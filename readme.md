@@ -8,7 +8,8 @@
   (1) 이 소스를 클론한다.
   
       폴더 구조는 아래와 같다.
-      ![image](https://user-images.githubusercontent.com/128672029/234761654-84d4cce9-045e-48ad-871e-3e33603d053b.png)
+      
+![image](https://user-images.githubusercontent.com/128672029/234761654-84d4cce9-045e-48ad-871e-3e33603d053b.png)
   
   (2) https://www.fitterlite.com/apps/si/asset.zip 를 다운로드하여 압축해제한 후 asset 폴더를 클론한 같은 이름의 폴더에 덮어 씌운다.
   
