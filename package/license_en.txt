@@ -1,0 +1,9 @@
+Copyright 2023 ipazeb.com all rights reserved.
+
+This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
+
+Permission is granted to anyone to use this software for non-commercial purpose(or commercial purpose granted by ipazeb inc), and to redistribute it freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software.
+2. This notice may not be removed or altered from any distribution.
+3. This software include internet-connect functionity, that enable response action to internet, or update programs or other files in this software. you most agree this term to use this software correctly.
