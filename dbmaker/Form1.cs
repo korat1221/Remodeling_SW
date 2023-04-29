@@ -85,7 +85,7 @@ namespace dbmaker
                 {
                     MessageBox.Show("테이블명을 입력하세요.");
                 }
-                else if (textBox2.Text == "")
+                else if (textBox2.Text == "") 
                 {
                     MessageBox.Show("컬럼 리스트를 입력하세요(쉼표로 구분).");
                 }
