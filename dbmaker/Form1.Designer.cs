@@ -30,26 +30,28 @@
         {
             this.button1 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.table = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.columns = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.startLine = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.endLine = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.endColumn = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
+            this.startColumn = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            ((System.ComponentModel.ISupportInitialize)(this.startLine)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.endLine)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.endColumn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.startColumn)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -67,12 +69,13 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
-            // textBox1
+            // table
             // 
-            this.textBox1.Location = new System.Drawing.Point(174, 59);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(158, 21);
-            this.textBox1.TabIndex = 1;
+            this.table.Location = new System.Drawing.Point(174, 59);
+            this.table.Name = "table";
+            this.table.Size = new System.Drawing.Size(158, 21);
+            this.table.TabIndex = 1;
+            this.table.Text = "법규열관류율";
             // 
             // label1
             // 
@@ -94,34 +97,40 @@
             this.label2.Tag = "";
             this.label2.Text = "컬럼 리스트";
             // 
-            // textBox2
+            // columns
             // 
-            this.textBox2.Location = new System.Drawing.Point(174, 102);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(532, 21);
-            this.textBox2.TabIndex = 3;
+            this.columns.Location = new System.Drawing.Point(174, 102);
+            this.columns.Name = "columns";
+            this.columns.Size = new System.Drawing.Size(532, 21);
+            this.columns.TabIndex = 3;
+            this.columns.Text = "﻿기준,시행연월,지역,구조체,유형,열관류율";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(84, 154);
+            this.label3.Location = new System.Drawing.Point(118, 43);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 12);
+            this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 6;
             this.label3.Tag = "";
-            this.label3.Text = "해더 컬럼 시작";
+            this.label3.Text = "시작";
             // 
-            // numericUpDown1
+            // startLine
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(175, 152);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 21);
-            this.numericUpDown1.TabIndex = 7;
+            this.startLine.Location = new System.Drawing.Point(153, 40);
+            this.startLine.Name = "startLine";
+            this.startLine.Size = new System.Drawing.Size(120, 21);
+            this.startLine.TabIndex = 7;
+            this.startLine.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(301, 154);
+            this.label4.Location = new System.Drawing.Point(279, 42);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(29, 12);
             this.label4.TabIndex = 8;
@@ -131,24 +140,29 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(534, 155);
+            this.label5.Location = new System.Drawing.Point(512, 43);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(29, 12);
             this.label5.TabIndex = 11;
             this.label5.Tag = "";
             this.label5.Text = "라인";
             // 
-            // numericUpDown2
+            // endLine
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(408, 152);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(120, 21);
-            this.numericUpDown2.TabIndex = 10;
+            this.endLine.Location = new System.Drawing.Point(386, 40);
+            this.endLine.Name = "endLine";
+            this.endLine.Size = new System.Drawing.Size(120, 21);
+            this.endLine.TabIndex = 10;
+            this.endLine.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(373, 155);
+            this.label6.Location = new System.Drawing.Point(351, 43);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(29, 12);
             this.label6.TabIndex = 9;
@@ -158,85 +172,107 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(533, 208);
+            this.label7.Location = new System.Drawing.Point(511, 96);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(29, 12);
             this.label7.TabIndex = 17;
             this.label7.Tag = "";
-            this.label7.Text = "라인";
+            this.label7.Text = "번째";
             // 
-            // numericUpDown3
+            // endColumn
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(407, 205);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(120, 21);
-            this.numericUpDown3.TabIndex = 16;
+            this.endColumn.Location = new System.Drawing.Point(385, 93);
+            this.endColumn.Name = "endColumn";
+            this.endColumn.Size = new System.Drawing.Size(120, 21);
+            this.endColumn.TabIndex = 16;
+            this.endColumn.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(372, 208);
+            this.label8.Location = new System.Drawing.Point(322, 96);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(29, 12);
+            this.label8.Size = new System.Drawing.Size(57, 12);
             this.label8.TabIndex = 15;
             this.label8.Tag = "";
-            this.label8.Text = "종료";
+            this.label8.Text = "종료 컬럼";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(300, 207);
+            this.label9.Location = new System.Drawing.Point(278, 95);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(29, 12);
             this.label9.TabIndex = 14;
             this.label9.Tag = "";
-            this.label9.Text = "라인";
+            this.label9.Text = "번째";
             // 
-            // numericUpDown4
+            // startColumn
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(174, 205);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(120, 21);
-            this.numericUpDown4.TabIndex = 13;
+            this.startColumn.Location = new System.Drawing.Point(152, 93);
+            this.startColumn.Name = "startColumn";
+            this.startColumn.Size = new System.Drawing.Size(120, 21);
+            this.startColumn.TabIndex = 13;
+            this.startColumn.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(83, 207);
+            this.label10.Location = new System.Drawing.Point(89, 96);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(85, 12);
+            this.label10.Size = new System.Drawing.Size(57, 12);
             this.label10.TabIndex = 12;
             this.label10.Tag = "";
-            this.label10.Text = "해더 컬럼 시작";
+            this.label10.Text = "시작 컬럼";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.endColumn);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.startLine);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.startColumn);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.endLine);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Location = new System.Drawing.Point(94, 152);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(612, 145);
+            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "해더 컬럼";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 448);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.numericUpDown3);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.numericUpDown4);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.numericUpDown2);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.columns);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.table);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.startLine)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.endLine)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.endColumn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.startColumn)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,22 +282,23 @@
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox table;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox columns;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown startLine;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown endLine;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.NumericUpDown endColumn;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
+        private System.Windows.Forms.NumericUpDown startColumn;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 
