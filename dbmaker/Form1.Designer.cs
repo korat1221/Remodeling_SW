@@ -47,16 +47,26 @@
             this.startColumn = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.overwrite = new System.Windows.Forms.CheckBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.columns_upd = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.startRow = new System.Windows.Forms.NumericUpDown();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.startLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.endLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.endColumn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.startColumn)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.startRow)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(362, 333);
+            this.button1.Location = new System.Drawing.Point(352, 511);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(92, 23);
             this.button1.TabIndex = 0;
@@ -75,7 +85,6 @@
             this.table.Name = "table";
             this.table.Size = new System.Drawing.Size(158, 21);
             this.table.TabIndex = 1;
-            this.table.Text = "법규열관류율";
             // 
             // label1
             // 
@@ -103,7 +112,6 @@
             this.columns.Name = "columns";
             this.columns.Size = new System.Drawing.Size(532, 21);
             this.columns.TabIndex = 3;
-            this.columns.Text = "﻿기준,시행연월,지역,구조체,유형,열관류율";
             // 
             // label3
             // 
@@ -121,11 +129,6 @@
             this.startLine.Name = "startLine";
             this.startLine.Size = new System.Drawing.Size(120, 21);
             this.startLine.TabIndex = 7;
-            this.startLine.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
             // 
             // label4
             // 
@@ -153,11 +156,6 @@
             this.endLine.Name = "endLine";
             this.endLine.Size = new System.Drawing.Size(120, 21);
             this.endLine.TabIndex = 10;
-            this.endLine.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
             // 
             // label6
             // 
@@ -185,11 +183,6 @@
             this.endColumn.Name = "endColumn";
             this.endColumn.Size = new System.Drawing.Size(120, 21);
             this.endColumn.TabIndex = 16;
-            this.endColumn.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
             // 
             // label8
             // 
@@ -217,11 +210,6 @@
             this.startColumn.Name = "startColumn";
             this.startColumn.Size = new System.Drawing.Size(120, 21);
             this.startColumn.TabIndex = 13;
-            this.startColumn.Value = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
             // 
             // label10
             // 
@@ -254,11 +242,92 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "해더 컬럼";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label13);
+            this.groupBox2.Controls.Add(this.label12);
+            this.groupBox2.Controls.Add(this.startRow);
+            this.groupBox2.Controls.Add(this.label14);
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.overwrite);
+            this.groupBox2.Controls.Add(this.columns_upd);
+            this.groupBox2.Location = new System.Drawing.Point(94, 321);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(612, 174);
+            this.groupBox2.TabIndex = 19;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "기타";
+            // 
+            // overwrite
+            // 
+            this.overwrite.AutoSize = true;
+            this.overwrite.Location = new System.Drawing.Point(59, 35);
+            this.overwrite.Name = "overwrite";
+            this.overwrite.Size = new System.Drawing.Size(72, 16);
+            this.overwrite.TabIndex = 18;
+            this.overwrite.Text = "덮어쓰기";
+            this.overwrite.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(29, 109);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(97, 12);
+            this.label11.TabIndex = 21;
+            this.label11.Tag = "";
+            this.label11.Text = "갱신 컬럼 리스트";
+            // 
+            // columns_upd
+            // 
+            this.columns_upd.Location = new System.Drawing.Point(132, 106);
+            this.columns_upd.Name = "columns_upd";
+            this.columns_upd.Size = new System.Drawing.Size(458, 21);
+            this.columns_upd.TabIndex = 20;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(149, 130);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(177, 12);
+            this.label12.TabIndex = 22;
+            this.label12.Tag = "";
+            this.label12.Text = "공백이면 컬럼 리스트와 동일함.";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(57, 71);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(69, 12);
+            this.label13.TabIndex = 18;
+            this.label13.Tag = "";
+            this.label13.Text = "데이터 시작";
+            // 
+            // startRow
+            // 
+            this.startRow.Location = new System.Drawing.Point(132, 68);
+            this.startRow.Name = "startRow";
+            this.startRow.Size = new System.Drawing.Size(120, 21);
+            this.startRow.TabIndex = 19;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(258, 71);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(53, 12);
+            this.label14.TabIndex = 20;
+            this.label14.Tag = "";
+            this.label14.Text = "라인부터";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 448);
+            this.ClientSize = new System.Drawing.Size(800, 583);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.columns);
             this.Controls.Add(this.label1);
@@ -273,6 +342,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.startColumn)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.startRow)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -299,6 +371,14 @@
         private System.Windows.Forms.NumericUpDown startColumn;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox overwrite;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox columns_upd;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.NumericUpDown startRow;
+        private System.Windows.Forms.Label label14;
     }
 }
 

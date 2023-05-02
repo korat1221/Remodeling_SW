@@ -29,7 +29,6 @@ namespace dbmaker
             openFileDialog1.ShowDialog();
         }
 
-
         public static string executeSQL(string exec, string query)
         {
             String ret = "";
@@ -92,26 +91,30 @@ namespace dbmaker
                 }
                 else
                 {
-                    try
+                    string sql = "";
+                    string[] columns = this.columns.Text.Split(',');
+                    string[] columns_upd = this.columns_upd.Text != "" ? this.columns_upd.Text.Split(',') : columns;
+
+                    if (overwrite.Checked)
                     {
-                        cmd.CommandText = "DROP TABLE " + table.Text;
+                        try
+                        {
+                            cmd.CommandText = "DROP TABLE " + table.Text;
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception)
+                        {
+                        }
+
+                        foreach (string column in columns)
+                        {
+                            if (sql != "") sql += ",";
+                            sql += column + " VARCHAR (255)";
+                        }
+
+                        cmd.CommandText = "CREATE TABLE " + table.Text + " (ID INTEGER PRIMARY KEY AUTOINCREMENT," + sql + ")";
                         cmd.ExecuteNonQuery();
                     }
-                    catch (Exception)
-                    {
-                    }
-
-                    string[] columns = this.columns.Text.Split(',');
-                    string sql = "";
-
-                    foreach (string column in columns)
-                    {
-                        if (sql != "") sql += ",";
-                        sql += column + " VARCHAR (255)";
-                    }
-
-                    cmd.CommandText = "CREATE TABLE " + table.Text + " (ID INTEGER PRIMARY KEY AUTOINCREMENT," + sql + ")";
-                    cmd.ExecuteNonQuery();
 
                     int n = 1, i, j, cnt;
                     StreamReader sr = new StreamReader(openFileDialog1.FileName);
@@ -119,56 +122,65 @@ namespace dbmaker
 
                     while (!sr.EndOfStream)
                     {
-                        string line = sr.ReadLine();
-                        string[] data = line.Split(',');
+                        string line = sr.ReadLine(), s;
+                        string[] data = line.Split('\t');
 
-                        if (startLine.Value <= n && endLine.Value >= n)
+                        if (data.Count() > 1)
                         {
-                            headerColumns.Add(data);
-                        }
-                        else if (endLine.Value < n)
-                        {
-                            if (headerColumns.Count() > 0)
+                            if (startLine.Value <= n && endLine.Value >= n)
                             {
-                                i = (int)startColumn.Value - 1;
-                                cnt = (int)endColumn.Value - (int)startColumn.Value + 1;
-
-                                while (i < data.Count())
-                                {
-                                    sql = "";
-                                    j = -1;
-                                    while (++j < startColumn.Value - 1)
-                                    {
-                                        if (sql != "") sql += ",";
-                                        sql += "'" + data[j] + "'";
-                                    }
-
-                                    j = -1;
-                                    while (++j < cnt)
-                                    {
-                                        if (sql != "") sql += ",";
-                                        sql += "'" + headerColumns[j][i] + "'";
-                                    }
-                                    if (sql != "") sql += ",";
-                                    sql += "'" + data[i] + "'";
-
-                                    cmd.CommandText = "INSERT INTO " + table.Text + " (" + String.Join(",", columns) + ") VALUES (" + sql + ")";
-                                    cmd.ExecuteNonQuery();
-                                    i++;
-                                }
+                                headerColumns.Add(data);
                             }
-                            else
+                            else if (endLine.Value < n)
                             {
-                                sql = "";
-                                i = -1;
-                                while (++i < data.Count())
+                                if (headerColumns.Count() > 0)
                                 {
-                                    if (sql != "") sql += ",";
-                                    sql += "'" + data[i] + "'";
-                                }
+                                    i = (int)startColumn.Value - 1;
+                                    cnt = (int)endColumn.Value - (int)startColumn.Value + 1;
 
-                                cmd.CommandText = "INSERT INTO " + table.Text + " (" + String.Join(",", columns) + ") VALUES (" + sql + ")";
-                                cmd.ExecuteNonQuery();
+                                    while (i < data.Count())
+                                    {
+                                        sql = "";
+                                        j = -1;
+                                        while (++j < startColumn.Value - 1)
+                                        {
+                                            if (sql != "") sql += ",";
+                                            sql += "'" + data[j] + "'";
+                                        }
+
+                                        j = -1;
+                                        while (++j < cnt)
+                                        {
+                                            if (sql != "") sql += ",";
+                                            sql += "'" + headerColumns[j][i] + "'";
+                                        }
+                                        if (sql != "") sql += ",";
+                                        sql += "'" + data[i] + "'";
+
+                                        cmd.CommandText = "INSERT INTO " + table.Text + " (" + String.Join(",", columns_upd) + ") VALUES (" + sql + ")";
+                                        cmd.ExecuteNonQuery();
+                                        i++;
+                                    }
+                                }
+                                else
+                                {
+                                    if (n >= startRow.Value)
+                                    {
+                                        sql = "";
+                                        i = -1;
+                                        while (++i < data.Count() && i < columns_upd.Count())
+                                        {
+                                            if (sql != "") sql += ",";
+
+                                            s = data[i];
+                                            s = s.Replace("\"", "");
+                                            sql += "'" + s + "'";
+                                        }
+
+                                        cmd.CommandText = "INSERT INTO " + table.Text + " (" + String.Join(",", columns_upd) + ") VALUES (" + sql + ")";
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                }
                             }
                         }
 
@@ -185,5 +197,6 @@ namespace dbmaker
                 }
             }
         }
+
     }
 }
