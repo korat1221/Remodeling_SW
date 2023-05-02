@@ -1,0 +1,28 @@
+번호	DB유형	제품명	제조사	문짝 종류	문짝내부	문틀내부	출입문 유형	
+표준_001	표준	D_WOOD1	IPAZEB	목재문	공기	목재		
+표준_002	표준	D_WOOD2	IPAZEB	목재문	단열재	목재		
+표준_003	표준	D_STEEL1	IPAZEB	철문	공기	공기		
+표준_004	표준	D_STEEL2	IPAZEB	철문	공기	시멘트몰탈		
+표준_005	표준	D_STEEL3	IPAZEB	철문	공기	단열재		
+표준_006	표준	D_STEEL4	IPAZEB	철문	단열재	공기		
+표준_007	표준	D_STEEL5	IPAZEB	철문	단열재	시멘트몰탈		
+표준_008	표준	D_STEEL6	IPAZEB	철문	단열재	단열재		
+표준_009	표준	D_INSUL1	IPAZEB	단열문	단열재	단열재		
+				표준	표준	표준		
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
