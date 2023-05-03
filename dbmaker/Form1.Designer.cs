@@ -48,13 +48,12 @@
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.overwrite = new System.Windows.Forms.CheckBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.columns_upd = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             this.startRow = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.columns_upd = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.startLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.endLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.endColumn)).BeginInit();
@@ -249,7 +248,6 @@
             this.groupBox2.Controls.Add(this.startRow);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.label11);
-            this.groupBox2.Controls.Add(this.overwrite);
             this.groupBox2.Controls.Add(this.columns_upd);
             this.groupBox2.Location = new System.Drawing.Point(94, 321);
             this.groupBox2.Name = "groupBox2";
@@ -258,20 +256,47 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "기타";
             // 
-            // overwrite
+            // label13
             // 
-            this.overwrite.AutoSize = true;
-            this.overwrite.Location = new System.Drawing.Point(59, 35);
-            this.overwrite.Name = "overwrite";
-            this.overwrite.Size = new System.Drawing.Size(72, 16);
-            this.overwrite.TabIndex = 18;
-            this.overwrite.Text = "덮어쓰기";
-            this.overwrite.UseVisualStyleBackColor = true;
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(57, 53);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(69, 12);
+            this.label13.TabIndex = 18;
+            this.label13.Tag = "";
+            this.label13.Text = "데이터 시작";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(149, 112);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(177, 12);
+            this.label12.TabIndex = 22;
+            this.label12.Tag = "";
+            this.label12.Text = "공백이면 컬럼 리스트와 동일함.";
+            // 
+            // startRow
+            // 
+            this.startRow.Location = new System.Drawing.Point(132, 50);
+            this.startRow.Name = "startRow";
+            this.startRow.Size = new System.Drawing.Size(120, 21);
+            this.startRow.TabIndex = 19;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(258, 53);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(53, 12);
+            this.label14.TabIndex = 20;
+            this.label14.Tag = "";
+            this.label14.Text = "라인부터";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(29, 109);
+            this.label11.Location = new System.Drawing.Point(29, 91);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(97, 12);
             this.label11.TabIndex = 21;
@@ -280,47 +305,10 @@
             // 
             // columns_upd
             // 
-            this.columns_upd.Location = new System.Drawing.Point(132, 106);
+            this.columns_upd.Location = new System.Drawing.Point(132, 88);
             this.columns_upd.Name = "columns_upd";
             this.columns_upd.Size = new System.Drawing.Size(458, 21);
             this.columns_upd.TabIndex = 20;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(149, 130);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(177, 12);
-            this.label12.TabIndex = 22;
-            this.label12.Tag = "";
-            this.label12.Text = "공백이면 컬럼 리스트와 동일함.";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(57, 71);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(69, 12);
-            this.label13.TabIndex = 18;
-            this.label13.Tag = "";
-            this.label13.Text = "데이터 시작";
-            // 
-            // startRow
-            // 
-            this.startRow.Location = new System.Drawing.Point(132, 68);
-            this.startRow.Name = "startRow";
-            this.startRow.Size = new System.Drawing.Size(120, 21);
-            this.startRow.TabIndex = 19;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(258, 71);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(53, 12);
-            this.label14.TabIndex = 20;
-            this.label14.Tag = "";
-            this.label14.Text = "라인부터";
             // 
             // Form1
             // 
@@ -372,7 +360,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckBox overwrite;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox columns_upd;
         private System.Windows.Forms.Label label12;

@@ -91,12 +91,12 @@ namespace dbmaker
                 }
                 else
                 {
-                    string sql = "";
-                    string[] columns = this.columns.Text.Split(',');
-                    string[] columns_upd = this.columns_upd.Text != "" ? this.columns_upd.Text.Split(',') : columns;
-
-                    if (overwrite.Checked)
+                    try
                     {
+                        string sql = "";
+                        string[] columns = this.columns.Text.Split(',');
+                        string[] columns_upd = this.columns_upd.Text != "" ? this.columns_upd.Text.Split(',') : columns;
+
                         try
                         {
                             cmd.CommandText = "DROP TABLE " + table.Text;
@@ -114,86 +114,90 @@ namespace dbmaker
 
                         cmd.CommandText = "CREATE TABLE " + table.Text + " (ID INTEGER PRIMARY KEY AUTOINCREMENT," + sql + ")";
                         cmd.ExecuteNonQuery();
-                    }
 
-                    int n = 1, i, j, cnt;
-                    StreamReader sr = new StreamReader(openFileDialog1.FileName);
-                    List<string[]> headerColumns = new List<string[]>();
+                        int n = 1, i, j, cnt;
+                        StreamReader sr = new StreamReader(openFileDialog1.FileName);
+                        List<string[]> headerColumns = new List<string[]>();
 
-                    while (!sr.EndOfStream)
-                    {
-                        string line = sr.ReadLine(), s;
-                        string[] data = line.Split('\t');
-
-                        if (data.Count() > 1)
+                        while (!sr.EndOfStream)
                         {
-                            if (startLine.Value <= n && endLine.Value >= n)
+                            string line = sr.ReadLine(), s;
+                            string[] data = line.Split('\t');
+
+                            if (data.Count() > 1)
                             {
-                                headerColumns.Add(data);
-                            }
-                            else if (endLine.Value < n)
-                            {
-                                if (headerColumns.Count() > 0)
+                                if (startLine.Value <= n && endLine.Value >= n)
                                 {
-                                    i = (int)startColumn.Value - 1;
-                                    cnt = (int)endColumn.Value - (int)startColumn.Value + 1;
-
-                                    while (i < data.Count())
+                                    headerColumns.Add(data);
+                                }
+                                else if (endLine.Value < n)
+                                {
+                                    if (headerColumns.Count() > 0)
                                     {
-                                        sql = "";
-                                        j = -1;
-                                        while (++j < startColumn.Value - 1)
-                                        {
-                                            if (sql != "") sql += ",";
-                                            sql += "'" + data[j] + "'";
-                                        }
+                                        i = (int)startColumn.Value - 1;
+                                        cnt = (int)endColumn.Value - (int)startColumn.Value + 1;
 
-                                        j = -1;
-                                        while (++j < cnt)
+                                        while (i < data.Count())
                                         {
-                                            if (sql != "") sql += ",";
-                                            sql += "'" + headerColumns[j][i] + "'";
-                                        }
-                                        if (sql != "") sql += ",";
-                                        sql += "'" + data[i] + "'";
+                                            sql = "";
+                                            j = -1;
+                                            while (++j < startColumn.Value - 1)
+                                            {
+                                                if (sql != "") sql += ",";
+                                                sql += "'" + data[j] + "'";
+                                            }
 
-                                        cmd.CommandText = "INSERT INTO " + table.Text + " (" + String.Join(",", columns_upd) + ") VALUES (" + sql + ")";
-                                        cmd.ExecuteNonQuery();
-                                        i++;
+                                            j = -1;
+                                            while (++j < cnt)
+                                            {
+                                                if (sql != "") sql += ",";
+                                                sql += "'" + headerColumns[j][i] + "'";
+                                            }
+                                            if (sql != "") sql += ",";
+                                            sql += "'" + data[i] + "'";
+
+                                            cmd.CommandText = "INSERT INTO " + table.Text + " (" + String.Join(",", columns_upd) + ") VALUES (" + sql + ")";
+                                            cmd.ExecuteNonQuery();
+                                            i++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (n >= startRow.Value)
+                                        {
+                                            sql = "";
+                                            i = -1;
+                                            while (++i < data.Count() && i < columns_upd.Count())
+                                            {
+                                                if (sql != "") sql += ",";
+
+                                                s = data[i];
+                                                s = s.Replace("\"", "");
+                                                sql += "'" + s + "'";
+                                            }
+
+                                            cmd.CommandText = "INSERT INTO " + table.Text + " (" + String.Join(",", columns_upd) + ") VALUES (" + sql + ")";
+                                            cmd.ExecuteNonQuery();
+                                        }
                                     }
                                 }
-                                else
-                                {
-                                    if (n >= startRow.Value)
-                                    {
-                                        sql = "";
-                                        i = -1;
-                                        while (++i < data.Count() && i < columns_upd.Count())
-                                        {
-                                            if (sql != "") sql += ",";
-
-                                            s = data[i];
-                                            s = s.Replace("\"", "");
-                                            sql += "'" + s + "'";
-                                        }
-
-                                        cmd.CommandText = "INSERT INTO " + table.Text + " (" + String.Join(",", columns_upd) + ") VALUES (" + sql + ")";
-                                        cmd.ExecuteNonQuery();
-                                    }
-                                }
                             }
+
+                            n++;
+                            // 결과를 출력해본다.
+
+                            //                Console.WriteLine("{0}, {1}, {2}, ... ", data[0], data[1], data[2], ... );
+
                         }
 
-                        n++;
-                        // 결과를 출력해본다.
+                        if (dbConn.State != System.Data.ConnectionState.Closed) dbConn.Close();
 
-                        //                Console.WriteLine("{0}, {1}, {2}, ... ", data[0], data[1], data[2], ... );
-
+                        MessageBox.Show("basedb.sqlite 에 테이블을 생성(갱신)하였습니다. asset 폴더의 basedb.sqlite 에서 확인하시기 바랍니다.");
                     }
-
-                    if (dbConn.State != System.Data.ConnectionState.Closed) dbConn.Close();
-
-                    MessageBox.Show("basedb.sqlite 에 테이블을 생성(갱신)하였습니다. asset 폴더의 basedb.sqlite 에서 확인하시기 바랍니다.");
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
         }
