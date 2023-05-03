@@ -95,7 +95,6 @@ namespace dbmaker
                     {
                         string sql = "";
                         string[] columns = this.columns.Text.Split(',');
-                        string[] columns_upd = this.columns_upd.Text != "" ? this.columns_upd.Text.Split(',') : columns;
 
                         try
                         {
@@ -156,7 +155,7 @@ namespace dbmaker
                                             if (sql != "") sql += ",";
                                             sql += "'" + data[i] + "'";
 
-                                            cmd.CommandText = "INSERT INTO " + table.Text + " (" + String.Join(",", columns_upd) + ") VALUES (" + sql + ")";
+                                            cmd.CommandText = "INSERT INTO " + table.Text + " (" + String.Join(",", columns) + ") VALUES (" + sql + ")";
                                             cmd.ExecuteNonQuery();
                                             i++;
                                         }
@@ -167,7 +166,7 @@ namespace dbmaker
                                         {
                                             sql = "";
                                             i = -1;
-                                            while (++i < data.Count() && i < columns_upd.Count())
+                                            while (++i < data.Count() && i < columns.Count())
                                             {
                                                 if (sql != "") sql += ",";
 
@@ -176,7 +175,7 @@ namespace dbmaker
                                                 sql += "'" + s + "'";
                                             }
 
-                                            cmd.CommandText = "INSERT INTO " + table.Text + " (" + String.Join(",", columns_upd) + ") VALUES (" + sql + ")";
+                                            cmd.CommandText = "INSERT INTO " + table.Text + " (" + String.Join(",", columns) + ") VALUES (" + sql + ")";
                                             cmd.ExecuteNonQuery();
                                         }
                                     }

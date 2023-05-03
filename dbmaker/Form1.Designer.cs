@@ -49,11 +49,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
             this.startRow = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.columns_upd = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.startLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.endLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.endColumn)).BeginInit();
@@ -65,7 +62,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(352, 511);
+            this.button1.Location = new System.Drawing.Point(354, 497);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(92, 23);
             this.button1.TabIndex = 0;
@@ -244,14 +241,11 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label13);
-            this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.startRow);
             this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Controls.Add(this.label11);
-            this.groupBox2.Controls.Add(this.columns_upd);
             this.groupBox2.Location = new System.Drawing.Point(94, 321);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(612, 174);
+            this.groupBox2.Size = new System.Drawing.Size(612, 120);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "기타";
@@ -265,16 +259,6 @@
             this.label13.TabIndex = 18;
             this.label13.Tag = "";
             this.label13.Text = "데이터 시작";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(149, 112);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(177, 12);
-            this.label12.TabIndex = 22;
-            this.label12.Tag = "";
-            this.label12.Text = "공백이면 컬럼 리스트와 동일함.";
             // 
             // startRow
             // 
@@ -292,23 +276,6 @@
             this.label14.TabIndex = 20;
             this.label14.Tag = "";
             this.label14.Text = "라인부터";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(29, 91);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(97, 12);
-            this.label11.TabIndex = 21;
-            this.label11.Tag = "";
-            this.label11.Text = "갱신 컬럼 리스트";
-            // 
-            // columns_upd
-            // 
-            this.columns_upd.Location = new System.Drawing.Point(132, 88);
-            this.columns_upd.Name = "columns_upd";
-            this.columns_upd.Size = new System.Drawing.Size(458, 21);
-            this.columns_upd.TabIndex = 20;
             // 
             // Form1
             // 
@@ -360,9 +327,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox columns_upd;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.NumericUpDown startRow;
         private System.Windows.Forms.Label label14;
