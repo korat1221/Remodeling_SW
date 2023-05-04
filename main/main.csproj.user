@@ -1,8 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <ItemGroup>
-        <Compile Update="Form1.cs">
-            <SubType>Form</SubType>
-        </Compile>
-    </ItemGroup>
+  <ItemGroup>
+    <Compile Update="contents\ConstructionRoof.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\ConstructionWall.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormRight.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MainContents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\Thermal1D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\ThermalMat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

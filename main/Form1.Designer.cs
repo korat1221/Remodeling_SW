@@ -68,6 +68,7 @@
             ClientSize = new Size(800, 450);
             Controls.Add(button1);
             Controls.Add(webView21);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "Form1";
             Text = "Form1";
             FormClosed += OnFormClosed;

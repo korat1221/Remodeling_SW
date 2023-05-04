@@ -36,7 +36,7 @@ namespace main
                 return;
             }
 #else
-            gPath = "C:\\Users\\아이템즈A\\AppData\\Local\\" + VIRTUAL_PATH_NAME + "\\";
+            gPath = "..\\..\\..\\..\\asset\\";
 #endif
 
             Directory.SetCurrentDirectory(gPath + "threejs\\");
@@ -78,7 +78,7 @@ namespace main
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(new FormMain());
         }
         public static void killServer()
         {

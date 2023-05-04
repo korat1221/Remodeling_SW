@@ -29,7 +29,7 @@ namespace main
 
                 // 결과를 출력해본다.
 
-//                Console.WriteLine("{0}, {1}, {2}, ... ", data[0], data[1], data[2], ... );
+                //                Console.WriteLine("{0}, {1}, {2}, ... ", data[0], data[1], data[2], ... );
 
             }
 
