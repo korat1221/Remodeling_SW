@@ -69,6 +69,7 @@
             Controls.Add(splitContainer1);
             Name = "FormMain";
             Text = "FormMain";
+            FormClosed += OnClosed;
             Load += FormMain_Load;
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();

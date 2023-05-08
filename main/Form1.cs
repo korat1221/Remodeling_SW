@@ -13,7 +13,7 @@ namespace main
 
         private void OnFormClosed(object sender, FormClosedEventArgs e)
         {
-            main.Program.killServer();
+            //            main.Program.killServer();
         }
 
         private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
@@ -38,6 +38,21 @@ namespace main
         private void button1_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Program.DB.setValue(DB.type.ProjDB, "연습테이블3", "연습필드5,연습필드6", "'4','3333'", "연습필드5");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string[][] res = Program.DB.getValue(DB.type.ProjDB, "연습테이블3", "연습필드6", "연습필드5 = '4'");
+
+            if (res.Count() > 0 && res[0].Count() > 0)
+            {
+                MessageBox.Show(res[0][0]);
+            }
         }
     }
 }

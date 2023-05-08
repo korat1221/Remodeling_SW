@@ -13,6 +13,7 @@ namespace main
         public const string VIRTUAL_PATH_NAME = "EnergyCalc";
 
         public static String? gPath;
+        public static DB DB = new DB();
 
         /// <summary>
         ///  The main entry point for the application.
@@ -74,6 +75,7 @@ namespace main
                 //            startInfo.FileName = "start.bat";
                 //          Process.Start(startInfo);
             }
+            Directory.SetCurrentDirectory("..\\");
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
@@ -102,44 +104,6 @@ namespace main
             System.IO.Directory.CreateDirectory(path);
 
             return path;
-        }
-
-        public static string executeSQL(string exec, string query)
-        {
-            String ret = "";
-
-            using (var dbConn = new SQLiteConnection(@"Data Source=" + gPath + "database.sqlite"))
-            {
-                dbConn.Open();
-                if (exec != "")
-                {
-                    SQLiteCommand cmd = new SQLiteCommand(exec, dbConn);
-                    cmd.ExecuteNonQuery();
-                }
-                if (query != "")
-                {
-                    SQLiteCommand cmd = new SQLiteCommand(query, dbConn);
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
-                    {
-                        string json = string.Empty;
-                        List<object> objects = new List<object>();
-
-                        while (reader.Read())
-                        {
-                            IDictionary<string, object> record = new Dictionary<string, object>();
-                            for (int i = 0; i < reader.FieldCount; i++)
-                            {
-                                record.Add(reader.GetName(i), reader[i]);
-                            }
-                            objects.Add(record);
-                        }
-//                        ret = JsonConvert.SerializeObject(objects);
-                    }
-                }
-                if (dbConn.State != System.Data.ConnectionState.Closed) dbConn.Close();
-            }
-
-            return ret;
         }
     }
 }
