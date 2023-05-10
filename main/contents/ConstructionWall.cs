@@ -16,7 +16,7 @@
 
         private void button1_Click(object sender, EventArgs e)
         {
-            foreach (Form1 openForm in Application.OpenForms)
+            foreach (FormDebug openForm in Application.OpenForms)
             {
                 if (openForm.Name == "Form1")
                 {

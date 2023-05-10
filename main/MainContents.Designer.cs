@@ -45,6 +45,7 @@
             button5 = new Button();
             button6 = new Button();
             button7 = new Button();
+            button8 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -224,12 +225,26 @@
             button7.Text = "출입문";
             button7.UseVisualStyleBackColor = false;
             // 
+            // button8
+            // 
+            button8.BackColor = SystemColors.InactiveBorder;
+            button8.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            button8.FlatStyle = FlatStyle.Flat;
+            button8.Location = new Point(33, 748);
+            button8.Name = "button8";
+            button8.Size = new Size(80, 25);
+            button8.TabIndex = 14;
+            button8.Text = "디버그";
+            button8.UseVisualStyleBackColor = false;
+            button8.Click += button8_Click;
+            // 
             // MainContents
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(150, 800);
+            Controls.Add(button8);
             Controls.Add(button7);
             Controls.Add(button6);
             Controls.Add(button5);
@@ -280,5 +295,6 @@
         private Button button5;
         private Button button6;
         private Button button7;
+        private Button button8;
     }
 }
