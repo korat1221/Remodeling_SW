@@ -37,3 +37,60 @@
   
   ![image](https://user-images.githubusercontent.com/128672029/235831351-2c2b1317-4b24-4211-88a2-1cb422cff29b.png)
 
+4. DB API 의 종류와 활용법
+
+   (1) DB 셋
+   
+   기초 DB, 프로젝트 DB, 계산 DB 로 구성되며, 프로젝트 DB, 계산 DB는 프로젝트별로 생긴다. 이때 계산 DB 는 메모리 DB 로 프로그램이 종료되면 사라진다.
+   
+   어느 폼에서든 DB.type.BaseDB(기초 DB), DB.type.ProjDB(프로젝트 DB), DB.type.CalcDB(계산 DB) 열거형 상수로 사용한다.
+
+   (2) DB API 의 종류
+   
+   openDB(프로젝트명) - 어느 폼에서든 Program.DB.openDB(프로젝트명); 을 실행하면 신규 DB 셋을 열수 있다. 이때 사용중인 DB 는 자동 종료된다.
+   
+   executeSQL(DB.type, 등록수정SQL) - 어느 폼에서든 Program.DB.executeSQL(DB.type, 등록수정SQL); 를 실행하여 DB 셋 내의 특정 DB 를 수정할수 있다. 
+   
+   querySQL(DB.type, 조회SQL) - 어느 폼에서든 Program.DB.querySQL(DB.type, 조회SQL); 를 실행하여 DB 셋 내의 특정 DB 의 레코드셋을 가져온다. 이때 레코드셋은 string[][] 형식이다.
+   
+   setValue(DB.type, 테이블명, 컬럼리스트(,로구분), 값리스트(,로구분), 키리스트(,로구분)) - 어느 폼에서든 Program.DB.setValue(DB.type, 테이블명, 컬럼리스트, 값리스트, 키리스트); 를 실행하여 DB 셋 내의 특정 테이블의 레코드셋을  등록 수정한다. 이때 등록 또는 수정여부는 키리스트의 레코드를 참조하여 자동으로 결정한다. 이 함수는 기초DB 에 대한 수정을 금지한다.
+   
+   getValue(DB.type, 테이블명, 컬럼리스트(,로구분), 조건문) - 어느 폼에서든 Program.DB.getValue(DB.type, 테이블명, 컬럼리스트, 조건문); 를 실행하여 DB 셋 내의 특정 테이블의 조건에 맞는 값을 string[][] 형식으로 리턴한다.
+   
+   (3) DB API 의 사용준비
+   
+   DB API 는 테이블을 자동 생성하는데, 이때 사용할 테이블 생성 SQL 문을 딕셔너리에 추가해야 한다.
+   DB.cs 소스파일 내에  
+   
+   private Dictionary<string, string> tables
+   
+   딕셔너리에 추가한다. 이때의 키는 테이블명이다.
+   
+5. CALC(계산 관리 모듈) API 의 활용법    
+
+   CALC API 는 아래 한가지이다.
+   
+   run(시나리오(string[] 형식의 문자열 배열));
+   
+   어느 폼에서든 Program.CALC.run(new string[] {"시나리오1", "시나리오2" }); 와 같은 형태로 사용한다.
+   
+   이때 사용되는 시나리오는 CALC.cs 모듈에 등록해야 한다.
+   
+   시나리오의 등록은 아래 절차를 따른다.
+   
+   (1) CALC.cs 의 init 함수 내에  
+   
+       시나리오함수 라는 실행 함수가 있다면
+
+	   _calculations[시나리오명] = new Func<bool>(시나리오함수);
+	   
+	   와 같이 등록한다.
+	   
+   (2) 시나리오 함수는 
+	   
+	   private static bool 시나리오함수()
+
+       와 같은 형식이고, CALC.cs 내에 선언한다.
+	   
+   이때 시나리오 함수는 여러 함수에 걸친 변수가 필요한 경우 CalcDB 를 활용하여 변수값 전달을 한다.
+   
