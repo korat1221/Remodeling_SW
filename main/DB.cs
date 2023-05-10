@@ -47,9 +47,16 @@ namespace main
         }
         private Dictionary<string, string> tables = new Dictionary<string, string>()
         {
-            {"연습테이블1", "CREATE TABLE 연습테이블1 (ID INTEGER PRIMARY KEY AUTOINCREMENT, 연습필드1 VARCHAR (255), 연습필드2 VARCHAR (255))"},
-            {"연습테이블2", "CREATE TABLE 연습테이블2 (ID INTEGER PRIMARY KEY AUTOINCREMENT, 연습필드3 VARCHAR (255), 연습필드4 VARCHAR (255))"},
-            {"연습테이블3", "CREATE TABLE 연습테이블3 (ID INTEGER PRIMARY KEY AUTOINCREMENT, 연습필드5 VARCHAR (255), 연습필드6 VARCHAR (255))"},
+            {"Zone", "CREATE TABLE Zone (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32))"},
+            {"OutairTemperature", "CREATE TABLE OutairTemperature (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32),월 VARCHAR (8), 온도 REAL,일 INTEGER)"},
+            {"Zonegeneral", "CREATE TABLE Zonegeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT, 구분 VARCHAR (8),zoneNum VARCHAR (32),zoneName VARCHAR (32),zoneUsage VARCHAR (32),zoneHC VARCHAR (32),θi_h_set VARCHAR (32),θi_c_set VARCHAR (32),Δθi_NA,Fx VARCHAR (32),Fx_fl VARCHAR (32),Fx_wl VARCHAR (32),θs_c VARCHAR (32),θi_h_min VARCHAR (32),θe_min VARCHAR (32),θSUP_Wi VARCHAR (32),Mode_night VARCHAR (32),Mode_we VARCHAR (32),twd_d VARCHAR (32),th_op_d_we VARCHAR (32),th_op_d VARCHAR (32),dwd_a VARCHAR (32),ZoneArea VARCHAR (32),zoneHeight VARCHAR (32),qI_p VARCHAR (32),qI_fac VARCHAR (32),Cwirk_A VARCHAR (32),VA_we VARCHAR (32),VA_wd VARCHAR (32),n50 VARCHAR (32),e VARCHAR (32),f VARCHAR (32),Vmech_SUP_we VARCHAR (32),Vmech_SUP_wd VARCHAR (32),Vmech_ETA_we VARCHAR (32),Vmech_ETA_wd VARCHAR (32),ηV_mech VARCHAR (32),ηχV_mech VARCHAR (32),χi_c_set VARCHAR (32),χi_h_set VARCHAR (32),Vmech_SUP_z VARCHAR (32),Vmech_ETA_z VARCHAR (32),ρacp_a VARCHAR (32))"},
+            {"ZoneWall", "CREATE TABLE ZoneWall (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),α VARCHAR (32),Degree VARCHAR (32))"},
+            {"ZoneRoof", "CREATE TABLE ZoneRoof (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),α VARCHAR (32),Degree VARCHAR (32))"},
+            {"ZoneFloor", "CREATE TABLE ZoneFloor (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32))"},
+            {"ZoneGWall", "CREATE TABLE ZoneGWall (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32))"},
+            {"ZoneDoor", "CREATE TABLE ZoneDoor (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),α VARCHAR (32),Degree VARCHAR (32))"},
+            {"ZoneWin", "CREATE TABLE ZoneWin (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Uvalue VARCHAR (32),Uinst VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),Ff VARCHAR (32),g VARCHAR (32),τ VARCHAR (32),gtot VARCHAR (32),τtot VARCHAR (32),degree VARCHAR (32))"},
+            {"ZoneCW", "CREATE TABLE ZoneCW (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area_g VARCHAR (32),Uvalue_g VARCHAR (32),Ff_g VARCHAR (32),g_g VARCHAR (32),gtot_g VARCHAR (32),τ_g VARCHAR (32),τtot_g VARCHAR (32),Area_p VARCHAR (32),Uvalue_p VARCHAR (32),α_p VARCHAR (32),Area_d VARCHAR (32),Uvalue_d VARCHAR (32),Ff_d VARCHAR (32),g_d VARCHAR (32),τ_d VARCHAR (32),Area_tot VARCHAR (32),Uinst VARCHAR (32))"},
         };
 
         private SQLiteConnection? baseDB, projDB, calcDB;
@@ -250,7 +257,7 @@ namespace main
             }
         }
 
-        public void setValue(type dbType, string table, string columns, string values, string key_column)
+        public void setValue(type dbType, string table, string columns, string values, string key_columns)
         {
             try
             {
@@ -258,6 +265,7 @@ namespace main
 
                 string[] cols = columns.Split(',');
                 string[] vals = values.Split(',');
+                string[] keys = key_columns.Split(',');
 
                 SQLiteCommand cmd = new SQLiteCommand();
 
@@ -272,18 +280,34 @@ namespace main
                 }
 
                 string condition = "";
-                int n = Array.FindIndex(cols, el => el == key_column);
 
-                if (n >= 0)
                 {
-                    string cond = cols[n] + " = " + vals[n];
-                    cmd.CommandText = "SELECT * FROM " + table + " WHERE " + cond;
+                    int i = -1;
+                    string cond = "";
 
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    while (++i < keys.Length)
                     {
-                        if (reader.Read() && reader.HasRows)
+                        int n = Array.FindIndex(cols, el => el == keys[i]);
+
+                        if (n >= 0)
                         {
-                            condition = cond;
+                            if (cond != "")
+                            {
+                                cond += " AND ";
+                            }
+                            cond += cols[n] + " = " + vals[n];
+                        }
+                    }
+
+                    if (cond != "")
+                    {
+                        cmd.CommandText = "SELECT * FROM " + table + " WHERE " + cond;
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read() && reader.HasRows)
+                            {
+                                condition = cond;
+                            }
                         }
                     }
                 }
@@ -314,7 +338,7 @@ namespace main
                 MessageBox.Show(ex.Message);
             }
         }
-        public string[][] getValue(type dbType, string table, string columns, string conditions)
+        public string[][] getValue(type dbType, string table, string columns, string conditions = "")
         {
             SQLiteCommand cmd = new SQLiteCommand();
             List<string[]> objects = new List<string[]>();
@@ -332,7 +356,14 @@ namespace main
                     break;
             }
 
-            cmd.CommandText = "SELECT " + columns + " FROM " + table + " WHERE " + conditions;
+            if (conditions != "")
+            {
+                cmd.CommandText = "SELECT " + columns + " FROM " + table + " WHERE " + conditions;
+            }
+            else
+            {
+                cmd.CommandText = "SELECT " + columns + " FROM " + table;
+            }
 
             using (SQLiteDataReader reader = cmd.ExecuteReader())
             {

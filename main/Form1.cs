@@ -1,6 +1,7 @@
 
 using System;
 using System.IO;
+using System.Security.Policy;
 
 namespace main
 {
@@ -53,6 +54,28 @@ namespace main
             {
                 MessageBox.Show(res[0][0]);
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Program.CALC.run(new string[] { "셈플: CSV 를 메모리DB에 로딩..." });
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Program.CALC.run(new string[] {
+                "존 HT",
+                "존 HV",
+                "존 tao",
+                "존 thetai",
+                "존 QT",
+                "존 QV",
+                "존 QSop",
+                "존 QStr",
+                "존 QI",
+                "존 eta",
+                "존 Qb"
+            });
         }
     }
 }
