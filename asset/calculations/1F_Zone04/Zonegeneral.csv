@@ -1,0 +1,2 @@
+구분,zoneNum,zoneName,zoneUsage,zoneHC,θi_h_set,θi_c_set,Δθi_NA,Fx,Fx_fl,Fx_wl,θs_c,θi_h_min,θe_min,θSUP_Wi,Mode_night,Mode_we,twd_d,th_op_d_we,th_op_d,dwd_a,ZoneArea,zoneHeight,qI_p,qI_fac,Cwirk_A,VA_we,VA_wd,n50,e,f,Vmech_SUP_we,Vmech_SUP_wd,Vmech_ETA_we,Vmech_ETA_wd,ηV_mech,ηχV_mech,χi_c_set,χi_h_set,Vmech_SUP_z,Vmech_ETA_z,ρacp_a
+값,1F_Zone04,IPAZEB1,01.sole office,Heating&Cooling,21,24,4,0.8,0.8,0.8,18,20,-12,18,reduced operation,reduced operation,11,0,13,250,30,2.5,30,42.6,70,2.5,4,3,0.07,15,75,120,75,120,0.7,0.7,0.011,0.006,0,0,0.34

@@ -1,0 +1,4 @@
+Name,Area,Ueff,DirectInDirect,Direction,α,Degree
+지붕1,10,0.15,Direction,수평,0.9,0
+지붕2,15,0.45,Direction,수평,0.8,0
+지붕3,20,0.3,Indirection,수평,0.7,0
