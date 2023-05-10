@@ -172,8 +172,9 @@
             button3.Name = "button3";
             button3.Size = new Size(80, 25);
             button3.TabIndex = 9;
-            button3.Text = "커튼월";
+            button3.Text = "용도프로필";
             button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
             // 
             // button4
             // 
@@ -252,7 +253,6 @@
             ShowInTaskbar = false;
             SizeGripStyle = SizeGripStyle.Hide;
             Text = "Form2";
-            Load += OnMenuLoad;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();

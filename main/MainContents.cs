@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.contents;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,7 +15,8 @@ namespace main
     {
         ConstructionWall f2 = new ConstructionWall();
         ConstructionRoof f3 = new ConstructionRoof();
-        Form1 f4 = new Form1();
+        ZoneUsage f4 = new ZoneUsage();
+
         public MainContents()
         {
             InitializeComponent();
@@ -28,7 +30,7 @@ namespace main
                     f3.TopLevel = false;
                     openForm.splitContainer2.Panel1.Controls.Add(f3);
                     f4.TopLevel = false;
-                    openForm.splitContainer2.Panel2.Controls.Add(f4);
+                    openForm.splitContainer2.Panel1.Controls.Add(f4);
                     return;
                 }
             }
@@ -60,10 +62,17 @@ namespace main
             }
         }
 
-        private void OnMenuLoad(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
-            f2.Show();
-            f4.Show();
+            foreach (FormMain openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "FormMain")
+                {
+                    f3.Hide();
+                    f4.Show();
+                    return;
+                }
+            }
         }
     }
 }
