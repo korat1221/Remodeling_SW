@@ -57,6 +57,15 @@ namespace main
             {"ZoneDoor", "CREATE TABLE ZoneDoor (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),α VARCHAR (32),Degree VARCHAR (32))"},
             {"ZoneWin", "CREATE TABLE ZoneWin (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Uvalue VARCHAR (32),Uinst VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),Ff VARCHAR (32),g VARCHAR (32),τ VARCHAR (32),gtot VARCHAR (32),τtot VARCHAR (32),degree VARCHAR (32))"},
             {"ZoneCW", "CREATE TABLE ZoneCW (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area_g VARCHAR (32),Uvalue_g VARCHAR (32),Ff_g VARCHAR (32),g_g VARCHAR (32),gtot_g VARCHAR (32),τ_g VARCHAR (32),τtot_g VARCHAR (32),Area_p VARCHAR (32),Uvalue_p VARCHAR (32),α_p VARCHAR (32),Area_d VARCHAR (32),Uvalue_d VARCHAR (32),Ff_d VARCHAR (32),g_d VARCHAR (32),τ_d VARCHAR (32),Area_tot VARCHAR (32),Uinst VARCHAR (32))"},
+            {"ZoneWall_Solar", "CREATE TABLE ZoneWall_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            {"ZoneRoof_Solar", "CREATE TABLE ZoneRoof_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            {"ZoneDoor_Solar", "CREATE TABLE ZoneDoor_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            {"ZoneCW_Solar", "CREATE TABLE ZoneCW_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            {"ZoneWin_Solar", "CREATE TABLE ZoneWin_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            {"ZoneWin_Shadow", "CREATE TABLE ZoneWin_Shadow (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            {"ZoneWin_a", "CREATE TABLE ZoneWin_a (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            {"ZoneCW_shadow", "CREATE TABLE ZoneCW_shadow (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            {"ZoneCW_a", "CREATE TABLE ZoneCW_a (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"}
         };
 
         private SQLiteConnection? baseDB, projDB, calcDB;

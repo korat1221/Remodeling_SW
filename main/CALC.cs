@@ -13,23 +13,13 @@ namespace main
         /////////////////////////////////////////////////////////////////////////////////////
         // calculation functions start
 
-        private static string zoneNum = "3F_Zone01";
+        private static string zoneNum = "";
 
         public void init()
         {
             _calculations["셈플: CSV 를 메모리DB에 로딩..."] = new Func<bool>(LoadMemDB_example);
 
-            _calculations["존 HT"] = new Func<bool>(ZoneHT);
-            _calculations["존 HV"] = new Func<bool>(ZoneHV);
-            _calculations["존 tao"] = new Func<bool>(Zonetao);
-            _calculations["존 thetai"] = new Func<bool>(Zonethetai);
-            _calculations["존 QT"] = new Func<bool>(ZoneQT);
-            _calculations["존 QV"] = new Func<bool>(ZoneQV);
-            _calculations["존 QSop"] = new Func<bool>(ZoneQSop);
-            _calculations["존 QStr"] = new Func<bool>(ZoneQStr);
-            _calculations["존 QI"] = new Func<bool>(ZoneQI);
-            _calculations["존 eta"] = new Func<bool>(Zoneeta);
-            _calculations["존 Qb"] = new Func<bool>(ZoneQb);
+            _calculations["존 계산"] = new Func<bool>(ZoneCalc);
         }
         private static bool LoadMemDB_example()
         {
@@ -47,7 +37,7 @@ namespace main
                         }
                         else
                         {
-                            Program.DB.setValue(DB.type.ProjDB, "Zone", "zoneNum", "'" + token[0] + "'", "zoneNum");
+                            Program.DB.setValue(DB.type.CalcDB, "Zone", "zoneNum", "'" + token[0] + "'", "zoneNum");
                             zoneNum = token[0];
 
                             //외기온도 가져오기
@@ -67,7 +57,7 @@ namespace main
                                             }
                                             else
                                             {
-                                                Program.DB.setValue(DB.type.ProjDB, "OutairTemperature", "zoneNum,월,온도,일", "'" + zoneNum + "','" + token2[0] + "'," + token2[1] + "," + token2[2], "zoneNum,월");
+                                                Program.DB.setValue(DB.type.CalcDB, "OutairTemperature", "zoneNum,월,온도,일", "'" + zoneNum + "','" + token2[0] + "'," + token2[1] + "," + token2[2], "zoneNum,월");
                                             }
                                             n2++;
 
@@ -127,9 +117,9 @@ namespace main
 
                                                 s += "'0.34'";
 
-                                                Program.DB.setValue(DB.type.ProjDB, "Zonegeneral", "구분,zoneNum,zoneName,zoneUsage,zoneHC,θi_h_set,θi_c_set,Δθi_NA,Fx,Fx_fl,Fx_wl,θs_c,θi_h_min,θe_min,θSUP_Wi,Mode_night,Mode_we,twd_d,th_op_d_we,th_op_d,dwd_a,ZoneArea,zoneHeight,qI_p,qI_fac,Cwirk_A,VA_we,VA_wd,n50,e,f,Vmech_SUP_we,Vmech_SUP_wd,Vmech_ETA_we,Vmech_ETA_wd,ηV_mech,ηχV_mech,χi_c_set,χi_h_set,Vmech_SUP_z,Vmech_ETA_z,ρacp_a",s, "zoneNum");
+                                                Program.DB.setValue(DB.type.CalcDB, "Zonegeneral", "구분,zoneNum,zoneName,zoneUsage,zoneHC,θi_h_set,θi_c_set,Δθi_NA,Fx,Fx_fl,Fx_wl,θs_c,θi_h_min,θe_min,θSUP_Wi,Mode_night,Mode_we,twd_d,th_op_d_we,th_op_d,dwd_a,ZoneArea,zoneHeight,qI_p,qI_fac,Cwirk_A,VA_we,VA_wd,n50,e,f,Vmech_SUP_we,Vmech_SUP_wd,Vmech_ETA_we,Vmech_ETA_wd,ηV_mech,ηχV_mech,χi_c_set,χi_h_set,Vmech_SUP_z,Vmech_ETA_z,ρacp_a",s, "zoneNum");
 
-                                                //string[][] res = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral", "구분,zoneNum");
+                                                //string[][] res = Program.DB.getValue(DB.type.CalcDB, "Zonegeneral", "구분,zoneNum");
 
                                                 //if (res.Count() > 0 && res[0].Count() > 0)
                                                 //{
@@ -211,13 +201,13 @@ namespace main
                                             else
                                             {
 
-                                                Program.DB.setValue(DB.type.ProjDB, "ZoneWall", "zoneNum,Name,Area,Ueff,DirectInDirect,Direction,α,Degree",
+                                                Program.DB.setValue(DB.type.CalcDB, "ZoneWall", "zoneNum,Name,Area,Ueff,DirectInDirect,Direction,α,Degree",
                                                     "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "'", "zoneNum,Name");
 
                                                 //         Wall wall = new Wall(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
                                                 //       zoneWall.Add(wall);
                                             }
-                                            n++;
+                                            n2++;
 
                                         }
                                     }
@@ -250,7 +240,7 @@ namespace main
                                             }
                                             else
                                             {
-                                                Program.DB.setValue(DB.type.ProjDB, "ZoneRoof", "zoneNum,Name,Area,Ueff,DirectInDirect,Direction,α,Degree",
+                                                Program.DB.setValue(DB.type.CalcDB, "ZoneRoof", "zoneNum,Name,Area,Ueff,DirectInDirect,Direction,α,Degree",
                                                     "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "'", "zoneNum,Name");
 
                                                 //      Roof roof = new Roof(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
@@ -288,7 +278,7 @@ namespace main
                                             }
                                             else
                                             {
-                                                Program.DB.setValue(DB.type.ProjDB, "ZoneFloor", "zoneNum,Name,Area,Ueff", "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "'", "zoneNum,Name");
+                                                Program.DB.setValue(DB.type.CalcDB, "ZoneFloor", "zoneNum,Name,Area,Ueff", "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "'", "zoneNum,Name");
                                                 //             Floor floor = new Floor(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]));
                                                 //           zoneFloor.Add(floor);
                                             }
@@ -324,7 +314,7 @@ namespace main
                                             }
                                             else
                                             {
-                                                Program.DB.setValue(DB.type.ProjDB, "ZoneGWall", "zoneNum,Name,Area,Ueff", "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "'", "zoneNum,Name");
+                                                Program.DB.setValue(DB.type.CalcDB, "ZoneGWall", "zoneNum,Name,Area,Ueff", "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "'", "zoneNum,Name");
                                                 //          GWall gwall = new GWall(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]));
                                                 //        zoneGWall.Add(gwall);
                                             }
@@ -360,7 +350,7 @@ namespace main
                                             }
                                             else
                                             {
-                                                Program.DB.setValue(DB.type.ProjDB, "ZoneDoor", "zoneNum,Name,Area,Ueff,DirectInDirect,Direction,α,Degree",
+                                                Program.DB.setValue(DB.type.CalcDB, "ZoneDoor", "zoneNum,Name,Area,Ueff,DirectInDirect,Direction,α,Degree",
                                                     "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "'", "zoneNum,Name");
 
                                                 //           Door door = new Door(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
@@ -398,7 +388,7 @@ namespace main
                                             }
                                             else
                                             {
-                                                Program.DB.setValue(DB.type.ProjDB, "ZoneWin", "zoneNum,Name,Area,Uvalue,Uinst,DirectInDirect,Direction,Ff,g,τ,gtot,τtot,degree",
+                                                Program.DB.setValue(DB.type.CalcDB, "ZoneWin", "zoneNum,Name,Area,Uvalue,Uinst,DirectInDirect,Direction,Ff,g,τ,gtot,τtot,degree",
                                                     "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "','" + token2[7] + "','" + token2[8] + "','" + token2[9] + "','" + token2[10] + "','" + token2[11] + "'",
                                                     "zoneNum,Name");
 
@@ -440,7 +430,7 @@ namespace main
                                                 }
                                                 else
                                                 {
-                                                    Program.DB.setValue(DB.type.ProjDB, "ZoneCW", "zoneNum,Name,Area_g,Uvalue_g,Ff_g,g_g,gtot_g,τ_g,τtot_g,Area_p,Uvalue_p,α_p,Area_d,Uvalue_d,Ff_d,g_d,τ_d,Area_tot,Uinst",
+                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneCW", "zoneNum,Name,Area_g,Uvalue_g,Ff_g,g_g,gtot_g,τ_g,τtot_g,Area_p,Uvalue_p,α_p,Area_d,Uvalue_d,Ff_d,g_d,τ_d,Area_tot,Uinst",
                                                         "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "','" + token2[7] + "','" + token2[8] + "','" + token2[9] + "','" + token2[10] + "','" + token2[11] + 
                                                         "','" + token2[12] + "','" + token2[13] + "','" + token2[14] + "','" + token2[15] + "','" + token2[16] + "','" + token2[17] + "'",
                                                         "zoneNum,Name");
@@ -463,6 +453,453 @@ namespace main
                                     Console.WriteLine("IOException source: {0}", e.Source);
                                 throw;
                             }
+
+                            //외벽 일사 계산
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneWall_Solar.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (!sr2.EndOfStream)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                while (++i < token2.Length)
+                                                {
+                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneWall_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                }
+
+                                                //두번째 행부터 계산 	  
+                                                //Wall zonewall = (Wall)zoneWall[n - 1];
+                                                //for (int mth = 0; mth < 12; mth++)
+                                                //{
+                                                //    zoneWalls_Is[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
+                                                //    QSopCalc qsopcalc = new QSopCalc();
+                                                //    if (zonewall.DiIndi() == "Indirection")
+                                                //    {   //직접외기 벽만 일사 계산      
+                                                //    }
+                                                //    else
+                                                //    {
+                                                //        if (0.5 * 4.5 * 10 >= zonewall.α() * zoneWalls_Is[n - 1, mth])
+                                                //        {
+                                                //            zoneWalls_Qssink[n - 1, mth] = qsopcalc.Calc(zonewall.Ueff(), zonewall.Area(), zonewall.α(), zoneWalls_Is[n - 1, mth]);
+                                                //            zoneWalls_Qssource[n - 1, mth] = 0;
+                                                //        }
+                                                //        else
+                                                //        {
+                                                //            zoneWalls_Qssink[n - 1, mth] = 0;
+                                                //            zoneWalls_Qssource[n - 1, mth] = qsopcalc.Calc(zonewall.Ueff(), zonewall.Area(), zonewall.α(), zoneWalls_Is[n - 1, mth]);
+                                                //        }
+                                                //    }
+                                                //    QSopsink_Wall[mth] += zoneWalls_Qssink[n - 1, mth];
+                                                //    QSopsource_Wall[mth] += zoneWalls_Qssource[n - 1, mth];
+
+                                                //}
+                                            }
+
+                                            n2++;
+                                        }
+
+
+                                    }
+                                }
+                            }
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //지붕 일사 계산
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneRoof_Solar.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (!sr2.EndOfStream)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                while (++i < token2.Length)
+                                                {
+                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneRoof_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                }
+
+                                                //Roof zoneroof = (Roof)zoneRoof[n - 1];
+                                                //for (int mth = 0; mth < 12; mth++)
+                                                //{
+                                                //    zoneRoofs_Is[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
+                                                //    QSopCalc qsopcalc = new QSopCalc();
+                                                //    if (zoneroof.DiIndi() == "Indirection")
+                                                //    {   //직접외기 지붕만 일사 계산      
+                                                //    }
+                                                //    else
+                                                //    {
+                                                //        if (0.5 * 4.5 * 10 >= zoneroof.α() * zoneRoofs_Is[n - 1, mth])
+                                                //        {
+                                                //            zoneRoofs_Qssink[n - 1, mth] = qsopcalc.Calc(zoneroof.Ueff(), zoneroof.Area(), zoneroof.α(), zoneRoofs_Is[n - 1, mth]);
+                                                //            zoneRoofs_Qssource[n - 1, mth] = 0;
+                                                //        }
+                                                //        else
+                                                //        {
+                                                //            zoneRoofs_Qssink[n - 1, mth] = 0;
+                                                //            zoneRoofs_Qssource[n - 1, mth] = qsopcalc.Calc(zoneroof.Ueff(), zoneroof.Area(), zoneroof.α(), zoneRoofs_Is[n - 1, mth]);
+                                                //        }
+                                                //    }
+                                                //    QSopsink_Roof[mth] += zoneRoofs_Qssink[n - 1, mth];
+                                                //    QSopsource_Roof[mth] += zoneRoofs_Qssource[n - 1, mth];
+                                                //}
+                                            }
+                                            n2++;
+                                        }
+
+
+                                    }
+                                }
+                            }
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //출입문 일사 계산
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneDoor_Solar.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (!sr2.EndOfStream)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                while (++i < token2.Length)
+                                                {
+                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneDoor_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                }
+
+                                                //Door zonedoor = (Door)zoneDoor[n - 1];
+                                                //for (int mth = 0; mth < 12; mth++)
+                                                //{
+                                                //    zoneDoors_Is[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
+                                                //    QSopCalc qsopcalc = new QSopCalc();
+                                                //    if (zonedoor.DiIndi() == "Indirection")
+                                                //    {   //직접외기 벽만 일사 계산      
+                                                //    }
+                                                //    else
+                                                //    {
+                                                //        if (0.5 * 4.5 * 10 >= zonedoor.α() * zoneDoors_Is[n - 1, mth])
+                                                //        {
+                                                //            zoneDoors_Qssink[n - 1, mth] = qsopcalc.Calc(zonedoor.Ueff(), zonedoor.Area(), zonedoor.α(), zoneDoors_Is[n - 1, mth]);
+                                                //            zoneDoors_Qssource[n - 1, mth] = 0;
+                                                //        }
+                                                //        else
+                                                //        {
+                                                //            zoneDoors_Qssink[n - 1, mth] = 0;
+                                                //            zoneDoors_Qssource[n - 1, mth] = qsopcalc.Calc(zonedoor.Ueff(), zonedoor.Area(), zonedoor.α(), zoneDoors_Is[n - 1, mth]);
+                                                //        }
+                                                //    }
+                                                //    QSopsink_Door[mth] += zoneDoors_Qssink[n - 1, mth];
+                                                //    QSopsource_Door[mth] += zoneDoors_Qssource[n - 1, mth];
+                                                //       }
+                                            }
+                                            n2++;
+                                        }
+                                    }
+                                }
+                            }
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //커튼월 패널 일사 계산
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneCW_Solar.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+
+                                        while (!sr2.EndOfStream)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                while (++i < token2.Length)
+                                                {
+                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneCW_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                }
+
+                                                //CW zonecw = (CW)zoneCW[n - 1];
+                                                //for (int mth = 0; mth < 12; mth++)
+                                                //{
+                                                //    zoneCWs_Is[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
+                                                //    QSopCalc qsopcalc = new QSopCalc();
+                                                //    if (0.5 * 4.5 * 10 >= zonecw.α_p() * zoneCWs_Is[n - 1, mth])
+                                                //    {
+                                                //        zoneCWs_Qssink[n - 1, mth] = qsopcalc.Calc(zonecw.Uvalue_p(), zonecw.Area_p(), zonecw.α_p(), zoneCWs_Is[n - 1, mth]);
+                                                //        zoneCWs_Qssource[n - 1, mth] = 0;
+                                                //    }
+                                                //    else
+                                                //    {
+                                                //        zoneCWs_Qssink[n - 1, mth] = 0;
+                                                //        zoneCWs_Qssource[n - 1, mth] = qsopcalc.Calc(zonecw.Uvalue_p(), zonecw.Area_p(), zonecw.α_p(), zoneCWs_Is[n - 1, mth]);
+                                                //    }
+                                                //    QSopsink_CW_p[mth] += zoneCWs_Qssink[n - 1, mth];
+                                                //    QSopsource_CW_p[mth] += zoneCWs_Qssource[n - 1, mth];
+                                                //}
+                                            }
+                                            n2++;
+                                        }
+                                    }
+                                }
+                            }
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneWin_Solar.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (!sr2.EndOfStream)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                while (++i < token2.Length)
+                                                {
+                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneWin_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                }
+
+                                                //Window zonewin = (Window)zoneWin[n - 1];
+                                                //for (int mth = 0; mth < 12; mth++)
+                                                //{
+                                                //    zoneWins_Is[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
+                                                //}
+                                            }
+                                            n2++;
+                                        }
+                                    }
+                                }
+                            }
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //존의 창별 음영정보 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneWin_Shadow.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (!sr2.EndOfStream)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                while (++i < token2.Length)
+                                                {
+                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneWin_Shadow", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                }
+
+                                                //Window zonewin = (Window)zoneWin[n - 1];
+                                                //for (int mth = 0; mth < 12; mth++)
+                                                //{
+                                                //    zoneWins_Fs[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
+                                                //}
+                                            }
+                                            n2++;
+                                        }
+                                    }
+                                }
+                            }
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //존의 창별 가동계수정보 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneWin_a.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (!sr2.EndOfStream)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                while (++i < token2.Length)
+                                                {
+                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneWin_a", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                }
+
+                                                //Window zonewin = (Window)zoneWin[n - 1];
+                                                //for (int mth = 0; mth < 12; mth++)
+                                                //{
+                                                //    zoneWins_a[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
+                                                //}
+                                            }
+                                            n2++;
+                                        }
+                                    }
+                                }
+                            }
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //존의 커튼월별 음영정보 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneCW_shadow.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (!sr2.EndOfStream)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                while (++i < token2.Length)
+                                                {
+                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneCW_shadow", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                }
+
+                                                //CW zonecw = (CW)zoneCW[n - 1];
+                                                //for (int mth = 0; mth < 12; mth++)
+                                                //{
+                                                //    zoneCWs_Fs[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
+                                                //}
+                                            }
+                                            n2++;
+                                        }
+                                    }
+                                }
+                            }
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //존의 커튼월별 가동계수정보 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneCW_a.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (!sr2.EndOfStream)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                while (++i < token2.Length)
+                                                {
+                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneCW_a", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                }
+
+                                                //CW zonecw = (CW)zoneCW[n - 1];
+                                                //for (int mth = 0; mth < 12; mth++)
+                                                //{
+                                                //    zoneCWs_a[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
+                                                //}
+                                            }
+                                            n2++;
+                                        }
+                                    }
+                                }
+                            }
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
                         }
                         n++;
                     }
@@ -471,127 +908,30 @@ namespace main
 
             return true;
         }
+        private static bool ZoneCalc()
+        {
+            int i = -1;
+            string[][] zones = Program.DB.getValue(DB.type.CalcDB, "Zone", "zoneNum");
 
-        private static bool ZoneHT()
-        {
-            Zone zone1 = new Zone(zoneNum);
-            zone1.ZoneHT();
+            while(++i < zones.Length)
+            {
+                Zone zone1 = new Zone(zones[i][0]);
+                zone1.ZoneHT();
+                zone1.ZoneHV();
+                zone1.Zonetao();
+                zone1.Zonethetai();
+                zone1.ZoneQT();
+                zone1.ZoneQV();
+                zone1.ZoneQSop(zones[i][0]);
+                zone1.ZoneQStr(zones[i][0]);
+                zone1.ZoneQI();
+                zone1.Zoneeta();
+                zone1.ZoneQb();
 
-            return true;
-        }
-        private static bool ZoneHV()
-        {
-            Zone zone1 = new Zone(zoneNum);
-            zone1.ZoneHT();
-            zone1.ZoneHV();
-            return true;
-        }
-        private static bool Zonetao()
-        {
-            Zone zone1 = new Zone(zoneNum);
-            zone1.ZoneHT();
-            zone1.ZoneHV();
-            zone1.Zonetao();
-            return true;
-        }
-        private static bool Zonethetai()
-        {
-            Zone zone1 = new Zone(zoneNum);
-            zone1.ZoneHT();
-            zone1.ZoneHV();
-            zone1.Zonetao();
-            zone1.Zonethetai();
-            return true;
-        }
-        private static bool ZoneQT()
-        {
-            Zone zone1 = new Zone(zoneNum);
-            zone1.ZoneHT();
-            zone1.ZoneHV();
-            zone1.Zonetao();
-            zone1.Zonethetai();
-            zone1.ZoneQT();
-            return true;
-        }
-        private static bool ZoneQV()
-        {
-            Zone zone1 = new Zone(zoneNum);
-            zone1.ZoneHT();
-            zone1.ZoneHV();
-            zone1.Zonetao();
-            zone1.Zonethetai();
-            zone1.ZoneQT();
-            zone1.ZoneQV();
-            return true;
-        }
-        private static bool ZoneQSop()
-        {
-            Zone zone1 = new Zone(zoneNum);
-            zone1.ZoneHT();
-            zone1.ZoneHV();
-            zone1.Zonetao();
-            zone1.Zonethetai();
-            zone1.ZoneQT();
-            zone1.ZoneQV();
-            zone1.ZoneQSop(zoneNum);
-            return true;
-        }
-        private static bool ZoneQStr()
-        {
-            Zone zone1 = new Zone(zoneNum);
-            zone1.ZoneHT();
-            zone1.ZoneHV();
-            zone1.Zonetao();
-            zone1.Zonethetai();
-            zone1.ZoneQT();
-            zone1.ZoneQV();
-            zone1.ZoneQSop(zoneNum);
-            zone1.ZoneQStr(zoneNum);
-            return true;
-        }
-        private static bool ZoneQI()
-        {
-            Zone zone1 = new Zone(zoneNum);
-            zone1.ZoneHT();
-            zone1.ZoneHV();
-            zone1.Zonetao();
-            zone1.Zonethetai();
-            zone1.ZoneQT();
-            zone1.ZoneQV();
-            zone1.ZoneQSop(zoneNum);
-            zone1.ZoneQStr(zoneNum);
-            zone1.ZoneQI();
-            return true;
-        }
-        private static bool Zoneeta()
-        {
-            Zone zone1 = new Zone(zoneNum);
-            zone1.ZoneHT();
-            zone1.ZoneHV();
-            zone1.Zonetao();
-            zone1.Zonethetai();
-            zone1.ZoneQT();
-            zone1.ZoneQV();
-            zone1.ZoneQSop(zoneNum);
-            zone1.ZoneQStr(zoneNum);
-            zone1.ZoneQI();
-            zone1.Zoneeta();
-            return true;
-        }
-        private static bool ZoneQb()
-        {
-            Zone zone1 = new Zone(zoneNum);
-            zone1.ZoneHT();
-            zone1.ZoneHV();
-            zone1.Zonetao();
-            zone1.Zonethetai();
-            zone1.ZoneQT();
-            zone1.ZoneQV();
-            zone1.ZoneQSop(zoneNum);
-            zone1.ZoneQStr(zoneNum);
-            zone1.ZoneQI();
-            zone1.Zoneeta();
-            zone1.ZoneQb();
+
+                MessageBox.Show(zoneNum + ":  " + zone1.zoneName + ":  " + zone1.Qhb_a);
+            }
+
             return true;
         }
 

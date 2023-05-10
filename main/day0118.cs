@@ -111,361 +111,484 @@ namespace main
 
 
         public Zone(String zoneNum)
-        {       
-            //외기온도 가져오기
-            try
+        {
             {
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\OutairTemperature.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string[][] OTemp = Program.DB.getValue(DB.type.CalcDB, "OutairTemperature", "월,온도,일", "zoneNum='" + zoneNum + "'");
+                int i = -1;
+                while (++i < OTemp.Length)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
-                    {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                theta_e[n - 1] = Convert.ToDouble(token[1]);
-                                dmth[n - 1] = Convert.ToDouble(token[2]);
-                            }
-                            n++;
-
-                        }
-                    }
+                    int n = Convert.ToInt32(OTemp[i][0]) - 1;
+                    theta_e[n] = Convert.ToDouble(OTemp[i][1]);
+                    dmth[n] = Convert.ToDouble(OTemp[i][2]);
                 }
+            }
 
 
-            }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+            //외기온도 가져오기
+            //try
+            //{
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\OutairTemperature.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    theta_e[n - 1] = Convert.ToDouble(token[1]);
+            //                    dmth[n - 1] = Convert.ToDouble(token[2]);
+            //                }
+            //                n++;
+
+            //            }
+            //        }
+            //    }
+
+
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //존 정보 가져오기
-            try
             {
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\Zonegeneral.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string[][] ZoneG = Program.DB.getValue(DB.type.CalcDB, "Zonegeneral", "zoneName,zoneUsage,zoneHC,θi_h_set,θi_c_set,Δθi_NA,Fx,Fx_fl,Fx_wl,θs_c,θi_h_min,θe_min,θSUP_Wi,Mode_night,Mode_we,twd_d,th_op_d_we,th_op_d,dwd_a,ZoneArea,zoneHeight,qI_p,qI_fac,Cwirk_A,VA_we,VA_wd,n50,e,f,Vmech_SUP_we,Vmech_SUP_wd,Vmech_ETA_we,Vmech_ETA_wd,ηV_mech,ηχV_mech,χi_c_set,χi_h_set,Vmech_SUP_z,Vmech_ETA_z,ρacp_a", "zoneNum='" + zoneNum + "'");
+
+                if (ZoneG.Length > 0)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
-                    {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                //zoneNum = token[1];
-                                zoneName = token[2];
-                                zoneUsage = token[3];
-                                zoneHC = token[4];
-                                theta_i_h_set = Convert.ToDouble(token[5]);
-                                theta_i_c_set = Convert.ToDouble(token[6]);
-                                dtheta_i_NA = Convert.ToDouble(token[7]);
-                                Fx = 0.8;
-                                Fx_Floor = Convert.ToDouble(token[9]);
-                                Fx_GWall = Convert.ToDouble(token[10]);
-                                theta_s_c = 18;
-                                theta_i_h_min = Convert.ToDouble(token[12]);
-                                theta_e_min = -12;
-                                theta_SUP_Wi = 18;
-                                Mode_night = token[15];
-                                Mode_we = token[16];
-                                twd_d = Convert.ToDouble(token[17]);
-                                th_op_d_we = 0;
-                                th_op_d = Convert.ToDouble(token[19]);
-                                dwd_a = Convert.ToDouble(token[20]);
-                                zoneArea = Convert.ToDouble(token[21]);
-                                zoneHeight = Convert.ToDouble(token[22]);
-                                qI_p = Convert.ToDouble(token[23]);
-                                qI_fac = Convert.ToDouble(token[24]);
-                                Cwirk_A = Convert.ToDouble(token[25]);
-                                VA_we = Convert.ToDouble(token[26]);
-                                VA_wd = Convert.ToDouble(token[27]);
-                                n50 = Convert.ToDouble(token[28]);
-                                e = Convert.ToDouble(token[29]);
-                                f = Convert.ToDouble(token[30]);
-                                Vmech_SUP_we = Convert.ToDouble(token[31]);
-                                Vmech_SUP_wd = Convert.ToDouble(token[32]);
-                                Vmech_ETA_we = Convert.ToDouble(token[33]);
-                                Vmech_ETA_wd = Convert.ToDouble(token[34]);
-                                eta_V_mech = Convert.ToDouble(token[35]);
-                                eta_χV_mech = Convert.ToDouble(token[36]);
-                                xi_c_set = Convert.ToDouble(token[37]);
-                                xi_h_set = Convert.ToDouble(token[38]);
-                                Vmech_SUP_z = Convert.ToDouble(token[39]);
-                                Vmech_ETA_z = Convert.ToDouble(token[40]);
-                                ρacp_a = 0.34;
-                            }
-                            n++;
-
-                        }
-                    }
+                    zoneName = ZoneG[0][0];
+                    zoneUsage = ZoneG[0][1];
+                    zoneHC = ZoneG[0][2];
+                    theta_i_h_set = Convert.ToDouble(ZoneG[0][3]);
+                    theta_i_c_set = Convert.ToDouble(ZoneG[0][4]);
+                    dtheta_i_NA = Convert.ToDouble(ZoneG[0][5]);
+                    Fx = Convert.ToDouble(ZoneG[0][6]);
+                    Fx_Floor = Convert.ToDouble(ZoneG[0][7]);
+                    Fx_GWall = Convert.ToDouble(ZoneG[0][8]);
+                    theta_s_c = Convert.ToDouble(ZoneG[0][9]);
+                    theta_i_h_min = Convert.ToDouble(ZoneG[0][10]);
+                    theta_e_min = Convert.ToDouble(ZoneG[0][11]);
+                    theta_SUP_Wi = Convert.ToDouble(ZoneG[0][12]);
+                    Mode_night = ZoneG[0][13];
+                    Mode_we = ZoneG[0][14];
+                    twd_d = Convert.ToDouble(ZoneG[0][15]);
+                    th_op_d_we = Convert.ToDouble(ZoneG[0][16]);
+                    th_op_d = Convert.ToDouble(ZoneG[0][17]);
+                    dwd_a = Convert.ToDouble(ZoneG[0][18]);
+                    zoneArea = Convert.ToDouble(ZoneG[0][19]);
+                    zoneHeight = Convert.ToDouble(ZoneG[0][20]);
+                    qI_p = Convert.ToDouble(ZoneG[0][21]);
+                    qI_fac = Convert.ToDouble(ZoneG[0][22]);
+                    Cwirk_A = Convert.ToDouble(ZoneG[0][23]);
+                    VA_we = Convert.ToDouble(ZoneG[0][24]);
+                    VA_wd = Convert.ToDouble(ZoneG[0][25]);
+                    n50 = Convert.ToDouble(ZoneG[0][26]);
+                    e = Convert.ToDouble(ZoneG[0][27]);
+                    f = Convert.ToDouble(ZoneG[0][28]);
+                    Vmech_SUP_we = Convert.ToDouble(ZoneG[0][29]);
+                    Vmech_SUP_wd = Convert.ToDouble(ZoneG[0][30]);
+                    Vmech_ETA_we = Convert.ToDouble(ZoneG[0][31]);
+                    Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][32]);
+                    eta_V_mech = Convert.ToDouble(ZoneG[0][33]);
+                    eta_χV_mech = Convert.ToDouble(ZoneG[0][34]);
+                    xi_c_set = Convert.ToDouble(ZoneG[0][35]);
+                    xi_h_set = Convert.ToDouble(ZoneG[0][36]);
+                    Vmech_SUP_z = Convert.ToDouble(ZoneG[0][37]);
+                    Vmech_ETA_z = Convert.ToDouble(ZoneG[0][38]);
+                    ρacp_a = Convert.ToDouble(ZoneG[0][39]);
                 }
+            }
+
+            //try
+            //{
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\Zonegeneral.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    //zoneNum = token[1];
+            //                    zoneName = token[2];
+            //                    zoneUsage = token[3];
+            //                    zoneHC = token[4];
+            //                    theta_i_h_set = Convert.ToDouble(token[5]);
+            //                    theta_i_c_set = Convert.ToDouble(token[6]);
+            //                    dtheta_i_NA = Convert.ToDouble(token[7]);
+            //                    Fx = 0.8;
+            //                    Fx_Floor = Convert.ToDouble(token[9]);
+            //                    Fx_GWall = Convert.ToDouble(token[10]);
+            //                    theta_s_c = 18;
+            //                    theta_i_h_min = Convert.ToDouble(token[12]);
+            //                    theta_e_min = -12;
+            //                    theta_SUP_Wi = 18;
+            //                    Mode_night = token[15];
+            //                    Mode_we = token[16];
+            //                    twd_d = Convert.ToDouble(token[17]);
+            //                    th_op_d_we = 0;
+            //                    th_op_d = Convert.ToDouble(token[19]);
+            //                    dwd_a = Convert.ToDouble(token[20]);
+            //                    zoneArea = Convert.ToDouble(token[21]);
+            //                    zoneHeight = Convert.ToDouble(token[22]);
+            //                    qI_p = Convert.ToDouble(token[23]);
+            //                    qI_fac = Convert.ToDouble(token[24]);
+            //                    Cwirk_A = Convert.ToDouble(token[25]);
+            //                    VA_we = Convert.ToDouble(token[26]);
+            //                    VA_wd = Convert.ToDouble(token[27]);
+            //                    n50 = Convert.ToDouble(token[28]);
+            //                    e = Convert.ToDouble(token[29]);
+            //                    f = Convert.ToDouble(token[30]);
+            //                    Vmech_SUP_we = Convert.ToDouble(token[31]);
+            //                    Vmech_SUP_wd = Convert.ToDouble(token[32]);
+            //                    Vmech_ETA_we = Convert.ToDouble(token[33]);
+            //                    Vmech_ETA_wd = Convert.ToDouble(token[34]);
+            //                    eta_V_mech = Convert.ToDouble(token[35]);
+            //                    eta_χV_mech = Convert.ToDouble(token[36]);
+            //                    xi_c_set = Convert.ToDouble(token[37]);
+            //                    xi_h_set = Convert.ToDouble(token[38]);
+            //                    Vmech_SUP_z = Convert.ToDouble(token[39]);
+            //                    Vmech_ETA_z = Convert.ToDouble(token[40]);
+            //                    ρacp_a = 0.34;
+            //                }
+            //                n++;
+
+            //            }
+            //        }
+            //    }
 
 
-            }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //존 외벽 정보 가져오기
-            try
             {
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneWall.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string[][] ZoneW = Program.DB.getValue(DB.type.CalcDB, "ZoneWall", "Area,Ueff,α,DirectInDirect", "zoneNum='" + zoneNum + "'");
+                int i = -1;
+                while (++i < ZoneW.Length)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
-                    {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                Wall wall = new Wall(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
-                                zoneWall.Add(wall);
-                            }
-                            n++;
-
-                        }
-                    }
+                    Wall wall = new Wall(Convert.ToDouble(ZoneW[i][0]), Convert.ToDouble(ZoneW[i][1]), Convert.ToDouble(ZoneW[i][2]), ZoneW[i][3]);
+                    zoneWall.Add(wall);
                 }
+            }
+            //try
+            //{
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneWall.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    Wall wall = new Wall(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
+            //                    zoneWall.Add(wall);
+            //                }
+            //                n++;
+
+            //            }
+            //        }
+            //    }
 
 
-            }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //존 지붕 정보 가져오기
-            try
             {
-
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneRoof.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string[][] ZoneR = Program.DB.getValue(DB.type.CalcDB, "ZoneRoof", "Area,Ueff,α,DirectInDirect", "zoneNum='" + zoneNum + "'");
+                int i = -1;
+                while (++i < ZoneR.Length)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
-                    {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                Roof roof = new Roof(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
-                                zoneRoof.Add(roof);
-                            }
-                            n++;
-
-                        }
-                    }
+                    Roof roof = new Roof(Convert.ToDouble(ZoneR[i][0]), Convert.ToDouble(ZoneR[i][1]), Convert.ToDouble(ZoneR[i][2]), ZoneR[i][3]);
+                    zoneRoof.Add(roof);
                 }
+            }
+            //try
+            //{
+
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneRoof.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    Roof roof = new Roof(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
+            //                    zoneRoof.Add(roof);
+            //                }
+            //                n++;
+
+            //            }
+            //        }
+            //    }
 
 
-            }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //존 바닥 정보 가져오기
-            try
             {
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneFloor.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string[][] ZoneF = Program.DB.getValue(DB.type.CalcDB, "ZoneFloor", "Area,Ueff", "zoneNum='" + zoneNum + "'");
+                int i = -1;
+                while (++i < ZoneF.Length)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
-                    {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                Floor floor = new Floor(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]));
-                                zoneFloor.Add(floor);
-                            }
-                            n++;
-
-                        }
-                    }
+                    Floor floor = new Floor(Convert.ToDouble(ZoneF[i][0]), Convert.ToDouble(ZoneF[i][1]));
+                    zoneFloor.Add(floor);
                 }
+            }
+            //try
+            //{
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneFloor.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    Floor floor = new Floor(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]));
+            //                    zoneFloor.Add(floor);
+            //                }
+            //                n++;
+
+            //            }
+            //        }
+            //    }
 
 
-            }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //존 지하벽 정보 가져오기
-            try
             {
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneGWall.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string[][] ZoneG = Program.DB.getValue(DB.type.CalcDB, "ZoneGWall", "Area,Ueff", "zoneNum='" + zoneNum + "'");
+                int i = -1;
+                while (++i < ZoneG.Length)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
-                    {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                GWall gwall = new GWall(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]));
-                                zoneGWall.Add(gwall);
-                            }
-                            n++;
-
-                        }
-                    }
+                    GWall gwall = new GWall(Convert.ToDouble(ZoneG[i][0]), Convert.ToDouble(ZoneG[i][1]));
+                    zoneGWall.Add(gwall);
                 }
+            }
+            //try
+            //{
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneGWall.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    GWall gwall = new GWall(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]));
+            //                    zoneGWall.Add(gwall);
+            //                }
+            //                n++;
+
+            //            }
+            //        }
+            //    }
 
 
-            }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //존 문 정보 가져오기
-            try
             {
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneDoor.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string[][] ZoneD = Program.DB.getValue(DB.type.CalcDB, "ZoneDoor", "Area,Ueff,α,DirectInDirect", "zoneNum='" + zoneNum + "'");
+                int i = -1;
+                while (++i < ZoneD.Length)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
-                    {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                Door door = new Door(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
-                                zoneDoor.Add(door);
-                            }
-                            n++;
-
-                        }
-                    }
+                    Door door = new Door(Convert.ToDouble(ZoneD[i][0]), Convert.ToDouble(ZoneD[i][1]), Convert.ToDouble(ZoneD[i][2]), ZoneD[i][3]);
+                    zoneDoor.Add(door);
                 }
+            }
+            //try
+            //{
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneDoor.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    Door door = new Door(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
+            //                    zoneDoor.Add(door);
+            //                }
+            //                n++;
+
+            //            }
+            //        }
+            //    }
 
 
-            }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //존 창문 정보 가져오기
-            try
             {
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneWin.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string[][] ZoneWin = Program.DB.getValue(DB.type.CalcDB, "ZoneWin", "Area,Uvalue,Uinst,DirectInDirect,Ff,g,τ,gtot,τtot", "zoneNum='" + zoneNum + "'");
+                int i = -1;
+                while (++i < ZoneWin.Length)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
-                    {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                Window win = new Window(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[3]), token[4], Convert.ToDouble(token[6]), Convert.ToDouble(token[7]), Convert.ToDouble(token[8]), Convert.ToDouble(token[9]), Convert.ToDouble(token[10]));
-                                zoneWin.Add(win);
-                            }
-                            n++;
-
-                        }
-                    }
+                    Window win = new Window(Convert.ToDouble(ZoneWin[i][0]), Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][2]), ZoneWin[i][3], Convert.ToDouble(ZoneWin[i][4]), Convert.ToDouble(ZoneWin[i][5]), Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin[i][7]), Convert.ToDouble(ZoneWin[i][8]));
+                    zoneWin.Add(win);
                 }
+            }
+            //try
+            //{
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneWin.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    Window win = new Window(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[3]), token[4], Convert.ToDouble(token[6]), Convert.ToDouble(token[7]), Convert.ToDouble(token[8]), Convert.ToDouble(token[9]), Convert.ToDouble(token[10]));
+            //                    zoneWin.Add(win);
+            //                }
+            //                n++;
+
+            //            }
+            //        }
+            //    }
 
 
-            }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //존 커튼월 정보 가져오기
-            try
             {
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneCW.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string[][] ZoneCW = Program.DB.getValue(DB.type.CalcDB, "ZoneCW", "Area_g,Uvalue_g,Ff_g,g_g,gtot_g,τ_g,τtot_g,Area_p,Uvalue_p,α_p,Area_d,Uvalue_d,Ff_d,g_d,τ_d,Area_tot,Uinst", "zoneNum='" + zoneNum + "'");
+                int i = -1;
+                while (++i < ZoneCW.Length)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
-                    {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                CW cw = new CW(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[3]), Convert.ToDouble(token[4]), Convert.ToDouble(token[5]), Convert.ToDouble(token[6]), Convert.ToDouble(token[7]), Convert.ToDouble(token[8]), Convert.ToDouble(token[9]), Convert.ToDouble(token[10]), Convert.ToDouble(token[11]), Convert.ToDouble(token[12]), Convert.ToDouble(token[13]), Convert.ToDouble(token[14]), Convert.ToDouble(token[15]), Convert.ToDouble(token[16]), Convert.ToDouble(token[17]));
-                                zoneCW.Add(cw);
-                            }
-                            n++;
-
-                        }
-                    }
+                    CW cw = new CW(Convert.ToDouble(ZoneCW[i][0]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(ZoneCW[i][2]), Convert.ToDouble(ZoneCW[i][3]), Convert.ToDouble(ZoneCW[i][4]), Convert.ToDouble(ZoneCW[i][5]), Convert.ToDouble(ZoneCW[i][6]), Convert.ToDouble(ZoneCW[i][7]), Convert.ToDouble(ZoneCW[i][8]), Convert.ToDouble(ZoneCW[i][9]), Convert.ToDouble(ZoneCW[i][10]), Convert.ToDouble(ZoneCW[i][11]), Convert.ToDouble(ZoneCW[i][12]), Convert.ToDouble(ZoneCW[i][13]), Convert.ToDouble(ZoneCW[i][14]), Convert.ToDouble(ZoneCW[i][15]), Convert.ToDouble(ZoneCW[i][16]));
+                    zoneCW.Add(cw);
                 }
+            }
+            //try
+            //{
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneCW.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    CW cw = new CW(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[3]), Convert.ToDouble(token[4]), Convert.ToDouble(token[5]), Convert.ToDouble(token[6]), Convert.ToDouble(token[7]), Convert.ToDouble(token[8]), Convert.ToDouble(token[9]), Convert.ToDouble(token[10]), Convert.ToDouble(token[11]), Convert.ToDouble(token[12]), Convert.ToDouble(token[13]), Convert.ToDouble(token[14]), Convert.ToDouble(token[15]), Convert.ToDouble(token[16]), Convert.ToDouble(token[17]));
+            //                    zoneCW.Add(cw);
+            //                }
+            //                n++;
+
+            //            }
+            //        }
+            //    }
 
 
-            }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
         }
 
   
@@ -726,238 +849,396 @@ namespace main
         public void ZoneQSop(String zoneNum)// 불투명 일사 계산
         {
             //외벽 일사 계산
-            try
+            double[,] zoneWalls_Is = new double[zoneWall.Count, 12];
+            double[,] zoneWalls_Qssink = new double[zoneWall.Count, 12];
+            double[,] zoneWalls_Qssource = new double[zoneWall.Count, 12];
+
             {
-                String line = "";
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneWall_Solar.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                int i = -1;
+
+                string[][] ZoneW_Name = Program.DB.getValue(DB.type.CalcDB, "ZoneWall", "Name", "zoneNum='" + zoneNum + "'");
+
+                while (++i < zoneWall.Count)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    Wall zonewall = (Wall)zoneWall[i];
+                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneWall_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneW_Name[i][0] + "'");
+
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        double[,] zoneWalls_Is = new double[zoneWall.Count, 12];
-                        double[,] zoneWalls_Qssink = new double[zoneWall.Count, 12];
-                        double[,] zoneWalls_Qssource = new double[zoneWall.Count, 12];
-                        int n = 0;
-                        while (!sr.EndOfStream)
+                        zoneWalls_Is[i, mth] = Convert.ToDouble(token[mth][0]);
+                        QSopCalc qsopcalc = new QSopCalc();
+                        if (zonewall.DiIndi() == "Indirection")
+                        {   //직접외기 벽만 일사 계산      
+                        }
+                        else
                         {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
+                            if (0.5 * 4.5 * 10 >= zonewall.α() * zoneWalls_Is[i, mth])
                             {
+                                zoneWalls_Qssink[i, mth] = qsopcalc.Calc(zonewall.Ueff(), zonewall.Area(), zonewall.α(), zoneWalls_Is[i, mth]);
+                                zoneWalls_Qssource[i, mth] = 0;
                             }
                             else
                             {
-                                //두번째 행부터 계산 	  
-                                Wall zonewall = (Wall)zoneWall[n - 1];
-                                for (int mth = 0; mth < 12; mth++)
-                                {
-                                    zoneWalls_Is[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
-                                    QSopCalc qsopcalc = new QSopCalc();
-                                    if (zonewall.DiIndi() == "Indirection")
-                                    {   //직접외기 벽만 일사 계산      
-                                    }
-                                    else
-                                    {
-                                        if (0.5 * 4.5 * 10 >= zonewall.α() * zoneWalls_Is[n - 1, mth])
-                                        {
-                                            zoneWalls_Qssink[n - 1, mth] = qsopcalc.Calc(zonewall.Ueff(), zonewall.Area(), zonewall.α(), zoneWalls_Is[n - 1, mth]);
-                                            zoneWalls_Qssource[n - 1, mth] = 0;
-                                        }
-                                        else
-                                        {
-                                            zoneWalls_Qssink[n - 1, mth] = 0;
-                                            zoneWalls_Qssource[n - 1, mth] = qsopcalc.Calc(zonewall.Ueff(), zonewall.Area(), zonewall.α(), zoneWalls_Is[n - 1, mth]);
-                                        }
-                                    }
-                                    QSopsink_Wall[mth] += zoneWalls_Qssink[n - 1, mth];
-                                    QSopsource_Wall[mth] += zoneWalls_Qssource[n - 1, mth];
-
-                                }
+                                zoneWalls_Qssink[i, mth] = 0;
+                                zoneWalls_Qssource[i, mth] = qsopcalc.Calc(zonewall.Ueff(), zonewall.Area(), zonewall.α(), zoneWalls_Is[i, mth]);
                             }
-
-                            n++;
                         }
-
+                        QSopsink_Wall[mth] += zoneWalls_Qssink[i, mth];
+                        QSopsource_Wall[mth] += zoneWalls_Qssource[i, mth];
 
                     }
                 }
             }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+
+            //try
+            //{
+            //    String line = "";
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneWall_Solar.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            double[,] zoneWalls_Is = new double[zoneWall.Count, 12];
+            //            double[,] zoneWalls_Qssink = new double[zoneWall.Count, 12];
+            //            double[,] zoneWalls_Qssource = new double[zoneWall.Count, 12];
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    //두번째 행부터 계산 	  
+            //                    Wall zonewall = (Wall)zoneWall[n - 1];
+            //                    for (int mth = 0; mth < 12; mth++)
+            //                    {
+            //                        zoneWalls_Is[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
+            //                        QSopCalc qsopcalc = new QSopCalc();
+            //                        if (zonewall.DiIndi() == "Indirection")
+            //                        {   //직접외기 벽만 일사 계산      
+            //                        }
+            //                        else
+            //                        {
+            //                            if (0.5 * 4.5 * 10 >= zonewall.α() * zoneWalls_Is[n - 1, mth])
+            //                            {
+            //                                zoneWalls_Qssink[n - 1, mth] = qsopcalc.Calc(zonewall.Ueff(), zonewall.Area(), zonewall.α(), zoneWalls_Is[n - 1, mth]);
+            //                                zoneWalls_Qssource[n - 1, mth] = 0;
+            //                            }
+            //                            else
+            //                            {
+            //                                zoneWalls_Qssink[n - 1, mth] = 0;
+            //                                zoneWalls_Qssource[n - 1, mth] = qsopcalc.Calc(zonewall.Ueff(), zonewall.Area(), zonewall.α(), zoneWalls_Is[n - 1, mth]);
+            //                            }
+            //                        }
+            //                        QSopsink_Wall[mth] += zoneWalls_Qssink[n - 1, mth];
+            //                        QSopsource_Wall[mth] += zoneWalls_Qssource[n - 1, mth];
+
+            //                    }
+            //                }
+
+            //                n++;
+            //            }
+
+
+            //        }
+            //    }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //지붕 일사 계산
-            try
+            double[,] zoneRoofs_Is = new double[zoneRoof.Count, 12];
+            double[,] zoneRoofs_Qssink = new double[zoneRoof.Count, 12];
+            double[,] zoneRoofs_Qssource = new double[zoneRoof.Count, 12];
+
             {
-                String line = "";
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneRoof_Solar.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+
+                int i = -1;
+
+                string[][] ZoneR_Name = Program.DB.getValue(DB.type.CalcDB, "ZoneRoof", "Name", "zoneNum='" + zoneNum + "'");
+
+                while (++i < zoneRoof.Count)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    Roof zoneroof = (Roof)zoneRoof[i];
+                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneRoof_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneR_Name[i][0] + "'");
+
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        double[,] zoneRoofs_Is = new double[zoneRoof.Count, 12];
-                        double[,] zoneRoofs_Qssink = new double[zoneRoof.Count, 12];
-                        double[,] zoneRoofs_Qssource = new double[zoneRoof.Count, 12];
-                        int n = 0;
-                        while (!sr.EndOfStream)
+                        zoneRoofs_Is[i, mth] = Convert.ToDouble(token[mth][0]);
+                        QSopCalc qsopcalc = new QSopCalc();
+                        if (zoneroof.DiIndi() == "Indirection")
+                        {   //직접외기 지붕만 일사 계산      
+                        }
+                        else
                         {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
+                            if (0.5 * 4.5 * 10 >= zoneroof.α() * zoneRoofs_Is[i, mth])
                             {
+                                zoneRoofs_Qssink[i, mth] = qsopcalc.Calc(zoneroof.Ueff(), zoneroof.Area(), zoneroof.α(), zoneRoofs_Is[i, mth]);
+                                zoneRoofs_Qssource[i, mth] = 0;
                             }
                             else
                             {
-                                Roof zoneroof = (Roof)zoneRoof[n - 1];
-                                for (int mth = 0; mth < 12; mth++)
-                                {
-                                    zoneRoofs_Is[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
-                                    QSopCalc qsopcalc = new QSopCalc();
-                                    if (zoneroof.DiIndi() == "Indirection")
-                                    {   //직접외기 지붕만 일사 계산      
-                                    }
-                                    else
-                                    {
-                                        if (0.5 * 4.5 * 10 >= zoneroof.α() * zoneRoofs_Is[n - 1, mth])
-                                        {
-                                            zoneRoofs_Qssink[n - 1, mth] = qsopcalc.Calc(zoneroof.Ueff(), zoneroof.Area(), zoneroof.α(), zoneRoofs_Is[n - 1, mth]);
-                                            zoneRoofs_Qssource[n - 1, mth] = 0;
-                                        }
-                                        else
-                                        {
-                                            zoneRoofs_Qssink[n - 1, mth] = 0;
-                                            zoneRoofs_Qssource[n - 1, mth] = qsopcalc.Calc(zoneroof.Ueff(), zoneroof.Area(), zoneroof.α(), zoneRoofs_Is[n - 1, mth]);
-                                        }
-                                    }
-                                    QSopsink_Roof[mth] += zoneRoofs_Qssink[n - 1, mth];
-                                    QSopsource_Roof[mth] += zoneRoofs_Qssource[n - 1, mth];
-                                }
+                                zoneRoofs_Qssink[i, mth] = 0;
+                                zoneRoofs_Qssource[i, mth] = qsopcalc.Calc(zoneroof.Ueff(), zoneroof.Area(), zoneroof.α(), zoneRoofs_Is[i, mth]);
                             }
-                            n++;
                         }
-
-
+                        QSopsink_Roof[mth] += zoneRoofs_Qssink[i, mth];
+                        QSopsource_Roof[mth] += zoneRoofs_Qssource[i, mth];
                     }
                 }
             }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+
+
+            //try
+            //{
+            //    String line = "";
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneRoof_Solar.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            double[,] zoneRoofs_Is = new double[zoneRoof.Count, 12];
+            //            double[,] zoneRoofs_Qssink = new double[zoneRoof.Count, 12];
+            //            double[,] zoneRoofs_Qssource = new double[zoneRoof.Count, 12];
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    Roof zoneroof = (Roof)zoneRoof[n - 1];
+            //                    for (int mth = 0; mth < 12; mth++)
+            //                    {
+            //                        zoneRoofs_Is[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
+            //                        QSopCalc qsopcalc = new QSopCalc();
+            //                        if (zoneroof.DiIndi() == "Indirection")
+            //                        {   //직접외기 지붕만 일사 계산      
+            //                        }
+            //                        else
+            //                        {
+            //                            if (0.5 * 4.5 * 10 >= zoneroof.α() * zoneRoofs_Is[n - 1, mth])
+            //                            {
+            //                                zoneRoofs_Qssink[n - 1, mth] = qsopcalc.Calc(zoneroof.Ueff(), zoneroof.Area(), zoneroof.α(), zoneRoofs_Is[n - 1, mth]);
+            //                                zoneRoofs_Qssource[n - 1, mth] = 0;
+            //                            }
+            //                            else
+            //                            {
+            //                                zoneRoofs_Qssink[n - 1, mth] = 0;
+            //                                zoneRoofs_Qssource[n - 1, mth] = qsopcalc.Calc(zoneroof.Ueff(), zoneroof.Area(), zoneroof.α(), zoneRoofs_Is[n - 1, mth]);
+            //                            }
+            //                        }
+            //                        QSopsink_Roof[mth] += zoneRoofs_Qssink[n - 1, mth];
+            //                        QSopsource_Roof[mth] += zoneRoofs_Qssource[n - 1, mth];
+            //                    }
+            //                }
+            //                n++;
+            //            }
+
+
+            //        }
+            //    }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //출입문 일사 계산
-            try
+            double[,] zoneDoors_Is = new double[zoneDoor.Count, 12];
+            double[,] zoneDoors_Qssink = new double[zoneDoor.Count, 12];
+            double[,] zoneDoors_Qssource = new double[zoneDoor.Count, 12];
+
             {
-                String line = "";
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneDoor_Solar.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                int i = -1;
+
+                string[][] ZoneD_Name = Program.DB.getValue(DB.type.CalcDB, "ZoneDoor", "Name", "zoneNum='" + zoneNum + "'");
+
+                while (++i < zoneDoor.Count)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    Door zonedoor = (Door)zoneDoor[i];
+                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneDoor_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneD_Name[i][0] + "'");
+
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        double[,] zoneDoors_Is = new double[zoneDoor.Count,12];
-                        double[,] zoneDoors_Qssink = new double[zoneDoor.Count,12];
-                        double[,] zoneDoors_Qssource = new double[zoneDoor.Count,12];
-                        int n = 0;
-                        while (!sr.EndOfStream)
+                        zoneDoors_Is[i, mth] = Convert.ToDouble(token[mth][0]);
+                        QSopCalc qsopcalc = new QSopCalc();
+                        if (zonedoor.DiIndi() == "Indirection")
+                        {   //직접외기 벽만 일사 계산      
+                        }
+                        else
                         {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
+                            if (0.5 * 4.5 * 10 >= zonedoor.α() * zoneDoors_Is[i, mth])
                             {
+                                zoneDoors_Qssink[i, mth] = qsopcalc.Calc(zonedoor.Ueff(), zonedoor.Area(), zonedoor.α(), zoneDoors_Is[i, mth]);
+                                zoneDoors_Qssource[i, mth] = 0;
                             }
                             else
                             {
-                                Door zonedoor = (Door)zoneDoor[n - 1];
-                                for (int mth = 0; mth < 12; mth++)
-                                {
-                                    zoneDoors_Is[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
-                                    QSopCalc qsopcalc = new QSopCalc();
-                                    if (zonedoor.DiIndi()=="Indirection")
-                                    {   //직접외기 벽만 일사 계산      
-                                    }
-                                    else
-                                    {
-                                        if (0.5 * 4.5 * 10 >= zonedoor.α() * zoneDoors_Is[n - 1,mth])
-                                        {
-                                            zoneDoors_Qssink[n - 1,mth] = qsopcalc.Calc(zonedoor.Ueff(), zonedoor.Area(), zonedoor.α(), zoneDoors_Is[n - 1,mth]);
-                                            zoneDoors_Qssource[n - 1,mth] = 0;
-                                        }
-                                        else
-                                        {
-                                            zoneDoors_Qssink[n - 1,mth] = 0;
-                                            zoneDoors_Qssource[n- 1,mth] = qsopcalc.Calc(zonedoor.Ueff(), zonedoor.Area(), zonedoor.α(), zoneDoors_Is[n - 1,mth]);
-                                        }
-                                    }
-                                    QSopsink_Door[mth] += zoneDoors_Qssink[n - 1,mth];
-                                    QSopsource_Door[mth] += zoneDoors_Qssource[n - 1,mth];
-                                }
+                                zoneDoors_Qssink[i, mth] = 0;
+                                zoneDoors_Qssource[i, mth] = qsopcalc.Calc(zonedoor.Ueff(), zonedoor.Area(), zonedoor.α(), zoneDoors_Is[i, mth]);
                             }
-                            n++;
                         }
+                        QSopsink_Door[mth] += zoneDoors_Qssink[i, mth];
+                        QSopsource_Door[mth] += zoneDoors_Qssource[i, mth];
                     }
                 }
             }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+
+            //try
+            //{
+            //    String line = "";
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneDoor_Solar.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            double[,] zoneDoors_Is = new double[zoneDoor.Count,12];
+            //            double[,] zoneDoors_Qssink = new double[zoneDoor.Count,12];
+            //            double[,] zoneDoors_Qssource = new double[zoneDoor.Count,12];
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    Door zonedoor = (Door)zoneDoor[n - 1];
+            //                    for (int mth = 0; mth < 12; mth++)
+            //                    {
+            //                        zoneDoors_Is[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
+            //                        QSopCalc qsopcalc = new QSopCalc();
+            //                        if (zonedoor.DiIndi()=="Indirection")
+            //                        {   //직접외기 벽만 일사 계산      
+            //                        }
+            //                        else
+            //                        {
+            //                            if (0.5 * 4.5 * 10 >= zonedoor.α() * zoneDoors_Is[n - 1,mth])
+            //                            {
+            //                                zoneDoors_Qssink[n - 1,mth] = qsopcalc.Calc(zonedoor.Ueff(), zonedoor.Area(), zonedoor.α(), zoneDoors_Is[n - 1,mth]);
+            //                                zoneDoors_Qssource[n - 1,mth] = 0;
+            //                            }
+            //                            else
+            //                            {
+            //                                zoneDoors_Qssink[n - 1,mth] = 0;
+            //                                zoneDoors_Qssource[n- 1,mth] = qsopcalc.Calc(zonedoor.Ueff(), zonedoor.Area(), zonedoor.α(), zoneDoors_Is[n - 1,mth]);
+            //                            }
+            //                        }
+            //                        QSopsink_Door[mth] += zoneDoors_Qssink[n - 1,mth];
+            //                        QSopsource_Door[mth] += zoneDoors_Qssource[n - 1,mth];
+            //                    }
+            //                }
+            //                n++;
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //커튼월 패널 일사 계산
-            try
-            {
-                String line = "";
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneCW_Solar.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
-                {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
-                    {
-                        int n = 0;
-                        double[,] zoneCWs_Is = new double[zoneCW.Count,12];
-                        double[,] zoneCWs_Qssink = new double[zoneCW.Count,12];
-                        double[,] zoneCWs_Qssource = new double[zoneCW.Count,12];
+            double[,] zoneCWs_Is = new double[zoneCW.Count, 12];
+            double[,] zoneCWs_Qssink = new double[zoneCW.Count, 12];
+            double[,] zoneCWs_Qssource = new double[zoneCW.Count, 12];
 
-                        while (!sr.EndOfStream)
+            {
+                int i = -1;
+
+                string[][] ZoneCW_Name = Program.DB.getValue(DB.type.CalcDB, "ZoneCW", "Name", "zoneNum='" + zoneNum + "'");
+
+                while (++i < zoneCW.Count)
+                {
+                    CW zonecw = (CW)zoneCW[i];
+                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneCW_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
+
+                    for (int mth = 0; mth < 12; mth++)
+                    {
+                        zoneCWs_Is[i, mth] = Convert.ToDouble(token[mth][0]);
+                        QSopCalc qsopcalc = new QSopCalc();
+                        if (0.5 * 4.5 * 10 >= zonecw.α_p() * zoneCWs_Is[i, mth])
                         {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                CW zonecw = (CW)zoneCW[n - 1];
-                                for (int mth = 0; mth < 12; mth++)
-                                {
-                                    zoneCWs_Is[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
-                                    QSopCalc qsopcalc = new QSopCalc();
-                                    if (0.5 * 4.5 * 10 >= zonecw.α_p() * zoneCWs_Is[n - 1,mth])
-                                    {
-                                        zoneCWs_Qssink[n - 1,mth] = qsopcalc.Calc(zonecw.Uvalue_p(), zonecw.Area_p(), zonecw.α_p(), zoneCWs_Is[n - 1,mth]);
-                                        zoneCWs_Qssource[n - 1,mth] = 0;
-                                    }
-                                    else
-                                    {
-                                        zoneCWs_Qssink[n - 1,mth] = 0;
-                                        zoneCWs_Qssource[n - 1,mth] = qsopcalc.Calc(zonecw.Uvalue_p(), zonecw.Area_p(), zonecw.α_p(), zoneCWs_Is[n - 1,mth]);
-                                    }
-                                    QSopsink_CW_p[mth] += zoneCWs_Qssink[n - 1,mth];
-                                    QSopsource_CW_p[mth] += zoneCWs_Qssource[n - 1,mth];
-                                }
-                            }
-                            n++;
+                            zoneCWs_Qssink[i, mth] = qsopcalc.Calc(zonecw.Uvalue_p(), zonecw.Area_p(), zonecw.α_p(), zoneCWs_Is[i, mth]);
+                            zoneCWs_Qssource[i, mth] = 0;
                         }
+                        else
+                        {
+                            zoneCWs_Qssink[i, mth] = 0;
+                            zoneCWs_Qssource[i, mth] = qsopcalc.Calc(zonecw.Uvalue_p(), zonecw.Area_p(), zonecw.α_p(), zoneCWs_Is[i, mth]);
+                        }
+                        QSopsink_CW_p[mth] += zoneCWs_Qssink[i, mth];
+                        QSopsource_CW_p[mth] += zoneCWs_Qssource[i, mth];
                     }
                 }
             }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+
+
+            //try
+            //{
+            //    String line = "";
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneCW_Solar.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            double[,] zoneCWs_Is = new double[zoneCW.Count,12];
+            //            double[,] zoneCWs_Qssink = new double[zoneCW.Count,12];
+            //            double[,] zoneCWs_Qssource = new double[zoneCW.Count,12];
+
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    CW zonecw = (CW)zoneCW[n - 1];
+            //                    for (int mth = 0; mth < 12; mth++)
+            //                    {
+            //                        zoneCWs_Is[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
+            //                        QSopCalc qsopcalc = new QSopCalc();
+            //                        if (0.5 * 4.5 * 10 >= zonecw.α_p() * zoneCWs_Is[n - 1,mth])
+            //                        {
+            //                            zoneCWs_Qssink[n - 1,mth] = qsopcalc.Calc(zonecw.Uvalue_p(), zonecw.Area_p(), zonecw.α_p(), zoneCWs_Is[n - 1,mth]);
+            //                            zoneCWs_Qssource[n - 1,mth] = 0;
+            //                        }
+            //                        else
+            //                        {
+            //                            zoneCWs_Qssink[n - 1,mth] = 0;
+            //                            zoneCWs_Qssource[n - 1,mth] = qsopcalc.Calc(zonecw.Uvalue_p(), zonecw.Area_p(), zonecw.α_p(), zoneCWs_Is[n - 1,mth]);
+            //                        }
+            //                        QSopsink_CW_p[mth] += zoneCWs_Qssink[n - 1,mth];
+            //                        QSopsource_CW_p[mth] += zoneCWs_Qssource[n - 1,mth];
+            //                    }
+            //                }
+            //                n++;
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //불투명일사 합계 계산
             for (int hc = 0; hc <= 1; hc++)
@@ -980,113 +1261,158 @@ namespace main
             double[,] zoneWins_a = new double[zoneWin.Count,12];
             double[,,] zoneWins_geff = new double[zoneWin.Count,2,12];
             double[,,] zoneWins_Qs = new double[zoneWin.Count,2,12];
+
+            string[][] ZoneWin_Name = Program.DB.getValue(DB.type.CalcDB, "ZoneWin", "Name", "zoneNum='" + zoneNum + "'");
+            string[][] ZoneCW_Name = Program.DB.getValue(DB.type.CalcDB, "ZoneCW", "Name", "zoneNum='" + zoneNum + "'");
+
             //존의 창별 일사정보 가져오기
-            try
             {
-                String line = "";
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneWin_Solar.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                int i = -1;
+
+                while (++i < zoneWin.Count)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneWin_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
+
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                Window zonewin = (Window)zoneWin[n - 1];
-                                for (int mth = 0; mth < 12; mth++)
-                                {
-                                    zoneWins_Is[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
-                                }
-                            }
-                            n++;
-                        }
+                        zoneWins_Is[i, mth] = Convert.ToDouble(token[mth][0]);
                     }
                 }
             }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+
+            //        try
+            //        {
+            //    String line = "";
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneWin_Solar.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    Window zonewin = (Window)zoneWin[n - 1];
+            //                    for (int mth = 0; mth < 12; mth++)
+            //                    {
+            //                        zoneWins_Is[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
+            //                    }
+            //                }
+            //                n++;
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //존의 창별 음영정보 가져오기
-            try
             {
-                String line = "";
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneWin_Shadow.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                int i = -1;
+
+                while (++i < zoneWin.Count)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneWin_Shadow", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
+
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                Window zonewin = (Window)zoneWin[n - 1];
-                                for (int mth = 0; mth < 12; mth++)
-                                {
-                                    zoneWins_Fs[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
-                                }
-                            }
-                            n++;
-                        }
+                        zoneWins_Fs[i, mth] = Convert.ToDouble(token[mth][0]);
                     }
                 }
-            }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
             }
 
+            //try
+            //{
+            //    String line = "";
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneWin_Shadow.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    Window zonewin = (Window)zoneWin[n - 1];
+            //                    for (int mth = 0; mth < 12; mth++)
+            //                    {
+            //                        zoneWins_Fs[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
+            //                    }
+            //                }
+            //                n++;
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
+
             //존의 창별 가동계수정보 가져오기
-            try
             {
-                String line = "";
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneWin_a.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                int i = -1;
+
+                while (++i < zoneWin.Count)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneWin_a", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
+
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                Window zonewin = (Window)zoneWin[n - 1];
-                                for (int mth = 0; mth < 12; mth++)
-                                {
-                                    zoneWins_a[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
-                                }
-                            }
-                            n++;
-                        }
+                        zoneWins_a[i, mth] = Convert.ToDouble(token[mth][0]);
                     }
                 }
             }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+            //try
+            //{
+            //    String line = "";
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneWin_a.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    Window zonewin = (Window)zoneWin[n - 1];
+            //                    for (int mth = 0; mth < 12; mth++)
+            //                    {
+            //                        zoneWins_a[n - 1, mth] = Convert.ToDouble(token[mth + 1]);
+            //                    }
+            //                }
+            //                n++;
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             // 창 일사 계산 
             for (int i = 0; i < zoneWin.Count; i++)
@@ -1122,112 +1448,151 @@ namespace main
             double[,] zoneCWs_d_Qs = new double[zoneWin.Count,12];
 
             //존의 커튼월별 일사정보 가져오기
-            try
             {
-                String line = "";
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneCW_Solar.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                int i = -1;
+
+                while (++i < zoneCW.Count)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneCW_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
+
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                CW zonecw = (CW)zoneCW[n - 1];
-                                for (int mth = 0; mth < 12; mth++)
-                                 {
-                                    zoneCWs_Is[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
-                                 }
-                            }
-                            n++;
-                        }
+                        zoneCWs_Is[i, mth] = Convert.ToDouble(token[mth][0]);
                     }
                 }
             }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+            //try
+            //{
+            //    String line = "";
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneCW_Solar.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    CW zonecw = (CW)zoneCW[n - 1];
+            //                    for (int mth = 0; mth < 12; mth++)
+            //                     {
+            //                        zoneCWs_Is[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
+            //                     }
+            //                }
+            //                n++;
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //존의 커튼월별 음영정보 가져오기
-            try
             {
-                String line = "";
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneCW_shadow.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                int i = -1;
+
+                while (++i < zoneCW.Count)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneCW_shadow", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
+
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                CW zonecw = (CW)zoneCW[n - 1];
-                                for (int mth = 0; mth < 12; mth++)
-                                 {
-                                   zoneCWs_Fs[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
-                                 }
-                             }
-                            n++;
+                        zoneCWs_Fs[i, mth] = Convert.ToDouble(token[mth][0]);
                     }
                 }
             }
-            }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+            //try
+            //{
+            //    String line = "";
+            //    string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneCW_shadow.csv";
+            //    using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //        {
+            //            int n = 0;
+            //            while (!sr.EndOfStream)
+            //            {
+            //                string[] token = sr.ReadLine().Split(',');
+            //                if (n == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    CW zonecw = (CW)zoneCW[n - 1];
+            //                    for (int mth = 0; mth < 12; mth++)
+            //                     {
+            //                       zoneCWs_Fs[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
+            //                     }
+            //                 }
+            //                n++;
+            //        }
+            //    }
+            //}
+            //}
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
 
             //존의 커튼월별 가동계수정보 가져오기
-            try
             {
-                String line = "";
-                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneCW_a.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                int i = -1;
+
+                while (++i < zoneCW.Count)
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneCW_a", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
+
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                CW zonecw = (CW)zoneCW[n - 1];
-                                for (int mth = 0; mth < 12; mth++)
-                                 {
-                                  zoneCWs_a[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
-                                 }
-                            }
-                            n++;
-                        }
+                        zoneCWs_a[i, mth] = Convert.ToDouble(token[mth][0]);
                     }
                 }
             }
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+//-            try
+//            {
+//                String line = "";
+//                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneCW_a.csv";
+//                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+//                {
+//                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+//                    {
+//                        int n = 0;
+//                        while (!sr.EndOfStream)
+//                        {
+//                            string[] token = sr.ReadLine().Split(',');
+//                            if (n == 0)
+//                            {
+//                            }
+//                            else
+//                            {
+//                                CW zonecw = (CW)zoneCW[n - 1];
+//                                for (int mth = 0; mth < 12; mth++)
+//                                 {
+//                                  zoneCWs_a[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
+//                                 }
+//                            }
+//                            n++;
+//                        }
+//                    }
+//                }
+//            }
+//            catch (IOException e)
+//            {
+//                if (e.Source != null)
+//                    Console.WriteLine("IOException source: {0}", e.Source);
+//                throw;
+//            }
 
             // 커튼월 일사 계산 
             for (int i = 0; i < zoneCW.Count; i++)
