@@ -22,7 +22,7 @@ namespace main
             FormDebug
         }
 
-        Form[] forms = new Form[] { new ConstructionWall(), new ConstructionRoof(), new ZoneUsage(), new FormDebug() };
+        Form[] forms = new Form[] { new ConstructionWall(), new ConstructionRoof(), new ZoneGeneral(), new FormDebug() };
 
         public MainContents()
         {

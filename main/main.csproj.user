@@ -7,7 +7,7 @@
     <Compile Update="contents\ConstructionWall.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\ZoneUsage.cs">
+    <Compile Update="contents\ZoneGeneral.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="FormDebug.cs">
