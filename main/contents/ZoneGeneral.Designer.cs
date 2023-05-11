@@ -176,6 +176,7 @@ namespace main.contents
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(977, 101);
             GeneralPanel.TabIndex = 17;
+            GeneralPanel.Paint += GeneralPanel_Paint;
 
             // 
             // textBox15
@@ -1324,7 +1325,7 @@ namespace main.contents
             panel1.Size = new Size(194, 356);
             panel1.TabIndex = 54;
             // 
-            // ZoneUsage
+            // ZoneGeneral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;

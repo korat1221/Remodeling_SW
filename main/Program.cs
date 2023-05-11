@@ -14,7 +14,6 @@ namespace main
 
         public static String? gPath;
         public static DB DB = new DB();
-        public static CALC CALC = new CALC();
 
         /// <summary>
         ///  The main entry point for the application.
@@ -38,8 +37,7 @@ namespace main
                 return;
             }
 #else
-            String str = System.Reflection.Assembly.GetEntryAssembly().Location;
-            gPath = str.Substring(0, str.IndexOf("\\main") + 1) + "asset\\";
+            gPath = "..\\..\\..\\..\\asset\\";
 #endif
 
             Directory.SetCurrentDirectory(gPath + "threejs\\");
@@ -77,9 +75,7 @@ namespace main
                 //            startInfo.FileName = "start.bat";
                 //          Process.Start(startInfo);
             }
-            Directory.SetCurrentDirectory(gPath);
-
-            CALC.init();
+            Directory.SetCurrentDirectory("..\\");
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.

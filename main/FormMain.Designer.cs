@@ -48,7 +48,7 @@
             // 
             splitContainer1.Panel2.Controls.Add(splitContainer2);
             splitContainer1.Size = new Size(1259, 513);
-            splitContainer1.SplitterDistance = 419;
+            splitContainer1.SplitterDistance = 94;
             splitContainer1.TabIndex = 0;
             // 
             // splitContainer2
@@ -57,8 +57,8 @@
             splitContainer2.Dock = DockStyle.Fill;
             splitContainer2.Location = new Point(0, 0);
             splitContainer2.Name = "splitContainer2";
-            splitContainer2.Size = new Size(836, 513);
-            splitContainer2.SplitterDistance = 588;
+            splitContainer2.Size = new Size(1161, 513);
+            splitContainer2.SplitterDistance = 147;
             splitContainer2.TabIndex = 0;
             // 
             // FormMain

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Documents\\GitHub\\Remodeling_SW\\main\\main.csproj": {}
+    "C:\\Users\\User\\Documents\\GitHub\\Remodeling_SW2222\\Remodeling_SW\\main\\main.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Documents\\GitHub\\Remodeling_SW\\main\\main.csproj": {
+    "C:\\Users\\User\\Documents\\GitHub\\Remodeling_SW2222\\Remodeling_SW\\main\\main.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\GitHub\\Remodeling_SW\\main\\main.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Documents\\GitHub\\Remodeling_SW2222\\Remodeling_SW\\main\\main.csproj",
         "projectName": "main",
-        "projectPath": "C:\\Users\\User\\Documents\\GitHub\\Remodeling_SW\\main\\main.csproj",
+        "projectPath": "C:\\Users\\User\\Documents\\GitHub\\Remodeling_SW2222\\Remodeling_SW\\main\\main.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\GitHub\\Remodeling_SW\\main\\obj\\",
+        "outputPath": "C:\\Users\\User\\Documents\\GitHub\\Remodeling_SW2222\\Remodeling_SW\\main\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
