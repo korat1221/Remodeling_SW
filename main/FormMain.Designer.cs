@@ -43,12 +43,13 @@
             splitContainer1.Dock = DockStyle.Fill;
             splitContainer1.Location = new Point(0, 0);
             splitContainer1.Name = "splitContainer1";
+            splitContainer1.Panel1MinSize = 200;
             // 
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(splitContainer2);
-            splitContainer1.Size = new Size(1259, 513);
-            splitContainer1.SplitterDistance = 94;
+            splitContainer1.Size = new Size(1259, 861);
+            splitContainer1.SplitterDistance = 225;
             splitContainer1.TabIndex = 0;
             // 
             // splitContainer2
@@ -57,15 +58,16 @@
             splitContainer2.Dock = DockStyle.Fill;
             splitContainer2.Location = new Point(0, 0);
             splitContainer2.Name = "splitContainer2";
-            splitContainer2.Size = new Size(1161, 513);
-            splitContainer2.SplitterDistance = 147;
+            splitContainer2.Panel1MinSize = 800;
+            splitContainer2.Size = new Size(1030, 861);
+            splitContainer2.SplitterDistance = 800;
             splitContainer2.TabIndex = 0;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1259, 513);
+            ClientSize = new Size(1259, 861);
             Controls.Add(splitContainer1);
             Name = "FormMain";
             Text = "FormMain";
