@@ -1,12 +1,13 @@
 
 using System;
 using System.IO;
+using System.Security.Policy;
 
 namespace main
 {
-    public partial class Form1 : Form
+    public partial class FormDebug : Form
     {
-        public Form1()
+        public FormDebug()
         {
             InitializeComponent();
         }
@@ -53,6 +54,26 @@ namespace main
             {
                 MessageBox.Show(res[0][0]);
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Program.CALC.run(new string[] { "셈플: CSV 를 메모리DB에 로딩..." });
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Program.CALC.run(new string[] {
+                "존 계산"
+            });
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Program.CALC.run(new string[] {
+                "셈플: CSV 를 메모리DB에 로딩...", 
+                "존 계산" 
+            });
         }
     }
 }
