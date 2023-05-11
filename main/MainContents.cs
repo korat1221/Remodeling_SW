@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,10 +14,16 @@ namespace main
 {
     public partial class MainContents : Form
     {
-        ConstructionWall f2 = new ConstructionWall();
-        ConstructionRoof f3 = new ConstructionRoof();
-        ZoneGeneral f4 = new ZoneGeneral();
-        ZoneEnvelope f5 = new ZoneEnvelope();
+        public enum FormID
+        {
+            ConstructionWall = 0,
+            ConstructionRoof,
+            ZoneGeneral,
+            ZoneEnvelope,
+            FormDebug
+        }
+
+        Form[] forms = new Form[] { new ConstructionWall(), new ConstructionRoof(), new ZoneGeneral(), new ZoneEnvelope(), new FormDebug() };
 
         public MainContents()
         {
@@ -26,14 +33,13 @@ namespace main
             {
                 if (openForm.Name == "FormMain")
                 {
-                    f2.TopLevel = false;
-                    openForm.splitContainer2.Panel2.Controls.Add(f2);
-                    f3.TopLevel = false;
-                    openForm.splitContainer2.Panel2.Controls.Add(f3);
-                    f4.TopLevel = false;
-                    openForm.splitContainer2.Panel2.Controls.Add(f4);
-                    f5.TopLevel = false;
-                    openForm.splitContainer2.Panel2.Controls.Add(f5);
+                    int i = -1;
+                    while (++i < forms.Length)
+                    {
+                        forms[i].TopLevel = false;
+                        openForm.splitContainer2.Panel1.Controls.Add(forms[i]);
+                    }
+
                     return;
                 }
             }
@@ -45,8 +51,12 @@ namespace main
             {
                 if (openForm.Name == "FormMain")
                 {
-                    f3.Hide();
-                    f2.Show();
+                    int i = -1;
+                    while (++i < forms.Length)
+                    {
+                        forms[i].Hide();
+                    }
+                    forms[(int)FormID.ConstructionWall].Show();
                     return;
                 }
             }
@@ -58,8 +68,12 @@ namespace main
             {
                 if (openForm.Name == "FormMain")
                 {
-                    f2.Hide();
-                    f3.Show();
+                    int i = -1;
+                    while (++i < forms.Length)
+                    {
+                        forms[i].Hide();
+                    }
+                    forms[(int)FormID.ConstructionRoof].Show();
                     return;
                 }
             }
@@ -71,8 +85,29 @@ namespace main
             {
                 if (openForm.Name == "FormMain")
                 {
-                    f3.Hide();
-                    f4.Show();
+                    int i = -1;
+                    while (++i < forms.Length)
+                    {
+                        forms[i].Hide();
+                    }
+                    forms[(int)FormID.ZoneGeneral].Show();
+                    return;
+                }
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            foreach (FormMain openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "FormMain")
+                {
+                    int i = -1;
+                    while (++i < forms.Length)
+                    {
+                        forms[i].Hide();
+                    }
+                    forms[(int)FormID.FormDebug].Show();
                     return;
                 }
             }
@@ -84,8 +119,12 @@ namespace main
             {
                 if (openForm.Name == "FormMain")
                 {
-                    f4.Hide();
-                    f5.Show();
+                    int i = -1;
+                    while (++i < forms.Length)
+                    {
+                        forms[i].Hide();
+                    }
+                    forms[(int)FormID.ZoneEnvelope].Show();
                     return;
                 }
             }

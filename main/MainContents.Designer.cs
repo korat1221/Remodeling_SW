@@ -45,6 +45,7 @@
             button5 = new Button();
             button6 = new Button();
             button7 = new Button();
+            button8 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -76,7 +77,7 @@
             button2.Name = "button2";
             button2.Size = new Size(80, 25);
             button2.TabIndex = 1;
-            button2.Text = "지붕";
+            button2.Text = "창호";
             button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
             // 
@@ -172,7 +173,7 @@
             button3.Name = "button3";
             button3.Size = new Size(80, 25);
             button3.TabIndex = 9;
-            button3.Text = "존 일반정보";
+            button3.Text = "용도프로필";
             button3.UseVisualStyleBackColor = false;
             button3.Click += button3_Click;
             // 
@@ -185,7 +186,7 @@
             button4.Name = "button4";
             button4.Size = new Size(80, 25);
             button4.TabIndex = 10;
-            button4.Text = "존 외피정보";
+            button4.Text = "지붕";
             button4.UseVisualStyleBackColor = false;
             button4.Click += button4_Click;
             // 
@@ -225,12 +226,26 @@
             button7.Text = "출입문";
             button7.UseVisualStyleBackColor = false;
             // 
+            // button8
+            // 
+            button8.BackColor = SystemColors.InactiveBorder;
+            button8.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            button8.FlatStyle = FlatStyle.Flat;
+            button8.Location = new Point(33, 748);
+            button8.Name = "button8";
+            button8.Size = new Size(80, 25);
+            button8.TabIndex = 14;
+            button8.Text = "디버그";
+            button8.UseVisualStyleBackColor = false;
+            button8.Click += button8_Click;
+            // 
             // MainContents
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(150, 800);
+            Controls.Add(button8);
             Controls.Add(button7);
             Controls.Add(button6);
             Controls.Add(button5);
@@ -281,5 +296,6 @@
         private Button button5;
         private Button button6;
         private Button button7;
+        private Button button8;
     }
 }

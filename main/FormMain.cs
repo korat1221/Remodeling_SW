@@ -22,7 +22,7 @@ namespace main
             Program.DB.openDB("test.sqlite");
             MainContents f1 = new MainContents();
             f1.TopLevel = false;
-            splitContainer2.Panel1.Controls.Add(f1);
+            splitContainer1.Panel1.Controls.Add(f1);
             f1.Show();
 
         }
