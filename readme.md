@@ -99,10 +99,10 @@
    (1) 콤보박스의 DB 인덱스 테이블 바인딩 함수
    
        BaseDB 내의 인덱스 테이블은 인덱스, 인덱스분류 의 두가지이다.
-       ![image](https://github.com/korat1221/Remodeling_SW/assets/128672029/0d840386-65e3-4ea8-9e6a-4b77e686ee18)
+![image](https://github.com/korat1221/Remodeling_SW/assets/128672029/0d840386-65e3-4ea8-9e6a-4b77e686ee18)
        <인덱스 테이블>
        
-       ![image](https://github.com/korat1221/Remodeling_SW/assets/128672029/474cdd71-4ffb-4acf-8026-9edc60abc497)
+![image](https://github.com/korat1221/Remodeling_SW/assets/128672029/474cdd71-4ffb-4acf-8026-9edc60abc497)
        <인덱스분류 테이블>
        
        즉, 프로그램에서 사용되는 모든 인덱스는 인덱스 테이블에 모여있고, 그 인덱스 레코드의 분류 관련 데이터는 인덱스분류에 모여있다.
