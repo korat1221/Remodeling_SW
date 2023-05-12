@@ -36,6 +36,11 @@
             button4 = new Button();
             button6 = new Button();
             button5 = new Button();
+            comboBox2 = new ComboBox();
+            comboBox1 = new ComboBox();
+            comboBox3 = new ComboBox();
+            label1 = new Label();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
@@ -116,11 +121,58 @@
             button5.UseVisualStyleBackColor = true;
             button5.Click += button5_Click;
             // 
+            // comboBox2
+            // 
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Location = new Point(420, 401);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(120, 23);
+            comboBox2.TabIndex = 8;
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(420, 460);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(120, 23);
+            comboBox1.TabIndex = 9;
+            // 
+            // comboBox3
+            // 
+            comboBox3.FormattingEnabled = true;
+            comboBox3.Location = new Point(546, 460);
+            comboBox3.Name = "comboBox3";
+            comboBox3.Size = new Size(120, 23);
+            comboBox3.TabIndex = 10;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(335, 408);
+            label1.Name = "label1";
+            label1.Size = new Size(79, 15);
+            label1.TabIndex = 11;
+            label1.Text = "단일콤보박스";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(335, 463);
+            label2.Name = "label2";
+            label2.Size = new Size(79, 15);
+            label2.TabIndex = 12;
+            label2.Text = "다중콤보박스";
+            // 
             // FormDebug
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 633);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(comboBox3);
+            Controls.Add(comboBox1);
+            Controls.Add(comboBox2);
             Controls.Add(button5);
             Controls.Add(button6);
             Controls.Add(button4);
@@ -132,8 +184,10 @@
             Name = "FormDebug";
             Text = "Form1";
             FormClosed += OnFormClosed;
+            Shown += OnGormShown;
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -146,5 +200,10 @@
         private Button button4;
         private Button button6;
         private Button button5;
+        private ComboBox comboBox2;
+        private ComboBox comboBox1;
+        private ComboBox comboBox3;
+        private Label label1;
+        private Label label2;
     }
 }

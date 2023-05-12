@@ -1,7 +1,10 @@
 
 using System;
+using System.Data;
+using System.Data.SQLite;
 using System.IO;
 using System.Security.Policy;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace main
 {
@@ -10,6 +13,18 @@ namespace main
         public FormDebug()
         {
             InitializeComponent();
+
+            Program.UTIL.FillComboBox_ByCategory(comboBox2, "커튼월", "프레임도어", "3");
+            Program.UTIL.FillComboBox_ByCategory(comboBox1, "건물", "건물용도", "1");
+
+            comboBox1.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
+
+            Program.UTIL.FillComboBox_ByComboBox(comboBox3, comboBox1, "3");
+        }
+
+        private void ComboBox1_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            Program.UTIL.FillComboBox_ByComboBox(comboBox3, comboBox1);
         }
 
         private void OnFormClosed(object sender, FormClosedEventArgs e)
@@ -71,9 +86,13 @@ namespace main
         private void button5_Click(object sender, EventArgs e)
         {
             Program.CALC.run(new string[] {
-                "셈플: CSV 를 메모리DB에 로딩...", 
-                "존 계산" 
+                "셈플: CSV 를 메모리DB에 로딩...",
+                "존 계산"
             });
+        }
+
+        private void OnGormShown(object sender, EventArgs e)
+        {
         }
     }
 }

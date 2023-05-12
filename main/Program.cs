@@ -14,6 +14,7 @@ namespace main
 
         public static String? gPath;
         public static DB DB = new DB();
+        public static UTIL UTIL = new UTIL();
         public static CALC CALC = new CALC();
 
         /// <summary>

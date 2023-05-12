@@ -278,6 +278,10 @@ namespace main
 
                 SQLiteCommand cmd = new SQLiteCommand();
 
+                Program.UTIL.trim(cols);
+                Program.UTIL.trim(vals);
+                Program.UTIL.trim(keys);
+
                 switch (dbType)
                 {
                     case type.ProjDB:

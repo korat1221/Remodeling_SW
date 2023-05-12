@@ -201,8 +201,8 @@ namespace main
                                             else
                                             {
 
-                                                Program.DB.setValue(DB.type.CalcDB, "ZoneWall", "zoneNum,Name,Area,Ueff,DirectInDirect,Direction,α,Degree",
-                                                    "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "'", "zoneNum,Name");
+                                                Program.DB.setValue(DB.type.CalcDB, "ZoneWall", "zoneNum, Name, Area,Ueff,DirectInDirect,Direction,α,Degree",
+                                                    "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "'", "zoneNum, Name");
 
                                                 //         Wall wall = new Wall(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
                                                 //       zoneWall.Add(wall);
