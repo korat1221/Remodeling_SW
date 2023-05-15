@@ -65,6 +65,7 @@ namespace main
             {"ZoneWin_Shadow", "CREATE TABLE ZoneWin_Shadow (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
             {"ZoneWin_a", "CREATE TABLE ZoneWin_a (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
             {"ZoneCW_shadow", "CREATE TABLE ZoneCW_shadow (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            {"ZoneEnvelope", "CREATE TABLE ZoneEnvelope (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),기호 VARCHAR (32),층 VARCHAR (32),존 VARCHAR (32),외피유형 VARCHAR (32),커튼월부위 VARCHAR (32),면적 VARCHAR (32),인접존 VARCHAR (32),방위 VARCHAR (32),기울기 VARCHAR (32),우측면돌출 VARCHAR (32),좌측면돌출 VARCHAR (32),상부돌출 VARCHAR (32),주변요소 VARCHAR (32),구조체 VARCHAR (32),Ueff VARCHAR (32),α VARCHAR (32),g VARCHAR (32),직접간접 VARCHAR (32))"},
             {"ZoneCW_a", "CREATE TABLE ZoneCW_a (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"}
         };
 

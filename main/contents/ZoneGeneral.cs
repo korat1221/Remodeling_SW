@@ -24,78 +24,52 @@ namespace main.contents
         {
             InitializeComponent();
 
-
-
             //콤보박스 리스트 생성 
-            try
+
+            //존 환기방식 콤보박스
+            string[][] SQL_index_Ventil = Program.DB.getValue(DB.type.BaseDB, "index_환기방식", "환기방식");
+            int i = -1;
+            while (++i < SQL_index_Ventil.Length)
             {
-                string connStr = @"Data Source=C:\Users\User\Documents\GitHub\Remodeling_SW\asset\basedb.sqlite";
-                SQLiteConnection conn1 = new SQLiteConnection(connStr);
-                conn1.Open();
-                var cmd = new SQLiteCommand(conn1);
-
-                //존 환기방식 콤보박스 
-
-                String query = "SELECT * fROM index_환기방식";
-                cmd = new SQLiteCommand(query, conn1);
-                SQLiteDataReader Ventilation_index_rdr = cmd.ExecuteReader();
-                while (Ventilation_index_rdr.Read())
-                {
-                    AHU_comboBox.Items.Add(Ventilation_index_rdr["환기방식"]);
-                }
-
-                //건물용도 콤보박스 
-
-                query = "SELECT * fROM index_건물용도";
-                cmd = new SQLiteCommand(query, conn1);
-                SQLiteDataReader BuildingUse_index_rdr = cmd.ExecuteReader();
-                while (BuildingUse_index_rdr.Read())
-                {
-                    BuildingUse_comboBox.Items.Add(BuildingUse_index_rdr["건물용도"]);
-
-                }
-
-
+                AHU_comboBox.Items.Add(SQL_index_Ventil[i][0]);
             }
-            catch (Exception ex) { }
 
-            try
+            //건물용도 콤보박스
+            string[][] SQL_index_BuildingUse = Program.DB.getValue(DB.type.BaseDB, "index_건물용도", "건물용도");
+            i = -1;
+            while (++i < SQL_index_BuildingUse.Length)
             {
-                string connStr = @"Data Source=C:\Users\User\Documents\GitHub\Remodeling_SW\asset\basedb.sqlite";
-                SQLiteConnection conn1 = new SQLiteConnection(connStr);
-                conn1.Open();
-                var cmd = new SQLiteCommand(conn1);
-
-                //존 사용 시작/종료 콤보박스 
-                String query = "SELECT * fROM index_시작종료시간";
-                cmd = new SQLiteCommand(query, conn1);
-                SQLiteDataReader StartEndTime_index_rdr = cmd.ExecuteReader();
-                while (StartEndTime_index_rdr.Read())
-                {
-                    StartTime_comboBox.Items.Add(StartEndTime_index_rdr["시간"]);
-                    EndTime_comboBox.Items.Add(StartEndTime_index_rdr["시간"]);
-                }
-
-                //주간 이용일수 콤보박스 
-                query = "SELECT * fROM index_주간이용일수";
-                cmd = new SQLiteCommand(query, conn1);
-                SQLiteDataReader WeekUseDay_index_rdr = cmd.ExecuteReader();
-                while (WeekUseDay_index_rdr.Read())
-                {
-                    WeekUseDay_comboBox.Items.Add(WeekUseDay_index_rdr["주간이용일수"]);
-                }
-
-
-                //기기밀도 콤보박스 
-                query = "SELECT * fROM Index_재실밀도";
-                cmd = new SQLiteCommand(query, conn1);
-                SQLiteDataReader OccupanDensity_index_rdr = cmd.ExecuteReader();
-                while (OccupanDensity_index_rdr.Read())
-                {
-                    EquipIHG_comboBox.Items.Add(OccupanDensity_index_rdr["재실밀도"]);
-                }
+                BuildingUse_comboBox.Items.Add(SQL_index_BuildingUse[i][0]);
             }
-            catch (Exception ex) { }
+
+
+            //존 사용 시작/종료 콤보박스 
+            string[][] SQL_index_StartEndTime = Program.DB.getValue(DB.type.BaseDB, "index_시작종료시간", "시간");
+            i = -1;
+            while (++i < SQL_index_StartEndTime.Length)
+            {
+                StartTime_comboBox.Items.Add(SQL_index_StartEndTime[i][0]);
+                EndTime_comboBox.Items.Add(SQL_index_StartEndTime[i][0]);
+            }
+
+
+            //주간 이용일수 콤보박스 
+            string[][] SQL_index_WeekUseDay = Program.DB.getValue(DB.type.BaseDB, "index_주간이용일수", "주간이용일수");
+            i = -1;
+            while (++i < SQL_index_WeekUseDay.Length)
+            {
+                WeekUseDay_comboBox.Items.Add(SQL_index_WeekUseDay[i][0]);
+            }
+
+
+            //기기밀도 콤보박스 
+            string[][] SQL_index_EquipIHG = Program.DB.getValue(DB.type.BaseDB, "Index_재실밀도", "재실밀도");
+            i = -1;
+            while (++i < SQL_index_EquipIHG.Length)
+            {
+                EquipIHG_comboBox.Items.Add(SQL_index_EquipIHG[i][0]);
+            }
+
         }
 
 
