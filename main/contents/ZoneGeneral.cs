@@ -56,14 +56,14 @@ namespace main.contents
         //건물용도 선택 시 용도프로필 콤보박스 생성
         private void BuildingUse_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.UTIL.FillComboBox_ByComboBox(Usage_comboBox,BuildingUse_comboBox, "1");          
+            Program.UTIL.FillComboBox_ByComboBox(Usage_comboBox, BuildingUse_comboBox, "1");
         }
 
 
         //주간이용일수 선택 시 연간이용일수 계산
         private void WeekUseDay_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            WeekUseDay = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(WeekUseDay_comboBox, "주간이용일수","이용일수", "일수"));
+            WeekUseDay = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(WeekUseDay_comboBox, "주간이용일수", "이용일수", "일수"));
             AnnualUseDay = Convert.ToDouble(Program.UTIL.GetValue2_BySelectComboBox(WeekUseDay_comboBox, "이용일수", "주간일수", "월='연간'", "이용일수"));
             AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
 
@@ -127,7 +127,7 @@ namespace main.contents
         }
         //시작 및 종료시간에 따라 시간 계산  
         private void EndTime_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-           {
+        {
 
             DataRowView? End_item = EndTime_comboBox.SelectedItem as DataRowView;
             DataRowView? Start_item = StartTime_comboBox.SelectedItem as DataRowView;
@@ -151,8 +151,8 @@ namespace main.contents
                     AHUTime_textBox.Text = AHUTime.ToString();
                     PersonIHG_Cal(PersonIHG, UseTime);
                 }
-             }
-           }
+            }
+        }
 
         private void PersonNum_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -184,19 +184,19 @@ namespace main.contents
         private void DHWneed_Cal(double DHWneed_1p, double PersonNum)
         {
             DataRowView? item = Usage_comboBox.SelectedItem as DataRowView;
-            if (item != null && item.Row.ItemArray.Length >= 3 )
+            if (item != null && item.Row.ItemArray.Length >= 3)
             {
                 if (String.IsNullOrEmpty(PersonNum_textBox.Text) == false)
                 {
                     DHWneed_textBox.Text = string.Format("{0:F1}", (DHWneed_1p * PersonNum));
                     DHWneed_image_textBox.Text = string.Format("{0:F1}", (DHWneed_1p * PersonNum)) + "kWh/d";
-                }                   
-            }        
+                }
+            }
         }
 
         private void OccupancyDensity_Cal(double PersonNum, double Area)
         {
-                if (String.IsNullOrEmpty(PersonNum_textBox.Text) == false && String.IsNullOrEmpty(Area_textBox.Text) == false)
+            if (String.IsNullOrEmpty(PersonNum_textBox.Text) == false && String.IsNullOrEmpty(Area_textBox.Text) == false)
             {
                 OccupancyDensity = Area / PersonNum;
                 OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
@@ -267,5 +267,13 @@ namespace main.contents
             }
         }
 
+        private void Save_button_Click(object sender, EventArgs e)
+        {
+            /*Program.DB.setValue(DB.type.CalcDB, "ZoneGeneral","번호,기호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출,좌측면돌출,상부돌출,주변요소,구조체,Ueff,α,g,직접간접",
+                                 "'" + token[0] + "','" + token[1] + "','" + token[2] + "','" + token[3] + "','" + token[4] + "','" + token[5] + "','"
+                             + token[6] + "','" + token[7] + "','" + token[8] + "','" + token[9] + "','" + token[10] + "','"
+                             + token[11] + "','" + token[12] + "','" + token[13] + "','" + token[14] + "','" + token[15] + "','"
+                             + token[16] + "','" + token[17] + "','" + token[18] + "'", "존,기호");*/
+        }
     }
 }

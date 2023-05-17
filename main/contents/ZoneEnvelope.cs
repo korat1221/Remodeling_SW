@@ -32,7 +32,6 @@ namespace main.contents
             Zone_comboBox.Items.Add("1F_Zone04");
             load_table_ZoneEnvelopeImport();
 
-
             //축열관련 콤보박스 만들기
             //천장
             string[][] SQL_index_Celing = Program.DB.getValue(DB.type.BaseDB, "축열", "축열유형", "구조체 = '천장'");
@@ -76,7 +75,7 @@ namespace main.contents
         }
 
         //임시로 존번호 선택하도록 함 > 추후 생성자로 복붙 필요 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void Zone_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             SelectZone = Zone_comboBox.SelectedItem.ToString();
             load_table_ZoneEnvelopeInfo(SelectZone);
@@ -423,5 +422,6 @@ namespace main.contents
             return n50;
 
         }
+
     }
 }

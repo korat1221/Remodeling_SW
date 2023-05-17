@@ -143,9 +143,9 @@ namespace main.contents
             textBox10 = new System.Windows.Forms.TextBox();
             AdditionalPanel = new Panel();
             pictureBox1 = new PictureBox();
-            panel1 = new Panel();
             BuildingCategory_comboBox = new System.Windows.Forms.ComboBox();
             label53 = new System.Windows.Forms.Label();
+            Save_button = new System.Windows.Forms.Button();
             GeneralPanel.SuspendLayout();
             panel2.SuspendLayout();
             AdditionalPanel.SuspendLayout();
@@ -1319,13 +1319,6 @@ namespace main.contents
             pictureBox1.TabIndex = 104;
             pictureBox1.TabStop = false;
             // 
-            // panel1
-            // 
-            panel1.Location = new Point(997, 337);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(194, 356);
-            panel1.TabIndex = 54;
-            // 
             // BuildingCategory_comboBox
             // 
             BuildingCategory_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1346,15 +1339,27 @@ namespace main.contents
             label53.TabIndex = 86;
             label53.Text = "건물대상";
             // 
+            // Save_button
+            // 
+            Save_button.BackColor = SystemColors.GradientActiveCaption;
+            Save_button.ForeColor = Color.Black;
+            Save_button.Location = new Point(1031, 653);
+            Save_button.Name = "Save_button";
+            Save_button.Size = new Size(131, 30);
+            Save_button.TabIndex = 88;
+            Save_button.Text = "SAVE";
+            Save_button.UseVisualStyleBackColor = false;
+            Save_button.Click += Save_button_Click;
+            // 
             // ZoneGeneral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(Save_button);
             Controls.Add(BuildingCategory_comboBox);
             Controls.Add(label53);
-            Controls.Add(panel1);
             Controls.Add(panel2);
             Controls.Add(BuildingUse_comboBox);
             Controls.Add(label21);
@@ -1381,7 +1386,6 @@ namespace main.contents
         private Panel GeneralPanel;
         private Panel panel2;
         private Panel AdditionalPanel;
-        private Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox1;
@@ -1490,5 +1494,6 @@ namespace main.contents
         private PictureBox pictureBox1;
         private System.Windows.Forms.ComboBox BuildingCategory_comboBox;
         private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Button Save_button;
     }
 }

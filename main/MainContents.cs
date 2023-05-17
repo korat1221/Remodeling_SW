@@ -20,10 +20,11 @@ namespace main
             ConstructionRoof,
             ZoneGeneral,
             ZoneEnvelope,
+            Model,
             FormDebug
         }
 
-        Form[] forms = new Form[] { new ConstructionWall(), new ConstructionRoof(), new ZoneGeneral(), new ZoneEnvelope(), new FormDebug() };
+        Form[] forms = new Form[] { new ConstructionWall(), new ConstructionRoof(), new ZoneGeneral(), new ZoneEnvelope(), new Model(), new FormDebug() };
 
         public MainContents()
         {
@@ -129,5 +130,23 @@ namespace main
                 }
             }
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            foreach (FormMain openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "FormMain")
+                {
+                    int i = -1;
+                    while (++i < forms.Length)
+                    {
+                        forms[i].Hide();
+                    }
+                    forms[(int)FormID.Model].Show();
+                    return;
+                }
+            }
+        }
+
     }
 }

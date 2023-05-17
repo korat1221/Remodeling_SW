@@ -186,7 +186,7 @@
             button4.Name = "button4";
             button4.Size = new Size(80, 25);
             button4.TabIndex = 10;
-            button4.Text = "지붕";
+            button4.Text = "존외피";
             button4.UseVisualStyleBackColor = false;
             button4.Click += button4_Click;
             // 
@@ -199,8 +199,9 @@
             button5.Name = "button5";
             button5.Size = new Size(80, 25);
             button5.TabIndex = 11;
-            button5.Text = "바닥";
+            button5.Text = "3D모델";
             button5.UseVisualStyleBackColor = false;
+            button5.Click += button5_Click;
             // 
             // button6
             // 
