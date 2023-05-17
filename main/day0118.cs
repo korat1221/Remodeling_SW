@@ -289,6 +289,8 @@ namespace main
                 {
                     Wall wall = new Wall(Convert.ToDouble(ZoneW[i][0]), Convert.ToDouble(ZoneW[i][1]), Convert.ToDouble(ZoneW[i][2]), ZoneW[i][3]);
                     zoneWall.Add(wall);
+
+
                 }
             }
             //try
@@ -1814,7 +1816,7 @@ namespace main
             this.wall_α = α;
             this.wall_DiIndi = DiIndi;
         }
-
+  
         public double Area()
         {
             return wall_Area;
