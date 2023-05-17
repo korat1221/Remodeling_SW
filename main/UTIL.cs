@@ -19,6 +19,36 @@ namespace main
             }
         }
 
+
+       public String GetValue_BySelectComboBox(ComboBox comboBox, String 테이블명, String 선택컬럼명, String 찾는컬럼명)
+        {
+            String Value = "";
+            DataRowView? item = comboBox.SelectedItem as DataRowView;
+
+            if (item != null && item.Row.ItemArray.Length >= 3)
+            {
+                string[][] res = Program.DB.getValue(DB.type.BaseDB, 테이블명, 찾는컬럼명, 선택컬럼명 + " = '" + item.Row.ItemArray[0].ToString() + "' ");
+                Value = res[0][0].ToString();
+            }
+
+            return Value;
+        }
+      
+        public String GetValue2_BySelectComboBox(ComboBox comboBox, String 테이블명, String 선택컬럼명,String 다른조건문, String 찾는컬럼명)
+        {
+
+            String Value = "";
+            DataRowView? item = comboBox.SelectedItem as DataRowView;
+
+               if (item != null && item.Row.ItemArray.Length >= 3)
+             {
+              string[][] res = Program.DB.getValue(DB.type.BaseDB, 테이블명, 찾는컬럼명, 선택컬럼명 +"= '" + item.Row.ItemArray[0].ToString() + "' AND "+다른조건문);
+                Value = res[0][0].ToString();
+            }
+
+            return Value;
+        }
+
         public void FillComboBox_ByCategory(ComboBox comboBox, string cate, string subcate, string def_value = "")
         {
             string[][] res = Program.DB.querySQL(DB.type.BaseDB, "SELECT a.이름, a.값, a.아이디 FROM 인덱스 AS a INNER JOIN 인덱스분류 AS b ON a.종류=b.아이디 WHERE b.종류='" + cate + "' AND b.이름='" + subcate + "'");

@@ -5,9 +5,11 @@ using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.contents
 {
@@ -25,51 +27,17 @@ namespace main.contents
             InitializeComponent();
 
             //콤보박스 리스트 생성 
-
             //존 환기방식 콤보박스
-            string[][] SQL_index_Ventil = Program.DB.getValue(DB.type.BaseDB, "index_환기방식", "환기방식");
-            int i = -1;
-            while (++i < SQL_index_Ventil.Length)
-            {
-                AHU_comboBox.Items.Add(SQL_index_Ventil[i][0]);
-            }
-
-            //건물용도 콤보박스
-            string[][] SQL_index_BuildingUse = Program.DB.getValue(DB.type.BaseDB, "index_건물용도", "건물용도");
-            i = -1;
-            while (++i < SQL_index_BuildingUse.Length)
-            {
-                BuildingUse_comboBox.Items.Add(SQL_index_BuildingUse[i][0]);
-            }
-
-
+            Program.UTIL.FillComboBox_ByCategory(AHU_comboBox, "존일반", "환기방식", "1");
+            //건물대상 콤보박스
+            Program.UTIL.FillComboBox_ByCategory(BuildingCategory_comboBox, "존일반", "건물용도", "1");
             //존 사용 시작/종료 콤보박스 
-            string[][] SQL_index_StartEndTime = Program.DB.getValue(DB.type.BaseDB, "index_시작종료시간", "시간");
-            i = -1;
-            while (++i < SQL_index_StartEndTime.Length)
-            {
-                StartTime_comboBox.Items.Add(SQL_index_StartEndTime[i][0]);
-                EndTime_comboBox.Items.Add(SQL_index_StartEndTime[i][0]);
-            }
-
-
+            Program.UTIL.FillComboBox_ByCategory(StartTime_comboBox, "존일반", "이용일 시작 및 종료시간", "8");
+            Program.UTIL.FillComboBox_ByCategory(EndTime_comboBox, "존일반", "이용일 시작 및 종료시간", "19");
             //주간 이용일수 콤보박스 
-            string[][] SQL_index_WeekUseDay = Program.DB.getValue(DB.type.BaseDB, "index_주간이용일수", "주간이용일수");
-            i = -1;
-            while (++i < SQL_index_WeekUseDay.Length)
-            {
-                WeekUseDay_comboBox.Items.Add(SQL_index_WeekUseDay[i][0]);
-            }
-
-
+            Program.UTIL.FillComboBox_ByCategory(WeekUseDay_comboBox, "존일반", "주간이용일", "1");
             //기기밀도 콤보박스 
-            string[][] SQL_index_EquipIHG = Program.DB.getValue(DB.type.BaseDB, "Index_재실밀도", "재실밀도");
-            i = -1;
-            while (++i < SQL_index_EquipIHG.Length)
-            {
-                EquipIHG_comboBox.Items.Add(SQL_index_EquipIHG[i][0]);
-            }
-
+            Program.UTIL.FillComboBox_ByCategory(EquipIHG_comboBox, "존일반", "밀도", "1");
         }
 
 
@@ -79,119 +47,46 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
 
+        //건물대상 선택 시 건물용도 콤보박스 생성
+        private void BuildingCategory_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.UTIL.FillComboBox_ByComboBox(BuildingUse_comboBox, BuildingCategory_comboBox, "1");
+        }
 
+        //건물용도 선택 시 용도프로필 콤보박스 생성
         private void BuildingUse_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Usage_comboBox.Items.Clear();
-            try
-            {
-                string connStr = @"Data Source=C:\Users\User\Documents\GitHub\Remodeling_SW\asset\basedb.sqlite";
-                SQLiteConnection conn1 = new SQLiteConnection(connStr);
-                conn1.Open();
-                var cmd = new SQLiteCommand(conn1);
-
-
-                //존 용도프로필 콤보박스 
-                String query = "SELECT * fROM index_용도프로필 ";
-                cmd = new SQLiteCommand(query, conn1);
-                SQLiteDataReader Usage_index_rdr = cmd.ExecuteReader();
-                int i = 0;
-                while (Usage_index_rdr.Read())
-                {
-                    Usage_comboBox.Items.Add(Usage_index_rdr[BuildingUse_comboBox.SelectedItem.ToString()]);
-                    if (Usage_comboBox.Items[i].ToString() == "")
-                    {
-                        Usage_comboBox.Items.RemoveAt(i);
-                    }
-                    i++;
-
-                }
-
-
-            }
-            catch (Exception ex) { }
+            Program.UTIL.FillComboBox_ByComboBox(Usage_comboBox,BuildingUse_comboBox, "1");          
         }
 
+
+        //주간이용일수 선택 시 연간이용일수 계산
         private void WeekUseDay_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
-            {
-                string connStr = @"Data Source=C:\Users\User\Documents\GitHub\Remodeling_SW\asset\basedb.sqlite";
-                SQLiteConnection conn1 = new SQLiteConnection(connStr);
-                conn1.Open();
-                var cmd = new SQLiteCommand(conn1);
+            WeekUseDay = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(WeekUseDay_comboBox, "주간이용일수","이용일수", "일수"));
+            AnnualUseDay = Convert.ToDouble(Program.UTIL.GetValue2_BySelectComboBox(WeekUseDay_comboBox, "이용일수", "주간일수", "월='연간'", "이용일수"));
+            AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
 
-
-                String query = "SELECT * fROM index_주간이용일수 ";
-                cmd = new SQLiteCommand(query, conn1);
-                SQLiteDataReader weekUseDay_index_rdr = cmd.ExecuteReader();
-                while (weekUseDay_index_rdr.Read())
-                {
-                    if (WeekUseDay_comboBox.SelectedItem.ToString() == weekUseDay_index_rdr["주간이용일수"].ToString())
-                    {
-                        WeekUseDay = double.Parse(weekUseDay_index_rdr["일수"].ToString());
-                    }
-                }
-
-
-
-                query = "SELECT * fROM 이용일수";
-                cmd = new SQLiteCommand(query, conn1);
-                SQLiteDataReader UseDay_Table_rdr = cmd.ExecuteReader();
-
-                while (UseDay_Table_rdr.Read())
-                {
-                    if (UseDay_Table_rdr["일"].ToString()== "365")
-                    {
-                        AnnualUseDay = double.Parse(UseDay_Table_rdr[WeekUseDay_comboBox.SelectedItem.ToString()].ToString());
-                        AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
-                    }
-                }
-
-            }
-            catch (Exception ex) { }
         }
 
+        //용도프로필 선택에 따라 값 설정
         private void Usage_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            DHWneed_1p = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "급탕요구량"));
+            OccupancyDensity_Low = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "재실밀도낮음"));
+            OccupancyDensity_Medium = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "재실밀도보통"));
+            OccupancyDensity_High = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "재실밀도높음"));
+            PersonIHG_Low = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "인체발열낮음"));
+            PersonIHG_Medium = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "인체발열보통"));
+            PersonIHG_High = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "인체발열높음"));
+            EquipIHG_Low = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기발열낮음"));
+            EquipIHG_Medium = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기발열보통"));
+            EquipIHG_High = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기발열높음"));
+            EquipIHG_Time = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기일일이용시간"));
+            theta_i_h_set = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "난방설정온도"));
+            theta_i_c_set = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "냉방설정온도"));
+            Em = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "조도"));
 
-            try
-            {
-                string connStr = @"Data Source=C:\Users\User\Documents\GitHub\Remodeling_SW\asset\basedb.sqlite";
-                SQLiteConnection conn1 = new SQLiteConnection(connStr);
-                conn1.Open();
-                var cmd = new SQLiteCommand(conn1);
-
-
-                //존 용도프로필 콤보박스 
-                String query = "SELECT * fROM 용도프로필 ";
-                cmd = new SQLiteCommand(query, conn1);
-                SQLiteDataReader Usage_Table_rdr = cmd.ExecuteReader();
-
-
-                while (Usage_Table_rdr.Read())
-                {
-                    if (Usage_comboBox.SelectedItem.ToString() == Usage_Table_rdr["용도명"].ToString())
-                    {
-                        DHWneed_1p = double.Parse(Usage_Table_rdr["급탕요구량"].ToString());
-                        OccupancyDensity_Low = double.Parse(Usage_Table_rdr["재실밀도낮음"].ToString());
-                        OccupancyDensity_Medium = double.Parse(Usage_Table_rdr["재실밀도보통"].ToString());
-                        OccupancyDensity_High = double.Parse(Usage_Table_rdr["재실밀도높음"].ToString());
-                        PersonIHG_Low = double.Parse(Usage_Table_rdr["인체발열낮음"].ToString());
-                        PersonIHG_Medium = double.Parse(Usage_Table_rdr["인체발열보통"].ToString());
-                        PersonIHG_High = double.Parse(Usage_Table_rdr["인체발열높음"].ToString());
-                        EquipIHG_Low = double.Parse(Usage_Table_rdr["기기발열낮음"].ToString());
-                        EquipIHG_Medium = double.Parse(Usage_Table_rdr["기기발열보통"].ToString());
-                        EquipIHG_High = double.Parse(Usage_Table_rdr["기기발열높음"].ToString());
-                        EquipIHG_Time = double.Parse(Usage_Table_rdr["기기일일이용시간"].ToString());
-                        theta_i_h_set = double.Parse(Usage_Table_rdr["난방설정온도"].ToString());
-                        theta_i_c_set = double.Parse(Usage_Table_rdr["냉방설정온도"].ToString());
-                        Em = double.Parse(Usage_Table_rdr["조도"].ToString());
-                    }
-                }
-
-            }
-            catch (Exception ex) { }
 
             DHWneed_Cal(DHWneed_1p, PersonNum);
             OccupancyDensity_Cal(PersonNum, Area);
@@ -202,49 +97,62 @@ namespace main.contents
             Em_textBox.Text = String.Format("{0:F0}", Em) + "lx";
 
         }
+
+        //시작 및 종료시간에 따라 시간 계산 
         private void StartTime_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            DataRowView? End_item = EndTime_comboBox.SelectedItem as DataRowView;
+            DataRowView? Start_item = StartTime_comboBox.SelectedItem as DataRowView;
             TimeSpan ts;
-            StartTime_image_textBox.Text = StartTime_comboBox.SelectedItem.ToString();
+            StartTime_image_textBox.Text = Start_item.Row.ItemArray[0].ToString();
 
-            if (EndTime_comboBox.SelectedItem != null)
+            if (End_item != null && End_item.Row.ItemArray.Length >= 3 && Start_item != null && Start_item.Row.ItemArray.Length >= 3)
             {
-                ts = DateTime.Parse(EndTime_comboBox.SelectedItem.ToString()) - DateTime.Parse(StartTime_comboBox.SelectedItem.ToString());
-                if (Double.Parse(ts.Hours.ToString()) >= 0)
-                { UseTime = Double.Parse(ts.Hours.ToString()); }
-                else
-                { UseTime = Double.Parse(ts.Hours.ToString()) + 24; }
+                if (EndTime_comboBox.SelectedItem != null)
+                {
+                    ts = DateTime.Parse(End_item.Row.ItemArray[0].ToString()) - DateTime.Parse(Start_item.Row.ItemArray[0].ToString());
+                    if (Double.Parse(ts.Hours.ToString()) >= 0)
+                    { UseTime = Double.Parse(ts.Hours.ToString()); }
+                    else
+                    { UseTime = Double.Parse(ts.Hours.ToString()) + 24; }
 
-                HCTime = UseTime + 1;
-                AHUTime = UseTime + 1;
-                UseTime_textBox.Text = UseTime.ToString();
-                HCTime_textBox.Text = HCTime.ToString();
-                AHUTime_textBox.Text = AHUTime.ToString();
-                PersonIHG_Cal(PersonIHG, UseTime);
+                    HCTime = UseTime + 1;
+                    AHUTime = UseTime + 1;
+                    UseTime_textBox.Text = UseTime.ToString();
+                    HCTime_textBox.Text = HCTime.ToString();
+                    AHUTime_textBox.Text = AHUTime.ToString();
+                    PersonIHG_Cal(PersonIHG, UseTime);
+                }
             }
         }
-
+        //시작 및 종료시간에 따라 시간 계산  
         private void EndTime_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
+           {
+
+            DataRowView? End_item = EndTime_comboBox.SelectedItem as DataRowView;
+            DataRowView? Start_item = StartTime_comboBox.SelectedItem as DataRowView;
             TimeSpan ts;
-            EndTime_image_textBox.Text = EndTime_comboBox.SelectedItem.ToString();
+            EndTime_image_textBox.Text = End_item.Row.ItemArray[0].ToString();
 
-            if (StartTime_comboBox.SelectedItem != null)
+            if (End_item != null && End_item.Row.ItemArray.Length >= 3 && Start_item != null && Start_item.Row.ItemArray.Length >= 3)
             {
-                ts = DateTime.Parse(EndTime_comboBox.SelectedItem.ToString()) - DateTime.Parse(StartTime_comboBox.SelectedItem.ToString());
-                if (Double.Parse(ts.Hours.ToString()) >= 0)
-                { UseTime = Double.Parse(ts.Hours.ToString()); }
-                else
-                { UseTime = Double.Parse(ts.Hours.ToString()) + 24; }
+                if (StartTime_comboBox.SelectedItem != null)
+                {
+                    ts = DateTime.Parse(End_item.Row.ItemArray[0].ToString()) - DateTime.Parse(Start_item.Row.ItemArray[0].ToString());
+                    if (Double.Parse(ts.Hours.ToString()) >= 0)
+                    { UseTime = Double.Parse(ts.Hours.ToString()); }
+                    else
+                    { UseTime = Double.Parse(ts.Hours.ToString()) + 24; }
 
-                HCTime = UseTime + 1;
-                AHUTime = UseTime + 1;
-                UseTime_textBox.Text = UseTime.ToString();
-                HCTime_textBox.Text = HCTime.ToString();
-                AHUTime_textBox.Text = AHUTime.ToString();
-                PersonIHG_Cal(PersonIHG, UseTime);
-            }
-        }
+                    HCTime = UseTime + 1;
+                    AHUTime = UseTime + 1;
+                    UseTime_textBox.Text = UseTime.ToString();
+                    HCTime_textBox.Text = HCTime.ToString();
+                    AHUTime_textBox.Text = AHUTime.ToString();
+                    PersonIHG_Cal(PersonIHG, UseTime);
+                }
+             }
+           }
 
         private void PersonNum_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -270,19 +178,25 @@ namespace main.contents
         private void EquipIHG_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             EquipIHG_Cal(EquipIHG_Time);
-
         }
 
+        //용도프로필 선택에 따라 급탕 계산
         private void DHWneed_Cal(double DHWneed_1p, double PersonNum)
         {
-            if (String.IsNullOrEmpty(PersonNum_textBox.Text) == false && Usage_comboBox.SelectedItem != null)
-                DHWneed_textBox.Text = string.Format("{0:F1}", (DHWneed_1p * PersonNum));
-            DHWneed_image_textBox.Text = string.Format("{0:F1}", (DHWneed_1p * PersonNum)) + "kWh/d";
+            DataRowView? item = Usage_comboBox.SelectedItem as DataRowView;
+            if (item != null && item.Row.ItemArray.Length >= 3 )
+            {
+                if (String.IsNullOrEmpty(PersonNum_textBox.Text) == false)
+                {
+                    DHWneed_textBox.Text = string.Format("{0:F1}", (DHWneed_1p * PersonNum));
+                    DHWneed_image_textBox.Text = string.Format("{0:F1}", (DHWneed_1p * PersonNum)) + "kWh/d";
+                }                   
+            }        
         }
 
         private void OccupancyDensity_Cal(double PersonNum, double Area)
         {
-            if (String.IsNullOrEmpty(PersonNum_textBox.Text) == false && String.IsNullOrEmpty(Area_textBox.Text) == false)
+                if (String.IsNullOrEmpty(PersonNum_textBox.Text) == false && String.IsNullOrEmpty(Area_textBox.Text) == false)
             {
                 OccupancyDensity = Area / PersonNum;
                 OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
@@ -325,12 +239,16 @@ namespace main.contents
             }
         }
 
+        //기기밀도수준 및 용도프로필 선택에 따라 기기발열 계산 
         private void EquipIHG_Cal(double EquipIHG_Time)
         {
-            if (EquipIHG_comboBox.SelectedItem != null && Usage_comboBox.SelectedItem != null)
+            DataRowView? EquipIHG_item = EquipIHG_comboBox.SelectedItem as DataRowView;
+            DataRowView? Usage_item = Usage_comboBox.SelectedItem as DataRowView;
+
+            if (EquipIHG_item != null && EquipIHG_item.Row.ItemArray.Length >= 3 && Usage_item != null && Usage_item.Row.ItemArray.Length >= 3)
             {
                 //PersonIHG 단위 : W/m2
-                switch (EquipIHG_comboBox.SelectedItem.ToString())
+                switch (EquipIHG_item.Row.ItemArray[0].ToString())
                 {
                     case "낮음":
                         EquipIHG = EquipIHG_Low;
@@ -348,5 +266,6 @@ namespace main.contents
 
             }
         }
+
     }
 }

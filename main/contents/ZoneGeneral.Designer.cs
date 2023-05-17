@@ -144,6 +144,8 @@ namespace main.contents
             AdditionalPanel = new Panel();
             pictureBox1 = new PictureBox();
             panel1 = new Panel();
+            BuildingCategory_comboBox = new System.Windows.Forms.ComboBox();
+            label53 = new System.Windows.Forms.Label();
             GeneralPanel.SuspendLayout();
             panel2.SuspendLayout();
             AdditionalPanel.SuspendLayout();
@@ -177,7 +179,6 @@ namespace main.contents
             GeneralPanel.Size = new Size(977, 101);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
-
             // 
             // textBox15
             // 
@@ -1002,7 +1003,7 @@ namespace main.contents
             // 
             BuildingUse_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BuildingUse_comboBox.FormattingEnabled = true;
-            BuildingUse_comboBox.Location = new Point(1058, 40);
+            BuildingUse_comboBox.Location = new Point(1058, 90);
             BuildingUse_comboBox.Name = "BuildingUse_comboBox";
             BuildingUse_comboBox.Size = new Size(120, 23);
             BuildingUse_comboBox.TabIndex = 85;
@@ -1012,7 +1013,7 @@ namespace main.contents
             // 
             label21.AutoSize = true;
             label21.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label21.Location = new Point(997, 44);
+            label21.Location = new Point(997, 94);
             label21.Name = "label21";
             label21.Size = new Size(55, 15);
             label21.TabIndex = 84;
@@ -1325,12 +1326,34 @@ namespace main.contents
             panel1.Size = new Size(194, 356);
             panel1.TabIndex = 54;
             // 
+            // BuildingCategory_comboBox
+            // 
+            BuildingCategory_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BuildingCategory_comboBox.FormattingEnabled = true;
+            BuildingCategory_comboBox.Location = new Point(1058, 54);
+            BuildingCategory_comboBox.Name = "BuildingCategory_comboBox";
+            BuildingCategory_comboBox.Size = new Size(120, 23);
+            BuildingCategory_comboBox.TabIndex = 87;
+            BuildingCategory_comboBox.SelectedIndexChanged += BuildingCategory_comboBox_SelectedIndexChanged;
+            // 
+            // label53
+            // 
+            label53.AutoSize = true;
+            label53.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label53.Location = new Point(997, 58);
+            label53.Name = "label53";
+            label53.Size = new Size(55, 15);
+            label53.TabIndex = 86;
+            label53.Text = "건물대상";
+            // 
             // ZoneGeneral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(BuildingCategory_comboBox);
+            Controls.Add(label53);
             Controls.Add(panel1);
             Controls.Add(panel2);
             Controls.Add(BuildingUse_comboBox);
@@ -1340,7 +1363,7 @@ namespace main.contents
             Controls.Add(GeneralPanel);
             Controls.Add(AdditionalPanel);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "ZoneUsage";
+            Name = "ZoneGeneral";
             Text = "Form3";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
@@ -1465,5 +1488,7 @@ namespace main.contents
         private System.Windows.Forms.TextBox textBox15;
         private System.Windows.Forms.TextBox OccupancyDensity_index_textBox;
         private PictureBox pictureBox1;
+        private System.Windows.Forms.ComboBox BuildingCategory_comboBox;
+        private System.Windows.Forms.Label label53;
     }
 }
