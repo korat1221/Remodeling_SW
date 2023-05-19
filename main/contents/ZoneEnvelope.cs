@@ -16,21 +16,30 @@ namespace main.contents
 {
     public partial class ZoneEnvelope : Form
     {
-        String SelectZone;
+        String ZoneNum;
+
 
         String[] ConstructionType = { "커튼월창", "외벽", "지붕", "최하층바닥", "창호", "외부출입문", "내벽", "층간바닥" };
-        String 선택구조체, 해당존유형;
-        string[][] ZoneE = new String[8][];
-        double Area_Celing, Area_Wall, Area_InWall, Area_Slab;
-        double Cwirk_Celing, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab;
+        String SelectConstruction, ZoneType;
+        double Area_Ceiling, Area_Wall, Area_InWall, Area_Slab;
+        double Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab;
+        String Ceiling_index, Wall_index, InWall_index, Slab_index;
         double Cwirk_total;
 
+   
         public ZoneEnvelope()
         {
+
             InitializeComponent();
+            Program.DB.initTable(DB.type.CalcDB, "ZoneEnvelope");
+            //Program.DB.initTables(DB.type.CalcDB);
             Zone_comboBox.Items.Add("1F_Zone02");
             Zone_comboBox.Items.Add("1F_Zone04");
             load_table_ZoneEnvelopeImport();
+
+
+
+
 
             //축열관련 콤보박스 만들기
             //천장
@@ -74,14 +83,20 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
 
+        
         //임시로 존번호 선택하도록 함 > 추후 생성자로 복붙 필요 
         private void Zone_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SelectZone = Zone_comboBox.SelectedItem.ToString();
-            load_table_ZoneEnvelopeInfo(SelectZone);
-            Calc_A(SelectZone);
-            해당존유형 = Calc_ZoneType();
-            Check_radioButton(해당존유형);
+
+            ZoneNum = Zone_comboBox.SelectedItem.ToString();
+            load_table_ZoneEnvelopeInfo(ZoneNum);
+            string[][] Zone = Program.DB.getValue(DB.type.CalcDB, "ZoneGeneral", "존이름,층,바닥면적,순체적", "존번호= '" + ZoneNum + "'");
+            MessageBox.Show(ZoneNum);
+            ZoneName_textBox.Text = Zone[0][0];
+            Calc_A(ZoneNum);
+            ZoneType = Calc_ZoneType();
+            Check_radioButton(ZoneType);
+
         }
 
         //천장 축열정보 선택 시 
@@ -89,9 +104,10 @@ namespace main.contents
         {
             double CwirkA;
             string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB, "축열", "Cwirk", "구조체='천장' AND 축열유형='" + CeilingCwirk_comboBox.SelectedItem.ToString() + "'");
+            Ceiling_index = CeilingCwirk_comboBox.SelectedItem.ToString();
             CwirkA = Convert.ToDouble(CwirkDB[0][0]);
-            Cwirk_Celing = Calc_Cwirk_Construction(Area_Celing, CwirkA);
-            Cwirk_total = Calc_Cwirk(Cwirk_Celing, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+            Cwirk_Ceiling = Calc_Cwirk_Construction(Area_Ceiling, CwirkA);
+            Cwirk_total = Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
             Cwirk_textBox.Text = string.Format("{0:F2}", Cwirk_total);
         }
 
@@ -99,9 +115,10 @@ namespace main.contents
         {
             double CwirkA;
             string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB, "축열", "Cwirk", "구조체='외벽' AND 축열유형='" + WallCwirk_comboBox.SelectedItem.ToString() + "'");
+            Wall_index = WallCwirk_comboBox.SelectedItem.ToString();
             CwirkA = Convert.ToDouble(CwirkDB[0][0]);
             Cwirk_Wall = Calc_Cwirk_Construction(Area_Wall, CwirkA);
-            Cwirk_total = Calc_Cwirk(Cwirk_Celing, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+            Cwirk_total = Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
             Cwirk_textBox.Text = string.Format("{0:F2}", Cwirk_total);
         }
 
@@ -109,9 +126,10 @@ namespace main.contents
         {
             double CwirkA;
             string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB, "축열", "Cwirk", "구조체='간벽' AND 축열유형='" + InWallCwirk_comboBox.SelectedItem.ToString() + "'");
+            InWall_index = InWallCwirk_comboBox.SelectedItem.ToString();
             CwirkA = Convert.ToDouble(CwirkDB[0][0]);
             Cwirk_InWall = Calc_Cwirk_Construction(Area_InWall, CwirkA);
-            Cwirk_total = Calc_Cwirk(Cwirk_Celing, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+            Cwirk_total = Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
             Cwirk_textBox.Text = string.Format("{0:F2}", Cwirk_total);
         }
 
@@ -119,16 +137,17 @@ namespace main.contents
         {
             double CwirkA;
             string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB, "축열", "Cwirk", "구조체='바닥' AND 축열유형='" + SlabCwirk_comboBox.SelectedItem.ToString() + "'");
+            Slab_index = SlabCwirk_comboBox.SelectedItem.ToString();
             CwirkA = Convert.ToDouble(CwirkDB[0][0]);
             Cwirk_Slab = Calc_Cwirk_Construction(Area_Slab, CwirkA);
-            Cwirk_total = Calc_Cwirk(Cwirk_Celing, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+            Cwirk_total = Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
             Cwirk_textBox.Text = string.Format("{0:F2}", Cwirk_total);
         }
 
         //기밀적용유형 선택 시 
         private void InfiltrationType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            double q = Calc_q50(해당존유형);
+            double q = Calc_q50(ZoneType);
             double n = Calc_n50(q);
             q50_textBox.Text = string.Format("{0:F0}", q);
             n50_textBox.Text = string.Format("{0:F1}", n);
@@ -227,8 +246,8 @@ namespace main.contents
                 dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
                 DataGridViewRow row2 = dataGridView1.Rows[e.RowIndex];
-                선택구조체 = row.Cells["구조체"].Value.ToString();
-                load_table_ZoneEnvelopeSelect(선택구조체);
+                SelectConstruction = row.Cells["구조체"].Value.ToString();
+                load_table_ZoneEnvelopeSelect(SelectConstruction);
                 for (int k = 0; k < ConstructionType.Length; k++)
                 {
                     if (k != row.Index)
@@ -266,7 +285,7 @@ namespace main.contents
             else { table_ZoneEnvelopeSelect.Columns.Add("α", typeof(string)); }
 
             //존별, 선택 구조체의 정보 불러오기 
-            string[][] ZoneE = Program.DB.getValue(DB.type.CalcDB, "ZoneEnvelope", "번호,기호,외피유형,면적,방위,기울기,구조체,Ueff,α,g", "존='" + SelectZone + "' AND 외피유형='" + 선택구조체 + "'");
+            string[][] ZoneE = Program.DB.getValue(DB.type.CalcDB, "ZoneEnvelope", "번호,기호,외피유형,면적,방위,기울기,구조체,Ueff,α,g", "존='" + ZoneNum + "' AND 외피유형='" + 선택구조체 + "'");
 
 
             for (int n = 0; n < ZoneE.Length; n++)
@@ -311,11 +330,11 @@ namespace main.contents
             }
             if (Construction_AreaSum[2] == 0) //최상층 아닐 경우 천장 면적
             {
-                Area_Celing = Construction_AreaSum[7];
+                Area_Ceiling = Construction_AreaSum[7];
             }
             else //최상층일 경우 천장 면적
             {
-                Area_Celing = Construction_AreaSum[2];
+                Area_Ceiling = Construction_AreaSum[2];
             }
 
             Area_Wall = Construction_AreaSum[1]; //외벽 면적
@@ -352,7 +371,7 @@ namespace main.contents
         {
             String 존유형;
 
-            string[][] ZoneE = Program.DB.getValue(DB.type.CalcDB, "ZoneEnvelope", "존,외피유형", "존='" + SelectZone + "'");
+            string[][] ZoneE = Program.DB.getValue(DB.type.CalcDB, "ZoneEnvelope", "존,외피유형", "존='" + ZoneNum + "'");
             int[] Construction_Count = new int[8];
             int i = -1;
             while (++i < ZoneE.Length)
@@ -411,13 +430,12 @@ namespace main.contents
             double AreaDirect_total = 0;
 
             //외피별, 직접외기 면적 정보 불러오기
-            string[][] ZoneE = Program.DB.getValue(DB.type.CalcDB, "ZoneEnvelope", "번호,기호,층,존,외피유형,면적,직접간접", "존='" + SelectZone + "' AND 직접간접='직접외기'");
+            string[][] ZoneE = Program.DB.getValue(DB.type.CalcDB, "ZoneEnvelope", "번호,기호,층,존,외피유형,면적,직접간접", "존='" + ZoneNum + "' AND 직접간접='직접외기'");
             int i = -1;
             while (++i < ZoneE.Length)
             { AreaDirect_total += Convert.ToDouble(ZoneE[i][5]); }
 
             n50 = AreaDirect_total * q50 / (Area_Slab * 2.5); //원래 순체적으로 해야하는데 지금은 그냥 임의로 계산로 함  
-            MessageBox.Show(n50.ToString());
 
             return n50;
 

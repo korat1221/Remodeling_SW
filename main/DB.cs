@@ -65,6 +65,7 @@ namespace main
             {"ZoneWin_Shadow", "CREATE TABLE ZoneWin_Shadow (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
             {"ZoneWin_a", "CREATE TABLE ZoneWin_a (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
             {"ZoneCW_shadow", "CREATE TABLE ZoneCW_shadow (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            {"ZoneGeneral", "CREATE TABLE ZoneGeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),존이름 VARCHAR (32),층 VARCHAR (32),길이 VARCHAR (32),깊이 VARCHAR (32),바닥면적 VARCHAR (32),용도프로필 VARCHAR (32),천장고 VARCHAR (32),시작시간 VARCHAR (32),종료시간 VARCHAR (32),주이용일 VARCHAR (32),재실자수 VARCHAR (32),기기발열수준 VARCHAR (32),일일급탕요구량 VARCHAR (32),냉난방시간 VARCHAR (32),사용시간 VARCHAR (32),공조시간 VARCHAR (32),연이용일수 VARCHAR (32),재실밀도 VARCHAR (32),재실수준 VARCHAR (32),일일인체발열 VARCHAR (32),면적당인체발열 VARCHAR (32),일일기기발열 VARCHAR (32),면적당기기발열 VARCHAR (32),순체적 VARCHAR (32),환기횟수 VARCHAR (32),환기량 VARCHAR (32))"},
             {"ZoneEnvelope", "CREATE TABLE ZoneEnvelope (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),기호 VARCHAR (32),층 VARCHAR (32),존 VARCHAR (32),외피유형 VARCHAR (32),커튼월부위 VARCHAR (32),면적 VARCHAR (32),인접존 VARCHAR (32),방위 VARCHAR (32),기울기 VARCHAR (32),우측면돌출 VARCHAR (32),좌측면돌출 VARCHAR (32),상부돌출 VARCHAR (32),주변요소 VARCHAR (32),구조체 VARCHAR (32),Ueff VARCHAR (32),α VARCHAR (32),g VARCHAR (32),직접간접 VARCHAR (32))"},
             {"ZoneCW_a", "CREATE TABLE ZoneCW_a (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"}
         };
@@ -152,6 +153,31 @@ namespace main
                 calcDB.Dispose();
             }
         }
+
+        public void initTable (type dbType, string table)
+        {
+            try
+            {
+                createTable(dbType, table, tables[table]);
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+
+        public void initTables (type dbType)
+        {
+            try
+            {
+                foreach (var table in tables)
+                {
+                    createTable(dbType, table.Key, table.Value);
+                }
+            }
+            catch (Exception e) { }
+        }
+
         public void executeSQL(type dbType, string exec)
         {
             if (exec != "")
@@ -271,7 +297,7 @@ namespace main
         {
             try
             {
-                createTable(dbType, table, tables[table]);
+               // createTable(dbType, table, tables[table]);
 
                 string[] cols = columns.Split(',');
                 string[] vals = values.Split(',');

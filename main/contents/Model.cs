@@ -15,8 +15,6 @@ namespace main.contents
         public Model()
         {
             InitializeComponent();
-            int k = 0;
-            ZoneGeneral zoneGeneral = new ZoneGeneral();
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)

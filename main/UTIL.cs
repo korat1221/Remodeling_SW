@@ -18,9 +18,21 @@ namespace main
                 arr[i] = arr[i].Trim();
             }
         }
+        public String SelectedItem_ByComboBox(ComboBox comboBox)
+        {
+            String Value = "";
+            DataRowView? item = comboBox.SelectedItem as DataRowView;
 
+            if (item != null && item.Row.ItemArray.Length >= 3)
+            {
+               
+                Value = item.Row.ItemArray[0].ToString();
+            }
 
-       public String GetValue_BySelectComboBox(ComboBox comboBox, String 테이블명, String 선택컬럼명, String 찾는컬럼명)
+            return Value;
+        }
+
+        public String GetValue_BySelectComboBox(ComboBox comboBox, String 테이블명, String 선택컬럼명, String 찾는컬럼명)
         {
             String Value = "";
             DataRowView? item = comboBox.SelectedItem as DataRowView;
