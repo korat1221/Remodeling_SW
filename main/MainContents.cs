@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.subcontents;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,10 +22,12 @@ namespace main
             ZoneGeneral,
             ZoneEnvelope,
             Model,
-            FormDebug
-        }
+            ConstructionWindow,
+            FormDebug,
 
-        Form[] forms = new Form[] { new ConstructionWall(), new ConstructionRoof(), new ZoneGeneral(), new ZoneEnvelope(), new Model(), new FormDebug() };
+        }
+        Form[] forms = new Form[] { new ConstructionWall(), new ConstructionRoof(), new ZoneGeneral(), new ZoneEnvelope(), new Model(), new ConstructionWindow(),  new FormDebug() };
+
 
         public MainContents()
         {
@@ -143,6 +146,23 @@ namespace main
                         forms[i].Hide();
                     }
                     forms[(int)FormID.Model].Show();
+                    return;
+                }
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            foreach (FormMain openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "FormMain")
+                {
+                    int i = -1;
+                    while (++i < forms.Length)
+                    {
+                        forms[i].Hide();
+                    }
+                    forms[(int)FormID.ConstructionWindow].Show();
                     return;
                 }
             }

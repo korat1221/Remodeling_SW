@@ -1366,7 +1366,7 @@ namespace main.contents
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 88;
             Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = false;
+            Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
             // 
             // label55

@@ -64,7 +64,7 @@
             button1.Name = "button1";
             button1.Size = new Size(80, 25);
             button1.TabIndex = 0;
-            button1.Text = "구조체";
+            button1.Text = "외벽";
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
@@ -77,7 +77,7 @@
             button2.Name = "button2";
             button2.Size = new Size(80, 25);
             button2.TabIndex = 1;
-            button2.Text = "창호";
+            button2.Text = "지붕";
             button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
             // 
@@ -212,8 +212,9 @@
             button6.Name = "button6";
             button6.Size = new Size(80, 25);
             button6.TabIndex = 12;
-            button6.Text = "지중벽";
+            button6.Text = "창호";
             button6.UseVisualStyleBackColor = false;
+            button6.Click += button6_Click;
             // 
             // button7
             // 
