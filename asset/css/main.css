@@ -1,0 +1,239 @@
+html,body { 
+   padding: 0; 
+   margin: 0; 
+   border: 0; 
+   height: 100%;
+   overflow: hidden;
+} 
+.cont-main {
+    width:1700px;
+    height: calc(100% - 210px);
+    padding:16px;
+    display: inline-block;
+}
+
+.cont-main > div {
+    height:100%;
+}
+
+.split {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.gutter {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+.gutter.gutter-horizontal {
+    cursor: col-resize;
+    background-image: url('../grips/vertical.png');
+}
+
+.gutter.gutter-vertical {
+    cursor: row-resize;
+    background-image: url('../grips/horizontal.png');
+}
+
+.split.split-horizontal, .gutter.gutter-horizontal {
+    height: 100%;
+    float: left;
+}
+
+.cls-border {
+    border: solid 1px #aaa;
+    border-radius: 4px;
+}
+
+.cont-item {
+    padding:10px;
+}
+
+.cont-icon {
+    width:96px;
+    height:96px;
+    background-size: contain;
+    cursor:pointer;
+}
+
+.cont-title {
+    cursor:pointer;
+    text-align: center;
+}
+
+.cls-list {
+    width:100%;
+    border-collapse: collapse;
+}
+
+.cls-link {
+    cursor: pointer;
+    color: blue;
+    text-decoration-line: underline;
+}
+
+.cls-list > tbody > tr {
+    border-bottom: 1px solid #dedede;
+}
+
+.cls-list > tbody > tr > th, .cls-list > tbody > tr > td {
+    text-align: center;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.cls-table > tbody > tr > td {
+    padding:8px;
+    white-space: nowrap;
+}
+
+.cls-table > tbody > tr > td:nth-child(1), .cls-table > tbody > tr > td:nth-child(3) {
+    width:136px;
+}
+
+.cls-table {
+    table-layout: fixed;
+}
+
+.cls-list > tbody > tr:nth-child(1) {
+    background-color: #eee;
+    height: 48px;
+}
+
+.jstree-node {
+    padding-top: 4px !important;
+}
+
+.cls-list-title {
+    float: left;
+    font-size: 18pt;
+    padding: 12px;
+    font-weight:bold;
+}
+
+.cls-list-buttons {
+    float:right;
+    line-height: 48px;
+    display: inline-block;
+}
+
+.cls-list-buttons > button {
+    vertical-align: bottom;
+}
+
+button {
+    cursor:pointer;
+    box-shadow: 1px 1px 1px #ccc;
+    border:1px solid #aaa;
+    border-radius: 4px;
+    padding:4px;
+    padding-left:16px;
+    padding-right:16px;
+    background-color: #fff; 
+}
+
+.cls-button {
+    color:#fff;
+    background-color: #7d7d7d; 
+    font-weight:bold;
+}
+
+input, select {
+    border:1px solid #ddd;
+    padding:4px;
+}
+.item0 {
+    background-image: url(proj.png);
+}
+.item0:hover {
+    background-image: url(proj_on.png);
+}
+.item1 {
+    background-image: url(stru.png);
+}
+.item1:hover {
+    background-image: url(stru_on.png);
+}
+.item2 {
+    background-image: url(3d.png);
+}
+.item2:hover {
+    background-image: url(3d_on.png);
+}
+.item3 {
+    background-image: url(room.png);
+}
+.item3:hover {
+    background-image: url(room_on.png);
+}
+.item4 {
+    background-image: url(result.png);
+}
+.item4:hover {
+    background-image: url(result_on.png);
+}
+
+.jstree-default .jstree-node {
+    margin-left: 12px !important;
+}
+
+.cls-number {
+    width:calc(100% - 64px) !important;
+}
+
+.cls-popup-btn {
+    background-image: url(/apps/si/passive/img/popup.svg);
+    width:26px;
+    height:26px;
+    cursor:pointer;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+} 
+
+.cls-edit-btn {
+    background-image: url(/apps/si/passive/img/edit.svg);
+    width:26px;
+    height:26px;
+    cursor:pointer;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+} 
+
+.cls-next {
+    background-image: url(/apps/si/passive/img/next.svg);
+} 
+
+.cls-prev {
+    background-image: url(/apps/si/passive/img/prev.svg);
+} 
+
+.cls-slide {
+    width:26px;
+    height:26px;
+    cursor:pointer;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    top: calc(50% - 13px);
+    z-index: 10000;
+} 
+
+.cls-upload-btn {
+    background-image: url(/apps/si/passive/img/upload.png);
+    width:32px;
+    height:32px;
+    cursor:pointer;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    z-index: 10000;
+} 

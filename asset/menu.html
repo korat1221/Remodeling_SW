@@ -1,0 +1,92 @@
+<html>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="js/jstree/themes/default/style.min.css" />
+    <script type='text/javascript' src="js/jquery-3.6.0.min.js"></script>
+    <script type='text/javascript' src="js/jstree/jstree.js"></script>
+    <script type='text/javascript' src="js/util.js"></script>
+    <script type='text/javascript' src="js/main.js"></script>
+    <script>
+
+        function load(menuID) {
+            switch(menuID) {
+                case 0:
+                    break;
+                case 1:
+                    gMainTree.load([
+                        { "text" : "3D 모델", "id" : "4" }
+                    ], "4");
+                    break;
+                case 2:
+                    gMainTree.load([
+                        { "text" : "외벽", "id" : "result.php", "children":[{"text": "W1","id": "0"}]},
+                        { "text" : "지붕", "id" : "print.php", "children":[{"text": "R1","id": "1"}]},
+                        { "text" : "창호", "id" : "result.php?dummy=", "children":[{"text": "WN1","id": "5"}]},
+                    ], "0");
+                    break;
+                case 3:
+                    gMainTree.load([
+                        { "text" : "존외피", "id" : "3" }
+                    ], "3");
+                    break;
+                case 4:
+                    gMainTree.load([
+                        { "text" : "용도프로필", "id" : "2" }
+                    ], "2");
+                    break;
+                case 5:
+                    break;
+            }
+
+            let icons = [
+                {"normal":"url(images/proj.png)","active":"url(images/proj_on.png)"},
+                {"normal":"url(images/3d.png)","active":"url(images/3d_on.png)"},
+                {"normal":"url(images/stru.png)","active":"url(images/stru_on.png)"},
+                {"normal":"url(images/stru.png)","active":"url(images/stru_on.png)"},
+                {"normal":"url(images/room.png)","active":"url(images/room_on.png)"},
+                {"normal":"url(images/result.png)","active":"url(images/result_on.png)"},
+            ];
+
+            icons.forEach((el, idx) => {
+                $('.item' + idx).css('background-image',el.normal);
+            });
+
+            $('.item' + menuID).css('background-image',icons[menuID].active);
+
+        }
+
+    </script>
+    <body oncontextmenu="return false;" onload="load(2)">
+        <div id="cont-left" class="split split-horizontal" style="width:320px;padding:4px">
+            <div id="cont-menu" style="width:125px;float:left;height: calc(100% - 16px);background-color: #B5C2CB;padding-top: 16px;border-radius: 4px;box-shadow: 2px 2px 2px 2px #eee;color:#fff">
+                <div class="cont-item" onclick="load(0)">
+                    <div class="cont-icon item0" style="background-image: url('images/proj_on.png');"></div>
+                    <div class="cont-title">건물 정보</div>
+                </div>
+                <div class="cont-item" onclick="load(1)">
+                    <div class="cont-icon item1" style="background-image: url('images/3d.png');"></div>
+                    <div class="cont-title">3D 모델</div>
+                </div>
+                <div class="cont-item" onclick="load(2)">
+                    <div class="cont-icon item2" style="background-image: url('images/stru.png');"></div>
+                    <div class="cont-title">구조체 정보</div>
+                </div>
+                <div class="cont-item" onclick="load(3)">
+                    <div class="cont-icon item3" style="background-image: url('images/stru.png');"></div>
+                    <div class="cont-title">존 정보</div>
+                </div>
+                <div class="cont-item" onclick="load(4)">
+                    <div class="cont-icon item4" style="background-image: url('images/room.png');"></div>
+                    <div class="cont-title">설비영역 정보</div>
+                </div>
+                <div class="cont-item" onclick="load(5)">
+                    <div class="cont-icon item5" style="background-image: url('images/result.png');"></div>
+                    <div class="cont-title">결과 정보</div>
+                </div>
+                <div class="cont-item" onclick="window.chrome.webview.postMessage('6')">
+                    <div class="cont-title">디버그</div>
+                </div>
+            </div>
+            <div id="cont-tree" style="width:calc(100% - 125px);float:left;height:100%;padding-top: 16px;padding-bottom: 16px;overflow:auto"></div>
+        </div>
+    </body>
+</html>
