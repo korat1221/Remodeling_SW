@@ -1,5 +1,6 @@
 ﻿using main.contents;
 using main.subcontents;
+using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,12 +27,18 @@ namespace main
             FormDebug,
 
         }
-        Form[] forms = new Form[] { new ConstructionWall(), new ConstructionRoof(), new ZoneGeneral(), new ZoneEnvelope(), new Model(), new ConstructionWindow(),  new FormDebug() };
+        Form[] forms = new Form[] { new ConstructionWall(), new ConstructionRoof(), new ZoneGeneral(), new ZoneEnvelope(), new Model(), new ConstructionWindow(), new FormDebug() };
 
 
         public MainContents()
         {
             InitializeComponent();
+
+            webView21.Source = new Uri(Program.gPath + "menu.html");
+            webView21.Location.Offset(0, 0);
+            webView21.Size = this.ClientSize;
+
+            InitializeAsync();
 
             foreach (FormMain openForm in Application.OpenForms)
             {
@@ -41,7 +48,7 @@ namespace main
                     while (++i < forms.Length)
                     {
                         forms[i].TopLevel = false;
-                        openForm.splitContainer2.Panel1.Controls.Add(forms[i]);
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[i]);
                     }
 
                     return;
@@ -49,123 +56,44 @@ namespace main
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        async void InitializeAsync()
         {
-            foreach (FormMain openForm in Application.OpenForms)
+            await webView21.EnsureCoreWebView2Async(null);
+            webView21.CoreWebView2.WebMessageReceived += OnJSMessage;
+        }
+        void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
+        {
+            int idx = Int32.Parse(args.TryGetWebMessageAsString());
+
+            if (idx >= 0 && idx < 7)
             {
-                if (openForm.Name == "FormMain")
-                {
-                    int i = -1;
-                    while (++i < forms.Length)
-                    {
-                        forms[i].Hide();
-                    }
-                    forms[(int)FormID.ConstructionWall].Show();
-                    return;
-                }
+                DoLoadForm(idx);
+            }
+        }
+        void DoLoadForm(int idx)
+        {
+            int i = -1;
+            while (++i < forms.Length)
+            {
+                forms[i].Hide();
+            }
+            forms[idx].Show();
+        }
+
+        public void DoResizeMain(Size sz)
+        {
+            int i = -1;
+            while (++i < forms.Length)
+            {
+                forms[i].Size = sz;
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void OnResize(object sender, EventArgs e)
         {
-            foreach (FormMain openForm in Application.OpenForms)
-            {
-                if (openForm.Name == "FormMain")
-                {
-                    int i = -1;
-                    while (++i < forms.Length)
-                    {
-                        forms[i].Hide();
-                    }
-                    forms[(int)FormID.ConstructionRoof].Show();
-                    return;
-                }
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            foreach (FormMain openForm in Application.OpenForms)
-            {
-                if (openForm.Name == "FormMain")
-                {
-                    int i = -1;
-                    while (++i < forms.Length)
-                    {
-                        forms[i].Hide();
-                    }
-                    forms[(int)FormID.ZoneGeneral].Show();
-                    return;
-                }
-            }
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            foreach (FormMain openForm in Application.OpenForms)
-            {
-                if (openForm.Name == "FormMain")
-                {
-                    int i = -1;
-                    while (++i < forms.Length)
-                    {
-                        forms[i].Hide();
-                    }
-                    forms[(int)FormID.FormDebug].Show();
-                    return;
-                }
-            }
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            foreach (FormMain openForm in Application.OpenForms)
-            {
-                if (openForm.Name == "FormMain")
-                {
-                    int i = -1;
-                    while (++i < forms.Length)
-                    {
-                        forms[i].Hide();
-                    }
-                    forms[(int)FormID.ZoneEnvelope].Show();
-                    return;
-                }
-            }
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            foreach (FormMain openForm in Application.OpenForms)
-            {
-                if (openForm.Name == "FormMain")
-                {
-                    int i = -1;
-                    while (++i < forms.Length)
-                    {
-                        forms[i].Hide();
-                    }
-                    forms[(int)FormID.Model].Show();
-                    return;
-                }
-            }
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            foreach (FormMain openForm in Application.OpenForms)
-            {
-                if (openForm.Name == "FormMain")
-                {
-                    int i = -1;
-                    while (++i < forms.Length)
-                    {
-                        forms[i].Hide();
-                    }
-                    forms[(int)FormID.ConstructionWindow].Show();
-                    return;
-                }
-            }
+            webView21.Location.Offset(0, 0);
+            webView21.Size = this.ClientSize;
+            webView21.Height = webView21.Size.Height - 4;
         }
 
     }

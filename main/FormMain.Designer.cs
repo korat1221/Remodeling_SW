@@ -29,39 +29,22 @@
         private void InitializeComponent()
         {
             splitContainer1 = new SplitContainer();
-            splitContainer2 = new SplitContainer();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
-            splitContainer2.SuspendLayout();
             SuspendLayout();
             // 
             // splitContainer1
             // 
-            splitContainer1.BorderStyle = BorderStyle.Fixed3D;
             splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.FixedPanel = FixedPanel.Panel1;
+            splitContainer1.IsSplitterFixed = true;
             splitContainer1.Location = new Point(0, 0);
             splitContainer1.Name = "splitContainer1";
             splitContainer1.Panel1MinSize = 200;
-            // 
-            // splitContainer1.Panel2
-            // 
-            splitContainer1.Panel2.Controls.Add(splitContainer2);
             splitContainer1.Size = new Size(1259, 861);
-            splitContainer1.SplitterDistance = 225;
+            splitContainer1.SplitterDistance = 325;
             splitContainer1.TabIndex = 0;
-            // 
-            // splitContainer2
-            // 
-            splitContainer2.BorderStyle = BorderStyle.Fixed3D;
-            splitContainer2.Dock = DockStyle.Fill;
-            splitContainer2.Location = new Point(0, 0);
-            splitContainer2.Name = "splitContainer2";
-            splitContainer2.Panel1MinSize = 800;
-            splitContainer2.Size = new Size(1030, 861);
-            splitContainer2.SplitterDistance = 800;
-            splitContainer2.TabIndex = 0;
+            splitContainer1.Resize += OnResize;
             // 
             // FormMain
             // 
@@ -73,17 +56,13 @@
             Text = "FormMain";
             FormClosed += OnClosed;
             Load += FormMain_Load;
-            splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
-            splitContainer2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         public SplitContainer splitContainer1;
-        public SplitContainer splitContainer2;
     }
 }

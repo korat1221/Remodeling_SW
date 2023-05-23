@@ -31,8 +31,10 @@
             panel2 = new Panel();
             AdditionalPanel = new Panel();
             dataGridView1 = new DataGridView();
+            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             AdditionalPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
             // panel2
@@ -48,6 +50,7 @@
             // 
             AdditionalPanel.BackColor = Color.White;
             AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
+            AdditionalPanel.Controls.Add(webView21);
             AdditionalPanel.Controls.Add(dataGridView1);
             AdditionalPanel.Location = new Point(12, 88);
             AdditionalPanel.Name = "AdditionalPanel";
@@ -63,6 +66,18 @@
             dataGridView1.Size = new Size(883, 558);
             dataGridView1.TabIndex = 0;
             // 
+            // webView21
+            // 
+            webView21.AllowExternalDrop = true;
+            webView21.CreationProperties = null;
+            webView21.DefaultBackgroundColor = Color.White;
+            webView21.Location = new Point(66, 42);
+            webView21.Name = "webView21";
+            webView21.Size = new Size(786, 478);
+            webView21.Source = new Uri("http://localhost:3000", UriKind.Absolute);
+            webView21.TabIndex = 1;
+            webView21.ZoomFactor = 1D;
+            // 
             // Model
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -76,6 +91,7 @@
             Text = "Form3";
             AdditionalPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
         }
 
@@ -83,5 +99,6 @@
         private Panel panel2;
         private Panel AdditionalPanel;
         private DataGridView dataGridView1;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
     }
 }

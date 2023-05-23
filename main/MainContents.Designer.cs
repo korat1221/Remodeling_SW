@@ -30,8 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainContents));
-            button1 = new Button();
-            button2 = new Button();
             imageList1 = new ImageList(components);
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
@@ -40,12 +38,7 @@
             pictureBox5 = new PictureBox();
             pictureBox6 = new PictureBox();
             pictureBox7 = new PictureBox();
-            button3 = new Button();
-            button4 = new Button();
-            button5 = new Button();
-            button6 = new Button();
-            button7 = new Button();
-            button8 = new Button();
+            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -53,33 +46,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
-            // 
-            // button1
-            // 
-            button1.BackColor = SystemColors.InactiveBorder;
-            button1.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Location = new Point(48, 75);
-            button1.Name = "button1";
-            button1.Size = new Size(80, 25);
-            button1.TabIndex = 0;
-            button1.Text = "외벽";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
-            // 
-            // button2
-            // 
-            button2.BackColor = SystemColors.InactiveBorder;
-            button2.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Location = new Point(48, 174);
-            button2.Name = "button2";
-            button2.Size = new Size(80, 25);
-            button2.TabIndex = 1;
-            button2.Text = "지붕";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
             // 
             // imageList1
             // 
@@ -97,7 +65,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(12, 71);
+            pictureBox1.Location = new Point(448, 27);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(30, 30);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -107,7 +75,7 @@
             // pictureBox2
             // 
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(12, 170);
+            pictureBox2.Location = new Point(448, 126);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(30, 30);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
@@ -117,7 +85,7 @@
             // pictureBox3
             // 
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(12, 269);
+            pictureBox3.Location = new Point(448, 225);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(30, 30);
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
@@ -127,7 +95,7 @@
             // pictureBox4
             // 
             pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
-            pictureBox4.Location = new Point(12, 368);
+            pictureBox4.Location = new Point(448, 324);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(30, 30);
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
@@ -137,7 +105,7 @@
             // pictureBox5
             // 
             pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
-            pictureBox5.Location = new Point(12, 467);
+            pictureBox5.Location = new Point(448, 423);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(30, 30);
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
@@ -147,7 +115,7 @@
             // pictureBox6
             // 
             pictureBox6.Image = (Image)resources.GetObject("pictureBox6.Image");
-            pictureBox6.Location = new Point(12, 566);
+            pictureBox6.Location = new Point(448, 522);
             pictureBox6.Name = "pictureBox6";
             pictureBox6.Size = new Size(30, 30);
             pictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
@@ -157,102 +125,31 @@
             // pictureBox7
             // 
             pictureBox7.Image = (Image)resources.GetObject("pictureBox7.Image");
-            pictureBox7.Location = new Point(12, 665);
+            pictureBox7.Location = new Point(448, 621);
             pictureBox7.Name = "pictureBox7";
             pictureBox7.Size = new Size(30, 30);
             pictureBox7.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox7.TabIndex = 8;
             pictureBox7.TabStop = false;
             // 
-            // button3
+            // webView21
             // 
-            button3.BackColor = SystemColors.InactiveBorder;
-            button3.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Location = new Point(48, 273);
-            button3.Name = "button3";
-            button3.Size = new Size(80, 25);
-            button3.TabIndex = 9;
-            button3.Text = "용도프로필";
-            button3.UseVisualStyleBackColor = false;
-            button3.Click += button3_Click;
-            // 
-            // button4
-            // 
-            button4.BackColor = SystemColors.InactiveBorder;
-            button4.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            button4.FlatStyle = FlatStyle.Flat;
-            button4.Location = new Point(48, 372);
-            button4.Name = "button4";
-            button4.Size = new Size(80, 25);
-            button4.TabIndex = 10;
-            button4.Text = "존외피";
-            button4.UseVisualStyleBackColor = false;
-            button4.Click += button4_Click;
-            // 
-            // button5
-            // 
-            button5.BackColor = SystemColors.InactiveBorder;
-            button5.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            button5.FlatStyle = FlatStyle.Flat;
-            button5.Location = new Point(48, 471);
-            button5.Name = "button5";
-            button5.Size = new Size(80, 25);
-            button5.TabIndex = 11;
-            button5.Text = "3D모델";
-            button5.UseVisualStyleBackColor = false;
-            button5.Click += button5_Click;
-            // 
-            // button6
-            // 
-            button6.BackColor = SystemColors.InactiveBorder;
-            button6.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            button6.FlatStyle = FlatStyle.Flat;
-            button6.Location = new Point(48, 570);
-            button6.Name = "button6";
-            button6.Size = new Size(80, 25);
-            button6.TabIndex = 12;
-            button6.Text = "창호";
-            button6.UseVisualStyleBackColor = false;
-            button6.Click += button6_Click;
-            // 
-            // button7
-            // 
-            button7.BackColor = SystemColors.InactiveBorder;
-            button7.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            button7.FlatStyle = FlatStyle.Flat;
-            button7.Location = new Point(48, 669);
-            button7.Name = "button7";
-            button7.Size = new Size(80, 25);
-            button7.TabIndex = 13;
-            button7.Text = "출입문";
-            button7.UseVisualStyleBackColor = false;
-            // 
-            // button8
-            // 
-            button8.BackColor = SystemColors.InactiveBorder;
-            button8.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            button8.FlatStyle = FlatStyle.Flat;
-            button8.Location = new Point(33, 748);
-            button8.Name = "button8";
-            button8.Size = new Size(80, 25);
-            button8.TabIndex = 14;
-            button8.Text = "디버그";
-            button8.UseVisualStyleBackColor = false;
-            button8.Click += button8_Click;
+            webView21.AllowExternalDrop = true;
+            webView21.CreationProperties = null;
+            webView21.DefaultBackgroundColor = Color.White;
+            webView21.Location = new Point(0, 2);
+            webView21.Name = "webView21";
+            webView21.Size = new Size(255, 754);
+            webView21.TabIndex = 15;
+            webView21.ZoomFactor = 1D;
             // 
             // MainContents
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(150, 800);
-            Controls.Add(button8);
-            Controls.Add(button7);
-            Controls.Add(button6);
-            Controls.Add(button5);
-            Controls.Add(button4);
-            Controls.Add(button3);
+            ClientSize = new Size(566, 800);
+            Controls.Add(webView21);
             Controls.Add(pictureBox7);
             Controls.Add(pictureBox6);
             Controls.Add(pictureBox5);
@@ -260,8 +157,6 @@
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
-            Controls.Add(button2);
-            Controls.Add(button1);
             FormBorderStyle = FormBorderStyle.None;
             MaximizeBox = false;
             MdiChildrenMinimizedAnchorBottom = false;
@@ -271,6 +166,7 @@
             ShowInTaskbar = false;
             SizeGripStyle = SizeGripStyle.Hide;
             Text = "Form2";
+            Resize += OnResize;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
@@ -278,13 +174,11 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Button button1;
-        private Button button2;
         private ImageList imageList1;
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
@@ -293,11 +187,6 @@
         private PictureBox pictureBox5;
         private PictureBox pictureBox6;
         private PictureBox pictureBox7;
-        private Button button3;
-        private Button button4;
-        private Button button5;
-        private Button button6;
-        private Button button7;
-        private Button button8;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
     }
 }
