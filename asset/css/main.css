@@ -239,7 +239,8 @@ input, select {
     z-index: 10000;
 } 
 
-.cls-strut-icon {
-    background-image: url(images/model.svg);
+.cls-model-icon {
+    background-image: url(../images/model.svg) !important;
     margin-right: 6px !important;
 }
+

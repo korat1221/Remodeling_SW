@@ -18,7 +18,7 @@
                 case 1:
                     gMainTree.load([
                         { "text" : "커튼월창", "id" : "CW", "children":[{"text": "C1","id": "2"}]},
-                        { "text" : "외벽", "id" : "Wall", "children":[{"text": "W1","id": "3"}]},
+                        { "type":"model", "text" : "외벽", "id" : "Wall", "children":[{"text": "W1","id": "3"}]},
                         { "text" : "지붕", "id" : "Roof", "children":[{"text": "C1","id": "4"}]},
                         { "text" : "최하층바닥","id" :  "Floor", "children":[{"text": "C1","id": "5"}]},
                         { "text" : "창호", "id" : "Win", "children":[{"text": "WN1","id": "6"}]},
@@ -85,7 +85,7 @@
         }
 
     </script>
-    <body oncontextmenu="return false;" onload="load(0)">
+    <body onload="load(0)">
         <div id="cont-left" class="split split-horizontal" style="width:320px;padding:4px">
             <div id="cont-menu" style="width:125px;float:left;height: calc(100% - 16px);background-color: #B5C2CB;padding-top: 16px;border-radius: 4px;box-shadow: 2px 2px 2px 2px #eee;color:#fff">
                 <div class="cont-item" onclick="load(0)">

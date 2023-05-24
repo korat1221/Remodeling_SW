@@ -11,13 +11,22 @@ class MainTree {
         this.loading = true;
 
         if (this.tree) {
-            this.tree.removeData();
+            $('#cont-tree').jstree(true).destroy();
         }
         this.tree = $('#cont-tree').jstree({
             'core' : {
-                'themes':{"dots":false, icons : false},
+                'themes':{"dots":false, icons : true},
                 'data' : data
-            }
+            },
+            "types" : {
+                "default" : {
+                    "icon" :false
+                },
+                "model" : {
+                    "icon" : "cls-model-icon"
+                },
+            },
+            "plugins" : [ "types" ]
         }).on('changed.jstree', function (e, data) {
             if (!that.loading && that.onSelect && data.selected.length > 0) {
                 that.onSelect(data.instance.get_node(data.selected[0]).id);
