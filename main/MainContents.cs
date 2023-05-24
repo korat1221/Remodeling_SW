@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.contents.Building;
 using main.subcontents;
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -18,16 +19,45 @@ namespace main
     {
         public enum FormID
         {
-            ConstructionWall = 0,
+            General =0,
+            EnergyUse,
+            ConstructionCW,
+            ConstructionWall,
             ConstructionRoof,
+            ConstructionFloor,
+            ConstructionWindow,
+            ConstructionDoor,
+            Model,
+            Shade,
+            Blind,
+            ThermalBridge,
             ZoneGeneral,
             ZoneEnvelope,
-            Model,
-            ConstructionWindow,
+            ZoneLighting,
+            ZoneSystem,
+            EquipmentList,
+            AHUSystem,
+            DHWSystem,
+            HeatingSystem,
+            CoolingSystem,
+            PV,
+            FuelCell,
+            WindPower,
+            SupplyRate,
+            EIndependenceRatio,
+            ReportExisting,
+            ReportRemodeling,
             FormDebug,
 
         }
-        Form[] forms = new Form[] { new ConstructionWall(), new ConstructionRoof(), new ZoneGeneral(), new ZoneEnvelope(), new Model(), new ConstructionWindow(), new FormDebug() };
+        Form[] forms = new Form[] { new General(), new EnergyUse(), 
+            new ConstructionCW(), new ConstructionWall(), new ConstructionRoof(), new ConstructionFloor(), new ConstructionWindow(), new ConstructionDoor(), 
+            new Model(), new Shade(), new Blind(), new ThermalBridge(), 
+            new ZoneGeneral(), new ZoneEnvelope(), new ZoneLighting(), new ZoneSystem(),
+            new EquipmentList(),new AHUSystem(), new DHWSystem(), new HeatingSystem(), new CoolingSystem(),
+            new PV(), new FuelCell(), new WindPower(), new SupplyRatio(), new EIndependenceRate(),
+            new ReportExisting(), new ReportRemodeling(),
+            new FormDebug() };
 
 
         public MainContents()
@@ -65,7 +95,7 @@ namespace main
         {
             int idx = Int32.Parse(args.TryGetWebMessageAsString());
 
-            if (idx >= 0 && idx < 7)
+            if (idx >= 0 && idx < 28)
             {
                 DoLoadForm(idx);
             }

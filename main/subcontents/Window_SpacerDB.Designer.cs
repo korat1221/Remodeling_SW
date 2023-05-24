@@ -120,7 +120,7 @@
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Spacer_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             Spacer_dataGridView.RowTemplate.Height = 25;
-            Spacer_dataGridView.Size = new Size(745, 372);
+            Spacer_dataGridView.Size = new Size(745, 143);
             Spacer_dataGridView.TabIndex = 19;
             Spacer_dataGridView.CellContentClick += Spacer_dataGridView_CellContentClick;
             // 
@@ -128,7 +128,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(594, 599);
+            Save_button.Location = new Point(602, 321);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -140,7 +140,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(749, 695);
+            ClientSize = new Size(749, 355);
             Controls.Add(Save_button);
             Controls.Add(Spacer_dataGridView);
             Controls.Add(GeneralPanel);

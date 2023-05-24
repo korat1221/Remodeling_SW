@@ -67,7 +67,7 @@ namespace main
             {"ZoneCW_shadow", "CREATE TABLE ZoneCW_shadow (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
             {"Select_WindowFrame", "CREATE TABLE Select_WindowFrame (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),제품명 VARCHAR (32),제조사 VARCHAR (32),프레임종류 VARCHAR (32),프레임재료 VARCHAR (32),개폐부프레임열관류율 VARCHAR (32),고정부프레임열관류율 VARCHAR (32),중간바프레임열관류율 VARCHAR (32),개폐부프레임두께 VARCHAR (32),고정부프레임두께 VARCHAR (32),중간바프레임두께 VARCHAR (32))"},
             {"Select_WindowGlass", "CREATE TABLE Select_WindowGlass (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),제품명 VARCHAR (32),제조사 VARCHAR (32),복층_삼중_단창 VARCHAR (32),아르곤_공기 VARCHAR (32),LE_CL_V VARCHAR (32),열관류율 VARCHAR (32),태양열취득율 VARCHAR (32),빛투과율 VARCHAR (32),외부반사율 VARCHAR (32),내부반사율 VARCHAR (32))"},
-            {"Select_WindowSpacer", "CREATE TABLE Select_WindowSpacer (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),제품명 VARCHAR (32),구분1 VARCHAR (32),구분2 VARCHAR (32),구분3 VARCHAR (32),고정유리_CL_선형열관류율 VARCHAR (32),개폐유리_CL_선형열관류율 VARCHAR (32),고정유리_LE_선형열관류율 VARCHAR (32),개폐유리_LE_선형열관류율 VARCHAR (32))"},
+            {"Select_WindowSpacer", "CREATE TABLE Select_WindowSpacer (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),제품명 VARCHAR (32),구분1 VARCHAR (32),구분2 VARCHAR (32),구분3 VARCHAR (32),고정유리_CL_선형열관류율 VARCHAR (32),개폐유리_CL_선형열관류율 VARCHAR (32),고정유리_LE_선형열관류율 VARCHAR (32),개폐유리_LE_선형열관류율 VARCHAR (32),LE_CL_V VARCHAR (32))"},
             {"Select_WindowInstall", "CREATE TABLE Select_WindowInstall (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),제품명 VARCHAR (32),구분1 VARCHAR (32),구분2 VARCHAR (32),구분3 VARCHAR (32),구분4 VARCHAR (32),상부설치선형열관류율 VARCHAR (32),측면설치선형열관류율 VARCHAR (32),하부설치선형열관류율 VARCHAR (32))"},
             {"ZoneGeneral", "CREATE TABLE ZoneGeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),존이름 VARCHAR (32),층 VARCHAR (32),길이 VARCHAR (32),깊이 VARCHAR (32),바닥면적 VARCHAR (32),용도프로필 VARCHAR (32),천장고 VARCHAR (32),시작시간 VARCHAR (32),종료시간 VARCHAR (32),주이용일 VARCHAR (32),재실자수 VARCHAR (32),기기발열수준 VARCHAR (32),일일급탕요구량 VARCHAR (32),냉난방시간 VARCHAR (32),사용시간 VARCHAR (32),공조시간 VARCHAR (32),연이용일수 VARCHAR (32),재실밀도 VARCHAR (32),재실수준 VARCHAR (32),일일인체발열 VARCHAR (32),면적당인체발열 VARCHAR (32),일일기기발열 VARCHAR (32),면적당기기발열 VARCHAR (32),순체적 VARCHAR (32),환기횟수 VARCHAR (32),환기량 VARCHAR (32))"},
             {"ZoneEnvelope", "CREATE TABLE ZoneEnvelope (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),기호 VARCHAR (32),층 VARCHAR (32),존 VARCHAR (32),외피유형 VARCHAR (32),커튼월부위 VARCHAR (32),면적 VARCHAR (32),인접존 VARCHAR (32),방위 VARCHAR (32),기울기 VARCHAR (32),우측면돌출 VARCHAR (32),좌측면돌출 VARCHAR (32),상부돌출 VARCHAR (32),주변요소 VARCHAR (32),구조체 VARCHAR (32),Ueff VARCHAR (32),α VARCHAR (32),g VARCHAR (32),직접간접 VARCHAR (32))"},
@@ -297,6 +297,7 @@ namespace main
             }
         }
 
+
         public void setValue(type dbType, string table, string columns, string values, string key_columns)
         {
             try
@@ -382,6 +383,39 @@ namespace main
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public void deleteValue(type dbType, string table)
+        {
+            try
+            {
+                // createTable(dbType, table, tables[table]);
+
+                SQLiteCommand cmd = new SQLiteCommand();
+
+
+                switch (dbType)
+                {
+                    case type.ProjDB:
+                        cmd.Connection = projDB;
+                        break;
+                    case type.CalcDB:
+                        cmd.Connection = calcDB;
+                        break;
+                }
+
+                string condition = "";
+
+                    cmd.CommandText = "delete from " + table;
+
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         public string[][] getValue(type dbType, string table, string columns, string conditions = "")
         {
             SQLiteCommand cmd = new SQLiteCommand();

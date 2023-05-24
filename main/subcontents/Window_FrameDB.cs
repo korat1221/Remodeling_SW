@@ -16,8 +16,9 @@ namespace main.subcontents
     public partial class Window_FrameDB : Form
     {
         String FrameType;
-        double Count_FrameDB;
+        public double Count_FrameDB;
         int SelectRow;
+
         public Window_FrameDB(String FrameType)
         {
             InitializeComponent();
@@ -82,12 +83,12 @@ namespace main.subcontents
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-
+            Program.DB.deleteValue(DB.type.CalcDB, "Select_WindowFrame");
             DataGridViewRow row = Frame_dataGridView.Rows[SelectRow];
             Program.DB.setValue(DB.type.CalcDB, "Select_WindowFrame", "번호,제품명,제조사,프레임종류,프레임재료,개폐부프레임열관류율,고정부프레임열관류율,중간바프레임열관류율,개폐부프레임두께,고정부프레임두께,중간바프레임두께",
-            "'" + row.Cells[0].Value.ToString() + "','" + row.Cells[1].Value.ToString() + "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','"
+            "'" + row.Cells[1].Value.ToString() + "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','"
             + row.Cells[5].Value.ToString() + "','" + row.Cells[6].Value.ToString() + "','" + row.Cells[7].Value.ToString() + "','" + row.Cells[8].Value.ToString() + "','" + row.Cells[9].Value.ToString() + "','"
-            + row.Cells[10].Value.ToString() + "'", "번호");
+            + row.Cells[10].Value.ToString() + "','" + row.Cells[11].Value.ToString() + "'", "번호");
 
             this.DialogResult = DialogResult.OK;
             this.Close();

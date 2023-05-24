@@ -78,12 +78,12 @@ namespace main.subcontents
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-
+            Program.DB.deleteValue(DB.type.CalcDB, "Select_WindowGlass");
             DataGridViewRow row = Frame_dataGridView.Rows[SelectRow];
             Program.DB.setValue(DB.type.CalcDB, "Select_WindowGlass", "번호,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율",
-            "'" + row.Cells[0].Value.ToString() + "','" + row.Cells[1].Value.ToString() + "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','"
-            + row.Cells[5].Value.ToString() + "','" + row.Cells[6].Value.ToString() + "','" + row.Cells[7].Value.ToString() + "','" + row.Cells[8].Value.ToString() + "','" + row.Cells[9].Value.ToString() + "','"
-            + row.Cells[10].Value.ToString() + "'", "번호");
+            "'" + row.Cells[1].Value.ToString() + "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','" + row.Cells[5].Value.ToString() + "','"
+            + row.Cells[6].Value.ToString() + "','" + row.Cells[7].Value.ToString() + "','" + row.Cells[8].Value.ToString() + "','" + row.Cells[9].Value.ToString() + "','" + row.Cells[10].Value.ToString() + "','"
+            + row.Cells[11].Value.ToString() + "'", "번호");
 
             this.DialogResult = DialogResult.OK;
             this.Close();

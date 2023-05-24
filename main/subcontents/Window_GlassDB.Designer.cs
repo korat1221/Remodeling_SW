@@ -128,7 +128,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(817, 606);
+            Save_button.Location = new Point(830, 550);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -140,7 +140,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(977, 695);
+            ClientSize = new Size(977, 583);
             Controls.Add(Save_button);
             Controls.Add(Frame_dataGridView);
             Controls.Add(GeneralPanel);

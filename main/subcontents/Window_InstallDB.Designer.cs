@@ -36,11 +36,11 @@
             label2 = new Label();
             pictureBox1 = new PictureBox();
             label1 = new Label();
-            Frame_dataGridView = new DataGridView();
+            Install_dataGridView = new DataGridView();
             Save_button = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Frame_dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Install_dataGridView).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -84,14 +84,14 @@
             // 
             // Frame_dataGridView
             // 
-            Frame_dataGridView.AllowUserToAddRows = false;
-            Frame_dataGridView.AllowUserToDeleteRows = false;
-            Frame_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            Frame_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            Frame_dataGridView.BackgroundColor = SystemColors.Control;
-            Frame_dataGridView.BorderStyle = BorderStyle.None;
-            Frame_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            Frame_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            Install_dataGridView.AllowUserToAddRows = false;
+            Install_dataGridView.AllowUserToDeleteRows = false;
+            Install_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            Install_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            Install_dataGridView.BackgroundColor = SystemColors.Control;
+            Install_dataGridView.BorderStyle = BorderStyle.None;
+            Install_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            Install_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
@@ -99,10 +99,10 @@
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            Frame_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            Frame_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Frame_dataGridView.Location = new Point(3, 172);
-            Frame_dataGridView.Name = "Frame_dataGridView";
+            Install_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            Install_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Install_dataGridView.Location = new Point(3, 172);
+            Install_dataGridView.Name = "Frame_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
             dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -110,25 +110,25 @@
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            Frame_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            Frame_dataGridView.RowHeadersVisible = false;
-            Frame_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            Install_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            Install_dataGridView.RowHeadersVisible = false;
+            Install_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            Frame_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Frame_dataGridView.RowTemplate.Height = 25;
-            Frame_dataGridView.Size = new Size(679, 372);
-            Frame_dataGridView.TabIndex = 19;
-            Frame_dataGridView.CellContentClick += Frame_dataGridView_CellContentClick;
+            Install_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            Install_dataGridView.RowTemplate.Height = 25;
+            Install_dataGridView.Size = new Size(679, 120);
+            Install_dataGridView.TabIndex = 19;
+            Install_dataGridView.CellContentClick += Frame_dataGridView_CellContentClick;
             // 
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(523, 589);
+            Save_button.Location = new Point(538, 298);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -140,16 +140,16 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(685, 695);
+            ClientSize = new Size(685, 331);
             Controls.Add(Save_button);
-            Controls.Add(Frame_dataGridView);
+            Controls.Add(Install_dataGridView);
             Controls.Add(GeneralPanel);
             Name = "Window_InstallDB";
             Text = "Window_InstallDB";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Frame_dataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Install_dataGridView).EndInit();
             ResumeLayout(false);
         }
 
@@ -159,7 +159,7 @@
         private Label label1;
         private PictureBox pictureBox1;
         private Label label2;
-        private DataGridView Frame_dataGridView;
+        private DataGridView Install_dataGridView;
         private Button Save_button;
     }
 }

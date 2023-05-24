@@ -1,25 +1,88 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Compile Update="contents\ConstructionRoof.cs">
+    <Compile Update="contents\3D\Blind.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\ConstructionWall.cs">
+    <Compile Update="contents\Result\ReportRemodeling.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\ConstructionWindow.cs">
+    <Compile Update="contents\Result\ReportExisting.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Model.cs">
+    <Compile Update="contents\RESystme\EIndependenceRate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Sample.cs">
+    <Compile Update="contents\RESystme\FuelCell.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\ZoneEnvelope.cs">
+    <Compile Update="contents\RESystme\PV.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\ZoneGeneral.cs">
+    <Compile Update="contents\RESystme\SupplyRatio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\System\CoolingSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\System\HeatingSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\System\DHWSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\System\AHUSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Building\EnergyUse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Construction\ConstructionDoor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Construction\ConstructionFloor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Construction\ConstructionCW.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Construction\ConstructionRoof.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Construction\ConstructionWall.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Construction\ConstructionWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\3D\Model.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Building\General.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\3D\Shade.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\3D\ThermalBridge.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\System\EquipmentList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\RESystme\WindPower.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Zone\ZoneSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Zone\ZoneLighting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Zone\ZoneEnvelope.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Zone\ZoneGeneral.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Form2.cs">

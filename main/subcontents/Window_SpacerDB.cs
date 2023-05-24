@@ -14,12 +14,14 @@ namespace main.subcontents
     {
         double Count_FrameDB;
         int SelectRow;
-        public Window_SpacerDB(String SingleDoubleType, String FrameMaterial)
+        String LE_CL_V;
+
+        public Window_SpacerDB(String SingleDoubleType, String FrameMaterial,String LE_CL_V)
         {
             InitializeComponent();
-            load_table_SpacerDB(SingleDoubleType, FrameMaterial);
+            load_table_SpacerDB(SingleDoubleType, FrameMaterial, LE_CL_V);
         }
-        void load_table_SpacerDB(String SingleDoubleType, String FrameMaterial)
+        void load_table_SpacerDB(String SingleDoubleType, String FrameMaterial,String LE_CL_V)
         {
             DataTable table_WindowSpacer = new DataTable();
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -45,6 +47,7 @@ namespace main.subcontents
             Spacer_dataGridView.DataSource = table_WindowSpacer;
             Count_FrameDB = WinSpacer.Length;
         }
+
         //데이터그리드뷰 체크박스 선택 시
         private void Spacer_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -70,16 +73,17 @@ namespace main.subcontents
                         row = Spacer_dataGridView.Rows[e.RowIndex];
                     }
                 }
+                LE_CL_V = LE_CL_V;
             }
         }
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-
+            Program.DB.deleteValue(DB.type.CalcDB, "Select_WindowSpacer");
             DataGridViewRow row = Spacer_dataGridView.Rows[SelectRow];
-            Program.DB.setValue(DB.type.CalcDB, "Select_WindowSpacer", "번호,제품명,구분1,구분2,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율",
-            "'" + row.Cells[0].Value.ToString() + "','" + row.Cells[1].Value.ToString() + "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','"
-            + row.Cells[5].Value.ToString() + "','" + row.Cells[6].Value.ToString() + "','" + row.Cells[7].Value.ToString() + "','" + row.Cells[8].Value.ToString() + "'", "번호");
+            Program.DB.setValue(DB.type.CalcDB, "Select_WindowSpacer", "번호,제품명,구분1,구분2,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율,LE_CL_V",
+            "'" + row.Cells[1].Value.ToString() + "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','" + row.Cells[5].Value.ToString() + "','"
+            + row.Cells[6].Value.ToString() + "','" + row.Cells[7].Value.ToString() + "','" + row.Cells[8].Value.ToString() + "','" + row.Cells[9].Value.ToString() + "','" + LE_CL_V + "'", "번호");
 
             this.DialogResult = DialogResult.OK;
             this.Close();

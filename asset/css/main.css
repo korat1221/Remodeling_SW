@@ -57,6 +57,7 @@ html,body {
 .cont-icon {
     width:96px;
     height:96px;
+    background-repeat: no-repeat;
     background-size: contain;
     cursor:pointer;
 }
@@ -237,3 +238,8 @@ input, select {
     position: absolute;
     z-index: 10000;
 } 
+
+.cls-strut-icon {
+    background-image: url(images/model.svg);
+    margin-right: 6px !important;
+}
