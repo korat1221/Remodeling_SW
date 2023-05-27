@@ -51,13 +51,13 @@
             GeneralPanel.Controls.Add(label1);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(682, 181);
+            GeneralPanel.Size = new Size(944, 168);
             GeneralPanel.TabIndex = 18;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(484, 43);
+            label2.Location = new Point(676, 43);
             label2.Name = "label2";
             label2.Size = new Size(171, 90);
             label2.TabIndex = 2;
@@ -66,7 +66,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(398, 33);
+            pictureBox1.Location = new Point(509, 43);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(80, 117);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -76,17 +76,18 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(4, 43);
+            label1.Location = new Point(49, 43);
             label1.Name = "label1";
             label1.Size = new Size(390, 90);
             label1.TabIndex = 0;
             label1.Text = "- ISO 10211 기준, KIAEBS S-8:2017 기준 시뮬레이션 값을 적용합니다.\r\n\r\n- 오른쪽 그림을 참조하여 해당하는 값을 입력하시오.\r\n\r\n- 설치 부위는 상부, 측면, 하부로 구분되며 차양장치에의한 추가 열교는\r\n   외피 정보에서 추가로 반영됩니다.";
             // 
-            // Frame_dataGridView
+            // Install_dataGridView
             // 
             Install_dataGridView.AllowUserToAddRows = false;
             Install_dataGridView.AllowUserToDeleteRows = false;
-            Install_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            Install_dataGridView.AllowUserToResizeColumns = false;
+            Install_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             Install_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             Install_dataGridView.BackgroundColor = SystemColors.Control;
             Install_dataGridView.BorderStyle = BorderStyle.None;
@@ -101,8 +102,8 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             Install_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Install_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Install_dataGridView.Location = new Point(3, 172);
-            Install_dataGridView.Name = "Frame_dataGridView";
+            Install_dataGridView.Location = new Point(3, 164);
+            Install_dataGridView.Name = "Install_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
             dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -120,7 +121,7 @@
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Install_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             Install_dataGridView.RowTemplate.Height = 25;
-            Install_dataGridView.Size = new Size(679, 120);
+            Install_dataGridView.Size = new Size(941, 128);
             Install_dataGridView.TabIndex = 19;
             Install_dataGridView.CellContentClick += Frame_dataGridView_CellContentClick;
             // 
@@ -128,7 +129,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(538, 298);
+            Save_button.Location = new Point(797, 294);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -140,7 +141,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(685, 331);
+            ClientSize = new Size(944, 331);
             Controls.Add(Save_button);
             Controls.Add(Install_dataGridView);
             Controls.Add(GeneralPanel);

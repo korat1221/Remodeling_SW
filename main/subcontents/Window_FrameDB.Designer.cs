@@ -1,4 +1,6 @@
-﻿namespace main.subcontents
+﻿using System.Windows.Forms;
+
+namespace main.subcontents
 {
     partial class Window_FrameDB
     {
@@ -51,13 +53,13 @@
             GeneralPanel.Controls.Add(label1);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(977, 181);
+            GeneralPanel.Size = new Size(1119, 181);
             GeneralPanel.TabIndex = 18;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(644, 6);
+            label2.Location = new Point(730, 6);
             label2.Name = "label2";
             label2.Size = new Size(249, 165);
             label2.TabIndex = 2;
@@ -66,7 +68,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(388, 12);
+            pictureBox1.Location = new Point(459, 12);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(201, 153);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -76,7 +78,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(42, 66);
+            label1.Location = new Point(88, 66);
             label1.Name = "label1";
             label1.Size = new Size(291, 45);
             label1.TabIndex = 0;
@@ -86,7 +88,8 @@
             // 
             Frame_dataGridView.AllowUserToAddRows = false;
             Frame_dataGridView.AllowUserToDeleteRows = false;
-            Frame_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            Frame_dataGridView.AllowUserToResizeColumns = false;
+            Frame_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             Frame_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             Frame_dataGridView.BackgroundColor = SystemColors.Control;
             Frame_dataGridView.BorderStyle = BorderStyle.None;
@@ -120,7 +123,7 @@
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Frame_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             Frame_dataGridView.RowTemplate.Height = 25;
-            Frame_dataGridView.Size = new Size(971, 241);
+            Frame_dataGridView.Size = new Size(1116, 241);
             Frame_dataGridView.TabIndex = 19;
             Frame_dataGridView.CellContentClick += Frame_dataGridView_CellContentClick;
             // 
@@ -128,7 +131,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(830, 419);
+            Save_button.Location = new Point(968, 419);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -140,7 +143,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(977, 459);
+            ClientSize = new Size(1119, 459);
             Controls.Add(Save_button);
             Controls.Add(Frame_dataGridView);
             Controls.Add(GeneralPanel);

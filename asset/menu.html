@@ -11,69 +11,69 @@
             switch(menuID) {
                 case 0:
                     gMainTree.load([
-                        { "text" : "일반정보", "id" : "0" },
-                        { "text" : "에너지사용량 정보", "id" : "1" }
+                    { "type":"General", "text" : "일반정보", "id" : "0" },
+                    { "type":"EnergyUse", "text" : "에너지사용량 정보", "id" : "1" }
                    ], "0");
                     break;
                 case 1:
                     gMainTree.load([
-                        { "text" : "커튼월창", "id" : "CW", "children":[{"text": "C1","id": "2"}]},
-                        { "type":"model", "text" : "외벽", "id" : "Wall", "children":[{"text": "W1","id": "3"}]},
-                        { "text" : "지붕", "id" : "Roof", "children":[{"text": "C1","id": "4"}]},
-                        { "text" : "최하층바닥","id" :  "Floor", "children":[{"text": "C1","id": "5"}]},
-                        { "text" : "창호", "id" : "Win", "children":[{"text": "WN1","id": "6"}]},
-                        { "text" : "외부출입문", "id" : "Door", "children":[{"text": "WN1","id": "7"}]}
+                        { "type":"CW", "text" : "커튼월창", "id" : "CW", "children":[{"text": "C1","id": "2"}]},
+                        { "type":"Wall", "text" : "외벽", "id" : "Wall", "children":[{"text": "W1","id": "3"}]},
+                        { "type":"Roof", "text" : "지붕", "id" : "Roof", "children":[{"text": "C1","id": "4"}]},
+                        { "type":"Floor", "text" :"최하층바닥","id" :  "Floor", "children":[{"text": "C1","id": "5"}]},
+                        { "type":"Window", "text" : "창호", "id" : "29", "children":[{"text": "WN1","id": "6"}]},
+                        { "type":"Door", "text" : "외부출입문", "id" : "Door", "children":[{"text": "WN1","id": "7"}]}
                     ], "2");
                     break;                 
                 case 2:
                     gMainTree.load([
-                        { "text" : "3D 모델", "id" : "8" },
-                        { "text" : "음영정보", "id" : "9" },
-                        { "text" : "차양정보", "id" : "10" },
-                        { "text" : "열교정보", "id" : "11" }
+                    { "type":"Model", "text" :  "3D 모델", "id" : "8" },
+                    { "type":"Shade", "text" :  "음영정보", "id" : "9" },
+                    { "type":"Blind", "text" :  "차양정보", "id" : "10" },
+                    { "type":"ThermalBridge", "text" : "열교정보", "id" : "11" }
                     ], "8");
                     break;   
                 case 3:
                     gMainTree.load([
-                        { "text" : "존 일반정보", "id" : "12" },
-                        { "text" : "존 외피정보", "id" : "13" },
-                        { "text" : "존 조명정보", "id" : "14" },
-                        { "text" : "존 설비정보", "id" : "15" }
+                    { "type":"ZoneGeneral", "text" : "존 일반정보", "id" : "12" },
+                    { "type":"ZoneEnvelope", "text" :  "존 외피정보", "id" : "13" },
+                    { "type":"ZoneLighting", "text" :  "존 조명정보", "id" : "14" },
+                    { "type":"ZoneSystem", "text" :  "존 설비정보", "id" : "15" }
                    ], "12");
                     break;
                 case 4:
                     gMainTree.load([
-                        { "text" : "장비일람표", "id" : "16" },
-                        { "text" : "공조시스템", "id" : "17" },
-                        { "text" : "급탕시스템", "id" : "18" },
-                        { "text" : "난방시스템", "id" : "19" },
-                        { "text" : "냉방시스템", "id" : "20" }
+                    { "type":"EquipmentList", "text" :  "장비일람표", "id" : "16" },
+                    { "type":"AHUSystem", "text" :  "공조시스템", "id" : "17" },
+                    { "type":"DHWSystem", "text" :  "급탕시스템", "id" : "18" },
+                    { "type":"HeatingSystem", "text" :  "난방시스템", "id" : "19" },
+                    { "type":"CoolingSystem", "text" :  "냉방시스템", "id" : "20" }
                    ], "16");
                     break;
                 case 5:
                     gMainTree.load([
-                        { "text" : "태양광시스템", "id" : "21" },
-                        { "text" : "연료전지", "id" : "22" },
-                        { "text" : "풍력시스템", "id" : "23" },
-                        { "text" : "공급의무비율", "id" : "24" },
-                        { "text" : "에너지자립률", "id" : "25" }
+                    { "type":"PVSystem", "text" :  "태양광시스템", "id" : "21" },
+                    { "type":"FuelCell", "text" :  "연료전지", "id" : "22" },
+                    { "type":"WindPower", "text" :  "풍력시스템", "id" : "23" },
+                    { "type":"SupplyRatio", "text" : "공급의무비율", "id" : "24" },
+                    { "type":"EIndependeceRate", "text" : "에너지자립률", "id" : "25" }
                    ], "21");
                     break;case 6:
                     gMainTree.load([
-                        { "text" : "기존_표준", "id" : "26" },
-                        { "text" : "기존_설계", "id" : "27" }
+                    { "type":"ReportExisting", "text" : "기존_표준", "id" : "26" },
+                    { "type":"ReportRemodeling", "text" :  "기존_설계", "id" : "27" }
                    ], "26");
                     break;
             }
 
             let icons = [
-                {"normal":"url(images/1.Building.png)","active":"url(images/1.Building_on2.png)"},
-                {"normal":"url(images/2.Construction.png)","active":"url(images/2.Construction_on.png)"},
-                {"normal":"url(images/3.3D.png)","active":"url(images/3.3D_on.png)"},
-                {"normal":"url(images/4.Zone.png)","active":"url(images/4.Zone_on.png)"},
-                {"normal":"url(images/5.System.png)","active":"url(images/5.System_on.png)"},
-                {"normal":"url(images/6.RESystem.png)","active":"url(images/6.RESystem_on.png)"},
-                {"normal":"url(images/7.Result.png)","active":"url(images/7.Result_on.png)"},
+                {"normal":"url(images/1sticon/1.Building.png)","active":"url(images/1sticon/1.Building_on2.png)"},
+                {"normal":"url(images/1sticon/2.Construction.png)","active":"url(images/1sticon/2.Construction_on2.png)"},
+                {"normal":"url(images/1sticon/3.3D.png)","active":"url(images/1sticon/3.3D_on2.png)"},
+                {"normal":"url(images/1sticon/4.Zone.png)","active":"url(images/1sticon/4.Zone_on2.png)"},
+                {"normal":"url(images/1sticon/5.System.png)","active":"url(images/1sticon/5.System_on2.png)"},
+                {"normal":"url(images/1sticon/6.RESystem.png)","active":"url(images/1sticon/6.RESystem_on2.png)"},
+                {"normal":"url(images/1sticon/7.Result.png)","active":"url(images/1sticon/7.Result_on2.png)"},
             ];
 
             icons.forEach((el, idx) => {
@@ -89,34 +89,34 @@
         <div id="cont-left" class="split split-horizontal" style="width:320px;padding:4px">
             <div id="cont-menu" style="width:125px;float:left;height: calc(100% - 16px);background-color: #B5C2CB;padding-top: 16px;border-radius: 4px;box-shadow: 2px 2px 2px 2px #eee;color:#fff">
                 <div class="cont-item" onclick="load(0)">
-                    <div class="cont-icon item0" style="background-image: url('images/1.Building.png');"></div>
+                    <div class="cont-icon item0" style="background-image: url('images/1sticon/1.Building.png');"></div>
                     <div class="cont-title">건물 정보</div>
                 </div>
                 <div class="cont-item" onclick="load(1)">
-                    <div class="cont-icon item1" style="background-image: url('images/2.Construction.png');"></div>
+                    <div class="cont-icon item1" style="background-image: url('images/1sticon/2.Construction.png');"></div>
                     <div class="cont-title">구조체 정보</div>
                 </div>
                 <div class="cont-item" onclick="load(2)">
-                    <div class="cont-icon item2" style="background-image: url('images/3.3D.png');"></div>
+                    <div class="cont-icon item2" style="background-image: url('images/1sticon/3.3D.png');"></div>
                     <div class="cont-title">3D 정보</div>
                 </div>
                 <div class="cont-item" onclick="load(3)">
-                    <div class="cont-icon item3" style="background-image: url('images/4.Zone.png');"></div>
+                    <div class="cont-icon item3" style="background-image: url('images/1sticon/4.Zone.png');"></div>
                     <div class="cont-title">층별 존 정보</div>
                 </div>
                 <div class="cont-item" onclick="load(4)">
-                    <div class="cont-icon item4" style="background-image: url('images/5.System.png');"></div>
+                    <div class="cont-icon item4" style="background-image: url('images/1sticon/5.System.png');"></div>
                     <div class="cont-title">설비 정보</div>
                 </div>
                 <div class="cont-item" onclick="load(5)">
-                    <div class="cont-icon item5" style="background-image: url('images/6.RESystem.png');"></div>
+                    <div class="cont-icon item5" style="background-image: url('images/1sticon/6.RESystem.png');"></div>
                     <div class="cont-title">신재생 정보</div>
                 </div>
                 <div class="cont-item" onclick="load(6)">
-                    <div class="cont-icon item6" style="background-image: url('images/7.Result.png');"></div>
+                    <div class="cont-icon item6" style="background-image: url('images/1sticon/7.Result.png');"></div>
                     <div class="cont-title">결과 정보</div>
                 </div>
-                <div class="cont-item" onclick="window.chrome.webview.postMessage('6')">
+                <div class="cont-item" onclick="window.chrome.webview.postMessage('28')">
                     <div class="cont-title">디버그</div>
                 </div>
             </div>

@@ -22,8 +22,89 @@ class MainTree {
                 "default" : {
                     "icon" :false
                 },
-                "model" : {
-                    "icon" : "cls-model-icon"
+                "General" : {
+                    "icon" : "cls-General-icon"
+                },
+                "EnergyUse" : {
+                    "icon" : "cls-EnergyUse-icon"
+                },                
+                "CW" : {
+                    "icon" : "cls-CW-icon"
+                },
+                "Wall" : {
+                    "icon" : "cls-Wall-icon"
+                },
+                "Roof" : {
+                    "icon" : "cls-Roof-icon"
+                },
+                "Floor" : {
+                    "icon" : "cls-Floor-icon"
+                },
+                "Window" : {
+                    "icon" : "cls-Window-icon"
+                },
+                "Door" : {
+                    "icon" : "cls-Door-icon"
+                },
+                "Model" : {
+                    "icon" : "cls-Model-icon"
+                },
+                "Shade" : {
+                    "icon" : "cls-Shade-icon"
+                },
+                "Blind" : {
+                    "icon" : "cls-Blind-icon"
+                },
+                "ThermalBridge" : {
+                    "icon" : "cls-ThermalBridge-icon"
+                },
+                "ZoneGeneral" : {
+                    "icon" : "cls-ZoneGeneral-icon"
+                },
+                "ZoneEnvelope" : {
+                    "icon" : "cls-ZoneEnvelope-icon"
+                },
+                "ZoneLighting" : {
+                    "icon" : "cls-ZoneLighting-icon"
+                },
+                "ZoneSystem" : {
+                    "icon" : "cls-ZoneSystem-icon"
+                },
+                "EquipmentList" : {
+                    "icon" : "cls-EquipmentList-icon"
+                },
+                "AHUSystem" : {
+                    "icon" : "cls-AHUSystem-icon"
+                },
+                "DHWSystem" : {
+                    "icon" : "cls-DHWSystem-icon"
+                },
+                "HeatingSystem" : {
+                    "icon" : "cls-HeatingSystem-icon"
+                },
+                "CoolingSystem" : {
+                    "icon" : "cls-CoolingSystem-icon"
+                },
+                "PVSystem" : {
+                    "icon" : "cls-PVSystem-icon"
+                },
+                "FuelCell" : {
+                    "icon" : "cls-FuelCell-icon"
+                },
+                "WindPower" : {
+                    "icon" : "cls-WindPower-icon"
+                },
+                "SupplyRatio" : {
+                    "icon" : "cls-SupplyRatio-icon"
+                },
+                "EIndependeceRate" : {
+                    "icon" : "cls-EIndependeceRate-icon"
+                },
+                "ReportExisting" : {
+                    "icon" : "cls-ReportExisting-icon"
+                },
+                "ReportRemodeling" : {
+                    "icon" : "cls-ReportRemodeling-icon"
                 },
             },
             "plugins" : [ "types" ]

@@ -37,7 +37,7 @@ namespace main
                         }
                         else
                         {
-                            Program.DB.setValue(DB.type.CalcDB, "Zone", "zoneNum", "'" + token[0] + "'", "zoneNum");
+                            Program.DB.setValue(DB.type.ProjDB, "Zone", "zoneNum", "'" + token[0] + "'", "zoneNum");
                             zoneNum = token[0];
 
                             //외기온도 가져오기
@@ -57,7 +57,7 @@ namespace main
                                             }
                                             else
                                             {
-                                                Program.DB.setValue(DB.type.CalcDB, "OutairTemperature", "zoneNum,월,온도,일", "'" + zoneNum + "','" + token2[0] + "'," + token2[1] + "," + token2[2], "zoneNum,월");
+                                                Program.DB.setValue(DB.type.ProjDB, "OutairTemperature", "zoneNum,월,온도,일", "'" + zoneNum + "','" + token2[0] + "'," + token2[1] + "," + token2[2], "zoneNum,월");
                                             }
                                             n2++;
 
@@ -117,9 +117,9 @@ namespace main
 
                                                 s += "'0.34'";
 
-                                                Program.DB.setValue(DB.type.CalcDB, "Zonegeneral", "구분,zoneNum,zoneName,zoneUsage,zoneHC,θi_h_set,θi_c_set,Δθi_NA,Fx,Fx_fl,Fx_wl,θs_c,θi_h_min,θe_min,θSUP_Wi,Mode_night,Mode_we,twd_d,th_op_d_we,th_op_d,dwd_a,ZoneArea,zoneHeight,qI_p,qI_fac,Cwirk_A,VA_we,VA_wd,n50,e,f,Vmech_SUP_we,Vmech_SUP_wd,Vmech_ETA_we,Vmech_ETA_wd,ηV_mech,ηχV_mech,χi_c_set,χi_h_set,Vmech_SUP_z,Vmech_ETA_z,ρacp_a",s, "zoneNum");
+                                                Program.DB.setValue(DB.type.ProjDB, "Zonegeneral", "구분,zoneNum,zoneName,zoneUsage,zoneHC,θi_h_set,θi_c_set,Δθi_NA,Fx,Fx_fl,Fx_wl,θs_c,θi_h_min,θe_min,θSUP_Wi,Mode_night,Mode_we,twd_d,th_op_d_we,th_op_d,dwd_a,ZoneArea,zoneHeight,qI_p,qI_fac,Cwirk_A,VA_we,VA_wd,n50,e,f,Vmech_SUP_we,Vmech_SUP_wd,Vmech_ETA_we,Vmech_ETA_wd,ηV_mech,ηχV_mech,χi_c_set,χi_h_set,Vmech_SUP_z,Vmech_ETA_z,ρacp_a",s, "zoneNum");
 
-                                                //string[][] res = Program.DB.getValue(DB.type.CalcDB, "Zonegeneral", "구분,zoneNum");
+                                                //string[][] res = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral", "구분,zoneNum");
 
                                                 //if (res.Count() > 0 && res[0].Count() > 0)
                                                 //{
@@ -201,7 +201,7 @@ namespace main
                                             else
                                             {
 
-                                                Program.DB.setValue(DB.type.CalcDB, "ZoneWall", "zoneNum, Name, Area,Ueff,DirectInDirect,Direction,α,Degree",
+                                                Program.DB.setValue(DB.type.ProjDB, "ZoneWall", "zoneNum, Name, Area,Ueff,DirectInDirect,Direction,α,Degree",
                                                     "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "'", "zoneNum, Name");
 
                                                 //         Wall wall = new Wall(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
@@ -240,7 +240,7 @@ namespace main
                                             }
                                             else
                                             {
-                                                Program.DB.setValue(DB.type.CalcDB, "ZoneRoof", "zoneNum,Name,Area,Ueff,DirectInDirect,Direction,α,Degree",
+                                                Program.DB.setValue(DB.type.ProjDB, "ZoneRoof", "zoneNum,Name,Area,Ueff,DirectInDirect,Direction,α,Degree",
                                                     "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "'", "zoneNum,Name");
 
                                                 //      Roof roof = new Roof(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
@@ -278,7 +278,7 @@ namespace main
                                             }
                                             else
                                             {
-                                                Program.DB.setValue(DB.type.CalcDB, "ZoneFloor", "zoneNum,Name,Area,Ueff", "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "'", "zoneNum,Name");
+                                                Program.DB.setValue(DB.type.ProjDB, "ZoneFloor", "zoneNum,Name,Area,Ueff", "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "'", "zoneNum,Name");
                                                 //             Floor floor = new Floor(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]));
                                                 //           zoneFloor.Add(floor);
                                             }
@@ -314,7 +314,7 @@ namespace main
                                             }
                                             else
                                             {
-                                                Program.DB.setValue(DB.type.CalcDB, "ZoneGWall", "zoneNum,Name,Area,Ueff", "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "'", "zoneNum,Name");
+                                                Program.DB.setValue(DB.type.ProjDB, "ZoneGWall", "zoneNum,Name,Area,Ueff", "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "'", "zoneNum,Name");
                                                 //          GWall gwall = new GWall(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]));
                                                 //        zoneGWall.Add(gwall);
                                             }
@@ -350,7 +350,7 @@ namespace main
                                             }
                                             else
                                             {
-                                                Program.DB.setValue(DB.type.CalcDB, "ZoneDoor", "zoneNum,Name,Area,Ueff,DirectInDirect,Direction,α,Degree",
+                                                Program.DB.setValue(DB.type.ProjDB, "ZoneDoor", "zoneNum,Name,Area,Ueff,DirectInDirect,Direction,α,Degree",
                                                     "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "'", "zoneNum,Name");
 
                                                 //           Door door = new Door(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
@@ -388,7 +388,7 @@ namespace main
                                             }
                                             else
                                             {
-                                                Program.DB.setValue(DB.type.CalcDB, "ZoneWin", "zoneNum,Name,Area,Uvalue,Uinst,DirectInDirect,Direction,Ff,g,τ,gtot,τtot,degree",
+                                                Program.DB.setValue(DB.type.ProjDB, "ZoneWin", "zoneNum,Name,Area,Uvalue,Uinst,DirectInDirect,Direction,Ff,g,τ,gtot,τtot,degree",
                                                     "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "','" + token2[7] + "','" + token2[8] + "','" + token2[9] + "','" + token2[10] + "','" + token2[11] + "'",
                                                     "zoneNum,Name");
 
@@ -430,7 +430,7 @@ namespace main
                                                 }
                                                 else
                                                 {
-                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneCW", "zoneNum,Name,Area_g,Uvalue_g,Ff_g,g_g,gtot_g,τ_g,τtot_g,Area_p,Uvalue_p,α_p,Area_d,Uvalue_d,Ff_d,g_d,τ_d,Area_tot,Uinst",
+                                                    Program.DB.setValue(DB.type.ProjDB, "ZoneCW", "zoneNum,Name,Area_g,Uvalue_g,Ff_g,g_g,gtot_g,τ_g,τtot_g,Area_p,Uvalue_p,α_p,Area_d,Uvalue_d,Ff_d,g_d,τ_d,Area_tot,Uinst",
                                                         "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "','" + token2[7] + "','" + token2[8] + "','" + token2[9] + "','" + token2[10] + "','" + token2[11] + 
                                                         "','" + token2[12] + "','" + token2[13] + "','" + token2[14] + "','" + token2[15] + "','" + token2[16] + "','" + token2[17] + "'",
                                                         "zoneNum,Name");
@@ -474,7 +474,7 @@ namespace main
                                                 int i = 0;
                                                 while (++i < token2.Length)
                                                 {
-                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneWall_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                    Program.DB.setValue(DB.type.ProjDB, "ZoneWall_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
                                                 }
 
                                                 //두번째 행부터 계산 	  
@@ -539,7 +539,7 @@ namespace main
                                                 int i = 0;
                                                 while (++i < token2.Length)
                                                 {
-                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneRoof_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                    Program.DB.setValue(DB.type.ProjDB, "ZoneRoof_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
                                                 }
 
                                                 //Roof zoneroof = (Roof)zoneRoof[n - 1];
@@ -601,7 +601,7 @@ namespace main
                                                 int i = 0;
                                                 while (++i < token2.Length)
                                                 {
-                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneDoor_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                    Program.DB.setValue(DB.type.ProjDB, "ZoneDoor_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
                                                 }
 
                                                 //Door zonedoor = (Door)zoneDoor[n - 1];
@@ -662,7 +662,7 @@ namespace main
                                                 int i = 0;
                                                 while (++i < token2.Length)
                                                 {
-                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneCW_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                    Program.DB.setValue(DB.type.ProjDB, "ZoneCW_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
                                                 }
 
                                                 //CW zonecw = (CW)zoneCW[n - 1];
@@ -715,7 +715,7 @@ namespace main
                                                 int i = 0;
                                                 while (++i < token2.Length)
                                                 {
-                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneWin_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                    Program.DB.setValue(DB.type.ProjDB, "ZoneWin_Solar", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
                                                 }
 
                                                 //Window zonewin = (Window)zoneWin[n - 1];
@@ -756,7 +756,7 @@ namespace main
                                                 int i = 0;
                                                 while (++i < token2.Length)
                                                 {
-                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneWin_Shadow", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                    Program.DB.setValue(DB.type.ProjDB, "ZoneWin_Shadow", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
                                                 }
 
                                                 //Window zonewin = (Window)zoneWin[n - 1];
@@ -797,7 +797,7 @@ namespace main
                                                 int i = 0;
                                                 while (++i < token2.Length)
                                                 {
-                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneWin_a", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                    Program.DB.setValue(DB.type.ProjDB, "ZoneWin_a", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
                                                 }
 
                                                 //Window zonewin = (Window)zoneWin[n - 1];
@@ -838,7 +838,7 @@ namespace main
                                                 int i = 0;
                                                 while (++i < token2.Length)
                                                 {
-                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneCW_shadow", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                    Program.DB.setValue(DB.type.ProjDB, "ZoneCW_shadow", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
                                                 }
 
                                                 //CW zonecw = (CW)zoneCW[n - 1];
@@ -879,7 +879,7 @@ namespace main
                                                 int i = 0;
                                                 while (++i < token2.Length)
                                                 {
-                                                    Program.DB.setValue(DB.type.CalcDB, "ZoneCW_a", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
+                                                    Program.DB.setValue(DB.type.ProjDB, "ZoneCW_a", "zoneNum,구조체,월,value", "'" + zoneNum + "','" + token2[0] + "','" + i + "','" + token2[i] + "'", "zoneNum,구조체,월");
                                                 }
 
                                                 //CW zonecw = (CW)zoneCW[n - 1];
@@ -911,7 +911,7 @@ namespace main
         private static bool ZoneCalc()
         {
             int i = -1;
-            string[][] zones = Program.DB.getValue(DB.type.CalcDB, "Zone", "zoneNum");
+            string[][] zones = Program.DB.getValue(DB.type.ProjDB, "Zone", "zoneNum");
 
             while(++i < zones.Length)
             {
@@ -928,8 +928,8 @@ namespace main
                 zone1.Zoneeta();
                 zone1.ZoneQb();
 
-
                 MessageBox.Show(zoneNum + ":  " + zone1.zoneName + ":  " + zone1.Qhb_a);
+
             }
 
             return true;

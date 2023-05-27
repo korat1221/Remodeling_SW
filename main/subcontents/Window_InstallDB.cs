@@ -15,13 +15,26 @@ namespace main.subcontents
         String FrameType;
         double Count_InstallDB;
         int SelectRow;
+        public String[] Select_WindowInstall = new string[9];
+        String InstallType, SingleDoubleType, FrameMaterial;
+        string[][] WinInstall;
+
         public Window_InstallDB(String InstallType, String SingleDoubleType, String FrameMaterial)
         {
             InitializeComponent();
-            load_table_InstallDB(InstallType, SingleDoubleType, FrameMaterial);
+            this.InstallType = InstallType;
+            this.SingleDoubleType = SingleDoubleType;
+            this.FrameMaterial = FrameMaterial;
+            load_table_InstallDB();
+        }
+        public Window_InstallDB(String InstallType)
+        {
+            InitializeComponent();
+            this.InstallType = InstallType;
+            load_table_InstallDB();
         }
 
-        void load_table_InstallDB(String InstallType, String SingleDoubleType, String FrameMaterial)
+        void load_table_InstallDB()
         {
             DataTable table_WindowInstall = new DataTable();
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -35,10 +48,18 @@ namespace main.subcontents
             table_WindowInstall.Columns.Add("구분2", typeof(string));
             table_WindowInstall.Columns.Add("구분3", typeof(string));
             table_WindowInstall.Columns.Add("구분4", typeof(string));
-            table_WindowInstall.Columns.Add("상부설치\r\n선형열관류율" + Environment.NewLine + "Ψg,fix[W/m·K]", typeof(string));
-            table_WindowInstall.Columns.Add("측면설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t[W/m·K]", typeof(string));
-            table_WindowInstall.Columns.Add("하부설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t[W/m·K]", typeof(string));
-            string[][] WinInstall = Program.DB.getValue(DB.type.BaseDB, "창호설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'AND 구분2 = '" + FrameMaterial + "'AND 구분3 ='" + SingleDoubleType + "'");
+            table_WindowInstall.Columns.Add("상부설치\r\n선형열관류율" + Environment.NewLine + "Ψg,fix\r\n[W/m·K]", typeof(string));
+            table_WindowInstall.Columns.Add("측면설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
+            table_WindowInstall.Columns.Add("하부설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
+
+            if (InstallType != null && SingleDoubleType != null && FrameMaterial != null)
+            {
+                WinInstall = Program.DB.getValue(DB.type.BaseDB, "창호설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'AND 구분2 = '" + FrameMaterial + "'AND 구분3 ='" + SingleDoubleType + "'");
+            }
+            else
+            {
+                WinInstall = Program.DB.getValue(DB.type.BaseDB, "창호설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType  + "'");
+            }
 
             for (int n = 0; n < WinInstall.Length; n++)
             {
@@ -47,6 +68,7 @@ namespace main.subcontents
             Install_dataGridView.DataSource = table_WindowInstall;
             Count_InstallDB = WinInstall.Length;
         }
+
         //데이터그리드뷰 체크박스 선택 시
         private void Frame_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -78,14 +100,12 @@ namespace main.subcontents
         private void Save_button_Click(object sender, EventArgs e)
         {
             DataGridViewRow row = Install_dataGridView.Rows[SelectRow];
-            Program.DB.deleteValue(DB.type.CalcDB, "Select_WindowInstall");
-            Program.DB.setValue(DB.type.CalcDB, "Select_WindowInstall", "번호,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율",
-            "'" + row.Cells[1].Value.ToString() + "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','" + row.Cells[5].Value.ToString() + "','"
-            + row.Cells[6].Value.ToString() + "','" + row.Cells[7].Value.ToString() + "','" + row.Cells[8].Value.ToString() + "','" + row.Cells[9].Value.ToString() + "'", "번호");
-
+            for (int i = 1; i < row.Cells.Count; i++)
+            {
+                Select_WindowInstall[i - 1] = row.Cells[i].Value.ToString();
+            }
             this.DialogResult = DialogResult.OK;
             this.Close();
-
         }
     }
 }

@@ -239,8 +239,148 @@ input, select {
     z-index: 10000;
 } 
 
-.cls-model-icon {
-    background-image: url(../images/model.svg) !important;
+.cls-General-icon {
+    background-image: url(../images/2ndicon/1_1General.png) !important;
     margin-right: 6px !important;
+    background-size: contain;
 }
+.cls-EnergyUse-icon {
+    background-image: url(../images/2ndicon/1_2EnergyUse.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-CW-icon {
+    background-image: url(../images/2ndicon/2_1CW.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+
+.cls-Wall-icon {
+    background-image: url(../images/2ndicon/2_2Wall.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+
+.cls-Roof-icon {
+    background-image: url(../images/2ndicon/2_3Roof.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+
+.cls-Floor-icon {
+    background-image: url(../images/2ndicon/2_4Floor.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-Window-icon {
+    background-image: url(../images/2ndicon/2_5Window.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-Door-icon {
+    background-image: url(../images/2ndicon/2_6Door.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-Model-icon {
+    background-image: url(../images/2ndicon/3_1Model.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-Shade-icon {
+    background-image: url(../images/2ndicon/3_2Shade.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-Blind-icon {
+    background-image: url(../images/2ndicon/3_3Blind.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-ThermalBridge-icon {
+    background-image: url(../images/2ndicon/3_4ThermalBridge.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-ZoneGeneral-icon {
+    background-image: url(../images/2ndicon/4_1_1ZoneGeneral.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-ZoneEnvelope-icon {
+    background-image: url(../images/2ndicon/4_1_2ZoneEnvelope.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-ZoneLighting-icon {
+    background-image: url(../images/2ndicon/4_1_3ZoneLighting.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-ZoneSystem-icon {
+    background-image: url(../images/2ndicon/4_1_4ZoneSystem.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-EquipmentList-icon {
+    background-image: url(../images/2ndicon/5_1EquipmentList.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-AHUSystem-icon {
+    background-image: url(../images/2ndicon/5_2AHUSystem.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-DHWSystem-icon {
+    background-image: url(../images/2ndicon/5_3DHWSystem.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-HeatingSystem-icon {
+    background-image: url(../images/2ndicon/5_4HeatingSystem.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-CoolingSystem-icon {
+    background-image: url(../images/2ndicon/5_5CoolingSystem.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-PVSystem-icon {
+    background-image: url(../images/2ndicon/6_1PVSystem.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-FuelCell-icon {
+    background-image: url(../images/2ndicon/6_2FuelCell.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-WindPower-icon {
+    background-image: url(../images/2ndicon/6_3WindPower.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-SupplyRatio-icon {
+    background-image: url(../images/2ndicon/6_4SupplyRatio.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-EIndependeceRate-icon {
+    background-image: url(../images/2ndicon/6_5EIndependeceRate.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-ReportExisting-icon {
+    background-image: url(../images/2ndicon/7_1ReportExisting.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+.cls-ReportRemodeling-icon {
+    background-image: url(../images/2ndicon/7_2ReportRemodeling.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
+
 

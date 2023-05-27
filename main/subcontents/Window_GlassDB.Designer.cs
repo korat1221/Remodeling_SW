@@ -36,11 +36,11 @@
             pictureBox1 = new PictureBox();
             label2 = new Label();
             label1 = new Label();
-            Frame_dataGridView = new DataGridView();
+            Glass_dataGridView = new DataGridView();
             Save_button = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Frame_dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Glass_dataGridView).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -84,14 +84,15 @@
             // 
             // Frame_dataGridView
             // 
-            Frame_dataGridView.AllowUserToAddRows = false;
-            Frame_dataGridView.AllowUserToDeleteRows = false;
-            Frame_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            Frame_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            Frame_dataGridView.BackgroundColor = SystemColors.Control;
-            Frame_dataGridView.BorderStyle = BorderStyle.None;
-            Frame_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            Frame_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            Glass_dataGridView.AllowUserToAddRows = false;
+            Glass_dataGridView.AllowUserToDeleteRows = false;
+            Glass_dataGridView.AllowUserToResizeColumns = false;
+            Glass_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Glass_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            Glass_dataGridView.BackgroundColor = SystemColors.Control;
+            Glass_dataGridView.BorderStyle = BorderStyle.None;
+            Glass_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            Glass_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
@@ -99,10 +100,10 @@
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            Frame_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            Frame_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Frame_dataGridView.Location = new Point(3, 172);
-            Frame_dataGridView.Name = "Frame_dataGridView";
+            Glass_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            Glass_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Glass_dataGridView.Location = new Point(3, 172);
+            Glass_dataGridView.Name = "Frame_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
             dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -110,19 +111,19 @@
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            Frame_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            Frame_dataGridView.RowHeadersVisible = false;
-            Frame_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            Glass_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            Glass_dataGridView.RowHeadersVisible = false;
+            Glass_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            Frame_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Frame_dataGridView.RowTemplate.Height = 25;
-            Frame_dataGridView.Size = new Size(977, 372);
-            Frame_dataGridView.TabIndex = 19;
-            Frame_dataGridView.CellContentClick += Frame_dataGridView_CellContentClick;
+            Glass_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            Glass_dataGridView.RowTemplate.Height = 25;
+            Glass_dataGridView.Size = new Size(977, 372);
+            Glass_dataGridView.TabIndex = 19;
+            Glass_dataGridView.CellContentClick += Frame_dataGridView_CellContentClick;
             // 
             // Save_button
             // 
@@ -142,14 +143,14 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(977, 583);
             Controls.Add(Save_button);
-            Controls.Add(Frame_dataGridView);
+            Controls.Add(Glass_dataGridView);
             Controls.Add(GeneralPanel);
             Name = "Window_GlassDB";
             Text = "Window_GlassDB";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Frame_dataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Glass_dataGridView).EndInit();
             ResumeLayout(false);
         }
 
@@ -158,7 +159,7 @@
         private Panel GeneralPanel;
         private Label label1;
         private Label label2;
-        private DataGridView Frame_dataGridView;
+        private DataGridView Glass_dataGridView;
         private Button Save_button;
         private PictureBox pictureBox1;
     }

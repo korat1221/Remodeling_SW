@@ -51,13 +51,13 @@
             GeneralPanel.Controls.Add(label1);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(748, 181);
+            GeneralPanel.Size = new Size(985, 181);
             GeneralPanel.TabIndex = 18;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(548, 58);
+            label2.Location = new Point(655, 58);
             label2.Name = "label2";
             label2.Size = new Size(191, 60);
             label2.TabIndex = 2;
@@ -66,7 +66,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(363, 12);
+            pictureBox1.Location = new Point(470, 12);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(201, 153);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -76,7 +76,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(3, 36);
+            label1.Location = new Point(70, 36);
             label1.Name = "label1";
             label1.Size = new Size(365, 105);
             label1.TabIndex = 0;
@@ -86,7 +86,8 @@
             // 
             Spacer_dataGridView.AllowUserToAddRows = false;
             Spacer_dataGridView.AllowUserToDeleteRows = false;
-            Spacer_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            Spacer_dataGridView.AllowUserToResizeColumns = false;
+            Spacer_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             Spacer_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             Spacer_dataGridView.BackgroundColor = SystemColors.Control;
             Spacer_dataGridView.BorderStyle = BorderStyle.None;
@@ -101,7 +102,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             Spacer_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Spacer_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Spacer_dataGridView.Location = new Point(3, 172);
+            Spacer_dataGridView.Location = new Point(3, 180);
             Spacer_dataGridView.Name = "Spacer_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
@@ -120,7 +121,7 @@
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Spacer_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             Spacer_dataGridView.RowTemplate.Height = 25;
-            Spacer_dataGridView.Size = new Size(745, 143);
+            Spacer_dataGridView.Size = new Size(982, 146);
             Spacer_dataGridView.TabIndex = 19;
             Spacer_dataGridView.CellContentClick += Spacer_dataGridView_CellContentClick;
             // 
@@ -128,7 +129,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(602, 321);
+            Save_button.Location = new Point(838, 332);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -140,7 +141,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(749, 355);
+            ClientSize = new Size(985, 375);
             Controls.Add(Save_button);
             Controls.Add(Spacer_dataGridView);
             Controls.Add(GeneralPanel);

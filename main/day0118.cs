@@ -11,7 +11,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace main
 {
     /*
-    public class ZoneCalc
+    private class ZoneCalc
         {
             String zoneNum;
         
@@ -70,50 +70,52 @@ namespace main
         
         }
     */
+   
     internal class Zone
     {
-        public String zoneName, zoneUsage, zoneHC, Mode_night, Mode_we;
-        public double theta_i_h_set, theta_i_c_set, dtheta_i_NA, Fx, Fx_Floor, Fx_GWall, theta_s_c, theta_i_h_min, theta_e_min, theta_SUP_Wi;
-        public double twd_d, th_op_d_we, th_op_d, dwd_a;
-        public double zoneArea, zoneHeight;
-        public double qI_p, qI_fac, Cwirk_A;
-        public double VA_we, VA_wd, n50, e, f, Vmech_SUP_we, Vmech_SUP_wd, Vmech_ETA_we, Vmech_ETA_wd, eta_V_mech, eta_χV_mech, xi_c_set, xi_h_set, Vmech_SUP_z, Vmech_ETA_z, ρacp_a;
-        ArrayList zoneWall = new ArrayList(); ArrayList zoneRoof = new ArrayList(); ArrayList zoneFloor = new ArrayList(); ArrayList zoneGWall = new ArrayList(); ArrayList zoneDoor = new ArrayList(); ArrayList zoneWin = new ArrayList(); ArrayList zoneCW = new ArrayList();
-        public double Zone_HT_tot, ZoneWall_HT, ZoneRoof_HT, ZoneFloor_HT, ZoneGWall_HT, ZoneDoor_HT, ZoneWin_HT, ZoneCW_HT;
-        public double ZoneWall_HT_Di, ZoneWall_HT_Indi, ZoneRoof_HT_Di, ZoneRoof_HT_Indi, ZoneWin_HT_Di, ZoneWin_HT_Indi, ZoneDoor_HT_Di, ZoneDoor_HT_Indi;
-        public double Zone_HT_TB_tot, ZoneWall_HT_TB, ZoneRoof_HT_TB, ZoneFloor_HT_TB, ZoneGwall_HT_TB, ZoneWin_HT_TB, ZoneDoor_HT_TB, ZoneCW_HT_TB;
-        public double[] Zone_HV_tot = new double[2], Zone_HV_inf = new double[2], Zone_HV_win = new double[2], Zone_HV_z = new double[2], Zone_HV_mech = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
-        public double[] Zone_H_tot = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
-        public double[] tao = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
-        public double[] theta_e = new double[12], dmth = new double[12], dwe_mth = new double[12], dwd_mth = new double[12];
-        public double[,,] theta_i = new double[2, 2, 12];
+         public String zoneName;
+         String zoneUsage, zoneHC, Mode_night, Mode_we;
+         double theta_i_h_set, theta_i_c_set, dtheta_i_NA, Fx, Fx_Floor, Fx_GWall, theta_s_c, theta_i_h_min, theta_e_min, theta_SUP_Wi;
+         double twd_d, th_op_d_we, th_op_d, dwd_a;
+         double zoneArea, zoneHeight;
+         double qI_p, qI_fac, Cwirk_A;
+         double VA_we, VA_wd, n50, e, f, Vmech_SUP_we, Vmech_SUP_wd, Vmech_ETA_we, Vmech_ETA_wd, eta_V_mech, eta_χV_mech, xi_c_set, xi_h_set, Vmech_SUP_z, Vmech_ETA_z, ρacp_a;
+         ArrayList zoneWall = new ArrayList(); ArrayList zoneRoof = new ArrayList(); ArrayList zoneFloor = new ArrayList(); ArrayList zoneGWall = new ArrayList(); ArrayList zoneDoor = new ArrayList(); ArrayList zoneWin = new ArrayList(); ArrayList zoneCW = new ArrayList();
+         double Zone_HT_tot, ZoneWall_HT, ZoneRoof_HT, ZoneFloor_HT, ZoneGWall_HT, ZoneDoor_HT, ZoneWin_HT, ZoneCW_HT;
+         double ZoneWall_HT_Di, ZoneWall_HT_Indi, ZoneRoof_HT_Di, ZoneRoof_HT_Indi, ZoneWin_HT_Di, ZoneWin_HT_Indi, ZoneDoor_HT_Di, ZoneDoor_HT_Indi;
+         double Zone_HT_TB_tot, ZoneWall_HT_TB, ZoneRoof_HT_TB, ZoneFloor_HT_TB, ZoneGwall_HT_TB, ZoneWin_HT_TB, ZoneDoor_HT_TB, ZoneCW_HT_TB;
+         double[] Zone_HV_tot = new double[2], Zone_HV_inf = new double[2], Zone_HV_win = new double[2], Zone_HV_z = new double[2], Zone_HV_mech = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
+         double[] Zone_H_tot = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
+         double[] tao = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
+         double[] theta_e = new double[12], dmth = new double[12], dwe_mth = new double[12], dwd_mth = new double[12];
+         double[,,] theta_i = new double[2, 2, 12];
 
         //[난방/냉방,비이용일/이용일,mth] = [h/c,we/wd,mth]=[0/1,0/1,12]
         //QT
-        public double[,,] QTsink_tot = new double[2, 2, 12], QTsink_Wall = new double[2, 2, 12], QTsink_Roof = new double[2, 2, 12], QTsink_Floor = new double[2, 2, 12], QTsink_GWall = new double[2, 2, 12], QTsink_Door = new double[2, 2, 12], QTsink_Win = new double[2, 2, 12], QTsink_CW = new double[2, 2, 12];
-        public double[,,] QTsource_tot = new double[2, 2, 12], QTsource_Wall = new double[2, 2, 12], QTsource_Roof = new double[2, 2, 12], QTsource_Floor = new double[2, 2, 12], QTsource_GWall = new double[2, 2, 12], QTsource_Door = new double[2, 2, 12], QTsource_Win = new double[2, 2, 12], QTsource_CW = new double[2, 2, 12];
+         double[,,] QTsink_tot = new double[2, 2, 12], QTsink_Wall = new double[2, 2, 12], QTsink_Roof = new double[2, 2, 12], QTsink_Floor = new double[2, 2, 12], QTsink_GWall = new double[2, 2, 12], QTsink_Door = new double[2, 2, 12], QTsink_Win = new double[2, 2, 12], QTsink_CW = new double[2, 2, 12];
+         double[,,] QTsource_tot = new double[2, 2, 12], QTsource_Wall = new double[2, 2, 12], QTsource_Roof = new double[2, 2, 12], QTsource_Floor = new double[2, 2, 12], QTsource_GWall = new double[2, 2, 12], QTsource_Door = new double[2, 2, 12], QTsource_Win = new double[2, 2, 12], QTsource_CW = new double[2, 2, 12];
         //QS
-        public double[,,] QSopsink_tot = new double[2, 2, 12], QSopsource_tot = new double[2, 2, 12], QStr_tot = new double[2, 2, 12];
-        public double[] QSopsink_Wall = new double[12], QSopsink_Roof = new double[12], QSopsink_Door = new double[12], QSopsink_CW_p = new double[12];
-        public double[] QSopsource_Wall = new double[12], QSopsource_Roof = new double[12], QSopsource_Door = new double[12], QSopsource_CW_p = new double[12];
-        public double[,] QStr_Win = new double[2, 12], QStr_CW = new double[2, 12];
+         double[,,] QSopsink_tot = new double[2, 2, 12], QSopsource_tot = new double[2, 2, 12], QStr_tot = new double[2, 2, 12];
+         double[] QSopsink_Wall = new double[12], QSopsink_Roof = new double[12], QSopsink_Door = new double[12], QSopsink_CW_p = new double[12];
+         double[] QSopsource_Wall = new double[12], QSopsource_Roof = new double[12], QSopsource_Door = new double[12], QSopsource_CW_p = new double[12];
+         double[,] QStr_Win = new double[2, 12], QStr_CW = new double[2, 12];
         //QV
-        public double[,,] QVsink_tot = new double[2, 2, 12], QV_inf_sink = new double[2, 2, 12], QV_win_sink = new double[2, 2, 12], QV_z_sink = new double[2, 2, 12], QV_mech_sink = new double[2, 2, 12];
-        public double[,,] QVsource_tot = new double[2, 2, 12], QV_inf_source = new double[2, 2, 12], QV_win_source = new double[2, 2, 12], QV_z_source = new double[2, 2, 12], QV_mech_source = new double[2, 2, 12];
+         double[,,] QVsink_tot = new double[2, 2, 12], QV_inf_sink = new double[2, 2, 12], QV_win_sink = new double[2, 2, 12], QV_z_sink = new double[2, 2, 12], QV_mech_sink = new double[2, 2, 12];
+         double[,,] QVsource_tot = new double[2, 2, 12], QV_inf_source = new double[2, 2, 12], QV_win_source = new double[2, 2, 12], QV_z_source = new double[2, 2, 12], QV_mech_source = new double[2, 2, 12];
         //QI
-        public double[,,] QI_tot = new double[2, 2, 12], QI_L = new double[2, 2, 12];
-        public double[] QI_P = new double[2], QI_fac = new double[2];
+         double[,,] QI_tot = new double[2, 2, 12], QI_L = new double[2, 2, 12];
+         double[] QI_P = new double[2], QI_fac = new double[2];
         //
-        public double[,,] Qsink = new double[2, 2, 12], Qsource = new double[2, 2, 12], gamma = new double[2, 2, 12], a = new double[2, 2, 12], eta = new double[2, 2, 12], dQc_b = new double[2, 2, 12], dQc_sink = new double[2, 2, 12];
-        public double[] Qhb_we_day = new double[12], Qhb_wd_day = new double[12], Qcb_we_day = new double[12], Qcb_wd_day = new double[12];
-        public double[] Qhb_mth = new double[12], Qcb_mth = new double[12], Qhb_we_mth = new double[12], Qhb_wd_mth = new double[12], Qcb_we_mth = new double[12], Qcb_wd_mth = new double[12];
-        public double Qhb_a, Qcb_a, Qhb_we_a, Qhb_wd_a, Qcb_we_a, Qcb_wd_a;
-
+         double[,,] Qsink = new double[2, 2, 12], Qsource = new double[2, 2, 12], gamma = new double[2, 2, 12], a = new double[2, 2, 12], eta = new double[2, 2, 12], dQc_b = new double[2, 2, 12], dQc_sink = new double[2, 2, 12];
+         double[] Qhb_we_day = new double[12], Qhb_wd_day = new double[12], Qcb_we_day = new double[12], Qcb_wd_day = new double[12];
+         double[] Qhb_mth = new double[12], Qcb_mth = new double[12], Qhb_we_mth = new double[12], Qhb_wd_mth = new double[12], Qcb_we_mth = new double[12], Qcb_wd_mth = new double[12];
+         public double Qhb_a, Qcb_a, Qhb_we_a, Qhb_wd_a, Qcb_we_a, Qcb_wd_a;
+        
 
         public Zone(String zoneNum)
         {
             {
-                string[][] OTemp = Program.DB.getValue(DB.type.CalcDB, "OutairTemperature", "월,온도,일", "zoneNum='" + zoneNum + "'");
+                string[][] OTemp = Program.DB.getValue(DB.type.ProjDB, "OutairTemperature", "월,온도,일", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < OTemp.Length)
                 {
@@ -161,7 +163,7 @@ namespace main
 
             //존 정보 가져오기
             {
-                string[][] ZoneG = Program.DB.getValue(DB.type.CalcDB, "Zonegeneral", "zoneName,zoneUsage,zoneHC,θi_h_set,θi_c_set,Δθi_NA,Fx,Fx_fl,Fx_wl,θs_c,θi_h_min,θe_min,θSUP_Wi,Mode_night,Mode_we,twd_d,th_op_d_we,th_op_d,dwd_a,ZoneArea,zoneHeight,qI_p,qI_fac,Cwirk_A,VA_we,VA_wd,n50,e,f,Vmech_SUP_we,Vmech_SUP_wd,Vmech_ETA_we,Vmech_ETA_wd,ηV_mech,ηχV_mech,χi_c_set,χi_h_set,Vmech_SUP_z,Vmech_ETA_z,ρacp_a", "zoneNum='" + zoneNum + "'");
+                string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral", "zoneName,zoneUsage,zoneHC,θi_h_set,θi_c_set,Δθi_NA,Fx,Fx_fl,Fx_wl,θs_c,θi_h_min,θe_min,θSUP_Wi,Mode_night,Mode_we,twd_d,th_op_d_we,th_op_d,dwd_a,ZoneArea,zoneHeight,qI_p,qI_fac,Cwirk_A,VA_we,VA_wd,n50,e,f,Vmech_SUP_we,Vmech_SUP_wd,Vmech_ETA_we,Vmech_ETA_wd,ηV_mech,ηχV_mech,χi_c_set,χi_h_set,Vmech_SUP_z,Vmech_ETA_z,ρacp_a", "zoneNum='" + zoneNum + "'");
 
                 if (ZoneG.Length > 0)
                 {
@@ -283,7 +285,7 @@ namespace main
 
             //존 외벽 정보 가져오기
             {
-                string[][] ZoneW = Program.DB.getValue(DB.type.CalcDB, "ZoneWall", "Area,Ueff,α,DirectInDirect", "zoneNum='" + zoneNum + "'");
+                string[][] ZoneW = Program.DB.getValue(DB.type.ProjDB, "ZoneWall", "Area,Ueff,α,DirectInDirect", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < ZoneW.Length)
                 {
@@ -329,7 +331,7 @@ namespace main
 
             //존 지붕 정보 가져오기
             {
-                string[][] ZoneR = Program.DB.getValue(DB.type.CalcDB, "ZoneRoof", "Area,Ueff,α,DirectInDirect", "zoneNum='" + zoneNum + "'");
+                string[][] ZoneR = Program.DB.getValue(DB.type.ProjDB, "ZoneRoof", "Area,Ueff,α,DirectInDirect", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < ZoneR.Length)
                 {
@@ -374,7 +376,7 @@ namespace main
 
             //존 바닥 정보 가져오기
             {
-                string[][] ZoneF = Program.DB.getValue(DB.type.CalcDB, "ZoneFloor", "Area,Ueff", "zoneNum='" + zoneNum + "'");
+                string[][] ZoneF = Program.DB.getValue(DB.type.ProjDB, "ZoneFloor", "Area,Ueff", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < ZoneF.Length)
                 {
@@ -418,7 +420,7 @@ namespace main
 
             //존 지하벽 정보 가져오기
             {
-                string[][] ZoneG = Program.DB.getValue(DB.type.CalcDB, "ZoneGWall", "Area,Ueff", "zoneNum='" + zoneNum + "'");
+                string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGWall", "Area,Ueff", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < ZoneG.Length)
                 {
@@ -462,7 +464,7 @@ namespace main
 
             //존 문 정보 가져오기
             {
-                string[][] ZoneD = Program.DB.getValue(DB.type.CalcDB, "ZoneDoor", "Area,Ueff,α,DirectInDirect", "zoneNum='" + zoneNum + "'");
+                string[][] ZoneD = Program.DB.getValue(DB.type.ProjDB, "ZoneDoor", "Area,Ueff,α,DirectInDirect", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < ZoneD.Length)
                 {
@@ -506,7 +508,7 @@ namespace main
 
             //존 창문 정보 가져오기
             {
-                string[][] ZoneWin = Program.DB.getValue(DB.type.CalcDB, "ZoneWin", "Area,Uvalue,Uinst,DirectInDirect,Ff,g,τ,gtot,τtot", "zoneNum='" + zoneNum + "'");
+                string[][] ZoneWin = Program.DB.getValue(DB.type.ProjDB, "ZoneWin", "Area,Uvalue,Uinst,DirectInDirect,Ff,g,τ,gtot,τtot", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < ZoneWin.Length)
                 {
@@ -550,7 +552,7 @@ namespace main
 
             //존 커튼월 정보 가져오기
             {
-                string[][] ZoneCW = Program.DB.getValue(DB.type.CalcDB, "ZoneCW", "Area_g,Uvalue_g,Ff_g,g_g,gtot_g,τ_g,τtot_g,Area_p,Uvalue_p,α_p,Area_d,Uvalue_d,Ff_d,g_d,τ_d,Area_tot,Uinst", "zoneNum='" + zoneNum + "'");
+                string[][] ZoneCW = Program.DB.getValue(DB.type.ProjDB, "ZoneCW", "Area_g,Uvalue_g,Ff_g,g_g,gtot_g,τ_g,τtot_g,Area_p,Uvalue_p,α_p,Area_d,Uvalue_d,Ff_d,g_d,τ_d,Area_tot,Uinst", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < ZoneCW.Length)
                 {
@@ -858,12 +860,12 @@ namespace main
             {
                 int i = -1;
 
-                string[][] ZoneW_Name = Program.DB.getValue(DB.type.CalcDB, "ZoneWall", "Name", "zoneNum='" + zoneNum + "'");
+                string[][] ZoneW_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneWall", "Name", "zoneNum='" + zoneNum + "'");
 
                 while (++i < zoneWall.Count)
                 {
                     Wall zonewall = (Wall)zoneWall[i];
-                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneWall_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneW_Name[i][0] + "'");
+                    string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneWall_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneW_Name[i][0] + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -963,12 +965,12 @@ namespace main
 
                 int i = -1;
 
-                string[][] ZoneR_Name = Program.DB.getValue(DB.type.CalcDB, "ZoneRoof", "Name", "zoneNum='" + zoneNum + "'");
+                string[][] ZoneR_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneRoof", "Name", "zoneNum='" + zoneNum + "'");
 
                 while (++i < zoneRoof.Count)
                 {
                     Roof zoneroof = (Roof)zoneRoof[i];
-                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneRoof_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneR_Name[i][0] + "'");
+                    string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneRoof_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneR_Name[i][0] + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -1064,12 +1066,12 @@ namespace main
             {
                 int i = -1;
 
-                string[][] ZoneD_Name = Program.DB.getValue(DB.type.CalcDB, "ZoneDoor", "Name", "zoneNum='" + zoneNum + "'");
+                string[][] ZoneD_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneDoor", "Name", "zoneNum='" + zoneNum + "'");
 
                 while (++i < zoneDoor.Count)
                 {
                     Door zonedoor = (Door)zoneDoor[i];
-                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneDoor_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneD_Name[i][0] + "'");
+                    string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneDoor_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneD_Name[i][0] + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -1162,12 +1164,12 @@ namespace main
             {
                 int i = -1;
 
-                string[][] ZoneCW_Name = Program.DB.getValue(DB.type.CalcDB, "ZoneCW", "Name", "zoneNum='" + zoneNum + "'");
+                string[][] ZoneCW_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneCW", "Name", "zoneNum='" + zoneNum + "'");
 
                 while (++i < zoneCW.Count)
                 {
                     CW zonecw = (CW)zoneCW[i];
-                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneCW_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
+                    string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneCW_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -1264,8 +1266,8 @@ namespace main
             double[,,] zoneWins_geff = new double[zoneWin.Count,2,12];
             double[,,] zoneWins_Qs = new double[zoneWin.Count,2,12];
 
-            string[][] ZoneWin_Name = Program.DB.getValue(DB.type.CalcDB, "ZoneWin", "Name", "zoneNum='" + zoneNum + "'");
-            string[][] ZoneCW_Name = Program.DB.getValue(DB.type.CalcDB, "ZoneCW", "Name", "zoneNum='" + zoneNum + "'");
+            string[][] ZoneWin_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneWin", "Name", "zoneNum='" + zoneNum + "'");
+            string[][] ZoneCW_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneCW", "Name", "zoneNum='" + zoneNum + "'");
 
             //존의 창별 일사정보 가져오기
             {
@@ -1273,7 +1275,7 @@ namespace main
 
                 while (++i < zoneWin.Count)
                 {
-                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneWin_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
+                    string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneWin_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -1323,7 +1325,7 @@ namespace main
 
                 while (++i < zoneWin.Count)
                 {
-                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneWin_Shadow", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
+                    string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneWin_Shadow", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -1373,7 +1375,7 @@ namespace main
 
                 while (++i < zoneWin.Count)
                 {
-                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneWin_a", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
+                    string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneWin_a", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -1455,7 +1457,7 @@ namespace main
 
                 while (++i < zoneCW.Count)
                 {
-                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneCW_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
+                    string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneCW_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -1504,7 +1506,7 @@ namespace main
 
                 while (++i < zoneCW.Count)
                 {
-                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneCW_shadow", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
+                    string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneCW_shadow", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -1553,7 +1555,7 @@ namespace main
 
                 while (++i < zoneCW.Count)
                 {
-                    string[][] token = Program.DB.getValue(DB.type.CalcDB, "ZoneCW_a", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
+                    string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneCW_a", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -1798,9 +1800,8 @@ namespace main
             }
         }
 
+
     }
-
-
 
     public class Wall
     {
@@ -1809,6 +1810,7 @@ namespace main
         double wall_α;
         string wall_DiIndi;
 
+        
         public Wall(double Area, double Ueff, double α, string DiIndi)
         {
             this.wall_Area = Area;
@@ -1835,7 +1837,7 @@ namespace main
         {
             return wall_DiIndi;
         }
-
+        
     }
 
     public class Roof
@@ -1845,7 +1847,7 @@ namespace main
         double Roof_α;
         String Roof_DiIndi;
 
-        public Roof(double Area, double Ueff, double α, String DiIndi)
+        public  Roof(double Area, double Ueff, double α, String DiIndi)
         {
             this.Roof_Area = Area;
             this.Roof_Ueff = Ueff;
@@ -2264,8 +2266,6 @@ namespace main
 
     public class theta_iCalc
     {
-
-
         public double tao_Calc(double cwirk, double H)
         {
             double tao;

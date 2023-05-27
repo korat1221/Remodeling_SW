@@ -1,5 +1,6 @@
 ﻿using main.contents;
 using main.contents.Building;
+using main.contentslist;
 using main.subcontents;
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -48,6 +49,7 @@ namespace main
             ReportExisting,
             ReportRemodeling,
             FormDebug,
+            List_ConstructionWindow,
 
         }
         Form[] forms = new Form[] { new General(), new EnergyUse(), 
@@ -57,7 +59,8 @@ namespace main
             new EquipmentList(),new AHUSystem(), new DHWSystem(), new HeatingSystem(), new CoolingSystem(),
             new PV(), new FuelCell(), new WindPower(), new SupplyRatio(), new EIndependenceRate(),
             new ReportExisting(), new ReportRemodeling(),
-            new FormDebug() };
+            new FormDebug(),
+            new List_ConstructionWindow()};
 
 
         public MainContents()
@@ -95,7 +98,7 @@ namespace main
         {
             int idx = Int32.Parse(args.TryGetWebMessageAsString());
 
-            if (idx >= 0 && idx < 28)
+            if (idx >= 0 && idx < 50)
             {
                 DoLoadForm(idx);
             }

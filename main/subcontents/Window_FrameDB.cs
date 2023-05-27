@@ -16,8 +16,9 @@ namespace main.subcontents
     public partial class Window_FrameDB : Form
     {
         String FrameType;
-        public double Count_FrameDB;
+        double Count_FrameDB;
         int SelectRow;
+        public string[] Select_WindowFrame = new string[11];
 
         public Window_FrameDB(String FrameType)
         {
@@ -36,8 +37,8 @@ namespace main.subcontents
             table_WindowFrame.Columns.Add("번호", typeof(string));
             table_WindowFrame.Columns.Add("제품명", typeof(string));
             table_WindowFrame.Columns.Add("제조사", typeof(string));
-            table_WindowFrame.Columns.Add("프레임종류", typeof(string));
-            table_WindowFrame.Columns.Add("프레임재료", typeof(string));
+            table_WindowFrame.Columns.Add("프레임\r\n종류", typeof(string));
+            table_WindowFrame.Columns.Add("프레임\r\n재료", typeof(string));
             table_WindowFrame.Columns.Add("개폐부프레임\r\n열관류율" + Environment.NewLine + "Uf,A[W/m2∙K]", typeof(string));
             table_WindowFrame.Columns.Add("고정부프레임\r\n열관류율" + Environment.NewLine + "Uf,B[W/m2∙K]", typeof(string));
             table_WindowFrame.Columns.Add("중간바프레임\r\n열관류율" + Environment.NewLine + "Uf,C[W/m2∙K]", typeof(string));
@@ -83,16 +84,14 @@ namespace main.subcontents
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            Program.DB.deleteValue(DB.type.CalcDB, "Select_WindowFrame");
             DataGridViewRow row = Frame_dataGridView.Rows[SelectRow];
-            Program.DB.setValue(DB.type.CalcDB, "Select_WindowFrame", "번호,제품명,제조사,프레임종류,프레임재료,개폐부프레임열관류율,고정부프레임열관류율,중간바프레임열관류율,개폐부프레임두께,고정부프레임두께,중간바프레임두께",
-            "'" + row.Cells[1].Value.ToString() + "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','"
-            + row.Cells[5].Value.ToString() + "','" + row.Cells[6].Value.ToString() + "','" + row.Cells[7].Value.ToString() + "','" + row.Cells[8].Value.ToString() + "','" + row.Cells[9].Value.ToString() + "','"
-            + row.Cells[10].Value.ToString() + "','" + row.Cells[11].Value.ToString() + "'", "번호");
+            for (int i = 1; i < row.Cells.Count; i++)
+            {
+                Select_WindowFrame[i - 1] = row.Cells[i].Value.ToString();
+            }
 
             this.DialogResult = DialogResult.OK;
             this.Close();
-
         }
     }
 }

@@ -15,13 +15,15 @@ namespace main.subcontents
         double Count_FrameDB;
         int SelectRow;
         String LE_CL_V;
+        public String[] Select_WindowSpacer = new String[11];
 
-        public Window_SpacerDB(String SingleDoubleType, String FrameMaterial,String LE_CL_V)
+        public Window_SpacerDB(String SingleDoubleType, String FrameMaterial, String LE_CL_V)
         {
             InitializeComponent();
-            load_table_SpacerDB(SingleDoubleType, FrameMaterial, LE_CL_V);
+            load_table_SpacerDB(SingleDoubleType, FrameMaterial);
+            this.LE_CL_V = LE_CL_V;
         }
-        void load_table_SpacerDB(String SingleDoubleType, String FrameMaterial,String LE_CL_V)
+        void load_table_SpacerDB(String SingleDoubleType, String FrameMaterial)
         {
             DataTable table_WindowSpacer = new DataTable();
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -34,10 +36,10 @@ namespace main.subcontents
             table_WindowSpacer.Columns.Add("구분1", typeof(string));
             table_WindowSpacer.Columns.Add("구분2", typeof(string));
             table_WindowSpacer.Columns.Add("구분3", typeof(string));
-            table_WindowSpacer.Columns.Add("고정유리(CL)\r\n선형열관류율" + Environment.NewLine + "Ψg,fix[W/m·K]", typeof(string));
-            table_WindowSpacer.Columns.Add("개폐유리(CL)\r\n선형열관류율" + Environment.NewLine + "Ψg,t[W/m·K]", typeof(string));
-            table_WindowSpacer.Columns.Add("고정유리(LE)\r\n선형열관류율" + Environment.NewLine + "Ψg,fix[W/m·K]", typeof(string));
-            table_WindowSpacer.Columns.Add("개폐유리(LE)\r\n선형열관류율" + Environment.NewLine + "Ψg,t[W/m·K]", typeof(string));
+            table_WindowSpacer.Columns.Add("고정유리(CL)\r\n선형열관류율" + Environment.NewLine + "Ψg,fix\r\n[W/m·K]", typeof(string));
+            table_WindowSpacer.Columns.Add("개폐유리(CL)\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
+            table_WindowSpacer.Columns.Add("고정유리(LE)\r\n선형열관류율" + Environment.NewLine + "Ψg,fix\r\n[W/m·K]", typeof(string));
+            table_WindowSpacer.Columns.Add("개폐유리(LE)\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
             string[][] WinSpacer = Program.DB.getValue(DB.type.BaseDB, "창호간봉", "번호,DB유형,제품명,구분1,구분2,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + FrameMaterial + "'");
 
             for (int n = 0; n < WinSpacer.Length; n++)
@@ -73,17 +75,18 @@ namespace main.subcontents
                         row = Spacer_dataGridView.Rows[e.RowIndex];
                     }
                 }
-                LE_CL_V = LE_CL_V;
             }
         }
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            Program.DB.deleteValue(DB.type.CalcDB, "Select_WindowSpacer");
             DataGridViewRow row = Spacer_dataGridView.Rows[SelectRow];
-            Program.DB.setValue(DB.type.CalcDB, "Select_WindowSpacer", "번호,제품명,구분1,구분2,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율,LE_CL_V",
-            "'" + row.Cells[1].Value.ToString() + "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','" + row.Cells[5].Value.ToString() + "','"
-            + row.Cells[6].Value.ToString() + "','" + row.Cells[7].Value.ToString() + "','" + row.Cells[8].Value.ToString() + "','" + row.Cells[9].Value.ToString() + "','" + LE_CL_V + "'", "번호");
+            for (int i = 1; i < row.Cells.Count; i++)
+            {
+                Select_WindowSpacer[i - 1] = row.Cells[i].Value.ToString();
+            }
+
+            Select_WindowSpacer[10] = LE_CL_V;
 
             this.DialogResult = DialogResult.OK;
             this.Close();

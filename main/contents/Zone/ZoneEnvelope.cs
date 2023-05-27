@@ -91,7 +91,6 @@ namespace main.contents
             ZoneNum = Zone_comboBox.SelectedItem.ToString();
             load_table_ZoneEnvelopeInfo(ZoneNum);
             string[][] Zone = Program.DB.getValue(DB.type.CalcDB, "ZoneGeneral", "존이름,층,바닥면적,순체적", "존번호= '" + ZoneNum + "'");
-            MessageBox.Show(ZoneNum);
             ZoneName_textBox.Text = Zone[0][0];
             Calc_A(ZoneNum);
             ZoneType = Calc_ZoneType();
