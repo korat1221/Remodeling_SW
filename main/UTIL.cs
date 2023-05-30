@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 
 namespace main
 {
@@ -119,6 +114,20 @@ namespace main
                         comboBox.SelectedIndex = i;
                         break;
                     }
+                }
+            }
+        }
+        public void resetMainTree(int idx, int sub_idx, object[] obj, string select_id)
+        {
+            foreach (FormMain openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "FormMain")
+                {
+                    MainContents f = (MainContents)(((FormMain)openForm).splitContainer1.Panel1.Controls[0]);
+                    string s = System.Text.Json.JsonSerializer.Serialize(obj);
+
+                    f.runScript("resetMainTree(" + idx + "," + sub_idx + ",'" + s + "','" + select_id + "')");
+                    return;
                 }
             }
         }

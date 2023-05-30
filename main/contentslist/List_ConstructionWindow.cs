@@ -1,15 +1,5 @@
 ﻿using main.contents;
-using main.subcontents;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace main.contentslist
 {
@@ -84,14 +74,19 @@ namespace main.contentslist
         {
             string[][] List = Program.DB.getValue(DB.type.CalcDB, "ConstructionWindow", "번호,창호명칭,Type,창호유효열관류율,태양열취득률,빛투과율,창호면적,유리종류", "");
 
+            List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
+
             WindowList.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
-
                 WindowList.Rows.Add(List[n][0], List[n][1], List[n][2], String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])), String.Format("{0:F2}", Convert.ToDouble(List[n][5])), String.Format("{0:F2}", Convert.ToDouble(List[n][6])), List[n][7]);
+
+                mainMenu.Add(new { text = List[n][1], PartId = "6-" + List[n][0] }); // 예시 코드: 메인 메뉴 동적 할당
             }
             dataGridView1.DataSource = WindowList;
             CountDB = List.Length;
+            
+            Program.UTIL.resetMainTree(1, 4, mainMenu.ToArray(), "2") ; // 예시 코드: 메인 메뉴 동적 할당
         }
         private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

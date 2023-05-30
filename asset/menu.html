@@ -6,65 +6,65 @@
     <script type='text/javascript' src="js/util.js"></script>
     <script type='text/javascript' src="js/main.js"></script>
     <script>
+        let gTreeData = [
+            [
+                { "type":"General", "text" : "일반정보", "id" : "0" },
+                { "type":"EnergyUse", "text" : "에너지사용량 정보", "id" : "1" }
+            ],
+            [
+                { "type":"CW", "text" : "커튼월창", "id" : "CW", "children":[{"text": "C1","id": "2"}]},
+                { "type":"Wall", "text" : "외벽", "id" : "Wall", "children":[{"text": "W1","id": "3"}]},
+                { "type":"Roof", "text" : "지붕", "id" : "Roof", "children":[{"text": "C1","id": "4"}]},
+                { "type":"Floor", "text" :"최하층바닥","id" :  "Floor", "children":[{"text": "C1","id": "5"}]},
+                { "type":"Window", "text" : "창호", "id" : "29", "children":[{"text": "WN1","id": "6"}]},
+                { "type":"Door", "text" : "외부출입문", "id" : "Door", "children":[{"text": "WN1","id": "7"}]}
+            ],
+            [
+                { "type":"Model", "text" :  "3D 모델", "id" : "8" },
+                { "type":"Shade", "text" :  "음영정보", "id" : "9" },
+                { "type":"Blind", "text" :  "차양정보", "id" : "10" },
+                { "type":"ThermalBridge", "text" : "열교정보", "id" : "11" }
+            ],
+            [
+                { "type":"ZoneGeneral", "text" : "존 일반정보", "id" : "12" },
+                { "type":"ZoneEnvelope", "text" :  "존 외피정보", "id" : "13" },
+                { "type":"ZoneLighting", "text" :  "존 조명정보", "id" : "14" },
+                { "type":"ZoneSystem", "text" :  "존 설비정보", "id" : "15" }
+            ],
+            [
+                { "type":"EquipmentList", "text" :  "장비일람표", "id" : "16" },
+                { "type":"AHUSystem", "text" :  "공조시스템", "id" : "17" },
+                { "type":"DHWSystem", "text" :  "급탕시스템", "id" : "18" },
+                { "type":"HeatingSystem", "text" :  "난방시스템", "id" : "19" },
+                { "type":"CoolingSystem", "text" :  "냉방시스템", "id" : "20" }
+            ],
+            [
+                { "type":"PVSystem", "text" :  "태양광시스템", "id" : "21" },
+                { "type":"FuelCell", "text" :  "연료전지", "id" : "22" },
+                { "type":"WindPower", "text" :  "풍력시스템", "id" : "23" },
+                { "type":"SupplyRatio", "text" : "공급의무비율", "id" : "24" },
+                { "type":"EIndependeceRate", "text" : "에너지자립률", "id" : "25" }
+            ],
+            [
+                { "type":"ReportExisting", "text" : "기존_표준", "id" : "26" },
+                { "type":"ReportRemodeling", "text" :  "기존_설계", "id" : "27" }
+            ]
+        ];
+        let gDefaultSelect = ["0","2","8","12","16","21","26"];
+
+        function resetMainTree(id, subid, tree, select_id) {
+            if (subid) {
+                gTreeData[id][subid].children = JSON.parse(tree);
+            }
+            else {
+                gTreeData[id] = JSON.parse(tree);
+            }
+            if (select_id) gDefaultSelect[id] = select_id;
+            load(id);
+        }
 
         function load(menuID) {
-            switch(menuID) {
-                case 0:
-                    gMainTree.load([
-                    { "type":"General", "text" : "일반정보", "id" : "0" },
-                    { "type":"EnergyUse", "text" : "에너지사용량 정보", "id" : "1" }
-                   ], "0");
-                    break;
-                case 1:
-                    gMainTree.load([
-                        { "type":"CW", "text" : "커튼월창", "id" : "CW", "children":[{"text": "C1","id": "2"}]},
-                        { "type":"Wall", "text" : "외벽", "id" : "Wall", "children":[{"text": "W1","id": "3"}]},
-                        { "type":"Roof", "text" : "지붕", "id" : "Roof", "children":[{"text": "C1","id": "4"}]},
-                        { "type":"Floor", "text" :"최하층바닥","id" :  "Floor", "children":[{"text": "C1","id": "5"}]},
-                        { "type":"Window", "text" : "창호", "id" : "29", "children":[{"text": "WN1","id": "6"}]},
-                        { "type":"Door", "text" : "외부출입문", "id" : "Door", "children":[{"text": "WN1","id": "7"}]}
-                    ], "2");
-                    break;                 
-                case 2:
-                    gMainTree.load([
-                    { "type":"Model", "text" :  "3D 모델", "id" : "8" },
-                    { "type":"Shade", "text" :  "음영정보", "id" : "9" },
-                    { "type":"Blind", "text" :  "차양정보", "id" : "10" },
-                    { "type":"ThermalBridge", "text" : "열교정보", "id" : "11" }
-                    ], "8");
-                    break;   
-                case 3:
-                    gMainTree.load([
-                    { "type":"ZoneGeneral", "text" : "존 일반정보", "id" : "12" },
-                    { "type":"ZoneEnvelope", "text" :  "존 외피정보", "id" : "13" },
-                    { "type":"ZoneLighting", "text" :  "존 조명정보", "id" : "14" },
-                    { "type":"ZoneSystem", "text" :  "존 설비정보", "id" : "15" }
-                   ], "12");
-                    break;
-                case 4:
-                    gMainTree.load([
-                    { "type":"EquipmentList", "text" :  "장비일람표", "id" : "16" },
-                    { "type":"AHUSystem", "text" :  "공조시스템", "id" : "17" },
-                    { "type":"DHWSystem", "text" :  "급탕시스템", "id" : "18" },
-                    { "type":"HeatingSystem", "text" :  "난방시스템", "id" : "19" },
-                    { "type":"CoolingSystem", "text" :  "냉방시스템", "id" : "20" }
-                   ], "16");
-                    break;
-                case 5:
-                    gMainTree.load([
-                    { "type":"PVSystem", "text" :  "태양광시스템", "id" : "21" },
-                    { "type":"FuelCell", "text" :  "연료전지", "id" : "22" },
-                    { "type":"WindPower", "text" :  "풍력시스템", "id" : "23" },
-                    { "type":"SupplyRatio", "text" : "공급의무비율", "id" : "24" },
-                    { "type":"EIndependeceRate", "text" : "에너지자립률", "id" : "25" }
-                   ], "21");
-                    break;case 6:
-                    gMainTree.load([
-                    { "type":"ReportExisting", "text" : "기존_표준", "id" : "26" },
-                    { "type":"ReportRemodeling", "text" :  "기존_설계", "id" : "27" }
-                   ], "26");
-                    break;
-            }
+            gMainTree.load(gTreeData[menuID], gDefaultSelect[menuID]);
 
             let icons = [
                 {"normal":"url(images/1sticon/1.Building.png)","active":"url(images/1sticon/1.Building_on2.png)"},

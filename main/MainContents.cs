@@ -1,18 +1,7 @@
 ﻿using main.contents;
 using main.contents.Building;
 using main.contentslist;
-using main.subcontents;
 using Microsoft.Web.WebView2.Core;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace main
 {
@@ -61,7 +50,7 @@ namespace main
             new ReportExisting(), new ReportRemodeling(),
             new FormDebug(),
             new List_ConstructionWindow()};
-
+        bool scriptable = false;
 
         public MainContents()
         {
@@ -93,6 +82,7 @@ namespace main
         {
             await webView21.EnsureCoreWebView2Async(null);
             webView21.CoreWebView2.WebMessageReceived += OnJSMessage;
+            webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
         }
         void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
@@ -102,6 +92,10 @@ namespace main
             {
                 DoLoadForm(idx);
             }
+        }
+        void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            scriptable = true;
         }
         void DoLoadForm(int idx)
         {
@@ -129,5 +123,12 @@ namespace main
             webView21.Height = webView21.Size.Height - 4;
         }
 
+        public void runScript(string script)
+        {
+            if (scriptable)
+            {
+                webView21.CoreWebView2.ExecuteScriptAsync(script);
+            }
+        }
     }
 }
