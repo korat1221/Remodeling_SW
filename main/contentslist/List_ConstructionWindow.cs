@@ -84,6 +84,7 @@ namespace main.contentslist
         {
             string[][] List = Program.DB.getValue(DB.type.CalcDB, "ConstructionWindow", "번호,창호명칭,Type,창호유효열관류율,태양열취득률,빛투과율,창호면적,유리종류", "");
 
+            WindowList.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
 

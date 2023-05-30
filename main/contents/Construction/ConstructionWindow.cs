@@ -19,14 +19,14 @@ namespace main.contents
     public partial class ConstructionWindow : Form
     {
         private String WinNum;
-        String WindowName, Type, UwMehod, DiIndi, FrameType, SingleDoubleType, FrameMaterial, FrameName, GlassName, SpacerName, InstallType, InstallName, LE_CL_V;
+        String WindowName, Type,OldWindow, UwMehod, DiIndi, FrameType, SingleDoubleType, FrameMaterial, FrameName, GlassName, SpacerName, InstallType, InstallName, LE_CL_V;
         String check_FrameType, check_SingleDoubleType, check_FrameMaterial, check_LE_CL_V, check_InstallType;
         String[][] Size;
         double Ug, g, τD65_SNA, Psi_g_fix, Psi_g_open, Uw, Uw_inst, dUinst;// dUinst는 열교가산치, Uw_inst는 유효열관류율(창호열관류율+열교가산치)
         double Uf_open, Uf_fix, Uf_btw, df_open, df_fix, df_btw;
         double Psi_InstallTop, Psi_InstallSide, Psi_InstallButtom;
         double Area, Width, Height, Ag_fix, Ag_open, Af_open, Af_fix, Af_btw, Lg_fix, Lg_open;
-
+        String[][] Old; String[][] f_shgc; String[][] f_τ;
 
         public ConstructionWindow()
         {
@@ -160,7 +160,7 @@ namespace main.contents
             Uw_comboBox.SelectedIndex = 0;
         }
 
-        //덧댐 창호 DB 불러오기 
+        //덧댐 창호 리스트 불러오기 
         private void Load_AdditionalWindow(String Type)
         {
             string def_value;
@@ -209,6 +209,47 @@ namespace main.contents
                 }
             }
 
+        }
+
+        private void AdditionalWindow_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            OldWindow = Program.UTIL.SelectedItem_ByComboBox(AdditionalWindow_comboBox);
+            Calc_AdditionalWindow();
+        }
+
+        private void Calc_AdditionalWindow()
+        {
+            if (Type == "외부(커튼월)덧댐") //추후 커튼월 db로 고쳐야 함
+            {
+                if (OldWindow != null && GlassName != null)
+                {
+                    Old = Program.DB.getValue(DB.type.CalcDB, "ConstructionWindow", "번호,창호명칭,Type,LE_CL_V,유리열관류율,태양열취득률,빛투과율,창호열관류율", "창호명칭 = '" + OldWindow + "'");
+                    String 조합구성 = LE_CL_V + "+" + Old[0][3];
+                    f_shgc = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
+                    f_τ = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
+
+                    g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Old[0][5]) * g;
+                    τD65_SNA = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Old[0][6]) * τD65_SNA;
+                }
+            }
+            else if (Type == "내부덧댐")
+            {
+                if (OldWindow != null && GlassName != null)
+                {
+                    Old = Program.DB.getValue(DB.type.CalcDB, "ConstructionWindow", "번호,창호명칭,Type,LE_CL_V,유리열관류율,태양열취득률,빛투과율,창호열관류율", "창호명칭 = '" + OldWindow + "'");
+                    String 조합구성 = LE_CL_V + "+" + Old[0][3];
+                    f_shgc = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
+                    f_τ = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
+
+                    g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Old[0][5]) * g;
+                    τD65_SNA = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Old[0][6]) * τD65_SNA;
+                }
+            }
+            else
+            {
+                g = g;
+                τD65_SNA = τD65_SNA;
+            }
         }
 
         private void Load_WindowType_image(String Type)
@@ -306,7 +347,7 @@ namespace main.contents
                 Uw2_label.Visible = true;
                 Uw2_unit_label.Visible = true;
                 Uw2_textBox.Visible = true;
-                Uw2_textBox.Text=string.Empty;
+                Uw2_textBox.Text = string.Empty;
                 Uw2_textBox.Enabled = true;
                 Uw2_textBox.BorderStyle = BorderStyle.FixedSingle;
             }
@@ -319,7 +360,7 @@ namespace main.contents
 
         private void Uw2_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (UwMehod == "진단"&& Uw2_textBox.Text != string.Empty)
+            if (UwMehod == "진단" && Uw2_textBox.Text != string.Empty)
             {
                 Uw = Convert.ToDouble(Uw2_textBox.Text);
                 Calc_dUinst();
@@ -513,6 +554,7 @@ namespace main.contents
                 τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
                 Calc_Uw();
                 Calc_dUinst();
+                Calc_AdditionalWindow(); //덧댐일 경우 
             }
 
             //유리를 다시 선택했을 경우 
@@ -728,12 +770,13 @@ namespace main.contents
               Area.ToString() + "','" + Width.ToString() + "','" + Height.ToString() + "','" + Ag_fix.ToString() + "','" + Ag_open.ToString() + "','" + Af_open.ToString() + "','" + Af_fix.ToString() + "','" + Af_btw.ToString() + "','" + Lg_fix.ToString() + "','" + Lg_open.ToString() + "','" +
               Ug.ToString() + "','" + g.ToString() + "','" + τD65_SNA.ToString() + "','" + Psi_g_fix.ToString() + "','" + Psi_g_open.ToString() + "','" +
               Uf_open.ToString() + "','" + Uf_fix.ToString() + "','" + Uf_btw.ToString() + "','" +
-              Uw.ToString() + "','" + dUinst.ToString() + "','" +  Uw_inst.ToString()
+              Uw.ToString() + "','" + dUinst.ToString() + "','" + Uw_inst.ToString()
               + "'", "번호");
 
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
+        
     }
 }

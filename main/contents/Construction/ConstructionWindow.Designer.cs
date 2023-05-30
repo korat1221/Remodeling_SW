@@ -385,6 +385,7 @@ namespace main.contents
             AdditionalWindow_comboBox.Name = "AdditionalWindow_comboBox";
             AdditionalWindow_comboBox.Size = new Size(120, 23);
             AdditionalWindow_comboBox.TabIndex = 0;
+            AdditionalWindow_comboBox.SelectedIndexChanged += AdditionalWindow_comboBox_SelectedIndexChanged;
             // 
             // Name_textBox
             // 
