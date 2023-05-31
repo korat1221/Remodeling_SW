@@ -512,9 +512,9 @@ namespace main.contents
             Install_textBox.Enabled = false;
             Install_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Install_textBox.ForeColor = SystemColors.ControlDark;
-            Install_textBox.Location = new Point(329, 230);
+            Install_textBox.Location = new Point(327, 230);
             Install_textBox.Name = "Install_textBox";
-            Install_textBox.Size = new Size(116, 15);
+            Install_textBox.Size = new Size(120, 15);
             Install_textBox.TabIndex = 95;
             Install_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -524,7 +524,7 @@ namespace main.contents
             Install_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Install_button.FlatStyle = FlatStyle.System;
             Install_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Install_button.Location = new Point(452, 226);
+            Install_button.Location = new Point(449, 226);
             Install_button.Margin = new Padding(0);
             Install_button.Name = "Install_button";
             Install_button.Size = new Size(23, 23);
@@ -540,9 +540,9 @@ namespace main.contents
             SpacerName_textBox.Enabled = false;
             SpacerName_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             SpacerName_textBox.ForeColor = SystemColors.ControlDark;
-            SpacerName_textBox.Location = new Point(177, 143);
+            SpacerName_textBox.Location = new Point(175, 143);
             SpacerName_textBox.Name = "SpacerName_textBox";
-            SpacerName_textBox.Size = new Size(116, 15);
+            SpacerName_textBox.Size = new Size(120, 15);
             SpacerName_textBox.TabIndex = 93;
             SpacerName_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -552,7 +552,7 @@ namespace main.contents
             Spacer_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Spacer_button.FlatStyle = FlatStyle.System;
             Spacer_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Spacer_button.Location = new Point(303, 139);
+            Spacer_button.Location = new Point(296, 139);
             Spacer_button.Margin = new Padding(0);
             Spacer_button.Name = "Spacer_button";
             Spacer_button.Size = new Size(23, 23);
@@ -568,9 +568,9 @@ namespace main.contents
             GlassName_textBox.Enabled = false;
             GlassName_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             GlassName_textBox.ForeColor = SystemColors.ControlDark;
-            GlassName_textBox.Location = new Point(177, 85);
+            GlassName_textBox.Location = new Point(175, 85);
             GlassName_textBox.Name = "GlassName_textBox";
-            GlassName_textBox.Size = new Size(116, 15);
+            GlassName_textBox.Size = new Size(120, 15);
             GlassName_textBox.TabIndex = 91;
             GlassName_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -580,7 +580,7 @@ namespace main.contents
             GlassDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             GlassDB_button.FlatStyle = FlatStyle.System;
             GlassDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            GlassDB_button.Location = new Point(303, 81);
+            GlassDB_button.Location = new Point(296, 81);
             GlassDB_button.Margin = new Padding(0);
             GlassDB_button.Name = "GlassDB_button";
             GlassDB_button.Size = new Size(23, 23);
@@ -596,9 +596,9 @@ namespace main.contents
             FrameName_textBox.Enabled = false;
             FrameName_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             FrameName_textBox.ForeColor = SystemColors.ControlDark;
-            FrameName_textBox.Location = new Point(329, 56);
+            FrameName_textBox.Location = new Point(327, 56);
             FrameName_textBox.Name = "FrameName_textBox";
-            FrameName_textBox.Size = new Size(116, 15);
+            FrameName_textBox.Size = new Size(120, 15);
             FrameName_textBox.TabIndex = 89;
             FrameName_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -608,7 +608,7 @@ namespace main.contents
             FrameDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             FrameDB_button.FlatStyle = FlatStyle.System;
             FrameDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            FrameDB_button.Location = new Point(452, 52);
+            FrameDB_button.Location = new Point(449, 52);
             FrameDB_button.Margin = new Padding(0);
             FrameDB_button.Name = "FrameDB_button";
             FrameDB_button.Size = new Size(23, 23);
@@ -801,9 +801,9 @@ namespace main.contents
             label23.ForeColor = SystemColors.ControlDark;
             label23.Location = new Point(484, 85);
             label23.Name = "label23";
-            label23.Size = new Size(163, 15);
+            label23.Size = new Size(159, 15);
             label23.TabIndex = 68;
-            label23.Text = "[g] 태양열 취득율(덧댐포함)";
+            label23.Text = "[g] 태양열취득률(덧댐포함)";
             // 
             // Ug_unit_label
             // 

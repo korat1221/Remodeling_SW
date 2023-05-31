@@ -35,7 +35,7 @@ namespace main.subcontents
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Program.DB.deleteValue(DB.type.CalcDB, "Import_WindowSize");
+                Program.DB.deleteTable(DB.type.CalcDB, "Import_WindowSize");
 
                 try
                 {
@@ -114,7 +114,7 @@ namespace main.subcontents
             SelectRow.Clear();
             SelectCheckBox();
 
-            Program.DB.deleteValue(DB.type.CalcDB, "Select_WindowSize");
+            Program.DB.deleteTable(DB.type.CalcDB, "Select_WindowSize");
             for (int n = 0; n < SelectRow.Count; n++)
             {
                 DataGridViewRow row = Size_dataGridView.Rows[Convert.ToInt32(SelectRow[n])];

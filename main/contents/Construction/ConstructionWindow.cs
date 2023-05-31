@@ -1,4 +1,5 @@
-﻿using main.Properties;
+﻿using main.contentslist;
+using main.Properties;
 using main.subcontents;
 using System;
 using System.Collections;
@@ -19,7 +20,7 @@ namespace main.contents
     public partial class ConstructionWindow : Form
     {
         private String WinNum;
-        String WindowName, Type,OldWindow, UwMehod, DiIndi, FrameType, SingleDoubleType, FrameMaterial, FrameName, GlassName, SpacerName, InstallType, InstallName, LE_CL_V;
+        String WindowName, Type, OldWindow, UwMehod, DiIndi, FrameType, SingleDoubleType, FrameMaterial, FrameName, GlassName, SpacerName, InstallType, InstallName, LE_CL_V;
         String check_FrameType, check_SingleDoubleType, check_FrameMaterial, check_LE_CL_V, check_InstallType;
         String[][] Size;
         double Ug, g, τD65_SNA, Psi_g_fix, Psi_g_open, Uw, Uw_inst, dUinst;// dUinst는 열교가산치, Uw_inst는 유효열관류율(창호열관류율+열교가산치)
@@ -230,6 +231,8 @@ namespace main.contents
 
                     g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Old[0][5]) * g;
                     τD65_SNA = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Old[0][6]) * τD65_SNA;
+                    Uw = 1 / (0.019 + 1 / Convert.ToDouble(Old[0][7]) + 1 / Uw);
+
                 }
             }
             else if (Type == "내부덧댐")
@@ -240,16 +243,22 @@ namespace main.contents
                     String 조합구성 = LE_CL_V + "+" + Old[0][3];
                     f_shgc = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
                     f_τ = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
-
                     g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Old[0][5]) * g;
                     τD65_SNA = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Old[0][6]) * τD65_SNA;
+                    Uw = 1 / (0.019 + 1 / Convert.ToDouble(Old[0][7]) + 1 / Uw);
                 }
             }
             else
             {
                 g = g;
                 τD65_SNA = τD65_SNA;
+                Uw =Uw;
             }
+
+            g_textBox.Text = String.Format("{0:F3}", g);
+            τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
+            Uw_textBox.Text = String.Format("{0:F3}", Uw);
+
         }
 
         private void Load_WindowType_image(String Type)
@@ -270,10 +279,12 @@ namespace main.contents
             {
                 Frame_label.Visible = true;
                 Frame_comboBox.Visible = true;
+                FrameName_textBox.Visible = true;
                 FrameDB_button.Visible = true;
 
                 Spacer_label.Visible = true;
                 Spacer_button.Visible = true;
+                SpacerName_textBox.Visible = true;
 
                 Ug_label.Visible = true;
                 Ug_textBox.Visible = true;
@@ -283,6 +294,8 @@ namespace main.contents
                 Psi_open_label.Visible = true;
                 Psi_fix_unit_label.Visible = true;
                 Psi_open_unit_label.Visible = true;
+                Psi_g_fix_textBox.Visible = true;
+                Psi_g_open_textBox.Visible = true;
 
                 Uw_textBox.Visible = true;
                 Uw_label.Visible = true;
@@ -298,10 +311,12 @@ namespace main.contents
             {
                 Frame_label.Visible = false;
                 Frame_comboBox.Visible = false;
+                FrameName_textBox.Visible = false;
                 FrameDB_button.Visible = false;
 
                 Spacer_label.Visible = false;
                 Spacer_button.Visible = false;
+                SpacerName_textBox.Visible = false;
 
                 Ug_label.Visible = false;
                 Ug_textBox.Visible = false;
@@ -311,6 +326,8 @@ namespace main.contents
                 Psi_open_label.Visible = false;
                 Psi_fix_unit_label.Visible = false;
                 Psi_open_unit_label.Visible = false;
+                Psi_g_fix_textBox.Visible = false;
+                Psi_g_open_textBox.Visible = false;
 
                 Uw_textBox.Visible = false;
                 Uw_label.Visible = false;
@@ -326,10 +343,12 @@ namespace main.contents
             {
                 Frame_label.Visible = false;
                 Frame_comboBox.Visible = false;
+                FrameName_textBox.Visible = false;
                 FrameDB_button.Visible = false;
 
                 Spacer_label.Visible = false;
                 Spacer_button.Visible = false;
+                SpacerName_textBox.Visible = false;
 
                 Ug_label.Visible = false;
                 Ug_textBox.Visible = false;
@@ -339,6 +358,8 @@ namespace main.contents
                 Psi_open_label.Visible = false;
                 Psi_fix_unit_label.Visible = false;
                 Psi_open_unit_label.Visible = false;
+                Psi_g_fix_textBox.Visible = false;
+                Psi_g_open_textBox.Visible = false;
 
                 Uw_textBox.Visible = false;
                 Uw_label.Visible = false;
@@ -354,7 +375,9 @@ namespace main.contents
 
             Calc_Uw();
             Rule_Uw();
+            Calc_AdditionalWindow();
             Calc_dUinst();
+
         }
 
 
@@ -412,6 +435,7 @@ namespace main.contents
                     d_InstallSide_textBox.Text = String.Format("{0:F2}", (Height * 2));
                 }
                 Calc_Uw();
+                Calc_AdditionalWindow();
                 Calc_dUinst();
             }
 
@@ -511,6 +535,7 @@ namespace main.contents
                     WindowFrame_pictureBox.Load(Program.gPath + Image[0][0]);
                     WindowFrame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     Calc_Uw();
+                    Calc_AdditionalWindow();
                     Calc_dUinst();
 
                 }
@@ -548,13 +573,13 @@ namespace main.contents
                 LE_CL_V = window_glassDB_form.Select_WindowGlass[5];
                 Ug = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[6]);
                 Ug_textBox.Text = String.Format("{0:F3}", Ug);
-                g = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[8]);
+                g = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[7]);
                 g_textBox.Text = String.Format("{0:F3}", g);
-                τD65_SNA = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[9]);
+                τD65_SNA = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[8]);
                 τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
                 Calc_Uw();
-                Calc_dUinst();
                 Calc_AdditionalWindow(); //덧댐일 경우 
+                Calc_dUinst();
             }
 
             //유리를 다시 선택했을 경우 
@@ -612,6 +637,7 @@ namespace main.contents
                     Psi_g_fix_textBox.Text = String.Format("{0:F3}", Psi_g_fix);
                     Psi_g_open_textBox.Text = String.Format("{0:F3}", Psi_g_open);
                     Calc_Uw();
+                    Calc_AdditionalWindow();
                     Calc_dUinst();
                 }
             }
@@ -759,24 +785,73 @@ namespace main.contents
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-
-
-            Program.DB.setValue(DB.type.CalcDB, "ConstructionWindow", "번호,창호명칭,Type,Uw적용방법,직접간접,프레임유형,이중단창,프레임재료,프레임종류,유리종류,간봉종류,설치유형,설치종류,LE_CL_V," +
-                "창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이," +
-                "유리열관류율,태양열취득률,빛투과율,고정유리선형열관류율,개폐유리선형열관류율," +
-                "상부설치열관류율,측면설치열관류율,하부설치열관류율," +
-                "창호열관류율,설치열교가산치,창호유효열관류율",
-              "'" + WinNum + "','" + WindowName + "','" + Type + "','" + UwMehod + "','" + DiIndi + "','" + FrameType + "','" + SingleDoubleType + "','" + FrameMaterial + "','" + FrameName + "','" + GlassName + "','" + SpacerName + "','" + InstallType + "','" + InstallName + "','" + LE_CL_V + "','" +
-              Area.ToString() + "','" + Width.ToString() + "','" + Height.ToString() + "','" + Ag_fix.ToString() + "','" + Ag_open.ToString() + "','" + Af_open.ToString() + "','" + Af_fix.ToString() + "','" + Af_btw.ToString() + "','" + Lg_fix.ToString() + "','" + Lg_open.ToString() + "','" +
-              Ug.ToString() + "','" + g.ToString() + "','" + τD65_SNA.ToString() + "','" + Psi_g_fix.ToString() + "','" + Psi_g_open.ToString() + "','" +
-              Uf_open.ToString() + "','" + Uf_fix.ToString() + "','" + Uf_btw.ToString() + "','" +
-              Uw.ToString() + "','" + dUinst.ToString() + "','" + Uw_inst.ToString()
-              + "'", "번호");
-
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            if( WindowName == null)
+            {
+                MessageBox.Show("창호 명칭을 입력하세요.");
+            }
+            else if (Type == null)
+            {
+                MessageBox.Show("창호 리모델링 유형을 선택하세요.");
+            }           
+            else if(GlassName == null)
+            {
+                MessageBox.Show("유리를 선택하세요.");
+            }
+            else if(InstallName == null)
+            {
+                MessageBox.Show("설치열교를 선택하세요.");
+            }
+            else if (UwMehod == "계산")
+            {
+                if (FrameName == null)
+                {
+                    MessageBox.Show("프레임을 선택하세요.");
+                }
+                else if (SpacerName == null)
+                {
+                    MessageBox.Show("간봉을 선택하세요.");
+                }
+                else
+                {
+                    Save();
+                }
+            }
+            else
+            {
+                Save();
+            }
         }
+        private void Save()
+        {
+            Program.DB.setValue(DB.type.CalcDB, "ConstructionWindow", "번호,창호명칭,Type,Uw적용방법,직접간접,프레임유형,이중단창,프레임재료,프레임종류,유리종류,간봉종류,설치유형,설치종류,LE_CL_V," +
+                  "창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이," +
+                  "유리열관류율,태양열취득률,빛투과율,고정유리선형열관류율,개폐유리선형열관류율," +
+                  "상부설치열관류율,측면설치열관류율,하부설치열관류율," +
+                  "창호열관류율,설치열교가산치,창호유효열관류율",
+                "'" + WinNum + "','" + WindowName + "','" + Type + "','" + UwMehod + "','" + DiIndi + "','" + FrameType + "','" + SingleDoubleType + "','" + FrameMaterial + "','" + FrameName + "','" + GlassName + "','" + SpacerName + "','" + InstallType + "','" + InstallName + "','" + LE_CL_V + "','" +
+                Area.ToString() + "','" + Width.ToString() + "','" + Height.ToString() + "','" + Ag_fix.ToString() + "','" + Ag_open.ToString() + "','" + Af_open.ToString() + "','" + Af_fix.ToString() + "','" + Af_btw.ToString() + "','" + Lg_fix.ToString() + "','" + Lg_open.ToString() + "','" +
+                Ug.ToString() + "','" + g.ToString() + "','" + τD65_SNA.ToString() + "','" + Psi_g_fix.ToString() + "','" + Psi_g_open.ToString() + "','" +
+                Uf_open.ToString() + "','" + Uf_fix.ToString() + "','" + Uf_btw.ToString() + "','" +
+                Uw.ToString() + "','" + dUinst.ToString() + "','" + Uw_inst.ToString()
+                + "'", "번호");
+            this.DialogResult = DialogResult.OK;
+            this.Hide();   
+            /*
+            List_ConstructionWindow f = new List_ConstructionWindow();
 
-        
+            foreach (FormMain openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "FormMain")
+                {
+
+                    f.TopLevel = false;
+                    openForm.splitContainer1.Panel2.Controls.Add(f);
+                    f.Show();
+                    f.BringToFront();
+                    f.load_List();
+                    return;
+                }
+            }        */
+        }
     }
 }

@@ -389,11 +389,10 @@ namespace main
             }
         }
 
-        public void deleteValue(type dbType, string table)
+        public void deleteTable(type dbType, string table)
         {
             try
             {
-                // createTable(dbType, table, tables[table]);
 
                 SQLiteCommand cmd = new SQLiteCommand();
 
@@ -411,6 +410,43 @@ namespace main
                 string condition = "";
 
                     cmd.CommandText = "delete from " + table;
+
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        public void deleteValue(type dbType, string table, string conditions = "")
+        {
+            try
+            {
+
+                SQLiteCommand cmd = new SQLiteCommand();
+
+
+                switch (dbType)
+                {
+                    case type.ProjDB:
+                        cmd.Connection = projDB;
+                        break;
+                    case type.CalcDB:
+                        cmd.Connection = calcDB;
+                        break;
+                }
+
+                string condition = "";
+
+                if (conditions != "")
+                {
+                    cmd.CommandText = "delete from " + table + " WHERE " + conditions;
+                }
+                else
+                {
+                    
+                }
 
 
                 cmd.ExecuteNonQuery();

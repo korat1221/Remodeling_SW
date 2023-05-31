@@ -41,7 +41,7 @@ namespace main
             List_ConstructionWindow,
 
         }
-        Form[] forms = new Form[] { new General(), new EnergyUse(), 
+          Form[] forms = new Form[] { new General(), new EnergyUse(), 
             new ConstructionCW(), new ConstructionWall(), new ConstructionRoof(), new ConstructionFloor(), new ConstructionWindow(), new ConstructionDoor(), 
             new Model(), new Shade(), new Blind(), new ThermalBridge(), 
             new ZoneGeneral(), new ZoneEnvelope(), new ZoneLighting(), new ZoneSystem(),
@@ -97,7 +97,7 @@ namespace main
         {
             scriptable = true;
         }
-        void DoLoadForm(int idx)
+       public void DoLoadForm(int idx)
         {
             int i = -1;
             while (++i < forms.Length)

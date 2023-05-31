@@ -34,6 +34,7 @@ namespace main.contentslist
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            button1 = new Button();
             Remove_button = new Button();
             Add_button = new Button();
             dataGridView1 = new DataGridView();
@@ -46,6 +47,7 @@ namespace main.contentslist
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(button1);
             GeneralPanel.Controls.Add(Remove_button);
             GeneralPanel.Controls.Add(Add_button);
             GeneralPanel.Controls.Add(dataGridView1);
@@ -55,6 +57,21 @@ namespace main.contentslist
             GeneralPanel.Size = new Size(977, 661);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // button1
+            // 
+            button1.BackColor = SystemColors.ControlLight;
+            button1.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            button1.FlatStyle = FlatStyle.System;
+            button1.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            button1.Location = new Point(593, 41);
+            button1.Margin = new Padding(0);
+            button1.Name = "button1";
+            button1.Size = new Size(23, 23);
+            button1.TabIndex = 91;
+            button1.Text = "+";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // Remove_button
             // 
@@ -69,6 +86,7 @@ namespace main.contentslist
             Remove_button.TabIndex = 90;
             Remove_button.Text = "-";
             Remove_button.UseVisualStyleBackColor = false;
+            Remove_button.Click += Remove_button_Click;
             // 
             // Add_button
             // 
@@ -127,6 +145,7 @@ namespace main.contentslist
             dataGridView1.Size = new Size(954, 575);
             dataGridView1.TabIndex = 19;
             dataGridView1.CellContentClick += dataGridView_CellContentClick;
+            dataGridView1.DoubleClick += dataGridView1_DoubleClick;
             // 
             // Icon_pictureBox
             // 
@@ -159,5 +178,6 @@ namespace main.contentslist
         private DataGridView dataGridView1;
         private Button Remove_button;
         private Button Add_button;
+        private Button button1;
     }
 }
