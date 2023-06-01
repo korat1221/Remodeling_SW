@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Data.SQLite;
+using System.Windows.Forms;
 
 namespace main
 {
@@ -109,6 +110,18 @@ namespace main
             System.IO.Directory.CreateDirectory(path);
 
             return path;
+        }
+
+        public static MainContents getMenuForm()
+        {
+            foreach (FormMain openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "FormMain")
+                {
+                    return (MainContents)openForm.splitContainer1.Panel1.Controls[0];
+                }
+            }
+            return null;
         }
     }
 }

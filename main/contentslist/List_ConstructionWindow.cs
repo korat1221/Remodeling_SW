@@ -8,13 +8,18 @@ namespace main.contentslist
 {
     public partial class List_ConstructionWindow : Form
     {
+        // icf 작업 : 시작
+        static String currentID = "";
+        static bool inEditing = false;
+        // icf 작업 : 끝
+
         int Num;
         String WinNum;
         double CountDB;
         int SelectRow;
         DataTable WindowList = new DataTable();
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
-        ArrayList form = new ArrayList();
+        //      ArrayList form = new ArrayList();
 
 
         public List_ConstructionWindow()
@@ -49,26 +54,33 @@ namespace main.contentslist
                 WinNum = "Win" + Num;
             }
 
-            f.SendWinNum = WinNum;
-            Load_form(f);
-            form.Add(f);
+            //       f.SendWinNum = WinNum;
+            Load_form(WinNum, true);
+            //         form.Add(f);
 
         }
 
-        private void Load_form(ConstructionWindow f)
+        public static bool OnLoadProc(Form form)
         {
-            foreach (FormMain openForm in Application.OpenForms)
-            {
-                if (openForm.Name == "FormMain")
-                {
+            ConstructionWindow f = (ConstructionWindow)form;
 
-                    f.TopLevel = false;
-                    openForm.splitContainer1.Panel2.Controls.Add(f);
-                    f.Show();
-                    f.BringToFront();
-                    return;
-                }
+            if (inEditing)
+            {
+                f.ResetForm(currentID);
             }
+            else
+            {
+                f.LoadData(currentID);
+            }
+
+            return true;
+        }
+
+        private void Load_form(String ID, bool editing = false)
+        {
+            currentID = ID;
+            inEditing = editing;
+            Program.getMenuForm().DoLoadForm(6, OnLoadProc);
         }
 
 
@@ -159,21 +171,30 @@ namespace main.contentslist
         private void dataGridView1_DoubleClick(object sender, EventArgs e)
         {
             int k = dataGridView1.CurrentCell.RowIndex;
-
-            for (int i = 0; i < form.Count; i++)
+            if (k > -1)
             {
-                ConstructionWindow f = (ConstructionWindow)form[i];
-
-                if (dataGridView1.Rows[k].Cells[1].Value.ToString() == f.SendWinNum)
-                {
-                    f.SendWinNum = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                    // MessageBox.Show(f.SendWinNum);
-                    Load_form(f);
-                }
+                Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString());
             }
+            /*            int k = dataGridView1.CurrentCell.RowIndex;
+
+                        for (int i = 0; i < form.Count; i++)
+                        {
+                            ConstructionWindow f = (ConstructionWindow)form[i];
+
+                            if (dataGridView1.Rows[k].Cells[1].Value.ToString() == f.SendWinNum)
+                            {
+                                f.SendWinNum = dataGridView1.Rows[k].Cells[1].Value.ToString();
+                                // MessageBox.Show(f.SendWinNum);
+                                Load_form(f);
+                            }
+                        }*/
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        //private void button1_Click(object sender, EventArgs e)
+        //{
+        //    load_List();
+        //}
+        public void LoadData(String ID)
         {
             load_List();
         }

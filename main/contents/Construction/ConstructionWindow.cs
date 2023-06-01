@@ -49,15 +49,15 @@ namespace main.contents
 
         }
 
-        public String SendWinNum
-        {
-            get { return this.WinNum; }
-            set { this.WinNum = value; }
-        }
+        //public String SendWinNum
+        //{
+        //    get { return this.WinNum; }
+        //    set { this.WinNum = value; }
+        //}
 
         private void ConstructionWindow_Load(object sender, EventArgs e)
         {
-            WinNum_textBox.Text = SendWinNum;
+            //          WinNum_textBox.Text = SendWinNum;
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -821,6 +821,15 @@ namespace main.contents
                 Save();
             }
         }
+        public static bool OnLoadListProc(Form form)
+        {
+            List_ConstructionWindow f = (List_ConstructionWindow)form;
+
+            f.load_List();
+
+            return true;
+        }
+
         private void Save()
         {
             Program.DB.setValue(DB.type.CalcDB, "ConstructionWindow", "번호,창호명칭,Type,Uw적용방법,직접간접,프레임유형,이중단창,프레임재료,프레임종류,유리종류,간봉종류,설치유형,설치종류,LE_CL_V," +
@@ -828,7 +837,7 @@ namespace main.contents
                   "유리열관류율,태양열취득률,빛투과율,고정유리선형열관류율,개폐유리선형열관류율," +
                   "상부설치열관류율,측면설치열관류율,하부설치열관류율," +
                   "창호열관류율,설치열교가산치,창호유효열관류율",
-                "'" + WinNum + "','" + WindowName + "','" + Type + "','" + UwMehod + "','" + DiIndi + "','" + FrameType + "','" + SingleDoubleType + "','" + FrameMaterial + "','" + FrameName + "','" + GlassName + "','" + SpacerName + "','" + InstallType + "','" + InstallName + "','" + LE_CL_V + "','" +
+                "'" + WinNum_textBox.Text + "','" + WindowName + "','" + Type + "','" + UwMehod + "','" + DiIndi + "','" + FrameType + "','" + SingleDoubleType + "','" + FrameMaterial + "','" + FrameName + "','" + GlassName + "','" + SpacerName + "','" + InstallType + "','" + InstallName + "','" + LE_CL_V + "','" +
                 Area.ToString() + "','" + Width.ToString() + "','" + Height.ToString() + "','" + Ag_fix.ToString() + "','" + Ag_open.ToString() + "','" + Af_open.ToString() + "','" + Af_fix.ToString() + "','" + Af_btw.ToString() + "','" + Lg_fix.ToString() + "','" + Lg_open.ToString() + "','" +
                 Ug.ToString() + "','" + g.ToString() + "','" + τD65_SNA.ToString() + "','" + Psi_g_fix.ToString() + "','" + Psi_g_open.ToString() + "','" +
                 Uf_open.ToString() + "','" + Uf_fix.ToString() + "','" + Uf_btw.ToString() + "','" +
@@ -852,6 +861,19 @@ namespace main.contents
                     return;
                 }
             }        */
+            Program.getMenuForm().DoLoadForm(29, OnLoadListProc);
+        }
+        public void LoadData(String ID)
+        {
+            WinNum_textBox.Text = ID;
+            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
+
+        }
+        public void ResetForm(String ID)
+        {
+            WinNum_textBox.Text = ID;
+            // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
+
         }
     }
 }

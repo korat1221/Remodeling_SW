@@ -5,6 +5,8 @@ using Microsoft.Web.WebView2.Core;
 
 namespace main
 {
+    public delegate bool OnOpenProc(Form form);
+
     public partial class MainContents : Form
     {
         public enum FormID
@@ -97,13 +99,16 @@ namespace main
         {
             scriptable = true;
         }
-       public void DoLoadForm(int idx)
+       public void DoLoadForm(int idx, OnOpenProc proc = null)
         {
             int i = -1;
             while (++i < forms.Length)
             {
                 forms[i].Hide();
             }
+
+            if (proc != null) proc(forms[idx]);
+
             forms[idx].Show();
         }
 
