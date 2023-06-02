@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,6 +19,9 @@ namespace main.subcontents
         public String[] Select_WindowInstall = new string[9];
         String InstallType, SingleDoubleType, FrameMaterial;
         string[][] WinInstall;
+        String UserNum, UserDBName, UserDBType1, UserDBType2, UserDBType3, UserDBType4;
+        Double UserDB_Psi_InstallTop, UserDB_Psi_InstallSide, UserDB_Psi_InstallButtom;
+        int Num;
 
         public Window_InstallDB(String InstallType, String SingleDoubleType, String FrameMaterial)
         {
@@ -26,12 +30,48 @@ namespace main.subcontents
             this.SingleDoubleType = SingleDoubleType;
             this.FrameMaterial = FrameMaterial;
             load_table_InstallDB();
+            //사용자DB 구분1 콤보박스
+            UserDBType1_comboBox.Items.Add("내단열");
+            UserDBType1_comboBox.Items.Add("외단열");
+            UserDBType1_comboBox.Items.Add("목구조");
+            UserDBType1_comboBox.Items.Add("경량철골조");
+            UserDBType1_comboBox.SelectedItem = InstallType;
+            UserDBType1_comboBox.Enabled = false;
+            //사용자DB 구분2 콤보박스
+            UserDBType2_comboBox.Items.Add("플라스틱");
+            UserDBType2_comboBox.Items.Add("금속");
+            UserDBType2_comboBox.SelectedItem = FrameMaterial;
+            UserDBType2_comboBox.Enabled = false;
+            //사용자DB 구분3 콤보박스
+            UserDBType3_comboBox.Items.Add("단창");
+            UserDBType3_comboBox.Items.Add("이중창");
+            UserDBType3_comboBox.SelectedItem = SingleDoubleType;
+            UserDBType3_comboBox.Enabled = false;
+            //사용자DB 구분4 콤보박스
+            Program.UTIL.FillComboBox_ByCategory(UserDBType4_comboBox, "창호", "설치위치", "1");
         }
         public Window_InstallDB(String InstallType)
         {
             InitializeComponent();
             this.InstallType = InstallType;
             load_table_InstallDB();
+            //사용자DB 구분1 콤보박스
+            UserDBType1_comboBox.Items.Add("내단열");
+            UserDBType1_comboBox.Items.Add("외단열");
+            UserDBType1_comboBox.Items.Add("목구조");
+            UserDBType1_comboBox.Items.Add("경량철골조");
+            UserDBType1_comboBox.SelectedItem = InstallType;
+            UserDBType1_comboBox.Enabled = false;
+            //사용자DB 구분2 콤보박스
+            UserDBType2_comboBox.Items.Add("플라스틱");
+            UserDBType2_comboBox.Items.Add("금속");
+            UserDBType2_comboBox.SelectedIndex = 0;
+            //사용자DB 구분3 콤보박스
+            UserDBType3_comboBox.Items.Add("단창");
+            UserDBType3_comboBox.Items.Add("이중창");
+            UserDBType2_comboBox.SelectedIndex = 0;
+            //사용자DB 구분4 콤보박스
+            Program.UTIL.FillComboBox_ByCategory(UserDBType4_comboBox, "창호", "설치위치", "1");
         }
 
         void load_table_InstallDB()
@@ -43,6 +83,7 @@ namespace main.subcontents
             checkBoxColumn.Name = "check";
             Install_dataGridView.Columns.Add(checkBoxColumn);
             table_WindowInstall.Columns.Add("번호", typeof(string));
+            table_WindowInstall.Columns.Add("DB유형", typeof(string));
             table_WindowInstall.Columns.Add("제품명", typeof(string));
             table_WindowInstall.Columns.Add("구분1", typeof(string));
             table_WindowInstall.Columns.Add("구분2", typeof(string));
@@ -52,25 +93,38 @@ namespace main.subcontents
             table_WindowInstall.Columns.Add("측면설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
             table_WindowInstall.Columns.Add("하부설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
 
+            try
+            {
+                string[][] User_WinInstall = Program.DB.getValue(DB.type.ProjDB, "User_WindowInstall", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
+                for (int n = 0; n < User_WinInstall.Length; n++)
+                {
+                    table_WindowInstall.Rows.Add(User_WinInstall[n][0], User_WinInstall[n][1], User_WinInstall[n][2], User_WinInstall[n][3], User_WinInstall[n][4], User_WinInstall[n][5], User_WinInstall[n][6], User_WinInstall[n][7], User_WinInstall[n][8], User_WinInstall[n][9]);
+                }
+            }
+            catch { }
+
+
+
             if (InstallType != null && SingleDoubleType != null && FrameMaterial != null)
             {
                 WinInstall = Program.DB.getValue(DB.type.BaseDB, "창호설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'AND 구분2 = '" + FrameMaterial + "'AND 구분3 ='" + SingleDoubleType + "'");
             }
             else
             {
-                WinInstall = Program.DB.getValue(DB.type.BaseDB, "창호설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType  + "'");
+                WinInstall = Program.DB.getValue(DB.type.BaseDB, "창호설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
             }
 
             for (int n = 0; n < WinInstall.Length; n++)
             {
-                table_WindowInstall.Rows.Add(WinInstall[n][0], WinInstall[n][2], WinInstall[n][3], WinInstall[n][4], WinInstall[n][5], WinInstall[n][6], WinInstall[n][7], WinInstall[n][8], WinInstall[n][9]);
+                table_WindowInstall.Rows.Add(WinInstall[n][0], WinInstall[n][1], WinInstall[n][2], WinInstall[n][3], WinInstall[n][4], WinInstall[n][5], WinInstall[n][6], WinInstall[n][7], WinInstall[n][8], WinInstall[n][9]);
             }
             Install_dataGridView.DataSource = table_WindowInstall;
             Count_InstallDB = WinInstall.Length;
         }
 
+
         //데이터그리드뷰 체크박스 선택 시
-        private void Frame_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void Install_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -100,12 +154,94 @@ namespace main.subcontents
         private void Save_button_Click(object sender, EventArgs e)
         {
             DataGridViewRow row = Install_dataGridView.Rows[SelectRow];
-            for (int i = 1; i < row.Cells.Count; i++)
+            for (int i = 1; i < row.Cells.Count - 2; i++)
             {
-                Select_WindowInstall[i - 1] = row.Cells[i].Value.ToString();
+                Select_WindowInstall[i] = row.Cells[i + 2].Value.ToString();
             }
+            Select_WindowInstall[0] = row.Cells[1].Value.ToString();
+
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+
+        private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
+        {
+            UserNum = Program.UTIL.CreateNum("User_WindowInstall", "번호", "UWS_0");
+            UserNum_textBox.Text = UserNum;
+            UserDBName = UserDBName_textBox.Text;
+        }
+
+        private void UserDBType1_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserDBType1 = UserDBType1_comboBox.SelectedItem.ToString();
+        }
+
+        private void UserDBType2_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserDBType2 = UserDBType2_comboBox.SelectedItem.ToString();
+        }
+
+        private void UserDBType3_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserDBType3 = UserDBType3_comboBox.SelectedItem.ToString();
+        }
+
+        private void UserDBType4_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserDBType4 = Program.UTIL.SelectedItem_ByComboBox(UserDBType4_comboBox);
+        }
+
+        private void UserDB_Psi_InstallTop_TextChanged(object sender, EventArgs e)
+        {
+            UserDB_Psi_InstallTop = Convert.ToDouble(UserDB_Psi_InstallTop_textBox.Text);
+        }
+
+        private void UserDB_Psi_InstallSide_TextChanged(object sender, EventArgs e)
+        {
+            UserDB_Psi_InstallSide = Convert.ToDouble(UserDB_Psi_InstallSide_textBox.Text);
+        }
+
+        private void UserDB_Psi_InstallButtom_TextChanged(object sender, EventArgs e)
+        {
+            UserDB_Psi_InstallButtom = Convert.ToDouble(UserDB_Psi_InstallButtom_textBox.Text);
+        }
+
+        private void AddUserDB_button_Click(object sender, EventArgs e)
+        {
+            if (UserDBName != null && UserDBType2 != null && UserDBType3 != null && UserDBType4 != null && UserDB_Psi_InstallTop != 0 && UserDB_Psi_InstallSide != 0 && UserDB_Psi_InstallButtom != 0)
+            {
+                Program.DB.setValue(DB.type.ProjDB, "User_WindowInstall", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율",
+                    "'" + UserNum + "','" + "사용자" + "','" + UserDBName + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDBType3 + "','" + UserDBType4 + "','" + UserDB_Psi_InstallTop.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "'", "번호");
+                load_table_InstallDB();
+            }
+            else
+            {
+                MessageBox.Show("모든 값을 입력해주세요.");
+            }
+
+        }
+
+        private void Deletebutton_Click(object sender, EventArgs e)
+        {
+            int k = Install_dataGridView.CurrentCell.RowIndex;
+            if (k > -1)
+            {
+                if (Install_dataGridView.Rows[k].Cells[2].Value.ToString() == "사용자")
+                {
+                    if ((MessageBox.Show(Install_dataGridView.Rows[k].Cells[3].Value.ToString() + "을 삭제하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                    {
+                        String Delete_Num = Install_dataGridView.Rows[k].Cells[1].Value.ToString();
+                        Program.DB.deleteValue(DB.type.ProjDB, "User_WindowInstall", "번호 ='" + Delete_Num + "'");
+                        load_table_InstallDB();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("기본 DB는 삭제할 수 없습니다.");
+                }
+            }
+
         }
     }
 }

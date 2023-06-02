@@ -163,6 +163,7 @@ namespace main.contents
             Width_textBox = new TextBox();
             WindowType_pictureBox = new PictureBox();
             Save_button = new Button();
+            Previous_button = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -221,7 +222,7 @@ namespace main.contents
             // 
             // WinNum_textBox
             // 
-            WinNum_textBox.BackColor = Color.Black;
+            WinNum_textBox.BackColor = Color.White;
             WinNum_textBox.BorderStyle = BorderStyle.None;
             WinNum_textBox.Enabled = false;
             WinNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1804,13 +1805,25 @@ namespace main.contents
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1015, 657);
+            Save_button.Location = new Point(1093, 661);
             Save_button.Name = "Save_button";
-            Save_button.Size = new Size(135, 25);
+            Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 90;
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
+            // 
+            // Previous_button
+            // 
+            Previous_button.BackColor = SystemColors.ButtonHighlight;
+            Previous_button.ForeColor = Color.Black;
+            Previous_button.Location = new Point(999, 661);
+            Previous_button.Name = "Previous_button";
+            Previous_button.Size = new Size(88, 25);
+            Previous_button.TabIndex = 91;
+            Previous_button.Text = "<<PREVIOUS";
+            Previous_button.UseVisualStyleBackColor = true;
+            Previous_button.Click += Previous_button_Click;
             // 
             // ConstructionWindow
             // 
@@ -1818,6 +1831,7 @@ namespace main.contents
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(Previous_button);
             Controls.Add(Save_button);
             Controls.Add(WindowType_pictureBox);
             Controls.Add(tabControl1);
@@ -1827,7 +1841,6 @@ namespace main.contents
             FormBorderStyle = FormBorderStyle.None;
             Name = "ConstructionWindow";
             Text = "Form3";
-            Load += ConstructionWindow_Load;
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
@@ -1984,5 +1997,6 @@ namespace main.contents
         private TextBox Uw2_textBox;
         private Label Uw2_label;
         private TextBox AdditionalWindow_textBox;
+        private Button Previous_button;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 
 namespace main
 {
@@ -130,6 +131,43 @@ namespace main
                     return;
                 }
             }
+        }
+
+        public String CreateNum(String 테이블명,String 컬럼명,String 기호)
+        {
+            String ItemNum;
+            int Num;
+            try
+            {
+                string[][] Check = Program.DB.getValue(DB.type.ProjDB, 테이블명, 컬럼명, "");
+                String[] NumCheck = new string[Check.Length];
+                int[] SpNum = new int[Check.Length];
+                for (int n = 0; n < Check.Length; n++)
+                {
+                    NumCheck[n] = (Check[n][0]);
+                    SpNum[n] = Convert.ToInt32(NumCheck[n].Substring(NumCheck[n].IndexOf(기호.Substring(기호.Length -1)) + 1));
+                }
+                Num = SpNum.Max() + 1;
+
+                if (Num < 1)
+                {
+                    Num = 1;
+                    ItemNum = 기호 + "01";
+
+                }
+                else if (Num < 10)
+                {
+                    ItemNum = 기호 + "0" + Num;
+                }
+                else
+                {
+                    ItemNum = 기호  + Num;
+                }
+
+            }
+            catch { ItemNum = 기호 + "01" ; }
+
+            return ItemNum;
         }
     }
 }

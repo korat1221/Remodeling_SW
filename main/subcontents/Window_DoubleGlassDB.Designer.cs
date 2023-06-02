@@ -1,6 +1,6 @@
 ﻿namespace main.subcontents
 {
-    partial class Window_GlassDB
+    partial class Window_DoubleGlassDB
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window_GlassDB));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
@@ -78,6 +77,7 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(Glass_dataGridView);
             GeneralPanel.Controls.Add(pictureBox1);
             GeneralPanel.Controls.Add(label2);
             GeneralPanel.Controls.Add(label1);
@@ -88,7 +88,6 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(631, 12);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(175, 152);
@@ -110,9 +109,9 @@
             label1.AutoSize = true;
             label1.Location = new Point(29, 43);
             label1.Name = "label1";
-            label1.Size = new Size(392, 90);
+            label1.Size = new Size(457, 75);
             label1.TabIndex = 0;
-            label1.Text = "- EN 674 기준 시뮬레이션 값을 적용합니다.\r\n\r\n- 오른쪽 그림을 참조하여 해당하는 값을 입력하시오.\r\n\r\n- 이중유리는 WINDOW에서 직접 작성한 값을 입력하거나, \r\n  표준DB or 사용자 DB에서 2개의 유리를 조합해서 작성할 수 있습니다.";
+            label1.Text = "- EN 674 기준 시뮬레이션 값을 적용합니다.\r\n\r\n- 오른쪽 그림을 참조하여 해당하는 값을 입력하시오.\r\n\r\n- 이중유리는 표준DB or 사용자 DB에서 2개의 유리를 조합해서 작성할 수 있습니다.";
             // 
             // Save_button
             // 
@@ -159,7 +158,7 @@
             panel1.Controls.Add(label8);
             panel1.Controls.Add(SingleDoubleTriple_comboBox);
             panel1.Controls.Add(label7);
-            panel1.Location = new Point(0, 172);
+            panel1.Location = new Point(0, 319);
             panel1.Name = "panel1";
             panel1.Size = new Size(977, 123);
             panel1.TabIndex = 26;
@@ -464,7 +463,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             Glass_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Glass_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Glass_dataGridView.Location = new Point(0, 294);
+            Glass_dataGridView.Location = new Point(0, 174);
             Glass_dataGridView.Name = "Glass_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
@@ -483,20 +482,19 @@
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Glass_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             Glass_dataGridView.RowTemplate.Height = 25;
-            Glass_dataGridView.Size = new Size(977, 481);
+            Glass_dataGridView.Size = new Size(977, 148);
             Glass_dataGridView.TabIndex = 111;
             // 
-            // Window_GlassDB
+            // Window_DoubleGlassDB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(977, 818);
-            Controls.Add(Glass_dataGridView);
             Controls.Add(panel1);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
-            Name = "Window_GlassDB";
-            Text = "Window_GlassDB";
+            Name = "Window_DoubleGlassDB";
+            Text = "Window_DoubleGlassDB";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

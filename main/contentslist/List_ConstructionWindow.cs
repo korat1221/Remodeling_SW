@@ -8,10 +8,8 @@ namespace main.contentslist
 {
     public partial class List_ConstructionWindow : Form
     {
-        // icf 작업 : 시작
         static String currentID = "";
-        static bool inEditing = false;
-        // icf 작업 : 끝
+        static String inEditing  = "Add";
 
         int Num;
         String WinNum;
@@ -19,7 +17,6 @@ namespace main.contentslist
         int SelectRow;
         DataTable WindowList = new DataTable();
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
-        //      ArrayList form = new ArrayList();
 
 
         public List_ConstructionWindow()
@@ -29,7 +26,7 @@ namespace main.contentslist
             string[][] Image = Program.DB.getValue(DB.type.BaseDB, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '창호'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            Program.DB.initTable(DB.type.CalcDB, "ConstructionWindow");
+            Program.DB.initTable(DB.type.ProjDB, "ConstructionWindow");
             Create_Table();
         }
 
@@ -42,41 +39,32 @@ namespace main.contentslist
 
         private void Add_button_Click(object sender, EventArgs e)
         {
-            ConstructionWindow f = new ConstructionWindow();
-
-            Num = Num + 1;
-            if (Num < 10)
-            {
-                WinNum = "Win0" + Num;
-            }
-            else
-            {
-                WinNum = "Win" + Num;
-            }
-
-            //       f.SendWinNum = WinNum;
-            Load_form(WinNum, true);
-            //         form.Add(f);
-
+            WinNum = Program.UTIL.CreateNum("ConstructionWindow", "번호", "WIN");
+            Load_form(WinNum, "Add");
         }
 
         public static bool OnLoadProc(Form form)
         {
             ConstructionWindow f = (ConstructionWindow)form;
 
-            if (inEditing)
+            if (inEditing == "Edit")
             {
-                f.ResetForm(currentID);
+                f.LoadData(currentID);
+
+            }
+            else if(inEditing =="Copy")
+            {
+                f.CopyForm(currentID);
             }
             else
             {
-                f.LoadData(currentID);
+                f.ResetForm(currentID);
             }
 
             return true;
         }
 
-        private void Load_form(String ID, bool editing = false)
+        private void Load_form(String ID, String editing)
         {
             currentID = ID;
             inEditing = editing;
@@ -106,21 +94,16 @@ namespace main.contentslist
 
         public void load_List()
         {
-            string[][] List = Program.DB.getValue(DB.type.CalcDB, "ConstructionWindow", "번호,창호명칭,Type,창호유효열관류율,태양열취득률,빛투과율,창호면적,유리종류", "");
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,창호유효열관류율,태양열취득률,빛투과율,창호면적,유리종류", "");
 
-            //  List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
 
             WindowList.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
                 WindowList.Rows.Add(List[n][0], List[n][1], List[n][2], String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])), String.Format("{0:F2}", Convert.ToDouble(List[n][5])), String.Format("{0:F2}", Convert.ToDouble(List[n][6])), List[n][7]);
-
-                //  mainMenu.Add(new { text = List[n][1], id = "6-" + List[n][0] }); // 예시 코드: 메인 메뉴 동적 할당
             }
             dataGridView1.DataSource = WindowList;
             CountDB = List.Length;
-
-            // Program.UTIL.resetMainTree(1, 4, mainMenu.ToArray(), "2") ; // 예시 코드: 메인 메뉴 동적 할당
         }
 
         //선택한 열 색 표시
@@ -160,9 +143,8 @@ namespace main.contentslist
                 if (k > -1)
                 {
                     String Delete_WinNum = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                    Program.DB.deleteValue(DB.type.CalcDB, "ConstructionWindow", "번호 ='" + Delete_WinNum + "'");
+                    Program.DB.deleteValue(DB.type.ProjDB, "ConstructionWindow", "번호 ='" + Delete_WinNum + "'");
                     load_List();
-                    //    dataGridView1.Refresh();
                 }
             }
 
@@ -173,30 +155,15 @@ namespace main.contentslist
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
-                Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString());
+                Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
             }
-            /*            int k = dataGridView1.CurrentCell.RowIndex;
 
-                        for (int i = 0; i < form.Count; i++)
-                        {
-                            ConstructionWindow f = (ConstructionWindow)form[i];
-
-                            if (dataGridView1.Rows[k].Cells[1].Value.ToString() == f.SendWinNum)
-                            {
-                                f.SendWinNum = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                                // MessageBox.Show(f.SendWinNum);
-                                Load_form(f);
-                            }
-                        }*/
         }
 
-        //private void button1_Click(object sender, EventArgs e)
-        //{
-        //    load_List();
-        //}
-        public void LoadData(String ID)
+        private void button1_Click(object sender, EventArgs e)
         {
-            load_List();
+            WinNum = Program.UTIL.CreateNum("ConstructionWindow", "번호", "WIN");
+            Load_form(WinNum, "Copy");
         }
     }
 }

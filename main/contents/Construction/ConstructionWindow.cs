@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 
 namespace main.contents
 {
@@ -47,17 +48,6 @@ namespace main.contents
             Program.UTIL.FillComboBox_ByCategory(Install_comboBox, "창호", "구조", "1");
 
 
-        }
-
-        //public String SendWinNum
-        //{
-        //    get { return this.WinNum; }
-        //    set { this.WinNum = value; }
-        //}
-
-        private void ConstructionWindow_Load(object sender, EventArgs e)
-        {
-            //          WinNum_textBox.Text = SendWinNum;
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -110,7 +100,7 @@ namespace main.contents
             Load_WindowType_image(Type);
         }
 
-        public void Changed_Type(String Type)
+        private void Changed_Type(String Type)
         {
             Uw_comboBox.Items.Clear();
 
@@ -170,19 +160,19 @@ namespace main.contents
             if (Type == "외부(커튼월)덧댐")
             {
                 def_value = "Type = '기존창호'";
-                Table = Program.DB.getValue(DB.type.CalcDB, "ConstructionWindow", "창호명칭", def_value);
+                Table = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "창호명칭", def_value);
 
             }
             else if (Type == "내부덧댐")
             {
                 def_value = "Type = '기존창호'";
-                Table = Program.DB.getValue(DB.type.CalcDB, "ConstructionWindow", "창호명칭", def_value);
+                Table = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "창호명칭", def_value);
 
             }
             else
             {
                 def_value = "Type = ''";
-                Table = Program.DB.getValue(DB.type.CalcDB, "ConstructionWindow", "창호명칭", def_value);
+                Table = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "창호명칭", def_value);
             }
 
             int i = -1;
@@ -224,7 +214,7 @@ namespace main.contents
             {
                 if (OldWindow != null && GlassName != null)
                 {
-                    Old = Program.DB.getValue(DB.type.CalcDB, "ConstructionWindow", "번호,창호명칭,Type,LE_CL_V,유리열관류율,태양열취득률,빛투과율,창호열관류율", "창호명칭 = '" + OldWindow + "'");
+                    Old = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,LE_CL_V,유리열관류율,태양열취득률,빛투과율,창호열관류율", "창호명칭 = '" + OldWindow + "'");
                     String 조합구성 = LE_CL_V + "+" + Old[0][3];
                     f_shgc = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
                     f_τ = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
@@ -239,7 +229,7 @@ namespace main.contents
             {
                 if (OldWindow != null && GlassName != null)
                 {
-                    Old = Program.DB.getValue(DB.type.CalcDB, "ConstructionWindow", "번호,창호명칭,Type,LE_CL_V,유리열관류율,태양열취득률,빛투과율,창호열관류율", "창호명칭 = '" + OldWindow + "'");
+                    Old = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,LE_CL_V,유리열관류율,태양열취득률,빛투과율,창호열관류율", "창호명칭 = '" + OldWindow + "'");
                     String 조합구성 = LE_CL_V + "+" + Old[0][3];
                     f_shgc = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
                     f_τ = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
@@ -252,7 +242,7 @@ namespace main.contents
             {
                 g = g;
                 τD65_SNA = τD65_SNA;
-                Uw =Uw;
+                Uw = Uw;
             }
 
             g_textBox.Text = String.Format("{0:F3}", g);
@@ -621,7 +611,7 @@ namespace main.contents
                 {
                     check_FrameMaterial = window_spacerDB_form.Select_WindowSpacer[3];
                     check_SingleDoubleType = window_spacerDB_form.Select_WindowSpacer[4];
-                    check_LE_CL_V = window_spacerDB_form.Select_WindowSpacer[10];
+                    check_LE_CL_V = window_spacerDB_form.Select_WindowSpacer[9];
                     SpacerName = window_spacerDB_form.Select_WindowSpacer[2];
                     SpacerName_textBox.Text = SpacerName;
                     if (LE_CL_V == "LE")
@@ -782,22 +772,31 @@ namespace main.contents
 
         }
 
+        private void Previous_button_Click(object sender, EventArgs e)
+        {
+            if ((MessageBox.Show("이전 화면으로 이동하시겠습니까?", "이전 화면 이동", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            {
+                this.DialogResult = DialogResult.OK;
+                this.Hide();
+                Program.getMenuForm().DoLoadForm(29, OnLoadListProc);
+            }
+        }
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            if( WindowName == null)
+            if (WindowName == null)
             {
                 MessageBox.Show("창호 명칭을 입력하세요.");
             }
             else if (Type == null)
             {
                 MessageBox.Show("창호 리모델링 유형을 선택하세요.");
-            }           
-            else if(GlassName == null)
+            }
+            else if (GlassName == null)
             {
                 MessageBox.Show("유리를 선택하세요.");
             }
-            else if(InstallName == null)
+            else if (InstallName == null)
             {
                 MessageBox.Show("설치열교를 선택하세요.");
             }
@@ -832,48 +831,177 @@ namespace main.contents
 
         private void Save()
         {
-            Program.DB.setValue(DB.type.CalcDB, "ConstructionWindow", "번호,창호명칭,Type,Uw적용방법,직접간접,프레임유형,이중단창,프레임재료,프레임종류,유리종류,간봉종류,설치유형,설치종류,LE_CL_V," +
+            Program.DB.setValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,기존창호,Uw적용방법,직접간접,프레임유형,이중단창,프레임재료,프레임종류,유리종류,간봉종류,설치유형,설치종류,LE_CL_V," +
                   "창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이," +
                   "유리열관류율,태양열취득률,빛투과율,고정유리선형열관류율,개폐유리선형열관류율," +
+                  "개폐부프레임열관류율,고정부프레임열관류율,중간바프레임열관류율,개폐부프레임두께,고정부프레임두께,중간바프레임두께," +
                   "상부설치열관류율,측면설치열관류율,하부설치열관류율," +
                   "창호열관류율,설치열교가산치,창호유효열관류율",
-                "'" + WinNum_textBox.Text + "','" + WindowName + "','" + Type + "','" + UwMehod + "','" + DiIndi + "','" + FrameType + "','" + SingleDoubleType + "','" + FrameMaterial + "','" + FrameName + "','" + GlassName + "','" + SpacerName + "','" + InstallType + "','" + InstallName + "','" + LE_CL_V + "','" +
+                "'" + WinNum_textBox.Text + "','" + WindowName + "','" + Type + "','" + OldWindow + "','" + UwMehod + "','" + DiIndi + "','" + FrameType + "','" + SingleDoubleType + "','" + FrameMaterial + "','" + FrameName + "','" + GlassName + "','" + SpacerName + "','" + InstallType + "','" + InstallName + "','" + LE_CL_V + "','" +
                 Area.ToString() + "','" + Width.ToString() + "','" + Height.ToString() + "','" + Ag_fix.ToString() + "','" + Ag_open.ToString() + "','" + Af_open.ToString() + "','" + Af_fix.ToString() + "','" + Af_btw.ToString() + "','" + Lg_fix.ToString() + "','" + Lg_open.ToString() + "','" +
                 Ug.ToString() + "','" + g.ToString() + "','" + τD65_SNA.ToString() + "','" + Psi_g_fix.ToString() + "','" + Psi_g_open.ToString() + "','" +
-                Uf_open.ToString() + "','" + Uf_fix.ToString() + "','" + Uf_btw.ToString() + "','" +
+                Uf_open.ToString() + "','" + Uf_fix.ToString() + "','" + Uf_btw.ToString() + "','" + df_open.ToString() + "','" + df_fix.ToString() + "','" + df_btw.ToString() + "','" +
+                Psi_InstallTop.ToString() + "','" + Psi_InstallSide.ToString() + "','" + Psi_InstallButtom.ToString() + "','" +
                 Uw.ToString() + "','" + dUinst.ToString() + "','" + Uw_inst.ToString()
                 + "'", "번호");
             this.DialogResult = DialogResult.OK;
-            this.Hide();   
-            /*
-            List_ConstructionWindow f = new List_ConstructionWindow();
-
-            foreach (FormMain openForm in Application.OpenForms)
-            {
-                if (openForm.Name == "FormMain")
-                {
-
-                    f.TopLevel = false;
-                    openForm.splitContainer1.Panel2.Controls.Add(f);
-                    f.Show();
-                    f.BringToFront();
-                    f.load_List();
-                    return;
-                }
-            }        */
+            this.Hide();
             Program.getMenuForm().DoLoadForm(29, OnLoadListProc);
         }
-        public void LoadData(String ID)
+
+
+        public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
-            WinNum_textBox.Text = ID;
-            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
+            try
+            {
+                WinNum_textBox.Text = ID;
+                String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,기존창호,Uw적용방법,직접간접,프레임유형,이중단창,프레임재료,프레임종류,유리종류,간봉종류,설치유형,설치종류,LE_CL_V," +
+                  "유리열관류율,태양열취득률,빛투과율,고정유리선형열관류율,개폐유리선형열관류율," +
+                  "상부설치열관류율,측면설치열관류율,하부설치열관류율," +
+                  "창호열관류율,설치열교가산치,창호유효열관류율," +
+                  "개폐부프레임열관류율,고정부프레임열관류율,중간바프레임열관류율,개폐부프레임두께,고정부프레임두께,중간바프레임두께," +
+                  "창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이"
+                    , "번호 = '" + ID + "'");
+                Name_textBox.Text = Load[0][1];
+                Type = Load[0][2];
+                switch (Type)
+                {
+                    case "기존창호":
+                        radioButton1.Checked = true;
+                        break;
+
+                    case "신규":
+                        radioButton2.Checked = true;
+                        break;
+
+                    case "철거 후 신규":
+                        radioButton3.Checked = true;
+                        break; ;
+
+                    case "외부(커튼월)덧댐":
+                        radioButton4.Checked = true;
+                        break;
+
+                    case "내부덧댐":
+                        radioButton5.Checked = true;
+                        break;
+                }
+                AdditionalWindow_comboBox.SelectedItem = Load[0][3];
+                Uw_comboBox.SelectedItem = Load[0][4];
+                DiIndi_comboBox.SelectedItem = Load[0][5];
+                Frame_comboBox.SelectedItem = Load[0][6];
+                SingleDoubleType = Load[0][7];
+                FrameMaterial = Load[0][8];
+                FrameMaterial_textBox.Text = Load[0][8];
+                FrameName = Load[0][9];
+                FrameName_textBox.Text = Load[0][9];
+                GlassName = Load[0][10];
+                GlassName_textBox.Text = Load[0][10];
+                SpacerName = Load[0][11];
+                SpacerName_textBox.Text = Load[0][11];
+                Install_comboBox.SelectedItem = Load[0][12];
+                InstallName = Load[0][13];
+                Install_textBox.Text = Load[0][13];
+                LE_CL_V = Load[0][14];
+
+                Ug = Convert.ToDouble(Load[0][15]);
+                Ug_textBox.Text = Load[0][15];
+
+                g = Convert.ToDouble(Load[0][16]);
+                g_textBox.Text = String.Format("{0:F3}", g);
+
+                τD65_SNA = Convert.ToDouble(Load[0][17]);
+                τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
+
+                Psi_g_fix = Convert.ToDouble(Load[0][18]);
+                Psi_g_fix_textBox.Text = string.Format("{0:F3}", Psi_g_fix);
+
+                Psi_g_open = Convert.ToDouble(Load[0][19]);
+                Psi_g_open_textBox.Text = String.Format("{0:F3}", Psi_g_open);
+
+                Psi_InstallTop = Convert.ToDouble(Load[0][20]);
+                Psi_InstallTop_textBox.Text = String.Format("{0:F3}", Psi_InstallTop);
+
+                Psi_InstallSide = Convert.ToDouble(Load[0][21]);
+                Psi_InstallSide_textBox.Text = String.Format("{0:F3}", Psi_InstallSide);
+
+
+                Psi_InstallButtom = Convert.ToDouble(Load[0][22]);
+                Psi_InstallButtom_textBox.Text = String.Format("{0:F3}", Psi_InstallButtom);
+
+                Uw = Convert.ToDouble(Load[0][23]);
+                if (UwMehod == "계산")
+                {
+                    Uw_textBox.Text = String.Format("{0:F3}", Uw);
+                }
+                else
+                {
+                    Uw2_textBox.Text = String.Format("{0:F3}", Uw);
+                }
+                dUinst = Convert.ToDouble(Load[0][24]);
+                dUinst_textBox.Text = String.Format("{0:F3}", dUinst);
+
+                Uw_inst = Convert.ToDouble(Load[0][25]);
+                Uw_inst_textBox.Text = String.Format("{0:F3}", Uw_inst);
+
+                Uf_open = Convert.ToDouble(Load[0][26]);
+                Uf_open_textBox.Text = String.Format("{0:F2}", Uf_open);
+                Uf_fix = Convert.ToDouble(Load[0][27]);
+                Uf_fix_textBox.Text = String.Format("{0:F2}", Uf_fix);
+                Uf_btw = Convert.ToDouble(Load[0][28]);
+                Uf_btw_textBox.Text = String.Format("{0:F2}", Uf_btw);
+                df_open = Convert.ToDouble(Load[0][29]);
+                df_open_textBox.Text = String.Format("{0:F2}", df_open);
+                df_fix = Convert.ToDouble(Load[0][30]);
+                df_fix_textBox.Text = String.Format("{0:F2}", df_fix);
+                df_btw = Convert.ToDouble(Load[0][31]);
+                df_btw_textBox.Text = String.Format("{0:F2}", df_btw);
+
+                Area = Convert.ToDouble(Load[0][32]);
+                Area_textBox.Text = String.Format("{0:F2}", Area);
+                Width = Convert.ToDouble(Load[0][33]);
+                Width_textBox.Text = String.Format("{0:F2}", Width);
+                Height = Convert.ToDouble(Load[0][34]);
+                Height_textBox.Text = String.Format("{0:F2}", Height);
+                Ag_fix = Convert.ToDouble(Load[0][35]);
+                Ag_fix_textBox.Text = String.Format("{0:F2}", Ag_fix);
+                Ag_open = Convert.ToDouble(Load[0][36]);
+                Ag_open_textBox.Text = String.Format("{0:F2}", Ag_open);
+                Af_open = Convert.ToDouble(Load[0][37]);
+                Af_open_textBox.Text = String.Format("{0:F2}", Af_open);
+                Af_fix = Convert.ToDouble(Load[0][38]);
+                Af_fix_textBox.Text = String.Format("{0:F2}", Af_fix);
+                Af_btw = Convert.ToDouble(Load[0][39]);
+                Af_btw_textBox.Text = String.Format("{0:F2}", Af_btw);
+                Lg_fix = Convert.ToDouble(Load[0][40]);
+                Lg_fix_textBox.Text = String.Format("{0:F2}", Lg_fix);
+                Lg_open = Convert.ToDouble(Load[0][41]);
+                Lg_open_textBox.Text = String.Format("{0:F2}", Lg_open);
+            }
+            catch { }
+
 
         }
-        public void ResetForm(String ID)
+        public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {
             WinNum_textBox.Text = ID;
-            // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
+            if (Name_textBox.Text != "")
+            {
+                WindowName = Name_textBox.Text + "_복사";
+                Name_textBox.Text = WindowName;
+            }
+        }
+
+        public void CopyForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
+        {
+            WinNum_textBox.Text = ID;
+            if (Name_textBox.Text != "")
+            {
+                WindowName = Name_textBox.Text + "_복사";
+                Name_textBox.Text = WindowName;
+            }
 
         }
+
     }
 }
