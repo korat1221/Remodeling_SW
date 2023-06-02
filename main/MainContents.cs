@@ -53,6 +53,12 @@ namespace main
             new FormDebug(),
             new List_ConstructionWindow()};
         bool scriptable = false;
+        public class FormParam
+        {
+            public int formID { get; set; }
+            public string? ID { get; set; }
+        }
+        static FormParam? formParam;
 
         public MainContents()
         {
@@ -86,13 +92,31 @@ namespace main
             webView21.CoreWebView2.WebMessageReceived += OnJSMessage;
             webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
         }
+        public static bool OnLoadProc(Form form)
+        {
+            if (formParam.formID == 6)
+            {
+                ConstructionWindow f = (ConstructionWindow)form;
+
+                f.LoadData(formParam.ID);
+            }
+            return true;
+        }
+
         void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
-            int idx = Int32.Parse(args.TryGetWebMessageAsString());
-
-            if (idx >= 0 && idx < 50)
+            try
             {
-                DoLoadForm(idx);
+                formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>(args.TryGetWebMessageAsString());
+
+                if (formParam.formID >= 0 && formParam.formID < 100)
+                {
+                    DoLoadForm(formParam.formID, OnLoadProc);
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
         void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
