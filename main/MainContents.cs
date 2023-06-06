@@ -51,7 +51,7 @@ namespace main
             new PV(), new FuelCell(), new WindPower(), new SupplyRatio(), new EIndependenceRate(),
             new ReportExisting(), new ReportRemodeling(),
             new FormDebug(),
-            new List_ConstructionWindow()};
+            new List_ConstructionWindow(),new List_ConstructionCW()};
         bool scriptable = false;
         public class FormParam
         {
@@ -94,7 +94,13 @@ namespace main
         }
         public static bool OnLoadProc(Form form)
         {
-            if (formParam.formID == 6)
+            if (formParam.formID == 2)
+            {
+                ConstructionCW f = (ConstructionCW)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 6)
             {
                 ConstructionWindow f = (ConstructionWindow)form;
 

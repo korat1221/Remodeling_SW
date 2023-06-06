@@ -196,7 +196,7 @@ namespace main.subcontents
                 string[][] User_DGlass = Program.DB.getValue(DB.type.ProjDB, "User_DoubleGlass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
                 for (int n = 0; n < User_DGlass.Length; n++)
                 {
-                    table_DoubleGlass.Rows.Add(User_DGlass[n][0], User_DGlass[n][1], User_DGlass[n][2], User_DGlass[n][3], User_DGlass[n][4], User_DGlass[n][5], User_DGlass[n][6], String.Format("{0:F3}", User_DGlass[n][7]), String.Format("{0:F3}", User_DGlass[n][8]), String.Format("{0:F3}", User_DGlass[n][9]), User_DGlass[n][10], User_DGlass[n][11]);
+                    table_DoubleGlass.Rows.Add(User_DGlass[n][0], User_DGlass[n][1], User_DGlass[n][2], User_DGlass[n][3], User_DGlass[n][4], User_DGlass[n][5], User_DGlass[n][6], String.Format("{0:F3}", Convert.ToDouble(User_DGlass[n][7])), String.Format("{0:F3}", Convert.ToDouble(User_DGlass[n][8])), String.Format("{0:F3}", Convert.ToDouble(User_DGlass[n][9])), User_DGlass[n][10], User_DGlass[n][11]);
                 }
             }
             catch { }
@@ -207,16 +207,16 @@ namespace main.subcontents
 
         private void Deletebutton_Click(object sender, EventArgs e)
         {
-            int k = Glass_dataGridView.CurrentCell.RowIndex;
+            int k = DoubleGlass_dataGridView.CurrentCell.RowIndex;
             if (k > -1)
             {
-                if (Glass_dataGridView.Rows[k].Cells[2].Value.ToString() == "사용자")
+                if (DoubleGlass_dataGridView.Rows[k].Cells[2].Value.ToString() == "사용자")
                 {
-                    if ((MessageBox.Show(Glass_dataGridView.Rows[k].Cells[3].Value.ToString() + "을 삭제하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                    if ((MessageBox.Show(DoubleGlass_dataGridView.Rows[k].Cells[3].Value.ToString() + "을 삭제하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
                     {
-                        String Delete_Num = Glass_dataGridView.Rows[k].Cells[1].Value.ToString();
-                        Program.DB.deleteValue(DB.type.ProjDB, "User_Glass", "번호 ='" + Delete_Num + "'");
-                        load_table_GlassDB();
+                        String Delete_Num = DoubleGlass_dataGridView.Rows[k].Cells[1].Value.ToString();
+                        Program.DB.deleteValue(DB.type.ProjDB, "User_DoubleGlass", "번호 ='" + Delete_Num + "'");
+                        load_table_DoubleGlassDB();
                     }
                 }
                 else
@@ -228,24 +228,7 @@ namespace main.subcontents
 
         }
 
-
-
-        private void Save_button_Click(object sender, EventArgs e)
-        {
-
-            DataGridViewRow row = Glass_dataGridView.Rows[SelectRow];
-
-            for (int i = 1; i < row.Cells.Count - 2; i++)
-            {
-                Select_WindowGlass[i] = row.Cells[i + 2].Value.ToString();
-            }
-            Select_WindowGlass[0] = row.Cells[1].Value.ToString();
-
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-
-        }
-
+        //데이터그리드뷰 체크박스 선택 시
         private void DoubleGlass_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -273,5 +256,22 @@ namespace main.subcontents
                 }
             }
         }
+
+        private void Save_button_Click(object sender, EventArgs e)
+        {
+
+            DataGridViewRow row = DoubleGlass_dataGridView.Rows[SelectRow];
+
+            for (int i = 1; i < row.Cells.Count - 2; i++)
+            {
+                Select_WindowGlass[i] = row.Cells[i + 2].Value.ToString();
+            }
+            Select_WindowGlass[0] = row.Cells[1].Value.ToString();
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+
+        }
+
     }
 }

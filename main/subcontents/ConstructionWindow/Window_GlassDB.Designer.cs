@@ -485,6 +485,7 @@
             Glass_dataGridView.RowTemplate.Height = 25;
             Glass_dataGridView.Size = new Size(977, 481);
             Glass_dataGridView.TabIndex = 111;
+            Glass_dataGridView.CellContentClick += Glass_dataGridView_CellContentClick;
             // 
             // Window_GlassDB
             // 

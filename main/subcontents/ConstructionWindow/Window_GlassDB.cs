@@ -82,49 +82,8 @@ namespace main.subcontents
             Glass_dataGridView.DataSource = table_WindowGlass;
             Count_FrameDB = WinGlass.Length;
         }
-        //데이터그리드뷰 체크박스 선택 시
-        private void Frame_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                Glass_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                SelectRow = e.RowIndex;
-                DataGridViewRow row = Glass_dataGridView.Rows[SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < Count_FrameDB; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        Glass_dataGridView.Rows[k].Cells[0].Value = false;
-                        row2 = Glass_dataGridView.Rows[k];
-                        row2.DefaultCellStyle.BackColor = Color.White;
-                        row2.DefaultCellStyle.ForeColor = Color.Black;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = Color.Black;
-                        row = Glass_dataGridView.Rows[e.RowIndex];
-                    }
-                }
-            }
-        }
+      
 
-        private void Save_button_Click(object sender, EventArgs e)
-        {
-
-            DataGridViewRow row = Glass_dataGridView.Rows[SelectRow];
-
-            for (int i = 1; i < row.Cells.Count - 2; i++)
-            {
-                Select_WindowGlass[i] = row.Cells[i + 2].Value.ToString();
-            }
-            Select_WindowGlass[0] = row.Cells[1].Value.ToString();
-
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-
-        }
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -217,5 +176,49 @@ namespace main.subcontents
 
 
         }
+
+        //데이터그리드뷰 체크박스 선택 시
+        private void Glass_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                Glass_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                SelectRow = e.RowIndex;
+                DataGridViewRow row = Glass_dataGridView.Rows[SelectRow];
+                DataGridViewRow row2;
+                for (int k = 0; k < Count_FrameDB; k++)
+                {
+                    if (k != row.Index)
+                    {
+                        Glass_dataGridView.Rows[k].Cells[0].Value = false;
+                        row2 = Glass_dataGridView.Rows[k];
+                        row2.DefaultCellStyle.BackColor = Color.White;
+                        row2.DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                        row = Glass_dataGridView.Rows[e.RowIndex];
+                    }
+                }
+            }
+        }
+        private void Save_button_Click(object sender, EventArgs e)
+        {
+
+            DataGridViewRow row = Glass_dataGridView.Rows[SelectRow];
+
+            for (int i = 1; i < row.Cells.Count - 2; i++)
+            {
+                Select_WindowGlass[i] = row.Cells[i + 2].Value.ToString();
+            }
+            Select_WindowGlass[0] = row.Cells[1].Value.ToString();
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+
+        }
+
     }
 }

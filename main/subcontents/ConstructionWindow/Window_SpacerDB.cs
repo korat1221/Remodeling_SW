@@ -28,7 +28,8 @@ namespace main.subcontents
             load_table_SpacerDB(SingleDoubleType, FrameMaterial);
             this.LE_CL_V = LE_CL_V;
             //사용자DB 구분1 콤보박스
-            Program.UTIL.FillComboBox_ByCategory(UserDBType1_comboBox, "창호", "간봉", "1");
+            UserDBType1_comboBox.Items.Add("일반간봉");
+            UserDBType1_comboBox.Items.Add(" 단열간봉");
             //사용자DB 구분2 콤보박스
             UserDBType2_comboBox.Items.Add("단창");
             UserDBType2_comboBox.Items.Add("이중창");
@@ -79,50 +80,6 @@ namespace main.subcontents
             Count_FrameDB = WinSpacer.Length;
         }
 
-        //데이터그리드뷰 체크박스 선택 시
-        private void Spacer_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                Spacer_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                SelectRow = e.RowIndex;
-                DataGridViewRow row = Spacer_dataGridView.Rows[SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < Count_FrameDB; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        Spacer_dataGridView.Rows[k].Cells[0].Value = false;
-                        row2 = Spacer_dataGridView.Rows[k];
-                        row2.DefaultCellStyle.BackColor = Color.White;
-                        row2.DefaultCellStyle.ForeColor = Color.Black;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = Color.Black;
-                        row = Spacer_dataGridView.Rows[e.RowIndex];
-                    }
-                }
-            }
-        }
-
-        private void Save_button_Click(object sender, EventArgs e)
-        {
-            DataGridViewRow row = Spacer_dataGridView.Rows[SelectRow];
-
-            for (int i = 1; i < (row.Cells.Count - 2); i++)
-            {
-                Select_WindowSpacer[i] = row.Cells[i + 2].Value.ToString();
-            }
-
-            Select_WindowSpacer[0] = row.Cells[1].Value.ToString();
-            Select_WindowSpacer[9] = LE_CL_V;
-
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-
-        }
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -133,7 +90,7 @@ namespace main.subcontents
 
         private void UserDBType1_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UserDBType1 = Program.UTIL.SelectedItem_ByComboBox(UserDBType1_comboBox);
+            UserDBType1 = UserDBType1_comboBox.SelectedItem.ToString();
         }
 
         private void UserDBType2_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -191,6 +148,51 @@ namespace main.subcontents
                     MessageBox.Show("기본 DB는 삭제할 수 없습니다.");
                 }
             }
+        }
+
+        //데이터그리드뷰 체크박스 선택 시
+        private void Spacer_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                Spacer_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                SelectRow = e.RowIndex;
+                DataGridViewRow row = Spacer_dataGridView.Rows[SelectRow];
+                DataGridViewRow row2;
+                for (int k = 0; k < Count_FrameDB; k++)
+                {
+                    if (k != row.Index)
+                    {
+                        Spacer_dataGridView.Rows[k].Cells[0].Value = false;
+                        row2 = Spacer_dataGridView.Rows[k];
+                        row2.DefaultCellStyle.BackColor = Color.White;
+                        row2.DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                        row = Spacer_dataGridView.Rows[e.RowIndex];
+                    }
+                }
+            }
+        }
+
+        private void Save_button_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = Spacer_dataGridView.Rows[SelectRow];
+
+            for (int i = 1; i < (row.Cells.Count - 2); i++)
+            {
+                Select_WindowSpacer[i] = row.Cells[i + 2].Value.ToString();
+            }
+
+            Select_WindowSpacer[0] = row.Cells[1].Value.ToString();
+            Select_WindowSpacer[9] = LE_CL_V;
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+
         }
     }
 }

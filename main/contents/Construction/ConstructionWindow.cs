@@ -9,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -459,6 +460,12 @@ namespace main.contents
                         FrameName = "";
                         FrameMaterial = "";
                         FrameName_textBox.Text = "";
+                        GlassName = "";
+                        GlassName_textBox.Text = "";
+                        SpacerName = "";
+                        SpacerName_textBox.Text = "";
+                        InstallName = "";
+                        Install_textBox.Text = "";
                         Uf_open_textBox.Text = "";
                         Uf_fix_textBox.Text = "";
                         Uf_btw_textBox.Text = "";
@@ -481,7 +488,7 @@ namespace main.contents
             }
             else
             {
-                Window_FrameDB window_frameDB_form = new Window_FrameDB(FrameType);
+                Window_FrameDB window_frameDB_form = new Window_FrameDB(FrameType, SingleDoubleType);
 
                 DialogResult result = window_frameDB_form.ShowDialog();
                 if (result == DialogResult.OK)
@@ -658,7 +665,7 @@ namespace main.contents
                     check_LE_CL_V = window_spacerDB_form.Select_WindowSpacer[9];
                     SpacerName = window_spacerDB_form.Select_WindowSpacer[2];
                     SpacerName_textBox.Text = SpacerName;
-                    if (LE_CL_V == "LE")
+                    if (LE_CL_V.Contains("LE"))
                     {
                         Psi_g_fix = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[7]);
                         Psi_g_open = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[8]);
