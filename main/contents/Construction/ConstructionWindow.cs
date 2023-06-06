@@ -554,42 +554,86 @@ namespace main.contents
 
         private void Glass_button_Click(object sender, EventArgs e)
         {
-            Window_GlassDB window_glassDB_form = new Window_GlassDB();
-            DialogResult result = window_glassDB_form.ShowDialog();
-            if (result == DialogResult.OK)
+            if (SingleDoubleType == "이중창")
             {
-                GlassName = window_glassDB_form.Select_WindowGlass[1];
-                GlassName_textBox.Text = GlassName;
-                LE_CL_V = window_glassDB_form.Select_WindowGlass[5];
-                Ug = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[6]);
-                Ug_textBox.Text = String.Format("{0:F3}", Ug);
-                g = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[7]);
-                g_textBox.Text = String.Format("{0:F3}", g);
-                τD65_SNA = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[8]);
-                τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
-                Calc_Uw();
-                Calc_AdditionalWindow(); //덧댐일 경우 
-                Calc_dUinst();
-            }
 
-            //유리를 다시 선택했을 경우 
-            try
-            {
-                if (check_LE_CL_V != null)
+                Window_DoubleGlassDB window_doubleglassDB_form = new Window_DoubleGlassDB();
+                DialogResult result = window_doubleglassDB_form.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    if (LE_CL_V != check_LE_CL_V)
+                    GlassName = window_doubleglassDB_form.Select_WindowGlass[1];
+                    GlassName_textBox.Text = GlassName;
+                    LE_CL_V = window_doubleglassDB_form.Select_WindowGlass[5];
+                    Ug = Convert.ToDouble(window_doubleglassDB_form.Select_WindowGlass[6]);
+                    Ug_textBox.Text = String.Format("{0:F3}", Ug);
+                    g = Convert.ToDouble(window_doubleglassDB_form.Select_WindowGlass[7]);
+                    g_textBox.Text = String.Format("{0:F3}", g);
+                    τD65_SNA = Convert.ToDouble(window_doubleglassDB_form.Select_WindowGlass[8]);
+                    τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
+                    Calc_Uw();
+                    Calc_AdditionalWindow(); //덧댐일 경우 
+                    Calc_dUinst();
+                }
+
+                //유리를 다시 선택했을 경우 
+                try
+                {
+                    if (check_LE_CL_V != null)
                     {
-                        MessageBox.Show("간봉을 다시 선택하세요.");
-                        SpacerName = "";
-                        SpacerName_textBox.Text = "";
-                        Psi_g_fix_textBox.Text = "";
-                        Psi_g_open_textBox.Text = "";
+                        if (LE_CL_V != check_LE_CL_V)
+                        {
+                            MessageBox.Show("간봉을 다시 선택하세요.");
+                            SpacerName = "";
+                            SpacerName_textBox.Text = "";
+                            Psi_g_fix_textBox.Text = "";
+                            Psi_g_open_textBox.Text = "";
+                        }
+
                     }
 
                 }
+                catch { }
 
             }
-            catch { }
+            else
+            {
+                Window_GlassDB window_glassDB_form = new Window_GlassDB();
+                DialogResult result = window_glassDB_form.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    GlassName = window_glassDB_form.Select_WindowGlass[1];
+                    GlassName_textBox.Text = GlassName;
+                    LE_CL_V = window_glassDB_form.Select_WindowGlass[5];
+                    Ug = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[6]);
+                    Ug_textBox.Text = String.Format("{0:F3}", Ug);
+                    g = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[7]);
+                    g_textBox.Text = String.Format("{0:F3}", g);
+                    τD65_SNA = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[8]);
+                    τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
+                    Calc_Uw();
+                    Calc_AdditionalWindow(); //덧댐일 경우 
+                    Calc_dUinst();
+                }
+
+                //유리를 다시 선택했을 경우 
+                try
+                {
+                    if (check_LE_CL_V != null)
+                    {
+                        if (LE_CL_V != check_LE_CL_V)
+                        {
+                            MessageBox.Show("간봉을 다시 선택하세요.");
+                            SpacerName = "";
+                            SpacerName_textBox.Text = "";
+                            Psi_g_fix_textBox.Text = "";
+                            Psi_g_open_textBox.Text = "";
+                        }
+
+                    }
+
+                }
+                catch { }
+            }
 
         }
 

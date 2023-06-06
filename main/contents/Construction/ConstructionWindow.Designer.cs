@@ -201,7 +201,7 @@ namespace main.contents
             // 
             // AdditionalWindow_textBox
             // 
-            AdditionalWindow_textBox.BackColor = SystemColors.Desktop;
+            AdditionalWindow_textBox.BackColor = Color.White;
             AdditionalWindow_textBox.BorderStyle = BorderStyle.None;
             AdditionalWindow_textBox.Enabled = false;
             AdditionalWindow_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -323,7 +323,7 @@ namespace main.contents
             // 
             // Type_textBox
             // 
-            Type_textBox.BackColor = SystemColors.Desktop;
+            Type_textBox.BackColor = Color.White;
             Type_textBox.BorderStyle = BorderStyle.None;
             Type_textBox.Enabled = false;
             Type_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -460,7 +460,7 @@ namespace main.contents
             // 
             // Uw2_textBox
             // 
-            Uw2_textBox.BackColor = SystemColors.Desktop;
+            Uw2_textBox.BackColor = Color.White;
             Uw2_textBox.BorderStyle = BorderStyle.None;
             Uw2_textBox.Enabled = false;
             Uw2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -508,7 +508,7 @@ namespace main.contents
             // 
             // Install_textBox
             // 
-            Install_textBox.BackColor = SystemColors.Desktop;
+            Install_textBox.BackColor = Color.White;
             Install_textBox.BorderStyle = BorderStyle.None;
             Install_textBox.Enabled = false;
             Install_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -536,7 +536,7 @@ namespace main.contents
             // 
             // SpacerName_textBox
             // 
-            SpacerName_textBox.BackColor = SystemColors.Desktop;
+            SpacerName_textBox.BackColor = Color.White;
             SpacerName_textBox.BorderStyle = BorderStyle.None;
             SpacerName_textBox.Enabled = false;
             SpacerName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -564,7 +564,7 @@ namespace main.contents
             // 
             // GlassName_textBox
             // 
-            GlassName_textBox.BackColor = SystemColors.Desktop;
+            GlassName_textBox.BackColor = Color.White;
             GlassName_textBox.BorderStyle = BorderStyle.None;
             GlassName_textBox.Enabled = false;
             GlassName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -592,7 +592,7 @@ namespace main.contents
             // 
             // FrameName_textBox
             // 
-            FrameName_textBox.BackColor = SystemColors.Desktop;
+            FrameName_textBox.BackColor = Color.White;
             FrameName_textBox.BorderStyle = BorderStyle.None;
             FrameName_textBox.Enabled = false;
             FrameName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -631,7 +631,7 @@ namespace main.contents
             // 
             // Uw_inst_textBox
             // 
-            Uw_inst_textBox.BackColor = SystemColors.Desktop;
+            Uw_inst_textBox.BackColor = Color.White;
             Uw_inst_textBox.BorderStyle = BorderStyle.None;
             Uw_inst_textBox.Enabled = false;
             Uw_inst_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -666,7 +666,7 @@ namespace main.contents
             // 
             // Uw_textBox
             // 
-            Uw_textBox.BackColor = SystemColors.Desktop;
+            Uw_textBox.BackColor = Color.White;
             Uw_textBox.BorderStyle = BorderStyle.None;
             Uw_textBox.Enabled = false;
             Uw_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -701,7 +701,7 @@ namespace main.contents
             // 
             // Psi_g_open_textBox
             // 
-            Psi_g_open_textBox.BackColor = SystemColors.Desktop;
+            Psi_g_open_textBox.BackColor = Color.White;
             Psi_g_open_textBox.BorderStyle = BorderStyle.None;
             Psi_g_open_textBox.Enabled = false;
             Psi_g_open_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -736,7 +736,7 @@ namespace main.contents
             // 
             // Psi_g_fix_textBox
             // 
-            Psi_g_fix_textBox.BackColor = SystemColors.Desktop;
+            Psi_g_fix_textBox.BackColor = Color.White;
             Psi_g_fix_textBox.BorderStyle = BorderStyle.None;
             Psi_g_fix_textBox.Enabled = false;
             Psi_g_fix_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -760,7 +760,7 @@ namespace main.contents
             // 
             // τD65_SNA_textBox
             // 
-            τD65_SNA_textBox.BackColor = SystemColors.Desktop;
+            τD65_SNA_textBox.BackColor = Color.White;
             τD65_SNA_textBox.BorderStyle = BorderStyle.None;
             τD65_SNA_textBox.Enabled = false;
             τD65_SNA_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -784,7 +784,7 @@ namespace main.contents
             // 
             // g_textBox
             // 
-            g_textBox.BackColor = SystemColors.Desktop;
+            g_textBox.BackColor = Color.White;
             g_textBox.BorderStyle = BorderStyle.None;
             g_textBox.Enabled = false;
             g_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -819,7 +819,7 @@ namespace main.contents
             // 
             // Ug_textBox
             // 
-            Ug_textBox.BackColor = SystemColors.Desktop;
+            Ug_textBox.BackColor = Color.White;
             Ug_textBox.BorderStyle = BorderStyle.None;
             Ug_textBox.Enabled = false;
             Ug_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -990,7 +990,7 @@ namespace main.contents
             // 
             // df_btw_textBox
             // 
-            df_btw_textBox.BackColor = SystemColors.Desktop;
+            df_btw_textBox.BackColor = Color.White;
             df_btw_textBox.BorderStyle = BorderStyle.None;
             df_btw_textBox.Enabled = false;
             df_btw_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1003,7 +1003,7 @@ namespace main.contents
             // 
             // df_fix_textBox
             // 
-            df_fix_textBox.BackColor = SystemColors.Desktop;
+            df_fix_textBox.BackColor = Color.White;
             df_fix_textBox.BorderStyle = BorderStyle.None;
             df_fix_textBox.Enabled = false;
             df_fix_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1016,7 +1016,7 @@ namespace main.contents
             // 
             // df_open_textBox
             // 
-            df_open_textBox.BackColor = SystemColors.Desktop;
+            df_open_textBox.BackColor = Color.White;
             df_open_textBox.BorderStyle = BorderStyle.None;
             df_open_textBox.Enabled = false;
             df_open_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1062,7 +1062,7 @@ namespace main.contents
             // 
             // Uf_btw_textBox
             // 
-            Uf_btw_textBox.BackColor = SystemColors.Desktop;
+            Uf_btw_textBox.BackColor = Color.White;
             Uf_btw_textBox.BorderStyle = BorderStyle.None;
             Uf_btw_textBox.Enabled = false;
             Uf_btw_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1075,7 +1075,7 @@ namespace main.contents
             // 
             // Uf_fix_textBox
             // 
-            Uf_fix_textBox.BackColor = SystemColors.Desktop;
+            Uf_fix_textBox.BackColor = Color.White;
             Uf_fix_textBox.BorderStyle = BorderStyle.None;
             Uf_fix_textBox.Enabled = false;
             Uf_fix_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1088,7 +1088,7 @@ namespace main.contents
             // 
             // Uf_open_textBox
             // 
-            Uf_open_textBox.BackColor = SystemColors.Desktop;
+            Uf_open_textBox.BackColor = Color.White;
             Uf_open_textBox.BorderStyle = BorderStyle.None;
             Uf_open_textBox.Enabled = false;
             Uf_open_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1112,7 +1112,7 @@ namespace main.contents
             // 
             // FrameMaterial_textBox
             // 
-            FrameMaterial_textBox.BackColor = SystemColors.Desktop;
+            FrameMaterial_textBox.BackColor = Color.White;
             FrameMaterial_textBox.BorderStyle = BorderStyle.None;
             FrameMaterial_textBox.Enabled = false;
             FrameMaterial_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1207,7 +1207,7 @@ namespace main.contents
             // 
             // d_InstallButtom_textBox
             // 
-            d_InstallButtom_textBox.BackColor = SystemColors.Desktop;
+            d_InstallButtom_textBox.BackColor = Color.White;
             d_InstallButtom_textBox.BorderStyle = BorderStyle.None;
             d_InstallButtom_textBox.Enabled = false;
             d_InstallButtom_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1220,7 +1220,7 @@ namespace main.contents
             // 
             // Psi_InstallButtom_textBox
             // 
-            Psi_InstallButtom_textBox.BackColor = SystemColors.Desktop;
+            Psi_InstallButtom_textBox.BackColor = Color.White;
             Psi_InstallButtom_textBox.BorderStyle = BorderStyle.None;
             Psi_InstallButtom_textBox.Enabled = false;
             Psi_InstallButtom_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1288,7 +1288,7 @@ namespace main.contents
             // 
             // d_InstallSide_textBox
             // 
-            d_InstallSide_textBox.BackColor = SystemColors.Desktop;
+            d_InstallSide_textBox.BackColor = Color.White;
             d_InstallSide_textBox.BorderStyle = BorderStyle.None;
             d_InstallSide_textBox.Enabled = false;
             d_InstallSide_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1301,7 +1301,7 @@ namespace main.contents
             // 
             // Psi_InstallSide_textBox
             // 
-            Psi_InstallSide_textBox.BackColor = SystemColors.Desktop;
+            Psi_InstallSide_textBox.BackColor = Color.White;
             Psi_InstallSide_textBox.BorderStyle = BorderStyle.None;
             Psi_InstallSide_textBox.Enabled = false;
             Psi_InstallSide_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1336,7 +1336,7 @@ namespace main.contents
             // 
             // d_InstallTop_textBox
             // 
-            d_InstallTop_textBox.BackColor = SystemColors.Desktop;
+            d_InstallTop_textBox.BackColor = Color.White;
             d_InstallTop_textBox.BorderStyle = BorderStyle.None;
             d_InstallTop_textBox.Enabled = false;
             d_InstallTop_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1349,7 +1349,7 @@ namespace main.contents
             // 
             // Psi_InstallTop_textBox
             // 
-            Psi_InstallTop_textBox.BackColor = SystemColors.Desktop;
+            Psi_InstallTop_textBox.BackColor = Color.White;
             Psi_InstallTop_textBox.BorderStyle = BorderStyle.None;
             Psi_InstallTop_textBox.Enabled = false;
             Psi_InstallTop_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1373,7 +1373,7 @@ namespace main.contents
             // 
             // dUinst_textBox
             // 
-            dUinst_textBox.BackColor = SystemColors.Desktop;
+            dUinst_textBox.BackColor = Color.White;
             dUinst_textBox.BorderStyle = BorderStyle.None;
             dUinst_textBox.Enabled = false;
             dUinst_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1467,7 +1467,7 @@ namespace main.contents
             // 
             // Lg_open_textBox
             // 
-            Lg_open_textBox.BackColor = SystemColors.Desktop;
+            Lg_open_textBox.BackColor = Color.White;
             Lg_open_textBox.BorderStyle = BorderStyle.None;
             Lg_open_textBox.Enabled = false;
             Lg_open_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1502,7 +1502,7 @@ namespace main.contents
             // 
             // Af_open_textBox
             // 
-            Af_open_textBox.BackColor = SystemColors.Desktop;
+            Af_open_textBox.BackColor = Color.White;
             Af_open_textBox.BorderStyle = BorderStyle.None;
             Af_open_textBox.Enabled = false;
             Af_open_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1537,7 +1537,7 @@ namespace main.contents
             // 
             // Lg_fix_textBox
             // 
-            Lg_fix_textBox.BackColor = SystemColors.Desktop;
+            Lg_fix_textBox.BackColor = Color.White;
             Lg_fix_textBox.BorderStyle = BorderStyle.None;
             Lg_fix_textBox.Enabled = false;
             Lg_fix_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1583,7 +1583,7 @@ namespace main.contents
             // 
             // Af_btw_textBox
             // 
-            Af_btw_textBox.BackColor = SystemColors.Desktop;
+            Af_btw_textBox.BackColor = Color.White;
             Af_btw_textBox.BorderStyle = BorderStyle.None;
             Af_btw_textBox.Enabled = false;
             Af_btw_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1607,7 +1607,7 @@ namespace main.contents
             // 
             // Af_fix_textBox
             // 
-            Af_fix_textBox.BackColor = SystemColors.Desktop;
+            Af_fix_textBox.BackColor = Color.White;
             Af_fix_textBox.BorderStyle = BorderStyle.None;
             Af_fix_textBox.Enabled = false;
             Af_fix_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1642,7 +1642,7 @@ namespace main.contents
             // 
             // Ag_open_textBox
             // 
-            Ag_open_textBox.BackColor = SystemColors.Desktop;
+            Ag_open_textBox.BackColor = Color.White;
             Ag_open_textBox.BorderStyle = BorderStyle.None;
             Ag_open_textBox.Enabled = false;
             Ag_open_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1677,7 +1677,7 @@ namespace main.contents
             // 
             // Area_textBox
             // 
-            Area_textBox.BackColor = SystemColors.Desktop;
+            Area_textBox.BackColor = Color.White;
             Area_textBox.BorderStyle = BorderStyle.None;
             Area_textBox.Enabled = false;
             Area_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1712,7 +1712,7 @@ namespace main.contents
             // 
             // Ag_fix_textBox
             // 
-            Ag_fix_textBox.BackColor = SystemColors.Desktop;
+            Ag_fix_textBox.BackColor = Color.White;
             Ag_fix_textBox.BorderStyle = BorderStyle.None;
             Ag_fix_textBox.Enabled = false;
             Ag_fix_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1758,7 +1758,7 @@ namespace main.contents
             // 
             // Height_textBox
             // 
-            Height_textBox.BackColor = SystemColors.Desktop;
+            Height_textBox.BackColor = Color.White;
             Height_textBox.BorderStyle = BorderStyle.None;
             Height_textBox.Enabled = false;
             Height_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1782,7 +1782,7 @@ namespace main.contents
             // 
             // Width_textBox
             // 
-            Width_textBox.BackColor = SystemColors.Desktop;
+            Width_textBox.BackColor = Color.White;
             Width_textBox.BorderStyle = BorderStyle.None;
             Width_textBox.Enabled = false;
             Width_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
