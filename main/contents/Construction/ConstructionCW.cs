@@ -46,7 +46,7 @@ namespace main.contents
             {
                 this.DialogResult = DialogResult.OK;
                 this.Hide();
-                Program.getMenuForm().DoLoadForm(29, OnLoadListProc);
+                Program.getMenuForm().DoLoadForm(30, OnLoadListProc);
             }
         }
 
@@ -114,7 +114,7 @@ namespace main.contents
                 + "'", "번호");
             this.DialogResult = DialogResult.OK;
             this.Hide();
-            Program.getMenuForm().DoLoadForm(29, OnLoadListProc);
+            Program.getMenuForm().DoLoadForm(30, OnLoadListProc);
         }
 
 
