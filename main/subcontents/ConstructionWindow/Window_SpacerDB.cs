@@ -41,6 +41,8 @@ namespace main.subcontents
             UserDBType3_comboBox.Items.Add("금속_단열바");
             UserDBType3_comboBox.SelectedItem = FrameMaterial;
             UserDBType3_comboBox.Enabled = false;
+            UserNum = Program.UTIL.CreateNum("User_WindowSpacer", "번호", "UGS_0");
+            UserNum_textBox.Text = UserNum;
         }
         void load_table_SpacerDB(String SingleDoubleType, String FrameMaterial)
         {
@@ -83,8 +85,6 @@ namespace main.subcontents
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserNum = Program.UTIL.CreateNum("User_WindowSpacer", "번호", "UGS_0");
-            UserNum_textBox.Text = UserNum;
             UserDBName = UserDBName_textBox.Text;
         }
 

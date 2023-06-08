@@ -425,6 +425,63 @@ namespace main
             }
         }
 
+        public void CopyValue(type dbType, string table, string columns, string values, string key_columns, string Copyconditions = "")
+        {            
+                    setValue(dbType, table, columns, values, key_columns);              
+        }
+
+        public bool CopyValue2(type dbType, string table, string conditions = "",string Num="")
+        {
+
+            if (conditions != "")
+            {
+                string[][] res = querySQL(dbType, "PRAGMA table_info(" + table + ")");
+
+
+                if (res.Length > 0)
+                {
+                    int i = 0;
+                    string columns = "";
+
+
+                    while (++i < res.Length)
+                    {
+                        if (columns != "") columns += ",";
+                        columns += res[i][1];
+                    }
+
+                    if (columns != "")
+                    {
+                        try
+                        {
+                            SQLiteCommand cmd = new SQLiteCommand();
+
+                            switch (dbType)
+                            {
+                                case type.ProjDB:
+                                    cmd.Connection = projDB;
+                                    break;
+                                case type.CalcDB:
+                                    cmd.Connection = calcDB;
+                                    break;
+                            }
+
+                            cmd.CommandText = "INSERT INTO " + table + " (" + columns + ") SELECT " + columns + " FROM " + table + " WHERE " + conditions + " LIMIT 1";
+
+                            cmd.ExecuteNonQuery();
+                            string[][] res1 = Program.DB.querySQL(DB.type.ProjDB, "SELECT MAX(ID) AS id FROM ConstructionWindow");
+
+                            Program.DB.executeSQL(DB.type.ProjDB, "UPDATE ConstructionWindow SET 번호='" + Num + "' WHERE  ID = " + res1[0][0]);
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         public void deleteValue(type dbType, string table, string conditions = "")
         {
             try

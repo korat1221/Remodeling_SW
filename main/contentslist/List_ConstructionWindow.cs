@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using System;
 using System.Collections;
 using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
@@ -9,7 +10,7 @@ namespace main.contentslist
     public partial class List_ConstructionWindow : Form
     {
         static String currentID = "";
-        static String inEditing  = "Add";
+        static String inEditing = "Add";
 
         int Num;
         String WinNum;
@@ -28,6 +29,7 @@ namespace main.contentslist
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             Program.DB.initTable(DB.type.ProjDB, "ConstructionWindow");
             Create_Table();
+
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -40,6 +42,9 @@ namespace main.contentslist
         private void Add_button_Click(object sender, EventArgs e)
         {
             WinNum = Program.UTIL.CreateNum("ConstructionWindow", "번호", "WIN");
+
+            Program.getMenuForm().ResetForm(6);
+
             Load_form(WinNum, "Add");
         }
 
@@ -52,8 +57,9 @@ namespace main.contentslist
                 f.LoadData(currentID);
 
             }
-            else if(inEditing =="Copy")
+            else if (inEditing == "Copy")
             {
+                f.LoadData(currentID);
                 f.CopyForm(currentID);
             }
             else
@@ -101,7 +107,7 @@ namespace main.contentslist
             for (int n = 0; n < List.Length; n++)
             {
                 WindowList.Rows.Add(List[n][0], List[n][1], List[n][2], String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])), String.Format("{0:F2}", Convert.ToDouble(List[n][5])), String.Format("{0:F2}", Convert.ToDouble(List[n][6])), List[n][7]);
-                mainMenu.Add(new { text = List[n][1], id = "{\\\"formID\\\":6,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":6,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             }
             dataGridView1.DataSource = WindowList;
             CountDB = List.Length;
@@ -162,10 +168,22 @@ namespace main.contentslist
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Copy_button_Click(object sender, EventArgs e)
         {
             WinNum = Program.UTIL.CreateNum("ConstructionWindow", "번호", "WIN");
-            Load_form(WinNum, "Copy");
+            int k = dataGridView1.CurrentCell.RowIndex;
+            if (k > -1)
+            {
+                String Copy_WinNum = dataGridView1.Rows[k].Cells[1].Value.ToString();
+                Program.DB.CopyValue2(DB.type.ProjDB, "ConstructionWindow", "번호 ='" + Copy_WinNum + "'",WinNum);              
+                Load_form(WinNum, "Copy");
+                load_List();              
+            }
+        }
+
+        public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
+        {
+            load_List();
         }
     }
 }

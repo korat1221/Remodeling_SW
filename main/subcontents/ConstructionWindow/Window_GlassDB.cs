@@ -40,7 +40,8 @@ namespace main.subcontents
             LE_CL_V_comboBox.Items.Add("LE");
             LE_CL_V_comboBox.Items.Add("V");
             LE_CL_V_comboBox.SelectedIndex = 0;
-
+            UserNum = Program.UTIL.CreateNum("User_Glass", "번호", "UWG_0");
+            UserNum_textBox.Text = UserNum;
         }
         void load_table_GlassDB()
         {
@@ -87,10 +88,7 @@ namespace main.subcontents
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserNum = Program.UTIL.CreateNum("User_Glass", "번호", "UWG_0");
-            UserNum_textBox.Text = UserNum;
             UserDBName = UserDBName_textBox.Text;
-
         }
 
         private void UserDB_Manufacture_textBox_TextChanged(object sender, EventArgs e)

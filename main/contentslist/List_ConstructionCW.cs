@@ -49,7 +49,7 @@ namespace main.contentslist
 
         public static bool OnLoadProc(Form form)
         {
-           ConstructionCW  f= (ConstructionCW)form;
+            ConstructionCW f = (ConstructionCW)form;
 
             if (inEditing == "Edit")
             {
@@ -166,7 +166,7 @@ namespace main.contentslist
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Copy_button_Click(object sender, EventArgs e)
         {
             CWNum = Program.UTIL.CreateNum("ConstructionCW", "번호", "WIN");
             Load_form(CWNum, "Copy");

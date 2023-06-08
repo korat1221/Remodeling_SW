@@ -28,6 +28,8 @@ namespace main.subcontents
         public Window_FrameDB(String FrameType, String SingleDoubleType)
         {
             InitializeComponent();
+            UserNum = Program.UTIL.CreateNum("User_WindowFrame", "번호", "UWF_0");
+            UserNum_textBox.Text = UserNum;
             this.FrameType = FrameType;
             this.SingleDoubleType = SingleDoubleType;
             load_table_FrameDB();
@@ -36,9 +38,9 @@ namespace main.subcontents
             UserDB_FrameType_comboBox.Text = this.FrameType;
             UserDB_FrameType_comboBox.Enabled = false;
             //프레임 형태 콤보박스 
-            Program.UTIL.FillComboBox_ByCategory(UserDB_FrameShape_comboBox, "창호", "형태", "1");
+            Program.UTIL.FillComboBox(UserDB_FrameShape_comboBox, "창호", "형태", "1");
             //프레임 재질 콤보박스 
-            Program.UTIL.FillComboBox_ByCategory(UserDB_FrameMaterial_comboBox, "창호", "프레임재질", "1");
+            Program.UTIL.FillComboBox(UserDB_FrameMaterial_comboBox, "창호", "프레임재질", "1");
             //유리 콤보박스
             try
             {
@@ -100,8 +102,7 @@ namespace main.subcontents
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserNum = Program.UTIL.CreateNum("User_WindowFrame", "번호", "UWF_0");
-            UserNum_textBox.Text = UserNum;
+
             UserDBName = UserDBName_textBox.Text;
         }
 
@@ -116,7 +117,7 @@ namespace main.subcontents
         }
         private void UserDB_FrameShape_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UserDB_FrameShape = Program.UTIL.SelectedItem_ByComboBox(UserDB_FrameShape_comboBox);
+            UserDB_FrameShape = UserDB_FrameShape_comboBox.SelectedItem.ToString();
             UserDB_FrameShape_textBox.Text = UserDB_FrameShape;
             Calc_Uf();
             Load_FrameImage();
@@ -124,8 +125,8 @@ namespace main.subcontents
 
         private void UserDB_FrameMaterial_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UserDB_FrameMaterial_orgin = Program.UTIL.SelectedItem_ByComboBox(UserDB_FrameMaterial_comboBox);
-            UserDB_FrameMaterial = Program.UTIL.SelectedItem_ByComboBox(UserDB_FrameMaterial_comboBox);
+            UserDB_FrameMaterial_orgin = UserDB_FrameMaterial_comboBox.SelectedItem.ToString();
+            UserDB_FrameMaterial = UserDB_FrameMaterial_comboBox.SelectedItem.ToString();
             switch (UserDB_FrameMaterial)
             {
                 case "플라스틱":

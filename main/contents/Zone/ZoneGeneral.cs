@@ -37,16 +37,16 @@ namespace main.contents
 
             //콤보박스 리스트 생성 
             //존 환기방식 콤보박스
-            Program.UTIL.FillComboBox_ByCategory(AHU_comboBox, "존일반", "환기방식", "1");
+            Program.UTIL.FillComboBox(AHU_comboBox, "존일반", "환기방식", "1");
             //건물대상 콤보박스
-            Program.UTIL.FillComboBox_ByCategory(BuildingCategory_comboBox, "존일반", "건물용도", "1");
+            Program.UTIL.FillComboBox_Parents(BuildingCategory_comboBox, "존일반", "건물용도", "1");
             //존 사용 시작/종료 콤보박스 
-            Program.UTIL.FillComboBox_ByCategory(StartTime_comboBox, "존일반", "이용일 시작 및 종료시간", "8");
-            Program.UTIL.FillComboBox_ByCategory(EndTime_comboBox, "존일반", "이용일 시작 및 종료시간", "19");
+            Program.UTIL.FillComboBox(StartTime_comboBox, "존일반", "이용일 시작 및 종료시간", "8");
+            Program.UTIL.FillComboBox(EndTime_comboBox, "존일반", "이용일 시작 및 종료시간", "19");
             //주간 이용일수 콤보박스 
-            Program.UTIL.FillComboBox_ByCategory(WeekUseDay_comboBox, "존일반", "주간이용일", "1");
+            Program.UTIL.FillComboBox(WeekUseDay_comboBox, "존일반", "주간이용일", "1");
             //기기밀도 콤보박스 
-            Program.UTIL.FillComboBox_ByCategory(EquipIHG_comboBox, "존일반", "밀도", "1");
+            Program.UTIL.FillComboBox(EquipIHG_comboBox, "존일반", "밀도", "1");
 
 
          }
@@ -94,7 +94,8 @@ namespace main.contents
         //주간이용일수 선택 시 연간이용일수 계산
         private void WeekUseDay_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            WeekUseDay = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(WeekUseDay_comboBox, "주간이용일수", "이용일수", "일수"));
+            string[][] res = Program.DB.getValue(DB.type.BaseDB, "주간이용일수", "일수", "이용일수" + " = '" + WeekUseDay_comboBox.SelectedItem.ToString() + "' ");
+            WeekUseDay = Convert.ToDouble(res[0][0].ToString());
             AnnualUseDay = Convert.ToDouble(Program.UTIL.GetValue2_BySelectComboBox(WeekUseDay_comboBox, "이용일수", "주간일수", "월='연간'", "이용일수"));
             AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
 
@@ -135,18 +136,13 @@ namespace main.contents
         //시작 및 종료시간에 따라 시간 계산 
         private void StartTime_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            DataRowView? End_item = EndTime_comboBox.SelectedItem as DataRowView;
-            DataRowView? Start_item = StartTime_comboBox.SelectedItem as DataRowView;
-            StartTime = Program.UTIL.SelectedItem_ByComboBox(StartTime_comboBox);
+            StartTime = StartTime_comboBox.SelectedItem.ToString(); ;
             TimeSpan ts;
-            StartTime_image_textBox.Text = Start_item.Row.ItemArray[0].ToString();
-
-            if (End_item != null && End_item.Row.ItemArray.Length >= 3 && Start_item != null && Start_item.Row.ItemArray.Length >= 3)
-            {
-                if (StartTime_comboBox.SelectedItem != null)
+            StartTime_image_textBox.Text = StartTime;
+          
+                if (StartTime_comboBox.SelectedItem != null&& EndTime_comboBox.SelectedItem != null)
                 {
-                    ts = DateTime.Parse(End_item.Row.ItemArray[0].ToString()) - DateTime.Parse(Start_item.Row.ItemArray[0].ToString());
+                    ts = DateTime.Parse(EndTime) - DateTime.Parse(StartTime);
                     if (Double.Parse(ts.Hours.ToString()) >= 0)
                     { UseTime = Double.Parse(ts.Hours.ToString()); }
                     else
@@ -159,24 +155,18 @@ namespace main.contents
                     AHUTime_textBox.Text = AHUTime.ToString();
                     PersonIHG_Cal(PersonIHG, UseTime);
                 }
-            }
-
         }
         //시작 및 종료시간에 따라 시간 계산  
         private void EndTime_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            DataRowView? End_item = EndTime_comboBox.SelectedItem as DataRowView;
-            DataRowView? Start_item = StartTime_comboBox.SelectedItem as DataRowView;
-            EndTime = Program.UTIL.SelectedItem_ByComboBox(EndTime_comboBox);
+            EndTime = EndTime_comboBox.SelectedItem.ToString();
             TimeSpan ts;
-            EndTime_image_textBox.Text = End_item.Row.ItemArray[0].ToString();
+            EndTime_image_textBox.Text = EndTime;
 
-            if (End_item != null && End_item.Row.ItemArray.Length >= 3 && Start_item != null && Start_item.Row.ItemArray.Length >= 3)
-            {
-                if (StartTime_comboBox.SelectedItem != null)
+           
+                if (StartTime_comboBox.SelectedItem != null && EndTime_comboBox.SelectedItem != null)
                 {
-                    ts = DateTime.Parse(End_item.Row.ItemArray[0].ToString()) - DateTime.Parse(Start_item.Row.ItemArray[0].ToString());
+                    ts = DateTime.Parse(EndTime) - DateTime.Parse(StartTime);
                     if (Double.Parse(ts.Hours.ToString()) >= 0)
                     { UseTime = Double.Parse(ts.Hours.ToString()); }
                     else
@@ -188,7 +178,6 @@ namespace main.contents
                     HCTime_textBox.Text = HCTime.ToString();
                     AHUTime_textBox.Text = AHUTime.ToString();
                     PersonIHG_Cal(PersonIHG, UseTime);
-                }
             }
         }
 
@@ -239,7 +228,7 @@ namespace main.contents
         }
         private void EquipIHG_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EquipIHG_index = Program.UTIL.SelectedItem_ByComboBox(EquipIHG_comboBox);
+            EquipIHG_index = EquipIHG_comboBox.SelectedItem.ToString();
             EquipIHG_Cal(EquipIHG_Time);
         }
 

@@ -143,7 +143,7 @@
             dataGridViewCellStyle2.SelectionForeColor = Color.Black;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             Glass_dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            Glass_dataGridView.Enabled = false;
+            Glass_dataGridView.ReadOnly = true;
             Glass_dataGridView.Location = new Point(0, 178);
             Glass_dataGridView.Name = "Glass_dataGridView";
             Glass_dataGridView.ReadOnly = true;

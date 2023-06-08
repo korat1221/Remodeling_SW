@@ -27,7 +27,6 @@ namespace main
 
             return Value;
         }
-
         public String GetValue_BySelectComboBox(ComboBox comboBox, String 테이블명, String 선택컬럼명, String 찾는컬럼명)
         {
             String Value = "";
@@ -41,6 +40,7 @@ namespace main
 
             return Value;
         }
+
       
         public String GetValue2_BySelectComboBox(ComboBox comboBox, String 테이블명, String 선택컬럼명,String 다른조건문, String 찾는컬럼명)
         {
@@ -48,22 +48,47 @@ namespace main
             String Value = "";
             DataRowView? item = comboBox.SelectedItem as DataRowView;
 
-               if (item != null && item.Row.ItemArray.Length >= 3)
-             {
-              string[][] res = Program.DB.getValue(DB.type.BaseDB, 테이블명, 찾는컬럼명, 선택컬럼명 +"= '" + item.Row.ItemArray[0].ToString() + "' AND "+다른조건문);
+              string[][] res = Program.DB.getValue(DB.type.BaseDB, 테이블명, 찾는컬럼명, 선택컬럼명 +"= '" + comboBox.SelectedItem.ToString() + "' AND "+다른조건문);
                 Value = res[0][0].ToString();
-            }
+         
 
             return Value;
         }
 
-        public void FillComboBox_ByCategory(ComboBox comboBox, string cate, string subcate, string def_value = "")
+        public void FillComboBox(ComboBox comboBox, string cate, string subcate, string def_value = "")
+        {
+            List<String> List = new List<String>();
+
+            string[][] res = Program.DB.querySQL(DB.type.BaseDB, "SELECT a.이름, a.값, a.아이디 FROM 인덱스 AS a INNER JOIN 인덱스분류 AS b ON a.종류=b.아이디 WHERE b.종류='" + cate + "' AND b.이름='" + subcate + "'");
+
+            int i = -1;
+            while (++i < res.Length)
+            {
+                List.Add(res[i][0]);
+            }
+            string[] ComboArray = List.ToArray();
+            comboBox.Items.Clear();
+            comboBox.Items.AddRange(ComboArray);
+            if (def_value != "")
+            {
+                for (i = 0; i < comboBox.Items.Count; i++)
+                {
+                    if (ComboArray.Length > 1 && i+1 == Convert.ToInt32(def_value))
+                    {
+                        comboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+        
+         public void FillComboBox_Parents(ComboBox comboBox, string cate, string subcate, string def_value = "")
         {
             string[][] res = Program.DB.querySQL(DB.type.BaseDB, "SELECT a.이름, a.값, a.아이디 FROM 인덱스 AS a INNER JOIN 인덱스분류 AS b ON a.종류=b.아이디 WHERE b.종류='" + cate + "' AND b.이름='" + subcate + "'");
 
-            FillComboBox(comboBox, res, def_value);
+            FillComboBox_Category(comboBox, res, def_value);
         }
-
+         
         public void FillComboBox_ByComboBox(ComboBox comboBox, ComboBox comboBox0, string def_value = "")
         {
             DataRowView? item = comboBox0.SelectedItem as DataRowView;
@@ -76,13 +101,12 @@ namespace main
                 {
                     string[][] res = Program.DB.querySQL(DB.type.BaseDB, "SELECT 이름, 값, 아이디 FROM 인덱스 WHERE 부모아이디=" + id);
 
-                    FillComboBox(comboBox, res, def_value);
+                    FillComboBox_Category(comboBox, res, def_value);
                 }
 
             }
         }
-
-        public void FillComboBox(ComboBox comboBox, string[][] data, string def_value = "")
+        public void FillComboBox_Category(ComboBox comboBox, string[][] data, string def_value = "")
         {
             int i = -1;
             DataTable sources = new DataTable();
@@ -115,6 +139,20 @@ namespace main
                         comboBox.SelectedIndex = i;
                         break;
                     }
+                }
+            }
+        }
+        public void SelectComboBox(ComboBox comboBox, string text)
+        {
+            int i = -1;
+
+            for (i = 0; i < comboBox.Items.Count; i++)
+            {
+                var arr = ((DataRowView)comboBox.Items[i]).Row.ItemArray;
+                if (arr.Length > 1 && arr[0].ToString() == text)
+                {
+                    comboBox.SelectedIndex = i;
+                    return;
                 }
             }
         }

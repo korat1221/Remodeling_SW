@@ -42,11 +42,11 @@ namespace main.contents
 
 
             //직접간접 콤보박스
-            Program.UTIL.FillComboBox_ByCategory(DiIndi_comboBox, "창호", "실외조건", "1");
+            Program.UTIL.FillComboBox(DiIndi_comboBox, "창호", "실외조건", "1");
             //프레임종류 콤보박스
-            Program.UTIL.FillComboBox_ByCategory(Frame_comboBox, "창호", "프레임시스템", "1");
+            Program.UTIL.FillComboBox(Frame_comboBox, "창호", "프레임시스템", "1");
             //설치위치 콤보박스
-            Program.UTIL.FillComboBox_ByCategory(Install_comboBox, "창호", "구조", "1");
+            Program.UTIL.FillComboBox(Install_comboBox, "창호", "구조", "1");
 
 
         }
@@ -205,7 +205,7 @@ namespace main.contents
 
         private void AdditionalWindow_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            OldWindow = Program.UTIL.SelectedItem_ByComboBox(AdditionalWindow_comboBox);
+            OldWindow = AdditionalWindow_comboBox.SelectedItem.ToString(); ;
             Calc_AdditionalWindow();
         }
 
@@ -383,7 +383,7 @@ namespace main.contents
 
         private void DiIndil_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DiIndi = Program.UTIL.SelectedItem_ByComboBox(DiIndi_comboBox);
+            DiIndi = DiIndi_comboBox.SelectedItem.ToString();
             Rule_Uw();
             Calc_dUinst();
         }
@@ -434,7 +434,7 @@ namespace main.contents
 
         private void Frame_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FrameType = Program.UTIL.SelectedItem_ByComboBox(Frame_comboBox);
+            FrameType = Frame_comboBox.SelectedItem.ToString();
             switch (FrameType)
             {
                 case "단창_SL":
@@ -686,7 +686,7 @@ namespace main.contents
 
         private void Install_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            InstallType = Program.UTIL.SelectedItem_ByComboBox(Install_comboBox);
+            InstallType = Install_comboBox.SelectedItem.ToString();
 
             //설치 유형 다시 선택했을 경우 
             try
@@ -941,8 +941,11 @@ namespace main.contents
                 Uw_comboBox.SelectedItem = Load[0][4];
                 DiIndi_comboBox.SelectedItem = Load[0][5];
                 Frame_comboBox.SelectedItem = Load[0][6];
+                check_FrameType = Load[0][6];
                 SingleDoubleType = Load[0][7];
+                check_SingleDoubleType = Load[0][7];
                 FrameMaterial = Load[0][8];
+                check_FrameMaterial = Load[0][8];
                 FrameMaterial_textBox.Text = Load[0][8];
                 FrameName = Load[0][9];
                 FrameName_textBox.Text = Load[0][9];
@@ -950,10 +953,14 @@ namespace main.contents
                 GlassName_textBox.Text = Load[0][10];
                 SpacerName = Load[0][11];
                 SpacerName_textBox.Text = Load[0][11];
+                check_InstallType = Load[0][12];
                 Install_comboBox.SelectedItem = Load[0][12];
+               // Program.UTIL.SelectComboBox(Install_comboBox, Load[0][12]);
+                //                Install_comboBox.SelectedText = Load[0][12];
                 InstallName = Load[0][13];
                 Install_textBox.Text = Load[0][13];
                 LE_CL_V = Load[0][14];
+                check_LE_CL_V = Load[0][14];
 
                 Ug = Convert.ToDouble(Load[0][15]);
                 Ug_textBox.Text = Load[0][15];
@@ -1028,6 +1035,16 @@ namespace main.contents
                 Lg_fix_textBox.Text = String.Format("{0:F2}", Lg_fix);
                 Lg_open = Convert.ToDouble(Load[0][41]);
                 Lg_open_textBox.Text = String.Format("{0:F2}", Lg_open);
+
+                string[][] Image1 = Program.DB.getValue(DB.type.BaseDB, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
+                WindowType_pictureBox.Load(Program.gPath + Image1[0][0]);
+                WindowType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                string[][] Image2 = Program.DB.getValue(DB.type.BaseDB, "창호프레임이미지", "이미지", "유형1 = '" + FrameType + "' AND 유형2 = '기본형' AND 재료 = '" + FrameMaterial + "'");
+                WindowFrame_pictureBox.Load(Program.gPath + Image2[0][0]);
+                WindowFrame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                string[][] Image3 = Program.DB.getValue(DB.type.BaseDB, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");
+                WindowInstall_pictureBox.Load(Program.gPath + Image3[0][0]);
+                WindowInstall_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
             catch { }
 
@@ -1036,11 +1053,6 @@ namespace main.contents
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {
             WinNum_textBox.Text = ID;
-            if (Name_textBox.Text != "")
-            {
-                WindowName = Name_textBox.Text + "_복사";
-                Name_textBox.Text = WindowName;
-            }
         }
 
         public void CopyForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
@@ -1050,6 +1062,7 @@ namespace main.contents
             {
                 WindowName = Name_textBox.Text + "_복사";
                 Name_textBox.Text = WindowName;
+                Save();
             }
 
         }

@@ -2,6 +2,7 @@
 using main.contents.Building;
 using main.contentslist;
 using Microsoft.Web.WebView2.Core;
+using System.Windows.Forms;
 
 namespace main
 {
@@ -40,7 +41,7 @@ namespace main
             ReportExisting,
             ReportRemodeling,
             FormDebug,
-            List_ConstructionWindow,
+            List_ConstructionWindow, 
 
         }
           Form[] forms = new Form[] { new General(), new EnergyUse(), 
@@ -106,6 +107,12 @@ namespace main
 
                 f.LoadData(formParam.ID);
             }
+            else if (formParam.formID == 29)
+            {
+                List_ConstructionWindow f = (List_ConstructionWindow)form;
+
+                f.LoadData(formParam.ID);
+            }
             return true;
         }
 
@@ -128,8 +135,18 @@ namespace main
         void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             scriptable = true;
+            int i = -1;
+            while (++i < forms.Length)
+            {
+                if (i == 29)
+                {
+                    List_ConstructionWindow f = (List_ConstructionWindow)forms[i];
+
+                    f.LoadData("");
+                }
+            }
         }
-       public void DoLoadForm(int idx, OnOpenProc proc = null)
+        public void DoLoadForm(int idx, OnOpenProc proc = null)
         {
             int i = -1;
             while (++i < forms.Length)
@@ -163,6 +180,23 @@ namespace main
             if (scriptable)
             {
                 webView21.CoreWebView2.ExecuteScriptAsync(script);
+            }
+        }
+        public void ResetForm(int idx)
+        {
+            if (idx == 6)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new ConstructionWindow();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
             }
         }
     }

@@ -48,7 +48,9 @@ namespace main.subcontents
             UserDBType3_comboBox.SelectedItem = SingleDoubleType;
             UserDBType3_comboBox.Enabled = false;
             //사용자DB 구분4 콤보박스
-            Program.UTIL.FillComboBox_ByCategory(UserDBType4_comboBox, "창호", "설치위치", "1");
+            Program.UTIL.FillComboBox(UserDBType4_comboBox, "창호", "설치위치", "1");
+            UserNum = Program.UTIL.CreateNum("User_WindowInstall", "번호", "UWS_0");
+            UserNum_textBox.Text = UserNum;
         }
         public Window_InstallDB(String InstallType)
         {
@@ -71,7 +73,7 @@ namespace main.subcontents
             UserDBType3_comboBox.Items.Add("이중창");
             UserDBType2_comboBox.SelectedIndex = 0;
             //사용자DB 구분4 콤보박스
-            Program.UTIL.FillComboBox_ByCategory(UserDBType4_comboBox, "창호", "설치위치", "1");
+            Program.UTIL.FillComboBox(UserDBType4_comboBox, "창호", "설치위치", "1");
         }
 
         void load_table_InstallDB()
@@ -167,8 +169,6 @@ namespace main.subcontents
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserNum = Program.UTIL.CreateNum("User_WindowInstall", "번호", "UWS_0");
-            UserNum_textBox.Text = UserNum;
             UserDBName = UserDBName_textBox.Text;
         }
 
@@ -189,7 +189,7 @@ namespace main.subcontents
 
         private void UserDBType4_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UserDBType4 = Program.UTIL.SelectedItem_ByComboBox(UserDBType4_comboBox);
+            UserDBType4 = UserDBType4_comboBox.SelectedItem.ToString();
         }
 
         private void UserDB_Psi_InstallTop_TextChanged(object sender, EventArgs e)

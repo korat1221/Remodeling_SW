@@ -32,6 +32,8 @@ namespace main.subcontents
             load_table_GlassDB();
             load_Glass_comboBox();
             load_table_DoubleGlassDB();
+            UserNum = Program.UTIL.CreateNum("User_DoubleGlass", "번호", "DWG_0");
+            UserNum_textBox.Text = UserNum;
         }
         void load_table_GlassDB()
         {
@@ -86,8 +88,6 @@ namespace main.subcontents
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserNum = Program.UTIL.CreateNum("User_DoubleGlass", "번호", "DWG_0");
-            UserNum_textBox.Text = UserNum;
             UserDBName = UserDBName_textBox.Text;
 
         }
