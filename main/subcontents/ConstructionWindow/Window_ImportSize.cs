@@ -16,10 +16,13 @@ namespace main.subcontents
     {
         public double Count_SizeInfo;
         ArrayList SelectRow = new ArrayList();
+        String 상위창호기호, 상위창호명칭;
 
-        public Window_ImportSize()
+        public Window_ImportSize(String WinNum, String Name)
         {
             InitializeComponent();
+            this.상위창호기호 = WinNum;
+            this.상위창호명칭 = Name;
         }
 
         private void CSVImport_button_Click(object sender, EventArgs e)
@@ -53,7 +56,7 @@ namespace main.subcontents
                                 Program.DB.setValue(DB.type.CalcDB, "Import_WindowSize", "창호명칭,창호면적,창호너비,창호높이,고정창유리면적,개폐창유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정창유리둘레길이,개폐창유리둘레길이",
                                 "'" + token[0] + "','" + token[1] + "','" + token[2] + "','" + token[3] + "','"
                                 + token[4] + "','" + token[5] + "','" + token[6] + "','" + token[7] + "','" + token[8] + "','"
-                                + token[9] + "','" + token[10] + "'", "창호 명칭");
+                                + token[9] + "','" + token[10] + "'", "창호명칭");
                             }
                             n++;
                         }
@@ -113,15 +116,27 @@ namespace main.subcontents
         {
             SelectRow.Clear();
             SelectCheckBox();
+            String 명칭;
+            String 번호;
 
-            Program.DB.deleteTable(DB.type.CalcDB, "Select_WindowSize");
+            String[][] Size = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호", "상위창호번호 = '" + 상위창호기호 + "'");
+            if (Size.Length > 0)
+            {
+                Program.DB.deleteValue(DB.type.ProjDB, "SubWindow", "상위창호번호 = '" + 상위창호기호 + "'");
+            }
+            else
+            {
+            }
+
             for (int n = 0; n < SelectRow.Count; n++)
             {
                 DataGridViewRow row = Size_dataGridView.Rows[Convert.ToInt32(SelectRow[n])];
-                Program.DB.setValue(DB.type.CalcDB, "Select_WindowSize", "창호명칭,창호면적,창호너비,창호높이,고정창유리면적,개폐창유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정창유리둘레길이,개폐창유리둘레길이",
-                "'" + row.Cells[1].Value.ToString() + "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','"
+                번호 = 상위창호기호.ToString() + "_" + (n + 1).ToString();
+                명칭 = 상위창호명칭 + "_" + row.Cells[1].Value.ToString();                
+                Program.DB.setValue(DB.type.ProjDB, "SubWindow", "번호,명칭,상위창호번호,창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이",
+                "'" +번호 + "','" + 명칭 + "','" + 상위창호기호+ "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','"
                 + row.Cells[5].Value.ToString() + "','" + row.Cells[6].Value.ToString() + "','" + row.Cells[7].Value.ToString() + "','" + row.Cells[8].Value.ToString() + "','" + row.Cells[9].Value.ToString() + "','"
-                + row.Cells[10].Value.ToString() + "','" + row.Cells[11].Value.ToString() + "'", "창호명칭");
+                + row.Cells[10].Value.ToString() + "','" + row.Cells[11].Value.ToString() + "'", "사이즈명칭");
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();

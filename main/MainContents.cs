@@ -1,6 +1,7 @@
 ﻿using main.contents;
 using main.contents.Building;
 using main.contentslist;
+using main.subcontents.ConstructionWindow;
 using Microsoft.Web.WebView2.Core;
 using System.Windows.Forms;
 
@@ -41,7 +42,8 @@ namespace main
             ReportExisting,
             ReportRemodeling,
             FormDebug,
-            List_ConstructionWindow, 
+            List_ConstructionWindow,
+            SubWindow,
 
         }
           Form[] forms = new Form[] { new General(), new EnergyUse(), 
@@ -52,7 +54,7 @@ namespace main
             new PV(), new FuelCell(), new WindPower(), new SupplyRatio(), new EIndependenceRate(),
             new ReportExisting(), new ReportRemodeling(),
             new FormDebug(),
-            new List_ConstructionWindow(),new List_ConstructionCW()};
+            new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow()};
         bool scriptable = false;
         public class FormParam
         {

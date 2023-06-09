@@ -125,47 +125,6 @@ namespace main.subcontents
         }
 
 
-        //데이터그리드뷰 체크박스 선택 시
-        private void Install_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                Install_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                SelectRow = e.RowIndex;
-                DataGridViewRow row = Install_dataGridView.Rows[SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < Count_InstallDB; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        Install_dataGridView.Rows[k].Cells[0].Value = false;
-                        row2 = Install_dataGridView.Rows[k];
-                        row2.DefaultCellStyle.BackColor = Color.White;
-                        row2.DefaultCellStyle.ForeColor = Color.Black;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = Color.Black;
-                        row = Install_dataGridView.Rows[e.RowIndex];
-                    }
-                }
-            }
-        }
-
-        private void Save_button_Click(object sender, EventArgs e)
-        {
-            DataGridViewRow row = Install_dataGridView.Rows[SelectRow];
-            for (int i = 1; i < row.Cells.Count - 2; i++)
-            {
-                Select_WindowInstall[i] = row.Cells[i + 2].Value.ToString();
-            }
-            Select_WindowInstall[0] = row.Cells[1].Value.ToString();
-
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-        }
-
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -242,6 +201,46 @@ namespace main.subcontents
                 }
             }
 
+        }
+        //데이터그리드뷰 체크박스 선택 시
+        private void Install_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                Install_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                SelectRow = e.RowIndex;
+                DataGridViewRow row = Install_dataGridView.Rows[SelectRow];
+                DataGridViewRow row2;
+                for (int k = 0; k < Count_InstallDB; k++)
+                {
+                    if (k != row.Index)
+                    {
+                        Install_dataGridView.Rows[k].Cells[0].Value = false;
+                        row2 = Install_dataGridView.Rows[k];
+                        row2.DefaultCellStyle.BackColor = Color.White;
+                        row2.DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                        row = Install_dataGridView.Rows[e.RowIndex];
+                    }
+                }
+            }
+
+        }     
+
+        private void Save_button_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = Install_dataGridView.Rows[SelectRow];
+            for (int i = 1; i < row.Cells.Count - 2; i++)
+            {
+                 Select_WindowInstall[i] = row.Cells[i + 2].Value.ToString();
+            }
+            Select_WindowInstall[0] = row.Cells[1].Value.ToString();
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }

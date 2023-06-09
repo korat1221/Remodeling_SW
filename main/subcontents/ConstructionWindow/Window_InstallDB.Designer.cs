@@ -222,6 +222,7 @@
             Install_dataGridView.RowTemplate.Height = 25;
             Install_dataGridView.Size = new Size(944, 193);
             Install_dataGridView.TabIndex = 97;
+            Install_dataGridView.CellContentClick += Install_dataGridView_CellContentClick;
             // 
             // label12
             // 
