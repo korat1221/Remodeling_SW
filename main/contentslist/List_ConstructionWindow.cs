@@ -192,9 +192,19 @@ namespace main.contentslist
             {
                 if (k > -1)
                 {
-                    String Delete_WinNum = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                    Program.DB.deleteValue(DB.type.ProjDB, "ConstructionWindow", "번호 ='" + Delete_WinNum + "'");
-                    load_List();
+                    if (dataGridView1.Rows[k].Cells[1].Value.ToString() != "")
+                    {
+                        String Delete_WinNum = dataGridView1.Rows[k].Cells[1].Value.ToString();
+                        Program.DB.deleteValue(DB.type.ProjDB, "ConstructionWindow", "번호 ='" + Delete_WinNum + "'");
+                        load_List();
+                    }
+                    else
+                    {
+                        String Delete_WinNum = dataGridView1.Rows[k].Cells[2].Value.ToString();
+                        Program.DB.deleteValue(DB.type.ProjDB, "SubWindow", "번호 ='" + Delete_WinNum + "'");
+                        load_List();
+
+                    }
                 }
             }
 

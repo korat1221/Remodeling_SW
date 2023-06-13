@@ -115,7 +115,6 @@ namespace main.contents
                     Uw_comboBox.Items.Add("진단");
                     AdditionalWindow_textBox.Visible = false;
                     AdditionalWindow_comboBox.Visible = false;
-                    Load_AdditionalWindow(Type);
                     break;
 
                 case "신규":
@@ -123,14 +122,13 @@ namespace main.contents
                     Uw_comboBox.Items.Add("법규");
                     AdditionalWindow_textBox.Visible = false;
                     AdditionalWindow_comboBox.Visible = false;
-                    Load_AdditionalWindow(Type);
                     break;
 
                 case "철거 후 신규":
                     Uw_comboBox.Items.Add("계산");
                     Uw_comboBox.Items.Add("법규");
-                    AdditionalWindow_textBox.Visible = false;
-                    AdditionalWindow_comboBox.Visible = false;
+                    AdditionalWindow_textBox.Visible = true;
+                    AdditionalWindow_comboBox.Visible = true;
                     Load_AdditionalWindow(Type);
                     break; ;
 
@@ -172,6 +170,12 @@ namespace main.contents
                 Table = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "창호명칭", def_value);
 
             }
+            else if (Type == "철거 후 신규")
+            {
+                def_value = "Type = '기존창호'";
+                Table = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "창호명칭", def_value);
+
+            }
             else
             {
                 def_value = "Type = ''";
@@ -207,7 +211,7 @@ namespace main.contents
 
         private void AdditionalWindow_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            OldWindow = AdditionalWindow_comboBox.SelectedItem.ToString(); ;
+            OldWindow = AdditionalWindow_comboBox.SelectedItem.ToString();
             Calc_g_AdditionalWindow();
         }
 
@@ -410,11 +414,21 @@ namespace main.contents
         }
         private void ImportSize()
         {
+            Sub_Area.Clear();
+            Sub_Width.Clear();
+            Sub_Height.Clear();
+            Sub_Ag_fix.Clear();
+            Sub_Ag_open.Clear();
+            Sub_Af_open.Clear();
+            Sub_Af_fix.Clear();
+            Sub_Af_btw.Clear();
+            Sub_Lg_fix.Clear();
+            Sub_Lg_open.Clear();
             Sub_Uw.Clear();
             Sub_dUinst.Clear();
             Sub_Uw_inst.Clear();
 
-           // Program.DB.deleteValue(DB.type.ProjDB, "SubWindow", "상위창호번호 = '" + WinNum + "'");
+            // Program.DB.deleteValue(DB.type.ProjDB, "SubWindow", "상위창호번호 = '" + WinNum + "'");
             Size = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭,상위창호번호,창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이", "상위창호번호 = '" + WinNum + "'");
             if (Size.Length > -1)
             {
@@ -449,7 +463,7 @@ namespace main.contents
                 Size_textBox.Text = Size.Length.ToString() + "개 치수 적용";
             }
 
-          
+
         }
 
         private void Frame_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -894,9 +908,9 @@ namespace main.contents
                 Uw.ToString()
                 + "'", "번호");
 
-            
+
             Size = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호", "상위창호번호 = '" + WinNum + "'");
-           
+
 
             ImportSize();
             this.DialogResult = DialogResult.OK;
@@ -945,6 +959,7 @@ namespace main.contents
                 Uw_comboBox.SelectedItem = Load[0][4];
                 DiIndi_comboBox.SelectedItem = Load[0][5];
                 Frame_comboBox.SelectedItem = Load[0][6];
+                FrameType = Load[0][6];
                 check_FrameType = Load[0][6];
                 SingleDoubleType = Load[0][7];
                 check_SingleDoubleType = Load[0][7];
@@ -957,6 +972,7 @@ namespace main.contents
                 GlassName_textBox.Text = Load[0][10];
                 SpacerName = Load[0][11];
                 SpacerName_textBox.Text = Load[0][11];
+                InstallType = Load[0][12];
                 check_InstallType = Load[0][12];
                 Install_comboBox.SelectedItem = Load[0][12];
                 InstallName = Load[0][13];
@@ -1011,6 +1027,7 @@ namespace main.contents
                 df_btw = Convert.ToDouble(Load[0][29]);
                 df_btw_textBox.Text = String.Format("{0:F2}", df_btw);
 
+                ImportSize();
 
                 string[][] Image1 = Program.DB.getValue(DB.type.BaseDB, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
                 WindowType_pictureBox.Load(Program.gPath + Image1[0][0]);
@@ -1021,10 +1038,10 @@ namespace main.contents
                 string[][] Image3 = Program.DB.getValue(DB.type.BaseDB, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");
                 WindowInstall_pictureBox.Load(Program.gPath + Image3[0][0]);
                 WindowInstall_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+
             }
             catch { }
-
-
         }
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {
@@ -1046,5 +1063,49 @@ namespace main.contents
 
         }
 
+        private void label25_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Frame_label_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void GlassName_textBox_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void Spacer_label_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void SpacerName_textBox_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void Size_textBox_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+        }
     }
 }

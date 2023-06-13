@@ -547,6 +547,7 @@ namespace main.subcontents.ConstructionWindow
                 Uw_comboBox.SelectedItem = MainLoad[0][4];
                 DiIndi_comboBox.SelectedItem = MainLoad[0][5];
                 Frame_comboBox.SelectedItem = MainLoad[0][6];
+                FrameType = MainLoad[0][6];
                 check_FrameType = MainLoad[0][6];
                 SingleDoubleType = MainLoad[0][7];
                 check_SingleDoubleType = MainLoad[0][7];
@@ -559,6 +560,7 @@ namespace main.subcontents.ConstructionWindow
                 GlassName_textBox.Text = MainLoad[0][10];
                 SpacerName = MainLoad[0][11];
                 SpacerName_textBox.Text = MainLoad[0][11];
+                InstallType = MainLoad[0][12];
                 check_InstallType = MainLoad[0][12];
                 Install_comboBox.SelectedItem = MainLoad[0][12];
                 InstallName = MainLoad[0][13];

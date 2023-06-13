@@ -381,6 +381,7 @@ namespace main.contents
             panel2.Name = "panel2";
             panel2.Size = new Size(977, 307);
             panel2.TabIndex = 18;
+            panel2.Paint += panel2_Paint;
             // 
             // Size_textBox
             // 
@@ -394,6 +395,7 @@ namespace main.contents
             Size_textBox.Size = new Size(120, 15);
             Size_textBox.TabIndex = 103;
             Size_textBox.TextAlign = HorizontalAlignment.Center;
+            Size_textBox.TextChanged += Size_textBox_TextChanged;
             // 
             // label1
             // 
@@ -404,6 +406,7 @@ namespace main.contents
             label1.Size = new Size(54, 16);
             label1.TabIndex = 102;
             label1.Text = "창호 치수";
+            label1.Click += label1_Click;
             // 
             // ImportSize_button
             // 
@@ -520,6 +523,7 @@ namespace main.contents
             SpacerName_textBox.Size = new Size(120, 15);
             SpacerName_textBox.TabIndex = 93;
             SpacerName_textBox.TextAlign = HorizontalAlignment.Center;
+            SpacerName_textBox.TextChanged += SpacerName_textBox_TextChanged;
             // 
             // Spacer_button
             // 
@@ -548,6 +552,7 @@ namespace main.contents
             GlassName_textBox.Size = new Size(120, 15);
             GlassName_textBox.TabIndex = 91;
             GlassName_textBox.TextAlign = HorizontalAlignment.Center;
+            GlassName_textBox.TextChanged += GlassName_textBox_TextChanged;
             // 
             // GlassDB_button
             // 
@@ -774,6 +779,7 @@ namespace main.contents
             label16.Size = new Size(29, 16);
             label16.TabIndex = 51;
             label16.Text = "설치";
+            label16.Click += label16_Click;
             // 
             // Spacer_label
             // 
@@ -784,6 +790,7 @@ namespace main.contents
             Spacer_label.Size = new Size(29, 16);
             Spacer_label.TabIndex = 45;
             Spacer_label.Text = "간봉";
+            Spacer_label.Click += Spacer_label_Click;
             // 
             // label11
             // 
@@ -794,6 +801,7 @@ namespace main.contents
             label11.Size = new Size(29, 16);
             label11.TabIndex = 41;
             label11.Text = "유리";
+            label11.Click += label11_Click;
             // 
             // Frame_comboBox
             // 
@@ -814,6 +822,7 @@ namespace main.contents
             Frame_label.Size = new Size(40, 16);
             Frame_label.TabIndex = 39;
             Frame_label.Text = "프레임";
+            Frame_label.Click += Frame_label_Click;
             // 
             // Uw_comboBox
             // 
@@ -834,6 +843,7 @@ namespace main.contents
             label25.Size = new Size(73, 16);
             label25.TabIndex = 37;
             label25.Text = "Uw 적용방법";
+            label25.Click += label25_Click;
             // 
             // label4
             // 
@@ -844,6 +854,7 @@ namespace main.contents
             label4.Size = new Size(83, 15);
             label4.TabIndex = 0;
             label4.Text = "창호 구성요소";
+            label4.Click += label4_Click;
             // 
             // WindowType_pictureBox
             // 
