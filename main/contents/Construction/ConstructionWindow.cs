@@ -634,7 +634,7 @@ namespace main.contents
             }
             else
             {
-                Window_GlassDB window_glassDB_form = new Window_GlassDB();
+                GlassDB window_glassDB_form = new GlassDB();
                 DialogResult result = window_glassDB_form.ShowDialog();
                 if (result == DialogResult.OK)
                 {

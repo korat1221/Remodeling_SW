@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace main.subcontents
 {
-    public partial class Window_GlassDB : Form
+    public partial class GlassDB : Form
     {
         String FrameType;
         double Count_FrameDB;
@@ -18,7 +18,7 @@ namespace main.subcontents
         public String[] Select_WindowGlass = new string[11];
         String UserNum, UserDBName, UserDB_Manufacture, UserDB_SingleDoubleTriple, UserDB_ArAir, UserDB_LE_CL_V;
         Double UserDB_Ug, UserDB_g, UserDB_Tao, UserDB_RExternal, UserDB_RInternal;
-        public Window_GlassDB()
+        public GlassDB()
         {
             InitializeComponent();
             load_table_GlassDB();

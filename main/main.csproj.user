@@ -112,6 +112,9 @@
     <Compile Update="subcontents\ConstructionCW\CW_FrameDB.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\ConstructionCW\CW_SpacerDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\ConstructionWindow\SubWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,7 +130,7 @@
     <Compile Update="subcontents\ConstructionWindow\Window_FrameDB.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="subcontents\ConstructionWindow\Window_GlassDB.cs">
+    <Compile Update="subcontents\ConstructionWindow\GlassDB.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\ConstructionWindow\Window_ImportSize.cs">

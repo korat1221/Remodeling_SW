@@ -89,11 +89,11 @@
             Frame_tabPage = new TabPage();
             label22 = new Label();
             df_btw_textBox = new TextBox();
-            df_fix_textBox = new TextBox();
             df_open_textBox = new TextBox();
-            Uf_btw_textBox = new TextBox();
-            Uf_fix_textBox = new TextBox();
+            df_mt_textBox = new TextBox();
+            Psi_p_textBox = new TextBox();
             Uf_open_textBox = new TextBox();
+            Uf_mt_textBox = new TextBox();
             FrameMaterial_textBox = new TextBox();
             label19 = new Label();
             label18 = new Label();
@@ -367,6 +367,7 @@
             Spacer_button.TabIndex = 92;
             Spacer_button.Text = "+";
             Spacer_button.UseVisualStyleBackColor = false;
+            Spacer_button.Click += Spacer_button_Click;
             // 
             // GlassName_textBox
             // 
@@ -394,6 +395,7 @@
             GlassDB_button.TabIndex = 90;
             GlassDB_button.Text = "+";
             GlassDB_button.UseVisualStyleBackColor = false;
+            GlassDB_button.Click += GlassDB_button_Click;
             // 
             // Install_comboBox
             // 
@@ -470,9 +472,9 @@
             label25.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label25.Location = new Point(78, 27);
             label25.Name = "label25";
-            label25.Size = new Size(73, 16);
+            label25.Size = new Size(80, 16);
             label25.TabIndex = 37;
-            label25.Text = "Uw 적용방법";
+            label25.Text = "Ucw 적용방법";
             // 
             // label4
             // 
@@ -578,9 +580,9 @@
             Uw2_label.ForeColor = SystemColors.ControlDark;
             Uw2_label.Location = new Point(484, 27);
             Uw2_label.Name = "Uw2_label";
-            Uw2_label.Size = new Size(103, 16);
+            Uw2_label.Size = new Size(135, 16);
             Uw2_label.TabIndex = 99;
-            Uw2_label.Text = "[Uw] 창호열관류율";
+            Uw2_label.Text = "[Ucw] 커튼월창 열관류율";
             Uw2_label.Visible = false;
             // 
             // label12
@@ -658,6 +660,7 @@
             FrameDB_button.TabIndex = 88;
             FrameDB_button.Text = "+";
             FrameDB_button.UseVisualStyleBackColor = false;
+            FrameDB_button.Click += FrameDB_button_Click;
             // 
             // Psi_open_unit_label
             // 
@@ -837,11 +840,11 @@
             Frame_tabPage.BorderStyle = BorderStyle.FixedSingle;
             Frame_tabPage.Controls.Add(label22);
             Frame_tabPage.Controls.Add(df_btw_textBox);
-            Frame_tabPage.Controls.Add(df_fix_textBox);
             Frame_tabPage.Controls.Add(df_open_textBox);
-            Frame_tabPage.Controls.Add(Uf_btw_textBox);
-            Frame_tabPage.Controls.Add(Uf_fix_textBox);
+            Frame_tabPage.Controls.Add(df_mt_textBox);
+            Frame_tabPage.Controls.Add(Psi_p_textBox);
             Frame_tabPage.Controls.Add(Uf_open_textBox);
+            Frame_tabPage.Controls.Add(Uf_mt_textBox);
             Frame_tabPage.Controls.Add(FrameMaterial_textBox);
             Frame_tabPage.Controls.Add(label19);
             Frame_tabPage.Controls.Add(label18);
@@ -881,19 +884,6 @@
             df_btw_textBox.TabIndex = 103;
             df_btw_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // df_fix_textBox
-            // 
-            df_fix_textBox.BackColor = Color.White;
-            df_fix_textBox.BorderStyle = BorderStyle.None;
-            df_fix_textBox.Enabled = false;
-            df_fix_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            df_fix_textBox.ForeColor = SystemColors.ControlDark;
-            df_fix_textBox.Location = new Point(533, 149);
-            df_fix_textBox.Name = "df_fix_textBox";
-            df_fix_textBox.Size = new Size(116, 15);
-            df_fix_textBox.TabIndex = 102;
-            df_fix_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
             // df_open_textBox
             // 
             df_open_textBox.BackColor = Color.White;
@@ -901,37 +891,37 @@
             df_open_textBox.Enabled = false;
             df_open_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             df_open_textBox.ForeColor = SystemColors.ControlDark;
-            df_open_textBox.Location = new Point(394, 149);
+            df_open_textBox.Location = new Point(533, 149);
             df_open_textBox.Name = "df_open_textBox";
             df_open_textBox.Size = new Size(116, 15);
-            df_open_textBox.TabIndex = 101;
+            df_open_textBox.TabIndex = 102;
             df_open_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Uf_btw_textBox
+            // df_mt_textBox
             // 
-            Uf_btw_textBox.BackColor = Color.White;
-            Uf_btw_textBox.BorderStyle = BorderStyle.None;
-            Uf_btw_textBox.Enabled = false;
-            Uf_btw_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Uf_btw_textBox.ForeColor = SystemColors.ControlDark;
-            Uf_btw_textBox.Location = new Point(672, 111);
-            Uf_btw_textBox.Name = "Uf_btw_textBox";
-            Uf_btw_textBox.Size = new Size(116, 15);
-            Uf_btw_textBox.TabIndex = 97;
-            Uf_btw_textBox.TextAlign = HorizontalAlignment.Center;
+            df_mt_textBox.BackColor = Color.White;
+            df_mt_textBox.BorderStyle = BorderStyle.None;
+            df_mt_textBox.Enabled = false;
+            df_mt_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            df_mt_textBox.ForeColor = SystemColors.ControlDark;
+            df_mt_textBox.Location = new Point(394, 149);
+            df_mt_textBox.Name = "df_mt_textBox";
+            df_mt_textBox.Size = new Size(116, 15);
+            df_mt_textBox.TabIndex = 101;
+            df_mt_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Uf_fix_textBox
+            // Psi_p_textBox
             // 
-            Uf_fix_textBox.BackColor = Color.White;
-            Uf_fix_textBox.BorderStyle = BorderStyle.None;
-            Uf_fix_textBox.Enabled = false;
-            Uf_fix_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Uf_fix_textBox.ForeColor = SystemColors.ControlDark;
-            Uf_fix_textBox.Location = new Point(533, 111);
-            Uf_fix_textBox.Name = "Uf_fix_textBox";
-            Uf_fix_textBox.Size = new Size(116, 15);
-            Uf_fix_textBox.TabIndex = 96;
-            Uf_fix_textBox.TextAlign = HorizontalAlignment.Center;
+            Psi_p_textBox.BackColor = Color.White;
+            Psi_p_textBox.BorderStyle = BorderStyle.None;
+            Psi_p_textBox.Enabled = false;
+            Psi_p_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Psi_p_textBox.ForeColor = SystemColors.ControlDark;
+            Psi_p_textBox.Location = new Point(672, 111);
+            Psi_p_textBox.Name = "Psi_p_textBox";
+            Psi_p_textBox.Size = new Size(116, 15);
+            Psi_p_textBox.TabIndex = 97;
+            Psi_p_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // Uf_open_textBox
             // 
@@ -940,11 +930,24 @@
             Uf_open_textBox.Enabled = false;
             Uf_open_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Uf_open_textBox.ForeColor = SystemColors.ControlDark;
-            Uf_open_textBox.Location = new Point(394, 111);
+            Uf_open_textBox.Location = new Point(533, 111);
             Uf_open_textBox.Name = "Uf_open_textBox";
             Uf_open_textBox.Size = new Size(116, 15);
-            Uf_open_textBox.TabIndex = 95;
+            Uf_open_textBox.TabIndex = 96;
             Uf_open_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Uf_mt_textBox
+            // 
+            Uf_mt_textBox.BackColor = Color.White;
+            Uf_mt_textBox.BorderStyle = BorderStyle.None;
+            Uf_mt_textBox.Enabled = false;
+            Uf_mt_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Uf_mt_textBox.ForeColor = SystemColors.ControlDark;
+            Uf_mt_textBox.Location = new Point(394, 111);
+            Uf_mt_textBox.Name = "Uf_mt_textBox";
+            Uf_mt_textBox.Size = new Size(116, 15);
+            Uf_mt_textBox.TabIndex = 95;
+            Uf_mt_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // FrameMaterial_textBox
             // 
@@ -1270,11 +1273,11 @@
         private TabPage Frame_tabPage;
         private Label label22;
         private TextBox df_btw_textBox;
-        private TextBox df_fix_textBox;
         private TextBox df_open_textBox;
-        private TextBox Uf_btw_textBox;
-        private TextBox Uf_fix_textBox;
+        private TextBox df_mt_textBox;
+        private TextBox Psi_p_textBox;
         private TextBox Uf_open_textBox;
+        private TextBox Uf_mt_textBox;
         private TextBox FrameMaterial_textBox;
         private Label label19;
         private Label label18;

@@ -309,10 +309,7 @@ namespace main.subcontents
             }
             if (UserDB_Uw > 0 && UserDB_Ug > 0 && UserDB_Ag > 0 && UserDB_PsiOpen > 0)
             {
-                UserDB_Uf = (UserDB_Uw * 4 - UserDB_Ug * UserDB_Ag - UserDB_PsiOpen * UserDB_Lopen - UserDB_PsiFix * UserDB_Lfix) / UserDB_Af;
-                UserDB_UfA_textBox.Text = "유리 Check";
-                UserDB_UfB_textBox.Text = "유리 Check";
-                UserDB_UfC_textBox.Text = "유리 Check";
+                UserDB_Uf = (UserDB_Uw * 4 - UserDB_Ug * UserDB_Ag - UserDB_PsiOpen * UserDB_Lopen - UserDB_PsiFix * UserDB_Lfix) / UserDB_Af;      
             }
 
             if (UserDB_Uf > 0.5)
@@ -320,6 +317,12 @@ namespace main.subcontents
                 UserDB_UfA_textBox.Text = String.Format("{0:F3}", UserDB_Uf);
                 UserDB_UfB_textBox.Text = String.Format("{0:F3}", UserDB_Uf);
                 UserDB_UfC_textBox.Text = String.Format("{0:F3}", UserDB_Uf);
+            }
+            else
+            {
+                UserDB_UfA_textBox.Text = "유리 Check";
+                UserDB_UfB_textBox.Text = "유리 Check";
+                UserDB_UfC_textBox.Text = "유리 Check";
             }
 
         }
