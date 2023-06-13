@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -202,7 +203,7 @@ namespace main
                                             {
 
                                                 Program.DB.setValue(DB.type.ProjDB, "ZoneWall", "zoneNum, Name, Area,Ueff,DirectInDirect,Direction,α,Degree",
-                                                    "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "'", "zoneNum, Name");
+                                                    "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "'", "zoneNum, Name");                                               
 
                                                 //         Wall wall = new Wall(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
                                                 //       zoneWall.Add(wall);
@@ -927,11 +928,28 @@ namespace main
                 zone1.ZoneQI();
                 zone1.Zoneeta();
                 zone1.ZoneQb();
-
                 MessageBox.Show(zoneNum + ":  " + zone1.zoneName + ":  " + zone1.Qhb_a);
+                /*
+                ZoneLight zonelight = new ZoneLight(zones[i][0]);
+                zonelight.Calc_Facade_general();
+                zonelight.Calc_Facade_shade();
+                zonelight.Calc_Facade_FDS();
+                zonelight.Calc_Facade_FD();
+
+                zonelight.Calc_Roof_general();
+
+                zonelight.Calc_Roof_ηR();
+                zonelight.Calc_Roof_FDS();
+                zonelight.Calc_Roof_FD();
+
+                zonelight.Calc_Sunlight_SCW();
+                zonelight.Calc_Sunlight_Pj_SC();
+
+                zonelight.Calc_W();*/
 
             }
 
+          
             return true;
         }
 

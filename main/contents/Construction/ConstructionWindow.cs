@@ -1062,50 +1062,5 @@ namespace main.contents
             }
 
         }
-
-        private void label25_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Frame_label_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void GlassName_textBox_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void Spacer_label_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void SpacerName_textBox_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void label16_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void Size_textBox_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-        }
     }
 }
