@@ -115,6 +115,12 @@ namespace main
 
                 f.LoadData(formParam.ID);
             }
+            else if (formParam.formID == 31)
+            {
+                SubWindow f = (SubWindow)form;
+
+                f.LoadData(formParam.ID);
+            }
             return true;
         }
 

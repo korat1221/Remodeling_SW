@@ -203,7 +203,7 @@ namespace main
                                             {
 
                                                 Program.DB.setValue(DB.type.ProjDB, "ZoneWall", "zoneNum, Name, Area,Ueff,DirectInDirect,Direction,α,Degree",
-                                                    "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "','" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "'", "zoneNum, Name");                                               
+                                                    "'" + zoneNum + "','" + token2[0] + "','" + token2[1] + "', '" + token2[2] + "','" + token2[3] + "','" + token2[4] + "','" + token2[5] + "','" + token2[6] + "'", "zoneNum, Name");                                               
 
                                                 //         Wall wall = new Wall(Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[5]), token[3]);
                                                 //       zoneWall.Add(wall);
@@ -900,6 +900,156 @@ namespace main
                                     Console.WriteLine("IOException source: {0}", e.Source);
                                 throw;
                             }
+
+
+                            //******************************************************************************************************************************************************************//
+
+                            //조명 존일반정보가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneLightgeneral.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (!sr2.EndOfStream)
+                                        {
+                                            //Facade _facade = new Facade();
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                string s = "";
+                                                while (++i < 8)
+                                                {
+                                                    s += "'" + token2[i] + "',";
+                                                }
+                                                Program.DB.setValue(DB.type.ProjDB, "ZoneLightgeneral", "ZoneNum,Wr,Lr,A,hR,hm,hLi,hTa,K", "'" + zoneNum + "'," + s +"'" + token2[8] + "'", "zoneNum"); 
+                                                //Wr = Convert.ToDouble(token2[1]);
+                                                //Lr = Convert.ToDouble(token2[2]);
+                                                //A = Convert.ToDouble(token2[3]);
+                                                //hR = Convert.ToDouble(token2[4]);
+                                                //hm = Convert.ToDouble(token2[5]);
+                                                //Zone_hLi = Convert.ToDouble(token2[6]);
+                                                //Zone_hTa = Convert.ToDouble(token2[7]);
+                                                //K = Convert.ToDouble(token2[8]);
+                                            }
+                                            n2++;
+
+                                        }
+
+                                        sr2.Close();
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 용도프로필 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneLightprofile.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+
+                                                int i = -1;
+                                                string s = "";
+                                                while (++i < 3)
+                                                {
+                                                    s += "'" + token2[i] + "',";
+                                                }
+                                                Program.DB.setValue(DB.type.ProjDB, "ZoneLightprofile", "ZoneNum,Location,Em,KA,FA", "'" + zoneNum + "'," + s + "'" + token2[3] + "'", "zoneNum");
+                                                //Location = token2[0];
+                                                //Em = Convert.ToDouble(token2[1]);
+                                                //KA = Convert.ToDouble(token2[2]);
+                                                //FA = Convert.ToDouble(token2[3]);
+
+
+                                            }
+                                            n2++;
+
+                                        }
+                                        sr2.Close();
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 낮시간 가져오기
+                            try 
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Zonedaytime.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+
+                                                int i = -1;
+                                                while (++i < 12)
+                                                {
+                                                    Program.DB.setValue(DB.type.ProjDB, "Zonedaytime", "zoneNum,월,value", "'" + zoneNum + "','" +(i+1).ToString() + "','" + token2[i+1] + "'", "zoneNum,월");
+                                                }
+
+                                            }
+                                            n2++;
+
+                                        }
+                                        sr2.Close();
+
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+
+
 
                         }
                         n++;

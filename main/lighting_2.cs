@@ -125,41 +125,38 @@ namespace main
 
         public ZoneLight(String zoneNum) //Zone 생성자 생성
         {
-            //존일반정보가져오기
+            //존조명일반정보가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\ZoneLightgeneral.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneLightgeneral.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
-                        while (!sr.EndOfStream)
+                        int n2 = 0;
+                        while (!sr2.EndOfStream)
                         {
                             //Facade _facade = new Facade();
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
+                            string[] token2 = sr2.ReadLine().Split(',');
+                            if (n2 == 0)
                             {
                             }
                             else
                             {
-
-                                Wr = Convert.ToDouble(token[1]);
-                                Lr = Convert.ToDouble(token[2]);
-                                A = Convert.ToDouble(token[3]);
-                                hR = Convert.ToDouble(token[4]);
-                                hm = Convert.ToDouble(token[5]);
-                                Zone_hLi = Convert.ToDouble(token[6]);
-                                Zone_hTa = Convert.ToDouble(token[7]);
-                                K = Convert.ToDouble(token[8]);
-                                //facadeList.Add(_facade);
-
+                                Wr = Convert.ToDouble(token2[1]);
+                                Lr = Convert.ToDouble(token2[2]);
+                                A = Convert.ToDouble(token2[3]);
+                                hR = Convert.ToDouble(token2[4]);
+                                hm = Convert.ToDouble(token2[5]);
+                                Zone_hLi = Convert.ToDouble(token2[6]);
+                                Zone_hTa = Convert.ToDouble(token2[7]);
+                                K = Convert.ToDouble(token2[8]);
                             }
-                            n++;
+                            n2++;
 
                         }
 
-                        sr.Close();
+                        sr2.Close();
 
                     }
                 }
@@ -172,35 +169,34 @@ namespace main
                     Console.WriteLine("IOException source: {0}", e.Source);
                 throw;
             }
-
             // 존 용도프로필 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\ZoneLightprofile.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneLightprofile.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
-                        while (sr.EndOfStream == false)
+                        int n2 = 0;
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
+                            string[] token2 = sr2.ReadLine().Split(',');
+                            if (n2 == 0)
                             {
                             }
                             else
                             {
-                                Location = token[0];
-                                Em = Convert.ToDouble(token[1]);
-                                KA = Convert.ToDouble(token[2]);
-                                FA = Convert.ToDouble(token[3]);
+                                Location = token2[0];
+                                Em = Convert.ToDouble(token2[1]);
+                                KA = Convert.ToDouble(token2[2]);
+                                FA = Convert.ToDouble(token2[3]);
 
 
                             }
-                            n++;
+                            n2++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -218,31 +214,31 @@ namespace main
             // 존 낮시간 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\Zonedaytime.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Zonedaytime.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
-                        while (sr.EndOfStream == false)
+                        int n2 = 0;
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
+                            string[] token2 = sr2.ReadLine().Split(',');
+                            if (n2 == 0)
                             {
                             }
                             else
                             {
                                 for (int i = 0; i < 12; i++)
                                 {
-                                    daytime[i] = Convert.ToDouble(token[i + 1]);
+                                    daytime[i] = Convert.ToDouble(token2[i + 1]);
 
                                 }
 
                             }
-                            n++;
+                            n2++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -260,15 +256,15 @@ namespace main
             // 존 밤시간 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\Zonenighttime.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Zonenighttime.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
@@ -276,7 +272,7 @@ namespace main
                             {
                                 for (int i = 0; i < 12; i++)
                                 {
-                                    nighttime[i] = Convert.ToDouble(token[i + 1]);
+                                    nighttime[i] = Convert.ToDouble(token2[i + 1]);
 
                                 }
 
@@ -284,7 +280,7 @@ namespace main
                             n++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -302,32 +298,32 @@ namespace main
             // 존 인공조명 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\Lighting.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Lighting.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
-                                Pj = Convert.ToDouble(token[1]);
-                                Pn = Convert.ToDouble(token[2]);
-                                Fo = Convert.ToDouble(token[3]);
-                                Fc = Convert.ToDouble(token[4]);
-                                lm_W = Convert.ToDouble(token[5]);
-                                wsp = Convert.ToDouble(token[6]);
+                                Pj = Convert.ToDouble(token2[1]);
+                                Pn = Convert.ToDouble(token2[2]);
+                                Fo = Convert.ToDouble(token2[3]);
+                                Fc = Convert.ToDouble(token2[4]);
+                                lm_W = Convert.ToDouble(token2[5]);
+                                wsp = Convert.ToDouble(token2[6]);
 
                             }
                             n++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -345,36 +341,36 @@ namespace main
             // 파사드정보1 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\facade1.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade1.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
 
-                                facade_di = (token[1]);
-                                Zone_f_Aca = Convert.ToDouble(token[2]);
-                                Zone_f_aD = Convert.ToDouble(token[3]);
-                                Zone_f_bD = Convert.ToDouble(token[4]);
-                                Zone_f_AD = Convert.ToDouble(token[5]);
-                                glass1 = (token[6]);
-                                f_τD65_SNA = Convert.ToDouble(token[7]);
-                                K1 = Convert.ToDouble(token[8]);
-                                K2 = Convert.ToDouble(token[9]);
-                                K3 = Convert.ToDouble(token[10]);
-                                facade_shade = (token[11]);
-                                facade_dimming = (token[12]);
-                                γSh_lsh = Convert.ToDouble(token[13]);
-                                γSh_hA = Convert.ToDouble(token[14]);
-                                γSh_vA = Convert.ToDouble(token[15]);
+                                facade_di = (token2[1]);
+                                Zone_f_Aca = Convert.ToDouble(token2[2]);
+                                Zone_f_aD = Convert.ToDouble(token2[3]);
+                                Zone_f_bD = Convert.ToDouble(token2[4]);
+                                Zone_f_AD = Convert.ToDouble(token2[5]);
+                                glass1 = (token2[6]);
+                                f_τD65_SNA = Convert.ToDouble(token2[7]);
+                                K1 = Convert.ToDouble(token2[8]);
+                                K2 = Convert.ToDouble(token2[9]);
+                                K3 = Convert.ToDouble(token2[10]);
+                                facade_shade = (token2[11]);
+                                facade_dimming = (token2[12]);
+                                γSh_lsh = Convert.ToDouble(token2[13]);
+                                γSh_hA = Convert.ToDouble(token2[14]);
+                                γSh_vA = Convert.ToDouble(token2[15]);
 
 
 
@@ -382,7 +378,7 @@ namespace main
                             n++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -400,15 +396,15 @@ namespace main
             // 파사드 음영계수 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\facade_shade.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_shade.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
@@ -418,7 +414,7 @@ namespace main
 
                                 for (int i = 0; i < 12; i++)
                                 {
-                                    f_shade[i] = Convert.ToDouble(token[i + 1]);
+                                    f_shade[i] = Convert.ToDouble(token2[i + 1]);
 
                                 }
 
@@ -432,7 +428,7 @@ namespace main
 
                         //    Console.WriteLine("확인" + i.ToString() + shademonth[i].ToString());
                         //}
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -450,15 +446,15 @@ namespace main
             // 파사드 trel_D_SA 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\facade_trel_D_SA.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_trel_D_SA.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
@@ -466,7 +462,7 @@ namespace main
                             {
                                 for (int i = 0; i < 12; i++)
                                 {
-                                    trel_D_SA[i] = Convert.ToDouble(token[i + 1]);
+                                    trel_D_SA[i] = Convert.ToDouble(token2[i + 1]);
 
                                 }
 
@@ -474,7 +470,7 @@ namespace main
                             n++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -492,15 +488,15 @@ namespace main
             // 파사드 trel_D_SNA 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\facade_trel_D_SNA.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_trel_D_SNA.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
@@ -508,7 +504,7 @@ namespace main
                             {
                                 for (int i = 0; i < 12; i++)
                                 {
-                                    trel_D_SNA[i] = Convert.ToDouble(token[i + 1]);
+                                    trel_D_SNA[i] = Convert.ToDouble(token2[i + 1]);
 
                                 }
 
@@ -516,7 +512,7 @@ namespace main
                             n++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -535,15 +531,15 @@ namespace main
             // 중정 아트리움 정보 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\Courtyard_Atrium.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Courtyard_Atrium.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
@@ -551,20 +547,20 @@ namespace main
                             {
 
 
-                                aIn_At = Convert.ToDouble(token[1]);
-                                bIn_At = Convert.ToDouble(token[2]);
-                                hIn_At = Convert.ToDouble(token[3]);
-                                glass2 = token[4];
-                                τSh_In_At_D65 = Convert.ToDouble(token[5]);
-                                Ksh_In_At_1 = Convert.ToDouble(token[6]);
-                                Ksh_In_At_2 = Convert.ToDouble(token[7]);
-                                Ksh_In_At_3 = Convert.ToDouble(token[8]);
+                                aIn_At = Convert.ToDouble(token2[1]);
+                                bIn_At = Convert.ToDouble(token2[2]);
+                                hIn_At = Convert.ToDouble(token2[3]);
+                                glass2 = token2[4];
+                                τSh_In_At_D65 = Convert.ToDouble(token2[5]);
+                                Ksh_In_At_1 = Convert.ToDouble(token2[6]);
+                                Ksh_In_At_2 = Convert.ToDouble(token2[7]);
+                                Ksh_In_At_3 = Convert.ToDouble(token2[8]);
 
                             }
                             n++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -582,32 +578,32 @@ namespace main
             // 이중외피 정보 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\Doubleskin.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Doubleskin.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
 
-                                glass3 = token[1];
-                                τSh_In_GDF_D65 = Convert.ToDouble(token[2]);
-                                Ksh_GDF_1 = Convert.ToDouble(token[3]);
-                                Ksh_GDF_2 = Convert.ToDouble(token[4]);
-                                Ksh_GDF_3 = Convert.ToDouble(token[5]);
+                                glass3 = token2[1];
+                                τSh_In_GDF_D65 = Convert.ToDouble(token2[2]);
+                                Ksh_GDF_1 = Convert.ToDouble(token2[3]);
+                                Ksh_GDF_2 = Convert.ToDouble(token2[4]);
+                                Ksh_GDF_3 = Convert.ToDouble(token2[5]);
 
                             }
                             n++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -626,23 +622,23 @@ namespace main
             //파사드 차양 미가동시 주광공급계수 테이블 일치 값 정보 가져오기 FD_S_SNA
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\facade_FD_S_SNA.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_FD_S_SNA.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
-                                for (int k = 0; k < token.Length; k++)
+                                for (int k = 0; k < token2.Length; k++)
                                 {
-                                    파사드차양미가동주광공급계수테이블[n - 1, k] = token[k];
+                                    파사드차양미가동주광공급계수테이블[n - 1, k] = token2[k];
                                 }
                             }
                             n++;
@@ -665,23 +661,23 @@ namespace main
             //파사드 차양 가동시 주광공급계수 테이블 일치 값 정보 가져오기 FD_S_SA
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\facade_FD_S_SA.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_FD_S_SA.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
-                                for (int k = 0; k < token.Length; k++)
+                                for (int k = 0; k < token2.Length; k++)
                                 {
-                                    파사드차양가동주광공급계수테이블[n - 1, k] = token[k];
+                                    파사드차양가동주광공급계수테이블[n - 1, k] = token2[k];
                                 }
                             }
                             n++;
@@ -705,23 +701,23 @@ namespace main
             //파사드 및 천창 주광제어 테이블 일치 값 정보 가져오기 FD_C
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\FD_C.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\FD_C.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
-                                for (int k = 0; k < token.Length; k++)
+                                for (int k = 0; k < token2.Length; k++)
                                 {
-                                    주광제어테이블[n - 1, k] = token[k];
+                                    주광제어테이블[n - 1, k] = token2[k];
                                 }
                             }
                             n++;
@@ -745,23 +741,23 @@ namespace main
             //파사드 Vmonth 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\facade_Vmonth_i.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_Vmonth_i.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
-                                for (int k = 0; k < token.Length; k++)
+                                for (int k = 0; k < token2.Length; k++)
                                 {
-                                    파사드월별분배[n - 1, k] = token[k];
+                                    파사드월별분배[n - 1, k] = token2[k];
                                 }
                             }
                             n++;
@@ -785,31 +781,31 @@ namespace main
             // 자연채광 정보 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\NaturalLighting.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\NaturalLighting.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
 
-                                Main = token[1];
-                                Middle = token[2];
-                                Sub = token[3];
+                                Main = token2[1];
+                                Middle = token2[2];
+                                Sub = token2[3];
 
 
                             }
                             n++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -827,42 +823,42 @@ namespace main
             // 천창1 정보 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\rooflight1.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\rooflight1.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
 
-                                roof_di = token[1];
-                                r_Aca = Convert.ToDouble(token[2]);
-                                r_aD = Convert.ToDouble(token[3]);
-                                r_bD = Convert.ToDouble(token[4]);
-                                r_AD = Convert.ToDouble(token[5]);
-                                roof_glass = token[6];
-                                γF = Convert.ToDouble(token[7]);
-                                γW = Convert.ToDouble(token[8]);
-                                As = Convert.ToDouble(token[9]);
-                                Bs = Convert.ToDouble(token[10]);
-                                hs = Convert.ToDouble(token[11]);
-                                hw = Convert.ToDouble(token[12]);
-                                hg = Convert.ToDouble(token[13]);
-                                Da = Convert.ToDouble(token[14]);
-                                r_τD65_SNA = Convert.ToDouble(token[15]);
-                                r_τD65_SA = Convert.ToDouble(token[16]);
-                                Kobl_1 = Convert.ToDouble(token[17]);
-                                Kobl_2 = Convert.ToDouble(token[18]);
-                                Kobl_3 = Convert.ToDouble(token[19]);
-                                roof_shade = token[20];
-                                roof_dimming = token[21];
+                                roof_di = token2[1];
+                                r_Aca = Convert.ToDouble(token2[2]);
+                                r_aD = Convert.ToDouble(token2[3]);
+                                r_bD = Convert.ToDouble(token2[4]);
+                                r_AD = Convert.ToDouble(token2[5]);
+                                roof_glass = token2[6];
+                                γF = Convert.ToDouble(token2[7]);
+                                γW = Convert.ToDouble(token2[8]);
+                                As = Convert.ToDouble(token2[9]);
+                                Bs = Convert.ToDouble(token2[10]);
+                                hs = Convert.ToDouble(token2[11]);
+                                hw = Convert.ToDouble(token2[12]);
+                                hg = Convert.ToDouble(token2[13]);
+                                Da = Convert.ToDouble(token2[14]);
+                                r_τD65_SNA = Convert.ToDouble(token2[15]);
+                                r_τD65_SA = Convert.ToDouble(token2[16]);
+                                Kobl_1 = Convert.ToDouble(token2[17]);
+                                Kobl_2 = Convert.ToDouble(token2[18]);
+                                Kobl_3 = Convert.ToDouble(token2[19]);
+                                roof_shade = token2[20];
+                                roof_dimming = token2[21];
 
 
 
@@ -870,7 +866,7 @@ namespace main
                             n++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -888,15 +884,15 @@ namespace main
             // 천창 음영계수 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\rooflight_shade.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\rooflight_shade.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
@@ -904,7 +900,7 @@ namespace main
                             {
                                 for (int i = 0; i < 12; i++)
                                 {
-                                    r_shade[i] = Convert.ToDouble(token[i + 1]);
+                                    r_shade[i] = Convert.ToDouble(token2[i + 1]);
 
                                 }
 
@@ -912,7 +908,7 @@ namespace main
                             n++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -930,25 +926,25 @@ namespace main
             // 신재생에너지1 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\renewable energy_1.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\renewable energy_1.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
-                                energy_type = (token[1]);
-                                energy_di = (token[2]);
-                                energy_inc = Convert.ToDouble(token[3]);
-                                energy_area = Convert.ToDouble(token[4]);
-                                energy_eff = Convert.ToDouble(token[5]);
+                                energy_type = (token2[1]);
+                                energy_di = (token2[2]);
+                                energy_inc = Convert.ToDouble(token2[3]);
+                                energy_area = Convert.ToDouble(token2[4]);
+                                energy_eff = Convert.ToDouble(token2[5]);
 
 
 
@@ -956,7 +952,7 @@ namespace main
                             n++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -975,15 +971,15 @@ namespace main
             // 외부조도 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\ext_ill.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ext_ill.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
@@ -991,7 +987,7 @@ namespace main
                             {
                                 for (int i = 0; i < 12; i++)
                                 {
-                                    ext[i] = Convert.ToDouble(token[i + 1]);
+                                    ext[i] = Convert.ToDouble(token2[i + 1]);
 
                                 }
 
@@ -999,7 +995,7 @@ namespace main
                             n++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }
@@ -1018,23 +1014,23 @@ namespace main
             //일반형 및 돔형 천창 ηR
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\ηR_normal.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ηR_normal.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
-                                for (int k = 0; k < token.Length; k++)
+                                for (int k = 0; k < token2.Length; k++)
                                 {
-                                    일반돔형천창계수테이블[n - 1, k] = token[k];
+                                    일반돔형천창계수테이블[n - 1, k] = token2[k];
                                 }
                             }
                             n++;
@@ -1057,23 +1053,23 @@ namespace main
             //톱니형 천창 ηR
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\ηR_saw.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ηR_saw.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
-                                for (int k = 0; k < token.Length; k++)
+                                for (int k = 0; k < token2.Length; k++)
                                 {
-                                    톱니형천창계수테이블[n - 1, k] = token[k];
+                                    톱니형천창계수테이블[n - 1, k] = token2[k];
                                 }
                             }
                             n++;
@@ -1096,23 +1092,23 @@ namespace main
             //천창 trel,D,SNA,j & trel,D,SA,j
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\roof_trel_D.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\roof_trel_D.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
-                                for (int k = 0; k < token.Length; k++)
+                                for (int k = 0; k < token2.Length; k++)
                                 {
-                                    천창차양장치가동시간[n - 1, k] = token[k];
+                                    천창차양장치가동시간[n - 1, k] = token2[k];
                                 }
                             }
                             n++;
@@ -1136,23 +1132,23 @@ namespace main
             //천창 FD_SNA 
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\roof_FD_SNA.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\roof_FD_SNA.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
-                                for (int k = 0; k < token.Length; k++)
+                                for (int k = 0; k < token2.Length; k++)
                                 {
-                                    천창차양미가동주광공급계수테이블[n - 1, k] = token[k];
+                                    천창차양미가동주광공급계수테이블[n - 1, k] = token2[k];
                                 }
                             }
                             n++;
@@ -1176,23 +1172,23 @@ namespace main
             //천창 FD_SA 
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\roof_FD_SA.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\roof_FD_SA.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
                             else
                             {
-                                for (int k = 0; k < token.Length; k++)
+                                for (int k = 0; k < token2.Length; k++)
                                 {
-                                    천창차양가동주광공급계수테이블[n - 1, k] = token[k];
+                                    천창차양가동주광공급계수테이블[n - 1, k] = token2[k];
                                 }
                             }
                             n++;
@@ -1216,15 +1212,15 @@ namespace main
             // 천창 Vmonth 가져오기
             try
             {
-                string filePath = Program.gPath + "calculations\\" + zoneNum + "\\roof_Vmonth_i.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\roof_Vmonth_i.csv";
+                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
                         int n = 0;
-                        while (sr.EndOfStream == false)
+                        while (sr2.EndOfStream == false)
                         {
-                            string[] token = sr.ReadLine().Split(',');
+                            string[] token2 = sr2.ReadLine().Split(',');
                             if (n == 0)
                             {
                             }
@@ -1232,7 +1228,7 @@ namespace main
                             {
                                 for (int i = 0; i < 12; i++)
                                 {
-                                    roof_Vmonth[i] = Convert.ToDouble(token[i + 1]);
+                                    roof_Vmonth[i] = Convert.ToDouble(token2[i + 1]);
 
                                 }
 
@@ -1241,7 +1237,7 @@ namespace main
                             n++;
 
                         }
-                        sr.Close();
+                        sr2.Close();
 
 
                     }

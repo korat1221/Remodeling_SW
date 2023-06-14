@@ -1,126 +1,126 @@
 <html>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="js/jstree/themes/default/style.min.css" />
-    <script type='text/javascript' src="js/jquery-3.6.0.min.js"></script>
-    <script type='text/javascript' src="js/jstree/jstree.js"></script>
-    <script type='text/javascript' src="js/util.js"></script>
-    <script type='text/javascript' src="js/main.js"></script>
-    <script>
-        let gTreeData = [
-            [
-                { "type":"General", "text" : "일반정보", "id" : "{\"formID\":0}" },
-                { "type": "EnergyUse", "text": "에너지사용량 정보", "id": "{\"formID\":1}" }
-            ],
-            [
-                { "type": "CW", "text": "커튼월창", "id": "{\"formID\":30}", "children": [{ "text": "C1", "id": "{\"formID\":2}"}]},
-                { "type": "Wall", "text": "외벽", "id": "Wall", "children": [{ "text": "W1", "id": "{\"formID\":3}"}]},
-                { "type": "Roof", "text": "지붕", "id": "Roof", "children": [{ "text": "C1", "id": "{\"formID\":4}"}]},
-                { "type": "Floor", "text": "최하층바닥", "id": "Floor", "children": [{ "text": "C1", "id": "{\"formID\":5}"}]},
-                { "type": "Window", "text": "창호", "id": "{\"formID\":29}", "children": [{ "text": "WN01", "id": "{\"formID\":6}"}],"children": [{ "text": "WN01_1", "id": "{\"formID\":31}"}]},
-                { "type": "Door", "text": "외부출입문", "id": "Door", "children": [{ "text": "WN1", "id": "{\"formID\":7}"}]}
-            ],
-            [
-                { "type": "Model", "text": "3D 모델", "id": "{\"formID\":8}" },
-                { "type": "Shade", "text": "음영정보", "id": "{\"formID\":9}" },
-                { "type": "Blind", "text": "차양정보", "id": "{\"formID\":10}" },
-                { "type": "ThermalBridge", "text": "열교정보", "id": "{\"formID\":11}" }
-            ],
-            [
-                { "type": "ZoneGeneral", "text": "존 일반정보", "id": "{\"formID\":12}" },
-                { "type": "ZoneEnvelope", "text": "존 외피정보", "id": "{\"formID\":13}" },
-                { "type": "ZoneLighting", "text": "존 조명정보", "id": "{\"formID\":14}" },
-                { "type": "ZoneSystem", "text": "존 설비정보", "id": "{\"formID\":15}" }
-            ],
-            [
-                { "type": "EquipmentList", "text": "장비일람표", "id": "{\"formID\":16}" },
-                { "type": "AHUSystem", "text": "공조시스템", "id": "{\"formID\":17}" },
-                { "type": "DHWSystem", "text": "급탕시스템", "id": "{\"formID\":18}" },
-                { "type": "HeatingSystem", "text": "난방시스템", "id": "{\"formID\":19}" },
-                { "type": "CoolingSystem", "text": "냉방시스템", "id": "{\"formID\":20}" }
-            ],
-            [
-                { "type": "PVSystem", "text": "태양광시스템", "id": "{\"formID\":21}" },
-                { "type": "FuelCell", "text": "연료전지", "id": "{\"formID\":22}" },
-                { "type": "WindPower", "text": "풍력시스템", "id": "{\"formID\":23}" },
-                { "type": "SupplyRatio", "text": "공급의무비율", "id": "{\"formID\":24}" },
-                { "type": "EIndependeceRate", "text": "에너지자립률", "id": "{\"formID\":25}" }
-            ],
-            [
-                { "type": "ReportExisting", "text": "기존_표준", "id": "{\"formID\":26}" },
-                { "type": "ReportRemodeling", "text": "기존_설계", "id": "{\"formID\":27}" }
-            ]
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="js/jstree/themes/default/style.min.css" />
+<script type='text/javascript' src="js/jquery-3.6.0.min.js"></script>
+<script type='text/javascript' src="js/jstree/jstree.js"></script>
+<script type='text/javascript' src="js/util.js"></script>
+<script type='text/javascript' src="js/main.js"></script>
+<script>
+    let gTreeData = [
+        [
+            { "type": "General", "text": "일반정보", "id": "{\"formID\":0}" },
+            { "type": "EnergyUse", "text": "에너지사용량 정보", "id": "{\"formID\":1}" }
+        ],
+        [
+            { "type": "CW", "text": "커튼월창", "id": "{\"formID\":30}", "children": [{ "text": "C1", "id": "{\"formID\":2}" }] },
+            { "type": "Wall", "text": "외벽", "id": "Wall", "children": [{ "text": "W1", "id": "{\"formID\":3}" }] },
+            { "type": "Roof", "text": "지붕", "id": "Roof", "children": [{ "text": "C1", "id": "{\"formID\":4}" }] },
+            { "type": "Floor", "text": "최하층바닥", "id": "Floor", "children": [{ "text": "C1", "id": "{\"formID\":5}" }] },
+            { "type": "Window", "text": "창호", "id": "{\"formID\":29}", "children": [{ "text": "WN01", "id": "{\"formID\":6}" }], "children": [{ "text": "WN01_1", "id": "{\"formID\":31}" }] },
+            { "type": "Door", "text": "외부출입문", "id": "Door", "children": [{ "text": "WN1", "id": "{\"formID\":7}" }] }
+        ],
+        [
+            { "type": "Model", "text": "3D 모델", "id": "{\"formID\":8}" },
+            { "type": "Shade", "text": "음영정보", "id": "{\"formID\":9}" },
+            { "type": "Blind", "text": "차양정보", "id": "{\"formID\":10}" },
+            { "type": "ThermalBridge", "text": "열교정보", "id": "{\"formID\":11}" }
+        ],
+        [
+            { "type": "ZoneGeneral", "text": "존 일반정보", "id": "{\"formID\":12}" },
+            { "type": "ZoneEnvelope", "text": "존 외피정보", "id": "{\"formID\":13}" },
+            { "type": "ZoneLighting", "text": "존 조명정보", "id": "{\"formID\":14}" },
+            { "type": "ZoneSystem", "text": "존 설비정보", "id": "{\"formID\":15}" }
+        ],
+        [
+            { "type": "EquipmentList", "text": "장비일람표", "id": "{\"formID\":16}" },
+            { "type": "AHUSystem", "text": "공조시스템", "id": "{\"formID\":17}" },
+            { "type": "DHWSystem", "text": "급탕시스템", "id": "{\"formID\":18}" },
+            { "type": "HeatingSystem", "text": "난방시스템", "id": "{\"formID\":19}" },
+            { "type": "CoolingSystem", "text": "냉방시스템", "id": "{\"formID\":20}" }
+        ],
+        [
+            { "type": "PVSystem", "text": "태양광시스템", "id": "{\"formID\":21}" },
+            { "type": "FuelCell", "text": "연료전지", "id": "{\"formID\":22}" },
+            { "type": "WindPower", "text": "풍력시스템", "id": "{\"formID\":23}" },
+            { "type": "SupplyRatio", "text": "공급의무비율", "id": "{\"formID\":24}" },
+            { "type": "EIndependeceRate", "text": "에너지자립률", "id": "{\"formID\":25}" }
+        ],
+        [
+            { "type": "ReportExisting", "text": "기존_표준", "id": "{\"formID\":26}" },
+            { "type": "ReportRemodeling", "text": "기존_설계", "id": "{\"formID\":27}" }
+        ]
+    ];
+    let gDefaultSelect = ["0", "2", "8", "12", "16", "21", "26"];
+
+    function resetMainTree(id, subid, tree, select_id) {
+        if (subid) {
+            gTreeData[id][subid].children = JSON.parse(tree);
+        }
+        else {
+            gTreeData[id] = JSON.parse(tree);
+        }
+        if (select_id) gDefaultSelect[id] = select_id;
+        load(id);
+    }
+
+    function load(menuID) {
+        gMainTree.load(gTreeData[menuID], gDefaultSelect[menuID]);
+
+        let icons = [
+            { "normal": "url(images/1sticon/1.Building.png)", "active": "url(images/1sticon/1.Building_on2.png)" },
+            { "normal": "url(images/1sticon/2.Construction.png)", "active": "url(images/1sticon/2.Construction_on2.png)" },
+            { "normal": "url(images/1sticon/3.3D.png)", "active": "url(images/1sticon/3.3D_on2.png)" },
+            { "normal": "url(images/1sticon/4.Zone.png)", "active": "url(images/1sticon/4.Zone_on2.png)" },
+            { "normal": "url(images/1sticon/5.System.png)", "active": "url(images/1sticon/5.System_on2.png)" },
+            { "normal": "url(images/1sticon/6.RESystem.png)", "active": "url(images/1sticon/6.RESystem_on2.png)" },
+            { "normal": "url(images/1sticon/7.Result.png)", "active": "url(images/1sticon/7.Result_on2.png)" },
         ];
-        let gDefaultSelect = ["0","2","8","12","16","21","26"];
 
-        function resetMainTree(id, subid, tree, select_id) {
-            if (subid) {
-                gTreeData[id][subid].children = JSON.parse(tree);
-            }
-            else {
-                gTreeData[id] = JSON.parse(tree);
-            }
-            if (select_id) gDefaultSelect[id] = select_id;
-            load(id);
-        }
+        icons.forEach((el, idx) => {
+            $('.item' + idx).css('background-image', el.normal);
+        });
 
-        function load(menuID) {
-            gMainTree.load(gTreeData[menuID], gDefaultSelect[menuID]);
+        $('.item' + menuID).css('background-image', icons[menuID].active);
 
-            let icons = [
-                {"normal":"url(images/1sticon/1.Building.png)","active":"url(images/1sticon/1.Building_on2.png)"},
-                {"normal":"url(images/1sticon/2.Construction.png)","active":"url(images/1sticon/2.Construction_on2.png)"},
-                {"normal":"url(images/1sticon/3.3D.png)","active":"url(images/1sticon/3.3D_on2.png)"},
-                {"normal":"url(images/1sticon/4.Zone.png)","active":"url(images/1sticon/4.Zone_on2.png)"},
-                {"normal":"url(images/1sticon/5.System.png)","active":"url(images/1sticon/5.System_on2.png)"},
-                {"normal":"url(images/1sticon/6.RESystem.png)","active":"url(images/1sticon/6.RESystem_on2.png)"},
-                {"normal":"url(images/1sticon/7.Result.png)","active":"url(images/1sticon/7.Result_on2.png)"},
-            ];
+    }
 
-            icons.forEach((el, idx) => {
-                $('.item' + idx).css('background-image',el.normal);
-            });
-
-            $('.item' + menuID).css('background-image',icons[menuID].active);
-
-        }
-
-    </script>
-    <body onload="load(0)">
-        <div id="cont-left" class="split split-horizontal" style="width:320px;padding:4px">
-            <div id="cont-menu" style="width:125px;float:left;height: calc(100% - 16px);background-color: #B5C2CB;padding-top: 16px;border-radius: 4px;box-shadow: 2px 2px 2px 2px #eee;color:#fff">
-                <div class="cont-item" onclick="load(0)">
-                    <div class="cont-icon item0" style="background-image: url('images/1sticon/1.Building.png');"></div>
-                    <div class="cont-title">건물 정보</div>
-                </div>
-                <div class="cont-item" onclick="load(1)">
-                    <div class="cont-icon item1" style="background-image: url('images/1sticon/2.Construction.png');"></div>
-                    <div class="cont-title">구조체 정보</div>
-                </div>
-                <div class="cont-item" onclick="load(2)">
-                    <div class="cont-icon item2" style="background-image: url('images/1sticon/3.3D.png');"></div>
-                    <div class="cont-title">3D 정보</div>
-                </div>
-                <div class="cont-item" onclick="load(3)">
-                    <div class="cont-icon item3" style="background-image: url('images/1sticon/4.Zone.png');"></div>
-                    <div class="cont-title">층별 존 정보</div>
-                </div>
-                <div class="cont-item" onclick="load(4)">
-                    <div class="cont-icon item4" style="background-image: url('images/1sticon/5.System.png');"></div>
-                    <div class="cont-title">설비 정보</div>
-                </div>
-                <div class="cont-item" onclick="load(5)">
-                    <div class="cont-icon item5" style="background-image: url('images/1sticon/6.RESystem.png');"></div>
-                    <div class="cont-title">신재생 정보</div>
-                </div>
-                <div class="cont-item" onclick="load(6)">
-                    <div class="cont-icon item6" style="background-image: url('images/1sticon/7.Result.png');"></div>
-                    <div class="cont-title">결과 정보</div>
-                </div>
-                <div class="cont-item" onclick="window.chrome.webview.postMessage('28')">
-                    <div class="cont-title">디버그</div>
-                </div>
+</script>
+<body onload="load(0)">
+    <div id="cont-left" class="split split-horizontal" style="width:320px;padding:4px">
+        <div id="cont-menu" style="width:125px;float:left;height: calc(100% - 16px);background-color: #B5C2CB;padding-top: 16px;border-radius: 4px;box-shadow: 2px 2px 2px 2px #eee;color:#fff">
+            <div class="cont-item" onclick="load(0)">
+                <div class="cont-icon item0" style="background-image: url('images/1sticon/1.Building.png');"></div>
+                <div class="cont-title">건물 정보</div>
             </div>
-            <div id="cont-tree" style="width:calc(100% - 125px);float:left;height:100%;padding-top: 16px;padding-bottom: 16px;overflow:auto"></div>
+            <div class="cont-item" onclick="load(1)">
+                <div class="cont-icon item1" style="background-image: url('images/1sticon/2.Construction.png');"></div>
+                <div class="cont-title">구조체 정보</div>
+            </div>
+            <div class="cont-item" onclick="load(2)">
+                <div class="cont-icon item2" style="background-image: url('images/1sticon/3.3D.png');"></div>
+                <div class="cont-title">3D 정보</div>
+            </div>
+            <div class="cont-item" onclick="load(3)">
+                <div class="cont-icon item3" style="background-image: url('images/1sticon/4.Zone.png');"></div>
+                <div class="cont-title">층별 존 정보</div>
+            </div>
+            <div class="cont-item" onclick="load(4)">
+                <div class="cont-icon item4" style="background-image: url('images/1sticon/5.System.png');"></div>
+                <div class="cont-title">설비 정보</div>
+            </div>
+            <div class="cont-item" onclick="load(5)">
+                <div class="cont-icon item5" style="background-image: url('images/1sticon/6.RESystem.png');"></div>
+                <div class="cont-title">신재생 정보</div>
+            </div>
+            <div class="cont-item" onclick="load(6)">
+                <div class="cont-icon item6" style="background-image: url('images/1sticon/7.Result.png');"></div>
+                <div class="cont-title">결과 정보</div>
+            </div>
+            <div class="cont-item" onclick="window.chrome.webview.postMessage(JSON.stringify({formID:28}))">
+                <div class="cont-title">디버그</div>
+            </div>
         </div>
-    </body>
+        <div id="cont-tree" style="width:calc(100% - 125px);float:left;height:100%;padding-top: 16px;padding-bottom: 16px;overflow:auto"></div>
+    </div>
+</body>
 </html>

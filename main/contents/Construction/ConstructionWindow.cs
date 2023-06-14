@@ -908,7 +908,6 @@ namespace main.contents
                 Uw.ToString()
                 + "'", "번호");
 
-
             Size = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호", "상위창호번호 = '" + WinNum + "'");
 
 

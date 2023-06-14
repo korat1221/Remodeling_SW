@@ -48,6 +48,8 @@
             UserDB_Psi_fix_textBox = new TextBox();
             label6 = new Label();
             panel1 = new Panel();
+            label15 = new Label();
+            UserNum_textBox = new TextBox();
             label4 = new Label();
             Deletebutton = new Button();
             Spacer_dataGridView = new DataGridView();
@@ -56,8 +58,8 @@
             UserDBType2_comboBox = new ComboBox();
             label7 = new Label();
             UserDBType1_comboBox = new ComboBox();
-            label15 = new Label();
-            UserNum_textBox = new TextBox();
+            label3 = new Label();
+            UserDB_Manufacture_textBox = new TextBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
@@ -107,7 +109,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(838, 450);
+            Save_button.Location = new Point(838, 461);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -118,7 +120,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(801, 48);
+            label5.Location = new Point(801, 72);
             label5.Name = "label5";
             label5.Size = new Size(44, 15);
             label5.TabIndex = 94;
@@ -127,7 +129,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(530, 48);
+            label10.Location = new Point(530, 72);
             label10.Name = "label10";
             label10.Size = new Size(131, 15);
             label10.TabIndex = 92;
@@ -135,7 +137,7 @@
             // 
             // UserDB_Psi_open_textBox
             // 
-            UserDB_Psi_open_textBox.Location = new Point(672, 44);
+            UserDB_Psi_open_textBox.Location = new Point(672, 68);
             UserDB_Psi_open_textBox.Name = "UserDB_Psi_open_textBox";
             UserDB_Psi_open_textBox.Size = new Size(120, 23);
             UserDB_Psi_open_textBox.TabIndex = 93;
@@ -176,7 +178,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(437, 48);
+            label11.Location = new Point(437, 72);
             label11.Name = "label11";
             label11.Size = new Size(44, 15);
             label11.TabIndex = 48;
@@ -185,7 +187,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(165, 48);
+            label9.Location = new Point(165, 72);
             label9.Name = "label9";
             label9.Size = new Size(131, 15);
             label9.TabIndex = 44;
@@ -193,7 +195,7 @@
             // 
             // UserDB_Psi_fix_textBox
             // 
-            UserDB_Psi_fix_textBox.Location = new Point(308, 44);
+            UserDB_Psi_fix_textBox.Location = new Point(308, 68);
             UserDB_Psi_fix_textBox.Name = "UserDB_Psi_fix_textBox";
             UserDB_Psi_fix_textBox.Size = new Size(120, 23);
             UserDB_Psi_fix_textBox.TabIndex = 45;
@@ -202,7 +204,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(440, 16);
+            label6.Location = new Point(258, 44);
             label6.Name = "label6";
             label6.Size = new Size(38, 15);
             label6.TabIndex = 7;
@@ -211,11 +213,12 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.GradientInactiveCaption;
+            panel1.Controls.Add(label3);
+            panel1.Controls.Add(UserDB_Manufacture_textBox);
             panel1.Controls.Add(label15);
             panel1.Controls.Add(UserNum_textBox);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(Deletebutton);
-            panel1.Controls.Add(Spacer_dataGridView);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(label10);
             panel1.Controls.Add(UserDB_Psi_open_textBox);
@@ -233,8 +236,27 @@
             panel1.Controls.Add(label6);
             panel1.Location = new Point(-1, 185);
             panel1.Name = "panel1";
-            panel1.Size = new Size(985, 249);
+            panel1.Size = new Size(985, 98);
             panel1.TabIndex = 27;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(130, 16);
+            label15.Name = "label15";
+            label15.Size = new Size(31, 15);
+            label15.TabIndex = 106;
+            label15.Text = "번호";
+            // 
+            // UserNum_textBox
+            // 
+            UserNum_textBox.BackColor = SystemColors.GradientInactiveCaption;
+            UserNum_textBox.BorderStyle = BorderStyle.None;
+            UserNum_textBox.Location = new Point(173, 15);
+            UserNum_textBox.Name = "UserNum_textBox";
+            UserNum_textBox.Size = new Size(68, 16);
+            UserNum_textBox.TabIndex = 107;
+            UserNum_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label4
             // 
@@ -281,7 +303,7 @@
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
             Spacer_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             Spacer_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Spacer_dataGridView.Location = new Point(3, 78);
+            Spacer_dataGridView.Location = new Point(3, 284);
             Spacer_dataGridView.Name = "Spacer_dataGridView";
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
@@ -308,7 +330,7 @@
             // 
             UserDBType3_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDBType3_comboBox.FormattingEnabled = true;
-            UserDBType3_comboBox.Location = new Point(854, 12);
+            UserDBType3_comboBox.Location = new Point(672, 40);
             UserDBType3_comboBox.Name = "UserDBType3_comboBox";
             UserDBType3_comboBox.Size = new Size(120, 23);
             UserDBType3_comboBox.TabIndex = 43;
@@ -317,7 +339,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(804, 16);
+            label8.Location = new Point(622, 44);
             label8.Name = "label8";
             label8.Size = new Size(38, 15);
             label8.TabIndex = 42;
@@ -327,8 +349,8 @@
             // 
             UserDBType2_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDBType2_comboBox.FormattingEnabled = true;
-            UserDBType2_comboBox.Location = new Point(672, 12);
-            UserDBType2_comboBox.Name = "UserDBType2_comboBox"; 
+            UserDBType2_comboBox.Location = new Point(490, 40);
+            UserDBType2_comboBox.Name = "UserDBType2_comboBox";
             UserDBType2_comboBox.Size = new Size(120, 23);
             UserDBType2_comboBox.TabIndex = 41;
             UserDBType2_comboBox.SelectedIndexChanged += UserDBType2_comboBox_SelectedIndexChanged;
@@ -336,7 +358,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(622, 16);
+            label7.Location = new Point(440, 44);
             label7.Name = "label7";
             label7.Size = new Size(38, 15);
             label7.TabIndex = 40;
@@ -346,40 +368,39 @@
             // 
             UserDBType1_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDBType1_comboBox.FormattingEnabled = true;
-            UserDBType1_comboBox.Location = new Point(490, 12);
+            UserDBType1_comboBox.Location = new Point(308, 40);
             UserDBType1_comboBox.Name = "UserDBType1_comboBox";
             UserDBType1_comboBox.Size = new Size(120, 23);
             UserDBType1_comboBox.TabIndex = 39;
             UserDBType1_comboBox.SelectedIndexChanged += UserDBType1_comboBox_SelectedIndexChanged;
             // 
-            // label15
+            // label3
             // 
-            label15.AutoSize = true;
-            label15.Location = new Point(130, 16);
-            label15.Name = "label15";
-            label15.Size = new Size(31, 15);
-            label15.TabIndex = 106;
-            label15.Text = "번호";
+            label3.AutoSize = true;
+            label3.Location = new Point(617, 16);
+            label3.Name = "label3";
+            label3.Size = new Size(43, 15);
+            label3.TabIndex = 108;
+            label3.Text = "제조사";
             // 
-            // UserNum_textBox
+            // UserDB_Manufacture_textBox
             // 
-            UserNum_textBox.BackColor = SystemColors.GradientInactiveCaption;
-            UserNum_textBox.BorderStyle = BorderStyle.None;
-            UserNum_textBox.Location = new Point(173, 15);
-            UserNum_textBox.Name = "UserNum_textBox";
-            UserNum_textBox.Size = new Size(68, 16);
-            UserNum_textBox.TabIndex = 107;
-            UserNum_textBox.TextAlign = HorizontalAlignment.Center;
+            UserDB_Manufacture_textBox.Location = new Point(672, 12);
+            UserDB_Manufacture_textBox.Name = "UserDB_Manufacture_textBox";
+            UserDB_Manufacture_textBox.Size = new Size(120, 23);
+            UserDB_Manufacture_textBox.TabIndex = 109;
+            UserDB_Manufacture_textBox.TextChanged += UserDB_Manufacture_textBox_TextChanged;
             // 
             // Window_SpacerDB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(985, 487);
+            ClientSize = new Size(985, 493);
             Controls.Add(panel1);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
+            Controls.Add(Spacer_dataGridView);
             Name = "Window_SpacerDB";
             Text = "Window_SpacerDB";
             GeneralPanel.ResumeLayout(false);
@@ -419,5 +440,7 @@
         private Label label4;
         private Label label15;
         private TextBox UserNum_textBox;
+        private Label label3;
+        private TextBox UserDB_Manufacture_textBox;
     }
 }

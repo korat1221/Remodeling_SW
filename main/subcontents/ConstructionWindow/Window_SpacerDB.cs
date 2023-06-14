@@ -88,6 +88,10 @@ namespace main.subcontents
             UserDBName = UserDBName_textBox.Text;
         }
 
+        private void UserDB_Manufacture_textBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
         private void UserDBType1_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UserDBType1 = UserDBType1_comboBox.SelectedItem.ToString();
@@ -194,5 +198,6 @@ namespace main.subcontents
             this.Close();
 
         }
+
     }
 }
