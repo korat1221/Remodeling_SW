@@ -688,20 +688,20 @@ namespace main.contents
                 DialogResult result = window_spacerDB_form.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    check_FrameMaterial = window_spacerDB_form.Select_WindowSpacer[3];
-                    check_SingleDoubleType = window_spacerDB_form.Select_WindowSpacer[4];
-                    check_LE_CL_V = window_spacerDB_form.Select_WindowSpacer[9];
-                    SpacerName = window_spacerDB_form.Select_WindowSpacer[2];
+                    check_FrameMaterial = window_spacerDB_form.Select_WindowSpacer[4];
+                    check_SingleDoubleType = window_spacerDB_form.Select_WindowSpacer[5];
+                    check_LE_CL_V = window_spacerDB_form.Select_WindowSpacer[10];
+                    SpacerName = window_spacerDB_form.Select_WindowSpacer[3];
                     SpacerName_textBox.Text = SpacerName;
                     if (LE_CL_V.Contains("LE"))
                     {
-                        Psi_g_fix = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[7]);
-                        Psi_g_open = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[8]);
+                        Psi_g_fix = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[8]);
+                        Psi_g_open = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[9]);
                     }
                     else
                     {
-                        Psi_g_fix = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[5]);
-                        Psi_g_open = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[6]);
+                        Psi_g_fix = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[6]);
+                        Psi_g_open = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[7]);
                     }
                     Psi_g_fix_textBox.Text = String.Format("{0:F3}", Psi_g_fix);
                     Psi_g_open_textBox.Text = String.Format("{0:F3}", Psi_g_open);

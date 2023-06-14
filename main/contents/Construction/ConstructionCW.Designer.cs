@@ -49,8 +49,8 @@
             label2 = new Label();
             SpacerName_textBox = new TextBox();
             Spacer_button = new Button();
-            GlassName_textBox = new TextBox();
-            GlassDB_button = new Button();
+            FixGlassName_textBox = new TextBox();
+            FixGlassDB_button = new Button();
             Install_comboBox = new ComboBox();
             label16 = new Label();
             Spacer_label = new Label();
@@ -61,6 +61,27 @@
             label25 = new Label();
             label4 = new Label();
             panel2 = new Panel();
+            PanelColor_label = new Label();
+            dPanel_label = new Label();
+            Panel_checkBox = new CheckBox();
+            PanelColor_comboBox = new ComboBox();
+            dPanel_label2 = new Label();
+            dPanel_textBox = new TextBox();
+            PanelGlass_label = new Label();
+            Panel_label = new Label();
+            PanelGlass_textBox = new TextBox();
+            PanelGlassDB_button = new Button();
+            αp_label2 = new Label();
+            UCW_p_label2 = new Label();
+            Panel_textBox = new TextBox();
+            PanelDB_button = new Button();
+            αp_textBox = new TextBox();
+            UCW_p_textBox = new TextBox();
+            label27 = new Label();
+            label8 = new Label();
+            label7 = new Label();
+            OpenGlassName_textBox = new TextBox();
+            OpenGlassDB_button = new Button();
             ImportSize_button = new Button();
             Uw2_unit_label = new Label();
             Ucw2_textBox = new TextBox();
@@ -71,19 +92,15 @@
             Install_button = new Button();
             FrameName_textBox = new TextBox();
             FrameDB_button = new Button();
-            Psi_open_unit_label = new Label();
-            Psi_g_open_textBox = new TextBox();
-            Psi_open_label = new Label();
-            Psi_fix_unit_label = new Label();
-            Psi_g_fix_textBox = new TextBox();
-            Psi_fix_label = new Label();
+            αp_label = new Label();
+            UCW_p_label = new Label();
             τD65_SNA_textBox = new TextBox();
             label26 = new Label();
             g_textBox = new TextBox();
             label23 = new Label();
             Ug_unit_label = new Label();
-            Ug_textBox = new TextBox();
-            Ug_label = new Label();
+            Ucw_g_textBox = new TextBox();
+            UCW_g_label = new Label();
             DiIndi_comboBox = new ComboBox();
             tabControl1 = new TabControl();
             Frame_tabPage = new TabPage();
@@ -325,7 +342,7 @@
             Size_textBox.Enabled = false;
             Size_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Size_textBox.ForeColor = SystemColors.ControlDark;
-            Size_textBox.Location = new Point(175, 264);
+            Size_textBox.Location = new Point(151, 264);
             Size_textBox.Name = "Size_textBox";
             Size_textBox.Size = new Size(120, 15);
             Size_textBox.TabIndex = 103;
@@ -335,7 +352,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(78, 263);
+            label2.Location = new Point(32, 263);
             label2.Name = "label2";
             label2.Size = new Size(54, 16);
             label2.TabIndex = 102;
@@ -348,7 +365,7 @@
             SpacerName_textBox.Enabled = false;
             SpacerName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             SpacerName_textBox.ForeColor = SystemColors.ControlDark;
-            SpacerName_textBox.Location = new Point(175, 143);
+            SpacerName_textBox.Location = new Point(327, 115);
             SpacerName_textBox.Name = "SpacerName_textBox";
             SpacerName_textBox.Size = new Size(120, 15);
             SpacerName_textBox.TabIndex = 93;
@@ -360,7 +377,7 @@
             Spacer_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Spacer_button.FlatStyle = FlatStyle.System;
             Spacer_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Spacer_button.Location = new Point(296, 139);
+            Spacer_button.Location = new Point(449, 111);
             Spacer_button.Margin = new Padding(0);
             Spacer_button.Name = "Spacer_button";
             Spacer_button.Size = new Size(23, 23);
@@ -369,39 +386,39 @@
             Spacer_button.UseVisualStyleBackColor = false;
             Spacer_button.Click += Spacer_button_Click;
             // 
-            // GlassName_textBox
+            // FixGlassName_textBox
             // 
-            GlassName_textBox.BackColor = Color.White;
-            GlassName_textBox.BorderStyle = BorderStyle.None;
-            GlassName_textBox.Enabled = false;
-            GlassName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            GlassName_textBox.ForeColor = SystemColors.ControlDark;
-            GlassName_textBox.Location = new Point(175, 85);
-            GlassName_textBox.Name = "GlassName_textBox";
-            GlassName_textBox.Size = new Size(120, 15);
-            GlassName_textBox.TabIndex = 91;
-            GlassName_textBox.TextAlign = HorizontalAlignment.Center;
+            FixGlassName_textBox.BackColor = Color.White;
+            FixGlassName_textBox.BorderStyle = BorderStyle.None;
+            FixGlassName_textBox.Enabled = false;
+            FixGlassName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            FixGlassName_textBox.ForeColor = SystemColors.ControlDark;
+            FixGlassName_textBox.Location = new Point(151, 85);
+            FixGlassName_textBox.Name = "FixGlassName_textBox";
+            FixGlassName_textBox.Size = new Size(120, 15);
+            FixGlassName_textBox.TabIndex = 91;
+            FixGlassName_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // GlassDB_button
+            // FixGlassDB_button
             // 
-            GlassDB_button.BackColor = SystemColors.ControlLight;
-            GlassDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            GlassDB_button.FlatStyle = FlatStyle.System;
-            GlassDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            GlassDB_button.Location = new Point(296, 81);
-            GlassDB_button.Margin = new Padding(0);
-            GlassDB_button.Name = "GlassDB_button";
-            GlassDB_button.Size = new Size(23, 23);
-            GlassDB_button.TabIndex = 90;
-            GlassDB_button.Text = "+";
-            GlassDB_button.UseVisualStyleBackColor = false;
-            GlassDB_button.Click += GlassDB_button_Click;
+            FixGlassDB_button.BackColor = SystemColors.ControlLight;
+            FixGlassDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            FixGlassDB_button.FlatStyle = FlatStyle.System;
+            FixGlassDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            FixGlassDB_button.Location = new Point(272, 81);
+            FixGlassDB_button.Margin = new Padding(0);
+            FixGlassDB_button.Name = "FixGlassDB_button";
+            FixGlassDB_button.Size = new Size(23, 23);
+            FixGlassDB_button.TabIndex = 90;
+            FixGlassDB_button.Text = "+";
+            FixGlassDB_button.UseVisualStyleBackColor = false;
+            FixGlassDB_button.Click += FixGlassDB_button_Click;
             // 
             // Install_comboBox
             // 
             Install_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Install_comboBox.FormattingEnabled = true;
-            Install_comboBox.Location = new Point(175, 226);
+            Install_comboBox.Location = new Point(151, 226);
             Install_comboBox.Name = "Install_comboBox";
             Install_comboBox.Size = new Size(120, 24);
             Install_comboBox.TabIndex = 52;
@@ -410,7 +427,7 @@
             // 
             label16.AutoSize = true;
             label16.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label16.Location = new Point(78, 230);
+            label16.Location = new Point(32, 230);
             label16.Name = "label16";
             label16.Size = new Size(29, 16);
             label16.TabIndex = 51;
@@ -420,7 +437,7 @@
             // 
             Spacer_label.AutoSize = true;
             Spacer_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Spacer_label.Location = new Point(78, 143);
+            Spacer_label.Location = new Point(298, 114);
             Spacer_label.Name = "Spacer_label";
             Spacer_label.Size = new Size(29, 16);
             Spacer_label.TabIndex = 45;
@@ -430,7 +447,7 @@
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label11.Location = new Point(78, 85);
+            label11.Location = new Point(32, 84);
             label11.Name = "label11";
             label11.Size = new Size(29, 16);
             label11.TabIndex = 41;
@@ -440,7 +457,7 @@
             // 
             Frame_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Frame_comboBox.FormattingEnabled = true;
-            Frame_comboBox.Location = new Point(175, 52);
+            Frame_comboBox.Location = new Point(151, 52);
             Frame_comboBox.Name = "Frame_comboBox";
             Frame_comboBox.Size = new Size(120, 24);
             Frame_comboBox.TabIndex = 40;
@@ -450,7 +467,7 @@
             // 
             Frame_label.AutoSize = true;
             Frame_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Frame_label.Location = new Point(78, 56);
+            Frame_label.Location = new Point(32, 56);
             Frame_label.Name = "Frame_label";
             Frame_label.Size = new Size(40, 16);
             Frame_label.TabIndex = 39;
@@ -460,7 +477,7 @@
             // 
             Ucw_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Ucw_comboBox.FormattingEnabled = true;
-            Ucw_comboBox.Location = new Point(175, 23);
+            Ucw_comboBox.Location = new Point(151, 23);
             Ucw_comboBox.Name = "Ucw_comboBox";
             Ucw_comboBox.Size = new Size(120, 24);
             Ucw_comboBox.TabIndex = 38;
@@ -470,7 +487,7 @@
             // 
             label25.AutoSize = true;
             label25.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label25.Location = new Point(78, 27);
+            label25.Location = new Point(32, 27);
             label25.Name = "label25";
             label25.Size = new Size(80, 16);
             label25.TabIndex = 37;
@@ -490,6 +507,27 @@
             // 
             panel2.BackColor = Color.White;
             panel2.BorderStyle = BorderStyle.Fixed3D;
+            panel2.Controls.Add(PanelColor_label);
+            panel2.Controls.Add(dPanel_label);
+            panel2.Controls.Add(Panel_checkBox);
+            panel2.Controls.Add(PanelColor_comboBox);
+            panel2.Controls.Add(dPanel_label2);
+            panel2.Controls.Add(dPanel_textBox);
+            panel2.Controls.Add(PanelGlass_label);
+            panel2.Controls.Add(Panel_label);
+            panel2.Controls.Add(PanelGlass_textBox);
+            panel2.Controls.Add(PanelGlassDB_button);
+            panel2.Controls.Add(αp_label2);
+            panel2.Controls.Add(UCW_p_label2);
+            panel2.Controls.Add(Panel_textBox);
+            panel2.Controls.Add(PanelDB_button);
+            panel2.Controls.Add(αp_textBox);
+            panel2.Controls.Add(UCW_p_textBox);
+            panel2.Controls.Add(label27);
+            panel2.Controls.Add(label8);
+            panel2.Controls.Add(label7);
+            panel2.Controls.Add(OpenGlassName_textBox);
+            panel2.Controls.Add(OpenGlassDB_button);
             panel2.Controls.Add(Size_textBox);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(ImportSize_button);
@@ -502,23 +540,19 @@
             panel2.Controls.Add(Install_button);
             panel2.Controls.Add(SpacerName_textBox);
             panel2.Controls.Add(Spacer_button);
-            panel2.Controls.Add(GlassName_textBox);
-            panel2.Controls.Add(GlassDB_button);
+            panel2.Controls.Add(FixGlassName_textBox);
+            panel2.Controls.Add(FixGlassDB_button);
             panel2.Controls.Add(FrameName_textBox);
             panel2.Controls.Add(FrameDB_button);
-            panel2.Controls.Add(Psi_open_unit_label);
-            panel2.Controls.Add(Psi_g_open_textBox);
-            panel2.Controls.Add(Psi_open_label);
-            panel2.Controls.Add(Psi_fix_unit_label);
-            panel2.Controls.Add(Psi_g_fix_textBox);
-            panel2.Controls.Add(Psi_fix_label);
+            panel2.Controls.Add(αp_label);
+            panel2.Controls.Add(UCW_p_label);
             panel2.Controls.Add(τD65_SNA_textBox);
             panel2.Controls.Add(label26);
             panel2.Controls.Add(g_textBox);
             panel2.Controls.Add(label23);
             panel2.Controls.Add(Ug_unit_label);
-            panel2.Controls.Add(Ug_textBox);
-            panel2.Controls.Add(Ug_label);
+            panel2.Controls.Add(Ucw_g_textBox);
+            panel2.Controls.Add(UCW_g_label);
             panel2.Controls.Add(DiIndi_comboBox);
             panel2.Controls.Add(Install_comboBox);
             panel2.Controls.Add(label16);
@@ -533,13 +567,254 @@
             panel2.Size = new Size(977, 307);
             panel2.TabIndex = 95;
             // 
+            // PanelColor_label
+            // 
+            PanelColor_label.AutoSize = true;
+            PanelColor_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PanelColor_label.Location = new Point(303, 172);
+            PanelColor_label.Name = "PanelColor_label";
+            PanelColor_label.Size = new Size(18, 16);
+            PanelColor_label.TabIndex = 124;
+            PanelColor_label.Text = "색";
+            // 
+            // dPanel_label
+            // 
+            dPanel_label.AutoSize = true;
+            dPanel_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dPanel_label.Location = new Point(298, 143);
+            dPanel_label.Name = "dPanel_label";
+            dPanel_label.Size = new Size(29, 16);
+            dPanel_label.TabIndex = 123;
+            dPanel_label.Text = "두께";
+            // 
+            // Panel_checkBox
+            // 
+            Panel_checkBox.AutoSize = true;
+            Panel_checkBox.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            Panel_checkBox.Location = new Point(64, 144);
+            Panel_checkBox.Name = "Panel_checkBox";
+            Panel_checkBox.Size = new Size(48, 17);
+            Panel_checkBox.TabIndex = 122;
+            Panel_checkBox.Text = "적용";
+            Panel_checkBox.UseVisualStyleBackColor = true;
+            Panel_checkBox.CheckedChanged += Panel_checkBox_CheckedChanged;
+            // 
+            // PanelColor_comboBox
+            // 
+            PanelColor_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PanelColor_comboBox.FormattingEnabled = true;
+            PanelColor_comboBox.Location = new Point(327, 168);
+            PanelColor_comboBox.Name = "PanelColor_comboBox";
+            PanelColor_comboBox.Size = new Size(120, 24);
+            PanelColor_comboBox.TabIndex = 121;
+            PanelColor_comboBox.SelectedIndexChanged += PanelColor_comboBox_SelectedIndexChanged;
+            // 
+            // dPanel_label2
+            // 
+            dPanel_label2.AutoSize = true;
+            dPanel_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dPanel_label2.ForeColor = SystemColors.ControlDark;
+            dPanel_label2.Location = new Point(449, 143);
+            dPanel_label2.Name = "dPanel_label2";
+            dPanel_label2.Size = new Size(29, 16);
+            dPanel_label2.TabIndex = 120;
+            dPanel_label2.Text = "mm";
+            // 
+            // dPanel_textBox
+            // 
+            dPanel_textBox.Location = new Point(327, 140);
+            dPanel_textBox.Name = "dPanel_textBox";
+            dPanel_textBox.Size = new Size(120, 23);
+            dPanel_textBox.TabIndex = 119;
+            // 
+            // PanelGlass_label
+            // 
+            PanelGlass_label.AutoSize = true;
+            PanelGlass_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PanelGlass_label.Location = new Point(116, 172);
+            PanelGlass_label.Name = "PanelGlass_label";
+            PanelGlass_label.Size = new Size(29, 16);
+            PanelGlass_label.TabIndex = 118;
+            PanelGlass_label.Text = "유리";
+            // 
+            // Panel_label
+            // 
+            Panel_label.AutoSize = true;
+            Panel_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Panel_label.Location = new Point(116, 143);
+            Panel_label.Name = "Panel_label";
+            Panel_label.Size = new Size(29, 16);
+            Panel_label.TabIndex = 117;
+            Panel_label.Text = "패널";
+            // 
+            // PanelGlass_textBox
+            // 
+            PanelGlass_textBox.BackColor = Color.White;
+            PanelGlass_textBox.BorderStyle = BorderStyle.None;
+            PanelGlass_textBox.Enabled = false;
+            PanelGlass_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PanelGlass_textBox.ForeColor = SystemColors.ControlDark;
+            PanelGlass_textBox.Location = new Point(151, 173);
+            PanelGlass_textBox.Name = "PanelGlass_textBox";
+            PanelGlass_textBox.Size = new Size(120, 15);
+            PanelGlass_textBox.TabIndex = 116;
+            PanelGlass_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // PanelGlassDB_button
+            // 
+            PanelGlassDB_button.BackColor = SystemColors.ControlLight;
+            PanelGlassDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            PanelGlassDB_button.FlatStyle = FlatStyle.System;
+            PanelGlassDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            PanelGlassDB_button.Location = new Point(272, 169);
+            PanelGlassDB_button.Margin = new Padding(0);
+            PanelGlassDB_button.Name = "PanelGlassDB_button";
+            PanelGlassDB_button.Size = new Size(23, 23);
+            PanelGlassDB_button.TabIndex = 115;
+            PanelGlassDB_button.Text = "+";
+            PanelGlassDB_button.UseVisualStyleBackColor = false;
+            PanelGlassDB_button.Click += PanelGlassDB_button_Click;
+            // 
+            // αp_label2
+            // 
+            αp_label2.AutoSize = true;
+            αp_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            αp_label2.ForeColor = SystemColors.ControlDark;
+            αp_label2.Location = new Point(821, 172);
+            αp_label2.Name = "αp_label2";
+            αp_label2.Size = new Size(11, 16);
+            αp_label2.TabIndex = 114;
+            αp_label2.Text = "-";
+            // 
+            // UCW_p_label2
+            // 
+            UCW_p_label2.AutoSize = true;
+            UCW_p_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UCW_p_label2.ForeColor = SystemColors.ControlDark;
+            UCW_p_label2.Location = new Point(800, 143);
+            UCW_p_label2.Name = "UCW_p_label2";
+            UCW_p_label2.Size = new Size(50, 16);
+            UCW_p_label2.TabIndex = 113;
+            UCW_p_label2.Text = "W/m²·K";
+            // 
+            // Panel_textBox
+            // 
+            Panel_textBox.BackColor = Color.White;
+            Panel_textBox.BorderStyle = BorderStyle.None;
+            Panel_textBox.Enabled = false;
+            Panel_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Panel_textBox.ForeColor = SystemColors.ControlDark;
+            Panel_textBox.Location = new Point(151, 144);
+            Panel_textBox.Name = "Panel_textBox";
+            Panel_textBox.Size = new Size(120, 15);
+            Panel_textBox.TabIndex = 112;
+            Panel_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // PanelDB_button
+            // 
+            PanelDB_button.BackColor = SystemColors.ControlLight;
+            PanelDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            PanelDB_button.FlatStyle = FlatStyle.System;
+            PanelDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            PanelDB_button.Location = new Point(272, 140);
+            PanelDB_button.Margin = new Padding(0);
+            PanelDB_button.Name = "PanelDB_button";
+            PanelDB_button.Size = new Size(23, 23);
+            PanelDB_button.TabIndex = 111;
+            PanelDB_button.Text = "+";
+            PanelDB_button.UseVisualStyleBackColor = false;
+            // 
+            // αp_textBox
+            // 
+            αp_textBox.BackColor = Color.White;
+            αp_textBox.BorderStyle = BorderStyle.None;
+            αp_textBox.Enabled = false;
+            αp_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            αp_textBox.ForeColor = SystemColors.ControlDark;
+            αp_textBox.Location = new Point(675, 173);
+            αp_textBox.Name = "αp_textBox";
+            αp_textBox.Size = new Size(116, 15);
+            αp_textBox.TabIndex = 110;
+            αp_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // UCW_p_textBox
+            // 
+            UCW_p_textBox.BackColor = Color.White;
+            UCW_p_textBox.BorderStyle = BorderStyle.None;
+            UCW_p_textBox.Enabled = false;
+            UCW_p_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UCW_p_textBox.ForeColor = SystemColors.ControlDark;
+            UCW_p_textBox.Location = new Point(675, 144);
+            UCW_p_textBox.Name = "UCW_p_textBox";
+            UCW_p_textBox.Size = new Size(116, 15);
+            UCW_p_textBox.TabIndex = 109;
+            UCW_p_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label27.Location = new Point(32, 143);
+            label27.Name = "label27";
+            label27.Size = new Size(29, 16);
+            label27.TabIndex = 108;
+            label27.Text = "패널";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.Location = new Point(116, 114);
+            label8.Name = "label8";
+            label8.Size = new Size(29, 16);
+            label8.TabIndex = 107;
+            label8.Text = "개폐";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Location = new Point(116, 84);
+            label7.Name = "label7";
+            label7.Size = new Size(29, 16);
+            label7.TabIndex = 106;
+            label7.Text = "고정";
+            // 
+            // OpenGlassName_textBox
+            // 
+            OpenGlassName_textBox.BackColor = Color.White;
+            OpenGlassName_textBox.BorderStyle = BorderStyle.None;
+            OpenGlassName_textBox.Enabled = false;
+            OpenGlassName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            OpenGlassName_textBox.ForeColor = SystemColors.ControlDark;
+            OpenGlassName_textBox.Location = new Point(151, 115);
+            OpenGlassName_textBox.Name = "OpenGlassName_textBox";
+            OpenGlassName_textBox.Size = new Size(120, 15);
+            OpenGlassName_textBox.TabIndex = 105;
+            OpenGlassName_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // OpenGlassDB_button
+            // 
+            OpenGlassDB_button.BackColor = SystemColors.ControlLight;
+            OpenGlassDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            OpenGlassDB_button.FlatStyle = FlatStyle.System;
+            OpenGlassDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            OpenGlassDB_button.Location = new Point(272, 111);
+            OpenGlassDB_button.Margin = new Padding(0);
+            OpenGlassDB_button.Name = "OpenGlassDB_button";
+            OpenGlassDB_button.Size = new Size(23, 23);
+            OpenGlassDB_button.TabIndex = 104;
+            OpenGlassDB_button.Text = "+";
+            OpenGlassDB_button.UseVisualStyleBackColor = false;
+            OpenGlassDB_button.Click += OpenGlassDB_button_Click;
+            // 
             // ImportSize_button
             // 
             ImportSize_button.BackColor = SystemColors.ControlLight;
             ImportSize_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ImportSize_button.FlatStyle = FlatStyle.System;
             ImportSize_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            ImportSize_button.Location = new Point(296, 260);
+            ImportSize_button.Location = new Point(272, 260);
             ImportSize_button.Margin = new Padding(0);
             ImportSize_button.Name = "ImportSize_button";
             ImportSize_button.Size = new Size(23, 23);
@@ -662,75 +937,27 @@
             FrameDB_button.UseVisualStyleBackColor = false;
             FrameDB_button.Click += FrameDB_button_Click;
             // 
-            // Psi_open_unit_label
+            // αp_label
             // 
-            Psi_open_unit_label.AutoSize = true;
-            Psi_open_unit_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Psi_open_unit_label.ForeColor = SystemColors.ControlDark;
-            Psi_open_unit_label.Location = new Point(800, 172);
-            Psi_open_unit_label.Name = "Psi_open_unit_label";
-            Psi_open_unit_label.Size = new Size(46, 16);
-            Psi_open_unit_label.TabIndex = 76;
-            Psi_open_unit_label.Text = "W/m·K";
+            αp_label.AutoSize = true;
+            αp_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            αp_label.ForeColor = SystemColors.ControlDark;
+            αp_label.Location = new Point(484, 172);
+            αp_label.Name = "αp_label";
+            αp_label.Size = new Size(113, 16);
+            αp_label.TabIndex = 77;
+            αp_label.Text = "[αp] 패널부분 흡수율";
             // 
-            // Psi_g_open_textBox
+            // UCW_p_label
             // 
-            Psi_g_open_textBox.BackColor = Color.White;
-            Psi_g_open_textBox.BorderStyle = BorderStyle.None;
-            Psi_g_open_textBox.Enabled = false;
-            Psi_g_open_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Psi_g_open_textBox.ForeColor = SystemColors.ControlDark;
-            Psi_g_open_textBox.Location = new Point(675, 172);
-            Psi_g_open_textBox.Name = "Psi_g_open_textBox";
-            Psi_g_open_textBox.Size = new Size(116, 15);
-            Psi_g_open_textBox.TabIndex = 78;
-            Psi_g_open_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // Psi_open_label
-            // 
-            Psi_open_label.AutoSize = true;
-            Psi_open_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Psi_open_label.ForeColor = SystemColors.ControlDark;
-            Psi_open_label.Location = new Point(484, 172);
-            Psi_open_label.Name = "Psi_open_label";
-            Psi_open_label.Size = new Size(144, 16);
-            Psi_open_label.TabIndex = 77;
-            Psi_open_label.Text = "[Ψg] 선형열관류율(개폐창)";
-            // 
-            // Psi_fix_unit_label
-            // 
-            Psi_fix_unit_label.AutoSize = true;
-            Psi_fix_unit_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Psi_fix_unit_label.ForeColor = SystemColors.ControlDark;
-            Psi_fix_unit_label.Location = new Point(800, 143);
-            Psi_fix_unit_label.Name = "Psi_fix_unit_label";
-            Psi_fix_unit_label.Size = new Size(46, 16);
-            Psi_fix_unit_label.TabIndex = 73;
-            Psi_fix_unit_label.Text = "W/m·K";
-            // 
-            // Psi_g_fix_textBox
-            // 
-            Psi_g_fix_textBox.BackColor = Color.White;
-            Psi_g_fix_textBox.BorderStyle = BorderStyle.None;
-            Psi_g_fix_textBox.Enabled = false;
-            Psi_g_fix_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Psi_g_fix_textBox.ForeColor = SystemColors.ControlDark;
-            Psi_g_fix_textBox.Location = new Point(675, 143);
-            Psi_g_fix_textBox.Name = "Psi_g_fix_textBox";
-            Psi_g_fix_textBox.Size = new Size(116, 15);
-            Psi_g_fix_textBox.TabIndex = 75;
-            Psi_g_fix_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // Psi_fix_label
-            // 
-            Psi_fix_label.AutoSize = true;
-            Psi_fix_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Psi_fix_label.ForeColor = SystemColors.ControlDark;
-            Psi_fix_label.Location = new Point(484, 143);
-            Psi_fix_label.Name = "Psi_fix_label";
-            Psi_fix_label.Size = new Size(144, 16);
-            Psi_fix_label.TabIndex = 74;
-            Psi_fix_label.Text = "[Ψg] 선형열관류율(고정창)";
+            UCW_p_label.AutoSize = true;
+            UCW_p_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UCW_p_label.ForeColor = SystemColors.ControlDark;
+            UCW_p_label.Location = new Point(484, 143);
+            UCW_p_label.Name = "UCW_p_label";
+            UCW_p_label.Size = new Size(146, 16);
+            UCW_p_label.TabIndex = 74;
+            UCW_p_label.Text = "[Ucw,p] 패널부분 열관류율";
             // 
             // τD65_SNA_textBox
             // 
@@ -752,9 +979,9 @@
             label26.ForeColor = SystemColors.ControlDark;
             label26.Location = new Point(484, 114);
             label26.Name = "label26";
-            label26.Size = new Size(176, 16);
+            label26.Size = new Size(135, 16);
             label26.TabIndex = 71;
-            label26.Text = "[τD65,SNA] 빛투과율(덧댐포함)";
+            label26.Text = "[τD65,SNA,g] 빛투과율";
             // 
             // g_textBox
             // 
@@ -774,11 +1001,11 @@
             label23.AutoSize = true;
             label23.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label23.ForeColor = SystemColors.ControlDark;
-            label23.Location = new Point(484, 85);
+            label23.Location = new Point(484, 84);
             label23.Name = "label23";
-            label23.Size = new Size(144, 16);
+            label23.Size = new Size(100, 16);
             label23.TabIndex = 68;
-            label23.Text = "[g] 태양열취득률(덧댐포함)";
+            label23.Text = "[gg] 태양열취득률";
             // 
             // Ug_unit_label
             // 
@@ -791,29 +1018,29 @@
             Ug_unit_label.TabIndex = 64;
             Ug_unit_label.Text = "W/m²·K";
             // 
-            // Ug_textBox
+            // Ucw_g_textBox
             // 
-            Ug_textBox.BackColor = Color.White;
-            Ug_textBox.BorderStyle = BorderStyle.None;
-            Ug_textBox.Enabled = false;
-            Ug_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Ug_textBox.ForeColor = SystemColors.ControlDark;
-            Ug_textBox.Location = new Point(675, 56);
-            Ug_textBox.Name = "Ug_textBox";
-            Ug_textBox.Size = new Size(116, 15);
-            Ug_textBox.TabIndex = 66;
-            Ug_textBox.TextAlign = HorizontalAlignment.Center;
+            Ucw_g_textBox.BackColor = Color.White;
+            Ucw_g_textBox.BorderStyle = BorderStyle.None;
+            Ucw_g_textBox.Enabled = false;
+            Ucw_g_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Ucw_g_textBox.ForeColor = SystemColors.ControlDark;
+            Ucw_g_textBox.Location = new Point(675, 56);
+            Ucw_g_textBox.Name = "Ucw_g_textBox";
+            Ucw_g_textBox.Size = new Size(116, 15);
+            Ucw_g_textBox.TabIndex = 66;
+            Ucw_g_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Ug_label
+            // UCW_g_label
             // 
-            Ug_label.AutoSize = true;
-            Ug_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Ug_label.ForeColor = SystemColors.ControlDark;
-            Ug_label.Location = new Point(484, 56);
-            Ug_label.Name = "Ug_label";
-            Ug_label.Size = new Size(157, 16);
-            Ug_label.TabIndex = 65;
-            Ug_label.Text = "[Ug] 유리 열관류율(덧댐제외)";
+            UCW_g_label.AutoSize = true;
+            UCW_g_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UCW_g_label.ForeColor = SystemColors.ControlDark;
+            UCW_g_label.Location = new Point(484, 56);
+            UCW_g_label.Name = "UCW_g_label";
+            UCW_g_label.Size = new Size(146, 16);
+            UCW_g_label.TabIndex = 65;
+            UCW_g_label.Text = "[Ucw,g] 유리부분 열관류율";
             // 
             // DiIndi_comboBox
             // 
@@ -1233,8 +1460,8 @@
         private Label label2;
         private TextBox SpacerName_textBox;
         private Button Spacer_button;
-        private TextBox GlassName_textBox;
-        private Button GlassDB_button;
+        private TextBox FixGlassName_textBox;
+        private Button FixGlassDB_button;
         private ComboBox Install_comboBox;
         private Label label16;
         private Label Spacer_label;
@@ -1255,19 +1482,15 @@
         private Button Install_button;
         private TextBox FrameName_textBox;
         private Button FrameDB_button;
-        private Label Psi_open_unit_label;
-        private TextBox Psi_g_open_textBox;
-        private Label Psi_open_label;
-        private Label Psi_fix_unit_label;
-        private TextBox Psi_g_fix_textBox;
-        private Label Psi_fix_label;
+        private Label αp_label;
+        private Label UCW_p_label;
         private TextBox τD65_SNA_textBox;
         private Label label26;
         private TextBox g_textBox;
         private Label label23;
         private Label Ug_unit_label;
-        private TextBox Ug_textBox;
-        private Label Ug_label;
+        private TextBox Ucw_g_textBox;
+        private Label UCW_g_label;
         private ComboBox DiIndi_comboBox;
         private TabControl tabControl1;
         private TabPage Frame_tabPage;
@@ -1300,5 +1523,26 @@
         private TextBox AdditionalCW_textBox;
         private ComboBox OldCW_comboBox;
         private PictureBox CWType_pictureBox;
+        private TextBox OpenGlassName_textBox;
+        private Button OpenGlassDB_button;
+        private Label label8;
+        private Label label7;
+        private CheckBox Panel_checkBox;
+        private ComboBox PanelColor_comboBox;
+        private Label dPanel_label2;
+        private TextBox dPanel_textBox;
+        private Label PanelGlass_label;
+        private Label Panel_label;
+        private TextBox PanelGlass_textBox;
+        private Button PanelGlassDB_button;
+        private Label αp_label2;
+        private Label UCW_p_label2;
+        private TextBox Panel_textBox;
+        private Button PanelDB_button;
+        private TextBox αp_textBox;
+        private TextBox UCW_p_textBox;
+        private Label label27;
+        private Label PanelColor_label;
+        private Label dPanel_label;
     }
 }

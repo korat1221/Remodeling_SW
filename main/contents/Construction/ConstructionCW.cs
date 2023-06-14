@@ -18,10 +18,10 @@ namespace main.contents
     public partial class ConstructionCW : Form
     {
         private String CWNum;
-        String CWName, Type, OldCW, UcwMethod, DiIndi, FrameType, SingleDoubleType, FrameMaterial, FrameName, GlassName, SpacerName, InstallType, InstallName, LE_CL_V;
+        String CWName, Type, OldCW, UcwMethod, DiIndi, FrameType, SingleDoubleType, FrameMaterial, FrameName, FixGlassName, OpenGlassName, PanelGlassName, SpacerName, InstallType, InstallName, LE_CL_V, PanelColor;
         String check_FrameType, check_LE_CL_V, check_InstallType;
         String[][] Size;
-        double Ug, g, τD65_SNA, Psi_g_fix, Psi_g_open, Ucw;
+        double Ug_Fix, Ug_Open, Ug_panel, g, τD65_SNA, αp, Psi_g_fix, Psi_g_open, Ucw;
         List<double> Sub_Ucw = new List<double>(); List<double> Sub_Ucw_inst = new List<double>(); List<double> Sub_dUinst = new List<double>();// dUinst는 열교가산치, Uw_inst는 유효열관류율(창호열관류율+열교가산치)
         double Uf_mt, Uf_open, Psi_p, df_mt, df_open, df_btw;
         double Psi_InstallTop, Psi_InstallSide, Psi_InstallButtom;
@@ -45,6 +45,9 @@ namespace main.contents
             Image = Program.DB.getValue(DB.type.BaseDB, "커튼월프레임이미지", "이미지", "유형 = '디포트'");
             CWFrame_pictureBox.Load(Program.gPath + Image[0][0]);
             CWFrame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+            Panel_checkBox.Checked = true;
+            Panel_checkBox.Checked = false;
 
         }
 
@@ -196,17 +199,9 @@ namespace main.contents
                 Spacer_button.Visible = true;
                 SpacerName_textBox.Visible = true;
 
-                Ug_label.Visible = true;
-                Ug_textBox.Visible = true;
+                UCW_g_label.Visible = true;
+                Ucw_g_textBox.Visible = true;
                 Ug_unit_label.Visible = true;
-
-                Psi_fix_label.Visible = true;
-                Psi_open_label.Visible = true;
-                Psi_fix_unit_label.Visible = true;
-                Psi_open_unit_label.Visible = true;
-                Psi_g_fix_textBox.Visible = true;
-                Psi_g_open_textBox.Visible = true;
-
 
                 Uw2_label.Visible = false;
                 Uw2_unit_label.Visible = false;
@@ -225,16 +220,9 @@ namespace main.contents
                 Spacer_button.Visible = false;
                 SpacerName_textBox.Visible = false;
 
-                Ug_label.Visible = false;
-                Ug_textBox.Visible = false;
+                UCW_g_label.Visible = false;
+                Ucw_g_textBox.Visible = false;
                 Ug_unit_label.Visible = false;
-
-                Psi_fix_label.Visible = false;
-                Psi_open_label.Visible = false;
-                Psi_fix_unit_label.Visible = false;
-                Psi_open_unit_label.Visible = false;
-                Psi_g_fix_textBox.Visible = false;
-                Psi_g_open_textBox.Visible = false;
 
                 Uw2_label.Visible = true;
                 Uw2_unit_label.Visible = true;
@@ -253,16 +241,9 @@ namespace main.contents
                 Spacer_button.Visible = false;
                 SpacerName_textBox.Visible = false;
 
-                Ug_label.Visible = false;
-                Ug_textBox.Visible = false;
+                UCW_g_label.Visible = false;
+                Ucw_g_textBox.Visible = false;
                 Ug_unit_label.Visible = false;
-
-                Psi_fix_label.Visible = false;
-                Psi_open_label.Visible = false;
-                Psi_fix_unit_label.Visible = false;
-                Psi_open_unit_label.Visible = false;
-                Psi_g_fix_textBox.Visible = false;
-                Psi_g_open_textBox.Visible = false;
 
                 Uw2_label.Visible = true;
                 Uw2_unit_label.Visible = true;
@@ -417,17 +398,16 @@ namespace main.contents
 
         }
 
-        private void GlassDB_button_Click(object sender, EventArgs e)
+        private void FixGlassDB_button_Click(object sender, EventArgs e)
         {
             GlassDB cw_glassDB_form = new GlassDB();
             DialogResult result = cw_glassDB_form.ShowDialog();
             if (result == DialogResult.OK)
             {
-                GlassName = cw_glassDB_form.Select_WindowGlass[1];
-                GlassName_textBox.Text = GlassName;
+                FixGlassName = cw_glassDB_form.Select_WindowGlass[1];
+                FixGlassName_textBox.Text = FixGlassName;
                 LE_CL_V = cw_glassDB_form.Select_WindowGlass[5];
-                Ug = Convert.ToDouble(cw_glassDB_form.Select_WindowGlass[6]);
-                Ug_textBox.Text = String.Format("{0:F3}", Ug);
+                Ug_Fix = Convert.ToDouble(cw_glassDB_form.Select_WindowGlass[6]);
                 g = Convert.ToDouble(cw_glassDB_form.Select_WindowGlass[7]);
                 g_textBox.Text = String.Format("{0:F3}", g);
                 τD65_SNA = Convert.ToDouble(cw_glassDB_form.Select_WindowGlass[8]);
@@ -444,10 +424,7 @@ namespace main.contents
                         MessageBox.Show("간봉을 다시 선택하세요.");
                         SpacerName = "";
                         SpacerName_textBox.Text = "";
-                        Psi_g_fix_textBox.Text = "";
-                        Psi_g_open_textBox.Text = "";
                     }
-
                 }
 
             }
@@ -455,7 +432,101 @@ namespace main.contents
 
         }
 
+        private void OpenGlassDB_button_Click(object sender, EventArgs e)
+        {
+            GlassDB cw_glassDB_form = new GlassDB();
+            DialogResult result = cw_glassDB_form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                OpenGlassName = cw_glassDB_form.Select_WindowGlass[1];
+                OpenGlassName_textBox.Text = OpenGlassName;
+                Ug_Open = Convert.ToDouble(cw_glassDB_form.Select_WindowGlass[6]);
+            }
 
+        }
+
+        private void Panel_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            PanelCheck();
+        }
+        private void PanelCheck()
+        {
+            if (Panel_checkBox.Checked)
+            {
+                Panel_label.Visible = true;
+                Panel_textBox.Visible = true;
+                PanelDB_button.Visible = true;
+
+                dPanel_label.Visible = true;
+                dPanel_textBox.Visible = true;
+                dPanel_label2.Visible = true;
+
+                PanelGlass_label.Visible = true;
+                PanelGlass_textBox.Visible = true;
+                PanelGlassDB_button.Visible = true;
+
+                PanelColor_label.Visible = true;
+                PanelColor_comboBox.Visible = true;
+                Program.UTIL.FillComboBox(PanelColor_comboBox, "커튼월", "색깔", "1");
+
+                UCW_p_label.Visible = true;
+                UCW_p_textBox.Visible = true;
+                UCW_p_label2.Visible = true;
+
+                αp_label.Visible = true;
+                αp_textBox.Visible = true;
+                αp_label.Visible = true;
+
+
+            }
+            else
+            {
+                Panel_label.Visible = false;
+                Panel_textBox.Visible = false;
+                PanelDB_button.Visible = false;
+
+                dPanel_label.Visible = false;
+                dPanel_textBox.Visible = false;
+                dPanel_label2.Visible = false;
+
+                PanelGlass_label.Visible = false;
+                PanelGlass_textBox.Visible = false;
+                PanelGlassDB_button.Visible = false;
+
+                PanelColor_label.Visible = false;
+                PanelColor_comboBox.Visible = false;
+
+                UCW_p_label.Visible = false;
+                UCW_p_textBox.Visible = false;
+                UCW_p_label2.Visible = false;
+
+                αp_label.Visible = false;
+                αp_textBox.Visible = false;
+                αp_label.Visible = false;
+
+            }
+        }
+
+        private void PanelGlassDB_button_Click(object sender, EventArgs e)
+        {
+            GlassDB cw_glassDB_form = new GlassDB();
+            DialogResult result = cw_glassDB_form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                PanelGlassName = cw_glassDB_form.Select_WindowGlass[1];
+                PanelGlass_textBox.Text = PanelGlassName;
+                Ug_panel = Convert.ToDouble(cw_glassDB_form.Select_WindowGlass[6]);
+            }
+
+        }
+
+        private void PanelColor_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PanelColor = PanelColor_comboBox.SelectedItem.ToString();
+            String[][] value = Program.DB.getValue(DB.type.BaseDB, "흡수율", "흡수율", "외장재색 = '" + PanelColor + "'");
+            αp = Convert.ToDouble(value[0][0]);
+            αp_textBox.Text = String.Format("{0:F1}", αp);
+        }
         private void Spacer_button_Click(object sender, EventArgs e)
         {
             if (FrameType == null)
@@ -486,8 +557,6 @@ namespace main.contents
                         Psi_g_fix = Convert.ToDouble(cw_spacerDB_form.Select_WindowSpacer[5]);
                         Psi_g_open = Convert.ToDouble(cw_spacerDB_form.Select_WindowSpacer[6]);
                     }
-                    Psi_g_fix_textBox.Text = String.Format("{0:F3}", Psi_g_fix);
-                    Psi_g_open_textBox.Text = String.Format("{0:F3}", Psi_g_open);
                 }
             }
         }
@@ -601,9 +670,9 @@ namespace main.contents
         public double Calc_Uw(double Area, double Width, double Height, double Ag_fix, double Ag_open, double Af_open, double Af_fix, double Af_btw, double Lg_fix, double Lg_open)
         {
             double Uwcalc;
-            if (UcwMethod == "계산" && Ug != 0 && Uf_open != 0 && Psi_g_fix != 0 && Area != 0)
+            if (UcwMethod == "계산" && Ug_Fix != 0 && Uf_open != 0 && Psi_g_fix != 0 && Area != 0)
             {
-                Uwcalc = (Ug * (Ag_fix + Ag_open) + (Uf_mt * Af_open) + (Uf_open * Af_fix) + (Psi_p * Af_btw) + (Psi_g_fix * Lg_fix) + (Psi_g_open * Lg_open)) / Area;
+                Uwcalc = (Ug_Fix * (Ag_fix + Ag_open) + (Uf_mt * Af_open) + (Uf_open * Af_fix) + (Psi_p * Af_btw) + (Psi_g_fix * Lg_fix) + (Psi_g_open * Lg_open)) / Area;
             }
             else { Uwcalc = 0; }
             return Uwcalc;
@@ -640,7 +709,7 @@ namespace main.contents
             {
                 MessageBox.Show("창호 리모델링 유형을 선택하세요.");
             }
-            else if (GlassName == null)
+            else if (FixGlassName == null)
             {
                 MessageBox.Show("유리를 선택하세요.");
             }
