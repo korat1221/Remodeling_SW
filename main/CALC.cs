@@ -40,7 +40,7 @@ namespace main
                         }
                         else
                         {
-                            Program.DB.setValue(DB.type.ProjDB, "Zone", "zoneNum", "'" + token[0] + "'", "zoneNum");
+                            Program.DB.setValue(DB.type.ProjDB, "Zone", "ZoneNum", "'" + token[0] + "'", "ZoneNum");
                             zoneNum = token[0];
 
                             //외기온도 가져오기
@@ -120,7 +120,7 @@ namespace main
 
                                                 s += "'0.34'";
 
-                                                Program.DB.setValue(DB.type.ProjDB, "Zonegeneral", "구분,zoneNum,zoneName,zoneUsage,zoneHC,θi_h_set,θi_c_set,Δθi_NA,Fx,Fx_fl,Fx_wl,θs_c,θi_h_min,θe_min,θSUP_Wi,Mode_night,Mode_we,twd_d,th_op_d_we,th_op_d,dwd_a,ZoneArea,zoneHeight,qI_p,qI_fac,Cwirk_A,VA_we,VA_wd,n50,e,f,Vmech_SUP_we,Vmech_SUP_wd,Vmech_ETA_we,Vmech_ETA_wd,ηV_mech,ηχV_mech,χi_c_set,χi_h_set,Vmech_SUP_z,Vmech_ETA_z,ρacp_a",s, "zoneNum");
+                                                Program.DB.setValue(DB.type.ProjDB, "Zonegeneral", "구분,zoneNum,zoneName,zoneUsage,zoneHC,θi_h_set,θi_c_set,Δθi_NA,Fx,Fx_fl,Fx_wl,θs_c,θi_h_min,θe_min,θSUP_Wi,Mode_night,Mode_we,twd_d,th_op_d_we,th_op_d,dwd_a,ZoneArea,zoneHeight,qI_p,qI_fac,Cwirk_A,VA_we,VA_wd,n50,e,f,Vmech_SUP_we,Vmech_SUP_wd,Vmech_ETA_we,Vmech_ETA_wd,ηV_mech,ηχV_mech,χi_c_set,χi_h_set,Vmech_SUP_z,Vmech_ETA_z,ρacp_a",s, "ZoneNum");
 
                                                 //string[][] res = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral", "구분,zoneNum");
 
@@ -933,7 +933,7 @@ namespace main
                                                 }
 
                                                 String Num = Program.UTIL.CreateNum("ZoneLightgeneral", "번호", "번호0");
-                                                Program.DB.setValue(DB.type.ProjDB, "ZoneLightgeneral", "번호,ZoneNum,Wr,Lr,A,hR,hm,hLi,hTa,K", "'" +Num + "','" + zoneNum + "'," + s +"'" + token2[8] + "'", "번호,zoneNum"); 
+                                                Program.DB.setValue(DB.type.ProjDB, "ZoneLightgeneral", "번호,ZoneNum,Wr,Lr,A,hR,hm,hLi,hTa,K", "'" +Num + "','" + zoneNum + "'," + s +"'" + token2[8] + "'", "ZoneNum"); 
                                                 //Wr = Convert.ToDouble(token2[1]);
                                                 //Lr = Convert.ToDouble(token2[2]);
                                                 //A = Convert.ToDouble(token2[3]);
@@ -985,7 +985,7 @@ namespace main
                                                 {
                                                     s += "'" + token2[i] + "',";
                                                 }
-                                                Program.DB.setValue(DB.type.ProjDB, "ZoneLightprofile", "ZoneNum,Location,Em,KA,FA", "'" + zoneNum + "'," + s + "'" + token2[3] + "'", "zoneNum");
+                                                Program.DB.setValue(DB.type.ProjDB, "ZoneLightprofile", "ZoneNum,Location,Em,KA,FA", "'" + zoneNum + "'," + s + "'" + token2[3] + "'", "ZoneNum");
                                                 //Location = token2[0];
                                                 //Em = Convert.ToDouble(token2[1]);
                                                 //KA = Convert.ToDouble(token2[2]);
@@ -1118,7 +1118,7 @@ namespace main
                                                 {
                                                     s += "'" + token2[i] + "',";
                                                 }
-                                                Program.DB.setValue(DB.type.ProjDB, "Lighting", "ZoneNum,Pj,Pn,Fo,Fc,lm_W,Wsp", "'" + zoneNum + "'," + s + "'" + token2[6] + "'", "zoneNum");
+                                                Program.DB.setValue(DB.type.ProjDB, "Lighting", "ZoneNum,Pj,Pn,Fo,Fc,lm_W,Wsp", "'" + zoneNum + "'," + s + "'" + token2[6] + "'", "ZoneNum");
 
 
                                                 //    Pj = Convert.ToDouble(token2[1]);
@@ -1170,7 +1170,7 @@ namespace main
                                                 {
                                                     s += "'" + token2[i] + "',";
                                                 }
-                                                Program.DB.setValue(DB.type.ProjDB, "facade1", "ZoneNum,direction,Aca,a,b,AD,glass,τD65_SNA,K1,K2,K3,shade,dimming,γSh_lsh,γSh_hA,γSh_vA", "'" + zoneNum + "'," + s + "'" + token2[15] + "'", "zoneNum");
+                                                Program.DB.setValue(DB.type.ProjDB, "facade1", "ZoneNum,direction,Aca,a,b,AD,glass,τD65_SNA,K1,K2,K3,shade,dimming,γSh_lsh,γSh_hA,γSh_vA", "'" + zoneNum + "'," + s + "'" + token2[15] + "'", "ZoneNum");
                                                 //facade_di = (token2[1]);
                                                 //Zone_f_Aca = Convert.ToDouble(token2[2]);
                                                 //Zone_f_aD = Convert.ToDouble(token2[3]);
@@ -1364,7 +1364,7 @@ namespace main
                                                 {
                                                     s += "'" + token2[i] + "',";
                                                 }
-                                                Program.DB.setValue(DB.type.ProjDB, "Courtyard_Atrium", "ZoneNum,aIn_At,bIn_At,hIn_At,glasstype,τSh_In_At_D65,Ksh_In_At_1,Ksh_In_At_2,Ksh_In_At_3", "'" + zoneNum + "'," + s + "'" + token2[8] + "'", "zoneNum");
+                                                Program.DB.setValue(DB.type.ProjDB, "Courtyard_Atrium", "ZoneNum,aIn_At,bIn_At,hIn_At,glasstype,τSh_In_At_D65,Ksh_In_At_1,Ksh_In_At_2,Ksh_In_At_3", "'" + zoneNum + "'," + s + "'" + token2[8] + "'", "ZoneNum");
                                                 
 
                                                 //aIn_At = Convert.ToDouble(token2[1]);
@@ -1418,7 +1418,7 @@ namespace main
                                                 {
                                                     s += "'" + token2[i] + "',";
                                                 }
-                                                Program.DB.setValue(DB.type.ProjDB, "Doubleskin", "ZoneNum, glasstype,τSh_In_GDF_D65,Ksh_GDF_1,Ksh_GDF_2,Ksh_GDF_3", "'" + zoneNum + "'," + s + "'" + token2[5] + "'", "zoneNum");
+                                                Program.DB.setValue(DB.type.ProjDB, "Doubleskin", "ZoneNum, glasstype,τSh_In_GDF_D65,Ksh_GDF_1,Ksh_GDF_2,Ksh_GDF_3", "'" + zoneNum + "'," + s + "'" + token2[5] + "'", "ZoneNum");
                                                 //glass3 = token2[1];
                                                 //τSh_In_GDF_D65 = Convert.ToDouble(token2[2]);
                                                 //Ksh_GDF_1 = Convert.ToDouble(token2[3]);
@@ -1466,7 +1466,7 @@ namespace main
                                                 {
                                                     s += "'" + token2[i] + "',";
                                                 }
-                                                Program.DB.setValue(DB.type.ProjDB, "NaturalLighting", "ZoneNum,Main,Middle,Sub", "'" + zoneNum + "'," + s + "'" + token2[3] + "'", "zoneNum");
+                                                Program.DB.setValue(DB.type.ProjDB, "NaturalLighting", "ZoneNum,Main,Middle,Sub", "'" + zoneNum + "'," + s + "'" + token2[3] + "'", "ZoneNum");
                                                 //Main = token2[1];
                                                 //Middle = token2[2];
                                                 //Sub = token2[3];
@@ -1515,7 +1515,7 @@ namespace main
                                                 {
                                                     s += "'" + token2[i] + "',";
                                                 }
-                                                Program.DB.setValue(DB.type.ProjDB, "rooflight1", "ZoneNum,direction,Aca,a,b,AD,glasstype,γF,γW,a_s,b_s,hS,hw,hg,Da,τD65_SNA,τD65_SA,Kobl_1,Kobl_2,Kobl_3,shading,dimmingtype", "'" + zoneNum + "'," + s + "'" + token2[21] + "'", "zoneNum");
+                                                Program.DB.setValue(DB.type.ProjDB, "rooflight1", "ZoneNum,direction,Aca,a,b,AD,glasstype,γF,γW,a_s,b_s,hS,hw,hg,Da,τD65_SNA,τD65_SA,Kobl_1,Kobl_2,Kobl_3,shading,dimmingtype", "'" + zoneNum + "'," + s + "'" + token2[21] + "'", "ZoneNum");
                                                 //roof_di = token2[1];
                                                 //r_Aca = Convert.ToDouble(token2[2]);
                                                 //r_aD = Convert.ToDouble(token2[3]);
@@ -1628,7 +1628,7 @@ namespace main
                                                 {
                                                     s += "'" + token2[i] + "',";
                                                 }
-                                                Program.DB.setValue(DB.type.ProjDB, "renewable_energy_1", "ZoneNum,energytype,direction,inc,area,eff", "'" + zoneNum + "'," + s + "'" + token2[5] + "'", "zoneNum");
+                                                Program.DB.setValue(DB.type.ProjDB, "renewable_energy_1", "ZoneNum,energytype,direction,inc,area,eff", "'" + zoneNum + "'," + s + "'" + token2[5] + "'", "ZoneNum");
                                                 //energy_type = (token2[1]);
                                                 //energy_di = (token2[2]);
                                                 //energy_inc = Convert.ToDouble(token2[3]);
@@ -1709,7 +1709,7 @@ namespace main
         private static bool ZoneCalc()
         {
             int i = -1;
-            string[][] zones = Program.DB.getValue(DB.type.ProjDB, "Zone", "zoneNum");
+            string[][] zones = Program.DB.getValue(DB.type.ProjDB, "Zone", "ZoneNum");
 
             while(++i < zones.Length)
             {
