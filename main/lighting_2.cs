@@ -261,11 +261,11 @@ namespace main
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
+                        int n2 = 0;
                         while (sr2.EndOfStream == false)
                         {
                             string[] token2 = sr2.ReadLine().Split(',');
-                            if (n == 0)
+                            if (n2 == 0)
                             {
                             }
                             else
@@ -277,7 +277,7 @@ namespace main
                                 }
 
                             }
-                            n++;
+                            n2++;
 
                         }
                         sr2.Close();
@@ -303,11 +303,11 @@ namespace main
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
+                        int n2 = 0;
                         while (sr2.EndOfStream == false)
                         {
                             string[] token2 = sr2.ReadLine().Split(',');
-                            if (n == 0)
+                            if (n2 == 0)
                             {
                             }
                             else
@@ -320,7 +320,7 @@ namespace main
                                 wsp = Convert.ToDouble(token2[6]);
 
                             }
-                            n++;
+                            n2++;
 
                         }
                         sr2.Close();
@@ -346,11 +346,11 @@ namespace main
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
+                        int n2 = 0;
                         while (sr2.EndOfStream == false)
                         {
                             string[] token2 = sr2.ReadLine().Split(',');
-                            if (n == 0)
+                            if (n2 == 0)
                             {
                             }
                             else
@@ -375,7 +375,7 @@ namespace main
 
 
                             }
-                            n++;
+                            n2++;
 
                         }
                         sr2.Close();
@@ -401,11 +401,11 @@ namespace main
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
+                        int n2 = 0;
                         while (sr2.EndOfStream == false)
                         {
                             string[] token2 = sr2.ReadLine().Split(',');
-                            if (n == 0)
+                            if (n2 == 0)
                             {
                             }
                             else
@@ -420,14 +420,10 @@ namespace main
 
 
                             }
-                            n++;
+                            n2++;
 
                         }
-                        //for (int i = 0; i < 12; i++)
-                        //{
-
-                        //    Console.WriteLine("확인" + i.ToString() + shademonth[i].ToString());
-                        //}
+                     
                         sr2.Close();
 
 
@@ -536,11 +532,11 @@ namespace main
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
+                        int n2 = 0;
                         while (sr2.EndOfStream == false)
                         {
                             string[] token2 = sr2.ReadLine().Split(',');
-                            if (n == 0)
+                            if (n2 == 0)
                             {
                             }
                             else
@@ -557,7 +553,7 @@ namespace main
                                 Ksh_In_At_3 = Convert.ToDouble(token2[8]);
 
                             }
-                            n++;
+                            n2++;
 
                         }
                         sr2.Close();
@@ -583,11 +579,11 @@ namespace main
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
+                        int n2 = 0;
                         while (sr2.EndOfStream == false)
                         {
                             string[] token2 = sr2.ReadLine().Split(',');
-                            if (n == 0)
+                            if (n2 == 0)
                             {
                             }
                             else
@@ -600,7 +596,7 @@ namespace main
                                 Ksh_GDF_3 = Convert.ToDouble(token2[5]);
 
                             }
-                            n++;
+                            n2++;
 
                         }
                         sr2.Close();
@@ -627,21 +623,21 @@ namespace main
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
+                        int n2 = 0;
                         while (sr2.EndOfStream == false)
                         {
                             string[] token2 = sr2.ReadLine().Split(',');
-                            if (n == 0)
+                            if (n2 == 0)
                             {
                             }
                             else
                             {
                                 for (int k = 0; k < token2.Length; k++)
                                 {
-                                    파사드차양미가동주광공급계수테이블[n - 1, k] = token2[k];
+                                    파사드차양미가동주광공급계수테이블[n2 - 1, k] = token2[k];
                                 }
                             }
-                            n++;
+                            n2++;
 
                         }
 
@@ -746,24 +742,23 @@ namespace main
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
+                        int n2 = 0;
                         while (sr2.EndOfStream == false)
                         {
                             string[] token2 = sr2.ReadLine().Split(',');
-                            if (n == 0)
+                            if (n2 == 0)
                             {
                             }
                             else
                             {
                                 for (int k = 0; k < token2.Length; k++)
                                 {
-                                    파사드월별분배[n - 1, k] = token2[k];
+                                    파사드월별분배[n2 - 1, k] = token2[k];
                                 }
                             }
-                            n++;
+                            n2++;
 
                         }
-
 
                     }
                 }
@@ -786,11 +781,11 @@ namespace main
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
+                        int n2 = 0;
                         while (sr2.EndOfStream == false)
                         {
                             string[] token2 = sr2.ReadLine().Split(',');
-                            if (n == 0)
+                            if (n2 == 0)
                             {
                             }
                             else
@@ -802,7 +797,7 @@ namespace main
 
 
                             }
-                            n++;
+                            n2++;
 
                         }
                         sr2.Close();
@@ -828,11 +823,11 @@ namespace main
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
+                        int n2 = 0;
                         while (sr2.EndOfStream == false)
                         {
                             string[] token2 = sr2.ReadLine().Split(',');
-                            if (n == 0)
+                            if (n2 == 0)
                             {
                             }
                             else
@@ -863,7 +858,7 @@ namespace main
 
 
                             }
-                            n++;
+                            n2++;
 
                         }
                         sr2.Close();
@@ -889,11 +884,11 @@ namespace main
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
+                        int n2 = 0;
                         while (sr2.EndOfStream == false)
                         {
                             string[] token2 = sr2.ReadLine().Split(',');
-                            if (n == 0)
+                            if (n2 == 0)
                             {
                             }
                             else
@@ -905,7 +900,7 @@ namespace main
                                 }
 
                             }
-                            n++;
+                            n2++;
 
                         }
                         sr2.Close();
@@ -931,11 +926,11 @@ namespace main
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
+                        int n2 = 0;
                         while (sr2.EndOfStream == false)
                         {
                             string[] token2 = sr2.ReadLine().Split(',');
-                            if (n == 0)
+                            if (n2 == 0)
                             {
                             }
                             else
@@ -949,7 +944,7 @@ namespace main
 
 
                             }
-                            n++;
+                            n2++;
 
                         }
                         sr2.Close();
@@ -976,11 +971,11 @@ namespace main
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
                     {
-                        int n = 0;
+                        int n2 = 0;
                         while (sr2.EndOfStream == false)
                         {
                             string[] token2 = sr2.ReadLine().Split(',');
-                            if (n == 0)
+                            if (n2 == 0)
                             {
                             }
                             else
@@ -992,7 +987,7 @@ namespace main
                                 }
 
                             }
-                            n++;
+                            n2++;
 
                         }
                         sr2.Close();

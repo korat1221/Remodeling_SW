@@ -1,8 +1,10 @@
 ﻿using main;
+using main.subcontents;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -1048,9 +1050,651 @@ namespace main
                                 throw;
                             }
 
+                            //조명 밤시간 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Zonenighttime.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+
+                                                int i = -1;
+                                                while (++i < 12)
+                                                {
+                                                    Program.DB.setValue(DB.type.ProjDB, "Zonenighttime", "zoneNum,월,value", "'" + zoneNum + "','" + (i + 1).ToString() + "','" + token2[i + 1] + "'", "zoneNum,월");
+                                                }
+
+                                            }
+                                            n2++;
+
+                                        }
+                                        sr2.Close();
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 존 인공조명 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Lighting.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                string s = "";
+                                                while (++i < 6)
+                                                {
+                                                    s += "'" + token2[i] + "',";
+                                                }
+                                                Program.DB.setValue(DB.type.ProjDB, "Lighting", "ZoneNum,Pj,Pn,Fo,Fc,lm_W,Wsp", "'" + zoneNum + "'," + s + "'" + token2[6] + "'", "zoneNum");
+
+
+                                                //    Pj = Convert.ToDouble(token2[1]);
+                                                //    Pn = Convert.ToDouble(token2[2]);
+                                                //    Fo = Convert.ToDouble(token2[3]);
+                                                //    Fc = Convert.ToDouble(token2[4]);
+                                                //    lm_W = Convert.ToDouble(token2[5]);
+                                                //    wsp = Convert.ToDouble(token2[6]);
+
+                                            }
+                                            n2++;
+
+                                        }
+                                        sr2.Close();
+
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 파사드정보1 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade1.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                string s = "";
+                                                while (++i < 15)
+                                                {
+                                                    s += "'" + token2[i] + "',";
+                                                }
+                                                Program.DB.setValue(DB.type.ProjDB, "facade1", "ZoneNum,direction,Aca,a,b,AD,glass,τD65_SNA,K1,K2,K3,shade,dimming,γSh_lsh,γSh_hA,γSh_vA", "'" + zoneNum + "'," + s + "'" + token2[15] + "'", "zoneNum");
+                                                //facade_di = (token2[1]);
+                                                //Zone_f_Aca = Convert.ToDouble(token2[2]);
+                                                //Zone_f_aD = Convert.ToDouble(token2[3]);
+                                                //Zone_f_bD = Convert.ToDouble(token2[4]);
+                                                //Zone_f_AD = Convert.ToDouble(token2[5]);
+                                                //glass1 = (token2[6]);
+                                                //f_τD65_SNA = Convert.ToDouble(token2[7]);
+                                                //K1 = Convert.ToDouble(token2[8]);
+                                                //K2 = Convert.ToDouble(token2[9]);
+                                                //K3 = Convert.ToDouble(token2[10]);
+                                                //facade_shade = (token2[11]);
+                                                //facade_dimming = (token2[12]);
+                                                //γSh_lsh = Convert.ToDouble(token2[13]);
+                                                //γSh_hA = Convert.ToDouble(token2[14]);
+                                                //γSh_vA = Convert.ToDouble(token2[15]);
 
 
 
+                                            }
+                                            n2++;
+
+                                        }
+                                        sr2.Close();
+
+
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 파사드 음영계수 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_shade.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+
+                                                int i = -1;
+                                                while (++i < 12)
+                                                {
+                                                    Program.DB.setValue(DB.type.ProjDB, "facade_shade", "zoneNum,월,value", "'" + zoneNum + "','" + (i + 1).ToString() + "','" + token2[i + 1] + "'", "zoneNum,월");
+                                                }
+
+                                            }
+                                            n2++;
+
+                                        }
+
+                                        sr2.Close();
+
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 파사드 trel_D_SA 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_trel_D_SA.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+
+                                                int i = -1;
+                                                while (++i < 12)
+                                                {
+                                                    Program.DB.setValue(DB.type.ProjDB, "facade_trel_D_SA", "zoneNum,월,value", "'" + zoneNum + "','" + (i + 1).ToString() + "','" + token2[i + 1] + "'", "zoneNum,월");
+                                                }
+
+                                            }
+                                            n2++;
+
+                                        }
+
+                                        sr2.Close();
+
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 파사드 trel_D_SNA 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_trel_D_SNA.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+
+                                                int i = -1;
+                                                while (++i < 12)
+                                                {
+                                                    Program.DB.setValue(DB.type.ProjDB, "facade_trel_D_SNA", "zoneNum,월,value", "'" + zoneNum + "','" + (i + 1).ToString() + "','" + token2[i + 1] + "'", "zoneNum,월");
+                                                }
+
+                                            }
+                                            n2++;
+
+                                        }
+
+                                        sr2.Close();
+
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 중정 아트리움 정보 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Courtyard_Atrium.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                string s = "";
+                                                while (++i < 8)
+                                                {
+                                                    s += "'" + token2[i] + "',";
+                                                }
+                                                Program.DB.setValue(DB.type.ProjDB, "Courtyard_Atrium", "ZoneNum,aIn_At,bIn_At,hIn_At,glasstype,τSh_In_At_D65,Ksh_In_At_1,Ksh_In_At_2,Ksh_In_At_3", "'" + zoneNum + "'," + s + "'" + token2[8] + "'", "zoneNum");
+                                                
+
+                                                //aIn_At = Convert.ToDouble(token2[1]);
+                                                //bIn_At = Convert.ToDouble(token2[2]);
+                                                //hIn_At = Convert.ToDouble(token2[3]);
+                                                //glass2 = token2[4];
+                                                //τSh_In_At_D65 = Convert.ToDouble(token2[5]);
+                                                //Ksh_In_At_1 = Convert.ToDouble(token2[6]);
+                                                //Ksh_In_At_2 = Convert.ToDouble(token2[7]);
+                                                //Ksh_In_At_3 = Convert.ToDouble(token2[8]);
+
+                                            }
+                                            n2++;
+
+                                        }
+                                        sr2.Close();
+
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 이중외피 정보 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Doubleskin.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                string s = "";
+                                                while (++i < 5)
+                                                {
+                                                    s += "'" + token2[i] + "',";
+                                                }
+                                                Program.DB.setValue(DB.type.ProjDB, "Doubleskin", "ZoneNum, glasstype,τSh_In_GDF_D65,Ksh_GDF_1,Ksh_GDF_2,Ksh_GDF_3", "'" + zoneNum + "'," + s + "'" + token2[5] + "'", "zoneNum");
+                                                //glass3 = token2[1];
+                                                //τSh_In_GDF_D65 = Convert.ToDouble(token2[2]);
+                                                //Ksh_GDF_1 = Convert.ToDouble(token2[3]);
+                                                //Ksh_GDF_2 = Convert.ToDouble(token2[4]);
+                                                //Ksh_GDF_3 = Convert.ToDouble(token2[5]);
+
+                                            }
+                                            n2++;
+
+                                        }
+                                        sr2.Close();
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 자연채광 정보 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\NaturalLighting.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                string s = "";
+                                                while (++i < 3)
+                                                {
+                                                    s += "'" + token2[i] + "',";
+                                                }
+                                                Program.DB.setValue(DB.type.ProjDB, "NaturalLighting", "ZoneNum,Main,Middle,Sub", "'" + zoneNum + "'," + s + "'" + token2[3] + "'", "zoneNum");
+                                                //Main = token2[1];
+                                                //Middle = token2[2];
+                                                //Sub = token2[3];
+
+
+                                            }
+                                            n2++;
+
+                                        }
+                                        sr2.Close();
+
+
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 천창1 정보 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\rooflight1.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                string s = "";
+                                                while (++i < 21)
+                                                {
+                                                    s += "'" + token2[i] + "',";
+                                                }
+                                                Program.DB.setValue(DB.type.ProjDB, "rooflight1", "ZoneNum,direction,Aca,a,b,AD,glasstype,γF,γW,a_s,b_s,hS,hw,hg,Da,τD65_SNA,τD65_SA,Kobl_1,Kobl_2,Kobl_3,shading,dimmingtype", "'" + zoneNum + "'," + s + "'" + token2[21] + "'", "zoneNum");
+                                                //roof_di = token2[1];
+                                                //r_Aca = Convert.ToDouble(token2[2]);
+                                                //r_aD = Convert.ToDouble(token2[3]);
+                                                //r_bD = Convert.ToDouble(token2[4]);
+                                                //r_AD = Convert.ToDouble(token2[5]);
+                                                //roof_glass = token2[6];
+                                                //γF = Convert.ToDouble(token2[7]);
+                                                //γW = Convert.ToDouble(token2[8]);
+                                                //As = Convert.ToDouble(token2[9]);
+                                                //Bs = Convert.ToDouble(token2[10]);
+                                                //hs = Convert.ToDouble(token2[11]);
+                                                //hw = Convert.ToDouble(token2[12]);
+                                                //hg = Convert.ToDouble(token2[13]);
+                                                //Da = Convert.ToDouble(token2[14]);
+                                                //r_τD65_SNA = Convert.ToDouble(token2[15]);
+                                                //r_τD65_SA = Convert.ToDouble(token2[16]);
+                                                //Kobl_1 = Convert.ToDouble(token2[17]);
+                                                //Kobl_2 = Convert.ToDouble(token2[18]);
+                                                //Kobl_3 = Convert.ToDouble(token2[19]);
+                                                //roof_shade = token2[20];
+                                                //roof_dimming = token2[21];
+
+
+
+                                            }
+                                            n2++;
+
+                                        }
+                                        sr2.Close();
+
+
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 음영계수 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\rooflight_shade.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+
+                                                int i = -1;
+                                                while (++i < 12)
+                                                {
+                                                    Program.DB.setValue(DB.type.ProjDB, "rooflight_shade", "zoneNum,월,value", "'" + zoneNum + "','" + (i + 1).ToString() + "','" + token2[i + 1] + "'", "zoneNum,월");
+                                                }
+                                                
+
+                                            }
+                                            n2++;
+
+                                        }
+                                        sr2.Close();
+
+
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 신재생에너지1 가져오기
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\renewable_energy_1.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = 0;
+                                                string s = "";
+                                                while (++i < 5)
+                                                {
+                                                    s += "'" + token2[i] + "',";
+                                                }
+                                                Program.DB.setValue(DB.type.ProjDB, "renewable_energy_1", "ZoneNum,energytype,direction,inc,area,eff", "'" + zoneNum + "'," + s + "'" + token2[5] + "'", "zoneNum");
+                                                //energy_type = (token2[1]);
+                                                //energy_di = (token2[2]);
+                                                //energy_inc = Convert.ToDouble(token2[3]);
+                                                //energy_area = Convert.ToDouble(token2[4]);
+                                                //energy_eff = Convert.ToDouble(token2[5]);
+
+
+
+                                            }
+                                            n2++;
+
+                                        }
+                                        sr2.Close();
+
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
+
+                            //조명 외부조도 가져오기 
+                            try
+                            {
+                                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ext_ill.csv";
+                                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                                {
+                                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+                                    {
+                                        int n2 = 0;
+                                        while (sr2.EndOfStream == false)
+                                        {
+                                            string[] token2 = sr2.ReadLine().Split(',');
+                                            if (n2 == 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                int i = -1;
+                                                while (++i < 12)
+                                                {
+                                                    Program.DB.setValue(DB.type.ProjDB, "ext_ill", "zoneNum,월,value", "'" + zoneNum + "','" + (i + 1).ToString() + "','" + token2[i + 1] + "'", "zoneNum,월");
+                                                }
+
+
+                                            }
+                                            n2++;
+
+                                        }
+                                        sr2.Close();
+
+
+                                    }
+                                }
+
+                            }
+
+                            catch (IOException e)
+                            {
+                                if (e.Source != null)
+                                    Console.WriteLine("IOException source: {0}", e.Source);
+                                throw;
+                            }
                         }
                         n++;
                     }
