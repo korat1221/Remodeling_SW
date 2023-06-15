@@ -1399,9 +1399,9 @@
             // 
             // CWType_pictureBox
             // 
-            CWType_pictureBox.Location = new Point(999, 54);
+            CWType_pictureBox.Location = new Point(992, 54);
             CWType_pictureBox.Name = "CWType_pictureBox";
-            CWType_pictureBox.Size = new Size(151, 200);
+            CWType_pictureBox.Size = new Size(178, 386);
             CWType_pictureBox.TabIndex = 97;
             CWType_pictureBox.TabStop = false;
             // 

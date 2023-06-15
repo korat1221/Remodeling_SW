@@ -112,6 +112,9 @@
     <Compile Update="subcontents\ConstructionCW\CW_FrameDB.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\ConstructionCW\CW_PanelDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\ConstructionCW\CW_SpacerDB.cs">
       <SubType>Form</SubType>
     </Compile>
