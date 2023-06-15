@@ -926,11 +926,14 @@ namespace main
                                             {
                                                 int i = 0;
                                                 string s = "";
+
                                                 while (++i < 8)
                                                 {
                                                     s += "'" + token2[i] + "',";
                                                 }
-                                                Program.DB.setValue(DB.type.ProjDB, "ZoneLightgeneral", "ZoneNum,Wr,Lr,A,hR,hm,hLi,hTa,K", "'" + zoneNum + "'," + s +"'" + token2[8] + "'", "zoneNum"); 
+
+                                                String Num = Program.UTIL.CreateNum("ZoneLightgeneral", "번호", "번호0");
+                                                Program.DB.setValue(DB.type.ProjDB, "ZoneLightgeneral", "번호,ZoneNum,Wr,Lr,A,hR,hm,hLi,hTa,K", "'" +Num + "','" + zoneNum + "'," + s +"'" + token2[8] + "'", "번호,zoneNum"); 
                                                 //Wr = Convert.ToDouble(token2[1]);
                                                 //Lr = Convert.ToDouble(token2[2]);
                                                 //A = Convert.ToDouble(token2[3]);
@@ -1723,9 +1726,9 @@ namespace main
                 zone1.Zoneeta();
                 zone1.ZoneQb();
                 MessageBox.Show(zoneNum + ":  " + zone1.zoneName + ":  " + zone1.Qhb_a);
-                /*
+                
                 ZoneLight zonelight = new ZoneLight(zones[i][0]);
-                zonelight.Calc_Facade_general();
+                /*zonelight.Calc_Facade_general();
                 zonelight.Calc_Facade_shade();
                 zonelight.Calc_Facade_FDS();
                 zonelight.Calc_Facade_FD();
@@ -1743,7 +1746,7 @@ namespace main
 
             }
 
-          
+
             return true;
         }
 

@@ -16,6 +16,7 @@ namespace main
         public string Location;  //존 용도프로필 csv 변수
         public double Em, KA, FA;
 
+        public double daytimekk;
         public double[] daytime = new double[12];   //존 낮시간 csv 변수 
         public double[] nighttime = new double[12];  //존 밤시간 csv 변수
         public double Pj, Pn, Fo, Fc, lm_W, wsp; //존 인공조명 csv 변수
@@ -125,133 +126,185 @@ namespace main
 
         public ZoneLight(String zoneNum) //Zone 생성자 생성
         {
+            string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLightgeneral", "ZoneNum,Wr,Lr,A,hR,hm,hLi,hTa,K", "zoneNum='" + zoneNum + "'");
+            int kk = -1;
+            while (++kk < ValueA.Length)
+            {
+                Wr = Convert.ToDouble(ValueA[kk][1]);
+                Lr =Convert.ToDouble(ValueA[kk][2]);
+                A =Convert.ToDouble(ValueA[kk][3]);
+                hR =Convert.ToDouble(ValueA[kk][4]);
+                hm =Convert.ToDouble(ValueA[kk][5]);
+                Zone_hLi =Convert.ToDouble(ValueA[kk][6]);
+                Zone_hTa =Convert.ToDouble(ValueA[kk][7]);
+                K =Convert.ToDouble(ValueA[kk][8]);
+            }
+
             //존조명일반정보가져오기
-            try
+            //try
+            //{
+            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneLightgeneral.csv";
+            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+            //    {
+            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+            //        {
+            //            int n2 = 0;
+            //            while (!sr2.EndOfStream)
+            //            {
+            //                //Facade _facade = new Facade();
+            //                string[] token2 = sr2.ReadLine().Split(',');
+            //                if (n2 == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    Wr = Convert.ToDouble(token2[1]);
+            //                    Lr = Convert.ToDouble(token2[2]);
+            //                    A = Convert.ToDouble(token2[3]);
+            //                    hR = Convert.ToDouble(token2[4]);
+            //                    hm = Convert.ToDouble(token2[5]);
+            //                    Zone_hLi = Convert.ToDouble(token2[6]);
+            //                    Zone_hTa = Convert.ToDouble(token2[7]);
+            //                    K = Convert.ToDouble(token2[8]);
+            //                }
+            //                n2++;
+
+            //            }
+
+            //            sr2.Close();
+
+            //        }
+            //    }
+
+            //}
+
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
+
+
+            ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLightprofile", "Location,Em,KA,FA", "zoneNum='" + zoneNum + "'");
+            kk = -1;
+            while (++kk < ValueA.Length)
             {
-                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneLightgeneral.csv";
-                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-                {
-                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-                    {
-                        int n2 = 0;
-                        while (!sr2.EndOfStream)
-                        {
-                            //Facade _facade = new Facade();
-                            string[] token2 = sr2.ReadLine().Split(',');
-                            if (n2 == 0)
-                            {
-                            }
-                            else
-                            {
-                                Wr = Convert.ToDouble(token2[1]);
-                                Lr = Convert.ToDouble(token2[2]);
-                                A = Convert.ToDouble(token2[3]);
-                                hR = Convert.ToDouble(token2[4]);
-                                hm = Convert.ToDouble(token2[5]);
-                                Zone_hLi = Convert.ToDouble(token2[6]);
-                                Zone_hTa = Convert.ToDouble(token2[7]);
-                                K = Convert.ToDouble(token2[8]);
-                            }
-                            n2++;
-
-                        }
-
-                        sr2.Close();
-
-                    }
-                }
-
+                Location = ValueA[kk][0];
+                Em =  Convert.ToDouble(ValueA[kk][1]);
+                KA =  Convert.ToDouble(ValueA[kk][2]);
+                FA =  Convert.ToDouble(ValueA[kk][3]);
             }
+            MessageBox.Show(FA.ToString());
 
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+
+
             // 존 용도프로필 가져오기
-            try
+            //try
+            //{
+            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneLightprofile.csv";
+            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+            //    {
+            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+            //        {
+            //            int n2 = 0;
+            //            while (sr2.EndOfStream == false)
+            //            {
+            //                string[] token2 = sr2.ReadLine().Split(',');
+            //                if (n2 == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    Location = token2[0];
+            //                    Em = Convert.ToDouble(token2[1]);
+            //                    KA = Convert.ToDouble(token2[2]);
+            //                    FA = Convert.ToDouble(token2[3]);
+
+
+            //                }
+            //                n2++;
+
+            //            }
+            //            sr2.Close();
+
+
+            //        }
+            //    }
+
+            //}
+
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
+
+
+
+            ValueA = Program.DB.getValue(DB.type.ProjDB, "Zonedaytime", "zoneNum,월,value", "zoneNum='" + zoneNum + "'");
+            kk = -1;
+            while (++kk < ValueA.Length)
             {
-                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneLightprofile.csv";
-                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+                for (int i = 0; i < 12; i++)
                 {
-                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-                    {
-                        int n2 = 0;
-                        while (sr2.EndOfStream == false)
-                        {
-                            string[] token2 = sr2.ReadLine().Split(',');
-                            if (n2 == 0)
-                            {
-                            }
-                            else
-                            {
-                                Location = token2[0];
-                                Em = Convert.ToDouble(token2[1]);
-                                KA = Convert.ToDouble(token2[2]);
-                                FA = Convert.ToDouble(token2[3]);
-
-
-                            }
-                            n2++;
-
-                        }
-                        sr2.Close();
-
-
-                    }
+                    daytime[i] = Convert.ToDouble(ValueA[kk][i+1]);
+                    daytimekk = daytime[i];
                 }
 
             }
+            MessageBox.Show(daytimekk.ToString());
 
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+
+
+
 
             // 존 낮시간 가져오기
-            try
-            {
-                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Zonedaytime.csv";
-                using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-                {
-                    using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-                    {
-                        int n2 = 0;
-                        while (sr2.EndOfStream == false)
-                        {
-                            string[] token2 = sr2.ReadLine().Split(',');
-                            if (n2 == 0)
-                            {
-                            }
-                            else
-                            {
-                                for (int i = 0; i < 12; i++)
-                                {
-                                    daytime[i] = Convert.ToDouble(token2[i + 1]);
+            //try
+            //{
+            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Zonedaytime.csv";
+            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
+            //    {
+            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
+            //        {
+            //            int n2 = 0;
+            //            while (sr2.EndOfStream == false)
+            //            {
+            //                string[] token2 = sr2.ReadLine().Split(',');
+            //                if (n2 == 0)
+            //                {
+            //                }
+            //                else
+            //                {
+            //                    for (int i = 0; i < 12; i++)
+            //                    {
+            //                        daytime[i] = Convert.ToDouble(token2[i + 1]);
 
-                                }
+            //                    }
 
-                            }
-                            n2++;
+            //                }
+            //                n2++;
 
-                        }
-                        sr2.Close();
+            //            }
+            //            sr2.Close();
 
 
-                    }
-                }
+            //        }
+            //    }
 
-            }
+            //}
 
-            catch (IOException e)
-            {
-                if (e.Source != null)
-                    Console.WriteLine("IOException source: {0}", e.Source);
-                throw;
-            }
+            //catch (IOException e)
+            //{
+            //    if (e.Source != null)
+            //        Console.WriteLine("IOException source: {0}", e.Source);
+            //    throw;
+            //}
+
+
+
+
 
             // 존 밤시간 가져오기
             try
@@ -921,7 +974,7 @@ namespace main
             // 신재생에너지1 가져오기
             try
             {
-                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\renewable energy_1.csv";
+                string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\renewable_energy_1.csv";
                 using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
                 {
                     using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))

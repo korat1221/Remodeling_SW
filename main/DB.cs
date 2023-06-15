@@ -49,7 +49,7 @@ namespace main
         private Dictionary<string, string> tables = new Dictionary<string, string>()
         {
             {"Zone", "CREATE TABLE IF NOT EXISTS Zone (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32))"},
-            {"ZoneLightgeneral", "CREATE TABLE IF NOT EXISTS ZoneLightgeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT,ZoneNum VARCHAR (32),Wr VARCHAR (32),Lr VARCHAR (32),A VARCHAR (32),hR VARCHAR (32),hm VARCHAR (32),hLi VARCHAR (32),hTa VARCHAR (32),K VARCHAR (32))"},
+            {"ZoneLightgeneral", "CREATE TABLE IF NOT EXISTS ZoneLightgeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),ZoneNum VARCHAR (32),Wr VARCHAR (32),Lr VARCHAR (32),A VARCHAR (32),hR VARCHAR (32),hm VARCHAR (32),hLi VARCHAR (32),hTa VARCHAR (32),K VARCHAR (32))"},
             {"ZoneLightprofile", "CREATE TABLE IF NOT EXISTS ZoneLightprofile (ID INTEGER PRIMARY KEY AUTOINCREMENT,ZoneNum VARCHAR (32),Location VARCHAR (32),Em VARCHAR (32),KA VARCHAR (32),FA VARCHAR (32))"},
             {"Zonedaytime", "CREATE TABLE IF NOT EXISTS Zonedaytime (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
             {"Zonenighttime", "CREATE TABLE IF NOT EXISTS Zonenighttime (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
