@@ -15,7 +15,7 @@ namespace main.subcontents.ConstructionCW
         double Count_FrameDB;
         int SelectRow;
         String LE_CL_V;
-        public String[] Select_WindowSpacer = new String[10];
+        public String[] Select_Spacer = new String[10];
         String UserNum, UserDBName, UserDB_Manufacture, UserDBType1, UserDBType2;
         Double UserDB_Psi_fix, UserDB_Psi_open;
         int Num;
@@ -178,11 +178,11 @@ namespace main.subcontents.ConstructionCW
 
             for (int i = 1; i < (row.Cells.Count - 2); i++)
             {
-                Select_WindowSpacer[i] = row.Cells[i + 2].Value.ToString();
+                Select_Spacer[i] = row.Cells[i + 2].Value.ToString();
             }
 
-            Select_WindowSpacer[0] = row.Cells[1].Value.ToString();
-            Select_WindowSpacer[9] = LE_CL_V;
+            Select_Spacer[0] = row.Cells[1].Value.ToString();
+            Select_Spacer[9] = LE_CL_V;
 
             this.DialogResult = DialogResult.OK;
             this.Close();

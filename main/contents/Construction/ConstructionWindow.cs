@@ -36,7 +36,6 @@ namespace main.contents
         {
             InitializeComponent();
             Program.DB.initTable(DB.type.CalcDB, "Import_WindowSize"); //불러온 사이즈 정보 저장할 table 생성
-            Program.DB.initTable(DB.type.CalcDB, "Select_WindowSize"); //선택한 사이즈 정보 저장할 table 생성
             Program.DB.initTable(DB.type.ProjDB, "SubWindow");
             string[][] Image = Program.DB.getValue(DB.type.BaseDB, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '창호'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
@@ -638,14 +637,14 @@ namespace main.contents
                 DialogResult result = window_glassDB_form.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    GlassName = window_glassDB_form.Select_WindowGlass[1];
+                    GlassName = window_glassDB_form.Select_Glass[1];
                     GlassName_textBox.Text = GlassName;
-                    LE_CL_V = window_glassDB_form.Select_WindowGlass[5];
-                    Ug = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[6]);
+                    LE_CL_V = window_glassDB_form.Select_Glass[5];
+                    Ug = Convert.ToDouble(window_glassDB_form.Select_Glass[6]);
                     Ug_textBox.Text = String.Format("{0:F3}", Ug);
-                    g = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[7]);
+                    g = Convert.ToDouble(window_glassDB_form.Select_Glass[7]);
                     g_textBox.Text = String.Format("{0:F3}", g);
-                    τD65_SNA = Convert.ToDouble(window_glassDB_form.Select_WindowGlass[8]);
+                    τD65_SNA = Convert.ToDouble(window_glassDB_form.Select_Glass[8]);
                     τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
                     Calc_g_AdditionalWindow();
                 }
@@ -954,9 +953,15 @@ namespace main.contents
                         radioButton5.Checked = true;
                         break;
                 }
-                AdditionalWindow_comboBox.SelectedItem = Load[0][3];
-                Uw_comboBox.SelectedItem = Load[0][4];
-                DiIndi_comboBox.SelectedItem = Load[0][5];
+                OldWindow = Load[0][3];
+                AdditionalWindow_comboBox.SelectedItem = OldWindow;
+
+                UwMethod = Load[0][4];
+                Uw_comboBox.SelectedItem = UwMethod;
+
+                DiIndi = Load[0][5];
+                DiIndi_comboBox.SelectedItem = DiIndi;
+
                 Frame_comboBox.SelectedItem = Load[0][6];
                 FrameType = Load[0][6];
                 check_FrameType = Load[0][6];
@@ -965,17 +970,23 @@ namespace main.contents
                 FrameMaterial = Load[0][8];
                 check_FrameMaterial = Load[0][8];
                 FrameMaterial_textBox.Text = Load[0][8];
+
                 FrameName = Load[0][9];
                 FrameName_textBox.Text = Load[0][9];
+
                 GlassName = Load[0][10];
                 GlassName_textBox.Text = Load[0][10];
+
                 SpacerName = Load[0][11];
                 SpacerName_textBox.Text = Load[0][11];
+
                 InstallType = Load[0][12];
                 check_InstallType = Load[0][12];
                 Install_comboBox.SelectedItem = Load[0][12];
+
                 InstallName = Load[0][13];
                 Install_textBox.Text = Load[0][13];
+
                 LE_CL_V = Load[0][14];
                 check_LE_CL_V = Load[0][14];
 

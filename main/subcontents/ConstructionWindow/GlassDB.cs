@@ -15,7 +15,7 @@ namespace main.subcontents
         String FrameType;
         double Count_FrameDB;
         int SelectRow;
-        public String[] Select_WindowGlass = new string[11];
+        public String[] Select_Glass = new string[11];
         String UserNum, UserDBName, UserDB_Manufacture, UserDB_SingleDoubleTriple, UserDB_ArAir, UserDB_LE_CL_V;
         Double UserDB_Ug, UserDB_g, UserDB_Tao, UserDB_RExternal, UserDB_RInternal;
         public GlassDB()
@@ -209,9 +209,9 @@ namespace main.subcontents
 
             for (int i = 1; i < row.Cells.Count - 2; i++)
             {
-                Select_WindowGlass[i] = row.Cells[i + 2].Value.ToString();
+                Select_Glass[i] = row.Cells[i + 2].Value.ToString();
             }
-            Select_WindowGlass[0] = row.Cells[1].Value.ToString();
+            Select_Glass[0] = row.Cells[1].Value.ToString();
 
             this.DialogResult = DialogResult.OK;
             this.Close();

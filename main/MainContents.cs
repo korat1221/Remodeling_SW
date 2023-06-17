@@ -43,7 +43,7 @@ namespace main
             ReportRemodeling,
             FormDebug,
             List_ConstructionWindow,
-            SubWindow,
+            SubWindow
 
         }
           Form[] forms = new Form[] { new General(), new EnergyUse(), 
@@ -115,12 +115,19 @@ namespace main
 
                 f.LoadData(formParam.ID);
             }
+            else if (formParam.formID == 30)
+            {
+                List_ConstructionCW f = (List_ConstructionCW)form;
+
+                f.LoadData(formParam.ID);
+            }
             else if (formParam.formID == 31)
             {
                 SubWindow f = (SubWindow)form;
 
                 f.LoadData(formParam.ID);
             }
+
             return true;
         }
 
@@ -149,6 +156,12 @@ namespace main
                 if (i == 29)
                 {
                     List_ConstructionWindow f = (List_ConstructionWindow)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 30)
+                {
+                    List_ConstructionCW f = (List_ConstructionCW)forms[i];
 
                     f.LoadData("");
                 }
@@ -200,6 +213,20 @@ namespace main
                     {
                         openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
                         forms[idx] = new ConstructionWindow();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+            else if (idx == 2)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new ConstructionCW();
                         forms[idx].TopLevel = false;
                         openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
                         return;

@@ -153,7 +153,7 @@ namespace main.contentslist
             }
             dataGridView1.DataSource = WindowList;
             CountDB = List.Length;
-            Program.UTIL.resetMainTree(1, 4, mainMenu.ToArray(), "2"); // 예시 코드: 메인 메뉴 동적 할당
+            Program.UTIL.resetMainTree(1, 4, mainMenu.ToArray(), "6"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
         //선택한 열 색 표시

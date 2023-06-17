@@ -120,6 +120,8 @@ namespace main.contents
             label14 = new Label();
             WindowFrame_pictureBox = new PictureBox();
             tabControl1 = new TabControl();
+            label8 = new Label();
+            label10 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -520,6 +522,7 @@ namespace main.contents
             SpacerName_textBox.Size = new Size(120, 15);
             SpacerName_textBox.TabIndex = 93;
             SpacerName_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
             // Spacer_button
             // 
             Spacer_button.BackColor = SystemColors.ControlLight;
@@ -1024,6 +1027,8 @@ namespace main.contents
             // Frame_tabPage
             // 
             Frame_tabPage.BorderStyle = BorderStyle.FixedSingle;
+            Frame_tabPage.Controls.Add(label10);
+            Frame_tabPage.Controls.Add(label8);
             Frame_tabPage.Controls.Add(label22);
             Frame_tabPage.Controls.Add(df_btw_textBox);
             Frame_tabPage.Controls.Add(df_fix_textBox);
@@ -1051,7 +1056,7 @@ namespace main.contents
             label22.AutoSize = true;
             label22.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label22.ForeColor = SystemColors.ControlDark;
-            label22.Location = new Point(294, 153);
+            label22.Location = new Point(294, 148);
             label22.Name = "label22";
             label22.Size = new Size(29, 16);
             label22.TabIndex = 104;
@@ -1153,7 +1158,7 @@ namespace main.contents
             label19.AutoSize = true;
             label19.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label19.ForeColor = SystemColors.ControlDark;
-            label19.Location = new Point(282, 115);
+            label19.Location = new Point(282, 110);
             label19.Name = "label19";
             label19.Size = new Size(51, 16);
             label19.TabIndex = 100;
@@ -1220,6 +1225,28 @@ namespace main.contents
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(977, 239);
             tabControl1.TabIndex = 19;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.ForeColor = SystemColors.ControlDark;
+            label8.Location = new Point(338, 110);
+            label8.Name = "label8";
+            label8.Size = new Size(50, 16);
+            label8.TabIndex = 105;
+            label8.Text = "W/m²·K";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label10.ForeColor = SystemColors.ControlDark;
+            label10.Location = new Point(354, 148);
+            label10.Name = "label10";
+            label10.Size = new Size(18, 16);
+            label10.TabIndex = 106;
+            label10.Text = "m";
             // 
             // ConstructionWindow
             // 
@@ -1348,5 +1375,7 @@ namespace main.contents
         private TextBox Size_textBox;
         private Label label1;
         private Button ImportSize_button;
+        private Label label10;
+        private Label label8;
     }
 }

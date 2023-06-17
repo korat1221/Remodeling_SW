@@ -16,7 +16,6 @@ namespace main.contentslist
         static String currentID = "";
         static String inEditing = "Add";
 
-        int Num;
         String CWNum;
         double CountDB;
         int SelectRow;
@@ -45,9 +44,9 @@ namespace main.contentslist
         {
             CWNum = Program.UTIL.CreateNum("ConstructionCW", "번호", "CW");
 
-            Program.getMenuForm().ResetForm(6);
+            Program.getMenuForm().ResetForm(2);
 
-            Load_form(CWNum, "Add", "Main");
+            Load_form(CWNum, "Add");
         }
 
         public static bool OnLoadProc(Form form)
@@ -72,18 +71,11 @@ namespace main.contentslist
             return true;
         }
 
-        private void Load_form(String ID, String editing, String MainSub)
+        private void Load_form(String ID, String editing)
         {
             currentID = ID;
             inEditing = editing;
-            if (MainSub == "Main")
-            {
-                Program.getMenuForm().DoLoadForm(2, OnLoadProc);
-            }
-            else
-            {
-             //   Program.getMenuForm().DoLoadForm(32, Sub_OnLoadProc);
-            }
+            Program.getMenuForm().DoLoadForm(2, OnLoadProc);
         }
 
 
@@ -95,7 +87,7 @@ namespace main.contentslist
             checkBoxColumn.Name = "check";
             dataGridView1.Columns.Add(checkBoxColumn);
             CWList.Columns.Add("번호", typeof(string));
-            CWList.Columns.Add("창호 명칭", typeof(string));
+            CWList.Columns.Add("명칭", typeof(string));
             CWList.Columns.Add("Type", typeof(string));
             CWList.Columns.Add("유효열관류율" + Environment.NewLine + "[W/m²·K]", typeof(string));
             CWList.Columns.Add("태양열취득률" + Environment.NewLine + "[-]", typeof(string));
@@ -105,34 +97,23 @@ namespace main.contentslist
             dataGridView1.DataSource = CWList;
 
 
+
         }
 
         public void load_List()
         {
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,창호명칭,Type,창호유효열관류율,태양열취득률,빛투과율,창호면적,유리종류", "");
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭,Type,커튼월창유효열관류율,태양열취득률,빛투과율,커튼월면적,고정유리종류", "");
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
             String Blank = "";
             CWList.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
-                CWList.Rows.Add(List[n][0], Blank, List[n][1], List[n][2], Blank, String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])), Blank, List[n][5]);
-
-               // string[][] SubList = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭,창호유효열관류율,창호면적", "상위창호번호 = '" + List[n][0] + "'");
-
-                List<object> subMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-
-               // for (int k = 0; k < SubList.Length; k++)
-              //  {
-
-                  //  CWList.Rows.Add(Blank, SubList[k][0], SubList[k][1], List[n][2], String.Format("{0:F2}", Convert.ToDouble(SubList[k][2])), String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])), String.Format("{0:F2}", Convert.ToDouble(SubList[k][3])), List[n][5]);
-                   // subMenu.Add(new { text = SubList[k][0], id = "{\\\"formID\\\":31,\\\"ID\\\":\\\"" + SubList[k][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-
-              //  }
-                mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":6,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}", children = subMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
+                CWList.Rows.Add(List[n][0], List[n][1], List[n][2], String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])), String.Format("{0:F2}", Convert.ToDouble(List[n][5])), String.Format("{0:F2}", Convert.ToDouble(List[n][6])), List[n][7]);
+                mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":2,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             }
             dataGridView1.DataSource = CWList;
             CountDB = List.Length;
-            Program.UTIL.resetMainTree(1, 4, mainMenu.ToArray(), "2"); // 예시 코드: 메인 메뉴 동적 할당
+            Program.UTIL.resetMainTree(1, 1, mainMenu.ToArray(), "2"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
         //선택한 열 색 표시
@@ -171,22 +152,13 @@ namespace main.contentslist
             {
                 if (k > -1)
                 {
-                    if (dataGridView1.Rows[k].Cells[1].Value.ToString() != "")
-                    {
-                        String Delete_WinNum = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                        Program.DB.deleteValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Delete_WinNum + "'");
+                        String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
+                        Program.DB.deleteValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Delete_Num + "'");
                         load_List();
-                    }
-                    else
-                    {
-                      //  String Delete_WinNum = dataGridView1.Rows[k].Cells[2].Value.ToString();
-                     //   Program.DB.deleteValue(DB.type.ProjDB, "SubWindow", "번호 ='" + Delete_WinNum + "'");
-                     //   load_List();
-
-                    }
+                   
                 }
-
             }
+
         }
 
         private void dataGridView1_DoubleClick(object sender, EventArgs e)
@@ -194,16 +166,10 @@ namespace main.contentslist
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
-                if (dataGridView1.Rows[k].Cells[1].Value.ToString() != "")
-                {
-                    Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit", "Main");
-                }
-                else
-                {
-                  //  Load_form(dataGridView1.Rows[k].Cells[2].Value.ToString(), "Edit", "Sub");
-                }
+                    Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
 
             }
+
         }
 
         private void Copy_button_Click(object sender, EventArgs e)
@@ -212,18 +178,18 @@ namespace main.contentslist
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
-                String Copy_WinNum = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                if (dataGridView1.Rows[k].Cells[1].Value.ToString() != "")
-                {
-                    Program.DB.CopyValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Copy_WinNum + "'", CWNum);
-                    Load_form(CWNum, "Copy", "Main");
-                    Load_form(CWNum, "Edit", "Main");
-                }
-                else
-                {
-                    MessageBox.Show("메인 커튼월창만 복사 가능합니다.");
-                }
+                String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
+              
+                    Program.DB.CopyValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Copy_Num + "'", CWNum);
+                    Load_form(CWNum, "Copy");
+                    Load_form(CWNum, "Edit");
+              
             }
+        }
+
+        public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
+        {
+            load_List();
         }
     }
 }

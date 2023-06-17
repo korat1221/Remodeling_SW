@@ -1,0 +1,236 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace main.subcontents.ConstructionCW
+{
+    public partial class CW_InstallDB : Form
+    {
+        String FrameType;
+        double Count_InstallDB;
+        int SelectRow;
+        public String[] Select_CWInstall = new string[8];
+        String InstallType, SingleDoubleType, FrameMaterial;
+        string[][] CWInstall;
+        String UserNum, UserDBName, UserDBType1, UserDBType2, UserDBType3;
+        Double UserDB_Psi_InstallTop, UserDB_Psi_InstallSide, UserDB_Psi_InstallButtom;
+        int Num;
+
+        public CW_InstallDB(String InstallType)
+        {
+            InitializeComponent();
+            this.InstallType = InstallType;
+            load_table_InstallDB();
+            //사용자DB 구분1 콤보박스
+            UserDBType1_comboBox.Items.Add("내단열");
+            UserDBType1_comboBox.Items.Add("외단열");
+            UserDBType1_comboBox.Items.Add("목구조");
+            UserDBType1_comboBox.Items.Add("경량철골조");
+            UserDBType1_comboBox.SelectedItem = InstallType;
+            UserDBType1_comboBox.Enabled = false;
+            //사용자DB 구분2 콤보박스
+            UserDBType2_comboBox.Items.Add("STS");
+            UserDBType2_comboBox.Items.Add("일반ALU");
+            UserDBType2_comboBox.Items.Add("단열ALU");
+            UserDBType2_comboBox.SelectedIndex = 0;
+            //사용자DB 구분4 콤보박스
+            Program.UTIL.FillComboBox(UserDBType3_comboBox, "커튼월", "설치위치", "1");
+
+            UserNum = Program.UTIL.CreateNum("User_CWInstall", "번호", "UCWS_0");
+            UserNum_textBox.Text = UserNum;
+        }
+
+        public CW_InstallDB(String InstallType, String FrameType)
+        {
+            InitializeComponent();
+            this.InstallType = InstallType;
+            load_table_InstallDB();
+            //사용자DB 구분1 콤보박스
+            UserDBType1_comboBox.Items.Add("내단열");
+            UserDBType1_comboBox.Items.Add("외단열");
+            UserDBType1_comboBox.Items.Add("목구조");
+            UserDBType1_comboBox.Items.Add("경량철골조");
+            UserDBType1_comboBox.SelectedItem = InstallType;
+            UserDBType1_comboBox.Enabled = false;
+            //사용자DB 구분2 콤보박스
+            UserDBType2_comboBox.Items.Add("STS");
+            UserDBType2_comboBox.Items.Add("일반ALU");
+            UserDBType2_comboBox.Items.Add("단열ALU");
+            UserDBType2_comboBox.SelectedItem = FrameType;
+            UserDBType2_comboBox.Enabled = false;
+            //사용자DB 구분4 콤보박스
+            Program.UTIL.FillComboBox(UserDBType3_comboBox, "커튼월", "설치위치", "1");
+
+            UserNum = Program.UTIL.CreateNum("User_CWInstall", "번호", "UCWS_0");
+            UserNum_textBox.Text = UserNum;
+        }
+
+        void load_table_InstallDB()
+        {
+            DataTable table_CWInstall = new DataTable();
+            DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
+            Install_dataGridView.Columns.Clear();
+            checkBoxColumn.HeaderText = "선택";
+            checkBoxColumn.Name = "check";
+            Install_dataGridView.Columns.Add(checkBoxColumn);
+            table_CWInstall.Columns.Add("번호", typeof(string));
+            table_CWInstall.Columns.Add("DB유형", typeof(string));
+            table_CWInstall.Columns.Add("제품명", typeof(string));
+            table_CWInstall.Columns.Add("구분1", typeof(string));
+            table_CWInstall.Columns.Add("구분2", typeof(string));
+            table_CWInstall.Columns.Add("구분3", typeof(string));
+            table_CWInstall.Columns.Add("상부설치\r\n선형열관류율" + Environment.NewLine + "Ψg,fix\r\n[W/m·K]", typeof(string));
+            table_CWInstall.Columns.Add("측면설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
+            table_CWInstall.Columns.Add("하부설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
+
+            try
+            {
+                string[][] User_CWInstall = Program.DB.getValue(DB.type.ProjDB, "User_CWInstall", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType  + "'");
+                for (int n = 0; n < User_CWInstall.Length; n++)
+                {
+                    table_CWInstall.Rows.Add(User_CWInstall[n][0], User_CWInstall[n][1], User_CWInstall[n][2], User_CWInstall[n][3], User_CWInstall[n][4], User_CWInstall[n][5], User_CWInstall[n][6], User_CWInstall[n][7], User_CWInstall[n][8]);
+                }
+            }
+            catch { }
+
+
+
+            if (InstallType != null && FrameType != null)
+            {
+                CWInstall = Program.DB.getValue(DB.type.BaseDB, "커튼월설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'AND 구분2 = '" + FrameType + "'");
+            }
+            else
+            {
+                CWInstall = Program.DB.getValue(DB.type.BaseDB, "커튼월설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
+            }
+
+            for (int n = 0; n < CWInstall.Length; n++)
+            {
+                table_CWInstall.Rows.Add(CWInstall[n][0], CWInstall[n][1], CWInstall[n][2], CWInstall[n][3], CWInstall[n][4], CWInstall[n][5], CWInstall[n][6], CWInstall[n][7], CWInstall[n][8]);
+            }
+            Install_dataGridView.DataSource = table_CWInstall;
+            Count_InstallDB = CWInstall.Length;
+        }
+
+
+
+        private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
+        {
+            UserDBName = UserDBName_textBox.Text;
+        }
+
+        private void UserDBType1_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserDBType1 = UserDBType1_comboBox.SelectedItem.ToString();
+        }
+
+        private void UserDBType2_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserDBType2 = UserDBType2_comboBox.SelectedItem.ToString();
+        }
+
+
+        private void UserDBType3_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserDBType3 = UserDBType3_comboBox.SelectedItem.ToString();
+        }
+
+        private void UserDB_Psi_InstallTop_TextChanged(object sender, EventArgs e)
+        {
+            UserDB_Psi_InstallTop = Convert.ToDouble(UserDB_Psi_InstallTop_textBox.Text);
+        }
+
+        private void UserDB_Psi_InstallSide_TextChanged(object sender, EventArgs e)
+        {
+            UserDB_Psi_InstallSide = Convert.ToDouble(UserDB_Psi_InstallSide_textBox.Text);
+        }
+
+        private void UserDB_Psi_InstallButtom_TextChanged(object sender, EventArgs e)
+        {
+            UserDB_Psi_InstallButtom = Convert.ToDouble(UserDB_Psi_InstallButtom_textBox.Text);
+        }
+
+        private void AddUserDB_button_Click(object sender, EventArgs e)
+        {
+            if (UserDBName != null && UserDBType2 != null && UserDBType3 != null && UserDBType3 != null && UserDB_Psi_InstallTop != 0 && UserDB_Psi_InstallSide != 0 && UserDB_Psi_InstallButtom != 0)
+            {
+                Program.DB.setValue(DB.type.ProjDB, "User_CWInstall", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율",
+                    "'" + UserNum + "','" + "사용자" + "','" + UserDBName + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDBType3 + "','" + UserDB_Psi_InstallTop.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "'", "번호");
+                load_table_InstallDB();
+            }
+            else
+            {
+                MessageBox.Show("모든 값을 입력해주세요.");
+            }
+
+        }
+
+        private void Deletebutton_Click(object sender, EventArgs e)
+        {
+            int k = Install_dataGridView.CurrentCell.RowIndex;
+            if (k > -1)
+            {
+                if (Install_dataGridView.Rows[k].Cells[2].Value.ToString() == "사용자")
+                {
+                    if ((MessageBox.Show(Install_dataGridView.Rows[k].Cells[3].Value.ToString() + "을 삭제하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                    {
+                        String Delete_Num = Install_dataGridView.Rows[k].Cells[1].Value.ToString();
+                        Program.DB.deleteValue(DB.type.ProjDB, "User_CWInstall", "번호 ='" + Delete_Num + "'");
+                        load_table_InstallDB();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("기본 DB는 삭제할 수 없습니다.");
+                }
+            }
+
+        }
+        //데이터그리드뷰 체크박스 선택 시
+        private void Install_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                Install_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                SelectRow = e.RowIndex;
+                DataGridViewRow row = Install_dataGridView.Rows[SelectRow];
+                DataGridViewRow row2;
+                for (int k = 0; k < Count_InstallDB; k++)
+                {
+                    if (k != row.Index)
+                    {
+                        Install_dataGridView.Rows[k].Cells[0].Value = false;
+                        row2 = Install_dataGridView.Rows[k];
+                        row2.DefaultCellStyle.BackColor = Color.White;
+                        row2.DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                        row = Install_dataGridView.Rows[e.RowIndex];
+                    }
+                }
+            }
+
+        }
+
+        private void Save_button_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = Install_dataGridView.Rows[SelectRow];
+            for (int i = 1; i < row.Cells.Count - 2; i++)
+            {
+                Select_CWInstall[i] = row.Cells[i + 2].Value.ToString();
+            }
+            Select_CWInstall[0] = row.Cells[1].Value.ToString();
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+    }
+}

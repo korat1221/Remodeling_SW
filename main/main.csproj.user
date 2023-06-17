@@ -109,6 +109,12 @@
     <Compile Update="MainContents.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\ConstructionCW\CW_InstallDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\ConstructionCW\CW_DoorFrameDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\ConstructionCW\CW_FrameDB.cs">
       <SubType>Form</SubType>
     </Compile>
