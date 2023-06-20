@@ -1727,21 +1727,21 @@ namespace main
                 MessageBox.Show(zoneNum + ":  " + zone1.zoneName + ":  " + zone1.Qhb_a);
                 
                 ZoneLight zonelight = new ZoneLight(zones[i][0]);
-                /*zonelight.Calc_Facade_general();
+                zonelight.Calc_Facade_general();
                 zonelight.Calc_Facade_shade();
                 zonelight.Calc_Facade_FDS();
                 zonelight.Calc_Facade_FD();
-
+                
                 zonelight.Calc_Roof_general();
 
-                zonelight.Calc_Roof_ηR();
+                //zonelight.Calc_Roof_ηR();
                 zonelight.Calc_Roof_FDS();
                 zonelight.Calc_Roof_FD();
 
                 zonelight.Calc_Sunlight_SCW();
                 zonelight.Calc_Sunlight_Pj_SC();
 
-                zonelight.Calc_W();*/
+                zonelight.Calc_W();
 
             }
 

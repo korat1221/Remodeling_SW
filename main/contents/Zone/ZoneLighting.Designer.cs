@@ -37,6 +37,7 @@
             this.floor_label = new System.Windows.Forms.Label();
             this.FloorName_label = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.LightType_textBox = new System.Windows.Forms.TextBox();
             this.LightType_button = new System.Windows.Forms.Button();
             this.LightDB_button = new System.Windows.Forms.Button();
             this.fc_textBox = new System.Windows.Forms.TextBox();
@@ -54,6 +55,7 @@
             this.LightMethod_label = new System.Windows.Forms.Label();
             this.light_label = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.RenewType_textBox = new System.Windows.Forms.TextBox();
             this.RenewType_button = new System.Windows.Forms.Button();
             this.RenewDB_button = new System.Windows.Forms.Button();
             this.Slope_comboBox = new System.Windows.Forms.ComboBox();
@@ -68,15 +70,13 @@
             this.Aca_label = new System.Windows.Forms.Label();
             this.D_label = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.NaturalType_textBox = new System.Windows.Forms.TextBox();
             this.NaturalDB_button = new System.Windows.Forms.Button();
             this.D_textBox = new System.Windows.Forms.TextBox();
             this.Aca_textBox = new System.Windows.Forms.TextBox();
             this.direction_textBox = new System.Windows.Forms.TextBox();
             this.Main_pictureBox = new System.Windows.Forms.PictureBox();
             this.type_pictureBox = new System.Windows.Forms.PictureBox();
-            this.LightType_textBox = new System.Windows.Forms.TextBox();
-            this.NaturalType_textBox = new System.Windows.Forms.TextBox();
-            this.RenewType_textBox = new System.Windows.Forms.TextBox();
             this.GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Icon_pictureBox)).BeginInit();
             this.panel2.SuspendLayout();
@@ -201,6 +201,19 @@
             this.panel2.Size = new System.Drawing.Size(977, 136);
             this.panel2.TabIndex = 18;
             // 
+            // LightType_textBox
+            // 
+            this.LightType_textBox.BackColor = System.Drawing.Color.White;
+            this.LightType_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.LightType_textBox.Enabled = false;
+            this.LightType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LightType_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.LightType_textBox.Location = new System.Drawing.Point(205, 73);
+            this.LightType_textBox.Name = "LightType_textBox";
+            this.LightType_textBox.Size = new System.Drawing.Size(120, 15);
+            this.LightType_textBox.TabIndex = 100;
+            this.LightType_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // LightType_button
             // 
             this.LightType_button.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -228,6 +241,7 @@
             this.LightDB_button.TabIndex = 96;
             this.LightDB_button.Text = "+";
             this.LightDB_button.UseVisualStyleBackColor = false;
+            this.LightDB_button.Click += new System.EventHandler(this.LightDB_button_Click);
             // 
             // fc_textBox
             // 
@@ -345,6 +359,7 @@
             this.LightMethod_comboBox.Name = "LightMethod_comboBox";
             this.LightMethod_comboBox.Size = new System.Drawing.Size(120, 24);
             this.LightMethod_comboBox.TabIndex = 41;
+            this.LightMethod_comboBox.SelectedIndexChanged += new System.EventHandler(this.LightMethod_comboBox_SelectedIndexChanged);
             // 
             // ControlType_comboBox
             // 
@@ -354,6 +369,7 @@
             this.ControlType_comboBox.Name = "ControlType_comboBox";
             this.ControlType_comboBox.Size = new System.Drawing.Size(120, 24);
             this.ControlType_comboBox.TabIndex = 40;
+            this.ControlType_comboBox.SelectedIndexChanged += new System.EventHandler(this.ControlType_comboBox_SelectedIndexChanged);
             // 
             // LightMethod_label
             // 
@@ -391,6 +407,19 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(466, 102);
             this.panel1.TabIndex = 19;
+            // 
+            // RenewType_textBox
+            // 
+            this.RenewType_textBox.BackColor = System.Drawing.Color.White;
+            this.RenewType_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.RenewType_textBox.Enabled = false;
+            this.RenewType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.RenewType_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.RenewType_textBox.Location = new System.Drawing.Point(205, 10);
+            this.RenewType_textBox.Name = "RenewType_textBox";
+            this.RenewType_textBox.Size = new System.Drawing.Size(120, 15);
+            this.RenewType_textBox.TabIndex = 102;
+            this.RenewType_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // RenewType_button
             // 
@@ -546,6 +575,19 @@
             this.panel3.Size = new System.Drawing.Size(466, 136);
             this.panel3.TabIndex = 93;
             // 
+            // NaturalType_textBox
+            // 
+            this.NaturalType_textBox.BackColor = System.Drawing.Color.White;
+            this.NaturalType_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.NaturalType_textBox.Enabled = false;
+            this.NaturalType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.NaturalType_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.NaturalType_textBox.Location = new System.Drawing.Point(205, 17);
+            this.NaturalType_textBox.Name = "NaturalType_textBox";
+            this.NaturalType_textBox.Size = new System.Drawing.Size(120, 15);
+            this.NaturalType_textBox.TabIndex = 101;
+            this.NaturalType_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // NaturalDB_button
             // 
             this.NaturalDB_button.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -614,45 +656,6 @@
             this.type_pictureBox.Size = new System.Drawing.Size(182, 246);
             this.type_pictureBox.TabIndex = 100;
             this.type_pictureBox.TabStop = false;
-            // 
-            // LightType_textBox
-            // 
-            this.LightType_textBox.BackColor = System.Drawing.Color.White;
-            this.LightType_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.LightType_textBox.Enabled = false;
-            this.LightType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LightType_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.LightType_textBox.Location = new System.Drawing.Point(205, 73);
-            this.LightType_textBox.Name = "LightType_textBox";
-            this.LightType_textBox.Size = new System.Drawing.Size(120, 15);
-            this.LightType_textBox.TabIndex = 100;
-            this.LightType_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // NaturalType_textBox
-            // 
-            this.NaturalType_textBox.BackColor = System.Drawing.Color.White;
-            this.NaturalType_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.NaturalType_textBox.Enabled = false;
-            this.NaturalType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.NaturalType_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.NaturalType_textBox.Location = new System.Drawing.Point(205, 17);
-            this.NaturalType_textBox.Name = "NaturalType_textBox";
-            this.NaturalType_textBox.Size = new System.Drawing.Size(120, 15);
-            this.NaturalType_textBox.TabIndex = 101;
-            this.NaturalType_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // RenewType_textBox
-            // 
-            this.RenewType_textBox.BackColor = System.Drawing.Color.White;
-            this.RenewType_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.RenewType_textBox.Enabled = false;
-            this.RenewType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.RenewType_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.RenewType_textBox.Location = new System.Drawing.Point(205, 10);
-            this.RenewType_textBox.Name = "RenewType_textBox";
-            this.RenewType_textBox.Size = new System.Drawing.Size(120, 15);
-            this.RenewType_textBox.TabIndex = 102;
-            this.RenewType_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ZoneLighting
             // 
