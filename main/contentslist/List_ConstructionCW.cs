@@ -61,7 +61,6 @@ namespace main.contentslist
             else if (inEditing == "Copy")
             {
                 f.LoadData(currentID);
-                f.CopyForm(currentID);
             }
             else
             {
@@ -113,7 +112,7 @@ namespace main.contentslist
             }
             dataGridView1.DataSource = CWList;
             CountDB = List.Length;
-            Program.UTIL.resetMainTree(1, 1, mainMenu.ToArray(), "2"); // 예시 코드: 메인 메뉴 동적 할당
+            Program.UTIL.resetMainTree(1, 0, mainMenu.ToArray(), "2"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
         //선택한 열 색 표시
@@ -180,9 +179,9 @@ namespace main.contentslist
             {
                 String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
               
-                    Program.DB.CopyValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Copy_Num + "'", CWNum);
-                    Load_form(CWNum, "Copy");
-                    Load_form(CWNum, "Edit");
+                Program.DB.CopyValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Copy_Num + "'", CWNum);
+                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionCW" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + CWNum + "'");                
+                Load_form(CWNum, "Copy");
               
             }
         }

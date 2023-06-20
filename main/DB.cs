@@ -490,9 +490,8 @@ namespace main
                             cmd.CommandText = "INSERT INTO " + table + " (" + columns + ") SELECT " + columns + " FROM " + table + " WHERE " + conditions + " LIMIT 1";
 
                             cmd.ExecuteNonQuery();
-                            string[][] res1 = Program.DB.querySQL(DB.type.ProjDB, "SELECT MAX(ID) AS id FROM ConstructionWindow");
-
-                            Program.DB.executeSQL(DB.type.ProjDB, "UPDATE ConstructionWindow SET 번호='" + Num + "' WHERE  ID = " + res1[0][0]);
+                            string[][] res1 = Program.DB.querySQL(DB.type.ProjDB, "SELECT MAX(ID) AS id FROM "+ table);
+                            Program.DB.executeSQL(DB.type.ProjDB, "UPDATE "+ table + " SET 번호='" + Num + "' WHERE  ID = " + res1[0][0]);
                         }
                         catch (Exception ex)
                         {

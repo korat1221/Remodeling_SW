@@ -61,7 +61,6 @@ namespace main.contentslist
             else if (inEditing == "Copy")
             {
                 f.LoadData(currentID);
-                f.CopyForm(currentID);
             }
             else
             {
@@ -79,10 +78,6 @@ namespace main.contentslist
             {
                 f.LoadData(currentID);
 
-            }
-            else if (inEditing == "Copy")
-            {
-                f.LoadData(currentID);
             }
             else
             {
@@ -188,7 +183,7 @@ namespace main.contentslist
         private void Remove_button_Click(object sender, EventArgs e)
         {
             int k = dataGridView1.CurrentCell.RowIndex;
-            if ((MessageBox.Show(dataGridView1.Rows[k].Cells[2].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            if ((MessageBox.Show(dataGridView1.Rows[k].Cells[3].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
                 if (k > -1)
                 {
@@ -196,6 +191,7 @@ namespace main.contentslist
                     {
                         String Delete_WinNum = dataGridView1.Rows[k].Cells[1].Value.ToString();
                         Program.DB.deleteValue(DB.type.ProjDB, "ConstructionWindow", "번호 ='" + Delete_WinNum + "'");
+                        Program.DB.deleteValue(DB.type.ProjDB, "SubWindow", "상위창호번호 ='" + Delete_WinNum + "'");
                         load_List();
                     }
                     else
@@ -238,12 +234,28 @@ namespace main.contentslist
                 if (dataGridView1.Rows[k].Cells[1].Value.ToString() != "")
                 {
                     Program.DB.CopyValue(DB.type.ProjDB, "ConstructionWindow", "번호 ='" + Copy_WinNum + "'", WinNum);
-                    Load_form(WinNum, "Copy", "Main");
-                    Load_form(WinNum, "Edit","Main");
+                    Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionWindow" + " SET 창호명칭 = '" + dataGridView1.Rows[k].Cells[3].Value.ToString()+"_복사" + "' WHERE  번호 = '" + WinNum + "'");
+                    SubCopy(Copy_WinNum);
                 }
                 else
                 {
                     MessageBox.Show("메인 창호만 복사 가능합니다.");
+                }
+            }
+            Load_form(WinNum, "Copy", "Main");
+        }
+        private void SubCopy(String Copy_WinNum)
+        {
+
+            String[][] Sub = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭", "상위창호번호 = '" + Copy_WinNum + "'");
+            if (Sub.Length > -1)
+            {
+                for (int n = 0; n < Sub.Length; n++)
+                {
+                    String New_SubNum = WinNum.ToString() + "_" + (n + 1).ToString();
+                    String New_SubName = Sub[n][1] + "_복사";
+                    Program.DB.CopyValue(DB.type.ProjDB, "SubWindow", "번호 ='" + Sub[n][0] + "'", New_SubNum);
+                    Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  SubWindow" + " SET 상위창호번호='" + WinNum + "', 명칭 = '"+ New_SubName +"' WHERE  번호 = '" + New_SubNum + "'");
                 }
             }
         }

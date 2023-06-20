@@ -683,24 +683,24 @@ namespace main.contents
             }
             else
             {
-                Window_SpacerDB window_spacerDB_form = new Window_SpacerDB(SingleDoubleType, FrameMaterial, LE_CL_V);
-                DialogResult result = window_spacerDB_form.ShowDialog();
+                Window_SpacerDB form = new Window_SpacerDB(SingleDoubleType, FrameMaterial, LE_CL_V);
+                DialogResult result = form.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    check_FrameMaterial = window_spacerDB_form.Select_WindowSpacer[4];
-                    check_SingleDoubleType = window_spacerDB_form.Select_WindowSpacer[5];
-                    check_LE_CL_V = window_spacerDB_form.Select_WindowSpacer[10];
-                    SpacerName = window_spacerDB_form.Select_WindowSpacer[3];
+                    check_FrameMaterial = form.Select_WindowSpacer[4];
+                    check_SingleDoubleType = form.Select_WindowSpacer[5];
+                    check_LE_CL_V = form.Select_WindowSpacer[10];
+                    SpacerName = form.Select_WindowSpacer[3];
                     SpacerName_textBox.Text = SpacerName;
                     if (LE_CL_V.Contains("LE"))
                     {
-                        Psi_g_fix = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[8]);
-                        Psi_g_open = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[9]);
+                        Psi_g_fix = Convert.ToDouble(form.Select_WindowSpacer[8]);
+                        Psi_g_open = Convert.ToDouble(form.Select_WindowSpacer[9]);
                     }
                     else
                     {
-                        Psi_g_fix = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[6]);
-                        Psi_g_open = Convert.ToDouble(window_spacerDB_form.Select_WindowSpacer[7]);
+                        Psi_g_fix = Convert.ToDouble(form.Select_WindowSpacer[6]);
+                        Psi_g_open = Convert.ToDouble(form.Select_WindowSpacer[7]);
                     }
                     Psi_g_fix_textBox.Text = String.Format("{0:F3}", Psi_g_fix);
                     Psi_g_open_textBox.Text = String.Format("{0:F3}", Psi_g_open);
@@ -1057,20 +1057,6 @@ namespace main.contents
         {
             WinNum_textBox.Text = ID;
             WinNum = ID;
-        }
-
-        public void CopyForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
-        {
-            WinNum_textBox.Text = ID;
-            WinNum = ID;
-
-            if (Name_textBox.Text != "")
-            {
-                WindowName = Name_textBox.Text + "_복사";
-                Name_textBox.Text = WindowName;
-                Save();
-            }
-
         }
     }
 }

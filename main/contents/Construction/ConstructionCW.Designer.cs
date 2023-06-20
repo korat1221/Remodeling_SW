@@ -227,6 +227,7 @@
             Area_textBox = new TextBox();
             label66 = new Label();
             CWType_pictureBox = new PictureBox();
+            label60 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -1393,6 +1394,7 @@
             // Frame_tabPage
             // 
             Frame_tabPage.BorderStyle = BorderStyle.FixedSingle;
+            Frame_tabPage.Controls.Add(label60);
             Frame_tabPage.Controls.Add(label31);
             Frame_tabPage.Controls.Add(df_door_textBox);
             Frame_tabPage.Controls.Add(label55);
@@ -1593,7 +1595,7 @@
             FrameName2_textBox.Enabled = false;
             FrameName2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             FrameName2_textBox.ForeColor = SystemColors.ControlDark;
-            FrameName2_textBox.Location = new Point(353, 30);
+            FrameName2_textBox.Location = new Point(496, 30);
             FrameName2_textBox.Name = "FrameName2_textBox";
             FrameName2_textBox.Size = new Size(116, 15);
             FrameName2_textBox.TabIndex = 93;
@@ -2733,6 +2735,17 @@
             CWType_pictureBox.TabIndex = 97;
             CWType_pictureBox.TabStop = false;
             // 
+            // label60
+            // 
+            label60.AutoSize = true;
+            label60.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label60.ForeColor = SystemColors.ControlDark;
+            label60.Location = new Point(391, 29);
+            label60.Name = "label60";
+            label60.Size = new Size(40, 16);
+            label60.TabIndex = 163;
+            label60.Text = "프레임";
+            // 
             // ConstructionCW
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2973,5 +2986,6 @@
         private Label label79;
         private TextBox Height_textBox;
         private Label label80;
+        private Label label60;
     }
 }

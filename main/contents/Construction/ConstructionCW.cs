@@ -1363,7 +1363,7 @@ namespace main.contents
                 Ag_fix = Convert.ToDouble(Load[0][31]);
                 Ag_open = Convert.ToDouble(Load[0][32]);
                 Lg_fix = Convert.ToDouble(Load[0][33]);
-                Lg_open = Convert.ToDouble(Load[0][34]);               
+                Lg_open = Convert.ToDouble(Load[0][34]);
                 Af_mt = Convert.ToDouble(Load[0][35]);
                 Af_open = Convert.ToDouble(Load[0][36]);
 
@@ -1374,9 +1374,9 @@ namespace main.contents
                 Ag_fix_textBox.Text = String.Format("{0:F2}", Ag_fix);
                 Ag_open_textBox.Text = String.Format("{0:F2}", Ag_open);
                 Lg_fix_textBox.Text = String.Format("{0:F2}", Lg_fix);
-                Lg_open_textBox.Text = String.Format("{0:F2}", Lg_open);               
+                Lg_open_textBox.Text = String.Format("{0:F2}", Lg_open);
                 Af_mt_textBox.Text = String.Format("{0:F2}", Af_mt);
-                Af_open_textBox.Text = String.Format("{0:F2}", Af_open);          
+                Af_open_textBox.Text = String.Format("{0:F2}", Af_open);
 
                 Ucw = Convert.ToDouble(Load[0][37]);
                 Ucw_g = Convert.ToDouble(Load[0][38]);
@@ -1427,7 +1427,7 @@ namespace main.contents
                     Lp = Convert.ToDouble(Load[0][10]);
                     Ap_textBox.Text = String.Format("{0:F2}", Ap);
                     Lp_textBox.Text = String.Format("{0:F2}", Lp);
-                   
+
 
                     Ucw_p = Convert.ToDouble(Load[0][11]);
                     UCW_p_textBox.Text = String.Format("{0:F3}", Ucw_p);
@@ -1505,20 +1505,6 @@ namespace main.contents
         {
             CWNum_textBox.Text = ID;
             CWNum = ID;
-        }
-
-        public void CopyForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
-        {
-            CWNum_textBox.Text = ID;
-            CWNum = ID;
-
-            if (Name_textBox.Text != "")
-            {
-                CWName = Name_textBox.Text + "_복사";
-                Name_textBox.Text = CWName;
-                Save();
-            }
-
         }
 
     }
