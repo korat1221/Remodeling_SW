@@ -31,19 +31,19 @@ namespace main.contents
         public ConstructionWall()
         {
             InitializeComponent();
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외벽'");
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외벽'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
             //외장재색 콤보박스
-            Program.UTIL.FillComboBox(Color_comboBox, "외벽", "외장재색", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed,Color_comboBox, "외벽", "외장재색", "1");
             //직접간접 콤보박스
-            Program.UTIL.FillComboBox(DiIndi_comboBox, "외벽", "직접/간접", "1");
-            Program.UTIL.FillComboBox(DiIndi2_comboBox, "외벽", "직접/간접", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi_comboBox, "외벽", "직접/간접", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi2_comboBox, "외벽", "직접/간접", "1");
             //표면열전달저항기준 콤보박스 
-            Program.UTIL.FillComboBox(RseRsi_comboBox, "외벽", "실내외표면열전달저항", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, RseRsi_comboBox, "외벽", "실내외표면열전달저항", "1");
             //구조유형콤보박스
-            Program.UTIL.FillComboBox(StructureType_comboBox, "외벽", "구조유형", "3");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, StructureType_comboBox, "외벽", "구조유형", "3");
             Load_table();
         }
 
@@ -271,7 +271,7 @@ namespace main.contents
 
         private void Load_WallType_image(String Type)
         {
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB, "외벽유형이미지", "이미지", "외벽유형 = '" + Type + "'");
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽유형이미지", "이미지", "외벽유형 = '" + Type + "'");
             WallType_pictureBox.Load(Program.gPath + Image[0][0]);
             WallType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -280,7 +280,7 @@ namespace main.contents
         private void Color_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             Color = Color_comboBox.SelectedItem.ToString();
-            String[][] value = Program.DB.getValue(DB.type.BaseDB, "흡수율", "흡수율", "외장재색 = '" + Color + "'");
+            String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + Color + "'");
             α = Convert.ToDouble(value[0][0]);
             α_textBox.Text = String.Format("{0:F1}", α);
         }
@@ -444,21 +444,21 @@ namespace main.contents
                         {
                             if (LinearPoint == "점형")
                             {
-                                string[][] Image = Program.DB.getValue(DB.type.BaseDB, "외벽점형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
+                                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
                                 pictureBox1.Load(Program.gPath + Image[0][0]);
                                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
-                                Image = Program.DB.getValue(DB.type.BaseDB, "외벽점형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TBType + "'");
+                                Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TBType + "'");
                                 pictureBox2.Load(Program.gPath + Image[0][0]);
                                 pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
                             }
                             else
                             {
-                                string[][] Image = Program.DB.getValue(DB.type.BaseDB, "외벽선형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
+                                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
                                 pictureBox1.Load(Program.gPath + Image[0][0]);
                                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
-                                Image = Program.DB.getValue(DB.type.BaseDB, "외벽선형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TBType + "'");
+                                Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TBType + "'");
                                 pictureBox2.Load(Program.gPath + Image[0][0]);
                                 pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
                             }
@@ -589,7 +589,7 @@ namespace main.contents
         {
             if (UMethod == "법규")
             {
-                String[][] Value = Program.DB.getValue(DB.type.BaseDB, "법규열관류율", "열관류율", "구조체 = '창호' And 시기 = '2018.09' AND  지역 = '중부1' AND 직접간접 =  '" + DiIndi + "'");
+                String[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율", "구조체 = '창호' And 시기 = '2018.09' AND  지역 = '중부1' AND 직접간접 =  '" + DiIndi + "'");
                 Uvalue = Convert.ToDouble(Value[0][0]);
                 U_textBox.Text = string.Format("{0:F3}", Uvalue);
                 dins = (1 / Uvalue) * 0.04 * 1000;
@@ -600,9 +600,9 @@ namespace main.contents
         {
             if (Rule_RseRsi != null && DiIndi != null)
             {
-                String[][] RsiValue = Program.DB.getValue(DB.type.BaseDB, "표면열전달저항", "저항값", "구조체 ='외벽' And 유형 = '실내' AND 기준 = '" + Rule_RseRsi + "'");
+                String[][] RsiValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "표면열전달저항", "저항값", "구조체 ='외벽' And 유형 = '실내' AND 기준 = '" + Rule_RseRsi + "'");
                 Rsi = Convert.ToDouble(RsiValue[0][0]);
-                String[][] RseValue = Program.DB.getValue(DB.type.BaseDB, "표면열전달저항", "저항값", "구조체 ='외벽' And 유형 = '" + DiIndi + "' AND 기준 = '" + Rule_RseRsi + "'");
+                String[][] RseValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "표면열전달저항", "저항값", "구조체 ='외벽' And 유형 = '" + DiIndi + "' AND 기준 = '" + Rule_RseRsi + "'");
                 Rse = Convert.ToDouble(RseValue[0][0]);
 
                 Rsi_textBox.Text = string.Format("{0:F2}", Rsi);

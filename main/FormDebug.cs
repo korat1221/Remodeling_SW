@@ -14,8 +14,8 @@ namespace main
         {
             InitializeComponent();
 
-            Program.UTIL.FillComboBox(comboBox2, "커튼월", "프레임도어", "3");
-            Program.UTIL.FillComboBox(comboBox1, "건물", "건물용도", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, comboBox2, "커튼월", "프레임도어", "3");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, comboBox1, "건물", "건물용도", "1");
 
             comboBox1.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
 

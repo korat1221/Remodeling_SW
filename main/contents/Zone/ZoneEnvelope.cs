@@ -43,28 +43,28 @@ namespace main.contents
 
             //축열관련 콤보박스 만들기
             //천장
-            string[][] SQL_index_Celing = Program.DB.getValue(DB.type.BaseDB, "축열", "축열유형", "구조체 = '천장'");
+            string[][] SQL_index_Celing = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "축열유형", "구조체 = '천장'");
             int i = -1;
             while (++i < SQL_index_Celing.Length)
             {
                 CeilingCwirk_comboBox.Items.Add(SQL_index_Celing[i][0]);
             }
             //외벽
-            string[][] SQL_index_Wall = Program.DB.getValue(DB.type.BaseDB, "축열", "축열유형", "구조체 = '외벽'");
+            string[][] SQL_index_Wall = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "축열유형", "구조체 = '외벽'");
             i = -1;
             while (++i < SQL_index_Wall.Length)
             {
                 WallCwirk_comboBox.Items.Add(SQL_index_Wall[i][0]);
             }
             //내벽
-            string[][] SQL_index_InWall = Program.DB.getValue(DB.type.BaseDB, "축열", "축열유형", "구조체 = '간벽'");
+            string[][] SQL_index_InWall = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "축열유형", "구조체 = '간벽'");
             i = -1;
             while (++i < SQL_index_InWall.Length)
             {
                 InWallCwirk_comboBox.Items.Add(SQL_index_InWall[i][0]);
             }
             //바닥
-            string[][] SQL_index_Slab = Program.DB.getValue(DB.type.BaseDB, "축열", "축열유형", "구조체 = '바닥'");
+            string[][] SQL_index_Slab = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "축열유형", "구조체 = '바닥'");
             i = -1;
             while (++i < SQL_index_Slab.Length)
             {
@@ -102,7 +102,7 @@ namespace main.contents
         private void CeilingCwrik_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             double CwirkA;
-            string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB, "축열", "Cwirk", "구조체='천장' AND 축열유형='" + CeilingCwirk_comboBox.SelectedItem.ToString() + "'");
+            string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "Cwirk", "구조체='천장' AND 축열유형='" + CeilingCwirk_comboBox.SelectedItem.ToString() + "'");
             Ceiling_index = CeilingCwirk_comboBox.SelectedItem.ToString();
             CwirkA = Convert.ToDouble(CwirkDB[0][0]);
             Cwirk_Ceiling = Calc_Cwirk_Construction(Area_Ceiling, CwirkA);
@@ -113,7 +113,7 @@ namespace main.contents
         private void WallCwirk_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             double CwirkA;
-            string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB, "축열", "Cwirk", "구조체='외벽' AND 축열유형='" + WallCwirk_comboBox.SelectedItem.ToString() + "'");
+            string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "Cwirk", "구조체='외벽' AND 축열유형='" + WallCwirk_comboBox.SelectedItem.ToString() + "'");
             Wall_index = WallCwirk_comboBox.SelectedItem.ToString();
             CwirkA = Convert.ToDouble(CwirkDB[0][0]);
             Cwirk_Wall = Calc_Cwirk_Construction(Area_Wall, CwirkA);
@@ -124,7 +124,7 @@ namespace main.contents
         private void InWallCwirk_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             double CwirkA;
-            string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB, "축열", "Cwirk", "구조체='간벽' AND 축열유형='" + InWallCwirk_comboBox.SelectedItem.ToString() + "'");
+            string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "Cwirk", "구조체='간벽' AND 축열유형='" + InWallCwirk_comboBox.SelectedItem.ToString() + "'");
             InWall_index = InWallCwirk_comboBox.SelectedItem.ToString();
             CwirkA = Convert.ToDouble(CwirkDB[0][0]);
             Cwirk_InWall = Calc_Cwirk_Construction(Area_InWall, CwirkA);
@@ -135,7 +135,7 @@ namespace main.contents
         private void SlabCwirk_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             double CwirkA;
-            string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB, "축열", "Cwirk", "구조체='바닥' AND 축열유형='" + SlabCwirk_comboBox.SelectedItem.ToString() + "'");
+            string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "Cwirk", "구조체='바닥' AND 축열유형='" + SlabCwirk_comboBox.SelectedItem.ToString() + "'");
             Slab_index = SlabCwirk_comboBox.SelectedItem.ToString();
             CwirkA = Convert.ToDouble(CwirkDB[0][0]);
             Cwirk_Slab = Calc_Cwirk_Construction(Area_Slab, CwirkA);
@@ -419,7 +419,7 @@ namespace main.contents
         double Calc_q50(string 해당존유형)
         {
             double q50;
-            string[][] InfiltrationDB = Program.DB.getValue(DB.type.BaseDB, "기밀", "q50", "존유형='" + 해당존유형 + "' AND 기밀적용유형='" + InfiltrationType_comboBox.SelectedItem.ToString() + "'");
+            string[][] InfiltrationDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "기밀", "q50", "존유형='" + 해당존유형 + "' AND 기밀적용유형='" + InfiltrationType_comboBox.SelectedItem.ToString() + "'");
             q50 = Convert.ToDouble(InfiltrationDB[0][0]);
             return q50;
         }

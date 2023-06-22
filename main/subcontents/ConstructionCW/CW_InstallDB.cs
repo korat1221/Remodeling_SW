@@ -40,7 +40,7 @@ namespace main.subcontents.ConstructionCW
             UserDBType2_comboBox.Items.Add("단열ALU");
             UserDBType2_comboBox.SelectedIndex = 0;
             //사용자DB 구분4 콤보박스
-            Program.UTIL.FillComboBox(UserDBType3_comboBox, "커튼월", "설치위치", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, UserDBType3_comboBox, "커튼월", "설치위치", "1");
 
             UserNum = Program.UTIL.CreateNum("User_CWInstall", "번호", "UCWS_0");
             UserNum_textBox.Text = UserNum;
@@ -65,7 +65,7 @@ namespace main.subcontents.ConstructionCW
             UserDBType2_comboBox.SelectedItem = FrameType;
             UserDBType2_comboBox.Enabled = false;
             //사용자DB 구분4 콤보박스
-            Program.UTIL.FillComboBox(UserDBType3_comboBox, "커튼월", "설치위치", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, UserDBType3_comboBox, "커튼월", "설치위치", "1");
 
             UserNum = Program.UTIL.CreateNum("User_CWInstall", "번호", "UCWS_0");
             UserNum_textBox.Text = UserNum;
@@ -103,11 +103,11 @@ namespace main.subcontents.ConstructionCW
 
             if (InstallType != null && FrameType != null)
             {
-                CWInstall = Program.DB.getValue(DB.type.BaseDB, "커튼월설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'AND 구분2 = '" + FrameType + "'");
+                CWInstall = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'AND 구분2 = '" + FrameType + "'");
             }
             else
             {
-                CWInstall = Program.DB.getValue(DB.type.BaseDB, "커튼월설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
+                CWInstall = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
             }
 
             for (int n = 0; n < CWInstall.Length; n++)

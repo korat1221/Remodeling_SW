@@ -1705,7 +1705,7 @@ namespace main
 
 
                 //조건에 맞는 값 가져오기
-                String[][] ValueA = Program.DB.getValue(DB.type.BaseDB, "조명_파사드차양미가동주광공급계수", "값", "Em='" + Em + "' AND D = '" + Zone_nearD + "' AND 방위 = '" + facade_di + "'");
+                String[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_파사드차양미가동주광공급계수", "값", "Em='" + Em + "' AND D = '" + Zone_nearD + "' AND 방위 = '" + facade_di + "'");
                 int kk = -1;
                 while (++kk < ValueA.Length)
                 {
@@ -1744,7 +1744,7 @@ namespace main
           
 
                 //조건에 맞는 값 가져오기
-                ValueA = Program.DB.getValue(DB.type.BaseDB, "조명_파사드차양가동주광공급계수", "파사드차양가동주광공급계수", "차양시스템종류='" + facade_shade + "' AND 주광이용가능성 = '" + dclass + "'");
+                ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_파사드차양가동주광공급계수", "파사드차양가동주광공급계수", "차양시스템종류='" + facade_shade + "' AND 주광이용가능성 = '" + dclass + "'");
                 kk = -1;
                 while (++kk < ValueA.Length)
                 {
@@ -1824,7 +1824,7 @@ namespace main
 
 
                 //조건에 맞는 값 가져오기
-                ValueA = Program.DB.getValue(DB.type.BaseDB, "조명_주광제어계수", "주광제어계수", "디밍유형='" + facade_dimming + "' AND 주광이용가능성 = '" + dclass + "' AND Em = '" + Em + "'");
+                ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광제어계수", "주광제어계수", "디밍유형='" + facade_dimming + "' AND 주광이용가능성 = '" + dclass + "' AND Em = '" + Em + "'");
                 kk = -1;
                 while (++kk < ValueA.Length)
                 {
@@ -1874,7 +1874,7 @@ namespace main
                 //{
                     for (int i = 0; i < 12; i++)
                     {
-                        string[][] ValueA = Program.DB.getValue(DB.type.BaseDB, "조명_파사드월별보정", "값", "방위='" + facade_di + "' AND 월 ='" + (i + 1) + "월".ToString() + "'");
+                        string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_파사드월별보정", "값", "방위='" + facade_di + "' AND 월 ='" + (i + 1) + "월".ToString() + "'");
                     find_facade_Vmonth[i] = Convert.ToDouble(ValueA[0][0]);
                     }
 
@@ -1950,7 +1950,7 @@ namespace main
 
                         //천창 효율 계수
                         //조건에 맞는 값 가져오기
-                        string[][] ValueA = Program.DB.getValue(DB.type.BaseDB, "조명_천창일반형ηR", "ηR", "K='" + K + "' AND hs_bs ='" + Zone_hs_bs + "' AND as_bs ='" + Zone_as_bs + "' AND γW ='" + γW + "'");
+                        string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창일반형ηR", "ηR", "K='" + K + "' AND hs_bs ='" + Zone_hs_bs + "' AND as_bs ='" + Zone_as_bs + "' AND γW ='" + γW + "'");
                         int kk = -1;
 
                         while (++kk < ValueA.Length)
@@ -1963,7 +1963,7 @@ namespace main
                     else if (Middle == "톱니형")
                     {
                         //조건에 맞는 값 가져오기
-                        string[][] ValueA = Program.DB.getValue(DB.type.BaseDB, "조명_천창톱니형ηR", "ηR", "K='" + K + "' AND hg_hw ='" + Zone_hg_hw + "' AND γF ='" + γF + "' AND γW ='" + γW + "'");
+                        string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창톱니형ηR", "ηR", "K='" + K + "' AND hg_hw ='" + Zone_hg_hw + "' AND γF ='" + γF + "' AND γW ='" + γW + "'");
                         int kk = -1;
 
                         while (++kk < ValueA.Length)
@@ -2176,7 +2176,7 @@ namespace main
 
                 //천창 차양 미가동 
                 int kk = -1;
-                string[][] ValueA = Program.DB.getValue(DB.type.BaseDB, "조명_천창차양시간", "trel_D_SNA_j", "방위 ='" + roof_di + "' AND γF ='" + γF + "'");
+                string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창차양시간", "trel_D_SNA_j", "방위 ='" + roof_di + "' AND γF ='" + γF + "'");
                 while (++kk < ValueA.Length)
                 {
 
@@ -2187,7 +2187,7 @@ namespace main
 
                 //천창 차양 가동 
                 kk = -1;
-                 ValueA = Program.DB.getValue(DB.type.BaseDB, "조명_천창차양시간", "trel_D_SA_j", "방위 ='" + roof_di + "' AND γF ='" + γF + "'");
+                 ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창차양시간", "trel_D_SA_j", "방위 ='" + roof_di + "' AND γF ='" + γF + "'");
                 while (++kk < ValueA.Length)
                 {
 
@@ -2199,7 +2199,7 @@ namespace main
 
                 //FDS_SNA 찾기 
                 kk = -1;
-                ValueA = Program.DB.getValue(DB.type.BaseDB, "조명_천창차양미가동주광공급계수", "천창차양미가동주광공급계수", "방위 ='" + roof_di + "' AND 기울기 ='" + γF + "' AND 주광이용가능성 ='" + roof_dclass + "' AND Em ='" + Em + "'");
+                ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창차양미가동주광공급계수", "천창차양미가동주광공급계수", "방위 ='" + roof_di + "' AND 기울기 ='" + γF + "' AND 주광이용가능성 ='" + roof_dclass + "' AND Em ='" + Em + "'");
                 while (++kk < ValueA.Length)
                 {
 
@@ -2219,7 +2219,7 @@ namespace main
 
                 //FD_SA 찾기
                 kk = -1;
-                ValueA = Program.DB.getValue(DB.type.BaseDB, "조명_천창차양가동주광공급계수", "천창차양가동주광공급계수", "방위 ='" + roof_di + "' AND 기울기 ='" + γF + "' AND 주광이용가능성 ='" + roof_dclass + "' AND Em ='" + Em + "'");
+                ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창차양가동주광공급계수", "천창차양가동주광공급계수", "방위 ='" + roof_di + "' AND 기울기 ='" + γF + "' AND 주광이용가능성 ='" + roof_dclass + "' AND Em ='" + Em + "'");
                 while (++kk < ValueA.Length)
                 {
 
@@ -2278,7 +2278,7 @@ namespace main
 
 
                 //조건에 맞는 값 가져오기
-                string[][] ValueA = Program.DB.getValue(DB.type.BaseDB, "조명_주광제어계수", "주광제어계수", "디밍유형='" + facade_dimming + "' AND 주광이용가능성 = '" + roof_dclass + "' AND Em = '" + Em + "'");
+                string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광제어계수", "주광제어계수", "디밍유형='" + facade_dimming + "' AND 주광이용가능성 = '" + roof_dclass + "' AND Em = '" + Em + "'");
                 int kk = -1;
                 while (++kk < ValueA.Length)
                 {
@@ -2289,7 +2289,7 @@ namespace main
 
                 for (int i = 0; i < 12; i++)
                 {
-                    ValueA = Program.DB.getValue(DB.type.BaseDB, "조명_천창월별보정값", "Vmonth", "월 ='" + (i + 1) + "월".ToString() + "'");
+                    ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창월별보정값", "Vmonth", "월 ='" + (i + 1) + "월".ToString() + "'");
                     roof_Vmonth[i] = Convert.ToDouble(ValueA[0][0]);
                 }
                 //MessageBox.Show(roof_Vmonth[0].ToString());

@@ -63,7 +63,7 @@ namespace main.subcontents
             table_WindowGlass.Columns.Add("빛투과율" + Environment.NewLine + "τD65,SNA[-]", typeof(string));
             table_WindowGlass.Columns.Add("외부\r\n반사율" + Environment.NewLine + "ρv[-]", typeof(string));
             table_WindowGlass.Columns.Add("내부\r\n반사율" + Environment.NewLine + "ρ'v[-]", typeof(string));
-            string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
+            string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
 
 
             try

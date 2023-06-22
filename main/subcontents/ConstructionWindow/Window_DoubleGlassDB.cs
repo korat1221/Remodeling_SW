@@ -52,7 +52,7 @@ namespace main.subcontents
             table_WindowGlass.Columns.Add("빛투과율" + Environment.NewLine + "τD65,SNA[-]", typeof(string));
             table_WindowGlass.Columns.Add("외부\r\n반사율" + Environment.NewLine + "ρv[-]", typeof(string));
             table_WindowGlass.Columns.Add("내부\r\n반사율" + Environment.NewLine + "ρ'v[-]", typeof(string));
-            string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
+            string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
 
 
             try
@@ -110,7 +110,7 @@ namespace main.subcontents
             }
             catch
             {
-                Select1_Glass = Program.DB.getValue(DB.type.BaseDB, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "제품명 = '" + SelectGlass1 + "'");
+                Select1_Glass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "제품명 = '" + SelectGlass1 + "'");
                 SelectGlass1 = Select1_Glass[0][2];
             }
             Calc_DoubleGlass();
@@ -129,7 +129,7 @@ namespace main.subcontents
             }
             catch
             {
-                Select2_Glass = Program.DB.getValue(DB.type.BaseDB, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "제품명 = '" + SelectGlass2 + "'");
+                Select2_Glass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "제품명 = '" + SelectGlass2 + "'");
                 SelectGlass2 = Select2_Glass[0][2];
             }
             Calc_DoubleGlass();
@@ -143,8 +143,8 @@ namespace main.subcontents
                 UserDB_ArAir = Select1_Glass[0][5] + "+" + Select2_Glass[0][5];
                 UserDB_LE_CL_V = Select1_Glass[0][6] + "+" + Select2_Glass[0][6];
                 UserDB_Ug = 1 / ((1 / Convert.ToDouble(Select1_Glass[0][7])) - 0.04 + 0.189 - 0.13 + (1 / Convert.ToDouble(Select2_Glass[0][7])));
-                String[][] f_shgc = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + UserDB_LE_CL_V + "' AND 보정유형 = '태양열취득률'");
-                String[][] f_τ = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + UserDB_LE_CL_V + "' AND 보정유형 = '빛투과율'");
+                String[][] f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + UserDB_LE_CL_V + "' AND 보정유형 = '태양열취득률'");
+                String[][] f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + UserDB_LE_CL_V + "' AND 보정유형 = '빛투과율'");
                 UserDB_g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Select1_Glass[0][8]) * Convert.ToDouble(Select2_Glass[0][8]);
                 UserDB_Tao = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Select1_Glass[0][9]) * Convert.ToDouble(Select2_Glass[0][9]);
                 UserDB_RExternal = Convert.ToDouble(Select1_Glass[0][10]);

@@ -51,6 +51,8 @@
             this.label13 = new System.Windows.Forms.Label();
             this.startRow = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.DBName_comboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.startLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.endLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.endColumn)).BeginInit();
@@ -277,11 +279,32 @@
             this.label14.Tag = "";
             this.label14.Text = "라인부터";
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(99, 26);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(33, 12);
+            this.label11.TabIndex = 20;
+            this.label11.Tag = "";
+            this.label11.Text = "DB명";
+            // 
+            // DBName_comboBox
+            // 
+            this.DBName_comboBox.FormattingEnabled = true;
+            this.DBName_comboBox.Location = new System.Drawing.Point(174, 23);
+            this.DBName_comboBox.Name = "DBName_comboBox";
+            this.DBName_comboBox.Size = new System.Drawing.Size(158, 20);
+            this.DBName_comboBox.TabIndex = 21;
+            this.DBName_comboBox.SelectedIndexChanged += new System.EventHandler(this.DBName_comboBox_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 583);
+            this.Controls.Add(this.DBName_comboBox);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.columns);
@@ -330,6 +353,8 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.NumericUpDown startRow;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox DBName_comboBox;
     }
 }
 

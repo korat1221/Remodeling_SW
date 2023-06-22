@@ -5,6 +5,13 @@ namespace main
 {
     internal class UTIL
     {
+        public enum type
+        {
+            BaseDB_HCneed,
+            BaseDB_Lighting,
+            ProjDB,
+            CalcDB
+        }
         public void trim(string[] arr)
         {
             int i = -1;
@@ -34,7 +41,7 @@ namespace main
 
             if (item != null && item.Row.ItemArray.Length >= 3)
             {
-                string[][] res = Program.DB.getValue(DB.type.BaseDB, 테이블명, 찾는컬럼명, 선택컬럼명 + " = '" + item.Row.ItemArray[0].ToString() + "' ");
+                string[][] res = Program.DB.getValue(DB.type.BaseDB_HCneed, 테이블명, 찾는컬럼명, 선택컬럼명 + " = '" + item.Row.ItemArray[0].ToString() + "' ");
                 Value = res[0][0].ToString();
             }
 
@@ -48,18 +55,18 @@ namespace main
             String Value = "";
             DataRowView? item = comboBox.SelectedItem as DataRowView;
 
-              string[][] res = Program.DB.getValue(DB.type.BaseDB, 테이블명, 찾는컬럼명, 선택컬럼명 +"= '" + comboBox.SelectedItem.ToString() + "' AND "+다른조건문);
+              string[][] res = Program.DB.getValue(DB.type.BaseDB_HCneed, 테이블명, 찾는컬럼명, 선택컬럼명 +"= '" + comboBox.SelectedItem.ToString() + "' AND "+다른조건문);
                 Value = res[0][0].ToString();
          
 
             return Value;
         }
 
-        public void FillComboBox(ComboBox comboBox, string cate, string subcate, string def_value = "")
+        public void FillComboBox(DB.type dbType, ComboBox comboBox, string cate, string subcate, string def_value = "")
         {
             List<String> List = new List<String>();
 
-            string[][] res = Program.DB.querySQL(DB.type.BaseDB, "SELECT a.이름, a.값, a.아이디 FROM 인덱스 AS a INNER JOIN 인덱스분류 AS b ON a.종류=b.아이디 WHERE b.종류='" + cate + "' AND b.이름='" + subcate + "'");
+            string[][] res = Program.DB.querySQL(dbType, "SELECT a.이름, a.값, a.아이디 FROM 인덱스 AS a INNER JOIN 인덱스분류 AS b ON a.종류=b.아이디 WHERE b.종류='" + cate + "' AND b.이름='" + subcate + "'");
 
             int i = -1;
             while (++i < res.Length)
@@ -84,7 +91,7 @@ namespace main
         
          public void FillComboBox_Parents(ComboBox comboBox, string cate, string subcate, string def_value = "")
         {
-            string[][] res = Program.DB.querySQL(DB.type.BaseDB, "SELECT a.이름, a.값, a.아이디 FROM 인덱스 AS a INNER JOIN 인덱스분류 AS b ON a.종류=b.아이디 WHERE b.종류='" + cate + "' AND b.이름='" + subcate + "'");
+            string[][] res = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT a.이름, a.값, a.아이디 FROM 인덱스 AS a INNER JOIN 인덱스분류 AS b ON a.종류=b.아이디 WHERE b.종류='" + cate + "' AND b.이름='" + subcate + "'");
 
             FillComboBox_Category(comboBox, res, def_value);
         }
@@ -99,7 +106,7 @@ namespace main
 
                 if (id != "")
                 {
-                    string[][] res = Program.DB.querySQL(DB.type.BaseDB, "SELECT 이름, 값, 아이디 FROM 인덱스 WHERE 부모아이디=" + id);
+                    string[][] res = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 이름, 값, 아이디 FROM 인덱스 WHERE 부모아이디=" + id);
 
                     FillComboBox_Category(comboBox, res, def_value);
                 }

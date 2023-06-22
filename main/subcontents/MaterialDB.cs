@@ -48,7 +48,7 @@ namespace main.subcontents
 
         private void Load_UserDB_Type1()
         {
-            string[][] Type2 = Program.DB.getValue(DB.type.BaseDB, "열전도율", "종류2", "구분 = '" + MaterialType + "'");
+            string[][] Type2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "종류2", "구분 = '" + MaterialType + "'");
             List.Clear();
             List.Add(Type2[0][0]);
             for (int n = 1; n < Type2.Length; n++)
@@ -94,7 +94,7 @@ namespace main.subcontents
             }
             catch { }
 
-            string[][] Value = Program.DB.getValue(DB.type.BaseDB, "열전도율", "재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '" + MaterialType + "'");
+            string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '" + MaterialType + "'");
             String dbnum;
             for (int n = 0; n < Value.Length; n++)
             {

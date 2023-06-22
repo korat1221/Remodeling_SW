@@ -28,7 +28,7 @@ namespace main.subcontents.ConstructionCW
             UserNum = Program.UTIL.CreateNum("User_Material", "번호", "UM_0");
             UserNum_textBox.Text = UserNum;
 
-            string[][] Type2 = Program.DB.getValue(DB.type.BaseDB, "열전도율", "종류2", "구분 = '단열재'");
+            string[][] Type2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "종류2", "구분 = '단열재'");
             List.Add(Type2[0][0]);
             for (int n = 1; n < Type2.Length; n++)
             {
@@ -74,7 +74,7 @@ namespace main.subcontents.ConstructionCW
             }
             catch { }
 
-            string[][] CWPanel = Program.DB.getValue(DB.type.BaseDB, "열전도율", "재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '단열재'");
+            string[][] CWPanel = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '단열재'");
             String dbnum;
             for (int n = 0; n < CWPanel.Length; n++)
             {

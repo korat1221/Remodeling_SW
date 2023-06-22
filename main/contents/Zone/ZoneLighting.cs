@@ -37,7 +37,7 @@ namespace main.contents
             InitializeComponent();
 
             //조명 이미지 로드 
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '존 조명정보'");
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '존 조명정보'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -76,19 +76,19 @@ namespace main.contents
             //https://agape93.tistory.com/6
 
             //조명방식 콤보박스
-            Program.UTIL.FillComboBox(LightMethod_comboBox, "조명", "조명방식", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_Lighting, LightMethod_comboBox, "조명", "조명방식", "1");
 
             //제어방식 콤보박스
-            Program.UTIL.FillComboBox(ControlType_comboBox, "조명", "제어종류", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_Lighting, ControlType_comboBox, "조명", "제어종류", "1");
 
             //디밍유형 콤보박스
-            Program.UTIL.FillComboBox(DimmingType_comboBox, "조명", "주광제어종류", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_Lighting, DimmingType_comboBox, "조명", "주광제어종류", "1");
 
             //집광채광 향 콤보박스
-            Program.UTIL.FillComboBox(RenewDi_comboBox, "조명", "방위", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_Lighting, RenewDi_comboBox, "조명", "방위", "1");
 
             //집광채광 기울기 콤보박스
-            Program.UTIL.FillComboBox(Slope_comboBox, "조명", "창기울기", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_Lighting, Slope_comboBox, "조명", "창기울기", "1");
 
 
 
@@ -178,7 +178,7 @@ namespace main.contents
         private void DimmingType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             dimming = DimmingType_comboBox.SelectedItem.ToString();
-            MessageBox.Show(dimming);
+           // MessageBox.Show(dimming);
 
         }
 
@@ -191,7 +191,7 @@ namespace main.contents
 
         public void  Match_Pjlx()
         {            
-                String[][] value = Program.DB.getValue(DB.type.BaseDB, "조명_럭스당조명밀도", "값,UFF", "조명방식='" + Method + "' AND K = '" + K + "'");
+                String[][] value = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_럭스당조명밀도", "값,UFF", "조명방식='" + Method + "' AND K = '" + K + "'");
                 Pj_lx = Convert.ToDouble(value[0][0]);
                 UFF = Convert.ToDouble(value[0][1]);
                 //MessageBox.Show(UFF.ToString());
@@ -199,7 +199,7 @@ namespace main.contents
 
         public void Match_Foc()
         {
-            String[][] value = Program.DB.getValue(DB.type.BaseDB, "조명_조명제어", "Foc", "제어종류 = '" + control + "'");
+            String[][] value = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_조명제어", "Foc", "제어종류 = '" + control + "'");
             Foc = Convert.ToDouble(value[0][0]);
         }
 

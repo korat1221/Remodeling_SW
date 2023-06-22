@@ -38,9 +38,9 @@ namespace main.subcontents
             UserDB_FrameType_comboBox.Text = this.FrameType;
             UserDB_FrameType_comboBox.Enabled = false;
             //프레임 형태 콤보박스 
-            Program.UTIL.FillComboBox(UserDB_FrameShape_comboBox, "창호", "형태", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, UserDB_FrameShape_comboBox, "창호", "형태", "1");
             //프레임 재질 콤보박스 
-            Program.UTIL.FillComboBox(UserDB_FrameMaterial_comboBox, "창호", "프레임재질", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, UserDB_FrameMaterial_comboBox, "창호", "프레임재질", "1");
             //유리 콤보박스
             try
             {
@@ -49,7 +49,7 @@ namespace main.subcontents
                 { GlassList.Add(User_WinGlass[n][1]); }
             }
             catch { }
-            string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB, "유리", "번호,제품명", "");
+            string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,제품명", "");
             for (int n = 0; n < WinGlass.Length; n++)
             {
                 GlassList.Add(WinGlass[n][1]);
@@ -90,7 +90,7 @@ namespace main.subcontents
             }
             catch { }
 
-            string[][] WinFrame = Program.DB.getValue(DB.type.BaseDB, "창호프레임", "번호,DB유형,제품명,제조사,프레임종류,프레임재료,개폐부프레임열관류율,고정부프레임열관류율,중간바프레임열관류율,개폐부프레임두께,고정부프레임두께,중간바프레임두께", "프레임종류 ='" + FrameType + "'");
+            string[][] WinFrame = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호프레임", "번호,DB유형,제품명,제조사,프레임종류,프레임재료,개폐부프레임열관류율,고정부프레임열관류율,중간바프레임열관류율,개폐부프레임두께,고정부프레임두께,중간바프레임두께", "프레임종류 ='" + FrameType + "'");
 
             for (int n = 0; n < WinFrame.Length; n++)
             {
@@ -143,7 +143,7 @@ namespace main.subcontents
             }
 
             //프레임두께
-            string[][] WinFrame = Program.DB.getValue(DB.type.BaseDB, "창호프레임", "개폐부프레임두께,고정부프레임두께,중간바프레임두께", "프레임종류 ='" + FrameType + "'AND 프레임재료 ='" + UserDB_FrameMaterial_orgin + "'");
+            string[][] WinFrame = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호프레임", "개폐부프레임두께,고정부프레임두께,중간바프레임두께", "프레임종류 ='" + FrameType + "'AND 프레임재료 ='" + UserDB_FrameMaterial_orgin + "'");
             UserDB_FramedA = Convert.ToDouble(WinFrame[0][0]);
             UserDBFramedA_textBox.Text = String.Format("{0:F2}", UserDB_FramedA);
             UserDB_FramedB = Convert.ToDouble(WinFrame[0][1]);
@@ -168,7 +168,7 @@ namespace main.subcontents
             }
             catch
             {
-                string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB, "유리", "번호,제품명,LE_CL_V,열관류율", "제품명 ='" + UserDBGlass + "'");
+                string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,제품명,LE_CL_V,열관류율", "제품명 ='" + UserDBGlass + "'");
                 UserDB_LE_CL_V = WinGlass[0][2];
                 UserDB_Ug = Convert.ToDouble(WinGlass[0][3]);
                 UserDB_Ug_textBox.Text = String.Format("{0:F3}", UserDB_Ug);
@@ -198,7 +198,7 @@ namespace main.subcontents
             }
             catch
             {
-                string[][] WinSpacer = Program.DB.getValue(DB.type.BaseDB, "창호간봉", "번호,제품명,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분1 = '" + UserDBSpacer + "'AND 구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + UserDB_FrameMaterial + "'");
+                string[][] WinSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호간봉", "번호,제품명,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분1 = '" + UserDBSpacer + "'AND 구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + UserDB_FrameMaterial + "'");
                 if (UserDB_LE_CL_V.Contains("LE"))
                 {
                     UserDB_PsiFix = Convert.ToDouble(WinSpacer[0][4]);
@@ -226,7 +226,7 @@ namespace main.subcontents
                     { SpacerList.Add(User_WinSpacer[n][1]); }
                 }
                 catch { }
-                string[][] WinSpacer = Program.DB.getValue(DB.type.BaseDB, "창호간봉", "번호,제품명,구분1", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + UserDB_FrameMaterial + "'");
+                string[][] WinSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호간봉", "번호,제품명,구분1", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + UserDB_FrameMaterial + "'");
                 for (int n = 0; n < WinSpacer.Length; n++)
                 {
                     SpacerList.Add(WinSpacer[n][2]);
@@ -240,7 +240,7 @@ namespace main.subcontents
         {
             if (FrameType != null && UserDB_FrameShape != null && UserDB_FrameMaterial != null)
             {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB, "창호프레임이미지", "이미지", "유형1 = '" + FrameType + "' And 유형2 = '" + UserDB_FrameShape + "' And 재료 = '" + UserDB_FrameMaterial + "'");
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호프레임이미지", "이미지", "유형1 = '" + FrameType + "' And 유형2 = '" + UserDB_FrameShape + "' And 재료 = '" + UserDB_FrameMaterial + "'");
 
                 UserDB_Frame_pictureBox.Load(Program.gPath + Image[0][0]);
                 UserDB_Frame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;

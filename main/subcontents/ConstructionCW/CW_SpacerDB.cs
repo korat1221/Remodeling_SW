@@ -67,7 +67,7 @@ namespace main.subcontents.ConstructionCW
             }
             catch { }
 
-            string[][] CWSpacer = Program.DB.getValue(DB.type.BaseDB, "커튼월간봉", "번호,DB유형,제품명,제조사,구분1,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분3 ='" + FrameTpe + "'");
+            string[][] CWSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월간봉", "번호,DB유형,제품명,제조사,구분1,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분3 ='" + FrameTpe + "'");
             for (int n = 0; n < CWSpacer.Length; n++)
             {
                 table_CWSpacer.Rows.Add(CWSpacer[n][0], CWSpacer[n][1], CWSpacer[n][2], CWSpacer[n][3], CWSpacer[n][4], CWSpacer[n][5], CWSpacer[n][6], CWSpacer[n][7], CWSpacer[n][8], CWSpacer[n][9]);

@@ -80,7 +80,7 @@ namespace main.subcontents.ZoneLighting
             //}
             //catch { }
 
-            string[][] Light = Program.DB.getValue(DB.type.BaseDB, "조명_DB", "번호,등기구명칭,램프유형,제조사,안정기_컨버터,광속,소비전력,광효율,조명계수", "");
+            string[][] Light = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_DB", "번호,등기구명칭,램프유형,제조사,안정기_컨버터,광속,소비전력,광효율,조명계수", "");
 
             for (int n = 0; n <Light.Length; n++)
             {

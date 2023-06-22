@@ -36,21 +36,21 @@ namespace main.contents
         {
             InitializeComponent();
             Program.DB.initTable(DB.type.CalcDB, "Import_CWSize"); //불러온 사이즈 정보 저장할 table 생성
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '커튼월창'");
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '커튼월창'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
             //직접간접 콤보박스
-            Program.UTIL.FillComboBox(DiIndi_comboBox, "커튼월", "실외조건", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi_comboBox, "커튼월", "실외조건", "1");
             //프레임종류 콤보박스
-            Program.UTIL.FillComboBox(Frame_comboBox, "커튼월", "프레임재질", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Frame_comboBox, "커튼월", "프레임재질", "1");
             //설치위치 콤보박스
-            Program.UTIL.FillComboBox(Install_comboBox, "커튼월", "구조", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Install_comboBox, "커튼월", "구조", "1");
 
-            Image = Program.DB.getValue(DB.type.BaseDB, "커튼월프레임이미지", "이미지", "유형 = '디포트'");
+            Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월프레임이미지", "이미지", "유형 = '디포트'");
             CWFrame_pictureBox.Load(Program.gPath + Image[0][0]);
             CWFrame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            Image = Program.DB.getValue(DB.type.BaseDB, "커튼월프레임이미지", "이미지", "유형 = '유리디포트'");
+            Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월프레임이미지", "이미지", "유형 = '유리디포트'");
             CWGlass_pictureBox.Load(Program.gPath + Image[0][0]);
             CWGlass_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -190,7 +190,7 @@ namespace main.contents
         private void Load_CWType_image(String Type)
         {
 
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB, "커튼월구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
 
             CWType_pictureBox.Load(Program.gPath + Image[0][0]);
             CWType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -569,7 +569,7 @@ namespace main.contents
 
                 PanelColor_label.Visible = true;
                 PanelColor_comboBox.Visible = true;
-                Program.UTIL.FillComboBox(PanelColor_comboBox, "커튼월", "색깔", "1");
+                Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed,PanelColor_comboBox, "커튼월", "색깔", "1");
 
                 UCW_p_label.Visible = true;
                 UCW_p_textBox.Visible = true;
@@ -667,7 +667,7 @@ namespace main.contents
         private void PanelColor_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             PanelColor = PanelColor_comboBox.SelectedItem.ToString();
-            String[][] value = Program.DB.getValue(DB.type.BaseDB, "흡수율", "흡수율", "외장재색 = '" + PanelColor + "'");
+            String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + PanelColor + "'");
             αp = Convert.ToDouble(value[0][0]);
             αp_textBox.Text = String.Format("{0:F1}", αp);
         }
@@ -900,7 +900,7 @@ namespace main.contents
                         Psi_InstallButtom_textBox.Text = String.Format("{0:F3}", Psi_InstallButtom);
 
 
-                        string[][] Image = Program.DB.getValue(DB.type.BaseDB, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
+                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
 
                         CWnstall_pictureBox.Load(Program.gPath + Image[0][0]);
                         CWnstall_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -933,7 +933,7 @@ namespace main.contents
                         Psi_InstallButtom_textBox.Text = String.Format("{0:F3}", Psi_InstallButtom);
 
 
-                        string[][] Image = Program.DB.getValue(DB.type.BaseDB, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
+                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
 
                         CWnstall_pictureBox.Load(Program.gPath + Image[0][0]);
                         CWnstall_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -998,7 +998,7 @@ namespace main.contents
         {
             if (UcwMethod == "법규")
             {
-                String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB, "법규열관류율", "열관류율", "구조체 = '창호' And 시기 = '2018.09' AND  지역 = '중부1' AND 직접간접 =  '" + DiIndi + "'");
+                String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율", "구조체 = '창호' And 시기 = '2018.09' AND  지역 = '중부1' AND 직접간접 =  '" + DiIndi + "'");
                 Ucw_g = Convert.ToDouble(Uvalue[0][0]);
                 UCW_g_textBox.Text = String.Format("{0:F3}", Ucw_g);
 
@@ -1012,7 +1012,7 @@ namespace main.contents
                     Ucw_d = 0;
                 }
 
-                Uvalue = Program.DB.getValue(DB.type.BaseDB, "법규열관류율", "열관류율", "구조체 = '외벽' And 시기 = '2018.09' AND  지역 = '중부1' AND 직접간접 =  '" + DiIndi + "'");
+                Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율", "구조체 = '외벽' And 시기 = '2018.09' AND  지역 = '중부1' AND 직접간접 =  '" + DiIndi + "'");
                 if (Panel_checkBox.Checked)
                 {
                     Ucw_p = Convert.ToDouble(Uvalue[0][0]);
@@ -1493,10 +1493,10 @@ namespace main.contents
             }
             else { }
 
-            string[][] Image1 = Program.DB.getValue(DB.type.BaseDB, "커튼월구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
+            string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
             CWType_pictureBox.Load(Program.gPath + Image1[0][0]);
             CWType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            string[][] Image2 = Program.DB.getValue(DB.type.BaseDB, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
+            string[][] Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
             CWnstall_pictureBox.Load(Program.gPath + Image2[0][0]);
             CWnstall_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
         }

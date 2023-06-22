@@ -48,7 +48,7 @@ namespace main.subcontents
             UserDBType3_comboBox.SelectedItem = SingleDoubleType;
             UserDBType3_comboBox.Enabled = false;
             //사용자DB 구분4 콤보박스
-            Program.UTIL.FillComboBox(UserDBType4_comboBox, "창호", "설치위치", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, UserDBType4_comboBox, "창호", "설치위치", "1");
             UserNum = Program.UTIL.CreateNum("User_WindowInstall", "번호", "UWS_0");
             UserNum_textBox.Text = UserNum;
         }
@@ -73,7 +73,7 @@ namespace main.subcontents
             UserDBType3_comboBox.Items.Add("이중창");
             UserDBType2_comboBox.SelectedIndex = 0;
             //사용자DB 구분4 콤보박스
-            Program.UTIL.FillComboBox(UserDBType4_comboBox, "창호", "설치위치", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, UserDBType4_comboBox, "창호", "설치위치", "1");
         }
 
         void load_table_InstallDB()
@@ -109,11 +109,11 @@ namespace main.subcontents
 
             if (InstallType != null && SingleDoubleType != null && FrameMaterial != null)
             {
-                WinInstall = Program.DB.getValue(DB.type.BaseDB, "창호설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'AND 구분2 = '" + FrameMaterial + "'AND 구분3 ='" + SingleDoubleType + "'");
+                WinInstall = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'AND 구분2 = '" + FrameMaterial + "'AND 구분3 ='" + SingleDoubleType + "'");
             }
             else
             {
-                WinInstall = Program.DB.getValue(DB.type.BaseDB, "창호설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
+                WinInstall = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
             }
 
             for (int n = 0; n < WinInstall.Length; n++)

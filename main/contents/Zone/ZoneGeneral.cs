@@ -37,16 +37,16 @@ namespace main.contents
 
             //콤보박스 리스트 생성 
             //존 환기방식 콤보박스
-            Program.UTIL.FillComboBox(AHU_comboBox, "존일반", "환기방식", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed,AHU_comboBox, "존일반", "환기방식", "1");
             //건물대상 콤보박스
             Program.UTIL.FillComboBox_Parents(BuildingCategory_comboBox, "존일반", "건물용도", "1");
             //존 사용 시작/종료 콤보박스 
-            Program.UTIL.FillComboBox(StartTime_comboBox, "존일반", "이용일 시작 및 종료시간", "8");
-            Program.UTIL.FillComboBox(EndTime_comboBox, "존일반", "이용일 시작 및 종료시간", "19");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, StartTime_comboBox, "존일반", "이용일 시작 및 종료시간", "8");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, EndTime_comboBox, "존일반", "이용일 시작 및 종료시간", "19");
             //주간 이용일수 콤보박스 
-            Program.UTIL.FillComboBox(WeekUseDay_comboBox, "존일반", "주간이용일", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, WeekUseDay_comboBox, "존일반", "주간이용일", "1");
             //기기밀도 콤보박스 
-            Program.UTIL.FillComboBox(EquipIHG_comboBox, "존일반", "밀도", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, EquipIHG_comboBox, "존일반", "밀도", "1");
 
 
          }
@@ -94,7 +94,7 @@ namespace main.contents
         //주간이용일수 선택 시 연간이용일수 계산
         private void WeekUseDay_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string[][] res = Program.DB.getValue(DB.type.BaseDB, "주간이용일수", "일수", "이용일수" + " = '" + WeekUseDay_comboBox.SelectedItem.ToString() + "' ");
+            string[][] res = Program.DB.getValue(DB.type.BaseDB_HCneed, "주간이용일수", "일수", "이용일수" + " = '" + WeekUseDay_comboBox.SelectedItem.ToString() + "' ");
             WeekUseDay = Convert.ToDouble(res[0][0].ToString());
             AnnualUseDay = Convert.ToDouble(Program.UTIL.GetValue2_BySelectComboBox(WeekUseDay_comboBox, "이용일수", "주간일수", "월='연간'", "이용일수"));
             AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);

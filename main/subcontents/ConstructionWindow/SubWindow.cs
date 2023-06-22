@@ -28,17 +28,17 @@ namespace main.subcontents.ConstructionWindow
         public SubWindow()
         {
             InitializeComponent();
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '창호'");
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '창호'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
 
             //직접간접 콤보박스
-            Program.UTIL.FillComboBox(DiIndi_comboBox, "창호", "실외조건", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi_comboBox, "창호", "실외조건", "1");
             //프레임종류 콤보박스
-            Program.UTIL.FillComboBox(Frame_comboBox, "창호", "프레임시스템", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Frame_comboBox, "창호", "프레임시스템", "1");
             //설치위치 콤보박스
-            Program.UTIL.FillComboBox(Install_comboBox, "창호", "구조", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Install_comboBox, "창호", "구조", "1");
 
 
         }
@@ -209,8 +209,8 @@ namespace main.subcontents.ConstructionWindow
                 {
                     Old = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,LE_CL_V,유리열관류율,태양열취득률,빛투과율,창호열관류율", "창호명칭 = '" + OldWindow + "'");
                     String 조합구성 = LE_CL_V + "+" + Old[0][3];
-                    f_shgc = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
-                    f_τ = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
+                    f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
+                    f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
 
                     g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Old[0][5]) * g;
                     τD65_SNA = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Old[0][6]) * τD65_SNA;
@@ -224,8 +224,8 @@ namespace main.subcontents.ConstructionWindow
                 {
                     Old = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,LE_CL_V,유리열관류율,태양열취득률,빛투과율,창호열관류율", "창호명칭 = '" + OldWindow + "'");
                     String 조합구성 = LE_CL_V + "+" + Old[0][3];
-                    f_shgc = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
-                    f_τ = Program.DB.getValue(DB.type.BaseDB, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
+                    f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
+                    f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
                     g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Old[0][5]) * g;
                     τD65_SNA = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Old[0][6]) * τD65_SNA;
                     Uw = 1 / (0.019 + 1 / Convert.ToDouble(Old[0][7]) + 1 / Uw);
@@ -247,7 +247,7 @@ namespace main.subcontents.ConstructionWindow
         private void Load_WindowType_image(String Type)
         {
 
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
 
             WindowType_pictureBox.Load(Program.gPath + Image[0][0]);
             WindowType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -460,7 +460,7 @@ namespace main.subcontents.ConstructionWindow
         {
             if (UwMethod == "법규")
             {
-                String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB, "법규열관류율", "열관류율", "구조체 = '창호' And 시기 = '2018.09' AND  지역 = '중부1' AND 직접간접 =  '" + DiIndi + "'");
+                String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율", "구조체 = '창호' And 시기 = '2018.09' AND  지역 = '중부1' AND 직접간접 =  '" + DiIndi + "'");
                 Uw = Convert.ToDouble(Uvalue[0][0]);
                 Uw2_textBox.Text = String.Format("{0:F3}", Uw);
             }
@@ -646,13 +646,13 @@ namespace main.subcontents.ConstructionWindow
                 d_InstallButtom_textBox.Text = String.Format("{0:F2}", Width);
                 d_InstallSide_textBox.Text = String.Format("{0:F2}", (Height * 2));
 
-                string[][] Image1 = Program.DB.getValue(DB.type.BaseDB, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
+                string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
                 WindowType_pictureBox.Load(Program.gPath + Image1[0][0]);
                 WindowType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                string[][] Image2 = Program.DB.getValue(DB.type.BaseDB, "창호프레임이미지", "이미지", "유형1 = '" + FrameType + "' AND 유형2 = '기본형' AND 재료 = '" + FrameMaterial + "'");
+                string[][] Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호프레임이미지", "이미지", "유형1 = '" + FrameType + "' AND 유형2 = '기본형' AND 재료 = '" + FrameMaterial + "'");
                 WindowFrame_pictureBox.Load(Program.gPath + Image2[0][0]);
                 WindowFrame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                string[][] Image3 = Program.DB.getValue(DB.type.BaseDB, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");
+                string[][] Image3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");
                 WindowInstall_pictureBox.Load(Program.gPath + Image3[0][0]);
                 WindowInstall_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }

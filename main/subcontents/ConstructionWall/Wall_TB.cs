@@ -102,7 +102,7 @@ namespace main.subcontents.ConstructionWall
             if (LinearPoint == "점형")
             {
                 table_TB.Columns.Add("점형\r\n열관류율" + Environment.NewLine + "d =" + string.Format("{0:F0}", d_Ins) + "mm", typeof(string));
-                string[][] TB = Program.DB.getValue(DB.type.BaseDB, "외벽점형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
+                string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
                 for (int n = 0; n < TB.Length; n++)
                 {
                     A = Convert.ToDouble(TB[n][8]);
@@ -116,7 +116,7 @@ namespace main.subcontents.ConstructionWall
             else
             {
                 table_TB.Columns.Add("선형\r\n열관류율" + Environment.NewLine + "d =" + string.Format("{0:F0}", d_Ins) + "mm", typeof(string));
-                string[][] TB = Program.DB.getValue(DB.type.BaseDB, "외벽선형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
+                string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
                 for (int n = 0; n < TB.Length; n++)
                 {
                     A = Convert.ToDouble(TB[n][8]);
@@ -134,13 +134,13 @@ namespace main.subcontents.ConstructionWall
         {
             if (LinearPoint == "점형")
             {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB, "외벽점형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
                 pictureBox1.Load(Program.gPath + Image[0][0]);
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
             else
             {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB, "외벽선형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
                 pictureBox1.Load(Program.gPath + Image[0][0]);
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -185,13 +185,13 @@ namespace main.subcontents.ConstructionWall
             {
                 if (LinearPoint == "점형")
                 {
-                    string[][] Image = Program.DB.getValue(DB.type.BaseDB, "외벽점형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
+                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
                     pictureBox2.Load(Program.gPath + Image[0][0]);
                     pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
                 }
                 else
                 {
-                    string[][] Image = Program.DB.getValue(DB.type.BaseDB, "외벽선형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
+                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
                     pictureBox2.Load(Program.gPath + Image[0][0]);
                     pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
 

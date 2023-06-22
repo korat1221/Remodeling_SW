@@ -28,7 +28,7 @@ namespace main.subcontents.ConstructionCW
             UserNum_textBox.Text = UserNum;
 
             //구분 콤보박스
-            Program.UTIL.FillComboBox(UserDB_Type_comboBox, "커튼월", "프레임도어", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, UserDB_Type_comboBox, "커튼월", "프레임도어", "1");
         }
         void load_table_DoorFrameDB()
         {
@@ -55,7 +55,7 @@ namespace main.subcontents.ConstructionCW
             }
             catch { }
 
-            string[][] CWDoorFrame = Program.DB.getValue(DB.type.BaseDB, "커튼월도어프레임", "번호,DB유형,제품명,제조사,프레임열관류율,프레임두께", "");
+            string[][] CWDoorFrame = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월도어프레임", "번호,DB유형,제품명,제조사,프레임열관류율,프레임두께", "");
             for (int n = 0; n < CWDoorFrame.Length; n++)
             {
                 table_CWDoor.Rows.Add(CWDoorFrame[n][0], CWDoorFrame[n][1], CWDoorFrame[n][2], CWDoorFrame[n][3], CWDoorFrame[n][2], CWDoorFrame[n][4], CWDoorFrame[n][5]);

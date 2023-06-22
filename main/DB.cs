@@ -41,7 +41,8 @@ namespace main
     {
         public enum type
         {
-            BaseDB,
+            BaseDB_HCneed,
+            BaseDB_Lighting,
             ProjDB,
             CalcDB
         }
@@ -105,24 +106,25 @@ namespace main
             {"ZoneCW_a", "CREATE TABLE IF NOT EXISTS ZoneCW_a (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"}
         };
 
-        private SQLiteConnection? baseDB, projDB, calcDB;
+        private SQLiteConnection? baseDB_hcneed, baseDB_lighting, projDB, calcDB;
         public bool openDB(string projPath)
         {
             closeDB();
 
             SQLiteCommand cmd = new SQLiteCommand();
-
-            if (GetFileSize("basedb.sqlite") > 0)
+            
+            //요구량 baseDB
+            if (GetFileSize("basedb_hcneed.sqlite") > 0)
             {
-                baseDB = new SQLiteConnection(@"Data Source=basedb.sqlite");
-                baseDB.Open();
+                baseDB_hcneed = new SQLiteConnection(@"Data Source=basedb_hcneed.sqlite");
+                baseDB_hcneed.Open();
 
-                if (baseDB.State != ConnectionState.Open)
+                if (baseDB_hcneed.State != ConnectionState.Open)
                 {
                     return false;
                 }
 
-                cmd.Connection = baseDB;
+                cmd.Connection = baseDB_hcneed;
                 cmd.CommandText = "PRAGMA synchronous=OFF";
                 cmd.ExecuteNonQuery();
                 cmd.CommandText = "PRAGMA journal_mode=OFF";
@@ -132,6 +134,29 @@ namespace main
             {
                 return false;
             }
+
+            //조명 baseDB
+            if (GetFileSize("basedb_lighting.sqlite") > 0)
+            {
+                baseDB_lighting = new SQLiteConnection(@"Data Source=basedb_lighting.sqlite");
+                baseDB_lighting.Open();
+
+                if (baseDB_lighting.State != ConnectionState.Open)
+                {
+                    return false;
+                }
+
+                cmd.Connection = baseDB_lighting;
+                cmd.CommandText = "PRAGMA synchronous=OFF";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "PRAGMA journal_mode=OFF";
+                cmd.ExecuteNonQuery();
+            }
+            else
+            {
+                return false;
+            }
+
 
             if (GetFileSize(projPath) <= 0)
             {
@@ -143,8 +168,10 @@ namespace main
 
             if (projDB.State != ConnectionState.Open)
             {
-                baseDB.Close();
-                baseDB.Dispose();
+                baseDB_hcneed.Close();
+                baseDB_hcneed.Dispose();
+                baseDB_lighting.Close();
+                baseDB_lighting.Dispose();
 
                 return false;
             }
@@ -159,8 +186,10 @@ namespace main
             calcDB.Open();
             if (calcDB.State != ConnectionState.Open)
             {
-                baseDB.Close();
-                baseDB.Dispose();
+                baseDB_hcneed.Close();
+                baseDB_hcneed.Dispose();
+                baseDB_lighting.Close();
+                baseDB_lighting.Dispose();
                 projDB.Close();
                 projDB.Dispose();
                 return false;
@@ -170,13 +199,17 @@ namespace main
         }
         public void closeDB()
         {
-            if (baseDB != null)
+            if (baseDB_hcneed != null)
             {
-                baseDB.Close();
-                baseDB.Dispose();
+                baseDB_hcneed.Close();
+                baseDB_hcneed.Dispose();
             }
-
-            if(projDB != null)
+            if (baseDB_lighting != null)
+            {
+                baseDB_lighting.Close();
+                baseDB_lighting.Dispose();
+            }
+            if (projDB != null)
             {
                 projDB.Close();
                 projDB.Dispose();
@@ -219,9 +252,15 @@ namespace main
             {
                 switch (dbType)
                 {
-                    case type.BaseDB:
+                    case type.BaseDB_HCneed:
                         {
-                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB);
+                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_hcneed);
+                            cmd.ExecuteNonQuery();
+                        }
+                        break;
+                    case type.BaseDB_Lighting:
+                        {
+                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_lighting);
                             cmd.ExecuteNonQuery();
                         }
                         break;
@@ -249,8 +288,11 @@ namespace main
             {
                 switch (dbType)
                 {
-                    case type.BaseDB:
-                        cmd.Connection = baseDB;
+                    case type.BaseDB_HCneed:
+                        cmd.Connection = baseDB_hcneed;
+                        break;
+                    case type.BaseDB_Lighting:
+                        cmd.Connection = baseDB_lighting;
                         break;
                     case type.ProjDB:
                         cmd.Connection = projDB;
@@ -546,8 +588,11 @@ namespace main
 
             switch (dbType)
             {
-                case type.BaseDB:
-                    cmd.Connection = baseDB;
+                case type.BaseDB_HCneed:
+                    cmd.Connection = baseDB_hcneed;
+                    break;
+                case type.BaseDB_Lighting:
+                    cmd.Connection = baseDB_lighting;
                     break;
                 case type.ProjDB:
                     cmd.Connection = projDB;
