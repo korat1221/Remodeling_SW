@@ -43,6 +43,8 @@ namespace main
         {
             BaseDB_HCneed,
             BaseDB_Lighting,
+            BaseDB_Cooling,
+            BaseDB_RESystem,
             ProjDB,
             CalcDB
         }
@@ -106,7 +108,7 @@ namespace main
             {"ZoneCW_a", "CREATE TABLE IF NOT EXISTS ZoneCW_a (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"}
         };
 
-        private SQLiteConnection? baseDB_hcneed, baseDB_lighting, projDB, calcDB;
+        private SQLiteConnection? baseDB_hcneed, baseDB_lighting, baseDB_cooling, baseDB_resystem, projDB, calcDB;
         public bool openDB(string projPath)
         {
             closeDB();
@@ -157,7 +159,49 @@ namespace main
                 return false;
             }
 
+            //냉방 baseDB
+            if (GetFileSize("basedb_cooling.sqlite") > 0)
+            {
+                baseDB_cooling = new SQLiteConnection(@"Data Source=basedb_cooling.sqlite");
+                baseDB_cooling.Open();
 
+                if (baseDB_cooling.State != ConnectionState.Open)
+                {
+                    return false;
+                }
+
+                cmd.Connection = baseDB_cooling;
+                cmd.CommandText = "PRAGMA synchronous=OFF";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "PRAGMA journal_mode=OFF";
+                cmd.ExecuteNonQuery();
+            }
+            else
+            {
+                return false;
+            }
+
+            //신재생 baseDB
+            if (GetFileSize("basedb_cooling.sqlite") > 0)
+            {
+                baseDB_resystem = new SQLiteConnection(@"Data Source=basedb_resystem.sqlite");
+                baseDB_resystem.Open();
+
+                if (baseDB_resystem.State != ConnectionState.Open)
+                {
+                    return false;
+                }
+
+                cmd.Connection = baseDB_resystem;
+                cmd.CommandText = "PRAGMA synchronous=OFF";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "PRAGMA journal_mode=OFF";
+                cmd.ExecuteNonQuery();
+            }
+            else
+            {
+                return false;
+            }
             if (GetFileSize(projPath) <= 0)
             {
                 File.Copy("templ.sqlite", projPath, true);
@@ -170,8 +214,15 @@ namespace main
             {
                 baseDB_hcneed.Close();
                 baseDB_hcneed.Dispose();
+
                 baseDB_lighting.Close();
                 baseDB_lighting.Dispose();
+
+                baseDB_cooling.Close();
+                baseDB_cooling.Dispose();
+
+                baseDB_resystem.Close();
+                baseDB_resystem.Dispose();
 
                 return false;
             }
@@ -188,8 +239,17 @@ namespace main
             {
                 baseDB_hcneed.Close();
                 baseDB_hcneed.Dispose();
+
                 baseDB_lighting.Close();
                 baseDB_lighting.Dispose();
+
+                baseDB_cooling.Close();
+                baseDB_cooling.Dispose();
+
+
+                baseDB_resystem.Close();
+                baseDB_resystem.Dispose();
+
                 projDB.Close();
                 projDB.Dispose();
                 return false;
@@ -208,6 +268,16 @@ namespace main
             {
                 baseDB_lighting.Close();
                 baseDB_lighting.Dispose();
+            }
+            if (baseDB_cooling != null)
+            {
+                baseDB_cooling.Close();
+                baseDB_cooling.Dispose();
+            }
+            if (baseDB_resystem != null)
+            {
+                baseDB_resystem.Close();
+                baseDB_resystem.Dispose();
             }
             if (projDB != null)
             {
@@ -264,6 +334,18 @@ namespace main
                             cmd.ExecuteNonQuery();
                         }
                         break;
+                    case type.BaseDB_Cooling:
+                        {
+                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_cooling);
+                            cmd.ExecuteNonQuery();
+                        }
+                        break;
+                    case type.BaseDB_RESystem:
+                        {
+                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_resystem);
+                            cmd.ExecuteNonQuery();
+                        }
+                        break;
                     case type.ProjDB:
                         {
                             SQLiteCommand cmd = new SQLiteCommand(exec, projDB);
@@ -293,6 +375,12 @@ namespace main
                         break;
                     case type.BaseDB_Lighting:
                         cmd.Connection = baseDB_lighting;
+                        break;
+                    case type.BaseDB_Cooling:
+                        cmd.Connection = baseDB_cooling;
+                        break;
+                    case type.BaseDB_RESystem:
+                        cmd.Connection = baseDB_resystem;
                         break;
                     case type.ProjDB:
                         cmd.Connection = projDB;
@@ -593,6 +681,12 @@ namespace main
                     break;
                 case type.BaseDB_Lighting:
                     cmd.Connection = baseDB_lighting;
+                    break;
+                case type.BaseDB_Cooling:
+                    cmd.Connection = baseDB_cooling;
+                    break;
+                case type.BaseDB_RESystem:
+                    cmd.Connection = baseDB_resystem;
                     break;
                 case type.ProjDB:
                     cmd.Connection = projDB;

@@ -5,13 +5,6 @@ namespace main
 {
     internal class UTIL
     {
-        public enum type
-        {
-            BaseDB_HCneed,
-            BaseDB_Lighting,
-            ProjDB,
-            CalcDB
-        }
         public void trim(string[] arr)
         {
             int i = -1;
