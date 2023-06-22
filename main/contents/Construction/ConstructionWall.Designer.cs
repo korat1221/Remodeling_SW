@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             CW_comboBox = new ComboBox();
             OldWall_comboBox = new ComboBox();
@@ -55,7 +58,7 @@
             TBName_textBox = new TextBox();
             StructureType_comboBox = new ComboBox();
             label11 = new Label();
-            Frame_label = new Label();
+            UMethod_label = new Label();
             Uvalue_comboBox = new ComboBox();
             label25 = new Label();
             label4 = new Label();
@@ -76,15 +79,46 @@
             DiIndi_comboBox = new ComboBox();
             WallType_pictureBox = new PictureBox();
             Glass_tabPage = new TabPage();
-            Frame_tabPage = new TabPage();
-            FrameName2_textBox = new TextBox();
+            PsiKai_label2 = new TextBox();
+            PsiKai_textBox = new TextBox();
+            PsiKai_label1 = new TextBox();
+            PerArea_label2 = new TextBox();
+            PerArea_textBox = new TextBox();
+            PerArea_label1 = new TextBox();
+            TBName2_textBox = new TextBox();
+            TBType_textBox = new TextBox();
+            label13 = new Label();
+            dU2_textBox = new TextBox();
+            label14 = new Label();
+            pictureBox2 = new PictureBox();
+            pictureBox1 = new PictureBox();
+            Ucalc_tabPage = new TabPage();
+            Rse_textBox = new TextBox();
+            label12 = new Label();
+            Rsi_textBox = new TextBox();
+            label10 = new Label();
+            Material_Rtot_textBox = new TextBox();
+            Material_dtot_textBox = new TextBox();
+            label8 = new Label();
+            DiIndi2_comboBox = new ComboBox();
+            label2 = new Label();
+            RseRsi_comboBox = new ComboBox();
+            MaterialDown_button = new Button();
+            MaterialUP_button = new Button();
+            Deletebutton = new Button();
+            Ucalc_dataGridView = new DataGridView();
+            AddMaterial_button = new Button();
             tabControl1 = new TabControl();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)WallType_pictureBox).BeginInit();
-            Frame_tabPage.SuspendLayout();
+            Glass_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            Ucalc_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).BeginInit();
             tabControl1.SuspendLayout();
             SuspendLayout();
             // 
@@ -351,7 +385,7 @@
             TB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             TB_button.FlatStyle = FlatStyle.System;
             TB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            TB_button.Location = new Point(473, 85);
+            TB_button.Location = new Point(431, 85);
             TB_button.Margin = new Padding(0);
             TB_button.Name = "TB_button";
             TB_button.Size = new Size(23, 23);
@@ -367,7 +401,7 @@
             TBName_textBox.Enabled = false;
             TBName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             TBName_textBox.ForeColor = SystemColors.ControlDark;
-            TBName_textBox.Location = new Point(351, 89);
+            TBName_textBox.Location = new Point(309, 89);
             TBName_textBox.Name = "TBName_textBox";
             TBName_textBox.Size = new Size(120, 15);
             TBName_textBox.TabIndex = 91;
@@ -393,15 +427,15 @@
             label11.TabIndex = 41;
             label11.Text = "구조 유형";
             // 
-            // Frame_label
+            // UMethod_label
             // 
-            Frame_label.AutoSize = true;
-            Frame_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Frame_label.Location = new Point(45, 59);
-            Frame_label.Name = "Frame_label";
-            Frame_label.Size = new Size(59, 15);
-            Frame_label.TabIndex = 39;
-            Frame_label.Text = "단열 수준";
+            UMethod_label.AutoSize = true;
+            UMethod_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            UMethod_label.Location = new Point(45, 59);
+            UMethod_label.Name = "UMethod_label";
+            UMethod_label.Size = new Size(59, 15);
+            UMethod_label.TabIndex = 39;
+            UMethod_label.Text = "단열 수준";
             // 
             // Uvalue_comboBox
             // 
@@ -455,7 +489,7 @@
             panel2.Controls.Add(DiIndi_comboBox);
             panel2.Controls.Add(StructureType_comboBox);
             panel2.Controls.Add(label11);
-            panel2.Controls.Add(Frame_label);
+            panel2.Controls.Add(UMethod_label);
             panel2.Controls.Add(Uvalue_comboBox);
             panel2.Controls.Add(label25);
             panel2.Location = new Point(12, 133);
@@ -618,7 +652,7 @@
             // 
             DiIndi_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             DiIndi_comboBox.FormattingEnabled = true;
-            DiIndi_comboBox.Location = new Point(351, 55);
+            DiIndi_comboBox.Location = new Point(309, 55);
             DiIndi_comboBox.Name = "DiIndi_comboBox";
             DiIndi_comboBox.Size = new Size(120, 24);
             DiIndi_comboBox.TabIndex = 55;
@@ -626,14 +660,28 @@
             // 
             // WallType_pictureBox
             // 
-            WallType_pictureBox.Location = new Point(992, 54);
+            WallType_pictureBox.Location = new Point(992, 41);
             WallType_pictureBox.Name = "WallType_pictureBox";
-            WallType_pictureBox.Size = new Size(178, 386);
+            WallType_pictureBox.Size = new Size(178, 250);
             WallType_pictureBox.TabIndex = 97;
             WallType_pictureBox.TabStop = false;
             // 
             // Glass_tabPage
             // 
+            Glass_tabPage.BorderStyle = BorderStyle.FixedSingle;
+            Glass_tabPage.Controls.Add(PsiKai_label2);
+            Glass_tabPage.Controls.Add(PsiKai_textBox);
+            Glass_tabPage.Controls.Add(PsiKai_label1);
+            Glass_tabPage.Controls.Add(PerArea_label2);
+            Glass_tabPage.Controls.Add(PerArea_textBox);
+            Glass_tabPage.Controls.Add(PerArea_label1);
+            Glass_tabPage.Controls.Add(TBName2_textBox);
+            Glass_tabPage.Controls.Add(TBType_textBox);
+            Glass_tabPage.Controls.Add(label13);
+            Glass_tabPage.Controls.Add(dU2_textBox);
+            Glass_tabPage.Controls.Add(label14);
+            Glass_tabPage.Controls.Add(pictureBox2);
+            Glass_tabPage.Controls.Add(pictureBox1);
             Glass_tabPage.Location = new Point(4, 24);
             Glass_tabPage.Name = "Glass_tabPage";
             Glass_tabPage.Padding = new Padding(3);
@@ -642,34 +690,411 @@
             Glass_tabPage.Text = "열교 세부정보";
             Glass_tabPage.UseVisualStyleBackColor = true;
             // 
-            // Frame_tabPage
+            // PsiKai_label2
             // 
-            Frame_tabPage.BorderStyle = BorderStyle.FixedSingle;
-            Frame_tabPage.Controls.Add(FrameName2_textBox);
-            Frame_tabPage.Location = new Point(4, 24);
-            Frame_tabPage.Name = "Frame_tabPage";
-            Frame_tabPage.Padding = new Padding(3);
-            Frame_tabPage.Size = new Size(969, 360);
-            Frame_tabPage.TabIndex = 0;
-            Frame_tabPage.Text = "열관류율 계산";
-            Frame_tabPage.UseVisualStyleBackColor = true;
+            PsiKai_label2.BackColor = System.Drawing.Color.White;
+            PsiKai_label2.BorderStyle = BorderStyle.None;
+            PsiKai_label2.Enabled = false;
+            PsiKai_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PsiKai_label2.ForeColor = SystemColors.ControlDark;
+            PsiKai_label2.Location = new Point(822, 98);
+            PsiKai_label2.Name = "PsiKai_label2";
+            PsiKai_label2.Size = new Size(68, 15);
+            PsiKai_label2.TabIndex = 151;
+            PsiKai_label2.TextAlign = HorizontalAlignment.Center;
             // 
-            // FrameName2_textBox
+            // PsiKai_textBox
             // 
-            FrameName2_textBox.BackColor = System.Drawing.Color.White;
-            FrameName2_textBox.BorderStyle = BorderStyle.None;
-            FrameName2_textBox.Enabled = false;
-            FrameName2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            FrameName2_textBox.ForeColor = SystemColors.ControlDark;
-            FrameName2_textBox.Location = new Point(353, 30);
-            FrameName2_textBox.Name = "FrameName2_textBox";
-            FrameName2_textBox.Size = new Size(116, 15);
-            FrameName2_textBox.TabIndex = 93;
-            FrameName2_textBox.TextAlign = HorizontalAlignment.Center;
+            PsiKai_textBox.BackColor = System.Drawing.Color.White;
+            PsiKai_textBox.BorderStyle = BorderStyle.None;
+            PsiKai_textBox.Enabled = false;
+            PsiKai_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PsiKai_textBox.ForeColor = SystemColors.ControlDark;
+            PsiKai_textBox.Location = new Point(699, 98);
+            PsiKai_textBox.Name = "PsiKai_textBox";
+            PsiKai_textBox.Size = new Size(116, 15);
+            PsiKai_textBox.TabIndex = 150;
+            PsiKai_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // PsiKai_label1
+            // 
+            PsiKai_label1.BackColor = System.Drawing.Color.White;
+            PsiKai_label1.BorderStyle = BorderStyle.None;
+            PsiKai_label1.Enabled = false;
+            PsiKai_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            PsiKai_label1.ForeColor = SystemColors.ControlDark;
+            PsiKai_label1.Location = new Point(539, 97);
+            PsiKai_label1.Name = "PsiKai_label1";
+            PsiKai_label1.Size = new Size(91, 16);
+            PsiKai_label1.TabIndex = 149;
+            // 
+            // PerArea_label2
+            // 
+            PerArea_label2.BackColor = System.Drawing.Color.White;
+            PerArea_label2.BorderStyle = BorderStyle.None;
+            PerArea_label2.Enabled = false;
+            PerArea_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PerArea_label2.ForeColor = SystemColors.ControlDark;
+            PerArea_label2.Location = new Point(822, 64);
+            PerArea_label2.Name = "PerArea_label2";
+            PerArea_label2.Size = new Size(68, 15);
+            PerArea_label2.TabIndex = 148;
+            PerArea_label2.TextAlign = HorizontalAlignment.Center;
+            // 
+            // PerArea_textBox
+            // 
+            PerArea_textBox.BackColor = System.Drawing.Color.White;
+            PerArea_textBox.BorderStyle = BorderStyle.None;
+            PerArea_textBox.Enabled = false;
+            PerArea_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PerArea_textBox.ForeColor = SystemColors.ControlDark;
+            PerArea_textBox.Location = new Point(699, 64);
+            PerArea_textBox.Name = "PerArea_textBox";
+            PerArea_textBox.Size = new Size(116, 15);
+            PerArea_textBox.TabIndex = 147;
+            PerArea_textBox.TextAlign = HorizontalAlignment.Center;
+            PerArea_textBox.TextChanged += PerArea_textBox_TextChanged;
+            // 
+            // PerArea_label1
+            // 
+            PerArea_label1.BackColor = System.Drawing.Color.White;
+            PerArea_label1.BorderStyle = BorderStyle.None;
+            PerArea_label1.Enabled = false;
+            PerArea_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            PerArea_label1.ForeColor = SystemColors.ControlDark;
+            PerArea_label1.Location = new Point(539, 63);
+            PerArea_label1.Name = "PerArea_label1";
+            PerArea_label1.Size = new Size(91, 16);
+            PerArea_label1.TabIndex = 146;
+            // 
+            // TBName2_textBox
+            // 
+            TBName2_textBox.BackColor = System.Drawing.Color.White;
+            TBName2_textBox.BorderStyle = BorderStyle.None;
+            TBName2_textBox.Enabled = false;
+            TBName2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            TBName2_textBox.ForeColor = SystemColors.ControlDark;
+            TBName2_textBox.Location = new Point(327, 43);
+            TBName2_textBox.Name = "TBName2_textBox";
+            TBName2_textBox.ShortcutsEnabled = false;
+            TBName2_textBox.Size = new Size(116, 15);
+            TBName2_textBox.TabIndex = 143;
+            TBName2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // TBType_textBox
+            // 
+            TBType_textBox.BackColor = System.Drawing.Color.White;
+            TBType_textBox.BorderStyle = BorderStyle.None;
+            TBType_textBox.Enabled = false;
+            TBType_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            TBType_textBox.ForeColor = SystemColors.ControlDark;
+            TBType_textBox.Location = new Point(69, 43);
+            TBType_textBox.Name = "TBType_textBox";
+            TBType_textBox.ShortcutsEnabled = false;
+            TBType_textBox.Size = new Size(116, 15);
+            TBType_textBox.TabIndex = 142;
+            TBType_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label13.ForeColor = SystemColors.ControlDark;
+            label13.Location = new Point(822, 130);
+            label13.Name = "label13";
+            label13.Size = new Size(50, 16);
+            label13.TabIndex = 141;
+            label13.Text = "W/m²·K";
+            // 
+            // dU2_textBox
+            // 
+            dU2_textBox.BackColor = System.Drawing.Color.White;
+            dU2_textBox.BorderStyle = BorderStyle.None;
+            dU2_textBox.Enabled = false;
+            dU2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dU2_textBox.ForeColor = System.Drawing.Color.Black;
+            dU2_textBox.Location = new Point(699, 131);
+            dU2_textBox.Name = "dU2_textBox";
+            dU2_textBox.Size = new Size(116, 15);
+            dU2_textBox.TabIndex = 138;
+            dU2_textBox.TextAlign = HorizontalAlignment.Center;
+            dU2_textBox.TextChanged += textBox2_TextChanged;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label14.ForeColor = SystemColors.ControlDark;
+            label14.Location = new Point(541, 131);
+            label14.Name = "label14";
+            label14.Size = new Size(87, 15);
+            label14.TabIndex = 136;
+            label14.Text = "1D 열교가산치";
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Location = new Point(284, 64);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(202, 215);
+            pictureBox2.TabIndex = 3;
+            pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(26, 64);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(202, 215);
+            pictureBox1.TabIndex = 2;
+            pictureBox1.TabStop = false;
+            // 
+            // Ucalc_tabPage
+            // 
+            Ucalc_tabPage.BorderStyle = BorderStyle.FixedSingle;
+            Ucalc_tabPage.Controls.Add(Rse_textBox);
+            Ucalc_tabPage.Controls.Add(label12);
+            Ucalc_tabPage.Controls.Add(Rsi_textBox);
+            Ucalc_tabPage.Controls.Add(label10);
+            Ucalc_tabPage.Controls.Add(Material_Rtot_textBox);
+            Ucalc_tabPage.Controls.Add(Material_dtot_textBox);
+            Ucalc_tabPage.Controls.Add(label8);
+            Ucalc_tabPage.Controls.Add(DiIndi2_comboBox);
+            Ucalc_tabPage.Controls.Add(label2);
+            Ucalc_tabPage.Controls.Add(RseRsi_comboBox);
+            Ucalc_tabPage.Controls.Add(MaterialDown_button);
+            Ucalc_tabPage.Controls.Add(MaterialUP_button);
+            Ucalc_tabPage.Controls.Add(Deletebutton);
+            Ucalc_tabPage.Controls.Add(Ucalc_dataGridView);
+            Ucalc_tabPage.Controls.Add(AddMaterial_button);
+            Ucalc_tabPage.Location = new Point(4, 24);
+            Ucalc_tabPage.Name = "Ucalc_tabPage";
+            Ucalc_tabPage.Padding = new Padding(3);
+            Ucalc_tabPage.Size = new Size(969, 360);
+            Ucalc_tabPage.TabIndex = 0;
+            Ucalc_tabPage.Text = "열관류율 계산";
+            Ucalc_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // Rse_textBox
+            // 
+            Rse_textBox.BackColor = System.Drawing.Color.White;
+            Rse_textBox.BorderStyle = BorderStyle.None;
+            Rse_textBox.Enabled = false;
+            Rse_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Rse_textBox.ForeColor = SystemColors.ControlDark;
+            Rse_textBox.Location = new Point(474, 303);
+            Rse_textBox.Name = "Rse_textBox";
+            Rse_textBox.Size = new Size(80, 15);
+            Rse_textBox.TabIndex = 118;
+            Rse_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label12.ForeColor = SystemColors.ControlDark;
+            label12.Location = new Point(298, 303);
+            label12.Name = "label12";
+            label12.Size = new Size(141, 15);
+            label12.TabIndex = 117;
+            label12.Text = "실외표면열전달저항[Rse]";
+            // 
+            // Rsi_textBox
+            // 
+            Rsi_textBox.BackColor = System.Drawing.Color.White;
+            Rsi_textBox.BorderStyle = BorderStyle.None;
+            Rsi_textBox.Enabled = false;
+            Rsi_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Rsi_textBox.ForeColor = SystemColors.ControlDark;
+            Rsi_textBox.Location = new Point(474, 40);
+            Rsi_textBox.Name = "Rsi_textBox";
+            Rsi_textBox.Size = new Size(80, 15);
+            Rsi_textBox.TabIndex = 116;
+            Rsi_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label10.ForeColor = SystemColors.ControlDark;
+            label10.Location = new Point(299, 40);
+            label10.Name = "label10";
+            label10.Size = new Size(138, 15);
+            label10.TabIndex = 114;
+            label10.Text = "실내표면열전달저항[Rsi]";
+            // 
+            // Material_Rtot_textBox
+            // 
+            Material_Rtot_textBox.BackColor = System.Drawing.Color.White;
+            Material_Rtot_textBox.BorderStyle = BorderStyle.None;
+            Material_Rtot_textBox.Enabled = false;
+            Material_Rtot_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Material_Rtot_textBox.ForeColor = SystemColors.ControlDark;
+            Material_Rtot_textBox.Location = new Point(474, 330);
+            Material_Rtot_textBox.Name = "Material_Rtot_textBox";
+            Material_Rtot_textBox.Size = new Size(80, 15);
+            Material_Rtot_textBox.TabIndex = 112;
+            Material_Rtot_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Material_dtot_textBox
+            // 
+            Material_dtot_textBox.BackColor = System.Drawing.Color.White;
+            Material_dtot_textBox.BorderStyle = BorderStyle.None;
+            Material_dtot_textBox.Enabled = false;
+            Material_dtot_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Material_dtot_textBox.ForeColor = SystemColors.ControlDark;
+            Material_dtot_textBox.Location = new Point(390, 330);
+            Material_dtot_textBox.Name = "Material_dtot_textBox";
+            Material_dtot_textBox.Size = new Size(80, 15);
+            Material_dtot_textBox.TabIndex = 111;
+            Material_dtot_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.ForeColor = SystemColors.ControlDark;
+            label8.Location = new Point(353, 330);
+            label8.Name = "label8";
+            label8.Size = new Size(31, 15);
+            label8.TabIndex = 110;
+            label8.Text = "합계";
+            // 
+            // DiIndi2_comboBox
+            // 
+            DiIndi2_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DiIndi2_comboBox.FormattingEnabled = true;
+            DiIndi2_comboBox.Location = new Point(309, 3);
+            DiIndi2_comboBox.Name = "DiIndi2_comboBox";
+            DiIndi2_comboBox.Size = new Size(120, 24);
+            DiIndi2_comboBox.TabIndex = 102;
+            DiIndi2_comboBox.SelectedIndexChanged += DiIndi2_comboBox_SelectedIndexChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Location = new Point(45, 8);
+            label2.Name = "label2";
+            label2.Size = new Size(127, 15);
+            label2.TabIndex = 101;
+            label2.Text = "실내외표면열전달저항";
+            // 
+            // RseRsi_comboBox
+            // 
+            RseRsi_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            RseRsi_comboBox.FormattingEnabled = true;
+            RseRsi_comboBox.Location = new Point(172, 3);
+            RseRsi_comboBox.Name = "RseRsi_comboBox";
+            RseRsi_comboBox.Size = new Size(120, 24);
+            RseRsi_comboBox.TabIndex = 100;
+            RseRsi_comboBox.SelectedIndexChanged += RseRsi_comboBox_SelectedIndexChanged;
+            // 
+            // MaterialDown_button
+            // 
+            MaterialDown_button.BackColor = SystemColors.ControlLight;
+            MaterialDown_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            MaterialDown_button.FlatStyle = FlatStyle.System;
+            MaterialDown_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            MaterialDown_button.Location = new Point(472, 4);
+            MaterialDown_button.Margin = new Padding(0);
+            MaterialDown_button.Name = "MaterialDown_button";
+            MaterialDown_button.Size = new Size(23, 23);
+            MaterialDown_button.TabIndex = 99;
+            MaterialDown_button.Text = "▼";
+            MaterialDown_button.UseVisualStyleBackColor = false;
+            MaterialDown_button.Click += MaterialDown_button_Click;
+            // 
+            // MaterialUP_button
+            // 
+            MaterialUP_button.BackColor = SystemColors.ControlLight;
+            MaterialUP_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            MaterialUP_button.FlatStyle = FlatStyle.System;
+            MaterialUP_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            MaterialUP_button.Location = new Point(447, 4);
+            MaterialUP_button.Margin = new Padding(0);
+            MaterialUP_button.Name = "MaterialUP_button";
+            MaterialUP_button.Size = new Size(23, 23);
+            MaterialUP_button.TabIndex = 98;
+            MaterialUP_button.Text = "▲";
+            MaterialUP_button.UseVisualStyleBackColor = false;
+            MaterialUP_button.Click += MaterialUP_button_Click;
+            // 
+            // Deletebutton
+            // 
+            Deletebutton.BackColor = SystemColors.ControlLight;
+            Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Deletebutton.FlatStyle = FlatStyle.System;
+            Deletebutton.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            Deletebutton.Location = new Point(530, 4);
+            Deletebutton.Margin = new Padding(0);
+            Deletebutton.Name = "Deletebutton";
+            Deletebutton.Size = new Size(23, 23);
+            Deletebutton.TabIndex = 97;
+            Deletebutton.Text = "-";
+            Deletebutton.UseVisualStyleBackColor = false;
+            Deletebutton.Click += DeleteMaterial_button_Click;
+            // 
+            // Ucalc_dataGridView
+            // 
+            Ucalc_dataGridView.AllowUserToAddRows = false;
+            Ucalc_dataGridView.AllowUserToDeleteRows = false;
+            Ucalc_dataGridView.AllowUserToResizeColumns = false;
+            Ucalc_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Ucalc_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            Ucalc_dataGridView.BackgroundColor = SystemColors.InactiveBorder;
+            Ucalc_dataGridView.BorderStyle = BorderStyle.None;
+            Ucalc_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            Ucalc_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            Ucalc_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            Ucalc_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Ucalc_dataGridView.Location = new Point(-1, 61);
+            Ucalc_dataGridView.Name = "Ucalc_dataGridView";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            Ucalc_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            Ucalc_dataGridView.RowHeadersVisible = false;
+            Ucalc_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            Ucalc_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            Ucalc_dataGridView.RowTemplate.Height = 25;
+            Ucalc_dataGridView.Size = new Size(555, 234);
+            Ucalc_dataGridView.TabIndex = 96;
+            Ucalc_dataGridView.CellContentClick += dataGridView1_CellContentClick;
+            Ucalc_dataGridView.CellValueChanged += dataGridView1_CellValueChanged;
+            // 
+            // AddMaterial_button
+            // 
+            AddMaterial_button.BackColor = SystemColors.ControlLight;
+            AddMaterial_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            AddMaterial_button.FlatStyle = FlatStyle.System;
+            AddMaterial_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            AddMaterial_button.Location = new Point(505, 4);
+            AddMaterial_button.Margin = new Padding(0);
+            AddMaterial_button.Name = "AddMaterial_button";
+            AddMaterial_button.Size = new Size(23, 23);
+            AddMaterial_button.TabIndex = 95;
+            AddMaterial_button.Text = "+";
+            AddMaterial_button.UseVisualStyleBackColor = false;
+            AddMaterial_button.Click += AddMaterial_button_Click;
             // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(Frame_tabPage);
+            tabControl1.Controls.Add(Ucalc_tabPage);
             tabControl1.Controls.Add(Glass_tabPage);
             tabControl1.Location = new Point(12, 297);
             tabControl1.Name = "tabControl1";
@@ -701,8 +1126,13 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)WallType_pictureBox).EndInit();
-            Frame_tabPage.ResumeLayout(false);
-            Frame_tabPage.PerformLayout();
+            Glass_tabPage.ResumeLayout(false);
+            Glass_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            Ucalc_tabPage.ResumeLayout(false);
+            Ucalc_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).EndInit();
             tabControl1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -723,7 +1153,7 @@
         private ComboBox StructureType_comboBox;
         private Label label11;
         private ComboBox Color_comboBox;
-        private Label Frame_label;
+        private Label UMethod_label;
         private ComboBox Uvalue_comboBox;
         private Label label25;
         private Label label4;
@@ -756,9 +1186,36 @@
         private Label CW_label;
         private Label OldWall_label;
         private TabPage Glass_tabPage;
-        private TabPage Frame_tabPage;
-        private TextBox FrameName2_textBox;
+        private TabPage Ucalc_tabPage;
         private TabControl tabControl1;
         private RadioButton radioButton6;
+        private Button AddMaterial_button;
+        private DataGridView Ucalc_dataGridView;
+        private Button Deletebutton;
+        private Button MaterialDown_button;
+        private Button MaterialUP_button;
+        private ComboBox DiIndi2_comboBox;
+        private Label label2;
+        private ComboBox RseRsi_comboBox;
+        private TextBox Material_Rtot_textBox;
+        private TextBox Material_dtot_textBox;
+        private Label label8;
+        private TextBox Rse_textBox;
+        private Label label12;
+        private TextBox Rsi_textBox;
+        private Label label10;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox1;
+        private TextBox dU2_textBox;
+        private Label label14;
+        private TextBox TBType_textBox;
+        private Label label13;
+        private TextBox TBName2_textBox;
+        private TextBox PsiKai_label2;
+        private TextBox PsiKai_textBox;
+        private TextBox PsiKai_label1;
+        private TextBox PerArea_label2;
+        private TextBox PerArea_textBox;
+        private TextBox PerArea_label1;
     }
 }

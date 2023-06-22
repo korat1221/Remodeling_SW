@@ -28,7 +28,7 @@
     <Compile Update="subcontents\ConstructionWall\Wall_TB.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="subcontents\ConstructionWall\Wall_MaterialDB.cs">
+    <Compile Update="subcontents\MaterialDB.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Reflection.PortableExecutable;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Collections;
 
 namespace main
 {
@@ -70,47 +62,47 @@ namespace main
         
         }
     */
-   
+
     internal class Zone
     {
-         public String zoneName;
-         String zoneUsage, zoneHC, Mode_night, Mode_we;
-         double theta_i_h_set, theta_i_c_set, dtheta_i_NA, Fx, Fx_Floor, Fx_GWall, theta_s_c, theta_i_h_min, theta_e_min, theta_SUP_Wi;
-         double twd_d, th_op_d_we, th_op_d, dwd_a;
-         double zoneArea, zoneHeight;
-         double qI_p, qI_fac, Cwirk_A;
-         double VA_we, VA_wd, n50, e, f, Vmech_SUP_we, Vmech_SUP_wd, Vmech_ETA_we, Vmech_ETA_wd, eta_V_mech, eta_χV_mech, xi_c_set, xi_h_set, Vmech_SUP_z, Vmech_ETA_z, ρacp_a;
-         ArrayList zoneWall = new ArrayList(); ArrayList zoneRoof = new ArrayList(); ArrayList zoneFloor = new ArrayList(); ArrayList zoneGWall = new ArrayList(); ArrayList zoneDoor = new ArrayList(); ArrayList zoneWin = new ArrayList(); ArrayList zoneCW = new ArrayList();
-         double Zone_HT_tot, ZoneWall_HT, ZoneRoof_HT, ZoneFloor_HT, ZoneGWall_HT, ZoneDoor_HT, ZoneWin_HT, ZoneCW_HT;
-         double ZoneWall_HT_Di, ZoneWall_HT_Indi, ZoneRoof_HT_Di, ZoneRoof_HT_Indi, ZoneWin_HT_Di, ZoneWin_HT_Indi, ZoneDoor_HT_Di, ZoneDoor_HT_Indi;
-         double Zone_HT_TB_tot, ZoneWall_HT_TB, ZoneRoof_HT_TB, ZoneFloor_HT_TB, ZoneGwall_HT_TB, ZoneWin_HT_TB, ZoneDoor_HT_TB, ZoneCW_HT_TB;
-         double[] Zone_HV_tot = new double[2], Zone_HV_inf = new double[2], Zone_HV_win = new double[2], Zone_HV_z = new double[2], Zone_HV_mech = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
-         double[] Zone_H_tot = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
-         double[] tao = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
-         double[] theta_e = new double[12], dmth = new double[12], dwe_mth = new double[12], dwd_mth = new double[12];
-         double[,,] theta_i = new double[2, 2, 12];
+        public String zoneName;
+        String zoneUsage, zoneHC, Mode_night, Mode_we;
+        double theta_i_h_set, theta_i_c_set, dtheta_i_NA, Fx, Fx_Floor, Fx_GWall, theta_s_c, theta_i_h_min, theta_e_min, theta_SUP_Wi;
+        double twd_d, th_op_d_we, th_op_d, dwd_a;
+        double zoneArea, zoneHeight;
+        double qI_p, qI_fac, Cwirk_A;
+        double VA_we, VA_wd, n50, e, f, Vmech_SUP_we, Vmech_SUP_wd, Vmech_ETA_we, Vmech_ETA_wd, eta_V_mech, eta_χV_mech, xi_c_set, xi_h_set, Vmech_SUP_z, Vmech_ETA_z, ρacp_a;
+        ArrayList zoneWall = new ArrayList(); ArrayList zoneRoof = new ArrayList(); ArrayList zoneFloor = new ArrayList(); ArrayList zoneGWall = new ArrayList(); ArrayList zoneDoor = new ArrayList(); ArrayList zoneWin = new ArrayList(); ArrayList zoneCW = new ArrayList();
+        double Zone_HT_tot, ZoneWall_HT, ZoneRoof_HT, ZoneFloor_HT, ZoneGWall_HT, ZoneDoor_HT, ZoneWin_HT, ZoneCW_HT;
+        double ZoneWall_HT_Di, ZoneWall_HT_Indi, ZoneRoof_HT_Di, ZoneRoof_HT_Indi, ZoneWin_HT_Di, ZoneWin_HT_Indi, ZoneDoor_HT_Di, ZoneDoor_HT_Indi;
+        double Zone_HT_TB_tot, ZoneWall_HT_TB, ZoneRoof_HT_TB, ZoneFloor_HT_TB, ZoneGwall_HT_TB, ZoneWin_HT_TB, ZoneDoor_HT_TB, ZoneCW_HT_TB;
+        double[] Zone_HV_tot = new double[2], Zone_HV_inf = new double[2], Zone_HV_win = new double[2], Zone_HV_z = new double[2], Zone_HV_mech = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
+        double[] Zone_H_tot = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
+        double[] tao = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
+        double[] theta_e = new double[12], dmth = new double[12], dwe_mth = new double[12], dwd_mth = new double[12];
+        double[,,] theta_i = new double[2, 2, 12];
 
         //[난방/냉방,비이용일/이용일,mth] = [h/c,we/wd,mth]=[0/1,0/1,12]
         //QT
-         double[,,] QTsink_tot = new double[2, 2, 12], QTsink_Wall = new double[2, 2, 12], QTsink_Roof = new double[2, 2, 12], QTsink_Floor = new double[2, 2, 12], QTsink_GWall = new double[2, 2, 12], QTsink_Door = new double[2, 2, 12], QTsink_Win = new double[2, 2, 12], QTsink_CW = new double[2, 2, 12];
-         double[,,] QTsource_tot = new double[2, 2, 12], QTsource_Wall = new double[2, 2, 12], QTsource_Roof = new double[2, 2, 12], QTsource_Floor = new double[2, 2, 12], QTsource_GWall = new double[2, 2, 12], QTsource_Door = new double[2, 2, 12], QTsource_Win = new double[2, 2, 12], QTsource_CW = new double[2, 2, 12];
+        double[,,] QTsink_tot = new double[2, 2, 12], QTsink_Wall = new double[2, 2, 12], QTsink_Roof = new double[2, 2, 12], QTsink_Floor = new double[2, 2, 12], QTsink_GWall = new double[2, 2, 12], QTsink_Door = new double[2, 2, 12], QTsink_Win = new double[2, 2, 12], QTsink_CW = new double[2, 2, 12];
+        double[,,] QTsource_tot = new double[2, 2, 12], QTsource_Wall = new double[2, 2, 12], QTsource_Roof = new double[2, 2, 12], QTsource_Floor = new double[2, 2, 12], QTsource_GWall = new double[2, 2, 12], QTsource_Door = new double[2, 2, 12], QTsource_Win = new double[2, 2, 12], QTsource_CW = new double[2, 2, 12];
         //QS
-         double[,,] QSopsink_tot = new double[2, 2, 12], QSopsource_tot = new double[2, 2, 12], QStr_tot = new double[2, 2, 12];
-         double[] QSopsink_Wall = new double[12], QSopsink_Roof = new double[12], QSopsink_Door = new double[12], QSopsink_CW_p = new double[12];
-         double[] QSopsource_Wall = new double[12], QSopsource_Roof = new double[12], QSopsource_Door = new double[12], QSopsource_CW_p = new double[12];
-         double[,] QStr_Win = new double[2, 12], QStr_CW = new double[2, 12];
+        double[,,] QSopsink_tot = new double[2, 2, 12], QSopsource_tot = new double[2, 2, 12], QStr_tot = new double[2, 2, 12];
+        double[] QSopsink_Wall = new double[12], QSopsink_Roof = new double[12], QSopsink_Door = new double[12], QSopsink_CW_p = new double[12];
+        double[] QSopsource_Wall = new double[12], QSopsource_Roof = new double[12], QSopsource_Door = new double[12], QSopsource_CW_p = new double[12];
+        double[,] QStr_Win = new double[2, 12], QStr_CW = new double[2, 12];
         //QV
-         double[,,] QVsink_tot = new double[2, 2, 12], QV_inf_sink = new double[2, 2, 12], QV_win_sink = new double[2, 2, 12], QV_z_sink = new double[2, 2, 12], QV_mech_sink = new double[2, 2, 12];
-         double[,,] QVsource_tot = new double[2, 2, 12], QV_inf_source = new double[2, 2, 12], QV_win_source = new double[2, 2, 12], QV_z_source = new double[2, 2, 12], QV_mech_source = new double[2, 2, 12];
+        double[,,] QVsink_tot = new double[2, 2, 12], QV_inf_sink = new double[2, 2, 12], QV_win_sink = new double[2, 2, 12], QV_z_sink = new double[2, 2, 12], QV_mech_sink = new double[2, 2, 12];
+        double[,,] QVsource_tot = new double[2, 2, 12], QV_inf_source = new double[2, 2, 12], QV_win_source = new double[2, 2, 12], QV_z_source = new double[2, 2, 12], QV_mech_source = new double[2, 2, 12];
         //QI
-         double[,,] QI_tot = new double[2, 2, 12], QI_L = new double[2, 2, 12];
-         double[] QI_P = new double[2], QI_fac = new double[2];
+        double[,,] QI_tot = new double[2, 2, 12], QI_L = new double[2, 2, 12];
+        double[] QI_P = new double[2], QI_fac = new double[2];
         //
-         double[,,] Qsink = new double[2, 2, 12], Qsource = new double[2, 2, 12], gamma = new double[2, 2, 12], a = new double[2, 2, 12], eta = new double[2, 2, 12], dQc_b = new double[2, 2, 12], dQc_sink = new double[2, 2, 12];
-         double[] Qhb_we_day = new double[12], Qhb_wd_day = new double[12], Qcb_we_day = new double[12], Qcb_wd_day = new double[12];
-         double[] Qhb_mth = new double[12], Qcb_mth = new double[12], Qhb_we_mth = new double[12], Qhb_wd_mth = new double[12], Qcb_we_mth = new double[12], Qcb_wd_mth = new double[12];
-         public double Qhb_a, Qcb_a, Qhb_we_a, Qhb_wd_a, Qcb_we_a, Qcb_wd_a;
-        
+        double[,,] Qsink = new double[2, 2, 12], Qsource = new double[2, 2, 12], gamma = new double[2, 2, 12], a = new double[2, 2, 12], eta = new double[2, 2, 12], dQc_b = new double[2, 2, 12], dQc_sink = new double[2, 2, 12];
+        double[] Qhb_we_day = new double[12], Qhb_wd_day = new double[12], Qcb_we_day = new double[12], Qcb_wd_day = new double[12];
+        double[] Qhb_mth = new double[12], Qcb_mth = new double[12], Qhb_we_mth = new double[12], Qhb_wd_mth = new double[12], Qcb_we_mth = new double[12], Qcb_wd_mth = new double[12];
+        public double Qhb_a, Qcb_a, Qhb_we_a, Qhb_wd_a, Qcb_we_a, Qcb_wd_a;
+
 
         public Zone(String zoneNum)
         {
@@ -595,7 +587,7 @@ namespace main
             //}
         }
 
-  
+
         public void ZoneHT() //관류 HT 계산
         {
             //외벽 HT
@@ -729,7 +721,7 @@ namespace main
             Zone_HV_tot[0] = Zone_HV_mech[0] + Zone_HV_z[0] + Zone_HV_inf[0] + Zone_HV_win[0];
             Zone_HV_tot[1] = Zone_HV_mech[1] + Zone_HV_z[1] + Zone_HV_inf[1] + Zone_HV_win[1];
         }
-   
+
         public void Zonetao()//시간상수 계산
         {
             Zone_H_tot[0] = Zone_HT_tot + Zone_HV_tot[0];
@@ -752,7 +744,7 @@ namespace main
             }
 
         }
-    
+
         public void ZoneQT()//관류 열전달 계산
         {
             double[,,] QTsink_Di_tot = new double[2, 2, 12], QTsink_Wall_Di = new double[2, 2, 12], QTsink_Roof_Di = new double[2, 2, 12], QTsink_Door_Di = new double[2, 2, 12], QTsink_Win_Di = new double[2, 2, 12], QTsink_CW = new double[2, 2, 12];
@@ -849,7 +841,7 @@ namespace main
             }
 
         }
-    
+
         public void ZoneQSop(String zoneNum)// 불투명 일사 계산
         {
             //외벽 일사 계산
@@ -1253,8 +1245,8 @@ namespace main
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        QSopsink_tot[hc,wewd,mth] = QSopsink_Wall[mth] + QSopsink_Roof[mth] + QSopsink_Door[mth] + QSopsink_CW_p[mth];
-                        QSopsource_tot[hc,wewd,mth] = QSopsource_Wall[mth] + QSopsource_Roof[mth] + QSopsource_Door[mth] + QSopsource_CW_p[mth];
+                        QSopsink_tot[hc, wewd, mth] = QSopsink_Wall[mth] + QSopsink_Roof[mth] + QSopsink_Door[mth] + QSopsink_CW_p[mth];
+                        QSopsource_tot[hc, wewd, mth] = QSopsource_Wall[mth] + QSopsource_Roof[mth] + QSopsource_Door[mth] + QSopsource_CW_p[mth];
                     }
                 }
             }
@@ -1262,11 +1254,11 @@ namespace main
 
         public void ZoneQStr(String zoneNum) //투명구조체 일사 계산
         {
-            double[,] zoneWins_Is = new double[zoneWin.Count,12];
-            double[,] zoneWins_Fs = new double[zoneWin.Count,12];
-            double[,] zoneWins_a = new double[zoneWin.Count,12];
-            double[,,] zoneWins_geff = new double[zoneWin.Count,2,12];
-            double[,,] zoneWins_Qs = new double[zoneWin.Count,2,12];
+            double[,] zoneWins_Is = new double[zoneWin.Count, 12];
+            double[,] zoneWins_Fs = new double[zoneWin.Count, 12];
+            double[,] zoneWins_a = new double[zoneWin.Count, 12];
+            double[,,] zoneWins_geff = new double[zoneWin.Count, 2, 12];
+            double[,,] zoneWins_Qs = new double[zoneWin.Count, 2, 12];
 
             string[][] ZoneWin_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneWin", "Name", "zoneNum='" + zoneNum + "'");
             string[][] ZoneCW_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneCW", "Name", "zoneNum='" + zoneNum + "'");
@@ -1428,30 +1420,30 @@ namespace main
                 {
                     GeffCalc geffcalc = new GeffCalc();
                     QStrCalc qstrcalc = new QStrCalc();
-                    zoneWins_geff[i,0,mth] = geffcalc.Calc(zonewin.g(), zoneWins_Fs[i,mth]);
-                    zoneWins_geff[i,1,mth] = geffcalc.Calc(zonewin.g(), zoneWins_Fs[i,mth]);
-                    zoneWins_geff[i,1,mth] = geffcalc.Calc(zonewin.g(), zoneWins_Fs[i,mth], zonewin.gtot(), zoneWins_a[i,mth]);
-                    if (zonewin.DiIndi()=="Indirection")
+                    zoneWins_geff[i, 0, mth] = geffcalc.Calc(zonewin.g(), zoneWins_Fs[i, mth]);
+                    zoneWins_geff[i, 1, mth] = geffcalc.Calc(zonewin.g(), zoneWins_Fs[i, mth]);
+                    zoneWins_geff[i, 1, mth] = geffcalc.Calc(zonewin.g(), zoneWins_Fs[i, mth], zonewin.gtot(), zoneWins_a[i, mth]);
+                    if (zonewin.DiIndi() == "Indirection")
                     {   //직접외기 창만 일사 계산      
                     }
                     else
                     {
-                        zoneWins_Qs[i,0,mth] = qstrcalc.Calc(zonewin.Ff(), zonewin.Area(), zoneWins_geff[i,0,mth], zoneWins_Is[i,mth]);
-                        zoneWins_Qs[i,1,mth] = qstrcalc.Calc(zonewin.Ff(), zonewin.Area(), zoneWins_geff[i,1,mth], zoneWins_Is[i,mth]);
+                        zoneWins_Qs[i, 0, mth] = qstrcalc.Calc(zonewin.Ff(), zonewin.Area(), zoneWins_geff[i, 0, mth], zoneWins_Is[i, mth]);
+                        zoneWins_Qs[i, 1, mth] = qstrcalc.Calc(zonewin.Ff(), zonewin.Area(), zoneWins_geff[i, 1, mth], zoneWins_Is[i, mth]);
                     }
-                    QStr_Win[0,mth] += zoneWins_Qs[i,0,mth];
-                    QStr_Win[1,mth] += zoneWins_Qs[i,1,mth];
+                    QStr_Win[0, mth] += zoneWins_Qs[i, 0, mth];
+                    QStr_Win[1, mth] += zoneWins_Qs[i, 1, mth];
                 }
 
             }
 
-            double[,] zoneCWs_Is = new double[zoneWin.Count,12];
-            double[,] zoneCWs_Fs = new double[zoneWin.Count,12];
-            double[,] zoneCWs_a = new double[zoneWin.Count,12];
-            double[,,] zoneCWs_g_geff = new double[zoneWin.Count,2,12]; 
-            double[,] zoneCWs_d_geff = new double[zoneWin.Count,12];
-            double[,,] zoneCWs_g_Qs = new double[zoneWin.Count,2,12]; 
-            double[,] zoneCWs_d_Qs = new double[zoneWin.Count,12];
+            double[,] zoneCWs_Is = new double[zoneWin.Count, 12];
+            double[,] zoneCWs_Fs = new double[zoneWin.Count, 12];
+            double[,] zoneCWs_a = new double[zoneWin.Count, 12];
+            double[,,] zoneCWs_g_geff = new double[zoneWin.Count, 2, 12];
+            double[,] zoneCWs_d_geff = new double[zoneWin.Count, 12];
+            double[,,] zoneCWs_g_Qs = new double[zoneWin.Count, 2, 12];
+            double[,] zoneCWs_d_Qs = new double[zoneWin.Count, 12];
 
             //존의 커튼월별 일사정보 가져오기
             {
@@ -1565,40 +1557,40 @@ namespace main
                     }
                 }
             }
-//-            try
-//            {
-//                String line = "";
-//                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneCW_a.csv";
-//                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
-//                {
-//                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
-//                    {
-//                        int n = 0;
-//                        while (!sr.EndOfStream)
-//                        {
-//                            string[] token = sr.ReadLine().Split(',');
-//                            if (n == 0)
-//                            {
-//                            }
-//                            else
-//                            {
-//                                CW zonecw = (CW)zoneCW[n - 1];
-//                                for (int mth = 0; mth < 12; mth++)
-//                                 {
-//                                  zoneCWs_a[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
-//                                 }
-//                            }
-//                            n++;
-//                        }
-//                    }
-//                }
-//            }
-//            catch (IOException e)
-//            {
-//                if (e.Source != null)
-//                    Console.WriteLine("IOException source: {0}", e.Source);
-//                throw;
-//            }
+            //-            try
+            //            {
+            //                String line = "";
+            //                string filePath = "C:\\javalecture\\day0118\\day0118\\"+zoneNum+"\\ZoneCW_a.csv";
+            //                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
+            //                {
+            //                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
+            //                    {
+            //                        int n = 0;
+            //                        while (!sr.EndOfStream)
+            //                        {
+            //                            string[] token = sr.ReadLine().Split(',');
+            //                            if (n == 0)
+            //                            {
+            //                            }
+            //                            else
+            //                            {
+            //                                CW zonecw = (CW)zoneCW[n - 1];
+            //                                for (int mth = 0; mth < 12; mth++)
+            //                                 {
+            //                                  zoneCWs_a[n - 1,mth] = Convert.ToDouble(token[mth + 1]);
+            //                                 }
+            //                            }
+            //                            n++;
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //            catch (IOException e)
+            //            {
+            //                if (e.Source != null)
+            //                    Console.WriteLine("IOException source: {0}", e.Source);
+            //                throw;
+            //            }
 
             // 커튼월 일사 계산 
             for (int i = 0; i < zoneCW.Count; i++)
@@ -1608,17 +1600,17 @@ namespace main
                 {
                     GeffCalc geffcalc = new GeffCalc();
                     QStrCalc qstrcalc = new QStrCalc();
-                    zoneCWs_g_geff[i,0,mth] = geffcalc.Calc(zonecw.g_g(), zoneCWs_Fs[i,mth]);    //비이용일   
-                    zoneCWs_g_geff[i,1,mth] = geffcalc.Calc(zonecw.g_g(), zoneCWs_Fs[i,mth]);    //이용일 차양없을 경우	
-                    zoneCWs_g_geff[i,1,mth] = geffcalc.Calc(zonecw.g_g(), zoneCWs_Fs[i,mth], zonecw.gtot_g(), zoneCWs_a[i,mth]);     //이용일 차양있을 경우
+                    zoneCWs_g_geff[i, 0, mth] = geffcalc.Calc(zonecw.g_g(), zoneCWs_Fs[i, mth]);    //비이용일   
+                    zoneCWs_g_geff[i, 1, mth] = geffcalc.Calc(zonecw.g_g(), zoneCWs_Fs[i, mth]);    //이용일 차양없을 경우	
+                    zoneCWs_g_geff[i, 1, mth] = geffcalc.Calc(zonecw.g_g(), zoneCWs_Fs[i, mth], zonecw.gtot_g(), zoneCWs_a[i, mth]);     //이용일 차양있을 경우
 
-                    zoneCWs_d_geff[i,mth] = geffcalc.Calc(zonecw.g_d(), zoneCWs_Fs[i,mth]);
-                    zoneCWs_g_Qs[i,0,mth] = qstrcalc.Calc(zonecw.Ff_g(), zonecw.Area_g(), zoneCWs_g_geff[i,0,mth], zoneCWs_Is[i,mth]);
-                    zoneCWs_g_Qs[i,1,mth] = qstrcalc.Calc(zonecw.Ff_g(), zonecw.Area_g(), zoneCWs_g_geff[i,1,mth], zoneCWs_Is[i,mth]);
-                    zoneCWs_d_Qs[i,mth] = qstrcalc.Calc(zonecw.Ff_d(), zonecw.Area_d(), zoneCWs_d_geff[i,mth], zoneCWs_Is[i,mth]);
+                    zoneCWs_d_geff[i, mth] = geffcalc.Calc(zonecw.g_d(), zoneCWs_Fs[i, mth]);
+                    zoneCWs_g_Qs[i, 0, mth] = qstrcalc.Calc(zonecw.Ff_g(), zonecw.Area_g(), zoneCWs_g_geff[i, 0, mth], zoneCWs_Is[i, mth]);
+                    zoneCWs_g_Qs[i, 1, mth] = qstrcalc.Calc(zonecw.Ff_g(), zonecw.Area_g(), zoneCWs_g_geff[i, 1, mth], zoneCWs_Is[i, mth]);
+                    zoneCWs_d_Qs[i, mth] = qstrcalc.Calc(zonecw.Ff_d(), zonecw.Area_d(), zoneCWs_d_geff[i, mth], zoneCWs_Is[i, mth]);
 
-                    QStr_CW[0,mth] += (zoneCWs_g_Qs[i,0,mth] + zoneCWs_d_Qs[i,mth]);
-                    QStr_CW[1,mth] += (zoneCWs_g_Qs[i,1,mth] + zoneCWs_d_Qs[i,mth]);
+                    QStr_CW[0, mth] += (zoneCWs_g_Qs[i, 0, mth] + zoneCWs_d_Qs[i, mth]);
+                    QStr_CW[1, mth] += (zoneCWs_g_Qs[i, 1, mth] + zoneCWs_d_Qs[i, mth]);
                 }
 
                 for (int hc = 0; hc <= 1; hc++)
@@ -1627,58 +1619,58 @@ namespace main
                     {
                         for (int mth = 0; mth < 12; mth++)
                         {
-                            QStr_tot[hc,wewd,mth] = QStr_Win[wewd,mth] + QStr_CW[wewd,mth];
+                            QStr_tot[hc, wewd, mth] = QStr_Win[wewd, mth] + QStr_CW[wewd, mth];
                         }
                     }
                 }
             }
 
         }
-    
+
         public void ZoneQV() //환기 열전달 계산
         {
             for (int hc = 0; hc <= 1; hc++)
             {
                 for (int wewd = 0; wewd <= 1; wewd++)
                 {
-                    double[,] theta_v_mech = new double[2,12];
+                    double[,] theta_v_mech = new double[2, 12];
 
 
                     for (int mth = 0; mth <= 11; mth++)
                     {
-                        theta_v_mech[0,mth] = theta_e[mth] + eta_V_mech * (theta_i_h_set - theta_e[mth]);
-                        theta_v_mech[1,mth] = theta_e[mth] + eta_V_mech * (theta_i_c_set - theta_e[mth]);
+                        theta_v_mech[0, mth] = theta_e[mth] + eta_V_mech * (theta_i_h_set - theta_e[mth]);
+                        theta_v_mech[1, mth] = theta_e[mth] + eta_V_mech * (theta_i_c_set - theta_e[mth]);
 
                         QVCalc qvcalc = new QVCalc();
-                        if (theta_i[hc,wewd,mth] >= theta_e[mth])
+                        if (theta_i[hc, wewd, mth] >= theta_e[mth])
                         {
-                            QV_inf_sink[hc,wewd,mth] = qvcalc.Calc_sink(theta_e[mth], theta_i[hc,wewd,mth], Zone_HV_inf[wewd]);
-                            QV_z_sink[hc,wewd,mth] = qvcalc.Calc_sink(theta_e[mth], theta_i[hc,wewd,mth], Zone_HV_z[wewd]);
-                            QV_win_sink[hc,wewd,mth] = qvcalc.Calc_sink(theta_e[mth], theta_i[hc,wewd,mth], Zone_HV_win[wewd]);
+                            QV_inf_sink[hc, wewd, mth] = qvcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], Zone_HV_inf[wewd]);
+                            QV_z_sink[hc, wewd, mth] = qvcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], Zone_HV_z[wewd]);
+                            QV_win_sink[hc, wewd, mth] = qvcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], Zone_HV_win[wewd]);
                         }
-                        else if (theta_i[hc,wewd,mth] < theta_e[mth])
+                        else if (theta_i[hc, wewd, mth] < theta_e[mth])
                         {
-                            QV_inf_source[hc,wewd,mth] = qvcalc.Calc_source(theta_e[mth], theta_i[hc,wewd,mth], Zone_HV_inf[wewd]);
-                            QV_z_source[0,1,mth] = qvcalc.Calc_source(theta_e[mth], theta_i[hc,wewd,mth], Zone_HV_z[wewd]);
-                            QV_win_source[hc,wewd,mth] = qvcalc.Calc_source(theta_e[mth], theta_i[hc,wewd,mth], Zone_HV_win[wewd]);
+                            QV_inf_source[hc, wewd, mth] = qvcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], Zone_HV_inf[wewd]);
+                            QV_z_source[0, 1, mth] = qvcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], Zone_HV_z[wewd]);
+                            QV_win_source[hc, wewd, mth] = qvcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], Zone_HV_win[wewd]);
                         }
 
-                        if (theta_i[hc,wewd,mth] >= theta_v_mech[hc,mth])
+                        if (theta_i[hc, wewd, mth] >= theta_v_mech[hc, mth])
                         {
-                            QV_mech_sink[hc,wewd,mth] = qvcalc.Calc_sink(theta_v_mech[hc,mth], theta_i[hc,wewd,mth], Zone_HV_mech[wewd]);
+                            QV_mech_sink[hc, wewd, mth] = qvcalc.Calc_sink(theta_v_mech[hc, mth], theta_i[hc, wewd, mth], Zone_HV_mech[wewd]);
                         }
                         else
                         {
-                            QV_mech_source[hc,wewd,mth] = qvcalc.Calc_source(theta_v_mech[hc,mth], theta_i[hc,wewd,mth], Zone_HV_mech[wewd]);
+                            QV_mech_source[hc, wewd, mth] = qvcalc.Calc_source(theta_v_mech[hc, mth], theta_i[hc, wewd, mth], Zone_HV_mech[wewd]);
                         }
-                        QVsink_tot[hc,wewd,mth] = QV_inf_sink[hc,wewd,mth] + QV_win_sink[hc,wewd,mth] + QV_z_sink[hc,wewd,mth] + QV_mech_sink[hc,wewd,mth];
-                        QVsource_tot[hc,wewd,mth] = QV_inf_source[hc,wewd,mth] + QV_win_source[hc,wewd,mth] + QV_z_source[hc,wewd,mth] + QV_mech_source[hc,wewd,mth];
+                        QVsink_tot[hc, wewd, mth] = QV_inf_sink[hc, wewd, mth] + QV_win_sink[hc, wewd, mth] + QV_z_sink[hc, wewd, mth] + QV_mech_sink[hc, wewd, mth];
+                        QVsource_tot[hc, wewd, mth] = QV_inf_source[hc, wewd, mth] + QV_win_source[hc, wewd, mth] + QV_z_source[hc, wewd, mth] + QV_mech_source[hc, wewd, mth];
                     }
 
                 }
             }
         }
-   
+
         public void ZoneQI() //내부발열 계산
         {
             //비이용일
@@ -1694,8 +1686,8 @@ namespace main
                 {
                     for (int mth = 0; mth <= 11; mth++)
                     {
-                        QI_L[hc,wewd,mth] = 0;
-                        QI_tot[hc,wewd,mth] = QI_P[wewd] + QI_fac[wewd] + QI_L[hc,wewd,mth];
+                        QI_L[hc, wewd, mth] = 0;
+                        QI_tot[hc, wewd, mth] = QI_P[wewd] + QI_fac[wewd] + QI_L[hc, wewd, mth];
                     }
                 }
             }
@@ -1712,13 +1704,13 @@ namespace main
             {
                 dwd_mth[mth] = dmth[mth] * dwd_a / 365;
                 dwe_mth[mth] = dmth[mth] - dwd_mth[mth];
-                Qsink[0,0,mth] = QTsink_tot[0,0,mth] + QVsink_tot[0,0,mth] + QSopsink_tot[0,0,mth];
-                Qsource[0,0,mth] = QTsource_tot[0,0,mth] + QVsource_tot[0,0,mth] + QSopsource_tot[0,0,mth] + QStr_tot[0,0,mth] + QI_tot[0,0,mth];
-                gamma[0,0,mth] = Qsource[0,0,mth] / Qsink[0,0,mth];
-                a[0,0,mth] = 1 + tao[0] / 16;
-                eta[0,0,mth] = eta_calc.eta_h_Calc(gamma[0,0,mth], a[0,0,mth]);
-                dQc_b[0,0,mth] = dQc_bcalc.Calc(Cwirk_A * zoneArea, theta_i_h_set, theta_i[0,0,mth], awe, dtheta_i_NA, Qsink[0,0,mth], eta[0,0,mth], Qsource[0,0,mth]);
-                dQc_sink[0,1,mth] = dQc_b[0,0,mth] * dwe_mth[mth] / dwd_mth[mth];
+                Qsink[0, 0, mth] = QTsink_tot[0, 0, mth] + QVsink_tot[0, 0, mth] + QSopsink_tot[0, 0, mth];
+                Qsource[0, 0, mth] = QTsource_tot[0, 0, mth] + QVsource_tot[0, 0, mth] + QSopsource_tot[0, 0, mth] + QStr_tot[0, 0, mth] + QI_tot[0, 0, mth];
+                gamma[0, 0, mth] = Qsource[0, 0, mth] / Qsink[0, 0, mth];
+                a[0, 0, mth] = 1 + tao[0] / 16;
+                eta[0, 0, mth] = eta_calc.eta_h_Calc(gamma[0, 0, mth], a[0, 0, mth]);
+                dQc_b[0, 0, mth] = dQc_bcalc.Calc(Cwirk_A * zoneArea, theta_i_h_set, theta_i[0, 0, mth], awe, dtheta_i_NA, Qsink[0, 0, mth], eta[0, 0, mth], Qsource[0, 0, mth]);
+                dQc_sink[0, 1, mth] = dQc_b[0, 0, mth] * dwe_mth[mth] / dwd_mth[mth];
             }
 
             for (int hc = 0; hc <= 1; hc++)
@@ -1727,37 +1719,37 @@ namespace main
                 {
                     for (int mth = 0; mth <= 11; mth++)
                     {
-                        Qsink[hc,wewd,mth] = QTsink_tot[hc,wewd,mth] + QVsink_tot[hc,wewd,mth] + QSopsink_tot[hc,wewd,mth];
-                        Qsource[hc,wewd,mth] = QTsource_tot[hc,wewd,mth] + QVsource_tot[hc,wewd,mth] + QSopsource_tot[hc,wewd,mth] + QStr_tot[hc,wewd,mth] + QI_tot[hc,wewd,mth];
+                        Qsink[hc, wewd, mth] = QTsink_tot[hc, wewd, mth] + QVsink_tot[hc, wewd, mth] + QSopsink_tot[hc, wewd, mth];
+                        Qsource[hc, wewd, mth] = QTsource_tot[hc, wewd, mth] + QVsource_tot[hc, wewd, mth] + QSopsource_tot[hc, wewd, mth] + QStr_tot[hc, wewd, mth] + QI_tot[hc, wewd, mth];
 
-                        if (Qsink[hc,wewd,mth] == 0)
+                        if (Qsink[hc, wewd, mth] == 0)
                         {
-                            gamma[hc,wewd,mth] = Qsource[hc,wewd,mth] / 1;
+                            gamma[hc, wewd, mth] = Qsource[hc, wewd, mth] / 1;
                         }
                         else
                         {
-                            gamma[hc,wewd,mth] = Qsource[hc,wewd,mth] / Qsink[hc,wewd,mth];
+                            gamma[hc, wewd, mth] = Qsource[hc, wewd, mth] / Qsink[hc, wewd, mth];
                         }
-                        a[hc,wewd,mth] = 1 + tao[wewd] / 16;
-                        eta[0,wewd,mth] = eta_calc.eta_h_Calc(gamma[0,wewd,mth], a[0,wewd,mth]);
-                        eta[1,wewd,mth] = eta_calc.eta_c_Calc(gamma[1,wewd,mth], a[1,wewd,mth]);
+                        a[hc, wewd, mth] = 1 + tao[wewd] / 16;
+                        eta[0, wewd, mth] = eta_calc.eta_h_Calc(gamma[0, wewd, mth], a[0, wewd, mth]);
+                        eta[1, wewd, mth] = eta_calc.eta_c_Calc(gamma[1, wewd, mth], a[1, wewd, mth]);
                     }
                 }
             }
-        }   
+        }
 
         public void ZoneQb()//요구량 계산
         {
             QbCalc qbcalc = new QbCalc();
             for (int mth = 0; mth <= 11; mth++)
             {
-                Qhb_we_day[mth] = qbcalc.Qhb_Calc(Qsink[0,0,mth], eta[0,0,mth], Qsource[0,0,mth]);
-                Qhb_wd_day[mth] = qbcalc.Qhb_Calc(Qsink[0,1,mth], eta[0,1,mth], Qsource[0,1,mth]);
-                Qcb_we_day[mth] = qbcalc.Qcb_Calc(eta[1,0,mth], Qsource[1,0,mth]);
-                Qcb_wd_day[mth] = qbcalc.Qcb_Calc(eta[1,1,mth], Qsource[1,1,mth]);
+                Qhb_we_day[mth] = qbcalc.Qhb_Calc(Qsink[0, 0, mth], eta[0, 0, mth], Qsource[0, 0, mth]);
+                Qhb_wd_day[mth] = qbcalc.Qhb_Calc(Qsink[0, 1, mth], eta[0, 1, mth], Qsource[0, 1, mth]);
+                Qcb_we_day[mth] = qbcalc.Qcb_Calc(eta[1, 0, mth], Qsource[1, 0, mth]);
+                Qcb_wd_day[mth] = qbcalc.Qcb_Calc(eta[1, 1, mth], Qsource[1, 1, mth]);
 
-                Qhb_we_mth[mth] = (Qhb_we_day[mth] * dwe_mth[mth] - dQc_b[0,0,mth]) / 1000; //kWh 단위
-                Qhb_wd_mth[mth] = (Qhb_wd_day[mth] * dwd_mth[mth] + dQc_sink[0,1,mth]) / 1000;
+                Qhb_we_mth[mth] = (Qhb_we_day[mth] * dwe_mth[mth] - dQc_b[0, 0, mth]) / 1000; //kWh 단위
+                Qhb_wd_mth[mth] = (Qhb_wd_day[mth] * dwd_mth[mth] + dQc_sink[0, 1, mth]) / 1000;
                 Qcb_we_mth[mth] = (Qcb_we_day[mth] * dwe_mth[mth]) / 1000;
                 Qcb_wd_mth[mth] = (Qcb_wd_day[mth] * dwd_mth[mth]) / 1000;
 
@@ -1797,7 +1789,7 @@ namespace main
                 Qhb_wd_a += Qhb_wd_mth[mth];
                 Qcb_we_a += Qcb_we_mth[mth];
                 Qcb_wd_a += Qcb_wd_mth[mth];
-                Qhb_a += (Qhb_we_mth[mth]+ Qhb_wd_mth[mth]);
+                Qhb_a += (Qhb_we_mth[mth] + Qhb_wd_mth[mth]);
                 Qcb_a += (Qcb_we_mth[mth] + Qcb_wd_mth[mth]);
             }
         }
@@ -1812,7 +1804,7 @@ namespace main
         double wall_α;
         string wall_DiIndi;
 
-        
+
         public Wall(double Area, double Ueff, double α, string DiIndi)
         {
             this.wall_Area = Area;
@@ -1820,7 +1812,7 @@ namespace main
             this.wall_α = α;
             this.wall_DiIndi = DiIndi;
         }
-  
+
         public double Area()
         {
             return wall_Area;
@@ -1839,7 +1831,7 @@ namespace main
         {
             return wall_DiIndi;
         }
-        
+
     }
 
     public class Roof
@@ -1849,7 +1841,7 @@ namespace main
         double Roof_α;
         String Roof_DiIndi;
 
-        public  Roof(double Area, double Ueff, double α, String DiIndi)
+        public Roof(double Area, double Ueff, double α, String DiIndi)
         {
             this.Roof_Area = Area;
             this.Roof_Ueff = Ueff;

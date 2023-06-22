@@ -124,12 +124,6 @@
     <Compile Update="subcontents\ConstructionWindow\SubWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="subcontents\Thermal1D.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="subcontents\ThermalMat.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="subcontents\ConstructionWindow\Window_DoubleGlassDB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +140,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\ConstructionWindow\Window_SpacerDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\ZoneLighting\LightingDB.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

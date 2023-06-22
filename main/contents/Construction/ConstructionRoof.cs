@@ -12,7 +12,6 @@ namespace main
 {
     public partial class ConstructionRoof : Form
     {
-        Thermal1D thermalForm = new Thermal1D();
         public ConstructionRoof()
         {
             InitializeComponent();
