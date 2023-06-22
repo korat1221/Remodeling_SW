@@ -73,6 +73,7 @@
             this.Save_button.TabIndex = 20;
             this.Save_button.Text = "SAVE";
             this.Save_button.UseVisualStyleBackColor = true;
+            Save_button.Click += Save_button_Click;
             // 
             // panel1
             // 
@@ -373,6 +374,7 @@
             this.Light_dataGridView.RowTemplate.Height = 25;
             this.Light_dataGridView.Size = new System.Drawing.Size(977, 354);
             this.Light_dataGridView.TabIndex = 111;
+            Light_dataGridView.CellContentClick += Light_dataGridView_CellContentClick;
             // 
             // LightingDB
             // 

@@ -38,7 +38,6 @@
             this.FloorName_label = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.LightType_textBox = new System.Windows.Forms.TextBox();
-            this.LightType_button = new System.Windows.Forms.Button();
             this.LightDB_button = new System.Windows.Forms.Button();
             this.fc_textBox = new System.Windows.Forms.TextBox();
             this.Pj_textbox = new System.Windows.Forms.TextBox();
@@ -48,21 +47,20 @@
             this.FL_label = new System.Windows.Forms.Label();
             this.DimmingType_comboBox = new System.Windows.Forms.ComboBox();
             this.DimmingType_label = new System.Windows.Forms.Label();
+            this.LightMethod_comboBox = new System.Windows.Forms.ComboBox();
+            this.LightMethod_label = new System.Windows.Forms.Label();
             this.LightType_label = new System.Windows.Forms.Label();
             this.ControlType_label = new System.Windows.Forms.Label();
-            this.LightMethod_comboBox = new System.Windows.Forms.ComboBox();
             this.ControlType_comboBox = new System.Windows.Forms.ComboBox();
-            this.LightMethod_label = new System.Windows.Forms.Label();
             this.light_label = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.RenewType_textBox = new System.Windows.Forms.TextBox();
-            this.RenewType_button = new System.Windows.Forms.Button();
+            this.RenewType_label = new System.Windows.Forms.Label();
+            this.RenewDi_label = new System.Windows.Forms.Label();
+            this.RenewDi_comboBox = new System.Windows.Forms.ComboBox();
+            this.Slope_label = new System.Windows.Forms.Label();
             this.RenewDB_button = new System.Windows.Forms.Button();
             this.Slope_comboBox = new System.Windows.Forms.ComboBox();
-            this.RenewType_label = new System.Windows.Forms.Label();
-            this.Slope_label = new System.Windows.Forms.Label();
-            this.RenewDi_comboBox = new System.Windows.Forms.ComboBox();
-            this.RenewDi_label = new System.Windows.Forms.Label();
             this.natural_label = new System.Windows.Forms.Label();
             this.renew_label = new System.Windows.Forms.Label();
             this.NaturalType_label = new System.Windows.Forms.Label();
@@ -77,6 +75,9 @@
             this.direction_textBox = new System.Windows.Forms.TextBox();
             this.Main_pictureBox = new System.Windows.Forms.PictureBox();
             this.type_pictureBox = new System.Windows.Forms.PictureBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.조명정보 = new System.Windows.Forms.TabPage();
+            this.집광채광정보 = new System.Windows.Forms.TabPage();
             this.GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Icon_pictureBox)).BeginInit();
             this.panel2.SuspendLayout();
@@ -84,6 +85,7 @@
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Main_pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.type_pictureBox)).BeginInit();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // GeneralPanel
@@ -181,7 +183,6 @@
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel2.Controls.Add(this.LightType_textBox);
-            this.panel2.Controls.Add(this.LightType_button);
             this.panel2.Controls.Add(this.LightDB_button);
             this.panel2.Controls.Add(this.fc_textBox);
             this.panel2.Controls.Add(this.Pj_textbox);
@@ -191,11 +192,11 @@
             this.panel2.Controls.Add(this.FL_label);
             this.panel2.Controls.Add(this.DimmingType_comboBox);
             this.panel2.Controls.Add(this.DimmingType_label);
+            this.panel2.Controls.Add(this.LightMethod_comboBox);
+            this.panel2.Controls.Add(this.LightMethod_label);
             this.panel2.Controls.Add(this.LightType_label);
             this.panel2.Controls.Add(this.ControlType_label);
-            this.panel2.Controls.Add(this.LightMethod_comboBox);
             this.panel2.Controls.Add(this.ControlType_comboBox);
-            this.panel2.Controls.Add(this.LightMethod_label);
             this.panel2.Location = new System.Drawing.Point(12, 121);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(977, 136);
@@ -208,25 +209,11 @@
             this.LightType_textBox.Enabled = false;
             this.LightType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LightType_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.LightType_textBox.Location = new System.Drawing.Point(205, 73);
+            this.LightType_textBox.Location = new System.Drawing.Point(205, 12);
             this.LightType_textBox.Name = "LightType_textBox";
             this.LightType_textBox.Size = new System.Drawing.Size(120, 15);
             this.LightType_textBox.TabIndex = 100;
             this.LightType_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // LightType_button
-            // 
-            this.LightType_button.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.LightType_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.LightType_button.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.LightType_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.LightType_button.Location = new System.Drawing.Point(174, 70);
-            this.LightType_button.Margin = new System.Windows.Forms.Padding(0);
-            this.LightType_button.Name = "LightType_button";
-            this.LightType_button.Size = new System.Drawing.Size(23, 23);
-            this.LightType_button.TabIndex = 99;
-            this.LightType_button.Text = "i";
-            this.LightType_button.UseVisualStyleBackColor = false;
             // 
             // LightDB_button
             // 
@@ -234,7 +221,7 @@
             this.LightDB_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
             this.LightDB_button.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.LightDB_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.LightDB_button.Location = new System.Drawing.Point(332, 70);
+            this.LightDB_button.Location = new System.Drawing.Point(332, 9);
             this.LightDB_button.Margin = new System.Windows.Forms.Padding(0);
             this.LightDB_button.Name = "LightDB_button";
             this.LightDB_button.Size = new System.Drawing.Size(23, 23);
@@ -250,7 +237,7 @@
             this.fc_textBox.Enabled = false;
             this.fc_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.fc_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.fc_textBox.Location = new System.Drawing.Point(681, 103);
+            this.fc_textBox.Location = new System.Drawing.Point(681, 79);
             this.fc_textBox.Name = "fc_textBox";
             this.fc_textBox.Size = new System.Drawing.Size(120, 15);
             this.fc_textBox.TabIndex = 92;
@@ -263,7 +250,7 @@
             this.Pj_textbox.Enabled = false;
             this.Pj_textbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Pj_textbox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Pj_textbox.Location = new System.Drawing.Point(681, 72);
+            this.Pj_textbox.Location = new System.Drawing.Point(681, 45);
             this.Pj_textbox.Name = "Pj_textbox";
             this.Pj_textbox.Size = new System.Drawing.Size(120, 15);
             this.Pj_textbox.TabIndex = 91;
@@ -276,7 +263,7 @@
             this.FL_textBox.Enabled = false;
             this.FL_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FL_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.FL_textBox.Location = new System.Drawing.Point(681, 41);
+            this.FL_textBox.Location = new System.Drawing.Point(680, 11);
             this.FL_textBox.Name = "FL_textBox";
             this.FL_textBox.Size = new System.Drawing.Size(120, 15);
             this.FL_textBox.TabIndex = 90;
@@ -286,7 +273,7 @@
             // 
             this.fc_label.AutoSize = true;
             this.fc_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.fc_label.Location = new System.Drawing.Point(558, 102);
+            this.fc_label.Location = new System.Drawing.Point(558, 78);
             this.fc_label.Name = "fc_label";
             this.fc_label.Size = new System.Drawing.Size(79, 16);
             this.fc_label.TabIndex = 49;
@@ -296,7 +283,7 @@
             // 
             this.Pj_label.AutoSize = true;
             this.Pj_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Pj_label.Location = new System.Drawing.Point(558, 71);
+            this.Pj_label.Location = new System.Drawing.Point(557, 45);
             this.Pj_label.Name = "Pj_label";
             this.Pj_label.Size = new System.Drawing.Size(54, 16);
             this.Pj_label.TabIndex = 48;
@@ -306,7 +293,7 @@
             // 
             this.FL_label.AutoSize = true;
             this.FL_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FL_label.Location = new System.Drawing.Point(558, 40);
+            this.FL_label.Location = new System.Drawing.Point(558, 12);
             this.FL_label.Name = "FL_label";
             this.FL_label.Size = new System.Drawing.Size(54, 16);
             this.FL_label.TabIndex = 47;
@@ -320,22 +307,43 @@
             this.DimmingType_comboBox.Name = "DimmingType_comboBox";
             this.DimmingType_comboBox.Size = new System.Drawing.Size(120, 24);
             this.DimmingType_comboBox.TabIndex = 46;
+            this.DimmingType_comboBox.SelectedIndexChanged += new System.EventHandler(this.DimmingType_comboBox_SelectedIndexChanged);
             // 
             // DimmingType_label
             // 
             this.DimmingType_label.AutoSize = true;
             this.DimmingType_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.DimmingType_label.Location = new System.Drawing.Point(33, 102);
+            this.DimmingType_label.Location = new System.Drawing.Point(33, 101);
             this.DimmingType_label.Name = "DimmingType_label";
             this.DimmingType_label.Size = new System.Drawing.Size(54, 16);
             this.DimmingType_label.TabIndex = 44;
             this.DimmingType_label.Text = "디밍 유형";
             // 
+            // LightMethod_comboBox
+            // 
+            this.LightMethod_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LightMethod_comboBox.FormattingEnabled = true;
+            this.LightMethod_comboBox.Location = new System.Drawing.Point(205, 37);
+            this.LightMethod_comboBox.Name = "LightMethod_comboBox";
+            this.LightMethod_comboBox.Size = new System.Drawing.Size(120, 24);
+            this.LightMethod_comboBox.TabIndex = 41;
+            this.LightMethod_comboBox.SelectedIndexChanged += new System.EventHandler(this.LightMethod_comboBox_SelectedIndexChanged);
+            // 
+            // LightMethod_label
+            // 
+            this.LightMethod_label.AutoSize = true;
+            this.LightMethod_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LightMethod_label.Location = new System.Drawing.Point(33, 40);
+            this.LightMethod_label.Name = "LightMethod_label";
+            this.LightMethod_label.Size = new System.Drawing.Size(54, 16);
+            this.LightMethod_label.TabIndex = 39;
+            this.LightMethod_label.Text = "조명 방식";
+            // 
             // LightType_label
             // 
             this.LightType_label.AutoSize = true;
             this.LightType_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LightType_label.Location = new System.Drawing.Point(32, 72);
+            this.LightType_label.Location = new System.Drawing.Point(33, 12);
             this.LightType_label.Name = "LightType_label";
             this.LightType_label.Size = new System.Drawing.Size(54, 16);
             this.LightType_label.TabIndex = 43;
@@ -345,41 +353,19 @@
             // 
             this.ControlType_label.AutoSize = true;
             this.ControlType_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ControlType_label.Location = new System.Drawing.Point(33, 43);
+            this.ControlType_label.Location = new System.Drawing.Point(32, 71);
             this.ControlType_label.Name = "ControlType_label";
             this.ControlType_label.Size = new System.Drawing.Size(54, 16);
             this.ControlType_label.TabIndex = 42;
             this.ControlType_label.Text = "제어 방식";
             // 
-            // LightMethod_comboBox
-            // 
-            this.LightMethod_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LightMethod_comboBox.FormattingEnabled = true;
-            this.LightMethod_comboBox.Location = new System.Drawing.Point(205, 8);
-            this.LightMethod_comboBox.Name = "LightMethod_comboBox";
-            this.LightMethod_comboBox.Size = new System.Drawing.Size(120, 24);
-            this.LightMethod_comboBox.TabIndex = 41;
-            this.LightMethod_comboBox.SelectedIndexChanged += new System.EventHandler(this.LightMethod_comboBox_SelectedIndexChanged);
-            // 
             // ControlType_comboBox
             // 
-            this.ControlType_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ControlType_comboBox.FormattingEnabled = true;
-            this.ControlType_comboBox.Location = new System.Drawing.Point(205, 39);
+            this.ControlType_comboBox.Location = new System.Drawing.Point(205, 69);
             this.ControlType_comboBox.Name = "ControlType_comboBox";
-            this.ControlType_comboBox.Size = new System.Drawing.Size(120, 24);
-            this.ControlType_comboBox.TabIndex = 40;
-            this.ControlType_comboBox.SelectedIndexChanged += new System.EventHandler(this.ControlType_comboBox_SelectedIndexChanged);
-            // 
-            // LightMethod_label
-            // 
-            this.LightMethod_label.AutoSize = true;
-            this.LightMethod_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LightMethod_label.Location = new System.Drawing.Point(33, 16);
-            this.LightMethod_label.Name = "LightMethod_label";
-            this.LightMethod_label.Size = new System.Drawing.Size(54, 16);
-            this.LightMethod_label.TabIndex = 39;
-            this.LightMethod_label.Text = "조명 방식";
+            this.ControlType_comboBox.Size = new System.Drawing.Size(121, 23);
+            this.ControlType_comboBox.TabIndex = 101;
+            this.ControlType_comboBox.SelectedIndexChanged += new System.EventHandler(this.ControlType_comboBox_SelectedIndexChanged_1);
             // 
             // light_label
             // 
@@ -396,16 +382,15 @@
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Controls.Add(this.RenewType_textBox);
-            this.panel1.Controls.Add(this.RenewType_button);
+            this.panel1.Controls.Add(this.RenewType_label);
+            this.panel1.Controls.Add(this.RenewDi_label);
+            this.panel1.Controls.Add(this.RenewDi_comboBox);
+            this.panel1.Controls.Add(this.Slope_label);
             this.panel1.Controls.Add(this.RenewDB_button);
             this.panel1.Controls.Add(this.Slope_comboBox);
-            this.panel1.Controls.Add(this.RenewType_label);
-            this.panel1.Controls.Add(this.Slope_label);
-            this.panel1.Controls.Add(this.RenewDi_comboBox);
-            this.panel1.Controls.Add(this.RenewDi_label);
-            this.panel1.Location = new System.Drawing.Point(12, 437);
+            this.panel1.Location = new System.Drawing.Point(538, 278);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(466, 102);
+            this.panel1.Size = new System.Drawing.Size(444, 120);
             this.panel1.TabIndex = 19;
             // 
             // RenewType_textBox
@@ -415,25 +400,50 @@
             this.RenewType_textBox.Enabled = false;
             this.RenewType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.RenewType_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.RenewType_textBox.Location = new System.Drawing.Point(205, 10);
+            this.RenewType_textBox.Location = new System.Drawing.Point(226, 10);
             this.RenewType_textBox.Name = "RenewType_textBox";
             this.RenewType_textBox.Size = new System.Drawing.Size(120, 15);
             this.RenewType_textBox.TabIndex = 102;
             this.RenewType_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // RenewType_button
+            // RenewType_label
             // 
-            this.RenewType_button.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.RenewType_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.RenewType_button.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.RenewType_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.RenewType_button.Location = new System.Drawing.Point(174, 6);
-            this.RenewType_button.Margin = new System.Windows.Forms.Padding(0);
-            this.RenewType_button.Name = "RenewType_button";
-            this.RenewType_button.Size = new System.Drawing.Size(23, 23);
-            this.RenewType_button.TabIndex = 101;
-            this.RenewType_button.Text = "i";
-            this.RenewType_button.UseVisualStyleBackColor = false;
+            this.RenewType_label.AutoSize = true;
+            this.RenewType_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.RenewType_label.Location = new System.Drawing.Point(32, 9);
+            this.RenewType_label.Name = "RenewType_label";
+            this.RenewType_label.Size = new System.Drawing.Size(29, 16);
+            this.RenewType_label.TabIndex = 47;
+            this.RenewType_label.Text = "종류";
+            // 
+            // RenewDi_label
+            // 
+            this.RenewDi_label.AutoSize = true;
+            this.RenewDi_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.RenewDi_label.Location = new System.Drawing.Point(32, 38);
+            this.RenewDi_label.Name = "RenewDi_label";
+            this.RenewDi_label.Size = new System.Drawing.Size(18, 16);
+            this.RenewDi_label.TabIndex = 50;
+            this.RenewDi_label.Text = "향";
+            // 
+            // RenewDi_comboBox
+            // 
+            this.RenewDi_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.RenewDi_comboBox.FormattingEnabled = true;
+            this.RenewDi_comboBox.Location = new System.Drawing.Point(226, 34);
+            this.RenewDi_comboBox.Name = "RenewDi_comboBox";
+            this.RenewDi_comboBox.Size = new System.Drawing.Size(120, 24);
+            this.RenewDi_comboBox.TabIndex = 48;
+            // 
+            // Slope_label
+            // 
+            this.Slope_label.AutoSize = true;
+            this.Slope_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Slope_label.Location = new System.Drawing.Point(31, 71);
+            this.Slope_label.Name = "Slope_label";
+            this.Slope_label.Size = new System.Drawing.Size(40, 16);
+            this.Slope_label.TabIndex = 51;
+            this.Slope_label.Text = "기울기";
             // 
             // RenewDB_button
             // 
@@ -441,7 +451,7 @@
             this.RenewDB_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
             this.RenewDB_button.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.RenewDB_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.RenewDB_button.Location = new System.Drawing.Point(332, 6);
+            this.RenewDB_button.Location = new System.Drawing.Point(353, 6);
             this.RenewDB_button.Margin = new System.Windows.Forms.Padding(0);
             this.RenewDB_button.Name = "RenewDB_button";
             this.RenewDB_button.Size = new System.Drawing.Size(23, 23);
@@ -453,49 +463,10 @@
             // 
             this.Slope_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Slope_comboBox.FormattingEnabled = true;
-            this.Slope_comboBox.Location = new System.Drawing.Point(205, 67);
+            this.Slope_comboBox.Location = new System.Drawing.Point(226, 67);
             this.Slope_comboBox.Name = "Slope_comboBox";
             this.Slope_comboBox.Size = new System.Drawing.Size(120, 24);
             this.Slope_comboBox.TabIndex = 52;
-            // 
-            // RenewType_label
-            // 
-            this.RenewType_label.AutoSize = true;
-            this.RenewType_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.RenewType_label.Location = new System.Drawing.Point(33, 9);
-            this.RenewType_label.Name = "RenewType_label";
-            this.RenewType_label.Size = new System.Drawing.Size(29, 16);
-            this.RenewType_label.TabIndex = 47;
-            this.RenewType_label.Text = "종류";
-            // 
-            // Slope_label
-            // 
-            this.Slope_label.AutoSize = true;
-            this.Slope_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Slope_label.Location = new System.Drawing.Point(32, 71);
-            this.Slope_label.Name = "Slope_label";
-            this.Slope_label.Size = new System.Drawing.Size(40, 16);
-            this.Slope_label.TabIndex = 51;
-            this.Slope_label.Text = "기울기";
-            // 
-            // RenewDi_comboBox
-            // 
-            this.RenewDi_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.RenewDi_comboBox.FormattingEnabled = true;
-            this.RenewDi_comboBox.Location = new System.Drawing.Point(205, 34);
-            this.RenewDi_comboBox.Name = "RenewDi_comboBox";
-            this.RenewDi_comboBox.Size = new System.Drawing.Size(120, 24);
-            this.RenewDi_comboBox.TabIndex = 48;
-            // 
-            // RenewDi_label
-            // 
-            this.RenewDi_label.AutoSize = true;
-            this.RenewDi_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.RenewDi_label.Location = new System.Drawing.Point(33, 38);
-            this.RenewDi_label.Name = "RenewDi_label";
-            this.RenewDi_label.Size = new System.Drawing.Size(18, 16);
-            this.RenewDi_label.TabIndex = 50;
-            this.RenewDi_label.Text = "향";
             // 
             // natural_label
             // 
@@ -511,7 +482,7 @@
             // 
             this.renew_label.AutoSize = true;
             this.renew_label.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.renew_label.Location = new System.Drawing.Point(41, 419);
+            this.renew_label.Location = new System.Drawing.Point(553, 260);
             this.renew_label.Name = "renew_label";
             this.renew_label.Size = new System.Drawing.Size(59, 15);
             this.renew_label.TabIndex = 101;
@@ -521,7 +492,7 @@
             // 
             this.NaturalType_label.AutoSize = true;
             this.NaturalType_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.NaturalType_label.Location = new System.Drawing.Point(33, 16);
+            this.NaturalType_label.Location = new System.Drawing.Point(33, 9);
             this.NaturalType_label.Name = "NaturalType_label";
             this.NaturalType_label.Size = new System.Drawing.Size(76, 16);
             this.NaturalType_label.TabIndex = 39;
@@ -531,7 +502,7 @@
             // 
             this.Direction_label.AutoSize = true;
             this.Direction_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Direction_label.Location = new System.Drawing.Point(33, 43);
+            this.Direction_label.Location = new System.Drawing.Point(33, 35);
             this.Direction_label.Name = "Direction_label";
             this.Direction_label.Size = new System.Drawing.Size(29, 16);
             this.Direction_label.TabIndex = 42;
@@ -541,7 +512,7 @@
             // 
             this.Aca_label.AutoSize = true;
             this.Aca_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Aca_label.Location = new System.Drawing.Point(32, 72);
+            this.Aca_label.Location = new System.Drawing.Point(32, 62);
             this.Aca_label.Name = "Aca_label";
             this.Aca_label.Size = new System.Drawing.Size(79, 16);
             this.Aca_label.TabIndex = 43;
@@ -551,7 +522,7 @@
             // 
             this.D_label.AutoSize = true;
             this.D_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.D_label.Location = new System.Drawing.Point(33, 102);
+            this.D_label.Location = new System.Drawing.Point(33, 90);
             this.D_label.Name = "D_label";
             this.D_label.Size = new System.Drawing.Size(40, 16);
             this.D_label.TabIndex = 44;
@@ -572,7 +543,7 @@
             this.panel3.Controls.Add(this.NaturalType_label);
             this.panel3.Location = new System.Drawing.Point(12, 278);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(466, 136);
+            this.panel3.Size = new System.Drawing.Size(511, 120);
             this.panel3.TabIndex = 93;
             // 
             // NaturalType_textBox
@@ -582,7 +553,7 @@
             this.NaturalType_textBox.Enabled = false;
             this.NaturalType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.NaturalType_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.NaturalType_textBox.Location = new System.Drawing.Point(205, 17);
+            this.NaturalType_textBox.Location = new System.Drawing.Point(205, 7);
             this.NaturalType_textBox.Name = "NaturalType_textBox";
             this.NaturalType_textBox.Size = new System.Drawing.Size(120, 15);
             this.NaturalType_textBox.TabIndex = 101;
@@ -609,7 +580,7 @@
             this.D_textBox.Enabled = false;
             this.D_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.D_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.D_textBox.Location = new System.Drawing.Point(205, 103);
+            this.D_textBox.Location = new System.Drawing.Point(205, 93);
             this.D_textBox.Name = "D_textBox";
             this.D_textBox.Size = new System.Drawing.Size(120, 15);
             this.D_textBox.TabIndex = 95;
@@ -622,7 +593,7 @@
             this.Aca_textBox.Enabled = false;
             this.Aca_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Aca_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Aca_textBox.Location = new System.Drawing.Point(205, 72);
+            this.Aca_textBox.Location = new System.Drawing.Point(205, 62);
             this.Aca_textBox.Name = "Aca_textBox";
             this.Aca_textBox.Size = new System.Drawing.Size(120, 15);
             this.Aca_textBox.TabIndex = 94;
@@ -635,7 +606,7 @@
             this.direction_textBox.Enabled = false;
             this.direction_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.direction_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.direction_textBox.Location = new System.Drawing.Point(205, 44);
+            this.direction_textBox.Location = new System.Drawing.Point(205, 34);
             this.direction_textBox.Name = "direction_textBox";
             this.direction_textBox.Size = new System.Drawing.Size(120, 15);
             this.direction_textBox.TabIndex = 93;
@@ -643,9 +614,9 @@
             // 
             // Main_pictureBox
             // 
-            this.Main_pictureBox.Location = new System.Drawing.Point(484, 278);
+            this.Main_pictureBox.Location = new System.Drawing.Point(12, 417);
             this.Main_pictureBox.Name = "Main_pictureBox";
-            this.Main_pictureBox.Size = new System.Drawing.Size(505, 261);
+            this.Main_pictureBox.Size = new System.Drawing.Size(511, 261);
             this.Main_pictureBox.TabIndex = 101;
             this.Main_pictureBox.TabStop = false;
             // 
@@ -657,12 +628,43 @@
             this.type_pictureBox.TabIndex = 100;
             this.type_pictureBox.TabStop = false;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.조명정보);
+            this.tabControl1.Controls.Add(this.집광채광정보);
+            this.tabControl1.Location = new System.Drawing.Point(538, 417);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(444, 261);
+            this.tabControl1.TabIndex = 102;
+            // 
+            // 조명정보
+            // 
+            this.조명정보.Location = new System.Drawing.Point(4, 24);
+            this.조명정보.Name = "조명정보";
+            this.조명정보.Padding = new System.Windows.Forms.Padding(3);
+            this.조명정보.Size = new System.Drawing.Size(436, 233);
+            this.조명정보.TabIndex = 0;
+            this.조명정보.Text = "조명 정보";
+            this.조명정보.UseVisualStyleBackColor = true;
+            // 
+            // 집광채광정보
+            // 
+            this.집광채광정보.Location = new System.Drawing.Point(4, 24);
+            this.집광채광정보.Name = "집광채광정보";
+            this.집광채광정보.Padding = new System.Windows.Forms.Padding(3);
+            this.집광채광정보.Size = new System.Drawing.Size(436, 233);
+            this.집광채광정보.TabIndex = 1;
+            this.집광채광정보.Text = "집광채광 정보";
+            this.집광채광정보.UseVisualStyleBackColor = true;
+            // 
             // ZoneLighting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.ClientSize = new System.Drawing.Size(1200, 730);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.type_pictureBox);
             this.Controls.Add(this.Main_pictureBox);
             this.Controls.Add(this.panel3);
@@ -686,6 +688,7 @@
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Main_pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.type_pictureBox)).EndInit();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -733,14 +736,15 @@
         private TextBox Aca_textBox;
         private TextBox direction_textBox;
         private PictureBox Main_pictureBox;
-        private Button LightType_button;
         private Button LightDB_button;
         private Button NaturalDB_button;
-        private Button RenewType_button;
         private Button RenewDB_button;
         private PictureBox type_pictureBox;
         private TextBox LightType_textBox;
         private TextBox RenewType_textBox;
         private TextBox NaturalType_textBox;
+        private TabControl tabControl1;
+        private TabPage 조명정보;
+        private TabPage 집광채광정보;
     }
 }
