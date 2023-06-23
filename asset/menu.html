@@ -48,6 +48,7 @@
         ]
     ];
     let gDefaultSelect = ["0", "2", "8", "12", "16", "21", "26"];
+    let first = true;
 
     function resetMainTree(id, subid, tree, select_id) {
         if (subid !== null) {
@@ -57,7 +58,9 @@
             gTreeData[id] = JSON.parse(tree);
         }
         if (select_id) gDefaultSelect[id] = select_id;
-        load(id);
+        if (!first) {
+            load(id);
+        }
     }
 
     function load(menuID) {
@@ -82,7 +85,7 @@
     }
 
 </script>
-<body onload="load(0)">
+<body onload="load(0);setTimeout(()=>{first = false;},1000)">
     <div id="cont-left" class="split split-horizontal" style="width:320px;padding:4px">
         <div id="cont-menu" style="width:125px;float:left;height: calc(100% - 16px);background-color: #B5C2CB;padding-top: 16px;border-radius: 4px;box-shadow: 2px 2px 2px 2px #eee;color:#fff">
             <div class="cont-item" onclick="load(0)">

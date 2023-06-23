@@ -180,6 +180,12 @@ namespace main
 
                     f.LoadData("");
                 }
+                else if (i == 32)
+                {
+                    List_Floor f = (List_Floor)forms[i];
+
+                    f.LoadData("");
+                }
             }
         }
         public void DoLoadForm(int idx, OnOpenProc proc = null)
