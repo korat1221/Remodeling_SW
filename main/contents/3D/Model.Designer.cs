@@ -31,36 +31,37 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
-            AdditionalPanel = new Panel();
+            Previous_button = new Button();
+            Save_button = new Button();
             dataGridView1 = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
-            AdditionalPanel.SuspendLayout();
+            panel2 = new Panel();
+            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
-            // webView21
+            // Previous_button
             // 
-            webView21.AllowExternalDrop = true;
-            webView21.CreationProperties = null;
-            webView21.DefaultBackgroundColor = Color.White;
-            webView21.Location = new Point(3, 3);
-            webView21.Name = "webView21";
-            webView21.Size = new Size(967, 478);
-            webView21.Source = new Uri("http://localhost:3000", UriKind.Absolute);
-            webView21.TabIndex = 1;
-            webView21.ZoomFactor = 1D;
+            Previous_button.BackColor = SystemColors.ButtonHighlight;
+            Previous_button.ForeColor = Color.Black;
+            Previous_button.Location = new Point(995, 668);
+            Previous_button.Name = "Previous_button";
+            Previous_button.Size = new Size(88, 25);
+            Previous_button.TabIndex = 93;
+            Previous_button.Text = "<<PREVIOUS";
+            Previous_button.UseVisualStyleBackColor = true;
             // 
-            // AdditionalPanel
+            // Save_button
             // 
-            AdditionalPanel.BackColor = Color.White;
-            AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
-            AdditionalPanel.Controls.Add(dataGridView1);
-            AdditionalPanel.Controls.Add(webView21);
-            AdditionalPanel.Location = new Point(12, 12);
-            AdditionalPanel.Name = "AdditionalPanel";
-            AdditionalPanel.Size = new Size(977, 791);
-            AdditionalPanel.TabIndex = 18;
+            Save_button.BackColor = SystemColors.ButtonHighlight;
+            Save_button.ForeColor = Color.Black;
+            Save_button.Location = new Point(1089, 668);
+            Save_button.Name = "Save_button";
+            Save_button.Size = new Size(88, 25);
+            Save_button.TabIndex = 92;
+            Save_button.Text = "SAVE";
+            Save_button.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
             // 
@@ -69,7 +70,7 @@
             dataGridView1.AllowUserToResizeColumns = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridView1.BackgroundColor = SystemColors.Window;
+            dataGridView1.BackgroundColor = SystemColors.InactiveBorder;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -82,7 +83,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(3, 497);
+            dataGridView1.Location = new Point(14, 539);
             dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
@@ -101,8 +102,33 @@
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(967, 219);
-            dataGridView1.TabIndex = 21;
+            dataGridView1.Size = new Size(937, 281);
+            dataGridView1.TabIndex = 96;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.White;
+            panel2.BorderStyle = BorderStyle.Fixed3D;
+            panel2.Controls.Add(webView21);
+            panel2.Controls.Add(dataGridView1);
+            panel2.Location = new Point(12, 12);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(977, 811);
+            panel2.TabIndex = 95;
+            // 
+            // webView21
+            // 
+            webView21.AllowExternalDrop = true;
+            webView21.CreationProperties = null;
+            webView21.DefaultBackgroundColor = Color.White;
+            webView21.Location = new Point(3, 12);
+            webView21.Name = "webView21";
+            webView21.Size = new Size(967, 478);
+            webView21.Source = new Uri("http://localhost:3000", UriKind.Absolute);
+            webView21.TabIndex = 97;
+            webView21.ZoomFactor = 1D;
             // 
             // Model
             // 
@@ -110,20 +136,23 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(AdditionalPanel);
+            Controls.Add(panel2);
+            Controls.Add(Previous_button);
+            Controls.Add(Save_button);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Model";
             Text = "Form3";
-            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
-            AdditionalPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
-        private Panel AdditionalPanel;
+        private Button Previous_button;
+        private Button Save_button;
         private DataGridView dataGridView1;
+        private Panel panel2;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
     }
 }

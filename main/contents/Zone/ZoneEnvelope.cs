@@ -171,11 +171,11 @@ namespace main.contents
                             }
                             else
                             {
-                                Program.DB.setValue(DB.type.CalcDB, "ZoneEnvelope", "번호,기호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출,좌측면돌출,상부돌출,주변요소,구조체,Ueff,α,g,직접간접",
-                                 "'" + token[0] + "','" + token[1] + "','" + token[2] + "','" + token[3] + "','" + token[4] + "','" + token[5] + "','"
+                                Program.DB.setValue(DB.type.CalcDB, "ZoneEnvelope", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출,좌측면돌출,상부돌출,주변요소,구조체,Ueff,α,g,직접간접",
+                                 "'" + token[1] + "','" + token[2] + "','" + token[3] + "','" + token[4] + "','" + token[5] + "','"
                              + token[6] + "','" + token[7] + "','" + token[8] + "','" + token[9] + "','" + token[10] + "','"
                              + token[11] + "','" + token[12] + "','" + token[13] + "','" + token[14] + "','" + token[15] + "','"
-                             + token[16] + "','" + token[17] + "','" + token[18] + "'", "존,기호");
+                             + token[16] + "','" + token[17] + "','" + token[18] + "'", "존,번호");
 
                             }
                             n++;

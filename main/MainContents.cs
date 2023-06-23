@@ -43,7 +43,9 @@ namespace main
             ReportRemodeling,
             FormDebug,
             List_ConstructionWindow,
-            SubWindow
+            SubWindow,
+            List_Floor,
+            List_Zone
 
         }
           Form[] forms = new Form[] { new General(), new EnergyUse(), 
@@ -54,7 +56,8 @@ namespace main
             new PV(), new FuelCell(), new WindPower(), new SupplyRatio(), new EIndependenceRate(),
             new ReportExisting(), new ReportRemodeling(),
             new FormDebug(),
-            new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow()};
+            new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow(),
+            new List_Floor(), new List_Zone()};
         bool scriptable = false;
         public class FormParam
         {
@@ -124,6 +127,18 @@ namespace main
             else if (formParam.formID == 31)
             {
                 SubWindow f = (SubWindow)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 32)
+            {
+                List_Floor f = (List_Floor)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 33)
+            {
+                List_Zone f = (List_Zone)form;
 
                 f.LoadData(formParam.ID);
             }
