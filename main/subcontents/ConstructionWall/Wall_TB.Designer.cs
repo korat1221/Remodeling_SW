@@ -76,14 +76,14 @@
             GeneralPanel.Controls.Add(label1);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(1016, 47);
+            GeneralPanel.Size = new Size(800, 47);
             GeneralPanel.TabIndex = 18;
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label7.Location = new Point(608, 15);
+            label7.Location = new Point(526, 16);
             label7.Name = "label7";
             label7.Size = new Size(91, 15);
             label7.TabIndex = 101;
@@ -93,7 +93,7 @@
             // 
             TB_Type_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             TB_Type_comboBox.FormattingEnabled = true;
-            TB_Type_comboBox.Location = new Point(724, 10);
+            TB_Type_comboBox.Location = new Point(642, 11);
             TB_Type_comboBox.Name = "TB_Type_comboBox";
             TB_Type_comboBox.Size = new Size(120, 24);
             TB_Type_comboBox.TabIndex = 53;
@@ -106,7 +106,7 @@
             StructureType_textBox.Enabled = false;
             StructureType_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             StructureType_textBox.ForeColor = SystemColors.ControlDark;
-            StructureType_textBox.Location = new Point(463, 14);
+            StructureType_textBox.Location = new Point(381, 15);
             StructureType_textBox.Name = "StructureType_textBox";
             StructureType_textBox.Size = new Size(120, 15);
             StructureType_textBox.TabIndex = 100;
@@ -117,7 +117,7 @@
             label6.AutoSize = true;
             label6.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label6.ForeColor = SystemColors.ControlText;
-            label6.Location = new Point(383, 14);
+            label6.Location = new Point(301, 15);
             label6.Name = "label6";
             label6.Size = new Size(55, 15);
             label6.TabIndex = 99;
@@ -130,7 +130,7 @@
             WallType_textBox.Enabled = false;
             WallType_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             WallType_textBox.ForeColor = SystemColors.ControlDark;
-            WallType_textBox.Location = new Point(238, 14);
+            WallType_textBox.Location = new Point(124, 15);
             WallType_textBox.Name = "WallType_textBox";
             WallType_textBox.Size = new Size(120, 15);
             WallType_textBox.TabIndex = 98;
@@ -141,17 +141,17 @@
             label1.AutoSize = true;
             label1.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = SystemColors.ControlText;
-            label1.Location = new Point(102, 14);
+            label1.Location = new Point(24, 15);
             label1.Name = "label1";
-            label1.Size = new Size(111, 15);
+            label1.Size = new Size(83, 15);
             label1.TabIndex = 97;
-            label1.Text = "외벽 리모델링 유형";
+            label1.Text = "리모델링 유형";
             // 
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(867, 444);
+            Save_button.Location = new Point(627, 442);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -169,7 +169,7 @@
             panel1.Controls.Add(label2);
             panel1.Location = new Point(0, 264);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1016, 31);
+            panel1.Size = new Size(800, 31);
             panel1.TabIndex = 27;
             // 
             // TBName_textBox
@@ -179,7 +179,7 @@
             TBName_textBox.Enabled = false;
             TBName_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             TBName_textBox.ForeColor = SystemColors.ControlDark;
-            TBName_textBox.Location = new Point(399, 8);
+            TBName_textBox.Location = new Point(309, 7);
             TBName_textBox.Name = "TBName_textBox";
             TBName_textBox.ShortcutsEnabled = false;
             TBName_textBox.Size = new Size(120, 16);
@@ -193,7 +193,7 @@
             dU_textBox.Enabled = false;
             dU_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             dU_textBox.ForeColor = Color.Black;
-            dU_textBox.Location = new Point(548, 8);
+            dU_textBox.Location = new Point(458, 7);
             dU_textBox.Name = "dU_textBox";
             dU_textBox.Size = new Size(75, 16);
             dU_textBox.TabIndex = 134;
@@ -204,7 +204,7 @@
             Ueff_label2.AutoSize = true;
             Ueff_label2.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             Ueff_label2.ForeColor = SystemColors.ControlDark;
-            Ueff_label2.Location = new Point(639, 9);
+            Ueff_label2.Location = new Point(549, 8);
             Ueff_label2.Name = "Ueff_label2";
             Ueff_label2.Size = new Size(51, 15);
             Ueff_label2.TabIndex = 133;
@@ -215,7 +215,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label2.ForeColor = SystemColors.ControlText;
-            label2.Location = new Point(283, 9);
+            label2.Location = new Point(193, 8);
             label2.Name = "label2";
             label2.Size = new Size(87, 15);
             label2.TabIndex = 100;
@@ -228,7 +228,7 @@
             PerArea_label2.Enabled = false;
             PerArea_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PerArea_label2.ForeColor = SystemColors.ControlDark;
-            PerArea_label2.Location = new Point(306, 176);
+            PerArea_label2.Location = new Point(250, 180);
             PerArea_label2.Name = "PerArea_label2";
             PerArea_label2.Size = new Size(68, 15);
             PerArea_label2.TabIndex = 145;
@@ -241,7 +241,7 @@
             PerArea_textBox.Enabled = false;
             PerArea_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PerArea_textBox.ForeColor = SystemColors.ControlDark;
-            PerArea_textBox.Location = new Point(180, 176);
+            PerArea_textBox.Location = new Point(124, 180);
             PerArea_textBox.Name = "PerArea_textBox";
             PerArea_textBox.Size = new Size(120, 15);
             PerArea_textBox.TabIndex = 144;
@@ -254,7 +254,7 @@
             PerArea_label1.Enabled = false;
             PerArea_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             PerArea_label1.ForeColor = SystemColors.ControlDark;
-            PerArea_label1.Location = new Point(80, 175);
+            PerArea_label1.Location = new Point(24, 179);
             PerArea_label1.Name = "PerArea_label1";
             PerArea_label1.Size = new Size(91, 16);
             PerArea_label1.TabIndex = 143;
@@ -264,7 +264,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label8.ForeColor = SystemColors.ControlText;
-            label8.Location = new Point(306, 58);
+            label8.Location = new Point(250, 62);
             label8.Name = "label8";
             label8.Size = new Size(18, 16);
             label8.TabIndex = 142;
@@ -275,7 +275,7 @@
             label9.AutoSize = true;
             label9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label9.ForeColor = SystemColors.ControlText;
-            label9.Location = new Point(80, 59);
+            label9.Location = new Point(24, 63);
             label9.Name = "label9";
             label9.Size = new Size(69, 15);
             label9.TabIndex = 141;
@@ -287,7 +287,7 @@
             dy_textBox.BorderStyle = BorderStyle.FixedSingle;
             dy_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             dy_textBox.ForeColor = SystemColors.ControlText;
-            dy_textBox.Location = new Point(180, 56);
+            dy_textBox.Location = new Point(124, 60);
             dy_textBox.Name = "dy_textBox";
             dy_textBox.Size = new Size(120, 22);
             dy_textBox.TabIndex = 140;
@@ -299,7 +299,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label5.ForeColor = SystemColors.ControlText;
-            label5.Location = new Point(306, 31);
+            label5.Location = new Point(250, 35);
             label5.Name = "label5";
             label5.Size = new Size(18, 16);
             label5.TabIndex = 139;
@@ -310,7 +310,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label4.ForeColor = SystemColors.ControlText;
-            label4.Location = new Point(80, 32);
+            label4.Location = new Point(24, 36);
             label4.Name = "label4";
             label4.Size = new Size(69, 15);
             label4.TabIndex = 138;
@@ -322,7 +322,7 @@
             dx_textBox.BorderStyle = BorderStyle.FixedSingle;
             dx_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             dx_textBox.ForeColor = SystemColors.ControlText;
-            dx_textBox.Location = new Point(180, 28);
+            dx_textBox.Location = new Point(124, 32);
             dx_textBox.Name = "dx_textBox";
             dx_textBox.Size = new Size(120, 22);
             dx_textBox.TabIndex = 135;
@@ -368,7 +368,7 @@
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             TB_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             TB_dataGridView.RowTemplate.Height = 25;
-            TB_dataGridView.Size = new Size(1016, 134);
+            TB_dataGridView.Size = new Size(800, 134);
             TB_dataGridView.TabIndex = 19;
             TB_dataGridView.CellContentClick += Spacer_dataGridView_CellContentClick;
             // 
@@ -388,12 +388,12 @@
             panel2.Controls.Add(dy_textBox);
             panel2.Location = new Point(0, 44);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1016, 220);
+            panel2.Size = new Size(800, 220);
             panel2.TabIndex = 28;
             // 
             // pictureBox2
             // 
-            pictureBox2.Location = new Point(702, 3);
+            pictureBox2.Location = new Point(549, 3);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(202, 215);
             pictureBox2.TabIndex = 1;
@@ -401,7 +401,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(444, 3);
+            pictureBox1.Location = new Point(324, 3);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(202, 215);
             pictureBox1.TabIndex = 0;
@@ -412,7 +412,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(1014, 479);
+            ClientSize = new Size(797, 479);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(TB_dataGridView);

@@ -143,7 +143,6 @@
             dataGridViewCellStyle2.SelectionForeColor = Color.Black;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             Glass_dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            Glass_dataGridView.ReadOnly = true;
             Glass_dataGridView.Location = new Point(0, 178);
             Glass_dataGridView.Name = "Glass_dataGridView";
             Glass_dataGridView.ReadOnly = true;
@@ -213,6 +212,7 @@
             // 
             // UserDBName_textBox
             // 
+            UserDBName_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBName_textBox.Location = new Point(481, 6);
             UserDBName_textBox.Name = "UserDBName_textBox";
             UserDBName_textBox.Size = new Size(120, 23);
@@ -290,6 +290,7 @@
             // 
             // UserDB_Manufacture_textBox
             // 
+            UserDB_Manufacture_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Manufacture_textBox.Location = new Point(760, 6);
             UserDB_Manufacture_textBox.Name = "UserDB_Manufacture_textBox";
             UserDB_Manufacture_textBox.Size = new Size(120, 23);

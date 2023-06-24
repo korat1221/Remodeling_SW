@@ -53,7 +53,12 @@ namespace main.subcontents.ConstructionWall
                     TB_Type_comboBox.Items.Add("트러스(점형)");
                     TB_Type_comboBox.Items.Add("트러스(선형)");
                     TB_Type_comboBox.Items.Add("내단열");
-                    break;                    
+                    break;
+            }
+            if(WallType =="내부덧댐")
+            {
+                TB_Type_comboBox.Items.Clear();
+                TB_Type_comboBox.Items.Add("내단열");
             }
             TB_Type_comboBox.SelectedIndex = 0;
 
@@ -95,9 +100,6 @@ namespace main.subcontents.ConstructionWall
             table_TB.Columns.Add("열교유형", typeof(string));
             table_TB.Columns.Add("수직간격" + Environment.NewLine + "[mm]", typeof(string));
             table_TB.Columns.Add("수평간격" + Environment.NewLine + "[mm]", typeof(string));
-            table_TB.Columns.Add("A", typeof(string));
-            table_TB.Columns.Add("B", typeof(string));
-            table_TB.Columns.Add("C", typeof(string));
 
             if (LinearPoint == "점형")
             {
@@ -105,11 +107,11 @@ namespace main.subcontents.ConstructionWall
                 string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
                 for (int n = 0; n < TB.Length; n++)
                 {
-                    A = Convert.ToDouble(TB[n][8]);
-                    B = Convert.ToDouble(TB[n][9]);
-                    C = Convert.ToDouble(TB[n][10]);
-                    Kai = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
-                    table_TB.Rows.Add(TB[n][0], TB[n][1], TB[n][2], TB[n][3], TB[n][4], TB[n][5], TB[n][6], TB[n][7], TB[n][8], TB[n][9], TB[n][10], string.Format("{0:F3}", Kai));
+                    double row_A = Convert.ToDouble(TB[n][8]);
+                    double row_B = Convert.ToDouble(TB[n][9]);
+                    double row_C = Convert.ToDouble(TB[n][10]);
+                    double row_Kai = (row_A * Math.Pow(d_Ins, 2) + row_B * d_Ins + row_C) / 1000;
+                    table_TB.Rows.Add(TB[n][0], TB[n][1], TB[n][2], TB[n][3], TB[n][4], TB[n][5], TB[n][6], TB[n][7], string.Format("{0:F3}", row_Kai));
                     Count_DB = TB.Length;
                 }
             }
@@ -119,11 +121,11 @@ namespace main.subcontents.ConstructionWall
                 string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
                 for (int n = 0; n < TB.Length; n++)
                 {
-                    A = Convert.ToDouble(TB[n][8]);
-                    B = Convert.ToDouble(TB[n][9]);
-                    C = Convert.ToDouble(TB[n][10]);
-                    Psi = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
-                    table_TB.Rows.Add(TB[n][0], TB[n][1], TB[n][2], TB[n][3], TB[n][4], TB[n][5], TB[n][6], TB[n][7], TB[n][8], TB[n][9], TB[n][10], string.Format("{0:F3}", Psi));
+                    double row_A = Convert.ToDouble(TB[n][8]);
+                    double row_B = Convert.ToDouble(TB[n][9]);
+                    double row_C = Convert.ToDouble(TB[n][10]);
+                    double row_Psi = (row_A * Math.Pow(d_Ins, 2) + row_B * d_Ins + row_C) / 1000;
+                    table_TB.Rows.Add(TB[n][0], TB[n][1], TB[n][2], TB[n][3], TB[n][4], TB[n][5], TB[n][6], TB[n][7], string.Format("{0:F3}", row_Psi));
                     Count_DB = TB.Length;
                 }
             }
@@ -174,7 +176,33 @@ namespace main.subcontents.ConstructionWall
                         row = TB_dataGridView.Rows[e.RowIndex];
                     }
                 }
+
                 TBName_textBox.Text = row.Cells[3].Value.ToString(); //제품명
+
+                if (LinearPoint == "점형")
+                {
+                    string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교", "번호,A,B,C", "번호 ='" + row.Cells[1].Value.ToString() + "'");
+                    for (int n = 0; n < TB.Length; n++)
+                    {
+                        A = Convert.ToDouble(TB[n][1]);
+                        B = Convert.ToDouble(TB[n][2]);
+                        C = Convert.ToDouble(TB[n][3]);
+                        Kai = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
+                        Count_DB = TB.Length;
+                    }
+                }
+                else
+                {
+                    string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교", "번호, A, B, C", "번호 = '" + row.Cells[1].Value.ToString() + "'");
+                    for (int n = 0; n < TB.Length; n++)
+                    {
+                        A = Convert.ToDouble(TB[n][1]);
+                        B = Convert.ToDouble(TB[n][2]);
+                        C = Convert.ToDouble(TB[n][3]);
+                        Psi = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
+                        Count_DB = TB.Length;
+                    }
+                }
             }
             Calc_dU();
 
@@ -261,12 +289,12 @@ namespace main.subcontents.ConstructionWall
 
             if (LinearPoint == "점형")
             {
-                Kai = Convert.ToDouble(row.Cells[12].Value);
+                Kai = Convert.ToDouble(row.Cells[9].Value);
                 dU = Kai * PerArea;
             }
             else
             {
-                Psi = Convert.ToDouble(row.Cells[12].Value);
+                Psi = Convert.ToDouble(row.Cells[9].Value);
                 dU = Psi * PerArea;
             }
             dU_textBox.Text = string.Format("{0:F3}", dU);
@@ -295,7 +323,7 @@ namespace main.subcontents.ConstructionWall
             {
                 Select_TB[12] = Psi.ToString(); //Psi
             }
-           
+
 
             this.DialogResult = DialogResult.OK;
             this.Close();

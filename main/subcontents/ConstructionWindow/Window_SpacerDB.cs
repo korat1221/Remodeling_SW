@@ -77,7 +77,7 @@ namespace main.subcontents
             string[][] WinSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호간봉", "번호,DB유형,제품명,구분1,구분2,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + FrameMaterial + "'");
             for (int n = 0; n < WinSpacer.Length; n++)
             {
-                table_WindowSpacer.Rows.Add(WinSpacer[n][0], WinSpacer[n][1], WinSpacer[n][2], "IPAZEB",WinSpacer[n][3], WinSpacer[n][4], WinSpacer[n][5], WinSpacer[n][6], WinSpacer[n][7], WinSpacer[n][8], WinSpacer[n][9]);
+                table_WindowSpacer.Rows.Add(WinSpacer[n][0], WinSpacer[n][1], WinSpacer[n][2], "IPAZEB", WinSpacer[n][3], WinSpacer[n][4], WinSpacer[n][5], WinSpacer[n][6], WinSpacer[n][7], WinSpacer[n][8], WinSpacer[n][9]);
             }
             Spacer_dataGridView.DataSource = table_WindowSpacer;
             Count_FrameDB = WinSpacer.Length;

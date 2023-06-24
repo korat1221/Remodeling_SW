@@ -48,7 +48,7 @@
             label5 = new Label();
             Type_textBox = new TextBox();
             label3 = new Label();
-            CWNum_textBox = new TextBox();
+            WallNum_textBox = new TextBox();
             Icon_pictureBox = new PictureBox();
             Name_textBox = new TextBox();
             label1 = new Label();
@@ -135,7 +135,7 @@
             GeneralPanel.Controls.Add(label5);
             GeneralPanel.Controls.Add(Type_textBox);
             GeneralPanel.Controls.Add(label3);
-            GeneralPanel.Controls.Add(CWNum_textBox);
+            GeneralPanel.Controls.Add(WallNum_textBox);
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Controls.Add(Name_textBox);
             GeneralPanel.Controls.Add(label1);
@@ -318,16 +318,16 @@
             // 
             // CWNum_textBox
             // 
-            CWNum_textBox.BackColor = System.Drawing.Color.White;
-            CWNum_textBox.BorderStyle = BorderStyle.None;
-            CWNum_textBox.Enabled = false;
-            CWNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            CWNum_textBox.ForeColor = SystemColors.ControlDark;
-            CWNum_textBox.Location = new Point(80, 19);
-            CWNum_textBox.Name = "CWNum_textBox";
-            CWNum_textBox.Size = new Size(67, 15);
-            CWNum_textBox.TabIndex = 90;
-            CWNum_textBox.TextAlign = HorizontalAlignment.Center;
+            WallNum_textBox.BackColor = System.Drawing.Color.White;
+            WallNum_textBox.BorderStyle = BorderStyle.None;
+            WallNum_textBox.Enabled = false;
+            WallNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            WallNum_textBox.ForeColor = SystemColors.ControlDark;
+            WallNum_textBox.Location = new Point(80, 19);
+            WallNum_textBox.Name = "CWNum_textBox";
+            WallNum_textBox.Size = new Size(67, 15);
+            WallNum_textBox.TabIndex = 90;
+            WallNum_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // Icon_pictureBox
             // 
@@ -339,6 +339,7 @@
             // 
             // Name_textBox
             // 
+            Name_textBox.BorderStyle = BorderStyle.FixedSingle;
             Name_textBox.Location = new Point(177, 16);
             Name_textBox.Name = "Name_textBox";
             Name_textBox.Size = new Size(120, 23);
@@ -668,6 +669,7 @@
             // 
             // Glass_tabPage
             // 
+            Glass_tabPage.BackColor = System.Drawing.Color.White;
             Glass_tabPage.BorderStyle = BorderStyle.FixedSingle;
             Glass_tabPage.Controls.Add(PsiKai_label2);
             Glass_tabPage.Controls.Add(PsiKai_textBox);
@@ -688,7 +690,6 @@
             Glass_tabPage.Size = new Size(969, 360);
             Glass_tabPage.TabIndex = 2;
             Glass_tabPage.Text = "열교 세부정보";
-            Glass_tabPage.UseVisualStyleBackColor = true;
             // 
             // PsiKai_label2
             // 
@@ -849,6 +850,7 @@
             // 
             // Ucalc_tabPage
             // 
+            Ucalc_tabPage.BackColor = System.Drawing.Color.White;
             Ucalc_tabPage.BorderStyle = BorderStyle.FixedSingle;
             Ucalc_tabPage.Controls.Add(Rse_textBox);
             Ucalc_tabPage.Controls.Add(label12);
@@ -871,7 +873,6 @@
             Ucalc_tabPage.Size = new Size(969, 360);
             Ucalc_tabPage.TabIndex = 0;
             Ucalc_tabPage.Text = "열관류율 계산";
-            Ucalc_tabPage.UseVisualStyleBackColor = true;
             // 
             // Rse_textBox
             // 
@@ -1143,7 +1144,7 @@
         private Panel GeneralPanel;
         private System.Windows.Forms.Label label1;
         private PictureBox Icon_pictureBox;
-        private TextBox CWNum_textBox;
+        private TextBox WallNum_textBox;
         private TextBox Type_textBox;
         private Label label3;
         private Button Previous_button;

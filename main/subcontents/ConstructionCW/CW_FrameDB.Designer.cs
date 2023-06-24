@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             Frame_dataGridView = new DataGridView();
             Save_button = new Button();
             toolTip1 = new ToolTip(components);
@@ -111,33 +111,33 @@
             Frame_dataGridView.BorderStyle = BorderStyle.None;
             Frame_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Frame_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
-            Frame_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            Frame_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Frame_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Frame_dataGridView.Location = new Point(-1, 319);
             Frame_dataGridView.Name = "Frame_dataGridView";
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = SystemColors.Control;
-            dataGridViewCellStyle11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
-            Frame_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            Frame_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             Frame_dataGridView.RowHeadersVisible = false;
             Frame_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle12.ForeColor = Color.Black;
-            dataGridViewCellStyle12.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle12.SelectionForeColor = Color.Black;
-            Frame_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            Frame_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             Frame_dataGridView.RowTemplate.Height = 25;
             Frame_dataGridView.Size = new Size(1119, 224);
             Frame_dataGridView.TabIndex = 19;
@@ -366,6 +366,7 @@
             // 
             // UserDBName_textBox
             // 
+            UserDBName_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBName_textBox.Location = new Point(469, 20);
             UserDBName_textBox.Name = "UserDBName_textBox";
             UserDBName_textBox.Size = new Size(120, 23);
@@ -393,6 +394,7 @@
             // 
             // UserDB_Manufacture_textBox
             // 
+            UserDB_Manufacture_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Manufacture_textBox.Location = new Point(693, 20);
             UserDB_Manufacture_textBox.Name = "UserDB_Manufacture_textBox";
             UserDB_Manufacture_textBox.Size = new Size(120, 23);
@@ -466,13 +468,13 @@
             UserDBSpacer_comboBox.TabIndex = 117;
             UserDBSpacer_comboBox.SelectedIndexChanged += UserDBSpacer_comboBox_SelectedIndexChanged;
             // 
-            // UserDB_PsiOpen_textBox
+            // UserDB_Psimt_textBox
             // 
             UserDB_Psimt_textBox.BackColor = SystemColors.GradientInactiveCaption;
             UserDB_Psimt_textBox.BorderStyle = BorderStyle.None;
             UserDB_Psimt_textBox.Enabled = false;
             UserDB_Psimt_textBox.Location = new Point(693, 179);
-            UserDB_Psimt_textBox.Name = "UserDB_PsiOpen_textBox";
+            UserDB_Psimt_textBox.Name = "UserDB_Psimt_textBox";
             UserDB_Psimt_textBox.Size = new Size(120, 16);
             UserDB_Psimt_textBox.TabIndex = 119;
             UserDB_Psimt_textBox.TextAlign = HorizontalAlignment.Center;
@@ -495,13 +497,13 @@
             label17.TabIndex = 120;
             label17.Text = "W/m²·K";
             // 
-            // UserDB_PsiFix_textBox
+            // UserDB_PsiOpen_textBox
             // 
             UserDB_PsiOpen_textBox.BackColor = SystemColors.GradientInactiveCaption;
             UserDB_PsiOpen_textBox.BorderStyle = BorderStyle.None;
             UserDB_PsiOpen_textBox.Enabled = false;
             UserDB_PsiOpen_textBox.Location = new Point(917, 179);
-            UserDB_PsiOpen_textBox.Name = "UserDB_PsiFix_textBox";
+            UserDB_PsiOpen_textBox.Name = "UserDB_PsiOpen_textBox";
             UserDB_PsiOpen_textBox.Size = new Size(120, 16);
             UserDB_PsiOpen_textBox.TabIndex = 122;
             UserDB_PsiOpen_textBox.TextAlign = HorizontalAlignment.Center;
@@ -517,6 +519,7 @@
             // 
             // UserDBUw_textBox
             // 
+            UserDBUw_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBUw_textBox.Location = new Point(917, 20);
             UserDBUw_textBox.Name = "UserDBUw_textBox";
             UserDBUw_textBox.Size = new Size(120, 23);
@@ -603,6 +606,7 @@
             // 
             // UserDBFramedB_textBox
             // 
+            UserDBFramedB_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBFramedB_textBox.Location = new Point(693, 98);
             UserDBFramedB_textBox.Name = "UserDBFramedB_textBox";
             UserDBFramedB_textBox.Size = new Size(120, 23);
@@ -638,6 +642,7 @@
             // 
             // UserDBFramedA_textBox
             // 
+            UserDBFramedA_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBFramedA_textBox.Location = new Point(469, 98);
             UserDBFramedA_textBox.Name = "UserDBFramedA_textBox";
             UserDBFramedA_textBox.Size = new Size(120, 23);

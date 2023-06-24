@@ -121,6 +121,7 @@
             DiIndi_comboBox = new ComboBox();
             tabControl1 = new TabControl();
             Frame_tabPage = new TabPage();
+            label60 = new Label();
             label31 = new Label();
             df_door_textBox = new TextBox();
             label55 = new Label();
@@ -227,7 +228,6 @@
             Area_textBox = new TextBox();
             label66 = new Label();
             CWType_pictureBox = new PictureBox();
-            label60 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -360,6 +360,7 @@
             // 
             // Name_textBox
             // 
+            Name_textBox.BorderStyle = BorderStyle.FixedSingle;
             Name_textBox.Location = new Point(177, 16);
             Name_textBox.Name = "Name_textBox";
             Name_textBox.Size = new Size(120, 23);
@@ -996,6 +997,7 @@
             // 
             // dPanel_textBox
             // 
+            dPanel_textBox.BorderStyle = BorderStyle.FixedSingle;
             dPanel_textBox.Location = new Point(351, 143);
             dPanel_textBox.Name = "dPanel_textBox";
             dPanel_textBox.Size = new Size(120, 23);
@@ -1393,6 +1395,7 @@
             // 
             // Frame_tabPage
             // 
+            Frame_tabPage.BackColor = Color.White;
             Frame_tabPage.BorderStyle = BorderStyle.FixedSingle;
             Frame_tabPage.Controls.Add(label60);
             Frame_tabPage.Controls.Add(label31);
@@ -1420,7 +1423,17 @@
             Frame_tabPage.Size = new Size(969, 211);
             Frame_tabPage.TabIndex = 0;
             Frame_tabPage.Text = "프레임 세부정보";
-            Frame_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // label60
+            // 
+            label60.AutoSize = true;
+            label60.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label60.ForeColor = SystemColors.ControlDark;
+            label60.Location = new Point(391, 29);
+            label60.Name = "label60";
+            label60.Size = new Size(40, 16);
+            label60.TabIndex = 163;
+            label60.Text = "프레임";
             // 
             // label31
             // 
@@ -1644,6 +1657,7 @@
             // 
             // Glass_tabPage
             // 
+            Glass_tabPage.BackColor = Color.White;
             Glass_tabPage.Controls.Add(label43);
             Glass_tabPage.Controls.Add(label39);
             Glass_tabPage.Controls.Add(DoorGlass2_textBox);
@@ -1672,7 +1686,6 @@
             Glass_tabPage.Size = new Size(969, 211);
             Glass_tabPage.TabIndex = 2;
             Glass_tabPage.Text = "유리 세부정보";
-            Glass_tabPage.UseVisualStyleBackColor = true;
             // 
             // label43
             // 
@@ -1933,6 +1946,7 @@
             // 
             // Install_tabPage
             // 
+            Install_tabPage.BackColor = Color.White;
             Install_tabPage.Controls.Add(label49);
             Install_tabPage.Controls.Add(d_InstallButtom_textBox);
             Install_tabPage.Controls.Add(label51);
@@ -1959,7 +1973,6 @@
             Install_tabPage.Size = new Size(969, 211);
             Install_tabPage.TabIndex = 1;
             Install_tabPage.Text = "설치열교 정보";
-            Install_tabPage.UseVisualStyleBackColor = true;
             // 
             // label49
             // 
@@ -2198,6 +2211,7 @@
             // 
             // Size_tabPage
             // 
+            Size_tabPage.BackColor = Color.White;
             Size_tabPage.Controls.Add(label81);
             Size_tabPage.Controls.Add(Width_textBox);
             Size_tabPage.Controls.Add(label67);
@@ -2246,7 +2260,6 @@
             Size_tabPage.Size = new Size(969, 211);
             Size_tabPage.TabIndex = 3;
             Size_tabPage.Text = "치수 정보";
-            Size_tabPage.UseVisualStyleBackColor = true;
             // 
             // label81
             // 
@@ -2734,17 +2747,6 @@
             CWType_pictureBox.Size = new Size(178, 386);
             CWType_pictureBox.TabIndex = 97;
             CWType_pictureBox.TabStop = false;
-            // 
-            // label60
-            // 
-            label60.AutoSize = true;
-            label60.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label60.ForeColor = SystemColors.ControlDark;
-            label60.Location = new Point(391, 29);
-            label60.Name = "label60";
-            label60.Size = new Size(40, 16);
-            label60.TabIndex = 163;
-            label60.Text = "프레임";
             // 
             // ConstructionCW
             // 

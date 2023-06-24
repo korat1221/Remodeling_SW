@@ -143,6 +143,7 @@
             // 
             // UserDB_Density_textBox
             // 
+            UserDB_Density_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Density_textBox.Location = new Point(540, 40);
             UserDB_Density_textBox.Name = "UserDB_Density_textBox";
             UserDB_Density_textBox.Size = new Size(120, 23);
@@ -160,6 +161,7 @@
             // 
             // UserDBName_textBox
             // 
+            UserDBName_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBName_textBox.Location = new Point(290, 11);
             UserDBName_textBox.Name = "UserDBName_textBox";
             UserDBName_textBox.Size = new Size(120, 23);
@@ -201,6 +203,7 @@
             // 
             // UserDB_Conductivity_textBox
             // 
+            UserDB_Conductivity_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Conductivity_textBox.Location = new Point(290, 40);
             UserDB_Conductivity_textBox.Name = "UserDB_Conductivity_textBox";
             UserDB_Conductivity_textBox.Size = new Size(120, 23);
@@ -272,6 +275,7 @@
             // 
             // UserDB_Note_textBox
             // 
+            UserDB_Note_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Note_textBox.Location = new Point(790, 69);
             UserDB_Note_textBox.Name = "UserDB_Note_textBox";
             UserDB_Note_textBox.Size = new Size(120, 23);
@@ -307,6 +311,7 @@
             // 
             // UserDB_c_textBox
             // 
+            UserDB_c_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_c_textBox.Location = new Point(790, 40);
             UserDB_c_textBox.Name = "UserDB_c_textBox";
             UserDB_c_textBox.Size = new Size(120, 23);
@@ -324,6 +329,7 @@
             // 
             // UserDB_dry_textBox
             // 
+            UserDB_dry_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_dry_textBox.Location = new Point(290, 69);
             UserDB_dry_textBox.Name = "UserDB_dry_textBox";
             UserDB_dry_textBox.Size = new Size(120, 23);
@@ -341,6 +347,7 @@
             // 
             // UserDB_wet_textBox
             // 
+            UserDB_wet_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_wet_textBox.Location = new Point(540, 69);
             UserDB_wet_textBox.Name = "UserDB_wet_textBox";
             UserDB_wet_textBox.Size = new Size(120, 23);
@@ -349,6 +356,7 @@
             // 
             // UserDB_Type2_textBox
             // 
+            UserDB_Type2_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Type2_textBox.Location = new Point(790, 11);
             UserDB_Type2_textBox.Name = "UserDB_Type2_textBox";
             UserDB_Type2_textBox.Size = new Size(120, 23);

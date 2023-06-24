@@ -303,6 +303,7 @@
             // 
             // UserDB_Psi_InstallButtom_textBox
             // 
+            UserDB_Psi_InstallButtom_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Psi_InstallButtom_textBox.Location = new Point(760, 64);
             UserDB_Psi_InstallButtom_textBox.Name = "UserDB_Psi_InstallButtom_textBox";
             UserDB_Psi_InstallButtom_textBox.Size = new Size(120, 23);
@@ -329,6 +330,7 @@
             // 
             // UserDB_Psi_InstallSide_textBox
             // 
+            UserDB_Psi_InstallSide_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Psi_InstallSide_textBox.Location = new Point(456, 64);
             UserDB_Psi_InstallSide_textBox.Name = "UserDB_Psi_InstallSide_textBox";
             UserDB_Psi_InstallSide_textBox.Size = new Size(120, 23);
@@ -346,6 +348,7 @@
             // 
             // UserDBName_textBox
             // 
+            UserDBName_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBName_textBox.Location = new Point(456, 6);
             UserDBName_textBox.Name = "UserDBName_textBox";
             UserDBName_textBox.Size = new Size(120, 23);
@@ -372,6 +375,7 @@
             // 
             // UserDB_Psi_InstallTop_textBox
             // 
+            UserDB_Psi_InstallTop_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Psi_InstallTop_textBox.Location = new Point(202, 64);
             UserDB_Psi_InstallTop_textBox.Name = "UserDB_Psi_InstallTop_textBox";
             UserDB_Psi_InstallTop_textBox.Size = new Size(120, 23);

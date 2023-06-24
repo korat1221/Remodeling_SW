@@ -17,7 +17,7 @@ namespace main.contents
     public partial class ZoneGeneral : Form
     {
         private String ZoneNum;
-       
+
         double DHWneed_1p, DHWneed, UseTime, HCTime, AHUTime, PersonNum, Length, Depth, Area, CelingHeight, NetVolume, VentilationRate, VentilationVolume, AnnualUseDay, WeekUseDay;
         double PersonIHG_1day, PersonIHG, PersonIHG_Low, PersonIHG_Medium, PersonIHG_High; //PersonIHG 단위 : W/m2
         double EquipIHG_1day, EquipIHG, EquipIHG_Low, EquipIHG_Medium, EquipIHG_High, EquipIHG_Time; //EquipIHG 단위 : W/m2
@@ -25,7 +25,7 @@ namespace main.contents
         double OccupancyDensity, OccupancyDensity_Low, OccupancyDensity_Medium, OccupancyDensity_High;
         String OccupancyDensity_index, EquipIHG_index;
         String ZoneName, Floor, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
-    
+
 
         public ZoneGeneral()
         {
@@ -37,7 +37,7 @@ namespace main.contents
 
             //콤보박스 리스트 생성 
             //존 환기방식 콤보박스
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed,AHU_comboBox, "존일반", "환기방식", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, AHU_comboBox, "존일반", "환기방식", "1");
             //건물대상 콤보박스
             Program.UTIL.FillComboBox_Parents(BuildingCategory_comboBox, "존일반", "건물용도", "1");
             //존 사용 시작/종료 콤보박스 
@@ -49,10 +49,10 @@ namespace main.contents
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, EquipIHG_comboBox, "존일반", "밀도", "1");
 
 
-         }
+        }
 
-       
-    
+
+
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -60,13 +60,13 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
 
-       
+
         private void Zone_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ZoneNum = Zone_comboBox.SelectedItem.ToString();
         }
 
-      
+
         private void Floor_textBox_TextChanged(object sender, EventArgs e)
         {
             Floor = Floor_textBox.Text;
@@ -139,22 +139,22 @@ namespace main.contents
             StartTime = StartTime_comboBox.SelectedItem.ToString(); ;
             TimeSpan ts;
             StartTime_image_textBox.Text = StartTime;
-          
-                if (StartTime_comboBox.SelectedItem != null&& EndTime_comboBox.SelectedItem != null)
-                {
-                    ts = DateTime.Parse(EndTime) - DateTime.Parse(StartTime);
-                    if (Double.Parse(ts.Hours.ToString()) >= 0)
-                    { UseTime = Double.Parse(ts.Hours.ToString()); }
-                    else
-                    { UseTime = Double.Parse(ts.Hours.ToString()) + 24; }
 
-                    HCTime = UseTime + 1;
-                    AHUTime = UseTime + 1;
-                    UseTime_textBox.Text = UseTime.ToString();
-                    HCTime_textBox.Text = HCTime.ToString();
-                    AHUTime_textBox.Text = AHUTime.ToString();
-                    PersonIHG_Cal(PersonIHG, UseTime);
-                }
+            if (StartTime_comboBox.SelectedItem != null && EndTime_comboBox.SelectedItem != null)
+            {
+                ts = DateTime.Parse(EndTime) - DateTime.Parse(StartTime);
+                if (Double.Parse(ts.Hours.ToString()) >= 0)
+                { UseTime = Double.Parse(ts.Hours.ToString()); }
+                else
+                { UseTime = Double.Parse(ts.Hours.ToString()) + 24; }
+
+                HCTime = UseTime + 1;
+                AHUTime = UseTime + 1;
+                UseTime_textBox.Text = UseTime.ToString();
+                HCTime_textBox.Text = HCTime.ToString();
+                AHUTime_textBox.Text = AHUTime.ToString();
+                PersonIHG_Cal(PersonIHG, UseTime);
+            }
         }
         //시작 및 종료시간에 따라 시간 계산  
         private void EndTime_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -163,21 +163,21 @@ namespace main.contents
             TimeSpan ts;
             EndTime_image_textBox.Text = EndTime;
 
-           
-                if (StartTime_comboBox.SelectedItem != null && EndTime_comboBox.SelectedItem != null)
-                {
-                    ts = DateTime.Parse(EndTime) - DateTime.Parse(StartTime);
-                    if (Double.Parse(ts.Hours.ToString()) >= 0)
-                    { UseTime = Double.Parse(ts.Hours.ToString()); }
-                    else
-                    { UseTime = Double.Parse(ts.Hours.ToString()) + 24; }
 
-                    HCTime = UseTime + 1;
-                    AHUTime = UseTime + 1;
-                    UseTime_textBox.Text = UseTime.ToString();
-                    HCTime_textBox.Text = HCTime.ToString();
-                    AHUTime_textBox.Text = AHUTime.ToString();
-                    PersonIHG_Cal(PersonIHG, UseTime);
+            if (StartTime_comboBox.SelectedItem != null && EndTime_comboBox.SelectedItem != null)
+            {
+                ts = DateTime.Parse(EndTime) - DateTime.Parse(StartTime);
+                if (Double.Parse(ts.Hours.ToString()) >= 0)
+                { UseTime = Double.Parse(ts.Hours.ToString()); }
+                else
+                { UseTime = Double.Parse(ts.Hours.ToString()) + 24; }
+
+                HCTime = UseTime + 1;
+                AHUTime = UseTime + 1;
+                UseTime_textBox.Text = UseTime.ToString();
+                HCTime_textBox.Text = HCTime.ToString();
+                AHUTime_textBox.Text = AHUTime.ToString();
+                PersonIHG_Cal(PersonIHG, UseTime);
             }
         }
 

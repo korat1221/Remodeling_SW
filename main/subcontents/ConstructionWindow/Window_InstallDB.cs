@@ -229,14 +229,14 @@ namespace main.subcontents
                 }
             }
 
-        }     
+        }
 
         private void Save_button_Click(object sender, EventArgs e)
         {
             DataGridViewRow row = Install_dataGridView.Rows[SelectRow];
             for (int i = 1; i < row.Cells.Count - 2; i++)
             {
-                 Select_WindowInstall[i] = row.Cells[i + 2].Value.ToString();
+                Select_WindowInstall[i] = row.Cells[i + 2].Value.ToString();
             }
             Select_WindowInstall[0] = row.Cells[1].Value.ToString();
             this.DialogResult = DialogResult.OK;

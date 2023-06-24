@@ -376,6 +376,7 @@ namespace main.subcontents.ConstructionWindow
             // 
             // Name_textBox
             // 
+            Name_textBox.BorderStyle = BorderStyle.FixedSingle;
             Name_textBox.Location = new Point(177, 16);
             Name_textBox.Name = "Name_textBox";
             Name_textBox.ReadOnly = true;
@@ -893,6 +894,7 @@ namespace main.subcontents.ConstructionWindow
             // 
             // Frame_tabPage
             // 
+            Frame_tabPage.BackColor = Color.White;
             Frame_tabPage.BorderStyle = BorderStyle.FixedSingle;
             Frame_tabPage.Controls.Add(label22);
             Frame_tabPage.Controls.Add(df_btw_textBox);
@@ -914,7 +916,6 @@ namespace main.subcontents.ConstructionWindow
             Frame_tabPage.Size = new Size(969, 211);
             Frame_tabPage.TabIndex = 0;
             Frame_tabPage.Text = "프레임 세부정보";
-            Frame_tabPage.UseVisualStyleBackColor = true;
             // 
             // label22
             // 
@@ -1090,6 +1091,7 @@ namespace main.subcontents.ConstructionWindow
             // 
             // Install_tabPage
             // 
+            Install_tabPage.BackColor = Color.White;
             Install_tabPage.Controls.Add(label43);
             Install_tabPage.Controls.Add(label44);
             Install_tabPage.Controls.Add(label45);
@@ -1116,7 +1118,6 @@ namespace main.subcontents.ConstructionWindow
             Install_tabPage.Size = new Size(969, 211);
             Install_tabPage.TabIndex = 1;
             Install_tabPage.Text = "설치열교 정보";
-            Install_tabPage.UseVisualStyleBackColor = true;
             // 
             // label43
             // 
@@ -1358,6 +1359,7 @@ namespace main.subcontents.ConstructionWindow
             // 
             // Size_tabPage
             // 
+            Size_tabPage.BackColor = Color.White;
             Size_tabPage.Controls.Add(label56);
             Size_tabPage.Controls.Add(label57);
             Size_tabPage.Controls.Add(Lg_open_textBox);
@@ -1394,7 +1396,6 @@ namespace main.subcontents.ConstructionWindow
             Size_tabPage.Size = new Size(969, 211);
             Size_tabPage.TabIndex = 2;
             Size_tabPage.Text = "사이즈 정보";
-            Size_tabPage.UseVisualStyleBackColor = true;
             // 
             // label56
             // 

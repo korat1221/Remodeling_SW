@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             label2 = new Label();
             pictureBox1 = new PictureBox();
@@ -44,7 +44,7 @@
             label12 = new Label();
             Deletebutton = new Button();
             AddUserDB_button = new Button();
-            this.UserDBType3_comboBox = new ComboBox();
+            UserDBType3_comboBox = new ComboBox();
             label14 = new Label();
             label3 = new Label();
             label4 = new Label();
@@ -134,7 +134,7 @@
             panel1.Controls.Add(label12);
             panel1.Controls.Add(Deletebutton);
             panel1.Controls.Add(AddUserDB_button);
-            panel1.Controls.Add(this.UserDBType3_comboBox);
+            panel1.Controls.Add(UserDBType3_comboBox);
             panel1.Controls.Add(label14);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label4);
@@ -186,33 +186,33 @@
             Install_dataGridView.BorderStyle = BorderStyle.None;
             Install_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Install_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            Install_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            Install_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Install_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Install_dataGridView.Location = new Point(-2, 90);
             Install_dataGridView.Name = "Install_dataGridView";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            Install_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            Install_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             Install_dataGridView.RowHeadersVisible = false;
             Install_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            Install_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            Install_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             Install_dataGridView.RowTemplate.Height = 25;
             Install_dataGridView.Size = new Size(944, 193);
             Install_dataGridView.TabIndex = 97;
@@ -260,13 +260,13 @@
             // 
             // UserDBType3_comboBox
             // 
-            this.UserDBType3_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            this.UserDBType3_comboBox.FormattingEnabled = true;
-            this.UserDBType3_comboBox.Location = new Point(760, 35);
-            this.UserDBType3_comboBox.Name = "UserDBType3_comboBox";
-            this.UserDBType3_comboBox.Size = new Size(120, 23);
-            this.UserDBType3_comboBox.TabIndex = 100;
-            this.UserDBType3_comboBox.SelectedIndexChanged += this.UserDBType3_comboBox_SelectedIndexChanged;
+            UserDBType3_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDBType3_comboBox.FormattingEnabled = true;
+            UserDBType3_comboBox.Location = new Point(760, 35);
+            UserDBType3_comboBox.Name = "UserDBType3_comboBox";
+            UserDBType3_comboBox.Size = new Size(120, 23);
+            UserDBType3_comboBox.TabIndex = 100;
+            UserDBType3_comboBox.SelectedIndexChanged += UserDBType3_comboBox_SelectedIndexChanged;
             // 
             // label14
             // 
@@ -297,6 +297,7 @@
             // 
             // UserDB_Psi_InstallButtom_textBox
             // 
+            UserDB_Psi_InstallButtom_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Psi_InstallButtom_textBox.Location = new Point(760, 64);
             UserDB_Psi_InstallButtom_textBox.Name = "UserDB_Psi_InstallButtom_textBox";
             UserDB_Psi_InstallButtom_textBox.Size = new Size(120, 23);
@@ -323,6 +324,7 @@
             // 
             // UserDB_Psi_InstallSide_textBox
             // 
+            UserDB_Psi_InstallSide_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Psi_InstallSide_textBox.Location = new Point(456, 64);
             UserDB_Psi_InstallSide_textBox.Name = "UserDB_Psi_InstallSide_textBox";
             UserDB_Psi_InstallSide_textBox.Size = new Size(120, 23);
@@ -340,6 +342,7 @@
             // 
             // UserDBName_textBox
             // 
+            UserDBName_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBName_textBox.Location = new Point(456, 6);
             UserDBName_textBox.Name = "UserDBName_textBox";
             UserDBName_textBox.Size = new Size(120, 23);
@@ -366,6 +369,7 @@
             // 
             // UserDB_Psi_InstallTop_textBox
             // 
+            UserDB_Psi_InstallTop_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Psi_InstallTop_textBox.Location = new Point(202, 64);
             UserDB_Psi_InstallTop_textBox.Name = "UserDB_Psi_InstallTop_textBox";
             UserDB_Psi_InstallTop_textBox.Size = new Size(120, 23);

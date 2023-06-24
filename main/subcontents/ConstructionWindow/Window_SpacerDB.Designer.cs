@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window_SpacerDB));
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             label2 = new Label();
             pictureBox1 = new PictureBox();
@@ -48,18 +48,18 @@
             UserDB_Psi_fix_textBox = new TextBox();
             label6 = new Label();
             panel1 = new Panel();
+            label3 = new Label();
+            UserDB_Manufacture_textBox = new TextBox();
             label15 = new Label();
             UserNum_textBox = new TextBox();
             label4 = new Label();
             Deletebutton = new Button();
-            Spacer_dataGridView = new DataGridView();
             UserDBType3_comboBox = new ComboBox();
             label8 = new Label();
             UserDBType2_comboBox = new ComboBox();
             label7 = new Label();
             UserDBType1_comboBox = new ComboBox();
-            label3 = new Label();
-            UserDB_Manufacture_textBox = new TextBox();
+            Spacer_dataGridView = new DataGridView();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
@@ -137,6 +137,7 @@
             // 
             // UserDB_Psi_open_textBox
             // 
+            UserDB_Psi_open_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Psi_open_textBox.Location = new Point(672, 68);
             UserDB_Psi_open_textBox.Name = "UserDB_Psi_open_textBox";
             UserDB_Psi_open_textBox.Size = new Size(120, 23);
@@ -154,6 +155,7 @@
             // 
             // UserDBName_textBox
             // 
+            UserDBName_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBName_textBox.Location = new Point(308, 12);
             UserDBName_textBox.Name = "UserDBName_textBox";
             UserDBName_textBox.Size = new Size(120, 23);
@@ -195,6 +197,7 @@
             // 
             // UserDB_Psi_fix_textBox
             // 
+            UserDB_Psi_fix_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Psi_fix_textBox.Location = new Point(308, 68);
             UserDB_Psi_fix_textBox.Name = "UserDB_Psi_fix_textBox";
             UserDB_Psi_fix_textBox.Size = new Size(120, 23);
@@ -239,6 +242,24 @@
             panel1.Size = new Size(985, 98);
             panel1.TabIndex = 27;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(617, 16);
+            label3.Name = "label3";
+            label3.Size = new Size(43, 15);
+            label3.TabIndex = 108;
+            label3.Text = "제조사";
+            // 
+            // UserDB_Manufacture_textBox
+            // 
+            UserDB_Manufacture_textBox.BorderStyle = BorderStyle.FixedSingle;
+            UserDB_Manufacture_textBox.Location = new Point(672, 12);
+            UserDB_Manufacture_textBox.Name = "UserDB_Manufacture_textBox";
+            UserDB_Manufacture_textBox.Size = new Size(120, 23);
+            UserDB_Manufacture_textBox.TabIndex = 109;
+            UserDB_Manufacture_textBox.TextChanged += UserDB_Manufacture_textBox_TextChanged;
+            // 
             // label15
             // 
             label15.AutoSize = true;
@@ -282,49 +303,6 @@
             Deletebutton.Text = "-";
             Deletebutton.UseVisualStyleBackColor = false;
             Deletebutton.Click += Delete_button_Click;
-            // 
-            // Spacer_dataGridView
-            // 
-            Spacer_dataGridView.AllowUserToAddRows = false;
-            Spacer_dataGridView.AllowUserToDeleteRows = false;
-            Spacer_dataGridView.AllowUserToResizeColumns = false;
-            Spacer_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            Spacer_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            Spacer_dataGridView.BackgroundColor = SystemColors.Control;
-            Spacer_dataGridView.BorderStyle = BorderStyle.None;
-            Spacer_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            Spacer_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            Spacer_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            Spacer_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Spacer_dataGridView.Location = new Point(3, 284);
-            Spacer_dataGridView.Name = "Spacer_dataGridView";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            Spacer_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            Spacer_dataGridView.RowHeadersVisible = false;
-            Spacer_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            Spacer_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            Spacer_dataGridView.RowTemplate.Height = 25;
-            Spacer_dataGridView.Size = new Size(982, 171);
-            Spacer_dataGridView.TabIndex = 19;
-            Spacer_dataGridView.CellContentClick += Spacer_dataGridView_CellContentClick;
             // 
             // UserDBType3_comboBox
             // 
@@ -374,22 +352,48 @@
             UserDBType1_comboBox.TabIndex = 39;
             UserDBType1_comboBox.SelectedIndexChanged += UserDBType1_comboBox_SelectedIndexChanged;
             // 
-            // label3
+            // Spacer_dataGridView
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(617, 16);
-            label3.Name = "label3";
-            label3.Size = new Size(43, 15);
-            label3.TabIndex = 108;
-            label3.Text = "제조사";
-            // 
-            // UserDB_Manufacture_textBox
-            // 
-            UserDB_Manufacture_textBox.Location = new Point(672, 12);
-            UserDB_Manufacture_textBox.Name = "UserDB_Manufacture_textBox";
-            UserDB_Manufacture_textBox.Size = new Size(120, 23);
-            UserDB_Manufacture_textBox.TabIndex = 109;
-            UserDB_Manufacture_textBox.TextChanged += UserDB_Manufacture_textBox_TextChanged;
+            Spacer_dataGridView.AllowUserToAddRows = false;
+            Spacer_dataGridView.AllowUserToDeleteRows = false;
+            Spacer_dataGridView.AllowUserToResizeColumns = false;
+            Spacer_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Spacer_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            Spacer_dataGridView.BackgroundColor = SystemColors.Control;
+            Spacer_dataGridView.BorderStyle = BorderStyle.None;
+            Spacer_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            Spacer_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            Spacer_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            Spacer_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Spacer_dataGridView.Location = new Point(3, 284);
+            Spacer_dataGridView.Name = "Spacer_dataGridView";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            Spacer_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            Spacer_dataGridView.RowHeadersVisible = false;
+            Spacer_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            Spacer_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            Spacer_dataGridView.RowTemplate.Height = 25;
+            Spacer_dataGridView.Size = new Size(982, 171);
+            Spacer_dataGridView.TabIndex = 19;
+            Spacer_dataGridView.CellContentClick += Spacer_dataGridView_CellContentClick;
             // 
             // Window_SpacerDB
             // 

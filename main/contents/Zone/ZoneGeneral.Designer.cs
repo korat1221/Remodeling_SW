@@ -260,7 +260,7 @@ namespace main.contents
             // 
             // textBox6
             // 
-            textBox6.BackColor = SystemColors.InactiveBorder;
+            textBox6.BackColor = Color.White;
             textBox6.BorderStyle = BorderStyle.FixedSingle;
             textBox6.Enabled = false;
             textBox6.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -291,7 +291,7 @@ namespace main.contents
             // 
             // textBox2
             // 
-            textBox2.BackColor = SystemColors.InactiveBorder;
+            textBox2.BackColor = Color.White;
             textBox2.BorderStyle = BorderStyle.FixedSingle;
             textBox2.Enabled = false;
             textBox2.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -460,7 +460,7 @@ namespace main.contents
             // 
             // OccupancyDensity_index_textBox
             // 
-            OccupancyDensity_index_textBox.BackColor = SystemColors.Desktop;
+            OccupancyDensity_index_textBox.BackColor = Color.White;
             OccupancyDensity_index_textBox.BorderStyle = BorderStyle.None;
             OccupancyDensity_index_textBox.Enabled = false;
             OccupancyDensity_index_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -525,7 +525,7 @@ namespace main.contents
             // 
             // EquipIHG_textBox
             // 
-            EquipIHG_textBox.BackColor = SystemColors.Desktop;
+            EquipIHG_textBox.BackColor = Color.White;
             EquipIHG_textBox.BorderStyle = BorderStyle.None;
             EquipIHG_textBox.Enabled = false;
             EquipIHG_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -591,7 +591,7 @@ namespace main.contents
             // 
             // PersonIHG_textBox
             // 
-            PersonIHG_textBox.BackColor = SystemColors.Desktop;
+            PersonIHG_textBox.BackColor = Color.White;
             PersonIHG_textBox.BorderStyle = BorderStyle.None;
             PersonIHG_textBox.Enabled = false;
             PersonIHG_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -626,7 +626,7 @@ namespace main.contents
             // 
             // OccupancyDensity_textBox
             // 
-            OccupancyDensity_textBox.BackColor = SystemColors.Desktop;
+            OccupancyDensity_textBox.BackColor = Color.White;
             OccupancyDensity_textBox.BorderStyle = BorderStyle.None;
             OccupancyDensity_textBox.Enabled = false;
             OccupancyDensity_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -681,7 +681,7 @@ namespace main.contents
             // 
             // AnnualUseDay_textBox
             // 
-            AnnualUseDay_textBox.BackColor = SystemColors.Desktop;
+            AnnualUseDay_textBox.BackColor = Color.White;
             AnnualUseDay_textBox.BorderStyle = BorderStyle.None;
             AnnualUseDay_textBox.Enabled = false;
             AnnualUseDay_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -716,7 +716,7 @@ namespace main.contents
             // 
             // AHUTime_textBox
             // 
-            AHUTime_textBox.BackColor = SystemColors.Desktop;
+            AHUTime_textBox.BackColor = Color.White;
             AHUTime_textBox.BorderStyle = BorderStyle.None;
             AHUTime_textBox.Enabled = false;
             AHUTime_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -781,7 +781,7 @@ namespace main.contents
             // 
             // UseTime_textBox
             // 
-            UseTime_textBox.BackColor = SystemColors.Desktop;
+            UseTime_textBox.BackColor = Color.White;
             UseTime_textBox.BorderStyle = BorderStyle.None;
             UseTime_textBox.Enabled = false;
             UseTime_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -816,7 +816,7 @@ namespace main.contents
             // 
             // HCTime_textBox
             // 
-            HCTime_textBox.BackColor = SystemColors.Desktop;
+            HCTime_textBox.BackColor = Color.White;
             HCTime_textBox.BorderStyle = BorderStyle.None;
             HCTime_textBox.Enabled = false;
             HCTime_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -881,7 +881,7 @@ namespace main.contents
             // 
             // DHWneed_textBox
             // 
-            DHWneed_textBox.BackColor = SystemColors.Desktop;
+            DHWneed_textBox.BackColor = Color.White;
             DHWneed_textBox.BorderStyle = BorderStyle.None;
             DHWneed_textBox.Enabled = false;
             DHWneed_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);

@@ -373,6 +373,7 @@ namespace main.subcontents
             // 
             // UserDBName_textBox
             // 
+            UserDBName_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBName_textBox.Location = new Point(469, 20);
             UserDBName_textBox.Name = "UserDBName_textBox";
             UserDBName_textBox.Size = new Size(120, 23);
@@ -409,6 +410,7 @@ namespace main.subcontents
             // 
             // UserDB_Manufacture_textBox
             // 
+            UserDB_Manufacture_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Manufacture_textBox.Location = new Point(693, 20);
             UserDB_Manufacture_textBox.Name = "UserDB_Manufacture_textBox";
             UserDB_Manufacture_textBox.Size = new Size(120, 23);
@@ -533,6 +535,7 @@ namespace main.subcontents
             // 
             // UserDBUw_textBox
             // 
+            UserDBUw_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBUw_textBox.Location = new Point(917, 20);
             UserDBUw_textBox.Name = "UserDBUw_textBox";
             UserDBUw_textBox.Size = new Size(120, 23);
@@ -629,6 +632,7 @@ namespace main.subcontents
             // 
             // UserDBFramedB_textBox
             // 
+            UserDBFramedB_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBFramedB_textBox.Location = new Point(693, 98);
             UserDBFramedB_textBox.Name = "UserDBFramedB_textBox";
             UserDBFramedB_textBox.Size = new Size(120, 23);
@@ -655,6 +659,7 @@ namespace main.subcontents
             // 
             // UserDBFramedC_textBox
             // 
+            UserDBFramedC_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBFramedC_textBox.Location = new Point(917, 98);
             UserDBFramedC_textBox.Name = "UserDBFramedC_textBox";
             UserDBFramedC_textBox.Size = new Size(120, 23);
@@ -690,6 +695,7 @@ namespace main.subcontents
             // 
             // UserDBFramedA_textBox
             // 
+            UserDBFramedA_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBFramedA_textBox.Location = new Point(469, 98);
             UserDBFramedA_textBox.Name = "UserDBFramedA_textBox";
             UserDBFramedA_textBox.Size = new Size(120, 23);

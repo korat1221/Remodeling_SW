@@ -184,6 +184,7 @@
             // 
             // UserDB_RInternal_textBox
             // 
+            UserDB_RInternal_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_RInternal_textBox.Location = new Point(760, 93);
             UserDB_RInternal_textBox.Name = "UserDB_RInternal_textBox";
             UserDB_RInternal_textBox.Size = new Size(120, 23);
@@ -210,6 +211,7 @@
             // 
             // UserDB_RExternal_textBox
             // 
+            UserDB_RExternal_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_RExternal_textBox.Location = new Point(481, 93);
             UserDB_RExternal_textBox.Name = "UserDB_RExternal_textBox";
             UserDB_RExternal_textBox.Size = new Size(120, 23);
@@ -227,6 +229,7 @@
             // 
             // UserDB_Manufacture_textBox
             // 
+            UserDB_Manufacture_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Manufacture_textBox.Location = new Point(760, 6);
             UserDB_Manufacture_textBox.Name = "UserDB_Manufacture_textBox";
             UserDB_Manufacture_textBox.Size = new Size(120, 23);
@@ -331,6 +334,7 @@
             // 
             // UserDB_Tao_textBox
             // 
+            UserDB_Tao_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Tao_textBox.Location = new Point(760, 64);
             UserDB_Tao_textBox.Name = "UserDB_Tao_textBox";
             UserDB_Tao_textBox.Size = new Size(120, 23);
@@ -357,6 +361,7 @@
             // 
             // UserDB_g_textBox
             // 
+            UserDB_g_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_g_textBox.Location = new Point(481, 64);
             UserDB_g_textBox.Name = "UserDB_g_textBox";
             UserDB_g_textBox.Size = new Size(120, 23);
@@ -374,6 +379,7 @@
             // 
             // UserDBName_textBox
             // 
+            UserDBName_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBName_textBox.Location = new Point(481, 6);
             UserDBName_textBox.Name = "UserDBName_textBox";
             UserDBName_textBox.Size = new Size(120, 23);
@@ -400,6 +406,7 @@
             // 
             // UserDB_Ug_textBox
             // 
+            UserDB_Ug_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Ug_textBox.Location = new Point(202, 64);
             UserDB_Ug_textBox.Name = "UserDB_Ug_textBox";
             UserDB_Ug_textBox.Size = new Size(120, 23);
@@ -487,7 +494,7 @@
             Glass_dataGridView.TabIndex = 111;
             Glass_dataGridView.CellContentClick += Glass_dataGridView_CellContentClick;
             // 
-            // Window_GlassDB
+            // GlassDB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -496,7 +503,7 @@
             Controls.Add(panel1);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
-            Name = "Window_GlassDB";
+            Name = "GlassDB";
             Text = "Window_GlassDB";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();

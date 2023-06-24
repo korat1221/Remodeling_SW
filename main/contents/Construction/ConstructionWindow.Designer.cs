@@ -105,6 +105,8 @@ namespace main.contents
             label38 = new Label();
             WindowInstall_pictureBox = new PictureBox();
             Frame_tabPage = new TabPage();
+            label10 = new Label();
+            label8 = new Label();
             label22 = new Label();
             df_btw_textBox = new TextBox();
             df_fix_textBox = new TextBox();
@@ -120,8 +122,6 @@ namespace main.contents
             label14 = new Label();
             WindowFrame_pictureBox = new PictureBox();
             tabControl1 = new TabControl();
-            label8 = new Label();
-            label10 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -881,6 +881,7 @@ namespace main.contents
             // 
             // Install_tabPage
             // 
+            Install_tabPage.BackColor = Color.White;
             Install_tabPage.Controls.Add(label44);
             Install_tabPage.Controls.Add(label45);
             Install_tabPage.Controls.Add(Psi_InstallButtom_textBox);
@@ -898,7 +899,6 @@ namespace main.contents
             Install_tabPage.Size = new Size(969, 211);
             Install_tabPage.TabIndex = 1;
             Install_tabPage.Text = "설치열교 정보";
-            Install_tabPage.UseVisualStyleBackColor = true;
             // 
             // label44
             // 
@@ -1026,6 +1026,7 @@ namespace main.contents
             // 
             // Frame_tabPage
             // 
+            Frame_tabPage.BackColor = Color.White;
             Frame_tabPage.BorderStyle = BorderStyle.FixedSingle;
             Frame_tabPage.Controls.Add(label10);
             Frame_tabPage.Controls.Add(label8);
@@ -1049,7 +1050,28 @@ namespace main.contents
             Frame_tabPage.Size = new Size(969, 211);
             Frame_tabPage.TabIndex = 0;
             Frame_tabPage.Text = "프레임 세부정보";
-            Frame_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label10.ForeColor = SystemColors.ControlDark;
+            label10.Location = new Point(354, 148);
+            label10.Name = "label10";
+            label10.Size = new Size(18, 16);
+            label10.TabIndex = 106;
+            label10.Text = "m";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.ForeColor = SystemColors.ControlDark;
+            label8.Location = new Point(338, 110);
+            label8.Name = "label8";
+            label8.Size = new Size(50, 16);
+            label8.TabIndex = 105;
+            label8.Text = "W/m²·K";
             // 
             // label22
             // 
@@ -1225,28 +1247,6 @@ namespace main.contents
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(977, 239);
             tabControl1.TabIndex = 19;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label8.ForeColor = SystemColors.ControlDark;
-            label8.Location = new Point(338, 110);
-            label8.Name = "label8";
-            label8.Size = new Size(50, 16);
-            label8.TabIndex = 105;
-            label8.Text = "W/m²·K";
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label10.ForeColor = SystemColors.ControlDark;
-            label10.Location = new Point(354, 148);
-            label10.Name = "label10";
-            label10.Size = new Size(18, 16);
-            label10.TabIndex = 106;
-            label10.Text = "m";
             // 
             // ConstructionWindow
             // 

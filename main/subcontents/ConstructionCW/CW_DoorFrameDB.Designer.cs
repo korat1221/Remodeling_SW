@@ -108,6 +108,7 @@
             // 
             // UserDB_dfd_textBox
             // 
+            UserDB_dfd_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_dfd_textBox.Location = new Point(701, 43);
             UserDB_dfd_textBox.Name = "UserDB_dfd_textBox";
             UserDB_dfd_textBox.Size = new Size(120, 23);
@@ -125,6 +126,7 @@
             // 
             // UserDBName_textBox
             // 
+            UserDBName_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDBName_textBox.Location = new Point(310, 12);
             UserDBName_textBox.Name = "UserDBName_textBox";
             UserDBName_textBox.Size = new Size(120, 23);
@@ -166,6 +168,7 @@
             // 
             // UserDB_Ufd_textBox
             // 
+            UserDB_Ufd_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Ufd_textBox.Location = new Point(310, 44);
             UserDB_Ufd_textBox.Name = "UserDB_Ufd_textBox";
             UserDB_Ufd_textBox.Size = new Size(120, 23);
@@ -227,6 +230,7 @@
             // 
             // UserDB_Manufacture_textBox
             // 
+            UserDB_Manufacture_textBox.BorderStyle = BorderStyle.FixedSingle;
             UserDB_Manufacture_textBox.Location = new Point(505, 11);
             UserDB_Manufacture_textBox.Name = "UserDB_Manufacture_textBox";
             UserDB_Manufacture_textBox.Size = new Size(120, 23);
@@ -320,7 +324,7 @@
             Door_dataGridView.TabIndex = 19;
             Door_dataGridView.CellContentClick += Spacer_dataGridView_CellContentClick;
             // 
-            // CW_DoorDB
+            // CW_DoorFrameDB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -330,7 +334,7 @@
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             Controls.Add(Door_dataGridView);
-            Name = "CW_DoorDB";
+            Name = "CW_DoorFrameDB";
             Text = "CW_DoorDB";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
