@@ -151,10 +151,10 @@ namespace main.contentslist
             {
                 if (k > -1)
                 {
-                        String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                        Program.DB.deleteValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Delete_Num + "'");
-                        load_List();
-                   
+                    String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
+                    Program.DB.deleteValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Delete_Num + "'");
+                    load_List();
+
                 }
             }
 
@@ -165,7 +165,7 @@ namespace main.contentslist
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
-                    Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
+                Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
 
             }
 
@@ -178,11 +178,11 @@ namespace main.contentslist
             if (k > -1)
             {
                 String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-              
+
                 Program.DB.CopyValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Copy_Num + "'", CWNum);
-                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionCW" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + CWNum + "'");                
+                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionCW" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + CWNum + "'");
                 Load_form(CWNum, "Copy");
-              
+
             }
         }
 

@@ -21,7 +21,7 @@ namespace main.contents
 {
     public partial class ConstructionWall : Form
     {
-        String WallNum, WallName, Type, check_Type, OldWall, CWName, UMethod, DiIndi, StructureType, check_StructureType, TBType, TBName, Color, ISO_KS, LinearPoint;        
+        String WallNum, WallName, Type, check_Type, OldWall, CWName, UMethod, DiIndi, StructureType, check_StructureType, TBType, TBName, Color, ISO_KS, LinearPoint;
         double A, B, C, PsiKai, PerArea;
         double Rse, Rsi, dtot, Rtot, dins, check_dins;
         double OldWall_R, CW_R;
@@ -29,8 +29,8 @@ namespace main.contents
         String[][] Old;
         int SelectRow;
         String[] Material = new String[10];
-        double[] Material_d = new double[10]; 
-        double[] Material_λ = new double[10]; 
+        double[] Material_d = new double[10];
+        double[] Material_λ = new double[10];
         double[] Material_R = new double[10];
 
         public ConstructionWall()
@@ -46,7 +46,7 @@ namespace main.contents
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi_comboBox, "외벽", "직접/간접", "1");
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi2_comboBox, "외벽", "직접/간접", "1");
             //표면열전달저항기준 콤보박스 
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, RseRsi_comboBox, "외벽", "실내외표면열전달저항", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, ISO_KS_comboBox, "외벽", "실내외표면열전달저항", "1");
             //구조유형콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, StructureType_comboBox, "외벽", "구조유형", "3");
             Load_table();
@@ -224,11 +224,12 @@ namespace main.contents
         private void OldWall_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             OldWall = OldWall_comboBox.SelectedItem.ToString();
-            string[][] OldWall_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "열관류율", "명칭 = '" + OldWall_comboBox.Text +"'");
+            string[][] OldWall_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "열관류율", "명칭 = '" + OldWall_comboBox.Text + "'");
             try
             {
                 OldWall_R = 1 / Convert.ToDouble(OldWall_U[0][0]);
-            }catch { }
+            }
+            catch { }
             Add_OldWall();
         }
 
@@ -278,7 +279,7 @@ namespace main.contents
         private void CW_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             CWName = CW_comboBox.SelectedItem.ToString();
-            string[][] CW_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "유리부분열관류율", "명칭 = '"+ CW_comboBox.Text + "'");
+            string[][] CW_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "유리부분열관류율", "명칭 = '" + CW_comboBox.Text + "'");
             try
             {
                 CW_R = 1 / Convert.ToDouble(CW_U[0][0]);
@@ -312,6 +313,7 @@ namespace main.contents
         {
             if (UMethod == "계산")
             {
+                tabControl1.SelectedTab = tabControl1.TabPages["Ucalc_tabPage"];
                 U_textBox.Enabled = false;
                 U_textBox.BorderStyle = BorderStyle.None;
                 DiIndi_comboBox.Visible = false;
@@ -356,9 +358,9 @@ namespace main.contents
             Calc_Ueff();
         }
 
-        private void RseRsi_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void ISO_KS_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ISO_KS = RseRsi_comboBox.SelectedItem.ToString();
+            ISO_KS = ISO_KS_comboBox.SelectedItem.ToString();
             Calc_RseRsi();
             Calc_Ueff();
         }
@@ -405,7 +407,7 @@ namespace main.contents
                 MessageBox.Show("커튼월덧댐일 경우 열교 평가는 하지 않습니다.");
                 TBName_textBox.Text = "열교없음";
             }
-            else if (Type == "기존외벽" && StructureType != "경량철골조")
+            else if (Type == "기존외벽")
             {
                 MessageBox.Show("기존 외벽일 경우 열교 평가는 하지 않습니다.");
                 TBName_textBox.Text = "열교없음";
@@ -416,8 +418,9 @@ namespace main.contents
                 {
                     MessageBox.Show("열관류율부터 계산하세요.");
                 }
-                else if (UMethod == "계산" && dins == 0)
+                else if (UMethod == "계산" && getDIns() == 0)
                 {
+                    MessageBox.Show(getDIns().ToString());
                     MessageBox.Show("단열재가 없으므로 열교 평가는 하지 않습니다.");
                     TBName_textBox.Text = "열교없음";
                 }
@@ -444,13 +447,16 @@ namespace main.contents
                         LinearPoint = TB_form.Select_TB[11];
                         PsiKai = Convert.ToDouble(TB_form.Select_TB[12]);
                         PsiKai_textBox.Text = string.Format("{0:F3}", PsiKai);
-
+                        tabControl1.SelectedTab = tabControl1.TabPages["dU_tabPage"];
                         if (LinearPoint == "점형")
                         {
                             PerArea_label1.Text = "적용개수";
                             PerArea_label2.Text = "EA/m²";
                             PsiKai_label1.Text = "점형열교 열관류율";
                             PsiKai_label2.Text = "W/K";
+                            dU_label3.Text = "1D 열교가산치";
+                            dU_label4.Text = "W/m²·K";
+
                         }
                         else
                         {
@@ -458,39 +464,45 @@ namespace main.contents
                             PerArea_label2.Text = "m/m²";
                             PsiKai_label1.Text = "선형열교 열관류율";
                             PsiKai_label2.Text = "W/mK";
+                            dU_label3.Text = "1D 열교가산치";
+                            dU_label4.Text = "W/m²·K";
                         }
 
-                        try
-                        {
-                            if (LinearPoint == "점형")
-                            {
-                                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
-                                pictureBox1.Load(Program.gPath + Image[0][0]);
-                                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-
-                                Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TBType + "'");
-                                pictureBox2.Load(Program.gPath + Image[0][0]);
-                                pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-                            }
-                            else
-                            {
-                                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
-                                pictureBox1.Load(Program.gPath + Image[0][0]);
-                                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-
-                                Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TBType + "'");
-                                pictureBox2.Load(Program.gPath + Image[0][0]);
-                                pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-                            }
-
-
-                        }
-                        catch { }
+                        Load_TB_Image();                        
                     }
                 }
             }
             Calc_Ueff();
         }
+
+        private void Load_TB_Image()
+        {
+            try
+            {
+                if (LinearPoint == "점형")
+                {
+                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
+                    pictureBox1.Load(Program.gPath + Image[0][0]);
+                    pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+
+                    Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TBType + "'");
+                    pictureBox2.Load(Program.gPath + Image[0][0]);
+                    pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                else
+                {
+                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
+                    pictureBox1.Load(Program.gPath + Image[0][0]);
+                    pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+
+                    Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TBType + "'");
+                    pictureBox2.Load(Program.gPath + Image[0][0]);
+                    pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+            }
+            catch { }
+        }
+
         private void Load_table()
         {
 
@@ -507,7 +519,7 @@ namespace main.contents
             Ucalc_dataGridView.Columns[4].HeaderText = "열전도율" + Environment.NewLine + "[W/m·K]";
             Ucalc_dataGridView.Columns[5].HeaderText = "두께" + Environment.NewLine + "[mm]";
             Ucalc_dataGridView.Columns[6].HeaderText = "열저항" + Environment.NewLine + "[m²·K/W]";
-            
+
         }
         private void Add_OldWall()
         {
@@ -519,14 +531,14 @@ namespace main.contents
                 }
                 else { }
             }
-           
+
             int nRow = Ucalc_dataGridView.Rows.Add();
             Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존외벽";
             Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldWall_comboBox.Text;
             Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
             Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldWall_R);
             Load_Material_Num();
-            Calc_dins();
+           
         }
 
         private void Add_CW()
@@ -546,14 +558,14 @@ namespace main.contents
             Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
             Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", CW_R);
             Load_Material_Num();
-            Calc_dins();
+          
         }
 
         private void AddMaterial_button_Click(object sender, EventArgs e)
         {
             MaterialDB form = new MaterialDB();
             DialogResult result = form.ShowDialog();
-            if(Ucalc_dataGridView.Rows.Count <10)
+            if (Ucalc_dataGridView.Rows.Count < 10)
             {
                 if (result == DialogResult.OK)
                 {
@@ -570,7 +582,7 @@ namespace main.contents
             {
                 MessageBox.Show("열개까지만 생성 가능합니다.");
             }
-          
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -691,9 +703,9 @@ namespace main.contents
                     {
                         Material[k] = Ucalc_dataGridView.Rows[k].Cells[3].Value.ToString();
                     }
-                    else { }                    
-                    Material_d[k] =Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[5].Value);
-                    Material_λ[k] =Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[4].Value);
+                    else { }
+                    Material_d[k] = Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[5].Value);
+                    Material_λ[k] = Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[4].Value);
                     Material_R[k] = Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[6].Value);
                     dtot += Material_d[k];
                     Rtot += Material_R[k];
@@ -707,14 +719,33 @@ namespace main.contents
             }
             else { return; }
         }
+ 
+        private double getDIns()
+        {
+            dins = 0;
+            for (int k = 0; k < Ucalc_dataGridView.RowCount; k++)
+            {
+                String s = Ucalc_dataGridView.Rows[k].Cells[2].Value.ToString();
+                if (s == "단열재")
+                {
+                    dins += Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[5].Value);
+                }
+            }
+
+            return dins;
+        }
         private void Calc_dins()
         {
             dins = 0;
             for (int k = 0; k < Ucalc_dataGridView.RowCount; k++)
             {
-                if (Ucalc_dataGridView.Rows[k].Cells[2].Value == "단열재")
+               if(Ucalc_dataGridView.Rows[k].Cells[2].Value != null)
                 {
-                    dins += Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[5].Value);
+                    if (Ucalc_dataGridView.Rows[k].Cells[2].Value.ToString() == "단열재")
+                    {
+                        dins += Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[5].Value);
+                    }
+
                 }
             }
             Calc_dU();
@@ -742,7 +773,7 @@ namespace main.contents
             {
                 this.DialogResult = DialogResult.OK;
                 this.Hide();
-                Program.getMenuForm().DoLoadForm(30, OnLoadListProc);
+                Program.getMenuForm().DoLoadForm(34, OnLoadListProc);
             }
         }
 
@@ -756,7 +787,7 @@ namespace main.contents
             {
                 MessageBox.Show("외벽 리모델링 유형을 선택하세요.");
             }
-           else if(Type != "기존외벽" && Type != "커튼월덧댐")
+            else if (Type != "기존외벽" && Type != "커튼월덧댐")
             {
                 if (TBName == null)
                 {
@@ -774,13 +805,11 @@ namespace main.contents
         }
         public static bool OnLoadListProc(Form form)
         {
-            //   List_ConstructionWall f = (List_ConstructionWall)form;
-
-            //f.load_List();
-
+             List_ConstructionWall f = (List_ConstructionWall)form;
+            f.load_List();
             return true;
         }
-       
+
         private void Save()
         {
             Program.DB.setValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭,Type,기존외벽,덧댐커튼월,U적용방법,직접간접,구조유형,열교유형,열교종류,외장재색,표면열전달저항기준,선형점형," +
@@ -812,27 +841,209 @@ namespace main.contents
                 Material[9] + "','" + Material_d[9].ToString() + "','" +
                 α.ToString() + "','" + Uvalue.ToString() + "','" + dU.ToString() + "','" + Ueff.ToString()
                  + "'", "번호");
+            this.DialogResult = DialogResult.OK;
+            this.Hide();
+            Program.getMenuForm().DoLoadForm(34, OnLoadListProc);
         }
 
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
+            try
+            {
+                
+                WallNum_textBox.Text = ID;
+                WallNum = ID;
+                String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭,Type,기존외벽,덧댐커튼월,U적용방법,직접간접,구조유형,열교유형,열교종류,외장재색,표면열전달저항기준,선형점형," +
+                "A,B,C,PsiKai,단위면적당적용," +
+                "Rse,Rsi,두께합계,열저항합계,단열재두께," +
+                "재료1종류,재료1두께," +
+                "재료2종류,재료2두께," +
+                "재료3종류,재료3두께," +
+                "재료4종류,재료4두께," +
+                "재료5종류,재료5두께," +
+                "재료6종류,재료6두께," +
+                "재료7종류,재료7두께," +
+                "재료8종류,재료8두께," +
+                "재료9종류,재료9두께," +
+                "재료10종류,재료10두께," +
+                "흡수율,열관류율,열교가산치,유효열관류율"
+                     , "번호 = '" + ID + "'");
+                Name_textBox.Text = Load[0][1];
+                Type = Load[0][2];
+                switch (Type)
+                {
+                    case "기존외벽":
+                        radioButton1.Checked = true;
+                        break;
+                    case "신규":
+                        radioButton2.Checked = true;
+                        break;
+                    case "철거 후 신규":
+                        radioButton3.Checked = true;
+                        break; ;
+                    case "외부덧댐":
+                        radioButton4.Checked = true;
+                        break; ;
+                    case "내부덧댐":
+                        radioButton5.Checked = true;
+                        break; ;
+                    case "커튼월덧댐":
+                        radioButton6.Checked = true;
+                        break; ;
+                }
+                OldWall = Load[0][3];
+                OldWall_comboBox.SelectedItem = OldWall;
 
+                CWName = Load[0][4];
+                CW_comboBox.SelectedItem = CWName; 
+
+                UMethod = Load[0][5];
+                Uvalue_comboBox.SelectedItem = UMethod;
+
+                DiIndi = Load[0][6];
+                DiIndi_comboBox.SelectedItem = DiIndi;
+
+                StructureType = Load[0][7];
+                check_StructureType = Load[0][7];
+                StructureType_comboBox.SelectedItem = StructureType;
+
+                TBType = Load[0][8];
+                TBType_textBox.Text = TBType;    
+
+                TBName = Load[0][9]; 
+                TBName_textBox.Text = TBName;
+                TBName2_textBox.Text = TBName;
+
+                Color = Load[0][10]; 
+                Color_comboBox.SelectedItem = Color;
+
+                ISO_KS = Load[0][11]; 
+                ISO_KS_comboBox.SelectedItem = ISO_KS;
+
+                LinearPoint = Load[0][12];
+
+                A = Convert.ToDouble(Load[0][13]);
+                B = Convert.ToDouble(Load[0][14]);
+                C = Convert.ToDouble(Load[0][15]);
+
+                PsiKai = Convert.ToDouble(Load[0][16]);
+                PsiKai_textBox.Text = string.Format("{0:F3}", PsiKai);
+                
+                PerArea = Convert.ToDouble(Load[0][17]);
+                PerArea_textBox.Text = string.Format("{0:F3}", PerArea);
+
+                Rse = Convert.ToDouble(Load[0][18]);
+                Rse_textBox.Text = string.Format("{0:F2}", Rse);
+                Rsi = Convert.ToDouble(Load[0][19]);
+                Rsi_textBox.Text = string.Format("{0:F2}", Rsi);
+
+                dtot = Convert.ToDouble(Load[0][20]);
+                Rtot = Convert.ToDouble(Load[0][21]);
+                Material_dtot_textBox.Text = String.Format("{0:F0}", dtot);
+                Material_Rtot_textBox.Text = String.Format("{0:F2}", Rtot);
+
+                //dins = Convert.ToDouble(Load[0][22]);
+//                dins = 0;
+                 check_dins = Convert.ToDouble(Load[0][22]);
+
+
+                α = Convert.ToDouble(Load[0][43]);
+                α_textBox.Text = String.Format("{0:F1}", α);
+
+                Uvalue = Convert.ToDouble(Load[0][44]);
+                U_textBox.Text = string.Format("{0:F3}", Uvalue);
+
+                dU = Convert.ToDouble(Load[0][45]);
+                dU_textBox.Text = string.Format("{0:F3}", dU);
+                dU2_textBox.Text = string.Format("{0:F3}", dU);
+
+                Ueff = Convert.ToDouble(Load[0][46]);
+                Ueff_textBox.Text = string.Format("{0:F3}", Ueff);
+
+                Ucalc_dataGridView.Rows.Clear();
+                for (int i = 0; i < 10; i++)
+                {
+                    Material[i] = Load[0][(2 * i + 23)];
+                    Material_d[i] = Convert.ToDouble(Load[0][(2 * i + 24)]);
+                }
+
+                for (int i = 0; i < 10; i++)
+                {
+                    if (Material[i] != "")
+                    {    string[][] Value;
+                        string[][] OldWall_U;
+                        int nRow = Ucalc_dataGridView.Rows.Add();
+                        Value = Program.DB.getValue(DB.type.ProjDB, "User_Material", "구분,열전도율", "재료명 = '" + Material[i] + "'");
+                       if(Value.Length == 0)
+                        {
+                           Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분,열전도율", "재료명 = '" + Material[i] + "'");
+                        }
+                        try
+                        {
+                            Material_λ[i] = Convert.ToDouble(Value[0][1]);
+                            Material_R[i] = Material_d[i] / 1000 / Material_λ[i];
+                           
+
+                            Ucalc_dataGridView.Rows[nRow].Cells[2].Value = Value[0][0];
+                            Ucalc_dataGridView.Rows[nRow].Cells[3].Value = Material[i];
+                            Ucalc_dataGridView.Rows[nRow].Cells[4].Value = Value[0][1];
+                            Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Convert.ToString(Material_d[i]);
+                            Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Info;
+                            Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Material_R[i]);
+                        }
+                        catch { }
+                        
+                        if (Value.Length == 0)
+                        {
+                            OldWall_U= Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "열관류율", "명칭 = '" + OldWall_comboBox.Text + "'");
+                            try
+                            {
+                                OldWall_R = 1 / Convert.ToDouble(OldWall_U[0][0]);
+                                Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존외벽";
+                                Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldWall_comboBox.Text;
+                                Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
+                                Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldWall_R);
+                            }
+                            catch { }
+                            if (OldWall_U.Length == 0)
+                            {
+                                string[][] CW_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "유리부분열관류율", "명칭 = '" + CW_comboBox.Text + "'");
+                                try
+                                {
+                                    CW_R = 1 / Convert.ToDouble(CW_U[0][0]);
+                                    Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "덧댐커튼월";
+                                    Ucalc_dataGridView.Rows[nRow].Cells[3].Value = CW_comboBox.Text;
+                                    Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
+                                    Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", CW_R);
+                                }
+                                catch { }
+                            }
+                            else { }
+                        }
+                        else { }
+                    }
+                    else { }
+                }
+
+                Load_Material_Num();
+
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외벽'");
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+                Load_WallType_image(Type);
+                Load_TB_Image(); 
+            }
+            catch { }
+
+            MessageBox.Show(dins.ToString());
         }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {
             WallNum_textBox.Text = ID;
             WallNum = ID;
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void PerArea_textBox_TextChanged(object sender, EventArgs e)
-        {
         }
     }
 }

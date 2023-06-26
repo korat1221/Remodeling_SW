@@ -91,10 +91,11 @@ namespace main.contentslist
         {
             currentID = ID;
             inEditing = editing;
-            if(MainSub =="Main")
+            if (MainSub == "Main")
             {
                 Program.getMenuForm().DoLoadForm(6, OnLoadProc);
-            }else
+            }
+            else
             {
                 Program.getMenuForm().DoLoadForm(31, Sub_OnLoadProc);
             }
@@ -131,7 +132,7 @@ namespace main.contentslist
             WindowList.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
-                WindowList.Rows.Add(List[n][0], Blank ,List[n][1], List[n][2], Blank, String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])), Blank, List[n][5]);
+                WindowList.Rows.Add(List[n][0], Blank, List[n][1], List[n][2], Blank, String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])), Blank, List[n][5]);
 
                 string[][] SubList = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭,창호유효열관류율,창호면적", "상위창호번호 = '" + List[n][0] + "'");
 
@@ -139,12 +140,12 @@ namespace main.contentslist
 
                 for (int k = 0; k < SubList.Length; k++)
                 {
-                
-                    WindowList.Rows.Add(Blank,SubList[k][0], SubList[k][1], List[n][2], String.Format("{0:F2}", Convert.ToDouble(SubList[k][2])), String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])), String.Format("{0:F2}", Convert.ToDouble(SubList[k][3])), List[n][5]);
+
+                    WindowList.Rows.Add(Blank, SubList[k][0], SubList[k][1], List[n][2], String.Format("{0:F2}", Convert.ToDouble(SubList[k][2])), String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])), String.Format("{0:F2}", Convert.ToDouble(SubList[k][3])), List[n][5]);
                     subMenu.Add(new { text = SubList[k][0], id = "{\\\"formID\\\":31,\\\"ID\\\":\\\"" + SubList[k][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
 
                 }
-                mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":6,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}", children = subMenu.ToArray()}); // 예시 코드: 메인 메뉴 동적 할당
+                mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":6,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}", children = subMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
             }
             dataGridView1.DataSource = WindowList;
             CountDB = List.Length;
@@ -211,15 +212,15 @@ namespace main.contentslist
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
-                if(dataGridView1.Rows[k].Cells[1].Value.ToString()!="")
+                if (dataGridView1.Rows[k].Cells[1].Value.ToString() != "")
                 {
                     Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit", "Main");
                 }
                 else
-                { 
-                    Load_form(dataGridView1.Rows[k].Cells[2].Value.ToString(), "Edit","Sub");
+                {
+                    Load_form(dataGridView1.Rows[k].Cells[2].Value.ToString(), "Edit", "Sub");
                 }
-               
+
             }
 
         }
@@ -234,7 +235,7 @@ namespace main.contentslist
                 if (dataGridView1.Rows[k].Cells[1].Value.ToString() != "")
                 {
                     Program.DB.CopyValue(DB.type.ProjDB, "ConstructionWindow", "번호 ='" + Copy_WinNum + "'", WinNum);
-                    Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionWindow" + " SET 창호명칭 = '" + dataGridView1.Rows[k].Cells[3].Value.ToString()+"_복사" + "' WHERE  번호 = '" + WinNum + "'");
+                    Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionWindow" + " SET 창호명칭 = '" + dataGridView1.Rows[k].Cells[3].Value.ToString() + "_복사" + "' WHERE  번호 = '" + WinNum + "'");
                     SubCopy(Copy_WinNum);
                 }
                 else
@@ -255,7 +256,7 @@ namespace main.contentslist
                     String New_SubNum = WinNum.ToString() + "_" + (n + 1).ToString();
                     String New_SubName = Sub[n][1] + "_복사";
                     Program.DB.CopyValue(DB.type.ProjDB, "SubWindow", "번호 ='" + Sub[n][0] + "'", New_SubNum);
-                    Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  SubWindow" + " SET 상위창호번호='" + WinNum + "', 명칭 = '"+ New_SubName +"' WHERE  번호 = '" + New_SubNum + "'");
+                    Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  SubWindow" + " SET 상위창호번호='" + WinNum + "', 명칭 = '" + New_SubName + "' WHERE  번호 = '" + New_SubNum + "'");
                 }
             }
         }

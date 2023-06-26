@@ -45,7 +45,8 @@ namespace main
             List_ConstructionWindow,
             SubWindow,
             List_Floor,
-            List_Zone
+            List_Zone,
+            List_ConstructionWall
 
         }
           Form[] forms = new Form[] { new General(), new EnergyUse(), 
@@ -57,7 +58,8 @@ namespace main
             new ReportExisting(), new ReportRemodeling(),
             new FormDebug(),
             new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow(),
-            new List_Floor(), new List_Zone()};
+            new List_Floor(), new List_Zone(),
+            new List_ConstructionWall()};
         bool scriptable = false;
         public class FormParam
         {
@@ -106,6 +108,12 @@ namespace main
 
                 f.LoadData(formParam.ID);
             }
+            else if (formParam.formID == 3)
+            {
+                ConstructionWall f = (ConstructionWall)form;
+
+                f.LoadData(formParam.ID);
+            }
             else if (formParam.formID == 6)
             {
                 ConstructionWindow f = (ConstructionWindow)form;
@@ -139,6 +147,12 @@ namespace main
             else if (formParam.formID == 33)
             {
                 List_Zone f = (List_Zone)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 34)
+            {
+                List_ConstructionWall f = (List_ConstructionWall)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -200,6 +214,12 @@ namespace main
                 else if (i == 32)
                 {
                     List_Floor f = (List_Floor)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 34)
+                {
+                    List_ConstructionWall f = (List_ConstructionWall)forms[i];
 
                     f.LoadData("");
                 }
@@ -265,6 +285,20 @@ namespace main
                     {
                         openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
                         forms[idx] = new ConstructionCW();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+            else if (idx == 3)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new ConstructionWall();
                         forms[idx].TopLevel = false;
                         openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
                         return;

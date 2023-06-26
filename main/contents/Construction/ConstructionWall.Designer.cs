@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             CW_comboBox = new ComboBox();
             OldWall_comboBox = new ComboBox();
@@ -78,7 +78,10 @@
             U_label = new Label();
             DiIndi_comboBox = new ComboBox();
             WallType_pictureBox = new PictureBox();
-            Glass_tabPage = new TabPage();
+            dU_tabPage = new TabPage();
+            dU_label4 = new TextBox();
+            dU2_textBox = new TextBox();
+            dU_label3 = new TextBox();
             PsiKai_label2 = new TextBox();
             PsiKai_textBox = new TextBox();
             PsiKai_label1 = new TextBox();
@@ -87,9 +90,6 @@
             PerArea_label1 = new TextBox();
             TBName2_textBox = new TextBox();
             TBType_textBox = new TextBox();
-            label13 = new Label();
-            dU2_textBox = new TextBox();
-            label14 = new Label();
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             Ucalc_tabPage = new TabPage();
@@ -102,7 +102,7 @@
             label8 = new Label();
             DiIndi2_comboBox = new ComboBox();
             label2 = new Label();
-            RseRsi_comboBox = new ComboBox();
+            ISO_KS_comboBox = new ComboBox();
             MaterialDown_button = new Button();
             MaterialUP_button = new Button();
             Deletebutton = new Button();
@@ -114,7 +114,7 @@
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)WallType_pictureBox).BeginInit();
-            Glass_tabPage.SuspendLayout();
+            dU_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             Ucalc_tabPage.SuspendLayout();
@@ -316,7 +316,7 @@
             label3.TabIndex = 92;
             label3.Text = "TYPE";
             // 
-            // CWNum_textBox
+            // WallNum_textBox
             // 
             WallNum_textBox.BackColor = System.Drawing.Color.White;
             WallNum_textBox.BorderStyle = BorderStyle.None;
@@ -324,7 +324,7 @@
             WallNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             WallNum_textBox.ForeColor = SystemColors.ControlDark;
             WallNum_textBox.Location = new Point(80, 19);
-            WallNum_textBox.Name = "CWNum_textBox";
+            WallNum_textBox.Name = "WallNum_textBox";
             WallNum_textBox.Size = new Size(67, 15);
             WallNum_textBox.TabIndex = 90;
             WallNum_textBox.TextAlign = HorizontalAlignment.Center;
@@ -667,29 +667,67 @@
             WallType_pictureBox.TabIndex = 97;
             WallType_pictureBox.TabStop = false;
             // 
-            // Glass_tabPage
+            // dU_tabPage
             // 
-            Glass_tabPage.BackColor = System.Drawing.Color.White;
-            Glass_tabPage.BorderStyle = BorderStyle.FixedSingle;
-            Glass_tabPage.Controls.Add(PsiKai_label2);
-            Glass_tabPage.Controls.Add(PsiKai_textBox);
-            Glass_tabPage.Controls.Add(PsiKai_label1);
-            Glass_tabPage.Controls.Add(PerArea_label2);
-            Glass_tabPage.Controls.Add(PerArea_textBox);
-            Glass_tabPage.Controls.Add(PerArea_label1);
-            Glass_tabPage.Controls.Add(TBName2_textBox);
-            Glass_tabPage.Controls.Add(TBType_textBox);
-            Glass_tabPage.Controls.Add(label13);
-            Glass_tabPage.Controls.Add(dU2_textBox);
-            Glass_tabPage.Controls.Add(label14);
-            Glass_tabPage.Controls.Add(pictureBox2);
-            Glass_tabPage.Controls.Add(pictureBox1);
-            Glass_tabPage.Location = new Point(4, 24);
-            Glass_tabPage.Name = "Glass_tabPage";
-            Glass_tabPage.Padding = new Padding(3);
-            Glass_tabPage.Size = new Size(969, 360);
-            Glass_tabPage.TabIndex = 2;
-            Glass_tabPage.Text = "열교 세부정보";
+            dU_tabPage.BackColor = System.Drawing.Color.White;
+            dU_tabPage.BorderStyle = BorderStyle.FixedSingle;
+            dU_tabPage.Controls.Add(dU_label4);
+            dU_tabPage.Controls.Add(dU2_textBox);
+            dU_tabPage.Controls.Add(dU_label3);
+            dU_tabPage.Controls.Add(PsiKai_label2);
+            dU_tabPage.Controls.Add(PsiKai_textBox);
+            dU_tabPage.Controls.Add(PsiKai_label1);
+            dU_tabPage.Controls.Add(PerArea_label2);
+            dU_tabPage.Controls.Add(PerArea_textBox);
+            dU_tabPage.Controls.Add(PerArea_label1);
+            dU_tabPage.Controls.Add(TBName2_textBox);
+            dU_tabPage.Controls.Add(TBType_textBox);
+            dU_tabPage.Controls.Add(pictureBox2);
+            dU_tabPage.Controls.Add(pictureBox1);
+            dU_tabPage.Location = new Point(4, 24);
+            dU_tabPage.Name = "dU_tabPage";
+            dU_tabPage.Padding = new Padding(3);
+            dU_tabPage.Size = new Size(969, 360);
+            dU_tabPage.TabIndex = 2;
+            dU_tabPage.Text = "열교 세부정보";
+            // 
+            // dU_label4
+            // 
+            dU_label4.BackColor = System.Drawing.Color.White;
+            dU_label4.BorderStyle = BorderStyle.None;
+            dU_label4.Enabled = false;
+            dU_label4.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dU_label4.ForeColor = SystemColors.ControlDark;
+            dU_label4.Location = new Point(816, 181);
+            dU_label4.Name = "dU_label4";
+            dU_label4.Size = new Size(68, 15);
+            dU_label4.TabIndex = 154;
+            dU_label4.TextAlign = HorizontalAlignment.Center;
+            // 
+            // dU2_textBox
+            // 
+            dU2_textBox.BackColor = System.Drawing.Color.White;
+            dU2_textBox.BorderStyle = BorderStyle.None;
+            dU2_textBox.Enabled = false;
+            dU2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dU2_textBox.ForeColor = SystemColors.ControlDark;
+            dU2_textBox.Location = new Point(696, 181);
+            dU2_textBox.Name = "dU2_textBox";
+            dU2_textBox.Size = new Size(116, 15);
+            dU2_textBox.TabIndex = 153;
+            dU2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // dU_label3
+            // 
+            dU_label3.BackColor = System.Drawing.Color.White;
+            dU_label3.BorderStyle = BorderStyle.None;
+            dU_label3.Enabled = false;
+            dU_label3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dU_label3.ForeColor = SystemColors.ControlDark;
+            dU_label3.Location = new Point(536, 180);
+            dU_label3.Name = "dU_label3";
+            dU_label3.Size = new Size(149, 16);
+            dU_label3.TabIndex = 152;
             // 
             // PsiKai_label2
             // 
@@ -698,7 +736,7 @@
             PsiKai_label2.Enabled = false;
             PsiKai_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PsiKai_label2.ForeColor = SystemColors.ControlDark;
-            PsiKai_label2.Location = new Point(822, 98);
+            PsiKai_label2.Location = new Point(819, 148);
             PsiKai_label2.Name = "PsiKai_label2";
             PsiKai_label2.Size = new Size(68, 15);
             PsiKai_label2.TabIndex = 151;
@@ -711,7 +749,7 @@
             PsiKai_textBox.Enabled = false;
             PsiKai_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PsiKai_textBox.ForeColor = SystemColors.ControlDark;
-            PsiKai_textBox.Location = new Point(699, 98);
+            PsiKai_textBox.Location = new Point(696, 148);
             PsiKai_textBox.Name = "PsiKai_textBox";
             PsiKai_textBox.Size = new Size(116, 15);
             PsiKai_textBox.TabIndex = 150;
@@ -724,9 +762,9 @@
             PsiKai_label1.Enabled = false;
             PsiKai_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             PsiKai_label1.ForeColor = SystemColors.ControlDark;
-            PsiKai_label1.Location = new Point(539, 97);
+            PsiKai_label1.Location = new Point(536, 147);
             PsiKai_label1.Name = "PsiKai_label1";
-            PsiKai_label1.Size = new Size(91, 16);
+            PsiKai_label1.Size = new Size(149, 16);
             PsiKai_label1.TabIndex = 149;
             // 
             // PerArea_label2
@@ -736,7 +774,7 @@
             PerArea_label2.Enabled = false;
             PerArea_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PerArea_label2.ForeColor = SystemColors.ControlDark;
-            PerArea_label2.Location = new Point(822, 64);
+            PerArea_label2.Location = new Point(819, 115);
             PerArea_label2.Name = "PerArea_label2";
             PerArea_label2.Size = new Size(68, 15);
             PerArea_label2.TabIndex = 148;
@@ -749,12 +787,11 @@
             PerArea_textBox.Enabled = false;
             PerArea_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PerArea_textBox.ForeColor = SystemColors.ControlDark;
-            PerArea_textBox.Location = new Point(699, 64);
+            PerArea_textBox.Location = new Point(696, 115);
             PerArea_textBox.Name = "PerArea_textBox";
             PerArea_textBox.Size = new Size(116, 15);
             PerArea_textBox.TabIndex = 147;
             PerArea_textBox.TextAlign = HorizontalAlignment.Center;
-            PerArea_textBox.TextChanged += PerArea_textBox_TextChanged;
             // 
             // PerArea_label1
             // 
@@ -763,9 +800,9 @@
             PerArea_label1.Enabled = false;
             PerArea_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             PerArea_label1.ForeColor = SystemColors.ControlDark;
-            PerArea_label1.Location = new Point(539, 63);
+            PerArea_label1.Location = new Point(536, 114);
             PerArea_label1.Name = "PerArea_label1";
-            PerArea_label1.Size = new Size(91, 16);
+            PerArea_label1.Size = new Size(149, 16);
             PerArea_label1.TabIndex = 146;
             // 
             // TBName2_textBox
@@ -796,42 +833,6 @@
             TBType_textBox.TabIndex = 142;
             TBType_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label13.ForeColor = SystemColors.ControlDark;
-            label13.Location = new Point(822, 130);
-            label13.Name = "label13";
-            label13.Size = new Size(50, 16);
-            label13.TabIndex = 141;
-            label13.Text = "W/m²·K";
-            // 
-            // dU2_textBox
-            // 
-            dU2_textBox.BackColor = System.Drawing.Color.White;
-            dU2_textBox.BorderStyle = BorderStyle.None;
-            dU2_textBox.Enabled = false;
-            dU2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dU2_textBox.ForeColor = System.Drawing.Color.Black;
-            dU2_textBox.Location = new Point(699, 131);
-            dU2_textBox.Name = "dU2_textBox";
-            dU2_textBox.Size = new Size(116, 15);
-            dU2_textBox.TabIndex = 138;
-            dU2_textBox.TextAlign = HorizontalAlignment.Center;
-            dU2_textBox.TextChanged += textBox2_TextChanged;
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label14.ForeColor = SystemColors.ControlDark;
-            label14.Location = new Point(541, 131);
-            label14.Name = "label14";
-            label14.Size = new Size(87, 15);
-            label14.TabIndex = 136;
-            label14.Text = "1D 열교가산치";
-            // 
             // pictureBox2
             // 
             pictureBox2.Location = new Point(284, 64);
@@ -861,7 +862,7 @@
             Ucalc_tabPage.Controls.Add(label8);
             Ucalc_tabPage.Controls.Add(DiIndi2_comboBox);
             Ucalc_tabPage.Controls.Add(label2);
-            Ucalc_tabPage.Controls.Add(RseRsi_comboBox);
+            Ucalc_tabPage.Controls.Add(ISO_KS_comboBox);
             Ucalc_tabPage.Controls.Add(MaterialDown_button);
             Ucalc_tabPage.Controls.Add(MaterialUP_button);
             Ucalc_tabPage.Controls.Add(Deletebutton);
@@ -981,13 +982,13 @@
             // 
             // RseRsi_comboBox
             // 
-            RseRsi_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            RseRsi_comboBox.FormattingEnabled = true;
-            RseRsi_comboBox.Location = new Point(172, 3);
-            RseRsi_comboBox.Name = "RseRsi_comboBox";
-            RseRsi_comboBox.Size = new Size(120, 24);
-            RseRsi_comboBox.TabIndex = 100;
-            RseRsi_comboBox.SelectedIndexChanged += RseRsi_comboBox_SelectedIndexChanged;
+            ISO_KS_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ISO_KS_comboBox.FormattingEnabled = true;
+            ISO_KS_comboBox.Location = new Point(172, 3);
+            ISO_KS_comboBox.Name = "RseRsi_comboBox";
+            ISO_KS_comboBox.Size = new Size(120, 24);
+            ISO_KS_comboBox.TabIndex = 100;
+            ISO_KS_comboBox.SelectedIndexChanged += ISO_KS_comboBox_SelectedIndexChanged;
             // 
             // MaterialDown_button
             // 
@@ -1045,33 +1046,33 @@
             Ucalc_dataGridView.BorderStyle = BorderStyle.None;
             Ucalc_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Ucalc_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            Ucalc_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            Ucalc_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Ucalc_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Ucalc_dataGridView.Location = new Point(-1, 61);
             Ucalc_dataGridView.Name = "Ucalc_dataGridView";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            Ucalc_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            Ucalc_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             Ucalc_dataGridView.RowHeadersVisible = false;
             Ucalc_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
-            Ucalc_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            Ucalc_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             Ucalc_dataGridView.RowTemplate.Height = 25;
             Ucalc_dataGridView.Size = new Size(555, 234);
             Ucalc_dataGridView.TabIndex = 96;
@@ -1096,7 +1097,7 @@
             // tabControl1
             // 
             tabControl1.Controls.Add(Ucalc_tabPage);
-            tabControl1.Controls.Add(Glass_tabPage);
+            tabControl1.Controls.Add(dU_tabPage);
             tabControl1.Location = new Point(12, 297);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -1127,8 +1128,8 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)WallType_pictureBox).EndInit();
-            Glass_tabPage.ResumeLayout(false);
-            Glass_tabPage.PerformLayout();
+            dU_tabPage.ResumeLayout(false);
+            dU_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             Ucalc_tabPage.ResumeLayout(false);
@@ -1186,7 +1187,7 @@
         private ComboBox OldWall_comboBox;
         private Label CW_label;
         private Label OldWall_label;
-        private TabPage Glass_tabPage;
+        private TabPage dU_tabPage;
         private TabPage Ucalc_tabPage;
         private TabControl tabControl1;
         private RadioButton radioButton6;
@@ -1197,7 +1198,7 @@
         private Button MaterialUP_button;
         private ComboBox DiIndi2_comboBox;
         private Label label2;
-        private ComboBox RseRsi_comboBox;
+        private ComboBox ISO_KS_comboBox;
         private TextBox Material_Rtot_textBox;
         private TextBox Material_dtot_textBox;
         private Label label8;
@@ -1207,7 +1208,6 @@
         private Label label10;
         private PictureBox pictureBox2;
         private PictureBox pictureBox1;
-        private TextBox dU2_textBox;
         private Label label14;
         private TextBox TBType_textBox;
         private Label label13;
@@ -1218,5 +1218,8 @@
         private TextBox PerArea_label2;
         private TextBox PerArea_textBox;
         private TextBox PerArea_label1;
+        private TextBox dU_label4;
+        private TextBox dU2_textBox;
+        private TextBox dU_label3;
     }
 }

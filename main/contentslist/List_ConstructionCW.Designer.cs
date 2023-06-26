@@ -37,6 +37,7 @@
             Add_button = new Button();
             dataGridView1 = new DataGridView();
             Icon_pictureBox = new PictureBox();
+            label4 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -45,6 +46,7 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(label4);
             GeneralPanel.Controls.Add(Copy_button);
             GeneralPanel.Controls.Add(Remove_button);
             GeneralPanel.Controls.Add(Add_button);
@@ -153,6 +155,16 @@
             Icon_pictureBox.TabIndex = 0;
             Icon_pictureBox.TabStop = false;
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Location = new Point(86, 32);
+            label4.Name = "label4";
+            label4.Size = new Size(55, 15);
+            label4.TabIndex = 96;
+            label4.Text = "커튼월창";
+            // 
             // List_ConstructionCW
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -164,6 +176,7 @@
             Name = "List_ConstructionCW";
             Text = "Form3";
             GeneralPanel.ResumeLayout(false);
+            GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
             ResumeLayout(false);
@@ -177,5 +190,6 @@
         private Button Remove_button;
         private Button Add_button;
         private Button Copy_button;
+        private Label label4;
     }
 }

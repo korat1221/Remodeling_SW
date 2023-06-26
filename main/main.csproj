@@ -20,6 +20,9 @@
     <Compile Update="contentslist\List_Floor.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="contentslist\List_ConstructionWall.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="contents\3D\Model.cs">
       <SubType>Form</SubType>
     </Compile>
