@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.contents;
+using System;
 using System.Data;
 
 namespace main
@@ -158,7 +159,7 @@ namespace main
         }
         public void resetMainTree(int idx, int sub_idx, object[] obj, string select_id)
         {
-            foreach (FormMain openForm in Application.OpenForms)
+            foreach (Form openForm in Application.OpenForms)
             {
                 if (openForm.Name == "FormMain")
                 {
@@ -166,6 +167,19 @@ namespace main
                     string s = System.Text.Json.JsonSerializer.Serialize(obj);
 
                     f.runScript("resetMainTree(" + idx + "," + sub_idx + ",'" + s + "','" + select_id + "')");
+                    return;
+                }
+            }
+        }
+        public void load3DModel(string path)
+        {
+            foreach (Form openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "Model")
+                {
+                    Model f = (Model)openForm;
+
+                    f.runScript("open3DModel('/test.obj')");
                     return;
                 }
             }

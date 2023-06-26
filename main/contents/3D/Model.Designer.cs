@@ -126,7 +126,7 @@
             webView21.Location = new Point(3, 12);
             webView21.Name = "webView21";
             webView21.Size = new Size(967, 478);
-            webView21.Source = new Uri("http://localhost:3000", UriKind.Absolute);
+            webView21.Source = new Uri("http://localhost:3000/anal3d/editor/", UriKind.Absolute);
             webView21.TabIndex = 97;
             webView21.ZoomFactor = 1D;
             // 

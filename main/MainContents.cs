@@ -152,7 +152,24 @@ namespace main
             {
                 formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>(args.TryGetWebMessageAsString());
 
-                if (formParam.formID >= 0 && formParam.formID < 100)
+                if (formParam.formID == 99999991)
+                {
+                    DoLoadForm(8, OnLoadProc);
+
+                    using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                    {
+                        openFileDialog.Filter = "obj 파일 (*.obj)|*.obj";
+                        openFileDialog.FilterIndex = 2;
+                        openFileDialog.RestoreDirectory = true;
+
+                        if (openFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            //Get the path of specified file
+                            Program.UTIL.load3DModel(openFileDialog.FileName);
+                        }
+                    }                
+                }
+                else if (formParam.formID >= 0 && formParam.formID < 100)
                 {
                     DoLoadForm(formParam.formID, OnLoadProc);
                 }

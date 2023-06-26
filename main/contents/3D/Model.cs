@@ -15,20 +15,51 @@ using main.subcontents.ConstructionCW;
 using System.Net;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
+using Microsoft.Web.WebView2.Core;
+using static main.MainContents;
 
 namespace main.contents
 {
     public partial class Model : Form
     {
         int SelectRow;
+        bool scriptable = false;
 
         public Model()
         {
             InitializeComponent();
             Create_table();
 
+            InitializeAsync();
+        }
+        async void InitializeAsync()
+        {
+            await webView21.EnsureCoreWebView2Async(null);
+            webView21.CoreWebView2.WebMessageReceived += OnJSMessage;
+            webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
         }
 
+        void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
+        {
+            try
+            {
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            scriptable = true;
+        }
+        public void runScript(string script)
+        {
+            if (scriptable)
+            {
+                webView21.CoreWebView2.ExecuteScriptAsync(script);
+            }
+        }
 
         private void Create_table()
         {
