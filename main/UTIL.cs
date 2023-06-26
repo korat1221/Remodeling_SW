@@ -1,6 +1,8 @@
 ﻿using main.contents;
 using System;
 using System.Data;
+using System.Xml.Linq;
+using System.Xml.Schema;
 
 namespace main
 {
@@ -171,6 +173,21 @@ namespace main
                 }
             }
         }
+
+        private String getRandomString()
+        {
+            var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var Charsarr = new char[8];
+            var random = new Random();
+
+            for (int i = 0; i < Charsarr.Length; i++)
+            {
+                Charsarr[i] = characters[random.Next(characters.Length)];
+            }
+
+            return new String(Charsarr);
+        }
+
         public void load3DModel(string path)
         {
             foreach (Form openForm in Application.OpenForms)
@@ -178,8 +195,19 @@ namespace main
                 if (openForm.Name == "Model")
                 {
                     Model f = (Model)openForm;
+                    string p = getRandomString() + Path.GetExtension(path);
+                    string path2 = Program.gPath + "threejs\\public\\models";
 
-                    f.runScript("open3DModel('/test.obj')");
+                    DirectoryInfo di = new DirectoryInfo(path2);  //Create Directoryinfo value by sDirPath  
+
+                    if (di.Exists == false)   //If New Folder not exits  
+                    {
+                        di.Create();             //create Folder  
+                    }
+
+                    File.Copy(path, path2 + "\\" + p);
+
+                    f.runScript("open3DModel('/models/" + p + "')");
                     return;
                 }
             }
