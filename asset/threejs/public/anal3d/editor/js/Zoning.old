@@ -1,0 +1,686 @@
+
+import { Utility } from './Utility.js';
+
+function Zoning( editor ) {
+    this.editor = editor;
+	this.util = new Utility();
+	this.positions = [];
+}
+
+Zoning.prototype = {
+	initPositions: function () {
+		this.positions = [];
+	},
+	collectPositions: function ( offset, position, normal ) {
+		let poss = [];
+		for(var i = 0; i < position.length; i+= 9) {
+			var pos = [];
+			for(var j = 0; j < 9; j += 3) {
+				pos.push([offset.x + position.array[i + j],offset.y + position.array[i + j + 1],offset.z + position.array[i + j + 2]]);
+			}
+
+			let area = this.util.getArea(pos);
+
+			if (area > 0) {
+				var slope = 0;
+				var cardinal = 0;
+				var nom = [0,0,0];
+	
+				for(var j = 0; j < 9; j += 3) {
+					slope += this.util.asSlope(normal.array[i + j],normal.array[i + j + 1],normal.array[i + j + 2]);
+					nom[0] += normal.array[i + j];
+					nom[1] += normal.array[i + j + 1];
+					nom[2] += normal.array[i + j + 2];
+				}
+				for(var j = 0; j < 3; j ++) {
+					nom[j] /= 3;
+				}
+	
+				cardinal = this.util.asCardinal(nom[0],nom[1],nom[2]);
+	
+				slope /= 3;
+
+				poss.push({cardi:cardinal, slope:slope, area:area, pos:pos, posT:this.util.asTriangle(pos)});
+			}
+		}
+		this.positions.push(poss);
+	},
+    findEdge: function (pos) {
+        var i = -1;
+        while(++i < this.editor.edges.length) {
+            if (this.util.isSamePoints(this.editor.edges[i].line, pos)) return this.editor.edges[i];
+        }
+        return null;
+    },
+	collectEdges: function () {
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        let _getAdjacentLine = (a, b) => {
+            let i = -1;
+    
+            while(++i < 3) {
+                let line = [b[i], b[(i + 1) % 3]];
+                if (this.editor.isAdjacent(a,line)) {
+                    return line;
+                }
+            }
+            return null;
+        };
+        let _collectWalls = (po) => {
+            if (!wall0[po.cardi]) wall0[po.cardi] = {};
+            for (const [cardi, value] of Object.entries(wall0)) {
+                for (const [j, el] of Object.entries(value)) {
+                    for (var k = 0; k < el.vertices.length; k++) {
+                        let el2 = el.vertices[k];
+
+                        if (this.util.getSamePoints(el2.position, po.pos).length == 2) {
+                            if (po.cardi == cardi && this.isGArea(el2.position) == this.isGArea(po.pos)) {
+                                el.vertices.push({"position":po.pos});
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            wall0[po.cardi][++wnum] = {"vertices":[{"position":po.pos}]};
+        };
+        let _collectEdges = (po) => {
+            if (!wall0[po.cardi]) wall0[po.cardi] = {};
+            for (const [cardi, value] of Object.entries(wall0)) {
+                for (const [j, el] of Object.entries(value)) {
+                    for (var k = 0; k < el.vertices.length; k++) {
+                        let el2 = el.vertices[k];
+                        let points = this.util.getSamePoints(el2.position, po.pos);
+                        if (points.length == 2 || (points = _getAdjacentLine(po.pos,el2.position)) != null || (points = _getAdjacentLine(el2.position,po.pos)) != null) {
+                            if (!(po.cardi == cardi && this.isGArea(el2.position) == this.isGArea(po.pos)) && !this.findEdge(points)) {
+                                this.editor.edges.push({line:points, walls:[]});
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        let wall0 = {}, wnum = 0;
+
+        this.positions.forEach(_po => {
+
+            wall0 = {};
+
+            _po.forEach(po => {		
+                _collectWalls(po);
+            });
+
+            _po.forEach(po => {		
+                _collectEdges(po);
+            });
+        });
+    },
+
+	deverticing: function() {
+		let i = -1;
+
+		while(++i < this.editor.edges.length) {
+			let el = this.editor.edges[i].line;
+		}
+	},
+
+	simplifyPositions: function () {
+		let i = -1, j, k, working = false;
+		let _POnL = (a, b, P) => {
+			return (new THREE.Vector3()).crossVectors(a.clone().sub(P), b.clone().sub(P)).length() < 0.0000001;
+		};
+		let _attachedTriangles = (a, b) => {
+			let i = -1, j, cnt = 0;
+			let key = ['a','b','c'];
+			let A = {}, B = {};
+
+			while(++i < key.length) {
+				j = -1;
+				while(++j < key.length) {
+					if (this.util.equalPoint(a[key[i]], b[key[j]])) {
+						A[key[i]] = true;
+						B[key[j]] = true;
+						cnt++;
+					}
+				}
+			}
+
+			if (cnt == 2) {
+				let ret = {a:{join:[],alone:null}, b:{join:[],alone:null}};
+
+				i = -1;
+				while(++i < key.length) {
+					if (A[key[i]]) ret.a.join.push(key[i]);
+					else ret.a.alone = key[i];
+					if (B[key[i]]) ret.b.join.push(key[i]);
+					else ret.b.alone = key[i];
+				}
+
+				return ret;
+			}
+
+			return null;
+		};
+		let _mergeVertices = (a, b)  => {
+			let o = _attachedTriangles(a,b), i = -1;
+
+			if (o) {
+				while(++i < 2) {
+					if (_POnL(a[o.a.alone], a[o.a.join[i]], b[o.b.alone])) {
+						a[o.a.join[i]] = b[o.b.alone];
+						return true;
+					}
+				}
+			}
+			return false;
+		};
+
+		while(++i < this.positions.length) {
+			let el = this.positions[i];
+
+			do {
+				working = false;
+				j = -1;
+				while(++j < el.length) {
+					let el2 = el[j];
+					
+					k = el.length;
+					while(--k >= 0) {
+						let el3 = el[k];
+						if (j != k && _mergeVertices(el2.posT, el3.posT)) {
+							working = true;
+							el.splice(k,1);
+						}
+					}
+				}
+			} while(working);
+		}
+	},	
+	normalizePositions: function () {
+        let _intersectLines = (L1, L2) => { 
+            let a = math.intersect([L1.start.x, L1.start.y, L1.start.z], [L1.end.x, L1.end.y, L1.end.z], [L2.start.x, L2.start.y, L2.start.z], [L2.end.x, L2.end.y, L2.end.z]);
+            let _isInside = (L, P) => {
+                let l = L.distance();
+                return L.start.distanceTo(P) < l && L.end.distanceTo(P) < l;
+            };
+    
+            if (a) {
+                let P = new THREE.Vector3(a[0],a[1],a[2]);
+                if (_isInside(L1,P) && _isInside(L2,P)) {
+                    return P;
+                }
+            }
+            return null;
+        };
+		let _isSamePlaned = (a, b) => {
+			let i = -1, _P = new THREE.Plane();
+			let key = ['a','b','c'];
+
+			while(++i < key.length) {
+				if(a.getPlane(_P).distanceToPoint(b[key[i]]) != 0) {
+					return false;
+				}
+			}
+			return true;
+		};
+		let _inTriangle = (T, P) => {			
+			return !!(!this.util.equalPoint(T.a,P) && !this.util.equalPoint(T.b,P) && !this.util.equalPoint(T.c,P) && T.containsPoint (P));
+		};
+		let _collectInsides = (a, b) => {
+			let done = false;
+
+			if (_isSamePlaned(a, b)) {
+				let i = -1;
+				let key = ['a','b','c'];
+
+				while(++i < key.length) {
+					let P = b[key[i]];
+					if (_inTriangle(a,b[key[i]])) {
+						if (!apos.insides) apos.insides = [];
+						if (!apos.insides.find(el => { return !!(el.equals(P)); })) {
+			//				apos.insides.push(P);
+						}
+						done = true;
+					}
+				}
+			}
+			return done;
+		};
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		let _isVtxPoint = (a) => {
+			let i = -1;
+			while(++i < this.positions.length) {
+				if (this.positions[i].find(el => { return (this.util.equalPoint(a,el.posT.a) || this.util.equalPoint(a,el.posT.b) || this.util.equalPoint(a,el.posT.c)); })) {
+					return true;
+				}
+			}
+			return false;
+		};
+		let _collectIntersects = (a, b) => {
+			let i = -1, j;
+			let key = ['a','b','c'], P;
+		
+			while(++i < 3) {
+				let L1 = new THREE.Line3(a[key[i]],a[key[(i+1)%3]]);
+				j = -1;
+				while(++j < 3) {
+					if ((P = _intersectLines(L1, new THREE.Line3(b[key[j]],b[key[(j+1)%3]]))) != null) {
+						if (!apos.intersects) apos.intersects = [];
+						if (!apos.intersects.find(el => { return !!(this.util.equalPoint(el,P)); }) && !_isVtxPoint(P)) {
+							apos.intersects.push(P);
+						}
+					}
+				}
+			}
+		};
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		let _POnL = (a, b, P) => {
+			return (new THREE.Vector3()).crossVectors(a.clone().sub(P), b.clone().sub(P)).length() < 0.001;
+		};
+		let _overlappedL = function (a, b) {
+			if (!_POnL(a.start, a.end, b.start) || !_POnL(a.start, a.end, b.end)) {
+				return false;
+			}
+			let l = a.distance();
+	
+			return (a.start.distanceTo(b.start) < l && a.end.distanceTo(b.start) < l) || (a.start.distanceTo(b.end) < l && a.end.distanceTo(b.end) < l);		
+		};
+		let _compareLine = (a, b) => {
+			return !!((this.util.equalPoint(a.start, b.start) && this.util.equalPoint(a.end, b.end)) || (this.util.equalPoint(a.start, b.end) && this.util.equalPoint(a.end, b.start)));
+		};
+
+		let _invalidLine = (line) => {
+			let i = -1, P;		
+	
+			while(++i < lines.length) {
+				let L = lines[i];
+				if (_compareLine(line,L) || _overlappedL(L,line) || _overlappedL(line, L) || ((P = _intersectLines(line,L)) != null && !this.util.equalPoint(line.start,P) && !this.util.equalPoint(line.end,P))) {
+					return true;
+				}
+			}
+			return false;
+		};
+		let _collectLines = (a, b, same, force) => {
+			let i = -1, j;
+			while(++i < a.length) {
+				j = same ? i : -1;
+				while(++j < b.length) {
+					let L = new THREE.Line3(a[i], b[j]);
+					if (L.distance() > 0) {
+						if (force || !_invalidLine(L)){
+							lines.push(L);
+						}
+					}
+				}
+			}
+		};
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		let _asTriArray = (a) => {
+			return [[a.a.x, a.a.y,a.a.z],[a.b.x,a.b.y,a.b.z],[a.c.x,a.c.y,a.c.z]];
+		};
+		let _compareTriangle = (a, b) => {
+			var i = -1, j, cnt = 0;
+			let key = ['a','b','c'];
+
+			while(++i < 3) {
+				j = -1;
+				while(++j < 3) {
+					if (a[key[i]].equals(b[key[j]])) {
+						cnt++;
+						break;
+					}
+				}
+			}
+			return !!(cnt >= 3);
+		};
+		let _pushTriangle = (T) => {
+			let area = T.getArea();
+			if (area > 0 && !poss[idx].find(el2 => { return _compareTriangle(el2.posT,T); })) {
+				poss[idx].push({pos:_asTriArray(T),posT:T,area:area,cardi:apos.cardi,slope:apos.slope});	
+			}
+		};
+		let _isLineExist = (line) => {
+			return lines.find(el => el.equals(line));
+		};
+		let _updateVertices = (pos) => {
+			lines = [];
+
+			if (apos.insides) {
+				_collectLines(apos.insides, apos.insides, true, true);
+			}
+			if (apos.insides && apos.intersects){ 
+				_collectLines(apos.insides, apos.intersects, false, true);
+			}
+			if (apos.intersects){
+				_collectLines(apos.intersects, apos.intersects, true, true);
+			}
+			 if (apos.insides) {
+				_collectLines(apos.insides, pos);
+			}
+			if (apos.intersects) {
+				_collectLines(apos.intersects, pos);
+			}
+			if (apos.insides || apos.intersects) {
+				_collectLines(pos, pos, true);
+
+				poss[idx].splice(idx2,1);
+
+				let i = -1, j;
+				while(++i < lines.length) {
+					let el = lines[i];
+					j = i;			
+					while(++j < lines.length) {
+						let el2 = lines[j];
+						if (el.end.equals(el2.start) && _isLineExist(new THREE.Line3(el.start, el2.end))) {
+							_pushTriangle(new THREE.Triangle(el.start, el.end, el2.end));
+						}
+						else if (el.end.equals(el2.end) && _isLineExist(new THREE.Line3(el.start, el2.start))) {
+							_pushTriangle(new THREE.Triangle(el.start, el.end, el2.start));
+						}
+						else if (el.start.equals(el2.start) && _isLineExist(new THREE.Line3(el.end, el2.end))) {
+							_pushTriangle(new THREE.Triangle(el.start, el.end, el2.end));
+						}
+						else if (el.start.equals(el2.end) && _isLineExist(new THREE.Line3(el.end, el2.start))) {
+							_pushTriangle(new THREE.Triangle(el.start, el.end, el2.start));
+						}
+					}
+				}
+			}
+		};
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		let poss = [], apos = null, idx = -1, idx2, lines = null;
+
+		while(++idx < this.positions.length) {
+			let el = this.positions[idx];
+			idx2 = -1;
+			poss.push([]);
+			while(++idx2 < el.length) {
+				poss[idx].push(el[idx2]);
+			}
+		}
+
+		while(--idx >= 0) {
+			let po = this.positions[idx];
+		
+			idx2 = po.length;
+			while(--idx2 >= 0) {
+				let po2 = po[idx2];
+
+				apos = {pos:po2.pos,area:po2.area,cardi:po2.cardi,slope:po2.slope};
+
+				this.positions.forEach((po3, idx3) => {
+					po3.forEach((po4, idx4) => {
+						if (idx !== idx3 || idx2 !== idx4) {
+							if (!_collectInsides(po2.posT, po4.posT)) _collectInsides(this.util.asTriangle([po2.pos[1],po2.pos[0],po2.pos[2]]), po4.posT);
+							_collectIntersects(po2.posT, po4.posT);
+						}
+					});	
+				});	
+
+				if (this.editor.debug.use) {
+
+					if (apos.intersects) {
+						apos.intersects.forEach(el => {
+							this.editor.debug.drawPoint(el, 0x00ff00);
+						});
+					}
+
+					if (apos.insides) {
+						apos.insides.forEach(el => {
+							this.editor.debug.drawPoint(el, 0xff0000);
+						});
+					}
+				}
+
+				_updateVertices([po2.posT.a,po2.posT.b,po2.posT.c]);
+			}
+		}
+
+		this.positions = poss;
+
+		if (this.editor.debug.use) {
+
+			idx = -1;
+			while(++idx < this.positions.length) {
+				let el = this.positions[idx];
+				idx2 = -1;
+				while(++idx2 < el.length) {
+					let el2 = el[idx2];
+
+			//		if (el2.cardi == 'DOWN') {
+			//			this.editor.debug.addDebugTriangle({triangle:el2.posT, color:{color:0xFF0000,opacity:0.5}});
+			//			console.log(el2.pos);
+			//		}
+				}
+			}
+		}
+	},
+
+    collectWalls: function () {
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        let _mergeWall = (cardi, idx, pos) => {
+            let k = -1, done = false, points;
+
+            for (const [_idx, el] of Object.entries(this.editor.wall[cardi])) {
+                if (idx != _idx && this.editor.wall[cardi][_idx]) {
+                    k = -1;
+                    while(++k < el.vertices.length) {
+                        let el2 = el.vertices[k];
+
+                        if ((points = this.util.getSamePoints(el2.position, pos)).length == 2) {
+                            if (this.isGArea(el2.position) == this.isGArea(pos) && !this.findEdge(points)) {
+                                let el0 = this.editor.wall[cardi][idx];
+                                let el1 = this.editor.wall[cardi][_idx];
+                                el0.vertices = el0.vertices.concat(el1.vertices);
+                                delete this.editor.wall[cardi][_idx];
+                                done = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return done;
+        };
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        let i;
+
+        this.positions.forEach((_po, _idx) => {
+            _po.forEach((po, _idx2) => {
+                if (!this.editor.wall[po.cardi]) this.editor.wall[po.cardi] = {};
+                this.editor.wall[po.cardi][this.editor.wnum++] = {"vertices":[{"position":po.pos,"slope":po.slope,"area":po.area}]};
+            });
+        });
+
+        for (const [cardi, walls] of Object.entries(this.editor.wall)) {
+            let done = false;
+
+            do {
+                done = false;
+                for (const [idx, el] of Object.entries(walls)) {
+                    if (this.editor.wall[cardi][idx]) {
+                        i = el.vertices.length;
+                        while(--i >= 0) {
+                            if (_mergeWall(cardi, idx, el.vertices[i].position)) done = true;
+                        }
+                    }
+                }
+            } while(done);
+        }
+
+        if (this.editor.debug.use) {
+            let n = 0.05;
+            for (const [cardi, value] of Object.entries(this.editor.wall)) {
+                for (const [j, el] of Object.entries(value)) {
+                    if (cardi == 'E' || cardi == 'W') {
+                        for (var k = 0; k < el.vertices.length; k++) {
+                            let el2 = el.vertices[k];
+                            let tri = this.util.asTriangle(el2.position).clone();
+
+                            tri.a.x += n;
+                            tri.b.x += n;
+                            tri.c.x += n;
+                            
+                //			this.editor.addDebugTriangle({triangle:tri, color:{color:0x0000FF,opacity:0.5}});
+                        }
+                    }
+                    else if (cardi == 'S' || cardi == 'N') {
+                        for (var k = 0; k < el.vertices.length; k++) {
+                            let el2 = el.vertices[k];
+                            let tri = this.util.asTriangle(el2.position).clone();
+
+    //							tri.a.z += n;
+    //							tri.b.z += n;
+    //							tri.c.z += n;
+                            
+                    //		this.editor.addDebugTriangle({triangle:tri, color:{color:0x00FF00,opacity:0.5}});
+                        }
+                    }
+                    else {
+                        for (var k = 0; k < el.vertices.length; k++) {
+                            let el2 = el.vertices[k];
+                            let tri = this.util.asTriangle(el2.position).clone();
+
+    //							tri.a.y += n;
+    //							tri.b.y += n;
+    //							tri.c.y += n;
+                            
+        //					this.editor.addDebugTriangle({triangle:tri, color:{color:0xFF0000,opacity:0.5}});
+                        }
+                    }
+                    n+= 0.05;
+                }
+            }
+        }
+    },
+	buildWalls: function ( ) {
+		let getType = (slope, cardi, gwall) => {
+			var type = gwall ? 'GWALL' : 'WALL';
+
+			if (cardi.indexOf('UP') >= 0) {
+				type = 'ROOF';
+			}
+			else if (cardi == 'DOWN') {
+				type = 'FLOOR';
+			}
+			return type;
+		};
+
+		let getCenterY = (vertices) => {
+			var Y = 0, n = 0;
+
+			vertices.forEach((el) => {
+				let ctr = this.editor.centerPoint(el.position);
+				Y += ctr[1];
+				n++;
+			});
+
+			return n > 0 ? (Y / n) : 0;
+		};
+
+		let getCenterPosition = (vertices) => {
+			var center = [0,0,0], n = 0, i, j;
+
+			vertices.forEach((el) => {
+				i = -1;
+				while(++i < el.position.length) {
+					j = -1;
+					while(++j < 3) {
+						center[j] += el.position[i][j];
+					}
+					n++;
+				}
+			});
+
+			if (n > 0) {
+				i = -1;
+				while(++i < 3) {
+					center[i] /= n;
+				}
+			}
+
+			return center;
+		};
+
+        let _getLinks = (pos) => {
+            var arr = [];
+    
+            for (const [cardi, value] of Object.entries(this.editor.wall)) {
+                for (const [j, el] of Object.entries(value)) {
+                    if (!el.parent) {
+                        el.vertices.forEach((el) => {
+                            if (this.util.isSameCount(el.position, pos) == 2) arr.push({"cardi":cardi, "id":parseInt(j)});
+                        });	
+                    }
+                }
+            }
+            return arr;
+        };
+    
+        let _excludeArea = (pid, area) => {
+            for (const [cardi, value] of Object.entries(this.editor.wall)) {
+                for (const [idx, el] of Object.entries(value)) {
+                    if (idx == pid) {
+                        el.area -= area;
+                    }
+                }
+            }
+        };
+    
+		for (const [cardi, value] of Object.entries(this.editor.wall)) {
+			for (const [idx, el] of Object.entries(value)) {
+				el.slope = 0;
+				el.area = 0;
+				el.circu = 0;
+				el.center = getCenterPosition(el.vertices);
+				el.links = [];
+				el.vertices.forEach((el2) => {
+					el.slope += el2.slope;
+					el.area += el2.area;
+					if (!el.parent) el.links = (el.links.concat(_getLinks(el2.position))).filter((value, index, self) => self.findIndex(el2 => el2.cardi == value.cardi && el2.id == value.id) === index);
+					else el.circu += this.editor.getCircuLength(el2.position);
+				});	
+				el.slope /= el.vertices.length;
+				el.cardinal = cardi;
+
+				if (!el.type) el.type = getType(el.slope, cardi, !!(getCenterY(el.vertices) < 0)); 
+				if (!this.editor.snum[el.type]) this.editor.snum[el.type] = 1;
+				el.snum = this.editor.snum[el.type]++ ;
+			}
+		}	
+
+		for (const [cardi, value] of Object.entries(this.editor.wall)) {
+			for (const [idx, el] of Object.entries(value)) {
+				if (el.parent) {
+					_excludeArea(el.parent, el.area);
+				}
+			}
+		}	
+	},
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Util
+
+    isGArea: function (path) {
+		let center = this.editor.centerPoint(path);
+
+		return !!(center[1] < 0);
+	},
+};
+
+export { Zoning };

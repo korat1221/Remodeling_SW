@@ -20,7 +20,7 @@
             { "type": "Door", "text": "외부출입문", "id": "Door", "children": [{ "text": "WN1", "id": "{\"formID\":7}" }] }
         ],
         [
-            { "type": "Model", "text": "3D 모델", "id": "{\"formID\":8}" },
+            { "type": "Model", "text": "3D 모델", "id": "{\"formID\":8}", "children": [{ "text": "열기", "id": "{\"formID\":99999991}" }]},
             { "type": "Shade", "text": "음영정보", "id": "{\"formID\":9}" },
             { "type": "Blind", "text": "차양정보", "id": "{\"formID\":10}" },
             { "type": "ThermalBridge", "text": "열교정보", "id": "{\"formID\":11}" }
@@ -122,5 +122,6 @@
         </div>
         <div id="cont-tree" style="width:calc(100% - 125px);float:left;height:100%;padding-top: 16px;padding-bottom: 16px;overflow:auto"></div>
     </div>
+    <input type="file" id="upfile" onchange="load3d(this)" style="display:none">
 </body>
 </html>
