@@ -18,6 +18,9 @@ using static System.ComponentModel.Design.ObjectSelectorEditor;
 using Microsoft.Web.WebView2.Core;
 using static main.MainContents;
 using System.IO;
+using main.contents.Building;
+using main.subcontents.ConstructionWindow;
+using main.contents;
 
 namespace main.contents
 {
@@ -26,10 +29,29 @@ namespace main.contents
         int SelectRow;
         bool scriptable = false;
 
+        public enum FormID
+        {
+            ZoneInfo = 0,
+            WallInfo,
+            WinInfo,
+            BridgeInfo
+        };
+        Form[] forms = new Form[] { new sub3dZoneInfo(), new sub3dWallInfo(), new sub3dWinInfo(), new sub3dBridgeInfo() };
+
+
         public Model()
         {
             InitializeComponent();
             Create_table();
+
+            int i = -1;
+            while (++i < forms.Length)
+            {
+                forms[i].TopLevel = false;
+                forms[i].ShowInTaskbar = false;
+                forms[i].Dock = DockStyle.Fill;
+                splitContainer1.Panel2.Controls.Add(forms[i]);
+            }
 
             InitializeAsync();
         }
@@ -39,12 +61,32 @@ namespace main.contents
             webView21.CoreWebView2.WebMessageReceived += OnJSMessage;
             webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
         }
+        public void DoLoadForm(int idx)
+        {
+            int i = -1;
+            while (++i < forms.Length)
+            {
+                forms[i].Hide();
+            }
+
+            forms[idx].Show();
+        }
 
         void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
             try
             {
-                Program.UTIL.write3DModel(Program.ProjName + ".json", args.TryGetWebMessageAsString());
+                int n;
+                String s = args.TryGetWebMessageAsString();
+
+                if ((n = s.IndexOf("__execute_sql__")) >= 0)
+                {
+                    Program.DB.executeSQL(DB.type.ProjDB, s.Substring(n));
+                }
+                else
+                {
+                    Program.UTIL.write3DModel(Program.ProjName + ".json", args.TryGetWebMessageAsString());
+                }
             }
             catch (Exception ex)
             {
@@ -56,7 +98,9 @@ namespace main.contents
             scriptable = true;
 
             runScript("load3DModel(" + Program.UTIL.read3DModel(Program.ProjName + ".json") + ")");
-       }
+
+            DoLoadForm(2);
+        }
         public void runScript(string script)
         {
             if (scriptable)
@@ -123,10 +167,10 @@ namespace main.contents
                 String Type = dataGridView1.Rows[n].Cells[4].Value.ToString();
                 Load_ConstructionList(n, Type);
             }
-            
+
         }
 
-    private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -159,10 +203,10 @@ namespace main.contents
             {
                 String num = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
                 if (e.ColumnIndex == 4)
-                { 
-                    String Type= dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
-                    Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D","번호,외피유형","'"+ num + "','"+Type+"'","번호");
-                    if(Type !="커튼월창")
+                {
+                    String Type = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+                    Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형", "'" + num + "','" + Type + "'", "번호");
+                    if (Type != "커튼월창")
                     {
                         Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,커튼월부위", "'" + num + "','" + "" + "'", "번호");
                     }
@@ -180,11 +224,12 @@ namespace main.contents
                     else
                     {
                         CWType = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
-                    }                   
+                    }
                     Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,커튼월부위", "'" + num + "','" + CWType + "'", "번호");
                 }
 
-                if(e.ColumnIndex == 10) {
+                if (e.ColumnIndex == 10)
+                {
                     String ConsType;
                     if (dataGridView1.Rows[e.RowIndex].Cells[10].Value == null)
                     {
@@ -195,34 +240,34 @@ namespace main.contents
                         ConsType = dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString();
                     }
                     Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,구조체", "'" + num + "','" + ConsType + "'", "번호");
-                }               
+                }
             }
         }
 
         private void Load_ConstructionList(int n, String Type)
         {
-            string[][] Value =null;
+            string[][] Value = null;
 
-                          
-                if (Type == "커튼월창")
-                {
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭", "");
-                }
-                else if(Type == "창호")
-                {
-                    Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭", "");
-                }
-                else
-                {
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭", "");
-                }      
-              DataGridViewComboBoxCell ConstructionCombo = new DataGridViewComboBoxCell();
-              ConstructionCombo.Items.Clear();
-              for (int k = 0;  k< Value.Length; k++)
-              {              
-                  ConstructionCombo.Items.Add(Value[k][1]);
-              }
-              dataGridView1.Rows[n].Cells[10] = ConstructionCombo;
+
+            if (Type == "커튼월창")
+            {
+                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭", "");
+            }
+            else if (Type == "창호")
+            {
+                Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭", "");
+            }
+            else
+            {
+                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭", "");
+            }
+            DataGridViewComboBoxCell ConstructionCombo = new DataGridViewComboBoxCell();
+            ConstructionCombo.Items.Clear();
+            for (int k = 0; k < Value.Length; k++)
+            {
+                ConstructionCombo.Items.Add(Value[k][1]);
+            }
+            dataGridView1.Rows[n].Cells[10] = ConstructionCombo;
         }
     }
 }

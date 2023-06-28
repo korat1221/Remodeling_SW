@@ -33,12 +33,14 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             Previous_button = new Button();
             Save_button = new Button();
-            dataGridView1 = new DataGridView();
-            panel2 = new Panel();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            panel2.SuspendLayout();
+            splitContainer1 = new SplitContainer();
+            dataGridView1 = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // Previous_button
@@ -63,6 +65,34 @@
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
             // 
+            // webView21
+            // 
+            webView21.AllowExternalDrop = true;
+            webView21.CreationProperties = null;
+            webView21.DefaultBackgroundColor = Color.White;
+            webView21.Dock = DockStyle.Fill;
+            webView21.Location = new Point(0, 0);
+            webView21.Name = "webView21";
+            webView21.Size = new Size(971, 400);
+            webView21.Source = new Uri("http://localhost:3000/anal3d/editor/", UriKind.Absolute);
+            webView21.TabIndex = 97;
+            webView21.ZoomFactor = 1D;
+            // 
+            // splitContainer1
+            // 
+            splitContainer1.Dock = DockStyle.Left;
+            splitContainer1.Location = new Point(0, 0);
+            splitContainer1.Name = "splitContainer1";
+            splitContainer1.Orientation = Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.AllowDrop = true;
+            splitContainer1.Panel1.Controls.Add(webView21);
+            splitContainer1.Size = new Size(971, 730);
+            splitContainer1.SplitterDistance = 400;
+            splitContainer1.TabIndex = 96;
+            // 
             // dataGridView1
             // 
             dataGridView1.AllowUserToAddRows = false;
@@ -83,7 +113,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(14, 539);
+            dataGridView1.Location = new Point(-299, -20);
             dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
@@ -106,29 +136,7 @@
             dataGridView1.TabIndex = 96;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
-            // 
-            // panel2
-            // 
-            panel2.BackColor = Color.White;
-            panel2.BorderStyle = BorderStyle.Fixed3D;
-            panel2.Controls.Add(webView21);
-            panel2.Controls.Add(dataGridView1);
-            panel2.Location = new Point(12, 12);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(977, 811);
-            panel2.TabIndex = 95;
-            // 
-            // webView21
-            // 
-            webView21.AllowExternalDrop = true;
-            webView21.CreationProperties = null;
-            webView21.DefaultBackgroundColor = Color.White;
-            webView21.Location = new Point(3, 12);
-            webView21.Name = "webView21";
-            webView21.Size = new Size(967, 478);
-            webView21.Source = new Uri("http://localhost:3000/anal3d/editor/", UriKind.Absolute);
-            webView21.TabIndex = 97;
-            webView21.ZoomFactor = 1D;
+ 
             // 
             // Model
             // 
@@ -136,23 +144,28 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(panel2);
+            Controls.Add(splitContainer1);
+
             Controls.Add(Previous_button);
             Controls.Add(Save_button);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Model";
             Text = "Form3";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
+            splitContainer1.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+
             ResumeLayout(false);
         }
 
         #endregion
         private Button Previous_button;
         private Button Save_button;
-        private DataGridView dataGridView1;
-        private Panel panel2;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+        private SplitContainer splitContainer1;
+        private DataGridView dataGridView1;
+
     }
 }
