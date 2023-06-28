@@ -19,7 +19,7 @@ namespace main
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            Program.DB.openDB("test.sqlite");
+            Program.DB.openDB(Program.ProjName + ".sqlite");
             MainContents f1 = new MainContents();
 
             f1.Location.Offset(0, 0);

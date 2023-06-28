@@ -195,7 +195,7 @@ namespace main
                 if (openForm.Name == "Model")
                 {
                     Model f = (Model)openForm;
-                    string p = getRandomString() + Path.GetExtension(path);
+                    string p = Program.ProjName + Path.GetExtension(path);
                     string path2 = Program.gPath + "threejs\\public\\models";
 
                     DirectoryInfo di = new DirectoryInfo(path2);  //Create Directoryinfo value by sDirPath  
@@ -205,12 +205,44 @@ namespace main
                         di.Create();             //create Folder  
                     }
 
+                    File.Delete(path2 + "\\" + p);
                     File.Copy(path, path2 + "\\" + p);
 
-                    f.runScript("open3DModel('/models/" + p + "')");
+                    if (File.Exists(path2 + "\\" + p))
+                    {
+                        f.runScript("open3DModel('/models/" + p + "')");
+                    }
                     return;
                 }
             }
+        }
+
+        public void write3DModel(string fname, string data)
+        {
+            string path2 = Program.gPath + "threejs\\public\\models";
+
+            DirectoryInfo di = new DirectoryInfo(path2);  //Create Directoryinfo value by sDirPath  
+
+            if (di.Exists == false)   //If New Folder not exits  
+            {
+                di.Create();             //create Folder  
+            }
+
+            File.Delete(path2 + "\\" + fname);
+            File.WriteAllText(path2 + "\\" + fname, data);
+        }
+
+        public string read3DModel(string fname)
+        {
+            string path2 = Program.gPath + "threejs\\public\\models";
+
+            DirectoryInfo di = new DirectoryInfo(path2);  //Create Directoryinfo value by sDirPath  
+
+            if (di.Exists == true && File.Exists(path2 + "\\" + fname))   //If New Folder not exits  
+            {
+                return File.ReadAllText(path2 + "\\" + fname);
+            }
+            return "";
         }
 
         public String CreateNum(String 테이블명,String 컬럼명,String 기호)

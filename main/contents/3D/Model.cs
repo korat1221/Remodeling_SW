@@ -17,6 +17,7 @@ using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 using Microsoft.Web.WebView2.Core;
 using static main.MainContents;
+using System.IO;
 
 namespace main.contents
 {
@@ -43,6 +44,7 @@ namespace main.contents
         {
             try
             {
+                Program.UTIL.write3DModel(Program.ProjName + ".json", args.TryGetWebMessageAsString());
             }
             catch (Exception ex)
             {
@@ -52,7 +54,9 @@ namespace main.contents
         void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             scriptable = true;
-        }
+
+            runScript("load3DModel(" + Program.UTIL.read3DModel(Program.ProjName + ".json") + ")");
+       }
         public void runScript(string script)
         {
             if (scriptable)
