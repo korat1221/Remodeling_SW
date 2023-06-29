@@ -210,18 +210,21 @@ namespace main
                 String ID = args.TryGetWebMessageAsString();
                 String json = "{\"formID\":" + ID + ",\"ID\":\"\"}";
 
-                if (ID == "8")
-                {
-                    Program.UTIL.setObjInfo(Program.UTIL.read3DModel(Program.ProjName + ".json"));
-
-                    DoLoadForm(8, OnLoadProc);
-                }
-                else if (Deserializable(json))
+                if (Deserializable(json))
                 {
                     formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>(json);
-                    if (formParam.formID >= 0 && formParam.formID < 100)
+                    if (formParam.formID == 8)
                     {
-                        DoLoadForm(formParam.formID, OnLoadProc);
+                        Program.UTIL.setObjInfo(Program.UTIL.read3DModel(Program.ProjName + ".json"));
+
+                        DoLoadForm(8, OnLoadProc);
+                    }
+                    else if (Deserializable(json))
+                    {
+                        if (formParam.formID >= 0 && formParam.formID < 100)
+                        {
+                            DoLoadForm(formParam.formID, OnLoadProc);
+                        }
                     }
                 }
                 else
