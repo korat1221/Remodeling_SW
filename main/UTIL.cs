@@ -173,6 +173,19 @@ namespace main
                 }
             }
         }
+        public void setObjInfo(string data)
+        {
+            foreach (Form openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "FormMain")
+                {
+                    MainContents f = (MainContents)(((FormMain)openForm).splitContainer1.Panel1.Controls[0]);
+
+                    f.runScript("setObjInfo(" + data + ")");
+                    return;
+                }
+            }
+        }
 
         private String getRandomString()
         {
@@ -216,7 +229,18 @@ namespace main
                 }
             }
         }
-
+        public void sendMessage(string msg)
+        {
+            foreach (Form openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "Model")
+                {
+                    Model f = (Model)openForm;
+                    f.runScript("sendMessage('" + msg + "')");
+                    return;
+                }
+            }
+        }
         public void write3DModel(string fname, string data)
         {
             string path2 = Program.gPath + "threejs\\public\\models";

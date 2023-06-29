@@ -21,9 +21,8 @@
         ],
         [
             { "type": "Model", "text": "3D 모델", "id": "{\"formID\":8}", "children": [{ "text": "열기", "id": "{\"formID\":99999991}" }]},
-            { "type": "Shade", "text": "음영정보", "id": "{\"formID\":9}" },
-            { "type": "Blind", "text": "차양정보", "id": "{\"formID\":10}" },
-            { "type": "ThermalBridge", "text": "열교정보", "id": "{\"formID\":11}" }
+            { "type": "Shade", "text": "공간정보", "id": "{\"formID\":9}", "children": []},
+            { "type": "ThermalBridge", "text": "열교정보", "id": "{\"formID\":11}", "children": [] }
         ],
         [   { "type": "Floor", "text": "층별 정보", "id": "{\"formID\":32}"}
 
@@ -50,6 +49,12 @@
     let gDefaultSelect = ["0", "2", "8", "12", "16", "21", "26"];
     let first = true;
 
+    function setObjInfo(o) {
+        gTreeData[2][1].children = o.tree[0].children;
+        gTreeData[2][2].children = o.tree[1].children;
+        load(2, true);
+    }
+    
     function resetMainTree(id, subid, tree, select_id) {
         if (subid !== null) {
             gTreeData[id][subid].children = JSON.parse(tree);
@@ -63,8 +68,8 @@
         }
     }
 
-    function load(menuID) {
-        gMainTree.load(gTreeData[menuID], gDefaultSelect[menuID]);
+    function load(menuID, not_open_all = false) {
+        gMainTree.load(gTreeData[menuID], gDefaultSelect[menuID],not_open_all);
 
         let icons = [
             { "normal": "url(images/1sticon/1.Building.png)", "active": "url(images/1sticon/1.Building_on2.png)" },

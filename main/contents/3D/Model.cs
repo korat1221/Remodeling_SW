@@ -85,7 +85,7 @@ namespace main.contents
                 }
                 else
                 {
-                    Program.UTIL.write3DModel(Program.ProjName + ".json", args.TryGetWebMessageAsString());
+                    Program.UTIL.write3DModel(Program.ProjName + ".json",s);
                 }
             }
             catch (Exception ex)

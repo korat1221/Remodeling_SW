@@ -4,6 +4,8 @@ using main.contentslist;
 using main.subcontents.ConstructionWindow;
 using Microsoft.Web.WebView2.Core;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
+using static main.MainContents;
 
 namespace main
 {
@@ -160,9 +162,24 @@ namespace main
             return true;
         }
 
-        void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
+        private bool Deserializable(String data)
         {
             try
+            {
+                var _a = System.Text.Json.JsonSerializer.Deserialize<FormParam>(data);
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+            void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
+        {
+            if (Deserializable(args.TryGetWebMessageAsString()))
             {
                 formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>(args.TryGetWebMessageAsString());
 
@@ -181,16 +198,36 @@ namespace main
                             //Get the path of specified file
                             Program.UTIL.load3DModel(openFileDialog.FileName);
                         }
-                    }                
+                    }
                 }
                 else if (formParam.formID >= 0 && formParam.formID < 100)
                 {
                     DoLoadForm(formParam.formID, OnLoadProc);
                 }
             }
-            catch (Exception ex)
+            else
             {
+                String ID = args.TryGetWebMessageAsString();
+                String json = "{\"formID\":" + ID + ",\"ID\":\"\"}";
 
+                if (ID == "8")
+                {
+                    Program.UTIL.setObjInfo(Program.UTIL.read3DModel(Program.ProjName + ".json"));
+
+                    DoLoadForm(8, OnLoadProc);
+                }
+                else if (Deserializable(json))
+                {
+                    formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>(json);
+                    if (formParam.formID >= 0 && formParam.formID < 100)
+                    {
+                        DoLoadForm(formParam.formID, OnLoadProc);
+                    }
+                }
+                else
+                {
+                    Program.UTIL.sendMessage(ID);
+                }
             }
         }
         void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)

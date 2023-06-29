@@ -5,7 +5,7 @@ class MainTree {
         this.onSelect = selProc;
         this.loading = true;
     }
-    load(data, sel_id) {
+    load(data, sel_id, not_open_all = false) {
         let that = this;
 
         this.loading = true;
@@ -117,7 +117,9 @@ class MainTree {
                 $(this).jstree('select_node', sel_id);
                 that.onSelect(sel_id);
             }
-            $(this).jstree('open_all');
+            if (!not_open_all) {
+                $(this).jstree('open_all');
+            }
             setTimeout(() => {
                 that.loading = false;
             }, 500);
