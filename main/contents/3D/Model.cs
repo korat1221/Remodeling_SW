@@ -61,7 +61,7 @@ namespace main.contents
             webView21.CoreWebView2.WebMessageReceived += OnJSMessage;
             webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
         }
-        public void DoLoadForm(int idx)
+        public void DoLoadForm(int idx, String ID)
         {
             int i = -1;
             while (++i < forms.Length)
@@ -99,7 +99,6 @@ namespace main.contents
 
             runScript("load3DModel(" + Program.UTIL.read3DModel(Program.ProjName + ".json") + ")");
 
-            DoLoadForm(2);
         }
         public void runScript(string script)
         {
