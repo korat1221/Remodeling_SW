@@ -403,7 +403,14 @@
 			}
 
 			function sendMessage(msg) {
-				editor.drawSpacePoints(msg);
+				let n;
+
+				if ((n = msg.indexOf("bridge-")) >= 0) {
+					editor.drawBridges(msg.substr(n + 7));
+				}
+				else {
+					editor.drawSpacePoints(msg);
+				}
 			}
 		</script>
 		
