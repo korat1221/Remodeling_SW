@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
+using System.Drawing;
 
 namespace main.contents
 {
@@ -44,10 +45,10 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             checkBoxColumn = new DataGridViewCheckBoxColumn();
             GeneralPanel = new Panel();
-            ZoneNum_textBox = new System.Windows.Forms.TextBox();
+            Num_textBox = new System.Windows.Forms.TextBox();
+            Icon_pictureBox = new PictureBox();
             Zone_comboBox = new System.Windows.Forms.ComboBox();
             ZoneName_textBox = new System.Windows.Forms.TextBox();
-            label1 = new System.Windows.Forms.Label();
             Floor_textBox = new System.Windows.Forms.TextBox();
             panel2 = new Panel();
             dataGridView2 = new DataGridView();
@@ -81,6 +82,7 @@ namespace main.contents
             label2 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
             GeneralPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -96,10 +98,10 @@ namespace main.contents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(ZoneNum_textBox);
+            GeneralPanel.Controls.Add(Num_textBox);
+            GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Controls.Add(Zone_comboBox);
             GeneralPanel.Controls.Add(ZoneName_textBox);
-            GeneralPanel.Controls.Add(label1);
             GeneralPanel.Controls.Add(Floor_textBox);
             GeneralPanel.Location = new Point(12, 12);
             GeneralPanel.Name = "GeneralPanel";
@@ -107,17 +109,26 @@ namespace main.contents
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
             // 
-            // ZoneNum_textBox
+            // Num_textBox
             // 
-            ZoneNum_textBox.BackColor = SystemColors.Window;
-            ZoneNum_textBox.BorderStyle = BorderStyle.None;
-            ZoneNum_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ZoneNum_textBox.ForeColor = Color.Black;
-            ZoneNum_textBox.Location = new Point(26, 55);
-            ZoneNum_textBox.Name = "ZoneNum_textBox";
-            ZoneNum_textBox.Size = new Size(120, 15);
-            ZoneNum_textBox.TabIndex = 91;
-            ZoneNum_textBox.TextAlign = HorizontalAlignment.Center;
+            Num_textBox.BackColor = Color.White;
+            Num_textBox.BorderStyle = BorderStyle.None;
+            Num_textBox.Enabled = false;
+            Num_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Num_textBox.ForeColor = SystemColors.ControlText;
+            Num_textBox.Location = new Point(80, 32);
+            Num_textBox.Name = "Num_textBox";
+            Num_textBox.Size = new Size(101, 15);
+            Num_textBox.TabIndex = 92;
+            Num_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Icon_pictureBox
+            // 
+            Icon_pictureBox.Location = new Point(30, 14);
+            Icon_pictureBox.Name = "Icon_pictureBox";
+            Icon_pictureBox.Size = new Size(50, 50);
+            Icon_pictureBox.TabIndex = 93;
+            Icon_pictureBox.TabStop = false;
             // 
             // Zone_comboBox
             // 
@@ -127,7 +138,6 @@ namespace main.contents
             Zone_comboBox.Name = "Zone_comboBox";
             Zone_comboBox.Size = new Size(137, 23);
             Zone_comboBox.TabIndex = 90;
-            Zone_comboBox.SelectedIndexChanged += Zone_comboBox_SelectedIndexChanged;
             // 
             // ZoneName_textBox
             // 
@@ -140,16 +150,6 @@ namespace main.contents
             ZoneName_textBox.Size = new Size(120, 15);
             ZoneName_textBox.TabIndex = 89;
             ZoneName_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(102, 19);
-            label1.Name = "label1";
-            label1.Size = new Size(19, 15);
-            label1.TabIndex = 1;
-            label1.Text = "층";
             // 
             // Floor_textBox
             // 
@@ -592,6 +592,7 @@ namespace main.contents
             VisibleChanged += ZoneEnvelope_VisibleChanged;
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -644,6 +645,7 @@ namespace main.contents
         private System.Windows.Forms.TextBox n50_textBox;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox q50_textBox;
-        private System.Windows.Forms.TextBox ZoneNum_textBox;
+        private System.Windows.Forms.TextBox Num_textBox;
+        private PictureBox Icon_pictureBox;
     }
 }

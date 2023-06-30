@@ -30,16 +30,19 @@ namespace main.contents
         public ZoneGeneral()
         {
             InitializeComponent();
-            Program.DB.initTable(DB.type.CalcDB, "ZoneGeneral");
-            //Program.DB.initTables(DB.type.CalcDB);
-            Zone_comboBox.Items.Add("1F_Zone02");
-            Zone_comboBox.Items.Add("1F_Zone04");
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '존 일반정보'");
+            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
-            //콤보박스 리스트 생성 
             //존 환기방식 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, AHU_comboBox, "존일반", "환기방식", "1");
-            //건물대상 콤보박스
-            Program.UTIL.FillComboBox_Parents(BuildingCategory_comboBox, "존일반", "건물용도", "1");
+
+            Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필이미지", "이미지", "대분류 = '메인'");
+            pictureBox1.Load(Program.gPath + Image[0][0]);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+
+
+
             //존 사용 시작/종료 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, StartTime_comboBox, "존일반", "이용일 시작 및 종료시간", "8");
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, EndTime_comboBox, "존일반", "이용일 시작 및 종료시간", "19");
@@ -47,11 +50,7 @@ namespace main.contents
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, WeekUseDay_comboBox, "존일반", "주간이용일", "1");
             //기기밀도 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, EquipIHG_comboBox, "존일반", "밀도", "1");
-
-
         }
-
-
 
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -60,13 +59,6 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
 
-
-        private void Zone_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ZoneNum = Zone_comboBox.SelectedItem.ToString();
-        }
-
-
         private void Floor_textBox_TextChanged(object sender, EventArgs e)
         {
             Floor = Floor_textBox.Text;
@@ -74,20 +66,6 @@ namespace main.contents
         private void ZoneName_textBox_TextChanged(object sender, EventArgs e)
         {
             ZoneName = ZoneName_textBox.Text;
-        }
-
-        //건물대상 선택 시 건물용도 콤보박스 생성
-        private void BuildingCategory_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            BuildingCategory = Program.UTIL.SelectedItem_ByComboBox(BuildingCategory_comboBox);
-            Program.UTIL.FillComboBox_ByComboBox(BuildingUse_comboBox, BuildingCategory_comboBox, "1");
-        }
-
-        //건물용도 선택 시 용도프로필 콤보박스 생성
-        private void BuildingUse_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            BuildingUse = Program.UTIL.SelectedItem_ByComboBox(BuildingUse_comboBox);
-            Program.UTIL.FillComboBox_ByComboBox(Usage_comboBox, BuildingUse_comboBox, "1");
         }
 
 
@@ -295,13 +273,13 @@ namespace main.contents
         //기기밀도수준 및 용도프로필 선택에 따라 기기발열 계산 
         private void EquipIHG_Cal(double EquipIHG_Time)
         {
-            DataRowView? EquipIHG_item = EquipIHG_comboBox.SelectedItem as DataRowView;
+
             DataRowView? Usage_item = Usage_comboBox.SelectedItem as DataRowView;
 
-            if (EquipIHG_item != null && EquipIHG_item.Row.ItemArray.Length >= 3 && Usage_item != null && Usage_item.Row.ItemArray.Length >= 3)
+            if (EquipIHG_index != null && Usage_item != null && Usage_item.Row.ItemArray.Length >= 3)
             {
                 //PersonIHG 단위 : W/m2
-                switch (EquipIHG_item.Row.ItemArray[0].ToString())
+                switch (EquipIHG_index)
                 {
                     case "낮음":
                         EquipIHG = EquipIHG_Low;
@@ -349,21 +327,66 @@ namespace main.contents
         private void reset()
         { }
 
-         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
+        public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             reset();
             try
             {
-                Zone_comboBox.SelectedItem = ID;
+                Num_textBox.Text = ID;
                 ZoneNum = ID;
             }
             catch { }
-          }
+        }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {
-            Zone_comboBox.SelectedItem = ID;
+            Num_textBox.Text = ID;
             ZoneNum = ID;
+
+            //건물대상,용도 텍스트박스
+            String[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "건물대상,건물용도", "");
+
+            BuildingCategory = value[0][0];
+            BuildingCategory_textBox.Text = BuildingCategory;
+
+            BuildingUse = value[0][1];
+            BuildingUse_textBox.Text = BuildingUse;
+        }
+
+        private void ZoneGeneral_VisibleChanged(object sender, EventArgs e)
+        {
+            String ID = main.MainContents.selID;
+            ID = ID.Substring(19, 9);
+            Num_textBox.Text = ID;
+            ZoneNum = ID;
+
+            var a = ZoneNum.Split('_');
+            Floor = a[0].ToString();
+            Floor_textBox.Text = Floor;
+
+            //건물대상,용도 텍스트박스
+            String[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "건물대상,건물용도", "");
+
+            BuildingCategory = value[0][0];
+            BuildingCategory_textBox.Text = BuildingCategory;
+
+            BuildingUse = value[0][1];
+            BuildingUse_textBox.Text = BuildingUse;
+
+        }
+
+        private void BuildingUse_textBox_TextChanged(object sender, EventArgs e)
+        {
+            String[][] Index = Program.DB.getValue(DB.type.BaseDB_HCneed, "인덱스", "아이디", "이름 = '" + BuildingUse + "'");
+
+            string id = Index[0][0].ToString();
+
+            if (id != "")
+            {
+                string[][] res = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 이름, 값, 아이디 FROM 인덱스 WHERE 부모아이디=" + id);
+
+                Program.UTIL.FillComboBox_Category(Usage_comboBox, res, "1");
+            }
         }
 
     }

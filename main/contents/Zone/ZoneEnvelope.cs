@@ -31,13 +31,10 @@ namespace main.contents
         {
 
             InitializeComponent();
-            Program.DB.initTable(DB.type.CalcDB, "ZoneEnvelope");
-            //Program.DB.initTables(DB.type.CalcDB);
-            Zone_comboBox.Items.Add("1F_Zone02");
-            Zone_comboBox.Items.Add("1F_Zone04");
-            load_table_ZoneEnvelopeImport();
-
-
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '존 외피정보'");
+            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            Program.DB.initTable(DB.type.ProjDB, "ZoneEnvelope");
 
 
 
@@ -74,6 +71,8 @@ namespace main.contents
             //기밀관련 콤보박스 만들기
             InfiltrationType_comboBox.Items.Add("표준값");
             InfiltrationType_comboBox.Items.Add("기밀설계보고서");
+
+
         }
 
 
@@ -84,19 +83,7 @@ namespace main.contents
         }
 
 
-        //임시로 존번호 선택하도록 함 > 추후 생성자로 복붙 필요 
-        private void Zone_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-            ZoneNum = Zone_comboBox.SelectedItem.ToString();
-            load_table_ZoneEnvelopeInfo(ZoneNum);
-            string[][] Zone = Program.DB.getValue(DB.type.CalcDB, "ZoneGeneral", "존이름,층,바닥면적,순체적", "존번호= '" + ZoneNum + "'");
-            ZoneName_textBox.Text = Zone[0][0];
-            Calc_A(ZoneNum);
-            ZoneType = Calc_ZoneType();
-            Check_radioButton(ZoneType);
-
-        }
+       
 
         //천장 축열정보 선택 시 
         private void CeilingCwrik_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -152,41 +139,6 @@ namespace main.contents
             n50_textBox.Text = string.Format("{0:F1}", n);
         }
 
-        //csv에서 해당 존의 외피정보 불러와서 저장하기
-        void load_table_ZoneEnvelopeImport()
-        {
-            try
-            {
-                string filePath = Program.gPath + "ZoneSample\\건물모델링.csv";
-                using (FileStream fileReader = new FileStream(filePath, FileMode.Open))
-                {
-                    using (StreamReader sr = new StreamReader(fileReader, Encoding.UTF8, false))
-                    {
-                        int n = 0;
-                        while (!sr.EndOfStream)
-                        {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                Program.DB.setValue(DB.type.CalcDB, "ZoneEnvelope", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출,좌측면돌출,상부돌출,주변요소,구조체,Ueff,α,g,직접간접",
-                                 "'" + token[1] + "','" + token[2] + "','" + token[3] + "','" + token[4] + "','" + token[5] + "','"
-                             + token[6] + "','" + token[7] + "','" + token[8] + "','" + token[9] + "','" + token[10] + "','"
-                             + token[11] + "','" + token[12] + "','" + token[13] + "','" + token[14] + "','" + token[15] + "','"
-                             + token[16] + "','" + token[17] + "','" + token[18] + "'", "존,번호");
-
-                            }
-                            n++;
-                        }
-
-                    }
-                }
-            }
-            catch (IOException e) { }
-
-        }
 
         //존외피 왼쪽테이블 정보 만들기 
         void load_table_ZoneEnvelopeInfo(String SelectZone)
@@ -204,7 +156,7 @@ namespace main.contents
             table_ZoneEnvelopeNum.Columns.Add("A" + Environment.NewLine + "[m2]", typeof(string));
             table_ZoneEnvelopeNum.Columns.Add("Ueff" + Environment.NewLine + "[W/m2K]", typeof(string));
 
-            string[][] ZoneE = Program.DB.getValue(DB.type.CalcDB, "ZoneEnvelope", "번호,기호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출,좌측면돌출,상부돌출,주변요소,구조체,Ueff,α,g", "존='" + SelectZone + "'");
+            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출,좌측면돌출,상부돌출,주변요소,구조체,Ueff,α,g", "존='" + SelectZone + "'");
 
             int[] Construction_Count = new int[8]; double[] Construction_AreaSum = new double[8]; double[] Construction_UeffAvg = new double[8]; double[] Construction_UeffSum = new double[8];
 
@@ -213,11 +165,14 @@ namespace main.contents
             {
                 for (int k = 0; k < ConstructionType.Length; k++)
                 {
-                    if (ZoneE[i][4] == ConstructionType[k])
+                    Construction_AreaSum[k] = 0;
+                    Construction_UeffSum[k] = 0;
+
+                    if (ZoneE[i][3] == ConstructionType[k])
                     {
                         Construction_Count[k] = Construction_Count[k] + 1;
-                        Construction_AreaSum[k] += Convert.ToDouble(ZoneE[i][6]);
-                        Construction_UeffSum[k] += (Convert.ToDouble(ZoneE[i][15]) * Convert.ToDouble(ZoneE[i][6]));
+                        Construction_AreaSum[k] += Convert.ToDouble(ZoneE[i][5]);
+                        Construction_UeffSum[k] += (Convert.ToDouble(ZoneE[i][14]) * Convert.ToDouble(ZoneE[i][5]));
                         Construction_UeffAvg[k] = Construction_UeffSum[k] / Construction_AreaSum[k]; //면적가중평균
 
                     }
@@ -284,25 +239,25 @@ namespace main.contents
             else { table_ZoneEnvelopeSelect.Columns.Add("α", typeof(string)); }
 
             //존별, 선택 구조체의 정보 불러오기 
-            string[][] ZoneE = Program.DB.getValue(DB.type.CalcDB, "ZoneEnvelope", "번호,기호,외피유형,면적,방위,기울기,구조체,Ueff,α,g", "존='" + ZoneNum + "' AND 외피유형='" + 선택구조체 + "'");
+            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope", "번호,외피유형,면적,방위,기울기,구조체,Ueff,α,g", "존='" + ZoneNum + "' AND 외피유형='" + 선택구조체 + "'");
 
 
             for (int n = 0; n < ZoneE.Length; n++)
             {
-                String 면적 = string.Format("{0:F2}", Convert.ToDouble(ZoneE[n][3]));
-                String Ueff = string.Format("{0:F2}", Convert.ToDouble(ZoneE[n][7]));
+                String 면적 = string.Format("{0:F2}", Convert.ToDouble(ZoneE[n][2]));
+                String Ueff = string.Format("{0:F2}", Convert.ToDouble(ZoneE[n][6]));
 
                 if (선택구조체 == "커튼월창" || 선택구조체 == "창호")
                 {
-                    String g = string.Format("{0:F2}", Convert.ToDouble(ZoneE[n][9]));
-                    table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE[n][1], ZoneE[n][6], 면적, ZoneE[n][4], ZoneE[n][5], Ueff, g);
+                    String g = string.Format("{0:F2}", Convert.ToDouble(ZoneE[n][8]));
+                    table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE[n][1], ZoneE[n][5], 면적, ZoneE[n][3], ZoneE[n][4], Ueff, g);
                 }
                 else
                 {
                     String α;
-                    try { α = string.Format("{0:F2}", Convert.ToDouble(ZoneE[n][8])); }
+                    try { α = string.Format("{0:F2}", Convert.ToDouble(ZoneE[n][7])); }
                     catch (Exception ex) { α = "-"; }
-                    table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE[n][1], ZoneE[n][6], 면적, ZoneE[n][4], ZoneE[n][5], Ueff, α);
+                    table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE[n][1], ZoneE[n][5], 면적, ZoneE[n][3], ZoneE[n][4], Ueff, α);
                 }
             }
             dataGridView2.DataSource = table_ZoneEnvelopeSelect;
@@ -312,7 +267,7 @@ namespace main.contents
         void Calc_A(String SelectZone)
         {
             //외피별 면적 정보 불러오기
-            string[][] ZoneE = Program.DB.getValue(DB.type.CalcDB, "ZoneEnvelope", "번호,기호,층,존,외피유형,면적", "존='" + SelectZone + "'");
+            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope", "번호,층,존,외피유형,면적", "존='" + SelectZone + "'");
 
             int[] Construction_Count = new int[8]; double[] Construction_AreaSum = new double[8];
             int i = -1;
@@ -370,7 +325,7 @@ namespace main.contents
         {
             String 존유형;
 
-            string[][] ZoneE = Program.DB.getValue(DB.type.CalcDB, "ZoneEnvelope", "존,외피유형", "존='" + ZoneNum + "'");
+            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope", "존,외피유형", "존='" + ZoneNum + "'");
             int[] Construction_Count = new int[8];
             int i = -1;
             while (++i < ZoneE.Length)
@@ -429,7 +384,7 @@ namespace main.contents
             double AreaDirect_total = 0;
 
             //외피별, 직접외기 면적 정보 불러오기
-            string[][] ZoneE = Program.DB.getValue(DB.type.CalcDB, "ZoneEnvelope", "번호,기호,층,존,외피유형,면적,직접간접", "존='" + ZoneNum + "' AND 직접간접='직접외기'");
+            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope", "번호,층,존,외피유형,면적,직접간접", "존='" + ZoneNum + "' AND 직접간접='직접외기'");
             int i = -1;
             while (++i < ZoneE.Length)
             { AreaDirect_total += Convert.ToDouble(ZoneE[i][5]); }
@@ -442,12 +397,16 @@ namespace main.contents
 
         private void ZoneEnvelope_VisibleChanged(object sender, EventArgs e)
         {
-            String s = main.MainContents.selID;
-            s = s;
-            //s = "form_1_2345_test";
-            //var a = s.Split("_");
-            //int ID = Int32.Parse(a[3]);
+            String ID = main.MainContents.selID;
+            ID = ID.Substring(19, 9);
+            Num_textBox.Text = ID;
+            ZoneNum = ID;
+            load_table_ZoneEnvelopeInfo(ZoneNum);
+            string[][] Zone = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "존번호,바닥면적", "존번호= '" + ZoneNum + "'");
+            Calc_A(ZoneNum);
+            ZoneType = Calc_ZoneType();
+            Check_radioButton(ZoneType);
+        }
 
-         }
     }
 }
