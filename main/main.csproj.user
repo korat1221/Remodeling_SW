@@ -145,5 +145,14 @@
     <Compile Update="subcontents\ZoneLighting\LightingDB.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\ZoneLighting\LightingNatural_facade.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\ZoneLighting\LightingNatural_roof.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\ZoneLighting\LightingRenewDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -216,6 +216,7 @@ namespace main.contents
 
 
 
+
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
@@ -323,7 +324,7 @@ namespace main.contents
 
             if (NaturalType == "파사드")
             {
-                NaturalLighting_facade naturallighting_facade = new NaturalLighting_facade(NaturalType);
+                LightingNatural_facade naturallighting_facade = new LightingNatural_facade(NaturalType);
                 DialogResult result = naturallighting_facade.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -336,7 +337,7 @@ namespace main.contents
 
             if (NaturalType == "천창")
             {
-                NaturalLighting_roof naturallighting_roof = new NaturalLighting_roof(NaturalType);
+                LightingNatural_roof naturallighting_roof = new LightingNatural_roof(NaturalType);
                 DialogResult result = naturallighting_roof.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -362,7 +363,7 @@ namespace main.contents
                 RenewName2 = renewdb_form.Select_Renew[2];
                 Reneweff = Convert.ToDouble(renewdb_form.Select_Renew[4]);
                 RenewA = renewdb_form.Select_Renew[7];
- 
+
 
                 RenewType_textBox.Text = RenewName;
 
@@ -371,10 +372,14 @@ namespace main.contents
                 R3_textBox.Text = Reneweff.ToString();
 
 
-             
-            }
 
-            Load_RenewType_image(RenewName);
+            }
+            if (RenewType_textBox.Text != null)
+            { Load_RenewType_image(RenewName); }
+            else
+            {
+                Main_pictureBox2.Visible = false;
+            }
 
         }
 
@@ -392,11 +397,15 @@ namespace main.contents
         private void Renew_checkBox_CheckedChanged(object sender, EventArgs e)
         {
             RenewCheck();
-            
-            Load_RenewType_image(Type);
+
             RenewInfo();
             Load_Renew2_image();
-            
+            if (Renew_checkBox.Checked && RenewType_textBox.Text !=null)
+            { 
+                Load_RenewType_image(RenewName);
+            }
+            else
+            { Main_pictureBox2.Image = null; }
 
         }
 
@@ -409,6 +418,7 @@ namespace main.contents
                 Load_Shade_image();
             }
         }
+
 
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -698,26 +708,24 @@ namespace main.contents
         {
             if (Renew_checkBox.Checked)
             {
-               
+
                 RenewDB_button.Visible = true;
                 RenewDi_comboBox.Visible = true;
                 Slope_comboBox.Visible = true;
                 RenewDi_label.Visible = true;
                 Slope_label.Visible = true;
-                //Main_pictureBox2.Visible = false;
+                RenewType_textBox.Visible = true;
             }
 
-            else 
+            else
             {
-               
+
                 RenewDB_button.Visible = false;
                 RenewDi_comboBox.Visible = false;
                 Slope_comboBox.Visible = false;
                 RenewDi_label.Visible = false;
                 Slope_label.Visible = false;
                 RenewType_textBox.Visible = false;
-
-
             }
 
         }
@@ -726,21 +734,14 @@ namespace main.contents
         private void Load_RenewType_image(String Type)
         {
             //집광 채광 종류가 null이 아닐 경우 그림에 들어가도록
-            if (RenewName !=null  && Renew_checkBox.Checked)
-            {
+           
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_집광채광이미지", "이미지", "");
+                Main_pictureBox2.Visible = true;
                 Main_pictureBox2.Load(Program.gPath + Image[0][0]);
                 Main_pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
 
                 this.Main_pictureBox2.Location = new Point(0, 0);
                 this.Main_pictureBox2.BackColor = Color.Transparent;
-
-            }
-
-            else
-            {
-                Main_pictureBox2.Image = null;
-            }
 
         }
 
@@ -780,10 +781,12 @@ namespace main.contents
 
         private void Load_Lamp_image()
         {
-
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_램프분류이미지", "이미지", "조명분류 = '" + LightType2 + "'");
-            Lamp_pictureBox.Load(Program.gPath + Image[0][0]);
-            Lamp_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            try {
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_램프분류이미지", "이미지", "조명분류 = '" + LightType2 + "'");
+                Lamp_pictureBox.Load(Program.gPath + Image[0][0]);
+                Lamp_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            } catch { }
+            
 
         }
 
@@ -846,13 +849,17 @@ namespace main.contents
 
             //else
             //{
-               // Renew2_pictureBox.Image = null;
+            // Renew2_pictureBox.Image = null;
             //}
 
 
         }
-
-
+        private void ZoneLighting_VisibleChanged(object sender, EventArgs e)
+        {
+            String ID = main.MainContents.selID;
+            ID = ID.Substring(19, 9);
+            Zone_textBox.Text = ID;
+        }
     }
 
 }

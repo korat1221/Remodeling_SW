@@ -1671,14 +1671,23 @@ namespace main.contents
             }
             else { }
 
-            string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
-            CWType_pictureBox.Visible = true;
-            CWType_pictureBox.Load(Program.gPath + Image1[0][0]);
-            CWType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            string[][] Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
-            CWnstall_pictureBox.Visible = true;
-            CWnstall_pictureBox.Load(Program.gPath + Image2[0][0]);
-            CWnstall_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            try
+            {
+                string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
+                CWType_pictureBox.Visible = true;
+                CWType_pictureBox.Load(Program.gPath + Image1[0][0]);
+                CWType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            catch { }
+            try
+            {
+                string[][] Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
+                CWnstall_pictureBox.Visible = true;
+                CWnstall_pictureBox.Load(Program.gPath + Image2[0][0]);
+                CWnstall_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            catch { }
+           
         }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
