@@ -1,6 +1,6 @@
 ﻿namespace main.subcontents.ZoneLighting
 {
-    partial class NaturalLighting_roof
+    partial class LightingNatural_roof
     {
         /// <summary>
         /// Required designer variable.

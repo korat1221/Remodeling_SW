@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace main.subcontents.ZoneLighting
 {
-    public partial class NaturalLighting_facade : Form
+    public partial class LightingNatural_facade : Form
     {
 
 
@@ -23,7 +23,7 @@ namespace main.subcontents.ZoneLighting
 
 
 
-        public NaturalLighting_facade(string NaturalType) 
+        public LightingNatural_facade(string NaturalType) 
         {
             InitializeComponent();
             this.NaturalType = NaturalType;
