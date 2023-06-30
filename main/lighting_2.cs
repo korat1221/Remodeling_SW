@@ -1603,7 +1603,7 @@ namespace main
                 //상부 음영 계수 계산
                 if (γSh_hA < 67.5)
                 {
-                    Zone_ISh_hA = shade.Calc_ISh_hA(γSh_hA);
+                    Zone_ISh_hA = shade.Calc_ISh_hA(γSh_lsh);
                 }
                 else
                 {

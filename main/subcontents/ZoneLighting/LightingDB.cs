@@ -13,11 +13,12 @@ namespace main.subcontents.ZoneLighting
 {
     public partial class LightingDB : Form
     {
-        String FrameType;
+        
         double Count_LightDB;
         int SelectRow;
         public String[] Select_Light = new string[9];
         String UserNum, UserDBName, UserDB_Manufacture, UserDB_SingleDoubleTriple, UserDB_ArAir, UserDB_LE_CL_V;
+
         Double UserDB_Ug, UserDB_g, UserDB_Tao, UserDB_RExternal, UserDB_RInternal;
 
         public LightingDB()
@@ -84,7 +85,7 @@ namespace main.subcontents.ZoneLighting
 
             for (int n = 0; n <Light.Length; n++)
             {
-                table_Light.Rows.Add(Light[n][0],Light[n][1],Light[n][2],Light[n][3],Light[n][4],Light[n][5],Light[n][6],Light[n][7],Light[n][8]);
+                table_Light.Rows.Add(Light[n][0],Light[n][1],Light[n][2],Light[n][3],Light[n][4],Light[n][5],Light[n][6], String.Format("{0:F2}", Convert.ToDouble(Light[n][7])), String.Format("{0:F2}", Convert.ToDouble(Light[n][8])));
             }
             Light_dataGridView.DataSource = table_Light;
             Count_LightDB = Light.Length;
@@ -160,6 +161,8 @@ namespace main.subcontents.ZoneLighting
 
 
         //}
+
+                
 
         //데이터그리드뷰 체크박스 선택 시
         private void Light_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
