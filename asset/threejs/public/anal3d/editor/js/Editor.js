@@ -1674,10 +1674,114 @@ Editor.prototype = {
 			}
 		}
 	},
-
 	sendWallData: function () {
 		if (!this.debug.use) {
-			window.chrome.webview.postMessage(JSON.stringify({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"tree":this.getTreeInfo(1),"tree2":this.getTreeInfo(0)}));	   
+			let _getWin = (cardi, id) => {
+				for (const [idx, el] of Object.entries(this.wall[cardi])) {
+					if (el.parent && el.parent == id) {
+						return el;
+					}
+				}
+			};
+			let _getMainWin = (space) => {
+				let i = -1;
+				let win = null;
+		
+				while(++i < space.length) {
+					let el = space[i];
+					let w = _getWin(el.cardi, el.id);
+		
+					if (w && (!win || win.area < w.area) && w.parent != '') {
+						win = w;
+					}
+				}
+		
+				return win;
+			};
+			let _getInwalledId = (inwalled) => {
+				if (inwalled) {
+					for (const [cardi, value] of Object.entries(this.wall)) {
+						for (const [idx, el] of Object.entries(value)) {
+							if (cardi == inwalled.cardi && idx == inwalled.idx) {
+								return el.id;
+							}
+						}
+					}
+				}
+				return "";
+			}    
+
+			let type = {"WALL":"외벽","INWALL":"간벽","ROOF":"지붕","FLOOR":"바닥","GWALL":"지중벽","WIN":"창호","CWALL":"커튼월","DOOR":"출입문"};
+            let tcode = {"WALL":"WL","INWALL":"IW","ROOF":"RF","FLOOR":"FL","GWALL":"GW","WIN":"WN","CWALL":"CW","DOOR":"DR"};
+            let cardinal = {"N":"북","S":"남","E":"동","W":"서","NE":"북동","NW":"북서","SE":"남동","SW":"남서","UP":"위","DOWN":"아래","UP_N":"북쪽위","UP_S":"남쪽위","UP_E":"동쪽위","UP_W":"서쪽위","UP_NE":"북동쪽위","UP_NW":"북서쪽위","UP_SE":"남동쪽위","UP_SW":"남서쪽위"};
+
+			let sql = "", i = -1;
+
+			sql += "DELETE FROM ZoneGeneral_3D;DELETE FROM ZoneEnvelope_3D;DELETE FROM ZoneEnvelope_3D;DELETE FROM ThermalBridge_3D;";
+
+			while(++i < this.spaces.length) {
+				let space = this.spaces[i];
+				let win = _getMainWin(space);
+				let wall_length = 0;
+				let depth = 0;
+				let area = 0;
+				let height = 0;
+				let cardi = "";
+				let zid = "";
+		
+				if (win) {
+					let wall = this.wall[win.cardinal][win.parent];
+
+					cardi = win.cardinal;
+
+					if (wall) {
+						wall_length = wall.wall_length;
+					}
+				}					
+				let floor = this.wall[space[0].cardi][space[0].id];
+
+				if (floor) {
+
+					zid = floor.floor + "F_Zone" + ((floor.sid ? floor.sid : "") + "").padStart(3, '0')
+					area = floor.area;
+					depth = wall_length != 0 ? area / wall_length : 0;
+					if (win) {
+						height = (win.box[0][1] > win.box[1][1] ? win.box[0][1] : win.box[1][1]) - floor.bbox[0][1];
+					}
+				}
+
+				sql += "INSERT INTO ZoneGeneral_3D (존번호,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES ('" + zid + "','" + area + "','" + (cardi != "" ? cardinal[cardi] : "") + "','" + wall_length + "','" + depth + "','" + height + "');";
+			}
+												
+			for (const [cardi, value] of Object.entries(this.wall)) {
+				for (const [idx, el] of Object.entries(value)) {
+					if (el.id) {
+ 						let zoned = "Zone" + ((el.sid ? el.sid : "") + "").padStart(3, '0');
+						sql += "INSERT INTO ZoneEnvelope_3D (번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이) VALUES ('" + el.floor + "F_" + zoned + "_" + tcode[el.type] + "','" + el.floor + "','" + zoned + "','" + type[el.type] + "','','" + el.area + "','" + _getInwalledId(el.inwalled) + "','" + cardinal[cardi] + "','" + el.slope + "','" + (el.right_shadow_angle ? el.right_shadow_angle : "0") + "','" + (el.left_shadow_angle ? el.left_shadow_angle : "0") + "','" + (el.up_shadow_angle ? el.up_shadow_angle : "0") + "','" + (el.shadow_angle ? el.shadow_angle : "0") + "','','','','','','" + el.wall_length + "');";
+					}
+				}
+			}
+
+			let _bridges = {
+				"1":"평지붕+외벽[90]",
+				"2":"평지붕+내벽",
+				"3":"경사지붕",
+				"4":"경사지붕+벽",
+				"5":"경사지붕+경사벽",
+				"6":"슬라브+벽",
+				"7":"내벽+외벽",
+				"8":"외벽+외벽",
+				"9":"외벽+내벽+외벽",
+				"10":"---",
+				"11":"평지붕+벽[270]",
+				"12":"평지붕+벽[270]+내벽",
+			};
+
+			Object.keys(this.bridges).forEach(el => {
+				sql += "INSERT INTO ThermalBridge_3D (ID,열교항목,열교길이) VALUES (" + el + ",'" + _bridges[el] + "','" + this.bridges[el].dist + "');";
+			});
+
+			window.chrome.webview.postMessage(sql + "@@@" + JSON.stringify({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"tree":this.getTreeInfo(1),"tree2":this.getTreeInfo(0)}));	   
 //			parent.postMessage({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"tree":this.getTreeInfo(1),"tree2":this.getTreeInfo(0)},'*');
 		}
 	},

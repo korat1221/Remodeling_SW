@@ -196,16 +196,19 @@ namespace main
                 {
                     DoLoadForm(8, OnLoadProc);
 
-                    using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                    if (MessageBox.Show("모델을 다시 로드 할 경우, 입력 정보 전체 삭제됩니다. 계속하시겠습니까 ?", "YesOrNo", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        openFileDialog.Filter = "obj 파일 (*.obj)|*.obj";
-                        openFileDialog.FilterIndex = 2;
-                        openFileDialog.RestoreDirectory = true;
-
-                        if (openFileDialog.ShowDialog() == DialogResult.OK)
+                        using (OpenFileDialog openFileDialog = new OpenFileDialog())
                         {
-                            //Get the path of specified file
-                            Program.UTIL.load3DModel(openFileDialog.FileName);
+                            openFileDialog.Filter = "obj 파일 (*.obj)|*.obj";
+                            openFileDialog.FilterIndex = 2;
+                            openFileDialog.RestoreDirectory = true;
+
+                            if (openFileDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                //Get the path of specified file
+                                Program.UTIL.load3DModel(openFileDialog.FileName);
+                            }
                         }
                     }
                 }

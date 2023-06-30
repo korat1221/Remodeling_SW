@@ -378,6 +378,14 @@ Shadows.prototype = {
 				}
 			}
 		}	
+		for (const [cardi, value] of Object.entries(this.editor.wall)) {
+			for (const [idx, el] of Object.entries(value)) {
+				if (cardi !== 'DOWN' && cardi.indexOf('UP') < 0 && el.bbox) {
+					el.wall_length = (new THREE.Vector3(el.bbox[0][0],el.bbox[1][1],el.bbox[0][2])).distanceTo(new THREE.Vector3(el.bbox[1][0],el.bbox[1][1],el.bbox[1][2]));
+				}
+				else el.wall_length = 0;
+			}
+		}		
 	},
 };
 

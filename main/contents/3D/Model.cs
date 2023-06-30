@@ -79,13 +79,11 @@ namespace main.contents
                 int n;
                 String s = args.TryGetWebMessageAsString();
 
-                if ((n = s.IndexOf("__execute_sql__")) >= 0)
+                if ((n = s.IndexOf("@@@")) >= 0)
                 {
-                    Program.DB.executeSQL(DB.type.ProjDB, s.Substring(n));
-                }
-                else
-                {
-                    Program.UTIL.write3DModel(Program.ProjName + ".json",s);
+                    String json = s.Substring(n + 3);
+                    Program.UTIL.write3DModel(Program.ProjName + ".json", json);
+                    Program.DB.executeSQL(DB.type.ProjDB, s.Substring(0, n));
                 }
             }
             catch (Exception ex)
