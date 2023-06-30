@@ -32,11 +32,13 @@
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            label4 = new Label();
             Copy_button = new Button();
             Remove_button = new Button();
             Add_button = new Button();
             dataGridView1 = new DataGridView();
             Icon_pictureBox = new PictureBox();
+            Num_textBox = new TextBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -45,6 +47,8 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(Num_textBox);
+            GeneralPanel.Controls.Add(label4);
             GeneralPanel.Controls.Add(Copy_button);
             GeneralPanel.Controls.Add(Remove_button);
             GeneralPanel.Controls.Add(Add_button);
@@ -55,6 +59,15 @@
             GeneralPanel.Size = new Size(977, 661);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Location = new Point(94, 32);
+            label4.Name = "label4";
+            label4.Size = new Size(0, 15);
+            label4.TabIndex = 98;
             // 
             // Copy_button
             // 
@@ -153,6 +166,19 @@
             Icon_pictureBox.TabIndex = 0;
             Icon_pictureBox.TabStop = false;
             // 
+            // Num_textBox
+            // 
+            Num_textBox.BackColor = Color.White;
+            Num_textBox.BorderStyle = BorderStyle.None;
+            Num_textBox.Enabled = false;
+            Num_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Num_textBox.ForeColor = SystemColors.ControlText;
+            Num_textBox.Location = new Point(86, 31);
+            Num_textBox.Name = "Num_textBox";
+            Num_textBox.Size = new Size(67, 15);
+            Num_textBox.TabIndex = 100;
+            Num_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
             // List_Zone
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -164,6 +190,7 @@
             Name = "List_Zone";
             Text = "Form3";
             GeneralPanel.ResumeLayout(false);
+            GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
             ResumeLayout(false);
@@ -177,5 +204,7 @@
         private Button Remove_button;
         private Button Add_button;
         private Button Copy_button;
+        private Label label4;
+        private TextBox Num_textBox;
     }
 }

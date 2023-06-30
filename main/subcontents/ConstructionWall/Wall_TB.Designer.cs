@@ -370,7 +370,7 @@
             TB_dataGridView.RowTemplate.Height = 25;
             TB_dataGridView.Size = new Size(800, 134);
             TB_dataGridView.TabIndex = 19;
-            TB_dataGridView.CellContentClick += Spacer_dataGridView_CellContentClick;
+            TB_dataGridView.CellContentClick += TB_dataGridView_CellContentClick;
             // 
             // panel2
             // 

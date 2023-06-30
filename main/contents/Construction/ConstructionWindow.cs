@@ -58,9 +58,18 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
 
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+            Panel p = (Panel)sender;
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+        }
         private void Name_textBox_TextChanged(object sender, EventArgs e)
         {
-            WindowName = Name_textBox.Text;
+            if (Name_textBox.Text != null)
+            {
+                WindowName = Name_textBox.Text.ToString();
+            }
+
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
@@ -210,8 +219,12 @@ namespace main.contents
 
         private void AdditionalWindow_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            OldWindow = AdditionalWindow_comboBox.SelectedItem.ToString();
-            Calc_g_AdditionalWindow();
+            DataRowView? item = AdditionalWindow_comboBox.SelectedItem as DataRowView;
+            if (item != null)
+            {
+                OldWindow = item.Row.ItemArray[0].ToString();
+                Calc_g_AdditionalWindow();
+            }
         }
 
         private double Calc_Uw_AdditionalWindow(double NewUw)
@@ -285,7 +298,7 @@ namespace main.contents
         {
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
-
+            WindowType_pictureBox.Visible = true;
             WindowType_pictureBox.Load(Program.gPath + Image[0][0]);
             WindowType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -293,97 +306,98 @@ namespace main.contents
 
         private void UwMethod_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UwMethod = Uw_comboBox.SelectedItem.ToString();
-
-            if (UwMethod == "계산")
+            if (Uw_comboBox.SelectedItem != null)
             {
-                Frame_label.Visible = true;
-                Frame_comboBox.Visible = true;
-                FrameName_textBox.Visible = true;
-                FrameDB_button.Visible = true;
+                UwMethod = Uw_comboBox.SelectedItem.ToString();
 
-                Spacer_label.Visible = true;
-                Spacer_button.Visible = true;
-                SpacerName_textBox.Visible = true;
+                if (UwMethod == "계산")
+                {
+                    Frame_label.Visible = true;
+                    Frame_comboBox.Visible = true;
+                    FrameName_textBox.Visible = true;
+                    FrameDB_button.Visible = true;
 
-                Ug_label.Visible = true;
-                Ug_textBox.Visible = true;
-                Ug_unit_label.Visible = true;
+                    Spacer_label.Visible = true;
+                    Spacer_button.Visible = true;
+                    SpacerName_textBox.Visible = true;
 
-                Psi_fix_label.Visible = true;
-                Psi_open_label.Visible = true;
-                Psi_fix_unit_label.Visible = true;
-                Psi_open_unit_label.Visible = true;
-                Psi_g_fix_textBox.Visible = true;
-                Psi_g_open_textBox.Visible = true;
+                    Ug_label.Visible = true;
+                    Ug_textBox.Visible = true;
+                    Ug_unit_label.Visible = true;
+
+                    Psi_fix_label.Visible = true;
+                    Psi_open_label.Visible = true;
+                    Psi_fix_unit_label.Visible = true;
+                    Psi_open_unit_label.Visible = true;
+                    Psi_g_fix_textBox.Visible = true;
+                    Psi_g_open_textBox.Visible = true;
 
 
-                Uw2_label.Visible = false;
-                Uw2_unit_label.Visible = false;
-                Uw2_textBox.Visible = false;
-                Uw2_textBox.Enabled = false;
-                Uw2_textBox.BorderStyle = BorderStyle.None;
+                    Uw2_label.Visible = false;
+                    Uw2_unit_label.Visible = false;
+                    Uw2_textBox.Visible = false;
+                    Uw2_textBox.Enabled = false;
+                    Uw2_textBox.BorderStyle = BorderStyle.None;
+                }
+                else if (UwMethod == "법규")
+                {
+                    Frame_label.Visible = false;
+                    Frame_comboBox.Visible = false;
+                    FrameName_textBox.Visible = false;
+                    FrameDB_button.Visible = false;
+
+                    Spacer_label.Visible = false;
+                    Spacer_button.Visible = false;
+                    SpacerName_textBox.Visible = false;
+
+                    Ug_label.Visible = false;
+                    Ug_textBox.Visible = false;
+                    Ug_unit_label.Visible = false;
+
+                    Psi_fix_label.Visible = false;
+                    Psi_open_label.Visible = false;
+                    Psi_fix_unit_label.Visible = false;
+                    Psi_open_unit_label.Visible = false;
+                    Psi_g_fix_textBox.Visible = false;
+                    Psi_g_open_textBox.Visible = false;
+
+                    Uw2_label.Visible = true;
+                    Uw2_unit_label.Visible = true;
+                    Uw2_textBox.Visible = true;
+                    Uw2_textBox.Enabled = false;
+                    Uw2_textBox.BorderStyle = BorderStyle.None;
+                }
+                else if (UwMethod == "진단")
+                {
+                    Frame_label.Visible = false;
+                    Frame_comboBox.Visible = false;
+                    FrameName_textBox.Visible = false;
+                    FrameDB_button.Visible = false;
+
+                    Spacer_label.Visible = false;
+                    Spacer_button.Visible = false;
+                    SpacerName_textBox.Visible = false;
+
+                    Ug_label.Visible = false;
+                    Ug_textBox.Visible = false;
+                    Ug_unit_label.Visible = false;
+
+                    Psi_fix_label.Visible = false;
+                    Psi_open_label.Visible = false;
+                    Psi_fix_unit_label.Visible = false;
+                    Psi_open_unit_label.Visible = false;
+                    Psi_g_fix_textBox.Visible = false;
+                    Psi_g_open_textBox.Visible = false;
+
+                    Uw2_label.Visible = true;
+                    Uw2_unit_label.Visible = true;
+                    Uw2_textBox.Visible = true;
+                    Uw2_textBox.Text = string.Empty;
+                    Uw2_textBox.Enabled = true;
+                    Uw2_textBox.BorderStyle = BorderStyle.FixedSingle;
+                }
+                Rule_Uw();
             }
-            else if (UwMethod == "법규")
-            {
-                Frame_label.Visible = false;
-                Frame_comboBox.Visible = false;
-                FrameName_textBox.Visible = false;
-                FrameDB_button.Visible = false;
-
-                Spacer_label.Visible = false;
-                Spacer_button.Visible = false;
-                SpacerName_textBox.Visible = false;
-
-                Ug_label.Visible = false;
-                Ug_textBox.Visible = false;
-                Ug_unit_label.Visible = false;
-
-                Psi_fix_label.Visible = false;
-                Psi_open_label.Visible = false;
-                Psi_fix_unit_label.Visible = false;
-                Psi_open_unit_label.Visible = false;
-                Psi_g_fix_textBox.Visible = false;
-                Psi_g_open_textBox.Visible = false;
-
-                Uw2_label.Visible = true;
-                Uw2_unit_label.Visible = true;
-                Uw2_textBox.Visible = true;
-                Uw2_textBox.Enabled = false;
-                Uw2_textBox.BorderStyle = BorderStyle.None;
-            }
-            else if (UwMethod == "진단")
-            {
-                Frame_label.Visible = false;
-                Frame_comboBox.Visible = false;
-                FrameName_textBox.Visible = false;
-                FrameDB_button.Visible = false;
-
-                Spacer_label.Visible = false;
-                Spacer_button.Visible = false;
-                SpacerName_textBox.Visible = false;
-
-                Ug_label.Visible = false;
-                Ug_textBox.Visible = false;
-                Ug_unit_label.Visible = false;
-
-                Psi_fix_label.Visible = false;
-                Psi_open_label.Visible = false;
-                Psi_fix_unit_label.Visible = false;
-                Psi_open_unit_label.Visible = false;
-                Psi_g_fix_textBox.Visible = false;
-                Psi_g_open_textBox.Visible = false;
-
-                Uw2_label.Visible = true;
-                Uw2_unit_label.Visible = true;
-                Uw2_textBox.Visible = true;
-                Uw2_textBox.Text = string.Empty;
-                Uw2_textBox.Enabled = true;
-                Uw2_textBox.BorderStyle = BorderStyle.FixedSingle;
-            }
-
-            Rule_Uw();
-
         }
 
 
@@ -397,8 +411,11 @@ namespace main.contents
 
         private void DiIndil_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DiIndi = DiIndi_comboBox.SelectedItem.ToString();
-            Rule_Uw();
+            if (DiIndi_comboBox.SelectedItem != null)
+            {
+                DiIndi = DiIndi_comboBox.SelectedItem.ToString();
+                Rule_Uw();
+            }
         }
 
         private void ImportSize_button_Click(object sender, EventArgs e)
@@ -467,49 +484,52 @@ namespace main.contents
 
         private void Frame_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FrameType = Frame_comboBox.SelectedItem.ToString();
-            switch (FrameType)
+            if (Frame_comboBox.SelectedItem != null)
             {
-                case "단창_SL":
-                    SingleDoubleType = "단창";
-                    break;
-
-                case "단창_T/T":
-                    SingleDoubleType = "단창";
-                    break;
-
-                case "이중창_SL":
-                    SingleDoubleType = "이중창";
-                    break;
-            }
-            //창호 유형 다시 선택했을 경우 
-            try
-            {
-                if (check_FrameType != null)
+                FrameType = Frame_comboBox.SelectedItem.ToString();
+                switch (FrameType)
                 {
-                    if (FrameType != check_FrameType)
-                    {
-                        MessageBox.Show("프레임, 유리, 간봉, 설치열교를 다시 선택하세요.");
-                        FrameName = "";
-                        FrameMaterial = "";
-                        FrameName_textBox.Text = "";
-                        GlassName = "";
-                        GlassName_textBox.Text = "";
-                        SpacerName = "";
-                        SpacerName_textBox.Text = "";
-                        InstallName = "";
-                        Install_textBox.Text = "";
-                        Uf_open_textBox.Text = "";
-                        Uf_fix_textBox.Text = "";
-                        Uf_btw_textBox.Text = "";
-                        df_open_textBox.Text = "";
-                        df_fix_textBox.Text = "";
-                        df_btw_textBox.Text = "";
-                    }
-                }
+                    case "단창_SL":
+                        SingleDoubleType = "단창";
+                        break;
 
+                    case "단창_T/T":
+                        SingleDoubleType = "단창";
+                        break;
+
+                    case "이중창_SL":
+                        SingleDoubleType = "이중창";
+                        break;
+                }
+                //창호 유형 다시 선택했을 경우 
+                try
+                {
+                    if (check_FrameType != null)
+                    {
+                        if (FrameType != check_FrameType)
+                        {
+                            MessageBox.Show("프레임, 유리, 간봉, 설치열교를 다시 선택하세요.");
+                            FrameName = "";
+                            FrameMaterial = "";
+                            FrameName_textBox.Text = "";
+                            GlassName = "";
+                            GlassName_textBox.Text = "";
+                            SpacerName = "";
+                            SpacerName_textBox.Text = "";
+                            InstallName = "";
+                            Install_textBox.Text = "";
+                            Uf_open_textBox.Text = "";
+                            Uf_fix_textBox.Text = "";
+                            Uf_btw_textBox.Text = "";
+                            df_open_textBox.Text = "";
+                            df_fix_textBox.Text = "";
+                            df_btw_textBox.Text = "";
+                        }
+                    }
+
+                }
+                catch { }
             }
-            catch { }
         }
 
 
@@ -561,7 +581,7 @@ namespace main.contents
 
 
                     string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호프레임이미지", "이미지", "유형1 = '" + FrameType + "' AND 유형2 = '기본형' AND 재료 = '" + FrameMaterial + "'");
-
+                    WindowFrame_pictureBox.Visible = true;
                     WindowFrame_pictureBox.Load(Program.gPath + Image[0][0]);
                     WindowFrame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -710,23 +730,24 @@ namespace main.contents
 
         private void Install_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            InstallType = Install_comboBox.SelectedItem.ToString();
-
-            //설치 유형 다시 선택했을 경우 
-            try
+            if (Install_comboBox.SelectedItem != null)
             {
-                if (check_InstallType != null)
+                InstallType = Install_comboBox.SelectedItem.ToString();
+                //설치 유형 다시 선택했을 경우 
+                try
                 {
-                    if (InstallType != check_InstallType)
+                    if (check_InstallType != null)
                     {
-                        MessageBox.Show("설치 위치를 다시 선택하세요.");
-                        InstallName = "";
-                        Install_textBox.Text = "";
+                        if (InstallType != check_InstallType)
+                        {
+                            MessageBox.Show("설치 위치를 다시 선택하세요.");
+                            InstallName = "";
+                            Install_textBox.Text = "";
+                        }
                     }
                 }
+                catch { }
             }
-            catch { }
-
         }
 
         private void Install_button_Click(object sender, EventArgs e)
@@ -795,7 +816,7 @@ namespace main.contents
 
 
                         string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");
-
+                        WindowInstall_pictureBox.Visible = true;
                         WindowInstall_pictureBox.Load(Program.gPath + Image[0][0]);
                         WindowInstall_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     }
@@ -808,9 +829,19 @@ namespace main.contents
         {
             if (UwMethod == "법규")
             {
-                String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율", "구조체 = '창호' And 시기 = '2018.09' AND  지역 = '중부1' AND 직접간접 =  '" + DiIndi + "'");
+                String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
+                String[][] Uvalue;
+                if (Type == "기존창호")
+                {
+                    Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '" + Date[0][0] + "' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
+                }
+                else
+                {
+                    Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
+                }
                 Uw = Convert.ToDouble(Uvalue[0][0]);
                 Uw2_textBox.Text = String.Format("{0:F3}", Uw);
+                MessageBox.Show("[(" + Uvalue[0][2] + " 시행)" + Uvalue[0][1] + "] " + Uvalue[0][3] + " 열관류율 적용");
             }
         }
 
@@ -916,9 +947,102 @@ namespace main.contents
             Program.getMenuForm().DoLoadForm(29, OnLoadListProc);
         }
 
+        private void reset()
+        {
+            WinNum_textBox.Text = "";
+            Name_textBox.Text = "";
 
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            radioButton3.Checked = false;
+            radioButton4.Checked = false;
+            radioButton5.Checked = false;
+
+            AdditionalWindow_comboBox.SelectedItem = null;
+            Uw_comboBox.SelectedItem = null;
+            DiIndi_comboBox.SelectedItem = null;
+            Frame_comboBox.SelectedItem = null;
+
+            FrameMaterial_textBox.Text = null;
+            FrameName_textBox.Text = null;
+            GlassName_textBox.Text = null;
+            SpacerName_textBox.Text = null;
+
+            Install_comboBox.SelectedItem = null;
+            Install_textBox.Text = null;
+
+            Ug_textBox.Text = null;
+            g_textBox.Text = null;
+            τD65_SNA_textBox.Text = null;
+            Psi_g_fix_textBox.Text = null;
+            Psi_g_open_textBox.Text = null;
+            Psi_InstallTop_textBox.Text = null;
+            Psi_InstallSide_textBox.Text = null;
+            Psi_InstallButtom_textBox.Text = null;
+            Uw2_textBox.Text = null;
+            Uf_open_textBox.Text = null;
+            Uf_fix_textBox.Text = null;
+            Uf_btw_textBox.Text = null;
+            df_open_textBox.Text = null;
+            df_fix_textBox.Text = null;
+            df_btw_textBox.Text = null;
+
+            WindowType_pictureBox.Visible = false;
+            WindowFrame_pictureBox.Visible = false;
+            WindowInstall_pictureBox.Visible = false;
+
+            WinNum = null;
+            WindowName = null;
+            Type = null;
+            OldWindow = null;
+            UwMethod = null;
+            DiIndi = null;
+            FrameType = null;
+            SingleDoubleType = null;
+            FrameMaterial = null;
+            FrameName = null;
+            GlassName = null;
+            SpacerName = null;
+            InstallType = null;
+            InstallName = null;
+            LE_CL_V = null;
+            check_FrameType = null;
+            check_SingleDoubleType = null;
+            check_FrameMaterial = null;
+            check_LE_CL_V = null;
+            check_InstallType = null;
+
+            Ug = 0;
+            g = 0;
+            τD65_SNA = 0;
+            Psi_g_fix = 0;
+            Psi_g_open = 0;
+            Uw = 0;
+
+            Sub_Uw.Clear(); Sub_Uw_inst.Clear(); Sub_dUinst.Clear();
+
+            Uf_open = 0;
+            Uf_fix = 0;
+            Uf_btw = 0;
+            df_open = 0;
+            df_fix = 0;
+            df_btw = 0;
+
+            Psi_InstallTop = 0;
+            Psi_InstallSide = 0;
+            Psi_InstallButtom = 0;
+
+            Sub_Area.Clear(); Sub_Width.Clear(); Sub_Height.Clear(); Sub_Ag_fix.Clear(); Sub_Ag_open.Clear(); Sub_Af_open.Clear(); Sub_Af_fix.Clear(); Sub_Af_btw.Clear(); Sub_Lg_fix.Clear(); Sub_Lg_open.Clear();
+
+            Old = null;
+            f_shgc = null;
+            f_τ = null;
+            Size = null;
+        }
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
+            reset();
+
             try
             {
                 WinNum_textBox.Text = ID;
@@ -1040,16 +1164,17 @@ namespace main.contents
                 ImportSize();
 
                 string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
+                WindowType_pictureBox.Visible = true;
                 WindowType_pictureBox.Load(Program.gPath + Image1[0][0]);
                 WindowType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 string[][] Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호프레임이미지", "이미지", "유형1 = '" + FrameType + "' AND 유형2 = '기본형' AND 재료 = '" + FrameMaterial + "'");
+                WindowFrame_pictureBox.Visible = true;
                 WindowFrame_pictureBox.Load(Program.gPath + Image2[0][0]);
                 WindowFrame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 string[][] Image3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");
+                WindowInstall_pictureBox.Visible = true;
                 WindowInstall_pictureBox.Load(Program.gPath + Image3[0][0]);
                 WindowInstall_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-
-
             }
             catch { }
         }
@@ -1058,5 +1183,6 @@ namespace main.contents
             WinNum_textBox.Text = ID;
             WinNum = ID;
         }
+
     }
 }

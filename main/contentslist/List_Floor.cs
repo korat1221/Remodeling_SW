@@ -16,7 +16,6 @@ namespace main.contentslist
         static String currentID = "";
         static String inEditing = "Add";
 
-        String CWNum;
         double CountDB;
         int SelectRow;
         DataTable ListTable = new DataTable();
@@ -26,8 +25,8 @@ namespace main.contentslist
         {
             InitializeComponent();
 
-            //Icon_pictureBox.Load(Program.gPath + "images/1sticon/4.Zone_on3.png");
-            //Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            Icon_pictureBox.Load(Program.gPath + "images/1sticon/4.Zone_on3.png");
+            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             Create_Table();
         }
 
@@ -39,7 +38,7 @@ namespace main.contentslist
 
         public static bool OnLoadProc(Form form)
         {
-            ConstructionCW f = (ConstructionCW)form;
+            List_Zone f = (List_Zone)form;
 
             if (inEditing == "Edit")
             {
@@ -62,7 +61,7 @@ namespace main.contentslist
         {
             currentID = ID;
             inEditing = editing;
-            Program.getMenuForm().DoLoadForm(2, OnLoadProc);
+            Program.getMenuForm().DoLoadForm(33, OnLoadProc);
         }
 
 
@@ -109,7 +108,7 @@ namespace main.contentslist
             }
             dataGridView1.DataSource = this.ListTable;
             CountDB = List.Length;
-           Program.UTIL.resetMainTree(3, 0, mainMenu.ToArray(), "12"); // 예시 코드: 메인 메뉴 동적 할당
+           Program.UTIL.resetMainTree(3, 0, mainMenu.ToArray(), "32"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
         //선택한 열 색 표시
@@ -143,18 +142,6 @@ namespace main.contentslist
 
         private void Remove_button_Click(object sender, EventArgs e)
         {
-            int k = dataGridView1.CurrentCell.RowIndex;
-            if ((MessageBox.Show(dataGridView1.Rows[k].Cells[2].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
-            {
-                if (k > -1)
-                {
-                        String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                        Program.DB.deleteValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Delete_Num + "'");
-                        load_List();
-                   
-                }
-            }
-
         }
 
         private void dataGridView1_DoubleClick(object sender, EventArgs e)
@@ -163,29 +150,19 @@ namespace main.contentslist
             if (k > -1)
             {
                     Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
-
             }
 
         }
 
         private void Copy_button_Click(object sender, EventArgs e)
         {
-            CWNum = Program.UTIL.CreateNum("ConstructionCW", "번호", "CW");
-            int k = dataGridView1.CurrentCell.RowIndex;
-            if (k > -1)
-            {
-                String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-              
-                Program.DB.CopyValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Copy_Num + "'", CWNum);
-                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionCW" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + CWNum + "'");                
-                Load_form(CWNum, "Copy");
-              
-            }
         }
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
         }
+       
+
     }
 }

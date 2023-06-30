@@ -26,7 +26,7 @@ namespace main.contents
         String Ceiling_index, Wall_index, InWall_index, Slab_index;
         double Cwirk_total;
 
-   
+
         public ZoneEnvelope()
         {
 
@@ -83,7 +83,7 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
 
-        
+
         //임시로 존번호 선택하도록 함 > 추후 생성자로 복붙 필요 
         private void Zone_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -440,5 +440,14 @@ namespace main.contents
 
         }
 
+        private void ZoneEnvelope_VisibleChanged(object sender, EventArgs e)
+        {
+            String s = main.MainContents.selID;
+            s = s;
+            //s = "form_1_2345_test";
+            //var a = s.Split("_");
+            //int ID = Int32.Parse(a[3]);
+
+         }
     }
 }

@@ -182,7 +182,7 @@ namespace main.contents
             WinNum_textBox.BorderStyle = BorderStyle.None;
             WinNum_textBox.Enabled = false;
             WinNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            WinNum_textBox.ForeColor = SystemColors.ControlDark;
+            WinNum_textBox.ForeColor = SystemColors.ControlText;
             WinNum_textBox.Location = new Point(80, 19);
             WinNum_textBox.Name = "WinNum_textBox";
             WinNum_textBox.Size = new Size(67, 15);
@@ -340,7 +340,6 @@ namespace main.contents
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.BorderStyle = BorderStyle.Fixed3D;
             panel2.Controls.Add(Size_textBox);
             panel2.Controls.Add(label1);
             panel2.Controls.Add(ImportSize_button);
@@ -383,6 +382,7 @@ namespace main.contents
             panel2.Name = "panel2";
             panel2.Size = new Size(977, 307);
             panel2.TabIndex = 18;
+            panel2.Paint += panel2_Paint;
             // 
             // Size_textBox
             // 
@@ -1027,7 +1027,6 @@ namespace main.contents
             // Frame_tabPage
             // 
             Frame_tabPage.BackColor = Color.White;
-            Frame_tabPage.BorderStyle = BorderStyle.FixedSingle;
             Frame_tabPage.Controls.Add(label10);
             Frame_tabPage.Controls.Add(label8);
             Frame_tabPage.Controls.Add(label22);

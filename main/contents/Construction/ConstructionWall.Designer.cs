@@ -32,6 +32,7 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            label1 = new Label();
             CW_comboBox = new ComboBox();
             OldWall_comboBox = new ComboBox();
             CW_label = new Label();
@@ -51,7 +52,6 @@
             WallNum_textBox = new TextBox();
             Icon_pictureBox = new PictureBox();
             Name_textBox = new TextBox();
-            label1 = new Label();
             Previous_button = new Button();
             Save_button = new Button();
             TB_button = new Button();
@@ -125,6 +125,7 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = System.Drawing.Color.White;
+            GeneralPanel.Controls.Add(label1);
             GeneralPanel.Controls.Add(CW_comboBox);
             GeneralPanel.Controls.Add(OldWall_comboBox);
             GeneralPanel.Controls.Add(CW_label);
@@ -138,12 +139,20 @@
             GeneralPanel.Controls.Add(WallNum_textBox);
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Controls.Add(Name_textBox);
-            GeneralPanel.Controls.Add(label1);
             GeneralPanel.Location = new Point(12, 12);
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(977, 101);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(142, 19);
+            label1.Name = "label1";
+            label1.Size = new Size(31, 15);
+            label1.TabIndex = 112;
+            label1.Text = "명칭";
             // 
             // CW_comboBox
             // 
@@ -310,7 +319,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(142, 57);
+            label3.Location = new Point(141, 57);
             label3.Name = "label3";
             label3.Size = new Size(33, 15);
             label3.TabIndex = 92;
@@ -322,7 +331,7 @@
             WallNum_textBox.BorderStyle = BorderStyle.None;
             WallNum_textBox.Enabled = false;
             WallNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            WallNum_textBox.ForeColor = SystemColors.ControlDark;
+            WallNum_textBox.ForeColor = SystemColors.ControlText;
             WallNum_textBox.Location = new Point(80, 19);
             WallNum_textBox.Name = "WallNum_textBox";
             WallNum_textBox.Size = new Size(67, 15);
@@ -345,16 +354,6 @@
             Name_textBox.Size = new Size(120, 23);
             Name_textBox.TabIndex = 4;
             Name_textBox.TextChanged += Name_textBox_TextChanged;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(102, 19);
-            label1.Name = "label1";
-            label1.Size = new Size(19, 15);
-            label1.TabIndex = 1;
-            label1.Text = "층";
             // 
             // Previous_button
             // 
@@ -471,7 +470,6 @@
             // panel2
             // 
             panel2.BackColor = System.Drawing.Color.White;
-            panel2.BorderStyle = BorderStyle.Fixed3D;
             panel2.Controls.Add(Ueff_label2);
             panel2.Controls.Add(Color_comboBox);
             panel2.Controls.Add(dU_label2);
@@ -497,6 +495,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(977, 158);
             panel2.TabIndex = 95;
+            panel2.Paint += panel2_Paint;
             // 
             // Ueff_label2
             // 
@@ -670,7 +669,6 @@
             // dU_tabPage
             // 
             dU_tabPage.BackColor = System.Drawing.Color.White;
-            dU_tabPage.BorderStyle = BorderStyle.FixedSingle;
             dU_tabPage.Controls.Add(dU_label4);
             dU_tabPage.Controls.Add(dU2_textBox);
             dU_tabPage.Controls.Add(dU_label3);
@@ -852,7 +850,6 @@
             // Ucalc_tabPage
             // 
             Ucalc_tabPage.BackColor = System.Drawing.Color.White;
-            Ucalc_tabPage.BorderStyle = BorderStyle.FixedSingle;
             Ucalc_tabPage.Controls.Add(Rse_textBox);
             Ucalc_tabPage.Controls.Add(label12);
             Ucalc_tabPage.Controls.Add(Rsi_textBox);
@@ -980,12 +977,12 @@
             label2.TabIndex = 101;
             label2.Text = "실내외표면열전달저항";
             // 
-            // RseRsi_comboBox
+            // ISO_KS_comboBox
             // 
             ISO_KS_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             ISO_KS_comboBox.FormattingEnabled = true;
             ISO_KS_comboBox.Location = new Point(172, 3);
-            ISO_KS_comboBox.Name = "RseRsi_comboBox";
+            ISO_KS_comboBox.Name = "ISO_KS_comboBox";
             ISO_KS_comboBox.Size = new Size(120, 24);
             ISO_KS_comboBox.TabIndex = 100;
             ISO_KS_comboBox.SelectedIndexChanged += ISO_KS_comboBox_SelectedIndexChanged;
@@ -1143,7 +1140,6 @@
         #endregion
         private TextBox Name_textBox;
         private Panel GeneralPanel;
-        private System.Windows.Forms.Label label1;
         private PictureBox Icon_pictureBox;
         private TextBox WallNum_textBox;
         private TextBox Type_textBox;
@@ -1221,5 +1217,6 @@
         private TextBox dU_label4;
         private TextBox dU2_textBox;
         private TextBox dU_label3;
+        private Label label1;
     }
 }

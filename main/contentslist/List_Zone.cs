@@ -16,7 +16,7 @@ namespace main.contentslist
         static String currentID = "";
         static String inEditing = "Add";
 
-        String CWNum;
+        String Num;
         double CountDB;
         int SelectRow;
         DataTable ListTable = new DataTable();
@@ -26,10 +26,10 @@ namespace main.contentslist
         {
             InitializeComponent();
 
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '커튼월창'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+            Icon_pictureBox.Load(Program.gPath + "images/1sticon/4.Zone_on3.png");
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             Create_Table();
+
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -41,16 +41,11 @@ namespace main.contentslist
 
         private void Add_button_Click(object sender, EventArgs e)
         {
-            CWNum = Program.UTIL.CreateNum("ConstructionCW", "번호", "CW");
-
-            Program.getMenuForm().ResetForm(2);
-
-            Load_form(CWNum, "Add");
         }
 
         public static bool OnLoadProc(Form form)
         {
-            ConstructionCW f = (ConstructionCW)form;
+            ZoneGeneral f = (ZoneGeneral)form;
 
             if (inEditing == "Edit")
             {
@@ -73,7 +68,7 @@ namespace main.contentslist
         {
             currentID = ID;
             inEditing = editing;
-            Program.getMenuForm().DoLoadForm(2, OnLoadProc);
+            Program.getMenuForm().DoLoadForm(12, OnLoadProc);
         }
 
 
@@ -97,18 +92,15 @@ namespace main.contentslist
 
         public void load_List()
         {
-            string[][] List = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope", "존", "");
-            List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
+            string[][] List = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "");
             String Blank = "";
             ListTable.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
-                ListTable.Rows.Add(List[n][0],null,null,null,null );
-             //  mainMenu.Add(new { text = List[n][0], id = "{\\\"formID\\\":12,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                ListTable.Rows.Add(List[n][0], null, null, null, null);
             }
             dataGridView1.DataSource = ListTable;
             CountDB = List.Length;
-          //  Program.UTIL.resetMainTree(3, 0, mainMenu.ToArray(), "12"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
         //선택한 열 색 표시
@@ -142,17 +134,6 @@ namespace main.contentslist
 
         private void Remove_button_Click(object sender, EventArgs e)
         {
-            int k = dataGridView1.CurrentCell.RowIndex;
-            if ((MessageBox.Show(dataGridView1.Rows[k].Cells[2].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
-            {
-                if (k > -1)
-                {
-                        String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                        Program.DB.deleteValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Delete_Num + "'");
-                        load_List();
-                   
-                }
-            }
 
         }
 
@@ -161,7 +142,7 @@ namespace main.contentslist
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
-                    Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
+                Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
 
             }
 
@@ -169,22 +150,18 @@ namespace main.contentslist
 
         private void Copy_button_Click(object sender, EventArgs e)
         {
-            CWNum = Program.UTIL.CreateNum("ConstructionCW", "번호", "CW");
-            int k = dataGridView1.CurrentCell.RowIndex;
-            if (k > -1)
-            {
-                String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-              
-                Program.DB.CopyValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Copy_Num + "'", CWNum);
-                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionCW" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + CWNum + "'");                
-                Load_form(CWNum, "Copy");
-              
-            }
         }
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
+            Num_textBox.Text = ID + " 정보";
+            Num = ID;
+        }
+        public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
+        {
+            Num_textBox.Text = ID + " 정보";
+            Num = ID;
         }
     }
 }

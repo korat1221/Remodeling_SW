@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
+            label64 = new Label();
             label2 = new Label();
             AdditionalCW_textBox = new TextBox();
             OldCW_comboBox = new ComboBox();
@@ -36,15 +37,14 @@
             label6 = new Label();
             label3 = new Label();
             label5 = new Label();
-            CWNum_textBox = new TextBox();
             Icon_pictureBox = new PictureBox();
             Name_textBox = new TextBox();
-            label1 = new Label();
             groupBox1 = new GroupBox();
             radioButton3 = new RadioButton();
             radioButton2 = new RadioButton();
             radioButton1 = new RadioButton();
             ImportSize_button = new Button();
+            CWNum_textBox = new TextBox();
             Size_textBox = new TextBox();
             Previous_button = new Button();
             Save_button = new Button();
@@ -246,6 +246,7 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(label64);
             GeneralPanel.Controls.Add(label2);
             GeneralPanel.Controls.Add(AdditionalCW_textBox);
             GeneralPanel.Controls.Add(OldCW_comboBox);
@@ -253,17 +254,25 @@
             GeneralPanel.Controls.Add(label6);
             GeneralPanel.Controls.Add(label3);
             GeneralPanel.Controls.Add(label5);
-            GeneralPanel.Controls.Add(CWNum_textBox);
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Controls.Add(Name_textBox);
-            GeneralPanel.Controls.Add(label1);
             GeneralPanel.Controls.Add(groupBox1);
             GeneralPanel.Controls.Add(ImportSize_button);
+            GeneralPanel.Controls.Add(CWNum_textBox);
             GeneralPanel.Location = new Point(12, 12);
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(977, 101);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // label64
+            // 
+            label64.AutoSize = true;
+            label64.Location = new Point(142, 19);
+            label64.Name = "label64";
+            label64.Size = new Size(31, 15);
+            label64.TabIndex = 104;
+            label64.Text = "명칭";
             // 
             // label2
             // 
@@ -337,19 +346,6 @@
             label5.TabIndex = 93;
             label5.Text = "기존";
             // 
-            // CWNum_textBox
-            // 
-            CWNum_textBox.BackColor = Color.White;
-            CWNum_textBox.BorderStyle = BorderStyle.None;
-            CWNum_textBox.Enabled = false;
-            CWNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            CWNum_textBox.ForeColor = SystemColors.ControlDark;
-            CWNum_textBox.Location = new Point(80, 19);
-            CWNum_textBox.Name = "CWNum_textBox";
-            CWNum_textBox.Size = new Size(67, 15);
-            CWNum_textBox.TabIndex = 90;
-            CWNum_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
             // Icon_pictureBox
             // 
             Icon_pictureBox.Location = new Point(30, 14);
@@ -366,16 +362,6 @@
             Name_textBox.Size = new Size(120, 23);
             Name_textBox.TabIndex = 4;
             Name_textBox.TextChanged += Name_textBox_TextChanged;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(102, 19);
-            label1.Name = "label1";
-            label1.Size = new Size(19, 15);
-            label1.TabIndex = 1;
-            label1.Text = "층";
             // 
             // groupBox1
             // 
@@ -438,6 +424,19 @@
             ImportSize_button.Text = "+";
             ImportSize_button.UseVisualStyleBackColor = false;
             ImportSize_button.Click += ImportSize_button_Click_1;
+            // 
+            // CWNum_textBox
+            // 
+            CWNum_textBox.BackColor = Color.White;
+            CWNum_textBox.BorderStyle = BorderStyle.None;
+            CWNum_textBox.Enabled = false;
+            CWNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CWNum_textBox.ForeColor = SystemColors.ControlText;
+            CWNum_textBox.Location = new Point(80, 19);
+            CWNum_textBox.Name = "CWNum_textBox";
+            CWNum_textBox.Size = new Size(67, 15);
+            CWNum_textBox.TabIndex = 90;
+            CWNum_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // Size_textBox
             // 
@@ -625,7 +624,6 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.BorderStyle = BorderStyle.Fixed3D;
             panel2.Controls.Add(DoorSpacer_textBox);
             panel2.Controls.Add(DoorSpacerDB_button);
             panel2.Controls.Add(τd_label2);
@@ -699,6 +697,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(977, 307);
             panel2.TabIndex = 95;
+            panel2.Paint += panel2_Paint;
             // 
             // DoorSpacer_textBox
             // 
@@ -1396,7 +1395,6 @@
             // Frame_tabPage
             // 
             Frame_tabPage.BackColor = Color.White;
-            Frame_tabPage.BorderStyle = BorderStyle.FixedSingle;
             Frame_tabPage.Controls.Add(label60);
             Frame_tabPage.Controls.Add(label31);
             Frame_tabPage.Controls.Add(df_door_textBox);
@@ -2791,13 +2789,11 @@
         #endregion
         private TextBox Name_textBox;
         private Panel GeneralPanel;
-        private System.Windows.Forms.Label label1;
         private GroupBox groupBox1;
         private RadioButton radioButton3;
         private RadioButton radioButton2;
         private RadioButton radioButton1;
         private PictureBox Icon_pictureBox;
-        private TextBox CWNum_textBox;
         private TextBox Type_textBox;
         private Label label6;
         private Label label3;
@@ -2989,5 +2985,7 @@
         private TextBox Height_textBox;
         private Label label80;
         private Label label60;
+        private global::System.Windows.Forms.Label label64;
+        private TextBox CWNum_textBox;
     }
 }

@@ -346,6 +346,25 @@ namespace main.contents
             MessageBox.Show(ZoneE[0][0]);
 
         }
+        private void reset()
+        { }
+
+         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
+        {
+            reset();
+            try
+            {
+                Zone_comboBox.SelectedItem = ID;
+                ZoneNum = ID;
+            }
+            catch { }
+          }
+
+        public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
+        {
+            Zone_comboBox.SelectedItem = ID;
+            ZoneNum = ID;
+        }
 
     }
 }

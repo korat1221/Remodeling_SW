@@ -68,9 +68,17 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
 
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+            Panel p = (Panel)sender;
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+        }
         private void Name_textBox_TextChanged(object sender, EventArgs e)
         {
-            CWName = Name_textBox.Text;
+            if (Name_textBox.Text != null)
+            {
+                CWName = Name_textBox.Text.ToString();
+            }
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -180,9 +188,13 @@ namespace main.contents
 
         private void OldCW_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            OldCW = OldCW_comboBox.SelectedItem.ToString();
-            Calc_Ucw();
-            Calc_dUinst();
+            DataRowView? item = OldCW_comboBox.SelectedItem as DataRowView;
+            if (item != null)
+            {
+                OldCW = OldCW_comboBox.SelectedItem.ToString();
+                Calc_Ucw();
+                Calc_dUinst();
+            }
         }
 
 
@@ -191,7 +203,7 @@ namespace main.contents
         {
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
-
+            CWType_pictureBox.Visible = true;
             CWType_pictureBox.Load(Program.gPath + Image[0][0]);
             CWType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -199,8 +211,12 @@ namespace main.contents
 
         private void Ucw_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UcwMethod = Ucw_comboBox.SelectedItem.ToString();
-            Act_UcWMethod();
+            if (Ucw_comboBox.SelectedItem != null)
+            {
+                UcwMethod = Ucw_comboBox.SelectedItem.ToString();
+                Act_UcWMethod();
+                Rule_Ucw_g();
+            }
         }
 
         private void Act_UcWMethod()
@@ -229,7 +245,7 @@ namespace main.contents
             }
             else if (UcwMethod == "법규")
             {
-                Rule_Uw();
+                
                 Frame_label.Visible = false;
                 Frame_comboBox.Visible = false;
                 FrameName_textBox.Visible = false;
@@ -257,6 +273,7 @@ namespace main.contents
 
                     UCW_p_textBox.Enabled = false;
                     UCW_p_textBox.BorderStyle = BorderStyle.None;
+                    Rule_Ucw_p();
                 }
                 else
                 {
@@ -275,6 +292,7 @@ namespace main.contents
 
                     UCW_d_textBox.Enabled = false;
                     UCW_d_textBox.BorderStyle = BorderStyle.None;
+                    Rule_Ucw_d();
 
                 }
                 else
@@ -373,42 +391,45 @@ namespace main.contents
 
         private void DiIndi_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DiIndi = DiIndi_comboBox.SelectedItem.ToString();
-            Rule_Uw();
-            Calc_dUinst();
+            if (DiIndi_comboBox.SelectedItem != null)
+            {
+                DiIndi = DiIndi_comboBox.SelectedItem.ToString();
+                Rule_Ucw_g();
+                Calc_dUinst();
+            }
         }
 
 
         private void Frame_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FrameType = Frame_comboBox.SelectedItem.ToString();
-
-            //프레임 유형 다시 선택했을 경우 
-            try
+            if (Frame_comboBox.SelectedItem != null)
             {
-                if (check_FrameType != null)
+                FrameType = Frame_comboBox.SelectedItem.ToString();
+                //프레임 유형 다시 선택했을 경우 
+                try
                 {
-                    if (FrameType != check_FrameType)
+                    if (check_FrameType != null)
                     {
-                        MessageBox.Show("프레임, 간봉, 설치열교를 다시 선택하세요.");
-                        FrameName = "";
-                        FrameName_textBox.Text = "";
-                        SpacerName = "";
-                        SpacerName_textBox.Text = "";
-                        InstallName = "";
-                        Install_textBox.Text = "";
-                        Uf_mt_textBox.Text = "";
-                        Uf_open_textBox.Text = "";
-                        df_mt_textBox.Text = "";
-                        df_open_textBox.Text = "";
+                        if (FrameType != check_FrameType)
+                        {
+                            MessageBox.Show("프레임, 간봉, 설치열교를 다시 선택하세요.");
+                            FrameName = "";
+                            FrameName_textBox.Text = "";
+                            SpacerName = "";
+                            SpacerName_textBox.Text = "";
+                            InstallName = "";
+                            Install_textBox.Text = "";
+                            Uf_mt_textBox.Text = "";
+                            Uf_open_textBox.Text = "";
+                            df_mt_textBox.Text = "";
+                            df_open_textBox.Text = "";
+                        }
                     }
                 }
-
+                catch { }
+                Calc_Ucw();
+                Calc_dUinst();
             }
-            catch { }
-            Calc_Ucw();
-            Calc_dUinst();
-
         }
 
         private void FrameDB_button_Click(object sender, EventArgs e)
@@ -545,8 +566,8 @@ namespace main.contents
 
         private void Panel_checkBox_CheckedChanged(object sender, EventArgs e)
         {
-            PanelCheck();
             Act_UcWMethod();
+            PanelCheck();
             Calc_Ucw();
             Calc_dUinst();
             Panel_check = Panel_checkBox.Checked;
@@ -569,7 +590,7 @@ namespace main.contents
 
                 PanelColor_label.Visible = true;
                 PanelColor_comboBox.Visible = true;
-                Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed,PanelColor_comboBox, "커튼월", "색깔", "1");
+                Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, PanelColor_comboBox, "커튼월", "색깔", "1");
 
                 UCW_p_label.Visible = true;
                 UCW_p_textBox.Visible = true;
@@ -629,8 +650,11 @@ namespace main.contents
 
         private void dPanel_textBox_TextChanged(object sender, EventArgs e)
         {
-            dPanel = Convert.ToDouble(dPanel_textBox.Text);
-            Calc_Up();
+            if (dPanel_textBox.Text != null)
+            {
+                dPanel = Convert.ToDouble(dPanel_textBox.Text);
+                Calc_Up();
+            }
         }
         private void PanelGlassDB_button_Click(object sender, EventArgs e)
         {
@@ -666,16 +690,19 @@ namespace main.contents
 
         private void PanelColor_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            PanelColor = PanelColor_comboBox.SelectedItem.ToString();
-            String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + PanelColor + "'");
-            αp = Convert.ToDouble(value[0][0]);
-            αp_textBox.Text = String.Format("{0:F1}", αp);
+            if (PanelColor_comboBox.SelectedItem != null)
+            {
+                PanelColor = PanelColor_comboBox.SelectedItem.ToString();
+                String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + PanelColor + "'");
+                αp = Convert.ToDouble(value[0][0]);
+                αp_textBox.Text = String.Format("{0:F1}", αp);
+            }
         }
 
         private void Door_checkBox_CheckedChanged(object sender, EventArgs e)
         {
-            DoorCheck();
             Act_UcWMethod();
+            DoorCheck();
             Calc_Ucw();
             Calc_dUinst();
             Door_check = Door_checkBox.Checked;
@@ -850,23 +877,26 @@ namespace main.contents
 
         private void Install_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            InstallType = Install_comboBox.SelectedItem.ToString();
-
-            //설치 유형 다시 선택했을 경우 
-            try
+            if (Install_comboBox.SelectedItem != null)
             {
-                if (check_InstallType != null)
+                InstallType = Install_comboBox.SelectedItem.ToString();
+
+                //설치 유형 다시 선택했을 경우 
+                try
                 {
-                    if (InstallType != check_InstallType)
+                    if (check_InstallType != null)
                     {
-                        MessageBox.Show("설치 위치를 다시 선택하세요.");
-                        InstallName = "";
-                        Install_textBox.Text = "";
+                        if (InstallType != check_InstallType)
+                        {
+                            MessageBox.Show("설치 위치를 다시 선택하세요.");
+                            InstallName = "";
+                            Install_textBox.Text = "";
+                        }
                     }
                 }
+                catch { }
+                Calc_dUinst();
             }
-            catch { }
-            Calc_dUinst();
         }
 
         private void Install_button_Click(object sender, EventArgs e)
@@ -901,7 +931,7 @@ namespace main.contents
 
 
                         string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
-
+                        CWnstall_pictureBox.Visible = true;
                         CWnstall_pictureBox.Load(Program.gPath + Image[0][0]);
                         CWnstall_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                     }
@@ -934,7 +964,7 @@ namespace main.contents
 
 
                         string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
-
+                        CWnstall_pictureBox.Visible = true;
                         CWnstall_pictureBox.Load(Program.gPath + Image[0][0]);
                         CWnstall_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     }
@@ -994,25 +1024,45 @@ namespace main.contents
         }
 
 
-        public void Rule_Uw()
+        public void Rule_Ucw_g()
         {
             if (UcwMethod == "법규")
             {
-                String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율", "구조체 = '창호' And 시기 = '2018.09' AND  지역 = '중부1' AND 직접간접 =  '" + DiIndi + "'");
+                String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
+                String[][] Uvalue;
+                if (Type == "기존 커튼월창")
+                {
+                    Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '" + Date[0][0] + "' AND  지역 ='" + Date[0][1] + "'  AND  직접간접 =  '" + DiIndi + "'");
+                }
+                else 
+                {
+                    Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'"); 
+                }
+                Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
                 Ucw_g = Convert.ToDouble(Uvalue[0][0]);
                 UCW_g_textBox.Text = String.Format("{0:F3}", Ucw_g);
 
-                if (Door_checkBox.Checked)
+
+                MessageBox.Show("[(" + Uvalue[0][2] + " 시행)" + Uvalue[0][1] + "] " + Uvalue[0][3] + " 열관류율 적용");
+            }
+        }
+
+        public void Rule_Ucw_p()
+        {
+            if (UcwMethod == "법규")
+            {
+                String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
+                String[][] Uvalue;
+             
+                if (Type == "기존 커튼월창")
                 {
-                    Ucw_d = Convert.ToDouble(Uvalue[0][0]);
-                    UCW_d_textBox.Text = String.Format("{0:F3}", Ucw_d);
+                    Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '외벽' And 시기 = '" + Date[0][0] + "' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
                 }
                 else
                 {
-                    Ucw_d = 0;
+                    Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '외벽' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
                 }
 
-                Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율", "구조체 = '외벽' And 시기 = '2018.09' AND  지역 = '중부1' AND 직접간접 =  '" + DiIndi + "'");
                 if (Panel_checkBox.Checked)
                 {
                     Ucw_p = Convert.ToDouble(Uvalue[0][0]);
@@ -1022,6 +1072,34 @@ namespace main.contents
                 {
                     Ucw_p = 0;
                 }
+            }
+        }
+
+        public void Rule_Ucw_d()
+        {
+            if (UcwMethod == "법규")
+            {
+                String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
+                String[][] Uvalue;
+                if (Type == "기존 커튼월창")
+                {
+                    Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '" + Date[0][0] + "' AND  지역 ='" + Date[0][1] + "'  AND  직접간접 =  '" + DiIndi + "'");
+                }
+                else
+                {
+                    Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
+                }
+                Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
+                
+                if (Door_checkBox.Checked)
+                {
+                    Ucw_d = Convert.ToDouble(Uvalue[0][0]);
+                    UCW_d_textBox.Text = String.Format("{0:F3}", Ucw_d);
+                }
+                else
+                {
+                    Ucw_d = 0;
+                }             
             }
         }
 
@@ -1262,9 +1340,109 @@ namespace main.contents
             Program.getMenuForm().DoLoadForm(30, OnLoadListProc);
         }
 
+        private void reset()
+        {
+            CWNum_textBox.Text = null;
+            Name_textBox.Text = null;
+
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            radioButton3.Checked = false;
+
+            OldCW_comboBox.SelectedItem = null;
+            Ucw_comboBox.SelectedItem = null;
+            DiIndi_comboBox.SelectedItem = null;
+            Frame_comboBox.SelectedItem = null;
+
+            FrameName_textBox.Text = null;
+            FixGlassName_textBox.Text = null;
+            FixGlassName2_textBox.Text = null;
+            OpenGlassName_textBox.Text = null;
+            OpenGlassName2_textBox.Text = null;
+            SpacerName_textBox.Text = null;
+
+            Install_comboBox.SelectedItem = null;
+            Install_textBox.Text = null;
+
+            Ug_Fix_textBox.Text = null;
+            Ug_Open_textBox.Text = null;
+            g_textBox.Text = null;
+            τg_textBox.Text = null;
+            Psi_g_fix_textBox.Text = null;
+            Psi_g_open_textBox.Text = null;
+            Uf_mt_textBox.Text = null;
+            Uf_open_textBox.Text = null;
+            df_mt_textBox.Text = null;
+            df_open_textBox.Text = null;
+
+            Psi_InstallTop_textBox.Text = null;
+            Psi_InstallSide_textBox.Text = null;
+            Psi_InstallButtom_textBox.Text = null;
+
+            SizeName = null;
+            Size_textBox.Text = null;
+            Area_textBox.Text = null;
+            Width_textBox.Text = null;
+            Height_textBox.Text = null;
+            Ag_fix_textBox.Text = null;
+            Ag_open_textBox.Text = null;
+            Lg_fix_textBox.Text = null;
+            Lg_open_textBox.Text = null;
+            Af_mt_textBox.Text = null;
+            Af_open_textBox.Text = null;
+
+            UCW_g_textBox.Text = null;
+            dUinst_textBox.Text = null;
+            Panel_checkBox.Checked = false;
+            Door_checkBox.Checked = false;
+
+            Panel_textBox.Text = null;
+            PanelGlass_textBox.Text = null;
+
+            αp_textBox.Text = null;
+
+            dPanel_textBox.Text = null;
+            Ap_textBox.Text = null;
+            Lp_textBox.Text = null;
+
+            UCW_p_textBox.Text = null;
+
+            DoorFrame_textBox.Text = null;
+            DoorGlass_textBox.Text = null;
+            DoorGlass2_textBox.Text = null;
+            Ug_Door_textBox.Text = null;
+            gd_textBox.Text = null;
+            Psi_g_Door_textBox.Text = null;
+            df_door_textBox.Text = null;
+            Uf_door_textBox.Text = null;
+            Af_d_textBox.Text = null;
+            Ag_d_textBox.Text = null;
+            Lg_d_textBox.Text = null;
+            UCW_d_textBox.Text = null;
+
+            CWType_pictureBox.Visible = false;
+            CWnstall_pictureBox.Visible = false;
+
+            CWNum = null;
+            CWName = null; Type = null; OldCW = null; UcwMethod = null; DiIndi = null; FrameType = null; check_FrameType = null; FrameName = null; FixGlassName = null; OpenGlassName = null; SpacerName = null; InstallType = null; check_InstallType = null; InstallName = null; LE_CL_V = null; check_LE_CL_V = null; SizeName = null;
+            PanelName = null; PanelGlassName = null; LE_CL_V_Panel = null; PanelColor = null;
+            DoorFrame = null; check_DoorFrame = null; DoorGlassName = null; DoorSpacer = null; LE_CL_V_Door = null; check_LE_CL_V_Door = null;
+            Size = null;
+            Ug_Fix = 0; Ug_Open = 0; g = 0; τ = 0; Psi_g_fix = 0; Psi_g_open = 0; Uf_mt = 0; Uf_open = 0; df_mt = 0; df_open = 0;
+            Up = 0; Ug_panel = 0; Conductivity_p = 0; αp = 0; Psi_p = 0; dPanel = 0;
+            Ug_Door = 0; gd = 0; τd = 0; Psi_g_Door = 0; df_door = 0; Uf_door = 0;
+            Psi_InstallTop = 0; Psi_InstallSide = 0; Psi_InstallButtom = 0;
+            Ucw = 0; Ucw_g = 0; Ucw_p = 0; Ucw_d = 0;
+            Ucw_inst = 0; dUinst = 0;
+            Ucw_g_inst = 0; Ucw_p_inst = 0; Ucw_d_inst = 0;
+            Area = 0; Width = 0; Height = 0; Ag_fix = 0; Ag_open = 0; Lg_fix = 0; Lg_open = 0; Ap = 0; Lp = 0; Af_mt = 0; Af_open = 0; Af_d = 0; Ag_d = 0; Lg_d = 0;
+            Old = null; f_shgc = null; f_τ = null;
+            Panel_check = false; Door_check = false;
+        }
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
+            reset();
             try
             {
                 CWNum_textBox.Text = ID;
@@ -1494,9 +1672,11 @@ namespace main.contents
             else { }
 
             string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
+            CWType_pictureBox.Visible = true;
             CWType_pictureBox.Load(Program.gPath + Image1[0][0]);
             CWType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             string[][] Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
+            CWnstall_pictureBox.Visible = true;
             CWnstall_pictureBox.Load(Program.gPath + Image2[0][0]);
             CWnstall_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
         }

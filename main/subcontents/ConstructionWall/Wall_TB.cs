@@ -21,7 +21,7 @@ namespace main.subcontents.ConstructionWall
         int SelectRow;
         public String[] Select_TB = new String[13];
         int Num;
-        String WallType, StructureType, TB_Type, LinearPoint;
+        String WallType, StructureType, TB_Type, LinearPoint, TBName;
 
         public Wall_TB(String WallType, String StructureType, double dins)
         {
@@ -68,7 +68,6 @@ namespace main.subcontents.ConstructionWall
         {
             TB_Type = TB_Type_comboBox.SelectedItem.ToString();
             Check_LinearPoint(TB_Type);
-            Load_Image2();
         }
         private void Check_LinearPoint(String TB_Type)
         {
@@ -136,13 +135,13 @@ namespace main.subcontents.ConstructionWall
         {
             if (LinearPoint == "점형")
             {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_구조유형", "열교유형 = '" + TB_Type + "'");
                 pictureBox1.Load(Program.gPath + Image[0][0]);
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
             else
             {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_구조유형", "구조유형 = '" + StructureType + "'");
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_구조유형", "열교유형 = '" + TB_Type + "'");
                 pictureBox1.Load(Program.gPath + Image[0][0]);
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -152,7 +151,7 @@ namespace main.subcontents.ConstructionWall
 
 
         //데이터그리드뷰 체크박스 선택 시
-        private void Spacer_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void TB_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -176,8 +175,9 @@ namespace main.subcontents.ConstructionWall
                         row = TB_dataGridView.Rows[e.RowIndex];
                     }
                 }
-
+                TBName = row.Cells[3].Value.ToString(); //제품명
                 TBName_textBox.Text = row.Cells[3].Value.ToString(); //제품명
+                Load_Image2();
 
                 if (LinearPoint == "점형")
                 {
@@ -209,17 +209,18 @@ namespace main.subcontents.ConstructionWall
         }
         private void Load_Image2()
         {
+            
             try
             {
                 if (LinearPoint == "점형")
                 {
-                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
+                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_고정유형", "제품명 = '" + TBName + "' And 열교유형 = '" + TB_Type + "'");
                     pictureBox2.Load(Program.gPath + Image[0][0]);
                     pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
                 }
                 else
                 {
-                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_고정유형", "구조유형 = '" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
+                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_고정유형", "제품명 = '" + TBName + "'  And 열교유형 = '" + TB_Type + "'");
                     pictureBox2.Load(Program.gPath + Image[0][0]);
                     pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
 
