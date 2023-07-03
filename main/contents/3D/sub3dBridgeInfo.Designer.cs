@@ -540,6 +540,7 @@
             // 
             textBox23.Location = new Point(216, 83);
             textBox23.Name = "textBox23";
+            textBox23.ReadOnly = true;
             textBox23.Size = new Size(100, 23);
             textBox23.TabIndex = 9;
             // 

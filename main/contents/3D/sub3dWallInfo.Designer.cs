@@ -46,6 +46,7 @@
             // 
             textBox1.Location = new Point(135, 42);
             textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
             textBox1.Size = new Size(100, 23);
             textBox1.TabIndex = 2;
             // 

@@ -346,6 +346,7 @@
 
 		</script>
 		<script>
+			let objInfo = null;
 
 			function init() {
 
@@ -399,6 +400,7 @@
 			}
 
 			function load3DModel(data) {
+				objInfo = data;
 				editor.loadInfo(data);
 			}
 
@@ -412,6 +414,193 @@
 					editor.drawSpacePoints(msg);
 				}
 			}
+						
+			function createSpacesInfo() {
+				var i = -1;
+
+				let getWallsByType = (prefix, space, t) => {
+					var arr = [], j = -1;
+					var map = {};
+
+					while(++j < space.length) {
+						let el = space[j];
+						let el2 = objInfo.wall[el.cardi][el.id];
+						
+						if (el2.type == t) {
+							map[el2.id] = el;
+						}
+					}
+
+					for (const [id, wall] of Object.entries(map)) {
+						if (id.substring(0, prefix.length) == prefix) {
+							let key = "board-" + id;
+							if (!objInfo.boards[key]) objInfo.boards[key] = [];
+							objInfo.boards[key].push(wall);
+							arr.push(wall);
+						}
+					}
+
+					return arr;
+				};
+
+				let getSpaceInfo = (space, idx) => {
+					var arr = [];
+					let prefix = 'S' + (i + 1) + '_';
+					let key0 = "sptree-" + idx;
+
+					objInfo.boards[key0 + "-wall"] = getWallsByType(prefix, space, 'WALL');
+					arr = arr.concat(objInfo.boards[key0 + "-wall"]);
+					objInfo.boards[key0 + "-roof"] = getWallsByType(prefix, space, 'ROOF');
+					arr = arr.concat(objInfo.boards[key0 + "-roof"]);
+					objInfo.boards[key0 + "-floor"] = getWallsByType(prefix, space, 'FLOOR');
+					arr = arr.concat(objInfo.boards[key0 + "-floor"]);
+					objInfo.boards[key0 + "-gwall"] = getWallsByType(prefix, space, 'GWALL');
+					arr = arr.concat(objInfo.boards[key0 + "-gwall"]);
+					objInfo.boards[key0 + "-inwall"] = getWallsByType(prefix, space, 'INWALL');
+					arr = arr.concat(objInfo.boards[key0 + "-inwall"]);
+					objInfo.boards[key0 + "-win"] = getWallsByType(prefix, space, 'WIN');
+					arr = arr.concat(objInfo.boards[key0 + "-win"]);
+					objInfo.boards[key0 + "-cwall"] = getWallsByType(prefix, space, 'CWALL');
+					arr = arr.concat(objInfo.boards[key0 + "-cwall"]);
+					objInfo.boards[key0 + "-door"] = getWallsByType(prefix, space, 'DOOR');
+					arr = arr.concat(objInfo.boards[key0 + "-door"]);
+
+					return arr;
+				};
+				
+				objInfo.boards = {};
+				while(++i < objInfo.spaces.length) {
+					objInfo.boards["space-" + i] = getSpaceInfo(objInfo.spaces[i], i);
+				}
+			}
+			
+			function getSpacesInfo () {
+				var ret = [];
+				var i = -1;
+
+				let getWallsByType = (prefix, space, t) => {
+					var arr = [], j = -1;
+					var map = {};
+
+					while(++j < space.length) {
+						let el = space[j];
+						let el2 = objInfo.wall[el.cardi][el.id];
+						
+						if (el2.type == t) {
+							map[el2.id] = true;
+						}
+					}
+
+					Object.keys(map).forEach(el => {
+						if (el.substring(0, prefix.length) == prefix) {
+							arr.push({"type":"detail","text":el,"id":"board-" + el});			
+						}
+					});
+
+					return arr;
+				};
+
+				let getSpaceInfo = (space, idx) => {
+					var ret = [];
+
+					let prefix = 'S' + (i + 1) + '_';
+					let key0 = "sptree-" + idx;
+					let win = getWallsByType(prefix, space, 'WIN');
+					let cwall = getWallsByType(prefix, space, 'CWALL');
+					let door = getWallsByType(prefix, space, 'DOOR');
+					let wall = getWallsByType(prefix, space, 'WALL');
+					let roof = getWallsByType(prefix, space, 'ROOF');
+					let floor = getWallsByType(prefix, space, 'FLOOR');
+					let gwall = getWallsByType(prefix, space, 'GWALL');
+					let inwall = getWallsByType(prefix, space, 'INWALL');
+
+					if (wall.length > 0) ret.push({"text":"외벽","id":key0 + "-wall","children":wall});
+					else ret.push({"text":"외벽","id":key0 + "-wall"});
+					if (roof.length > 0) ret.push({"text":"지붕","id":key0 + "-roof","children":roof});
+					else ret.push({"text":"지붕","id":key0 + "-roof"});
+					if (floor.length > 0) ret.push({"text":"바닥","id":key0 + "-floor","children":floor});
+					else ret.push({"text":"바닥","id":key0 + "-floor"});
+					if (gwall.length > 0) ret.push({"text":"지중벽","id":key0 + "-gwall","children":gwall});
+					else ret.push({"text":"지중벽","id":key0 + "-gwall"});
+					if (inwall.length > 0) ret.push({"text":"간벽","id":key0 + "-inwall","children":inwall});
+					else ret.push({"text":"간벽","id":key0 + "-inwall"});
+					if (win.length > 0) ret.push({"text":"창호","id":key0 + "-win","children":win});
+					else ret.push({"text":"창호","id":key0 + "-win"});
+					if (cwall.length > 0) ret.push({"text":"커튼월","id":key0 + "-cwall","children":cwall});
+					else ret.push({"text":"커튼월","id":key0 + "-cwall"});
+					if (door.length > 0) ret.push({"text":"출입문","id":key0 + "-door","children":door});
+					else ret.push({"text":"출입문","id":key0 + "-door"});
+
+					let cnt = wall.length;
+
+					cnt += roof.length;
+					cnt += floor.length;
+					cnt += gwall.length;
+					cnt += inwall.length;
+
+					return cnt > 1 ? ret : null;
+				};
+				
+				while(++i < objInfo.spaces.length) {
+					let space = objInfo.spaces[i];
+					let key = "space-" + i;
+					let chil = getSpaceInfo(space, i);
+
+					if (chil && !objInfo.shadows["space-" + (i + 1)]) {
+						ret.push({"type":"space","text":"공간_" + (i + 1), "id":key,"children":chil});
+					}
+				}
+				return ret;
+			}
+
+			function updateObjInfo(arr) {
+				let _getWall = (wall, id) => {
+					for (const [cardi, value] of Object.entries(wall)) {
+						for (const [j, el] of Object.entries(value)) {
+							if (el.id == id) {
+								return el;
+							}
+						}
+					}
+					return null;
+				};
+
+				if (objInfo) {
+					let i = -1;
+					let updated = false;
+
+					while(++i < arr.length) {
+						let o = arr[i];
+						let info = _getWall(objInfo.wall, o.id);
+
+						if (info && (info.type == 'WIN' || info.type == 'CWALL' || info.type == 'DOOR')) {
+							info.winType = o.wtype;
+
+							switch(info.winType) {
+								case '1':
+									info.type = 'WIN';
+									break;
+								case '5':
+									info.type = 'DOOR';
+									break;
+								default:    
+									info.type = 'WIN';
+									break;
+							}
+							updated = true;
+						}
+					}
+
+					if (updated) {
+						createSpacesInfo();
+
+						objInfo.tree[0] = {"text":"공간 정보","id":"spaces","children":getSpacesInfo(objInfo)};
+
+						window.chrome.webview.postMessage("@@@" + JSON.stringify(objInfo));	   
+					}
+				}
+			}
+			
 		</script>
 		
 	</body>

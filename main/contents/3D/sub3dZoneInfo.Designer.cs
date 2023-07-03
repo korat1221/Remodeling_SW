@@ -62,13 +62,13 @@
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
             Column4 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
-            Column6 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewComboBoxColumn();
+            Column6 = new DataGridViewComboBoxColumn();
             Column7 = new DataGridViewTextBoxColumn();
             Column8 = new DataGridViewTextBoxColumn();
             Column9 = new DataGridViewTextBoxColumn();
             Column10 = new DataGridViewTextBoxColumn();
-            Column11 = new DataGridViewTextBoxColumn();
+            Column11 = new DataGridViewComboBoxColumn();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
@@ -100,6 +100,7 @@
             // 
             // dataGridView2
             // 
+            dataGridView2.BorderStyle = BorderStyle.None;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
             dataGridViewCellStyle1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -128,6 +129,7 @@
             Column13.DefaultCellStyle = dataGridViewCellStyle2;
             Column13.HeaderText = "존 번호";
             Column13.Name = "Column13";
+            Column13.ReadOnly = true;
             Column13.Resizable = DataGridViewTriState.True;
             Column13.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
@@ -137,6 +139,7 @@
             Column14.DefaultCellStyle = dataGridViewCellStyle3;
             Column14.HeaderText = "바닥면적";
             Column14.Name = "Column14";
+            Column14.ReadOnly = true;
             Column14.Resizable = DataGridViewTriState.True;
             Column14.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
@@ -146,6 +149,7 @@
             Column15.DefaultCellStyle = dataGridViewCellStyle4;
             Column15.HeaderText = "주향";
             Column15.Name = "Column15";
+            Column15.ReadOnly = true;
             Column15.Resizable = DataGridViewTriState.True;
             Column15.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
@@ -155,6 +159,7 @@
             Column16.DefaultCellStyle = dataGridViewCellStyle5;
             Column16.HeaderText = "주광너비";
             Column16.Name = "Column16";
+            Column16.ReadOnly = true;
             Column16.Resizable = DataGridViewTriState.True;
             Column16.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
@@ -164,6 +169,7 @@
             Column17.DefaultCellStyle = dataGridViewCellStyle6;
             Column17.HeaderText = "주광깊이";
             Column17.Name = "Column17";
+            Column17.ReadOnly = true;
             Column17.Resizable = DataGridViewTriState.True;
             Column17.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
@@ -173,6 +179,7 @@
             Column18.DefaultCellStyle = dataGridViewCellStyle7;
             Column18.HeaderText = "상인방높이";
             Column18.Name = "Column18";
+            Column18.ReadOnly = true;
             Column18.Resizable = DataGridViewTriState.True;
             Column18.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
@@ -189,6 +196,7 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.BorderStyle = BorderStyle.None;
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle8.BackColor = SystemColors.Control;
             dataGridViewCellStyle8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -205,6 +213,8 @@
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(786, 416);
             dataGridView1.TabIndex = 1;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.DataError += onDataError;
             // 
             // Column1
             // 
@@ -219,6 +229,8 @@
             Column2.DefaultCellStyle = dataGridViewCellStyle9;
             Column2.HeaderText = "번호";
             Column2.Name = "Column2";
+            Column2.ReadOnly = true;
+            Column2.Width = 130;
             // 
             // Column3
             // 
@@ -226,6 +238,7 @@
             Column3.DefaultCellStyle = dataGridViewCellStyle10;
             Column3.HeaderText = "층";
             Column3.Name = "Column3";
+            Column3.ReadOnly = true;
             // 
             // Column4
             // 
@@ -233,6 +246,7 @@
             Column4.DefaultCellStyle = dataGridViewCellStyle11;
             Column4.HeaderText = "존";
             Column4.Name = "Column4";
+            Column4.ReadOnly = true;
             // 
             // Column5
             // 
@@ -240,6 +254,8 @@
             Column5.DefaultCellStyle = dataGridViewCellStyle12;
             Column5.HeaderText = "외피유형";
             Column5.Name = "Column5";
+            Column5.Resizable = DataGridViewTriState.True;
+            Column5.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // Column6
             // 
@@ -247,6 +263,8 @@
             Column6.DefaultCellStyle = dataGridViewCellStyle13;
             Column6.HeaderText = "커튼월부위";
             Column6.Name = "Column6";
+            Column6.Resizable = DataGridViewTriState.True;
+            Column6.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // Column7
             // 
@@ -254,6 +272,8 @@
             Column7.DefaultCellStyle = dataGridViewCellStyle14;
             Column7.HeaderText = "인접존";
             Column7.Name = "Column7";
+            Column7.ReadOnly = true;
+            Column7.Width = 130;
             // 
             // Column8
             // 
@@ -261,6 +281,7 @@
             Column8.DefaultCellStyle = dataGridViewCellStyle15;
             Column8.HeaderText = "면적 [m²]";
             Column8.Name = "Column8";
+            Column8.ReadOnly = true;
             // 
             // Column9
             // 
@@ -268,6 +289,7 @@
             Column9.DefaultCellStyle = dataGridViewCellStyle16;
             Column9.HeaderText = "방위";
             Column9.Name = "Column9";
+            Column9.ReadOnly = true;
             // 
             // Column10
             // 
@@ -275,6 +297,7 @@
             Column10.DefaultCellStyle = dataGridViewCellStyle17;
             Column10.HeaderText = "기울기";
             Column10.Name = "Column10";
+            Column10.ReadOnly = true;
             // 
             // Column11
             // 
@@ -282,6 +305,8 @@
             Column11.DefaultCellStyle = dataGridViewCellStyle18;
             Column11.HeaderText = "구조체";
             Column11.Name = "Column11";
+            Column11.Resizable = DataGridViewTriState.True;
+            Column11.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // sub3dZoneInfo
             // 
@@ -308,17 +333,6 @@
         private TabPage tabPage2;
         private DataGridView dataGridView2;
         private DataGridView dataGridView1;
-        private DataGridViewCheckBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column3;
-        private DataGridViewTextBoxColumn Column4;
-        private DataGridViewTextBoxColumn Column5;
-        private DataGridViewTextBoxColumn Column6;
-        private DataGridViewTextBoxColumn Column7;
-        private DataGridViewTextBoxColumn Column8;
-        private DataGridViewTextBoxColumn Column9;
-        private DataGridViewTextBoxColumn Column10;
-        private DataGridViewTextBoxColumn Column11;
         private DataGridViewCheckBoxColumn Column12;
         private DataGridViewTextBoxColumn Column13;
         private DataGridViewTextBoxColumn Column14;
@@ -326,5 +340,16 @@
         private DataGridViewTextBoxColumn Column16;
         private DataGridViewTextBoxColumn Column17;
         private DataGridViewTextBoxColumn Column18;
+        private DataGridViewCheckBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewComboBoxColumn Column5;
+        private DataGridViewComboBoxColumn Column6;
+        private DataGridViewTextBoxColumn Column7;
+        private DataGridViewTextBoxColumn Column8;
+        private DataGridViewTextBoxColumn Column9;
+        private DataGridViewTextBoxColumn Column10;
+        private DataGridViewComboBoxColumn Column11;
     }
 }
