@@ -29,10 +29,6 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            label25 = new Label();
-            label26 = new Label();
-            textBox9 = new TextBox();
-            label27 = new Label();
             label28 = new Label();
             label29 = new Label();
             textBox10 = new TextBox();
@@ -88,10 +84,6 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(label25);
-            panel1.Controls.Add(label26);
-            panel1.Controls.Add(textBox9);
-            panel1.Controls.Add(label27);
             panel1.Controls.Add(label28);
             panel1.Controls.Add(label29);
             panel1.Controls.Add(textBox10);
@@ -140,40 +132,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(426, 514);
             panel1.TabIndex = 0;
-            // 
-            // label25
-            // 
-            label25.AutoSize = true;
-            label25.Location = new Point(174, 462);
-            label25.Name = "label25";
-            label25.Size = new Size(31, 15);
-            label25.TabIndex = 51;
-            label25.Text = "길이";
-            // 
-            // label26
-            // 
-            label26.AutoSize = true;
-            label26.Location = new Point(317, 462);
-            label26.Name = "label26";
-            label26.Size = new Size(18, 15);
-            label26.TabIndex = 50;
-            label26.Text = "m";
-            // 
-            // textBox9
-            // 
-            textBox9.Location = new Point(211, 459);
-            textBox9.Name = "textBox9";
-            textBox9.Size = new Size(100, 23);
-            textBox9.TabIndex = 49;
-            // 
-            // label27
-            // 
-            label27.AutoSize = true;
-            label27.Location = new Point(43, 462);
-            label27.Name = "label27";
-            label27.Size = new Size(77, 15);
-            label27.TabIndex = 48;
-            label27.Text = "열교 정보 12";
             // 
             // label28
             // 
@@ -600,8 +558,8 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1164, 641);
-            Controls.Add(panel1);
             Controls.Add(panel2);
+            Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "sub3dBridgeInfo";
             Text = "sub3dBridgeInfo";
@@ -616,10 +574,6 @@
         #endregion
 
         private Panel panel1;
-        private Label label25;
-        private Label label26;
-        private TextBox textBox9;
-        private Label label27;
         private Label label28;
         private Label label29;
         private TextBox textBox10;

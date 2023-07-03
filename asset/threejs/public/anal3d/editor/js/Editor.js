@@ -1750,14 +1750,17 @@ Editor.prototype = {
 					}
 				}
 
-				sql += "INSERT INTO ZoneGeneral_3D (존번호,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES ('" + zid + "','" + area + "','" + (cardi != "" ? cardinal[cardi] : "") + "','" + wall_length + "','" + depth + "','" + height + "');";
+				if (floor.floor) {
+					sql += "INSERT INTO ZoneGeneral_3D (존번호,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES ('" + zid + "','" + area + "','" + (cardi != "" ? cardinal[cardi] : "") + "','" + wall_length + "','" + depth + "','" + height + "');";
+				}
 			}
 												
 			for (const [cardi, value] of Object.entries(this.wall)) {
 				for (const [idx, el] of Object.entries(value)) {
-					if (el.id) {
+					if (el.id && el.floor) {
  						let zoned = "Zone" + ((el.sid ? el.sid : "") + "").padStart(3, '0');
-						sql += "INSERT INTO ZoneEnvelope_3D (번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이) VALUES ('" + el.floor + "F_" + zoned + "_" + tcode[el.type] + "','" + el.floor + "','" + zoned + "','" + type[el.type] + "','','" + el.area + "','" + _getInwalledId(el.inwalled) + "','" + cardinal[cardi] + "','" + el.slope + "','" + (el.right_shadow_angle ? el.right_shadow_angle : "0") + "','" + (el.left_shadow_angle ? el.left_shadow_angle : "0") + "','" + (el.up_shadow_angle ? el.up_shadow_angle : "0") + "','" + (el.shadow_angle ? el.shadow_angle : "0") + "','','','','','','" + el.wall_length + "');";
+						sql += "INSERT INTO ZoneEnvelope_3D (번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이) VALUES ('" + el.id + "','" + el.floor + "','" + zoned + "','" + type[el.type] + "','','" + el.area + "','" + _getInwalledId(el.inwalled) + "','" + cardinal[cardi] + "','" + el.slope + "','" + (el.right_shadow_angle ? el.right_shadow_angle : "0") + "','" + (el.left_shadow_angle ? el.left_shadow_angle : "0") + "','" + (el.up_shadow_angle ? el.up_shadow_angle : "0") + "','" + (el.shadow_angle ? el.shadow_angle : "0") + "','','','','','','" + el.wall_length + "');";
+//						sql += "INSERT INTO ZoneEnvelope_3D (번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이) VALUES ('" + el.floor + "F_" + zoned + "_" + tcode[el.type] + "','" + el.floor + "','" + zoned + "','" + type[el.type] + "','','" + el.area + "','" + _getInwalledId(el.inwalled) + "','" + cardinal[cardi] + "','" + el.slope + "','" + (el.right_shadow_angle ? el.right_shadow_angle : "0") + "','" + (el.left_shadow_angle ? el.left_shadow_angle : "0") + "','" + (el.up_shadow_angle ? el.up_shadow_angle : "0") + "','" + (el.shadow_angle ? el.shadow_angle : "0") + "','','','','','','" + el.wall_length + "');";
 					}
 				}
 			}

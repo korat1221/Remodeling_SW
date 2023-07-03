@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.contents
 {
@@ -18,7 +19,13 @@ namespace main.contents
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
+            String ID = main.MainContents.selID.Replace("board-","");
+            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "번호 = '" + ID + "'");
 
+            if (rec.Length > 0)
+            {
+                textBox1.Text = Double.Parse(rec[0][0]).ToString("#.##");
+            }
         }
     }
 }
