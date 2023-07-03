@@ -103,6 +103,14 @@ namespace main
             webView21.CoreWebView2.WebMessageReceived += OnJSMessage;
             webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
         }
+        public void refreshWebCtrl()
+        {
+            webView21.Source = new Uri(Program.gPath + "menu.html?n=2",true);
+
+            Model f = (Model)forms[8];
+
+            f.DoLoadForm(0);
+        }
         public static bool OnLoadProc(Form form)
         {
             if (formParam.formID == 2)
@@ -127,7 +135,7 @@ namespace main
             {
                 Model f = (Model)form;
 
-                f.DoLoadForm(Int32.Parse(formParam.ID),selID);
+                f.DoLoadForm(Int32.Parse(formParam.ID));
             }
             else if (formParam.formID == 29)
             {
@@ -169,11 +177,11 @@ namespace main
             return true;
         }
 
-        private bool Deserializable(String data)
+        private bool Deserialize(String data)
         {
             try
             {
-                var _a = System.Text.Json.JsonSerializer.Deserialize<FormParam>(data);
+                formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>(data);
 
                 return true;
 
@@ -188,10 +196,8 @@ namespace main
         {
             selID = args.TryGetWebMessageAsString();
 
-            if (Deserializable(selID))
+            if (Deserialize(selID))
             {
-                formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>(selID);
-
                 if (formParam.formID == 99999991)
                 {
                     DoLoadForm(8, OnLoadProc);
@@ -221,21 +227,17 @@ namespace main
             {
                 String json = "{\"formID\":" + selID + ",\"ID\":\"0\"}";
 
-                if (Deserializable(json))
+                if (Deserialize(json))
                 {
-                    formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>(json);
                     if (formParam.formID == 8)
                     {
                         Program.UTIL.setObjInfo(Program.UTIL.read3DModel(Program.ProjName + ".json"));
 
                         DoLoadForm(8, OnLoadProc);
                     }
-                    else if (Deserializable(json))
+                    else if (formParam.formID >= 0 && formParam.formID < 100)
                     {
-                        if (formParam.formID >= 0 && formParam.formID < 100)
-                        {
-                            DoLoadForm(formParam.formID, OnLoadProc);
-                        }
+                        DoLoadForm(formParam.formID, OnLoadProc);
                     }
                 }
                 else

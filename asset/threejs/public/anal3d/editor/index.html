@@ -10,7 +10,7 @@
 		<link rel="shortcut icon" href="../files/favicon.ico" media="(prefers-color-scheme: light)" />
 	</head>
 	<body style="background-color: #fff;"onload="init()">
-		<input type="file" style="display:none" />
+		<input type="file"  />
 		<div id="view-cont" style="width:100%;height:100%"></div>
 		<div id="menu-cont" style="display:none"></div>
 		<div id="navigator" title="" style="display:none;overflow:hidden"><div id="navigator-details"></div></div>
@@ -565,6 +565,7 @@
 					return null;
 				};
 
+				console.log('AAA');
 				if (objInfo) {
 					let i = -1;
 					let updated = false;

@@ -59,7 +59,7 @@ namespace main.contents
             webView21.CoreWebView2.WebMessageReceived += OnJSMessage;
             webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
         }
-        public void DoLoadForm(int idx, String ID)
+        public void DoLoadForm(int idx)
         {
             int i = -1;
             while (++i < forms.Length)
@@ -82,6 +82,7 @@ namespace main.contents
                     String json = s.Substring(n + 3);
                     Program.UTIL.write3DModel(Program.ProjName + ".json", json);
                     Program.DB.executeSQL(DB.type.ProjDB, s.Substring(0, n));
+                    Program.UTIL.reloadWebCtrl();
                 }
             }
             catch (Exception ex)
