@@ -1794,9 +1794,26 @@ Editor.prototype = {
 	},
 	getBridgesInfo: function () {
 		var ret = [];
+		let _bridges = {
+			"1":"평지붕+외벽[90]",
+			"2":"평지붕+내벽",
+			"3":"경사지붕",
+			"4":"경사지붕+벽",
+			"5":"경사지붕+경사벽",
+			"6":"슬라브+벽",
+			"7":"내벽+외벽",
+			"8":"외벽+외벽",
+			"9":"외벽+내벽+외벽",
+			"10":"---",
+			"11":"평지붕+벽[270]",
+			"12":"평지붕+벽[270]+내벽",
+		};
+
 
 		Object.keys(this.bridges).forEach(el => {
-			ret.push({"type":"bridge","text":"열교 정보 " + el, "id":"bridge-" + el});
+			if (el != 10) {
+				ret.push({"type":"bridge","text":_bridges[el], "id":"bridge-" + el});
+			}
 		});
 
 		return ret;
