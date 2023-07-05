@@ -18,6 +18,11 @@ namespace main.subcontents.ZoneLighting
 
         string NaturalType, facadetype;
         public string rooftype;
+        public double roofangle1, roofangle2, rooflength1, rooflength2, rooflength3;
+
+
+
+
 
         public LightingNatural_roof(string NaturalType)
         {
@@ -64,6 +69,16 @@ namespace main.subcontents.ZoneLighting
 
 
 
+        private void Save_button_Click_1(object sender, EventArgs e)
+        {
+            rooftype = rooftype.ToString();
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+
+            glass();
+            dim();
+
+        }
 
 
 
@@ -109,14 +124,23 @@ namespace main.subcontents.ZoneLighting
         }
 
 
-        private void Save_button_Click_1(object sender, EventArgs e)
+
+
+        //천창 유리정보 저장값 
+        private void glass()
         {
-            rooftype = rooftype.ToString();
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            roofangle1 = Convert.ToDouble(roofangle1_comboBox.SelectedItem);
+            roofangle2 = Convert.ToDouble(roofangle2_comboBox.SelectedItem);
         }
 
 
+        //천창 치수정보 저장값 
+        private void dim()
+        {
+            rooflength1 = Convert.ToDouble(rooflength1_textBox.Text);
+            rooflength2 = Convert.ToDouble(rooflength2_textBox.Text);
+            rooflength3 = Convert.ToDouble(rooflength3_textBox.Text);
+        }
 
 
 

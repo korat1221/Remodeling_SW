@@ -17,9 +17,10 @@ namespace main.subcontents.ZoneLighting
 
         //변수
         string NaturalType;
-        public String facadetype;
+        public String facadetype, doubleskinglasstype, atriumglasstype;
         public string rooftype;
 
+        public double W, L, H, glasslight;
 
 
 
@@ -39,6 +40,9 @@ namespace main.subcontents.ZoneLighting
             NaturalLight_comboBox.Items.Add("중정");
             NaturalLight_comboBox.Items.Add("아트리움");
             NaturalLight_comboBox.SelectedIndex = 0;
+
+
+
 
             //이중외피 아트리움 유리 콤보박스
             glass1_comboBox.Items.Clear();
@@ -71,14 +75,9 @@ namespace main.subcontents.ZoneLighting
 
             Act_Glass();
             Act_Dim();
-
-            
-           
-
-
-
         }
 
+     
 
 
 
@@ -96,7 +95,8 @@ namespace main.subcontents.ZoneLighting
                 glass1_comboBox.Visible = true;
                 glass_label.Visible = true;
                 glass_textBox.Visible = true;
-                glaassinfo_label.ForeColor = Color.Black;
+                glaassinfo_label.Visible = true;
+
 
             }
 
@@ -108,7 +108,8 @@ namespace main.subcontents.ZoneLighting
                 glass2_comboBox.Visible = true;
                 glass_label.Visible = true;
                 glass_textBox.Visible = true;
-                glaassinfo_label.ForeColor = Color.Black;
+                glaassinfo_label.Visible = true;
+
 
             }
 
@@ -120,8 +121,7 @@ namespace main.subcontents.ZoneLighting
                 glass2_comboBox.Visible = false;
                 glass_label.Visible = false;
                 glass_textBox.Visible = false;
-                glaassinfo_label.ForeColor= Color.Gray;
-
+                glaassinfo_label.Visible = false;
 
             }
 
@@ -143,7 +143,7 @@ namespace main.subcontents.ZoneLighting
                 H_label.Visible = true;
                 H_textBox.Visible = true;
                 Hm_label.Visible = true;
-                Dim_label.ForeColor = Color.Black;
+                Dim_label.Visible = true;
 
             }
 
@@ -159,7 +159,7 @@ namespace main.subcontents.ZoneLighting
                 H_label.Visible = false;
                 H_textBox.Visible = false;
                 Hm_label.Visible = false;
-                Dim_label.ForeColor = Color.Gray;
+                Dim_label.Visible = false;
 
 
             }
@@ -184,9 +184,70 @@ namespace main.subcontents.ZoneLighting
            facadetype = facadetype.ToString();
             this.DialogResult = DialogResult.OK;
             this.Close();
-            
 
+            glass();
+            dim();
+          
+
+          
         }
+
+
+        //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+        //파사드 이중외피 아트리움 유리 저장 값 
+        private void glass()
+        {
+            doubleskinglasstype = glass1_comboBox.SelectedItem.ToString();
+            atriumglasstype = glass2_comboBox.SelectedItem.ToString();
+            glasslight = Convert.ToDouble(glass_textBox.Text);
+
+            if (facadetype == "일반 파사드" || facadetype == "중정")
+            {
+                doubleskinglasstype = null;
+                atriumglasstype = null;
+                glasslight = 0;
+            }
+
+            else if (facadetype == "이중외피")
+            {
+                atriumglasstype = null;
+            }
+
+            else if (facadetype == "아트리움")
+            {
+                atriumglasstype = null;
+            }
+
+            else;
+        }
+
+
+        //파사드 치수정보 저장값
+        private void dim()
+        {
+         
+
+            if (facadetype == "중정" || facadetype == "아트리움")
+            {
+                W = Convert.ToDouble(W_textBox.Text);
+                L = Convert.ToDouble(L_textBox.Text);
+                H = Convert.ToDouble(H_textBox.Text);
+
+            }
+
+            else
+            {
+                W = 0;
+                L = 0;
+                H = 0;
+
+            }
+        }
+
+
+
+
 
 
 

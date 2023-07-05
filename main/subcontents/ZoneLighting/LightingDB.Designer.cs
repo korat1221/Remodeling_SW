@@ -34,8 +34,8 @@
             this.Save_button = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.UserDB_W_textBox = new System.Windows.Forms.TextBox();
+            this.UserDB_Manufacture_textBox = new System.Windows.Forms.TextBox();
             this.UserDBName_textBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -43,10 +43,10 @@
             this.label29 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
-            this.UserDB_RInternal_textBox = new System.Windows.Forms.TextBox();
+            this.UserDB_FL_textBox = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
-            this.UserDB_RExternal_textBox = new System.Windows.Forms.TextBox();
+            this.UserDB_lm_textBox = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.UserNum_textBox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -54,7 +54,7 @@
             this.AddUserDB_button = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.UserDB_Tao_textBox = new System.Windows.Forms.TextBox();
+            this.UserDB_eff_textBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.LampType_comboBox = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -79,8 +79,8 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.textBox2);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.UserDB_W_textBox);
+            this.panel1.Controls.Add(this.UserDB_Manufacture_textBox);
             this.panel1.Controls.Add(this.UserDBName_textBox);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label5);
@@ -88,10 +88,10 @@
             this.panel1.Controls.Add(this.label29);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.label30);
-            this.panel1.Controls.Add(this.UserDB_RInternal_textBox);
+            this.panel1.Controls.Add(this.UserDB_FL_textBox);
             this.panel1.Controls.Add(this.label31);
             this.panel1.Controls.Add(this.label32);
-            this.panel1.Controls.Add(this.UserDB_RExternal_textBox);
+            this.panel1.Controls.Add(this.UserDB_lm_textBox);
             this.panel1.Controls.Add(this.label15);
             this.panel1.Controls.Add(this.UserNum_textBox);
             this.panel1.Controls.Add(this.label12);
@@ -99,7 +99,7 @@
             this.panel1.Controls.Add(this.AddUserDB_button);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.UserDB_Tao_textBox);
+            this.panel1.Controls.Add(this.UserDB_eff_textBox);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.LampType_comboBox);
             this.panel1.Controls.Add(this.label8);
@@ -117,19 +117,21 @@
             this.label6.TabIndex = 119;
             this.label6.Text = "lm";
             // 
-            // textBox2
+            // UserDB_W_textBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(481, 77);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(120, 23);
-            this.textBox2.TabIndex = 118;
+            this.UserDB_W_textBox.Location = new System.Drawing.Point(481, 77);
+            this.UserDB_W_textBox.Name = "UserDB_W_textBox";
+            this.UserDB_W_textBox.Size = new System.Drawing.Size(120, 23);
+            this.UserDB_W_textBox.TabIndex = 118;
+            this.UserDB_W_textBox.TextChanged += new System.EventHandler(this.UserDB_W_textBox_TextChanged);
             // 
-            // textBox1
+            // UserDB_Manufacture_textBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(758, 13);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(120, 23);
-            this.textBox1.TabIndex = 115;
+            this.UserDB_Manufacture_textBox.Location = new System.Drawing.Point(758, 13);
+            this.UserDB_Manufacture_textBox.Name = "UserDB_Manufacture_textBox";
+            this.UserDB_Manufacture_textBox.Size = new System.Drawing.Size(120, 23);
+            this.UserDB_Manufacture_textBox.TabIndex = 115;
+            this.UserDB_Manufacture_textBox.TextChanged += new System.EventHandler(this.UserDB_Manufacture_textBox_TextChanged);
             // 
             // UserDBName_textBox
             // 
@@ -137,6 +139,7 @@
             this.UserDBName_textBox.Name = "UserDBName_textBox";
             this.UserDBName_textBox.Size = new System.Drawing.Size(120, 23);
             this.UserDBName_textBox.TabIndex = 91;
+            this.UserDBName_textBox.TextChanged += new System.EventHandler(this.UserDBName_textBox_TextChanged_1);
             // 
             // label2
             // 
@@ -164,6 +167,7 @@
             this.Converter_comboBox.Name = "Converter_comboBox";
             this.Converter_comboBox.Size = new System.Drawing.Size(120, 23);
             this.Converter_comboBox.TabIndex = 116;
+            this.Converter_comboBox.SelectedIndexChanged += new System.EventHandler(this.Converter_comboBox_SelectedIndexChanged);
             // 
             // label29
             // 
@@ -192,12 +196,13 @@
             this.label30.TabIndex = 111;
             this.label30.Text = "조명계수";
             // 
-            // UserDB_RInternal_textBox
+            // UserDB_FL_textBox
             // 
-            this.UserDB_RInternal_textBox.Location = new System.Drawing.Point(758, 76);
-            this.UserDB_RInternal_textBox.Name = "UserDB_RInternal_textBox";
-            this.UserDB_RInternal_textBox.Size = new System.Drawing.Size(120, 23);
-            this.UserDB_RInternal_textBox.TabIndex = 112;
+            this.UserDB_FL_textBox.Location = new System.Drawing.Point(758, 76);
+            this.UserDB_FL_textBox.Name = "UserDB_FL_textBox";
+            this.UserDB_FL_textBox.Size = new System.Drawing.Size(120, 23);
+            this.UserDB_FL_textBox.TabIndex = 112;
+            this.UserDB_FL_textBox.TextChanged += new System.EventHandler(this.UserDB_FL_textBox_TextChanged);
             // 
             // label31
             // 
@@ -217,12 +222,13 @@
             this.label32.TabIndex = 108;
             this.label32.Text = "광속";
             // 
-            // UserDB_RExternal_textBox
+            // UserDB_lm_textBox
             // 
-            this.UserDB_RExternal_textBox.Location = new System.Drawing.Point(481, 47);
-            this.UserDB_RExternal_textBox.Name = "UserDB_RExternal_textBox";
-            this.UserDB_RExternal_textBox.Size = new System.Drawing.Size(120, 23);
-            this.UserDB_RExternal_textBox.TabIndex = 109;
+            this.UserDB_lm_textBox.Location = new System.Drawing.Point(481, 47);
+            this.UserDB_lm_textBox.Name = "UserDB_lm_textBox";
+            this.UserDB_lm_textBox.Size = new System.Drawing.Size(120, 23);
+            this.UserDB_lm_textBox.TabIndex = 109;
+            this.UserDB_lm_textBox.TextChanged += new System.EventHandler(this.UserDB_lm_textBox_TextChanged);
             // 
             // label15
             // 
@@ -266,6 +272,7 @@
             this.Deletebutton.TabIndex = 102;
             this.Deletebutton.Text = "-";
             this.Deletebutton.UseVisualStyleBackColor = false;
+            this.Deletebutton.Click += new System.EventHandler(this.Deletebutton_Click);
             // 
             // AddUserDB_button
             // 
@@ -280,6 +287,7 @@
             this.AddUserDB_button.TabIndex = 101;
             this.AddUserDB_button.Text = "+";
             this.AddUserDB_button.UseVisualStyleBackColor = false;
+            this.AddUserDB_button.Click += new System.EventHandler(this.AddUserDB_button_Click);
             // 
             // label3
             // 
@@ -299,12 +307,13 @@
             this.label4.TabIndex = 96;
             this.label4.Text = "광효율";
             // 
-            // UserDB_Tao_textBox
+            // UserDB_eff_textBox
             // 
-            this.UserDB_Tao_textBox.Location = new System.Drawing.Point(758, 44);
-            this.UserDB_Tao_textBox.Name = "UserDB_Tao_textBox";
-            this.UserDB_Tao_textBox.Size = new System.Drawing.Size(120, 23);
-            this.UserDB_Tao_textBox.TabIndex = 97;
+            this.UserDB_eff_textBox.Location = new System.Drawing.Point(758, 44);
+            this.UserDB_eff_textBox.Name = "UserDB_eff_textBox";
+            this.UserDB_eff_textBox.Size = new System.Drawing.Size(120, 23);
+            this.UserDB_eff_textBox.TabIndex = 97;
+            this.UserDB_eff_textBox.TextChanged += new System.EventHandler(this.UserDB_eff_textBox_TextChanged);
             // 
             // label10
             // 
@@ -323,6 +332,7 @@
             this.LampType_comboBox.Name = "LampType_comboBox";
             this.LampType_comboBox.Size = new System.Drawing.Size(120, 23);
             this.LampType_comboBox.TabIndex = 43;
+            this.LampType_comboBox.SelectedIndexChanged += new System.EventHandler(this.LampType_comboBox_SelectedIndexChanged);
             // 
             // label8
             // 
@@ -403,7 +413,7 @@
         private Button AddUserDB_button;
         private Label label3;
         private Label label4;
-        private TextBox UserDB_Tao_textBox;
+        private TextBox UserDB_eff_textBox;
         private Label label10;
         private Label label13;
         private TextBox UserDBName_textBox;
@@ -412,14 +422,14 @@
         private DataGridView Light_dataGridView;
         private Label label29;
         private Label label30;
-        private TextBox UserDB_RInternal_textBox;
+        private TextBox UserDB_FL_textBox;
         private Label label31;
         private Label label32;
-        private TextBox UserDB_RExternal_textBox;
+        private TextBox UserDB_lm_textBox;
         private Label label2;
-        private TextBox textBox1;
+        private TextBox UserDB_Manufacture_textBox;
         private Label label6;
-        private TextBox textBox2;
+        private TextBox UserDB_W_textBox;
         private Label label5;
         private ComboBox Converter_comboBox;
     }

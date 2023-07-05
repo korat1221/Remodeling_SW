@@ -96,7 +96,7 @@
             this.glass_textBox.BackColor = System.Drawing.Color.White;
             this.glass_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.glass_textBox.Enabled = false;
-            this.glass_textBox.Location = new System.Drawing.Point(139, 182);
+            this.glass_textBox.Location = new System.Drawing.Point(139, 180);
             this.glass_textBox.Name = "glass_textBox";
             this.glass_textBox.Size = new System.Drawing.Size(120, 16);
             this.glass_textBox.TabIndex = 212;
@@ -324,13 +324,13 @@
             this.Save_button.UseVisualStyleBackColor = true;
             this.Save_button.Click += new System.EventHandler(this.Save_button_Click_1);
             // 
-            // NaturalLighting_facade
+            // LightingNatural_facade
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(602, 512);
             this.Controls.Add(this.Save_button);
             this.Controls.Add(this.panel1);
-            this.Name = "NaturalLighting_facade";
+            this.Name = "LightingNatural_facade";
             this.Text = "NaturalLighting";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
