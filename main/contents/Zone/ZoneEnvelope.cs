@@ -397,15 +397,18 @@ namespace main.contents
 
         private void ZoneEnvelope_VisibleChanged(object sender, EventArgs e)
         {
-            String ID = main.MainContents.selID;
-            ID = ID.Substring(19, 9);
-            Num_textBox.Text = ID;
-            ZoneNum = ID;
-            load_table_ZoneEnvelopeInfo(ZoneNum);
-            string[][] Zone = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "존번호,바닥면적", "존번호= '" + ZoneNum + "'");
-            Calc_A(ZoneNum);
-            ZoneType = Calc_ZoneType();
-            Check_radioButton(ZoneType);
+            if (main.MainContents.selID.IndexOf("_Zone") >= 0)
+            {
+                String ID = main.MainContents.selID;
+                ID = ID.Substring(19, 9);
+                Num_textBox.Text = ID;
+                ZoneNum = ID;
+                load_table_ZoneEnvelopeInfo(ZoneNum);
+                string[][] Zone = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "존번호,바닥면적", "존번호= '" + ZoneNum + "'");
+                Calc_A(ZoneNum);
+                ZoneType = Calc_ZoneType();
+                Check_radioButton(ZoneType);
+            }
         }
 
     }

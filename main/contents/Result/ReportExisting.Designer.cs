@@ -29,12 +29,10 @@
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
-            label3 = new System.Windows.Forms.Label();
-            label1 = new System.Windows.Forms.Label();
-            textBox1 = new System.Windows.Forms.TextBox();
-            panel2 = new Panel();
-            AdditionalPanel = new Panel();
-            textBox2 = new System.Windows.Forms.TextBox();
+            textBox2 = new TextBox();
+            label3 = new Label();
+            label1 = new Label();
+            textBox1 = new TextBox();
             GeneralPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -47,9 +45,19 @@
             GeneralPanel.Controls.Add(textBox1);
             GeneralPanel.Location = new Point(12, 12);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(977, 101);
+            GeneralPanel.Size = new Size(977, 683);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // textBox2
+            // 
+            textBox2.BackColor = SystemColors.Window;
+            textBox2.BorderStyle = BorderStyle.FixedSingle;
+            textBox2.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox2.Location = new Point(155, 52);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(120, 22);
+            textBox2.TabIndex = 89;
             // 
             // label3
             // 
@@ -57,7 +65,7 @@
             label3.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label3.Location = new Point(74, 56);
             label3.Name = "label3";
-            label3.Size = new Size(75, 15);
+            label3.Size = new Size(79, 15);
             label3.TabIndex = 3;
             label3.Text = "기존건물결과";
             // 
@@ -81,43 +89,13 @@
             textBox1.Size = new Size(120, 22);
             textBox1.TabIndex = 88;
             // 
-            // panel2
-            // 
-            panel2.BackColor = Color.White;
-            panel2.BorderStyle = BorderStyle.Fixed3D;
-            panel2.Location = new Point(12, 136);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(977, 149);
-            panel2.TabIndex = 18;
-            // 
-            // AdditionalPanel
-            // 
-            AdditionalPanel.BackColor = Color.White;
-            AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
-            AdditionalPanel.Location = new Point(12, 303);
-            AdditionalPanel.Name = "AdditionalPanel";
-            AdditionalPanel.Size = new Size(977, 390);
-            AdditionalPanel.TabIndex = 18;
-            // 
-            // textBox2
-            // 
-            textBox2.BackColor = SystemColors.Window;
-            textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox2.Location = new Point(155, 52);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(120, 22);
-            textBox2.TabIndex = 89;
-            // 
             // ReportExisting
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(panel2);
             Controls.Add(GeneralPanel);
-            Controls.Add(AdditionalPanel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "ReportExisting";
             Text = "Form3";
@@ -129,8 +107,6 @@
         #endregion
 
         private Panel GeneralPanel;
-        private Panel panel2;
-        private Panel AdditionalPanel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label3;
