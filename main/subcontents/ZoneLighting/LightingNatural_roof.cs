@@ -8,13 +8,14 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.subcontents.ZoneLighting
 {
     public partial class LightingNatural_roof : Form
 
     {
-
+        string ZoneNum;
 
         string NaturalType, facadetype;
         public string rooftype;
@@ -24,16 +25,16 @@ namespace main.subcontents.ZoneLighting
 
 
 
-        public LightingNatural_roof(string NaturalType)
+        public LightingNatural_roof(string NaturalType, string ZoneNum)
         {
             InitializeComponent();
 
             this.NaturalType = NaturalType;
-           
+            this.ZoneNum = ZoneNum;
             NaturalType2_textBox.Text = NaturalType;
 
+            LoadData(ZoneNum);
 
-           
             //천창 세부유형 콤보박스 
             NaturalLight2_comboBox.Items.Clear();
             NaturalLight2_comboBox.Items.Add("일반형");
@@ -142,7 +143,36 @@ namespace main.subcontents.ZoneLighting
             rooflength3 = Convert.ToDouble(rooflength3_textBox.Text);
         }
 
+        private void LoadData(String ZoneNum)
+        {
+            try
+            {
 
+                String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting", "천창,천창유리각,천창수평측면각,천창장변부길이,천창단변부길이,천창수평상부높이",
+                "번호 = '" + ZoneNum + "'");
+
+                rooftype = Load[0][0];
+                NaturalLight2_comboBox.SelectedItem = rooftype;
+
+                roofangle1 = Convert.ToDouble(Load[0][1]);
+                roofangle1_comboBox.SelectedItem = roofangle1;
+
+                roofangle2 = Convert.ToDouble(Load[0][2]);
+                roofangle2_comboBox.SelectedItem = roofangle2;
+
+                rooflength1 = Convert.ToDouble(Load[0][3]);
+                rooflength1_textBox.Text = rooflength1.ToString();
+
+                rooflength2 = Convert.ToDouble(Load[0][4]);
+                rooflength2_textBox.Text = rooflength2.ToString();
+
+                rooflength3 = Convert.ToDouble(Load[0][5]);
+                rooflength3_textBox.Text = rooflength3.ToString();
+
+                Load_rooftype_image(rooftype);
+            }
+            catch { }
+        }
 
 
     }

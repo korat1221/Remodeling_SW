@@ -81,6 +81,7 @@ namespace main.contents
             InternalZone_radioButton = new System.Windows.Forms.RadioButton();
             label2 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
+            Save_button = new System.Windows.Forms.Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
@@ -573,12 +574,25 @@ namespace main.contents
             label4.TabIndex = 38;
             label4.Text = "기밀 성능";
             // 
+            // Save_button
+            // 
+            Save_button.BackColor = SystemColors.ButtonHighlight;
+            Save_button.ForeColor = Color.Black;
+            Save_button.Location = new Point(1020, 642);
+            Save_button.Name = "Save_button";
+            Save_button.Size = new Size(135, 25);
+            Save_button.TabIndex = 89;
+            Save_button.Text = "SAVE";
+            Save_button.UseVisualStyleBackColor = true;
+            Save_button.Click += Save_button_Click;
+            // 
             // ZoneEnvelope
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(Save_button);
             Controls.Add(label4);
             Controls.Add(label2);
             Controls.Add(panel1);
@@ -647,5 +661,6 @@ namespace main.contents
         private System.Windows.Forms.TextBox q50_textBox;
         private System.Windows.Forms.TextBox Num_textBox;
         private PictureBox Icon_pictureBox;
+        private System.Windows.Forms.Button Save_button;
     }
 }

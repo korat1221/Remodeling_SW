@@ -31,12 +31,6 @@
     <Compile Update="contents\Construction\ConstructionDoor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Construction\ConstructionFloor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="contents\Construction\ConstructionRoof.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="contents\Construction\ConstructionWindow.cs">
       <SubType>Form</SubType>
     </Compile>

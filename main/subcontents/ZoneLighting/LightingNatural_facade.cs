@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,22 +17,24 @@ namespace main.subcontents.ZoneLighting
 
 
         //변수
+        string ZoneNum;
         string NaturalType;
         public String facadetype, doubleskinglasstype, atriumglasstype;
         public string rooftype;
+        List<String> GlassList = new List<String>();
 
-        public double W, L, H, glasslight;
+        public double W, L, H, Tao;
 
 
 
-        public LightingNatural_facade(string NaturalType) 
+        public LightingNatural_facade(string NaturalType, string ZoneNum)
         {
             InitializeComponent();
+            this.ZoneNum = ZoneNum;
             this.NaturalType = NaturalType;
             NaturalType_textBox.Text = NaturalType;
-            
-           
 
+            LoadData(ZoneNum);
 
             //파사드 세부유형 콤보박스
             NaturalLight_comboBox.Items.Clear();
@@ -41,26 +44,23 @@ namespace main.subcontents.ZoneLighting
             NaturalLight_comboBox.Items.Add("아트리움");
             NaturalLight_comboBox.SelectedIndex = 0;
 
-
-
-
-            //이중외피 아트리움 유리 콤보박스
+            GlassList.Clear();
+            //유리 콤보박스
+            try
+            {
+                string[][] User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,제품명", "");
+                for (int n = 0; n < User_WinGlass.Length; n++)
+                { GlassList.Add(User_WinGlass[n][1]); }
+            }
+            catch { }
+            string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,제품명", "");
+            for (int n = 0; n < WinGlass.Length; n++)
+            {
+                GlassList.Add(WinGlass[n][1]);
+            }
+            string[] GlassArray = GlassList.ToArray();
             glass1_comboBox.Items.Clear();
-            glass1_comboBox.Items.Add("LE/12R/CL/12R/LE");
-            glass1_comboBox.Items.Add("LE/12R/CL/13R/LE");
-            glass1_comboBox.Items.Add("LE/12R/CL/14R/LE");
-            glass1_comboBox.Items.Add("LE/12R/CL/15R/LE");
-            glass1_comboBox.SelectedIndex = 0;
-
-            glass2_comboBox.Items.Clear();
-            glass2_comboBox.Items.Add("LE/12R/CL/12R/LE");
-            glass2_comboBox.Items.Add("LE/12R/CL/13R/LE");
-            glass2_comboBox.Items.Add("LE/12R/CL/14R/LE");
-            glass2_comboBox.Items.Add("LE/12R/CL/15R/LE");
-            glass2_comboBox.SelectedIndex = 0;
-
-
-
+            glass1_comboBox.Items.AddRange(GlassArray);
         }
 
 
@@ -69,7 +69,7 @@ namespace main.subcontents.ZoneLighting
         //파사드 세부유형 선택
         private void NaturalLight_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
+
             facadetype = NaturalLight_comboBox.SelectedItem.ToString();
             Load_facadetype_image(facadetype);
 
@@ -77,7 +77,7 @@ namespace main.subcontents.ZoneLighting
             Act_Dim();
         }
 
-     
+
 
 
 
@@ -89,12 +89,10 @@ namespace main.subcontents.ZoneLighting
         {
             if (facadetype == "이중외피")
             {
-                glass2_label.Visible = false;
-                glass2_comboBox.Visible = false;
                 glass1_label.Visible = true;
                 glass1_comboBox.Visible = true;
                 glass_label.Visible = true;
-                glass_textBox.Visible = true;
+                Tao_textBox.Visible = true;
                 glaassinfo_label.Visible = true;
 
 
@@ -104,10 +102,8 @@ namespace main.subcontents.ZoneLighting
             {
                 glass1_label.Visible = false;
                 glass1_comboBox.Visible = false;
-                glass2_label.Visible = true;
-                glass2_comboBox.Visible = true;
                 glass_label.Visible = true;
-                glass_textBox.Visible = true;
+                Tao_textBox.Visible = true;
                 glaassinfo_label.Visible = true;
 
 
@@ -117,10 +113,8 @@ namespace main.subcontents.ZoneLighting
             {
                 glass1_label.Visible = false;
                 glass1_comboBox.Visible = false;
-                glass2_label.Visible = false;
-                glass2_comboBox.Visible = false;
                 glass_label.Visible = false;
-                glass_textBox.Visible = false;
+                Tao_textBox.Visible = false;
                 glaassinfo_label.Visible = false;
 
             }
@@ -181,32 +175,46 @@ namespace main.subcontents.ZoneLighting
 
         private void Save_button_Click_1(object sender, EventArgs e)
         {
-           facadetype = facadetype.ToString();
+            facadetype = facadetype.ToString();
             this.DialogResult = DialogResult.OK;
             this.Close();
 
             glass();
             dim();
-          
 
-          
+
+
         }
 
 
         //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
+        private void glass1_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            doubleskinglasstype = glass1_comboBox.SelectedItem.ToString();
+            atriumglasstype = glass1_comboBox.SelectedItem.ToString();
+            try
+            {
+                string[][] User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,제품명,빛투과율", "제품명 ='" + glass1_comboBox.SelectedItem.ToString() + "'");
+                Tao = Convert.ToDouble(User_WinGlass[0][2]);
+            }
+            catch
+            {
+                string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,제품명,빛투과율", "제품명 ='" + glass1_comboBox.SelectedItem.ToString() + "'");
+                Tao = Convert.ToDouble(WinGlass[0][2]);
+            }
+            Tao_textBox.Text = string.Format("{0:F3}", Tao);
+
+        }
         //파사드 이중외피 아트리움 유리 저장 값 
         private void glass()
         {
-            doubleskinglasstype = glass1_comboBox.SelectedItem.ToString();
-            atriumglasstype = glass2_comboBox.SelectedItem.ToString();
-            glasslight = Convert.ToDouble(glass_textBox.Text);
-
             if (facadetype == "일반 파사드" || facadetype == "중정")
             {
                 doubleskinglasstype = null;
                 atriumglasstype = null;
-                glasslight = 0;
+                Tao = 0;
+
             }
 
             else if (facadetype == "이중외피")
@@ -226,14 +234,13 @@ namespace main.subcontents.ZoneLighting
         //파사드 치수정보 저장값
         private void dim()
         {
-         
+
 
             if (facadetype == "중정" || facadetype == "아트리움")
             {
                 W = Convert.ToDouble(W_textBox.Text);
                 L = Convert.ToDouble(L_textBox.Text);
                 H = Convert.ToDouble(H_textBox.Text);
-
             }
 
             else
@@ -245,13 +252,35 @@ namespace main.subcontents.ZoneLighting
             }
         }
 
+        private void LoadData(String ZoneNum)
+        {
+            try
+            {
 
+                String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting", "파사드,이중외피유리,아트리움유리,파사드유리빛투과율,파사드너비,파사드길이,파사드높이",
+                "번호 = '" + ZoneNum + "'");
 
+                facadetype = Load[0][0];
+                NaturalLight_comboBox.SelectedItem = facadetype;
 
+                doubleskinglasstype = Load[0][1];
+                atriumglasstype = Load[0][2];
+                Tao = Convert.ToDouble(Load[0][3]);
+                glass1_comboBox.SelectedItem = doubleskinglasstype;
+                Tao_textBox.Text = Tao.ToString();
 
+                W = Convert.ToDouble(Load[0][4]);
+                L = Convert.ToDouble(Load[0][5]);
+                H = Convert.ToDouble(Load[0][6]);
 
+                W_textBox.Text = W.ToString();
+                L_textBox.Text = L.ToString();
+                H_textBox.Text = H.ToString();
 
-
+                Load_facadetype_image(facadetype);
+            }
+            catch { }
+        }
 
     }
 }

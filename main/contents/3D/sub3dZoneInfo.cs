@@ -91,7 +91,7 @@ namespace main.contents
             }
             else
             {
-                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭", "");
+                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭", "");
             }
             DataGridViewComboBoxCell ConstructionCombo = new DataGridViewComboBoxCell();
             ConstructionCombo.Items.Clear();

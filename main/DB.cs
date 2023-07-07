@@ -70,7 +70,7 @@ namespace main
             {"ext_ill", "CREATE TABLE IF NOT EXISTS ext_ill (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
             {"User_Lighting", "CREATE TABLE IF NOT EXISTS User_Lighting (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),DB유형 VARCHAR (32),등기구명칭 VARCHAR (32),램프유형 VARCHAR (32),제조사 VARCHAR (32),안정기_컨버터 VARCHAR (32),광속 VARCHAR (32),소비전력 VARCHAR (32),광효율 VARCHAR (32),조명계수 VARCHAR (32))"},
             {"User_Renew", "CREATE TABLE IF NOT EXISTS User_Renew (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),DB유형 VARCHAR (32),집광채광명칭 VARCHAR (32),집광채광종류 VARCHAR (32),제조사 VARCHAR (32),집광채광효율 VARCHAR (32),산광부가로길이 VARCHAR (32),산광부세로길이 VARCHAR (32),산광부면적 VARCHAR (32))"},
-            {"ZoneLighting", "CREATE TABLE IF NOT EXISTS ZoneLighting (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),조명방식 VARCHAR (32),제어방식 VARCHAR (32),디밍유형 VARCHAR (32),조명개수 VARCHAR (32),조명밀도 VARCHAR (32),재실계수 VARCHAR (32),재실계수1 VARCHAR (32),재실계수2 VARCHAR (32),재실계수3 VARCHAR (32),조도제어계수 VARCHAR (32),자연채광유형 VARCHAR (32),파사드 VARCHAR (32),이중외피유리 VARCHAR (32),아트리움유리 VARCHAR (32),파사드유리빛투과율 VARCHAR (32),파사드너비 VARCHAR (32),파사드길이 VARCHAR (32),파사드높이 VARCHAR (32),천창 VARCHAR (32),천창유리각 VARCHAR (32),천창수평측면각 VARCHAR (32),천창장변부길이 VARCHAR (32),천창단변부길이 VARCHAR (32),천창수평상부높이 VARCHAR (32),차양 VARCHAR (32),집광채광번호 VARCHAR (32),집광채광명칭 VARCHAR (32),집광채광종류 VARCHAR (32),집광채광효율 VARCHAR (32),집광채광면적 VARCHAR (32),표준길이1 VARCHAR (32),표준길이2 VARCHAR (32),표준너비 VARCHAR (32),사용자길이1 VARCHAR (32),사용자길이2 VARCHAR (32),사용자면적 VARCHAR (32), 조명번호 VARCHAR (32), 등기구명칭 VARCHAR (32), 램프유형 VARCHAR (32), 컨버터_안정기 VARCHAR (32), 광속 VARCHAR (32), 소비전력 VARCHAR (32), 조명계수 VARCHAR (32),표준광속 VARCHAR (32), 표준소비전력 VARCHAR (32),사용자광속 VARCHAR (32), 사용자소비전력 VARCHAR (32),사용자예상전력 VARCHAR (32))"},
+            {"ZoneLighting_form", "CREATE TABLE IF NOT EXISTS ZoneLighting_form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),조명방식 VARCHAR (32),제어방식 VARCHAR (32),디밍유형 VARCHAR (32),조명개수 VARCHAR (32),조명밀도 VARCHAR (32),재실계수 VARCHAR (32),재실계수1 VARCHAR (32),재실계수2 VARCHAR (32),재실계수3 VARCHAR (32),조도제어계수 VARCHAR (32),자연채광체크 VARCHAR (32),자연채광유형 VARCHAR (32),파사드 VARCHAR (32),이중외피유리 VARCHAR (32),아트리움유리 VARCHAR (32),파사드유리빛투과율 VARCHAR (32),파사드너비 VARCHAR (32),파사드길이 VARCHAR (32),파사드높이 VARCHAR (32),천창 VARCHAR (32),천창유리각 VARCHAR (32),천창수평측면각 VARCHAR (32),천창장변부길이 VARCHAR (32),천창단변부길이 VARCHAR (32),천창수평상부높이 VARCHAR (32),차양 VARCHAR (32),집광채광체크  VARCHAR (32),집광채광번호 VARCHAR (32),집광채광명칭 VARCHAR (32),집광채광종류 VARCHAR (32),집광채광효율 VARCHAR (32),집광채광면적 VARCHAR (32),표준길이1 VARCHAR (32),표준길이2 VARCHAR (32),표준너비 VARCHAR (32),사용자길이1 VARCHAR (32),사용자길이2 VARCHAR (32),사용자면적 VARCHAR (32), 조명번호 VARCHAR (32), 등기구명칭 VARCHAR (32), 램프유형 VARCHAR (32), 컨버터_안정기 VARCHAR (32), 광속 VARCHAR (32), 소비전력 VARCHAR (32), 조명계수 VARCHAR (32),표준광속 VARCHAR (32), 표준소비전력 VARCHAR (32),사용자광속 VARCHAR (32), 사용자소비전력 VARCHAR (32),사용자예상전력 VARCHAR (32))"},
 
 
 
@@ -766,11 +766,11 @@ namespace main
 
             if (conditions != "")
             {
-                cmd.CommandText = "SELECT " + columns + " FROM " + table + " GROUP BY " + columns + " WHERE " + conditions;
+                cmd.CommandText = "SELECT DISTINCT " + columns + " FROM " + table + " WHERE " + conditions;
             }
             else
             {
-                cmd.CommandText = "SELECT " + columns + " FROM " + table + " GROUP BY " + columns ;
+                cmd.CommandText = "SELECT DISTINCT " + columns + " FROM " + table  ;
             }
 
             using (SQLiteDataReader reader = cmd.ExecuteReader())

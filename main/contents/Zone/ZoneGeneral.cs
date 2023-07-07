@@ -164,8 +164,6 @@ namespace main.contents
                 EquipIHG_image_textBox.BackColor = Color.FromArgb(217, 217, 217);
                 RA_Volume_textBox.BackColor = Color.FromArgb(217, 217, 217);
                 SA_Volume_textBox.BackColor = Color.FromArgb(217, 217, 217);
-                HeatingLoad_textBox.Visible = false;
-                CoolingLoad_textBox.Visible = false;
 
             }
             else

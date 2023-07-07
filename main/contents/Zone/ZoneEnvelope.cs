@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using main.contentslist;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,16 +8,18 @@ using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.contents
 {
     public partial class ZoneEnvelope : Form
     {
-        String ZoneNum;
+        String ZoneNum, ZoneName, Layer;
 
 
         String[] ConstructionType = { "커튼월창", "외벽", "지붕", "최하층바닥", "창호", "외부출입문", "내벽", "층간바닥" };
@@ -83,7 +86,7 @@ namespace main.contents
         }
 
 
-       
+
 
         //천장 축열정보 선택 시 
         private void CeilingCwrik_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -141,7 +144,7 @@ namespace main.contents
 
 
         //존외피 왼쪽테이블 정보 만들기 
-        void load_table_ZoneEnvelopeInfo(String SelectZone)
+        void load_table_ZoneEnvelopeInfo(String ZoneNum)
         {
             DataTable table_ZoneEnvelopeNum = new DataTable();
             // 체크박스 추가
@@ -156,27 +159,76 @@ namespace main.contents
             table_ZoneEnvelopeNum.Columns.Add("A" + Environment.NewLine + "[m2]", typeof(string));
             table_ZoneEnvelopeNum.Columns.Add("Ueff" + Environment.NewLine + "[W/m2K]", typeof(string));
 
-            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출,좌측면돌출,상부돌출,주변요소,구조체,Ueff,α,g", "존='" + SelectZone + "'");
+            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,커튼월부위,면적,구조체", "존='" + ZoneNum + "'");
 
             int[] Construction_Count = new int[8]; double[] Construction_AreaSum = new double[8]; double[] Construction_UeffAvg = new double[8]; double[] Construction_UeffSum = new double[8];
-
+           
+            for (int k = 0; k < ConstructionType.Length; k++)
+            {
+                Construction_AreaSum[k] = 0;
+                Construction_UeffSum[k] = 0;
+            }
             int i = -1;
             while (++i < ZoneE.Length)
             {
                 for (int k = 0; k < ConstructionType.Length; k++)
                 {
-                    Construction_AreaSum[k] = 0;
-                    Construction_UeffSum[k] = 0;
-
-                    if (ZoneE[i][3] == ConstructionType[k])
+                    if (ZoneE[i][1] == ConstructionType[k])
                     {
                         Construction_Count[k] = Construction_Count[k] + 1;
-                        Construction_AreaSum[k] += Convert.ToDouble(ZoneE[i][5]);
-                        Construction_UeffSum[k] += (Convert.ToDouble(ZoneE[i][14]) * Convert.ToDouble(ZoneE[i][5]));
-                        Construction_UeffAvg[k] = Construction_UeffSum[k] / Construction_AreaSum[k]; //면적가중평균
-
+                        Construction_AreaSum[k] += Convert.ToDouble(ZoneE[i][3]);
                     }
                 }
+            }
+
+            i = -1;
+            while (++i < ZoneE.Length)
+            {
+                if(ZoneE[i][1] =="커튼월창")
+                {
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "커튼월창유효열관류율", "명칭='" + ZoneE[i][4] + "'");
+                    Construction_UeffSum[0] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
+
+                }
+                else if (ZoneE[i][1] =="외벽")
+                {
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭='" + ZoneE[i][4] + "'");
+                    Construction_UeffSum[1] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
+                }
+                else if (ZoneE[i][1] == "지붕")
+                {
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭='" + ZoneE[i][4] + "'"); ///나중에 지붕으로 고쳐야함
+                    Construction_UeffSum[2] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
+                }
+                else if (ZoneE[i][1] == "최하층바닥")
+                {
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭='" + ZoneE[i][4] + "'"); ///나중에 최하층바닥으로 고쳐야함
+                    Construction_UeffSum[3] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
+                }
+                else if (ZoneE[i][1] == "창호")
+                {
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "창호유효열관류율", "명칭='" + ZoneE[i][4] + "'");
+                    Construction_UeffSum[4] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
+                }
+                else if (ZoneE[i][1] == "외부출입문")
+                {
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭='" + ZoneE[i][4] + "'"); ///나중에 외부출입문으로 고쳐야함
+                    Construction_UeffSum[5] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
+                }
+                else { }
+            }
+
+            for (int k = 0; k < ConstructionType.Length; k++)
+            {
+                if (Construction_AreaSum[k] == 0)
+                {
+                    Construction_UeffAvg[k] = 0;
+                }
+                else
+                {
+                    Construction_UeffAvg[k] = Construction_UeffSum[k] / Construction_AreaSum[k]; //면적가중평균
+                }
+
             }
 
             //존별 구조체별 종합정보 테이블 만들기
@@ -394,7 +446,43 @@ namespace main.contents
             return n50;
 
         }
+        public static bool OnLoadListProc(Form form)
+        {
+            List_Zone f = (List_Zone)form;
+            f.load_List();
+            return true;
+        }
 
+        private void Save_button_Click(object sender, EventArgs e)
+        {
+            Save();
+        }
+        private void Save()
+        {
+            MessageBox.Show(ZoneNum + "[" + ZoneName + "] 정보를 저장하였습니다.");
+            this.DialogResult = DialogResult.OK;
+            this.Hide();
+            Program.getMenuForm().DoLoadForm(33, OnLoadListProc);
+        }
+        private void reset()
+        {
+        }
+        public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
+        {
+            reset();
+            Load_OtherFormData();
+            load_table_ZoneEnvelopeInfo(ZoneNum);
+            string[][] Zone = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "존번호,바닥면적", "존번호= '" + ZoneNum + "'");
+            Calc_A(ZoneNum);
+            ZoneType = Calc_ZoneType();
+            Check_radioButton(ZoneType);
+        }
+        public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
+        {
+            Num_textBox.Text = ID;
+            ZoneNum = ID;
+            Load_OtherFormData();
+        }
         private void ZoneEnvelope_VisibleChanged(object sender, EventArgs e)
         {
             if (main.MainContents.selID.IndexOf("_Zone") >= 0)
@@ -403,12 +491,22 @@ namespace main.contents
                 ID = ID.Substring(19, 9);
                 Num_textBox.Text = ID;
                 ZoneNum = ID;
-                load_table_ZoneEnvelopeInfo(ZoneNum);
-                string[][] Zone = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "존번호,바닥면적", "존번호= '" + ZoneNum + "'");
-                Calc_A(ZoneNum);
-                ZoneType = Calc_ZoneType();
-                Check_radioButton(ZoneType);
+                LoadData(ZoneNum);
             }
+        }
+        private void Load_OtherFormData()
+        {
+            try
+            {
+                //존이름 불러오기
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름", "존번호 = '" + ZoneNum + "'");
+
+                ZoneName = Value[0][0];
+                ZoneName_textBox.Text = ZoneName;
+            }
+            catch { }
+
+            load_table_ZoneEnvelopeInfo(ZoneNum);
         }
 
     }
