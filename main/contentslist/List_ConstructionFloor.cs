@@ -42,9 +42,9 @@ namespace main.contentslist
 
         private void Add_button_Click(object sender, EventArgs e)
         {
-            WallNum = Program.UTIL.CreateNum("ConstructionFloor", "번호", "WL");
+            WallNum = Program.UTIL.CreateNum("ConstructionFloor", "번호", "FR");
 
-            Program.getMenuForm().ResetForm(3);
+            Program.getMenuForm().ResetForm(5);
 
             Load_form(WallNum, "Add");
         }
@@ -74,7 +74,7 @@ namespace main.contentslist
         {
             currentID = ID;
             inEditing = editing;
-            Program.getMenuForm().DoLoadForm(3, OnLoadProc);
+            Program.getMenuForm().DoLoadForm(5, OnLoadProc);
         }
 
 
@@ -106,11 +106,11 @@ namespace main.contentslist
             for (int n = 0; n < List.Length; n++)
             {
                 WallList.Rows.Add(List[n][0], List[n][1], List[n][2], String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])));
-                mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":3,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":5,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             }
             dataGridView1.DataSource = WallList;
             CountDB = List.Length;
-            Program.UTIL.resetMainTree(1, 1, mainMenu.ToArray(), "34"); // 예시 코드: 메인 메뉴 동적 할당
+            Program.UTIL.resetMainTree(1, 1, mainMenu.ToArray(), "36"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
         //선택한 열 색 표시

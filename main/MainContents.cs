@@ -48,7 +48,9 @@ namespace main
             SubWindow,
             List_Floor,
             List_Zone,
-            List_ConstructionWall
+            List_ConstructionWall,
+            List_ConstructionRoof,
+            List_ConstructionFloor
 
         }
           Form[] forms = new Form[] { new General(), new EnergyUse(), 
@@ -61,7 +63,7 @@ namespace main
             new FormDebug(),
             new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow(),
             new List_Floor(), new List_Zone(),
-            new List_ConstructionWall()};
+            new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor()};
         bool scriptable = false;
         public class FormParam
         {
@@ -125,6 +127,18 @@ namespace main
 
                 f.LoadData(formParam.ID);
             }
+            else if (formParam.formID == 4)
+            {
+                ConstructionRoof f = (ConstructionRoof)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 5)
+            {
+                ConstructionFloor f = (ConstructionFloor)form;
+
+                f.LoadData(formParam.ID);
+            }
             else if (formParam.formID == 6)
             {
                 ConstructionWindow f = (ConstructionWindow)form;
@@ -170,6 +184,18 @@ namespace main
             else if (formParam.formID == 34)
             {
                 List_ConstructionWall f = (List_ConstructionWall)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 35)
+            {
+                List_ConstructionRoof f = (List_ConstructionRoof)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 36)
+            {
+                List_ConstructionFloor f = (List_ConstructionFloor)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -294,6 +320,18 @@ namespace main
 
                     f.LoadData("");
                 }
+                else if (i == 35)
+                {
+                    List_ConstructionRoof f = (List_ConstructionRoof)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 36)
+                {
+                    List_ConstructionFloor f = (List_ConstructionFloor)forms[i];
+
+                    f.LoadData("");
+                }
             }
         }
         public void DoLoadForm(int idx, OnOpenProc proc = null)
@@ -370,6 +408,34 @@ namespace main
                     {
                         openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
                         forms[idx] = new ConstructionWall();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+            else if (idx == 4)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new ConstructionRoof();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+            else if (idx == 5)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new ConstructionFloor();
                         forms[idx].TopLevel = false;
                         openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
                         return;
