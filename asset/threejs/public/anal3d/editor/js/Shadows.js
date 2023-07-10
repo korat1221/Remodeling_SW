@@ -338,6 +338,8 @@ Shadows.prototype = {
 						});
 
 						if (y > -99999999) {
+							el.shadow_base = pos0.distanceTo(centers[pkey]);
+							el.shadow_height = centers[pkey].distanceTo(pos2);
 							el.shadow_angle = Math.atan2(centers[pkey].distanceTo(pos2), pos0.distanceTo(centers[pkey])) * 180 / Math.PI;
 							el.lines.push({points:[pos0, pos2],color:0x0000FF, opacity:0.5});
 							//				this.editor.lines.push([pos0, centers[pkey]]);
@@ -352,8 +354,10 @@ Shadows.prototype = {
 					if (left) {
 //						this.editor.lines.push([ctr, left.points[0]]);
 //						this.editor.lines.push([ctr, left.points[1]]);
+						el.left_shadow_base = left.base;
+						el.left_shadow_height = left.height;
 						el.left_shadow_angle = Math.atan2(left.height, left.base) * 180 / Math.PI;
-							el.lines.push({points:[ctr, left.point],color:0xFF00, opacity:0.5});
+						el.lines.push({points:[ctr, left.point],color:0xFF00, opacity:0.5});
 						//						console.log("left" + el.left_shadow_angle);
 					}
 
@@ -362,6 +366,8 @@ Shadows.prototype = {
 					if (right) {
 //						this.editor.lines.push([ctr, right.points[0]]);
 //						this.editor.lines.push([ctr, right.points[1]]);
+						el.right_shadow_base = right.base;
+						el.right_shadow_height = right.height;
 						el.right_shadow_angle = Math.atan2(right.height, right.base) * 180 / Math.PI;
 						el.lines.push({points:[ctr, right.point],color:0x00FF00, opacity:0.5});
 //						console.log("right" + el.right_shadow_angle);
@@ -371,6 +377,8 @@ Shadows.prototype = {
 						let up = ctr.clone();
 						up.y = upPoint.y;
 
+						el.up_shadow_base = ctr.distanceTo(up);
+						el.up_shadow_height = up.distanceTo(upPoint);
 						el.up_shadow_angle = Math.atan2(up.distanceTo(upPoint),ctr.distanceTo(up)) * 180 / Math.PI;
 							el.lines.push({points:[ctr, upPoint],color:0xFF00FF, opacity:0.5});
 				//		console.log("up " + el.up_shadow_angle);

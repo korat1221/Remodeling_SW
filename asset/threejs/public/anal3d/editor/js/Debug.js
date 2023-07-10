@@ -55,6 +55,22 @@ Debug.prototype = {
         let mesh = new THREE.Mesh( geometry, material );
         this.editor.addObject( mesh );
     },
+    drawTriangle2: function (a, color) {
+        const material = new THREE.MeshStandardMaterial({
+            color: color.color,
+            wireframe : false,
+            shading: THREE.FlatShading,
+            roughness: 1,
+            metalness: 0,
+            side: THREE.DoubleSide,
+            opacity: color.opacity,
+            transparent:true
+        });
+        const geometry = new THREE.BufferGeometry();
+        geometry.setFromPoints(a);
+        let mesh = new THREE.Mesh( geometry, material );
+        this.editor.addObject( mesh );
+    },
     drawPolygon: function (a, color) {
         const material = new THREE.MeshStandardMaterial({
             color: color.color,
@@ -145,8 +161,19 @@ Debug.prototype = {
 		this.editor.addObject( mesh );
 	},
 
-    drawLine4: function (line, color) {
+	drawLine4: function (line, color) {
 		const mesh = new THREE.Line( new THREE.BufferGeometry().setFromPoints([line.start,line.end]), 
+			new THREE.LineBasicMaterial( { 
+				color:  new THREE.Color( color ),
+				opacity: 1.0,
+				transparent:true,
+			} ) 
+		);
+		this.editor.addObject( mesh );
+	},
+
+	drawLine5: function (line, color) {
+		const mesh = new THREE.Line( new THREE.BufferGeometry().setFromPoints(line), 
 			new THREE.LineBasicMaterial( { 
 				color:  new THREE.Color( color ),
 				opacity: 1.0,

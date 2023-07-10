@@ -31,21 +31,24 @@
             }
             print("\n");    
 
+            $cwTypes = array("1" => "창호","2" => "커튼월유리","3" => "커튼월패널","4" => "커튼월출입문","5" => "외부출입문");
+
             $type = array("WALL" => "외벽","INWALL" => "간벽","ROOF" => "지붕","FLOOR" => "바닥","GWALL" => "지중벽","WIN" => "창호","CWALL" => "커튼월","DOOR" => "출입문");
             $tcode = array("WALL" => "WL","INWALL" => "IW","ROOF" => "RF","FLOOR" => "FL","GWALL" => "GW","WIN" => "WN","CWALL" => "CW","DOOR" => "DR");
-            $cardinal = array("N" => "북","S" => "남","E" => "동","W" => "서","NE" => "북동","NW" => "북서","SE" => "남동","SW" => "남서","UP" => "위","DOWN" => "아래","UP_N" => "북쪽위","UP_S" => "남쪽위","UP_E" => "동쪽위","UP_W" => "서쪽위","UP_NE" => "북동쪽위","UP_NW" => "북서쪽위","UP_SE" => "남동쪽위","UP_SW" => "남서쪽위");
+            $cardinal = array("N" => "북","S" => "남","E" => "동","W" => "서","NE" => "북동","NW" => "북서","SE" => "남동","SW" => "남서","UP" => "수평","DOWN" => "수평","UP_N" => "북쪽위","UP_S" => "남쪽위","UP_E" => "동쪽위","UP_W" => "서쪽위","UP_NE" => "북동쪽위","UP_NW" => "북서쪽위","UP_SE" => "남동쪽위","UP_SW" => "남서쪽위");
             $rec = array();
             foreach($o->wall as $cardi => $row) {
                 foreach($row as $idx => $cell) {
                     $obj = new stdClass();
-                    if (isset($cell->id)) {
-                        $obj->floor = $cell->floor;
-                        $obj->zoned = "Zone".sprintf('%03d', $cell->sid);
-                        $obj->id = $cell->floor."F_".$obj->zoned."_".$tcode[$cell->type];
-                        $obj->type = iconv("utf-8","euc-kr",$type[$cell->type]);
+                    if (isset($cell->id) && isset($cell->floor)) {
+                        $obj->floor = $cell->floor.'F';
+                        $obj->zoned = $cell->zid;
+                        $obj->id = $cell->tid;
+                        $obj->type = iconv("utf-8","euc-kr",$cell->ttype);
+                        $obj->wtype = iconv("utf-8","euc-kr",$cwTypes[$cell->winType]);
                         $obj->area = $cell->area;
                         $obj->near = $cell->inwalled;
-                        $obj->cardi = iconv("utf-8","euc-kr",$cardinal[$cardi]);
+                        $obj->cardinal = iconv("utf-8","euc-kr",$cardinal[$cardi]);
                         $obj->slope = $cell->slope;
                         $obj->right_shadow_angle = intval($cell->right_shadow_angle);
                         $obj->left_shadow_angle = intval($cell->left_shadow_angle);
@@ -85,10 +88,10 @@
                     echo $row->floor.","; //층
                     echo $row->zoned.","; //존
                     echo $row->type.","; //외피유형
-                    echo ","; //커튼월부위
+                    echo $row->wtype.","; //커튼월부위
                     echo $row->area.","; //면적
                     echo getInwalledId($rec, $row->near).","; //인접존
-                    echo $row->cardi.","; //방위
+                    echo $row->cardinal.","; //방위
                     echo $row->slope.","; //기울기
                     echo $row->right_shadow_angle.",";//우측면돌출
                     echo $row->left_shadow_angle.",";//좌측면돌출

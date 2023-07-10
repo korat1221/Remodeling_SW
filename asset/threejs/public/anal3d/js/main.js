@@ -31,6 +31,7 @@ var gPData1 = {};
 var gPData2 = {};
 
 var gCurSA = '';
+var gCurSpace = '';
 
 var gDebug = {};
 var gInFileLoading = false;
@@ -48,7 +49,11 @@ var gMainTree = new MainTree((fname) => {
     }
     else if (fname.indexOf('board-') >= 0 || fname.indexOf('sptree-') >= 0 || fname.indexOf('space-') >= 0) {
         select3d(fname);
-        gCurWallObj = getWallObject(fname.replace("board-",""));
+        gCurSpace = '';
+        if (fname.indexOf('space-') >= 0) {
+            gCurSpace = fname.replace("space-","");
+        }
+        else gCurWallObj = getWallObject(fname.replace("board-",""));
         loadDialog('#cont-bottom', "/anal3d/pages/3d_attr.php", true);
         return;
     }
@@ -301,12 +306,13 @@ window.addEventListener("message", async (event) => {
         gObjInfo.tree = o.tree;
         gObjInfo.tree2 = o.tree2;
 
-        executeSQL("UPDATE si_anal3d_projects SET obj_info='" + Base64.encode(JSON.stringify(gObjInfo)) + "' WHERE ID=" + gCurProj);
-        $('#cont-top').css('overflow','hidden');
+        executeSQL("UPDATE si_anal3d_projects SET obj_info='" + Base64.encode(JSON.stringify(gObjInfo)) + "' WHERE ID=" + gCurProj, "SELECT COUNT(*) FROM si_anal3d_projects", () => {
+            $('#cont-top').css('overflow','hidden');
 
-        setTimeout(() => {
-            location.reload();
-        },500);
+            setTimeout(() => {
+                location.reload();
+            },500);    
+        });
 
 //        loadDialog('#cont-top', "/anal3d/pages/3dview.php", true);                        
     }

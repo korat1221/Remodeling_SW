@@ -24,7 +24,13 @@ namespace main.contents
 
         private String _fixed(string v)
         {
-            return (v == "0" ? "0" : Double.Parse(v).ToString("#.##"));
+            try
+            {
+                return (v == "0" ? "0" : Double.Parse(v).ToString("#.##"));
+            }
+            catch (Exception e) { }
+
+            return "0";
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
@@ -109,6 +115,16 @@ namespace main.contents
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            {
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호", "번호='" + dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString() + "'");
+
+                if (rec.Length > 0)
+                {
+                    Program.UTIL.sendMessage("board-" + rec[0][0]);
+                }
+            }
+
             if (e.RowIndex >= 0)
             {
                 dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
@@ -139,7 +155,7 @@ namespace main.contents
             string num, Type, CWType, ConsType, ret = "";
             int i = -1;
 
-            while(++i < dataGridView1.RowCount)
+            while (++i < dataGridView1.RowCount)
             {
                 if (dataGridView1.Rows[i].Cells[1].Value != null)
                 {
@@ -171,6 +187,45 @@ namespace main.contents
             MessageBox.Show("저장되었습니다.");
 
             return "[" + ret + "]";
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            {
+                string ID = dataGridView2.Rows[e.RowIndex].Cells[1].Value.ToString();
+                int n = ID.IndexOf("_Zone");
+                if (n > 0)
+                {
+                    ID = ID.Substring(n + 5);
+
+                    n = Int32.Parse(ID) - 1;
+                    Program.UTIL.sendMessage("space-" + n);
+                }
+            }
+            if (e.RowIndex >= 0)
+            {
+                dataGridView2.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                int SelectRow = e.RowIndex;
+                DataGridViewRow row = dataGridView2.Rows[SelectRow];
+                DataGridViewRow row2;
+                for (int k = 0; k < dataGridView2.RowCount; k++)
+                {
+                    if (k != row.Index)
+                    {
+                        dataGridView2.Rows[k].Cells[0].Value = false;
+                        row2 = dataGridView2.Rows[k];
+                        row2.DefaultCellStyle.BackColor = SystemColors.Window;
+                        row2.DefaultCellStyle.ForeColor = SystemColors.WindowText;
+                    }
+                    else
+                    {
+                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
+                        row.DefaultCellStyle.ForeColor = SystemColors.WindowText;
+                        row = dataGridView1.Rows[e.RowIndex];
+                    }
+                }
+            }
         }
     }
 }

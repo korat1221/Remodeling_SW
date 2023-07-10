@@ -8,7 +8,7 @@ function Windowing( editor ) {
 }
 
 Windowing.prototype = {
-    collectWindows: function ( offset, bbox ) {
+    collectWindows: function ( offset, bbox, type, wtype ) {
 		let _verticesInfo = (vertices) => {
 			let i = -1, v = new THREE.Vector3();
 
@@ -30,7 +30,12 @@ Windowing.prototype = {
 		for (const [cardi, value] of Object.entries(this.editor.wall)) {
 			for (const [idx, el] of Object.entries(value)) {
 				if ((vtx = _verticesInfo(el.vertices)) != null && (area = this.util.getArea(pos)) > 0) {
-					this.editor.wall[cardi][this.editor.wnum++] = {"vertices":[{"position":pos,"slope":vtx.slope,"area":area}],"links":[], "type":"WIN", "cardinal":cardi, "parent":idx}; // after wall divide
+					if (type) {
+						this.editor.wall[cardi][this.editor.wnum++] = {"vertices":[{"position":pos,"slope":vtx.slope,"area":area}],"links":[], "type": type,  "winType":wtype, "cardinal":cardi, "parent":idx}; // after wall divide
+					}
+					else {
+						this.editor.wall[cardi][this.editor.wnum++] = {"vertices":[{"position":pos,"slope":vtx.slope,"area":area}],"links":[], "type": "WIN", "winType":"1", "cardinal":cardi, "parent":idx};
+					}
 					return;
 				}
 			}
@@ -410,7 +415,7 @@ Windowing.prototype = {
 			}
 		}
 		bboxes.forEach(el => {
-			this.collectWindows( new THREE.Vector3(), el );
+			this.collectWindows( new THREE.Vector3(), el, 'WIN', '2' );
 		});
 	},
 };

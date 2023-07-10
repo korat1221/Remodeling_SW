@@ -32,6 +32,9 @@
     <Compile Update="contents\3D\Model.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="contents\3D\sub3dSpaceInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="contents\3D\sub3dWallInfo.cs">
       <SubType>Form</SubType>
     </Compile>

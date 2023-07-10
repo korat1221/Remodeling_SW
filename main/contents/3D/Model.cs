@@ -33,9 +33,10 @@ namespace main.contents
             ZoneInfo = 0,
             WallInfo,
             WinInfo,
-            BridgeInfo
+            BridgeInfo,
+            SpaceInfo
         };
-        Form[] forms = new Form[] { new sub3dZoneInfo(), new sub3dWallInfo(), new sub3dWinInfo(), new sub3dBridgeInfo() };
+        Form[] forms = new Form[] { new sub3dZoneInfo(), new sub3dWallInfo(), new sub3dWinInfo(), new sub3dBridgeInfo(), new sub3dSpaceInfo() };
 
 
         public Model()

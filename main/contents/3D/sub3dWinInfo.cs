@@ -20,7 +20,7 @@ namespace main.contents
         private void onVisibleChanged(object sender, EventArgs e)
         {
             String ID = main.MainContents.selID.Replace("board-", "");
-            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도", "번호 = '" + ID + "'");
+            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도", "아이디 = '" + ID + "'");
 
             if (rec.Length > 0)
             {

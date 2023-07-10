@@ -83,6 +83,8 @@ namespace main
 
             InitializeAsync();
 
+            Program.DB.initTables(DB.type.ProjDB);
+
             foreach (FormMain openForm in Application.OpenForms)
             {
                 if (openForm.Name == "FormMain")
@@ -269,13 +271,17 @@ namespace main
                 else
                 {
                     Program.UTIL.sendMessage(selID);
-                    if (selID.IndexOf("_WALL_") >= 0)
+                    if (selID.IndexOf("_WALL_") >= 0 || selID.IndexOf("_INWALL_") >= 0)
                     {
                         formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"1\"}");
                     }
                     else if (selID.IndexOf("_WIN_") >= 0)
                     {
                         formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"2\"}");
+                    }
+                    else if (selID.IndexOf("space-") >= 0)
+                    {
+                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"4\"}");
                     }
                     else if (selID.IndexOf("bridge-") >= 0)
                     {

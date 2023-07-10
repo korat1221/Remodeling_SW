@@ -10,7 +10,8 @@
 		<link rel="shortcut icon" href="../files/favicon.ico" media="(prefers-color-scheme: light)" />
 	</head>
 	<body style="background-color: #fff;"onload="init()">
-		<input type="file"  style="display:none"/>
+		<input type="file"/>
+		<!-- <input type="file"  style="display:none"/> -->
 		<div id="view-cont" style="width:100%;height:100%"></div>
 		<div id="menu-cont" style="display:none"></div>
 		<div id="navigator" title="" style="display:none;overflow:hidden"><div id="navigator-details"></div></div>
@@ -443,6 +444,57 @@
 					return arr;
 				};
 
+				let getInWallsByType = (prefix, space, isWall) => {
+					var arr = [], j = -1;
+					var map = {};
+
+					while(++j < space.length) {
+						let el = space[j];
+						let el2 = objInfo.wall[el.cardi][el.id];
+						
+						if (el2.type == 'INWALL' && ((isWall && el.cardi != 'DOWN' && el.cardi.indexOf('UP') < 0) ||
+						(!isWall && (el.cardi == 'DOWN' || el.cardi.indexOf('UP') >= 0)))) {
+							map[el2.id] = el;
+						}
+					}
+
+					for (const [id, wall] of Object.entries(map)) {
+						if (id.substring(0, prefix.length) == prefix) {
+							let key = "board-" + id;
+							if (!objInfo.boards[key]) objInfo.boards[key] = [];
+							objInfo.boards[key].push(wall);
+							arr.push(wall);
+						}
+					}
+
+					return arr;
+				};
+
+				let getWinsByType = (prefix, space, w) => {
+					var arr = [], j = -1;
+					var map = {};
+
+					while(++j < space.length) {
+						let el = space[j];
+						let el2 = objInfo.wall[el.cardi][el.id];
+						
+						if (el2.type == 'WIN' && el2.winType == w) {
+							map[el2.id] = el;
+						}
+					}
+
+					for (const [id, wall] of Object.entries(map)) {
+						if (id.substring(0, prefix.length) == prefix) {
+							let key = "board-" + id;
+							if (!objInfo.boards[key]) objInfo.boards[key] = [];
+							objInfo.boards[key].push(wall);
+							arr.push(wall);
+						}
+					}
+
+					return arr;
+				};
+
 				let getSpaceInfo = (space, idx) => {
 					var arr = [];
 					let prefix = 'S' + (i + 1) + '_';
@@ -456,19 +508,24 @@
 					arr = arr.concat(objInfo.boards[key0 + "-floor"]);
 					objInfo.boards[key0 + "-gwall"] = getWallsByType(prefix, space, 'GWALL');
 					arr = arr.concat(objInfo.boards[key0 + "-gwall"]);
-					objInfo.boards[key0 + "-inwall"] = getWallsByType(prefix, space, 'INWALL');
+					objInfo.boards[key0 + "-inwall"] = getInWallsByType(prefix, space, true);
 					arr = arr.concat(objInfo.boards[key0 + "-inwall"]);
-					objInfo.boards[key0 + "-win"] = getWallsByType(prefix, space, 'WIN');
+					objInfo.boards[key0 + "-infloor"] = getInWallsByType(prefix, space);
+					arr = arr.concat(objInfo.boards[key0 + "-infloor"]);	
+					objInfo.boards[key0 + "-win"] = getWinsByType(prefix, space, '1');
 					arr = arr.concat(objInfo.boards[key0 + "-win"]);
-					objInfo.boards[key0 + "-cwall"] = getWallsByType(prefix, space, 'CWALL');
-					arr = arr.concat(objInfo.boards[key0 + "-cwall"]);
-					objInfo.boards[key0 + "-door"] = getWallsByType(prefix, space, 'DOOR');
+					objInfo.boards[key0 + "-win2"] = getWinsByType(prefix, space, '2');
+					arr = arr.concat(objInfo.boards[key0 + "-win2"]);
+					objInfo.boards[key0 + "-win3"] = getWinsByType(prefix, space, '3');
+					arr = arr.concat(objInfo.boards[key0 + "-win3"]);
+					objInfo.boards[key0 + "-win4"] = getWinsByType(prefix, space, '4');
+					arr = arr.concat(objInfo.boards[key0 + "-win4"]);
+					objInfo.boards[key0 + "-door"] = getWinsByType(prefix, space, '5');
 					arr = arr.concat(objInfo.boards[key0 + "-door"]);
 
 					return arr;
 				};
 				
-				objInfo.boards = {};
 				while(++i < objInfo.spaces.length) {
 					objInfo.boards["space-" + i] = getSpaceInfo(objInfo.spaces[i], i);
 				}
@@ -476,9 +533,30 @@
 			
 			function getSpacesInfo () {
 				var ret = [];
-				var i = -1;
+				var i = -1, n = 0;
+				let getIDInfo = (el) => {
+					let ret = ['',''];
+					let tcodes0 = ['_WIN_','_CWALL_','_DOOR_','_WALL_','_ROOF_','_FLOOR_','_GWALL_','_INWALL_'];
+					let tcodes2 = ['WIN','CW','DR','WL','RF','FR','GW','IW','SL'], i = -1;
 
-				let getWallsByType = (prefix, space, t) => {
+					while(++i < tcodes0.length) {
+						if (el.indexOf(tcodes0[i]) > 0) {
+							if (i < 7 || el.indexOf('_DOWN_') < 0) {
+								ret[0] = tcodes2[i];
+							}
+							else {
+								ret[0] = tcodes2[8];
+							}
+						}
+					}
+
+					if ((i = el.lastIndexOf('_')) > 0) {
+						ret[1] = el.substring(i + 1);
+					}
+
+					return ret;
+				};
+				let getWallsByType = (prefix, prefix2, space, t,  ttype) => {
 					var arr = [], j = -1;
 					var map = {};
 
@@ -487,77 +565,176 @@
 						let el2 = objInfo.wall[el.cardi][el.id];
 						
 						if (el2.type == t) {
-							map[el2.id] = true;
+							map[el2.id] = el2;
 						}
 					}
 
-					Object.keys(map).forEach(el => {
-						if (el.substring(0, prefix.length) == prefix) {
-							arr.push({"type":"detail","text":el,"id":"board-" + el});			
+					for (const [id, el] of Object.entries(map)) {
+						if (id.substring(0, prefix.length) == prefix) {
+							let a = getIDInfo(id);
+							el.zid = prefix2;
+							el.ttype = ttype;
+							el.tid = prefix2 + "_" + a[0] + "_" + a[1];
+							arr.push({"type":"detail","text":el.tid,"id":"board-" + id});			
 						}
-					});
+					}
 
 					return arr;
 				};
+				let getInWallsByType = (prefix, prefix2, space, isWall) => {
+					var arr = [], j = -1;
+					var map = {};
+					let ID = isWall ? 'IW' : 'SL';
+					let ttype = isWall ? '내벽' : '층간바닥';
 
-				let getSpaceInfo = (space, idx) => {
+					while(++j < space.length) {
+						let el = space[j];
+						let el2 = objInfo.wall[el.cardi][el.id];
+						
+						if (el2.type == 'INWALL' && ((isWall && el.cardi != 'DOWN' && el.cardi.indexOf('UP') < 0) ||
+						(!isWall && (el.cardi == 'DOWN' || el.cardi.indexOf('UP') >= 0)))) {
+							map[el2.id] = el2;
+						}
+					}
+
+					for (const [id, el] of Object.entries(map)) {
+						if (id.substring(0, prefix.length) == prefix) {
+							let a = getIDInfo(id);
+							el.zid = prefix2;
+							el.ttype = ttype;
+							el.tid = prefix2 + "_" + ID + "_" + a[1];
+							arr.push({"type":"detail","text":el.tid,"id":"board-" + id});	
+						}
+					}
+
+					return arr;
+				};
+				let getWinsByType = (prefix, prefix2, space, w) => {
+					var arr = [], j = -1;
+					var map = {};
+					let ID = 'WIN';
+					let ttype = '창호';
+
+					switch(w) {
+						case '1':
+							ttype='창호';
+							break;
+						case '2':
+						case '3':
+						case '4':
+							ttype='커튼월창';
+							break;
+						case '5':
+							ttype='외부출입문';
+							break;
+					}
+					if (w == '5') {
+						ID = 'DR';
+					}
+					else if (w == '1') {
+						ID = 'WIN';
+					}
+					else {
+						ID = 'CW';
+					}
+
+					while(++j < space.length) {
+						let el = space[j];
+						let el2 = objInfo.wall[el.cardi][el.id];
+						
+						if (el2.type == 'WIN' && el2.winType == w) {
+							map[el2.id] = el2;
+						}
+					}
+
+					for (const [id, el] of Object.entries(map)) {
+						if (id.substring(0, prefix.length) == prefix) {
+							let a = getIDInfo(id);
+							el.zid = prefix2;
+							el.ttype = ttype;
+							el.tid = prefix2 + "_" + ID + "_" + a[1];
+							arr.push({"type":"detail","text":el.tid,"id":"board-" + id});			
+						}
+					}
+
+					return arr;
+				};	
+
+				let getSpaceInfo = (FL, space, idx) => {
 					var ret = [];
 
 					let prefix = 'S' + (i + 1) + '_';
-					let key0 = "sptree-" + idx;
-					let win = getWallsByType(prefix, space, 'WIN');
-					let cwall = getWallsByType(prefix, space, 'CWALL');
-					let door = getWallsByType(prefix, space, 'DOOR');
-					let wall = getWallsByType(prefix, space, 'WALL');
-					let roof = getWallsByType(prefix, space, 'ROOF');
-					let floor = getWallsByType(prefix, space, 'FLOOR');
-					let gwall = getWallsByType(prefix, space, 'GWALL');
-					let inwall = getWallsByType(prefix, space, 'INWALL');
+					let prefix2 = FL + "F_Zone" + idx;
+					let key0 = "sptree-" + i;
+					let win = getWinsByType(prefix, prefix2, space, '1');
+					let cwall = [];
+					let cwall2 = getWinsByType(prefix, prefix2, space, '2');
+					let cwall3 = getWinsByType(prefix, prefix2, space, '3');
+					let cwall4 = getWinsByType(prefix, prefix2, space, '4');
+					let door = getWinsByType(prefix, prefix2, space, '5');
+					let wall = getWallsByType(prefix, prefix2, space, 'WALL', '외벽');
+					let roof = getWallsByType(prefix, prefix2, space, 'ROOF', '지붕');
+					let floor = getWallsByType(prefix, prefix2, space, 'FLOOR', '최하층바닥');
+					let gwall = getWallsByType(prefix, "B" + FL + "F_Zone" + idx, space, 'GWALL', '지중벽');
+					let inwall = getInWallsByType(prefix, prefix2, space,true);
+					let infloor = getInWallsByType(prefix, prefix2, space);
 
 					if (wall.length > 0) ret.push({"text":"외벽","id":key0 + "-wall","children":wall});
-					else ret.push({"text":"외벽","id":key0 + "-wall"});
 					if (roof.length > 0) ret.push({"text":"지붕","id":key0 + "-roof","children":roof});
-					else ret.push({"text":"지붕","id":key0 + "-roof"});
-					if (floor.length > 0) ret.push({"text":"바닥","id":key0 + "-floor","children":floor});
-					else ret.push({"text":"바닥","id":key0 + "-floor"});
+					if (floor.length > 0) ret.push({"text":"최하층바닥","id":key0 + "-floor","children":floor});
 					if (gwall.length > 0) ret.push({"text":"지중벽","id":key0 + "-gwall","children":gwall});
-					else ret.push({"text":"지중벽","id":key0 + "-gwall"});
-					if (inwall.length > 0) ret.push({"text":"간벽","id":key0 + "-inwall","children":inwall});
-					else ret.push({"text":"간벽","id":key0 + "-inwall"});
+					if (inwall.length > 0) ret.push({"text":"내벽","id":key0 + "-inwall","children":inwall});
+					if (infloor.length > 0) ret.push({"text":"층간바닥","id":key0 + "-infloor","children":infloor});
 					if (win.length > 0) ret.push({"text":"창호","id":key0 + "-win","children":win});
-					else ret.push({"text":"창호","id":key0 + "-win"});
-					if (cwall.length > 0) ret.push({"text":"커튼월","id":key0 + "-cwall","children":cwall});
-					else ret.push({"text":"커튼월","id":key0 + "-cwall"});
-					if (door.length > 0) ret.push({"text":"출입문","id":key0 + "-door","children":door});
-					else ret.push({"text":"출입문","id":key0 + "-door"});
+
+					if (cwall2.length > 0) {
+						cwall.push({"text":"유리부분","id":key0 + "-win2","children":cwall2});
+					}
+
+					if (cwall3.length > 0) {
+						cwall.push({"text":"패널부분","id":key0 + "-win3","children":cwall3});
+					}
+
+					if (cwall4.length > 0) {
+						cwall.push({"text":"출입문부분","id":key0 + "-win4","children":cwall4});
+					}
+
+					if (cwall.length > 0) ret.push({"text":"커튼월창","id":key0 + "-cwall","children":cwall});
+					if (door.length > 0) ret.push({"text":"외부출입문","id":key0 + "-door","children":door});
 
 					let cnt = wall.length;
 
 					cnt += roof.length;
 					cnt += floor.length;
+					cnt += infloor.length;
 					cnt += gwall.length;
 					cnt += inwall.length;
+					cnt += win.length;
+					cnt += cwall.length;
 
 					return cnt > 1 ? ret : null;
 				};
 				
 				while(++i < objInfo.spaces.length) {
 					let space = objInfo.spaces[i];
+					let fl = objInfo.wall[space[0].cardi][space[0].id].floor;
+					let idx = ((n + 1) + "").padStart(3, '0');
 					let key = "space-" + i;
-					let chil = getSpaceInfo(space, i);
+					let chil = getSpaceInfo(fl, space, idx);
 
 					if (chil && !objInfo.shadows["space-" + (i + 1)]) {
-						ret.push({"type":"space","text":"공간_" + (i + 1), "id":key,"children":chil});
+						ret.push({"type":"space","text":fl + "F_Zone" + idx, "id":key,"children":chil});
+						n++;
 					}
 				}
 				return ret;
 			}
 
 			function updateObjInfo(arr) {
-				let _getWall = (wall, id) => {
+				let _getWall = (wall, tid) => {
 					for (const [cardi, value] of Object.entries(wall)) {
 						for (const [j, el] of Object.entries(value)) {
-							if (el.id == id) {
+							if (el.tid == tid) {
 								return el;
 							}
 						}
@@ -574,20 +751,8 @@
 						let o = arr[i];
 						let info = _getWall(objInfo.wall, o.id);
 
-						if (info && (info.type == 'WIN' || info.type == 'CWALL' || info.type == 'DOOR')) {
+						if (info && info.type == 'WIN') {
 							info.winType = o.wtype;
-
-							switch(info.winType) {
-								case '1':
-									info.type = 'WIN';
-									break;
-								case '5':
-									info.type = 'DOOR';
-									break;
-								default:    
-									info.type = 'WIN';
-									break;
-							}
 							updated = true;
 						}
 					}
@@ -595,7 +760,7 @@
 					if (updated) {
 						createSpacesInfo();
 
-						objInfo.tree[0] = {"text":"공간 정보","id":"spaces","children":getSpacesInfo(objInfo)};
+						objInfo.tree[0] = {"text":"존 정보","id":"spaces","children":getSpacesInfo(objInfo)};
 
 						window.chrome.webview.postMessage("@@@" + JSON.stringify(objInfo));	   
 					}

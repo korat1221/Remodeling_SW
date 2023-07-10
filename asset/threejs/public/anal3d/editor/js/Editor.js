@@ -1582,7 +1582,7 @@ Editor.prototype = {
 
 		for (const [cardi, value] of Object.entries(this.wall)) {
 			for (const [idx, el] of Object.entries(value)) {
-				if (arr.find(el2 => {
+				if (arr && arr.find(el2 => {
 					return !!(el2.cardi == cardi && el2.id == idx);
 				})) {
 					drawSpacePoint(el, {"color":0xff0000,"alpha":1.0});
@@ -1703,19 +1703,24 @@ Editor.prototype = {
 					for (const [cardi, value] of Object.entries(this.wall)) {
 						for (const [idx, el] of Object.entries(value)) {
 							if (cardi == inwalled.cardi && idx == inwalled.idx) {
-								return el.id;
+								return el.tid;
 							}
 						}
 					}
 				}
 				return "";
 			}    
+			let _asVal = (v, def = "") => {
+				return v ? v : def;
+			};
 
-			let type = {"WALL":"외벽","INWALL":"간벽","ROOF":"지붕","FLOOR":"바닥","GWALL":"지중벽","WIN":"창호","CWALL":"커튼월","DOOR":"출입문"};
+            let cwTypes = {"1":"창호","2":"커튼월유리","3":"커튼월패널","4":"커튼월출입문","5":"외부출입문"};
+			let type = {"WALL":"외벽","INWALL":"내벽","ROOF":"지붕","FLOOR":"바닥","GWALL":"지중벽","WIN":"창호","CWALL":"커튼월","DOOR":"출입문"};
             let tcode = {"WALL":"WL","INWALL":"IW","ROOF":"RF","FLOOR":"FL","GWALL":"GW","WIN":"WN","CWALL":"CW","DOOR":"DR"};
-            let cardinal = {"N":"북","S":"남","E":"동","W":"서","NE":"북동","NW":"북서","SE":"남동","SW":"남서","UP":"위","DOWN":"아래","UP_N":"북쪽위","UP_S":"남쪽위","UP_E":"동쪽위","UP_W":"서쪽위","UP_NE":"북동쪽위","UP_NW":"북서쪽위","UP_SE":"남동쪽위","UP_SW":"남서쪽위"};
+            let cardinal = {"N":"북","S":"남","E":"동","W":"서","NE":"북동","NW":"북서","SE":"남동","SW":"남서","UP":"수평","DOWN":"수평","UP_N":"북쪽위","UP_S":"남쪽위","UP_E":"동쪽위","UP_W":"서쪽위","UP_NE":"북동쪽위","UP_NW":"북서쪽위","UP_SE":"남동쪽위","UP_SW":"남서쪽위"};
 
 			let sql = "", i = -1;
+			let tree = this.getTreeInfo();
 
 			sql += "DELETE FROM ZoneGeneral_3D;DELETE FROM ZoneEnvelope_3D;DELETE FROM ZoneEnvelope_3D;DELETE FROM ThermalBridge_3D;";
 
@@ -1742,7 +1747,8 @@ Editor.prototype = {
 
 				if (floor) {
 
-					zid = floor.floor + "F_Zone" + ((floor.sid ? floor.sid : "") + "").padStart(3, '0')
+					zid = floor.zid;
+//					zid = floor.floor + "F_Zone" + ((floor.sid ? floor.sid : "") + "").padStart(3, '0')
 					area = floor.area;
 					depth = wall_length != 0 ? area / wall_length : 0;
 					if (win) {
@@ -1751,16 +1757,19 @@ Editor.prototype = {
 				}
 
 				if (floor.floor) {
-					sql += "INSERT INTO ZoneGeneral_3D (존번호,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES ('" + zid + "','" + area + "','" + (cardi != "" ? cardinal[cardi] : "") + "','" + wall_length + "','" + depth + "','" + height + "');";
+					sql += "INSERT INTO ZoneGeneral_3D (존번호,층,지면접합유형,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES ('" + zid + "','" + floor.floor + "','" + (floor.type == 'FLOOR' ? '지면위' : '층간슬라브')+ "','" + area + "','" + (cardi != "" ? cardinal[cardi] : "") + "','" + wall_length + "','" + depth + "','" + height + "');";
 				}
 			}
 												
 			for (const [cardi, value] of Object.entries(this.wall)) {
 				for (const [idx, el] of Object.entries(value)) {
 					if (el.id && el.floor) {
- 						let zoned = "Zone" + ((el.sid ? el.sid : "") + "").padStart(3, '0');
-						sql += "INSERT INTO ZoneEnvelope_3D (번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이) VALUES ('" + el.id + "','" + el.floor + "','" + zoned + "','" + type[el.type] + "','','" + el.area + "','" + _getInwalledId(el.inwalled) + "','" + cardinal[cardi] + "','" + el.slope + "','" + (el.right_shadow_angle ? el.right_shadow_angle : "0") + "','" + (el.left_shadow_angle ? el.left_shadow_angle : "0") + "','" + (el.up_shadow_angle ? el.up_shadow_angle : "0") + "','" + (el.shadow_angle ? el.shadow_angle : "0") + "','','','','','','" + el.wall_length + "');";
-//						sql += "INSERT INTO ZoneEnvelope_3D (번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이) VALUES ('" + el.floor + "F_" + zoned + "_" + tcode[el.type] + "','" + el.floor + "','" + zoned + "','" + type[el.type] + "','','" + el.area + "','" + _getInwalledId(el.inwalled) + "','" + cardinal[cardi] + "','" + el.slope + "','" + (el.right_shadow_angle ? el.right_shadow_angle : "0") + "','" + (el.left_shadow_angle ? el.left_shadow_angle : "0") + "','" + (el.up_shadow_angle ? el.up_shadow_angle : "0") + "','" + (el.shadow_angle ? el.shadow_angle : "0") + "','','','','','','" + el.wall_length + "');";
+// 						let zoned = "Zone" + ((el.sid ? el.sid : "") + "").padStart(3, '0');
+if (el.type == 'WIN') {
+	let i = 0;
+	i=i;
+}
+						sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이) VALUES ('" + el.id + "','" + el.tid + "','" + el.floor + "','" + el.zid + "','" + el.ttype + "','" + _asVal(cwTypes[el.winType],"") + "','" + el.area + "','" + _getInwalledId(el.inwalled) + "','" + cardinal[cardi] + "','" + el.slope + "','" + _asVal(el.right_shadow_angle,"0") + "','" + _asVal(el.left_shadow_angle,"0") + "','" + _asVal(el.up_shadow_angle,"0") + "','" + _asVal(el.shadow_angle,"0") + "','','" + _asVal(el.right_shadow_height,"0") + "','" + _asVal(el.left_shadow_height,"0") + "','" + _asVal(el.up_shadow_height,"0") + "','" + _asVal(el.shadow_height,"0") + "','" + el.wall_length + "');";
 					}
 				}
 			}
@@ -1784,13 +1793,13 @@ Editor.prototype = {
 				sql += "INSERT INTO ThermalBridge_3D (ID,열교항목,열교길이) VALUES (" + el + ",'" + _bridges[el] + "','" + this.bridges[el].dist + "');";
 			});
 
-			window.chrome.webview.postMessage(sql + "@@@" + JSON.stringify({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"tree":this.getTreeInfo(1),"tree2":this.getTreeInfo(0)}));	   
+			window.chrome.webview.postMessage(sql + "@@@" + JSON.stringify({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"tree":tree,"tree2":tree}));	   
 //			parent.postMessage({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"tree":this.getTreeInfo(1),"tree2":this.getTreeInfo(0)},'*');
 		}
 	},
 
-	getTreeInfo: function (type) {
-		return [{"text":"공간 정보","id":"spaces","children":this.getSpacesInfo()}, {"text":"열교 정보","id":"bridges","children":this.getBridgesInfo()}];
+	getTreeInfo: function () {
+		return [{"text":"존 정보","id":"spaces","children":this.getSpacesInfo()}, {"text":"열교 정보","id":"bridges","children":this.getBridgesInfo()}];
 	},
 	getBridgesInfo: function () {
 		var ret = [];
@@ -1820,83 +1829,203 @@ Editor.prototype = {
 	},
 	getSpacesInfo: function () {
 		var ret = [];
-		var i = -1;
+		var i = -1, n = 0;
+		let getIDInfo = (el) => {
+			let ret = ['',''];
+			let tcodes0 = ['_WIN_','_CWALL_','_DOOR_','_WALL_','_ROOF_','_FLOOR_','_GWALL_','_INWALL_'];
+			let tcodes2 = ['WIN','CW','DR','WL','RF','FR','GW','IW','SL'], i = -1;
 
-		let getWallsByType = (prefix, space, t) => {
+			while(++i < tcodes0.length) {
+				if (el.indexOf(tcodes0[i]) > 0) {
+					if (i < 7 || el.indexOf('_DOWN_') < 0) {
+						ret[0] = tcodes2[i];
+					}
+					else {
+						ret[0] = tcodes2[8];
+					}
+				}
+			}
+
+			if ((i = el.lastIndexOf('_')) > 0) {
+				ret[1] = el.substring(i + 1);
+			}
+
+			return ret;
+		};
+		let getWallsByType = (prefix, prefix2, space, t,  ttype) => {
 			var arr = [], j = -1;
 			var map = {};
-
+	
 			while(++j < space.length) {
 				let el = space[j];
 				let el2 = this.wall[el.cardi][el.id];
 				
 				if (el2.type == t) {
-					map[el2.id] = true;
+					map[el2.id] = el2;
 				}
 			}
 
-			Object.keys(map).forEach(el => {
-				if (el.substring(0, prefix.length) == prefix) {
-					arr.push({"type":"detail","text":el,"id":"board-" + el});			
+			for (const [id, el] of Object.entries(map)) {
+				if (id.substring(0, prefix.length) == prefix) {
+					let a = getIDInfo(id);
+					el.zid = prefix2;
+					el.ttype = ttype;
+					el.tid = prefix2 + "_" + a[0] + "_" + a[1];
+					arr.push({"type":"detail","text":el.tid,"id":"board-" + id});			
 				}
-			});
-
+			}
+	
 			return arr;
 		};
+		let getInWallsByType = (prefix, prefix2, space, isWall) => {
+			var arr = [], j = -1;
+			var map = {};
+			let ID = isWall ? 'IW' : 'SL';
+			let ttype = isWall ? '내벽' : '층간바닥';
 
-		let getSpaceInfo = (space, idx) => {
+			while(++j < space.length) {
+				let el = space[j];
+				let el2 = this.wall[el.cardi][el.id];
+				
+				if (el2.type == 'INWALL' && ((isWall && el.cardi != 'DOWN' && el.cardi.indexOf('UP') < 0) ||
+				(!isWall && (el.cardi == 'DOWN' || el.cardi.indexOf('UP') >= 0)))) {
+					map[el2.id] = el2;
+				}
+			}
+	
+			for (const [id, el] of Object.entries(map)) {
+				if (id.substring(0, prefix.length) == prefix) {
+					let a = getIDInfo(id);
+					el.zid = prefix2;
+					el.ttype = ttype;
+					el.tid = prefix2 + "_" + ID + "_" + a[1];
+					arr.push({"type":"detail","text":el.tid,"id":"board-" + id});	
+				}
+			}
+	
+			return arr;
+		};
+		let getWinsByType = (prefix, prefix2, space, w) => {
+			var arr = [], j = -1;
+			var map = {};
+			let ID = 'WIN';
+			let ttype = '창호';
+	
+			switch(w) {
+				case '1':
+					ttype='창호';
+					break;
+				case '2':
+				case '3':
+				case '4':
+					ttype='커튼월창';
+					break;
+				case '5':
+					ttype='외부출입문';
+					break;
+			}
+			if (w == '5') {
+				ID = 'DR';
+			}
+			else if (w == '1') {
+				ID = 'WIN';
+			}
+			else {
+				ID = 'CW';
+			}
+	
+			while(++j < space.length) {
+				let el = space[j];
+				let el2 = this.wall[el.cardi][el.id];
+				
+				if (el2.type == 'WIN' && el2.winType == w) {
+					map[el2.id] = el2;
+				}
+			}
+	
+			for (const [id, el] of Object.entries(map)) {
+				if (id.substring(0, prefix.length) == prefix) {
+					let a = getIDInfo(id);
+					el.zid = prefix2;
+					el.ttype = ttype;
+					el.tid = prefix2 + "_" + ID + "_" + a[1];
+					arr.push({"type":"detail","text":el.tid,"id":"board-" + id});			
+				}
+			}
+	
+			return arr;
+		};	
+
+		let getSpaceInfo = (FL, space, idx) => {
 			var ret = [];
 	
 			let prefix = 'S' + (i + 1) + '_';
-			let key0 = "sptree-" + idx;
-			let win = getWallsByType(prefix, space, 'WIN');
-			let cwall = getWallsByType(prefix, space, 'CWALL');
-			let door = getWallsByType(prefix, space, 'DOOR');
-			let wall = getWallsByType(prefix, space, 'WALL');
-			let roof = getWallsByType(prefix, space, 'ROOF');
-			let floor = getWallsByType(prefix, space, 'FLOOR');
-			let gwall = getWallsByType(prefix, space, 'GWALL');
-			let inwall = getWallsByType(prefix, space, 'INWALL');
+			let prefix2 = FL + "F_Zone" + idx;
+			let key0 = "sptree-" + i;
+			let win = getWinsByType(prefix, prefix2, space, '1');
+			let cwall = [];
+			let cwall2 = getWinsByType(prefix, prefix2, space, '2');
+			let cwall3 = getWinsByType(prefix, prefix2, space, '3');
+			let cwall4 = getWinsByType(prefix, prefix2, space, '4');
+			let door = getWinsByType(prefix, prefix2, space, '5');
+			let wall = getWallsByType(prefix, prefix2, space, 'WALL', '외벽');
+			let roof = getWallsByType(prefix, prefix2, space, 'ROOF', '지붕');
+			let floor = getWallsByType(prefix, prefix2, space, 'FLOOR', '최하층바닥');
+			let gwall = getWallsByType(prefix, "B" + FL + "F_Zone" + idx, space, 'GWALL', '지중벽');
+			let inwall = getInWallsByType(prefix, prefix2, space,true);
+			let infloor = getInWallsByType(prefix, prefix2, space);
 
 			if (wall.length > 0) ret.push({"text":"외벽","id":key0 + "-wall","children":wall});
-			else ret.push({"text":"외벽","id":key0 + "-wall"});
 			if (roof.length > 0) ret.push({"text":"지붕","id":key0 + "-roof","children":roof});
-			else ret.push({"text":"지붕","id":key0 + "-roof"});
-			if (floor.length > 0) ret.push({"text":"바닥","id":key0 + "-floor","children":floor});
-			else ret.push({"text":"바닥","id":key0 + "-floor"});
+			if (floor.length > 0) ret.push({"text":"최하층바닥","id":key0 + "-floor","children":floor});
 			if (gwall.length > 0) ret.push({"text":"지중벽","id":key0 + "-gwall","children":gwall});
-			else ret.push({"text":"지중벽","id":key0 + "-gwall"});
-			if (inwall.length > 0) ret.push({"text":"간벽","id":key0 + "-inwall","children":inwall});
-			else ret.push({"text":"간벽","id":key0 + "-inwall"});
+			if (inwall.length > 0) ret.push({"text":"내벽","id":key0 + "-inwall","children":inwall});
+			if (infloor.length > 0) ret.push({"text":"층간바닥","id":key0 + "-infloor","children":infloor});
 			if (win.length > 0) ret.push({"text":"창호","id":key0 + "-win","children":win});
-			else ret.push({"text":"창호","id":key0 + "-win"});
-			if (cwall.length > 0) ret.push({"text":"커튼월","id":key0 + "-cwall","children":cwall});
-			else ret.push({"text":"커튼월","id":key0 + "-cwall"});
-			if (door.length > 0) ret.push({"text":"출입문","id":key0 + "-door","children":door});
-			else ret.push({"text":"출입문","id":key0 + "-door"});
+
+			if (cwall2.length > 0) {
+				cwall.push({"text":"유리부분","id":key0 + "-win2","children":cwall2});
+			}
+
+			if (cwall3.length > 0) {
+				cwall.push({"text":"패널부분","id":key0 + "-win3","children":cwall3});
+			}
+
+			if (cwall4.length > 0) {
+				cwall.push({"text":"출입문부분","id":key0 + "-win4","children":cwall4});
+			}
+
+			if (cwall.length > 0) ret.push({"text":"커튼월창","id":key0 + "-cwall","children":cwall});
+			if (door.length > 0) ret.push({"text":"외부출입문","id":key0 + "-door","children":door});
 
 			let cnt = wall.length;
 
 			cnt += roof.length;
 			cnt += floor.length;
+			cnt += infloor.length;
 			cnt += gwall.length;
 			cnt += inwall.length;
+			cnt += win.length;
+			cnt += cwall.length;
 
 			return cnt > 1 ? ret : null;
 		};
 		
 		while(++i < this.spaces.length) {
 			let space = this.spaces[i];
+			let fl = this.wall[space[0].cardi][space[0].id].floor;
+			let idx = ((n + 1) + "").padStart(3, '0');
 			let key = "space-" + i;
-			let chil = getSpaceInfo(space, i);
+			let chil = getSpaceInfo(fl, space, idx);
 
 			if (chil && !this.shadows["space-" + (i + 1)]) {
-				ret.push({"type":"space","text":"공간_" + (i + 1), "id":key,"children":chil});
+				ret.push({"type":"space","text":fl + "F_Zone" + idx, "id":key,"children":chil});
+				n++;
 			}
 		}
 		return ret;
 	},
-	
+
 	setFloors: function () {
 		let floors = {}, floors0 = {};
 		let _setWallFloor = (cardi0, id0, cardi, id) => {
@@ -1936,7 +2065,9 @@ Editor.prototype = {
 
 		let heights = Object.keys(floors0);
 
-		heights.sort();
+		heights.sort((a,b) => {
+			return parseInt(a) - parseInt(b);
+		});
 
 		i = -1;
 		while(++i < heights.length) {
@@ -2013,18 +2144,18 @@ Editor.prototype = {
 				case 'FLOOR':
 					return {"color":0xAAAAAA,"alpha":0.9};
 				case 'WIN':
-					return {"color":0x6495ED,"alpha":0.7};
-				case 'DOOR':
-					return {"color":0x553830,"alpha":0.7};
-				case 'CWALL':
-					if (winType == "2")
-						return {"color":0xfcde00,"alpha":0.7};
-					else if (winType == "3")
-						return {"color":0x505edb,"alpha":0.7};
-					else if (winType == "4")
-						return {"color":0x0014be,"alpha":0.7};
-					else	
-						return {"color":0x6495ED,"alpha":0.7};
+					switch(winType) {
+						case '1':
+							return {"color":0x6495ED,"alpha":0.7};
+						case '2':
+							return {"color":0x505edb,"alpha":0.7};
+						case '3':
+							return {"color":0xfcde00,"alpha":0.7};
+						case '4':
+							return {"color":0x0014be,"alpha":0.7};
+						case '5':
+							return {"color":0x553830,"alpha":0.7};
+					}
 				}
 		}
 		return {"color":0xffffff,"alpha":0.5};
@@ -2057,6 +2188,57 @@ Editor.prototype = {
 			return arr;
 		};
 
+		let getInWallsByType = (prefix, space, isWall) => {
+			var arr = [], j = -1;
+			var map = {};
+
+			while(++j < space.length) {
+				let el = space[j];
+				let el2 = this.wall[el.cardi][el.id];
+				
+				if (el2.type == 'INWALL' && ((isWall && el.cardi != 'DOWN' && el.cardi.indexOf('UP') < 0) ||
+				(!isWall && (el.cardi == 'DOWN' || el.cardi.indexOf('UP') >= 0)))) {
+					map[el2.id] = el;
+				}
+			}
+
+			for (const [id, wall] of Object.entries(map)) {
+				if (id.substring(0, prefix.length) == prefix) {
+					let key = "board-" + id;
+					if (!this.boards[key]) this.boards[key] = [];
+					this.boards[key].push(wall);
+					arr.push(wall);
+				}
+			}
+
+			return arr;
+		};
+
+		let getWinsByType = (prefix, space, w) => {
+			var arr = [], j = -1;
+			var map = {};
+
+			while(++j < space.length) {
+				let el = space[j];
+				let el2 = this.wall[el.cardi][el.id];
+				
+				if (el2.type == 'WIN' && el2.winType == w) {
+					map[el2.id] = el;
+				}
+			}
+
+			for (const [id, wall] of Object.entries(map)) {
+				if (id.substring(0, prefix.length) == prefix) {
+					let key = "board-" + id;
+					if (!this.boards[key]) this.boards[key] = [];
+					this.boards[key].push(wall);
+					arr.push(wall);
+				}
+			}
+
+			return arr;
+		};
+
 		let getSpaceInfo = (space, idx) => {
 			var arr = [];
 			let prefix = 'S' + (i + 1) + '_';
@@ -2070,10 +2252,20 @@ Editor.prototype = {
 			arr = arr.concat(this.boards[key0 + "-floor"]);
 			this.boards[key0 + "-gwall"] = getWallsByType(prefix, space, 'GWALL');
 			arr = arr.concat(this.boards[key0 + "-gwall"]);
-			this.boards[key0 + "-inwall"] = getWallsByType(prefix, space, 'INWALL');
+			this.boards[key0 + "-inwall"] = getInWallsByType(prefix, space, true);
 			arr = arr.concat(this.boards[key0 + "-inwall"]);
-			this.boards[key0 + "-win"] = getWallsByType(prefix, space, 'WIN');
+			this.boards[key0 + "-infloor"] = getInWallsByType(prefix, space);
+			arr = arr.concat(this.boards[key0 + "-infloor"]);	
+			this.boards[key0 + "-win"] = getWinsByType(prefix, space, '1');
 			arr = arr.concat(this.boards[key0 + "-win"]);
+			this.boards[key0 + "-win2"] = getWinsByType(prefix, space, '2');
+			arr = arr.concat(this.boards[key0 + "-win2"]);
+			this.boards[key0 + "-win3"] = getWinsByType(prefix, space, '3');
+			arr = arr.concat(this.boards[key0 + "-win3"]);
+			this.boards[key0 + "-win4"] = getWinsByType(prefix, space, '4');
+			arr = arr.concat(this.boards[key0 + "-win4"]);
+			this.boards[key0 + "-door"] = getWinsByType(prefix, space, '5');
+			arr = arr.concat(this.boards[key0 + "-door"]);
 
 			return arr;
 		};
@@ -2141,7 +2333,7 @@ Editor.prototype = {
 			//	line[1][2] += n;
 
 //			if (i != 2)
-				this.debug.drawLine3(line, 0x00FF00);
+		//		this.debug.drawLine3(line, 0x00FF00);
 			}
 			i = -1;
 			while(++i < this.debug.line.length) {

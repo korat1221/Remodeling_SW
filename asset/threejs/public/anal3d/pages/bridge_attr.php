@@ -2,7 +2,7 @@
     require_once( 'controls.php' );
 
     if (isset($_GET['type']) && $_GET['type'] != '') {
-        drawPanel('',"<div style='font-size:14pt'>열교 정보 ".$_GET['type']."</div><br><div id='wall-info'></div>");
+        drawPanel('',"<div id='bridge-title' style='font-size:14pt'></div><br><div id='wall-info'></div>");
     }
     else {
         drawPanel('',"<div id='wall-info'></div>");
@@ -29,13 +29,31 @@ select {
 <script>
 
 $(function() {
+    let _bridges = {
+        "1":"평지붕+외벽[90]",
+        "2":"평지붕+내벽",
+        "3":"경사지붕",
+        "4":"경사지붕+벽",
+        "5":"경사지붕+경사벽",
+        "6":"슬라브+벽",
+        "7":"내벽+외벽",
+        "8":"외벽+외벽",
+        "9":"외벽+내벽+외벽",
+        "10":"---",
+        "11":"평지붕+벽[270]",
+        "12":"평지붕+벽[270]+내벽",
+    };
 
 <? if (isset($_GET['type']) && $_GET['type'] != '') { ?>
         html = '<center><table style="width:50%;table-layout:fixed;font-size:12pt"><tr><td>열교 길이</td><td><input id="up-angle" type="number" value="<?=$_GET['val']?>" disabled = true /> m</td></tr></table></center>';
+        $('#bridge-title').html(_bridges[<?=$_GET['type']?>]);
 <? } else { ?>
+
     html = '<center><table style="width:80%;table-layout:fixed;font-size:12pt">';
     Object.keys(gObjInfo.bridges).forEach(el => {
-        html += '<tr><td>열교 정보 ' + el + '</td><td style="width:64px">길이</td><td><input id="up-angle" type="number" value="' + gObjInfo.bridges[el].dist + '" disabled = true /> m</td></tr>';
+        if (el != 10) {
+            html += '<tr><td>' + _bridges[el] + '</td><td style="width:64px">길이</td><td><input id="up-angle" type="number" value="' + gObjInfo.bridges[el].dist + '" disabled = true /> m</td></tr>';
+        }
     });
     html += '</table></center>';
 <? } ?>
