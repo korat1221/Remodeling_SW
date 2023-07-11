@@ -1714,7 +1714,7 @@ Editor.prototype = {
 				return v ? v : def;
 			};
 
-            let cwTypes = {"1":"창호","2":"커튼월유리","3":"커튼월패널","4":"커튼월출입문","5":"외부출입문"};
+            let cwTypes = {"1":"창호","2":"유리부분","3":"패널부분","4":"출입문부분","5":"외부출입문"};
 			let type = {"WALL":"외벽","INWALL":"내벽","ROOF":"지붕","FLOOR":"바닥","GWALL":"지중벽","WIN":"창호","CWALL":"커튼월","DOOR":"출입문"};
             let tcode = {"WALL":"WL","INWALL":"IW","ROOF":"RF","FLOOR":"FL","GWALL":"GW","WIN":"WN","CWALL":"CW","DOOR":"DR"};
             let cardinal = {"N":"북","S":"남","E":"동","W":"서","NE":"북동","NW":"북서","SE":"남동","SW":"남서","UP":"수평","DOWN":"수평","UP_N":"북쪽위","UP_S":"남쪽위","UP_E":"동쪽위","UP_W":"서쪽위","UP_NE":"북동쪽위","UP_NW":"북서쪽위","UP_SE":"남동쪽위","UP_SW":"남서쪽위"};

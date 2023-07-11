@@ -741,18 +741,25 @@
 					}
 					return null;
 				};
+				let _getWinType = (wtype) => {
+					let winTypes = {"창호":"1","유리부분":"2","패널부분":"3","출입문부분":"4","외부출입문":"5"};
 
-				console.log('AAA');
+					return winTypes[wtype];
+				};
+
 				if (objInfo) {
-					let i = -1;
+					let i = -1, wtype, s;
 					let updated = false;
 
 					while(++i < arr.length) {
 						let o = arr[i];
-						let info = _getWall(objInfo.wall, o.id);
+						let info = _getWall(objInfo.wall, o.id0);
 
 						if (info && info.type == 'WIN') {
-							info.winType = o.wtype;
+							wtype = _getWinType(o.wtype);
+							info.ttype = o.type;
+							info.tid = o.id;
+							info.winType = wtype ? wtype : "";
 							updated = true;
 						}
 					}
@@ -761,6 +768,7 @@
 						createSpacesInfo();
 
 						objInfo.tree[0] = {"text":"존 정보","id":"spaces","children":getSpacesInfo(objInfo)};
+						editor.loadInfo(objInfo);
 
 						window.chrome.webview.postMessage("@@@" + JSON.stringify(objInfo));	   
 					}

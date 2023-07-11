@@ -32,7 +32,7 @@ namespace main.contents
 
             return "0";
         }
-        private void onVisibleChanged(object sender, EventArgs e)
+        private void redrawList()
         {
             dataGridView1.Rows.Clear();
             dataGridView2.Rows.Clear();
@@ -54,34 +54,73 @@ namespace main.contents
                 {
                     dataGridView1.Rows.Add(null, rec[i][0], rec[i][1], rec[i][2], null, null, rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]));
 
-                    DataGridViewComboBoxCell TypeCombo = new DataGridViewComboBoxCell();
-                    TypeCombo.Items.Add("커튼월창");
-                    TypeCombo.Items.Add("외벽");
-                    TypeCombo.Items.Add("지붕");
-                    TypeCombo.Items.Add("최하층바닥");
-                    TypeCombo.Items.Add("창호");
-                    TypeCombo.Items.Add("외부출입문");
-                    TypeCombo.Items.Add("내벽");
-                    TypeCombo.Items.Add("층간바닥");
+                    if (isWinType(rec[i][3]))
+                    {
+                        DataGridViewComboBoxCell TypeCombo = new DataGridViewComboBoxCell();
+                        TypeCombo.Items.Add("커튼월창");
+                        TypeCombo.Items.Add("창호");
+                        TypeCombo.Items.Add("외부출입문");
 
+                        TypeCombo.Value = rec[i][3];
+                        dataGridView1.Rows[i].Cells[4] = TypeCombo;
+                        Load_ConstructionList(i, rec[i][3]);
+                    }
+                    else
+                    {
+                        DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
+                        TypeLabel.Value = rec[i][3];
+                        dataGridView1.Rows[i].Cells[4] = TypeLabel;
+                        TypeLabel.ReadOnly = true;
+                    }
+                    if (isCWallType(rec[i][4]))
+                    {
+                        DataGridViewComboBoxCell CWTypeCombo = new DataGridViewComboBoxCell();
+                        CWTypeCombo.Items.Add("유리부분");
+                        CWTypeCombo.Items.Add("패널부분");
+                        CWTypeCombo.Items.Add("출입문부분");
 
-                    DataGridViewComboBoxCell CWTypeCombo = new DataGridViewComboBoxCell();
-                    CWTypeCombo.Items.Add("유리부분");
-                    CWTypeCombo.Items.Add("패널부분");
-                    CWTypeCombo.Items.Add("출입문부분");
-                    CWTypeCombo.Items.Add("");
-
-                    TypeCombo.Value = rec[i][3];
-                    dataGridView1.Rows[i].Cells[4] = TypeCombo;
-
-                    CWTypeCombo.Value = rec[i][4];
-                    dataGridView1.Rows[i].Cells[5] = CWTypeCombo;
-
-                    String Type = dataGridView1.Rows[i].Cells[4].Value.ToString();
-                    Load_ConstructionList(i, Type);
+                        CWTypeCombo.Value = rec[i][4];
+                        dataGridView1.Rows[i].Cells[5] = CWTypeCombo;
+                    }
+                    else
+                    {
+                        DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
+                        TypeLabel.Value = "";
+                        dataGridView1.Rows[i].Cells[5] = TypeLabel;
+                        TypeLabel.ReadOnly = true;
+                    }
                 }
             }
         }
+        private void onVisibleChanged(object sender, EventArgs e)
+        {
+            redrawList();
+        }
+
+        private bool isWinType(string type)
+        {
+            switch (type)
+            {
+                case "커튼월창":
+                case "창호":
+                case "외부출입문":
+                    return true;
+            }
+            return false;
+        }
+
+        private bool isCWallType(string type)
+        {
+            switch (type)
+            {
+                case "유리부분":
+                case "패널부분":
+                case "출입문부분":
+                    return true;
+            }
+            return false;
+        }
+
         private void Load_ConstructionList(int n, String Type)
         {
             string[][] Value = null;
@@ -152,24 +191,16 @@ namespace main.contents
         public string Save()
         {
 
-            string num, Type, CWType, ConsType, ret = "";
+            string num, num0, Type, CWType, ConsType, ret = "", tcode;
             int i = -1;
 
             while (++i < dataGridView1.RowCount)
             {
                 if (dataGridView1.Rows[i].Cells[1].Value != null)
                 {
-                    num = dataGridView1.Rows[i].Cells[1].Value.ToString();
+                    num0 = dataGridView1.Rows[i].Cells[1].Value.ToString();
+                    num = num0;
                     Type = dataGridView1.Rows[i].Cells[4].Value.ToString();
-
-                    if (dataGridView1.Rows[i].Cells[5].Value == null)
-                    {
-                        CWType = "";
-                    }
-                    else
-                    {
-                        CWType = dataGridView1.Rows[i].Cells[5].Value.ToString();
-                    }
 
                     if (dataGridView1.Rows[i].Cells[10].Value == null)
                     {
@@ -180,13 +211,45 @@ namespace main.contents
                         ConsType = dataGridView1.Rows[i].Cells[10].Value.ToString();
                     }
 
-                    ret += "{\"id\":\"" + num + "\",\"type\":\"" + Type + "\",\"wtype\":\"" + CWType + "\"},";
-                    Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,커튼월부위,구조체", "'" + num + "','" + Type + "','" + CWType + "','" + ConsType + "'", "번호");
+                    if (isWinType(Type) && (tcode = getTCode(Type)) != "")
+                    {
+                        CWType = dataGridView1.Rows[i].Cells[5].Value.ToString();
+
+                        if (Type != "커튼월창") CWType = Type;
+                        else if (CWType == "") CWType = "유리부분";
+
+                        num = num.Replace("_WIN_", "__");
+                        num = num.Replace("_DR_", "__");
+                        num = num.Replace("_CW_", "__");
+                        num = num.Replace("__", tcode);
+
+                        string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num0 + "'");
+
+                        ret += "{\"id0\":\"" + num0 + "\",\"id\":\"" + num + "\",\"type\":\"" + Type + "\",\"wtype\":\"" + CWType + "\"},";
+                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,외피유형,커튼월부위,구조체", "'" + rec[0][0] + "','" + num + "','" + Type + "','" + CWType + "','" + ConsType + "'", "아이디");
+                    }
                 }
             }
+
+            redrawList();
+
             MessageBox.Show("저장되었습니다.");
 
             return "[" + ret + "]";
+        }
+
+        private string getTCode(string type)
+        {
+            switch(type)
+            {
+                case "창호":
+                    return "_WIN_";
+                case "커튼월창":
+                    return "_CW_";
+                case "외부출입문":
+                    return "_DR_";
+            }
+            return "";
         }
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
