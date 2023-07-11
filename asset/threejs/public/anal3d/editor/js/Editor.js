@@ -1769,7 +1769,7 @@ if (el.type == 'WIN') {
 	let i = 0;
 	i=i;
 }
-						sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이) VALUES ('" + el.id + "','" + el.tid + "','" + el.floor + "','" + el.zid + "','" + el.ttype + "','" + _asVal(cwTypes[el.winType],"") + "','" + el.area + "','" + _getInwalledId(el.inwalled) + "','" + cardinal[cardi] + "','" + el.slope + "','" + _asVal(el.right_shadow_angle,"0") + "','" + _asVal(el.left_shadow_angle,"0") + "','" + _asVal(el.up_shadow_angle,"0") + "','" + _asVal(el.shadow_angle,"0") + "','','" + _asVal(el.right_shadow_height,"0") + "','" + _asVal(el.left_shadow_height,"0") + "','" + _asVal(el.up_shadow_height,"0") + "','" + _asVal(el.shadow_height,"0") + "','" + el.wall_length + "');";
+						sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이) VALUES ('" + el.id + "','" + el.tid + "','" + el.floor + "F','" + el.zid + "','" + el.ttype + "','" + _asVal(cwTypes[el.winType],"") + "','" + el.area + "','" + _getInwalledId(el.inwalled) + "','" + cardinal[cardi] + "','" + el.slope + "','" + _asVal(el.right_shadow_angle,"0") + "','" + _asVal(el.left_shadow_angle,"0") + "','" + _asVal(el.up_shadow_angle,"0") + "','" + _asVal(el.shadow_angle,"0") + "','','" + _asVal(el.right_shadow_height,"0") + "','" + _asVal(el.left_shadow_height,"0") + "','" + _asVal(el.up_shadow_height,"0") + "','" + _asVal(el.shadow_height,"0") + "','" + el.wall_length + "');";
 					}
 				}
 			}
