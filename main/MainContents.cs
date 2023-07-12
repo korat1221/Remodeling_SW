@@ -1,5 +1,6 @@
 ﻿using main.contents;
 using main.contents.Building;
+using main.contents.Result;
 using main.contentslist;
 using main.subcontents.ConstructionWindow;
 using Microsoft.Web.WebView2.Core;
@@ -50,7 +51,8 @@ namespace main
             List_Zone,
             List_ConstructionWall,
             List_ConstructionRoof,
-            List_ConstructionFloor
+            List_ConstructionFloor,
+            PrintReport
 
         }
           Form[] forms = new Form[] { new General(), new EnergyUse(), 
@@ -63,7 +65,7 @@ namespace main
             new FormDebug(),
             new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow(),
             new List_Floor(), new List_Zone(),
-            new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor()};
+            new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor(), new PrintReport()};
         bool scriptable = false;
         public class FormParam
         {
@@ -198,6 +200,12 @@ namespace main
             else if (formParam.formID == 36)
             {
                 List_ConstructionFloor f = (List_ConstructionFloor)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 37)
+            {
+                PrintReport f = (PrintReport)form;
 
                 f.LoadData(formParam.ID);
             }

@@ -106,6 +106,9 @@ class MainTree {
                 "ReportRemodeling" : {
                     "icon" : "cls-ReportRemodeling-icon"
                 },
+                "PrintReport" : {
+                    "icon" : "cls-ReportRemodeling-icon"
+                },
             },
             "plugins" : [ "types" ]
         }).on('changed.jstree', function (e, data) {
