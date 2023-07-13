@@ -18,8 +18,6 @@ namespace main.contents.Result
         {
             InitializeComponent();
 
-            webView21.Source = new Uri(Program.gPath + "report.html");
-
             InitializeAsync();
         }
         async void InitializeAsync()
@@ -53,6 +51,7 @@ namespace main.contents.Result
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
+            runScript("init(['zpage.html','zpage.html'],[])");
         }
 
         private void button1_Click(object sender, EventArgs e)
