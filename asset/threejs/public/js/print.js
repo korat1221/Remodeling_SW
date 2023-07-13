@@ -16,17 +16,19 @@ window.addEventListener("message", async (event) => {
             $( 'body' ).append($('<div>').load('/print/' + o.pages[i]));
         }
         
-        i = -1;
+        setTimeout(() => {
+            let i = -1;
 
-        while(++i < o.items.length) {
-            let item = o.items[i];
-
-            j = -1;
-            while(++j < item.data.length) {
-                let el = item.data[j];
-                $( '.' + item.class ).eq(el.idx).html(el.val);
-            }
-        }
+            while(++i < o.items.length) {
+                let item = o.items[i];
+    
+                j = -1;
+                while(++j < item.data.length) {
+                    let el = item.data[j];
+                    $( '.' + item.cname ).eq(el.idx).html(el.val);
+                }
+            }    
+        }, 100);
     }
 });
 
