@@ -28,1113 +28,1090 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            GeneralPanel = new Panel();
-            label1 = new Label();
-            CW_comboBox = new ComboBox();
-            OldWall_comboBox = new ComboBox();
-            CW_label = new Label();
-            OldWall_label = new Label();
-            groupBox1 = new GroupBox();
-            radioButton6 = new RadioButton();
-            radioButton5 = new RadioButton();
-            radioButton4 = new RadioButton();
-            radioButton3 = new RadioButton();
-            radioButton2 = new RadioButton();
-            radioButton1 = new RadioButton();
-            label7 = new Label();
-            label6 = new Label();
-            label5 = new Label();
-            Type_textBox = new TextBox();
-            label3 = new Label();
-            WallNum_textBox = new TextBox();
-            Icon_pictureBox = new PictureBox();
-            Name_textBox = new TextBox();
-            Previous_button = new Button();
-            Save_button = new Button();
-            TB_button = new Button();
-            TBName_textBox = new TextBox();
-            StructureType_comboBox = new ComboBox();
-            label11 = new Label();
-            UMethod_label = new Label();
-            Uvalue_comboBox = new ComboBox();
-            label25 = new Label();
-            label4 = new Label();
-            panel2 = new Panel();
-            Ueff_label2 = new Label();
-            Color_comboBox = new ComboBox();
-            dU_label2 = new Label();
-            Ueff_textBox = new TextBox();
-            label9 = new Label();
-            Ueff_label = new Label();
-            dU_textBox = new TextBox();
-            label26 = new Label();
-            α_textBox = new TextBox();
-            label23 = new Label();
-            U_label2 = new Label();
-            U_textBox = new TextBox();
-            U_label = new Label();
-            DiIndi_comboBox = new ComboBox();
-            WallType_pictureBox = new PictureBox();
-            dU_tabPage = new TabPage();
-            dU_label4 = new TextBox();
-            dU2_textBox = new TextBox();
-            dU_label3 = new TextBox();
-            PsiKai_label2 = new TextBox();
-            PsiKai_textBox = new TextBox();
-            PsiKai_label1 = new TextBox();
-            PerArea_label2 = new TextBox();
-            PerArea_textBox = new TextBox();
-            PerArea_label1 = new TextBox();
-            TBName2_textBox = new TextBox();
-            TBType_textBox = new TextBox();
-            pictureBox2 = new PictureBox();
-            pictureBox1 = new PictureBox();
-            Ucalc_tabPage = new TabPage();
-            Rse_textBox = new TextBox();
-            label12 = new Label();
-            Rsi_textBox = new TextBox();
-            label10 = new Label();
-            Material_Rtot_textBox = new TextBox();
-            Material_dtot_textBox = new TextBox();
-            label8 = new Label();
-            DiIndi2_comboBox = new ComboBox();
-            label2 = new Label();
-            ISO_KS_comboBox = new ComboBox();
-            MaterialDown_button = new Button();
-            MaterialUP_button = new Button();
-            Deletebutton = new Button();
-            Ucalc_dataGridView = new DataGridView();
-            AddMaterial_button = new Button();
-            tabControl1 = new TabControl();
-            GeneralPanel.SuspendLayout();
-            groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)WallType_pictureBox).BeginInit();
-            dU_tabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            Ucalc_tabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).BeginInit();
-            tabControl1.SuspendLayout();
-            SuspendLayout();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.GeneralPanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.OldFloor_comboBox = new System.Windows.Forms.ComboBox();
+            this.OldFloor_label = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.Type_textBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.WallNum_textBox = new System.Windows.Forms.TextBox();
+            this.Icon_pictureBox = new System.Windows.Forms.PictureBox();
+            this.Name_textBox = new System.Windows.Forms.TextBox();
+            this.Previous_button = new System.Windows.Forms.Button();
+            this.Save_button = new System.Windows.Forms.Button();
+            this.TB_button = new System.Windows.Forms.Button();
+            this.StructureType_textBox = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.UMethod_label = new System.Windows.Forms.Label();
+            this.Uvalue_comboBox = new System.Windows.Forms.ComboBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.TBName_textBox = new System.Windows.Forms.TextBox();
+            this.Base_textBox = new System.Windows.Forms.TextBox();
+            this.DiIndi_textBox = new System.Windows.Forms.TextBox();
+            this.Ueff_label2 = new System.Windows.Forms.Label();
+            this.Base_comboBox = new System.Windows.Forms.ComboBox();
+            this.dU_label2 = new System.Windows.Forms.Label();
+            this.Ueff_textBox = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.Ueff_label = new System.Windows.Forms.Label();
+            this.dU_textBox = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.U_label2 = new System.Windows.Forms.Label();
+            this.U_textBox = new System.Windows.Forms.TextBox();
+            this.U_label = new System.Windows.Forms.Label();
+            this.FloorType_pictureBox = new System.Windows.Forms.PictureBox();
+            this.dU_tabPage = new System.Windows.Forms.TabPage();
+            this.dU_label4 = new System.Windows.Forms.TextBox();
+            this.dU2_textBox = new System.Windows.Forms.TextBox();
+            this.dU_label3 = new System.Windows.Forms.TextBox();
+            this.PsiKai_label2 = new System.Windows.Forms.TextBox();
+            this.PsiKai_textBox = new System.Windows.Forms.TextBox();
+            this.PsiKai_label1 = new System.Windows.Forms.TextBox();
+            this.PerArea_label2 = new System.Windows.Forms.TextBox();
+            this.PerArea_textBox = new System.Windows.Forms.TextBox();
+            this.PerArea_label1 = new System.Windows.Forms.TextBox();
+            this.TBName2_textBox = new System.Windows.Forms.TextBox();
+            this.TBType_textBox = new System.Windows.Forms.TextBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Ucalc_tabPage = new System.Windows.Forms.TabPage();
+            this.DiIndi2_textBox = new System.Windows.Forms.TextBox();
+            this.Rse_textBox = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.Rsi_textBox = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.Material_Rtot_textBox = new System.Windows.Forms.TextBox();
+            this.Material_dtot_textBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.ISO_KS_comboBox = new System.Windows.Forms.ComboBox();
+            this.MaterialDown_button = new System.Windows.Forms.Button();
+            this.MaterialUP_button = new System.Windows.Forms.Button();
+            this.Deletebutton = new System.Windows.Forms.Button();
+            this.Ucalc_dataGridView = new System.Windows.Forms.DataGridView();
+            this.AddMaterial_button = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.GeneralPanel.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Icon_pictureBox)).BeginInit();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FloorType_pictureBox)).BeginInit();
+            this.dU_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.Ucalc_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Ucalc_dataGridView)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // GeneralPanel
             // 
-            GeneralPanel.BackColor = System.Drawing.Color.White;
-            GeneralPanel.Controls.Add(label1);
-            GeneralPanel.Controls.Add(CW_comboBox);
-            GeneralPanel.Controls.Add(OldWall_comboBox);
-            GeneralPanel.Controls.Add(CW_label);
-            GeneralPanel.Controls.Add(OldWall_label);
-            GeneralPanel.Controls.Add(groupBox1);
-            GeneralPanel.Controls.Add(label7);
-            GeneralPanel.Controls.Add(label6);
-            GeneralPanel.Controls.Add(label5);
-            GeneralPanel.Controls.Add(Type_textBox);
-            GeneralPanel.Controls.Add(label3);
-            GeneralPanel.Controls.Add(WallNum_textBox);
-            GeneralPanel.Controls.Add(Icon_pictureBox);
-            GeneralPanel.Controls.Add(Name_textBox);
-            GeneralPanel.Location = new Point(12, 12);
-            GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(977, 101);
-            GeneralPanel.TabIndex = 17;
-            GeneralPanel.Paint += GeneralPanel_Paint;
+            this.GeneralPanel.BackColor = System.Drawing.Color.White;
+            this.GeneralPanel.Controls.Add(this.label1);
+            this.GeneralPanel.Controls.Add(this.OldFloor_comboBox);
+            this.GeneralPanel.Controls.Add(this.OldFloor_label);
+            this.GeneralPanel.Controls.Add(this.groupBox1);
+            this.GeneralPanel.Controls.Add(this.label7);
+            this.GeneralPanel.Controls.Add(this.label6);
+            this.GeneralPanel.Controls.Add(this.label5);
+            this.GeneralPanel.Controls.Add(this.Type_textBox);
+            this.GeneralPanel.Controls.Add(this.label3);
+            this.GeneralPanel.Controls.Add(this.WallNum_textBox);
+            this.GeneralPanel.Controls.Add(this.Icon_pictureBox);
+            this.GeneralPanel.Controls.Add(this.Name_textBox);
+            this.GeneralPanel.Location = new System.Drawing.Point(12, 12);
+            this.GeneralPanel.Name = "GeneralPanel";
+            this.GeneralPanel.Size = new System.Drawing.Size(977, 101);
+            this.GeneralPanel.TabIndex = 17;
+            this.GeneralPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.GeneralPanel_Paint);
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(142, 19);
-            label1.Name = "label1";
-            label1.Size = new Size(31, 15);
-            label1.TabIndex = 112;
-            label1.Text = "명칭";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(142, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(31, 15);
+            this.label1.TabIndex = 112;
+            this.label1.Text = "명칭";
             // 
-            // CW_comboBox
+            // OldFloor_comboBox
             // 
-            CW_comboBox.FormattingEnabled = true;
-            CW_comboBox.Location = new Point(837, 67);
-            CW_comboBox.Name = "CW_comboBox";
-            CW_comboBox.Size = new Size(120, 23);
-            CW_comboBox.TabIndex = 108;
-            CW_comboBox.SelectedIndexChanged += CW_comboBox_SelectedIndexChanged;
+            this.OldFloor_comboBox.FormattingEnabled = true;
+            this.OldFloor_comboBox.Location = new System.Drawing.Point(699, 67);
+            this.OldFloor_comboBox.Name = "OldFloor_comboBox";
+            this.OldFloor_comboBox.Size = new System.Drawing.Size(120, 23);
+            this.OldFloor_comboBox.TabIndex = 109;
+            this.OldFloor_comboBox.SelectedIndexChanged += new System.EventHandler(this.OldFloor_comboBox_SelectedIndexChanged);
             // 
-            // OldWall_comboBox
+            // OldFloor_label
             // 
-            OldWall_comboBox.FormattingEnabled = true;
-            OldWall_comboBox.Location = new Point(699, 67);
-            OldWall_comboBox.Name = "OldWall_comboBox";
-            OldWall_comboBox.Size = new Size(120, 23);
-            OldWall_comboBox.TabIndex = 109;
-            OldWall_comboBox.SelectedIndexChanged += OldWall_comboBox_SelectedIndexChanged;
-            // 
-            // CW_label
-            // 
-            CW_label.AutoSize = true;
-            CW_label.Location = new Point(836, 45);
-            CW_label.Name = "CW_label";
-            CW_label.Size = new Size(46, 15);
-            CW_label.TabIndex = 111;
-            CW_label.Text = "커튼월:";
-            // 
-            // OldWall_label
-            // 
-            OldWall_label.AutoSize = true;
-            OldWall_label.Location = new Point(699, 45);
-            OldWall_label.Name = "OldWall_label";
-            OldWall_label.Size = new Size(58, 15);
-            OldWall_label.TabIndex = 110;
-            OldWall_label.Text = "기존외벽:";
+            this.OldFloor_label.AutoSize = true;
+            this.OldFloor_label.Location = new System.Drawing.Point(699, 45);
+            this.OldFloor_label.Name = "OldFloor_label";
+            this.OldFloor_label.Size = new System.Drawing.Size(58, 15);
+            this.OldFloor_label.TabIndex = 110;
+            this.OldFloor_label.Text = "기존바닥:";
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(radioButton6);
-            groupBox1.Controls.Add(radioButton5);
-            groupBox1.Controls.Add(radioButton4);
-            groupBox1.Controls.Add(radioButton3);
-            groupBox1.Controls.Add(radioButton2);
-            groupBox1.Controls.Add(radioButton1);
-            groupBox1.Location = new Point(378, 3);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(283, 95);
-            groupBox1.TabIndex = 107;
-            groupBox1.TabStop = false;
-            // 
-            // radioButton6
-            // 
-            radioButton6.AutoSize = true;
-            radioButton6.Location = new Point(195, 69);
-            radioButton6.Name = "radioButton6";
-            radioButton6.Size = new Size(85, 19);
-            radioButton6.TabIndex = 5;
-            radioButton6.TabStop = true;
-            radioButton6.Text = "커튼월덧댐";
-            radioButton6.UseVisualStyleBackColor = true;
-            radioButton6.CheckedChanged += radioButton6_CheckedChanged;
+            this.groupBox1.Controls.Add(this.radioButton5);
+            this.groupBox1.Controls.Add(this.radioButton4);
+            this.groupBox1.Controls.Add(this.radioButton3);
+            this.groupBox1.Controls.Add(this.radioButton2);
+            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Location = new System.Drawing.Point(378, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(283, 95);
+            this.groupBox1.TabIndex = 107;
+            this.groupBox1.TabStop = false;
             // 
             // radioButton5
             // 
-            radioButton5.AutoSize = true;
-            radioButton5.Location = new Point(108, 69);
-            radioButton5.Name = "radioButton5";
-            radioButton5.Size = new Size(73, 19);
-            radioButton5.TabIndex = 4;
-            radioButton5.TabStop = true;
-            radioButton5.Text = "내부덧댐";
-            radioButton5.UseVisualStyleBackColor = true;
-            radioButton5.CheckedChanged += radioButton5_CheckedChanged;
+            this.radioButton5.AutoSize = true;
+            this.radioButton5.Location = new System.Drawing.Point(108, 69);
+            this.radioButton5.Name = "radioButton5";
+            this.radioButton5.Size = new System.Drawing.Size(73, 19);
+            this.radioButton5.TabIndex = 4;
+            this.radioButton5.TabStop = true;
+            this.radioButton5.Text = "내부덧댐";
+            this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioButton5.CheckedChanged += new System.EventHandler(this.radioButton5_CheckedChanged);
             // 
             // radioButton4
             // 
-            radioButton4.AutoSize = true;
-            radioButton4.Location = new Point(17, 69);
-            radioButton4.Name = "radioButton4";
-            radioButton4.Size = new Size(73, 19);
-            radioButton4.TabIndex = 3;
-            radioButton4.TabStop = true;
-            radioButton4.Text = "외부덧댐";
-            radioButton4.UseVisualStyleBackColor = true;
-            radioButton4.CheckedChanged += radioButton4_CheckedChanged;
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Location = new System.Drawing.Point(17, 69);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(73, 19);
+            this.radioButton4.TabIndex = 3;
+            this.radioButton4.TabStop = true;
+            this.radioButton4.Text = "외부덧댐";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
             // 
             // radioButton3
             // 
-            radioButton3.AutoSize = true;
-            radioButton3.Location = new Point(108, 43);
-            radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(93, 19);
-            radioButton3.TabIndex = 2;
-            radioButton3.TabStop = true;
-            radioButton3.Text = "철거 후 신규";
-            radioButton3.UseVisualStyleBackColor = true;
-            radioButton3.CheckedChanged += radioButton3_CheckedChanged_1;
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(108, 43);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(93, 19);
+            this.radioButton3.TabIndex = 2;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "철거 후 신규";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
             // 
             // radioButton2
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(17, 43);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(49, 19);
-            radioButton2.TabIndex = 1;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "신규";
-            radioButton2.UseVisualStyleBackColor = true;
-            radioButton2.CheckedChanged += radioButton2_CheckedChanged_1;
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(17, 43);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(49, 19);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "신규";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // radioButton1
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(17, 17);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(73, 19);
-            radioButton1.TabIndex = 0;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "기존외벽";
-            radioButton1.UseVisualStyleBackColor = true;
-            radioButton1.CheckedChanged += radioButton1_CheckedChanged_1;
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(17, 17);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(73, 19);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "기존바닥";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // label7
             // 
-            label7.AutoSize = true;
-            label7.Location = new Point(341, 71);
-            label7.Name = "label7";
-            label7.Size = new Size(31, 15);
-            label7.TabIndex = 106;
-            label7.Text = "덧댐";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(341, 71);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(31, 15);
+            this.label7.TabIndex = 106;
+            this.label7.Text = "덧댐";
             // 
             // label6
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(341, 45);
-            label6.Name = "label6";
-            label6.Size = new Size(31, 15);
-            label6.TabIndex = 105;
-            label6.Text = "신규";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(341, 45);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(31, 15);
+            this.label6.TabIndex = 105;
+            this.label6.Text = "신규";
             // 
             // label5
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(340, 19);
-            label5.Name = "label5";
-            label5.Size = new Size(31, 15);
-            label5.TabIndex = 104;
-            label5.Text = "기존";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(340, 19);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(31, 15);
+            this.label5.TabIndex = 104;
+            this.label5.Text = "기존";
             // 
             // Type_textBox
             // 
-            Type_textBox.BackColor = System.Drawing.Color.White;
-            Type_textBox.BorderStyle = BorderStyle.None;
-            Type_textBox.Enabled = false;
-            Type_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Type_textBox.ForeColor = SystemColors.ControlDark;
-            Type_textBox.Location = new Point(177, 57);
-            Type_textBox.Name = "Type_textBox";
-            Type_textBox.Size = new Size(120, 15);
-            Type_textBox.TabIndex = 96;
-            Type_textBox.TextAlign = HorizontalAlignment.Center;
+            this.Type_textBox.BackColor = System.Drawing.Color.White;
+            this.Type_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Type_textBox.Enabled = false;
+            this.Type_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Type_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.Type_textBox.Location = new System.Drawing.Point(177, 57);
+            this.Type_textBox.Name = "Type_textBox";
+            this.Type_textBox.Size = new System.Drawing.Size(120, 15);
+            this.Type_textBox.TabIndex = 96;
+            this.Type_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label3
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(141, 57);
-            label3.Name = "label3";
-            label3.Size = new Size(33, 15);
-            label3.TabIndex = 92;
-            label3.Text = "TYPE";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(141, 57);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(33, 15);
+            this.label3.TabIndex = 92;
+            this.label3.Text = "TYPE";
             // 
             // WallNum_textBox
             // 
-            WallNum_textBox.BackColor = System.Drawing.Color.White;
-            WallNum_textBox.BorderStyle = BorderStyle.None;
-            WallNum_textBox.Enabled = false;
-            WallNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            WallNum_textBox.ForeColor = SystemColors.ControlText;
-            WallNum_textBox.Location = new Point(80, 19);
-            WallNum_textBox.Name = "WallNum_textBox";
-            WallNum_textBox.Size = new Size(67, 15);
-            WallNum_textBox.TabIndex = 90;
-            WallNum_textBox.TextAlign = HorizontalAlignment.Center;
+            this.WallNum_textBox.BackColor = System.Drawing.Color.White;
+            this.WallNum_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.WallNum_textBox.Enabled = false;
+            this.WallNum_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.WallNum_textBox.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.WallNum_textBox.Location = new System.Drawing.Point(80, 19);
+            this.WallNum_textBox.Name = "WallNum_textBox";
+            this.WallNum_textBox.Size = new System.Drawing.Size(67, 15);
+            this.WallNum_textBox.TabIndex = 90;
+            this.WallNum_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Icon_pictureBox
             // 
-            Icon_pictureBox.Location = new Point(30, 14);
-            Icon_pictureBox.Name = "Icon_pictureBox";
-            Icon_pictureBox.Size = new Size(50, 50);
-            Icon_pictureBox.TabIndex = 91;
-            Icon_pictureBox.TabStop = false;
+            this.Icon_pictureBox.Location = new System.Drawing.Point(30, 14);
+            this.Icon_pictureBox.Name = "Icon_pictureBox";
+            this.Icon_pictureBox.Size = new System.Drawing.Size(50, 50);
+            this.Icon_pictureBox.TabIndex = 91;
+            this.Icon_pictureBox.TabStop = false;
             // 
             // Name_textBox
             // 
-            Name_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Name_textBox.Location = new Point(177, 16);
-            Name_textBox.Name = "Name_textBox";
-            Name_textBox.Size = new Size(120, 23);
-            Name_textBox.TabIndex = 4;
-            Name_textBox.TextChanged += Name_textBox_TextChanged;
+            this.Name_textBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Name_textBox.Location = new System.Drawing.Point(177, 16);
+            this.Name_textBox.Name = "Name_textBox";
+            this.Name_textBox.Size = new System.Drawing.Size(120, 23);
+            this.Name_textBox.TabIndex = 4;
+            this.Name_textBox.TextChanged += new System.EventHandler(this.Name_textBox_TextChanged);
             // 
             // Previous_button
             // 
-            Previous_button.BackColor = SystemColors.ButtonHighlight;
-            Previous_button.ForeColor = System.Drawing.Color.Black;
-            Previous_button.Location = new Point(995, 668);
-            Previous_button.Name = "Previous_button";
-            Previous_button.Size = new Size(88, 25);
-            Previous_button.TabIndex = 93;
-            Previous_button.Text = "<<PREVIOUS";
-            Previous_button.UseVisualStyleBackColor = true;
-            Previous_button.Click += Previous_button_Click;
+            this.Previous_button.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Previous_button.ForeColor = System.Drawing.Color.Black;
+            this.Previous_button.Location = new System.Drawing.Point(995, 668);
+            this.Previous_button.Name = "Previous_button";
+            this.Previous_button.Size = new System.Drawing.Size(88, 25);
+            this.Previous_button.TabIndex = 93;
+            this.Previous_button.Text = "<<PREVIOUS";
+            this.Previous_button.UseVisualStyleBackColor = true;
             // 
             // Save_button
             // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = System.Drawing.Color.Black;
-            Save_button.Location = new Point(1089, 668);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(88, 25);
-            Save_button.TabIndex = 92;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
+            this.Save_button.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Save_button.ForeColor = System.Drawing.Color.Black;
+            this.Save_button.Location = new System.Drawing.Point(1089, 668);
+            this.Save_button.Name = "Save_button";
+            this.Save_button.Size = new System.Drawing.Size(88, 25);
+            this.Save_button.TabIndex = 92;
+            this.Save_button.Text = "SAVE";
+            this.Save_button.UseVisualStyleBackColor = true;
             // 
             // TB_button
             // 
-            TB_button.BackColor = SystemColors.ControlLight;
-            TB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            TB_button.FlatStyle = FlatStyle.System;
-            TB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            TB_button.Location = new Point(431, 85);
-            TB_button.Margin = new Padding(0);
-            TB_button.Name = "TB_button";
-            TB_button.Size = new Size(23, 23);
-            TB_button.TabIndex = 92;
-            TB_button.Text = "+";
-            TB_button.UseVisualStyleBackColor = false;
-            TB_button.Click += TB_button_Click;
+            this.TB_button.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.TB_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.TB_button.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.TB_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.TB_button.Location = new System.Drawing.Point(431, 85);
+            this.TB_button.Margin = new System.Windows.Forms.Padding(0);
+            this.TB_button.Name = "TB_button";
+            this.TB_button.Size = new System.Drawing.Size(23, 23);
+            this.TB_button.TabIndex = 92;
+            this.TB_button.Text = "+";
+            this.TB_button.UseVisualStyleBackColor = false;
+            this.TB_button.Click += new System.EventHandler(this.TB_button_Click);
             // 
-            // TBName_textBox
+            // StructureType_textBox
             // 
-            TBName_textBox.BackColor = System.Drawing.Color.White;
-            TBName_textBox.BorderStyle = BorderStyle.None;
-            TBName_textBox.Enabled = false;
-            TBName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            TBName_textBox.ForeColor = SystemColors.ControlDark;
-            TBName_textBox.Location = new Point(309, 89);
-            TBName_textBox.Name = "TBName_textBox";
-            TBName_textBox.Size = new Size(120, 15);
-            TBName_textBox.TabIndex = 91;
-            TBName_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // StructureType_comboBox
-            // 
-            StructureType_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            StructureType_comboBox.FormattingEnabled = true;
-            StructureType_comboBox.Location = new Point(175, 84);
-            StructureType_comboBox.Name = "StructureType_comboBox";
-            StructureType_comboBox.Size = new Size(120, 24);
-            StructureType_comboBox.TabIndex = 52;
-            StructureType_comboBox.SelectedIndexChanged += StructureType_comboBox_SelectedIndexChanged;
+            this.StructureType_textBox.BackColor = System.Drawing.Color.White;
+            this.StructureType_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.StructureType_textBox.Enabled = false;
+            this.StructureType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.StructureType_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.StructureType_textBox.Location = new System.Drawing.Point(175, 87);
+            this.StructureType_textBox.Name = "StructureType_textBox";
+            this.StructureType_textBox.Size = new System.Drawing.Size(120, 15);
+            this.StructureType_textBox.TabIndex = 91;
+            this.StructureType_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.StructureType_textBox.TextChanged += new System.EventHandler(this.StructureType_textBox_TextChanged);
             // 
             // label11
             // 
-            label11.AutoSize = true;
-            label11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label11.Location = new Point(45, 88);
-            label11.Name = "label11";
-            label11.Size = new Size(59, 15);
-            label11.TabIndex = 41;
-            label11.Text = "구조 유형";
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label11.Location = new System.Drawing.Point(45, 88);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(59, 15);
+            this.label11.TabIndex = 41;
+            this.label11.Text = "구조 유형";
             // 
             // UMethod_label
             // 
-            UMethod_label.AutoSize = true;
-            UMethod_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            UMethod_label.Location = new Point(45, 59);
-            UMethod_label.Name = "UMethod_label";
-            UMethod_label.Size = new Size(59, 15);
-            UMethod_label.TabIndex = 39;
-            UMethod_label.Text = "단열 수준";
+            this.UMethod_label.AutoSize = true;
+            this.UMethod_label.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.UMethod_label.Location = new System.Drawing.Point(45, 59);
+            this.UMethod_label.Name = "UMethod_label";
+            this.UMethod_label.Size = new System.Drawing.Size(59, 15);
+            this.UMethod_label.TabIndex = 39;
+            this.UMethod_label.Text = "단열 수준";
             // 
             // Uvalue_comboBox
             // 
-            Uvalue_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Uvalue_comboBox.FormattingEnabled = true;
-            Uvalue_comboBox.Location = new Point(175, 55);
-            Uvalue_comboBox.Name = "Uvalue_comboBox";
-            Uvalue_comboBox.Size = new Size(120, 24);
-            Uvalue_comboBox.TabIndex = 38;
-            Uvalue_comboBox.SelectedIndexChanged += Uvalue_comboBox_SelectedIndexChanged;
+            this.Uvalue_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Uvalue_comboBox.FormattingEnabled = true;
+            this.Uvalue_comboBox.Location = new System.Drawing.Point(175, 55);
+            this.Uvalue_comboBox.Name = "Uvalue_comboBox";
+            this.Uvalue_comboBox.Size = new System.Drawing.Size(120, 24);
+            this.Uvalue_comboBox.TabIndex = 38;
+            this.Uvalue_comboBox.SelectedIndexChanged += new System.EventHandler(this.Uvalue_comboBox_SelectedIndexChanged);
             // 
             // label25
             // 
-            label25.AutoSize = true;
-            label25.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label25.Location = new Point(45, 29);
-            label25.Name = "label25";
-            label25.Size = new Size(59, 15);
-            label25.TabIndex = 37;
-            label25.Text = "외장재 색";
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label25.Location = new System.Drawing.Point(45, 29);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(59, 15);
+            this.label25.TabIndex = 37;
+            this.label25.Text = "기초 설치";
             // 
             // label4
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(12, 115);
-            label4.Name = "label4";
-            label4.Size = new Size(87, 15);
-            label4.TabIndex = 94;
-            label4.Text = "외벽 성능 정보";
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(12, 115);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(87, 15);
+            this.label4.TabIndex = 94;
+            this.label4.Text = "바닥 성능 정보";
             // 
             // panel2
             // 
-            panel2.BackColor = System.Drawing.Color.White;
-            panel2.Controls.Add(Ueff_label2);
-            panel2.Controls.Add(Color_comboBox);
-            panel2.Controls.Add(dU_label2);
-            panel2.Controls.Add(Ueff_textBox);
-            panel2.Controls.Add(label9);
-            panel2.Controls.Add(TB_button);
-            panel2.Controls.Add(TBName_textBox);
-            panel2.Controls.Add(Ueff_label);
-            panel2.Controls.Add(dU_textBox);
-            panel2.Controls.Add(label26);
-            panel2.Controls.Add(α_textBox);
-            panel2.Controls.Add(label23);
-            panel2.Controls.Add(U_label2);
-            panel2.Controls.Add(U_textBox);
-            panel2.Controls.Add(U_label);
-            panel2.Controls.Add(DiIndi_comboBox);
-            panel2.Controls.Add(StructureType_comboBox);
-            panel2.Controls.Add(label11);
-            panel2.Controls.Add(UMethod_label);
-            panel2.Controls.Add(Uvalue_comboBox);
-            panel2.Controls.Add(label25);
-            panel2.Location = new Point(12, 133);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(977, 158);
-            panel2.TabIndex = 95;
-            panel2.Paint += panel2_Paint;
+            this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.Controls.Add(this.TBName_textBox);
+            this.panel2.Controls.Add(this.Base_textBox);
+            this.panel2.Controls.Add(this.DiIndi_textBox);
+            this.panel2.Controls.Add(this.Ueff_label2);
+            this.panel2.Controls.Add(this.Base_comboBox);
+            this.panel2.Controls.Add(this.dU_label2);
+            this.panel2.Controls.Add(this.Ueff_textBox);
+            this.panel2.Controls.Add(this.label9);
+            this.panel2.Controls.Add(this.TB_button);
+            this.panel2.Controls.Add(this.StructureType_textBox);
+            this.panel2.Controls.Add(this.Ueff_label);
+            this.panel2.Controls.Add(this.dU_textBox);
+            this.panel2.Controls.Add(this.label26);
+            this.panel2.Controls.Add(this.label23);
+            this.panel2.Controls.Add(this.U_label2);
+            this.panel2.Controls.Add(this.U_textBox);
+            this.panel2.Controls.Add(this.U_label);
+            this.panel2.Controls.Add(this.label11);
+            this.panel2.Controls.Add(this.UMethod_label);
+            this.panel2.Controls.Add(this.Uvalue_comboBox);
+            this.panel2.Controls.Add(this.label25);
+            this.panel2.Location = new System.Drawing.Point(12, 133);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(977, 158);
+            this.panel2.TabIndex = 95;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            // 
+            // TBName_textBox
+            // 
+            this.TBName_textBox.BackColor = System.Drawing.Color.White;
+            this.TBName_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TBName_textBox.Enabled = false;
+            this.TBName_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.TBName_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.TBName_textBox.Location = new System.Drawing.Point(309, 88);
+            this.TBName_textBox.Name = "TBName_textBox";
+            this.TBName_textBox.Size = new System.Drawing.Size(120, 15);
+            this.TBName_textBox.TabIndex = 135;
+            this.TBName_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.TBName_textBox.TextChanged += new System.EventHandler(this.TB2Name_textBox_TextChanged);
+            // 
+            // Base_textBox
+            // 
+            this.Base_textBox.BackColor = System.Drawing.Color.White;
+            this.Base_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Base_textBox.Enabled = false;
+            this.Base_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Base_textBox.ForeColor = System.Drawing.Color.White;
+            this.Base_textBox.Location = new System.Drawing.Point(309, 25);
+            this.Base_textBox.Name = "Base_textBox";
+            this.Base_textBox.Size = new System.Drawing.Size(116, 15);
+            this.Base_textBox.TabIndex = 134;
+            this.Base_textBox.Text = "지면위";
+            this.Base_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Base_textBox.Visible = false;
+            // 
+            // DiIndi_textBox
+            // 
+            this.DiIndi_textBox.BackColor = System.Drawing.Color.White;
+            this.DiIndi_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.DiIndi_textBox.Enabled = false;
+            this.DiIndi_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.DiIndi_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.DiIndi_textBox.Location = new System.Drawing.Point(309, 59);
+            this.DiIndi_textBox.Name = "DiIndi_textBox";
+            this.DiIndi_textBox.Size = new System.Drawing.Size(116, 15);
+            this.DiIndi_textBox.TabIndex = 133;
+            this.DiIndi_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DiIndi_textBox.TextChanged += new System.EventHandler(this.DiIndi_textBox_TextChanged);
             // 
             // Ueff_label2
             // 
-            Ueff_label2.AutoSize = true;
-            Ueff_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Ueff_label2.ForeColor = SystemColors.ControlDark;
-            Ueff_label2.Location = new Point(824, 117);
-            Ueff_label2.Name = "Ueff_label2";
-            Ueff_label2.Size = new Size(50, 16);
-            Ueff_label2.TabIndex = 132;
-            Ueff_label2.Text = "W/m²·K";
+            this.Ueff_label2.AutoSize = true;
+            this.Ueff_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Ueff_label2.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.Ueff_label2.Location = new System.Drawing.Point(824, 117);
+            this.Ueff_label2.Name = "Ueff_label2";
+            this.Ueff_label2.Size = new System.Drawing.Size(50, 16);
+            this.Ueff_label2.TabIndex = 132;
+            this.Ueff_label2.Text = "W/m²·K";
             // 
-            // Color_comboBox
+            // Base_comboBox
             // 
-            Color_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Color_comboBox.FormattingEnabled = true;
-            Color_comboBox.Location = new Point(175, 25);
-            Color_comboBox.Name = "Color_comboBox";
-            Color_comboBox.Size = new Size(120, 24);
-            Color_comboBox.TabIndex = 121;
-            Color_comboBox.SelectedIndexChanged += Color_comboBox_SelectedIndexChanged;
+            this.Base_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Base_comboBox.FormattingEnabled = true;
+            this.Base_comboBox.Location = new System.Drawing.Point(175, 25);
+            this.Base_comboBox.Name = "Base_comboBox";
+            this.Base_comboBox.Size = new System.Drawing.Size(120, 24);
+            this.Base_comboBox.TabIndex = 121;
+            this.Base_comboBox.SelectedIndexChanged += new System.EventHandler(this.Base_comboBox_SelectedIndexChanged);
             // 
             // dU_label2
             // 
-            dU_label2.AutoSize = true;
-            dU_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dU_label2.ForeColor = SystemColors.ControlDark;
-            dU_label2.Location = new Point(824, 88);
-            dU_label2.Name = "dU_label2";
-            dU_label2.Size = new Size(50, 16);
-            dU_label2.TabIndex = 113;
-            dU_label2.Text = "W/m²·K";
+            this.dU_label2.AutoSize = true;
+            this.dU_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dU_label2.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.dU_label2.Location = new System.Drawing.Point(824, 88);
+            this.dU_label2.Name = "dU_label2";
+            this.dU_label2.Size = new System.Drawing.Size(50, 16);
+            this.dU_label2.TabIndex = 113;
+            this.dU_label2.Text = "W/m²·K";
             // 
             // Ueff_textBox
             // 
-            Ueff_textBox.BackColor = System.Drawing.Color.White;
-            Ueff_textBox.BorderStyle = BorderStyle.None;
-            Ueff_textBox.Enabled = false;
-            Ueff_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Ueff_textBox.ForeColor = SystemColors.ControlDark;
-            Ueff_textBox.Location = new Point(699, 117);
-            Ueff_textBox.Name = "Ueff_textBox";
-            Ueff_textBox.Size = new Size(116, 15);
-            Ueff_textBox.TabIndex = 109;
-            Ueff_textBox.TextAlign = HorizontalAlignment.Center;
+            this.Ueff_textBox.BackColor = System.Drawing.Color.White;
+            this.Ueff_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Ueff_textBox.Enabled = false;
+            this.Ueff_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Ueff_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.Ueff_textBox.Location = new System.Drawing.Point(699, 117);
+            this.Ueff_textBox.Name = "Ueff_textBox";
+            this.Ueff_textBox.Size = new System.Drawing.Size(116, 15);
+            this.Ueff_textBox.TabIndex = 109;
+            this.Ueff_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label9
             // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label9.ForeColor = SystemColors.ControlDark;
-            label9.Location = new Point(845, 29);
-            label9.Name = "label9";
-            label9.Size = new Size(11, 16);
-            label9.TabIndex = 96;
-            label9.Text = "-";
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label9.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label9.Location = new System.Drawing.Point(845, 29);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(11, 16);
+            this.label9.TabIndex = 96;
+            this.label9.Text = "-";
             // 
             // Ueff_label
             // 
-            Ueff_label.AutoSize = true;
-            Ueff_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Ueff_label.ForeColor = SystemColors.ControlDark;
-            Ueff_label.Location = new Point(539, 117);
-            Ueff_label.Name = "Ueff_label";
-            Ueff_label.Size = new Size(149, 15);
-            Ueff_label.TabIndex = 74;
-            Ueff_label.Text = "[Ueff] 유효열관류율 ①+②";
+            this.Ueff_label.AutoSize = true;
+            this.Ueff_label.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Ueff_label.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.Ueff_label.Location = new System.Drawing.Point(539, 117);
+            this.Ueff_label.Name = "Ueff_label";
+            this.Ueff_label.Size = new System.Drawing.Size(149, 15);
+            this.Ueff_label.TabIndex = 74;
+            this.Ueff_label.Text = "[Ueff] 유효열관류율 ①+②";
             // 
             // dU_textBox
             // 
-            dU_textBox.BackColor = System.Drawing.Color.White;
-            dU_textBox.BorderStyle = BorderStyle.None;
-            dU_textBox.Enabled = false;
-            dU_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dU_textBox.ForeColor = SystemColors.ControlDark;
-            dU_textBox.Location = new Point(699, 89);
-            dU_textBox.Name = "dU_textBox";
-            dU_textBox.Size = new Size(116, 15);
-            dU_textBox.TabIndex = 72;
-            dU_textBox.TextAlign = HorizontalAlignment.Center;
+            this.dU_textBox.BackColor = System.Drawing.Color.White;
+            this.dU_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dU_textBox.Enabled = false;
+            this.dU_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dU_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.dU_textBox.Location = new System.Drawing.Point(699, 89);
+            this.dU_textBox.Name = "dU_textBox";
+            this.dU_textBox.Size = new System.Drawing.Size(116, 15);
+            this.dU_textBox.TabIndex = 72;
+            this.dU_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label26
             // 
-            label26.AutoSize = true;
-            label26.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label26.ForeColor = SystemColors.ControlDark;
-            label26.Location = new Point(539, 88);
-            label26.Name = "label26";
-            label26.Size = new Size(148, 15);
-            label26.TabIndex = 71;
-            label26.Text = "[ΔU1D] 1D_열교가산치 ②";
-            // 
-            // α_textBox
-            // 
-            α_textBox.BackColor = System.Drawing.Color.White;
-            α_textBox.BorderStyle = BorderStyle.None;
-            α_textBox.Enabled = false;
-            α_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            α_textBox.ForeColor = SystemColors.ControlDark;
-            α_textBox.Location = new Point(699, 30);
-            α_textBox.Name = "α_textBox";
-            α_textBox.Size = new Size(116, 15);
-            α_textBox.TabIndex = 69;
-            α_textBox.TextAlign = HorizontalAlignment.Center;
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label26.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label26.Location = new System.Drawing.Point(539, 88);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(148, 15);
+            this.label26.TabIndex = 71;
+            this.label26.Text = "[ΔU1D] 1D_열교가산치 ②";
             // 
             // label23
             // 
-            label23.AutoSize = true;
-            label23.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label23.ForeColor = SystemColors.ControlDark;
-            label23.Location = new Point(539, 29);
-            label23.Name = "label23";
-            label23.Size = new Size(63, 15);
-            label23.TabIndex = 68;
-            label23.Text = "[α] 흡수율";
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label23.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label23.Location = new System.Drawing.Point(539, 29);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(63, 15);
+            this.label23.TabIndex = 68;
+            this.label23.Text = "[α] 흡수율";
             // 
             // U_label2
             // 
-            U_label2.AutoSize = true;
-            U_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            U_label2.ForeColor = SystemColors.ControlDark;
-            U_label2.Location = new Point(824, 59);
-            U_label2.Name = "U_label2";
-            U_label2.Size = new Size(50, 16);
-            U_label2.TabIndex = 64;
-            U_label2.Text = "W/m²·K";
+            this.U_label2.AutoSize = true;
+            this.U_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.U_label2.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.U_label2.Location = new System.Drawing.Point(824, 59);
+            this.U_label2.Name = "U_label2";
+            this.U_label2.Size = new System.Drawing.Size(50, 16);
+            this.U_label2.TabIndex = 64;
+            this.U_label2.Text = "W/m²·K";
             // 
             // U_textBox
             // 
-            U_textBox.BackColor = System.Drawing.Color.White;
-            U_textBox.BorderStyle = BorderStyle.None;
-            U_textBox.Enabled = false;
-            U_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            U_textBox.ForeColor = SystemColors.ControlDark;
-            U_textBox.Location = new Point(699, 60);
-            U_textBox.Name = "U_textBox";
-            U_textBox.Size = new Size(116, 15);
-            U_textBox.TabIndex = 66;
-            U_textBox.TextAlign = HorizontalAlignment.Center;
-            U_textBox.TextChanged += U_textBox_TextChanged;
+            this.U_textBox.BackColor = System.Drawing.Color.White;
+            this.U_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.U_textBox.Enabled = false;
+            this.U_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.U_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.U_textBox.Location = new System.Drawing.Point(699, 60);
+            this.U_textBox.Name = "U_textBox";
+            this.U_textBox.Size = new System.Drawing.Size(116, 15);
+            this.U_textBox.TabIndex = 66;
+            this.U_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.U_textBox.TextChanged += new System.EventHandler(this.U_textBox_TextChanged);
             // 
             // U_label
             // 
-            U_label.AutoSize = true;
-            U_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            U_label.ForeColor = SystemColors.ControlDark;
-            U_label.Location = new Point(539, 59);
-            U_label.Name = "U_label";
-            U_label.Size = new Size(91, 15);
-            U_label.TabIndex = 65;
-            U_label.Text = "[U] 열관류율 ①";
+            this.U_label.AutoSize = true;
+            this.U_label.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.U_label.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.U_label.Location = new System.Drawing.Point(539, 59);
+            this.U_label.Name = "U_label";
+            this.U_label.Size = new System.Drawing.Size(91, 15);
+            this.U_label.TabIndex = 65;
+            this.U_label.Text = "[U] 열관류율 ①";
             // 
-            // DiIndi_comboBox
+            // FloorType_pictureBox
             // 
-            DiIndi_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            DiIndi_comboBox.FormattingEnabled = true;
-            DiIndi_comboBox.Location = new Point(309, 55);
-            DiIndi_comboBox.Name = "DiIndi_comboBox";
-            DiIndi_comboBox.Size = new Size(120, 24);
-            DiIndi_comboBox.TabIndex = 55;
-            DiIndi_comboBox.SelectedIndexChanged += DiIndi_comboBox_SelectedIndexChanged;
-            // 
-            // WallType_pictureBox
-            // 
-            WallType_pictureBox.Location = new Point(992, 41);
-            WallType_pictureBox.Name = "WallType_pictureBox";
-            WallType_pictureBox.Size = new Size(178, 250);
-            WallType_pictureBox.TabIndex = 97;
-            WallType_pictureBox.TabStop = false;
+            this.FloorType_pictureBox.Location = new System.Drawing.Point(992, 41);
+            this.FloorType_pictureBox.Name = "FloorType_pictureBox";
+            this.FloorType_pictureBox.Size = new System.Drawing.Size(178, 250);
+            this.FloorType_pictureBox.TabIndex = 97;
+            this.FloorType_pictureBox.TabStop = false;
             // 
             // dU_tabPage
             // 
-            dU_tabPage.BackColor = System.Drawing.Color.White;
-            dU_tabPage.Controls.Add(dU_label4);
-            dU_tabPage.Controls.Add(dU2_textBox);
-            dU_tabPage.Controls.Add(dU_label3);
-            dU_tabPage.Controls.Add(PsiKai_label2);
-            dU_tabPage.Controls.Add(PsiKai_textBox);
-            dU_tabPage.Controls.Add(PsiKai_label1);
-            dU_tabPage.Controls.Add(PerArea_label2);
-            dU_tabPage.Controls.Add(PerArea_textBox);
-            dU_tabPage.Controls.Add(PerArea_label1);
-            dU_tabPage.Controls.Add(TBName2_textBox);
-            dU_tabPage.Controls.Add(TBType_textBox);
-            dU_tabPage.Controls.Add(pictureBox2);
-            dU_tabPage.Controls.Add(pictureBox1);
-            dU_tabPage.Location = new Point(4, 24);
-            dU_tabPage.Name = "dU_tabPage";
-            dU_tabPage.Padding = new Padding(3);
-            dU_tabPage.Size = new Size(969, 360);
-            dU_tabPage.TabIndex = 2;
-            dU_tabPage.Text = "열교 세부정보";
+            this.dU_tabPage.BackColor = System.Drawing.Color.White;
+            this.dU_tabPage.Controls.Add(this.dU_label4);
+            this.dU_tabPage.Controls.Add(this.dU2_textBox);
+            this.dU_tabPage.Controls.Add(this.dU_label3);
+            this.dU_tabPage.Controls.Add(this.PsiKai_label2);
+            this.dU_tabPage.Controls.Add(this.PsiKai_textBox);
+            this.dU_tabPage.Controls.Add(this.PsiKai_label1);
+            this.dU_tabPage.Controls.Add(this.PerArea_label2);
+            this.dU_tabPage.Controls.Add(this.PerArea_textBox);
+            this.dU_tabPage.Controls.Add(this.PerArea_label1);
+            this.dU_tabPage.Controls.Add(this.TBName2_textBox);
+            this.dU_tabPage.Controls.Add(this.TBType_textBox);
+            this.dU_tabPage.Controls.Add(this.pictureBox2);
+            this.dU_tabPage.Controls.Add(this.pictureBox1);
+            this.dU_tabPage.Location = new System.Drawing.Point(4, 24);
+            this.dU_tabPage.Name = "dU_tabPage";
+            this.dU_tabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.dU_tabPage.Size = new System.Drawing.Size(969, 360);
+            this.dU_tabPage.TabIndex = 2;
+            this.dU_tabPage.Text = "열교 세부정보";
             // 
             // dU_label4
             // 
-            dU_label4.BackColor = System.Drawing.Color.White;
-            dU_label4.BorderStyle = BorderStyle.None;
-            dU_label4.Enabled = false;
-            dU_label4.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dU_label4.ForeColor = SystemColors.ControlDark;
-            dU_label4.Location = new Point(816, 181);
-            dU_label4.Name = "dU_label4";
-            dU_label4.Size = new Size(68, 15);
-            dU_label4.TabIndex = 154;
-            dU_label4.TextAlign = HorizontalAlignment.Center;
+            this.dU_label4.BackColor = System.Drawing.Color.White;
+            this.dU_label4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dU_label4.Enabled = false;
+            this.dU_label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dU_label4.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.dU_label4.Location = new System.Drawing.Point(816, 181);
+            this.dU_label4.Name = "dU_label4";
+            this.dU_label4.Size = new System.Drawing.Size(68, 15);
+            this.dU_label4.TabIndex = 154;
+            this.dU_label4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // dU2_textBox
             // 
-            dU2_textBox.BackColor = System.Drawing.Color.White;
-            dU2_textBox.BorderStyle = BorderStyle.None;
-            dU2_textBox.Enabled = false;
-            dU2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dU2_textBox.ForeColor = SystemColors.ControlDark;
-            dU2_textBox.Location = new Point(696, 181);
-            dU2_textBox.Name = "dU2_textBox";
-            dU2_textBox.Size = new Size(116, 15);
-            dU2_textBox.TabIndex = 153;
-            dU2_textBox.TextAlign = HorizontalAlignment.Center;
+            this.dU2_textBox.BackColor = System.Drawing.Color.White;
+            this.dU2_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dU2_textBox.Enabled = false;
+            this.dU2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dU2_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.dU2_textBox.Location = new System.Drawing.Point(696, 181);
+            this.dU2_textBox.Name = "dU2_textBox";
+            this.dU2_textBox.Size = new System.Drawing.Size(116, 15);
+            this.dU2_textBox.TabIndex = 153;
+            this.dU2_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // dU_label3
             // 
-            dU_label3.BackColor = System.Drawing.Color.White;
-            dU_label3.BorderStyle = BorderStyle.None;
-            dU_label3.Enabled = false;
-            dU_label3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dU_label3.ForeColor = SystemColors.ControlDark;
-            dU_label3.Location = new Point(536, 180);
-            dU_label3.Name = "dU_label3";
-            dU_label3.Size = new Size(149, 16);
-            dU_label3.TabIndex = 152;
+            this.dU_label3.BackColor = System.Drawing.Color.White;
+            this.dU_label3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dU_label3.Enabled = false;
+            this.dU_label3.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dU_label3.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.dU_label3.Location = new System.Drawing.Point(536, 180);
+            this.dU_label3.Name = "dU_label3";
+            this.dU_label3.Size = new System.Drawing.Size(149, 16);
+            this.dU_label3.TabIndex = 152;
             // 
             // PsiKai_label2
             // 
-            PsiKai_label2.BackColor = System.Drawing.Color.White;
-            PsiKai_label2.BorderStyle = BorderStyle.None;
-            PsiKai_label2.Enabled = false;
-            PsiKai_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            PsiKai_label2.ForeColor = SystemColors.ControlDark;
-            PsiKai_label2.Location = new Point(819, 148);
-            PsiKai_label2.Name = "PsiKai_label2";
-            PsiKai_label2.Size = new Size(68, 15);
-            PsiKai_label2.TabIndex = 151;
-            PsiKai_label2.TextAlign = HorizontalAlignment.Center;
+            this.PsiKai_label2.BackColor = System.Drawing.Color.White;
+            this.PsiKai_label2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PsiKai_label2.Enabled = false;
+            this.PsiKai_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PsiKai_label2.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.PsiKai_label2.Location = new System.Drawing.Point(819, 148);
+            this.PsiKai_label2.Name = "PsiKai_label2";
+            this.PsiKai_label2.Size = new System.Drawing.Size(68, 15);
+            this.PsiKai_label2.TabIndex = 151;
+            this.PsiKai_label2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // PsiKai_textBox
             // 
-            PsiKai_textBox.BackColor = System.Drawing.Color.White;
-            PsiKai_textBox.BorderStyle = BorderStyle.None;
-            PsiKai_textBox.Enabled = false;
-            PsiKai_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            PsiKai_textBox.ForeColor = SystemColors.ControlDark;
-            PsiKai_textBox.Location = new Point(696, 148);
-            PsiKai_textBox.Name = "PsiKai_textBox";
-            PsiKai_textBox.Size = new Size(116, 15);
-            PsiKai_textBox.TabIndex = 150;
-            PsiKai_textBox.TextAlign = HorizontalAlignment.Center;
+            this.PsiKai_textBox.BackColor = System.Drawing.Color.White;
+            this.PsiKai_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PsiKai_textBox.Enabled = false;
+            this.PsiKai_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PsiKai_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.PsiKai_textBox.Location = new System.Drawing.Point(696, 148);
+            this.PsiKai_textBox.Name = "PsiKai_textBox";
+            this.PsiKai_textBox.Size = new System.Drawing.Size(116, 15);
+            this.PsiKai_textBox.TabIndex = 150;
+            this.PsiKai_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // PsiKai_label1
             // 
-            PsiKai_label1.BackColor = System.Drawing.Color.White;
-            PsiKai_label1.BorderStyle = BorderStyle.None;
-            PsiKai_label1.Enabled = false;
-            PsiKai_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            PsiKai_label1.ForeColor = SystemColors.ControlDark;
-            PsiKai_label1.Location = new Point(536, 147);
-            PsiKai_label1.Name = "PsiKai_label1";
-            PsiKai_label1.Size = new Size(149, 16);
-            PsiKai_label1.TabIndex = 149;
+            this.PsiKai_label1.BackColor = System.Drawing.Color.White;
+            this.PsiKai_label1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PsiKai_label1.Enabled = false;
+            this.PsiKai_label1.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PsiKai_label1.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.PsiKai_label1.Location = new System.Drawing.Point(536, 147);
+            this.PsiKai_label1.Name = "PsiKai_label1";
+            this.PsiKai_label1.Size = new System.Drawing.Size(149, 16);
+            this.PsiKai_label1.TabIndex = 149;
             // 
             // PerArea_label2
             // 
-            PerArea_label2.BackColor = System.Drawing.Color.White;
-            PerArea_label2.BorderStyle = BorderStyle.None;
-            PerArea_label2.Enabled = false;
-            PerArea_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            PerArea_label2.ForeColor = SystemColors.ControlDark;
-            PerArea_label2.Location = new Point(819, 115);
-            PerArea_label2.Name = "PerArea_label2";
-            PerArea_label2.Size = new Size(68, 15);
-            PerArea_label2.TabIndex = 148;
-            PerArea_label2.TextAlign = HorizontalAlignment.Center;
+            this.PerArea_label2.BackColor = System.Drawing.Color.White;
+            this.PerArea_label2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PerArea_label2.Enabled = false;
+            this.PerArea_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PerArea_label2.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.PerArea_label2.Location = new System.Drawing.Point(819, 115);
+            this.PerArea_label2.Name = "PerArea_label2";
+            this.PerArea_label2.Size = new System.Drawing.Size(68, 15);
+            this.PerArea_label2.TabIndex = 148;
+            this.PerArea_label2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // PerArea_textBox
             // 
-            PerArea_textBox.BackColor = System.Drawing.Color.White;
-            PerArea_textBox.BorderStyle = BorderStyle.None;
-            PerArea_textBox.Enabled = false;
-            PerArea_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            PerArea_textBox.ForeColor = SystemColors.ControlDark;
-            PerArea_textBox.Location = new Point(696, 115);
-            PerArea_textBox.Name = "PerArea_textBox";
-            PerArea_textBox.Size = new Size(116, 15);
-            PerArea_textBox.TabIndex = 147;
-            PerArea_textBox.TextAlign = HorizontalAlignment.Center;
+            this.PerArea_textBox.BackColor = System.Drawing.Color.White;
+            this.PerArea_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PerArea_textBox.Enabled = false;
+            this.PerArea_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PerArea_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.PerArea_textBox.Location = new System.Drawing.Point(696, 115);
+            this.PerArea_textBox.Name = "PerArea_textBox";
+            this.PerArea_textBox.Size = new System.Drawing.Size(116, 15);
+            this.PerArea_textBox.TabIndex = 147;
+            this.PerArea_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // PerArea_label1
             // 
-            PerArea_label1.BackColor = System.Drawing.Color.White;
-            PerArea_label1.BorderStyle = BorderStyle.None;
-            PerArea_label1.Enabled = false;
-            PerArea_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            PerArea_label1.ForeColor = SystemColors.ControlDark;
-            PerArea_label1.Location = new Point(536, 114);
-            PerArea_label1.Name = "PerArea_label1";
-            PerArea_label1.Size = new Size(149, 16);
-            PerArea_label1.TabIndex = 146;
+            this.PerArea_label1.BackColor = System.Drawing.Color.White;
+            this.PerArea_label1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PerArea_label1.Enabled = false;
+            this.PerArea_label1.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PerArea_label1.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.PerArea_label1.Location = new System.Drawing.Point(536, 114);
+            this.PerArea_label1.Name = "PerArea_label1";
+            this.PerArea_label1.Size = new System.Drawing.Size(149, 16);
+            this.PerArea_label1.TabIndex = 146;
             // 
             // TBName2_textBox
             // 
-            TBName2_textBox.BackColor = System.Drawing.Color.White;
-            TBName2_textBox.BorderStyle = BorderStyle.None;
-            TBName2_textBox.Enabled = false;
-            TBName2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            TBName2_textBox.ForeColor = SystemColors.ControlDark;
-            TBName2_textBox.Location = new Point(327, 43);
-            TBName2_textBox.Name = "TBName2_textBox";
-            TBName2_textBox.ShortcutsEnabled = false;
-            TBName2_textBox.Size = new Size(116, 15);
-            TBName2_textBox.TabIndex = 143;
-            TBName2_textBox.TextAlign = HorizontalAlignment.Center;
+            this.TBName2_textBox.BackColor = System.Drawing.Color.White;
+            this.TBName2_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TBName2_textBox.Enabled = false;
+            this.TBName2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.TBName2_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.TBName2_textBox.Location = new System.Drawing.Point(327, 43);
+            this.TBName2_textBox.Name = "TBName2_textBox";
+            this.TBName2_textBox.ShortcutsEnabled = false;
+            this.TBName2_textBox.Size = new System.Drawing.Size(116, 15);
+            this.TBName2_textBox.TabIndex = 143;
+            this.TBName2_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // TBType_textBox
             // 
-            TBType_textBox.BackColor = System.Drawing.Color.White;
-            TBType_textBox.BorderStyle = BorderStyle.None;
-            TBType_textBox.Enabled = false;
-            TBType_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            TBType_textBox.ForeColor = SystemColors.ControlDark;
-            TBType_textBox.Location = new Point(69, 43);
-            TBType_textBox.Name = "TBType_textBox";
-            TBType_textBox.ShortcutsEnabled = false;
-            TBType_textBox.Size = new Size(116, 15);
-            TBType_textBox.TabIndex = 142;
-            TBType_textBox.TextAlign = HorizontalAlignment.Center;
+            this.TBType_textBox.BackColor = System.Drawing.Color.White;
+            this.TBType_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TBType_textBox.Enabled = false;
+            this.TBType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.TBType_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.TBType_textBox.Location = new System.Drawing.Point(69, 43);
+            this.TBType_textBox.Name = "TBType_textBox";
+            this.TBType_textBox.ShortcutsEnabled = false;
+            this.TBType_textBox.Size = new System.Drawing.Size(116, 15);
+            this.TBType_textBox.TabIndex = 142;
+            this.TBType_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // pictureBox2
             // 
-            pictureBox2.Location = new Point(284, 64);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(202, 215);
-            pictureBox2.TabIndex = 3;
-            pictureBox2.TabStop = false;
+            this.pictureBox2.Location = new System.Drawing.Point(284, 64);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(202, 215);
+            this.pictureBox2.TabIndex = 3;
+            this.pictureBox2.TabStop = false;
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(26, 64);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(202, 215);
-            pictureBox1.TabIndex = 2;
-            pictureBox1.TabStop = false;
+            this.pictureBox1.Location = new System.Drawing.Point(26, 64);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(202, 215);
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
             // 
             // Ucalc_tabPage
             // 
-            Ucalc_tabPage.BackColor = System.Drawing.Color.White;
-            Ucalc_tabPage.Controls.Add(Rse_textBox);
-            Ucalc_tabPage.Controls.Add(label12);
-            Ucalc_tabPage.Controls.Add(Rsi_textBox);
-            Ucalc_tabPage.Controls.Add(label10);
-            Ucalc_tabPage.Controls.Add(Material_Rtot_textBox);
-            Ucalc_tabPage.Controls.Add(Material_dtot_textBox);
-            Ucalc_tabPage.Controls.Add(label8);
-            Ucalc_tabPage.Controls.Add(DiIndi2_comboBox);
-            Ucalc_tabPage.Controls.Add(label2);
-            Ucalc_tabPage.Controls.Add(ISO_KS_comboBox);
-            Ucalc_tabPage.Controls.Add(MaterialDown_button);
-            Ucalc_tabPage.Controls.Add(MaterialUP_button);
-            Ucalc_tabPage.Controls.Add(Deletebutton);
-            Ucalc_tabPage.Controls.Add(Ucalc_dataGridView);
-            Ucalc_tabPage.Controls.Add(AddMaterial_button);
-            Ucalc_tabPage.Location = new Point(4, 24);
-            Ucalc_tabPage.Name = "Ucalc_tabPage";
-            Ucalc_tabPage.Padding = new Padding(3);
-            Ucalc_tabPage.Size = new Size(969, 360);
-            Ucalc_tabPage.TabIndex = 0;
-            Ucalc_tabPage.Text = "열관류율 계산";
+            this.Ucalc_tabPage.BackColor = System.Drawing.Color.White;
+            this.Ucalc_tabPage.Controls.Add(this.DiIndi2_textBox);
+            this.Ucalc_tabPage.Controls.Add(this.Rse_textBox);
+            this.Ucalc_tabPage.Controls.Add(this.label12);
+            this.Ucalc_tabPage.Controls.Add(this.Rsi_textBox);
+            this.Ucalc_tabPage.Controls.Add(this.label10);
+            this.Ucalc_tabPage.Controls.Add(this.Material_Rtot_textBox);
+            this.Ucalc_tabPage.Controls.Add(this.Material_dtot_textBox);
+            this.Ucalc_tabPage.Controls.Add(this.label8);
+            this.Ucalc_tabPage.Controls.Add(this.label2);
+            this.Ucalc_tabPage.Controls.Add(this.ISO_KS_comboBox);
+            this.Ucalc_tabPage.Controls.Add(this.MaterialDown_button);
+            this.Ucalc_tabPage.Controls.Add(this.MaterialUP_button);
+            this.Ucalc_tabPage.Controls.Add(this.Deletebutton);
+            this.Ucalc_tabPage.Controls.Add(this.Ucalc_dataGridView);
+            this.Ucalc_tabPage.Controls.Add(this.AddMaterial_button);
+            this.Ucalc_tabPage.Location = new System.Drawing.Point(4, 24);
+            this.Ucalc_tabPage.Name = "Ucalc_tabPage";
+            this.Ucalc_tabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.Ucalc_tabPage.Size = new System.Drawing.Size(969, 360);
+            this.Ucalc_tabPage.TabIndex = 0;
+            this.Ucalc_tabPage.Text = "열관류율 계산";
+            // 
+            // DiIndi2_textBox
+            // 
+            this.DiIndi2_textBox.BackColor = System.Drawing.Color.White;
+            this.DiIndi2_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.DiIndi2_textBox.Enabled = false;
+            this.DiIndi2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.DiIndi2_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.DiIndi2_textBox.Location = new System.Drawing.Point(305, 8);
+            this.DiIndi2_textBox.Name = "DiIndi2_textBox";
+            this.DiIndi2_textBox.Size = new System.Drawing.Size(116, 15);
+            this.DiIndi2_textBox.TabIndex = 134;
+            this.DiIndi2_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DiIndi2_textBox.TextChanged += new System.EventHandler(this.DiIndi2_textBox_TextChanged);
             // 
             // Rse_textBox
             // 
-            Rse_textBox.BackColor = System.Drawing.Color.White;
-            Rse_textBox.BorderStyle = BorderStyle.None;
-            Rse_textBox.Enabled = false;
-            Rse_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Rse_textBox.ForeColor = SystemColors.ControlDark;
-            Rse_textBox.Location = new Point(474, 303);
-            Rse_textBox.Name = "Rse_textBox";
-            Rse_textBox.Size = new Size(80, 15);
-            Rse_textBox.TabIndex = 118;
-            Rse_textBox.TextAlign = HorizontalAlignment.Center;
+            this.Rse_textBox.BackColor = System.Drawing.Color.White;
+            this.Rse_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Rse_textBox.Enabled = false;
+            this.Rse_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Rse_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.Rse_textBox.Location = new System.Drawing.Point(474, 303);
+            this.Rse_textBox.Name = "Rse_textBox";
+            this.Rse_textBox.Size = new System.Drawing.Size(80, 15);
+            this.Rse_textBox.TabIndex = 118;
+            this.Rse_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label12
             // 
-            label12.AutoSize = true;
-            label12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label12.ForeColor = SystemColors.ControlDark;
-            label12.Location = new Point(298, 303);
-            label12.Name = "label12";
-            label12.Size = new Size(141, 15);
-            label12.TabIndex = 117;
-            label12.Text = "실외표면열전달저항[Rse]";
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label12.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label12.Location = new System.Drawing.Point(298, 303);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(141, 15);
+            this.label12.TabIndex = 117;
+            this.label12.Text = "실외표면열전달저항[Rse]";
             // 
             // Rsi_textBox
             // 
-            Rsi_textBox.BackColor = System.Drawing.Color.White;
-            Rsi_textBox.BorderStyle = BorderStyle.None;
-            Rsi_textBox.Enabled = false;
-            Rsi_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Rsi_textBox.ForeColor = SystemColors.ControlDark;
-            Rsi_textBox.Location = new Point(474, 40);
-            Rsi_textBox.Name = "Rsi_textBox";
-            Rsi_textBox.Size = new Size(80, 15);
-            Rsi_textBox.TabIndex = 116;
-            Rsi_textBox.TextAlign = HorizontalAlignment.Center;
+            this.Rsi_textBox.BackColor = System.Drawing.Color.White;
+            this.Rsi_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Rsi_textBox.Enabled = false;
+            this.Rsi_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Rsi_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.Rsi_textBox.Location = new System.Drawing.Point(474, 40);
+            this.Rsi_textBox.Name = "Rsi_textBox";
+            this.Rsi_textBox.Size = new System.Drawing.Size(80, 15);
+            this.Rsi_textBox.TabIndex = 116;
+            this.Rsi_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label10
             // 
-            label10.AutoSize = true;
-            label10.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label10.ForeColor = SystemColors.ControlDark;
-            label10.Location = new Point(299, 40);
-            label10.Name = "label10";
-            label10.Size = new Size(138, 15);
-            label10.TabIndex = 114;
-            label10.Text = "실내표면열전달저항[Rsi]";
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label10.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label10.Location = new System.Drawing.Point(299, 40);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(138, 15);
+            this.label10.TabIndex = 114;
+            this.label10.Text = "실내표면열전달저항[Rsi]";
             // 
             // Material_Rtot_textBox
             // 
-            Material_Rtot_textBox.BackColor = System.Drawing.Color.White;
-            Material_Rtot_textBox.BorderStyle = BorderStyle.None;
-            Material_Rtot_textBox.Enabled = false;
-            Material_Rtot_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Material_Rtot_textBox.ForeColor = SystemColors.ControlDark;
-            Material_Rtot_textBox.Location = new Point(474, 330);
-            Material_Rtot_textBox.Name = "Material_Rtot_textBox";
-            Material_Rtot_textBox.Size = new Size(80, 15);
-            Material_Rtot_textBox.TabIndex = 112;
-            Material_Rtot_textBox.TextAlign = HorizontalAlignment.Center;
+            this.Material_Rtot_textBox.BackColor = System.Drawing.Color.White;
+            this.Material_Rtot_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Material_Rtot_textBox.Enabled = false;
+            this.Material_Rtot_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Material_Rtot_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.Material_Rtot_textBox.Location = new System.Drawing.Point(474, 330);
+            this.Material_Rtot_textBox.Name = "Material_Rtot_textBox";
+            this.Material_Rtot_textBox.Size = new System.Drawing.Size(80, 15);
+            this.Material_Rtot_textBox.TabIndex = 112;
+            this.Material_Rtot_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Material_dtot_textBox
             // 
-            Material_dtot_textBox.BackColor = System.Drawing.Color.White;
-            Material_dtot_textBox.BorderStyle = BorderStyle.None;
-            Material_dtot_textBox.Enabled = false;
-            Material_dtot_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Material_dtot_textBox.ForeColor = SystemColors.ControlDark;
-            Material_dtot_textBox.Location = new Point(390, 330);
-            Material_dtot_textBox.Name = "Material_dtot_textBox";
-            Material_dtot_textBox.Size = new Size(80, 15);
-            Material_dtot_textBox.TabIndex = 111;
-            Material_dtot_textBox.TextAlign = HorizontalAlignment.Center;
+            this.Material_dtot_textBox.BackColor = System.Drawing.Color.White;
+            this.Material_dtot_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Material_dtot_textBox.Enabled = false;
+            this.Material_dtot_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Material_dtot_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.Material_dtot_textBox.Location = new System.Drawing.Point(390, 330);
+            this.Material_dtot_textBox.Name = "Material_dtot_textBox";
+            this.Material_dtot_textBox.Size = new System.Drawing.Size(80, 15);
+            this.Material_dtot_textBox.TabIndex = 111;
+            this.Material_dtot_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label8
             // 
-            label8.AutoSize = true;
-            label8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label8.ForeColor = SystemColors.ControlDark;
-            label8.Location = new Point(353, 330);
-            label8.Name = "label8";
-            label8.Size = new Size(31, 15);
-            label8.TabIndex = 110;
-            label8.Text = "합계";
-            // 
-            // DiIndi2_comboBox
-            // 
-            DiIndi2_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            DiIndi2_comboBox.FormattingEnabled = true;
-            DiIndi2_comboBox.Location = new Point(309, 3);
-            DiIndi2_comboBox.Name = "DiIndi2_comboBox";
-            DiIndi2_comboBox.Size = new Size(120, 24);
-            DiIndi2_comboBox.TabIndex = 102;
-            DiIndi2_comboBox.SelectedIndexChanged += DiIndi2_comboBox_SelectedIndexChanged;
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label8.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label8.Location = new System.Drawing.Point(353, 330);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(31, 15);
+            this.label8.TabIndex = 110;
+            this.label8.Text = "합계";
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(45, 8);
-            label2.Name = "label2";
-            label2.Size = new Size(127, 15);
-            label2.TabIndex = 101;
-            label2.Text = "실내외표면열전달저항";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(45, 8);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(127, 15);
+            this.label2.TabIndex = 101;
+            this.label2.Text = "실내외표면열전달저항";
             // 
             // ISO_KS_comboBox
             // 
-            ISO_KS_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ISO_KS_comboBox.FormattingEnabled = true;
-            ISO_KS_comboBox.Location = new Point(172, 3);
-            ISO_KS_comboBox.Name = "ISO_KS_comboBox";
-            ISO_KS_comboBox.Size = new Size(120, 24);
-            ISO_KS_comboBox.TabIndex = 100;
-            ISO_KS_comboBox.SelectedIndexChanged += ISO_KS_comboBox_SelectedIndexChanged;
+            this.ISO_KS_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ISO_KS_comboBox.FormattingEnabled = true;
+            this.ISO_KS_comboBox.Location = new System.Drawing.Point(172, 3);
+            this.ISO_KS_comboBox.Name = "ISO_KS_comboBox";
+            this.ISO_KS_comboBox.Size = new System.Drawing.Size(120, 24);
+            this.ISO_KS_comboBox.TabIndex = 100;
+            this.ISO_KS_comboBox.SelectedIndexChanged += new System.EventHandler(this.ISO_KS_comboBox_SelectedIndexChanged);
             // 
             // MaterialDown_button
             // 
-            MaterialDown_button.BackColor = SystemColors.ControlLight;
-            MaterialDown_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            MaterialDown_button.FlatStyle = FlatStyle.System;
-            MaterialDown_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            MaterialDown_button.Location = new Point(472, 4);
-            MaterialDown_button.Margin = new Padding(0);
-            MaterialDown_button.Name = "MaterialDown_button";
-            MaterialDown_button.Size = new Size(23, 23);
-            MaterialDown_button.TabIndex = 99;
-            MaterialDown_button.Text = "▼";
-            MaterialDown_button.UseVisualStyleBackColor = false;
-            MaterialDown_button.Click += MaterialDown_button_Click;
+            this.MaterialDown_button.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.MaterialDown_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.MaterialDown_button.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.MaterialDown_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.MaterialDown_button.Location = new System.Drawing.Point(472, 4);
+            this.MaterialDown_button.Margin = new System.Windows.Forms.Padding(0);
+            this.MaterialDown_button.Name = "MaterialDown_button";
+            this.MaterialDown_button.Size = new System.Drawing.Size(23, 23);
+            this.MaterialDown_button.TabIndex = 99;
+            this.MaterialDown_button.Text = "▼";
+            this.MaterialDown_button.UseVisualStyleBackColor = false;
             // 
             // MaterialUP_button
             // 
-            MaterialUP_button.BackColor = SystemColors.ControlLight;
-            MaterialUP_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            MaterialUP_button.FlatStyle = FlatStyle.System;
-            MaterialUP_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            MaterialUP_button.Location = new Point(447, 4);
-            MaterialUP_button.Margin = new Padding(0);
-            MaterialUP_button.Name = "MaterialUP_button";
-            MaterialUP_button.Size = new Size(23, 23);
-            MaterialUP_button.TabIndex = 98;
-            MaterialUP_button.Text = "▲";
-            MaterialUP_button.UseVisualStyleBackColor = false;
-            MaterialUP_button.Click += MaterialUP_button_Click;
+            this.MaterialUP_button.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.MaterialUP_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.MaterialUP_button.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.MaterialUP_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.MaterialUP_button.Location = new System.Drawing.Point(447, 4);
+            this.MaterialUP_button.Margin = new System.Windows.Forms.Padding(0);
+            this.MaterialUP_button.Name = "MaterialUP_button";
+            this.MaterialUP_button.Size = new System.Drawing.Size(23, 23);
+            this.MaterialUP_button.TabIndex = 98;
+            this.MaterialUP_button.Text = "▲";
+            this.MaterialUP_button.UseVisualStyleBackColor = false;
+            this.MaterialUP_button.Click += new System.EventHandler(this.MaterialUP_button_Click);
             // 
             // Deletebutton
             // 
-            Deletebutton.BackColor = SystemColors.ControlLight;
-            Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Deletebutton.Location = new Point(530, 4);
-            Deletebutton.Margin = new Padding(0);
-            Deletebutton.Name = "Deletebutton";
-            Deletebutton.Size = new Size(23, 23);
-            Deletebutton.TabIndex = 97;
-            Deletebutton.Text = "-";
-            Deletebutton.UseVisualStyleBackColor = false;
+            this.Deletebutton.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.Deletebutton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Deletebutton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Deletebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Deletebutton.Location = new System.Drawing.Point(530, 4);
+            this.Deletebutton.Margin = new System.Windows.Forms.Padding(0);
+            this.Deletebutton.Name = "Deletebutton";
+            this.Deletebutton.Size = new System.Drawing.Size(23, 23);
+            this.Deletebutton.TabIndex = 97;
+            this.Deletebutton.Text = "-";
+            this.Deletebutton.UseVisualStyleBackColor = false;
             Deletebutton.Click += DeleteMaterial_button_Click;
             // 
             // Ucalc_dataGridView
             // 
-            Ucalc_dataGridView.AllowUserToAddRows = false;
-            Ucalc_dataGridView.AllowUserToDeleteRows = false;
-            Ucalc_dataGridView.AllowUserToResizeColumns = false;
-            Ucalc_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            Ucalc_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            Ucalc_dataGridView.BackgroundColor = SystemColors.InactiveBorder;
-            Ucalc_dataGridView.BorderStyle = BorderStyle.None;
-            Ucalc_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            Ucalc_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            this.Ucalc_dataGridView.AllowUserToAddRows = false;
+            this.Ucalc_dataGridView.AllowUserToDeleteRows = false;
+            this.Ucalc_dataGridView.AllowUserToResizeColumns = false;
+            this.Ucalc_dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.Ucalc_dataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.Ucalc_dataGridView.BackgroundColor = System.Drawing.SystemColors.InactiveBorder;
+            this.Ucalc_dataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Ucalc_dataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.Ucalc_dataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            Ucalc_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            Ucalc_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Ucalc_dataGridView.Location = new Point(-1, 61);
-            Ucalc_dataGridView.Name = "Ucalc_dataGridView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            Ucalc_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            Ucalc_dataGridView.RowHeadersVisible = false;
-            Ucalc_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Ucalc_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.Ucalc_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Ucalc_dataGridView.Location = new System.Drawing.Point(-1, 61);
+            this.Ucalc_dataGridView.Name = "Ucalc_dataGridView";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Ucalc_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.Ucalc_dataGridView.RowHeadersVisible = false;
+            this.Ucalc_dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            Ucalc_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Ucalc_dataGridView.RowTemplate.Height = 25;
-            Ucalc_dataGridView.Size = new Size(555, 234);
-            Ucalc_dataGridView.TabIndex = 96;
+            this.Ucalc_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            this.Ucalc_dataGridView.RowTemplate.Height = 25;
+            this.Ucalc_dataGridView.Size = new System.Drawing.Size(555, 234);
+            this.Ucalc_dataGridView.TabIndex = 96;
             Ucalc_dataGridView.CellContentClick += dataGridView1_CellContentClick;
             Ucalc_dataGridView.CellValueChanged += dataGridView1_CellValueChanged;
             // 
             // AddMaterial_button
             // 
-            AddMaterial_button.BackColor = SystemColors.ControlLight;
-            AddMaterial_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            AddMaterial_button.FlatStyle = FlatStyle.System;
-            AddMaterial_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            AddMaterial_button.Location = new Point(505, 4);
-            AddMaterial_button.Margin = new Padding(0);
-            AddMaterial_button.Name = "AddMaterial_button";
-            AddMaterial_button.Size = new Size(23, 23);
-            AddMaterial_button.TabIndex = 95;
-            AddMaterial_button.Text = "+";
-            AddMaterial_button.UseVisualStyleBackColor = false;
-            AddMaterial_button.Click += AddMaterial_button_Click;
+            this.AddMaterial_button.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.AddMaterial_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.AddMaterial_button.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.AddMaterial_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.AddMaterial_button.Location = new System.Drawing.Point(505, 4);
+            this.AddMaterial_button.Margin = new System.Windows.Forms.Padding(0);
+            this.AddMaterial_button.Name = "AddMaterial_button";
+            this.AddMaterial_button.Size = new System.Drawing.Size(23, 23);
+            this.AddMaterial_button.TabIndex = 95;
+            this.AddMaterial_button.Text = "+";
+            this.AddMaterial_button.UseVisualStyleBackColor = false;
+            this.AddMaterial_button.Click += new System.EventHandler(this.AddMaterial_button_Click);
             // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(Ucalc_tabPage);
-            tabControl1.Controls.Add(dU_tabPage);
-            tabControl1.Location = new Point(12, 297);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(977, 388);
-            tabControl1.TabIndex = 96;
+            this.tabControl1.Controls.Add(this.Ucalc_tabPage);
+            this.tabControl1.Controls.Add(this.dU_tabPage);
+            this.tabControl1.Location = new System.Drawing.Point(12, 297);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(977, 388);
+            this.tabControl1.TabIndex = 96;
             // 
             // ConstructionFloor
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.InactiveBorder;
-            ClientSize = new Size(1200, 730);
-            Controls.Add(WallType_pictureBox);
-            Controls.Add(tabControl1);
-            Controls.Add(label4);
-            Controls.Add(panel2);
-            Controls.Add(Previous_button);
-            Controls.Add(Save_button);
-            Controls.Add(GeneralPanel);
-            FormBorderStyle = FormBorderStyle.None;
-            Name = "ConstructionFloor";
-            Text = "Form3";
-            GeneralPanel.ResumeLayout(false);
-            GeneralPanel.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)WallType_pictureBox).EndInit();
-            dU_tabPage.ResumeLayout(false);
-            dU_tabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            Ucalc_tabPage.ResumeLayout(false);
-            Ucalc_tabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).EndInit();
-            tabControl1.ResumeLayout(false);
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.ClientSize = new System.Drawing.Size(1200, 730);
+            this.Controls.Add(this.FloorType_pictureBox);
+            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.Previous_button);
+            this.Controls.Add(this.Save_button);
+            this.Controls.Add(this.GeneralPanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "ConstructionFloor";
+            this.Text = "Form3";
+            this.GeneralPanel.ResumeLayout(false);
+            this.GeneralPanel.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Icon_pictureBox)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FloorType_pictureBox)).EndInit();
+            this.dU_tabPage.ResumeLayout(false);
+            this.dU_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.Ucalc_tabPage.ResumeLayout(false);
+            this.Ucalc_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Ucalc_dataGridView)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
@@ -1147,10 +1124,10 @@
         private Button Previous_button;
         private Button Save_button;
         private Button TB_button;
-        private TextBox TBName_textBox;
+        private TextBox StructureType_textBox;
         private ComboBox StructureType_comboBox;
         private Label label11;
-        private ComboBox Color_comboBox;
+        private ComboBox Base_comboBox;
         private Label UMethod_label;
         private ComboBox Uvalue_comboBox;
         private Label label25;
@@ -1159,13 +1136,11 @@
         private Label label9;
         private TextBox dU_textBox;
         private Label label26;
-        private TextBox α_textBox;
         private Label label23;
         private Label U_label2;
         private TextBox U_textBox;
         private Label U_label;
-        private ComboBox DiIndi_comboBox;
-        private PictureBox WallType_pictureBox;
+        private PictureBox FloorType_pictureBox;
         private Label dU_label2;
         private TextBox Ueff_textBox;
         private Label Ueff_label2;
@@ -1179,20 +1154,16 @@
         private Label label7;
         private Label label6;
         private Label label5;
-        private ComboBox CW_comboBox;
-        private ComboBox OldWall_comboBox;
-        private Label CW_label;
-        private Label OldWall_label;
+        private ComboBox OldFloor_comboBox;
+        private Label OldFloor_label;
         private TabPage dU_tabPage;
         private TabPage Ucalc_tabPage;
         private TabControl tabControl1;
-        private RadioButton radioButton6;
         private Button AddMaterial_button;
         private DataGridView Ucalc_dataGridView;
         private Button Deletebutton;
         private Button MaterialDown_button;
         private Button MaterialUP_button;
-        private ComboBox DiIndi2_comboBox;
         private Label label2;
         private ComboBox ISO_KS_comboBox;
         private TextBox Material_Rtot_textBox;
@@ -1218,5 +1189,9 @@
         private TextBox dU2_textBox;
         private TextBox dU_label3;
         private Label label1;
+        private TextBox DiIndi_textBox;
+        private TextBox DiIndi2_textBox;
+        private TextBox Base_textBox;
+        private TextBox TBName_textBox;
     }
 }

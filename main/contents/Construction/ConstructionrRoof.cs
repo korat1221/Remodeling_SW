@@ -20,12 +20,11 @@ namespace main.contents
 {
     public partial class ConstructionRoof : Form
     {
-        String RoofNum, RoofName, Type, check_Type, OldRoof, CWName, UMethod, DiIndi, StructureType, check_StructureType, TBType, TBName, Color, ISO_KS, LinearPoint;
+        String RoofNum, RoofName, Type, check_Type, OldRoof, UMethod, DiIndi, StructureType, check_StructureType, TBType, TBName, Color, ISO_KS, LinearPoint;
         double A, B, C, PsiKai, PerArea;
         double Rse, Rsi, dtot, Rtot, dins, check_dins;
-        double OldRoof_R, CW_R;
+        double OldRoof_R;
         double α, Uvalue, dU, Ueff;
-        String[][] Old;
         int SelectRow;
         String[] Material = new String[10];
         double[] Material_d = new double[10];
@@ -42,12 +41,12 @@ namespace main.contents
             //외장재색 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Color_comboBox, "지붕", "외장재색", "1");
             //직접간접 콤보박스
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi_comboBox, "지붕", "직접/간접", "1");
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi2_comboBox, "지붕", "직접/간접", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi_comboBox, "지붕", "실외조건", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi2_comboBox, "지붕", "실외조건", "1");
             //표면열전달저항기준 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, ISO_KS_comboBox, "지붕", "실내외표면열전달저항", "1");
             //구조유형콤보박스
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, StructureType_comboBox, "지붕", "구조유형", "3");
+            //Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, StructureType_comboBox, "지붕", "구조유형", "3");
             Load_table();
         }
 
@@ -115,13 +114,17 @@ namespace main.contents
         private void Changed_Type(String Type)
         {
             Uvalue_comboBox.Items.Clear();
+            StructureType_comboBox.Items.Clear();
 
             switch (Type)
             {
-                case "기존외벽":
+                case "기존지붕":
                     Uvalue_comboBox.Items.Add("계산");
                     Uvalue_comboBox.Items.Add("법규");
                     Uvalue_comboBox.Items.Add("진단");
+                    StructureType_comboBox.Items.Add("경량철골조");
+                    StructureType_comboBox.Items.Add("목구조");
+                    StructureType_comboBox.Items.Add("콘크리트조");
                     OldRoof_label.Visible = false;
                     OldRoof_comboBox.Visible = false;
                     break;
@@ -129,6 +132,9 @@ namespace main.contents
                 case "신규":
                     Uvalue_comboBox.Items.Add("계산");
                     Uvalue_comboBox.Items.Add("법규");
+                    StructureType_comboBox.Items.Add("경량철골조");
+                    StructureType_comboBox.Items.Add("목구조");
+                    StructureType_comboBox.Items.Add("콘크리트조");
                     OldRoof_label.Visible = false;
                     OldRoof_comboBox.Visible = false;
                     break;
@@ -136,6 +142,9 @@ namespace main.contents
                 case "철거 후 신규":
                     Uvalue_comboBox.Items.Add("계산");
                     Uvalue_comboBox.Items.Add("법규");
+                    StructureType_comboBox.Items.Add("경량철골조");
+                    StructureType_comboBox.Items.Add("목구조");
+                    StructureType_comboBox.Items.Add("콘크리트조");
                     OldRoof_label.Visible = true;
                     OldRoof_comboBox.Visible = true;
                     Load_OldRoof(Type);
@@ -143,6 +152,7 @@ namespace main.contents
 
                 case "외부덧댐":
                     Uvalue_comboBox.Items.Add("계산");
+                    StructureType_comboBox.Items.Add("기존지붕");
                     OldRoof_label.Visible = true;
                     OldRoof_comboBox.Visible = true;
                     Load_OldRoof(Type);
@@ -150,32 +160,26 @@ namespace main.contents
 
                 case "내부덧댐":
                     Uvalue_comboBox.Items.Add("계산");
+                    StructureType_comboBox.Items.Add("기존지붕");
                     OldRoof_label.Visible = true;
                     OldRoof_comboBox.Visible = true;
                     Load_OldRoof(Type);
                     break;
 
-                case "커튼월덧댐": 
-                    Uvalue_comboBox.Items.Add("계산");
-                    OldRoof_label.Visible = true;
-                    OldRoof_comboBox.Visible = true;
-                    Load_OldRoof(Type);
-                    Load_OldCW(Type);
-                    break;
             }
 
             Uvalue_comboBox.SelectedIndex = 0;
         }
 
-        //기존 외벽 리스트 불러오기 
+        //기존 지붕 리스트 불러오기 
         private void Load_OldRoof(String Type)
         {
             string def_value;
             String[][] Table;
 
-            if (Type == "철거 후 신규" || Type == "외부덧댐" || Type == "내부덧댐" || Type == "커튼월덧댐")
+            if (Type == "철거 후 신규" || Type == "외부덧댐" || Type == "내부덧댐" )
             {
-                def_value = "Type = '기존외벽'";
+                def_value = "Type = '기존지붕'";
                 Table = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "명칭", def_value);
             }
             else
@@ -210,6 +214,7 @@ namespace main.contents
             }
 
         }
+
         private void OldRoof_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             DataRowView? item = OldRoof_comboBox.SelectedItem as DataRowView;
@@ -228,48 +233,6 @@ namespace main.contents
 
         }
 
-        //기존 커튼월창 리스트 불러오기 
-        private void Load_OldCW(String Type)
-        {
-            string def_value;
-            String[][] Table;
-
-            if (Type == "커튼월덧댐")
-            {
-                def_value = "Type = '기존 커튼월창'";
-                Table = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "명칭", def_value);
-            }
-            else
-            {
-                def_value = "Type = ''";
-                Table = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "명칭", def_value);
-            }
-
-            int i = -1;
-            DataTable sources = new DataTable();
-            sources.Columns.Add("Text");
-            sources.Columns.Add("Value");
-            sources.Columns.Add("ID");
-
-            while (++i < Table.Length)
-            {
-                DataRow dr = sources.NewRow();
-                dr["Text"] = Table[i][0];
-                sources.Rows.Add(dr);
-            }
-
-            //CW_comboBox.DataSource = sources.DefaultView;
-            //CW_comboBox.DisplayMember = "Text";
-            //for (i = 0; i < OldRoof_comboBox.Items.Count; i++)
-            //{
-            //    var arr = ((DataRowView)CW_comboBox.Items[i]).Row.ItemArray;
-            //    if (arr.Length > 1 && arr[1].ToString() == def_value)
-            //    {
-            //        CW_comboBox.SelectedIndex = i;
-            //        break;
-            //    }
-            //}
-        }
 
         private void Load_RoofType_image(String Type)
         {
@@ -279,18 +242,6 @@ namespace main.contents
             RoofType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
         }
-
-        //private void Color_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    if (CW_comboBox.SelectedItem != null)
-        //    {
-        //        Color = Color_comboBox.SelectedItem.ToString();
-        //        String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + Color + "'");
-        //        α = Convert.ToDouble(value[0][0]);
-        //        α_textBox.Text = String.Format("{0:F1}", α);
-        //    }
-
-        //}
 
         private void Color_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -323,7 +274,7 @@ namespace main.contents
             }
             else if (UMethod == "법규")
             {
-                Rule_U();
+                Rule_U();  //*오류 
                 U_textBox.Enabled = false;
                 U_textBox.BorderStyle = BorderStyle.None;
                 DiIndi_comboBox.Visible = true;
@@ -339,6 +290,7 @@ namespace main.contents
                 Ucalc_tabPage.Enabled = false;
             }
         }
+
 
         private void U_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -362,6 +314,7 @@ namespace main.contents
             }
         }
 
+
         private void ISO_KS_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ISO_KS_comboBox.SelectedItem != null)
@@ -372,8 +325,6 @@ namespace main.contents
             }
         }
 
-      
-
         private void DiIndi2_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DiIndi2_comboBox.SelectedItem != null)
@@ -383,11 +334,30 @@ namespace main.contents
                 Calc_Ueff();
             }
         }
+
+
         private void StructureType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (StructureType_comboBox.SelectedItem != null)
             {
                 StructureType = StructureType_comboBox.SelectedItem.ToString();
+
+                //타입이 기존지붕이면서 구조 유형이 콘크리트일때만 열교 평가 문구 
+                if(Type == "기존지붕"  )
+                {
+                    if (StructureType == "콘크리트조")
+                    {
+                        MessageBox.Show("내단열일 경우 열교를 입력하세요");
+                        TBName_textBox.Text = "";
+                    }
+                    else { }
+                }
+                else
+                {
+                    MessageBox.Show("열교를 입력하세요");
+                }
+
+          
                 //구조 유형 다시 선택했을 경우 
                 try
                 {
@@ -416,15 +386,11 @@ namespace main.contents
             {
                 MessageBox.Show("구조유형부터 선택하세요.");
             }
-            else if (Type == "커튼월덧댐")
+           
+            else if (Type == "기존지붕"&& StructureType != "콘크리트조")
             {
-                MessageBox.Show("커튼월덧댐일 경우 열교 평가는 하지 않습니다.");
-                TBName_textBox.Text = "열교없음";
-            }
-            else if (Type == "기존외벽")
-            {
-                MessageBox.Show("기존 외벽일 경우 열교 평가는 하지 않습니다.");
-                TBName_textBox.Text = "열교없음";
+               MessageBox.Show("기존 지붕일 경우 열교 평가는 하지 않습니다.");
+               TBName_textBox.Text = "열교없음";
             }
             else
             {
@@ -434,7 +400,7 @@ namespace main.contents
                 }
                 else if (UMethod == "계산" && dins == 0)
                 {
-                    MessageBox.Show(dins.ToString());
+                    //MessageBox.Show(dins.ToString());
                     MessageBox.Show("단열재가 없으므로 열교 평가는 하지 않습니다.");
                     TBName_textBox.Text = "열교없음";
                 }
@@ -498,6 +464,7 @@ namespace main.contents
             Calc_Ueff();
         }
 
+
         private void Load_TB_Image()
         {
             try
@@ -506,7 +473,7 @@ namespace main.contents
                 {
                     if (TBType != "")
                     {
-                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_구조유형", "열교유형 = '" + TBType + "'");
+                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕점형열교이미지", "이미지열교구조유형", "열교유형 = '" + TBType + "'");
                         pictureBox1.Visible = true;
                         pictureBox1.Load(Program.gPath + Image[0][0]);
                         pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -514,7 +481,7 @@ namespace main.contents
 
                     if (TBType != "" && TBName != "")
                     {
-                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_고정유형", "제품명 = '" + TBName + "' And 열교유형 = '" + TBType + "'");
+                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕점형열교이미지", "이미지고정유형", "제품명 = '" + TBName + "' And 열교유형 = '" + TBType + "'");
                         pictureBox2.Visible = true;
                         pictureBox2.Load(Program.gPath + Image[0][0]);
                         pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
@@ -525,14 +492,14 @@ namespace main.contents
                 {
                     if (TBType != "")
                     {
-                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_구조유형", "열교유형 = '" + TBType + "'");
+                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕선형열교이미지", "이미지열교구조유형", "열교유형 = '" + TBType + "'");
                         pictureBox1.Visible = true;
                         pictureBox1.Load(Program.gPath + Image[0][0]);
                         pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                     }
                     if (TBType != "" && TBName != "")
                     {
-                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_고정유형", "제품명 = '" + TBName + "' And 열교유형 = '" + TBType + "'");
+                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕선형열교이미지", "이미지고정유형", "제품명 = '" + TBName + "' And 열교유형 = '" + TBType + "'");
                         pictureBox2.Visible = true;
                         pictureBox2.Load(Program.gPath + Image[0][0]);
                         pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
@@ -542,6 +509,7 @@ namespace main.contents
             }
             catch { }
         }
+
 
         private void Load_table()
         {
@@ -565,7 +533,7 @@ namespace main.contents
         {
             for (int k = 0; k < Ucalc_dataGridView.RowCount; k++)
             {
-                if (Ucalc_dataGridView.Rows[k].Cells[2].Value == "기존외벽")
+                if (Ucalc_dataGridView.Rows[k].Cells[2].Value == "기존지붕")
                 {
                     Ucalc_dataGridView.Rows.Remove(Ucalc_dataGridView.Rows[k]);
                 }
@@ -573,30 +541,10 @@ namespace main.contents
             }
 
             int nRow = Ucalc_dataGridView.Rows.Add();
-            Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존외벽";
+            Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존지붕";
             Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldRoof;
             Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
             Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldRoof_R);
-            Load_Material_Num();
-
-        }
-
-        private void Add_CW()
-        {
-            for (int k = 0; k < Ucalc_dataGridView.RowCount; k++)
-            {
-                if (Ucalc_dataGridView.Rows[k].Cells[2].Value == "덧댐커튼월")
-                {
-                    Ucalc_dataGridView.Rows.Remove(Ucalc_dataGridView.Rows[k]);
-                }
-                else { }
-            }
-
-            int nRow = Ucalc_dataGridView.Rows.Add();
-            Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "덧댐커튼월";
-            Ucalc_dataGridView.Rows[nRow].Cells[3].Value = CWName;
-            Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
-            Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", CW_R);
             Load_Material_Num();
 
         }
@@ -651,6 +599,7 @@ namespace main.contents
                 }
             }
         }
+
         private void DeleteMaterial_button_Click(object sender, EventArgs e)
         {
             Ucalc_dataGridView.Rows.Remove(Ucalc_dataGridView.Rows[SelectRow]);
@@ -669,6 +618,7 @@ namespace main.contents
             Ucalc_dataGridView.CurrentCell = Ucalc_dataGridView[Ucalc_dataGridView.CurrentCell.ColumnIndex, iCurrentRow - 1];
             Load_Material_Num();
         }
+
         private void MaterialDown_button_Click(object sender, EventArgs e)
         {
             if (Ucalc_dataGridView.CurrentRow.Index < 0 || Ucalc_dataGridView.CurrentRow.Index + 1 == Ucalc_dataGridView.Rows.Count) return;
@@ -705,23 +655,23 @@ namespace main.contents
         }
 
 
-        private void Rule_U()
+        private void Rule_U() 
         {
             if (UMethod == "법규")
             {
                 String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
                 String[][] Value;
 
-                if (Type == "기존외벽")
+                if (Type == "기존지붕")
                 {
-                    Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '외벽' And 시기 = '" + Date[0][0] + "' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
+                    Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '지붕' And 시기 = '" + Date[0][0] + "' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
                 }
                 else
                 {
-                    Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '외벽' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
+                    Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '지붕' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
                 }
 
-                Uvalue = Convert.ToDouble(Value[0][0]);
+                Uvalue = Convert.ToDouble(Value[0][0]);  
                 U_textBox.Text = string.Format("{0:F3}", Uvalue);
                 dins = (1 / Uvalue) * 0.04 * 1000;
                 Calc_dU();
@@ -732,9 +682,9 @@ namespace main.contents
         {
             if (ISO_KS != null && DiIndi != null)
             {
-                String[][] RsiValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "표면열전달저항", "저항값", "구조체 ='외벽' And 유형 = '실내' AND 기준 = '" + ISO_KS + "'");
+                String[][] RsiValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "표면열전달저항", "저항값", "구조체 ='지붕' And 유형 = '실내' AND 기준 = '" + ISO_KS + "'");
                 Rsi = Convert.ToDouble(RsiValue[0][0]);
-                String[][] RseValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "표면열전달저항", "저항값", "구조체 ='외벽' And 유형 = '" + DiIndi + "' AND 기준 = '" + ISO_KS + "'");
+                String[][] RseValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "표면열전달저항", "저항값", "구조체 ='지붕' And 유형 = '" + DiIndi + "' AND 기준 = '" + ISO_KS + "'");
                 Rse = Convert.ToDouble(RseValue[0][0]);
 
                 Rsi_textBox.Text = string.Format("{0:F2}", Rsi);
@@ -790,16 +740,26 @@ namespace main.contents
 
         }
 
+
+
         //단열두께 달라지면 열교가산치 재산정 
         private void Calc_dU()
         {
             if (PerArea_textBox.Text != "" && PerArea != 0)
             {
-                PsiKai = (A * Math.Pow(dins, 2) + B * dins + C) / 1000;
-                PsiKai_textBox.Text = string.Format("{0:F3}", PsiKai);
-                dU = PsiKai * PerArea;
-                dU_textBox.Text = string.Format("{0:F3}", dU);
-                dU2_textBox.Text = string.Format("{0:F3}", dU);
+                if(TBName_textBox.Text == "열교없음")
+                {
+                    dU = 0;
+                }
+                else
+                {
+                    PsiKai = (A * Math.Pow(dins, 2) + B * dins + C) / 1000;
+                    PsiKai_textBox.Text = string.Format("{0:F3}", PsiKai);
+                    dU = PsiKai * PerArea;
+                    dU_textBox.Text = string.Format("{0:F3}", dU);
+                    dU2_textBox.Text = string.Format("{0:F3}", dU);
+                }
+                
             }
 
         }
@@ -824,13 +784,13 @@ namespace main.contents
         {
             if (RoofName == null)
             {
-                MessageBox.Show("외벽 명칭을 입력하세요.");
+                MessageBox.Show("지붕 명칭을 입력하세요.");
             }
             else if (Type == null)
             {
-                MessageBox.Show("외벽 리모델링 유형을 선택하세요.");
+                MessageBox.Show("지붕 리모델링 유형을 선택하세요.");
             }
-            else if (Type != "기존외벽" && Type != "커튼월덧댐")
+            else if (Type != "기존지붕")
             {
                 if (TBName == null)
                 {
@@ -855,7 +815,7 @@ namespace main.contents
 
         private void Save()
         { 
-        //    Program.DB.setValue(DB.type.ProjDB, "ConstructionRoof", "번호,명칭,Type,기존외벽,덧댐커튼월,U적용방법,직접간접,구조유형,열교유형,열교종류,외장재색,표면열전달저항기준,선형점형," +
+        //    Program.DB.setValue(DB.type.ProjDB, "ConstructionRoof", "번호,명칭,Type,기존지붕,덧댐커튼월,U적용방법,직접간접,구조유형,열교유형,열교종류,외장재색,표면열전달저항기준,선형점형," +
         //        "A,B,C,PsiKai,단위면적당적용," +
         //        "Rse,Rsi,두께합계,열저항합계,단열재두께," +
         //        "재료1종류,재료1두께," +
@@ -995,7 +955,7 @@ namespace main.contents
         //        RoofNum = ID;
 
 
-        //        String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "번호,명칭,Type,기존외벽,덧댐커튼월,U적용방법,직접간접,구조유형,열교유형,열교종류,외장재색,표면열전달저항기준,선형점형," +
+        //        String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "번호,명칭,Type,기존지붕,덧댐커튼월,U적용방법,직접간접,구조유형,열교유형,열교종류,외장재색,표면열전달저항기준,선형점형," +
         //         "A,B,C,PsiKai,단위면적당적용," +
         //         "Rse,Rsi,두께합계,열저항합계,단열재두께," +
         //         "재료1종류,재료1두께," +
@@ -1014,7 +974,7 @@ namespace main.contents
         //        Type = Load[0][2];
         //        switch (Type)
         //        {
-        //            case "기존외벽":
+        //            case "기존지붕":
         //                radioButton1.Checked = true;
         //                break;
         //            case "신규":
@@ -1169,7 +1129,7 @@ namespace main.contents
         //                    try
         //                    {
         //                        OldRoof_R = 1 / Convert.ToDouble(OldRoof_U[0][0]);
-        //                        Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존외벽";
+        //                        Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존지붕";
         //                        Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldRoof;
         //                        Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
         //                        Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldRoof_R);
@@ -1197,7 +1157,7 @@ namespace main.contents
 
         //        Load_Material_Num();
 
-        //        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외벽'");
+        //        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '지붕'");
         //        Icon_pictureBox.Load(Program.gPath + Image[0][0]);
         //        Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 

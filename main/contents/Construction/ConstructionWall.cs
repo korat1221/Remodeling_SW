@@ -47,8 +47,6 @@ namespace main.contents
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi2_comboBox, "외벽", "직접/간접", "1");
             //표면열전달저항기준 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, ISO_KS_comboBox, "외벽", "실내외표면열전달저항", "1");
-            //구조유형콤보박스
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, StructureType_comboBox, "외벽", "구조유형", "3");
             Load_table();
         }
 
@@ -123,6 +121,7 @@ namespace main.contents
         private void Changed_Type(String Type)
         {
             Uvalue_comboBox.Items.Clear();
+            StructureType_comboBox.Items.Clear();
 
             switch (Type)
             {
@@ -130,6 +129,9 @@ namespace main.contents
                     Uvalue_comboBox.Items.Add("계산");
                     Uvalue_comboBox.Items.Add("법규");
                     Uvalue_comboBox.Items.Add("진단");
+                    StructureType_comboBox.Items.Add("경량철골조");
+                    StructureType_comboBox.Items.Add("목구조");
+                    StructureType_comboBox.Items.Add("콘크리트조");
                     OldWall_label.Visible = false;
                     OldWall_comboBox.Visible = false;
                     CW_label.Visible = false;
@@ -139,6 +141,9 @@ namespace main.contents
                 case "신규":
                     Uvalue_comboBox.Items.Add("계산");
                     Uvalue_comboBox.Items.Add("법규");
+                    StructureType_comboBox.Items.Add("경량철골조");
+                    StructureType_comboBox.Items.Add("목구조");
+                    StructureType_comboBox.Items.Add("콘크리트조");
                     OldWall_label.Visible = false;
                     OldWall_comboBox.Visible = false;
                     CW_label.Visible = false;
@@ -148,6 +153,10 @@ namespace main.contents
                 case "철거 후 신규":
                     Uvalue_comboBox.Items.Add("계산");
                     Uvalue_comboBox.Items.Add("법규");
+                    StructureType_comboBox.Items.Add("기존외벽");
+                    StructureType_comboBox.Items.Add("경량철골조");
+                    StructureType_comboBox.Items.Add("목구조");
+                    StructureType_comboBox.Items.Add("콘크리트조");
                     OldWall_label.Visible = true;
                     OldWall_comboBox.Visible = true;
                     Load_OldWall(Type);
@@ -157,6 +166,7 @@ namespace main.contents
 
                 case "외부덧댐":
                     Uvalue_comboBox.Items.Add("계산");
+                    StructureType_comboBox.Items.Add("기존외벽");
                     OldWall_label.Visible = true;
                     OldWall_comboBox.Visible = true;
                     Load_OldWall(Type);
@@ -166,6 +176,7 @@ namespace main.contents
 
                 case "내부덧댐":
                     Uvalue_comboBox.Items.Add("계산");
+                    StructureType_comboBox.Items.Add("기존외벽");
                     OldWall_label.Visible = true;
                     OldWall_comboBox.Visible = true;
                     Load_OldWall(Type);
@@ -175,6 +186,7 @@ namespace main.contents
 
                 case "커튼월덧댐":
                     Uvalue_comboBox.Items.Add("계산");
+                    StructureType_comboBox.Items.Add("기존외벽");
                     OldWall_label.Visible = true;
                     OldWall_comboBox.Visible = true;
                     Load_OldWall(Type);

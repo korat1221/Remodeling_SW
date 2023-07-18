@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.GeneralPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.OldRoof_comboBox = new System.Windows.Forms.ComboBox();
@@ -156,6 +156,7 @@
             this.OldRoof_comboBox.Name = "OldRoof_comboBox";
             this.OldRoof_comboBox.Size = new System.Drawing.Size(120, 23);
             this.OldRoof_comboBox.TabIndex = 109;
+            this.OldRoof_comboBox.SelectedIndexChanged += new System.EventHandler(this.OldRoof_comboBox_SelectedIndexChanged);
             // 
             // OldRoof_label
             // 
@@ -328,6 +329,7 @@
             this.Previous_button.TabIndex = 93;
             this.Previous_button.Text = "<<PREVIOUS";
             this.Previous_button.UseVisualStyleBackColor = true;
+            this.Previous_button.Click += new System.EventHandler(this.Previous_button_Click);
             // 
             // Save_button
             // 
@@ -339,6 +341,7 @@
             this.Save_button.TabIndex = 92;
             this.Save_button.Text = "SAVE";
             this.Save_button.UseVisualStyleBackColor = true;
+            this.Save_button.Click += new System.EventHandler(this.Save_button_Click);
             // 
             // TB_button
             // 
@@ -353,6 +356,7 @@
             this.TB_button.TabIndex = 92;
             this.TB_button.Text = "+";
             this.TB_button.UseVisualStyleBackColor = false;
+            this.TB_button.Click += new System.EventHandler(this.TB_button_Click);
             // 
             // TBName_textBox
             // 
@@ -375,6 +379,7 @@
             this.StructureType_comboBox.Name = "StructureType_comboBox";
             this.StructureType_comboBox.Size = new System.Drawing.Size(120, 24);
             this.StructureType_comboBox.TabIndex = 52;
+            this.StructureType_comboBox.SelectedIndexChanged += new System.EventHandler(this.StructureType_comboBox_SelectedIndexChanged);
             // 
             // label11
             // 
@@ -404,6 +409,7 @@
             this.Uvalue_comboBox.Name = "Uvalue_comboBox";
             this.Uvalue_comboBox.Size = new System.Drawing.Size(120, 24);
             this.Uvalue_comboBox.TabIndex = 38;
+            this.Uvalue_comboBox.SelectedIndexChanged += new System.EventHandler(this.Uvalue_comboBox_SelectedIndexChanged);
             // 
             // label25
             // 
@@ -423,7 +429,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(87, 15);
             this.label4.TabIndex = 94;
-            this.label4.Text = "외벽 성능 정보";
+            this.label4.Text = "지붕 성능 정보";
             // 
             // panel2
             // 
@@ -474,6 +480,7 @@
             this.Color_comboBox.Name = "Color_comboBox";
             this.Color_comboBox.Size = new System.Drawing.Size(120, 24);
             this.Color_comboBox.TabIndex = 121;
+            this.Color_comboBox.SelectedIndexChanged += new System.EventHandler(this.Color_comboBox_SelectedIndexChanged);
             // 
             // dU_label2
             // 
@@ -592,6 +599,7 @@
             this.U_textBox.Size = new System.Drawing.Size(116, 15);
             this.U_textBox.TabIndex = 66;
             this.U_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.U_textBox.TextChanged += new System.EventHandler(this.U_textBox_TextChanged);
             // 
             // U_label
             // 
@@ -612,6 +620,7 @@
             this.DiIndi_comboBox.Name = "DiIndi_comboBox";
             this.DiIndi_comboBox.Size = new System.Drawing.Size(120, 24);
             this.DiIndi_comboBox.TabIndex = 55;
+            this.DiIndi_comboBox.SelectedIndexChanged += new System.EventHandler(this.DiIndi_comboBox_SelectedIndexChanged);
             // 
             // RoofType_pictureBox
             // 
@@ -920,6 +929,7 @@
             this.DiIndi2_comboBox.Name = "DiIndi2_comboBox";
             this.DiIndi2_comboBox.Size = new System.Drawing.Size(120, 24);
             this.DiIndi2_comboBox.TabIndex = 102;
+            this.DiIndi2_comboBox.SelectedIndexChanged += new System.EventHandler(this.DiIndi2_comboBox_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -939,6 +949,7 @@
             this.ISO_KS_comboBox.Name = "ISO_KS_comboBox";
             this.ISO_KS_comboBox.Size = new System.Drawing.Size(120, 24);
             this.ISO_KS_comboBox.TabIndex = 100;
+            this.ISO_KS_comboBox.SelectedIndexChanged += new System.EventHandler(this.ISO_KS_comboBox_SelectedIndexChanged);
             // 
             // MaterialDown_button
             // 
@@ -953,6 +964,7 @@
             this.MaterialDown_button.TabIndex = 99;
             this.MaterialDown_button.Text = "▼";
             this.MaterialDown_button.UseVisualStyleBackColor = false;
+            this.MaterialDown_button.Click += new System.EventHandler(this.MaterialDown_button_Click);
             // 
             // MaterialUP_button
             // 
@@ -967,6 +979,7 @@
             this.MaterialUP_button.TabIndex = 98;
             this.MaterialUP_button.Text = "▲";
             this.MaterialUP_button.UseVisualStyleBackColor = false;
+            this.MaterialUP_button.Click += new System.EventHandler(this.MaterialUP_button_Click);
             // 
             // Deletebutton
             // 
@@ -981,6 +994,7 @@
             this.Deletebutton.TabIndex = 97;
             this.Deletebutton.Text = "-";
             this.Deletebutton.UseVisualStyleBackColor = false;
+            Deletebutton.Click += DeleteMaterial_button_Click;
             // 
             // Ucalc_dataGridView
             // 
@@ -993,36 +1007,38 @@
             this.Ucalc_dataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Ucalc_dataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.Ucalc_dataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("맑은 고딕", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Ucalc_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Ucalc_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.Ucalc_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Ucalc_dataGridView.Location = new System.Drawing.Point(-1, 61);
             this.Ucalc_dataGridView.Name = "Ucalc_dataGridView";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Ucalc_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Ucalc_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.Ucalc_dataGridView.RowHeadersVisible = false;
             this.Ucalc_dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black;
-            this.Ucalc_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            this.Ucalc_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.Ucalc_dataGridView.RowTemplate.Height = 25;
             this.Ucalc_dataGridView.Size = new System.Drawing.Size(555, 234);
             this.Ucalc_dataGridView.TabIndex = 96;
+            Ucalc_dataGridView.CellContentClick += dataGridView1_CellContentClick;
+            Ucalc_dataGridView.CellValueChanged += dataGridView1_CellValueChanged;
             // 
             // AddMaterial_button
             // 
@@ -1037,6 +1053,7 @@
             this.AddMaterial_button.TabIndex = 95;
             this.AddMaterial_button.Text = "+";
             this.AddMaterial_button.UseVisualStyleBackColor = false;
+            this.AddMaterial_button.Click += new System.EventHandler(this.AddMaterial_button_Click);
             // 
             // tabControl1
             // 

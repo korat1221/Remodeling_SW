@@ -197,12 +197,12 @@ namespace main.contents
                 }
                 else if (ZoneE[i][1] == "지붕")
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭='" + ZoneE[i][4] + "'"); ///나중에 지붕으로 고쳐야함
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "유효열관류율", "명칭='" + ZoneE[i][4] + "'"); 
                     Construction_UeffSum[2] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
                 }
                 else if (ZoneE[i][1] == "최하층바닥")
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭='" + ZoneE[i][4] + "'"); ///나중에 최하층바닥으로 고쳐야함
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "유효열관류율", "명칭='" + ZoneE[i][4] + "'"); 
                     Construction_UeffSum[3] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
                 }
                 else if (ZoneE[i][1] == "창호")
@@ -212,7 +212,7 @@ namespace main.contents
                 }
                 else if (ZoneE[i][1] == "외부출입문")
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭='" + ZoneE[i][4] + "'"); ///나중에 외부출입문으로 고쳐야함
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭='" + ZoneE[i][4] + "'"); 
                     Construction_UeffSum[5] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
                 }
                 else { }
