@@ -71,6 +71,7 @@ namespace main.contents
                         TypeLabel.Value = rec[i][3];
                         dataGridView1.Rows[i].Cells[4] = TypeLabel;
                         TypeLabel.ReadOnly = true;
+                        Load_ConstructionList(i, rec[i][3]);
                     }
                     if (isCWallType(rec[i][4]))
                     {
@@ -125,26 +126,40 @@ namespace main.contents
         {
             string[][] Value = null;
 
+            switch(Type)
+            {
+                case "커튼월창":
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭", "");
+                    break;
+                case "외벽":
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭", "");
+                    break;
+                case "지붕":
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "번호,명칭", "");
+                    break;
+                case "최하층바닥":
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호,명칭", "");
+                    break;
+                case "창호":
+                    Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭", "");
+                    break;
+                case "외부출입문":
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭", ""); //출입문으로 나중에 바꿔야함 
+                    break;
+            }
 
-            if (Type == "커튼월창")
-            {
-                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭", "");
-            }
-            else if (Type == "창호")
-            {
-                Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭", "");
-            }
-            else
-            {
-                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭", "");
-            }
             DataGridViewComboBoxCell ConstructionCombo = new DataGridViewComboBoxCell();
             ConstructionCombo.Items.Clear();
-            for (int k = 0; k < Value.Length; k++)
+            if (Value != null)
             {
-                ConstructionCombo.Items.Add(Value[k][1]);
+                for (int k = 0; k < Value.Length; k++)
+                {
+                    ConstructionCombo.Items.Add(Value[k][1]);
+                }
+                dataGridView1.Rows[n].Cells[10] = ConstructionCombo;
             }
-            dataGridView1.Rows[n].Cells[10] = ConstructionCombo;
+            else { }
+           
         }
 
         private void onDataError(object sender, DataGridViewDataErrorEventArgs e)

@@ -16,7 +16,7 @@ namespace main.contentslist
         static String currentID = "";
         static String inEditing = "Add";
 
-        String WallNum;
+        String FloorNum;
         double CountDB;
         int SelectRow;
         DataTable WallList = new DataTable();
@@ -42,11 +42,11 @@ namespace main.contentslist
 
         private void Add_button_Click(object sender, EventArgs e)
         {
-            WallNum = Program.UTIL.CreateNum("ConstructionFloor", "번호", "FR");
+            FloorNum = Program.UTIL.CreateNum("ConstructionFloor", "번호", "FR");
 
             Program.getMenuForm().ResetForm(5);
 
-            Load_form(WallNum, "Add");
+            Load_form(FloorNum, "Add");
         }
 
         public static bool OnLoadProc(Form form)
@@ -171,15 +171,15 @@ namespace main.contentslist
 
         private void Copy_button_Click(object sender, EventArgs e)
         {
-            WallNum = Program.UTIL.CreateNum("ConstructionFloor", "번호", "WL");
+            FloorNum = Program.UTIL.CreateNum("ConstructionFloor", "번호", "FR");
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
                 String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
 
-                Program.DB.CopyValue(DB.type.ProjDB, "ConstructionFloor", "번호 ='" + Copy_Num + "'", WallNum);
-                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionFloor" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + WallNum + "'");
-                Load_form(WallNum, "Copy");
+                Program.DB.CopyValue(DB.type.ProjDB, "ConstructionFloor", "번호 ='" + Copy_Num + "'", FloorNum);
+                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionFloor" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + FloorNum + "'");
+                Load_form(FloorNum, "Copy");
 
             }
         }

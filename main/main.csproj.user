@@ -34,12 +34,6 @@
     <Compile Update="contents\Construction\ConstructionWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Model-detail1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="contents\model-detail2.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="contents\Result\PrintReport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,9 +71,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="contents\System\HeatingSystem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="contents\WindowProperties.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="contents\Zone\ZoneEnvelope.cs">
@@ -159,12 +150,6 @@
     </Compile>
     <Compile Update="subcontents\ZoneLighting\LightingRenewDB.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="ucPanel\ucScreen.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ucPanel\ucScreen2.cs">
-      <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
 </Project>

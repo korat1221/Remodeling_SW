@@ -21,7 +21,7 @@ namespace main.contents
 {
     public partial class ConstructionFloor : Form
     {
-        String FloorNum, FloorName, Type, check_Type, OldFloor, UMethod, Base, DiIndi, DiIndi2, StructureType, check_StructureType, TBType, TBName, ISO_KS, LinearPoint;
+        String FloorNum, FloorName, Type, check_Type, OldFloor, UMethod, Base, DiIndi, StructureType, check_StructureType, TBType, TBName, ISO_KS, LinearPoint;
         double A, B, C, PsiKai, PerArea;
         double Rse, Rsi, dtot, Rtot, dins, check_dins;
         double OldWall_R;
@@ -295,36 +295,12 @@ namespace main.contents
         private void Base_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             Base = Base_comboBox.SelectedItem.ToString();
-          
-            //기초설치 다시 선택했을 경우
-            baseselect();
+
             Load_FloorType_image(Type, Base);
+
+            Uvalue_comboBox.SelectedIndex = 0;
         }
 
-        private void baseselect()
-        {
-            if(Type == "외부덧댐")
-            {
-                Base_textBox.Text = "비단열지하실";
-            }
-            else
-            {
-                Base_textBox.Text = "지면위";
-            }
-            
-            try
-            {
-                if (Base_comboBox.SelectedItem.ToString() != Base_textBox.Text)
-                {
-                    MessageBox.Show("단열 수준을 다시 선택하세요.");
-                    //DiIndi_textBox.Text = null;
-                    //DiIndi2_textBox.Text = null;
-                    //Uvalue_comboBox.Items.Clear();
-                }
-                else { }
-            }
-            catch { }
-        }
 
         private void DiIndi_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -333,51 +309,53 @@ namespace main.contents
         private void DiIndi2_textBox_TextChanged(object sender, EventArgs e)
         {
             Dilndi();
-
+            if (DiIndi2_textBox.Text != null)
+            {
+                Calc_RseRsi();
+                Calc_Ueff();
+            }
         }
 
-        // 지면위 -> 직접외기 / 단열지하실 -> 간접외기 / 비단열지하실,바닥(외기) -> 지면 
+        // 지면위 -> 지면 / 단열지하실 -> 간접외기 / 비단열지하실 -> 간접외기 / 바닥(외기) -> 직접외기 
         public void Dilndi()
         {
             if (UMethod == "법규" || UMethod == "진단")
             {
-                DiIndi = DiIndi_textBox.Text;
-
-                if (Base == "지면위")
-                {
-                    DiIndi_textBox.Text = "직접외기";
-                    DiIndi2_textBox.Text = "";
-                }
-                else if(Base == "단열지하실")
-                {
-                    DiIndi_textBox.Text = "간접외기";
-                    DiIndi2_textBox.Text = "";
-                }
-                else
+                if (Base == "지면위" || Base == "단열지하실")
                 {
                     DiIndi_textBox.Text = "지면";
                     DiIndi2_textBox.Text = "";
                 }
-            }
-            else if(UMethod == "계산")
-            {
-                DiIndi = DiIndi2_textBox.Text;
-
-                if (Base == "지면위")
+                else if (Base == "바닥(외기)")
                 {
-                    DiIndi_textBox.Text = "";
-                    DiIndi2_textBox.Text = "직접외기";
-                }
-                else if (Base == "단열지하실")
-                {
-                    DiIndi_textBox.Text = "";
-                    DiIndi2_textBox.Text = "간접외기";
+                    DiIndi_textBox.Text = "직접외기";
+                    DiIndi2_textBox.Text = "";
                 }
                 else
+                {
+                    DiIndi_textBox.Text = "간접외기";
+                    DiIndi2_textBox.Text = "";
+                }
+                DiIndi = DiIndi_textBox.Text;
+            }
+            else if (UMethod == "계산")
+            {
+                if (Base == "지면위" || Base == "단열지하실")
                 {
                     DiIndi_textBox.Text = "";
                     DiIndi2_textBox.Text = "지면";
                 }
+                else if (Base == "바닥(외기)")
+                {
+                    DiIndi_textBox.Text = "";
+                    DiIndi2_textBox.Text = "직접외기";
+                }
+                else
+                {
+                    DiIndi_textBox.Text = "";
+                    DiIndi2_textBox.Text = "간접외기";
+                }
+                DiIndi = DiIndi2_textBox.Text;
             }
             else
             {
@@ -400,8 +378,7 @@ namespace main.contents
 
         private void Uvalue_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Base_textBox.Text = Base;
-    
+
             if (Uvalue_comboBox.SelectedItem != null)
             {
                 UMethod = Uvalue_comboBox.SelectedItem.ToString();
@@ -456,7 +433,7 @@ namespace main.contents
 
         private void TB_button_Click(object sender, EventArgs e)
         {
-           
+
             if (Type == "내부덧댐")
             {
                 MessageBox.Show("내부 덧댐일 경우 열교 평가는 하지 않습니다.");
@@ -542,27 +519,7 @@ namespace main.contents
         private void Load_TB_Image()
         {
             try
-            {
-                if (LinearPoint == "점형")
-                {
-                    if (TBType != "")
-                    {
-                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥점형열교이미지", "이미지_구조유형", "열교유형 = '" + TBType + "'");
-                        pictureBox1.Visible = true;
-                        pictureBox1.Load(Program.gPath + Image[0][0]);
-                        pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-                    }
-
-                    if (TBType != "" && TBName != "")
-                    {
-                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥점형열교이미지", "이미지_고정유형", "제품명 = '" + TBName + "' And 열교유형 = '" + TBType + "'");
-                        pictureBox2.Visible = true;
-                        pictureBox2.Load(Program.gPath + Image[0][0]);
-                        pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-                    }
-
-                }
-                else if (LinearPoint == "선형")
+            {if (LinearPoint == "선형")
                 {
                     if (TBType != "")
                     {
@@ -735,23 +692,34 @@ namespace main.contents
             {
                 String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
                 String[][] Value;
+                String DiIndi_;
+
+                if(DiIndi =="직접외기" || DiIndi=="간접외기")
+                {
+                    DiIndi_ = DiIndi;
+                }
+                else
+                {
+                    DiIndi_ = "간접외기";
+                }
+
 
                 if (Type == "기존바닥")
                 {
-                    Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '바닥' And 시기 = '" + Date[0][0] + "' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
-                    
+                    Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '바닥' And 시기 = '" + Date[0][0] + "' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi_ + "'");
+
 
                 }
                 else
                 {
-                    Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '바닥' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
+                    Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '바닥' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi_ + "'");
                 }
 
                 Uvalue = Convert.ToDouble(Value[0][0]);
                 U_textBox.Text = string.Format("{0:F3}", Uvalue);
                 dins = (1 / Uvalue) * 0.04 * 1000;
                 Calc_dU();
-                MessageBox.Show("[(" + Value[0][2] + " 시행)" + Value[0][1]+"] " + Value[0][3] + " 열관류율 적용");
+                MessageBox.Show("[(" + Value[0][2] + " 시행)" + Value[0][1] + "] " + Value[0][3] + " 열관류율 적용");
             }
         }
         private void Calc_RseRsi()
@@ -766,6 +734,7 @@ namespace main.contents
                 Rsi_textBox.Text = string.Format("{0:F2}", Rsi);
                 Rse_textBox.Text = string.Format("{0:F2}", Rse);
             }
+           
         }
 
         private void Calc_U()
@@ -878,43 +847,56 @@ namespace main.contents
             f.load_List();
             return true;
         }
-
+        //String FloorNum, FloorName, Type, check_Type, OldFloor, UMethod, Base, DiIndi, StructureType, check_StructureType, TBType, TBName, ISO_KS, LinearPoint;
+        //double A, B, C, PsiKai, PerArea;
+        //double Rse, Rsi, dtot, Rtot, dins, check_dins;
+        //double OldWall_R;
+        //double Uvalue, dU, Ueff;
+        //String[][] Old;
+        //int SelectRow;
+        //String[] Material = new String[10];
+        //double[] Material_d = new double[10];
+        //double[] Material_λ = new double[10];
+        //double[] Material_R = new double[10];
         private void Save()
         {
-            //Program.DB.setValue(DB.type.ProjDB, "ConstructionFloor", "번호,명칭,Type,기존바닥,덧댐커튼월,U적용방법,직접간접,구조유형,열교유형,열교종류,외장재색,표면열전달저항기준,선형점형," +
-            //    "A,B,C,PsiKai,단위면적당적용," +
-            //    "Rse,Rsi,두께합계,열저항합계,단열재두께," +
-            //    "재료1종류,재료1두께," +
-            //    "재료2종류,재료2두께," +
-            //    "재료3종류,재료3두께," +
-            //    "재료4종류,재료4두께," +
-            //    "재료5종류,재료5두께," +
-            //    "재료6종류,재료6두께," +
-            //    "재료7종류,재료7두께," +
-            //    "재료8종류,재료8두께," +
-            //    "재료9종류,재료9두께," +
-            //    "재료10종류,재료10두께," +
-            //    "흡수율,열관류율,열교가산치,유효열관류율",
-            //    "'" + WallNum_textBox.Text + "','" + WallName + "','" + Type + "','" + OldWall + "','" + CWName + "','" + UMethod + "','" + DiIndi + "','" + StructureType + "','" + TBType + "','" + TBName + "','" + Color + "','" + ISO_KS + "','" + LinearPoint + "','" +
-            //    A.ToString() + "','" + B.ToString() + "','" + C.ToString() + "','" + PsiKai.ToString() + "','" + PerArea.ToString() + "','" +
-            //    Rse.ToString() + "','" + Rsi.ToString() + "','" + dtot.ToString() + "','" + Rtot.ToString() + "','" + dins.ToString() + "','" +
-            //    Material[0] + "','" + Material_d[0].ToString() + "','" +
-            //    Material[1] + "','" + Material_d[1].ToString() + "','" +
-            //    Material[2] + "','" + Material_d[2].ToString() + "','" +
-            //    Material[3] + "','" + Material_d[3].ToString() + "','" +
-            //    Material[4] + "','" + Material_d[4].ToString() + "','" +
-            //    Material[5] + "','" + Material_d[5].ToString() + "','" +
-            //    Material[6] + "','" + Material_d[6].ToString() + "','" +
-            //    Material[7] + "','" + Material_d[7].ToString() + "','" +
-            //    Material[8] + "','" + Material_d[8].ToString() + "','" +
-            //    Material[9] + "','" + Material_d[9].ToString() + "','" +
-            //    α.ToString() + "','" + Uvalue.ToString() + "','" + dU.ToString() + "','" + Ueff.ToString()
-            //     + "'", "번호");
-            //this.DialogResult = DialogResult.OK;
-            //this.Hide();
-            //Program.getMenuForm().DoLoadForm(34, OnLoadListProc);
+            Program.DB.setValue(DB.type.ProjDB, "ConstructionFloor", "번호,명칭,Type,기존바닥,U적용방법,기초설치,직접간접,구조유형,열교유형,열교종류,표면열전달저항기준,선형점형," +
+                "A,B,C,PsiKai,단위면적당적용," +
+                "Rse,Rsi,두께합계,열저항합계,단열재두께," +
+                "재료1종류,재료1두께," +
+                "재료2종류,재료2두께," +
+                "재료3종류,재료3두께," +
+                "재료4종류,재료4두께," +
+                "재료5종류,재료5두께," +
+                "재료6종류,재료6두께," +
+                "재료7종류,재료7두께," +
+                "재료8종류,재료8두께," +
+                "재료9종류,재료9두께," +
+                "재료10종류,재료10두께," +
+                "열관류율,열교가산치,유효열관류율",
+                "'" + FloorNum_textBox.Text + "','" + FloorName + "','" + Type + "','" + OldFloor + "','" + UMethod + "','" + Base + "','" + DiIndi + "','" + StructureType + "','" + TBType + "','" + TBName + "','" + ISO_KS + "','" + LinearPoint + "','" +
+                A.ToString() + "','" + B.ToString() + "','" + C.ToString() + "','" + PsiKai.ToString() + "','" + PerArea.ToString() + "','" +
+                Rse.ToString() + "','" + Rsi.ToString() + "','" + dtot.ToString() + "','" + Rtot.ToString() + "','" + dins.ToString() + "','" +
+                Material[0] + "','" + Material_d[0].ToString() + "','" +
+                Material[1] + "','" + Material_d[1].ToString() + "','" +
+                Material[2] + "','" + Material_d[2].ToString() + "','" +
+                Material[3] + "','" + Material_d[3].ToString() + "','" +
+                Material[4] + "','" + Material_d[4].ToString() + "','" +
+                Material[5] + "','" + Material_d[5].ToString() + "','" +
+                Material[6] + "','" + Material_d[6].ToString() + "','" +
+                Material[7] + "','" + Material_d[7].ToString() + "','" +
+                Material[8] + "','" + Material_d[8].ToString() + "','" +
+                Material[9] + "','" + Material_d[9].ToString() + "','" +
+                Uvalue.ToString() + "','" + dU.ToString() + "','" + Ueff.ToString()
+                 + "'", "번호");
+            this.DialogResult = DialogResult.OK;
+            this.Hide();
+            Program.getMenuForm().DoLoadForm(36, OnLoadListProc);
         }
 
+
+        //흡수율,색깔,커튼월 지우기
+        //기초설치 넣기
         private void reset()
         {
             //WallNum_textBox.Text = "";
@@ -1015,7 +997,7 @@ namespace main.contents
         }
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
-            //reset();
+            reset();
 
             //try
             //{
@@ -1245,7 +1227,7 @@ namespace main.contents
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {
-            WallNum_textBox.Text = ID;
+            FloorNum_textBox.Text = ID;
             FloorNum = ID;
         }
 
