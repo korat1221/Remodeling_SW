@@ -33,29 +33,9 @@ namespace main.subcontents.ConstructionFloor
             this.d_Ins = dins;
             StructureType_textBox.Text = StructureType;
             TB_Type_comboBox.Items.Clear();
+
+
             //구분 콤보박스
-            //switch (StructureType)
-            //{
-            //    case "경량철골조":
-            //        TB_Type_comboBox.Items.Add("금속스터드");
-            //        TB_Type_comboBox.Items.Add("단열패널");
-            //        break;
-            //    case "목구조":
-            //        TB_Type_comboBox.Items.Add("목재스터드");
-            //        break;
-            //    case "콘크리트조":
-            //        TB_Type_comboBox.Items.Add("직접고정");
-            //        TB_Type_comboBox.Items.Add("트러스(점형)");
-            //        TB_Type_comboBox.Items.Add("트러스(선형)");
-            //        TB_Type_comboBox.Items.Add("내단열");
-            //        break;
-            //    case "기존외벽":
-            //        TB_Type_comboBox.Items.Add("직접고정");
-            //        TB_Type_comboBox.Items.Add("트러스(점형)");
-            //        TB_Type_comboBox.Items.Add("트러스(선형)");
-            //        TB_Type_comboBox.Items.Add("내단열");
-            //        break;
-            //}
             if(FloorType =="신규" || FloorType == "철거 후 신규")
             {
                 TB_Type_comboBox.Items.Clear();
