@@ -1,5 +1,6 @@
 ﻿using main.contents;
 using main.contents.Building;
+using main.contents.Construction;
 using main.contents.Result;
 using main.contentslist;
 using main.subcontents.ConstructionWindow;
@@ -21,7 +22,7 @@ namespace main
             ConstructionCW,
             ConstructionWall,
             ConstructionRoof,
-            ConstructionFloor,
+            ConstructionFloor222,
             ConstructionWindow,
             ConstructionDoor,
             Model,

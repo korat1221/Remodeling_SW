@@ -671,11 +671,15 @@ namespace main.contents
                     Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '지붕' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
                 }
 
-                Uvalue = Convert.ToDouble(Value[0][0]);  
-                U_textBox.Text = string.Format("{0:F3}", Uvalue);
-                dins = (1 / Uvalue) * 0.04 * 1000;
-                Calc_dU();
-                MessageBox.Show("[(" + Value[0][2] + " 시행)" + Value[0][1]+"] " + Value[0][3] + " 열관류율 적용");
+                if (Value.Length > 0)
+                {
+                    Uvalue = Convert.ToDouble(Value[0][0]);
+                    U_textBox.Text = string.Format("{0:F3}", Uvalue);
+                    dins = (1 / Uvalue) * 0.04 * 1000;
+                    Calc_dU();
+                    //  MessageBox.Show("[(" + Value[0][2] + " 시행)" + Value[0][1] + "] " + Value[0][3] + " 열관류율 적용");
+                }
+                else { }
             }
         }
         private void Calc_RseRsi()

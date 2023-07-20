@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.contents.Construction;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +20,7 @@ namespace main.contentslist
         String FloorNum;
         double CountDB;
         int SelectRow;
-        DataTable WallList = new DataTable();
+        DataTable FloorList = new DataTable();
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
 
         public List_ConstructionFloor()
@@ -85,13 +86,13 @@ namespace main.contentslist
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             dataGridView1.Columns.Add(checkBoxColumn);
-            WallList.Columns.Add("번호", typeof(string));
-            WallList.Columns.Add("명칭", typeof(string));
-            WallList.Columns.Add("Type", typeof(string));
-            WallList.Columns.Add("유효열관류율" + Environment.NewLine + "[W/m²·K]", typeof(string));
-            WallList.Columns.Add("흡수율" + Environment.NewLine + "[-]", typeof(string));
-            WallList.Columns.Add("면적" + Environment.NewLine + "[m²]", typeof(string));
-            dataGridView1.DataSource = WallList;
+            FloorList.Columns.Add("번호", typeof(string));
+            FloorList.Columns.Add("명칭", typeof(string));
+            FloorList.Columns.Add("Type", typeof(string));
+            FloorList.Columns.Add("기초설치", typeof(string));
+            FloorList.Columns.Add("유효열관류율" + Environment.NewLine + "[W/m²·K]", typeof(string));
+            FloorList.Columns.Add("면적" + Environment.NewLine + "[m²]", typeof(string));
+            dataGridView1.DataSource = FloorList;
 
 
 
@@ -99,16 +100,16 @@ namespace main.contentslist
 
         public void load_List()
         {
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호,명칭,Type,유효열관류율,흡수율", "");
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호,명칭,Type,기초설치,유효열관류율", "");
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
             String Blank = "";
-            WallList.Rows.Clear();
+            FloorList.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
-                WallList.Rows.Add(List[n][0], List[n][1], List[n][2], String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])));
+                FloorList.Rows.Add(List[n][0], List[n][1], List[n][2], List[n][3], String.Format("{0:F2}", Convert.ToDouble(List[n][4])));
                 mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":5,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             }
-            dataGridView1.DataSource = WallList;
+            dataGridView1.DataSource = FloorList;
             CountDB = List.Length;
             Program.UTIL.resetMainTree(1, 3, mainMenu.ToArray(), "36"); // 예시 코드: 메인 메뉴 동적 할당
         }

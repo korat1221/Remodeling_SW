@@ -1,4 +1,4 @@
-﻿namespace main.contents
+﻿namespace main.contents.Construction
 {
     partial class ConstructionFloor
     {
@@ -65,11 +65,9 @@
             Base_comboBox = new ComboBox();
             dU_label2 = new Label();
             Ueff_textBox = new TextBox();
-            label9 = new Label();
             Ueff_label = new Label();
             dU_textBox = new TextBox();
             label26 = new Label();
-            label23 = new Label();
             U_label2 = new Label();
             U_textBox = new TextBox();
             U_label = new Label();
@@ -328,6 +326,7 @@
             Previous_button.TabIndex = 93;
             Previous_button.Text = "<<PREVIOUS";
             Previous_button.UseVisualStyleBackColor = true;
+            Previous_button.Click += Previous_button_Click;
             // 
             // Save_button
             // 
@@ -339,6 +338,7 @@
             Save_button.TabIndex = 92;
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
+            Save_button.Click += Save_button_Click;
             // 
             // TB_button
             // 
@@ -428,13 +428,11 @@
             panel2.Controls.Add(Base_comboBox);
             panel2.Controls.Add(dU_label2);
             panel2.Controls.Add(Ueff_textBox);
-            panel2.Controls.Add(label9);
             panel2.Controls.Add(TB_button);
             panel2.Controls.Add(StructureType_textBox);
             panel2.Controls.Add(Ueff_label);
             panel2.Controls.Add(dU_textBox);
             panel2.Controls.Add(label26);
-            panel2.Controls.Add(label23);
             panel2.Controls.Add(U_label2);
             panel2.Controls.Add(U_textBox);
             panel2.Controls.Add(U_label);
@@ -460,7 +458,7 @@
             TBName_textBox.Size = new Size(120, 15);
             TBName_textBox.TabIndex = 135;
             TBName_textBox.TextAlign = HorizontalAlignment.Center;
-            TBName_textBox.TextChanged += TB2Name_textBox_TextChanged;
+            TBName_textBox.TextChanged += TBName_textBox_TextChanged;
             // 
             // DiIndi_textBox
             // 
@@ -521,17 +519,6 @@
             Ueff_textBox.TabIndex = 109;
             Ueff_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label9.ForeColor = SystemColors.ControlDark;
-            label9.Location = new Point(845, 29);
-            label9.Name = "label9";
-            label9.Size = new Size(11, 16);
-            label9.TabIndex = 96;
-            label9.Text = "-";
-            // 
             // Ueff_label
             // 
             Ueff_label.AutoSize = true;
@@ -565,18 +552,7 @@
             label26.Name = "label26";
             label26.Size = new Size(148, 15);
             label26.TabIndex = 71;
-            label26.Text = "[ΔU1D] 1D_열교가산치 ②";
-            // 
-            // label23
-            // 
-            label23.AutoSize = true;
-            label23.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label23.ForeColor = SystemColors.ControlDark;
-            label23.Location = new Point(539, 29);
-            label23.Name = "label23";
-            label23.Size = new Size(63, 15);
-            label23.TabIndex = 68;
-            label23.Text = "[α] 흡수율";
+            label26.Text = "[ΔU1D] 1D_열교가산치 ②";           
             // 
             // U_label2
             // 
@@ -960,6 +936,7 @@
             MaterialDown_button.TabIndex = 99;
             MaterialDown_button.Text = "▼";
             MaterialDown_button.UseVisualStyleBackColor = false;
+            MaterialDown_button.Click += MaterialDown_button_Click;
             // 
             // MaterialUP_button
             // 
@@ -1060,7 +1037,7 @@
             tabControl1.Size = new Size(977, 388);
             tabControl1.TabIndex = 96;
             // 
-            // ConstructionFloor
+            // ConstructionFloor222
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -1074,7 +1051,7 @@
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "ConstructionFloor";
+            Name = "ConstructionFloor222";
             Text = "Form3";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
@@ -1107,7 +1084,6 @@
         private Button Save_button;
         private Button TB_button;
         private TextBox StructureType_textBox;
-        private ComboBox StructureType_comboBox;
         private Label label11;
         private ComboBox Base_comboBox;
         private Label UMethod_label;
@@ -1115,10 +1091,8 @@
         private Label label25;
         private Label label4;
         private Panel panel2;
-        private Label label9;
         private TextBox dU_textBox;
         private Label label26;
-        private Label label23;
         private Label U_label2;
         private TextBox U_textBox;
         private Label U_label;

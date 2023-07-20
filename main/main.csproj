@@ -44,9 +44,6 @@
     <Compile Update="contents\3D\sub3dBridgeInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Construction\ConstructionFloor.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="contents\Construction\ConstructionrRoof.cs">
       <SubType>Form</SubType>
     </Compile>
