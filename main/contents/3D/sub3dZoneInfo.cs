@@ -156,6 +156,8 @@ namespace main.contents
                 {
                     ConstructionCombo.Items.Add(Value[k][1]);
                 }
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,구조체");
+                ConstructionCombo.Value = rec[n][1];
                 dataGridView1.Rows[n].Cells[10] = ConstructionCombo;
             }
             else { }
@@ -217,48 +219,6 @@ namespace main.contents
                     num = num0;
                     Type = dataGridView1.Rows[i].Cells[4].Value.ToString();
 
-                    if (dataGridView1.Rows[i].Cells[10].Value == null)
-                    {
-                        ConsType = "";
-                    }
-                    else
-                    {
-                        ConsType = dataGridView1.Rows[i].Cells[10].Value.ToString();
-                    }
-
-                    string[][] Value = null;
-                    switch (Type)
-                    {
-                        case "커튼월창":
-                            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호", "명칭 = '" + ConsType + "'");
-                            break;
-                        case "외벽":
-                            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호", "명칭 = '" + ConsType + "'");
-                            break;
-                        case "지붕":
-                            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "번호", "명칭 = '" + ConsType + "'");
-                            break;
-                        case "최하층바닥":
-                            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호", "명칭 = '" + ConsType + "'");
-                            break;
-                        case "창호":
-                            Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호", "명칭 = '" + ConsType + "'");
-                            break;
-                        case "외부출입문":
-                            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호", "명칭 = '" + ConsType + "'"); ; //출입문으로 나중에 바꿔야함 
-                            break;
-                    }
-
-
-                    if (dataGridView1.Rows[i].Cells[10].Value == null)
-                    {
-                        ConsType = "";
-                    }
-                    else
-                    {
-                        ConsType = dataGridView1.Rows[i].Cells[10].Value.ToString();
-                    }
-
 
                     if (isWinType(Type) && (tcode = getTCode(Type)) != "")
                     {
@@ -275,8 +235,47 @@ namespace main.contents
                         string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num0 + "'");
 
                         ret += "{\"id0\":\"" + num0 + "\",\"id\":\"" + num + "\",\"type\":\"" + Type + "\",\"wtype\":\"" + CWType + "\"},";
-                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,외피유형,커튼월부위,구조체,구조체번호", "'" + rec[0][0] + "','" + num + "','" + Type + "','" + CWType + "','" + ConsType + "','" + ConsType + "'", "아이디");
+
+                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,외피유형,커튼월부위", "'" + rec[0][0] + "','" + num + "','" + Type + "','" + CWType + "'", "아이디");
+
                     }
+
+                    if (dataGridView1.Rows[i].Cells[10].Value == null)
+                    {
+                        ConsType = "";
+                    }
+                    else
+                    {
+                        ConsType = dataGridView1.Rows[i].Cells[10].Value.ToString();
+                        string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num0 + "'");
+                        string[][] Value = null;
+                        switch (Type)
+                        {
+                            case "커튼월창":
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호", "명칭 = '" + ConsType + "'");
+                                break;
+                            case "외벽":
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호", "명칭 = '" + ConsType + "'");
+                                break;
+                            case "지붕":
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "번호", "명칭 = '" + ConsType + "'");
+                                break;
+                            case "최하층바닥":
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호", "명칭 = '" + ConsType + "'");
+                                break;
+                            case "창호":
+                                Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호", "명칭 = '" + ConsType + "'");
+                                break;
+                            case "외부출입문":
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호", "명칭 = '" + ConsType + "'"); ; //출입문으로 나중에 바꿔야함 
+                                break;
+                        }
+                        if (Value.Length > 0)
+                        { Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,구조체,구조체번호", "'" + rec[0][0] + "','" + num + "','" + ConsType + "','" + Value[0][0] + "'", "아이디"); }
+                        else { }
+                    }
+
+
                 }
             }
 
