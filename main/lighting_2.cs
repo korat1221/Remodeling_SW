@@ -2375,7 +2375,7 @@ namespace main
                 for (int i = 0; i < 12; i++)
                 {
                     Zone_Final_W[i] = Math.Round(final_w.Calc_W_re_yes(Fc, Zone_Sunlight_PjSC[i], Pj, Fo, daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], nighttime[i], wsp, A),3);
-                    MessageBox.Show((i + 1) + "월 조명에너지 소요량 : " + " " + Zone_Final_W[i]);
+                    //MessageBox.Show((i + 1) + "월 조명에너지 소요량 : " + " " + Zone_Final_W[i]);
 
                 }
 
@@ -2387,7 +2387,7 @@ namespace main
                 for (int i = 0; i < 12; i++)
                 {
                     Zone_Final_W[i] = Math.Round(final_w.Calc_W_re_no(Fc, Pj, Fo, daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], nighttime[i], wsp, A),3);
-                    MessageBox.Show((i + 1) + "월 조명에너지 소요량 : " + " " + Zone_Final_W[i]);
+                    //MessageBox.Show((i + 1) + "월 조명에너지 소요량 : " + " " + Zone_Final_W[i]);
                 }
             }
 

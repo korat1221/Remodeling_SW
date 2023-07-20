@@ -93,7 +93,7 @@ namespace main.contentslist
             WallList.Columns.Add("면적" + Environment.NewLine + "[m²]", typeof(string));
             dataGridView1.DataSource = WallList;
 
-
+           
 
         }
 

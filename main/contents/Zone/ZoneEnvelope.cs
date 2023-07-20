@@ -8,6 +8,7 @@ using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -187,33 +188,39 @@ namespace main.contents
                 if(ZoneE[i][1] =="커튼월창")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "커튼월창유효열관류율", "명칭='" + ZoneE[i][4] + "'");
-                    Construction_UeffSum[0] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
+                    if (Value.Length != 0)
+                    { Construction_UeffSum[0] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
 
                 }
                 else if (ZoneE[i][1] =="외벽")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭='" + ZoneE[i][4] + "'");
-                    Construction_UeffSum[1] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
+                    if (Value.Length != 0)
+                    { Construction_UeffSum[1] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
                 }
                 else if (ZoneE[i][1] == "지붕")
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "유효열관류율", "명칭='" + ZoneE[i][4] + "'"); 
-                    Construction_UeffSum[2] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "유효열관류율", "명칭='" + ZoneE[i][4] + "'");
+                    if (Value.Length != 0)
+                    { Construction_UeffSum[2] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
                 }
                 else if (ZoneE[i][1] == "최하층바닥")
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "유효열관류율", "명칭='" + ZoneE[i][4] + "'"); 
-                    Construction_UeffSum[3] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "유효열관류율", "명칭='" + ZoneE[i][4] + "'");
+                    if (Value.Length != 0)
+                    { Construction_UeffSum[3] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
                 }
                 else if (ZoneE[i][1] == "창호")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "창호유효열관류율", "명칭='" + ZoneE[i][4] + "'");
-                    Construction_UeffSum[4] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
+                    if (Value.Length != 0)
+                    { Construction_UeffSum[4] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
                 }
                 else if (ZoneE[i][1] == "외부출입문")
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭='" + ZoneE[i][4] + "'"); 
-                    Construction_UeffSum[5] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3]));
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭='" + ZoneE[i][4] + "'");
+                    if (Value.Length != 0)
+                    { Construction_UeffSum[5] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
                 }
                 else { }
             }
@@ -291,26 +298,63 @@ namespace main.contents
             else { table_ZoneEnvelopeSelect.Columns.Add("α", typeof(string)); }
 
             //존별, 선택 구조체의 정보 불러오기 
-            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope", "번호,외피유형,면적,방위,기울기,구조체,Ueff,α,g", "존='" + ZoneNum + "' AND 외피유형='" + 선택구조체 + "'");
+            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope", "번호,외피유형,면적,방위,기울기,구조체", "존='" + ZoneNum + "' AND 외피유형='" + 선택구조체 + "'");
+            //string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope", "번호,외피유형,면적,방위,기울기,구조체,Ueff,α,g", "존='" + ZoneNum + "' AND 외피유형='" + 선택구조체 + "'");
 
-
+            string[][] Value;
+            
             for (int n = 0; n < ZoneE.Length; n++)
             {
-                String 면적 = string.Format("{0:F2}", Convert.ToDouble(ZoneE[n][2]));
-                String Ueff = string.Format("{0:F2}", Convert.ToDouble(ZoneE[n][6]));
+                try
+                {
+                    if (ZoneE[n][1] == "커튼월창")
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "커튼월창유효열관류율,태양열취득률", "명칭='" + ZoneE[n][5] + "'");
+                    }
+                    else if (ZoneE[n][1] == "외벽")
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율,흡수율", "명칭='" + ZoneE[n][5] + "'");
+                    }
+                    else if (ZoneE[n][1] == "지붕")
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "유효열관류율,흡수율", "명칭='" + ZoneE[n][5] + "'");
+                    }
+                    else if (ZoneE[n][1] == "최하층바닥")
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "유효열관류율", "명칭='" + ZoneE[n][5] + "'");
+                    }
+                    else if (ZoneE[n][1] == "창호")
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "창호유효열관류율,태양열취득률", "명칭='" + ZoneE[n][5] + "'");
+                    }
+                    else if (ZoneE[n][1] == "외부출입문")
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율,흡수율", "명칭='" + ZoneE[n][5] + "'");
+                    }
+                    else
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭='" + ZoneE[n][5] + "'");
+                    }
 
-                if (선택구조체 == "커튼월창" || 선택구조체 == "창호")
-                {
-                    String g = string.Format("{0:F2}", Convert.ToDouble(ZoneE[n][8]));
-                    table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE[n][1], ZoneE[n][5], 면적, ZoneE[n][3], ZoneE[n][4], Ueff, g);
+                    String 면적 = string.Format("{0:F2}", Convert.ToDouble(ZoneE[n][2]));
+                    String Ueff = string.Format("{0:F2}", Convert.ToDouble(Value[n][0]));
+
+                    if (선택구조체 == "커튼월창" || 선택구조체 == "창호")
+                    {
+                        String g = string.Format("{0:F2}", Convert.ToDouble(Value[n][1]));
+                        table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE[n][1], ZoneE[n][5], 면적, ZoneE[n][3], ZoneE[n][4], Ueff, g);
+                    }
+                    else if(선택구조체 == "외벽" || 선택구조체 == "지붕" || 선택구조체 == "외부출입문")
+                    {
+                        String α = string.Format("{0:F2}", Convert.ToDouble(Value[n][1])); 
+                        table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE[n][1], ZoneE[n][5], 면적, ZoneE[n][3], ZoneE[n][4], Ueff, α);
+                    }
+                    else
+                    {
+
+                    }
                 }
-                else
-                {
-                    String α;
-                    try { α = string.Format("{0:F2}", Convert.ToDouble(ZoneE[n][7])); }
-                    catch (Exception ex) { α = "-"; }
-                    table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE[n][1], ZoneE[n][5], 면적, ZoneE[n][3], ZoneE[n][4], Ueff, α);
-                }
+                catch { }
             }
             dataGridView2.DataSource = table_ZoneEnvelopeSelect;
         }

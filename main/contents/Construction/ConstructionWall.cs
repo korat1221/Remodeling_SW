@@ -331,14 +331,13 @@ namespace main.contents
 
         private void Color_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (CW_comboBox.SelectedItem != null)
+            if (Color_comboBox.SelectedItem != null)
             {
                 Color = Color_comboBox.SelectedItem.ToString();
                 String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + Color + "'");
                 α = Convert.ToDouble(value[0][0]);
                 α_textBox.Text = String.Format("{0:F1}", α);
             }
-
         }
         private void Uvalue_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -762,7 +761,7 @@ namespace main.contents
                 U_textBox.Text = string.Format("{0:F3}", Uvalue);
                 dins = (1 / Uvalue) * 0.04 * 1000;
                 Calc_dU();
-                MessageBox.Show("[(" + Value[0][2] + " 시행)" + Value[0][1]+"] " + Value[0][3] + " 열관류율 적용");
+                MessageBox.Show("[(" + Value[0][2] + " 시행)" + Value[0][1] + "] " + Value[0][3] + " 열관류율 적용");
             }
         }
         private void Calc_RseRsi()
@@ -1107,6 +1106,7 @@ namespace main.contents
 
                 Color = Load[0][10];
                 Color_comboBox.SelectedItem = Color;
+                MessageBox.Show(Color);
 
                 ISO_KS = Load[0][11];
                 ISO_KS_comboBox.SelectedItem = ISO_KS;
@@ -1262,7 +1262,6 @@ namespace main.contents
             WallNum_textBox.Text = ID;
             WallNum = ID;
         }
-
 
     }
 }
