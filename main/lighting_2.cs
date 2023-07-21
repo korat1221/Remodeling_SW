@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.subcontents.ConstructionRoof;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -41,15 +42,11 @@ namespace main
 
         public string Main, Middle, Sub;  //자연채광 csv 변수 
 
-        public double nearEm_SNA;//FD_S_SNA 용 기준조도 근사값 구하는 변수
-
-
 
         public string roof_di, roof_glass, roof_shade, roof_dimming;  //천창1정보 csv 변수
         public double r_Aca, r_aD, r_bD, r_AD, γF, γW, As, Bs, hs, hw, hg, Da, r_τD65_SNA, r_τD65_SA, Kobl_1, Kobl_2, Kobl_3;
 
         public double[] r_shade = new double[12];   //천창 음영계수 csv 변수
-
 
 
         public string energy_type, energy_di;  //신재생에너지1 csv 변수
@@ -65,18 +62,19 @@ namespace main
         public double Zone_ITr, Zone_IRD; //facade_general ITr Calc 객체 변수 
         public double Zone_ISh_Ish, Zone_ISh_hA, Zone_ISh_vA, Zone_Wi, Zone_Ish_In_At, Zone_Ish_GDF; //facade_shade 객체 변수   
 
-        public double Zone_τeff_SNA_j, Zone_D, Zone_nearD, Zone_DCA, Zone_FDS; //facade_FDS 객체 변수 
+        public double Zone_τeff_SNA_j, Zone_D, Zone_nearD, Zone_DCA ; //facade_FDS 객체 변수 
         public string dclass;
 
+        public double f_nearEm_SNA;//FD_S_SNA 용 기준조도 근사값 구하는 변수
+        public double f_naerEm_DC; //FDC용 기준조도 근사값 구하는 변수
+
+        public double[] Zone_FDS = new double[12];
         public double[] Zone_Facade_FD = new double[12]; //파사드 최종 FD
-
-
 
         public double find_fd_sna, find_fd_sa, find_fd_c;  //각 조건들에 일치하는 테이블 값을 구하기 위한 변수
 
     
         //public double final_fd;
-
 
         public double Zone_as_bs, Zone_hs_bs, Zone_hg_hw;  //천창 길이 비 
 
@@ -91,31 +89,24 @@ namespace main
         public double Zone_Roof_DSNA, Zone_Roof_DSA; //차양 유무에 따른 평균 주광률 구하기 위한 변수
         public string roof_dclass;
 
-
-        public double Zone_Roof_FDS;//FDS 구하는 변수 
-
-
-        public double near_fds_em; // 천창 fds 용 기준조도 근사값 구하기
-
+       
+        public double r_nearEm_FDS; // 천창 fds 용 기준조도 근사값 구하기
+        public double r_nearEm_DC; //천창 fdc용 기준조도 근사값 구하기 
         //public String[,] 천창차양미가동주광공급계수테이블 = new string[660, 5];  //천창 FD_S_SNA 테이블 
         //public String[,] 천창차양가동주광공급계수테이블 = new string[660, 5];  //천창 FD_S_SA 테이블 
 
-        
         public double find_roof_fd_sna, find_roof_fd_sa, find_roof_fd_c; // 천창 FD_S_SNA 및 FD_S_SA 및 FDC 찾기 위한 변수
         //public double roof_FDS, final_roof_fd ;
         public double[] roof_Vmonth = new double[12];   //천창 Vmonth_i csv 변수
+        public double[] Zone_Roof_FDS = new double[12];//FDS 구하는 변수 
 
         public double[] Zone_Roof_FD = new double[12]; //천창 최종 FD
 
         public double[] Zone_Sunlight_SCW = new double[12];
         public double[] Zone_Sunlight_PjSC = new double[12];
   
-
-
-
-
-        public double[] W_re_yes = new double[12]; // 신재생 이용시 최종 조명에너지 소요량 
-        public double[] W_re_no = new double[12]; // 신재생 미이용시 최종 조명에너지 소요량 
+        //public double[] W_re_yes = new double[12]; // 신재생 이용시 최종 조명에너지 소요량 
+        //public double[] W_re_no = new double[12]; // 신재생 미이용시 최종 조명에너지 소요량 
         public double[] Zone_Final_W = new double[12]; //최종 조명에너지소요량
 
 
@@ -1762,12 +1753,12 @@ namespace main
                     double[] em_data = { 100, 300, 500, 750, 1000 };
                     double em_target = Em;
                     var em_min = em_data.Min(x => Math.Abs(x - em_target));
-                    nearEm_SNA = em_data.First(y => Math.Abs(y - em_target) == em_min);
+                    f_nearEm_SNA = em_data.First(y => Math.Abs(y - em_target) == em_min);
 
                 }
                 else
                 {
-                    nearEm_SNA = 0;
+                    f_nearEm_SNA = 0;
                 }
                 //Console.WriteLine("FDS_기준조도: " + "  " + nearEm_SNA);
 
@@ -1795,7 +1786,7 @@ namespace main
 
                 for (int i = 0; i < 12; i++)
                 {
-                    Zone_FDS = FDS.Calc_Facade_FDS(trel_D_SNA[i], find_fd_sna, trel_D_SA[i], find_fd_sa);
+                    Zone_FDS[i] = FDS.Calc_Facade_FDS(trel_D_SNA[i], find_fd_sna, trel_D_SA[i], find_fd_sa);
                     //Console.WriteLine("파사드" + " " + (i + 1) + "월 주광 공급 계수 : " + "  " + Zone_FDS);
 
                 }
@@ -1806,7 +1797,7 @@ namespace main
                 double[] fdcem_data = { 50, 100, 150, 200, 300, 500, 750, 1000 };
                 double fdcem_target = Em;
                 var fdcem_min = fdcem_data.Min(x => Math.Abs(x - fdcem_target));
-                var fdcnearEm_SNA = fdcem_data.First(y => Math.Abs(y - fdcem_target) == fdcem_min);
+                 f_naerEm_DC = fdcem_data.First(y => Math.Abs(y - fdcem_target) == fdcem_min);
                 //Console.WriteLine("FDC_기준조도: " + "  " + fdcnearEm_SNA);
 
 
@@ -1892,7 +1883,7 @@ namespace main
                 {
                     if (Main == "파사드")
                     {
-                        Zone_Facade_FD[i] = FD.Calc_Facade_FD(find_facade_Vmonth[i], Zone_FDS, find_fd_c);
+                        Zone_Facade_FD[i] = FD.Calc_Facade_FD(find_facade_Vmonth[i], Zone_FDS[i], find_fd_c);
                         //Console.WriteLine("파사드" + " " + (i + 1) + "월 주광 점유 계수 : " + "  " + Zone_Facade_FD[i]);
                     }
 
@@ -2150,7 +2141,7 @@ namespace main
                 double[] data = { 100, 300, 500, 750, 1000 };
                 double target = Em;
                 var min = data.Min(x => Math.Abs(x - target));
-                near_fds_em = data.First(y => Math.Abs(y - target) == min);
+                r_nearEm_FDS = data.First(y => Math.Abs(y - target) == min);
 
                 //Console.WriteLine("FDS 기준조도: " + " " + near_fds_em);
 
@@ -2239,8 +2230,11 @@ namespace main
 
 
                 //FDS 계산 
-                Zone_Roof_FDS = roof_fds.Calc_Roof_FDS(find_roof_trel_D_SNA, find_roof_fd_sna,  find_roof_trel_D_SA, find_roof_fd_sa);
-
+                for (int i = 0; i < 12; i++)
+                {
+                    Zone_Roof_FDS[i] = roof_fds.Calc_Roof_FDS(find_roof_trel_D_SNA, find_roof_fd_sna, find_roof_trel_D_SA, find_roof_fd_sa);
+                    //Console.WriteLine("천창" + " " + (i + 1) + "월 주광 점유 계수 : " + "  " + Zone_Roof_FD[i]);
+                }
             }
             else return;
 
@@ -2260,7 +2254,7 @@ namespace main
                 double[] rooffdcem_data = { 50, 100, 150, 200, 300, 500, 750, 1000 };
                 double rooffdcem_target = Em;
                 var rooffdcem_min = rooffdcem_data.Min(x => Math.Abs(x - rooffdcem_target));
-                var rooffdcnearEm_SNA = rooffdcem_data.First(y => Math.Abs(y - rooffdcem_target) == rooffdcem_min);
+                r_nearEm_DC = rooffdcem_data.First(y => Math.Abs(y - rooffdcem_target) == rooffdcem_min);
                 //Console.WriteLine("FDC_기준조도: " + "  " + rooffdcnearEm_SNA);
 
 
@@ -2298,7 +2292,7 @@ namespace main
                 //최종 천창 FDS
                 for (int i = 0; i < 12; i++)
                 {
-                    Zone_Roof_FD[i] = roof_fd.Calc_Roof_FD(roof_Vmonth[i], Zone_Roof_FDS, find_roof_fd_c);
+                    Zone_Roof_FD[i] = roof_fd.Calc_Roof_FD(roof_Vmonth[i], Zone_Roof_FDS[i], find_roof_fd_c);
                     //Console.WriteLine("천창" + " " + (i + 1) + "월 주광 점유 계수 : " + "  " + Zone_Roof_FD[i]);
                 }
 
