@@ -338,5 +338,48 @@ namespace main.contents
                 }
             }
         }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                if (e.ColumnIndex == 4)
+                {
+                    DataGridViewCell cell = row.Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
+                    DataGridViewComboBoxCell cell2 = row.Cells[5] as DataGridViewComboBoxCell;
+
+                    if (cell.Value.ToString() != "커튼월창")
+                    {
+                        DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
+                        TypeLabel.Value = "";
+                        row.Cells[5] = TypeLabel;
+                        TypeLabel.ReadOnly = true;
+                    }
+                    else
+                    {
+                        DataGridViewComboBoxCell CWTypeCombo = new DataGridViewComboBoxCell();
+                        CWTypeCombo.Items.Add("유리부분");
+                        CWTypeCombo.Items.Add("패널부분");
+                        CWTypeCombo.Items.Add("출입문부분");
+
+                        CWTypeCombo.Value = "유리부분";
+
+                        row.Cells[5] = CWTypeCombo;
+                        CWTypeCombo.ReadOnly = false;
+                    }
+                }
+            }
+        }
+
+        private void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (dataGridView1.IsCurrentCellDirty)
+            {
+                // This fires the cell value changed handler below
+                dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
     }
 }

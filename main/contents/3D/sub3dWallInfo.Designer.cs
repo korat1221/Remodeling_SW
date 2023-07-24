@@ -32,6 +32,8 @@
             textBox1 = new TextBox();
             label2 = new Label();
             label3 = new Label();
+            label4 = new Label();
+            textBox2 = new TextBox();
             SuspendLayout();
             // 
             // label1
@@ -69,11 +71,30 @@
             label3.TabIndex = 4;
             label3.Text = "내벽 길이 값:";
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(83, 85);
+            label4.Name = "label4";
+            label4.Size = new Size(46, 15);
+            label4.TabIndex = 6;
+            label4.Text = "구조체:";
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(135, 82);
+            textBox2.Name = "textBox2";
+            textBox2.ReadOnly = true;
+            textBox2.Size = new Size(195, 23);
+            textBox2.TabIndex = 5;
+            // 
             // sub3dWallInfo
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label4);
+            Controls.Add(textBox2);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(textBox1);
@@ -92,5 +113,7 @@
         private TextBox textBox1;
         private Label label2;
         private Label label3;
+        private Label label4;
+        private TextBox textBox2;
     }
 }
