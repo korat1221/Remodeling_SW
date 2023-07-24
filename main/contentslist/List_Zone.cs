@@ -92,7 +92,7 @@ namespace main.contentslist
 
         public void load_List()
         {
-            string[][] List = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "");
+            string[][] List = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + Num + "'");
             String Blank = "";
             ListTable.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
@@ -153,10 +153,10 @@ namespace main.contentslist
         }
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
-        {
-            load_List();
+        {           
             Num_textBox.Text = ID + " 정보";
             Num = ID;
+            load_List();
         }
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {

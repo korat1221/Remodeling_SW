@@ -1821,7 +1821,7 @@ namespace main
                     //zonename 가져와야할까? 
                     MTH = (mth + 1).ToString() + "월";
 
-                    Program.DB.setValue(DB.type.ProjDB, "Zone_Lighting", "번호,월," +
+                    Program.DB.setValue(DB.type.ProjDB, "Zone_LightResult", "번호,월," +
                         "ITr,IRD,ISh_Ish,ISh_hA,Ish_vA,Ish_In_At,Wi,Ish_GDF,Ish," +
                         "f_τeff_SNA,f_D,f_nearD,f_DCA,f_dclass,f_nearEm_SNA,f_fd_sna,f_fd_sa,f_nearEm_DC,f_fd_c,f_FDS,f_FD," +
                         "as_bs,hs_bs,hg_hw,"+

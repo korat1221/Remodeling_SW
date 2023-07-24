@@ -762,7 +762,7 @@ namespace main.contents
                     U_textBox.Text = string.Format("{0:F3}", Uvalue);
                     dins = (1 / Uvalue) * 0.04 * 1000;
                     Calc_dU();
-                  //  MessageBox.Show("[(" + Value[0][2] + " 시행)" + Value[0][1] + "] " + Value[0][3] + " 열관류율 적용");
+                 // MessageBox.Show("[(" + Value[0][2] + " 시행)" + Value[0][1] + "] " + Value[0][3] + " 열관류율 적용");
                 }
                 else
                 {

@@ -91,7 +91,7 @@ namespace main.contentslist
             for (int n = 0; n < List.Length; n++)
             {
                 ListTable.Rows.Add(List[n][0], null, null, null, null, null);
-                string[][] SubList = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "");
+                string[][] SubList = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List[n][0]+"'");
                 
                 List<object> subMenu = new List<object>();
                  for (int k = 0; k < SubList.Length; k++)

@@ -1260,7 +1260,7 @@ namespace main.contents
             if (main.MainContents.selID.IndexOf("_Zone") >= 0)
             {
                 String ID = main.MainContents.selID;
-                ID = ID.Substring(19, 9);
+                ID = ID.Substring(19, 10);
                 Num_textBox.Text = ID;
                 ZoneNum = ID;
                 LoadData(ZoneNum);
@@ -1297,7 +1297,7 @@ namespace main.contents
             try
             {
                 //층정보 불러오기
-                String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,바닥면적,주향,주광너비,주광깊이,상인방높이", "존번호 = '" + ZoneNum + "'");
+                String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,바닥면적", "존번호 = '" + ZoneNum + "'");
 
                 Layer = General_3D[0][0];
                 Layer_textBox.Text = Layer;
@@ -1305,18 +1305,7 @@ namespace main.contents
                 A = Convert.ToDouble(General_3D[0][1]); //나중에 순바닥면적으로 고쳐야함 지금은 그냥 바닥면적임
                 A_textBox.Text = string.Format("{0:F2}", A);
 
-                //facade_di = General_3D[0][2];
-                //direction_textBox.Text = facade_di;
-                //Window1_textBox.Text = facade_di;
-
-
-                //roof_di = General_3D[0][2];
-                //direction_textBox.Text = General_3D[0][2];
-                //Window1_textBox.Text = General_3D[0][2];
-
-                //Wr = Convert.ToDouble(General_3D[0][3]);
-                //Lr = Convert.ToDouble(General_3D[0][4]);
-                //hLi = Convert.ToDouble(General_3D[0][5]);
+                //hLi = Convert.ToDouble(General_3D[0][5]); //상인방 높이 3D에서 찾아야함
             }
             catch { }
 
@@ -1377,13 +1366,24 @@ namespace main.contents
                     }
                 }
 
+                ////////////////////////////////////////////////////////주향 기준 실너비(그 향의 벽체길이) 깊이 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                String[][] Wall_Length = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '외벽'");
+
+                Wr = 0;
+                for(int j =0; j <Wall_Length.Length;j++)
+                {
+                    Wr += Convert.ToDouble(Wall_Length[j][0]);
+                }
+
+                Lr = A / Wr;
+
                 ////////////////////////////////////////////////////////주 향의 창호 커튼월 높이, 너비 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-               // String[][] MEnvelope_Wina = Program.DB.querySQL(DB.type.ProjDB, " select b.창호높이,b.창호면적 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체 = b.명칭");
+                // String[][] MEnvelope_Wina = Program.DB.querySQL(DB.type.ProjDB, " select b.창호높이,b.창호면적 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체 = b.명칭");
 
 
                 //주향 창호 및 커튼월 정보 불러오기
-                String[][] MEnvelope_Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 구조체", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '창호'");
-                String[][] MEnvelope_CW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 구조체", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '커튼월창' And 커튼월부위 = '유리부분'");
+                String[][] MEnvelope_Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '창호'");
+                String[][] MEnvelope_CW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '커튼월창' And 커튼월부위 = '유리부분'");
 
                 //주향의 창호 면적합계와 면적가중 높이 계산
                 double AVG_Height = 0;
@@ -1392,7 +1392,7 @@ namespace main.contents
                 int i = -1;
                 while (++i < MEnvelope_Win.Length)
                 {
-                    String[][] SubWindow = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "창호높이,창호면적", "명칭 = '" + MEnvelope_Win[i][2].ToString() + "'");
+                    String[][] SubWindow = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "창호높이,창호면적", "번호 = '" + MEnvelope_Win[i][3].ToString() + "'");
                     Height_Wins[i] = Convert.ToDouble(SubWindow[0][0]);
                     Area_Wins[i] = Convert.ToDouble(SubWindow[0][1]);
                 }
@@ -1426,7 +1426,7 @@ namespace main.contents
 
                 ////////////////////////////////////////////////////////////////////////////////////주향 창호 빛투과율 찾기///////////////////////////////////////////////////////////////////////
                 //창호 구조체 타입 찾기 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
-                String[][] Win_Type = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체", "존 = '" + ZoneNum + "' And 방위 = '" + facade_di + "' And 외피유형 = '창호'");
+                String[][] Win_Type = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호", "존 = '" + ZoneNum + "' And 방위 = '" + facade_di + "' And 외피유형 = '창호'");
 
                 //창호 구조체 타입별로 면적 합계 구하기
                 double AreaSum_Wins = 0;
@@ -1435,7 +1435,7 @@ namespace main.contents
                 {
                     for (int k = 0; k < Win_Type.Length; k++)
                     {
-                        if (MEnvelope_Win[j][2] == Win_Type[k][0])
+                        if (MEnvelope_Win[j][3] == Win_Type[k][1])
                         { AreaSum_ConstructionWin[k] += Convert.ToDouble(MEnvelope_Win[j][1]); }
                     }
                 }
@@ -1449,10 +1449,10 @@ namespace main.contents
                 }
 
 
-                String MainType_SubWin = Win_Type[index][0]; // 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
+                String MainType_SubWin = Win_Type[index][1]; // 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
 
                 //찾은 SubWindow정보에서 MainWindow 찾기 
-                String[][] MainType_Win = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "상위창호번호 ", "명칭 = '" + MainType_SubWin + "'");
+                String[][] MainType_Win = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "상위창호번호 ", "번호 = '" + MainType_SubWin + "'");
 
 
                 //찾은 주 창호 유형의 빛투과율 찾기 
@@ -1463,7 +1463,7 @@ namespace main.contents
 
                 ////////////////////////////////////////////////////////////////////////////////////주향 커튼월 빛투과율 찾기///////////////////////////////////////////////////////////////////////
                 //커튼월창 구조체 타입 찾기 
-                String[][] CW_Type = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체", "존 = '" + ZoneNum + "' And 방위 = '" + facade_di + "' And 외피유형 = '커튼월창'");
+                String[][] CW_Type = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호", "존 = '" + ZoneNum + "' And 방위 = '" + facade_di + "' And 외피유형 = '커튼월창'");
 
                 //커튼월창 구조체 타입별로 면적 합계 구하기
                 double[] AreaSum_ConstructionCW = new double[CW_Type.Length];
@@ -1471,7 +1471,7 @@ namespace main.contents
                 {
                     for (int k = 0; k < CW_Type.Length; k++)
                     {
-                        if (MEnvelope_CW[j][2] == CW_Type[k][0])
+                        if (MEnvelope_CW[j][3] == CW_Type[k][1])
                         { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
                     }
                 }
@@ -1486,7 +1486,7 @@ namespace main.contents
 
 
                 //찾은 주 커튼월창 유형의 빛투과율 찾기 
-                String[][] MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호", "명칭 = '" + CW_Type[index][0] + "'");
+                String[][] MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호", "번호 = '" + CW_Type[index][1] + "'");
                 String MainType_CW = MainType_CW_Value[0][2].ToString(); // 커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형  
 
 
