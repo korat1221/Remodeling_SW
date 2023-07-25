@@ -210,7 +210,25 @@ namespace main.contents
 
             string num, num0, Type, CWType, ConsType, ret = "", tcode;
             int i = -1;
+            while (++i < dataGridView1.RowCount)
+            {
+              if(dataGridView1.Rows[i].Cells[4].Value != null)
+                {
+                    if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "내벽" && dataGridView1.Rows[i].Cells[4].Value.ToString() != "층간바닥")
+                    {
+                        if (dataGridView1.Rows[i].Cells[10].Value == null|| dataGridView1.Rows[i].Cells[10].Value.ToString() == "")
+                        {
+                            MessageBox.Show(dataGridView1.Rows[i].Cells[1].Value.ToString() + "의 구조체를 선택하세요.");
+                            return "[" + ret + "]";
+                        }
+                        else { }
+                    }
+                    else { }
+                }
+                else { }                    
+            }
 
+            i = -1;
             while (++i < dataGridView1.RowCount)
             {
                 if (dataGridView1.Rows[i].Cells[1].Value != null)

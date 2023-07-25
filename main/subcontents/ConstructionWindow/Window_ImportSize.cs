@@ -132,11 +132,17 @@ namespace main.subcontents
             {
                 DataGridViewRow row = Size_dataGridView.Rows[Convert.ToInt32(SelectRow[n])];
                 번호 = 상위창호기호.ToString() + "_" + (n + 1).ToString();
-                명칭 = 상위창호명칭 + "_" + row.Cells[1].Value.ToString();                
-                Program.DB.setValue(DB.type.ProjDB, "SubWindow", "번호,명칭,상위창호번호,창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이",
+                명칭 = 상위창호명칭 + "_" + row.Cells[1].Value.ToString();
+
+                double 창호면적 = Convert.ToDouble(row.Cells[2].Value);
+                double 고정유리면적 = Convert.ToDouble(row.Cells[5].Value);
+                double 개폐유리면적 = Convert.ToDouble(row.Cells[6].Value);
+                double 유리면적비 = (고정유리면적 + 개폐유리면적) / 창호면적;
+
+                Program.DB.setValue(DB.type.ProjDB, "SubWindow", "번호,명칭,상위창호번호,창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이,유리면적비",
                 "'" +번호 + "','" + 명칭 + "','" + 상위창호기호+ "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','"
                 + row.Cells[5].Value.ToString() + "','" + row.Cells[6].Value.ToString() + "','" + row.Cells[7].Value.ToString() + "','" + row.Cells[8].Value.ToString() + "','" + row.Cells[9].Value.ToString() + "','"
-                + row.Cells[10].Value.ToString() + "','" + row.Cells[11].Value.ToString() + "'", "번호");
+                + row.Cells[10].Value.ToString() + "','" + row.Cells[11].Value.ToString() + "','" +유리면적비 + "'", "번호");
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();

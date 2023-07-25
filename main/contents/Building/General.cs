@@ -17,6 +17,7 @@ using static main.DB;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Security.Cryptography;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace main.contents
 {
@@ -400,11 +401,171 @@ namespace main.contents
 
         private void reset()
         {
+            ProjectName = null;
+            ProjectName_textBox.Text = null;
+
+            ProjectType = null;
+            ProjectType_textBox.Text = null;
+
+            Target = null;
+            Target_comboBox.SelectedItem = null;
+
+            Diagnosis = null;
+            Diagnosis_comboBox.SelectedItem = null;
+
+
+            BuildingName = null;
+            BuildingName_textBox.Text = null;
+
+            BuildingLocation = null;
+            BuildingLocation_textBox.Text = null;
+
+            Climate_comboBox.SelectedItem = null;
+            Climate = null;
+            BylawClimate = null;
+            ByRawClimate_textBox.Text = null;
+
+            WallType = null;
+            WallType_comboBox.SelectedItem = null;
+
+            RoofType = null;
+            RoofType_comboBox.SelectedItem = null;
+
+            Year = null;
+            Year_comboBox.SelectedItem = null;
+
+            Month = null;
+            Month_comboBox.SelectedItem = null;
+
+            ConstrucitonDate = 0;
+            BylawDate = 0;
+            
+            BylawDate_textBox.Text = "";
+
+
+            GrossArea = 0;
+            GrossArea_textBox.Text = null;
+            BuildingArea =0;
+            BuildingArea_textBox.Text = null;
+
+            AboveGround = null;
+            AboveGround_comboBox.SelectedItem = null;
+
+            UnderGround = null;
+            UnderGround_comboBox.SelectedItem = null;
+
+            ReviewerName = null;
+            ReviewerName_textBox.Text = null;
+
+            ReviewerLocation = null;
+            ReviewerLocation_textBox.Text = null;
+
+            ReviewerCompany = null;
+            ReviewerCompany_textBox.Text = null;
+
+            ReviewYear = null;
+            ReviewYear_comboBox.SelectedItem = null;
+
+            ReviewMonth = null;
+            ReviewMonth_comboBox.SelectedItem = null;
+
+            ReviewDate = 0;
         }
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
+            reset();
+            try
+            {
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,프로젝트유형,사업성능목표,건물진단실시," +
+                "건물대상,건물용도,건물명,주소,지역인덱스,지역,지역구분," +
+                "외벽구조유형,지붕구조유형,준공연도,준공월," +
+                "준공시기,법규시기," +
+                "연면적,건축면적," +
+                "지상층수,지하층수," +
+                "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기","");
 
-        }
+                ProjectName = Value[0][0];
+                ProjectName_textBox.Text = ProjectName.ToString();
+
+                ProjectType = Value[0][1];
+                ProjectType_textBox.Text = ProjectType.ToString();
+
+                Target = Value[0][2];
+                Target_comboBox.SelectedItem = Target;
+
+                Diagnosis = Value[0][3];
+                Diagnosis_comboBox.SelectedItem = Diagnosis;
+
+                BuildingCategory = Value[0][4];
+                BuildingUse_comboBox.SelectedItem = BuildingCategory;
+
+                BuildingUse = Value[0][5];
+                BuildingUse_comboBox.SelectedItem = BuildingUse;
+
+                BuildingName = Value[0][6];
+                BuildingName_textBox.Text = BuildingName;
+
+                BuildingLocation = Value[0][7];
+                BuildingLocation_textBox.Text = BuildingLocation;
+
+                Climate_comboBox.SelectedItem = Value[0][8];
+                Climate = Value[0][9];
+                BylawClimate = Value[0][10];
+                ByRawClimate_textBox.Text = BylawClimate;
+
+                WallType = Value[0][11];
+                WallType_comboBox.SelectedItem = WallType;
+
+                RoofType = Value[0][12];
+                RoofType_comboBox.SelectedItem = RoofType;
+
+                Year = Value[0][13];
+                Year_comboBox.SelectedItem = Year;
+
+                Month = Value[0][14];
+                Month_comboBox.SelectedItem = Month;
+
+                ConstrucitonDate = Convert.ToDouble(Value[0][15]);
+                BylawDate = Convert.ToDouble(Value[0][16]);
+
+                if (BylawDate == 2013.1)
+                {
+                    BylawDate_textBox.Text = "2013.10";
+                }
+                else { BylawDate_textBox.Text = Convert.ToString(BylawDate); }
+
+
+                GrossArea =Convert.ToDouble(Value[0][17]);
+                GrossArea_textBox.Text = GrossArea.ToString();
+                BuildingArea = Convert.ToDouble(Value[0][18]);
+                BuildingArea_textBox.Text = BuildingArea.ToString();
+
+                AboveGround = Value[0][19];
+                AboveGround_comboBox.SelectedItem = AboveGround;
+
+                UnderGround = Value[0][20];
+                UnderGround_comboBox.SelectedItem = UnderGround;
+
+                ReviewerName = Value[0][21];
+                ReviewerName_textBox.Text = ReviewerName;
+
+                ReviewerLocation = Value[0][22];
+                ReviewerLocation_textBox.Text = ReviewerLocation;
+
+                ReviewerCompany = Value[0][23];
+                ReviewerCompany_textBox.Text= ReviewerCompany;
+
+                ReviewYear = Value[0][24];
+                ReviewYear_comboBox.SelectedItem = ReviewYear;
+
+                ReviewMonth = Value[0][25];
+                ReviewMonth_comboBox.SelectedItem = ReviewMonth;
+
+                ReviewDate = Convert.ToDouble(Value[0][26]);
+            }
+            catch { }
+
+         }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {

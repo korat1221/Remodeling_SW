@@ -1424,7 +1424,7 @@ namespace main.contents
             SA_Volume_textBox.ForeColor = SystemColors.ControlDarkDark;
             SA_Volume_textBox.Location = new Point(506, 213);
             SA_Volume_textBox.Name = "SA_Volume_textBox";
-            SA_Volume_textBox.Size = new Size(49, 14);
+            SA_Volume_textBox.Size = new Size(71, 14);
             SA_Volume_textBox.TabIndex = 115;
             SA_Volume_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -1434,9 +1434,9 @@ namespace main.contents
             RA_Volume_textBox.BorderStyle = BorderStyle.None;
             RA_Volume_textBox.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
             RA_Volume_textBox.ForeColor = SystemColors.ControlDarkDark;
-            RA_Volume_textBox.Location = new Point(439, 213);
+            RA_Volume_textBox.Location = new Point(427, 213);
             RA_Volume_textBox.Name = "RA_Volume_textBox";
-            RA_Volume_textBox.Size = new Size(49, 14);
+            RA_Volume_textBox.Size = new Size(61, 14);
             RA_Volume_textBox.TabIndex = 114;
             RA_Volume_textBox.TextAlign = HorizontalAlignment.Center;
             // 

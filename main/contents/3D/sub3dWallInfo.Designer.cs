@@ -34,6 +34,7 @@
             label3 = new Label();
             label4 = new Label();
             textBox2 = new TextBox();
+            textBox3 = new TextBox();
             SuspendLayout();
             // 
             // label1
@@ -47,16 +48,19 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(135, 42);
+            textBox1.BackColor = Color.White;
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Location = new Point(135, 44);
             textBox1.Name = "textBox1";
             textBox1.ReadOnly = true;
-            textBox1.Size = new Size(100, 23);
+            textBox1.Size = new Size(120, 16);
             textBox1.TabIndex = 2;
+            textBox1.TextAlign = HorizontalAlignment.Center;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(241, 45);
+            label2.Location = new Point(261, 45);
             label2.Name = "label2";
             label2.Size = new Size(18, 15);
             label2.TabIndex = 3;
@@ -74,7 +78,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(83, 85);
+            label4.Location = new Point(51, 85);
             label4.Name = "label4";
             label4.Size = new Size(46, 15);
             label4.TabIndex = 6;
@@ -82,17 +86,33 @@
             // 
             // textBox2
             // 
+            textBox2.BackColor = Color.White;
+            textBox2.BorderStyle = BorderStyle.None;
             textBox2.Location = new Point(135, 82);
             textBox2.Name = "textBox2";
             textBox2.ReadOnly = true;
-            textBox2.Size = new Size(195, 23);
+            textBox2.Size = new Size(120, 16);
             textBox2.TabIndex = 5;
+            textBox2.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBox3
+            // 
+            textBox3.BackColor = Color.White;
+            textBox3.BorderStyle = BorderStyle.None;
+            textBox3.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox3.Location = new Point(51, 12);
+            textBox3.Name = "textBox3";
+            textBox3.ReadOnly = true;
+            textBox3.Size = new Size(120, 16);
+            textBox3.TabIndex = 7;
             // 
             // sub3dWallInfo
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(800, 450);
+            Controls.Add(textBox3);
             Controls.Add(label4);
             Controls.Add(textBox2);
             Controls.Add(label3);
@@ -115,5 +135,6 @@
         private Label label3;
         private Label label4;
         private TextBox textBox2;
+        private TextBox textBox3;
     }
 }

@@ -30,6 +30,7 @@
         {
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            textBox4 = new TextBox();
             label5 = new Label();
             label6 = new Label();
             textBox3 = new TextBox();
@@ -65,6 +66,8 @@
             // 
             // tabPage1
             // 
+            tabPage1.BackColor = Color.White;
+            tabPage1.Controls.Add(textBox4);
             tabPage1.Controls.Add(label5);
             tabPage1.Controls.Add(label6);
             tabPage1.Controls.Add(textBox3);
@@ -84,7 +87,17 @@
             tabPage1.Size = new Size(792, 422);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "음영 정보";
-            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // textBox4
+            // 
+            textBox4.BackColor = Color.White;
+            textBox4.BorderStyle = BorderStyle.None;
+            textBox4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox4.Location = new Point(96, 25);
+            textBox4.Name = "textBox4";
+            textBox4.ReadOnly = true;
+            textBox4.Size = new Size(120, 16);
+            textBox4.TabIndex = 24;
             // 
             // label5
             // 
@@ -94,6 +107,7 @@
             label5.Size = new Size(124, 15);
             label5.TabIndex = 23;
             label5.Text = "주변요소음영각도[γh]";
+            label5.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label6
             // 
@@ -106,16 +120,19 @@
             // 
             // textBox3
             // 
-            textBox3.Location = new Point(577, 92);
+            textBox3.BackColor = Color.White;
+            textBox3.BorderStyle = BorderStyle.None;
+            textBox3.Location = new Point(577, 94);
             textBox3.Name = "textBox3";
             textBox3.ReadOnly = true;
-            textBox3.Size = new Size(100, 23);
+            textBox3.Size = new Size(100, 16);
             textBox3.TabIndex = 21;
+            textBox3.TextAlign = HorizontalAlignment.Center;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(104, 95);
+            label3.Location = new Point(96, 95);
             label3.Name = "label3";
             label3.Size = new Size(155, 15);
             label3.TabIndex = 20;
@@ -132,11 +149,14 @@
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(265, 92);
+            textBox2.BackColor = Color.White;
+            textBox2.BorderStyle = BorderStyle.None;
+            textBox2.Location = new Point(265, 94);
             textBox2.Name = "textBox2";
             textBox2.ReadOnly = true;
-            textBox2.Size = new Size(100, 23);
+            textBox2.Size = new Size(100, 16);
             textBox2.TabIndex = 18;
+            textBox2.TextAlign = HorizontalAlignment.Center;
             // 
             // label1
             // 
@@ -146,6 +166,7 @@
             label1.Size = new Size(124, 15);
             label1.TabIndex = 17;
             label1.Text = "상부돌출음영각도[γo]";
+            label1.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label2
             // 
@@ -158,11 +179,14 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(577, 52);
+            textBox1.BackColor = Color.White;
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Location = new Point(577, 54);
             textBox1.Name = "textBox1";
             textBox1.ReadOnly = true;
-            textBox1.Size = new Size(100, 23);
+            textBox1.Size = new Size(100, 16);
             textBox1.TabIndex = 15;
+            textBox1.TextAlign = HorizontalAlignment.Center;
             // 
             // label67
             // 
@@ -184,11 +208,14 @@
             // 
             // textBox23
             // 
-            textBox23.Location = new Point(265, 52);
+            textBox23.BackColor = Color.White;
+            textBox23.BorderStyle = BorderStyle.None;
+            textBox23.Location = new Point(265, 54);
             textBox23.Name = "textBox23";
             textBox23.ReadOnly = true;
-            textBox23.Size = new Size(100, 23);
+            textBox23.Size = new Size(100, 16);
             textBox23.TabIndex = 12;
+            textBox23.TextAlign = HorizontalAlignment.Center;
             // 
             // webView21
             // 
@@ -263,5 +290,6 @@
         private Label label67;
         private Label label68;
         private TextBox textBox23;
+        private TextBox textBox4;
     }
 }

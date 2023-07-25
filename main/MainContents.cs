@@ -120,6 +120,12 @@ namespace main
         }
         public static bool OnLoadProc(Form form)
         {
+            if (formParam.formID == 0)
+            {
+                General f = (General)form;
+
+                f.LoadData(formParam.ID);
+            }
             if (formParam.formID == 2)
             {
                 ConstructionCW f = (ConstructionCW)form;

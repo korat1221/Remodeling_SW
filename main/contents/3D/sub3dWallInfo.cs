@@ -20,10 +20,11 @@ namespace main.contents
         private void onVisibleChanged(object sender, EventArgs e)
         {
             String ID = main.MainContents.selID.Replace("board-", "");
-            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체", "아이디 = '" + ID + "'");
+            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체,번호", "아이디 = '" + ID + "'");
 
             if (rec.Length > 0)
             {
+                textBox3.Text = rec[0][2];
                 textBox1.Text = Double.Parse(rec[0][0]).ToString("#.##");
                 textBox2.Text = rec[0][1];
             }
