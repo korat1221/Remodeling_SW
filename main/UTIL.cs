@@ -282,6 +282,10 @@ namespace main
             return "";
         }
 
+        public string asFixed(string s)
+        {
+            return Convert.ToDouble(s.Trim()).ToString("0.##");
+        }
         public String CreateNum(String 테이블명,String 컬럼명,String 기호)
         {
             String ItemNum;
