@@ -212,18 +212,35 @@ namespace main
                     String[][] ZoneWin_P = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접,태양열취득률,빛투과율", "번호='" + ZoneWin[i][7] + "'");
                     Window win = new Window(Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[i][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][2]));
                     zoneWin.Add(win);
-                    //나중에 창호포함 태양열취득률, 빛투과율 반영해야 함
+                    //나중에 차양포함 태양열취득률, 빛투과율 반영해야 함
                 }
             }
 
             //존 커튼월 정보 가져오기
             {
-                string[][] ZoneCW = Program.DB.getValue(DB.type.ProjDB, "ZoneCW", "Area_g,Uvalue_g,Ff_g,g_g,gtot_g,τ_g,τtot_g,Area_p,Uvalue_p,α_p,Area_d,Uvalue_d,Ff_d,g_d,τ_d,Area_tot,Uinst", "zoneNum='" + zoneNum + "'");
+                String[][] ZoneCW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,면적,커튼월부위,구조체번호", "존 = '" + zoneNum + "' AND 외피유형 = '커튼월창'");
+                // string[][] ZoneCW = Program.DB.getValue(DB.type.ProjDB, "ZoneCW", "Area_g,Uvalue_g,Ff_g,g_g,gtot_g,τ_g,τtot_g,Area_p,Uvalue_p,α_p,Area_d,Uvalue_d,Ff_d,g_d,τ_d,Area_tot,Uinst", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < ZoneCW.Length)
-                {
-                    CW cw = new CW(Convert.ToDouble(ZoneCW[i][0]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(ZoneCW[i][2]), Convert.ToDouble(ZoneCW[i][3]), Convert.ToDouble(ZoneCW[i][4]), Convert.ToDouble(ZoneCW[i][5]), Convert.ToDouble(ZoneCW[i][6]), Convert.ToDouble(ZoneCW[i][7]), Convert.ToDouble(ZoneCW[i][8]), Convert.ToDouble(ZoneCW[i][9]), Convert.ToDouble(ZoneCW[i][10]), Convert.ToDouble(ZoneCW[i][11]), Convert.ToDouble(ZoneCW[i][12]), Convert.ToDouble(ZoneCW[i][13]), Convert.ToDouble(ZoneCW[i][14]), Convert.ToDouble(ZoneCW[i][15]), Convert.ToDouble(ZoneCW[i][16]));
-                    zoneCW.Add(cw);
+                { //유리부분면적,유리부분열관류율,유리부분 유리면적비,유리부분 태양열취득률, 유리부분 빛투과율, 유리부분 차양포함 태양열취득률, 유리부분 차양포함 빛투과율, 패널부분 면적, 패널부분흡수율, 출입문부분면적, 출입문부분열관류율,출입문부분유리면적비, 출입문부분빛투과율, 출입문부분태양열취득률, 출입문부분빛투과율, 커튼월창면적, 설치열교가산치 
+                    if (ZoneCW[i][2] == "유리부분")
+                    {
+                        String[][] CW = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,면적,커튼월부위,구조체번호", "존 = '" + zoneNum + "' AND 외피유형 = '커튼월창'");
+                        CW cw = new CW(Convert.ToDouble(ZoneCW[i][0]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(ZoneCW[i][2]), Convert.ToDouble(ZoneCW[i][3]), Convert.ToDouble(ZoneCW[i][4]), Convert.ToDouble(ZoneCW[i][5]), Convert.ToDouble(ZoneCW[i][6]), Convert.ToDouble(ZoneCW[i][7]), Convert.ToDouble(ZoneCW[i][8]), Convert.ToDouble(ZoneCW[i][9]), Convert.ToDouble(ZoneCW[i][10]), Convert.ToDouble(ZoneCW[i][11]), Convert.ToDouble(ZoneCW[i][12]), Convert.ToDouble(ZoneCW[i][13]), Convert.ToDouble(ZoneCW[i][14]), Convert.ToDouble(ZoneCW[i][15]), Convert.ToDouble(ZoneCW[i][16]));
+                        zoneCW.Add(cw);
+                    }
+                    else if (ZoneCW[i][2] == "패널부분")
+                    {
+                        CW cw = new CW(Convert.ToDouble(ZoneCW[i][0]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(ZoneCW[i][2]), Convert.ToDouble(ZoneCW[i][3]), Convert.ToDouble(ZoneCW[i][4]), Convert.ToDouble(ZoneCW[i][5]), Convert.ToDouble(ZoneCW[i][6]), Convert.ToDouble(ZoneCW[i][7]), Convert.ToDouble(ZoneCW[i][8]), Convert.ToDouble(ZoneCW[i][9]), Convert.ToDouble(ZoneCW[i][10]), Convert.ToDouble(ZoneCW[i][11]), Convert.ToDouble(ZoneCW[i][12]), Convert.ToDouble(ZoneCW[i][13]), Convert.ToDouble(ZoneCW[i][14]), Convert.ToDouble(ZoneCW[i][15]), Convert.ToDouble(ZoneCW[i][16]));
+                        zoneCW.Add(cw);
+                    }
+                    else
+                    {
+                        CW cw = new CW(Convert.ToDouble(ZoneCW[i][0]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(ZoneCW[i][2]), Convert.ToDouble(ZoneCW[i][3]), Convert.ToDouble(ZoneCW[i][4]), Convert.ToDouble(ZoneCW[i][5]), Convert.ToDouble(ZoneCW[i][6]), Convert.ToDouble(ZoneCW[i][7]), Convert.ToDouble(ZoneCW[i][8]), Convert.ToDouble(ZoneCW[i][9]), Convert.ToDouble(ZoneCW[i][10]), Convert.ToDouble(ZoneCW[i][11]), Convert.ToDouble(ZoneCW[i][12]), Convert.ToDouble(ZoneCW[i][13]), Convert.ToDouble(ZoneCW[i][14]), Convert.ToDouble(ZoneCW[i][15]), Convert.ToDouble(ZoneCW[i][16]));
+                        zoneCW.Add(cw);
+                    }
+                       
+                    
                 }
             }
             //try
