@@ -668,7 +668,7 @@ namespace main.contents
         }
         private void ZoneEnvelope_VisibleChanged(object sender, EventArgs e)
         {
-            if (main.MainContents.selID.IndexOf("_Zone") >= 0)
+            if (main.MainContents.currentForm == main.MainContents.FormID.ZoneEnvelope)
             {
                 String ID = main.MainContents.selID;
                 ID = ID.Substring(19, 10);
@@ -694,9 +694,7 @@ namespace main.contents
             catch
             {
                 MessageBox.Show("존 일반정보부터 입력하세요.");
-                this.Hide();
-                currentID = ZoneNum;
-                Program.getMenuForm().DoLoadForm(12, OnLoadProc);
+                Program.getMenuForm().DoLoadFormDirect(12);
             }
             try
             {

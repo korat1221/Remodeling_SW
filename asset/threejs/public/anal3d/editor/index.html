@@ -485,7 +485,7 @@
 
 					for (const [id, wall] of Object.entries(map)) {
 						if (id.substring(0, prefix.length) == prefix) {
-							let key = "board-" + id;
+							let key = "board-" + id + "_win" + w;
 							if (!objInfo.boards[key]) objInfo.boards[key] = [];
 							objInfo.boards[key].push(wall);
 							arr.push(wall);
@@ -653,7 +653,7 @@
 							el.zid = prefix2;
 							el.ttype = ttype;
 							el.tid = prefix2 + "_" + ID + "_" + a[1];
-							arr.push({"type":"detail","text":el.tid,"id":"board-" + id});			
+                            arr.push({ "type": "detail", "text": el.tid, "id": "board-" + id + "_win" + w });			
 						}
 					}
 

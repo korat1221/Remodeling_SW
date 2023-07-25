@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace main.contents
 {
-    public partial class sub3dWinInfo : Form
+    public partial class sub3dWINInfo : Form
     {
-        public sub3dWinInfo()
+        public sub3dWINInfo()
         {
             InitializeComponent();
         }

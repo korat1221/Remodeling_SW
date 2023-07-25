@@ -47,13 +47,15 @@ namespace main
             ReportRemodeling,
             FormDebug,
             List_ConstructionWindow,
+            List_ConstructionCW,
             SubWindow,
             List_Floor,
             List_Zone,
             List_ConstructionWall,
             List_ConstructionRoof,
             List_ConstructionFloor,
-            PrintReport
+            PrintReport,
+            None
 
         }
           Form[] forms = new Form[] { new General(), new EnergyUse(), 
@@ -75,6 +77,7 @@ namespace main
         }
         static FormParam? formParam;
         static public String? selID;
+        static public FormID currentForm = FormID.General;
 
         public MainContents()
         {
@@ -286,21 +289,46 @@ namespace main
                 else
                 {
                     Program.UTIL.sendMessage(selID);
-                    if (selID.IndexOf("_WALL_") >= 0 || selID.IndexOf("_INWALL_") >= 0)
+
+                    if (selID.IndexOf("_win2") >= 0 || selID.IndexOf("_win3") >= 0 || selID.IndexOf("_win4") >= 0)
                     {
-                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"1\"}");
+                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"3\"}");
                     }
-                    else if (selID.IndexOf("_WIN_") >= 0)
-                    {
-                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"2\"}");
-                    }
-                    else if (selID.IndexOf("space-") >= 0)
+                    else if (selID.IndexOf("_WALL_") >= 0)
                     {
                         formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"4\"}");
                     }
+                    else if (selID.IndexOf("_ROOF_") >= 0)
+                    {
+                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"5\"}");
+                    }
+                    else if (selID.IndexOf("_FLOOR_") >= 0)
+                    {
+                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"6\"}");
+                    }
+                    else if (selID.IndexOf("_win1") >= 0)
+                    {
+                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"7\"}");
+                    }
+                    else if (selID.IndexOf("_win5") >= 0)
+                    {
+                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"8\"}");
+                    }
+                    else if (selID.IndexOf("_INWALL_") >= 0)
+                    {
+                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"9\"}");
+                    }
+                    else if (selID.IndexOf("_INFLOOR_") >= 0)
+                    {
+                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"10\"}");
+                    }
+                    else if (selID.IndexOf("space-") >= 0)
+                    {
+                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"2\"}");
+                    }
                     else if (selID.IndexOf("bridge-") >= 0)
                     {
-                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"3\"}");
+                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"1\"}");
                     }
                     else
                     {
@@ -355,13 +383,22 @@ namespace main
                 }
             }
         }
+        public void DoLoadFormDirect(int idx)
+        {
+    //        Program.UTIL.unselectAll();
+            DoLoadForm(idx, OnLoadProc);
+        }
+
         public void DoLoadForm(int idx, OnOpenProc proc = null)
         {
+            currentForm = FormID.None;
             int i = -1;
             while (++i < forms.Length)
             {
                 forms[i].Hide();
             }
+
+            currentForm = (FormID)idx;
 
             if (proc != null) proc(forms[idx]);
 

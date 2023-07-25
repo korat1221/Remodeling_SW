@@ -1257,7 +1257,7 @@ namespace main.contents
         //존명칭 로드
         private void ZoneLighting_VisibleChanged(object sender, EventArgs e)
         {
-            if (main.MainContents.selID.IndexOf("_Zone") >= 0)
+            if (main.MainContents.currentForm == main.MainContents.FormID.ZoneLighting)
             {
                 String ID = main.MainContents.selID;
                 ID = ID.Substring(19, 10);

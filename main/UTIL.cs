@@ -186,6 +186,19 @@ namespace main
                 }
             }
         }
+        public void unselectAll()
+        {
+            foreach (Form openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "FormMain")
+                {
+                    MainContents f = (MainContents)(((FormMain)openForm).splitContainer1.Panel1.Controls[0]);
+
+                    f.runScript("unselectAll()");
+                    return;
+                }
+            }
+        }
         public void setObjInfo(string data)
         {
             foreach (Form openForm in Application.OpenForms)

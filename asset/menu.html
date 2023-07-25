@@ -89,6 +89,9 @@
         $('.item' + menuID).css('background-image', icons[menuID].active);
 
     }
+    function unselectAll() {
+        gMainTree.unselectAll();
+    }
 
     function init() {
         let n = getParam("n");

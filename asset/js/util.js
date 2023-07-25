@@ -128,6 +128,9 @@ class MainTree {
             }, 500);
         });
     }
+    unselectAll() {
+        $('#cont-tree').jstree(true).deselect_all();
+    }
 }
 
 function getParam(sname) {

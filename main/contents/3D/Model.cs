@@ -31,12 +31,18 @@ namespace main.contents
         public enum FormID
         {
             ZoneInfo = 0,
-            WallInfo,
-            WinInfo,
             BridgeInfo,
-            SpaceInfo
+            SpaceInfo,
+            CWInfo,
+            WLInfo,
+            RFInfo,
+            FRInfo,
+            WINInfo,
+            DRInfo,
+            IWInfo,
+            SLInfo
         };
-        Form[] forms = new Form[] { new sub3dZoneInfo(), new sub3dWallInfo(), new sub3dWinInfo(), new sub3dBridgeInfo(), new sub3dSpaceInfo() };
+        Form[] forms = new Form[] { new sub3dZoneInfo(), new sub3dBridgeInfo(), new sub3dSpaceInfo(), new sub3dCWInfo(), new sub3dWLInfo(), new sub3dRFInfo(), new sub3dFRInfo(), new sub3dWINInfo(), new sub3dDRInfo(), new sub3dIWInfo(), new sub3dSLInfo() };
 
 
         public Model()

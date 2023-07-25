@@ -1,6 +1,6 @@
 ﻿namespace main.contents
 {
-    partial class sub3dWinInfo
+    partial class sub3dWINInfo
     {
         /// <summary>
         /// Required designer variable.
@@ -252,15 +252,15 @@
             webView22.TabIndex = 0;
             webView22.ZoomFactor = 1D;
             // 
-            // sub3dWinInfo
+            // sub3dWINInfo
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(tabControl1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "sub3dWinInfo";
-            Text = "sub3dWinInfo";
+            Name = "sub3dWINInfo";
+            Text = "sub3dWINInfo";
             VisibleChanged += onVisibleChanged;
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);

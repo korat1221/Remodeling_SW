@@ -1949,7 +1949,7 @@ if (el.type == 'WIN') {
 					el.zid = prefix2;
 					el.ttype = ttype;
 					el.tid = prefix2 + "_" + ID + "_" + a[1];
-					arr.push({"type":"detail","text":el.tid,"id":"board-" + id});			
+					arr.push({"type":"detail","text":el.tid,"id":"board-" + id + "_win" + w});			
 				}
 			}
 	
@@ -2229,7 +2229,7 @@ if (el.type == 'WIN') {
 
 			for (const [id, wall] of Object.entries(map)) {
 				if (id.substring(0, prefix.length) == prefix) {
-					let key = "board-" + id;
+					let key = "board-" + id + "_win" + w;
 					if (!this.boards[key]) this.boards[key] = [];
 					this.boards[key].push(wall);
 					arr.push(wall);

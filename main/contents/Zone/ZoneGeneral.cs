@@ -815,7 +815,7 @@ namespace main.contents
 
         private void ZoneGeneral_VisibleChanged(object sender, EventArgs e)
         {
-            if (main.MainContents.selID.IndexOf("_Zone") >= 0)
+            if (main.MainContents.currentForm == main.MainContents.FormID.ZoneGeneral)
             {
                 String ID = main.MainContents.selID;
                 ID = ID.Substring(19, 10);
