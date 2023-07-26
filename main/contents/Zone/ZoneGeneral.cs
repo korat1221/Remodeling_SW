@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static System.Windows.Forms.MonthCalendar;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.contents
@@ -50,10 +51,10 @@ namespace main.contents
             //실 제어방식
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, RoomControl_comboBox, "존일반", "건물 자동화 온도조절", "1");
             //존 사용 시작/종료 콤보박스 
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, StartTime_comboBox, "존일반", "이용일 시작 및 종료시간", "8");
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, EndTime_comboBox, "존일반", "이용일 시작 및 종료시간", "19");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, StartTime_comboBox, "존일반", "이용일 시작 및 종료시간", "");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, EndTime_comboBox, "존일반", "이용일 시작 및 종료시간", "");
             //주간 이용일수 콤보박스 
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, WeekUseDay_comboBox, "존일반", "주간이용일", "1");
+            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, WeekUseDay_comboBox, "존일반", "주간이용일", "4");
             //기기밀도 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, EquipIHG_comboBox, "존일반", "밀도", "1");
 
@@ -218,6 +219,19 @@ namespace main.contents
                 AHU_label.Visible = true;
                 AHU_comboBox.Visible = true;
                 AHU_comboBox.Enabled = true;
+                η_label.Visible = true;
+                η_label2.Visible = true;
+                η_textBox.Visible = true;
+                η_label.Enabled = true;
+                η_label2.Enabled = true;
+                η_textBox.Enabled = true;
+                η2_label.Visible = true;
+                η2_label2.Visible = true;
+                η2_textBox.Visible = true;
+                η2_label.Enabled = true;
+                η2_label2.Enabled = true;
+                η2_textBox.Enabled = true;
+
             }
             else
             {
@@ -226,6 +240,18 @@ namespace main.contents
                 AHU_comboBox.Visible = false;
                 AHU_comboBox.Enabled = false;
                 AHU_pictureBox.Visible = false;
+                η_label.Visible = false;
+                η_label2.Visible = false;
+                η_textBox.Visible = false;
+                η_label.Enabled = false;
+                η_label2.Enabled = false;
+                η_textBox.Enabled = false;
+                η2_label.Visible = false;
+                η2_label2.Visible = false;
+                η2_textBox.Visible = false;
+                η2_label.Enabled = false;
+                η2_label2.Enabled = false;
+                η2_textBox.Enabled = false;
             }
         }
         private void Load_AHUImage()
@@ -657,14 +683,16 @@ namespace main.contents
             OccupancyDensity = 0; OccupancyDensity_Low = 0; OccupancyDensity_Medium = 0; OccupancyDensity_High = 0;
 
             RoomControl_comboBox.SelectedIndex = 0;
-            StartTime_comboBox.SelectedItem = "8:00";
-            EndTime_comboBox.SelectedItem = "18:00";
-            WeekUseDay_comboBox.SelectedIndex = 0;
+            StartTime_comboBox.SelectedItem = null;
+            EndTime_comboBox.SelectedItem = null;
+            WeekUseDay_comboBox.SelectedIndex = 3;
             EquipIHG_comboBox.SelectedIndex = 0;
 
             CeilingHeight_textBox.Text = "";
             PersonNum_textBox.Text = "";
 
+            NetArea = 0;
+            NetArea_textBox.Text = "";
 
             String[] ConstructionType = { "커튼월창", "외벽", "지붕", "최하층바닥", "창호", "외부출입문", "내벽", "층간바닥" };
 
@@ -677,6 +705,26 @@ namespace main.contents
             Load_AHUImage();
             Calc_Time();
             Calc_Usage();
+            DHWneed_image_textBox.Text = "";
+            EndTime_image_textBox.Text = "";
+            EquipIHG_image_textBox.Text = "";
+            PersonIHG_image_textBox.Text = "";
+            StartTime_image_textBox.Text = "";
+            theta_i_c_set_textBox.Text = "";
+            theta_i_h_set_textBox.Text = "";
+            UseTime_textBox.Text = "";
+            VentilationRate_textBox.Text = "";
+            Volume_wd_textBox.Text = "";
+            η2_textBox.Text = "";
+            η_textBox.Text = "";
+            CW_textBox.Text = "";
+            Wall_textBox.Text = "";
+            Roof_textBox.Text = "";
+            Window_textBox.Text = "";
+            Floor_textBox.Text = "";
+            InWall_textBox.Text = "";
+            Door_textBox.Text = "";
+
         }
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
@@ -943,7 +991,7 @@ namespace main.contents
                         }
                         else
                         {
-                            Wall_d = 0.075 + Convert.ToDouble(Wall_Value[j][2]) / 1000; //내단열로 가정함
+                            Wall_d = 0.075 + Convert.ToDouble(Wall_Value[0][2]) / 1000; //내단열로 가정함
                         }
                     }
                     else
@@ -966,11 +1014,10 @@ namespace main.contents
                 }
 
                 NetArea = Convert.ToDouble(General_3D[0][2]) - Area_WallInWall;
-                NetArea_textBox.Text = string.Format("{0:F1}", NetArea);
+                NetArea_textBox.Text = string.Format("{0:F2}", NetArea);
 
             }
             catch { }
-
         }
 
     }

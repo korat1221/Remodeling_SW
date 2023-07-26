@@ -43,6 +43,7 @@ namespace main
         {
             BaseDB_HCneed,
             BaseDB_Lighting,
+            BaseDB_Heating,
             BaseDB_Cooling,
             BaseDB_RESystem,
             ProjDB,
@@ -75,25 +76,25 @@ namespace main
 
 
 
-            {"Zone_HCneed", "CREATE TABLE IF NOT EXISTS Zone_HCneed (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32), 이름 VARCHAR (32), 난방_냉방 VARCHAR (32), 비이용일_이용일 VARCHAR (32), 월 VARCHAR (32), HT_tot VARCHAR (32), HT_Wall VARCHAR (32), HT_Roof VARCHAR (32), HT_Floor VARCHAR (32), HT_GWall VARCHAR (32), HT_Door VARCHAR (32), HT_Win VARCHAR (32), HT_CW VARCHAR (32), HT_Di_Wall VARCHAR (32), HT_Indi_Wall VARCHAR (32), HT_Di_Roof VARCHAR (32), HT_Indi_Roof VARCHAR (32), HT_Di_Win VARCHAR (32), HT_Indi_Win VARCHAR (32), HT_Di_Door VARCHAR (32), HT_Indi_Door VARCHAR (32), HT_TB_tot VARCHAR (32), HT_TB_Wall VARCHAR (32), HT_TB_Roof VARCHAR (32), HT_TB_Floor VARCHAR (32), HT_TB_Gwall VARCHAR (32), HT_TB_Win VARCHAR (32), HT_TB_Door VARCHAR (32), HT_TB_CW VARCHAR (32), HV_tot VARCHAR (32), HV_inf VARCHAR (32), HV_win VARCHAR (32), HV_z VARCHAR (32), HV_mech VARCHAR (32), H_tot VARCHAR (32), tao VARCHAR (32), dwe_mth VARCHAR (32), dwd_mth VARCHAR (32), theta_i VARCHAR (32), theta_e VARCHAR (32), QTsink_tot VARCHAR (32), QTsink_Wall VARCHAR (32), QTsink_Roof VARCHAR (32), QTsink_Floor VARCHAR (32), QTsink_GWall VARCHAR (32), QTsink_Door VARCHAR (32), QTsink_Win VARCHAR (32), QTsink_CW VARCHAR (32), QTsource_tot VARCHAR (32), QTsource_Wall VARCHAR (32), QTsource_Roof VARCHAR (32), QTsource_Floor VARCHAR (32), QTsource_GWall VARCHAR (32), QTsource_Door VARCHAR (32), QTsource_Win VARCHAR (32), QTsource_CW VARCHAR (32), QSopsink_tot VARCHAR (32), QSopsource_tot VARCHAR (32), QStr_tot VARCHAR (32), QSopsink_Wall VARCHAR (32), QSopsink_Roof VARCHAR (32), QSopsink_Door VARCHAR (32), QSopsink_CW_p VARCHAR (32), QSopsource_Wall VARCHAR (32), QSopsource_Roof VARCHAR (32), QSopsource_Door VARCHAR (32), QSopsource_CW_p VARCHAR (32), QStr_Win VARCHAR (32), QStr_CW VARCHAR (32), QVsink_tot VARCHAR (32), QV_inf_sink VARCHAR (32), QV_win_sink VARCHAR (32), QV_z_sink VARCHAR (32), QV_mech_sink VARCHAR (32), QVsource_tot VARCHAR (32), QV_inf_source VARCHAR (32), QV_win_source VARCHAR (32), QV_z_source VARCHAR (32), QV_mech_source VARCHAR (32), QI_tot VARCHAR (32), QI_L VARCHAR (32), QI_P VARCHAR (32), QI_fac VARCHAR (32), Qsink VARCHAR (32), Qsource VARCHAR (32), gamma VARCHAR (32), a VARCHAR (32), eta VARCHAR (32), dQc_b VARCHAR (32), dQc_sink VARCHAR (32), Qhb_we_day VARCHAR (32), Qhb_wd_day VARCHAR (32), Qcb_we_day VARCHAR (32), Qcb_wd_day VARCHAR (32), Qhb_mth VARCHAR (32), Qcb_mth VARCHAR (32), Qhb_we_mth VARCHAR (32), Qhb_wd_mth VARCHAR (32), Qcb_we_mth VARCHAR (32), Qcb_wd_mth VARCHAR (32), Qhb_a VARCHAR (32),  Qcb_a VARCHAR (32),  Qhb_we_a VARCHAR (32),  Qhb_wd_a VARCHAR (32),  Qcb_we_a VARCHAR (32),  Qcb_wd_a VARCHAR (32))"},
-            {"OutairTemperature", "CREATE TABLE IF NOT EXISTS OutairTemperature (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32),월 VARCHAR (8), 온도 REAL,일 INTEGER)"},
-            {"Zonegeneral", "CREATE TABLE IF NOT EXISTS Zonegeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT, 구분 VARCHAR (8),zoneNum VARCHAR (32),zoneName VARCHAR (32),zoneUsage VARCHAR (32),zoneHC VARCHAR (32),θi_h_set VARCHAR (32),θi_c_set VARCHAR (32),Δθi_NA,Fx VARCHAR (32),Fx_fl VARCHAR (32),Fx_wl VARCHAR (32),θs_c VARCHAR (32),θi_h_min VARCHAR (32),θe_min VARCHAR (32),θSUP_Wi VARCHAR (32),Mode_night VARCHAR (32),Mode_we VARCHAR (32),twd_d VARCHAR (32),th_op_d_we VARCHAR (32),th_op_d VARCHAR (32),dwd_a VARCHAR (32),ZoneArea VARCHAR (32),zoneHeight VARCHAR (32),qI_p VARCHAR (32),qI_fac VARCHAR (32),Cwirk_A VARCHAR (32),VA_we VARCHAR (32),VA_wd VARCHAR (32),n50 VARCHAR (32),e VARCHAR (32),f VARCHAR (32),Vmech_SUP_we VARCHAR (32),Vmech_SUP_wd VARCHAR (32),Vmech_ETA_we VARCHAR (32),Vmech_ETA_wd VARCHAR (32),ηV_mech VARCHAR (32),ηχV_mech VARCHAR (32),χi_c_set VARCHAR (32),χi_h_set VARCHAR (32),Vmech_SUP_z VARCHAR (32),Vmech_ETA_z VARCHAR (32),ρacp_a VARCHAR (32))"},
-            {"ZoneWall", "CREATE TABLE IF NOT EXISTS ZoneWall (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),α VARCHAR (32),Degree VARCHAR (32))"},
-            {"ZoneRoof", "CREATE TABLE IF NOT EXISTS ZoneRoof (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),α VARCHAR (32),Degree VARCHAR (32))"},
-            {"ZoneFloor", "CREATE TABLE IF NOT EXISTS ZoneFloor (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32))"},
-            {"ZoneGWall", "CREATE TABLE IF NOT EXISTS ZoneGWall (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32))"},
-            {"ZoneDoor", "CREATE TABLE IF NOT EXISTS ZoneDoor (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),α VARCHAR (32),Degree VARCHAR (32))"},
-            {"ZoneWin", "CREATE TABLE IF NOT EXISTS ZoneWin (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Uvalue VARCHAR (32),Uinst VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),Ff VARCHAR (32),g VARCHAR (32),τ VARCHAR (32),gtot VARCHAR (32),τtot VARCHAR (32),degree VARCHAR (32))"},
-            {"ZoneCW", "CREATE TABLE IF NOT EXISTS ZoneCW (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area_g VARCHAR (32),Uvalue_g VARCHAR (32),Ff_g VARCHAR (32),g_g VARCHAR (32),gtot_g VARCHAR (32),τ_g VARCHAR (32),τtot_g VARCHAR (32),Area_p VARCHAR (32),Uvalue_p VARCHAR (32),α_p VARCHAR (32),Area_d VARCHAR (32),Uvalue_d VARCHAR (32),Ff_d VARCHAR (32),g_d VARCHAR (32),τ_d VARCHAR (32),Area_tot VARCHAR (32),Uinst VARCHAR (32))"},
-            {"ZoneWall_Solar", "CREATE TABLE IF NOT EXISTS ZoneWall_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
-            {"ZoneRoof_Solar", "CREATE TABLE IF NOT EXISTS ZoneRoof_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
-            {"ZoneDoor_Solar", "CREATE TABLE IF NOT EXISTS ZoneDoor_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
-            {"ZoneCW_Solar", "CREATE TABLE IF NOT EXISTS ZoneCW_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
-            {"ZoneWin_Solar", "CREATE TABLE IF NOT EXISTS ZoneWin_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
-            {"ZoneWin_Shadow", "CREATE TABLE IF NOT EXISTS ZoneWin_Shadow (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
-            {"ZoneWin_a", "CREATE TABLE IF NOT EXISTS ZoneWin_a (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
-            {"ZoneCW_shadow", "CREATE TABLE IF NOT EXISTS ZoneCW_shadow (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
-            {"ZoneCW_a", "CREATE TABLE IF NOT EXISTS ZoneCW_a (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+             {"Zone_HCneed", "CREATE TABLE IF NOT EXISTS Zone_HCneed (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32), 이름 VARCHAR (32), 난방_냉방 VARCHAR (32), 비이용일_이용일 VARCHAR (32), 월 VARCHAR (32), HT_tot VARCHAR (32), HT_Wall VARCHAR (32), HT_Roof VARCHAR (32), HT_Floor VARCHAR (32), HT_GWall VARCHAR (32), HT_Door VARCHAR (32), HT_Win VARCHAR (32), HT_CW VARCHAR (32), HT_Di_Wall VARCHAR (32), HT_Indi_Wall VARCHAR (32), HT_Di_Roof VARCHAR (32), HT_Indi_Roof VARCHAR (32), HT_Di_Win VARCHAR (32), HT_Indi_Win VARCHAR (32), HT_Di_Door VARCHAR (32), HT_Indi_Door VARCHAR (32), HT_TB_tot VARCHAR (32), HT_TB_Wall VARCHAR (32), HT_TB_Roof VARCHAR (32), HT_TB_Floor VARCHAR (32), HT_TB_Gwall VARCHAR (32), HT_TB_Win VARCHAR (32), HT_TB_Door VARCHAR (32), HT_TB_CW VARCHAR (32), HV_tot VARCHAR (32), HV_inf VARCHAR (32), HV_win VARCHAR (32), HV_z VARCHAR (32), HV_mech VARCHAR (32), H_tot VARCHAR (32), tao VARCHAR (32), dwe_mth VARCHAR (32), dwd_mth VARCHAR (32), theta_i VARCHAR (32), theta_e VARCHAR (32), QTsink_tot VARCHAR (32), QTsink_Wall VARCHAR (32), QTsink_Roof VARCHAR (32), QTsink_Floor VARCHAR (32), QTsink_GWall VARCHAR (32), QTsink_Door VARCHAR (32), QTsink_Win VARCHAR (32), QTsink_CW VARCHAR (32), QTsource_tot VARCHAR (32), QTsource_Wall VARCHAR (32), QTsource_Roof VARCHAR (32), QTsource_Floor VARCHAR (32), QTsource_GWall VARCHAR (32), QTsource_Door VARCHAR (32), QTsource_Win VARCHAR (32), QTsource_CW VARCHAR (32), QSopsink_tot VARCHAR (32), QSopsource_tot VARCHAR (32), QStr_tot VARCHAR (32), QSopsink_Wall VARCHAR (32), QSopsink_Roof VARCHAR (32), QSopsink_Door VARCHAR (32), QSopsink_CW_p VARCHAR (32), QSopsource_Wall VARCHAR (32), QSopsource_Roof VARCHAR (32), QSopsource_Door VARCHAR (32), QSopsource_CW_p VARCHAR (32), QStr_Win VARCHAR (32), QStr_CW VARCHAR (32), QVsink_tot VARCHAR (32), QV_inf_sink VARCHAR (32), QV_win_sink VARCHAR (32), QV_z_sink VARCHAR (32), QV_mech_sink VARCHAR (32), QVsource_tot VARCHAR (32), QV_inf_source VARCHAR (32), QV_win_source VARCHAR (32), QV_z_source VARCHAR (32), QV_mech_source VARCHAR (32), QI_tot VARCHAR (32), QI_L VARCHAR (32), QI_P VARCHAR (32), QI_fac VARCHAR (32), Qsink VARCHAR (32), Qsource VARCHAR (32), gamma VARCHAR (32), a VARCHAR (32), eta VARCHAR (32), dQc_b VARCHAR (32), dQc_sink VARCHAR (32), Qhb_we_day VARCHAR (32), Qhb_wd_day VARCHAR (32), Qcb_we_day VARCHAR (32), Qcb_wd_day VARCHAR (32), Qhb_mth VARCHAR (32), Qcb_mth VARCHAR (32), Qhb_we_mth VARCHAR (32), Qhb_wd_mth VARCHAR (32), Qcb_we_mth VARCHAR (32), Qcb_wd_mth VARCHAR (32), Qhb_a VARCHAR (32),  Qcb_a VARCHAR (32),  Qhb_we_a VARCHAR (32),  Qhb_wd_a VARCHAR (32),  Qcb_we_a VARCHAR (32),  Qcb_wd_a VARCHAR (32))"},
+            //{"OutairTemperature", "CREATE TABLE IF NOT EXISTS OutairTemperature (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32),월 VARCHAR (8), 온도 REAL,일 INTEGER)"},
+            //{"Zonegeneral", "CREATE TABLE IF NOT EXISTS Zonegeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT, 구분 VARCHAR (8),zoneNum VARCHAR (32),zoneName VARCHAR (32),zoneUsage VARCHAR (32),zoneHC VARCHAR (32),θi_h_set VARCHAR (32),θi_c_set VARCHAR (32),Δθi_NA,Fx VARCHAR (32),Fx_fl VARCHAR (32),Fx_wl VARCHAR (32),θs_c VARCHAR (32),θi_h_min VARCHAR (32),θe_min VARCHAR (32),θSUP_Wi VARCHAR (32),Mode_night VARCHAR (32),Mode_we VARCHAR (32),twd_d VARCHAR (32),th_op_d_we VARCHAR (32),th_op_d VARCHAR (32),dwd_a VARCHAR (32),ZoneArea VARCHAR (32),zoneHeight VARCHAR (32),qI_p VARCHAR (32),qI_fac VARCHAR (32),Cwirk_A VARCHAR (32),VA_we VARCHAR (32),VA_wd VARCHAR (32),n50 VARCHAR (32),e VARCHAR (32),f VARCHAR (32),Vmech_SUP_we VARCHAR (32),Vmech_SUP_wd VARCHAR (32),Vmech_ETA_we VARCHAR (32),Vmech_ETA_wd VARCHAR (32),ηV_mech VARCHAR (32),ηχV_mech VARCHAR (32),χi_c_set VARCHAR (32),χi_h_set VARCHAR (32),Vmech_SUP_z VARCHAR (32),Vmech_ETA_z VARCHAR (32),ρacp_a VARCHAR (32))"},
+            //{"ZoneWall", "CREATE TABLE IF NOT EXISTS ZoneWall (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),α VARCHAR (32),Degree VARCHAR (32))"},
+            //{"ZoneRoof", "CREATE TABLE IF NOT EXISTS ZoneRoof (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),α VARCHAR (32),Degree VARCHAR (32))"},
+            //{"ZoneFloor", "CREATE TABLE IF NOT EXISTS ZoneFloor (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32))"},
+            //{"ZoneGWall", "CREATE TABLE IF NOT EXISTS ZoneGWall (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32))"},
+            //{"ZoneDoor", "CREATE TABLE IF NOT EXISTS ZoneDoor (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Ueff VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),α VARCHAR (32),Degree VARCHAR (32))"},
+            //{"ZoneWin", "CREATE TABLE IF NOT EXISTS ZoneWin (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area VARCHAR (32),Uvalue VARCHAR (32),Uinst VARCHAR (32),DirectInDirect VARCHAR (32),Direction VARCHAR (32),Ff VARCHAR (32),g VARCHAR (32),τ VARCHAR (32),gtot VARCHAR (32),τtot VARCHAR (32),degree VARCHAR (32))"},
+            //{"ZoneCW", "CREATE TABLE IF NOT EXISTS ZoneCW (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), Name VARCHAR (32),Area_g VARCHAR (32),Uvalue_g VARCHAR (32),Ff_g VARCHAR (32),g_g VARCHAR (32),gtot_g VARCHAR (32),τ_g VARCHAR (32),τtot_g VARCHAR (32),Area_p VARCHAR (32),Uvalue_p VARCHAR (32),α_p VARCHAR (32),Area_d VARCHAR (32),Uvalue_d VARCHAR (32),Ff_d VARCHAR (32),g_d VARCHAR (32),τ_d VARCHAR (32),Area_tot VARCHAR (32),Uinst VARCHAR (32))"},
+            //{"ZoneWall_Solar", "CREATE TABLE IF NOT EXISTS ZoneWall_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            //{"ZoneRoof_Solar", "CREATE TABLE IF NOT EXISTS ZoneRoof_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            //{"ZoneDoor_Solar", "CREATE TABLE IF NOT EXISTS ZoneDoor_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            //{"ZoneCW_Solar", "CREATE TABLE IF NOT EXISTS ZoneCW_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            //{"ZoneWin_Solar", "CREATE TABLE IF NOT EXISTS ZoneWin_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            //{"ZoneWin_Shadow", "CREATE TABLE IF NOT EXISTS ZoneWin_Shadow (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            //{"ZoneWin_a", "CREATE TABLE IF NOT EXISTS ZoneWin_a (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            //{"ZoneCW_shadow", "CREATE TABLE IF NOT EXISTS ZoneCW_shadow (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
+            //{"ZoneCW_a", "CREATE TABLE IF NOT EXISTS ZoneCW_a (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32), 구조체 VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
 
             {"BuildingGeneral", "CREATE TABLE IF NOT EXISTS BuildingGeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트명 VARCHAR (32),프로젝트유형 VARCHAR (32),사업성능목표 VARCHAR (32),건물진단실시 VARCHAR (32),건물대상 VARCHAR (32),건물용도 VARCHAR (32),건물명 VARCHAR (32),주소 VARCHAR (32),지역인덱스 VARCHAR (32),지역 VARCHAR (32),지역구분 VARCHAR (32),외벽구조유형 VARCHAR (32),지붕구조유형 VARCHAR (32),준공연도 VARCHAR (32),준공월 VARCHAR (32),준공시기 VARCHAR (32),법규시기 VARCHAR (32),연면적 VARCHAR (32),건축면적 VARCHAR (32),지상층수 VARCHAR (32),지하층수 VARCHAR (32),작성자 VARCHAR (32),작성자주소 VARCHAR (32),작성자회사 VARCHAR (32),작성연도 VARCHAR (32),작성월 VARCHAR (32),작성시기 VARCHAR (32))"},
             {"User_Material", "CREATE TABLE IF NOT EXISTS User_Material (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),DB유형 VARCHAR (32),구분 VARCHAR (32),재료명 VARCHAR (32),종류2 VARCHAR (32),종류1 VARCHAR (32),열전도율 VARCHAR (32),밀도 VARCHAR (32),투습저항계수dry VARCHAR (32),투습저항계수wet VARCHAR (32),비열 VARCHAR (32),비고 VARCHAR (32))"},
@@ -117,12 +118,12 @@ namespace main
             {"User_CWInstall", "CREATE TABLE User_CWInstall (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),DB유형 VARCHAR (32),제품명 VARCHAR (32),구분1 VARCHAR (32),구분2 VARCHAR (32),구분3 VARCHAR (32),상부설치선형열관류율 VARCHAR (32),측면설치선형열관류율 VARCHAR (32),하부설치선형열관류율 VARCHAR (32))"},
             {"ZoneGeneral_Form", "CREATE TABLE IF NOT EXISTS ZoneGeneral_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),존이름 VARCHAR (32),실제어방식 VARCHAR (32),냉난방유무 VARCHAR (32),환기유무 VARCHAR (32),환기방식 VARCHAR (32),온도교환효율 VARCHAR (32),전열교환효율 VARCHAR (32),용도프로필 VARCHAR (32),순바닥면적 VARCHAR (32),천장고 VARCHAR (32),시작시간 VARCHAR (32),종료시간 VARCHAR (32),주이용일 VARCHAR (32),재실자수 VARCHAR (32),기기발열수준 VARCHAR (32),일일급탕요구량 VARCHAR (32),냉난방시간 VARCHAR (32),사용시간 VARCHAR (32),공조시간 VARCHAR (32),연이용일수 VARCHAR (32),재실밀도 VARCHAR (32),재실수준 VARCHAR (32),일일인체발열 VARCHAR (32),면적당인체발열 VARCHAR (32),일일기기발열 VARCHAR (32),면적당기기발열 VARCHAR (32),순체적 VARCHAR (32),환기횟수 VARCHAR (32),이용일환기량 VARCHAR (32),비이용일환기량  VARCHAR (32),천장축열선택 VARCHAR (32),외벽축열선택 VARCHAR (32),내벽축열선택 VARCHAR (32),바닥축열선택 VARCHAR (32),천장축열 VARCHAR (32),외벽축열 VARCHAR (32),내벽축열 VARCHAR (32),바닥축열 VARCHAR (32),천장면적 VARCHAR (32),외벽면적 VARCHAR (32),내벽면적 VARCHAR (32),바닥면적 VARCHAR (32),존축열성능 VARCHAR  VARCHAR (32),존기밀타입 VARCHAR (32),기밀적용유형 VARCHAR (32),q50 VARCHAR (32),n50 VARCHAR (32))"},
             {"Zonegeneral_3D", "CREATE TABLE IF NOT EXISTS ZoneGeneral_3D (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),층 VARCHAR (32),지면접합유형 VARCHAR (32),바닥면적 VARCHAR (32),주향 VARCHAR (32),주광너비 VARCHAR (32),주광깊이 VARCHAR (32),상인방높이 VARCHAR (32))"},
-            {"ZoneEnvelope_3D", "CREATE TABLE IF NOT EXISTS ZoneEnvelope_3D (ID INTEGER PRIMARY KEY AUTOINCREMENT,아이디 VARCHAR (32),번호 VARCHAR (32),층 VARCHAR (32),존 VARCHAR (32),외피유형 VARCHAR (32),커튼월부위 VARCHAR (32),면적 VARCHAR (32),인접존 VARCHAR (32),방위 VARCHAR (32),기울기 VARCHAR (32),우측면돌출각도 VARCHAR (32),좌측면돌출각도 VARCHAR (32),상부돌출각도 VARCHAR (32),주변요소음영각도 VARCHAR (32),구조체 VARCHAR (32),우측면돌출길이 VARCHAR (32),좌측면돌출길이 VARCHAR (32),상부돌출길이 VARCHAR (32),주변요소음영길이 VARCHAR (32),벽체길이 VARCHAR (32))"},
+            {"ZoneEnvelope_3D", "CREATE TABLE IF NOT EXISTS ZoneEnvelope_3D (ID INTEGER PRIMARY KEY AUTOINCREMENT,아이디 VARCHAR (32),번호 VARCHAR (32),층 VARCHAR (32),존 VARCHAR (32),외피유형 VARCHAR (32),커튼월부위 VARCHAR (32),면적 VARCHAR (32),인접존 VARCHAR (32),방위 VARCHAR (32),기울기 VARCHAR (32),우측면돌출각도 VARCHAR (32),좌측면돌출각도 VARCHAR (32),상부돌출각도 VARCHAR (32),주변요소음영각도 VARCHAR (32),구조체 VARCHAR (32),구조체번호 VARCHAR (32),우측면돌출길이 VARCHAR (32),좌측면돌출길이 VARCHAR (32),상부돌출길이 VARCHAR (32),주변요소음영길이 VARCHAR (32),벽체길이 VARCHAR (32))"},
             {"ThermalBridge_3D", "CREATE TABLE IF NOT EXISTS ThermalBridge_3D (ID INTEGER PRIMARY KEY AUTOINCREMENT,열교항목 VARCHAR (32),열교길이 VARCHAR (32))"}
         };
    
 
-        private SQLiteConnection? baseDB_hcneed, baseDB_lighting, baseDB_cooling, baseDB_resystem, projDB, calcDB;
+        private SQLiteConnection? baseDB_hcneed, baseDB_lighting, baseDB_heating, baseDB_cooling, baseDB_resystem, projDB, calcDB;
         public bool openDB(string projPath)
         {
             closeDB();
@@ -172,7 +173,27 @@ namespace main
             {
                 return false;
             }
+            //난방 baseDB
+            if (GetFileSize("basedb_heating.sqlite") > 0)
+            {
+                baseDB_heating = new SQLiteConnection(@"Data Source=basedb_heating.sqlite");
+                baseDB_heating.Open();
 
+                if (baseDB_heating.State != ConnectionState.Open)
+                {
+                    return false;
+                }
+
+                cmd.Connection = baseDB_heating;
+                cmd.CommandText = "PRAGMA synchronous=OFF";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "PRAGMA journal_mode=OFF";
+                cmd.ExecuteNonQuery();
+            }
+            else
+            {
+                return false;
+            }
             //냉방 baseDB
             if (GetFileSize("basedb_cooling.sqlite") > 0)
             {
@@ -232,6 +253,9 @@ namespace main
                 baseDB_lighting.Close();
                 baseDB_lighting.Dispose();
 
+                baseDB_heating.Close();
+                baseDB_heating.Dispose();
+
                 baseDB_cooling.Close();
                 baseDB_cooling.Dispose();
 
@@ -256,6 +280,9 @@ namespace main
 
                 baseDB_lighting.Close();
                 baseDB_lighting.Dispose();
+
+                baseDB_heating.Close();
+                baseDB_heating.Dispose();
 
                 baseDB_cooling.Close();
                 baseDB_cooling.Dispose();
@@ -282,6 +309,11 @@ namespace main
             {
                 baseDB_lighting.Close();
                 baseDB_lighting.Dispose();
+            }
+            if (baseDB_heating != null)
+            {
+                baseDB_heating.Close();
+                baseDB_heating.Dispose();
             }
             if (baseDB_cooling != null)
             {
@@ -351,6 +383,12 @@ namespace main
                             cmd.ExecuteNonQuery();
                         }
                         break;
+                    case type.BaseDB_Heating:
+                        {
+                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_heating);
+                            cmd.ExecuteNonQuery();
+                        }
+                        break;
                     case type.BaseDB_Cooling:
                         {
                             SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_cooling);
@@ -392,6 +430,9 @@ namespace main
                         break;
                     case type.BaseDB_Lighting:
                         cmd.Connection = baseDB_lighting;
+                        break;
+                    case type.BaseDB_Heating:
+                        cmd.Connection = baseDB_heating;
                         break;
                     case type.BaseDB_Cooling:
                         cmd.Connection = baseDB_cooling;
@@ -699,6 +740,9 @@ namespace main
                 case type.BaseDB_Lighting:
                     cmd.Connection = baseDB_lighting;
                     break;
+                case type.BaseDB_Heating:
+                    cmd.Connection = baseDB_heating;
+                    break;
                 case type.BaseDB_Cooling:
                     cmd.Connection = baseDB_cooling;
                     break;
@@ -754,6 +798,9 @@ namespace main
                     break;
                 case type.BaseDB_Lighting:
                     cmd.Connection = baseDB_lighting;
+                    break;
+                case type.BaseDB_Heating:
+                    cmd.Connection = baseDB_heating;
                     break;
                 case type.BaseDB_Cooling:
                     cmd.Connection = baseDB_cooling;

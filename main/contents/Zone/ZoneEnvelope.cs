@@ -516,23 +516,23 @@ namespace main.contents
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            if (Ceiling_index == null)
+            if (CeilingCwirk_comboBox.SelectedItem == null)
             {
                 MessageBox.Show("천장 축열 특성을 선택해주세요.");
             }
-            else if (Wall_index == null)
+            else if (WallCwirk_comboBox.SelectedItem == null)
             {
                 MessageBox.Show("외벽 축열 특성을 선택해주세요.");
             }
-            else if (InWall_index == null)
+            else if (InWallCwirk_comboBox.SelectedItem == null)
             {
                 MessageBox.Show("내벽 축열 특성을 선택해주세요.");
             }
-            else if (Slab_index == null)
+            else if (SlabCwirk_comboBox.SelectedItem == null)
             {
                 MessageBox.Show("바닥 축열 특성을 선택해주세요.");
             }
-            else if (InfiltrationType_comboBox.SelectedItem.ToString() == null)
+            else if (InfiltrationType_comboBox.SelectedItem == null)
             {
                 MessageBox.Show("기밀 성능 적용 방식을 선택해주세요.");
             }
@@ -570,9 +570,10 @@ namespace main.contents
             + ZoneType + "','" + InfiltrationType_comboBox.SelectedItem.ToString() + "','"
             + q50_textBox.Text.ToString() + "','" + n50_textBox.Text.ToString() + "'", "존번호");
 
-            this.DialogResult = DialogResult.OK;
-            this.Hide();
-            Program.getMenuForm().DoLoadForm(33, OnLoadListProc);
+            MessageBox.Show(ZoneNum + "[" + ZoneName + "] 정보를 저장하였습니다.");
+            //this.DialogResult = DialogResult.OK;
+            //this.Hide();
+            //Program.getMenuForm().DoLoadForm(33, OnLoadListProc);
         }
         private void reset()
         {
@@ -604,6 +605,7 @@ namespace main.contents
             Area_Slab = 0;
 
             Cwirk_total = 0;
+            Cwirk_textBox.Text = "";
 
             ZoneType = null;
 
