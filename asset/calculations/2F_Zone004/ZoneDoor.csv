@@ -1,0 +1,4 @@
+Name,Area,Ueff,DirectInDirect,Direction,α,Degree
+출입문1,10,0.15,Direction,동,0.9,90
+출입문2,15,0.45,Direction,서,0.8,90
+출입문3,20,0.3,Indirection,남,0.7,90

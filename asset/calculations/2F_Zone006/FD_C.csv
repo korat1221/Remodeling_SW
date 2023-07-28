@@ -1,0 +1,97 @@
+﻿주광제어종류,Dclass,Em,FD_C
+수동(on/off),None,50,0
+수동(on/off),None,100,0
+수동(on/off),None,150,0
+수동(on/off),None,200,0
+수동(on/off),None,300,0
+수동(on/off),None,500,0
+수동(on/off),None,750,0
+수동(on/off),None,1000,0
+수동(on/off),Low,50,0.5
+수동(on/off),Low,100,0.5
+수동(on/off),Low,150,0.5
+수동(on/off),Low,200,0.5
+수동(on/off),Low,300,0.5
+수동(on/off),Low,500,0.47
+수동(on/off),Low,750,0.44
+수동(on/off),Low,1000,0.44
+수동(on/off),Medium,50,0.55
+수동(on/off),Medium,100,0.55
+수동(on/off),Medium,150,0.55
+수동(on/off),Medium,200,0.55
+수동(on/off),Medium,300,0.55
+수동(on/off),Medium,500,0.52
+수동(on/off),Medium,750,0.49
+수동(on/off),Medium,1000,0.49
+수동(on/off),Strong,50,0.6
+수동(on/off),Strong,100,0.6
+수동(on/off),Strong,150,0.6
+수동(on/off),Strong,200,0.6
+수동(on/off),Strong,300,0.6
+수동(on/off),Strong,500,0.57
+수동(on/off),Strong,750,0.54
+수동(on/off),Strong,1000,0.54
+디밍(not off),None,50,0
+디밍(not off),None,100,0
+디밍(not off),None,150,0
+디밍(not off),None,200,0
+디밍(not off),None,300,0
+디밍(not off),None,500,0
+디밍(not off),None,750,0
+디밍(not off),None,1000,0
+디밍(not off),Low,50,0.65
+디밍(not off),Low,100,0.65
+디밍(not off),Low,150,0.65
+디밍(not off),Low,200,0.65
+디밍(not off),Low,300,0.65
+디밍(not off),Low,500,0.7
+디밍(not off),Low,750,0.73
+디밍(not off),Low,1000,0.73
+디밍(not off),Medium,50,0.7
+디밍(not off),Medium,100,0.7
+디밍(not off),Medium,150,0.7
+디밍(not off),Medium,200,0.7
+디밍(not off),Medium,300,0.7
+디밍(not off),Medium,500,0.73
+디밍(not off),Medium,750,0.75
+디밍(not off),Medium,1000,0.75
+디밍(not off),Strong,50,0.73
+디밍(not off),Strong,100,0.73
+디밍(not off),Strong,150,0.73
+디밍(not off),Strong,200,0.73
+디밍(not off),Strong,300,0.73
+디밍(not off),Strong,500,0.75
+디밍(not off),Strong,750,0.76
+디밍(not off),Strong,1000,0.76
+디밍(off),None,50,0
+디밍(off),None,100,0
+디밍(off),None,150,0
+디밍(off),None,200,0
+디밍(off),None,300,0
+디밍(off),None,500,0
+디밍(off),None,750,0
+디밍(off),None,1000,0
+디밍(off),Low,50,0.71
+디밍(off),Low,100,0.71
+디밍(off),Low,150,0.71
+디밍(off),Low,200,0.71
+디밍(off),Low,300,0.71
+디밍(off),Low,500,0.74
+디밍(off),Low,750,0.76
+디밍(off),Low,1000,0.76
+디밍(off),Medium,50,0.77
+디밍(off),Medium,100,0.77
+디밍(off),Medium,150,0.77
+디밍(off),Medium,200,0.77
+디밍(off),Medium,300,0.77
+디밍(off),Medium,500,0.78
+디밍(off),Medium,750,0.79
+디밍(off),Medium,1000,0.79
+디밍(off),Strong,50,0.81
+디밍(off),Strong,100,0.81
+디밍(off),Strong,150,0.81
+디밍(off),Strong,200,0.81
+디밍(off),Strong,300,0.81
+디밍(off),Strong,500,0.81
+디밍(off),Strong,750,0.81
+디밍(off),Strong,1000,0.81
