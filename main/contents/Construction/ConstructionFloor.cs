@@ -255,6 +255,7 @@ namespace main.contents.Construction
                 U_textBox.BorderStyle = BorderStyle.None;
                 Ucalc_dataGridView.Show();
                 Ucalc_tabPage.Enabled = true;
+                pictureBox3.Visible = true;
             }
             else if (UMethod == "법규")
             {
@@ -263,6 +264,7 @@ namespace main.contents.Construction
                 U_textBox.BorderStyle = BorderStyle.None;
                 Ucalc_dataGridView.Hide();
                 Ucalc_tabPage.Enabled = false;
+                pictureBox3.Visible = false;
             }
             else if (UMethod == "진단")
             {
@@ -270,6 +272,7 @@ namespace main.contents.Construction
                 U_textBox.BorderStyle = BorderStyle.FixedSingle;
                 Ucalc_dataGridView.Hide();
                 Ucalc_tabPage.Enabled = false;
+                pictureBox3.Visible = false;
             }
         }
 
@@ -308,7 +311,7 @@ namespace main.contents.Construction
         }
         private void DiIndi2_textBox_TextChanged(object sender, EventArgs e)
         {
-           
+
             if (DiIndi2_textBox.Text != null)
             {
                 Dilndi();
@@ -385,6 +388,7 @@ namespace main.contents.Construction
                 UMethod = Uvalue_comboBox.SelectedItem.ToString();
                 Act_UcWMethod();
                 Dilndi();
+                Calc_Ueff();
             }
         }
 
@@ -1117,7 +1121,7 @@ namespace main.contents.Construction
                     Material_d[i] = Convert.ToDouble(Load[0][(2 * i + 23)]);
                 }
 
-                
+
                 for (int i = 0; i < 10; i++)
                 {
                     if (Material[i] != "")

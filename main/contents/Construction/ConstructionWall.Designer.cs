@@ -109,6 +109,7 @@
             Ucalc_dataGridView = new DataGridView();
             AddMaterial_button = new Button();
             tabControl1 = new TabControl();
+            pictureBox3 = new PictureBox();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -120,6 +121,7 @@
             Ucalc_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).BeginInit();
             tabControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -850,6 +852,7 @@
             // Ucalc_tabPage
             // 
             Ucalc_tabPage.BackColor = System.Drawing.Color.White;
+            Ucalc_tabPage.Controls.Add(pictureBox3);
             Ucalc_tabPage.Controls.Add(Rse_textBox);
             Ucalc_tabPage.Controls.Add(label12);
             Ucalc_tabPage.Controls.Add(Rsi_textBox);
@@ -1101,6 +1104,15 @@
             tabControl1.Size = new Size(977, 388);
             tabControl1.TabIndex = 96;
             // 
+            // pictureBox3
+            // 
+            pictureBox3.BackColor = System.Drawing.Color.Gainsboro;
+            pictureBox3.Location = new Point(569, 61);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(366, 236);
+            pictureBox3.TabIndex = 136;
+            pictureBox3.TabStop = false;
+            // 
             // ConstructionWall
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1133,6 +1145,7 @@
             Ucalc_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).EndInit();
             tabControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1218,5 +1231,6 @@
         private TextBox dU2_textBox;
         private TextBox dU_label3;
         private Label label1;
+        private PictureBox pictureBox3;
     }
 }

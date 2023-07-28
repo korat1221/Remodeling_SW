@@ -1282,17 +1282,23 @@ namespace main.contents
             try
             {
                 //존이름 불러오기
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,천장고,용도프로필", "존번호 = '" + ZoneNum + "'");
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,천장고,용도프로필,순바닥면적", "존번호 = '" + ZoneNum + "'");
 
                 ZoneName = Value[0][0];
                 ZoneName_textBox.Text = ZoneName;
 
+                A = Convert.ToDouble(Value[0][3]); 
+                A_textBox.Text = string.Format("{0:F2}", A);
+
                 hR = Convert.ToDouble(Value[0][1]);
                 Usage = Value[0][2];
                 K = 1.25; //////////////////////추후 계산 식으로 변경해야함
-
             }
-            catch { }
+            catch 
+            {
+                MessageBox.Show("존 일반정보부터 입력하세요.");
+                Program.getMenuForm().DoLoadFormDirect(12);
+            }
 
             try
             {
@@ -1301,9 +1307,6 @@ namespace main.contents
 
                 Layer = General_3D[0][0];
                 Layer_textBox.Text = Layer;
-
-                A = Convert.ToDouble(General_3D[0][1]); //나중에 순바닥면적으로 고쳐야함 지금은 그냥 바닥면적임
-                A_textBox.Text = string.Format("{0:F2}", A);
 
                 //hLi = Convert.ToDouble(General_3D[0][5]); //상인방 높이 3D에서 찾아야함
             }

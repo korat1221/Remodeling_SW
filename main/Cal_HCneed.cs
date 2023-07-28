@@ -781,6 +781,7 @@ namespace main
             double[,] zoneCWs_d_Qs = new double[zoneWin.Count, 12];
 
             //존의 커튼월별 일사정보 가져오기
+            try
             {
                 int i = -1;
                 string[][] ZoneCW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "방위,기울기", "존='" + zoneNum + "' AND 외피유형 = '커튼월창'");
@@ -794,7 +795,8 @@ namespace main
                         zoneCWs_Is[i, mth] = Convert.ToDouble(token[mth][0]);
                     }
                 }
-            }           
+            }
+            catch { }          
 
             //존의 커튼월별 음영정보 가져오기
             {
@@ -845,15 +847,16 @@ namespace main
                     QStr_CW[0, mth] += (zoneCWs_g_Qs[i, 0, mth] + zoneCWs_d_Qs[i, mth]);
                     QStr_CW[1, mth] += (zoneCWs_g_Qs[i, 1, mth] + zoneCWs_d_Qs[i, mth]);
                 }
+                
+            }
 
-                for (int hc = 0; hc <= 1; hc++)
+            for (int hc = 0; hc <= 1; hc++)
+            {
+                for (int wewd = 0; wewd <= 1; wewd++)
                 {
-                    for (int wewd = 0; wewd <= 1; wewd++)
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        for (int mth = 0; mth < 12; mth++)
-                        {
-                            QStr_tot[hc, wewd, mth] = QStr_Win[wewd, mth] + QStr_CW[wewd, mth];
-                        }
+                        QStr_tot[hc, wewd, mth] = QStr_Win[wewd, mth] + QStr_CW[wewd, mth];
                     }
                 }
             }

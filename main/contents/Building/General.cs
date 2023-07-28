@@ -31,6 +31,7 @@ namespace main.contents
         String AboveGround, UnderGround;
         String ReviewerName, ReviewerLocation, ReviewerCompany, ReviewYear, ReviewMonth;
         double ReviewDate;
+        double[] law = new double[11];
 
         public General()
         {
@@ -55,8 +56,16 @@ namespace main.contents
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Diagnosis_comboBox, "건물", "건물 진단 실시", "1");
             //건물대상 콤보박스
             Program.UTIL.FillComboBox_Parents(BuildingCategory_comboBox, "존일반", "건물용도", "1");
+
+
             //기후데이터 콤보박스
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Climate_comboBox, "건물", "지역", "18");
+            string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "인덱스", "이름", "종류 = '2'");
+             Climate_comboBox.Items.Clear();
+            for (int i = 0; i < Value.Length; i++)
+            {
+                Climate_comboBox.Items.Add(Value[i][0]);
+            }
+            Climate_comboBox.SelectedIndex = 2;
             //외벽 구조유형 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, WallType_comboBox, "건물", "외벽 구조유형", "1");
             //지붕 구조유형 콤보박스
@@ -215,16 +224,12 @@ namespace main.contents
 
         private void Year_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             if (Year_comboBox.SelectedItem != null)
             {
                 Year = Year_comboBox.SelectedItem.ToString();
                 Calc_LawDate();
 
-                if (BylawDate == 2013.1)
-                {
-                    BylawDate_textBox.Text = "2013.10";
-                }
-                else { BylawDate_textBox.Text = Convert.ToString(BylawDate); }
             }
         }
 
@@ -234,6 +239,51 @@ namespace main.contents
             {
                 Month = Month_comboBox.SelectedItem.ToString();
                 Calc_LawDate();
+            }
+        }
+
+        private void Calc_LawDate()
+        {
+            if(Year !=null && Month !=null)
+            {
+                if (Convert.ToDouble(Month) < 10)
+                {
+                    ConstrucitonDate = Convert.ToDouble((Year + ".0" + Month));
+                }
+                else
+                {
+                    ConstrucitonDate = Convert.ToDouble((Year + "." + Month));
+                }
+                string[][] Value = Program.DB.getValue_dedupe(DB.type.BaseDB_HCneed, "법규열관류율", "시기", "");
+               
+                for (int i = 0; i < Value.Length; i++)
+                {
+                    law[i] = Convert.ToDouble(Value[i][0]);
+                }
+
+                Array.Sort(law);
+                for (int k = 0; k < 11; k++)
+                {
+                 if (ConstrucitonDate >= 2018.09)
+                  {
+                     BylawDate = 2018.09;
+                     break;
+                   }
+                   else if (law[k] >= ConstrucitonDate)
+                   {
+                        if (k != 0)
+                        {
+                            BylawDate = law[k - 1];
+                            break;
+                        }
+                        else
+                        {
+                            BylawDate = 1979.09;
+                            break;
+                        }
+                    }
+                    else { }
+                }
 
                 if (BylawDate == 2013.1)
                 {
@@ -241,28 +291,7 @@ namespace main.contents
                 }
                 else { BylawDate_textBox.Text = Convert.ToString(BylawDate); }
             }
-        }
-
-        private void Calc_LawDate()
-        {
-            if (Convert.ToDouble(Month) < 10)
-            {
-                ConstrucitonDate = Convert.ToDouble((Year + ".0" + Month));
-            }
-            else
-            {
-                ConstrucitonDate = Convert.ToDouble((Year + "." + Month));
-            }
-            string[][] Value = Program.DB.getValue_dedupe(DB.type.BaseDB_HCneed, "법규열관류율", "시기", "");
-
-            for (int i = 0; i < Value.Length; i++)
-            {
-                if (Convert.ToDouble(Value[i][0]) < ConstrucitonDate)
-                {
-                    BylawDate = Convert.ToDouble(Value[i][0]);
-                }
-                else { }
-            }
+            
         }
         private void BuildingName_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -338,7 +367,7 @@ namespace main.contents
         }
         private void Calc_ReviewDate()
         {
-            if (Convert.ToDouble(Month) < 10)
+            if (Convert.ToDouble(ReviewMonth) < 10)
             {
                 ReviewDate = Convert.ToDouble((ReviewYear + ".0" + ReviewMonth));
             }
@@ -408,10 +437,10 @@ namespace main.contents
             ProjectType_textBox.Text = null;
 
             Target = null;
-            Target_comboBox.SelectedItem = null;
+            Target_comboBox.SelectedIndex = 0;
 
             Diagnosis = null;
-            Diagnosis_comboBox.SelectedItem = null;
+            Diagnosis_comboBox.SelectedIndex = 0;
 
 
             BuildingName = null;
@@ -420,27 +449,15 @@ namespace main.contents
             BuildingLocation = null;
             BuildingLocation_textBox.Text = null;
 
-            Climate_comboBox.SelectedItem = null;
-            Climate = null;
-            BylawClimate = null;
-            ByRawClimate_textBox.Text = null;
+            Climate_comboBox.SelectedIndex = 2;
 
-            WallType = null;
-            WallType_comboBox.SelectedItem = null;
+            WallType_comboBox.SelectedIndex = 0;
 
-            RoofType = null;
-            RoofType_comboBox.SelectedItem = null;
+            RoofType_comboBox.SelectedIndex = 0;
 
-            Year = null;
-            Year_comboBox.SelectedItem = null;
-
-            Month = null;
-            Month_comboBox.SelectedItem = null;
-
-            ConstrucitonDate = 0;
-            BylawDate = 0;
-            
-            BylawDate_textBox.Text = "";
+            Year_comboBox.SelectedItem = (2023).ToString();
+            Month_comboBox.SelectedIndex = 0;
+            Calc_LawDate();
 
 
             GrossArea = 0;
@@ -448,11 +465,9 @@ namespace main.contents
             BuildingArea =0;
             BuildingArea_textBox.Text = null;
 
-            AboveGround = null;
-            AboveGround_comboBox.SelectedItem = null;
+            AboveGround_comboBox.SelectedIndex = 0;
 
-            UnderGround = null;
-            UnderGround_comboBox.SelectedItem = null;
+            UnderGround_comboBox.SelectedIndex = 0;
 
             ReviewerName = null;
             ReviewerName_textBox.Text = null;
@@ -463,13 +478,9 @@ namespace main.contents
             ReviewerCompany = null;
             ReviewerCompany_textBox.Text = null;
 
-            ReviewYear = null;
-            ReviewYear_comboBox.SelectedItem = null;
-
-            ReviewMonth = null;
-            ReviewMonth_comboBox.SelectedItem = null;
-
-            ReviewDate = 0;
+            ReviewYear_comboBox.SelectedItem = (2023).ToString();
+            ReviewMonth_comboBox.SelectedIndex = 0;
+            Calc_ReviewDate();
         }
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
@@ -526,13 +537,7 @@ namespace main.contents
                 Month_comboBox.SelectedItem = Month;
 
                 ConstrucitonDate = Convert.ToDouble(Value[0][15]);
-                BylawDate = Convert.ToDouble(Value[0][16]);
-
-                if (BylawDate == 2013.1)
-                {
-                    BylawDate_textBox.Text = "2013.10";
-                }
-                else { BylawDate_textBox.Text = Convert.ToString(BylawDate); }
+                Calc_LawDate();
 
 
                 GrossArea =Convert.ToDouble(Value[0][17]);
@@ -562,6 +567,7 @@ namespace main.contents
                 ReviewMonth_comboBox.SelectedItem = ReviewMonth;
 
                 ReviewDate = Convert.ToDouble(Value[0][26]);
+                Calc_ReviewDate();
             }
             catch { }
 

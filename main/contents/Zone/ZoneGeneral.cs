@@ -914,8 +914,8 @@ namespace main.contents
                 if (Construction_AreaSum[2] != 0)
                 { Roof_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[2]) + "m²"; }
 
-                if ((Construction_AreaSum[3] + Construction_AreaSum[7]) != 0)
-                { Floor_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[3] + Construction_AreaSum[7]) + "m²"; }
+                if (Construction_AreaSum[3] != 0)
+                { Floor_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[3]) + "m²"; }
 
                 if (Construction_AreaSum[4] != 0)
                 { Window_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[4]) + "m²"; }
@@ -945,7 +945,10 @@ namespace main.contents
 
                 String[][] Wall = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체번호", "존 = '" + ZoneNum + "' And 외피유형 = '외벽'");
                 double Area_WallInWall = 0;
-
+               if(Wall[0][1]=="" || Wall[0][1]==null)
+                {
+                    MessageBox.Show("3D 모델 화면에서 외피 구조체종류부터 입력해주세요.");
+                }
                 for (int j = 0; j < Wall.Length; j++)
                 {
                     double Wall_d, Wall_A;

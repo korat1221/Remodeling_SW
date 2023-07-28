@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -75,7 +76,6 @@ namespace main.contentslist
             ListTable.Columns.Add("주요 용도프로필", typeof(string));
             ListTable.Columns.Add("존 개수" + Environment.NewLine + "[EA]", typeof(string));
             ListTable.Columns.Add("순바닥면적" + Environment.NewLine + "[m²]", typeof(string));
-            ListTable.Columns.Add("평균 층고" + Environment.NewLine + "[m]", typeof(string));
             ListTable.Columns.Add("평균 천장고" + Environment.NewLine + "[m]", typeof(string));
 
             dataGridView1.DataSource = ListTable;
@@ -85,12 +85,43 @@ namespace main.contentslist
         {
 
             string[][] List = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "");
+            string[][] Value;
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            String Blank = "";
+
             ListTable.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
-                ListTable.Rows.Add(List[n][0], null, null, null, null, null);
+                string[][] Zone = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List[n][0] + "'");
+
+                String[] 용도프로필 = new String[Zone.Length];
+                double[] 순바닥면적 = new double[Zone.Length];
+                double[] 천장고 = new double[Zone.Length];
+              
+                for (int k = 0; k < Zone.Length; k++)
+                {
+                    try
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", " 존이름, 용도프로필, 순바닥면적, 천장고", "존번호 = '" + Zone[k][0] + "'");
+                        용도프로필[k] = Value[0][1];
+                        순바닥면적[k] = Convert.ToDouble(Value[0][2]);
+                        천장고[k] = Convert.ToDouble(Value[0][3]);
+                    }
+                    catch { }
+                }
+
+                int index =0;//순바닥면적 가장 큰 존 인덱스 찾기
+                for (int k = 0; k < Zone.Length; k++)
+                {
+                    if (순바닥면적[k] == 순바닥면적.Max())
+                    { index = k; }
+                }
+
+                if (순바닥면적.Contains(0)) //모든 존 정보가 저장되어 있을 때만 
+                { ListTable.Rows.Add(List[n][0], null, null, null, null); }
+                else
+                {
+                    ListTable.Rows.Add(List[n][0], 용도프로필[index], Zone.Length, String.Format("{0:F1}", 순바닥면적.Sum()), String.Format("{0:F1}", 천장고.Average()));
+                }
                 string[][] SubList = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List[n][0]+"'");
                 
                 List<object> subMenu = new List<object>();

@@ -217,7 +217,7 @@ namespace main
             }
 
             //신재생 baseDB
-            if (GetFileSize("basedb_cooling.sqlite") > 0)
+            if (GetFileSize("basedb_resystem.sqlite") > 0)
             {
                 baseDB_resystem = new SQLiteConnection(@"Data Source=basedb_resystem.sqlite");
                 baseDB_resystem.Open();

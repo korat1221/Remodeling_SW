@@ -101,7 +101,7 @@ namespace main.contentslist
 
         public void load_List()
         {
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭,Type,커튼월창유효열관류율,태양열취득률,빛투과율,커튼월면적,고정유리종류", "");
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭,Type,유리부분유효열관류율,태양열취득률,빛투과율,커튼월면적,고정유리종류", "");
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
             String Blank = "";
             CWList.Rows.Clear();

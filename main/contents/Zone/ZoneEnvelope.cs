@@ -405,8 +405,13 @@ namespace main.contents
         {
             if (Ceiling_index != null && Wall_index != null && InWall_index != null && Slab_index != null && Ceiling_index != String.Empty && Wall_index != String.Empty && InWall_index != String.Empty && Slab_index != String.Empty)
             {
-                    Cwirk_total = (Cwirk_Celing + Cwirk_Wall + Cwirk_InWall + Cwirk_Slab) / NetArea;
-                    Cwirk_textBox.Text = string.Format("{0:F2}", Cwirk_total);
+                
+                Cwirk_total = (Cwirk_Celing + Cwirk_Wall + Cwirk_InWall + Cwirk_Slab) / NetArea;
+                if (Cwirk_total > 150)
+                {
+                    Cwirk_total = 150;
+                }
+                Cwirk_textBox.Text = string.Format("{0:F2}", Cwirk_total);
             }
             else
             {

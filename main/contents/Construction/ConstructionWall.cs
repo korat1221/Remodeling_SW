@@ -345,6 +345,7 @@ namespace main.contents
             {
                 UMethod = Uvalue_comboBox.SelectedItem.ToString();
                 Act_UcWMethod();
+                Calc_Ueff();
             }
         }
 
@@ -358,6 +359,7 @@ namespace main.contents
                 DiIndi_comboBox.Visible = false;
                 Ucalc_dataGridView.Show();
                 Ucalc_tabPage.Enabled = true;
+                pictureBox3.Visible = true;
             }
             else if (UMethod == "법규")
             {
@@ -367,6 +369,7 @@ namespace main.contents
                 DiIndi_comboBox.Visible = true;
                 Ucalc_dataGridView.Hide();
                 Ucalc_tabPage.Enabled = false;
+                pictureBox3.Visible = false;
             }
             else if (UMethod == "진단")
             {
@@ -375,6 +378,7 @@ namespace main.contents
                 DiIndi_comboBox.Visible = true;
                 Ucalc_dataGridView.Hide();
                 Ucalc_tabPage.Enabled = false;
+                pictureBox3.Visible = false;
             }
         }
 
@@ -762,7 +766,7 @@ namespace main.contents
                     U_textBox.Text = string.Format("{0:F3}", Uvalue);
                     dins = (1 / Uvalue) * 0.04 * 1000;
                     Calc_dU();
-                 // MessageBox.Show("[(" + Value[0][2] + " 시행)" + Value[0][1] + "] " + Value[0][3] + " 열관류율 적용");
+                    // MessageBox.Show("[(" + Value[0][2] + " 시행)" + Value[0][1] + "] " + Value[0][3] + " 열관류율 적용");
                 }
                 else
                 {

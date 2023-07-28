@@ -103,6 +103,7 @@
             Ucalc_dataGridView = new DataGridView();
             AddMaterial_button = new Button();
             tabControl1 = new TabControl();
+            pictureBox3 = new PictureBox();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -114,6 +115,7 @@
             Ucalc_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).BeginInit();
             tabControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -286,7 +288,7 @@
             label3.TabIndex = 92;
             label3.Text = "TYPE";
             // 
-            // WallNum_textBox
+            // FloorNum_textBox
             // 
             FloorNum_textBox.BackColor = Color.White;
             FloorNum_textBox.BorderStyle = BorderStyle.None;
@@ -294,7 +296,7 @@
             FloorNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             FloorNum_textBox.ForeColor = SystemColors.ControlText;
             FloorNum_textBox.Location = new Point(80, 19);
-            FloorNum_textBox.Name = "WallNum_textBox";
+            FloorNum_textBox.Name = "FloorNum_textBox";
             FloorNum_textBox.Size = new Size(67, 15);
             FloorNum_textBox.TabIndex = 90;
             FloorNum_textBox.TextAlign = HorizontalAlignment.Center;
@@ -552,7 +554,7 @@
             label26.Name = "label26";
             label26.Size = new Size(148, 15);
             label26.TabIndex = 71;
-            label26.Text = "[ΔU1D] 1D_열교가산치 ②";           
+            label26.Text = "[ΔU1D] 1D_열교가산치 ②";
             // 
             // U_label2
             // 
@@ -782,6 +784,7 @@
             // Ucalc_tabPage
             // 
             Ucalc_tabPage.BackColor = Color.White;
+            Ucalc_tabPage.Controls.Add(pictureBox3);
             Ucalc_tabPage.Controls.Add(DiIndi2_textBox);
             Ucalc_tabPage.Controls.Add(Rse_textBox);
             Ucalc_tabPage.Controls.Add(label12);
@@ -1037,7 +1040,16 @@
             tabControl1.Size = new Size(977, 388);
             tabControl1.TabIndex = 96;
             // 
-            // ConstructionFloor222
+            // pictureBox3
+            // 
+            pictureBox3.BackColor = Color.Gainsboro;
+            pictureBox3.Location = new Point(564, 62);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(366, 236);
+            pictureBox3.TabIndex = 135;
+            pictureBox3.TabStop = false;
+            // 
+            // ConstructionFloor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -1051,7 +1063,7 @@
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "ConstructionFloor222";
+            Name = "ConstructionFloor";
             Text = "Form3";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
@@ -1069,6 +1081,7 @@
             Ucalc_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).EndInit();
             tabControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1148,5 +1161,6 @@
         private TextBox DiIndi_textBox;
         private TextBox DiIndi2_textBox;
         private TextBox TBName_textBox;
+        private PictureBox pictureBox3;
     }
 }

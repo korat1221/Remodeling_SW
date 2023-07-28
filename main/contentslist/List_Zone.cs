@@ -93,11 +93,19 @@ namespace main.contentslist
         public void load_List()
         {
             string[][] List = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + Num + "'");
+            String[][] Value;
             String Blank = "";
             ListTable.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
-                ListTable.Rows.Add(List[n][0], null, null, null, null);
+                try
+                {
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "select a.존번호, a.존이름, a.용도프로필, a.순바닥면적, a.천장고 FROM ZoneGeneral_Form AS a INNER JOIN ZoneEnvelope_3D AS b ON a.존번호 = b.존 where b.층 = '" + Num + "' AND b.존 = '" + List[n][0] + "'");
+                    ListTable.Rows.Add(List[n][0],  Value[0][1], Value[0][2], String.Format("{0:F1}", Convert.ToDouble(Value[0][3])), String.Format("{0:F1}", Convert.ToDouble(Value[0][4])));
+                }
+                catch
+                { ListTable.Rows.Add(List[n][0], null, null, null, null); }
+                
             }
             dataGridView1.DataSource = ListTable;
             CountDB = List.Length;

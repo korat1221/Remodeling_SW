@@ -841,7 +841,7 @@ namespace main.contents
                 }
                 Uw = Convert.ToDouble(Uvalue[0][0]);
                 Uw2_textBox.Text = String.Format("{0:F3}", Uw);
-                MessageBox.Show("[(" + Uvalue[0][2] + " 시행)" + Uvalue[0][1] + "] " + Uvalue[0][3] + " 열관류율 적용");
+               // MessageBox.Show("[(" + Uvalue[0][2] + " 시행)" + Uvalue[0][1] + "] " + Uvalue[0][3] + " 열관류율 적용");
             }
         }
 
