@@ -3,6 +3,12 @@ function Utility( ) {
 }
 
 Utility.prototype = {
+	equalArray:function (a, b) {
+		return Array.isArray(a) &&
+			Array.isArray(b) &&
+			a.length === b.length &&
+			a.every((val, index) => val === b[index]);
+	},	
     equalPoint: function (a, b) {
 		return a.distanceTo(b) < 0.00000001;
 	},

@@ -1763,7 +1763,7 @@ Editor.prototype = {
 												
 			for (const [cardi, value] of Object.entries(this.wall)) {
 				for (const [idx, el] of Object.entries(value)) {
-					if (el.id && el.floor) {
+					if (el.id && el.floor && (el.type !== 'WALL' || !this.isShadowed(el.edges))) {
 // 						let zoned = "Zone" + ((el.sid ? el.sid : "") + "").padStart(3, '0');
 if (el.type == 'WIN') {
 	let i = 0;
@@ -1860,7 +1860,7 @@ if (el.type == 'WIN') {
 				let el = space[j];
 				let el2 = this.wall[el.cardi][el.id];
 				
-				if (el2.type == t) {
+				if (el2.type == t && (t !== 'WALL' || !this.isShadowed(el2.edges))) {
 					map[el2.id] = el2;
 				}
 			}
@@ -2160,6 +2160,38 @@ if (el.type == 'WIN') {
 		}
 		return {"color":0xffffff,"alpha":0.5};
 	},
+	findShadowEdges: function (space, edges) {
+		let i = -1;
+		let arr = [...edges];
+	
+		while(++i < space.length) {
+			let el = space[i];
+			let wall = this.wall[el.cardi][el.id];
+
+			let a = arr.findIndex(el => {return wall.edges.find(el2 => {return el2 == el;});});
+
+			if (a >= 0) {
+				arr.splice(a,1);
+			}
+
+			if (arr.length <= 0) {
+				return true;
+			}
+		}
+		return false;
+	},
+	isShadowed: function (edges) {
+		let i = -1;
+		
+		while(++i < this.spaces.length) {
+			if (this.shadows["space-" + (i + 1)]) {
+				if (this.findShadowEdges(this.spaces[i], edges)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	},
 	createSpacesInfo: function () {
 		var i = -1;
 
@@ -2171,7 +2203,7 @@ if (el.type == 'WIN') {
 				let el = space[j];
 				let el2 = this.wall[el.cardi][el.id];
 				
-				if (el2.type == t) {
+				if (el2.type == t && (t !== 'WALL' || !this.isShadowed(el2.edges))) {
 					map[el2.id] = el;
 				}
 			}
