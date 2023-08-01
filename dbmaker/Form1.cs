@@ -127,7 +127,7 @@ namespace dbmaker
                             cmd.ExecuteNonQuery();
 
                             int n = 1, i, j, cnt;
-                            StreamReader sr = new StreamReader(openFileDialog1.FileName);
+                            StreamReader sr = new StreamReader(openFileDialog1.FileName, Encoding.Default);
                             List<string[]> headerColumns = new List<string[]>();
 
                             while (!sr.EndOfStream)
