@@ -422,7 +422,22 @@ namespace main.contents.Construction
 
         private void TB_button_Click(object sender, EventArgs e)
         {
-
+            //지면접합, 단열지하의 경우 1D 열교를 미반영하고 지면접합 검토에서 반영하는 것으로 함( 그런데, 지면접합 유형을 단순방식으로 간단히 검토하기로 해서 추후 변경 필요)
+            if (Base == "지면위" )
+            {
+                MessageBox.Show("지면위는 열교 평가는 하지 않습니다.");
+                TBName_textBox.Text = "열교없음";
+            }
+            else if (Base == "단열지하실")
+            {
+                MessageBox.Show("단열지하실은 열교 평가는 하지 않습니다.");
+                TBName_textBox.Text = "열교없음";
+            }
+            else if (Type == "내부덧댐")
+            {
+                MessageBox.Show("내부 덧댐일 경우 열교 평가는 하지 않습니다.");
+                TBName_textBox.Text = "열교없음";
+            }
             if (Type == "내부덧댐")
             {
                 MessageBox.Show("내부 덧댐일 경우 열교 평가는 하지 않습니다.");
@@ -441,7 +456,6 @@ namespace main.contents.Construction
                 }
                 else if (UMethod == "계산" && dins == 0)
                 {
-                    MessageBox.Show(dins.ToString());
                     MessageBox.Show("단열재가 없으므로 열교 평가는 하지 않습니다.");
                     TBName_textBox.Text = "열교없음";
                 }
@@ -803,7 +817,7 @@ namespace main.contents.Construction
             {
                 this.DialogResult = DialogResult.OK;
                 this.Hide();
-                Program.getMenuForm().DoLoadForm(34, OnLoadListProc);
+                Program.getMenuForm().DoLoadForm(36, OnLoadListProc);
             }
         }
 

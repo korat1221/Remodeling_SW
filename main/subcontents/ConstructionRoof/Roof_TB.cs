@@ -31,9 +31,14 @@ namespace main.subcontents.ConstructionRoof
             this.StructureType = StructureType;
             this.d_Ins = dins;
             StructureType_textBox.Text = StructureType;
+            if (StructureType == "기존지붕") //덧댐인 경우에는 새로 시공되는 덧댐 부위를 초점으로 검토해야 하므로, 기존이 다른 유형이더라도 콘크리트조로 가정하고, 덧댐 시공된 것으로 검토 
+            {
+                this.StructureType = "콘크리트조";
+            }
+
             TB_Type_comboBox.Items.Clear();
             //구분 콤보박스
-            switch (StructureType)
+            switch (this.StructureType)
             {
                 case "경량철골조":
                     TB_Type_comboBox.Items.Add("경량_일반형");

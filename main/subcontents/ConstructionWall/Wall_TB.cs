@@ -31,9 +31,14 @@ namespace main.subcontents.ConstructionWall
             this.StructureType = StructureType;
             this.d_Ins = dins;
             StructureType_textBox.Text = StructureType;
+            if(StructureType == "기존외벽") //덧댐인 경우에는 새로 시공되는 덧댐 부위를 초점으로 검토해야 하므로, 기존외벽이 다른 유형이더라도 콘크리트조로 가정하고, 덧댐 시공된 것으로 검토 
+            {
+                this.StructureType = "콘크리트조";
+            }
+
             TB_Type_comboBox.Items.Clear();
             //구분 콤보박스
-            switch (StructureType)
+            switch (this.StructureType)
             {
                 case "경량철골조":
                     TB_Type_comboBox.Items.Add("금속스터드");
@@ -43,12 +48,6 @@ namespace main.subcontents.ConstructionWall
                     TB_Type_comboBox.Items.Add("목재스터드");
                     break;
                 case "콘크리트조":
-                    TB_Type_comboBox.Items.Add("직접고정");
-                    TB_Type_comboBox.Items.Add("트러스(점형)");
-                    TB_Type_comboBox.Items.Add("트러스(선형)");
-                    TB_Type_comboBox.Items.Add("내단열");
-                    break;
-                case "기존외벽":
                     TB_Type_comboBox.Items.Add("직접고정");
                     TB_Type_comboBox.Items.Add("트러스(점형)");
                     TB_Type_comboBox.Items.Add("트러스(선형)");

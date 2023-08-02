@@ -29,6 +29,9 @@
     <Compile Update="contentslist\List_ConstructionWall.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="contentslist\List_HeatingSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="contents\3D\Model.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +68,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\ConstructionWall\Wall_TB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\HeatingSystem\Heating_Zone.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\HeatingSystem\Heating_BoilerDB.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\MaterialDB.cs">
