@@ -123,7 +123,8 @@ namespace main
 
 
             {"HeatingSystem_Form", "CREATE TABLE IF NOT EXISTS HeatingSystem_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),명칭 VARCHAR (32))"},
-            {"ZoneSystem_Form", "CREATE TABLE IF NOT EXISTS ZoneSystem_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),난방시스템 VARCHAR (32))"}
+            {"ZoneSystem_Form", "CREATE TABLE IF NOT EXISTS ZoneSystem_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),난방시스템 VARCHAR (32))"},
+            {"User_Boiler", "CREATE TABLE IF NOT EXISTS User_Boiler (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),명칭 VARCHAR (32),난방급탕 VARCHAR (32),연료 VARCHAR (32),Type VARCHAR (32),용량 VARCHAR (32),전부하효율 VARCHAR (32),부분부하효율 VARCHAR (32),소비전력 VARCHAR (32),대기전력 VARCHAR (32))"},
         };
    
 

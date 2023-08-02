@@ -368,6 +368,8 @@ namespace main.contents
                     DataGridViewCell cell = row.Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
                     DataGridViewComboBoxCell cell2 = row.Cells[5] as DataGridViewComboBoxCell;
 
+                    Load_ConstructionList(e.RowIndex, dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
+
                     if (cell.Value.ToString() != "커튼월창")
                     {
                         DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
@@ -387,7 +389,9 @@ namespace main.contents
                         row.Cells[5] = CWTypeCombo;
                         CWTypeCombo.ReadOnly = false;
                     }
+
                 }
+
             }
         }
 

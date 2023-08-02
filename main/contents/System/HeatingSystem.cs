@@ -48,13 +48,6 @@ namespace main.contents
             SLRL_comboBox.Items.Add("저온수(35/28)");
             SLRL_comboBox.SelectedIndex = 1;
 
-            //생산설비내 펌프 유무
-            InPump_comboBox.Items.Clear();
-            InPump_comboBox.Items.Add("내부 펌프 없음");
-            InPump_comboBox.Items.Add("내부 펌프 있음+외기온에 따른 제어");
-            InPump_comboBox.Items.Add("내부 펌프 있음+실내온도에 따른 제어");
-            InPump_comboBox.SelectedIndex = 2;
-
             MainSystem_comboBox.Items.Clear();
             SubSystem1_comboBox.Items.Clear();
             SubSystem2_comboBox.Items.Clear();
@@ -89,13 +82,6 @@ namespace main.contents
             }
         }
 
-        private void Combi_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (Combi_comboBox.SelectedItem != null)
-            {
-                Combi = Combi_comboBox.SelectedItem.ToString();
-            }
-        }
 
         private void SystemLoacation_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -142,13 +128,14 @@ namespace main.contents
         }
         private void LoadtabPage(String System)
         {
-            if (System == "히트펌프")
-            {
-                tabControl2.SelectedTab = tabControl2.TabPages["HP_tabPage"];
-            }
-            else if (System == "보일러")
+
+            if (System == "보일러")
             {
                 tabControl2.SelectedTab = tabControl2.TabPages["Boiler_tabPage"];
+            }
+            else if (System == "히트펌프")
+            {
+                tabControl2.SelectedTab = tabControl2.TabPages["HP_tabPage"];
             }
             else if (System == "흡수식온수기")
             {
@@ -164,13 +151,6 @@ namespace main.contents
             }
         }
 
-        private void InPump_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (InPump_comboBox.SelectedItem != null)
-            {
-                InPump = InPump_comboBox.SelectedItem.ToString();
-            }
-        }
         private void Save()
         {
             this.DialogResult = DialogResult.OK;

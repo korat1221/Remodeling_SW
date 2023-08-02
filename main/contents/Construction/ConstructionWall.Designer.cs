@@ -93,6 +93,7 @@
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             Ucalc_tabPage = new TabPage();
+            pictureBox3 = new PictureBox();
             Rse_textBox = new TextBox();
             label12 = new Label();
             Rsi_textBox = new TextBox();
@@ -109,7 +110,6 @@
             Ucalc_dataGridView = new DataGridView();
             AddMaterial_button = new Button();
             tabControl1 = new TabControl();
-            pictureBox3 = new PictureBox();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -119,9 +119,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             Ucalc_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).BeginInit();
             tabControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -540,6 +540,7 @@
             Ueff_textBox.ForeColor = SystemColors.ControlDark;
             Ueff_textBox.Location = new Point(699, 117);
             Ueff_textBox.Name = "Ueff_textBox";
+            Ueff_textBox.ReadOnly = true;
             Ueff_textBox.Size = new Size(116, 15);
             Ueff_textBox.TabIndex = 109;
             Ueff_textBox.TextAlign = HorizontalAlignment.Center;
@@ -575,6 +576,7 @@
             dU_textBox.ForeColor = SystemColors.ControlDark;
             dU_textBox.Location = new Point(699, 89);
             dU_textBox.Name = "dU_textBox";
+            dU_textBox.ReadOnly = true;
             dU_textBox.Size = new Size(116, 15);
             dU_textBox.TabIndex = 72;
             dU_textBox.TextAlign = HorizontalAlignment.Center;
@@ -599,6 +601,7 @@
             α_textBox.ForeColor = SystemColors.ControlDark;
             α_textBox.Location = new Point(699, 30);
             α_textBox.Name = "α_textBox";
+            α_textBox.ReadOnly = true;
             α_textBox.Size = new Size(116, 15);
             α_textBox.TabIndex = 69;
             α_textBox.TextAlign = HorizontalAlignment.Center;
@@ -634,6 +637,7 @@
             U_textBox.ForeColor = SystemColors.ControlDark;
             U_textBox.Location = new Point(699, 60);
             U_textBox.Name = "U_textBox";
+            U_textBox.ReadOnly = true;
             U_textBox.Size = new Size(116, 15);
             U_textBox.TabIndex = 66;
             U_textBox.TextAlign = HorizontalAlignment.Center;
@@ -875,6 +879,15 @@
             Ucalc_tabPage.TabIndex = 0;
             Ucalc_tabPage.Text = "열관류율 계산";
             // 
+            // pictureBox3
+            // 
+            pictureBox3.BackColor = System.Drawing.Color.Gainsboro;
+            pictureBox3.Location = new Point(569, 61);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(366, 236);
+            pictureBox3.TabIndex = 136;
+            pictureBox3.TabStop = false;
+            // 
             // Rse_textBox
             // 
             Rse_textBox.BackColor = System.Drawing.Color.White;
@@ -1104,15 +1117,6 @@
             tabControl1.Size = new Size(977, 388);
             tabControl1.TabIndex = 96;
             // 
-            // pictureBox3
-            // 
-            pictureBox3.BackColor = System.Drawing.Color.Gainsboro;
-            pictureBox3.Location = new Point(569, 61);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(366, 236);
-            pictureBox3.TabIndex = 136;
-            pictureBox3.TabStop = false;
-            // 
             // ConstructionWall
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1143,9 +1147,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             Ucalc_tabPage.ResumeLayout(false);
             Ucalc_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).EndInit();
             tabControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }

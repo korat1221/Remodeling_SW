@@ -38,18 +38,23 @@
             Name_textBox = new TextBox();
             tabControl1 = new TabControl();
             Qhg_tabPage = new TabPage();
-            SLRL_comboBox = new ComboBox();
+            textBox2 = new TextBox();
+            button1 = new Button();
+            label19 = new Label();
+            textBox1 = new TextBox();
+            button3 = new Button();
             label7 = new Label();
-            InPump_comboBox = new ComboBox();
+            TBName_textBox = new TextBox();
+            TB_button = new Button();
+            label12 = new Label();
+            SLRL_comboBox = new ComboBox();
             label8 = new Label();
             SystemLoacation_comboBox = new ComboBox();
             label5 = new Label();
             SubSystem2_comboBox = new ComboBox();
             label6 = new Label();
-            Combi_comboBox = new ComboBox();
             label2 = new Label();
             SubSystem1_comboBox = new ComboBox();
-            label4 = new Label();
             HeatingDHW_comboBox = new ComboBox();
             UMethod_label = new Label();
             MainSystem_comboBox = new ComboBox();
@@ -57,16 +62,10 @@
             Qhs_tabPage = new TabPage();
             Qhd_tabPage = new TabPage();
             Qhce_tabPage = new TabPage();
+            panel2 = new Panel();
             tabControl2 = new TabControl();
-            HP_tabPage = new TabPage();
             Boiler_tabPage = new TabPage();
-            PersonNum_textBox = new TextBox();
-            label11 = new Label();
-            label10 = new Label();
-            textBox1 = new TextBox();
-            label9 = new Label();
-            TBName_textBox = new TextBox();
-            TB_button = new Button();
+            HP_tabPage = new TabPage();
             AS_tabPage = new TabPage();
             DH_tabPage = new TabPage();
             Solar_tabPage = new TabPage();
@@ -75,7 +74,6 @@
             tabControl1.SuspendLayout();
             Qhg_tabPage.SuspendLayout();
             tabControl2.SuspendLayout();
-            Boiler_tabPage.SuspendLayout();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -179,24 +177,29 @@
             tabControl1.Location = new Point(12, 119);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(977, 137);
+            tabControl1.Size = new Size(977, 155);
             tabControl1.TabIndex = 97;
             // 
             // Qhg_tabPage
             // 
             Qhg_tabPage.BackColor = Color.White;
-            Qhg_tabPage.Controls.Add(SLRL_comboBox);
+            Qhg_tabPage.Controls.Add(textBox2);
+            Qhg_tabPage.Controls.Add(button1);
+            Qhg_tabPage.Controls.Add(label19);
+            Qhg_tabPage.Controls.Add(textBox1);
+            Qhg_tabPage.Controls.Add(button3);
             Qhg_tabPage.Controls.Add(label7);
-            Qhg_tabPage.Controls.Add(InPump_comboBox);
+            Qhg_tabPage.Controls.Add(TBName_textBox);
+            Qhg_tabPage.Controls.Add(TB_button);
+            Qhg_tabPage.Controls.Add(label12);
+            Qhg_tabPage.Controls.Add(SLRL_comboBox);
             Qhg_tabPage.Controls.Add(label8);
             Qhg_tabPage.Controls.Add(SystemLoacation_comboBox);
             Qhg_tabPage.Controls.Add(label5);
             Qhg_tabPage.Controls.Add(SubSystem2_comboBox);
             Qhg_tabPage.Controls.Add(label6);
-            Qhg_tabPage.Controls.Add(Combi_comboBox);
             Qhg_tabPage.Controls.Add(label2);
             Qhg_tabPage.Controls.Add(SubSystem1_comboBox);
-            Qhg_tabPage.Controls.Add(label4);
             Qhg_tabPage.Controls.Add(HeatingDHW_comboBox);
             Qhg_tabPage.Controls.Add(UMethod_label);
             Qhg_tabPage.Controls.Add(MainSystem_comboBox);
@@ -204,19 +207,73 @@
             Qhg_tabPage.Location = new Point(4, 24);
             Qhg_tabPage.Name = "Qhg_tabPage";
             Qhg_tabPage.Padding = new Padding(3);
-            Qhg_tabPage.Size = new Size(969, 109);
+            Qhg_tabPage.Size = new Size(969, 127);
             Qhg_tabPage.TabIndex = 0;
             Qhg_tabPage.Text = "생산";
             // 
-            // SLRL_comboBox
+            // textBox2
             // 
-            SLRL_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            SLRL_comboBox.FormattingEnabled = true;
-            SLRL_comboBox.Location = new Point(825, 30);
-            SLRL_comboBox.Name = "SLRL_comboBox";
-            SLRL_comboBox.Size = new Size(120, 24);
-            SLRL_comboBox.TabIndex = 141;
-            SLRL_comboBox.SelectedIndexChanged += SLRL_comboBox_SelectedIndexChanged;
+            textBox2.BackColor = Color.White;
+            textBox2.BorderStyle = BorderStyle.None;
+            textBox2.Enabled = false;
+            textBox2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox2.ForeColor = SystemColors.ControlDark;
+            textBox2.Location = new Point(794, 96);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(120, 15);
+            textBox2.TabIndex = 152;
+            textBox2.TextAlign = HorizontalAlignment.Center;
+            // 
+            // button1
+            // 
+            button1.BackColor = SystemColors.ControlLight;
+            button1.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            button1.FlatStyle = FlatStyle.System;
+            button1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            button1.Location = new Point(917, 92);
+            button1.Margin = new Padding(0);
+            button1.Name = "button1";
+            button1.Size = new Size(23, 23);
+            button1.TabIndex = 151;
+            button1.Text = "+";
+            button1.UseVisualStyleBackColor = false;
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label19.Location = new Point(701, 96);
+            label19.Name = "label19";
+            label19.Size = new Size(71, 15);
+            label19.TabIndex = 150;
+            label19.Text = "Sub2일람표";
+            // 
+            // textBox1
+            // 
+            textBox1.BackColor = Color.White;
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Enabled = false;
+            textBox1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox1.ForeColor = SystemColors.ControlDark;
+            textBox1.Location = new Point(794, 64);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(120, 15);
+            textBox1.TabIndex = 149;
+            textBox1.TextAlign = HorizontalAlignment.Center;
+            // 
+            // button3
+            // 
+            button3.BackColor = SystemColors.ControlLight;
+            button3.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            button3.FlatStyle = FlatStyle.System;
+            button3.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            button3.Location = new Point(917, 60);
+            button3.Margin = new Padding(0);
+            button3.Name = "button3";
+            button3.Size = new Size(23, 23);
+            button3.TabIndex = 148;
+            button3.Text = "+";
+            button3.UseVisualStyleBackColor = false;
             // 
             // label7
             // 
@@ -224,25 +281,62 @@
             label7.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label7.Location = new Point(701, 64);
             label7.Name = "label7";
-            label7.Size = new Size(123, 15);
-            label7.TabIndex = 140;
-            label7.Text = "생산설비 내 펌프유무";
+            label7.Size = new Size(72, 15);
+            label7.TabIndex = 147;
+            label7.Text = "SUb1일람표";
             // 
-            // InPump_comboBox
+            // TBName_textBox
             // 
-            InPump_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            InPump_comboBox.FormattingEnabled = true;
-            InPump_comboBox.Location = new Point(825, 60);
-            InPump_comboBox.Name = "InPump_comboBox";
-            InPump_comboBox.Size = new Size(120, 24);
-            InPump_comboBox.TabIndex = 139;
-            InPump_comboBox.SelectedIndexChanged += InPump_comboBox_SelectedIndexChanged;
+            TBName_textBox.BackColor = Color.White;
+            TBName_textBox.BorderStyle = BorderStyle.None;
+            TBName_textBox.Enabled = false;
+            TBName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            TBName_textBox.ForeColor = SystemColors.ControlDark;
+            TBName_textBox.Location = new Point(347, 64);
+            TBName_textBox.Name = "TBName_textBox";
+            TBName_textBox.Size = new Size(120, 15);
+            TBName_textBox.TabIndex = 146;
+            TBName_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // TB_button
+            // 
+            TB_button.BackColor = SystemColors.ControlLight;
+            TB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            TB_button.FlatStyle = FlatStyle.System;
+            TB_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            TB_button.Location = new Point(469, 60);
+            TB_button.Margin = new Padding(0);
+            TB_button.Name = "TB_button";
+            TB_button.Size = new Size(23, 23);
+            TB_button.TabIndex = 145;
+            TB_button.Text = "+";
+            TB_button.UseVisualStyleBackColor = false;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label12.Location = new Point(256, 64);
+            label12.Name = "label12";
+            label12.Size = new Size(70, 15);
+            label12.TabIndex = 144;
+            label12.Text = "Main일람표";
+            // 
+            // SLRL_comboBox
+            // 
+            SLRL_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            SLRL_comboBox.FormattingEnabled = true;
+            SLRL_comboBox.Location = new Point(576, 29);
+            SLRL_comboBox.Name = "SLRL_comboBox";
+            SLRL_comboBox.Size = new Size(120, 24);
+            SLRL_comboBox.TabIndex = 141;
+            SLRL_comboBox.SelectedIndexChanged += SLRL_comboBox_SelectedIndexChanged;
             // 
             // label8
             // 
             label8.AutoSize = true;
             label8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label8.Location = new Point(701, 34);
+            label8.Location = new Point(491, 34);
             label8.Name = "label8";
             label8.Size = new Size(84, 15);
             label8.TabIndex = 138;
@@ -252,7 +346,7 @@
             // 
             SystemLoacation_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             SystemLoacation_comboBox.FormattingEnabled = true;
-            SystemLoacation_comboBox.Location = new Point(576, 30);
+            SystemLoacation_comboBox.Location = new Point(347, 29);
             SystemLoacation_comboBox.Name = "SystemLoacation_comboBox";
             SystemLoacation_comboBox.Size = new Size(120, 24);
             SystemLoacation_comboBox.TabIndex = 137;
@@ -262,17 +356,17 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.Location = new Point(497, 64);
+            label5.Location = new Point(497, 96);
             label5.Name = "label5";
-            label5.Size = new Size(62, 15);
+            label5.Size = new Size(59, 15);
             label5.TabIndex = 136;
-            label5.Text = "보조설비2";
+            label5.Text = "Sub설비2";
             // 
             // SubSystem2_comboBox
             // 
             SubSystem2_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             SubSystem2_comboBox.FormattingEnabled = true;
-            SubSystem2_comboBox.Location = new Point(576, 60);
+            SubSystem2_comboBox.Location = new Point(576, 91);
             SubSystem2_comboBox.Name = "SubSystem2_comboBox";
             SubSystem2_comboBox.Size = new Size(120, 24);
             SubSystem2_comboBox.TabIndex = 135;
@@ -282,57 +376,37 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label6.Location = new Point(497, 34);
+            label6.Location = new Point(256, 34);
             label6.Name = "label6";
             label6.Size = new Size(55, 15);
             label6.TabIndex = 134;
             label6.Text = "설치위치";
             // 
-            // Combi_comboBox
-            // 
-            Combi_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Combi_comboBox.FormattingEnabled = true;
-            Combi_comboBox.Location = new Point(347, 30);
-            Combi_comboBox.Name = "Combi_comboBox";
-            Combi_comboBox.Size = new Size(120, 24);
-            Combi_comboBox.TabIndex = 133;
-            Combi_comboBox.SelectedIndexChanged += Combi_comboBox_SelectedIndexChanged;
-            // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(258, 64);
+            label2.Location = new Point(497, 64);
             label2.Name = "label2";
-            label2.Size = new Size(62, 15);
+            label2.Size = new Size(59, 15);
             label2.TabIndex = 132;
-            label2.Text = "보조설비1";
+            label2.Text = "Sub설비1";
             // 
             // SubSystem1_comboBox
             // 
             SubSystem1_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             SubSystem1_comboBox.FormattingEnabled = true;
-            SubSystem1_comboBox.Location = new Point(347, 60);
+            SubSystem1_comboBox.Location = new Point(576, 59);
             SubSystem1_comboBox.Name = "SubSystem1_comboBox";
             SubSystem1_comboBox.Size = new Size(120, 24);
             SubSystem1_comboBox.TabIndex = 131;
             SubSystem1_comboBox.SelectedIndexChanged += SubSystem1_comboBox_SelectedIndexChanged;
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.Location = new Point(258, 34);
-            label4.Name = "label4";
-            label4.Size = new Size(55, 15);
-            label4.TabIndex = 130;
-            label4.Text = "콤비설비";
-            // 
             // HeatingDHW_comboBox
             // 
             HeatingDHW_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             HeatingDHW_comboBox.FormattingEnabled = true;
-            HeatingDHW_comboBox.Location = new Point(108, 30);
+            HeatingDHW_comboBox.Location = new Point(108, 29);
             HeatingDHW_comboBox.Name = "HeatingDHW_comboBox";
             HeatingDHW_comboBox.Size = new Size(120, 24);
             HeatingDHW_comboBox.TabIndex = 129;
@@ -344,15 +418,15 @@
             UMethod_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             UMethod_label.Location = new Point(19, 64);
             UMethod_label.Name = "UMethod_label";
-            UMethod_label.Size = new Size(55, 15);
+            UMethod_label.Size = new Size(58, 15);
             UMethod_label.TabIndex = 128;
-            UMethod_label.Text = "주요설비";
+            UMethod_label.Text = "Main설비";
             // 
             // MainSystem_comboBox
             // 
             MainSystem_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             MainSystem_comboBox.FormattingEnabled = true;
-            MainSystem_comboBox.Location = new Point(108, 60);
+            MainSystem_comboBox.Location = new Point(108, 59);
             MainSystem_comboBox.Name = "MainSystem_comboBox";
             MainSystem_comboBox.Size = new Size(120, 24);
             MainSystem_comboBox.TabIndex = 127;
@@ -374,18 +448,18 @@
             Qhs_tabPage.Location = new Point(4, 24);
             Qhs_tabPage.Name = "Qhs_tabPage";
             Qhs_tabPage.Padding = new Padding(3);
-            Qhs_tabPage.Size = new Size(969, 109);
+            Qhs_tabPage.Size = new Size(969, 127);
             Qhs_tabPage.TabIndex = 2;
-            Qhs_tabPage.Text = "축열";
+            Qhs_tabPage.Text = "저장";
             // 
             // Qhd_tabPage
             // 
             Qhd_tabPage.Location = new Point(4, 24);
             Qhd_tabPage.Name = "Qhd_tabPage";
             Qhd_tabPage.Padding = new Padding(3);
-            Qhd_tabPage.Size = new Size(969, 109);
+            Qhd_tabPage.Size = new Size(969, 127);
             Qhd_tabPage.TabIndex = 3;
-            Qhd_tabPage.Text = "배관";
+            Qhd_tabPage.Text = "분배";
             Qhd_tabPage.UseVisualStyleBackColor = true;
             // 
             // Qhce_tabPage
@@ -393,23 +467,41 @@
             Qhce_tabPage.Location = new Point(4, 24);
             Qhce_tabPage.Name = "Qhce_tabPage";
             Qhce_tabPage.Padding = new Padding(3);
-            Qhce_tabPage.Size = new Size(969, 109);
+            Qhce_tabPage.Size = new Size(969, 127);
             Qhce_tabPage.TabIndex = 4;
             Qhce_tabPage.Text = "공급";
             Qhce_tabPage.UseVisualStyleBackColor = true;
             // 
+            // panel2
+            // 
+            panel2.BackColor = Color.White;
+            panel2.Location = new Point(12, 439);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(977, 221);
+            panel2.TabIndex = 143;
+            // 
             // tabControl2
             // 
-            tabControl2.Controls.Add(HP_tabPage);
             tabControl2.Controls.Add(Boiler_tabPage);
+            tabControl2.Controls.Add(HP_tabPage);
             tabControl2.Controls.Add(AS_tabPage);
             tabControl2.Controls.Add(DH_tabPage);
             tabControl2.Controls.Add(Solar_tabPage);
-            tabControl2.Location = new Point(12, 260);
+            tabControl2.Location = new Point(12, 280);
             tabControl2.Name = "tabControl2";
             tabControl2.SelectedIndex = 0;
-            tabControl2.Size = new Size(977, 368);
-            tabControl2.TabIndex = 98;
+            tabControl2.Size = new Size(977, 153);
+            tabControl2.TabIndex = 144;
+            // 
+            // Boiler_tabPage
+            // 
+            Boiler_tabPage.Location = new Point(4, 24);
+            Boiler_tabPage.Name = "Boiler_tabPage";
+            Boiler_tabPage.Padding = new Padding(3);
+            Boiler_tabPage.Size = new Size(969, 125);
+            Boiler_tabPage.TabIndex = 6;
+            Boiler_tabPage.Text = "보일러";
+            Boiler_tabPage.UseVisualStyleBackColor = true;
             // 
             // HP_tabPage
             // 
@@ -417,114 +509,16 @@
             HP_tabPage.Location = new Point(4, 24);
             HP_tabPage.Name = "HP_tabPage";
             HP_tabPage.Padding = new Padding(3);
-            HP_tabPage.Size = new Size(969, 340);
-            HP_tabPage.TabIndex = 0;
+            HP_tabPage.Size = new Size(969, 125);
+            HP_tabPage.TabIndex = 2;
             HP_tabPage.Text = "히트펌프";
-            // 
-            // Boiler_tabPage
-            // 
-            Boiler_tabPage.BackColor = Color.White;
-            Boiler_tabPage.Controls.Add(PersonNum_textBox);
-            Boiler_tabPage.Controls.Add(label11);
-            Boiler_tabPage.Controls.Add(label10);
-            Boiler_tabPage.Controls.Add(textBox1);
-            Boiler_tabPage.Controls.Add(label9);
-            Boiler_tabPage.Controls.Add(TBName_textBox);
-            Boiler_tabPage.Controls.Add(TB_button);
-            Boiler_tabPage.Location = new Point(4, 24);
-            Boiler_tabPage.Name = "Boiler_tabPage";
-            Boiler_tabPage.Padding = new Padding(3);
-            Boiler_tabPage.Size = new Size(969, 340);
-            Boiler_tabPage.TabIndex = 2;
-            Boiler_tabPage.Text = "보일러";
-            // 
-            // PersonNum_textBox
-            // 
-            PersonNum_textBox.BackColor = SystemColors.Window;
-            PersonNum_textBox.BorderStyle = BorderStyle.FixedSingle;
-            PersonNum_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            PersonNum_textBox.Location = new Point(108, 109);
-            PersonNum_textBox.Name = "PersonNum_textBox";
-            PersonNum_textBox.Size = new Size(120, 22);
-            PersonNum_textBox.TabIndex = 143;
-            PersonNum_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label11.Location = new Point(19, 113);
-            label11.Name = "label11";
-            label11.Size = new Size(71, 15);
-            label11.TabIndex = 142;
-            label11.Text = "보일러 용량";
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label10.Location = new Point(19, 69);
-            label10.Name = "label10";
-            label10.Size = new Size(31, 15);
-            label10.TabIndex = 140;
-            label10.Text = "연료";
-            // 
-            // textBox1
-            // 
-            textBox1.BackColor = Color.White;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Enabled = false;
-            textBox1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.ForeColor = SystemColors.ControlDark;
-            textBox1.Location = new Point(108, 69);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(120, 15);
-            textBox1.TabIndex = 139;
-            textBox1.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label9.Location = new Point(19, 28);
-            label9.Name = "label9";
-            label9.Size = new Size(71, 15);
-            label9.TabIndex = 138;
-            label9.Text = "보일러 종류";
-            // 
-            // TBName_textBox
-            // 
-            TBName_textBox.BackColor = Color.White;
-            TBName_textBox.BorderStyle = BorderStyle.None;
-            TBName_textBox.Enabled = false;
-            TBName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            TBName_textBox.ForeColor = SystemColors.ControlDark;
-            TBName_textBox.Location = new Point(108, 28);
-            TBName_textBox.Name = "TBName_textBox";
-            TBName_textBox.Size = new Size(120, 15);
-            TBName_textBox.TabIndex = 137;
-            TBName_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // TB_button
-            // 
-            TB_button.BackColor = SystemColors.ControlLight;
-            TB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            TB_button.FlatStyle = FlatStyle.System;
-            TB_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            TB_button.Location = new Point(230, 25);
-            TB_button.Margin = new Padding(0);
-            TB_button.Name = "TB_button";
-            TB_button.Size = new Size(23, 23);
-            TB_button.TabIndex = 136;
-            TB_button.Text = "+";
-            TB_button.UseVisualStyleBackColor = false;
             // 
             // AS_tabPage
             // 
             AS_tabPage.Location = new Point(4, 24);
             AS_tabPage.Name = "AS_tabPage";
             AS_tabPage.Padding = new Padding(3);
-            AS_tabPage.Size = new Size(969, 340);
+            AS_tabPage.Size = new Size(969, 125);
             AS_tabPage.TabIndex = 3;
             AS_tabPage.Text = "흡수식온수기";
             AS_tabPage.UseVisualStyleBackColor = true;
@@ -534,7 +528,7 @@
             DH_tabPage.Location = new Point(4, 24);
             DH_tabPage.Name = "DH_tabPage";
             DH_tabPage.Padding = new Padding(3);
-            DH_tabPage.Size = new Size(969, 340);
+            DH_tabPage.Size = new Size(969, 125);
             DH_tabPage.TabIndex = 4;
             DH_tabPage.Text = "지역난방";
             DH_tabPage.UseVisualStyleBackColor = true;
@@ -544,7 +538,7 @@
             Solar_tabPage.Location = new Point(4, 24);
             Solar_tabPage.Name = "Solar_tabPage";
             Solar_tabPage.Padding = new Padding(3);
-            Solar_tabPage.Size = new Size(969, 340);
+            Solar_tabPage.Size = new Size(969, 125);
             Solar_tabPage.TabIndex = 5;
             Solar_tabPage.Text = "태양열시스템";
             Solar_tabPage.UseVisualStyleBackColor = true;
@@ -556,6 +550,7 @@
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
             Controls.Add(tabControl2);
+            Controls.Add(panel2);
             Controls.Add(tabControl1);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.None;
@@ -568,8 +563,6 @@
             Qhg_tabPage.ResumeLayout(false);
             Qhg_tabPage.PerformLayout();
             tabControl2.ResumeLayout(false);
-            Boiler_tabPage.ResumeLayout(false);
-            Boiler_tabPage.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -588,34 +581,33 @@
         private TabPage Qhs_tabPage;
         private TabPage Qhd_tabPage;
         private TabPage Qhce_tabPage;
-        private TabControl tabControl2;
-        private TabPage HP_tabPage;
-        private TabPage Boiler_tabPage;
-        private TabPage AS_tabPage;
-        private TabPage DH_tabPage;
-        private TabPage Solar_tabPage;
         private ComboBox SLRL_comboBox;
-        private Label label7;
-        private ComboBox InPump_comboBox;
         private Label label8;
         private ComboBox SystemLoacation_comboBox;
         private Label label5;
         private ComboBox SubSystem2_comboBox;
         private Label label6;
-        private ComboBox Combi_comboBox;
         private Label label2;
         private ComboBox SubSystem1_comboBox;
-        private Label label4;
         private ComboBox HeatingDHW_comboBox;
         private Label UMethod_label;
         private ComboBox MainSystem_comboBox;
         private Label label25;
-        private Label label11;
-        private Label label10;
+        private Panel panel2;
+        private TabControl tabControl2;
+        private TabPage HP_tabPage;
+        private TabPage AS_tabPage;
+        private TabPage DH_tabPage;
+        private TabPage Solar_tabPage;
+        private TextBox textBox2;
+        private Button button1;
+        private Label label19;
         private TextBox textBox1;
-        private Label label9;
+        private Button button3;
+        private Label label7;
         private TextBox TBName_textBox;
         private Button TB_button;
-        private TextBox PersonNum_textBox;
+        private Label label12;
+        private TabPage Boiler_tabPage;
     }
 }
