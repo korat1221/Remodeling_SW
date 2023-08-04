@@ -600,6 +600,11 @@ Zoning.prototype = {
 							T.getNormal(n);
 
 							let cardi = this.util.asCardinal(n.x,n.y,n.z);
+							let cardi_r = this.util.asCardinal(n.x,-n.y,n.z);
+
+							if (cardi === 'DOWN' && cardi_r !== "UP") {
+								cardi = cardi_r;
+							}
 
 			//				if (debug_temp) {
 			//					console.log(Math.abs(plane.distanceToPoint(v)));
