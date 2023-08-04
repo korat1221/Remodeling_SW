@@ -70,10 +70,10 @@
     <Compile Update="subcontents\ConstructionWall\Wall_TB.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="subcontents\HeatingSystem\Heating_Zone.cs">
+    <Compile Update="subcontents\HeatingSystem\Heating_Boiler.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="subcontents\HeatingSystem\Heating_BoilerDB.cs">
+    <Compile Update="subcontents\HeatingSystem\Heating_Zone.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\MaterialDB.cs">

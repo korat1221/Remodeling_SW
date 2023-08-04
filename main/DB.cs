@@ -69,8 +69,8 @@ namespace main
             //{"rooflight_shade", "CREATE TABLE IF NOT EXISTS rooflight_shade (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
             //{"renewable_energy_1", "CREATE TABLE IF NOT EXISTS renewable_energy_1 (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32),energytype VARCHAR (32),direction VARCHAR (32),inc VARCHAR (32),area VARCHAR (32),eff VARCHAR (32))"},
             //{"ext_ill", "CREATE TABLE IF NOT EXISTS ext_ill (ID INTEGER PRIMARY KEY AUTOINCREMENT,zoneNum VARCHAR (32),월 VARCHAR (32),value VARCHAR (32))"},
-            //{"User_Lighting", "CREATE TABLE IF NOT EXISTS User_Lighting (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),DB유형 VARCHAR (32),등기구명칭 VARCHAR (32),램프유형 VARCHAR (32),제조사 VARCHAR (32),안정기_컨버터 VARCHAR (32),광속 VARCHAR (32),소비전력 VARCHAR (32),광효율 VARCHAR (32),조명계수 VARCHAR (32))"},
-            //{"User_Renew", "CREATE TABLE IF NOT EXISTS User_Renew (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),DB유형 VARCHAR (32),집광채광명칭 VARCHAR (32),집광채광종류 VARCHAR (32),제조사 VARCHAR (32),집광채광효율 VARCHAR (32),산광부가로길이 VARCHAR (32),산광부세로길이 VARCHAR (32),산광부면적 VARCHAR (32))"},
+            {"User_Lighting", "CREATE TABLE IF NOT EXISTS User_Lighting (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),DB유형 VARCHAR (32),등기구명칭 VARCHAR (32),램프유형 VARCHAR (32),제조사 VARCHAR (32),안정기_컨버터 VARCHAR (32),광속 VARCHAR (32),소비전력 VARCHAR (32),광효율 VARCHAR (32),조명계수 VARCHAR (32))"},
+            {"User_Renew", "CREATE TABLE IF NOT EXISTS User_Renew (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),DB유형 VARCHAR (32),집광채광명칭 VARCHAR (32),집광채광종류 VARCHAR (32),제조사 VARCHAR (32),집광채광효율 VARCHAR (32),산광부가로길이 VARCHAR (32),산광부세로길이 VARCHAR (32),산광부면적 VARCHAR (32))"},
             //{"ZoneLighting_form", "CREATE TABLE IF NOT EXISTS ZoneLighting_form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),조명방식 VARCHAR (32),제어방식 VARCHAR (32),디밍유형 VARCHAR (32),조명개수 VARCHAR (32),조명밀도 VARCHAR (32),재실계수 VARCHAR (32),재실계수1 VARCHAR (32),재실계수2 VARCHAR (32),재실계수3 VARCHAR (32),조도제어계수 VARCHAR (32),자연채광체크 VARCHAR (32),자연채광유형 VARCHAR (32),파사드 VARCHAR (32),이중외피유리 VARCHAR (32),아트리움유리 VARCHAR (32),파사드유리빛투과율 VARCHAR (32),파사드너비 VARCHAR (32),파사드길이 VARCHAR (32),파사드높이 VARCHAR (32),천창 VARCHAR (32),천창유리각 VARCHAR (32),천창수평측면각 VARCHAR (32),천창장변부길이 VARCHAR (32),천창단변부길이 VARCHAR (32),천창수평상부높이 VARCHAR (32),차양 VARCHAR (32),집광채광체크  VARCHAR (32),집광채광번호 VARCHAR (32),집광채광명칭 VARCHAR (32),집광채광종류 VARCHAR (32),집광채광효율 VARCHAR (32),집광채광면적 VARCHAR (32),표준길이1 VARCHAR (32),표준길이2 VARCHAR (32),표준너비 VARCHAR (32),사용자길이1 VARCHAR (32),사용자길이2 VARCHAR (32),사용자면적 VARCHAR (32), 조명번호 VARCHAR (32), 등기구명칭 VARCHAR (32), 램프유형 VARCHAR (32), 컨버터_안정기 VARCHAR (32), 광속 VARCHAR (32), 소비전력 VARCHAR (32), 조명계수 VARCHAR (32),표준광속 VARCHAR (32), 표준소비전력 VARCHAR (32),사용자광속 VARCHAR (32), 사용자소비전력 VARCHAR (32),사용자예상전력 VARCHAR (32))"},
             //{"Zone_LightResult", "CREATE TABLE IF NOT EXISTS Zone_LightResult (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32), 월 VARCHAR (32),ITr VARCHAR (32),IRD VARCHAR (32),ISh_Ish VARCHAR (32),ISh_hA VARCHAR (32),Ish_vA VARCHAR (32),Ish_In_At VARCHAR (32),Wi VARCHAR (32),Ish_GDF VARCHAR (32),Ish VARCHAR (32),f_τeff_SNA VARCHAR (32),f_D VARCHAR (32),f_nearD VARCHAR (32),f_DCA VARCHAR (32),f_dclass VARCHAR (32),f_nearEm_SNA VARCHAR (32),f_fd_sna VARCHAR (32),f_fd_sa VARCHAR (32),f_nearEm_DC VARCHAR (32),f_fd_c VARCHAR (32),f_FDS VARCHAR (32),f_FD VARCHAR (32),as_bs VARCHAR (32),hs_bs VARCHAR (32),hg_hw VARCHAR (32),normal_ηR VARCHAR (32),saw_ηR VARCHAR (32),r_DSNA VARCHAR (32),r_DSA VARCHAR (32),r_dclass VARCHAR (32),r_nearEm_FDS VARCHAR (32),r_fd_sna VARCHAR (32),r_fd_sa VARCHAR (32),r_nearEm_DC VARCHAR (32),r_fd_c VARCHAR (32),r_FDS VARCHAR (32),r_FD VARCHAR (32),Sunlight_SCW VARCHAR (32),Sunlight_PjSC VARCHAR (32),Final_W VARCHAR (32))"},
 
@@ -124,7 +124,8 @@ namespace main
 
             {"HeatingSystem_Form", "CREATE TABLE IF NOT EXISTS HeatingSystem_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),명칭 VARCHAR (32))"},
             {"ZoneSystem_Form", "CREATE TABLE IF NOT EXISTS ZoneSystem_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),난방시스템 VARCHAR (32))"},
-            {"User_Boiler", "CREATE TABLE IF NOT EXISTS User_Boiler (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),명칭 VARCHAR (32),난방급탕 VARCHAR (32),연료 VARCHAR (32),Type VARCHAR (32),용량 VARCHAR (32),전부하효율 VARCHAR (32),부분부하효율 VARCHAR (32),소비전력 VARCHAR (32),대기전력 VARCHAR (32))"},
+            {"User_Boiler", "CREATE TABLE IF NOT EXISTS User_Boiler (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),난방급탕 VARCHAR (32),연료 VARCHAR (32),Type VARCHAR (32),용량 VARCHAR (32),전부하효율 VARCHAR (32),부분부하효율 VARCHAR (32),소비전력 VARCHAR (32),대기전력 VARCHAR (32),대수 VARCHAR (32))"},
+            {"User_Pump", "CREATE TABLE IF NOT EXISTS User_Pump (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),명칭 VARCHAR (32),종류 VARCHAR (32),A효율 VARCHAR (32),B효율 VARCHAR (32),유량 VARCHAR (32),동력 VARCHAR (32),양정 VARCHAR (32),대수 VARCHAR (32))"},
         };
    
 
@@ -721,7 +722,7 @@ namespace main
                 }
                 else
                 {
-                    
+                    cmd.CommandText = "delete from " + table;
                 }
 
 
