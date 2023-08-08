@@ -73,19 +73,6 @@ namespace main.subcontents.ZoneLighting
             table_Light.Columns.Add("조명계수" + Environment.NewLine + "FL[-]", typeof(string));
 
 
-           
-
-            string[][] Light = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_DB", "번호,DB유형,등기구명칭,램프유형,제조사,안정기_컨버터,광속,소비전력,광효율,조명계수", "");
-
-            for (int n = 0; n <Light.Length; n++)
-            {
-                table_Light.Rows.Add(Light[n][0],Light[n][1],Light[n][2],Light[n][3],Light[n][4],Light[n][5], Light[n][6], Light[n][7], String.Format("{0:F2}", Convert.ToDouble(Light[n][8])), String.Format("{0:F2}", Convert.ToDouble(Light[n][9])));
-            }
-            Light_dataGridView.DataSource = table_Light;
-            Count_LightDB = Light.Length;
-
-
-
 
             //조명 사용자 DB 추가
             try
@@ -97,18 +84,22 @@ namespace main.subcontents.ZoneLighting
                 }
             }
             catch { }
+            //표준 DB
+            string[][] Light = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_DB", "번호,DB유형,등기구명칭,램프유형,제조사,안정기_컨버터,광속,소비전력,광효율,조명계수", "");
 
+            for (int n = 0; n <Light.Length; n++)
+            {
+                table_Light.Rows.Add(Light[n][0],Light[n][1],Light[n][2],Light[n][3],Light[n][4],Light[n][5], Light[n][6], Light[n][7], String.Format("{0:F2}", Convert.ToDouble(Light[n][8])), String.Format("{0:F2}", Convert.ToDouble(Light[n][9])));
+            }
+            Light_dataGridView.DataSource = table_Light;
+            Count_LightDB = Light.Length;
 
         }
-
-
-
 
         private void UserDBName_textBox_TextChanged_1(object sender, EventArgs e)
         {
             UserDB_Name = UserDBName_textBox.Text;
         }
-
 
         private void UserDB_Manufacture_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -160,11 +151,7 @@ namespace main.subcontents.ZoneLighting
             {
                 MessageBox.Show("모든 값을 입력해주세요.");
             }
-
         }
-
-
-
         private void Deletebutton_Click(object sender, EventArgs e)
         {
             int k = Light_dataGridView.CurrentCell.RowIndex;

@@ -64,18 +64,6 @@ namespace main.subcontents.ZoneLighting
             table_Renew.Columns.Add("산광부 면적" + Environment.NewLine + "[m2]", typeof(string));
 
 
-
-            string[][] Renew = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_집광채광DB", "번호,DB유형,집광채광명칭,집광채광종류,제조사,집광채광효율,산광부가로길이,산광부세로길이,산광부면적", "");
-
-            for (int n = 0; n < Renew.Length; n++)
-            {
-                table_Renew.Rows.Add(Renew[n][0], Renew[n][1], Renew[n][2], Renew[n][3], Renew[n][4], Renew[n][5], Renew[n][6], Renew[n][7], Renew[n][8]);
-            }
-            Renew_dataGridView.DataSource = table_Renew;
-            Count_RenewDB = Renew.Length;
-
-
-
             //집광채광 사용자 DB 추가 
             try
             {
@@ -86,9 +74,17 @@ namespace main.subcontents.ZoneLighting
                 }
             }
             catch { }
+            //표준DB
+            string[][] Renew = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_집광채광DB", "번호,DB유형,집광채광명칭,집광채광종류,제조사,집광채광효율,산광부가로길이,산광부세로길이,산광부면적", "");
+
+            for (int n = 0; n < Renew.Length; n++)
+            {
+                table_Renew.Rows.Add(Renew[n][0], Renew[n][1], Renew[n][2], Renew[n][3], Renew[n][4], Renew[n][5], Renew[n][6], Renew[n][7], Renew[n][8]);
+            }
+            Renew_dataGridView.DataSource = table_Renew;
+            Count_RenewDB = Renew.Length;
 
         }
-
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
         {
