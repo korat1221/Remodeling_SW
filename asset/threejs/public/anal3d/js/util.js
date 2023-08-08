@@ -109,6 +109,12 @@ class MainTree {
             }, 500);
         });
     }
+    select(id) {
+        if (!this.loading && this.onSelect) {
+            this.tree.jstree("deselect_all");
+            this.tree.jstree("select_node", this.tree.jstree("get_node", id));
+        }
+    }
 }
 
 function drawPanel(sel, title, content) {

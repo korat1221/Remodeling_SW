@@ -10,7 +10,7 @@
 		<link rel="shortcut icon" href="../files/favicon.ico" media="(prefers-color-scheme: light)" />
 	</head>
 	<body style="background-color: #fff;"onload="init()">
-		<!-- <input type="file"  style="display:none"/> -->
+		 <!-- <input type="file"  />  -->
 		<div id="view-cont" style="width:100%;height:100%"></div>
 		<div id="menu-cont" style="display:none"></div>
 		<div id="navigator" title="" style="display:none;overflow:hidden"><div id="navigator-details"></div></div>
@@ -229,6 +229,38 @@
 			// } );
 
 			//
+
+			window.addEventListener('pointermove', (e) => {
+				editor.mouse.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1)
+				editor.raycaster.setFromCamera(editor.mouse, editor.camera)
+				editor.intersects = editor.raycaster.intersectObjects(editor.scene.children, false);
+
+			});
+
+			let dwOldTick = 0;
+			document.addEventListener("mousedown", (event) => {
+				dwOldTick = (new Date()).getTime();
+			});
+
+			window.addEventListener('click', (e) => {
+				if ((new Date()).getTime() - dwOldTick <= 600) {
+					let i = -1;
+
+					while(++i < editor.intersects.length) {
+						let hit = editor.intersects[i];
+
+						if (hit.object.sid) {
+							let id = hit.object.sid;
+							if (!editor.isShadowedID(hit.object.sid)) {
+								window.chrome.webview.postMessage(id);
+//								parent.postMessage({"selectWall":true,"fname":id},'*');							
+							}
+
+							break;
+						}
+					}
+				}
+			});
 
 			document.addEventListener( 'dragover', function ( event ) {
 

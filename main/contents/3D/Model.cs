@@ -91,6 +91,10 @@ namespace main.contents
                     Program.DB.executeSQL(DB.type.ProjDB, s.Substring(0, n));
                     Program.UTIL.reloadWebCtrl();
                 }
+                else
+                {
+                    Program.UTIL.selectWall(s);
+                }
             }
             catch (Exception ex)
             {

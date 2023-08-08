@@ -184,6 +184,10 @@ function Editor() {
 	this.drawing_line = [];
 	this.points = [];
 
+	this.raycaster = new THREE.Raycaster();
+	this.mouse = new THREE.Vector2();
+	this.intersects = [];
+
 	this.textureLoader = new THREE.TextureLoader();
 	this.textureMaterial = new THREE.MeshBasicMaterial({
 		map: this.textureLoader.load('https://threejsfundamentals.org/threejs/resources/images/wall.jpg'),
@@ -731,6 +735,10 @@ Editor.prototype = {
 		this.drawing_line = [];
 		this.points = [];
 	
+		this.raycaster = new THREE.Raycaster();
+		this.mouse = new THREE.Vector2();
+		this.intersects = [];
+
 		this.materialsRefCounter.clear();
 
 		this.animations = {};
@@ -1557,6 +1565,13 @@ Editor.prototype = {
 		}	
 	},
 
+	isShadowedID: function (id) {
+		let s = id.substring(1);
+		let n = s.indexOf('_');
+		s = s.substring(0,n);
+		return this.shadows["space-" + s];
+	},
+
 	drawSpacePoints: function (id) {
 		let arr = this.boards[id];
 		var i = -1;
@@ -1573,7 +1588,7 @@ Editor.prototype = {
 			el.vertices.forEach((el2) => {
 				collectSpacePoints(el2.position);
 			});	
-			this.drawPoints(el.id, color ? color : this.getColor(el.sid, el.type, el.winType));
+			this.drawPoints(el.id, color ? color : this.getColor(el.sid, el.type, el.winType), el.mid);
 		};
 	
 		while(++i < this.drawing_line.length) {
@@ -1871,6 +1886,7 @@ if (el.type == 'WIN') {
 					el.zid = prefix2;
 					el.ttype = ttype;
 					el.tid = prefix2 + "_" + a[0] + "_" + a[1];
+					el.mid = "board-" + id;
 					arr.push({"type":"detail","text":el.tid,"id":"board-" + id});			
 				}
 			}
@@ -1899,6 +1915,7 @@ if (el.type == 'WIN') {
 					el.zid = prefix2;
 					el.ttype = ttype;
 					el.tid = prefix2 + "_" + ID + "_" + a[1];
+					el.mid = "board-" + id;
 					arr.push({"type":"detail","text":el.tid,"id":"board-" + id});	
 				}
 			}
@@ -1949,6 +1966,7 @@ if (el.type == 'WIN') {
 					el.zid = prefix2;
 					el.ttype = ttype;
 					el.tid = prefix2 + "_" + ID + "_" + a[1];
+					el.mid = "board-" + id + "_win" + w;
 					arr.push({"type":"detail","text":el.tid,"id":"board-" + id + "_win" + w});			
 				}
 			}
@@ -2328,7 +2346,7 @@ if (el.type == 'WIN') {
 							this.collectPoints(el2.position);
 						}
 					});	
-					this.drawPoints(id, color ? color : this.getColor(sid, el.type, el.winType));
+					this.drawPoints(id, color ? color : this.getColor(sid, el.type, el.winType), el.mid);
 				}
 			}
 		}	
@@ -2398,7 +2416,7 @@ if (el.type == 'WIN') {
 		// }
 	},
 
-	drawPoints: function (sid, color) {
+	drawPoints: function (sid, color, mid) {
 		if (sid) {
 			if (this.drawing_wall[sid]) {
 				let material = this.getMaterialById(this.drawing_wall[sid]);
@@ -2425,6 +2443,7 @@ if (el.type == 'WIN') {
 				this.addObject( mesh );
 				this.drawing_wall[sid] = material.id;
 				this.drawing_mesh[sid] = mesh;
+				mesh.sid = mid;
 			}
 		}
 		// else if (this.test){

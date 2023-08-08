@@ -172,6 +172,19 @@ namespace main
                 }
             }
         }
+        public void selectWall(string sid)
+        {
+            foreach (Form openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "FormMain")
+                {
+                    MainContents f = (MainContents)(((FormMain)openForm).splitContainer1.Panel1.Controls[0]);
+
+                    f.runScript("selectWall('" + sid + "')");
+                    return;
+                }
+            }
+        }
         public void resetMainTree(int idx, int sub_idx, object[] obj, string select_id)
         {
             foreach (Form openForm in Application.OpenForms)
