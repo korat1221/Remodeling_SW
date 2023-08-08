@@ -48,11 +48,11 @@ namespace main.contents
             }
             {
                 int i = -1;
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기");
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,천창유무");
 
                 while (++i < rec.Length)
                 {
-                    dataGridView1.Rows.Add(null, rec[i][0], rec[i][1], rec[i][2], null, null, rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]));
+                    dataGridView1.Rows.Add(null, rec[i][0], rec[i][1], rec[i][2], null, null, rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]),null);
 
                     if (isWinType(rec[i][3]))
                     {
@@ -90,6 +90,22 @@ namespace main.contents
                         dataGridView1.Rows[i].Cells[5] = TypeLabel;
                         TypeLabel.ReadOnly = true;
                     }
+                    if (isWinCW(rec[i][3])) //천창유무 
+                    {
+                        DataGridViewComboBoxCell RoofWinCombo = new DataGridViewComboBoxCell();
+                        RoofWinCombo.Items.Add("천창있음");
+
+                        RoofWinCombo.Value = rec[i][9];
+                        dataGridView1.Rows[i].Cells[11] = RoofWinCombo;
+                    }
+                    else
+                    {
+                        DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
+                        TypeLabel.Value = "";
+                        dataGridView1.Rows[i].Cells[11] = TypeLabel;
+                        TypeLabel.ReadOnly = true;
+                    }
+
                 }
             }
         }
@@ -121,7 +137,16 @@ namespace main.contents
             }
             return false;
         }
-
+        private bool isWinCW(string type)
+        {
+            switch (type)
+            {
+                case "커튼월창":
+                case "창호":
+                    return true;
+            }
+            return false;
+        }
         private void Load_ConstructionList(int n, String Type)
         {
             string[][] Value = null;
@@ -208,7 +233,7 @@ namespace main.contents
         public string Save()
         {
 
-            string num, num0, Type, CWType, ConsType, ret = "", tcode;
+            string num, num0, Type, CWType, ConsType, ret = "", tcode, RoofWin="";
             int i = -1;
             while (++i < dataGridView1.RowCount)
             {
@@ -292,11 +317,18 @@ namespace main.contents
                         { Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,구조체,구조체번호", "'" + rec[0][0] + "','" + num + "','" + ConsType + "','" + Value[0][0] + "'", "아이디"); }
                         else { }
                     }
-
-
+                    if(dataGridView1.Rows[i].Cells[11].Value == null)
+                    {
+                        RoofWin = "";
+                    }
+                    else
+                    {
+                        string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num0 + "'");
+                        RoofWin = dataGridView1.Rows[i].Cells[11].Value.ToString();
+                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,천창유무", "'" + rec[0][0] + "','" + RoofWin  + "'", "아이디");
+                    }
                 }
             }
-
             redrawList();
 
             MessageBox.Show("저장되었습니다.");
@@ -389,7 +421,26 @@ namespace main.contents
                         row.Cells[5] = CWTypeCombo;
                         CWTypeCombo.ReadOnly = false;
                     }
+                }
+                if (e.ColumnIndex == 4) //커튼월창이거나 창호 일경우 천창유무 콤보박스 
+                {
+                    DataGridViewCell cell = row.Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
+                    DataGridViewComboBoxCell cell2 = row.Cells[10] as DataGridViewComboBoxCell;
 
+                    if (cell.Value.ToString() != "커튼월창" && cell.Value.ToString() != "창호")
+                    {
+                        DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
+                        TypeLabel.Value = "";
+                        row.Cells[11] = TypeLabel;
+                        TypeLabel.ReadOnly = true;
+                    }
+                    else
+                    {
+                        DataGridViewComboBoxCell RoofWinCombo = new DataGridViewComboBoxCell();
+                        RoofWinCombo.Items.Add("천창있음");
+                        row.Cells[10] = RoofWinCombo;
+                        RoofWinCombo.ReadOnly = false;
+                    }
                 }
 
             }

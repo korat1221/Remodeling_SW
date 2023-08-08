@@ -46,10 +46,11 @@
             DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             dataGridView2 = new DataGridView();
-            Column12 = new DataGridViewCheckBoxColumn();
+            Column12 = new DataGridViewTextBoxColumn();
             Column13 = new DataGridViewTextBoxColumn();
             Column14 = new DataGridViewTextBoxColumn();
             Column15 = new DataGridViewTextBoxColumn();
@@ -69,6 +70,7 @@
             Column9 = new DataGridViewTextBoxColumn();
             Column10 = new DataGridViewTextBoxColumn();
             Column11 = new DataGridViewComboBoxColumn();
+            Column19 = new DataGridViewComboBoxColumn();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
@@ -207,7 +209,7 @@
             dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8, Column9, Column10, Column11 });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8, Column9, Column10, Column11, Column19 });
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(3, 3);
             dataGridView1.Name = "dataGridView1";
@@ -311,6 +313,15 @@
             Column11.Resizable = DataGridViewTriState.True;
             Column11.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
+            // Column19
+            // 
+            dataGridViewCellStyle19.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Column19.DefaultCellStyle = dataGridViewCellStyle18;
+            Column19.HeaderText = "천창유무";
+            Column19.Name = "Column19";
+            Column19.Resizable = DataGridViewTriState.True;
+            Column19.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
             // sub3dZoneInfo
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -336,7 +347,7 @@
         private TabPage tabPage2;
         private DataGridView dataGridView2;
         private DataGridView dataGridView1;
-        private DataGridViewCheckBoxColumn Column12;
+        private DataGridViewTextBoxColumn Column12;
         private DataGridViewTextBoxColumn Column13;
         private DataGridViewTextBoxColumn Column14;
         private DataGridViewTextBoxColumn Column15;
@@ -354,5 +365,6 @@
         private DataGridViewTextBoxColumn Column9;
         private DataGridViewTextBoxColumn Column10;
         private DataGridViewComboBoxColumn Column11;
+        private DataGridViewComboBoxColumn Column19;
     }
 }

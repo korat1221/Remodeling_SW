@@ -78,7 +78,9 @@ namespace main.contents
         private void Floor_textBox_TextChanged(object sender, EventArgs e)
         {
             if (Layer_textBox.Text != null)
-            { Layer = Layer_textBox.Text; }
+            { Layer = Layer_textBox.Text;
+                GetValue_ZoneEnvelope();
+            }
         }
 
         private void ZoneName_textBox_TextChanged(object sender, EventArgs e)
@@ -886,48 +888,9 @@ namespace main.contents
             }
             catch { }
 
-            try
-            { //3D 외피정보
-                String[][] Envelope_3D = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "외피유형,면적", "존 = '" + ZoneNum + "'");
+            GetValue_ZoneEnvelope();
 
-                //외피별 면적 합계 계산
-                //"커튼월창", "외벽", "지붕", "최하층바닥", "창호", "외부출입문", "내벽", "층간바닥" 
-                int[] Construction_Count = new int[8]; double[] Construction_AreaSum = new double[8];
-                String[] ConstructionType = { "커튼월창", "외벽", "지붕", "최하층바닥", "창호", "외부출입문", "내벽", "층간바닥" };
-                int i = -1;
-                while (++i < Envelope_3D.Length)
-                {
-                    for (int k = 0; k < ConstructionType.Length; k++)
-                    {
-                        if (Envelope_3D[i][0] == ConstructionType[k])
-                        {
-                            Construction_AreaSum[k] += Convert.ToDouble(Envelope_3D[i][1]);
-                        }
-                    }
-                }
-                if (Construction_AreaSum[0] != 0)
-                { CW_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[0]) + "m²"; }
 
-                if (Construction_AreaSum[1] != 0)
-                { Wall_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[1]) + "m²"; }
-
-                if (Construction_AreaSum[2] != 0)
-                { Roof_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[2]) + "m²"; }
-
-                if (Construction_AreaSum[3] != 0)
-                { Floor_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[3]) + "m²"; }
-
-                if (Construction_AreaSum[4] != 0)
-                { Window_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[4]) + "m²"; }
-
-                if (Construction_AreaSum[5] != 0)
-                { Door_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[5]) + "m²"; }
-
-                if (Construction_AreaSum[6] != 0)
-                { InWall_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[6]) + "m²"; }
-
-            }
-            catch { }
             try
             {//3D 외피정보
                 String[][] 층 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "존 = '" + ZoneNum + "'");
@@ -1021,6 +984,53 @@ namespace main.contents
 
             }
             catch { }
+        }
+
+        private void GetValue_ZoneEnvelope()
+        {
+            try
+            { //3D 외피정보
+                String[][] Envelope_3D = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "외피유형,면적", "존 = '" + ZoneNum + "'");
+
+                //외피별 면적 합계 계산
+                //"커튼월창", "외벽", "지붕", "최하층바닥", "창호", "외부출입문", "내벽", "층간바닥" 
+                int[] Construction_Count = new int[8]; double[] Construction_AreaSum = new double[8];
+                String[] ConstructionType = { "커튼월창", "외벽", "지붕", "최하층바닥", "창호", "외부출입문", "내벽", "층간바닥" };
+                int i = -1;
+                while (++i < Envelope_3D.Length)
+                {
+                    for (int k = 0; k < ConstructionType.Length; k++)
+                    {
+                        if (Envelope_3D[i][0] == ConstructionType[k])
+                        {
+                            Construction_AreaSum[k] += Convert.ToDouble(Envelope_3D[i][1]);
+                        }
+                    }
+                }
+                if (Construction_AreaSum[0] != 0)
+                { CW_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[0]) + "m²"; }
+
+                if (Construction_AreaSum[1] != 0)
+                { Wall_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[1]) + "m²"; }
+
+                if (Construction_AreaSum[2] != 0)
+                { Roof_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[2]) + "m²"; }
+
+                if (Construction_AreaSum[3] != 0)
+                { Floor_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[3]) + "m²"; }
+
+                if (Construction_AreaSum[4] != 0)
+                { Window_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[4]) + "m²"; }
+
+                if (Construction_AreaSum[5] != 0)
+                { Door_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[5]) + "m²"; }
+
+                if (Construction_AreaSum[6] != 0)
+                { InWall_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[6]) + "m²"; }
+
+            }
+            catch { }
+
         }
 
     }
