@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             Zone_button = new Button();
             label1 = new Label();
@@ -64,6 +64,12 @@
             MainSystem_comboBox = new ComboBox();
             Qhs_tabPage = new TabPage();
             Qhd_tabPage = new TabPage();
+            Pump2Num_label1 = new Label();
+            Pump2Num_label2 = new Label();
+            Pump2Num_textBox = new TextBox();
+            Pump1Num_label1 = new Label();
+            Pump1Num_label2 = new Label();
+            Pump1Num_textBox = new TextBox();
             Pump2Control_label = new Label();
             Pump2Control_comboBox = new ComboBox();
             Pump2_textBox = new TextBox();
@@ -492,6 +498,12 @@
             // 
             // Qhd_tabPage
             // 
+            Qhd_tabPage.Controls.Add(Pump2Num_label1);
+            Qhd_tabPage.Controls.Add(Pump2Num_label2);
+            Qhd_tabPage.Controls.Add(Pump2Num_textBox);
+            Qhd_tabPage.Controls.Add(Pump1Num_label1);
+            Qhd_tabPage.Controls.Add(Pump1Num_label2);
+            Qhd_tabPage.Controls.Add(Pump1Num_textBox);
             Qhd_tabPage.Controls.Add(Pump2Control_label);
             Qhd_tabPage.Controls.Add(Pump2Control_comboBox);
             Qhd_tabPage.Controls.Add(Pump2_textBox);
@@ -518,11 +530,73 @@
             Qhd_tabPage.Text = "분배";
             Qhd_tabPage.UseVisualStyleBackColor = true;
             // 
+            // Pump2Num_label1
+            // 
+            Pump2Num_label1.AutoSize = true;
+            Pump2Num_label1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Pump2Num_label1.Location = new Point(705, 89);
+            Pump2Num_label1.Name = "Pump2Num_label1";
+            Pump2Num_label1.Size = new Size(61, 16);
+            Pump2Num_label1.TabIndex = 192;
+            Pump2Num_label1.Text = "펌프2 대수";
+            // 
+            // Pump2Num_label2
+            // 
+            Pump2Num_label2.AutoSize = true;
+            Pump2Num_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Pump2Num_label2.ForeColor = SystemColors.ControlDark;
+            Pump2Num_label2.Location = new Point(891, 89);
+            Pump2Num_label2.Name = "Pump2Num_label2";
+            Pump2Num_label2.Size = new Size(25, 16);
+            Pump2Num_label2.TabIndex = 191;
+            Pump2Num_label2.Text = "EA";
+            // 
+            // Pump2Num_textBox
+            // 
+            Pump2Num_textBox.BorderStyle = BorderStyle.FixedSingle;
+            Pump2Num_textBox.Location = new Point(768, 86);
+            Pump2Num_textBox.Name = "Pump2Num_textBox";
+            Pump2Num_textBox.Size = new Size(120, 23);
+            Pump2Num_textBox.TabIndex = 190;
+            Pump2Num_textBox.TextAlign = HorizontalAlignment.Center;
+            Pump2Num_textBox.TextChanged += Pump2Num_textBox_TextChanged;
+            // 
+            // Pump1Num_label1
+            // 
+            Pump1Num_label1.AutoSize = true;
+            Pump1Num_label1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Pump1Num_label1.Location = new Point(705, 56);
+            Pump1Num_label1.Name = "Pump1Num_label1";
+            Pump1Num_label1.Size = new Size(61, 16);
+            Pump1Num_label1.TabIndex = 189;
+            Pump1Num_label1.Text = "펌프1 대수";
+            // 
+            // Pump1Num_label2
+            // 
+            Pump1Num_label2.AutoSize = true;
+            Pump1Num_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Pump1Num_label2.ForeColor = SystemColors.ControlDark;
+            Pump1Num_label2.Location = new Point(891, 56);
+            Pump1Num_label2.Name = "Pump1Num_label2";
+            Pump1Num_label2.Size = new Size(25, 16);
+            Pump1Num_label2.TabIndex = 188;
+            Pump1Num_label2.Text = "EA";
+            // 
+            // Pump1Num_textBox
+            // 
+            Pump1Num_textBox.BorderStyle = BorderStyle.FixedSingle;
+            Pump1Num_textBox.Location = new Point(768, 53);
+            Pump1Num_textBox.Name = "Pump1Num_textBox";
+            Pump1Num_textBox.Size = new Size(120, 23);
+            Pump1Num_textBox.TabIndex = 187;
+            Pump1Num_textBox.TextAlign = HorizontalAlignment.Center;
+            Pump1Num_textBox.TextChanged += Pump1Num_textBox_TextChanged;
+            // 
             // Pump2Control_label
             // 
             Pump2Control_label.AutoSize = true;
             Pump2Control_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump2Control_label.Location = new Point(629, 90);
+            Pump2Control_label.Location = new Point(507, 90);
             Pump2Control_label.Name = "Pump2Control_label";
             Pump2Control_label.Size = new Size(66, 15);
             Pump2Control_label.TabIndex = 186;
@@ -533,7 +607,7 @@
             // 
             Pump2Control_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Pump2Control_comboBox.FormattingEnabled = true;
-            Pump2Control_comboBox.Location = new Point(708, 85);
+            Pump2Control_comboBox.Location = new Point(575, 85);
             Pump2Control_comboBox.Name = "Pump2Control_comboBox";
             Pump2Control_comboBox.Size = new Size(120, 24);
             Pump2Control_comboBox.TabIndex = 185;
@@ -547,7 +621,7 @@
             Pump2_textBox.Enabled = false;
             Pump2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Pump2_textBox.ForeColor = SystemColors.ControlDark;
-            Pump2_textBox.Location = new Point(113, 90);
+            Pump2_textBox.Location = new Point(94, 90);
             Pump2_textBox.Name = "Pump2_textBox";
             Pump2_textBox.Size = new Size(120, 15);
             Pump2_textBox.TabIndex = 184;
@@ -559,19 +633,20 @@
             Pump2_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Pump2_button.FlatStyle = FlatStyle.System;
             Pump2_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Pump2_button.Location = new Point(236, 86);
+            Pump2_button.Location = new Point(220, 86);
             Pump2_button.Margin = new Padding(0);
             Pump2_button.Name = "Pump2_button";
             Pump2_button.Size = new Size(23, 23);
             Pump2_button.TabIndex = 183;
             Pump2_button.Text = "+";
             Pump2_button.UseVisualStyleBackColor = false;
+            Pump2_button.Click += Pump2_button_Click;
             // 
             // Pump2_label
             // 
             Pump2_label.AutoSize = true;
             Pump2_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump2_label.Location = new Point(47, 90);
+            Pump2_label.Location = new Point(33, 90);
             Pump2_label.Name = "Pump2_label";
             Pump2_label.Size = new Size(38, 15);
             Pump2_label.TabIndex = 182;
@@ -581,7 +656,7 @@
             // 
             Pump2Valve_label.AutoSize = true;
             Pump2Valve_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump2Valve_label.Location = new Point(322, 90);
+            Pump2Valve_label.Location = new Point(249, 90);
             Pump2Valve_label.Name = "Pump2Valve_label";
             Pump2Valve_label.Size = new Size(102, 15);
             Pump2Valve_label.TabIndex = 181;
@@ -591,7 +666,7 @@
             // 
             Pump2Valve_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Pump2Valve_comboBox.FormattingEnabled = true;
-            Pump2Valve_comboBox.Location = new Point(428, 85);
+            Pump2Valve_comboBox.Location = new Point(351, 85);
             Pump2Valve_comboBox.Name = "Pump2Valve_comboBox";
             Pump2Valve_comboBox.Size = new Size(120, 24);
             Pump2Valve_comboBox.TabIndex = 180;
@@ -601,7 +676,7 @@
             // 
             PumpMethod_label.AutoSize = true;
             PumpMethod_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            PumpMethod_label.Location = new Point(322, 25);
+            PumpMethod_label.Location = new Point(249, 25);
             PumpMethod_label.Name = "PumpMethod_label";
             PumpMethod_label.Size = new Size(59, 15);
             PumpMethod_label.TabIndex = 179;
@@ -611,7 +686,7 @@
             // 
             PumpMethod_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PumpMethod_comboBox.FormattingEnabled = true;
-            PumpMethod_comboBox.Location = new Point(428, 20);
+            PumpMethod_comboBox.Location = new Point(351, 20);
             PumpMethod_comboBox.Name = "PumpMethod_comboBox";
             PumpMethod_comboBox.Size = new Size(120, 24);
             PumpMethod_comboBox.TabIndex = 178;
@@ -621,7 +696,7 @@
             // 
             Pump1Control_label.AutoSize = true;
             Pump1Control_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump1Control_label.Location = new Point(629, 57);
+            Pump1Control_label.Location = new Point(507, 57);
             Pump1Control_label.Name = "Pump1Control_label";
             Pump1Control_label.Size = new Size(66, 15);
             Pump1Control_label.TabIndex = 177;
@@ -632,7 +707,7 @@
             // 
             Pump1Control_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Pump1Control_comboBox.FormattingEnabled = true;
-            Pump1Control_comboBox.Location = new Point(708, 52);
+            Pump1Control_comboBox.Location = new Point(575, 52);
             Pump1Control_comboBox.Name = "Pump1Control_comboBox";
             Pump1Control_comboBox.Size = new Size(120, 24);
             Pump1Control_comboBox.TabIndex = 176;
@@ -643,7 +718,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(47, 25);
+            label2.Location = new Point(33, 25);
             label2.Name = "label2";
             label2.Size = new Size(59, 15);
             label2.TabIndex = 175;
@@ -653,7 +728,7 @@
             // 
             PumpUse_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PumpUse_comboBox.FormattingEnabled = true;
-            PumpUse_comboBox.Location = new Point(114, 20);
+            PumpUse_comboBox.Location = new Point(94, 20);
             PumpUse_comboBox.Name = "PumpUse_comboBox";
             PumpUse_comboBox.Size = new Size(120, 24);
             PumpUse_comboBox.TabIndex = 174;
@@ -666,7 +741,7 @@
             Pump1_textBox.Enabled = false;
             Pump1_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Pump1_textBox.ForeColor = SystemColors.ControlDark;
-            Pump1_textBox.Location = new Point(113, 57);
+            Pump1_textBox.Location = new Point(94, 57);
             Pump1_textBox.Name = "Pump1_textBox";
             Pump1_textBox.Size = new Size(120, 15);
             Pump1_textBox.TabIndex = 167;
@@ -678,19 +753,20 @@
             Pump1_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Pump1_button.FlatStyle = FlatStyle.System;
             Pump1_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Pump1_button.Location = new Point(236, 53);
+            Pump1_button.Location = new Point(220, 53);
             Pump1_button.Margin = new Padding(0);
             Pump1_button.Name = "Pump1_button";
             Pump1_button.Size = new Size(23, 23);
             Pump1_button.TabIndex = 166;
             Pump1_button.Text = "+";
             Pump1_button.UseVisualStyleBackColor = false;
+            Pump1_button.Click += Pump1_button_Click;
             // 
             // Pump1_label
             // 
             Pump1_label.AutoSize = true;
             Pump1_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump1_label.Location = new Point(47, 57);
+            Pump1_label.Location = new Point(33, 57);
             Pump1_label.Name = "Pump1_label";
             Pump1_label.Size = new Size(38, 15);
             Pump1_label.TabIndex = 165;
@@ -700,7 +776,7 @@
             // 
             Pump1Valve_label.AutoSize = true;
             Pump1Valve_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump1Valve_label.Location = new Point(322, 57);
+            Pump1Valve_label.Location = new Point(249, 57);
             Pump1Valve_label.Name = "Pump1Valve_label";
             Pump1Valve_label.Size = new Size(102, 15);
             Pump1Valve_label.TabIndex = 156;
@@ -710,7 +786,7 @@
             // 
             Pump1Valve_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Pump1Valve_comboBox.FormattingEnabled = true;
-            Pump1Valve_comboBox.Location = new Point(428, 52);
+            Pump1Valve_comboBox.Location = new Point(351, 52);
             Pump1Valve_comboBox.Name = "Pump1Valve_comboBox";
             Pump1Valve_comboBox.Size = new Size(120, 24);
             Pump1Valve_comboBox.TabIndex = 155;
@@ -769,33 +845,33 @@
             Boiler_dataGridView.BorderStyle = BorderStyle.None;
             Boiler_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Boiler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            Boiler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            Boiler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Boiler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Boiler_dataGridView.Location = new Point(19, 6);
             Boiler_dataGridView.Name = "Boiler_dataGridView";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            Boiler_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            Boiler_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             Boiler_dataGridView.RowHeadersVisible = false;
             Boiler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            Boiler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            Boiler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             Boiler_dataGridView.RowTemplate.Height = 25;
             Boiler_dataGridView.Size = new Size(921, 113);
             Boiler_dataGridView.TabIndex = 22;
@@ -929,5 +1005,11 @@
         private Label Pump1_label;
         private Label Pump1Valve_label;
         private ComboBox Pump1Valve_comboBox;
+        private Label Pump2Num_label1;
+        private Label Pump2Num_label2;
+        private TextBox Pump2Num_textBox;
+        private Label Pump1Num_label1;
+        private Label Pump1Num_label2;
+        private TextBox Pump1Num_textBox;
     }
 }

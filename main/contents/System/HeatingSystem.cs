@@ -1,5 +1,5 @@
 ﻿using main.contentslist;
-using main.subcontents.ConstructionWall;
+using main.subcontents.HeatingSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,8 +22,9 @@ namespace main.contents
     {
         String Num, Name;
         String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System, PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control;
+        int Pump1Num, Pump2Num;
         String[] SystemType = { "보일러", "히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
-        ArrayList SelectBoiler = new ArrayList();
+        ArrayList SelectBoiler = new ArrayList(); ArrayList SelectPump = new ArrayList();
 
 
         public HeatingSystem()
@@ -76,6 +77,32 @@ namespace main.contents
             PumpMethod_comboBox.Items.Add("1차펌프");
             PumpMethod_comboBox.Items.Add("1차폐회로+2차펌프");
             PumpMethod_comboBox.SelectedIndex = 0;
+
+            //펌프 정유량 밸브 콤보박스
+            Pump1Valve_comboBox.Items.Clear();
+            Pump1Valve_comboBox.Items.Add("있음");
+            Pump1Valve_comboBox.Items.Add("없음");
+            Pump1Valve_comboBox.SelectedIndex = 0;
+            Pump2Valve_comboBox.Items.Clear();
+            Pump2Valve_comboBox.Items.Add("있음");
+            Pump2Valve_comboBox.Items.Add("없음");
+            Pump2Valve_comboBox.SelectedIndex = 0;
+
+            //펌프 제어 콤보박스
+            Pump1Control_comboBox.Items.Clear();
+            Pump1Control_comboBox.Items.Add("대수제어");
+            Pump1Control_comboBox.Items.Add("인버터제어");
+            Pump1Control_comboBox.Items.Add("제어없음");
+            Pump1Control_comboBox.SelectedIndex = 1;
+            Pump2Control_comboBox.Items.Clear();
+            Pump2Control_comboBox.Items.Add("대수제어");
+            Pump2Control_comboBox.Items.Add("인버터제어");
+            Pump2Control_comboBox.Items.Add("제어없음");
+            Pump2Control_comboBox.SelectedIndex = 1;
+
+            Pump1Num = 1;
+            Pump1Num_textBox.Text = Pump1Num.ToString();
+
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -384,7 +411,7 @@ namespace main.contents
             {
                 PumpUse = PumpUse_comboBox.SelectedItem.ToString();
                 Boolean Check = (PumpUse == "펌프 있음");
-              
+
                 PumpMethod_label.Visible = Check;
                 PumpMethod_comboBox.Visible = Check;
 
@@ -418,7 +445,7 @@ namespace main.contents
 
         private void Pump1Valve_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Pump1Valve_comboBox.SelectedItem != null)
+            if (Pump1Valve_comboBox.Visible == true && Pump1Valve_comboBox.SelectedItem != null)
             {
                 Pump1Valve = Pump1Valve_comboBox.SelectedItem.ToString();
             }
@@ -430,16 +457,28 @@ namespace main.contents
 
         private void Pump1Control_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Pump1Control_comboBox.SelectedItem != null)
+            if (Pump1Control_comboBox.Visible == true && Pump1Control_comboBox.SelectedItem != null)
             {
                 Pump1Control = Pump1Control_comboBox.SelectedItem.ToString();
             }
-            Pump1Control = null;
+            else { Pump1Control = null; }
+        }
+
+        private void Pump1Num_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (Pump1Num_textBox.Visible == true && Pump1Num_textBox.Text != null)
+            {
+                Pump1Num = Convert.ToInt32(Pump1Num_textBox.Text.ToString());
+            }
+            else
+            {
+                Pump1Num = 0;
+            }
         }
 
         private void Pump2Valve_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Pump2Valve_comboBox.SelectedItem != null)
+            if (Pump2Valve_comboBox.Visible == true && Pump2Valve_comboBox.SelectedItem != null)
             {
                 Pump2Valve = Pump2Valve_comboBox.SelectedItem.ToString();
             }
@@ -451,7 +490,7 @@ namespace main.contents
 
         private void Pump2Control_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Pump2Control_comboBox.SelectedItem != null)
+            if (Pump2Control_comboBox.Visible == true && Pump2Control_comboBox.SelectedItem != null)
             {
                 Pump2Control = Pump2Control_comboBox.SelectedItem.ToString();
             }
@@ -460,6 +499,20 @@ namespace main.contents
                 Pump2Control = null;
             }
         }
+
+        private void Pump2Num_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (Pump2Num_textBox.Visible == true && Pump2Num_textBox.Text != null)
+            {
+                Pump2Num = Convert.ToInt32(Pump2Num_textBox.Text.ToString());
+            }
+            else
+            {
+                Pump2Num = 0;
+            }
+
+        }
+
         private void ChangeVisble_Pump1(String PumpUse)
         {
             Boolean Check = (PumpUse == "펌프 있음");
@@ -470,12 +523,17 @@ namespace main.contents
             Pump1Valve_comboBox.Visible = Check;
             Pump1Control_label.Visible = Check;
             Pump1Control_comboBox.Visible = Check;
+            Pump1Num_label1.Visible = Check;
+            Pump1Num_textBox.Visible = Check;
+            Pump1Num_label2.Visible = Check;
 
             if (Check == false)
             {
                 Pump1 = null;
                 Pump1Valve_comboBox.SelectedItem = null;
                 Pump1Control_comboBox.SelectedItem = null;
+                Pump1Num = 0;
+                Pump1Num_textBox.Text = null;
             }
         }
 
@@ -489,14 +547,80 @@ namespace main.contents
             Pump2Valve_comboBox.Visible = Check;
             Pump2Control_label.Visible = Check;
             Pump2Control_comboBox.Visible = Check;
+            Pump2Num_label1.Visible = Check;
+            Pump2Num_textBox.Visible = Check;
+            Pump2Num_label2.Visible = Check;
 
             if (Check == false)
             {
                 Pump2 = null;
                 Pump2Valve_comboBox.SelectedItem = null;
                 Pump2Control_comboBox.SelectedItem = null;
+                Pump2Num = 0;
+                Pump2Num_textBox.Text = null;
             }
         }
+
+        private void Pump1_button_Click(object sender, EventArgs e)
+        {
+            Heating_Pump heating_pump = new Heating_Pump();
+            DialogResult result = heating_pump.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    if (heating_pump.SelectPump != null)
+                    {
+                        Pump1 = heating_pump.SelectPump;
+                        string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + Pump1.ToString() + "'");
+                        Pump1_textBox.Text = Value[0][0];
+                    }
+                }
+                catch { }
+            }
+        }
+
+        private void Pump2_button_Click(object sender, EventArgs e)
+        {
+            Heating_Pump heating_pump = new Heating_Pump();
+            DialogResult result = heating_pump.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    if (heating_pump.SelectPump != null)
+                    {
+                        Pump2 = heating_pump.SelectPump;
+                        string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + Pump2.ToString() + "'");
+                        Pump2_textBox.Text = Value[0][0];
+                    }
+                }
+                catch { }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

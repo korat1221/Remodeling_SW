@@ -15,7 +15,7 @@ using System.Windows.Forms;
 using static main.DB;
 using System.Xml.Linq;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
-using main.subcontents.ConstructionWall;
+using main.subcontents.HeatingSystem;
 
 namespace main.contents
 {

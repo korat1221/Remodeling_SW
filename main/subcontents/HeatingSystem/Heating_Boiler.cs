@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace main.subcontents.ConstructionWall
+namespace main.subcontents.HeatingSystem
 {
     public partial class Heating_Boiler : Form
     {

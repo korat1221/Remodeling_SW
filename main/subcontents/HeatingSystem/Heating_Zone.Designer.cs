@@ -1,4 +1,4 @@
-﻿namespace main.subcontents.ConstructionWall
+﻿namespace main.subcontents.HeatingSystem
 {
     partial class Heating_Zone
     {
