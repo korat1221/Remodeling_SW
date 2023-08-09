@@ -330,7 +330,7 @@ namespace main.contents
             Pump_checkBoxColumn.Name = "check";
             Pump_dataGridView.Columns.Add(Pump_checkBoxColumn);
 
-            Pump_dataGridView.ColumnCount = 10;
+            Pump_dataGridView.ColumnCount = 11;
             Pump_dataGridView.Columns[1].HeaderText = "번호";
             Pump_dataGridView.Columns[2].HeaderText = "명칭";
             Pump_dataGridView.Columns[3].HeaderText = "종류";
@@ -339,7 +339,11 @@ namespace main.contents
             Pump_dataGridView.Columns[6].HeaderText = "유량" + Environment.NewLine + "[CMH]";
             Pump_dataGridView.Columns[7].HeaderText = "동력" + Environment.NewLine + "[kW]";
             Pump_dataGridView.Columns[8].HeaderText = "양정" + Environment.NewLine + "[m]";
-            Pump_dataGridView.Columns[9].HeaderText = "대수" + Environment.NewLine + "[EA]";
+            Pump_dataGridView.Columns[9].HeaderText = "계산";
+            Pump_dataGridView.Columns[10].HeaderText = "대수" + Environment.NewLine + "[EA]";
+            //Pump_ButtonColumn.HeaderText = "계산";
+            //Pump_ButtonColumn.Name = "Cal";
+            //Pump_dataGridView.Columns.Add(Pump_ButtonColumn);
         }
 
         private void Pump_Add_button_Click(object sender, EventArgs e)
@@ -357,7 +361,11 @@ namespace main.contents
             펌프종류comboBox.Items.Add("지열순환펌프");
             Pump_dataGridView.Rows[nRow].Cells[3] = 펌프종류comboBox;
 
-            for (int k = 4; k < 10; k++)
+            DataGridViewButtonCell Pump_ButtonCell = new DataGridViewButtonCell();
+            Pump_dataGridView.Rows[nRow].Cells[9] = Pump_ButtonCell;
+            Pump_ButtonCell.Value = "양정 계산";
+            Pump_ButtonCell.Style.BackColor = SystemColors.Window;
+            for (int k = 4; k < 11; k++)
             {
                 Pump_dataGridView.Rows[nRow].Cells[k].Style.BackColor = SystemColors.Info;
             }
@@ -404,7 +412,7 @@ namespace main.contents
             펌프종류comboBox.Items.Add("지열순환펌프");
             Pump_dataGridView.Rows[nRow].Cells[3] = 펌프종류comboBox;
 
-            for (int k = 2; k < 10; k++)
+            for (int k = 2; k < 11; k++)
             {
                 if (Pump_dataGridView.Rows[Pump_SelectRow].Cells[k].Value != null)
                 {
@@ -465,12 +473,18 @@ namespace main.contents
             for (int k = 0; k < Pump_dataGridView.RowCount; k++)
             {
                 String[] Value = new String[9];
-                for (int i = 1; i < 10; i++)
+                for (int i = 1; i < 9; i++)
                 {
                     if (Pump_dataGridView.Rows[k].Cells[i].Value != null)
                     { Value[i - 1] = Pump_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
+
+                    if (Pump_dataGridView.Rows[k].Cells[10].Value != null)
+                    { Value[8] = Pump_dataGridView.Rows[k].Cells[10].Value.ToString(); }
+                    else { Value[8] = ""; }
                 }
+
+
                 Program.DB.setValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정,대수",
                 "'" + Value[0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','"
