@@ -195,7 +195,7 @@ namespace main.contents
             Boiler_dataGridView.AllowUserToAddRows = false;
             Boiler_dataGridView.AllowUserToDeleteRows = false;
             Boiler_dataGridView.AllowUserToResizeColumns = false;
-            Boiler_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Boiler_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             Boiler_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             Boiler_dataGridView.BackgroundColor = SystemColors.Window;
             Boiler_dataGridView.BorderStyle = BorderStyle.None;
@@ -207,7 +207,7 @@ namespace main.contents
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
             Boiler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Boiler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Boiler_dataGridView.Location = new Point(19, 65);
