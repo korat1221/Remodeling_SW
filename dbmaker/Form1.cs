@@ -26,6 +26,7 @@ namespace dbmaker
             DBName_comboBox.Items.Add("basedb_hcneed");
             DBName_comboBox.Items.Add("basedb_lighting");
             DBName_comboBox.Items.Add("basedb_heating");
+            DBName_comboBox.Items.Add("basedb_cooling");
         }
 
         private void DBName_comboBox_SelectedIndexChanged(object sender, EventArgs e)

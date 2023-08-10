@@ -70,7 +70,7 @@ namespace main
             new FormDebug(),
             new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow(),
             new List_Floor(), new List_Zone(),
-            new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor(), new PrintReport(),new PV(), new List_HeatingSystem()}; //나중에 PV를 냉방리스트로 바꿔야함 
+            new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor(), new PrintReport(),new List_CoolingSystem(), new List_HeatingSystem()}; //나중에 PV를 냉방리스트로 바꿔야함 
         bool scriptable = false;
         public class FormParam
         {
@@ -173,6 +173,12 @@ namespace main
 
                 f.LoadData(formParam.ID);
             }
+            else if (formParam.formID == 20)
+            {
+                CoolingSystem f = (CoolingSystem)form;
+
+                f.LoadData(formParam.ID);
+            }
             else if (formParam.formID == 29)
             {
                 List_ConstructionWindow f = (List_ConstructionWindow)form;
@@ -224,6 +230,12 @@ namespace main
             else if (formParam.formID == 37)
             {
                 PrintReport f = (PrintReport)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 38)
+            {
+                List_CoolingSystem f = (List_CoolingSystem)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -395,6 +407,12 @@ namespace main
 
                     f.LoadData("");
                 }
+                else if (i == 38)
+                {
+                    List_CoolingSystem f = (List_CoolingSystem)forms[i];
+
+                    f.LoadData("");
+                }
                 else if (i == 39)
                 {
                     List_HeatingSystem f = (List_HeatingSystem)forms[i];
@@ -528,6 +546,20 @@ namespace main
                     {
                         openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
                         forms[idx] = new HeatingSystem();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+            else if (idx == 20)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new CoolingSystem();
                         forms[idx].TopLevel = false;
                         openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
                         return;
