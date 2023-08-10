@@ -21,10 +21,10 @@ namespace main.contents
     public partial class HeatingSystem : Form
     {
         String Num, Name;
-        String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System, PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control;
+        String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System, PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control, ce1Type, ce2Type;
         int Pump1Num, Pump2Num;
         String[] SystemType = { "보일러", "히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
-        ArrayList SelectBoiler = new ArrayList(); ArrayList SelectPump = new ArrayList();
+        ArrayList SelectBoiler = new ArrayList(); ArrayList SelectPump = new ArrayList(); ArrayList Selectce1Zone = new ArrayList(); ArrayList Selectce2Zone = new ArrayList();
 
 
         public HeatingSystem()
@@ -78,31 +78,16 @@ namespace main.contents
             PumpMethod_comboBox.Items.Add("1차폐회로+2차펌프");
             PumpMethod_comboBox.SelectedIndex = 0;
 
-            //펌프 정유량 밸브 콤보박스
-            Pump1Valve_comboBox.Items.Clear();
-            Pump1Valve_comboBox.Items.Add("있음");
-            Pump1Valve_comboBox.Items.Add("없음");
-            Pump1Valve_comboBox.SelectedIndex = 0;
-            Pump2Valve_comboBox.Items.Clear();
-            Pump2Valve_comboBox.Items.Add("있음");
-            Pump2Valve_comboBox.Items.Add("없음");
-            Pump2Valve_comboBox.SelectedIndex = 0;
+            //공급설비 콤보박스
+            ce1Type_comboBox.Items.Clear();
+            ce1Type_comboBox.Items.Add("실내기");
+            ce1Type_comboBox.Items.Add("방열기");
+            ce1Type_comboBox.Items.Add("팬코일유닛");
+            ce1Type_comboBox.SelectedIndex = 0;
 
-            //펌프 제어 콤보박스
-            Pump1Control_comboBox.Items.Clear();
-            Pump1Control_comboBox.Items.Add("대수제어");
-            Pump1Control_comboBox.Items.Add("인버터제어");
-            Pump1Control_comboBox.Items.Add("제어없음");
-            Pump1Control_comboBox.SelectedIndex = 1;
-            Pump2Control_comboBox.Items.Clear();
-            Pump2Control_comboBox.Items.Add("대수제어");
-            Pump2Control_comboBox.Items.Add("인버터제어");
-            Pump2Control_comboBox.Items.Add("제어없음");
-            Pump2Control_comboBox.SelectedIndex = 1;
-
-            Pump1Num = 1;
-            Pump1Num_textBox.Text = Pump1Num.ToString();
-
+            ce2Type_comboBox.Items.Add("실내기");
+            ce2Type_comboBox.Items.Add("방열기");
+            ce2Type_comboBox.Items.Add("팬코일유닛");
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -410,18 +395,19 @@ namespace main.contents
             if (PumpUse_comboBox.SelectedItem != null)
             {
                 PumpUse = PumpUse_comboBox.SelectedItem.ToString();
-                Boolean Check = (PumpUse == "펌프 있음");
-
-                PumpMethod_label.Visible = Check;
-                PumpMethod_comboBox.Visible = Check;
-
-                if (Check == false)
+                if (PumpUse == "펌프 있음")
                 {
-                    PumpMethod_comboBox.SelectedItem = null;
+                    PumpMethod_label.Visible = true;
+                    PumpMethod_comboBox.Visible = true;
+                    Create_Pump_Table();
                 }
-
-                ChangeVisble_Pump1(PumpUse);
-                ChangeVisble_Pump2(PumpMethod); ;
+                else
+                {
+                    PumpMethod_label.Visible = false;
+                    PumpMethod_comboBox.Visible = false;
+                    PumpMethod_comboBox.SelectedItem = null;
+                    Pump_dataGridView.Columns.Clear();
+                }
             }
             else
             {
@@ -435,134 +421,95 @@ namespace main.contents
             if (PumpMethod_comboBox.SelectedItem != null)
             {
                 PumpMethod = PumpMethod_comboBox.SelectedItem.ToString();
-                ChangeVisble_Pump2(PumpMethod);
+                ChangeVisble_Pump(PumpMethod);
             }
             else
             {
                 PumpMethod = null;
+                ChangeVisble_Pump("");
             }
         }
 
-        private void Pump1Valve_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void ChangeVisble_Pump(String PumpMethod)
         {
-            if (Pump1Valve_comboBox.Visible == true && Pump1Valve_comboBox.SelectedItem != null)
-            {
-                Pump1Valve = Pump1Valve_comboBox.SelectedItem.ToString();
-            }
-            else
-            {
-                Pump1Valve = null;
-            }
-        }
-
-        private void Pump1Control_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (Pump1Control_comboBox.Visible == true && Pump1Control_comboBox.SelectedItem != null)
-            {
-                Pump1Control = Pump1Control_comboBox.SelectedItem.ToString();
-            }
-            else { Pump1Control = null; }
-        }
-
-        private void Pump1Num_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if (Pump1Num_textBox.Visible == true && Pump1Num_textBox.Text != null)
-            {
-                Pump1Num = Convert.ToInt32(Pump1Num_textBox.Text.ToString());
-            }
-            else
-            {
-                Pump1Num = 0;
-            }
-        }
-
-        private void Pump2Valve_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (Pump2Valve_comboBox.Visible == true && Pump2Valve_comboBox.SelectedItem != null)
-            {
-                Pump2Valve = Pump2Valve_comboBox.SelectedItem.ToString();
-            }
-            else
-            {
-                Pump2Valve = null;
-            }
-        }
-
-        private void Pump2Control_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (Pump2Control_comboBox.Visible == true && Pump2Control_comboBox.SelectedItem != null)
-            {
-                Pump2Control = Pump2Control_comboBox.SelectedItem.ToString();
-            }
-            else
-            {
-                Pump2Control = null;
-            }
-        }
-
-        private void Pump2Num_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if (Pump2Num_textBox.Visible == true && Pump2Num_textBox.Text != null)
-            {
-                Pump2Num = Convert.ToInt32(Pump2Num_textBox.Text.ToString());
-            }
-            else
-            {
-                Pump2Num = 0;
-            }
-
-        }
-
-        private void ChangeVisble_Pump1(String PumpUse)
-        {
-            Boolean Check = (PumpUse == "펌프 있음");
-            Pump1_label.Visible = Check;
-            Pump1_textBox.Visible = Check;
-            Pump1_button.Visible = Check;
-            Pump1Valve_label.Visible = Check;
-            Pump1Valve_comboBox.Visible = Check;
-            Pump1Control_label.Visible = Check;
-            Pump1Control_comboBox.Visible = Check;
-            Pump1Num_label1.Visible = Check;
-            Pump1Num_textBox.Visible = Check;
-            Pump1Num_label2.Visible = Check;
-
-            if (Check == false)
-            {
-                Pump1 = null;
-                Pump1Valve_comboBox.SelectedItem = null;
-                Pump1Control_comboBox.SelectedItem = null;
-                Pump1Num = 0;
-                Pump1Num_textBox.Text = null;
-            }
-        }
-
-        private void ChangeVisble_Pump2(String PumpMethod)
-        {
-            Boolean Check = (PumpMethod == "1차폐회로+2차펌프");
-            Pump2_label.Visible = Check;
-            Pump2_textBox.Visible = Check;
-            Pump2_button.Visible = Check;
-            Pump2Valve_label.Visible = Check;
-            Pump2Valve_comboBox.Visible = Check;
-            Pump2Control_label.Visible = Check;
-            Pump2Control_comboBox.Visible = Check;
-            Pump2Num_label1.Visible = Check;
-            Pump2Num_textBox.Visible = Check;
-            Pump2Num_label2.Visible = Check;
-
-            if (Check == false)
+            if (PumpMethod == "1차펌프")
             {
                 Pump2 = null;
-                Pump2Valve_comboBox.SelectedItem = null;
-                Pump2Control_comboBox.SelectedItem = null;
-                Pump2Num = 0;
-                Pump2Num_textBox.Text = null;
+                Pump1_label.Visible = true;
+                Pump1_textBox.Visible = true;
+                Pump1_button.Visible = true;
+                Pump2_label.Visible = false;
+                Pump2_textBox.Visible = false;
+                Pump2_button.Visible = false;
+                Pump2 = null;
+                Pump2_textBox.Text = null;
+                if (Pump1 != null)
+                {
+                    if (Pump_dataGridView.Rows.Count == 0)
+                    {
+                        Pump_dataGridView.Rows.Add();
+                        Load_Pump_Table(0, Pump1);
+                    }
+                    if (Pump_dataGridView.Rows.Count == 1)
+                    { Load_Pump_Table(0, Pump1); }
+                }
+                if (Pump_dataGridView.Rows.Count == 2)
+                { Pump_dataGridView.Rows.Remove(Pump_dataGridView.Rows[1]); }
+            }
+            else if (PumpMethod == "1차폐회로+2차펌프")
+            {
+                Pump1_label.Visible = true;
+                Pump1_textBox.Visible = true;
+                Pump1_button.Visible = true;
+                Pump2_label.Visible = true;
+                Pump2_textBox.Visible = true;
+                Pump2_button.Visible = true;
+                if (Pump1 != null && Pump2 != null)
+                {
+                    if (Pump_dataGridView.Rows.Count == 0)
+                    {
+                        Pump_dataGridView.Rows.Add();
+                        Pump_dataGridView.Rows.Add();
+                        Load_Pump_Table(0, Pump1);
+                        Load_Pump_Table(1, Pump2);
+                    }
+                    else if (Pump_dataGridView.Rows.Count == 1)
+                    {
+                        Pump_dataGridView.Rows.Add();
+                        Load_Pump_Table(0, Pump1);
+                        Load_Pump_Table(1, Pump2);
+                    }
+                    else if (Pump_dataGridView.Rows.Count == 2)
+                    {
+                        Load_Pump_Table(0, Pump1);
+                        Load_Pump_Table(1, Pump2);
+                    }
+                }
+            }
+            else
+            {
+                Pump1 = null;
+                Pump2 = null;
+                Pump1_label.Visible = false;
+                Pump1_textBox.Visible = false;
+                Pump1_button.Visible = false;
+                Pump2_label.Visible = false;
+                Pump2_textBox.Visible = false;
+                Pump2_button.Visible = false;
+                Pump2 = null;
+                Pump1 = null;
+                Pump2_textBox.Text = null;
+                Pump1_textBox.Text = null;
+                Pump_dataGridView.Rows.Clear();
             }
         }
 
         private void Pump1_button_Click(object sender, EventArgs e)
         {
+            if (Pump_dataGridView.Rows.Count == 0)
+            {
+                Pump_dataGridView.Rows.Add();
+            }
             Heating_Pump heating_pump = new Heating_Pump();
             DialogResult result = heating_pump.ShowDialog();
             if (result == DialogResult.OK)
@@ -574,6 +521,8 @@ namespace main.contents
                         Pump1 = heating_pump.SelectPump;
                         string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + Pump1.ToString() + "'");
                         Pump1_textBox.Text = Value[0][0];
+                        if (Pump_dataGridView.Rows.Count == 1)
+                        { Load_Pump_Table(0, Pump1); }
                     }
                 }
                 catch { }
@@ -582,6 +531,10 @@ namespace main.contents
 
         private void Pump2_button_Click(object sender, EventArgs e)
         {
+            if (Pump_dataGridView.Rows.Count == 1)
+            {
+                Pump_dataGridView.Rows.Add();
+            }
             Heating_Pump heating_pump = new Heating_Pump();
             DialogResult result = heating_pump.ShowDialog();
             if (result == DialogResult.OK)
@@ -593,20 +546,143 @@ namespace main.contents
                         Pump2 = heating_pump.SelectPump;
                         string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + Pump2.ToString() + "'");
                         Pump2_textBox.Text = Value[0][0];
+                        if (Pump_dataGridView.Rows.Count == 2)
+                        { Load_Pump_Table(1, Pump2); }
                     }
                 }
                 catch { }
             }
         }
 
+        private void Create_Pump_Table()
+        {
+            Pump_dataGridView.Columns.Clear();
+            Pump_dataGridView.ColumnCount = 12;
+            Pump_dataGridView.Columns[0].HeaderText = "구분";
+            Pump_dataGridView.Columns[1].HeaderText = "번호";
+            Pump_dataGridView.Columns[2].HeaderText = "명칭";
+            Pump_dataGridView.Columns[3].HeaderText = "종류";
+            Pump_dataGridView.Columns[4].HeaderText = "A효율" + Environment.NewLine + "[%]";
+            Pump_dataGridView.Columns[5].HeaderText = "B효율" + Environment.NewLine + "[%]";
+            Pump_dataGridView.Columns[6].HeaderText = "유량" + Environment.NewLine + "[CMH]";
+            Pump_dataGridView.Columns[7].HeaderText = "동력" + Environment.NewLine + "[kW]";
+            Pump_dataGridView.Columns[8].HeaderText = "양정" + Environment.NewLine + "[m]";
+            Pump_dataGridView.Columns[9].HeaderText = "정유량 밸브";
+            Pump_dataGridView.Columns[10].HeaderText = "펌프 제어";
+            Pump_dataGridView.Columns[11].HeaderText = "대수" + Environment.NewLine + "[EA]";
 
+        }
+        private void Load_Pump_Table(int nRow, String PumpNum)
+        {
+            DataGridViewComboBoxCell 정유량밸브comboBox = new DataGridViewComboBoxCell();
+            정유량밸브comboBox.Items.Add("있음");
+            정유량밸브comboBox.Items.Add("없음");
+            Pump_dataGridView.Rows[nRow].Cells[9] = 정유량밸브comboBox;
+            Pump_dataGridView.Rows[nRow].Cells[9].Value = "있음";
 
+            DataGridViewComboBoxCell 제어comboBox = new DataGridViewComboBoxCell();
+            제어comboBox.Items.Add("대수제어");
+            제어comboBox.Items.Add("인버터제어");
+            제어comboBox.Items.Add("제어없음");
+            Pump_dataGridView.Rows[nRow].Cells[10] = 제어comboBox;
+            if (PumpMethod == "1차폐회로+2차펌프")
+            {
+                Pump_dataGridView.Rows[nRow].Cells[10].Value = "대수제어";
+            }
+            else
+            {
+                Pump_dataGridView.Rows[nRow].Cells[10].Value = "제어없음";
+            }
 
+            Pump_dataGridView.Rows[nRow].Cells[11].Style.BackColor = SystemColors.Info;
+            try
+            {
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "번호 = '" + PumpNum.ToString() + "'");
+                for (int n = 0; n < Value.Length; n++)
+                {
+                    string A효율 = "", B효율 = "", 유량 = "", 동력 = "", 양정 = "";
+                    if (Value[n][3] != null && Value[n][3] != "")
+                    {
+                        A효율 = string.Format("{0:F1}", Convert.ToDouble(Value[n][3]));
+                    }
+                    if (Value[n][4] != null && Value[n][4] != "")
+                    {
+                        B효율 = string.Format("{0:F1}", Convert.ToDouble(Value[n][4]));
+                    }
+                    if (Value[n][5] != null && Value[n][5] != "")
+                    {
+                        유량 = string.Format("{0:F0}", Convert.ToDouble(Value[n][5]));
+                    }
+                    if (Value[n][6] != null && Value[n][6] != "")
+                    {
+                        동력 = string.Format("{0:F0}", Convert.ToDouble(Value[n][6]));
+                    }
+                    if (Value[n][7] != null && Value[n][7] != "")
+                    {
+                        양정 = string.Format("{0:F0}", Convert.ToDouble(Value[n][7]));
+                    }
 
+                    if (nRow == 1)
+                    {
+                        Pump_dataGridView.Rows[nRow].Cells[0].Value = "2차펌프";
+                    }
+                    else { Pump_dataGridView.Rows[nRow].Cells[0].Value = "1차펌프"; }
+                    Pump_dataGridView.Rows[nRow].Cells[1].Value = Value[0][0];
+                    Pump_dataGridView.Rows[nRow].Cells[2].Value = Value[0][1];
+                    Pump_dataGridView.Rows[nRow].Cells[3].Value = Value[0][2];
+                    Pump_dataGridView.Rows[nRow].Cells[4].Value = A효율;
+                    Pump_dataGridView.Rows[nRow].Cells[5].Value = B효율;
+                    Pump_dataGridView.Rows[nRow].Cells[6].Value = 유량;
+                    Pump_dataGridView.Rows[nRow].Cells[7].Value = 동력;
+                    Pump_dataGridView.Rows[nRow].Cells[8].Value = 양정;
+                }
+            }
+            catch { }
+        }
 
+        /////////////////////////////////////////////////////공급////////////////////////////////////////////////////////////////////
+        private void ce1Type_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ce1Type_comboBox.SelectedItem != null)
+            {
+                ce1Type = ce1Type_comboBox.SelectedItem.ToString();
+            }
+            else
+            {
+                ce1Type = null;
+            }
+        }
 
+        private void ce2Type_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ce2Type_comboBox.SelectedItem != null)
+            {
+                ce2Type = ce2Type_comboBox.SelectedItem.ToString();
+            }
+            else
+            {
+                ce2Type = null;
+            }
+        }
 
+        private void ce1Zone_button_Click(object sender, EventArgs e)
+        {
+            Heating_ceZone heating_pump = new Heating_ceZone(Num, ce1Type);
+            DialogResult result = heating_pump.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                   
+                }
+                catch { }
+            }
+        }
 
+        private void ce2Zone_button_Click(object sender, EventArgs e)
+        {
+
+        }
 
 
 

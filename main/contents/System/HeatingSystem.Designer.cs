@@ -28,9 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle40 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle41 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle42 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle43 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle44 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle45 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle37 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle38 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle39 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             Zone_button = new Button();
             label1 = new Label();
@@ -41,6 +47,13 @@
             Name_textBox = new TextBox();
             tabControl1 = new TabControl();
             Qhg_tabPage = new TabPage();
+            tabControl2 = new TabControl();
+            Boiler_tabPage = new TabPage();
+            Boiler_dataGridView = new DataGridView();
+            HP_tabPage = new TabPage();
+            AS_tabPage = new TabPage();
+            DH_tabPage = new TabPage();
+            Solar_tabPage = new TabPage();
             label9 = new Label();
             Complex_comboBox = new ComboBox();
             Sub2UserList_textBox = new TextBox();
@@ -64,47 +77,41 @@
             MainSystem_comboBox = new ComboBox();
             Qhs_tabPage = new TabPage();
             Qhd_tabPage = new TabPage();
-            Pump2Num_label1 = new Label();
-            Pump2Num_label2 = new Label();
-            Pump2Num_textBox = new TextBox();
-            Pump1Num_label1 = new Label();
-            Pump1Num_label2 = new Label();
-            Pump1Num_textBox = new TextBox();
-            Pump2Control_label = new Label();
-            Pump2Control_comboBox = new ComboBox();
+            Pump_dataGridView = new DataGridView();
             Pump2_textBox = new TextBox();
             Pump2_button = new Button();
             Pump2_label = new Label();
-            Pump2Valve_label = new Label();
-            Pump2Valve_comboBox = new ComboBox();
             PumpMethod_label = new Label();
             PumpMethod_comboBox = new ComboBox();
-            Pump1Control_label = new Label();
-            Pump1Control_comboBox = new ComboBox();
             label2 = new Label();
             PumpUse_comboBox = new ComboBox();
             Pump1_textBox = new TextBox();
             Pump1_button = new Button();
             Pump1_label = new Label();
-            Pump1Valve_label = new Label();
-            Pump1Valve_comboBox = new ComboBox();
             Qhce_tabPage = new TabPage();
+            ce1Zone_textBox = new TextBox();
+            ce1Zone_button = new Button();
+            label5 = new Label();
+            label4 = new Label();
+            ce1Type_comboBox = new ComboBox();
             panel2 = new Panel();
-            tabControl2 = new TabControl();
-            Boiler_tabPage = new TabPage();
-            Boiler_dataGridView = new DataGridView();
-            HP_tabPage = new TabPage();
-            AS_tabPage = new TabPage();
-            DH_tabPage = new TabPage();
-            Solar_tabPage = new TabPage();
+            ce2Zone_textBox = new TextBox();
+            ce2Zone_button = new Button();
+            label7 = new Label();
+            label10 = new Label();
+            ce2Type_comboBox = new ComboBox();
+            dataGridView1 = new DataGridView();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
             Qhg_tabPage.SuspendLayout();
-            Qhd_tabPage.SuspendLayout();
             tabControl2.SuspendLayout();
             Boiler_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).BeginInit();
+            Qhd_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Pump_dataGridView).BeginInit();
+            Qhce_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -208,12 +215,13 @@
             tabControl1.Location = new Point(12, 119);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(977, 155);
+            tabControl1.Size = new Size(977, 314);
             tabControl1.TabIndex = 97;
             // 
             // Qhg_tabPage
             // 
             Qhg_tabPage.BackColor = Color.White;
+            Qhg_tabPage.Controls.Add(tabControl2);
             Qhg_tabPage.Controls.Add(label9);
             Qhg_tabPage.Controls.Add(Complex_comboBox);
             Qhg_tabPage.Controls.Add(Sub2UserList_textBox);
@@ -238,9 +246,115 @@
             Qhg_tabPage.Location = new Point(4, 24);
             Qhg_tabPage.Name = "Qhg_tabPage";
             Qhg_tabPage.Padding = new Padding(3);
-            Qhg_tabPage.Size = new Size(969, 127);
+            Qhg_tabPage.Size = new Size(969, 286);
             Qhg_tabPage.TabIndex = 0;
             Qhg_tabPage.Text = "생산";
+            // 
+            // tabControl2
+            // 
+            tabControl2.Controls.Add(Boiler_tabPage);
+            tabControl2.Controls.Add(HP_tabPage);
+            tabControl2.Controls.Add(AS_tabPage);
+            tabControl2.Controls.Add(DH_tabPage);
+            tabControl2.Controls.Add(Solar_tabPage);
+            tabControl2.Location = new Point(3, 127);
+            tabControl2.Name = "tabControl2";
+            tabControl2.SelectedIndex = 0;
+            tabControl2.Size = new Size(963, 156);
+            tabControl2.TabIndex = 144;
+            // 
+            // Boiler_tabPage
+            // 
+            Boiler_tabPage.Controls.Add(Boiler_dataGridView);
+            Boiler_tabPage.Location = new Point(4, 24);
+            Boiler_tabPage.Name = "Boiler_tabPage";
+            Boiler_tabPage.Padding = new Padding(3);
+            Boiler_tabPage.Size = new Size(955, 128);
+            Boiler_tabPage.TabIndex = 6;
+            Boiler_tabPage.Text = "보일러";
+            Boiler_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // Boiler_dataGridView
+            // 
+            Boiler_dataGridView.AllowUserToAddRows = false;
+            Boiler_dataGridView.AllowUserToDeleteRows = false;
+            Boiler_dataGridView.AllowUserToResizeColumns = false;
+            Boiler_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Boiler_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            Boiler_dataGridView.BackgroundColor = Color.White;
+            Boiler_dataGridView.BorderStyle = BorderStyle.None;
+            Boiler_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            Boiler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle40.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle40.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle40.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle40.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle40.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle40.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle40.WrapMode = DataGridViewTriState.True;
+            Boiler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle40;
+            Boiler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Boiler_dataGridView.Location = new Point(6, 9);
+            Boiler_dataGridView.Name = "Boiler_dataGridView";
+            dataGridViewCellStyle41.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle41.BackColor = SystemColors.Control;
+            dataGridViewCellStyle41.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle41.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle41.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle41.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle41.WrapMode = DataGridViewTriState.True;
+            Boiler_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle41;
+            Boiler_dataGridView.RowHeadersVisible = false;
+            Boiler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle42.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle42.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle42.ForeColor = Color.Black;
+            dataGridViewCellStyle42.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle42.SelectionForeColor = Color.Black;
+            Boiler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle42;
+            Boiler_dataGridView.RowTemplate.Height = 25;
+            Boiler_dataGridView.Size = new Size(943, 113);
+            Boiler_dataGridView.TabIndex = 22;
+            // 
+            // HP_tabPage
+            // 
+            HP_tabPage.BackColor = Color.White;
+            HP_tabPage.Location = new Point(4, 24);
+            HP_tabPage.Name = "HP_tabPage";
+            HP_tabPage.Padding = new Padding(3);
+            HP_tabPage.Size = new Size(955, 128);
+            HP_tabPage.TabIndex = 2;
+            HP_tabPage.Text = "히트펌프";
+            // 
+            // AS_tabPage
+            // 
+            AS_tabPage.Location = new Point(4, 24);
+            AS_tabPage.Name = "AS_tabPage";
+            AS_tabPage.Padding = new Padding(3);
+            AS_tabPage.Size = new Size(955, 128);
+            AS_tabPage.TabIndex = 3;
+            AS_tabPage.Text = "흡수식온수기";
+            AS_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // DH_tabPage
+            // 
+            DH_tabPage.Location = new Point(4, 24);
+            DH_tabPage.Name = "DH_tabPage";
+            DH_tabPage.Padding = new Padding(3);
+            DH_tabPage.Size = new Size(955, 128);
+            DH_tabPage.TabIndex = 4;
+            DH_tabPage.Text = "지역난방";
+            DH_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // Solar_tabPage
+            // 
+            Solar_tabPage.Location = new Point(4, 24);
+            Solar_tabPage.Name = "Solar_tabPage";
+            Solar_tabPage.Padding = new Padding(3);
+            Solar_tabPage.Size = new Size(955, 128);
+            Solar_tabPage.TabIndex = 5;
+            Solar_tabPage.Text = "태양열시스템";
+            Solar_tabPage.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
@@ -492,127 +606,72 @@
             Qhs_tabPage.Location = new Point(4, 24);
             Qhs_tabPage.Name = "Qhs_tabPage";
             Qhs_tabPage.Padding = new Padding(3);
-            Qhs_tabPage.Size = new Size(969, 127);
+            Qhs_tabPage.Size = new Size(969, 286);
             Qhs_tabPage.TabIndex = 2;
             Qhs_tabPage.Text = "저장";
             // 
             // Qhd_tabPage
             // 
-            Qhd_tabPage.Controls.Add(Pump2Num_label1);
-            Qhd_tabPage.Controls.Add(Pump2Num_label2);
-            Qhd_tabPage.Controls.Add(Pump2Num_textBox);
-            Qhd_tabPage.Controls.Add(Pump1Num_label1);
-            Qhd_tabPage.Controls.Add(Pump1Num_label2);
-            Qhd_tabPage.Controls.Add(Pump1Num_textBox);
-            Qhd_tabPage.Controls.Add(Pump2Control_label);
-            Qhd_tabPage.Controls.Add(Pump2Control_comboBox);
+            Qhd_tabPage.Controls.Add(Pump_dataGridView);
             Qhd_tabPage.Controls.Add(Pump2_textBox);
             Qhd_tabPage.Controls.Add(Pump2_button);
             Qhd_tabPage.Controls.Add(Pump2_label);
-            Qhd_tabPage.Controls.Add(Pump2Valve_label);
-            Qhd_tabPage.Controls.Add(Pump2Valve_comboBox);
             Qhd_tabPage.Controls.Add(PumpMethod_label);
             Qhd_tabPage.Controls.Add(PumpMethod_comboBox);
-            Qhd_tabPage.Controls.Add(Pump1Control_label);
-            Qhd_tabPage.Controls.Add(Pump1Control_comboBox);
             Qhd_tabPage.Controls.Add(label2);
             Qhd_tabPage.Controls.Add(PumpUse_comboBox);
             Qhd_tabPage.Controls.Add(Pump1_textBox);
             Qhd_tabPage.Controls.Add(Pump1_button);
             Qhd_tabPage.Controls.Add(Pump1_label);
-            Qhd_tabPage.Controls.Add(Pump1Valve_label);
-            Qhd_tabPage.Controls.Add(Pump1Valve_comboBox);
             Qhd_tabPage.Location = new Point(4, 24);
             Qhd_tabPage.Name = "Qhd_tabPage";
             Qhd_tabPage.Padding = new Padding(3);
-            Qhd_tabPage.Size = new Size(969, 127);
+            Qhd_tabPage.Size = new Size(969, 286);
             Qhd_tabPage.TabIndex = 3;
             Qhd_tabPage.Text = "분배";
             Qhd_tabPage.UseVisualStyleBackColor = true;
             // 
-            // Pump2Num_label1
+            // Pump_dataGridView
             // 
-            Pump2Num_label1.AutoSize = true;
-            Pump2Num_label1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump2Num_label1.Location = new Point(705, 89);
-            Pump2Num_label1.Name = "Pump2Num_label1";
-            Pump2Num_label1.Size = new Size(61, 16);
-            Pump2Num_label1.TabIndex = 192;
-            Pump2Num_label1.Text = "펌프2 대수";
-            // 
-            // Pump2Num_label2
-            // 
-            Pump2Num_label2.AutoSize = true;
-            Pump2Num_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump2Num_label2.ForeColor = SystemColors.ControlDark;
-            Pump2Num_label2.Location = new Point(891, 89);
-            Pump2Num_label2.Name = "Pump2Num_label2";
-            Pump2Num_label2.Size = new Size(25, 16);
-            Pump2Num_label2.TabIndex = 191;
-            Pump2Num_label2.Text = "EA";
-            // 
-            // Pump2Num_textBox
-            // 
-            Pump2Num_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Pump2Num_textBox.Location = new Point(768, 86);
-            Pump2Num_textBox.Name = "Pump2Num_textBox";
-            Pump2Num_textBox.Size = new Size(120, 23);
-            Pump2Num_textBox.TabIndex = 190;
-            Pump2Num_textBox.TextAlign = HorizontalAlignment.Center;
-            Pump2Num_textBox.TextChanged += Pump2Num_textBox_TextChanged;
-            // 
-            // Pump1Num_label1
-            // 
-            Pump1Num_label1.AutoSize = true;
-            Pump1Num_label1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump1Num_label1.Location = new Point(705, 56);
-            Pump1Num_label1.Name = "Pump1Num_label1";
-            Pump1Num_label1.Size = new Size(61, 16);
-            Pump1Num_label1.TabIndex = 189;
-            Pump1Num_label1.Text = "펌프1 대수";
-            // 
-            // Pump1Num_label2
-            // 
-            Pump1Num_label2.AutoSize = true;
-            Pump1Num_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump1Num_label2.ForeColor = SystemColors.ControlDark;
-            Pump1Num_label2.Location = new Point(891, 56);
-            Pump1Num_label2.Name = "Pump1Num_label2";
-            Pump1Num_label2.Size = new Size(25, 16);
-            Pump1Num_label2.TabIndex = 188;
-            Pump1Num_label2.Text = "EA";
-            // 
-            // Pump1Num_textBox
-            // 
-            Pump1Num_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Pump1Num_textBox.Location = new Point(768, 53);
-            Pump1Num_textBox.Name = "Pump1Num_textBox";
-            Pump1Num_textBox.Size = new Size(120, 23);
-            Pump1Num_textBox.TabIndex = 187;
-            Pump1Num_textBox.TextAlign = HorizontalAlignment.Center;
-            Pump1Num_textBox.TextChanged += Pump1Num_textBox_TextChanged;
-            // 
-            // Pump2Control_label
-            // 
-            Pump2Control_label.AutoSize = true;
-            Pump2Control_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump2Control_label.Location = new Point(507, 90);
-            Pump2Control_label.Name = "Pump2Control_label";
-            Pump2Control_label.Size = new Size(66, 15);
-            Pump2Control_label.TabIndex = 186;
-            Pump2Control_label.Text = "펌프2 제어";
-            Pump2Control_label.Visible = false;
-            // 
-            // Pump2Control_comboBox
-            // 
-            Pump2Control_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump2Control_comboBox.FormattingEnabled = true;
-            Pump2Control_comboBox.Location = new Point(575, 85);
-            Pump2Control_comboBox.Name = "Pump2Control_comboBox";
-            Pump2Control_comboBox.Size = new Size(120, 24);
-            Pump2Control_comboBox.TabIndex = 185;
-            Pump2Control_comboBox.Visible = false;
-            Pump2Control_comboBox.SelectedIndexChanged += Pump2Control_comboBox_SelectedIndexChanged;
+            Pump_dataGridView.AllowUserToAddRows = false;
+            Pump_dataGridView.AllowUserToDeleteRows = false;
+            Pump_dataGridView.AllowUserToResizeColumns = false;
+            Pump_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Pump_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            Pump_dataGridView.BackgroundColor = Color.White;
+            Pump_dataGridView.BorderStyle = BorderStyle.None;
+            Pump_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            Pump_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle43.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle43.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle43.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle43.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle43.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle43.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle43.WrapMode = DataGridViewTriState.True;
+            Pump_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle43;
+            Pump_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Pump_dataGridView.Location = new Point(14, 71);
+            Pump_dataGridView.Name = "Pump_dataGridView";
+            dataGridViewCellStyle44.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle44.BackColor = SystemColors.Control;
+            dataGridViewCellStyle44.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle44.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle44.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle44.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle44.WrapMode = DataGridViewTriState.True;
+            Pump_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle44;
+            Pump_dataGridView.RowHeadersVisible = false;
+            Pump_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle45.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle45.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle45.ForeColor = Color.Black;
+            dataGridViewCellStyle45.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle45.SelectionForeColor = Color.Black;
+            Pump_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle45;
+            Pump_dataGridView.RowTemplate.Height = 25;
+            Pump_dataGridView.Size = new Size(949, 129);
+            Pump_dataGridView.TabIndex = 185;
             // 
             // Pump2_textBox
             // 
@@ -621,7 +680,7 @@
             Pump2_textBox.Enabled = false;
             Pump2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Pump2_textBox.ForeColor = SystemColors.ControlDark;
-            Pump2_textBox.Location = new Point(94, 90);
+            Pump2_textBox.Location = new Point(766, 25);
             Pump2_textBox.Name = "Pump2_textBox";
             Pump2_textBox.Size = new Size(120, 15);
             Pump2_textBox.TabIndex = 184;
@@ -633,7 +692,7 @@
             Pump2_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Pump2_button.FlatStyle = FlatStyle.System;
             Pump2_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Pump2_button.Location = new Point(220, 86);
+            Pump2_button.Location = new Point(889, 21);
             Pump2_button.Margin = new Padding(0);
             Pump2_button.Name = "Pump2_button";
             Pump2_button.Size = new Size(23, 23);
@@ -646,31 +705,11 @@
             // 
             Pump2_label.AutoSize = true;
             Pump2_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump2_label.Location = new Point(33, 90);
+            Pump2_label.Location = new Point(712, 25);
             Pump2_label.Name = "Pump2_label";
-            Pump2_label.Size = new Size(38, 15);
+            Pump2_label.Size = new Size(50, 15);
             Pump2_label.TabIndex = 182;
-            Pump2_label.Text = "펌프2";
-            // 
-            // Pump2Valve_label
-            // 
-            Pump2Valve_label.AutoSize = true;
-            Pump2Valve_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump2Valve_label.Location = new Point(249, 90);
-            Pump2Valve_label.Name = "Pump2Valve_label";
-            Pump2Valve_label.Size = new Size(102, 15);
-            Pump2Valve_label.TabIndex = 181;
-            Pump2Valve_label.Text = "펌프2 정유량밸브";
-            // 
-            // Pump2Valve_comboBox
-            // 
-            Pump2Valve_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump2Valve_comboBox.FormattingEnabled = true;
-            Pump2Valve_comboBox.Location = new Point(351, 85);
-            Pump2Valve_comboBox.Name = "Pump2Valve_comboBox";
-            Pump2Valve_comboBox.Size = new Size(120, 24);
-            Pump2Valve_comboBox.TabIndex = 180;
-            Pump2Valve_comboBox.SelectedIndexChanged += Pump2Valve_comboBox_SelectedIndexChanged;
+            Pump2_label.Text = "2차펌프";
             // 
             // PumpMethod_label
             // 
@@ -686,33 +725,11 @@
             // 
             PumpMethod_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PumpMethod_comboBox.FormattingEnabled = true;
-            PumpMethod_comboBox.Location = new Point(351, 20);
+            PumpMethod_comboBox.Location = new Point(318, 20);
             PumpMethod_comboBox.Name = "PumpMethod_comboBox";
             PumpMethod_comboBox.Size = new Size(120, 24);
             PumpMethod_comboBox.TabIndex = 178;
             PumpMethod_comboBox.SelectedIndexChanged += PumpMethod_comboBox_SelectedIndexChanged;
-            // 
-            // Pump1Control_label
-            // 
-            Pump1Control_label.AutoSize = true;
-            Pump1Control_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump1Control_label.Location = new Point(507, 57);
-            Pump1Control_label.Name = "Pump1Control_label";
-            Pump1Control_label.Size = new Size(66, 15);
-            Pump1Control_label.TabIndex = 177;
-            Pump1Control_label.Text = "펌프1 제어";
-            Pump1Control_label.Visible = false;
-            // 
-            // Pump1Control_comboBox
-            // 
-            Pump1Control_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump1Control_comboBox.FormattingEnabled = true;
-            Pump1Control_comboBox.Location = new Point(575, 52);
-            Pump1Control_comboBox.Name = "Pump1Control_comboBox";
-            Pump1Control_comboBox.Size = new Size(120, 24);
-            Pump1Control_comboBox.TabIndex = 176;
-            Pump1Control_comboBox.Visible = false;
-            Pump1Control_comboBox.SelectedIndexChanged += Pump1Control_comboBox_SelectedIndexChanged;
             // 
             // label2
             // 
@@ -741,7 +758,7 @@
             Pump1_textBox.Enabled = false;
             Pump1_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Pump1_textBox.ForeColor = SystemColors.ControlDark;
-            Pump1_textBox.Location = new Point(94, 57);
+            Pump1_textBox.Location = new Point(542, 25);
             Pump1_textBox.Name = "Pump1_textBox";
             Pump1_textBox.Size = new Size(120, 15);
             Pump1_textBox.TabIndex = 167;
@@ -753,7 +770,7 @@
             Pump1_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Pump1_button.FlatStyle = FlatStyle.System;
             Pump1_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Pump1_button.Location = new Point(220, 53);
+            Pump1_button.Location = new Point(664, 21);
             Pump1_button.Margin = new Padding(0);
             Pump1_button.Name = "Pump1_button";
             Pump1_button.Size = new Size(23, 23);
@@ -766,41 +783,90 @@
             // 
             Pump1_label.AutoSize = true;
             Pump1_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump1_label.Location = new Point(33, 57);
+            Pump1_label.Location = new Point(488, 24);
             Pump1_label.Name = "Pump1_label";
-            Pump1_label.Size = new Size(38, 15);
+            Pump1_label.Size = new Size(50, 15);
             Pump1_label.TabIndex = 165;
-            Pump1_label.Text = "펌프1";
-            // 
-            // Pump1Valve_label
-            // 
-            Pump1Valve_label.AutoSize = true;
-            Pump1Valve_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump1Valve_label.Location = new Point(249, 57);
-            Pump1Valve_label.Name = "Pump1Valve_label";
-            Pump1Valve_label.Size = new Size(102, 15);
-            Pump1Valve_label.TabIndex = 156;
-            Pump1Valve_label.Text = "펌프1 정유량밸브";
-            // 
-            // Pump1Valve_comboBox
-            // 
-            Pump1Valve_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump1Valve_comboBox.FormattingEnabled = true;
-            Pump1Valve_comboBox.Location = new Point(351, 52);
-            Pump1Valve_comboBox.Name = "Pump1Valve_comboBox";
-            Pump1Valve_comboBox.Size = new Size(120, 24);
-            Pump1Valve_comboBox.TabIndex = 155;
-            Pump1Valve_comboBox.SelectedIndexChanged += Pump1Valve_comboBox_SelectedIndexChanged;
+            Pump1_label.Text = "1차펌프";
             // 
             // Qhce_tabPage
             // 
+            Qhce_tabPage.Controls.Add(dataGridView1);
+            Qhce_tabPage.Controls.Add(ce2Zone_textBox);
+            Qhce_tabPage.Controls.Add(ce2Zone_button);
+            Qhce_tabPage.Controls.Add(label7);
+            Qhce_tabPage.Controls.Add(label10);
+            Qhce_tabPage.Controls.Add(ce2Type_comboBox);
+            Qhce_tabPage.Controls.Add(ce1Zone_textBox);
+            Qhce_tabPage.Controls.Add(ce1Zone_button);
+            Qhce_tabPage.Controls.Add(label5);
+            Qhce_tabPage.Controls.Add(label4);
+            Qhce_tabPage.Controls.Add(ce1Type_comboBox);
             Qhce_tabPage.Location = new Point(4, 24);
             Qhce_tabPage.Name = "Qhce_tabPage";
             Qhce_tabPage.Padding = new Padding(3);
-            Qhce_tabPage.Size = new Size(969, 127);
+            Qhce_tabPage.Size = new Size(969, 286);
             Qhce_tabPage.TabIndex = 4;
             Qhce_tabPage.Text = "공급";
             Qhce_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // ce1Zone_textBox
+            // 
+            ce1Zone_textBox.BackColor = Color.White;
+            ce1Zone_textBox.BorderStyle = BorderStyle.None;
+            ce1Zone_textBox.Enabled = false;
+            ce1Zone_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ce1Zone_textBox.ForeColor = SystemColors.ControlDark;
+            ce1Zone_textBox.Location = new Point(294, 32);
+            ce1Zone_textBox.Name = "ce1Zone_textBox";
+            ce1Zone_textBox.Size = new Size(120, 15);
+            ce1Zone_textBox.TabIndex = 187;
+            ce1Zone_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // ce1Zone_button
+            // 
+            ce1Zone_button.BackColor = SystemColors.ControlLight;
+            ce1Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            ce1Zone_button.FlatStyle = FlatStyle.System;
+            ce1Zone_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            ce1Zone_button.Location = new Point(416, 28);
+            ce1Zone_button.Margin = new Padding(0);
+            ce1Zone_button.Name = "ce1Zone_button";
+            ce1Zone_button.Size = new Size(23, 23);
+            ce1Zone_button.TabIndex = 186;
+            ce1Zone_button.Text = "+";
+            ce1Zone_button.UseVisualStyleBackColor = false;
+            ce1Zone_button.Click += ce1Zone_button_Click;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.Location = new Point(241, 32);
+            label5.Name = "label5";
+            label5.Size = new Size(47, 15);
+            label5.TabIndex = 185;
+            label5.Text = "공급 존";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Location = new Point(19, 32);
+            label4.Name = "label4";
+            label4.Size = new Size(90, 15);
+            label4.TabIndex = 177;
+            label4.Text = "공급설비1 종류";
+            // 
+            // ce1Type_comboBox
+            // 
+            ce1Type_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ce1Type_comboBox.FormattingEnabled = true;
+            ce1Type_comboBox.Location = new Point(115, 27);
+            ce1Type_comboBox.Name = "ce1Type_comboBox";
+            ce1Type_comboBox.Size = new Size(120, 24);
+            ce1Type_comboBox.TabIndex = 176;
+            ce1Type_comboBox.SelectedIndexChanged += ce1Type_comboBox_SelectedIndexChanged;
             // 
             // panel2
             // 
@@ -810,111 +876,105 @@
             panel2.Size = new Size(977, 221);
             panel2.TabIndex = 143;
             // 
-            // tabControl2
+            // ce2Zone_textBox
             // 
-            tabControl2.Controls.Add(Boiler_tabPage);
-            tabControl2.Controls.Add(HP_tabPage);
-            tabControl2.Controls.Add(AS_tabPage);
-            tabControl2.Controls.Add(DH_tabPage);
-            tabControl2.Controls.Add(Solar_tabPage);
-            tabControl2.Location = new Point(12, 280);
-            tabControl2.Name = "tabControl2";
-            tabControl2.SelectedIndex = 0;
-            tabControl2.Size = new Size(977, 153);
-            tabControl2.TabIndex = 144;
+            ce2Zone_textBox.BackColor = Color.White;
+            ce2Zone_textBox.BorderStyle = BorderStyle.None;
+            ce2Zone_textBox.Enabled = false;
+            ce2Zone_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ce2Zone_textBox.ForeColor = SystemColors.ControlDark;
+            ce2Zone_textBox.Location = new Point(768, 32);
+            ce2Zone_textBox.Name = "ce2Zone_textBox";
+            ce2Zone_textBox.Size = new Size(120, 15);
+            ce2Zone_textBox.TabIndex = 192;
+            ce2Zone_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Boiler_tabPage
+            // ce2Zone_button
             // 
-            Boiler_tabPage.Controls.Add(Boiler_dataGridView);
-            Boiler_tabPage.Location = new Point(4, 24);
-            Boiler_tabPage.Name = "Boiler_tabPage";
-            Boiler_tabPage.Padding = new Padding(3);
-            Boiler_tabPage.Size = new Size(969, 125);
-            Boiler_tabPage.TabIndex = 6;
-            Boiler_tabPage.Text = "보일러";
-            Boiler_tabPage.UseVisualStyleBackColor = true;
+            ce2Zone_button.BackColor = SystemColors.ControlLight;
+            ce2Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            ce2Zone_button.FlatStyle = FlatStyle.System;
+            ce2Zone_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            ce2Zone_button.Location = new Point(890, 28);
+            ce2Zone_button.Margin = new Padding(0);
+            ce2Zone_button.Name = "ce2Zone_button";
+            ce2Zone_button.Size = new Size(23, 23);
+            ce2Zone_button.TabIndex = 191;
+            ce2Zone_button.Text = "+";
+            ce2Zone_button.UseVisualStyleBackColor = false;
+            ce2Zone_button.Click += ce2Zone_button_Click;
             // 
-            // Boiler_dataGridView
+            // label7
             // 
-            Boiler_dataGridView.AllowUserToAddRows = false;
-            Boiler_dataGridView.AllowUserToDeleteRows = false;
-            Boiler_dataGridView.AllowUserToResizeColumns = false;
-            Boiler_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            Boiler_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            Boiler_dataGridView.BackgroundColor = Color.White;
-            Boiler_dataGridView.BorderStyle = BorderStyle.None;
-            Boiler_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            Boiler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            Boiler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            Boiler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Boiler_dataGridView.Location = new Point(19, 6);
-            Boiler_dataGridView.Name = "Boiler_dataGridView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            Boiler_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            Boiler_dataGridView.RowHeadersVisible = false;
-            Boiler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            Boiler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Boiler_dataGridView.RowTemplate.Height = 25;
-            Boiler_dataGridView.Size = new Size(921, 113);
-            Boiler_dataGridView.TabIndex = 22;
+            label7.AutoSize = true;
+            label7.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Location = new Point(715, 32);
+            label7.Name = "label7";
+            label7.Size = new Size(47, 15);
+            label7.TabIndex = 190;
+            label7.Text = "공급 존";
             // 
-            // HP_tabPage
+            // label10
             // 
-            HP_tabPage.BackColor = Color.White;
-            HP_tabPage.Location = new Point(4, 24);
-            HP_tabPage.Name = "HP_tabPage";
-            HP_tabPage.Padding = new Padding(3);
-            HP_tabPage.Size = new Size(969, 125);
-            HP_tabPage.TabIndex = 2;
-            HP_tabPage.Text = "히트펌프";
+            label10.AutoSize = true;
+            label10.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label10.Location = new Point(493, 32);
+            label10.Name = "label10";
+            label10.Size = new Size(90, 15);
+            label10.TabIndex = 189;
+            label10.Text = "공급설비2 종류";
             // 
-            // AS_tabPage
+            // ce2Type_comboBox
             // 
-            AS_tabPage.Location = new Point(4, 24);
-            AS_tabPage.Name = "AS_tabPage";
-            AS_tabPage.Padding = new Padding(3);
-            AS_tabPage.Size = new Size(969, 125);
-            AS_tabPage.TabIndex = 3;
-            AS_tabPage.Text = "흡수식온수기";
-            AS_tabPage.UseVisualStyleBackColor = true;
+            ce2Type_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ce2Type_comboBox.FormattingEnabled = true;
+            ce2Type_comboBox.Location = new Point(589, 27);
+            ce2Type_comboBox.Name = "ce2Type_comboBox";
+            ce2Type_comboBox.Size = new Size(120, 24);
+            ce2Type_comboBox.TabIndex = 188;
+            ce2Type_comboBox.SelectedIndexChanged += ce2Type_comboBox_SelectedIndexChanged;
             // 
-            // DH_tabPage
+            // dataGridView1
             // 
-            DH_tabPage.Location = new Point(4, 24);
-            DH_tabPage.Name = "DH_tabPage";
-            DH_tabPage.Padding = new Padding(3);
-            DH_tabPage.Size = new Size(969, 125);
-            DH_tabPage.TabIndex = 4;
-            DH_tabPage.Text = "지역난방";
-            DH_tabPage.UseVisualStyleBackColor = true;
-            // 
-            // Solar_tabPage
-            // 
-            Solar_tabPage.Location = new Point(4, 24);
-            Solar_tabPage.Name = "Solar_tabPage";
-            Solar_tabPage.Padding = new Padding(3);
-            Solar_tabPage.Size = new Size(969, 125);
-            Solar_tabPage.TabIndex = 5;
-            Solar_tabPage.Text = "태양열시스템";
-            Solar_tabPage.UseVisualStyleBackColor = true;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToResizeColumns = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle37.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle37.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle37.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle37.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle37.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle37.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle37.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle37;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(10, 79);
+            dataGridView1.Name = "dataGridView1";
+            dataGridViewCellStyle38.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle38.BackColor = SystemColors.Control;
+            dataGridViewCellStyle38.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle38.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle38.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle38.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle38.WrapMode = DataGridViewTriState.True;
+            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle38;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle39.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle39.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle39.ForeColor = Color.Black;
+            dataGridViewCellStyle39.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle39.SelectionForeColor = Color.Black;
+            dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle39;
+            dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.Size = new Size(949, 129);
+            dataGridView1.TabIndex = 193;
             // 
             // HeatingSystem
             // 
@@ -922,7 +982,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(tabControl2);
             Controls.Add(panel2);
             Controls.Add(tabControl1);
             Controls.Add(GeneralPanel);
@@ -935,11 +994,15 @@
             tabControl1.ResumeLayout(false);
             Qhg_tabPage.ResumeLayout(false);
             Qhg_tabPage.PerformLayout();
-            Qhd_tabPage.ResumeLayout(false);
-            Qhd_tabPage.PerformLayout();
             tabControl2.ResumeLayout(false);
             Boiler_tabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).EndInit();
+            Qhd_tabPage.ResumeLayout(false);
+            Qhd_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Pump_dataGridView).EndInit();
+            Qhce_tabPage.ResumeLayout(false);
+            Qhce_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
@@ -987,29 +1050,27 @@
         private Label label9;
         private ComboBox Complex_comboBox;
         private DataGridView Boiler_dataGridView;
-        private Label Pump2Control_label;
-        private ComboBox Pump2Control_comboBox;
         private TextBox Pump2_textBox;
         private Button Pump2_button;
         private Label Pump2_label;
-        private Label Pump2Valve_label;
-        private ComboBox Pump2Valve_comboBox;
         private Label PumpMethod_label;
         private ComboBox PumpMethod_comboBox;
-        private Label Pump1Control_label;
-        private ComboBox Pump1Control_comboBox;
         private Label label2;
         private ComboBox PumpUse_comboBox;
         private TextBox Pump1_textBox;
         private Button Pump1_button;
         private Label Pump1_label;
-        private Label Pump1Valve_label;
-        private ComboBox Pump1Valve_comboBox;
-        private Label Pump2Num_label1;
-        private Label Pump2Num_label2;
-        private TextBox Pump2Num_textBox;
-        private Label Pump1Num_label1;
-        private Label Pump1Num_label2;
-        private TextBox Pump1Num_textBox;
+        private TextBox ce1Zone_textBox;
+        private Button ce1Zone_button;
+        private Label label5;
+        private Label label4;
+        private ComboBox ce1Type_comboBox;
+        private DataGridView Pump_dataGridView;
+        private DataGridView dataGridView1;
+        private TextBox ce2Zone_textBox;
+        private Button ce2Zone_button;
+        private Label label7;
+        private Label label10;
+        private ComboBox ce2Type_comboBox;
     }
 }
