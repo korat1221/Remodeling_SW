@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
@@ -30,9 +32,15 @@ using System.Windows.Forms;
             objDataGrid.ColumnAdded += objDataGrid_ColumnAdded;
             objDataGrid.ColumnWidthChanged += objDataGrid_ColumnWidthChanged;
             objHeaderTree = objStackedHeaderGenerator.GenerateStackedHeader(objDataGrid);
-        }
 
-        public StackedHeaderDecorator(IStackedHeaderGenerator objStackedHeaderGenerator, DataGridView objDataGrid)
+            objDataGrid.GridColor = Color.FromArgb(220, 220, 220);
+            objDataGrid.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+
+
+        objDataGrid.CellPainting += dataGridView1_CellPainting;
+
+    }
+    public StackedHeaderDecorator(IStackedHeaderGenerator objStackedHeaderGenerator, DataGridView objDataGrid)
             : this(objDataGrid)
         {
             this.objStackedHeaderGenerator = objStackedHeaderGenerator;
@@ -54,8 +62,101 @@ using System.Windows.Forms;
             RegenerateHeaders();
             Refresh();
         }
+        private bool isSelectedRow(int ridx)
+        {
+            int i = -1, cnt = objDataGrid.GetCellCount(DataGridViewElementStates.Selected);
 
-        void objDataGrid_Paint(object sender, PaintEventArgs e)
+            while (++i < cnt)
+            {
+                if (objDataGrid.SelectedCells[i].RowIndex == ridx)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        private void renderColors()
+        {
+            int i;
+
+            for (int k = 0; k < objDataGrid.RowCount; k++)
+            {
+                DataGridViewRow row = objDataGrid.Rows[k];
+
+                i = -1;
+                while (++i < row.Cells.Count)
+                {
+                    var cell = row.Cells[i];
+
+                    if (isSelectedRow(k))
+                    {
+                        cell.Style.BackColor = SystemColors.GradientInactiveCaption;
+                    }
+                    else
+                    {
+                        if (cell.GetType() == typeof(DataGridViewTextBoxCell))
+                        {
+                            cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? SystemColors.Info : Color.FromArgb(240, 241, 241);
+                        }
+                        else if (cell.GetType() == typeof(DataGridViewComboBoxCell))
+                        {
+
+                        cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? Color.FromArgb(244, 227, 216) : Color.FromArgb(240, 241, 241);
+                    }
+                        else if (cell.GetType() == typeof(DataGridViewButtonCell))
+                        {
+                            cell.Style.BackColor = Color.FromArgb(192, 208, 226);
+
+                        }
+                        else
+                        {
+                            row.DefaultCellStyle.BackColor = SystemColors.Window;
+
+                        }
+                    }
+                }
+            }
+        }
+
+    // Paint the cell when not in edit mode.
+    private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+    {
+        if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+        {
+            renderColors();
+
+            //Rectangle rect2 = new Rectangle(9, e.CellBounds.Y + e.CellBounds.Height, 9999, e.CellBounds.Height + 1);
+
+            //e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, 0, 0)), rect2);
+
+            if (objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewComboBoxCell)
+            {
+                var cell = objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
+                var foreColor = cell.Style.ForeColor.Name == "0" ? Color.Black : cell.Style.ForeColor;
+
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.Border);
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.ContentBackground);
+
+                using (Brush forebrush = new SolidBrush(foreColor))
+                using (Brush backbrush = new SolidBrush(cell.Style.BackColor))
+                using (StringFormat format = new StringFormat())
+                {
+                    Rectangle rect = new Rectangle(e.CellBounds.X + 1, e.CellBounds.Y + 1, e.CellBounds.Width - 19, e.CellBounds.Height - 3);
+                    format.LineAlignment = StringAlignment.Center;
+
+                    e.Graphics.FillRectangle(backbrush, rect);
+                    e.Graphics.DrawString(cell.FormattedValue.ToString(), e.CellStyle.Font, forebrush, rect, format);
+                }
+
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.ErrorIcon);
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.Focus);
+                e.Handled = true;
+            }
+        }
+    }
+
+    // Paint the cell in edit mode.
+    void objDataGrid_Paint(object sender, PaintEventArgs e)
         {
             iNoOfLevels = NoOfLevels(objHeaderTree);
             objGraphics = e.Graphics;
@@ -94,9 +195,17 @@ using System.Windows.Forms;
                 objChild.Measure(objDataGrid, 0, objDataGrid.ColumnHeadersHeight/iNoOfLevels);
                 objChild.AcceptRenderer(this);
             }
+
+            Point pt01 = new Point(objDataGrid.DisplayRectangle.X, objDataGrid.DisplayRectangle.Y);
+            Point pt02 = new Point(objDataGrid.DisplayRectangle.X + objDataGrid.DisplayRectangle.Width, objDataGrid.DisplayRectangle.Y);
+            Point pt11 = new Point(objDataGrid.DisplayRectangle.X, objDataGrid.DisplayRectangle.Y + objDataGrid.ColumnHeadersHeight);
+            Point pt12 = new Point(objDataGrid.DisplayRectangle.X + objDataGrid.DisplayRectangle.Width, objDataGrid.DisplayRectangle.Y + objDataGrid.ColumnHeadersHeight);
+
+            objGraphics.DrawLine(Pens.Gray, pt01, pt02);
+            objGraphics.DrawLine(Pens.Gray, pt11, pt12);
         }
 
-        public void Render(Header objHeader)
+    public void Render(Header objHeader)
         {
             if (objHeader.Children.Count == 0)
             {
@@ -116,8 +225,8 @@ using System.Windows.Forms;
                     r1.X -= (objDataGrid.Columns[objHeader.ColumnId].Width - r1.Width);
                 }
                 r1.X -= 1;
-                r1.Width = objDataGrid.Columns[objHeader.ColumnId].Width;
-                objGraphics.DrawRectangle(Pens.Gray, r1);
+                r1.Width = objDataGrid.Columns[objHeader.ColumnId].Width + 1;
+                objGraphics.DrawRectangle(new Pen(Color.FromArgb(240, 240, 240), 1), r1);
                 objGraphics.DrawString(objHeader.Name,
                                        objDataGrid.ColumnHeadersDefaultCellStyle.Font,
                                        new SolidBrush(objDataGrid.ColumnHeadersDefaultCellStyle.ForeColor),
@@ -153,8 +262,8 @@ using System.Windows.Forms;
                 r1.X -= 1;
                 objGraphics.SetClip(r1);
           //      r1.X = x - objDataGrid.HorizontalScrollingOffset;
-                r1.Width -= 1;
-                objGraphics.DrawRectangle(Pens.Gray, r1);
+           //     r1.Width -= 1;
+                objGraphics.DrawRectangle(new Pen(Color.FromArgb(240, 240, 240), 1), r1);
                 r1.X -= 1;
                 objGraphics.DrawString(objHeader.Name, objDataGrid.ColumnHeadersDefaultCellStyle.Font,
                                        new SolidBrush(objDataGrid.ColumnHeadersDefaultCellStyle.ForeColor),

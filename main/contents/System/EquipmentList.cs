@@ -114,12 +114,12 @@ namespace main.contents
             Boiler_dataGridView.Rows[nRow].Cells[5] = 연료Combo;
 
 
-            Boiler_dataGridView.Rows[nRow].Cells[3].Style.BackColor = SystemColors.Info;
-            Boiler_dataGridView.Rows[nRow].Cells[6].Style.BackColor = SystemColors.Control;
-            for (int k = 7; k < 13; k++)
-            {
-                Boiler_dataGridView.Rows[nRow].Cells[k].Style.BackColor = SystemColors.Info;
-            }
+            //Boiler_dataGridView.Rows[nRow].Cells[3].Style.BackColor = SystemColors.Info;
+            //Boiler_dataGridView.Rows[nRow].Cells[6].Style.BackColor = SystemColors.Control;
+            //for (int k = 7; k < 13; k++)
+            //{
+            //    Boiler_dataGridView.Rows[nRow].Cells[k].Style.BackColor = SystemColors.Info;
+            //}
         }
 
         private void DefaultBoiler_Add_button_Click(object sender, EventArgs e)
@@ -156,7 +156,7 @@ namespace main.contents
                         //  Value2 = Program.DB.getValueDouble(DB.type.BaseDB_Heating, "보일러", "대기전력", "번호 = '" + SelectBoiler[0].ToString() + "'");
                         String name = Value[0][0];
 
-                        Boiler_dataGridView.Rows[nRow].Cells[3].Style.BackColor = SystemColors.Info;
+                        //         Boiler_dataGridView.Rows[nRow].Cells[3].Style.BackColor = SystemColors.Info;
                         if (Value[0][1] == "가스")
                         {
                             DataGridViewComboBoxCell 연료Combo = new DataGridViewComboBoxCell();
@@ -167,13 +167,13 @@ namespace main.contents
                         else { Boiler_dataGridView.Rows[nRow].Cells[5].Value = Value[0][1]; }
                         Boiler_dataGridView.Rows[nRow].Cells[6].Value = Value[0][2];
 
-                        Boiler_dataGridView.Rows[nRow].Cells[7].Style.BackColor = SystemColors.Info;
+                        //            Boiler_dataGridView.Rows[nRow].Cells[7].Style.BackColor = SystemColors.Info;
 
                         Boiler_dataGridView.Rows[nRow].Cells[8].Value = Convert.ToDouble(Value[0][3]) * 100;
                         Boiler_dataGridView.Rows[nRow].Cells[9].Value = Convert.ToDouble(Value[0][4]) * 100;
                         Boiler_dataGridView.Rows[nRow].Cells[10].Value = Value[0][5];
                         Boiler_dataGridView.Rows[nRow].Cells[11].Value = Value[0][6];
-                        Boiler_dataGridView.Rows[nRow].Cells[12].Style.BackColor = SystemColors.Info;
+                        //         Boiler_dataGridView.Rows[nRow].Cells[12].Style.BackColor = SystemColors.Info;
                     }
                 }
                 catch { }
@@ -200,10 +200,10 @@ namespace main.contents
                         }
                     }
                 }
-                if (Boiler_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
-                {
-                    Boiler_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.White;
-                }
+                //if (Boiler_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                //{
+                //    Boiler_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.White;
+                //}
             }
         }
 
@@ -272,13 +272,13 @@ namespace main.contents
             {
                 if (Boiler_dataGridView.Rows[Boiler_SelectRow].Cells[k].Value != null)
                 {
-                    Boiler_dataGridView.Rows[nRow].Cells[k].Value = Boiler_dataGridView.Rows[Boiler_SelectRow].Cells[k].Value;
-                    Boiler_dataGridView.Rows[nRow].Cells[k].Style.BackColor = Color.White;
+                    Boiler_dataGridView.Rows[nRow].Cells[k].Value = Boiler_dataGridView.Rows[Pump_SelectRow].Cells[k].Value;
+                    //           Boiler_dataGridView.Rows[nRow].Cells[k].Style.BackColor = Color.White;
                 }
-                else
-                {
-                    Boiler_dataGridView.Rows[nRow].Cells[k].Style.BackColor = SystemColors.Info;
-                }
+                //else
+                //{
+                //    Boiler_dataGridView.Rows[nRow].Cells[k].Style.BackColor = SystemColors.Info;
+                //}
             }
             if (Boiler_dataGridView.Rows[Boiler_SelectRow].Cells[3].Value != null)
             {
@@ -731,14 +731,14 @@ namespace main.contents
                     { Value[i - 1] = ce_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-
-                Program.DB.setValue(DB.type.ProjDB, "User_ce", "번호,명칭,난방냉방,종류,용량,소비전력,온도제어방식,대수",
+                Program.DB.setValue(DB.type.ProjDB, "User_Boiler", "번호,DB유형,명칭,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력,대수",
                 "'" + Value[0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','"
-                 + Value[7]
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','"
+                 + Value[11]
                  + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
         }
+
     }
 }
