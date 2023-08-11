@@ -34,7 +34,8 @@ namespace main.contents
         {
             InitializeComponent();
 
-            StackedHeaderDecorator objREnderer = new StackedHeaderDecorator(Boiler_dataGridView);
+            new StackedHeaderDecorator(Boiler_dataGridView);
+            new StackedHeaderDecorator(Pump_dataGridView);
 
             Program.DB.initTable(DB.type.ProjDB, "User_Boiler");
             Program.DB.initTable(DB.type.ProjDB, "User_Pump");
@@ -352,18 +353,30 @@ namespace main.contents
             Pump_checkBoxColumn.Name = "check";
             Pump_dataGridView.Columns.Add(Pump_checkBoxColumn);
 
-            Pump_dataGridView.ColumnCount = 12;
-            Pump_dataGridView.Columns[1].HeaderText = "번호";
-            Pump_dataGridView.Columns[2].HeaderText = "명칭";
-            Pump_dataGridView.Columns[3].HeaderText = "종류";
-            Pump_dataGridView.Columns[4].HeaderText = "A효율" + Environment.NewLine + "[%]";
-            Pump_dataGridView.Columns[5].HeaderText = "B효율" + Environment.NewLine + "[%]";
-            Pump_dataGridView.Columns[6].HeaderText = "유량" + Environment.NewLine + "[CMH]";
-            Pump_dataGridView.Columns[7].HeaderText = "양정" + Environment.NewLine + "[m]";
-            Pump_dataGridView.Columns[8].HeaderText = "계산";
-            Pump_dataGridView.Columns[9].HeaderText = "동력" + Environment.NewLine + "[kW]";
-            Pump_dataGridView.Columns[10].HeaderText = "계산";
-            Pump_dataGridView.Columns[11].HeaderText = "대수" + Environment.NewLine + "[EA]";
+            Pump_dataGridView.Columns.Add("P1", "번호");
+            Pump_dataGridView.Columns.Add("P2", "명칭");
+            Pump_dataGridView.Columns.Add("P3", "종류");
+            Pump_dataGridView.Columns.Add("P4", "A효율" + Environment.NewLine + "[%]");
+            Pump_dataGridView.Columns.Add("P5", "B효율" + Environment.NewLine + "[%]");
+            Pump_dataGridView.Columns.Add("P6", "유량" + Environment.NewLine + "[CMH]");
+            Pump_dataGridView.Columns.Add("P7", "양정" + Environment.NewLine + "[m]");
+            Pump_dataGridView.Columns.Add("P8", "계산");
+            Pump_dataGridView.Columns.Add("P9", "동력" + Environment.NewLine + "[kW]");
+            Pump_dataGridView.Columns.Add("P10", "계산");
+            Pump_dataGridView.Columns.Add("P11", "대수" + Environment.NewLine + "[EA]");
+
+            //Pump_dataGridView.ColumnCount = 12;
+            //Pump_dataGridView.Columns[1].HeaderText = "번호";
+            //Pump_dataGridView.Columns[2].HeaderText = "명칭";
+            //Pump_dataGridView.Columns[3].HeaderText = "종류";
+            //Pump_dataGridView.Columns[4].HeaderText = "A효율" + Environment.NewLine + "[%]";
+            //Pump_dataGridView.Columns[5].HeaderText = "B효율" + Environment.NewLine + "[%]";
+            //Pump_dataGridView.Columns[6].HeaderText = "유량" + Environment.NewLine + "[CMH]";
+            //Pump_dataGridView.Columns[7].HeaderText = "양정" + Environment.NewLine + "[m]";
+            //Pump_dataGridView.Columns[8].HeaderText = "계산";
+            //Pump_dataGridView.Columns[9].HeaderText = "동력" + Environment.NewLine + "[kW]";
+            //Pump_dataGridView.Columns[10].HeaderText = "계산";
+            //Pump_dataGridView.Columns[11].HeaderText = "대수" + Environment.NewLine + "[EA]";
         }
 
         private void Pump_Add_button_Click(object sender, EventArgs e)

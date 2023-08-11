@@ -101,12 +101,7 @@ using System.Windows.Forms;
                         else if (cell.GetType() == typeof(DataGridViewComboBoxCell))
                         {
 
-                        cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? Color.FromArgb(244, 227, 216) : Color.FromArgb(240, 241, 241);
-                    }
-                        else if (cell.GetType() == typeof(DataGridViewButtonCell))
-                        {
-                            cell.Style.BackColor = Color.FromArgb(192, 208, 226);
-
+                            cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? Color.FromArgb(244, 227, 216) : Color.FromArgb(240, 241, 241);
                         }
                         else
                         {
@@ -144,6 +139,31 @@ using System.Windows.Forms;
                     Rectangle rect = new Rectangle(e.CellBounds.X + 1, e.CellBounds.Y + 1, e.CellBounds.Width - 19, e.CellBounds.Height - 3);
                     format.LineAlignment = StringAlignment.Center;
 
+                    e.Graphics.FillRectangle(backbrush, rect);
+                    e.Graphics.DrawString(cell.FormattedValue.ToString(), e.CellStyle.Font, forebrush, rect, format);
+                }
+
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.ErrorIcon);
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.Focus);
+                e.Handled = true;
+            }
+            else if (objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewButtonCell)
+            {
+                var cell = objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewButtonCell;
+                var foreColor = cell.Style.ForeColor.Name == "0" ? Color.Black : cell.Style.ForeColor;
+
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.Border);
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.ContentBackground);
+
+                using (Brush forebrush = new SolidBrush(foreColor))
+                using (Brush backbrush = new SolidBrush(Color.FromArgb(192, 208, 226)))
+                using (StringFormat format = new StringFormat())
+                {
+                    Rectangle rect0 = new Rectangle(e.CellBounds.X, e.CellBounds.Y, e.CellBounds.Width, e.CellBounds.Height);
+                    Rectangle rect = new Rectangle(e.CellBounds.X + 1, e.CellBounds.Y + 1, e.CellBounds.Width - 2, e.CellBounds.Height - 2);
+                    format.Alignment = StringAlignment.Center;
+
+                    e.Graphics.FillRectangle(new SolidBrush(SystemColors.Window), rect0);
                     e.Graphics.FillRectangle(backbrush, rect);
                     e.Graphics.DrawString(cell.FormattedValue.ToString(), e.CellStyle.Font, forebrush, rect, format);
                 }
