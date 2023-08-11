@@ -73,16 +73,16 @@ namespace main.subcontents.HeatingSystem
             SelectRow.Clear();
             SelectCheckBox();
 
-            String[][] Size = Program.DB.getValue(DB.type.ProjDB, "ZoneSystem_Form", "존번호, 난방시스템", "난방시스템 = '" + SystemNum + "'");
+            String[][] Size = Program.DB.getValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호, 난방시스템", "난방시스템 = '" + SystemNum + "'");
             if (Size.Length > 0)
             {
-                Program.DB.deleteValue(DB.type.ProjDB, "ZoneSystem_Form", "난방시스템 = '" + SystemNum + "'");
+                Program.DB.deleteValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "난방시스템 = '" + SystemNum + "'");
             }
             for (int n = 0; n < SelectRow.Count; n++)
             {
                 DataGridViewRow row = Zone_dataGridView.Rows[Convert.ToInt32(SelectRow[n])];               
 
-                Program.DB.setValue(DB.type.ProjDB, "ZoneSystem_Form", "존번호,난방시스템",
+                Program.DB.setValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호,난방시스템",
                 "'" + row.Cells[1].Value.ToString() + "','" + SystemNum + "'","");
                 this.DialogResult = DialogResult.OK;
                 this.Close();

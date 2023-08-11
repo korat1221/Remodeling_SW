@@ -37,6 +37,7 @@ namespace main.contents
             new StackedHeaderDecorator(Boiler_dataGridView);
             new StackedHeaderDecorator(Pump_dataGridView);
 
+
             Program.DB.initTable(DB.type.ProjDB, "User_Boiler");
             Program.DB.initTable(DB.type.ProjDB, "User_Pump");
             Program.DB.initTable(DB.type.ProjDB, "User_ce");
@@ -648,7 +649,7 @@ namespace main.contents
 
         private void ce_Remove_button_Click(object sender, EventArgs e)
         {
-            
+
             Load_ce_Num();
         }
 

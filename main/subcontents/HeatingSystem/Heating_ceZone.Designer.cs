@@ -68,7 +68,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(119, 32);
+            label4.Location = new Point(119, 31);
             label4.Name = "label4";
             label4.Size = new Size(47, 15);
             label4.TabIndex = 103;
@@ -115,7 +115,7 @@
             ceZone_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             ceZone_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             ceZone_dataGridView.Location = new Point(0, 74);
-            ceZone_dataGridView.Name = "Boiler_dataGridView";
+            ceZone_dataGridView.Name = "ceZone_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
             dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -136,7 +136,6 @@
             ceZone_dataGridView.Size = new Size(800, 358);
             ceZone_dataGridView.TabIndex = 19;
             ceZone_dataGridView.CellContentClick += ceZone_dataGridView_CellContentClick;
-            ceZone_dataGridView.CellValueChanged += ceZone_dataGridView_CellValueChanged;
             // 
             // Heating_ceZone
             // 

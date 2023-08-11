@@ -24,6 +24,7 @@ namespace main.contents
         String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System, PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control, ce1Type, ce2Type;
         int Pump1Num, Pump2Num;
         String[] SystemType = { "보일러", "히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
+        String[] ceType = { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방" };
         ArrayList SelectBoiler = new ArrayList(); ArrayList SelectPump = new ArrayList(); ArrayList Selectce1Zone = new ArrayList(); ArrayList Selectce2Zone = new ArrayList();
 
 
@@ -80,14 +81,12 @@ namespace main.contents
 
             //공급설비 콤보박스
             ce1Type_comboBox.Items.Clear();
-            ce1Type_comboBox.Items.Add("실내기");
-            ce1Type_comboBox.Items.Add("방열기");
-            ce1Type_comboBox.Items.Add("팬코일유닛");
-            ce1Type_comboBox.SelectedIndex = 0;
-
-            ce2Type_comboBox.Items.Add("실내기");
-            ce2Type_comboBox.Items.Add("방열기");
-            ce2Type_comboBox.Items.Add("팬코일유닛");
+            ce2Type_comboBox.Items.Clear();
+            for (int i = 0; i < ceType.Length; i++)
+            {
+                ce1Type_comboBox.Items.Add(ceType[i]);
+                ce2Type_comboBox.Items.Add(ceType[i]);
+            }
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -665,15 +664,52 @@ namespace main.contents
             }
         }
 
+        private void Create_ce_Table()
+        {
+            ce_dataGridView.Columns.Clear();
+            ce_dataGridView.ColumnCount = 9;
+            ce_dataGridView.Columns[0].HeaderText = "번호";
+            ce_dataGridView.Columns[1].HeaderText = "종류";
+            ce_dataGridView.Columns[2].HeaderText = "일람표 번호";
+            ce_dataGridView.Columns[3].HeaderText = "일람표 명칭";
+            ce_dataGridView.Columns[4].HeaderText = "용량" + Environment.NewLine + "[kW]";
+            ce_dataGridView.Columns[5].HeaderText = "소비전력" + Environment.NewLine + "[kW]";
+            ce_dataGridView.Columns[6].HeaderText = "적용 존 번호";
+            ce_dataGridView.Columns[7].HeaderText = "적용 존 명칭";
+            ce_dataGridView.Columns[8].HeaderText = "설치위치";
+
+        }
         private void ce1Zone_button_Click(object sender, EventArgs e)
         {
-            Heating_ceZone heating_pump = new Heating_ceZone(Num, ce1Type);
-            DialogResult result = heating_pump.ShowDialog();
+            Heating_ceZone ceZone = new Heating_ceZone(Num, ce1Type);
+            DialogResult result = ceZone.ShowDialog();
             if (result == DialogResult.OK)
             {
                 try
                 {
-                   
+                    String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호,공급설비종류,공급설비일람표", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce1Type + "'");
+                    if( Value.Length> 0)
+                    {
+                        Create_ce_Table();
+                    }
+
+                    for (int n  = 0; n < Value.Length; n++)
+                    {
+                        ce_dataGridView.Rows.Add();                       
+                        DataGridViewComboBoxCell 설치위치comboBox = new DataGridViewComboBoxCell();
+                        설치위치comboBox.Items.Add("내벽 설치");
+                        설치위치comboBox.Items.Add("외벽 설치");
+                        설치위치comboBox.Items.Add("창호측 설치"); 
+                        설치위치comboBox.Items.Add("창호측 설치");
+                        ce_dataGridView.Rows[n].Cells[8] = 설치위치comboBox;
+
+                        string[][] 공급설비일람표 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "번호,명칭,용량,소비전력", "번호 = '" + Value[n][2] + "'");
+                        ce_dataGridView.Rows[n].Cells[1].Value = ce1Type;//종류
+                        ce_dataGridView.Rows[n].Cells[2].Value = 공급설비일람표[0][0];//일람표번호
+                        ce_dataGridView.Rows[n].Cells[3].Value = 공급설비일람표[0][1]; //일람표명칭
+                        ce_dataGridView.Rows[n].Cells[4].Value = 공급설비일람표[0][2]; //용량
+                        ce_dataGridView.Rows[n].Cells[5].Value = 공급설비일람표[0][3];//소비전력
+                    }
                 }
                 catch { }
             }

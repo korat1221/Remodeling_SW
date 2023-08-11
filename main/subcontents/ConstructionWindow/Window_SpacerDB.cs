@@ -25,6 +25,7 @@ namespace main.subcontents
         public Window_SpacerDB(String SingleDoubleType, String FrameMaterial, String LE_CL_V)
         {
             InitializeComponent();
+            new StackedHeaderDecorator(Spacer_dataGridView);
             load_table_SpacerDB(SingleDoubleType, FrameMaterial);
             this.LE_CL_V = LE_CL_V;
             //사용자DB 구분1 콤보박스
@@ -52,24 +53,34 @@ namespace main.subcontents
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             Spacer_dataGridView.Columns.Add(checkBoxColumn);
-            table_WindowSpacer.Columns.Add("번호", typeof(string));
-            table_WindowSpacer.Columns.Add("DB유형", typeof(string));
-            table_WindowSpacer.Columns.Add("제품명", typeof(string));
-            table_WindowSpacer.Columns.Add("제조사", typeof(string));
-            table_WindowSpacer.Columns.Add("구분1", typeof(string));
-            table_WindowSpacer.Columns.Add("구분2", typeof(string));
-            table_WindowSpacer.Columns.Add("구분3", typeof(string));
-            table_WindowSpacer.Columns.Add("고정유리(CL)\r\n선형열관류율" + Environment.NewLine + "Ψg,fix\r\n[W/m·K]", typeof(string));
-            table_WindowSpacer.Columns.Add("개폐유리(CL)\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
-            table_WindowSpacer.Columns.Add("고정유리(LE)\r\n선형열관류율" + Environment.NewLine + "Ψg,fix\r\n[W/m·K]", typeof(string));
-            table_WindowSpacer.Columns.Add("개폐유리(LE)\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
 
+            Spacer_dataGridView.Columns.Add("A1", "번호");
+            Spacer_dataGridView.Columns.Add("A2", "DB유형");
+            Spacer_dataGridView.Columns.Add("A3", "제품명");
+            Spacer_dataGridView.Columns.Add("A4", "제조사");
+            Spacer_dataGridView.Columns.Add("A5", "구분1");
+            Spacer_dataGridView.Columns.Add("A6", "구분2");
+            Spacer_dataGridView.Columns.Add("A7", "구분3");
+            Spacer_dataGridView.Columns.Add("A8", "선형열관류율.고정유리(CL).Ψg,fix\r\n[W/m·K]");
+            Spacer_dataGridView.Columns.Add("A9", "선형열관류율.개폐유리(CL).Ψg,t\r\n[W/m·K]");
+            Spacer_dataGridView.Columns.Add("A10", "선형열관류율.고정유리(LE).Ψg,fix\r\n[W/m·K]");
+            Spacer_dataGridView.Columns.Add("A11", "선형열관류율.개폐유리(LE).Ψg,t\r\n[W/m·K]");
+            Spacer_dataGridView.Columns[8].Width = 100;
+            Spacer_dataGridView.Columns[9].Width = 100;
+            Spacer_dataGridView.Columns[10].Width = 100;
+            Spacer_dataGridView.Columns[11].Width = 100;
             try
             {
                 string[][] User_WinSpacer = Program.DB.getValue(DB.type.ProjDB, "User_WindowSpacer", "번호,DB유형,제품명,제조사,구분1,구분2,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + FrameMaterial + "'");
                 for (int n = 0; n < User_WinSpacer.Length; n++)
                 {
-                    table_WindowSpacer.Rows.Add(User_WinSpacer[n][0], User_WinSpacer[n][1], User_WinSpacer[n][2], User_WinSpacer[n][3], User_WinSpacer[n][4], User_WinSpacer[n][5], User_WinSpacer[n][6], User_WinSpacer[n][7], User_WinSpacer[n][8], User_WinSpacer[n][9], User_WinSpacer[n][10]);
+                    Spacer_dataGridView.Rows.Add();
+                    int nRow = Spacer_dataGridView.Rows.Count - 1;
+                    for(int k = 0; k < 11 ; k++)
+                    {
+                        Spacer_dataGridView.Rows[nRow].Cells[k+1].Value = User_WinSpacer[n][k];
+                    }
+                    //table_WindowSpacer.Rows.Add(User_WinSpacer[n][0], User_WinSpacer[n][1], User_WinSpacer[n][2], User_WinSpacer[n][3], User_WinSpacer[n][4], User_WinSpacer[n][5], User_WinSpacer[n][6], User_WinSpacer[n][7], User_WinSpacer[n][8], User_WinSpacer[n][9], User_WinSpacer[n][10]);
                 }
             }
             catch { }
@@ -77,9 +88,18 @@ namespace main.subcontents
             string[][] WinSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호간봉", "번호,DB유형,제품명,구분1,구분2,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + FrameMaterial + "'");
             for (int n = 0; n < WinSpacer.Length; n++)
             {
-                table_WindowSpacer.Rows.Add(WinSpacer[n][0], WinSpacer[n][1], WinSpacer[n][2], "IPAZEB", WinSpacer[n][3], WinSpacer[n][4], WinSpacer[n][5], WinSpacer[n][6], WinSpacer[n][7], WinSpacer[n][8], WinSpacer[n][9]);
+                Spacer_dataGridView.Rows.Add();
+                int nRow = Spacer_dataGridView.Rows.Count - 1;
+                Spacer_dataGridView.Rows[nRow].Cells[1].Value = WinSpacer[n][0];
+                Spacer_dataGridView.Rows[nRow].Cells[2].Value = WinSpacer[n][1];
+                Spacer_dataGridView.Rows[nRow].Cells[3].Value = WinSpacer[n][2];
+                Spacer_dataGridView.Rows[nRow].Cells[4].Value = "IPAZEB";
+                for (int k = 3; k < 10; k++)
+                {
+                    Spacer_dataGridView.Rows[nRow].Cells[k + 2].Value = WinSpacer[n][k];
+                }
+                //table_WindowSpacer.Rows.Add(WinSpacer[n][0], WinSpacer[n][1], WinSpacer[n][2], "IPAZEB", WinSpacer[n][3], WinSpacer[n][4], WinSpacer[n][5], WinSpacer[n][6], WinSpacer[n][7], WinSpacer[n][8], WinSpacer[n][9]);
             }
-            Spacer_dataGridView.DataSource = table_WindowSpacer;
             Count_FrameDB = WinSpacer.Length;
         }
 
@@ -164,22 +184,22 @@ namespace main.subcontents
                 SelectRow = e.RowIndex;
                 DataGridViewRow row = Spacer_dataGridView.Rows[SelectRow];
                 DataGridViewRow row2;
-                for (int k = 0; k < Count_FrameDB; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        Spacer_dataGridView.Rows[k].Cells[0].Value = false;
-                        row2 = Spacer_dataGridView.Rows[k];
-                        row2.DefaultCellStyle.BackColor = Color.White;
-                        row2.DefaultCellStyle.ForeColor = Color.Black;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = Color.Black;
-                        row = Spacer_dataGridView.Rows[e.RowIndex];
-                    }
-                }
+                //for (int k = 0; k < Count_FrameDB; k++)
+                //{
+                //    if (k != row.Index)
+                //    {
+                //        Spacer_dataGridView.Rows[k].Cells[0].Value = false;
+                //        row2 = Spacer_dataGridView.Rows[k];
+                //        row2.DefaultCellStyle.BackColor = Color.White;
+                //        row2.DefaultCellStyle.ForeColor = Color.Black;
+                //    }
+                //    else
+                //    {
+                //        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
+                //        row.DefaultCellStyle.ForeColor = Color.Black;
+                //        row = Spacer_dataGridView.Rows[e.RowIndex];
+                //    }
+                //}
             }
         }
 
