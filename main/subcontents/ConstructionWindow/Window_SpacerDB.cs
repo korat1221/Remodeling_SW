@@ -25,7 +25,7 @@ namespace main.subcontents
         public Window_SpacerDB(String SingleDoubleType, String FrameMaterial, String LE_CL_V)
         {
             InitializeComponent();
-            new StackedHeaderDecorator(Spacer_dataGridView);
+            new StackedHeaderDecorator(Spacer_dataGridView, true);
             load_table_SpacerDB(SingleDoubleType, FrameMaterial);
             this.LE_CL_V = LE_CL_V;
             //사용자DB 구분1 콤보박스
@@ -63,10 +63,10 @@ namespace main.subcontents
             Spacer_dataGridView.Columns.Add("A7", "구분3");
             Spacer_dataGridView.Columns.Add("A8", "선형열관류율.고정유리(CL).Ψg,fix\r\n[W/m·K]");
             Spacer_dataGridView.Columns.Add("A9", "선형열관류율.개폐유리(CL).Ψg,t\r\n[W/m·K]");
-            Spacer_dataGridView.Columns.Add("A10", "선형열관류율.고정유리(LE).Ψg,fix\r\n[W/m·K]");
+            Spacer_dataGridView.Columns.Add("A10", "선형열관류율.고정유리(LE)_________.Ψg,fix\r\n[W/m·K]");
             Spacer_dataGridView.Columns.Add("A11", "선형열관류율.개폐유리(LE).Ψg,t\r\n[W/m·K]");
-            Spacer_dataGridView.Columns[8].Width = 100;
-            Spacer_dataGridView.Columns[9].Width = 100;
+            Spacer_dataGridView.Columns[8].Width = 150;
+            Spacer_dataGridView.Columns[9].Width = 80;
             Spacer_dataGridView.Columns[10].Width = 100;
             Spacer_dataGridView.Columns[11].Width = 100;
             try

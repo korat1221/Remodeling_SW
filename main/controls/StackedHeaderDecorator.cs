@@ -1,317 +1,370 @@
-﻿using System;
+﻿using main;
+using System;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 
-    public class StackedHeaderDecorator
+public class StackedHeaderDecorator
+{
+    private readonly IStackedHeaderGenerator objStackedHeaderGenerator = StackedHeaderGenerator.Instance;
+    private Graphics objGraphics;
+    private readonly DataGridView objDataGrid;
+    private Header objHeaderTree;
+    private int iNoOfLevels;
+    private readonly StringFormat objFormat;
+
+    public delegate void RenderProc(DataGridViewRow row);
+
+    RenderProc renderProc;
+
+    public StackedHeaderDecorator(DataGridView objDataGrid, bool fixedHeader = false, RenderProc proc = null)
     {
-        private readonly IStackedHeaderGenerator objStackedHeaderGenerator = StackedHeaderGenerator.Instance;
-        private Graphics objGraphics;
-        private readonly DataGridView objDataGrid;
-        private Header objHeaderTree;
-        private int iNoOfLevels;
-        private readonly StringFormat objFormat;
+        this.objDataGrid = objDataGrid;
+        objFormat = new StringFormat();
+        objFormat.Alignment = StringAlignment.Center;
+        objFormat.LineAlignment = StringAlignment.Center;
 
-        public StackedHeaderDecorator(DataGridView objDataGrid)
+        Type dgvType = objDataGrid.GetType();
+        PropertyInfo pi = dgvType.GetProperty("DoubleBuffered",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+        pi.SetValue(objDataGrid, true, null);
+
+        objDataGrid.Scroll += (objDataGrid_Scroll);
+        objDataGrid.Paint += objDataGrid_Paint;
+        objDataGrid.ColumnRemoved += objDataGrid_ColumnRemoved;
+        objDataGrid.ColumnAdded += objDataGrid_ColumnAdded;
+        objDataGrid.ColumnWidthChanged += objDataGrid_ColumnWidthChanged;
+        objHeaderTree = objStackedHeaderGenerator.GenerateStackedHeader(objDataGrid);
+
+        objDataGrid.AutoSizeColumnsMode = fixedHeader ? DataGridViewAutoSizeColumnsMode.Fill : DataGridViewAutoSizeColumnsMode.ColumnHeader;
+
+        DataGridViewCellStyle defCellStyle = new DataGridViewCellStyle();
+
+        defCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        defCellStyle.BackColor = Color.White;
+        defCellStyle.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+        defCellStyle.ForeColor = SystemColors.WindowText;
+        defCellStyle.SelectionBackColor = Color.White;
+        defCellStyle.SelectionForeColor = Color.Black;
+        defCellStyle.WrapMode = DataGridViewTriState.False;
+        objDataGrid.ColumnHeadersDefaultCellStyle = defCellStyle;
+
+        objDataGrid.GridColor = Color.FromArgb(220, 220, 220);//Row 선 색
+        objDataGrid.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+
+        objDataGrid.CellPainting += dataGridView1_CellPainting;
+        renderProc = proc;
+        //    objDataGrid.RowsAdded += objDataGrid_RowsAdded;
+        //    objDataGrid..RowsRemoved += objDataGrid_RowsRemoved;
+    }
+
+    private void objDataGrid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+    {
+   //     objDataGrid.ClearSelection();
+
+    }
+    private void objDataGrid_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+    {
+    //    objDataGrid.ClearSelection();
+
+    }
+
+    public StackedHeaderDecorator(IStackedHeaderGenerator objStackedHeaderGenerator, DataGridView objDataGrid, bool fixedHeader = false, RenderProc proc = null)
+            : this(objDataGrid, fixedHeader, proc)
+    {
+        this.objStackedHeaderGenerator = objStackedHeaderGenerator;
+    }
+
+    void objDataGrid_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+    {
+        Refresh();
+    }
+
+    void objDataGrid_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
+    {
+        RegenerateHeaders();
+        Refresh();
+    }
+
+    void objDataGrid_ColumnRemoved(object sender, DataGridViewColumnEventArgs e)
+    {
+        RegenerateHeaders();
+        Refresh();
+    }
+    private bool isSelectedRow(int ridx)
+    {
+        for (int k = 0; k < objDataGrid.RowCount; k++)
         {
-            this.objDataGrid = objDataGrid;
-            objFormat = new StringFormat();
-            objFormat.Alignment = StringAlignment.Center;
-            objFormat.LineAlignment = StringAlignment.Center;
+            DataGridViewRow row = objDataGrid.Rows[k];
 
-            Type dgvType = objDataGrid.GetType();
-            PropertyInfo pi = dgvType.GetProperty("DoubleBuffered",
-                BindingFlags.Instance | BindingFlags.NonPublic);
-            pi.SetValue(objDataGrid, true, null);
-
-            objDataGrid.Scroll += (objDataGrid_Scroll);
-            objDataGrid.Paint += objDataGrid_Paint;
-            objDataGrid.ColumnRemoved += objDataGrid_ColumnRemoved;
-            objDataGrid.ColumnAdded += objDataGrid_ColumnAdded;
-            objDataGrid.ColumnWidthChanged += objDataGrid_ColumnWidthChanged;
-            objHeaderTree = objStackedHeaderGenerator.GenerateStackedHeader(objDataGrid);
-
-            objDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
-
-            DataGridViewCellStyle defCellStyle = new DataGridViewCellStyle();
-
-            defCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            defCellStyle.BackColor = Color.White;
-            defCellStyle.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            defCellStyle.ForeColor = SystemColors.WindowText;
-            defCellStyle.SelectionBackColor = Color.White;
-            defCellStyle.SelectionForeColor = Color.Black;
-            defCellStyle.WrapMode = DataGridViewTriState.False;
-            objDataGrid.ColumnHeadersDefaultCellStyle = defCellStyle;
-
-            objDataGrid.GridColor = Color.FromArgb(220, 220, 220);//Row 선 색
-            objDataGrid.CellBorderStyle = DataGridViewCellBorderStyle.Single;
-
-            objDataGrid.CellPainting += dataGridView1_CellPainting;
-
-        }
-        public StackedHeaderDecorator(IStackedHeaderGenerator objStackedHeaderGenerator, DataGridView objDataGrid)
-            : this(objDataGrid)
-        {
-            this.objStackedHeaderGenerator = objStackedHeaderGenerator;
-        }
-
-        void objDataGrid_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
-        {
-            Refresh();
-        }
-
-        void objDataGrid_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
-        {
-            RegenerateHeaders();
-            Refresh();
-        }
-
-        void objDataGrid_ColumnRemoved(object sender, DataGridViewColumnEventArgs e)
-        {
-            RegenerateHeaders();
-            Refresh();
-        }
-        private bool isSelectedRow(int ridx)
-        {
-            int i = -1, cnt = objDataGrid.GetCellCount(DataGridViewElementStates.Selected);
-
-            while (++i < cnt)
+            if (row.Cells.Count > 0)
             {
-                if (objDataGrid.SelectedCells[i].RowIndex == ridx)
+                var val = row.Cells[0].Value;
+
+                if (val != null && val.Equals(true))
                 {
                     return true;
                 }
             }
-            return false;
         }
-        private void renderColors()
+
+        int i = -1, cnt = objDataGrid.GetCellCount(DataGridViewElementStates.Selected);
+
+        while (++i < cnt)
         {
-            int i;
-
-            for (int k = 0; k < objDataGrid.RowCount; k++)
+            if (objDataGrid.SelectedCells[i].RowIndex == ridx)
             {
-                DataGridViewRow row = objDataGrid.Rows[k];
+                return true;
+            }
+        }
+        return false;
+    }
+    private void renderColors()
+    {
+        int i;
 
-                i = -1;
-                while (++i < row.Cells.Count)
+        for (int k = 0; k < objDataGrid.RowCount; k++)
+        {
+            DataGridViewRow row = objDataGrid.Rows[k];
+
+            i = -1;
+            while (++i < row.Cells.Count)
+            {
+                var cell = row.Cells[i];
+
+                if (isSelectedRow(k))
                 {
-                    var cell = row.Cells[i];
-
-                    if (isSelectedRow(k))
+                    cell.Style.BackColor = SystemColors.GradientInactiveCaption;
+                }
+                else
+                {
+                    if (cell.GetType() == typeof(DataGridViewTextBoxCell))
                     {
-                        cell.Style.BackColor = SystemColors.GradientInactiveCaption;
+                        cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? SystemColors.Info : Color.FromArgb(240, 241, 241); //입력 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 노랑색 
+                    }
+                    else if (cell.GetType() == typeof(DataGridViewComboBoxCell))
+                    {
+                        cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? Color.FromArgb(244, 227, 216) : Color.FromArgb(240, 241, 241);//콤보박스 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 주황색
                     }
                     else
                     {
-                        if (cell.GetType() == typeof(DataGridViewTextBoxCell))
-                        {
-                            cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? SystemColors.Info : Color.FromArgb(240, 241, 241); //입력 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 노랑색 
-                        }
-                        else if (cell.GetType() == typeof(DataGridViewComboBoxCell))
-                        {
-
-                            cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? Color.FromArgb(244, 227, 216) : Color.FromArgb(240, 241, 241);//콤보박스 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 주황색
-                    }
-                        else
-                        {
-                            row.DefaultCellStyle.BackColor = SystemColors.Window;
-
-                        }
+                        row.DefaultCellStyle.BackColor = SystemColors.Window;
                     }
                 }
             }
+            if (renderProc != null) renderProc(row);
         }
+    }
 
-    // Paint the cell when not in edit mode.
-    private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+// Paint the cell when not in edit mode.
+private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+{
+    if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
     {
-        if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+        renderColors();
+
+        //Rectangle rect2 = new Rectangle(9, e.CellBounds.Y + e.CellBounds.Height, 9999, e.CellBounds.Height + 1);
+
+        //e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, 0, 0)), rect2);
+
+        if (objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewComboBoxCell)
         {
-            renderColors();
+            var cell = objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
+            var foreColor = cell.Style.ForeColor.Name == "0" ? Color.Black : cell.Style.ForeColor;
 
-            //Rectangle rect2 = new Rectangle(9, e.CellBounds.Y + e.CellBounds.Height, 9999, e.CellBounds.Height + 1);
+            e.Paint(e.ClipBounds, DataGridViewPaintParts.Border);
+            e.Paint(e.ClipBounds, DataGridViewPaintParts.ContentBackground);
 
-            //e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, 0, 0)), rect2);
-
-            if (objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewComboBoxCell)
+            using (Brush forebrush = new SolidBrush(foreColor))
+            using (Brush backbrush = new SolidBrush(cell.Style.BackColor))
+            using (StringFormat format = new StringFormat())
             {
-                var cell = objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
-                var foreColor = cell.Style.ForeColor.Name == "0" ? Color.Black : cell.Style.ForeColor;
+                Rectangle rect = new Rectangle(e.CellBounds.X + 1, e.CellBounds.Y + 1, e.CellBounds.Width - 19, e.CellBounds.Height - 3);
+                format.LineAlignment = StringAlignment.Center;
 
-                e.Paint(e.ClipBounds, DataGridViewPaintParts.Border);
-                e.Paint(e.ClipBounds, DataGridViewPaintParts.ContentBackground);
-
-                using (Brush forebrush = new SolidBrush(foreColor))
-                using (Brush backbrush = new SolidBrush(cell.Style.BackColor))
-                using (StringFormat format = new StringFormat())
-                {
-                    Rectangle rect = new Rectangle(e.CellBounds.X + 1, e.CellBounds.Y + 1, e.CellBounds.Width - 19, e.CellBounds.Height - 3);
-                    format.LineAlignment = StringAlignment.Center;
-
-                    e.Graphics.FillRectangle(backbrush, rect);
-                    e.Graphics.DrawString(cell.FormattedValue.ToString(), e.CellStyle.Font, forebrush, rect, format);
-                }
-
-                e.Paint(e.ClipBounds, DataGridViewPaintParts.ErrorIcon);
-                e.Paint(e.ClipBounds, DataGridViewPaintParts.Focus);
-                e.Handled = true;
+                e.Graphics.FillRectangle(backbrush, rect);
+                e.Graphics.DrawString(cell.FormattedValue.ToString(), e.CellStyle.Font, forebrush, rect, format);
             }
-            else if (objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewButtonCell)
+
+            e.Paint(e.ClipBounds, DataGridViewPaintParts.ErrorIcon);
+            e.Paint(e.ClipBounds, DataGridViewPaintParts.Focus);
+            e.Handled = true;
+        }
+        else if (objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewButtonCell)
+        {
+            var cell = objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewButtonCell;
+            var foreColor = cell.Style.ForeColor.Name == "0" ? Color.Black : cell.Style.ForeColor;
+
+            e.Paint(e.ClipBounds, DataGridViewPaintParts.Border);
+            e.Paint(e.ClipBounds, DataGridViewPaintParts.ContentBackground);
+
+            using (Brush forebrush = new SolidBrush(foreColor))
+            using (Brush backbrush = new SolidBrush(Color.FromArgb(192, 208, 226))) //버튼 색상
+            using (StringFormat format = new StringFormat())
             {
-                var cell = objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewButtonCell;
-                var foreColor = cell.Style.ForeColor.Name == "0" ? Color.Black : cell.Style.ForeColor;
+                Rectangle rect0 = new Rectangle(e.CellBounds.X, e.CellBounds.Y, e.CellBounds.Width, e.CellBounds.Height);
+                Rectangle rect = new Rectangle(e.CellBounds.X + 1, e.CellBounds.Y + 1, e.CellBounds.Width - 2, e.CellBounds.Height - 2);
+                format.Alignment = StringAlignment.Center;
 
-                e.Paint(e.ClipBounds, DataGridViewPaintParts.Border);
-                e.Paint(e.ClipBounds, DataGridViewPaintParts.ContentBackground);
-
-                using (Brush forebrush = new SolidBrush(foreColor))
-                using (Brush backbrush = new SolidBrush(Color.FromArgb(192, 208, 226))) //버튼 색상
-                using (StringFormat format = new StringFormat())
-                {
-                    Rectangle rect0 = new Rectangle(e.CellBounds.X, e.CellBounds.Y, e.CellBounds.Width, e.CellBounds.Height);
-                    Rectangle rect = new Rectangle(e.CellBounds.X + 1, e.CellBounds.Y + 1, e.CellBounds.Width - 2, e.CellBounds.Height - 2);
-                    format.Alignment = StringAlignment.Center;
-
-                    e.Graphics.FillRectangle(new SolidBrush(SystemColors.Window), rect0);// 버튼 배경 색상
-                    e.Graphics.FillRectangle(backbrush, rect);
-                    e.Graphics.DrawString(cell.FormattedValue.ToString(), e.CellStyle.Font, forebrush, rect, format);
-                }
-
-                e.Paint(e.ClipBounds, DataGridViewPaintParts.ErrorIcon);
-                e.Paint(e.ClipBounds, DataGridViewPaintParts.Focus);
-                e.Handled = true;
+                e.Graphics.FillRectangle(new SolidBrush(SystemColors.Window), rect0);// 버튼 배경 색상
+                e.Graphics.FillRectangle(backbrush, rect);
+                e.Graphics.DrawString(cell.FormattedValue.ToString(), e.CellStyle.Font, forebrush, rect, format);
             }
+
+            e.Paint(e.ClipBounds, DataGridViewPaintParts.ErrorIcon);
+            e.Paint(e.ClipBounds, DataGridViewPaintParts.Focus);
+            e.Handled = true;
+        }
+    }
+}
+
+bool isMultiLined()
+{
+    int i = -1;
+
+    while(++i < objDataGrid.Columns.Count)
+    {
+        var s = objDataGrid.Columns[i].HeaderText;
+
+        if (s.IndexOf('\n') >= 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Paint the cell in edit mode.
+void objDataGrid_Paint(object sender, PaintEventArgs e)
+    {
+        iNoOfLevels = NoOfLevels(objHeaderTree);
+        if (iNoOfLevels > 0 && !isMultiLined())
+        {
+            iNoOfLevels--;
+        }
+        objGraphics = e.Graphics;
+        objDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        objDataGrid.ColumnHeadersHeight = iNoOfLevels * 20;
+        if (null != objHeaderTree)
+        {
+            RenderColumnHeaders();
         }
     }
 
-    // Paint the cell in edit mode.
-    void objDataGrid_Paint(object sender, PaintEventArgs e)
+    void objDataGrid_Scroll(object sender, ScrollEventArgs e)
+    {
+        Refresh();
+    }
+
+    private void Refresh()
+    {
+        Rectangle rtHeader = objDataGrid.DisplayRectangle;
+        objDataGrid.Invalidate(rtHeader);
+    }
+
+    private void RegenerateHeaders()
+    {
+        objHeaderTree = objStackedHeaderGenerator.GenerateStackedHeader(objDataGrid);
+    }
+
+    private void RenderColumnHeaders()
+    {
+        objGraphics.FillRectangle(new SolidBrush(objDataGrid.ColumnHeadersDefaultCellStyle.BackColor),
+                                    new Rectangle(objDataGrid.DisplayRectangle.X, objDataGrid.DisplayRectangle.Y,
+                                                objDataGrid.DisplayRectangle.Width, objDataGrid.ColumnHeadersHeight));
+
+        foreach (Header objChild in objHeaderTree.Children)
         {
-            iNoOfLevels = NoOfLevels(objHeaderTree);
-            objGraphics = e.Graphics;
-            objDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            objDataGrid.ColumnHeadersHeight = iNoOfLevels * 20;
-            if (null != objHeaderTree)
+            objChild.Measure(objDataGrid, 0, objDataGrid.ColumnHeadersHeight/iNoOfLevels);
+            objChild.AcceptRenderer(this);
+        }
+
+        Point pt01 = new Point(objDataGrid.DisplayRectangle.X, objDataGrid.DisplayRectangle.Y);
+        Point pt02 = new Point(objDataGrid.DisplayRectangle.X + objDataGrid.DisplayRectangle.Width, objDataGrid.DisplayRectangle.Y);
+        Point pt11 = new Point(objDataGrid.DisplayRectangle.X, objDataGrid.DisplayRectangle.Y + objDataGrid.ColumnHeadersHeight);
+        Point pt12 = new Point(objDataGrid.DisplayRectangle.X + objDataGrid.DisplayRectangle.Width, objDataGrid.DisplayRectangle.Y + objDataGrid.ColumnHeadersHeight);
+
+        objGraphics.DrawLine(Pens.Gray, pt01, pt02);
+        objGraphics.DrawLine(Pens.Gray, pt11, pt12);
+    }
+
+public void Render(Header objHeader)
+    {
+        if (objHeader.Children.Count == 0)
+        {
+            Rectangle r1 = objDataGrid.GetColumnDisplayRectangle(objHeader.ColumnId, true);
+            if (r1.Width == 0)
             {
-                RenderColumnHeaders();
+                return;
             }
-        }
+            r1.Y = objHeader.Y;
+            r1.Width += 1;
+            r1.X -= 1;
+            r1.Height = objHeader.Height;
+            objGraphics.SetClip(r1);
 
-        void objDataGrid_Scroll(object sender, ScrollEventArgs e)
-        {
-            Refresh();
-        }
-
-        private void Refresh()
-        {
-            Rectangle rtHeader = objDataGrid.DisplayRectangle;
-            objDataGrid.Invalidate(rtHeader);
-        }
-
-        private void RegenerateHeaders()
-        {
-            objHeaderTree = objStackedHeaderGenerator.GenerateStackedHeader(objDataGrid);
-        }
-
-        private void RenderColumnHeaders()
-        {
-            objGraphics.FillRectangle(new SolidBrush(objDataGrid.ColumnHeadersDefaultCellStyle.BackColor),
-                                      new Rectangle(objDataGrid.DisplayRectangle.X, objDataGrid.DisplayRectangle.Y,
-                                                    objDataGrid.DisplayRectangle.Width, objDataGrid.ColumnHeadersHeight));
-
-            foreach (Header objChild in objHeaderTree.Children)
+            if (r1.X + objDataGrid.Columns[objHeader.ColumnId].Width < objDataGrid.DisplayRectangle.Width)
             {
-                objChild.Measure(objDataGrid, 0, objDataGrid.ColumnHeadersHeight/iNoOfLevels);
-                objChild.AcceptRenderer(this);
+                r1.X -= (objDataGrid.Columns[objHeader.ColumnId].Width - r1.Width);
             }
-
-            Point pt01 = new Point(objDataGrid.DisplayRectangle.X, objDataGrid.DisplayRectangle.Y);
-            Point pt02 = new Point(objDataGrid.DisplayRectangle.X + objDataGrid.DisplayRectangle.Width, objDataGrid.DisplayRectangle.Y);
-            Point pt11 = new Point(objDataGrid.DisplayRectangle.X, objDataGrid.DisplayRectangle.Y + objDataGrid.ColumnHeadersHeight);
-            Point pt12 = new Point(objDataGrid.DisplayRectangle.X + objDataGrid.DisplayRectangle.Width, objDataGrid.DisplayRectangle.Y + objDataGrid.ColumnHeadersHeight);
-
-            objGraphics.DrawLine(Pens.Gray, pt01, pt02);
-            objGraphics.DrawLine(Pens.Gray, pt11, pt12);
+            r1.X -= 1;
+            r1.Width = objDataGrid.Columns[objHeader.ColumnId].Width + 1;
+            objGraphics.DrawRectangle(new Pen(Color.FromArgb(220, 220, 220), 1), r1);
+            objGraphics.DrawString(objHeader.Name,
+                                    objDataGrid.ColumnHeadersDefaultCellStyle.Font,
+                                    new SolidBrush(objDataGrid.ColumnHeadersDefaultCellStyle.ForeColor),
+                                    r1,
+                                    objFormat);
+            objGraphics.ResetClip();
         }
-
-    public void Render(Header objHeader)
+        else
         {
-            if (objHeader.Children.Count == 0)
+            int x = objDataGrid.RowHeadersWidth;
+            for (int i = 0; i < objHeader.Children[0].ColumnId; ++i)
             {
-                Rectangle r1 = objDataGrid.GetColumnDisplayRectangle(objHeader.ColumnId, true);
-                if (r1.Width == 0)
+                if (objDataGrid.Columns[i].Visible)
                 {
-                    return;
+                    x += objDataGrid.Columns[i].Width;
                 }
-                r1.Y = objHeader.Y;
-                r1.Width += 1;
-                r1.X -= 1;
-                r1.Height = objHeader.Height;
-                objGraphics.SetClip(r1);
-
-                if (r1.X + objDataGrid.Columns[objHeader.ColumnId].Width < objDataGrid.DisplayRectangle.Width)
-                {
-                    r1.X -= (objDataGrid.Columns[objHeader.ColumnId].Width - r1.Width);
-                }
-                r1.X -= 1;
-                r1.Width = objDataGrid.Columns[objHeader.ColumnId].Width + 1;
-                objGraphics.DrawRectangle(new Pen(Color.FromArgb(220, 220, 220), 1), r1);
-                objGraphics.DrawString(objHeader.Name,
-                                       objDataGrid.ColumnHeadersDefaultCellStyle.Font,
-                                       new SolidBrush(objDataGrid.ColumnHeadersDefaultCellStyle.ForeColor),
-                                       r1,
-                                       objFormat);
-                objGraphics.ResetClip();
             }
-            else
+            if (x > (objDataGrid.HorizontalScrollingOffset + objDataGrid.DisplayRectangle.Width - 5))
             {
-                int x = objDataGrid.RowHeadersWidth;
-                for (int i = 0; i < objHeader.Children[0].ColumnId; ++i)
-                {
-                    if (objDataGrid.Columns[i].Visible)
-                    {
-                        x += objDataGrid.Columns[i].Width;
-                    }
-                }
-                if (x > (objDataGrid.HorizontalScrollingOffset + objDataGrid.DisplayRectangle.Width - 5))
-                {
-                    return;
-                }
-
-                //Rectangle r1 = objDataGrid.GetCellDisplayRectangle(objHeader.Children[0].ColumnId, -1, true);
-                Rectangle r1 = objDataGrid.GetCellDisplayRectangle(objHeader.ColumnId, -1, true);
-
-                r1.Y = objHeader.Y;
-                r1.Height = objHeader.Height;
-                r1.Width = objHeader.Width  + 1;
-                if (r1.X < objDataGrid.RowHeadersWidth)
-                {
-                    r1.X = objDataGrid.RowHeadersWidth;
-                }
-                r1.X -= 1;
-                objGraphics.SetClip(r1);
-          //      r1.X = x - objDataGrid.HorizontalScrollingOffset;
-           //     r1.Width -= 1;
-                objGraphics.DrawRectangle(new Pen(Color.FromArgb(220, 220, 220), 1), r1);
-                r1.X -= 1;
-                objGraphics.DrawString(objHeader.Name, objDataGrid.ColumnHeadersDefaultCellStyle.Font,
-                                       new SolidBrush(objDataGrid.ColumnHeadersDefaultCellStyle.ForeColor),
-                                       r1, objFormat);
-                objGraphics.ResetClip();
+                return;
             }
-        }
 
-        private int NoOfLevels(Header header)
-        {
-            int level = 0;
-            foreach (Header child in header.Children)
+            //Rectangle r1 = objDataGrid.GetCellDisplayRectangle(objHeader.Children[0].ColumnId, -1, true);
+            Rectangle r1 = objDataGrid.GetCellDisplayRectangle(objHeader.ColumnId, -1, true);
+
+            r1.Y = objHeader.Y;
+            r1.Height = objHeader.Height;
+            r1.Width = objHeader.Width  + 1;
+            if (r1.X < objDataGrid.RowHeadersWidth)
             {
-                int temp = NoOfLevels(child);
-                level = temp > level ? temp : level;
+                r1.X = objDataGrid.RowHeadersWidth;
             }
-            return level + 1;
+            r1.X -= 1;
+            objGraphics.SetClip(r1);
+        //      r1.X = x - objDataGrid.HorizontalScrollingOffset;
+        //     r1.Width -= 1;
+            objGraphics.DrawRectangle(new Pen(Color.FromArgb(220, 220, 220), 1), r1);
+            r1.X -= 1;
+            objGraphics.DrawString(objHeader.Name, objDataGrid.ColumnHeadersDefaultCellStyle.Font,
+                                    new SolidBrush(objDataGrid.ColumnHeadersDefaultCellStyle.ForeColor),
+                                    r1, objFormat);
+            objGraphics.ResetClip();
         }
     }
+
+    private int NoOfLevels(Header header)
+    {
+        int level = 0;
+        foreach (Header child in header.Children)
+        {
+            int temp = NoOfLevels(child);
+            level = temp > level ? temp : level;
+        }
+        return level + 1;
+    }
+}
