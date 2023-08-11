@@ -45,42 +45,65 @@ namespace main.subcontents
         }
         void load_table_GlassDB()
         {
-            DataTable table_WindowGlass = new DataTable();
+            new StackedHeaderDecorator(Glass_dataGridView);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Glass_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             Glass_dataGridView.Columns.Add(checkBoxColumn);
-            table_WindowGlass.Columns.Add("번호", typeof(string));
-            table_WindowGlass.Columns.Add("DB유형", typeof(string));
-            table_WindowGlass.Columns.Add("제품명", typeof(string));
-            table_WindowGlass.Columns.Add("제조사", typeof(string));
-            table_WindowGlass.Columns.Add("복층/삼중/단창", typeof(string));
-            table_WindowGlass.Columns.Add("아르곤/공기", typeof(string));
-            table_WindowGlass.Columns.Add("LE/CL/V", typeof(string));
-            table_WindowGlass.Columns.Add("열관류율" + Environment.NewLine + "Ug[W/m2∙K]", typeof(string));
-            table_WindowGlass.Columns.Add("태양열\r\n취득율" + Environment.NewLine + "SHGC[-]", typeof(string));
-            table_WindowGlass.Columns.Add("빛투과율" + Environment.NewLine + "τD65,SNA[-]", typeof(string));
-            table_WindowGlass.Columns.Add("외부\r\n반사율" + Environment.NewLine + "ρv[-]", typeof(string));
-            table_WindowGlass.Columns.Add("내부\r\n반사율" + Environment.NewLine + "ρ'v[-]", typeof(string));
-            string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
 
-
+            Glass_dataGridView.Columns.Add("A1", "번호");
+            Glass_dataGridView.Columns.Add("A2", "DB유형");
+            Glass_dataGridView.Columns.Add("A3", "제품명");
+            Glass_dataGridView.Columns.Add("A4", "제조사");
+            Glass_dataGridView.Columns.Add("A5", "복층/삼중/단창");
+            Glass_dataGridView.Columns.Add("A6", "아르곤/공기");
+            Glass_dataGridView.Columns.Add("A7", "LE/CL/V");
+            Glass_dataGridView.Columns.Add("A8", "유리성능.열관류율.Ug.[W/m2∙K]");
+            Glass_dataGridView.Columns.Add("A9", "유리성능.태양열취득률.SHGC.[-]");
+            Glass_dataGridView.Columns.Add("A10", "유리성능.빛투과율.τD65,SNA.[-]");
+            Glass_dataGridView.Columns.Add("A11", "반사율.외부.ρv.[-]");
+            Glass_dataGridView.Columns.Add("A12", "반사율.내부.ρ'v.[-]");
+            //table_WindowGlass.Columns.Add("번호", typeof(string));
+            //table_WindowGlass.Columns.Add("DB유형", typeof(string));
+            //table_WindowGlass.Columns.Add("제품명", typeof(string));
+            //table_WindowGlass.Columns.Add("제조사", typeof(string));
+            //table_WindowGlass.Columns.Add("복층/삼중/단창", typeof(string));
+            //table_WindowGlass.Columns.Add("아르곤/공기", typeof(string));
+            //table_WindowGlass.Columns.Add("LE/CL/V", typeof(string));
+            //table_WindowGlass.Columns.Add("열관류율" + Environment.NewLine + "Ug[W/m2∙K]", typeof(string));
+            //table_WindowGlass.Columns.Add("태양열\r\n취득율" + Environment.NewLine + "SHGC[-]", typeof(string));
+            //table_WindowGlass.Columns.Add("빛투과율" + Environment.NewLine + "τD65,SNA[-]", typeof(string));
+            //table_WindowGlass.Columns.Add("외부\r\n반사율" + Environment.NewLine + "ρv[-]", typeof(string));
+            //table_WindowGlass.Columns.Add("내부\r\n반사율" + Environment.NewLine + "ρ'v[-]", typeof(string));
             try
             {
                 string[][] User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
                 for (int n = 0; n < User_WinGlass.Length; n++)
                 {
-                    table_WindowGlass.Rows.Add(User_WinGlass[n][0], User_WinGlass[n][1], User_WinGlass[n][2], User_WinGlass[n][3], User_WinGlass[n][4], User_WinGlass[n][5], User_WinGlass[n][6], User_WinGlass[n][7], User_WinGlass[n][8], User_WinGlass[n][9], User_WinGlass[n][10], User_WinGlass[n][11]);
+                    Glass_dataGridView.Rows.Add();
+                    int nRow = Glass_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 12; k++)
+                    {
+                        Glass_dataGridView.Rows[nRow].Cells[k + 1].Value = User_WinGlass[n][k];
+                    }
+                    //table_WindowGlass.Rows.Add(User_WinGlass[n][0], User_WinGlass[n][1], User_WinGlass[n][2], User_WinGlass[n][3], User_WinGlass[n][4], User_WinGlass[n][5], User_WinGlass[n][6], User_WinGlass[n][7], User_WinGlass[n][8], User_WinGlass[n][9], User_WinGlass[n][10], User_WinGlass[n][11]);
                 }
             }
             catch { }
 
+            string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
             for (int n = 0; n < WinGlass.Length; n++)
             {
-                table_WindowGlass.Rows.Add(WinGlass[n][0], WinGlass[n][1], WinGlass[n][2], WinGlass[n][3], WinGlass[n][4], WinGlass[n][5], WinGlass[n][6], WinGlass[n][7], WinGlass[n][8], WinGlass[n][9], WinGlass[n][10], WinGlass[n][11]);
+                Glass_dataGridView.Rows.Add();
+                int nRow = Glass_dataGridView.Rows.Count - 1;
+                for (int k = 0; k < 12; k++)
+                {
+                    Glass_dataGridView.Rows[nRow].Cells[k + 1].Value = WinGlass[n][k];
+                }
+               // table_WindowGlass.Rows.Add(WinGlass[n][0], WinGlass[n][1], WinGlass[n][2], WinGlass[n][3], WinGlass[n][4], WinGlass[n][5], WinGlass[n][6], WinGlass[n][7], WinGlass[n][8], WinGlass[n][9], WinGlass[n][10], WinGlass[n][11]);
             }
-            Glass_dataGridView.DataSource = table_WindowGlass;
+            //Glass_dataGridView.DataSource = table_WindowGlass;
             Count_FrameDB = WinGlass.Length;
         }
       
@@ -182,24 +205,6 @@ namespace main.subcontents
             {
                 Glass_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 SelectRow = e.RowIndex;
-                DataGridViewRow row = Glass_dataGridView.Rows[SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < Count_FrameDB; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        Glass_dataGridView.Rows[k].Cells[0].Value = false;
-                        row2 = Glass_dataGridView.Rows[k];
-                        row2.DefaultCellStyle.BackColor = Color.White;
-                        row2.DefaultCellStyle.ForeColor = Color.Black;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = Color.Black;
-                        row = Glass_dataGridView.Rows[e.RowIndex];
-                    }
-                }
             }
         }
         private void Save_button_Click(object sender, EventArgs e)

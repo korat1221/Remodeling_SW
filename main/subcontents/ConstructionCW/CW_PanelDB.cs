@@ -46,30 +46,48 @@ namespace main.subcontents.ConstructionCW
         }
         void load_table_PanelDB()
         {
-            DataTable table_CWPanel = new DataTable();
+            new StackedHeaderDecorator(Panel_dataGridView);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Panel_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             Panel_dataGridView.Columns.Add(checkBoxColumn);
-            table_CWPanel.Columns.Add("번호", typeof(string));
-            table_CWPanel.Columns.Add("DB유형", typeof(string));
-            table_CWPanel.Columns.Add("재료명", typeof(string));
-            table_CWPanel.Columns.Add("종류1", typeof(string));
-            table_CWPanel.Columns.Add("종류2", typeof(string));
-            table_CWPanel.Columns.Add("열전도율" + Environment.NewLine + "λ\r\n[W/m·K]", typeof(string));
-            table_CWPanel.Columns.Add("밀도" + Environment.NewLine + "ρ\r\n[kg/m³]", typeof(string));
-            table_CWPanel.Columns.Add("비열" + Environment.NewLine + "с\r\n[kJ/kg·K]", typeof(string));
-            table_CWPanel.Columns.Add("투습저항계수" + Environment.NewLine + "dry", typeof(string));
-            table_CWPanel.Columns.Add("투습저항계수" + Environment.NewLine + "wet", typeof(string));
-            table_CWPanel.Columns.Add("비고", typeof(string));
+
+            Panel_dataGridView.Columns.Add("A1", "번호");
+            Panel_dataGridView.Columns.Add("A2", "DB유형");
+            Panel_dataGridView.Columns.Add("A3", "재료명");
+            Panel_dataGridView.Columns.Add("A4", "종류1");
+            Panel_dataGridView.Columns.Add("A5", "종류2");
+            Panel_dataGridView.Columns.Add("A6", "열전도율");
+            Panel_dataGridView.Columns.Add("A7", "밀도");
+            Panel_dataGridView.Columns.Add("A8", "비열");
+            Panel_dataGridView.Columns.Add("A9", "투습저항계수.dry");
+            Panel_dataGridView.Columns.Add("A10", "투습저항계수.wet");
+            Panel_dataGridView.Columns.Add("A11", "비고");
+            //table_CWPanel.Columns.Add("번호", typeof(string));
+            //table_CWPanel.Columns.Add("DB유형", typeof(string));
+            //table_CWPanel.Columns.Add("재료명", typeof(string));
+            //table_CWPanel.Columns.Add("종류1", typeof(string));
+            //table_CWPanel.Columns.Add("종류2", typeof(string));
+            //table_CWPanel.Columns.Add("열전도율" + Environment.NewLine + "λ\r\n[W/m·K]", typeof(string));
+            //table_CWPanel.Columns.Add("밀도" + Environment.NewLine + "ρ\r\n[kg/m³]", typeof(string));
+            //table_CWPanel.Columns.Add("비열" + Environment.NewLine + "с\r\n[kJ/kg·K]", typeof(string));
+            //table_CWPanel.Columns.Add("투습저항계수" + Environment.NewLine + "dry", typeof(string));
+            //table_CWPanel.Columns.Add("투습저항계수" + Environment.NewLine + "wet", typeof(string));
+            //table_CWPanel.Columns.Add("비고", typeof(string));
 
             try
             {
                 string[][] User_CWPanel = Program.DB.getValue(DB.type.ProjDB, "User_Material", "번호,DB유형,재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '단열재'");
                 for (int n = 0; n < User_CWPanel.Length; n++)
                 {
-                    table_CWPanel.Rows.Add(User_CWPanel[n][0], User_CWPanel[n][1], User_CWPanel[n][2], User_CWPanel[n][3], User_CWPanel[n][4], User_CWPanel[n][5], User_CWPanel[n][6], User_CWPanel[n][7], User_CWPanel[n][8], User_CWPanel[n][9], User_CWPanel[n][10]);
+                    Panel_dataGridView.Rows.Add();
+                    int nRow = Panel_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 11; k++)
+                    {
+                        Panel_dataGridView.Rows[nRow].Cells[k + 1].Value = User_CWPanel[n][k];
+                    }
+                   // table_CWPanel.Rows.Add(User_CWPanel[n][0], User_CWPanel[n][1], User_CWPanel[n][2], User_CWPanel[n][3], User_CWPanel[n][4], User_CWPanel[n][5], User_CWPanel[n][6], User_CWPanel[n][7], User_CWPanel[n][8], User_CWPanel[n][9], User_CWPanel[n][10]);
                 }
             }
             catch { }
@@ -86,9 +104,18 @@ namespace main.subcontents.ConstructionCW
                 {
                     dbnum = "M_0" + (n + 1).ToString();
                 }
-                table_CWPanel.Rows.Add(dbnum, "표준", CWPanel[n][0], CWPanel[n][1], CWPanel[n][2], CWPanel[n][3], CWPanel[n][4], CWPanel[n][5], CWPanel[n][6], CWPanel[n][7], CWPanel[n][8]);
+
+                Panel_dataGridView.Rows.Add();
+                int nRow = Panel_dataGridView.Rows.Count - 1;
+                Panel_dataGridView.Rows[nRow].Cells[1].Value = dbnum;
+                Panel_dataGridView.Rows[nRow].Cells[2].Value = "표준";
+                for (int k = 0; k < 9; k++)
+                {
+                    Panel_dataGridView.Rows[nRow].Cells[k + 3].Value = CWPanel[n][k];
+                }
+                //table_CWPanel.Rows.Add(dbnum, "표준", CWPanel[n][0], CWPanel[n][1], CWPanel[n][2], CWPanel[n][3], CWPanel[n][4], CWPanel[n][5], CWPanel[n][6], CWPanel[n][7], CWPanel[n][8]);
             }
-            Panel_dataGridView.DataSource = table_CWPanel;
+            //Panel_dataGridView.DataSource = table_CWPanel;
             Count_FrameDB = CWPanel.Length;
         }
 
@@ -180,24 +207,6 @@ namespace main.subcontents.ConstructionCW
             {
                 Panel_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 SelectRow = e.RowIndex;
-                DataGridViewRow row = Panel_dataGridView.Rows[SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < Count_FrameDB; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        Panel_dataGridView.Rows[k].Cells[0].Value = false;
-                        row2 = Panel_dataGridView.Rows[k];
-                        row2.DefaultCellStyle.BackColor = Color.White;
-                        row2.DefaultCellStyle.ForeColor = Color.Black;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = Color.Black;
-                        row = Panel_dataGridView.Rows[e.RowIndex];
-                    }
-                }
             }
         }
 

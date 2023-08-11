@@ -72,31 +72,48 @@ namespace main.subcontents
 
         void load_table_SizeInfo()
         {
-
-            DataTable table_WindowSize = new DataTable();
+            new StackedHeaderDecorator(Size_dataGridView);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Size_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             Size_dataGridView.Columns.Add(checkBoxColumn);
-            table_WindowSize.Columns.Add("창호명칭", typeof(string));
-            table_WindowSize.Columns.Add("창호면적" + Environment.NewLine + "[m²]", typeof(string));
-            table_WindowSize.Columns.Add("창호너비" + Environment.NewLine + "[m]", typeof(string));
-            table_WindowSize.Columns.Add("창호높이" + Environment.NewLine + "[m]", typeof(string));
-            table_WindowSize.Columns.Add("고정창\r\n유리면적", typeof(string));
-            table_WindowSize.Columns.Add("개폐창\r\n유리면적" + Environment.NewLine + "[m²]", typeof(string));
-            table_WindowSize.Columns.Add("개폐\r\n프레임면적" + Environment.NewLine + "[m²]", typeof(string));
-            table_WindowSize.Columns.Add("고정\r\n프레임면적" + Environment.NewLine + "[m²]", typeof(string));
-            table_WindowSize.Columns.Add("중간\r\n프레임면적" + Environment.NewLine + "[m²]", typeof(string));
-            table_WindowSize.Columns.Add("고정창유리\r\n둘레길이" + Environment.NewLine + "[m]", typeof(string));
-            table_WindowSize.Columns.Add("개폐창유리\r\n둘레길이" + Environment.NewLine + "[m]", typeof(string));
+
+            Size_dataGridView.Columns.Add("A1", "창호명칭");
+            Size_dataGridView.Columns.Add("A2", "창호전체.면적.[m²]");
+            Size_dataGridView.Columns.Add("A3", "창호전체.너비.[m]");
+            Size_dataGridView.Columns.Add("A4", "창호전체.높이.[m]");
+            Size_dataGridView.Columns.Add("A5", "유리면적.고정창.[m²]");
+            Size_dataGridView.Columns.Add("A6", "유리면적.개폐창.[m²]");
+            Size_dataGridView.Columns.Add("A7", "프레임면적.개폐프레임.[m²]");
+            Size_dataGridView.Columns.Add("A8", "프레임면적.고정프레임.[m²]");
+            Size_dataGridView.Columns.Add("A9", "프레임면적.중간프레임.[m²]");
+            Size_dataGridView.Columns.Add("A10", "유리 둘레길이.고정창.[m]");
+            Size_dataGridView.Columns.Add("A11", "유리 둘레길이.개폐창.[m]");
+            //table_WindowSize.Columns.Add("창호명칭", typeof(string));
+            //table_WindowSize.Columns.Add("창호면적" + Environment.NewLine + "[m²]", typeof(string));
+            //table_WindowSize.Columns.Add("창호너비" + Environment.NewLine + "[m]", typeof(string));
+            //table_WindowSize.Columns.Add("창호높이" + Environment.NewLine + "[m]", typeof(string));
+            //table_WindowSize.Columns.Add("고정창\r\n유리면적", typeof(string));
+            //table_WindowSize.Columns.Add("개폐창\r\n유리면적" + Environment.NewLine + "[m²]", typeof(string));
+            //table_WindowSize.Columns.Add("개폐\r\n프레임면적" + Environment.NewLine + "[m²]", typeof(string));
+            //table_WindowSize.Columns.Add("고정\r\n프레임면적" + Environment.NewLine + "[m²]", typeof(string));
+            //table_WindowSize.Columns.Add("중간\r\n프레임면적" + Environment.NewLine + "[m²]", typeof(string));
+            //table_WindowSize.Columns.Add("고정창유리\r\n둘레길이" + Environment.NewLine + "[m]", typeof(string));
+            //table_WindowSize.Columns.Add("개폐창유리\r\n둘레길이" + Environment.NewLine + "[m]", typeof(string));
             string[][] WinSize = Program.DB.getValue(DB.type.CalcDB, "Import_WindowSize", "창호명칭,창호면적,창호너비,창호높이,고정창유리면적,개폐창유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정창유리둘레길이,개폐창유리둘레길이");
 
             for (int n = 0; n < WinSize.Length; n++)
             {
-                table_WindowSize.Rows.Add(WinSize[n][0], WinSize[n][1], WinSize[n][2], WinSize[n][3], WinSize[n][4], WinSize[n][5], WinSize[n][6], WinSize[n][7], WinSize[n][8], WinSize[n][9], WinSize[n][10]);
+                Size_dataGridView.Rows.Add();
+                int nRow = Size_dataGridView.Rows.Count - 1;
+                for (int k = 0; k < 11; k++)
+                {
+                    Size_dataGridView.Rows[nRow].Cells[k + 1].Value = WinSize[n][0];
+                }
+                //table_WindowSize.Rows.Add(WinSize[n][0], WinSize[n][1], WinSize[n][2], WinSize[n][3], WinSize[n][4], WinSize[n][5], WinSize[n][6], WinSize[n][7], WinSize[n][8], WinSize[n][9], WinSize[n][10]);
             }
-            Size_dataGridView.DataSource = table_WindowSize;
+           // Size_dataGridView.DataSource = table_WindowSize;
             Count_SizeInfo = WinSize.Length;
         }
 

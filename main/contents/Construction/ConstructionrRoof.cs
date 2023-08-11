@@ -34,6 +34,8 @@ namespace main.contents
         public ConstructionRoof()
         {
             InitializeComponent();
+            new StackedHeaderDecorator(Ucalc_dataGridView);
+            Ucalc_dataGridView.BackgroundColor = SystemColors.InactiveBorder;
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '지붕'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -528,13 +530,21 @@ namespace main.contents
             checkBoxColumn.Name = "check";
             Ucalc_dataGridView.Columns.Add(checkBoxColumn);
 
-            Ucalc_dataGridView.ColumnCount = 7;
-            Ucalc_dataGridView.Columns[1].HeaderText = "번호";
-            Ucalc_dataGridView.Columns[2].HeaderText = "구분";
-            Ucalc_dataGridView.Columns[3].HeaderText = "재료명";
-            Ucalc_dataGridView.Columns[4].HeaderText = "열전도율" + Environment.NewLine + "[W/m·K]";
-            Ucalc_dataGridView.Columns[5].HeaderText = "두께" + Environment.NewLine + "[mm]";
-            Ucalc_dataGridView.Columns[6].HeaderText = "열저항" + Environment.NewLine + "[m²·K/W]";
+
+            Ucalc_dataGridView.Columns.Add("A1", "번호");
+            Ucalc_dataGridView.Columns.Add("A2", "구분");
+            Ucalc_dataGridView.Columns.Add("A3", "재료명");
+            Ucalc_dataGridView.Columns.Add("A4", "열전도율.[W/m·K]");
+            Ucalc_dataGridView.Columns.Add("A5", "두께.[mm]");
+            Ucalc_dataGridView.Columns.Add("A6", "열저항.[m²·K/W]");
+
+            //Ucalc_dataGridView.ColumnCount = 7;
+            //Ucalc_dataGridView.Columns[1].HeaderText = "번호";
+            //Ucalc_dataGridView.Columns[2].HeaderText = "구분";
+            //Ucalc_dataGridView.Columns[3].HeaderText = "재료명";
+            //Ucalc_dataGridView.Columns[4].HeaderText = "열전도율" + Environment.NewLine + "[W/m·K]";
+            //Ucalc_dataGridView.Columns[5].HeaderText = "두께" + Environment.NewLine + "[mm]";
+            //Ucalc_dataGridView.Columns[6].HeaderText = "열저항" + Environment.NewLine + "[m²·K/W]";
 
         }
         private void Add_OldRoof()
@@ -551,7 +561,7 @@ namespace main.contents
             int nRow = Ucalc_dataGridView.Rows.Add();
             Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존지붕";
             Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldRoof;
-            Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
+           // Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
             Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldRoof_R);
             Load_Material_Num();
 
@@ -569,7 +579,7 @@ namespace main.contents
                     Ucalc_dataGridView.Rows[nRow].Cells[2].Value = form.Select[10];
                     Ucalc_dataGridView.Rows[nRow].Cells[3].Value = form.Select[1];
                     Ucalc_dataGridView.Rows[nRow].Cells[4].Value = form.Select[4];
-                    Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Info;
+                   // Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Info;
                 }
                 Load_Material_Num();
                 Calc_dins();
@@ -586,25 +596,7 @@ namespace main.contents
             if (e.RowIndex >= 0)
             {
                 Ucalc_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                SelectRow = e.RowIndex;
-                DataGridViewRow row = Ucalc_dataGridView.Rows[SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < Ucalc_dataGridView.RowCount; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        Ucalc_dataGridView.Rows[k].Cells[0].Value = false;
-                        row2 = Ucalc_dataGridView.Rows[k];
-                        row2.DefaultCellStyle.BackColor = SystemColors.Window;
-                        row2.DefaultCellStyle.ForeColor = SystemColors.WindowText;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = SystemColors.WindowText;
-                        row = Ucalc_dataGridView.Rows[e.RowIndex];
-                    }
-                }
+                SelectRow = e.RowIndex;                
             }
         }
 
@@ -1128,7 +1120,7 @@ namespace main.contents
                             Ucalc_dataGridView.Rows[nRow].Cells[3].Value = Material[i];
                             Ucalc_dataGridView.Rows[nRow].Cells[4].Value = Value[0][1];
                             Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Load[0][(2 * i + 23)];
-                            Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Info;
+                          //  Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Info;
                             Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Material_R[i]);
                         }
                         catch { }
@@ -1141,7 +1133,7 @@ namespace main.contents
                                 OldRoof_R = 1 / Convert.ToDouble(OldRoof_U[0][0]);
                                 Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존지붕";
                                 Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldRoof;
-                                Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
+                              //  Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
                                 Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldRoof_R);
                             }
                             catch { }

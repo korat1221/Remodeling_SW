@@ -78,29 +78,45 @@ namespace main.subcontents
 
         void load_table_InstallDB()
         {
-            DataTable table_WindowInstall = new DataTable();
+            new StackedHeaderDecorator(Install_dataGridView);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Install_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             Install_dataGridView.Columns.Add(checkBoxColumn);
-            table_WindowInstall.Columns.Add("번호", typeof(string));
-            table_WindowInstall.Columns.Add("DB유형", typeof(string));
-            table_WindowInstall.Columns.Add("제품명", typeof(string));
-            table_WindowInstall.Columns.Add("구분1", typeof(string));
-            table_WindowInstall.Columns.Add("구분2", typeof(string));
-            table_WindowInstall.Columns.Add("구분3", typeof(string));
-            table_WindowInstall.Columns.Add("구분4", typeof(string));
-            table_WindowInstall.Columns.Add("상부설치\r\n선형열관류율" + Environment.NewLine + "Ψg,fix\r\n[W/m·K]", typeof(string));
-            table_WindowInstall.Columns.Add("측면설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
-            table_WindowInstall.Columns.Add("하부설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
 
+            Install_dataGridView.Columns.Add("A1", "번호");
+            Install_dataGridView.Columns.Add("A2", "DB유형");
+            Install_dataGridView.Columns.Add("A3", "제품명");
+            Install_dataGridView.Columns.Add("A4", "구분1");
+            Install_dataGridView.Columns.Add("A5", "구분2");
+            Install_dataGridView.Columns.Add("A6", "구분3");
+            Install_dataGridView.Columns.Add("A7", "구분4");
+            Install_dataGridView.Columns.Add("A8", "설치선형열관류율.상부.Ψg,top[W/m·K]");
+            Install_dataGridView.Columns.Add("A9", "설치선형열관류율.측면.Ψg,side[W/m·K]");
+            Install_dataGridView.Columns.Add("A10", "설치선형열관류율.하부.Ψg,buttom[W/m·K]");
+            //table_WindowInstall.Columns.Add("번호", typeof(string));
+            //table_WindowInstall.Columns.Add("DB유형", typeof(string));
+            //table_WindowInstall.Columns.Add("제품명", typeof(string));
+            //table_WindowInstall.Columns.Add("구분1", typeof(string));
+            //table_WindowInstall.Columns.Add("구분2", typeof(string));
+            //table_WindowInstall.Columns.Add("구분3", typeof(string));
+            //table_WindowInstall.Columns.Add("구분4", typeof(string));
+            //table_WindowInstall.Columns.Add("상부설치\r\n선형열관류율" + Environment.NewLine + "Ψg,fix\r\n[W/m·K]", typeof(string));
+            //table_WindowInstall.Columns.Add("측면설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
+            //table_WindowInstall.Columns.Add("하부설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
             try
             {
                 string[][] User_WinInstall = Program.DB.getValue(DB.type.ProjDB, "User_WindowInstall", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
                 for (int n = 0; n < User_WinInstall.Length; n++)
                 {
-                    table_WindowInstall.Rows.Add(User_WinInstall[n][0], User_WinInstall[n][1], User_WinInstall[n][2], User_WinInstall[n][3], User_WinInstall[n][4], User_WinInstall[n][5], User_WinInstall[n][6], User_WinInstall[n][7], User_WinInstall[n][8], User_WinInstall[n][9]);
+                    Install_dataGridView.Rows.Add();
+                    int nRow = Install_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 10; k++)
+                    {
+                        Install_dataGridView.Rows[nRow].Cells[k + 1].Value = User_WinInstall[n][k];
+                    }
+                   // table_WindowInstall.Rows.Add(User_WinInstall[n][0], User_WinInstall[n][1], User_WinInstall[n][2], User_WinInstall[n][3], User_WinInstall[n][4], User_WinInstall[n][5], User_WinInstall[n][6], User_WinInstall[n][7], User_WinInstall[n][8], User_WinInstall[n][9]);
                 }
             }
             catch { }
@@ -118,9 +134,15 @@ namespace main.subcontents
 
             for (int n = 0; n < WinInstall.Length; n++)
             {
-                table_WindowInstall.Rows.Add(WinInstall[n][0], WinInstall[n][1], WinInstall[n][2], WinInstall[n][3], WinInstall[n][4], WinInstall[n][5], WinInstall[n][6], WinInstall[n][7], WinInstall[n][8], WinInstall[n][9]);
+                Install_dataGridView.Rows.Add();
+                int nRow = Install_dataGridView.Rows.Count - 1;
+                for (int k = 0; k < 10; k++)
+                {
+                    Install_dataGridView.Rows[nRow].Cells[k + 1].Value = WinInstall[n][k];
+                }
+               // table_WindowInstall.Rows.Add(WinInstall[n][0], WinInstall[n][1], WinInstall[n][2], WinInstall[n][3], WinInstall[n][4], WinInstall[n][5], WinInstall[n][6], WinInstall[n][7], WinInstall[n][8], WinInstall[n][9]);
             }
-            Install_dataGridView.DataSource = table_WindowInstall;
+            //Install_dataGridView.DataSource = table_WindowInstall;
             Count_InstallDB = WinInstall.Length;
         }
 
@@ -208,27 +230,8 @@ namespace main.subcontents
             if (e.RowIndex >= 0)
             {
                 Install_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                SelectRow = e.RowIndex;
-                DataGridViewRow row = Install_dataGridView.Rows[SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < Count_InstallDB; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        Install_dataGridView.Rows[k].Cells[0].Value = false;
-                        row2 = Install_dataGridView.Rows[k];
-                        row2.DefaultCellStyle.BackColor = Color.White;
-                        row2.DefaultCellStyle.ForeColor = Color.Black;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = Color.Black;
-                        row = Install_dataGridView.Rows[e.RowIndex];
-                    }
-                }
+                SelectRow = e.RowIndex;               
             }
-
         }
 
         private void Save_button_Click(object sender, EventArgs e)

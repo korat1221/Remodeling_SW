@@ -57,29 +57,51 @@ namespace main.subcontents.ConstructionCW
         }
         void load_table_FrameDB()
         {
-            DataTable table_CWFrame = new DataTable();
+            new StackedHeaderDecorator(Frame_dataGridView);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Frame_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             Frame_dataGridView.Columns.Add(checkBoxColumn);
-            table_CWFrame.Columns.Add("번호", typeof(string));
-            table_CWFrame.Columns.Add("DB유형", typeof(string));
-            table_CWFrame.Columns.Add("제품명", typeof(string));
-            table_CWFrame.Columns.Add("제조사", typeof(string));
-            table_CWFrame.Columns.Add("구분1", typeof(string));
-            table_CWFrame.Columns.Add("구분2", typeof(string));
-            table_CWFrame.Columns.Add("고정부프레임\r\n열관류율" + Environment.NewLine + "Umt[W/m2∙K]", typeof(string));
-            table_CWFrame.Columns.Add("개폐부프레임\r\n열관류율" + Environment.NewLine + "Ufr[W/m2∙K]", typeof(string));
-            table_CWFrame.Columns.Add("패널엣지선형\r\n열관류율" + Environment.NewLine + "Up,mt[W/m∙K]", typeof(string));
-            table_CWFrame.Columns.Add("M/T\r\n프레임두께" + Environment.NewLine + "dA[m]", typeof(string));
-            table_CWFrame.Columns.Add("fr\r\n프레임두께" + Environment.NewLine + "dB[m]", typeof(string));
+
+            Frame_dataGridView.Columns.Add("A1", "번호");
+            Frame_dataGridView.Columns.Add("A2", "DB유형");
+            Frame_dataGridView.Columns.Add("A3", "제품명");
+            Frame_dataGridView.Columns.Add("A4", "제조사");
+            Frame_dataGridView.Columns.Add("A5", "구분1");
+            Frame_dataGridView.Columns.Add("A6", "구분2");
+            Frame_dataGridView.Columns.Add("A7", "열관류율.고정부프레임.Umt[W/m2∙K]");
+            Frame_dataGridView.Columns.Add("A8", "열관류율.개폐부프레임.Ufr[W/m2∙K]");
+            Frame_dataGridView.Columns.Add("A9", "열관류율.패널엣지선형.Up,mt[W/m∙K]");
+            Frame_dataGridView.Columns.Add("A10", "두께.M/T프레임.dA[m]");
+            Frame_dataGridView.Columns.Add("A11", "두께.fr프레임.dB[m]");
+            //table_CWFrame.Columns.Add("번호", typeof(string));
+            //table_CWFrame.Columns.Add("DB유형", typeof(string));
+            //table_CWFrame.Columns.Add("제품명", typeof(string));
+            //table_CWFrame.Columns.Add("제조사", typeof(string));
+            //table_CWFrame.Columns.Add("구분1", typeof(string));
+            //table_CWFrame.Columns.Add("구분2", typeof(string));
+            //table_CWFrame.Columns.Add("고정부프레임\r\n열관류율" + Environment.NewLine + "Umt[W/m2∙K]", typeof(string));
+            //table_CWFrame.Columns.Add("개폐부프레임\r\n열관류율" + Environment.NewLine + "Ufr[W/m2∙K]", typeof(string));
+            //table_CWFrame.Columns.Add("패널엣지선형\r\n열관류율" + Environment.NewLine + "Up,mt[W/m∙K]", typeof(string));
+            //table_CWFrame.Columns.Add("M/T\r\n프레임두께" + Environment.NewLine + "dA[m]", typeof(string));
+            //table_CWFrame.Columns.Add("fr\r\n프레임두께" + Environment.NewLine + "dB[m]", typeof(string));
             try
             {
                 string[][] User_CWFrame = Program.DB.getValue(DB.type.ProjDB, "User_CWFrame", "번호,DB유형,제품명,제조사,구분1,구분2,고정부프레임열관류율,개폐부프레임열관류율,패널엣지선형열관류율,M_T프레임두께,fr프레임두께", "구분1 ='" + FrameType + "'");
                 for (int n = 0; n < User_CWFrame.Length; n++)
                 {
-                    table_CWFrame.Rows.Add(User_CWFrame[n][0], User_CWFrame[n][1], User_CWFrame[n][2], User_CWFrame[n][3], User_CWFrame[n][4], User_CWFrame[n][5], String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][6])), String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][7])), String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][8])), String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][9])),String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][10])));
+                    Frame_dataGridView.Rows.Add();
+                    int nRow = Frame_dataGridView.Rows.Count - 1;
+                    for(int i = 0; i < 6; i++)
+                    {
+                        Frame_dataGridView.Rows[nRow].Cells[i+1].Value = User_CWFrame[n][i];
+                    }
+                    for (int i = 6; i < 11; i++)
+                    {
+                        Frame_dataGridView.Rows[nRow].Cells[i + 1].Value = String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][i]));
+                    }
+                    //table_CWFrame.Rows.Add(User_CWFrame[n][0], User_CWFrame[n][1], User_CWFrame[n][2], User_CWFrame[n][3], User_CWFrame[n][4], User_CWFrame[n][5], String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][6])), String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][7])), String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][8])), String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][9])),String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][10])));
                 }
             }
             catch { }
@@ -88,9 +110,15 @@ namespace main.subcontents.ConstructionCW
 
             for (int n = 0; n < CWFrame.Length; n++)
             {
-                table_CWFrame.Rows.Add(CWFrame[n][0], CWFrame[n][1], CWFrame[n][2], CWFrame[n][3], CWFrame[n][4], CWFrame[n][5], CWFrame[n][6], CWFrame[n][7], CWFrame[n][8], CWFrame[n][9], CWFrame[n][10]);
+                Frame_dataGridView.Rows.Add();
+                int nRow = Frame_dataGridView.Rows.Count - 1;
+                for (int i = 0; i < 11; i++)
+                {
+                    Frame_dataGridView.Rows[nRow].Cells[i + 1].Value = CWFrame[n][i];
+                }
+               // table_CWFrame.Rows.Add(CWFrame[n][0], CWFrame[n][1], CWFrame[n][2], CWFrame[n][3], CWFrame[n][4], CWFrame[n][5], CWFrame[n][6], CWFrame[n][7], CWFrame[n][8], CWFrame[n][9], CWFrame[n][10]);
             }
-            Frame_dataGridView.DataSource = table_CWFrame;
+          //  Frame_dataGridView.DataSource = table_CWFrame;
             Count_FrameDB = CWFrame.Length;
         }
 
@@ -341,24 +369,6 @@ namespace main.subcontents.ConstructionCW
             {
                 Frame_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 SelectRow = e.RowIndex;
-                DataGridViewRow row = Frame_dataGridView.Rows[SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < Count_FrameDB; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        Frame_dataGridView.Rows[k].Cells[0].Value = false;
-                        row2 = Frame_dataGridView.Rows[k];
-                        row2.DefaultCellStyle.BackColor = Color.White;
-                        row2.DefaultCellStyle.ForeColor = Color.Black;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = Color.Black;
-                        row = Frame_dataGridView.Rows[e.RowIndex];
-                    }
-                }
             }
         }
         private void Save_button_Click(object sender, EventArgs e)
