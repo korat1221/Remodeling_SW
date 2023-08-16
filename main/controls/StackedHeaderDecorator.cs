@@ -38,6 +38,8 @@ public class StackedHeaderDecorator
         objDataGrid.ColumnRemoved += objDataGrid_ColumnRemoved;
         objDataGrid.ColumnAdded += objDataGrid_ColumnAdded;
         objDataGrid.ColumnWidthChanged += objDataGrid_ColumnWidthChanged;
+        objDataGrid.CurrentCellDirtyStateChanged += objDataGrid_CurrentCellDirtyStateChanged;
+
         objHeaderTree = objStackedHeaderGenerator.GenerateStackedHeader(objDataGrid);
 
         objDataGrid.AutoSizeColumnsMode = fixedHeader ? DataGridViewAutoSizeColumnsMode.Fill : DataGridViewAutoSizeColumnsMode.ColumnHeader;
@@ -62,16 +64,11 @@ public class StackedHeaderDecorator
         //    objDataGrid..RowsRemoved += objDataGrid_RowsRemoved;
     }
 
-    private void objDataGrid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+    private void objDataGrid_CurrentCellDirtyStateChanged(object sender, EventArgs e)
     {
-   //     objDataGrid.ClearSelection();
-
+        objDataGrid.CommitEdit(DataGridViewDataErrorContexts.Commit);
     }
-    private void objDataGrid_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
-    {
-    //    objDataGrid.ClearSelection();
 
-    }
 
     public StackedHeaderDecorator(IStackedHeaderGenerator objStackedHeaderGenerator, DataGridView objDataGrid, bool fixedHeader = false, RenderProc proc = null)
             : this(objDataGrid, fixedHeader, proc)
@@ -156,7 +153,7 @@ public class StackedHeaderDecorator
                     }
                     else
                     {
-                        row.DefaultCellStyle.BackColor = SystemColors.Window;
+                        cell.Style.BackColor = SystemColors.Window;
                     }
                     if (renderProc != null) renderProc(row);
                 }
