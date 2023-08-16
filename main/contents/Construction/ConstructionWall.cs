@@ -21,7 +21,7 @@ namespace main.contents
 {
     public partial class ConstructionWall : Form
     {
-        String WallNum, WallName, Type, check_Type, OldWall, CWName, UMethod, DiIndi, StructureType, check_StructureType, TBType, TBName, Color, ISO_KS, LinearPoint;
+        String WallNum, WallName, Type, check_Type, OldWall, CWName, UMethod, DiIndi, StructureType, check_StructureType, TBType, TBName, Color_Envelope, ISO_KS, LinearPoint;
         double A, B, C, PsiKai, PerArea;
         double Rse, Rsi, dtot, Rtot, dins, check_dins;
         double OldWall_R, CW_R;
@@ -52,9 +52,10 @@ namespace main.contents
             Load_table();
         }
 
-        private static void Ucalc_dataGridView_RowHandle(DataGridViewRow row)
+        private void Ucalc_dataGridView_RowHandle(DataGridViewRow row)
         {
-            row.Cells[5].Style.BackColor = SystemColors.Info;
+           // row.Cells[5].Style.BackColor = SystemColors.Info;
+            row.Cells[6].Style.BackColor = Color.FromArgb(240, 241, 241);
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -339,8 +340,8 @@ namespace main.contents
         {
             if (Color_comboBox.SelectedItem != null)
             {
-                Color = Color_comboBox.SelectedItem.ToString();
-                String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + Color + "'");
+                Color_Envelope = Color_comboBox.SelectedItem.ToString();
+                String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + Color_Envelope + "'");
                 α = Convert.ToDouble(value[0][0]);
                 α_textBox.Text = String.Format("{0:F1}", α);
             }
@@ -925,7 +926,7 @@ namespace main.contents
                 "재료9종류,재료9두께," +
                 "재료10종류,재료10두께," +
                 "흡수율,열관류율,열교가산치,유효열관류율",
-                "'" + WallNum_textBox.Text + "','" + WallName + "','" + Type + "','" + OldWall + "','" + CWName + "','" + UMethod + "','" + DiIndi + "','" + StructureType + "','" + TBType + "','" + TBName + "','" + Color + "','" + ISO_KS + "','" + LinearPoint + "','" +
+                "'" + WallNum_textBox.Text + "','" + WallName + "','" + Type + "','" + OldWall + "','" + CWName + "','" + UMethod + "','" + DiIndi + "','" + StructureType + "','" + TBType + "','" + TBName + "','" + Color_Envelope + "','" + ISO_KS + "','" + LinearPoint + "','" +
                 A.ToString() + "','" + B.ToString() + "','" + C.ToString() + "','" + PsiKai.ToString() + "','" + PerArea.ToString() + "','" +
                 Rse.ToString() + "','" + Rsi.ToString() + "','" + dtot.ToString() + "','" + Rtot.ToString() + "','" + dins.ToString() + "','" +
                 Material[0] + "','" + Material_d[0].ToString() + "','" +
@@ -1039,7 +1040,7 @@ namespace main.contents
             check_StructureType = null;
             TBType = null;
             TBName = null;
-            Color = null;
+            Color_Envelope = null;
             ISO_KS = null;
             LinearPoint = null;
         }
@@ -1124,8 +1125,8 @@ namespace main.contents
                 TBName_textBox.Text = TBName;
                 TBName2_textBox.Text = TBName;
 
-                Color = Load[0][10];
-                Color_comboBox.SelectedItem = Color;
+                Color_Envelope = Load[0][10];
+                Color_comboBox.SelectedItem = Color_Envelope;
 
                 ISO_KS = Load[0][11];
                 ISO_KS_comboBox.SelectedItem = ISO_KS;

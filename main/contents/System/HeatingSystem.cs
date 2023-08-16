@@ -10,6 +10,7 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,13 +72,12 @@ namespace main.contents
             PumpUse_comboBox.Items.Clear();
             PumpUse_comboBox.Items.Add("펌프 있음");
             PumpUse_comboBox.Items.Add("펌프 없음(설비 내장)");
-            PumpUse_comboBox.SelectedIndex = 0;
+            PumpUse_comboBox.SelectedIndex = 1;
 
             //펌프 방식 콤보박스
             PumpMethod_comboBox.Items.Clear();
             PumpMethod_comboBox.Items.Add("1차펌프");
             PumpMethod_comboBox.Items.Add("1차폐회로+2차펌프");
-            PumpMethod_comboBox.SelectedIndex = 0;
 
             //공급설비 콤보박스
             ce1Type_comboBox.Items.Clear();
@@ -337,20 +337,18 @@ namespace main.contents
         {
             try
             {
-                DataTable Boiler_table = new DataTable();
+                new StackedHeaderDecorator(Boiler_dataGridView);
                 Boiler_dataGridView.Columns.Clear();
-                Boiler_table.Columns.Add("번호", typeof(string));
-                Boiler_table.Columns.Add("명칭", typeof(string));
-                Boiler_table.Columns.Add("연료", typeof(string));
-                Boiler_table.Columns.Add("Type", typeof(string));
-                Boiler_table.Columns.Add("용량" + Environment.NewLine + "[kW]", typeof(string));
-                Boiler_table.Columns.Add("전부하효율" + Environment.NewLine + "[%]", typeof(string));
-                Boiler_table.Columns.Add("부분부하효율" + Environment.NewLine + "[%]", typeof(string));
-                Boiler_table.Columns.Add("소비전력" + Environment.NewLine + "[W]", typeof(string));
-                Boiler_table.Columns.Add("대기전력" + Environment.NewLine + "[W]", typeof(string));
-                Boiler_table.Columns.Add("대수" + Environment.NewLine + "[EA]", typeof(string));
-
-
+                Boiler_dataGridView.Columns.Add("A1", "번호");
+                Boiler_dataGridView.Columns.Add("A2", "명칭");
+                Boiler_dataGridView.Columns.Add("A3", "연료");
+                Boiler_dataGridView.Columns.Add("A4", "Type");
+                Boiler_dataGridView.Columns.Add("A5", "용량.[kW]");
+                Boiler_dataGridView.Columns.Add("A6", "효율.전부하효율.[%]");
+                Boiler_dataGridView.Columns.Add("A7", "효율.부분부하효율.[%]");
+                Boiler_dataGridView.Columns.Add("A8", "소비전력.[W]");
+                Boiler_dataGridView.Columns.Add("A9", "대기전력.[W]");
+                Boiler_dataGridView.Columns.Add("A10", "대수.[EA]");
 
                 for (int n = 0; n < SelectBoiler.Count; n++)
                 {
@@ -377,10 +375,17 @@ namespace main.contents
                     {
                         대기전력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[0][8]));
                     }
-                    Boiler_table.Rows.Add(User_Value[0][0], User_Value[0][1], User_Value[0][2], User_Value[0][3], 용량, 전부하효율, 부분부하효율, 소비전력, 대기전력);
-
-                    Boiler_dataGridView.DataSource = Boiler_table;
-                    Boiler_dataGridView.Rows[n].Cells[9].Style.BackColor = SystemColors.Info;
+                    Boiler_dataGridView.Rows.Add();
+                    int nRow = Boiler_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 4; k++)
+                    {
+                        Boiler_dataGridView.Rows[nRow].Cells[k].Value = User_Value[0][0];
+                    }
+                    Boiler_dataGridView.Rows[nRow].Cells[4].Value = 용량;
+                    Boiler_dataGridView.Rows[nRow].Cells[5].Value = 전부하효율;
+                    Boiler_dataGridView.Rows[nRow].Cells[6].Value = 부분부하효율;
+                    Boiler_dataGridView.Rows[nRow].Cells[7].Value = 소비전력;
+                    Boiler_dataGridView.Rows[nRow].Cells[8].Value = 대기전력;
                 }
 
 
@@ -406,6 +411,7 @@ namespace main.contents
                     PumpMethod_comboBox.Visible = false;
                     PumpMethod_comboBox.SelectedItem = null;
                     Pump_dataGridView.Columns.Clear();
+                    ChangeVisble_Pump(null);
                 }
             }
             else
@@ -556,19 +562,19 @@ namespace main.contents
         private void Create_Pump_Table()
         {
             Pump_dataGridView.Columns.Clear();
-            Pump_dataGridView.ColumnCount = 12;
-            Pump_dataGridView.Columns[0].HeaderText = "구분";
-            Pump_dataGridView.Columns[1].HeaderText = "번호";
-            Pump_dataGridView.Columns[2].HeaderText = "명칭";
-            Pump_dataGridView.Columns[3].HeaderText = "종류";
-            Pump_dataGridView.Columns[4].HeaderText = "A효율" + Environment.NewLine + "[%]";
-            Pump_dataGridView.Columns[5].HeaderText = "B효율" + Environment.NewLine + "[%]";
-            Pump_dataGridView.Columns[6].HeaderText = "유량" + Environment.NewLine + "[CMH]";
-            Pump_dataGridView.Columns[7].HeaderText = "동력" + Environment.NewLine + "[kW]";
-            Pump_dataGridView.Columns[8].HeaderText = "양정" + Environment.NewLine + "[m]";
-            Pump_dataGridView.Columns[9].HeaderText = "정유량 밸브";
-            Pump_dataGridView.Columns[10].HeaderText = "펌프 제어";
-            Pump_dataGridView.Columns[11].HeaderText = "대수" + Environment.NewLine + "[EA]";
+            new StackedHeaderDecorator(Pump_dataGridView);
+            Pump_dataGridView.Columns.Add("A0", "구분");
+            Pump_dataGridView.Columns.Add("A1","펌프번호");
+            Pump_dataGridView.Columns.Add("A2","명칭");
+            Pump_dataGridView.Columns.Add("A3","종류");
+            Pump_dataGridView.Columns.Add("A4","A효율.[%]");
+            Pump_dataGridView.Columns.Add("A5","B효율.[%]");
+            Pump_dataGridView.Columns.Add("A6","유량.[CMH]");
+            Pump_dataGridView.Columns.Add("A7","동력.[kW]");
+            Pump_dataGridView.Columns.Add("A8","양정.[m]");
+            Pump_dataGridView.Columns.Add("A9","정유량 밸브");
+            Pump_dataGridView.Columns.Add("A10","펌프 제어");
+            Pump_dataGridView.Columns.Add("A11","대수.[EA]");
 
         }
         private void Load_Pump_Table(int nRow, String PumpNum)
@@ -577,23 +583,13 @@ namespace main.contents
             정유량밸브comboBox.Items.Add("있음");
             정유량밸브comboBox.Items.Add("없음");
             Pump_dataGridView.Rows[nRow].Cells[9] = 정유량밸브comboBox;
-            Pump_dataGridView.Rows[nRow].Cells[9].Value = "있음";
 
             DataGridViewComboBoxCell 제어comboBox = new DataGridViewComboBoxCell();
             제어comboBox.Items.Add("대수제어");
             제어comboBox.Items.Add("인버터제어");
             제어comboBox.Items.Add("제어없음");
-            Pump_dataGridView.Rows[nRow].Cells[10] = 제어comboBox;
-            if (PumpMethod == "1차폐회로+2차펌프")
-            {
-                Pump_dataGridView.Rows[nRow].Cells[10].Value = "대수제어";
-            }
-            else
-            {
-                Pump_dataGridView.Rows[nRow].Cells[10].Value = "제어없음";
-            }
+            Pump_dataGridView.Rows[nRow].Cells[10] = 제어comboBox;          
 
-            Pump_dataGridView.Rows[nRow].Cells[11].Style.BackColor = SystemColors.Info;
             try
             {
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "번호 = '" + PumpNum.ToString() + "'");
@@ -666,60 +662,115 @@ namespace main.contents
 
         private void Create_ce_Table()
         {
-            ce_dataGridView.Columns.Clear();
-            ce_dataGridView.ColumnCount = 9;
-            ce_dataGridView.Columns[0].HeaderText = "번호";
-            ce_dataGridView.Columns[1].HeaderText = "종류";
-            ce_dataGridView.Columns[2].HeaderText = "일람표 번호";
-            ce_dataGridView.Columns[3].HeaderText = "일람표 명칭";
-            ce_dataGridView.Columns[4].HeaderText = "용량" + Environment.NewLine + "[kW]";
-            ce_dataGridView.Columns[5].HeaderText = "소비전력" + Environment.NewLine + "[kW]";
-            ce_dataGridView.Columns[6].HeaderText = "적용 존 번호";
-            ce_dataGridView.Columns[7].HeaderText = "적용 존 명칭";
-            ce_dataGridView.Columns[8].HeaderText = "설치위치";
-
+            new StackedHeaderDecorator(ce_dataGridView);
+            ce_dataGridView.Columns.Add("A0", "번호          ");
+            ce_dataGridView.Columns.Add("A1", "종류");
+            ce_dataGridView.Columns.Add("A2","일람표 번호");
+            ce_dataGridView.Columns.Add("A3","일람표 명칭");
+            ce_dataGridView.Columns.Add("A4","용량.[kW]");
+            ce_dataGridView.Columns.Add("A5","소비전력.[kW]");
+            ce_dataGridView.Columns.Add("A6","적용 존.존번호");
+            ce_dataGridView.Columns.Add("A7","적용 존.존명칭");
+            ce_dataGridView.Columns.Add("A8","적용 존.설치위치");
         }
         private void ce1Zone_button_Click(object sender, EventArgs e)
         {
-            Heating_ceZone ceZone = new Heating_ceZone(Num, ce1Type);
-            DialogResult result = ceZone.ShowDialog();
-            if (result == DialogResult.OK)
+            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호,공급설비종류,공급설비일람표", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce1Type + "'");
+            if (Value.Length == 0)
             {
-                try
+
+                Heating_ceZone ceZone = new Heating_ceZone(Num, ce1Type);
+                DialogResult result = ceZone.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호,공급설비종류,공급설비일람표", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce1Type + "'");
-                    if( Value.Length> 0)
+                    Load_ce(ce1Type);
+                }
+            }
+            else
+            {
+                if ((MessageBox.Show("입력하신 공급설비2 의 정보를 리셋하시겠습니까?", "공급설비2 정보 리셋", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                {
+                    Heating_ceZone ceZone = new Heating_ceZone(Num, ce1Type);
+                    DialogResult result = ceZone.ShowDialog();
+                    if (result == DialogResult.OK)
                     {
-                        Create_ce_Table();
-                    }
-
-                    for (int n  = 0; n < Value.Length; n++)
-                    {
-                        ce_dataGridView.Rows.Add();                       
-                        DataGridViewComboBoxCell 설치위치comboBox = new DataGridViewComboBoxCell();
-                        설치위치comboBox.Items.Add("내벽 설치");
-                        설치위치comboBox.Items.Add("외벽 설치");
-                        설치위치comboBox.Items.Add("창호측 설치"); 
-                        설치위치comboBox.Items.Add("창호측 설치");
-                        ce_dataGridView.Rows[n].Cells[8] = 설치위치comboBox;
-
-                        string[][] 공급설비일람표 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "번호,명칭,용량,소비전력", "번호 = '" + Value[n][2] + "'");
-                        ce_dataGridView.Rows[n].Cells[1].Value = ce1Type;//종류
-                        ce_dataGridView.Rows[n].Cells[2].Value = 공급설비일람표[0][0];//일람표번호
-                        ce_dataGridView.Rows[n].Cells[3].Value = 공급설비일람표[0][1]; //일람표명칭
-                        ce_dataGridView.Rows[n].Cells[4].Value = 공급설비일람표[0][2]; //용량
-                        ce_dataGridView.Rows[n].Cells[5].Value = 공급설비일람표[0][3];//소비전력
+                        Load_ce(ce1Type);
                     }
                 }
-                catch { }
+                else { }
             }
+
         }
+
 
         private void ce2Zone_button_Click(object sender, EventArgs e)
         {
-
+            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호,공급설비종류,공급설비일람표", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce2Type + "'");
+            if (Value.Length == 0)
+            {
+               
+                Heating_ceZone ceZone = new Heating_ceZone(Num, ce2Type);
+                DialogResult result = ceZone.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    Load_ce(ce2Type);
+                }
+            }
+            else 
+            {
+                if ((MessageBox.Show("입력하신 공급설비2 의 정보를 리셋하시겠습니까?", "공급설비2 정보 리셋", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                {
+                    Heating_ceZone ceZone = new Heating_ceZone(Num, ce2Type);
+                    DialogResult result = ceZone.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        Load_ce(ce2Type);
+                    }
+                }
+                else { }
+            }
+            
         }
+        private void Load_ce(string CE)
+        {
+            try
+            {
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호,공급설비종류,공급설비일람표", "난방시스템 = '" + Num + "' And 공급설비종류 = '"+CE+"'");               
 
+                int Sum = 1;
+                for (int n = 0; n < Value.Length; n++)
+                {
+                    int nRow = ce_dataGridView.Rows.Add();
+                    DataGridViewComboBoxCell 설치위치comboBox = new DataGridViewComboBoxCell();
+                    설치위치comboBox.Items.Add("내벽 설치");
+                    설치위치comboBox.Items.Add("외벽 설치");
+                    설치위치comboBox.Items.Add("창호측 설치");
+                    설치위치comboBox.Items.Add("창호측 설치");
+                    ce_dataGridView.Rows[nRow].Cells[8] = 설치위치comboBox;
+
+                    for (int a = 0; a < ce_dataGridView.Rows.Count; a++)//존, 공급설비 같은 경우 개수 누적하기 
+                    {
+                        if (ce_dataGridView.Rows[a].Cells[6].Value != null && ce_dataGridView.Rows[a].Cells[1].Value != null)
+                        {
+                            if (ce_dataGridView.Rows[a].Cells[6].Value.ToString() == Value[n][0] && ce_dataGridView.Rows[a].Cells[1].Value.ToString() == Value[n][1])
+                            { Sum += 1; }
+                            else { Sum = 1; }
+                        }
+                    }          
+                    ce_dataGridView.Rows[nRow].Cells[1].Value = Value[n][1];//종류
+                    string[][] 일람표정보 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "번호,명칭,용량,소비전력", "번호 = '" + Value[n][2] + "'");
+                    ce_dataGridView.Rows[nRow].Cells[2].Value = 일람표정보[0][0];//일람표번호
+                    ce_dataGridView.Rows[nRow].Cells[3].Value = 일람표정보[0][1]; //일람표명칭
+                    ce_dataGridView.Rows[nRow].Cells[4].Value = 일람표정보[0][2]; //용량
+                    ce_dataGridView.Rows[nRow].Cells[5].Value = 일람표정보[0][3];//소비전력
+                    string[][] 존정보 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름", "존번호 = '" + Value[n][0] + "'");
+                    ce_dataGridView.Rows[nRow].Cells[6].Value = 존정보[0][0];//존번호
+                    ce_dataGridView.Rows[nRow].Cells[7].Value = 존정보[0][1];//존이름
+                    ce_dataGridView.Rows[nRow].Cells[0].Value = 일람표정보[0][0] + "_" + 존정보[0][0] + "_" + Sum;
+                }
+            }
+            catch { }
+        }
 
 
 

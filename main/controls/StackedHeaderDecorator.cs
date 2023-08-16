@@ -1,10 +1,12 @@
 ﻿using main;
 using System;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 public class StackedHeaderDecorator
 {
@@ -95,30 +97,34 @@ public class StackedHeaderDecorator
     }
     private bool isSelectedRow(int ridx)
     {
-        for (int k = 0; k < objDataGrid.RowCount; k++)
+        DataGridViewRow row = objDataGrid.Rows[ridx];
+
+        if (row.Cells.Count > 0)
         {
-            DataGridViewRow row = objDataGrid.Rows[k];
+            var val = row.Cells[0].Value;
 
-            if (row.Cells.Count > 0)
-            {
-                var val = row.Cells[0].Value;
+            //if (val != null)
+            //{
+            //    Debug.Print(string.Format("{0} {1}", ridx, val.ToString()));
 
-                if (val != null && val.Equals(true))
-                {
-                    return true;
-                }
-            }
-        }
+            //}
 
-        int i = -1, cnt = objDataGrid.GetCellCount(DataGridViewElementStates.Selected);
 
-        while (++i < cnt)
-        {
-            if (objDataGrid.SelectedCells[i].RowIndex == ridx)
+            if (val != null && val.Equals(true))
             {
                 return true;
             }
         }
+
+        //int i = -1, cnt = objDataGrid.GetCellCount(DataGridViewElementStates.Selected);
+
+        //while (++i < cnt)
+        //{
+        //    if (objDataGrid.SelectedCells[i].RowIndex == ridx)
+        //    {
+        //        return true;
+        //    }
+        //}
         return false;
     }
     private void renderColors()
@@ -152,9 +158,9 @@ public class StackedHeaderDecorator
                     {
                         row.DefaultCellStyle.BackColor = SystemColors.Window;
                     }
+                    if (renderProc != null) renderProc(row);
                 }
             }
-            if (renderProc != null) renderProc(row);
         }
     }
 
@@ -192,33 +198,33 @@ private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingE
             e.Paint(e.ClipBounds, DataGridViewPaintParts.Focus);
             e.Handled = true;
         }
-        else if (objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewButtonCell)
-        {
-            var cell = objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewButtonCell;
-            var foreColor = cell.Style.ForeColor.Name == "0" ? Color.Black : cell.Style.ForeColor;
-
-            e.Paint(e.ClipBounds, DataGridViewPaintParts.Border);
-            e.Paint(e.ClipBounds, DataGridViewPaintParts.ContentBackground);
-
-            using (Brush forebrush = new SolidBrush(foreColor))
-            using (Brush backbrush = new SolidBrush(Color.FromArgb(192, 208, 226))) //버튼 색상
-            using (StringFormat format = new StringFormat())
+            else if (objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewButtonCell)
             {
-                Rectangle rect0 = new Rectangle(e.CellBounds.X, e.CellBounds.Y, e.CellBounds.Width, e.CellBounds.Height);
-                Rectangle rect = new Rectangle(e.CellBounds.X + 1, e.CellBounds.Y + 1, e.CellBounds.Width - 2, e.CellBounds.Height - 2);
-                format.Alignment = StringAlignment.Center;
+                var cell = objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewButtonCell;
+                var foreColor = cell.Style.ForeColor.Name == "0" ? Color.Black : cell.Style.ForeColor;
 
-                e.Graphics.FillRectangle(new SolidBrush(SystemColors.Window), rect0);// 버튼 배경 색상
-                e.Graphics.FillRectangle(backbrush, rect);
-                e.Graphics.DrawString(cell.FormattedValue.ToString(), e.CellStyle.Font, forebrush, rect, format);
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.Border);
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.ContentBackground);
+
+                using (Brush forebrush = new SolidBrush(foreColor))
+                using (Brush backbrush = new SolidBrush(Color.FromArgb(192, 208, 226))) //버튼 색상
+                using (StringFormat format = new StringFormat())
+                {
+                    Rectangle rect0 = new Rectangle(e.CellBounds.X, e.CellBounds.Y, e.CellBounds.Width, e.CellBounds.Height);
+                    Rectangle rect = new Rectangle(e.CellBounds.X + 1, e.CellBounds.Y + 1, e.CellBounds.Width - 2, e.CellBounds.Height - 2);
+                    format.Alignment = StringAlignment.Center;
+
+                    e.Graphics.FillRectangle(new SolidBrush(SystemColors.Window), rect0);// 버튼 배경 색상
+                    e.Graphics.FillRectangle(backbrush, rect);
+                    e.Graphics.DrawString(cell.FormattedValue.ToString(), e.CellStyle.Font, forebrush, rect, format);
+                }
+
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.ErrorIcon);
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.Focus);
+                e.Handled = true;
             }
-
-            e.Paint(e.ClipBounds, DataGridViewPaintParts.ErrorIcon);
-            e.Paint(e.ClipBounds, DataGridViewPaintParts.Focus);
-            e.Handled = true;
         }
     }
-}
 
 bool isMultiLined()
 {
