@@ -684,23 +684,7 @@ namespace main.contents
             if (e.RowIndex >= 0)
             {
                 Ucalc_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                SelectRow = e.RowIndex;
-                for (int k = 0; k < Ucalc_dataGridView.RowCount; k++)
-                {
-                    //if (k != row.Index)
-                    //{
-                    //    Ucalc_dataGridView.Rows[k].Cells[0].Value = false;
-                    //    row2 = Ucalc_dataGridView.Rows[k];
-                    //    row2.DefaultCellStyle.BackColor = SystemColors.Window;
-                    //    row2.DefaultCellStyle.ForeColor = SystemColors.WindowText;
-                    //}
-                    //else
-                    //{
-                    //    row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                    //    row.DefaultCellStyle.ForeColor = SystemColors.WindowText;
-                    //    row = Ucalc_dataGridView.Rows[e.RowIndex];
-                    //}
-                }
+                SelectRow = e.RowIndex;              
             }
         }
         private void DeleteMaterial_button_Click(object sender, EventArgs e)

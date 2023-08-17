@@ -145,11 +145,11 @@ public class StackedHeaderDecorator
                 {
                     if (cell.GetType() == typeof(DataGridViewTextBoxCell))
                     {
-                        cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? SystemColors.Info : Color.FromArgb(240, 241, 241); //입력 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 노랑색 
+                        cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? SystemColors.Info : Color.FromArgb(255, 255, 255); //입력 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 노랑색 
                     }
                     else if (cell.GetType() == typeof(DataGridViewComboBoxCell))
                     {
-                        cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? Color.FromArgb(244, 227, 216) : Color.FromArgb(240, 241, 241);//콤보박스 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 주황색
+                        cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? Color.FromArgb(244, 227, 216) : Color.FromArgb(255, 255, 255);//콤보박스 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 주황색
                     }
                     else
                     {

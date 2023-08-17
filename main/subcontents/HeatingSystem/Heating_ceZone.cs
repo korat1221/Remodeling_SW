@@ -135,12 +135,14 @@ namespace main.subcontents.HeatingSystem
                 Program.DB.deleteValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "난방시스템 = '" + SystemNum + "' And 공급설비종류 = '" + ceType + "'");
             }
 
+            int sum = 1; 
             for (int i = 0; i < ceZone_dataGridView.Rows.Count; i++)
             {
                 int index = ceZone_dataGridView.Rows[i].Cells[0].Value.ToString().IndexOf("_");
                 if (index > 0)
                 {
                     String substring = ceZone_dataGridView.Rows[i].Cells[0].Value.ToString().Substring(0, index);
+                    String substring2 = ceZone_dataGridView.Rows[i].Cells[0].Value.ToString().Substring(index + 1, ceZone_dataGridView.Rows[i].Cells[0].Value.ToString().Length - index -1);
                     String 존번호 = null;
                     for (int k = 0; k < ceZone_dataGridView.Rows.Count; k++)
                     {
@@ -150,11 +152,11 @@ namespace main.subcontents.HeatingSystem
                         }
                     }
                     string[][] 공급설비일람표 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "번호", "명칭 = '" + ceZone_dataGridView.Rows[i].Cells[7].Value + "'");
-                    Program.DB.setValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호,난방시스템,공급설비종류,공급설비일람표",
+                    Program.DB.setValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호,난방시스템,공급설비종류,공급설비",
                      "'" + 존번호 + "','"
                      + SystemNum + "','"
                      + ceType + "','"
-                     + 공급설비일람표[0][0] + "'", "");
+                     + 공급설비일람표[0][0]+"_"+ substring2 + "'", "");
                 }
             }              
                 this.DialogResult = DialogResult.OK;

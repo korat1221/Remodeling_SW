@@ -89,6 +89,7 @@
             Pump1_button = new Button();
             Pump1_label = new Label();
             Qhce_tabPage = new TabPage();
+            ce_Remove_button = new Button();
             ce_dataGridView = new DataGridView();
             ce2Zone_textBox = new TextBox();
             ce2Zone_button = new Button();
@@ -791,6 +792,7 @@
             // 
             // Qhce_tabPage
             // 
+            Qhce_tabPage.Controls.Add(ce_Remove_button);
             Qhce_tabPage.Controls.Add(ce_dataGridView);
             Qhce_tabPage.Controls.Add(ce2Zone_textBox);
             Qhce_tabPage.Controls.Add(ce2Zone_button);
@@ -809,6 +811,21 @@
             Qhce_tabPage.TabIndex = 4;
             Qhce_tabPage.Text = "공급";
             Qhce_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // ce_Remove_button
+            // 
+            ce_Remove_button.BackColor = SystemColors.ControlLight;
+            ce_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            ce_Remove_button.FlatStyle = FlatStyle.System;
+            ce_Remove_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            ce_Remove_button.Location = new Point(852, 53);
+            ce_Remove_button.Margin = new Padding(0);
+            ce_Remove_button.Name = "ce_Remove_button";
+            ce_Remove_button.Size = new Size(23, 23);
+            ce_Remove_button.TabIndex = 194;
+            ce_Remove_button.Text = "-";
+            ce_Remove_button.UseVisualStyleBackColor = false;
+            ce_Remove_button.Click += ce_Remove_button_Click;
             // 
             // ce_dataGridView
             // 
@@ -830,7 +847,7 @@
             dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
             ce_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             ce_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            ce_dataGridView.Location = new Point(10, 79);
+            ce_dataGridView.Location = new Point(19, 79);
             ce_dataGridView.Name = "ce_dataGridView";
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle8.BackColor = SystemColors.Control;
@@ -849,8 +866,9 @@
             dataGridViewCellStyle9.SelectionForeColor = Color.Black;
             ce_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
             ce_dataGridView.RowTemplate.Height = 25;
-            ce_dataGridView.Size = new Size(949, 201);
+            ce_dataGridView.Size = new Size(856, 201);
             ce_dataGridView.TabIndex = 193;
+            ce_dataGridView.CellContentClick += ce_dataGridView_CellContentClick;
             // 
             // ce2Zone_textBox
             // 
@@ -1073,5 +1091,6 @@
         private Label label10;
         private ComboBox ce2Type_comboBox;
         private DataGridView ce_dataGridView;
+        private Button ce_Remove_button;
     }
 }
