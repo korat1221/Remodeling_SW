@@ -16,12 +16,9 @@ public class StackedHeaderDecorator
     private Header objHeaderTree;
     private int iNoOfLevels;
     private readonly StringFormat objFormat;
+    private Dictionary<int, Color> columnColors = new Dictionary<int, Color>();
 
-    public delegate void RenderProc(DataGridViewRow row);
-
-    RenderProc renderProc;
-
-    public StackedHeaderDecorator(DataGridView objDataGrid, bool fixedHeader = false, RenderProc proc = null)
+    public StackedHeaderDecorator(DataGridView objDataGrid, bool fixedHeader = false)
     {
         this.objDataGrid = objDataGrid;
         objFormat = new StringFormat();
@@ -59,7 +56,6 @@ public class StackedHeaderDecorator
         objDataGrid.CellBorderStyle = DataGridViewCellBorderStyle.Single;
 
         objDataGrid.CellPainting += dataGridView1_CellPainting;
-        renderProc = proc;
         //    objDataGrid.RowsAdded += objDataGrid_RowsAdded;
         //    objDataGrid..RowsRemoved += objDataGrid_RowsRemoved;
     }
@@ -70,12 +66,16 @@ public class StackedHeaderDecorator
     }
 
 
-    public StackedHeaderDecorator(IStackedHeaderGenerator objStackedHeaderGenerator, DataGridView objDataGrid, bool fixedHeader = false, RenderProc proc = null)
-            : this(objDataGrid, fixedHeader, proc)
+    public StackedHeaderDecorator(IStackedHeaderGenerator objStackedHeaderGenerator, DataGridView objDataGrid, bool fixedHeader = false)
+            : this(objDataGrid, fixedHeader)
     {
         this.objStackedHeaderGenerator = objStackedHeaderGenerator;
     }
 
+    public void AddCellColor(int cell, Color color)
+    {
+        columnColors.Add(cell, color);
+    }
     void objDataGrid_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
     {
         Refresh();
@@ -143,7 +143,11 @@ public class StackedHeaderDecorator
                 }
                 else
                 {
-                    if (cell.GetType() == typeof(DataGridViewTextBoxCell))
+                    if (columnColors.ContainsKey(i))
+                    {
+                        cell.Style.BackColor = columnColors[i];
+                    }
+                    else if (cell.GetType() == typeof(DataGridViewTextBoxCell))
                     {
                         cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? SystemColors.Info : Color.FromArgb(255, 255, 255); //입력 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 노랑색 
                     }
@@ -155,7 +159,6 @@ public class StackedHeaderDecorator
                     {
                         cell.Style.BackColor = SystemColors.Window;
                     }
-                    if (renderProc != null) renderProc(row);
                 }
             }
         }

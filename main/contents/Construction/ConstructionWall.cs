@@ -36,7 +36,9 @@ namespace main.contents
         public ConstructionWall()
         {
             InitializeComponent();
-            new StackedHeaderDecorator(Ucalc_dataGridView, false, Ucalc_dataGridView_RowHandle);
+            var Ucalc_dgv = new StackedHeaderDecorator(Ucalc_dataGridView);
+            Ucalc_dgv.AddCellColor(6, Color.FromArgb(240, 241, 241));
+
             Ucalc_dataGridView.BackgroundColor = SystemColors.InactiveBorder;
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외벽'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
@@ -52,11 +54,6 @@ namespace main.contents
             Load_table();
         }
 
-        private void Ucalc_dataGridView_RowHandle(DataGridViewRow row)
-        {
-           // row.Cells[5].Style.BackColor = SystemColors.Info;
-            row.Cells[6].Style.BackColor = Color.FromArgb(240, 241, 241);
-        }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
