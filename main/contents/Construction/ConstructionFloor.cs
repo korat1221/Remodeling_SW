@@ -32,7 +32,7 @@ namespace main.contents.Construction
         public ConstructionFloor()
         {
             InitializeComponent();
-            new StackedHeaderDecorator(Ucalc_dataGridView);
+            new StackedHeaderDecorator(Ucalc_dataGridView, true);
             Ucalc_dataGridView.BackgroundColor = SystemColors.InactiveBorder;
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '최하층바닥'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
@@ -45,6 +45,11 @@ namespace main.contents.Construction
             Load_table();
         }
 
+        private void Ucalc_dataGridView_RowHandle(DataGridViewRow row)
+        {
+            // row.Cells[5].Style.BackColor = SystemColors.Info;
+            row.Cells[6].Style.BackColor = Color.FromArgb(255, 255, 255);
+        }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
@@ -563,6 +568,12 @@ namespace main.contents.Construction
             Ucalc_dataGridView.Columns.Add("A4", "열전도율.[W/m·K]");
             Ucalc_dataGridView.Columns.Add("A5", "두께.[mm]");
             Ucalc_dataGridView.Columns.Add("A6", "열저항.[m²·K/W]");
+            Ucalc_dataGridView.Columns[0].Width = 40;
+            Ucalc_dataGridView.Columns[1].Width = 40;
+            Ucalc_dataGridView.Columns[2].Width = 70;
+            Ucalc_dataGridView.Columns[3].Width = 130;
+            Ucalc_dataGridView.Columns[4].Width = 70;
+            Ucalc_dataGridView.Columns[6].Width = 70;
 
             //Ucalc_dataGridView.ColumnCount = 7;
             //Ucalc_dataGridView.Columns[1].HeaderText = "번호";

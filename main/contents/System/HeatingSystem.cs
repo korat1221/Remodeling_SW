@@ -394,6 +394,12 @@ namespace main.contents
             catch { }
         }
 
+
+        /////////////////////////////////////////////////////저장////////////////////////////////////////////////////////////////////
+        private void Storage_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
         /////////////////////////////////////////////////////분배////////////////////////////////////////////////////////////////////
         private void PumpUse_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -654,6 +660,11 @@ namespace main.contents
             if (ce2Type_comboBox.SelectedItem != null)
             {
                 ce2Type = ce2Type_comboBox.SelectedItem.ToString();
+                if (ce1Type == ce2Type)
+                {
+                    MessageBox.Show("공급설비1과 다른 종류의 공급설비를 선택하세요.");
+                    ce2Type_comboBox.SelectedItem = null;
+                }
             }
             else
             {
@@ -690,9 +701,21 @@ namespace main.contents
             if (result == DialogResult.OK)
             {
                 Load_ce(ce1Type);
+                String[][] Value = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce1Type + "'");
+                if (Value.Length > 0)
+                {
+                    if (Value.Length == 1)
+                    {
+                        ce1Zone_textBox.Text = Value[0][0];
+                    }
+                    else
+                    {
+                        ce1Zone_textBox.Text = Value[0][0] + "외 " + (Value.Length - 1) + "개 존";
+                    }
+                }
+
             }
         }
-
 
         private void ce2Zone_button_Click(object sender, EventArgs e)
         {
@@ -701,6 +724,18 @@ namespace main.contents
             if (result == DialogResult.OK)
             {
                 Load_ce(ce2Type);
+                String[][] Value = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce2Type + "'");
+                if (Value.Length > 0)
+                {
+                    if (Value.Length == 1)
+                    {
+                        ce2Zone_textBox.Text = Value[0][0];
+                    }
+                    else
+                    {
+                        ce2Zone_textBox.Text = Value[0][0] + "외 " + (Value.Length - 1) + "개 존";
+                    }
+                }
             }
         }
 
