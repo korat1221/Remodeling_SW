@@ -1639,9 +1639,6 @@ namespace main
                                 //energy_inc = Convert.ToDouble(token2[3]);
                                 //energy_area = Convert.ToDouble(token2[4]);
                                 //energy_eff = Convert.ToDouble(token2[5]);
-
-
-
                             }
                             n2++;
 
@@ -1804,6 +1801,18 @@ namespace main
                 }
 
                 ZoneLight zonelight = new ZoneLight(zones[i][0]);
+                zonelight.Calc_time(zones[i][0]);
+                string s = "";
+                {
+                    int j = -1;
+
+                    while (++j < zonelight.Zone_useofdays.Length)
+                    {
+                        s += zonelight.Zone_nighttime[j];
+                        s += ",";
+                    }
+                    MessageBox.Show(s);
+                }
                 zonelight.Calc_Facade_general();
                 zonelight.Calc_Facade_shade();
                 zonelight.Calc_Facade_FDS();

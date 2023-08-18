@@ -27,7 +27,6 @@ namespace main
         public double Zone_f_Aca, Zone_f_a, Zone_f_b, Zone_f_AD, f_τD65_SNA, K1, K2, K3, γSh_lsh, γSh_hA, γSh_vA;
         public double Zone_Calc_Ish; //파사드 최종 음영 계수 변수
 
-        public double[] f_shade = new double[12];  //파사드 음영계수 csv 및 계산 변수 
         public double[] trel_D_SA = new double[12];   //파사드 trel_D_SA csv 변수
         public double[] trel_D_SNA = new double[12];  //파사드 trel_D_SNA csv 변수
         public double[] facade_Vmonth = new double[12];   //파사드 Vmonth_i csv 변수
@@ -48,7 +47,7 @@ namespace main
 
 
         public string energy_type, energy_di;  //신재생에너지1 csv 변수
-        public double energy_inc, energy_area, energy_eff;
+        public double energy_inc, energy_area, energy_eff, energy_slope;
 
         public double[] ext = new double[12];   //외부조도 csv 변수
 
@@ -91,1404 +90,208 @@ namespace main
 
         public double[] monthday = new double[12], weekdays = new double[12], sunrise = new double[12], sunset = new double[12]; // 월별 일수, 평일수, 주이용일
         public double dayofuse, starttime, endtime;
+        public string[][] 지역;
 
 
         public ZoneLight(String zoneNum) //Zone 생성자 생성
         {
-            
-            //String[][] ValueA = Program.DB.querySQL(DB.type.ProjDB, "select a.주광너비,a.주광깊이,a.상인방높이,b.순바닥면적,b.천장고 FROM ZoneGeneral_3D AS a INNER JOIN ZoneGeneral_Form AS b ON a.존번호 = b.존번호 where a.존번호 = '" + zoneNum + "'"); 
-            //이게 아니고 Zonelihgting form에서 가져와야해 
-            string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLightgeneral", "zoneNum,Wr,Lr,A,hR,hm,hLi,hTa,K", "zoneNum='" + zoneNum + "'");
-            int kk = -1;
-            while (++kk < ValueA.Length)
+            try
             {
-                Wr = Convert.ToDouble(ValueA[kk][1]);
-                Lr = Convert.ToDouble(ValueA[kk][2]);
-                A = Convert.ToDouble(ValueA[kk][3]);
-                hR = Convert.ToDouble(ValueA[kk][4]);
-                hm = Convert.ToDouble(ValueA[kk][5]);
-                Zone_hLi = Convert.ToDouble(ValueA[kk][6]);
-                Zone_hTa = Convert.ToDouble(ValueA[kk][7]);
-                K =Convert.ToDouble(ValueA[kk][8]);
+                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,너비,길이,순바닥면적,상인방높이,작업면높이,공간계수,기준조도", "번호='" + zoneNum + "'");
+                int kk = -1;
+                while (++kk < ValueA.Length)
+                {
+                    Wr = Convert.ToDouble(ValueA[kk][1]);
+                    Lr = Convert.ToDouble(ValueA[kk][2]);
+                    A = Convert.ToDouble(ValueA[kk][3]);
+                    //hR = Convert.ToDouble(ValueA[kk][4]);
+                    //hm = Convert.ToDouble(ValueA[kk][5]);
+                    Zone_hLi = Convert.ToDouble(ValueA[kk][4]);
+                    Zone_hTa = Convert.ToDouble(ValueA[kk][5]);
+                    K = Convert.ToDouble(ValueA[kk][6]);
+                    Em = Convert.ToDouble(ValueA[kk][7]);
+                }
             }
-
-
-            ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLightprofile", "Location,Em,KA,FA", "zoneNum='" + zoneNum + "'");
-            kk = -1;
-            while (++kk < ValueA.Length)
+            catch { }
+            try
             {
-                Location = ValueA[kk][0];
-                Em = Convert.ToDouble(ValueA[kk][1]);
-                KA = Convert.ToDouble(ValueA[kk][2]);
-                FA = Convert.ToDouble(ValueA[kk][3]);
+                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "조명밀도,조명예상전력,재실계수,조도제어계수,광효율,대기전력", "번호='" + zoneNum + "'");
+                int kk = -1;
+                while (++kk < ValueA.Length)
+                {
+                    Pj = Convert.ToDouble(ValueA[kk][0]);
+                    Pn = Convert.ToDouble(ValueA[kk][1]);
+                    Fo = Convert.ToDouble(ValueA[kk][2]);
+                    Fc = Convert.ToDouble(ValueA[kk][3]);
+                    lm_W = Convert.ToDouble(ValueA[kk][4]);
+                    wsp = Convert.ToDouble(ValueA[kk][5]);
+                }
             }
-            //MessageBox.Show(FA.ToString());
+            catch { }
+            try
+            {
+                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,자연채광유형,서브유형,집광채광체크", "번호='" + zoneNum + "'");
+                int kk = -1;
+                while (++kk < ValueA.Length)
+                {
+                    Main = ValueA[kk][1];
+                    Middle = ValueA[kk][2];
+                    Sub = ValueA[kk][3];
+                }
+            }
+            catch { }
+            try
+            {
+                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "주향,주창면적합,주광깊이,주광길이,주광면적,주창유리빛투과율,주창유리면적비,차양,디밍유형", "번호='" + zoneNum + "'");
+                int kk = -1;
+                while (++kk < ValueA.Length)
+                {
+                    facade_di = ValueA[kk][0];
+                    Zone_f_Aca = Convert.ToDouble(ValueA[kk][1]);
+                    Zone_f_a = Convert.ToDouble(ValueA[kk][2]);
+                    Zone_f_b = Convert.ToDouble(ValueA[kk][3]);
+                    Zone_f_AD = Convert.ToDouble(ValueA[kk][4]);
+                    roof_di = ValueA[kk][0];
+                    r_Aca = Convert.ToDouble(ValueA[kk][1]);
+                    r_aD = Convert.ToDouble(ValueA[kk][2]);
+                    r_bD = Convert.ToDouble(ValueA[kk][3]);
+                    r_AD = Convert.ToDouble(ValueA[kk][4]);
+                    //glass1 = ValueA[kk][5];
+                    f_τD65_SNA = Convert.ToDouble(ValueA[kk][5]);
+                    r_τD65_SNA = Convert.ToDouble(ValueA[kk][5]);
+                    r_τD65_SA = Convert.ToDouble(ValueA[kk][5]) * 0.5;
+                    K1 = Convert.ToDouble(ValueA[kk][6]);
+                    K2 = 0.9;
+                    K3 = 0.9;
+                    Kobl_1 = Convert.ToDouble(ValueA[kk][6]);
+                    Kobl_2 = 0.9;
+                    Kobl_3 = 0.9;
+                    facade_shade = ValueA[kk][7];
+                    facade_dimming = ValueA[kk][8];
+                    roof_shade = ValueA[kk][7];
+                    roof_dimming = ValueA[kk][8];
+                    γSh_lsh = 40;    //////////////////////////////////////////////////////////추후에 음영 바꿔야함 
+                    γSh_hA = 65;     //////////////////////////////////////////////////////////추후에 음영 바꿔야함 
+                    γSh_vA = 30;     //////////////////////////////////////////////////////////추후에 음영 바꿔야함 
+                }
+            }
+            catch { }
 
-
-
-            // 존 용도프로필 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ZoneLightprofile.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    Location = token2[0];
-            //                    Em = Convert.ToDouble(token2[1]);
-            //                    KA = Convert.ToDouble(token2[2]);
-            //                    FA = Convert.ToDouble(token2[3]);
-
-
-            //                }
-            //                n2++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-
-            //kk = -1;
-            //while (++kk < ValueA.Length)
-            //{
-            //    for (int i = 0; i < 12; i++)
-            //    {
-            //        ValueA = Program.DB.getValue(DB.type.ProjDB, "Zonedaytime", "value", "zoneNum='" + zoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
-            //        ddaytime[i] = Convert.ToDouble(ValueA[0][0]);
-            //    }
-
-            //}
-            //MessageBox.Show( daytime[0].ToString());
-            //MessageBox.Show( daytime[5].ToString());
-
-
-
-            // 존 낮시간 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Zonedaytime.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int i = 0; i < 12; i++)
-            //                    {
-            //                        daytime[i] = Convert.ToDouble(token2[i + 1]);
-
-            //                    }
-
-            //                }
-            //                n2++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-            //kk = -1;
-            //while (++kk < ValueA.Length)
-            //{
-            //    for (int i = 0; i < 12; i++)
-            //    {
-            //        ValueA = Program.DB.getValue(DB.type.ProjDB, "Zonenighttime", "value", "zoneNum='" + zoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
-            //        nnighttime[i] = Convert.ToDouble(ValueA[0][0]);
-            //    }
-
-            //}
-            //MessageBox.Show(nighttime[0].ToString() );
-            //MessageBox.Show(nighttime[1].ToString());
-
-
-            // 존 밤시간 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Zonenighttime.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int i = 0; i < 12; i++)
-            //                    {
-            //                        nighttime[i] = Convert.ToDouble(token2[i + 1]);
-
-            //                    }
-
-            //                }
-            //                n2++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-            ValueA = Program.DB.getValue(DB.type.ProjDB, "Lighting", "Pj,Pn,Fo,Fc,lm_W,Wsp", "zoneNum='" + zoneNum + "'");
-            kk = -1;
-            while (++kk < ValueA.Length)
+            if (Main == "파사드")
             {
 
-                Pj = Convert.ToDouble(ValueA[kk][0]);
-                Pn = Convert.ToDouble(ValueA[kk][1]);
-                Fo = Convert.ToDouble(ValueA[kk][2]);
-                Fc = Convert.ToDouble(ValueA[kk][3]);
-                lm_W = Convert.ToDouble(ValueA[kk][4]);
-                wsp = Convert.ToDouble(ValueA[kk][5]);
+                try
+                {
+                    for (int i = 0; i < 12; i++)        /////////////////////////////////////////////////////////////////////추후에 차양 바꿔야함 
+                    {
+                        string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "facade_trel_D_SA", "value", "zoneNum='" + zoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
+                        trel_D_SA[i] = Convert.ToDouble(ValueA[0][0]);
+                    }
+                    // MessageBox.Show(trel_D_SA[0].ToString());
+
+                    for (int i = 0; i < 12; i++)           /////////////////////////////////////////////////////////////////////추후에 차양 바꿔야함 
+                    {
+                        string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "facade_trel_D_SNA", "value", "zoneNum='" + zoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
+                        trel_D_SNA[i] = Convert.ToDouble(ValueA[0][0]);
+                    }
+                    //MessageBox.Show(trel_D_SNA[0].ToString());
+                }
+                catch { }
+                try
+                {
+                    string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,파사드길이,파사드너비,파사드높이,파사드유리빛투과율", "번호='" + zoneNum + "'");
+                    int kk = -1;
+                    while (++kk < ValueA.Length)
+                    {
+                        aIn_At = Convert.ToDouble(ValueA[kk][1]);
+                        bIn_At = Convert.ToDouble(ValueA[kk][2]);
+                        hIn_At = Convert.ToDouble(ValueA[kk][3]);
+                        //glass2 = ValueA[kk][4];
+                        τSh_In_At_D65 = Convert.ToDouble(ValueA[kk][4]);
+                        τSh_In_GDF_D65 = Convert.ToDouble(ValueA[kk][4]);
+                        Ksh_In_At_1 = 0.7;
+                        Ksh_In_At_2 = 0.9;
+                        Ksh_In_At_3 = 0.9;
+                        Ksh_GDF_1 = 0.7;
+                        Ksh_GDF_2 = 0.9;
+                        Ksh_GDF_3 = 0.9;
+                    }
+                }
+                catch { }
 
             }
-            //MessageBox.Show(Pj.ToString());
-
-
-
-            // 존 인공조명 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Lighting.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    Pj = Convert.ToDouble(token2[1]);
-            //                    Pn = Convert.ToDouble(token2[2]);
-            //                    Fo = Convert.ToDouble(token2[3]);
-            //                    Fc = Convert.ToDouble(token2[4]);
-            //                    lm_W = Convert.ToDouble(token2[5]);
-            //                    wsp = Convert.ToDouble(token2[6]);
-
-            //                }
-            //                n2++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-            ValueA = Program.DB.getValue(DB.type.ProjDB, "facade1", "direction,Aca,a,b,AD,glass,τD65_SNA,K1,K2,K3,shade,dimming,γSh_lsh,γSh_hA,γSh_vA", "zoneNum='" + zoneNum + "'");
-            kk = -1;
-            while (++kk < ValueA.Length)
+            else
             {
-
-                facade_di = (ValueA[kk][0]);
-                Zone_f_Aca = Convert.ToDouble(ValueA[kk][1]);
-                Zone_f_a = Convert.ToDouble(ValueA[kk][2]);
-                Zone_f_b = Convert.ToDouble(ValueA[kk][3]);
-                Zone_f_AD = Convert.ToDouble(ValueA[kk][4]);
-                glass1 = ValueA[kk][5];
-                f_τD65_SNA = Convert.ToDouble(ValueA[kk][6]);
-                K1 = Convert.ToDouble(ValueA[kk][7]);
-                K2 = Convert.ToDouble(ValueA[kk][8]);
-                K3 = Convert.ToDouble(ValueA[kk][9]);
-                facade_shade = ValueA[kk][10];
-                facade_dimming = ValueA[kk][11];
-                γSh_lsh = Convert.ToDouble(ValueA[kk][12]);
-                γSh_hA = Convert.ToDouble(ValueA[kk][13]);
-                γSh_vA = Convert.ToDouble(ValueA[kk][14]);
-
+                try
+                {
+                    string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,천창유리각,천창수평측면각,천창장변부길이,천창단변부길이,천창수평상부높이,", "번호='" + zoneNum + "'");
+                    int kk = -1;
+                    while (++kk < ValueA.Length)
+                    {
+                        γF = Convert.ToDouble(ValueA[kk][1]);
+                        γW = Convert.ToDouble(ValueA[kk][2]);
+                        As = Convert.ToDouble(ValueA[kk][3]);
+                        Bs = Convert.ToDouble(ValueA[kk][4]);
+                        hs = Convert.ToDouble(ValueA[kk][5]);
+                        hw = Convert.ToDouble(ValueA[kk][3]);
+                        hg = Convert.ToDouble(ValueA[kk][4]);
+                    }
+                }
+                catch { }
+               
             }
-            //MessageBox.Show(facade_di.ToString());
 
-
-            // 파사드정보1 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade1.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-
-            //                    facade_di = (token2[1]);
-            //                    Zone_f_Aca = Convert.ToDouble(token2[2]);
-            //                    Zone_f_aD = Convert.ToDouble(token2[3]);
-            //                    Zone_f_bD = Convert.ToDouble(token2[4]);
-            //                    Zone_f_AD = Convert.ToDouble(token2[5]);
-            //                    glass1 = (token2[6]);
-            //                    f_τD65_SNA = Convert.ToDouble(token2[7]);
-            //                    K1 = Convert.ToDouble(token2[8]);
-            //                    K2 = Convert.ToDouble(token2[9]);
-            //                    K3 = Convert.ToDouble(token2[10]);
-            //                    facade_shade = (token2[11]);
-            //                    facade_dimming = (token2[12]);
-            //                    γSh_lsh = Convert.ToDouble(token2[13]);
-            //                    γSh_hA = Convert.ToDouble(token2[14]);
-            //                    γSh_vA = Convert.ToDouble(token2[15]);
-
-
-
-            //                }
-            //                n2++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-            for (int i = 0; i < 12; i++)
+            try
             {
-                ValueA = Program.DB.getValue(DB.type.ProjDB, "facade_shade", "value", "zoneNum='" + zoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
-                f_shade[i] = Convert.ToDouble(ValueA[0][0]);
+                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,집광채광번호,집광채광면적,사용자면적,집광채광효율,집광채광향,집광채광각도", "번호='" + zoneNum + "'");
+                int kk = -1;
+                while (++kk < ValueA.Length)
+                {
+                    energy_type = ValueA[kk][1];
+                    if (energy_type.Contains("DL"))
+                    {
+                        energy_area = Convert.ToDouble(ValueA[kk][2]);
+                    }
+                    else
+                    {
+                        energy_area = Convert.ToDouble(ValueA[kk][3]);
+                    }
+                    energy_eff = Convert.ToDouble(ValueA[kk][4]);
+                    energy_di = ValueA[kk][5];
+                    energy_slope = Convert.ToDouble(ValueA[kk][6]);
+                }
             }
-            //MessageBox.Show(f_shade[0].ToString());
+            catch { }
 
+            try { 지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", ""); }
+            catch { }
 
-
-            // 파사드 음영계수 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_shade.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-
-
-            //                    for (int i = 0; i < 12; i++)
-            //                    {
-            //                        f_shade[i] = Convert.ToDouble(token2[i + 1]);
-
-            //                    }
-
-
-            //                }
-            //                n2++;
-
-            //            }
-
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-            for (int i = 0; i < 12; i++)
+            try
             {
-                ValueA = Program.DB.getValue(DB.type.ProjDB, "facade_trel_D_SA", "value", "zoneNum='" + zoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
-                trel_D_SA[i] = Convert.ToDouble(ValueA[0][0]);
+                for (int i = 0; i < 12; i++)
+                {
+                    //string[][] Valueaaaa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_외부조도", "외부조도", " 지역명='" + 지역[0][0] + "' and 방향='" + energy_di + "' and 각도='" + energy_slope + "' and 기간 = '"+(i+1)+"월' ");
+                    String[][] Valueaaaa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_외부조도", "외부조도", " 지역명 = '" + 지역[0][0] + "' and 방향 = '" + energy_di + "' and 각도 = '" + energy_slope + "' and 기간 = '" + (i + 1) + "월'");
+                    ext[i] = Convert.ToDouble(Valueaaaa[0][0]);
+                }
             }
-            // MessageBox.Show(trel_D_SA[0].ToString());
+            catch { }
 
 
-
-
-            // 파사드 trel_D_SA 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_trel_D_SA.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int i = 0; i < 12; i++)
-            //                    {
-            //                        trel_D_SA[i] = Convert.ToDouble(token2[i + 1]);
-
-            //                    }
-
-            //                }
-            //                n++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-            for (int i = 0; i < 12; i++)
+            try
             {
-                ValueA = Program.DB.getValue(DB.type.ProjDB, "facade_trel_D_SNA", "value", "zoneNum='" + zoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
-                trel_D_SNA[i] = Convert.ToDouble(ValueA[0][0]);
+                //월별일수, 월별평일수
+                for (int i = 0; i < 12; i++)
+                {
+                    String[][] ValueAA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_사용시간", "월별일수,월별평일수,julianday(time(해뜨는시간)),julianday(time(해지는시간))", "ID = '" + (i + 1) + "'");
+                    monthday[i] = Convert.ToDouble(ValueAA[0][0]);
+                    weekdays[i] = Convert.ToDouble(ValueAA[0][1]);
+                    sunrise[i] = Convert.ToDouble(ValueAA[0][2]);
+                    sunset[i] = Convert.ToDouble(ValueAA[0][3]);
+                }
             }
-            //MessageBox.Show(trel_D_SNA[0].ToString());
-
-
-
-            // 파사드 trel_D_SNA 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_trel_D_SNA.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int i = 0; i < 12; i++)
-            //                    {
-            //                        trel_D_SNA[i] = Convert.ToDouble(token2[i + 1]);
-
-            //                    }
-
-            //                }
-            //                n++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-            ValueA = Program.DB.getValue(DB.type.ProjDB, "Courtyard_Atrium", "zoneNum,aIn_At,bIn_At,hIn_At,glasstype,τSh_In_At_D65,Ksh_In_At_1,Ksh_In_At_2,Ksh_In_At_3", "zoneNum='" + zoneNum + "'");
-            kk = -1;
-            while (++kk < ValueA.Length)
-            {
-
-                aIn_At = Convert.ToDouble(ValueA[kk][1]);
-                bIn_At = Convert.ToDouble(ValueA[kk][2]);
-                hIn_At = Convert.ToDouble(ValueA[kk][3]);
-                glass2 = ValueA[kk][4];
-                τSh_In_At_D65 = Convert.ToDouble(ValueA[kk][5]);
-                Ksh_In_At_1 = Convert.ToDouble(ValueA[kk][6]);
-                Ksh_In_At_2 = Convert.ToDouble(ValueA[kk][7]);
-                Ksh_In_At_3 = Convert.ToDouble(ValueA[kk][8]);
-
-
-            }
-            //MessageBox.Show(aIn_At.ToString());
-
-
-
-            // 중정 아트리움 정보 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Courtyard_Atrium.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-
-
-            //                    aIn_At = Convert.ToDouble(token2[1]);
-            //                    bIn_At = Convert.ToDouble(token2[2]);
-            //                    hIn_At = Convert.ToDouble(token2[3]);
-            //                    glass2 = token2[4];
-            //                    τSh_In_At_D65 = Convert.ToDouble(token2[5]);
-            //                    Ksh_In_At_1 = Convert.ToDouble(token2[6]);
-            //                    Ksh_In_At_2 = Convert.ToDouble(token2[7]);
-            //                    Ksh_In_At_3 = Convert.ToDouble(token2[8]);
-
-            //                }
-            //                n2++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-            ValueA = Program.DB.getValue(DB.type.ProjDB, "Doubleskin", "zoneNum, glasstype,τSh_In_GDF_D65,Ksh_GDF_1,Ksh_GDF_2,Ksh_GDF_3", "zoneNum='" + zoneNum + "'");
-            kk = -1;
-            while (++kk < ValueA.Length)
-            {
-                glass3 = ValueA[kk][1];
-                τSh_In_GDF_D65 = Convert.ToDouble(ValueA[kk][2]);
-                Ksh_GDF_1 = Convert.ToDouble(ValueA[kk][3]);
-                Ksh_GDF_2 = Convert.ToDouble(ValueA[kk][4]);
-                Ksh_GDF_3 = Convert.ToDouble(ValueA[kk][5]);
-            }
-
-            //MessageBox.Show(glass3.ToString());
-
-
-
-
-            // 이중외피 정보 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\Doubleskin.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-
-            //                    glass3 = token2[1];
-            //                    τSh_In_GDF_D65 = Convert.ToDouble(token2[2]);
-            //                    Ksh_GDF_1 = Convert.ToDouble(token2[3]);
-            //                    Ksh_GDF_2 = Convert.ToDouble(token2[4]);
-            //                    Ksh_GDF_3 = Convert.ToDouble(token2[5]);
-
-            //                }
-            //                n2++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-
-            //파사드 차양 미가동시 주광공급계수 테이블 일치 값 정보 가져오기 FD_S_SNA
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_FD_S_SNA.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int k = 0; k < token2.Length; k++)
-            //                    {
-            //                      파사드차양미가동주광공급계수테이블[n2 - 1, k] = token2[k];
-            //                    }
-            //                }
-            //                n2++;
-
-            //            }
-
-            //        }
-            //    }
-
-
-            //}
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-            //파사드 차양 가동시 주광공급계수 테이블 일치 값 정보 가져오기 FD_S_SA
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_FD_S_SA.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int k = 0; k < token2.Length; k++)
-            //                    {
-            //                        파사드차양가동주광공급계수테이블[n - 1, k] = token2[k];
-            //                    }
-            //                }
-            //                n++;
-
-            //            }
-
-
-            //        }
-            //    }
-
-
-            //}
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-
-
-
-            //파사드 및 천창 주광제어 테이블 일치 값 정보 가져오기 FD_C
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\FD_C.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int k = 0; k < token2.Length; k++)
-            //                    {
-            //                        주광제어테이블[n - 1, k] = token2[k];
-            //                    }
-            //                }
-            //                n++;
-
-            //            }
-
-
-            //        }
-            //    }
-
-
-            //}
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-            //kk = -1;
-            //while (++kk < ValueA.Length)
-            //{
-            //    for (int i = 0; i < 12; i++)
-            //    {
-            //        ValueA = Program.DB.getValue(DB.type.ProjDB, "Zonenighttime", "value", "zoneNum='" + zoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
-            //        nighttime[i] = Convert.ToDouble(ValueA[0][0]);
-            //    }
-
-            //}
-
-
-
-
-
-            //파사드 Vmonth 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\facade_Vmonth_i.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int k = 0; k < token2.Length; k++)
-            //                    {
-            //                        파사드월별분배[n2 - 1, k] = token2[k];
-            //                    }
-            //                }
-            //                n2++;
-
-            //            }
-
-            //        }
-            //    }
-
-
-            //}
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-
-
-
-            ValueA = Program.DB.getValue(DB.type.ProjDB, "NaturalLighting", "zoneNum,Main,Middle,Sub", "zoneNum='" + zoneNum + "'");
-            kk = -1;
-            while (++kk < ValueA.Length)
-            {
-
-
-                Main = ValueA[kk][1];
-                Middle = ValueA[kk][2];
-                Sub = ValueA[kk][3];
-
-            }
-            //MessageBox.Show(Main.ToString());
-
-            // 자연채광 정보 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\NaturalLighting.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-
-            //                    Main = token2[1];
-            //                    Middle = token2[2];
-            //                    Sub = token2[3];
-
-
-            //                }
-            //                n2++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-
-            ValueA = Program.DB.getValue(DB.type.ProjDB, "rooflight1", "zoneNum,direction,Aca,a,b,AD,glasstype,γF,γW,a_s,b_s,hS,hw,hg,Da,τD65_SNA,τD65_SA,Kobl_1,Kobl_2,Kobl_3,shading,dimmingtype", "zoneNum='" + zoneNum + "'");
-            kk = -1;
-            while (++kk < ValueA.Length)
-            {
-                roof_di = ValueA[kk][1];
-                r_Aca = Convert.ToDouble(ValueA[kk][2]);
-                r_aD = Convert.ToDouble(ValueA[kk][3]);
-                r_bD = Convert.ToDouble(ValueA[kk][4]);
-                r_AD = Convert.ToDouble(ValueA[kk][5]);
-                roof_glass = ValueA[kk][6];
-                γF = Convert.ToDouble(ValueA[kk][7]);
-                γW = Convert.ToDouble(ValueA[kk][8]);
-                As = Convert.ToDouble(ValueA[kk][9]);
-                Bs = Convert.ToDouble(ValueA[kk][10]);
-                hs = Convert.ToDouble(ValueA[kk][11]);
-                hw = Convert.ToDouble(ValueA[kk][12]);
-                hg = Convert.ToDouble(ValueA[kk][13]);
-                Da = Convert.ToDouble(ValueA[kk][14]);
-                r_τD65_SNA = Convert.ToDouble(ValueA[kk][15]);
-                r_τD65_SA = Convert.ToDouble(ValueA[kk][16]);
-                Kobl_1 = Convert.ToDouble(ValueA[kk][17]);
-                Kobl_2 = Convert.ToDouble(ValueA[kk][18]);
-                Kobl_3 = Convert.ToDouble(ValueA[kk][19]);
-                roof_shade = ValueA[kk][20];
-                roof_dimming = ValueA[kk][21];
-
-            }
-            //MessageBox.Show(roof_dimming.ToString());
-
-
-            // 천창1 정보 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\rooflight1.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-
-            //                    roof_di = token2[1];
-            //                    r_Aca = Convert.ToDouble(token2[2]);
-            //                    r_aD = Convert.ToDouble(token2[3]);
-            //                    r_bD = Convert.ToDouble(token2[4]);
-            //                    r_AD = Convert.ToDouble(token2[5]);
-            //                    roof_glass = token2[6];
-            //                    γF = Convert.ToDouble(token2[7]);
-            //                    γW = Convert.ToDouble(token2[8]);
-            //                    As = Convert.ToDouble(token2[9]);
-            //                    Bs = Convert.ToDouble(token2[10]);
-            //                    hs = Convert.ToDouble(token2[11]);
-            //                    hw = Convert.ToDouble(token2[12]);
-            //                    hg = Convert.ToDouble(token2[13]);
-            //                    Da = Convert.ToDouble(token2[14]);
-            //                    r_τD65_SNA = Convert.ToDouble(token2[15]);
-            //                    r_τD65_SA = Convert.ToDouble(token2[16]);
-            //                    Kobl_1 = Convert.ToDouble(token2[17]);
-            //                    Kobl_2 = Convert.ToDouble(token2[18]);
-            //                    Kobl_3 = Convert.ToDouble(token2[19]);
-            //                    roof_shade = token2[20];
-            //                    roof_dimming = token2[21];
-
-
-
-            //                }
-            //                n2++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-
-
-            for (int i = 0; i < 12; i++)
-            {
-                ValueA = Program.DB.getValue(DB.type.ProjDB, "rooflight_shade", "value", "zoneNum='" + zoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
-                r_shade[i] = Convert.ToDouble(ValueA[0][0]);
-            }
-            //MessageBox.Show(r_shade[0].ToString());
-
-
-            //// 천창 음영계수 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\rooflight_shade.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int i = 0; i < 12; i++)
-            //                    {
-            //                        r_shade[i] = Convert.ToDouble(token2[i + 1]);
-
-            //                    }
-
-            //                }
-            //                n2++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-            ValueA = Program.DB.getValue(DB.type.ProjDB, "renewable_energy_1", "zoneNum,energytype,direction,inc,area,eff", "zoneNum='" + zoneNum + "'");
-            kk = -1;
-            while (++kk < ValueA.Length)
-            {
-
-                energy_type = ValueA[kk][1];
-                energy_di = ValueA[kk][2];
-                energy_inc = Convert.ToDouble(ValueA[kk][3]);
-                energy_area = Convert.ToDouble(ValueA[kk][4]);
-                energy_eff = Convert.ToDouble(ValueA[kk][5]);
-
-
-            }
-            //MessageBox.Show(energy_type.ToString());
-
-            // 신재생에너지1 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\renewable_energy_1.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    energy_type = (token2[1]);
-            //                    energy_di = (token2[2]);
-            //                    energy_inc = Convert.ToDouble(token2[3]);
-            //                    energy_area = Convert.ToDouble(token2[4]);
-            //                    energy_eff = Convert.ToDouble(token2[5]);
-
-
-
-            //                }
-            //                n2++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-            for (int i = 0; i < 12; i++)
-            {
-                ValueA = Program.DB.getValue(DB.type.ProjDB, "ext_ill", "value", "zoneNum='" + zoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
-                ext[i] = Convert.ToDouble(ValueA[0][0]);
-            }
-            //MessageBox.Show(ext[0].ToString());
-
-
-
-
-            // 외부조도 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ext_ill.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n2 = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n2 == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int i = 0; i < 12; i++)
-            //                    {
-            //                        ext[i] = Convert.ToDouble(token2[i + 1]);
-
-            //                    }
-
-            //                }
-            //                n2++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-
-
-
-
-            //일반형 및 돔형 천창 ηR
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ηR_normal.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int k = 0; k < token2.Length; k++)
-            //                    {
-            //                        일반돔형천창계수테이블[n - 1, k] = token2[k];
-            //                    }
-            //                }
-            //                n++;
-
-            //            }
-
-            //        }
-            //    }
-
-
-            //}
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-
-
-            //톱니형 천창 ηR
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\ηR_saw.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int k = 0; k < token2.Length; k++)
-            //                    {
-            //                        톱니형천창계수테이블[n - 1, k] = token2[k];
-            //                    }
-            //                }
-            //                n++;
-
-            //            }
-
-            //        }
-            //    }
-
-
-            //}
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-
-
-
-            ////천창 trel,D,SNA,j & trel,D,SA,j
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\roof_trel_D.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int k = 0; k < token2.Length; k++)
-            //                    {
-            //                        천창차양장치가동시간[n - 1, k] = token2[k];
-            //                    }
-            //                }
-            //                n++;
-
-            //            }
-
-
-            //        }
-            //    }
-
-
-            //}
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-            //천창 FD_SNA 
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\roof_FD_SNA.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int k = 0; k < token2.Length; k++)
-            //                    {
-            //                        천창차양미가동주광공급계수테이블[n - 1, k] = token2[k];
-            //                    }
-            //                }
-            //                n++;
-
-            //            }
-
-
-            //        }
-            //    }
-
-
-            //}
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-            //천창 FD_SA 
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\roof_FD_SA.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int k = 0; k < token2.Length; k++)
-            //                    {
-            //                        천창차양가동주광공급계수테이블[n - 1, k] = token2[k];
-            //                    }
-            //                }
-            //                n++;
-
-            //            }
-
-
-            //        }
-            //    }
-
-
-            //}
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        //Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-
-
-            // 천창 Vmonth 가져오기
-            //try
-            //{
-            //    string filePath2 = Program.gPath + "calculations\\" + zoneNum + "\\roof_Vmonth_i.csv";
-            //    using (FileStream fileReader2 = new FileStream(filePath2, FileMode.Open))
-            //    {
-            //        using (StreamReader sr2 = new StreamReader(fileReader2, Encoding.UTF8, false))
-            //        {
-            //            int n = 0;
-            //            while (sr2.EndOfStream == false)
-            //            {
-            //                string[] token2 = sr2.ReadLine().Split(',');
-            //                if (n == 0)
-            //                {
-            //                }
-            //                else
-            //                {
-            //                    for (int i = 0; i < 12; i++)
-            //                    {
-            //                        roof_Vmonth[i] = Convert.ToDouble(token2[i + 1]);
-
-            //                    }
-
-
-            //                }
-            //                n++;
-
-            //            }
-            //            sr2.Close();
-
-
-            //        }
-            //    }
-
-            //}
-
-            //catch (IOException e)
-            //{
-            //    if (e.Source != null)
-            //        Console.WriteLine("IOException source: {0}", e.Source);
-            //    throw;
-            //}
-
-            //월별일수, 월별평일수
-            String[][] ValueAA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_사용시간", "월별일수,월별평일수,julianday(time(해뜨는시간)),julianday(time(해지는시간))", "");
-            for (int i = 0; i < 12; i++)
-            {
-                monthday[i] = Convert.ToDouble(ValueAA[i][0]);
-                weekdays[i] = Convert.ToDouble(ValueAA[i][1]);
-                sunrise[i] = Convert.ToDouble(ValueAA[i][2]);
-                sunset[i] = Convert.ToDouble(ValueAA[i][3]);
-            }
+            catch { }
+          
         }
 
         //시간정보 계산
@@ -1515,18 +318,7 @@ namespace main
             }
         }
 
-        //기본정보 계산
-        //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-        //public void Calc_general()
-        //{
-        //    Form_general general = new Form_general();
-
-        //    Zone_K = general.Calc_K(Wr, Lr, hm);
-        //    Zone_nearK = general.Calc_nearK();
-        //}
-
-
+      
         //파사드 계산 
         //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
@@ -1767,12 +559,12 @@ namespace main
 
                 if (Middle == "일반형" || Middle == "돔형")
                 {
-                    Zone_as_bs = general.Calc_near_as_bs();
-                    Zone_hs_bs = general.Calc_near_hs_bs();
+                    Zone_as_bs = general.Calc_near_as_bs(As,Bs);
+                    Zone_hs_bs = general.Calc_near_hs_bs(hs,Bs);
                 }
                 else if (Middle == "톱니형")
                 {
-                    Zone_hg_hw = general.Calc_near_hg_hw();
+                    Zone_hg_hw = general.Calc_near_hg_hw(hg,hw);  
                 }
                 else return;
 
@@ -1814,6 +606,15 @@ namespace main
 
         public void Calc_Roof_FDS()
         {
+            //조건에 맞는 값 가져오기
+            String[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창주광률", "주광률", "기울기='" + γF + "'");
+            int kk = -1;
+            while (++kk < ValueA.Length)
+            {
+                Da = Convert.ToDouble(ValueA[0][0]);
+            }
+            //MessageBox.Show(find_fd_sna.ToString());
+
             if (Main == "천창")
             {
                 Roof_FDS roof_fds = new Roof_FDS();
@@ -1914,8 +715,8 @@ namespace main
 
 
                 //천창 차양 미가동 
-                int kk = -1;
-                string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창차양시간", "trel_D_SNA_j", "방위 ='" + roof_di + "' AND γF ='" + γF + "'");
+                kk = -1;
+                ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창차양시간", "trel_D_SNA_j", "방위 ='" + roof_di + "' AND γF ='" + γF + "'");
                 while (++kk < ValueA.Length)
                 {
 
@@ -2013,7 +814,7 @@ namespace main
         
         public void Calc_Sunlight_SCW()
         {
-            if (Sub == "집광채광 O")
+            if (Sub == "True")
             {
                 Sunlight_SCW sunlight_scw = new Sunlight_SCW();
 
@@ -2029,7 +830,7 @@ namespace main
 
         public void Calc_Sunlight_Pj_SC()
         {
-            if (Sub == "집광채광 O")
+            if (Sub == "True")
             {
                 Sunlight_PjSC sunlight_pjsc = new Sunlight_PjSC();
 
@@ -2051,7 +852,7 @@ namespace main
         {
             Final_W final_w = new Final_W();
 
-            if (Sub == "집광채광 O")
+            if (Sub == "True")
             {
                 for (int i = 0; i < 12; i++)
                 {
@@ -2060,7 +861,7 @@ namespace main
                 }
             }
 
-            else if (Sub == "집광채광 X")
+            else if (Sub == "False")
             {
                 for (int i = 0; i < 12; i++)
                 {
@@ -2355,15 +1156,10 @@ namespace main
         public double hs_bs, near_hs_bs;
         public double hg_hw, near_hg_hw;
 
-
-        public double Calc_as_bs(double r_as, double r_bs)
+        public double Calc_near_as_bs(double r_as, double r_bs)  //as/bs 근사값 구하기 
         {
             as_bs = r_as / r_bs;
-            return as_bs;
-        }
 
-        public double Calc_near_as_bs()  //as/bs 근사값 구하기 
-        {
             double[] data = { 1, 2, 5 };
             double target = as_bs;
             var min = data.Min(x => Math.Abs(x - target));
@@ -2372,14 +1168,11 @@ namespace main
             //Console.WriteLine(near_as_bs);
             return (near_as_bs);
         }
-        public double Calc_hs_bs(double r_hs, double r_bs)
+
+        public double Calc_near_hs_bs(double r_hs,double r_bs)  //hs/bs 근사값 구하기 
         {
             hs_bs = r_hs / r_bs;
-            return hs_bs;
-        }
 
-        public double Calc_near_hs_bs()  //hs/bs 근사값 구하기 
-        {
             double[] data = { 0.25, 0.5 };
             double target = hs_bs;
             var min = data.Min(x => Math.Abs(x - target));
@@ -2389,15 +1182,10 @@ namespace main
             return (near_hs_bs);
         }
 
-        public double Calc_hg_hw(double r_hg, double r_hw)
+        public double Calc_near_hg_hw(double r_hg, double r_hw)  //hg/hw 근사값 구하기 
         {
-            double hg_hw;
             hg_hw = r_hg / r_hw;
-            return hg_hw;
-        }
 
-        public double Calc_near_hg_hw()  //hg/hw 근사값 구하기 
-        {
             double[] data = { 1, 0.5 };
             double target = hg_hw;
             var min = data.Min(x => Math.Abs(x - target));

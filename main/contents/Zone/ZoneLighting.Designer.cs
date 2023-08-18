@@ -1,4 +1,5 @@
-﻿namespace main.contents
+﻿
+namespace main.contents
 {
     partial class ZoneLighting
     {
@@ -35,7 +36,6 @@
             this.Icon_pictureBox = new System.Windows.Forms.PictureBox();
             this.floor_label = new System.Windows.Forms.Label();
             this.FloorName_label = new System.Windows.Forms.Label();
-            this.Natural_checkBox = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.Pci_textBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -234,18 +234,6 @@
             this.FloorName_label.TabIndex = 93;
             this.FloorName_label.Text = "명칭";
             // 
-            // Natural_checkBox
-            // 
-            this.Natural_checkBox.AutoSize = true;
-            this.Natural_checkBox.Font = new System.Drawing.Font("맑은 고딕", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Natural_checkBox.Location = new System.Drawing.Point(129, 11);
-            this.Natural_checkBox.Name = "Natural_checkBox";
-            this.Natural_checkBox.Size = new System.Drawing.Size(48, 17);
-            this.Natural_checkBox.TabIndex = 123;
-            this.Natural_checkBox.Text = "적용";
-            this.Natural_checkBox.UseVisualStyleBackColor = true;
-            this.Natural_checkBox.CheckedChanged += new System.EventHandler(this.Natural_checkBox_CheckedChanged);
-            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
@@ -278,7 +266,7 @@
             this.Pci_textBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Pci_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Pci_textBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Pci_textBox.Location = new System.Drawing.Point(717, 99);
+            this.Pci_textBox.Location = new System.Drawing.Point(714, 99);
             this.Pci_textBox.Name = "Pci_textBox";
             this.Pci_textBox.Size = new System.Drawing.Size(120, 22);
             this.Pci_textBox.TabIndex = 141;
@@ -520,7 +508,6 @@
             this.panel3.Controls.Add(this.roofButton);
             this.panel3.Controls.Add(this.Acam2_label);
             this.panel3.Controls.Add(this.facadeButton);
-            this.panel3.Controls.Add(this.Natural_checkBox);
             this.panel3.Controls.Add(this.direction_textBox);
             this.panel3.Controls.Add(this.Direction_label);
             this.panel3.Controls.Add(this.NaturalDB_button);
@@ -536,15 +523,14 @@
             // roofButton
             // 
             this.roofButton.AutoSize = true;
+            this.roofButton.Enabled = false;
             this.roofButton.Location = new System.Drawing.Point(275, 8);
             this.roofButton.Name = "roofButton";
             this.roofButton.Size = new System.Drawing.Size(49, 19);
             this.roofButton.TabIndex = 127;
-            this.roofButton.TabStop = true;
             this.roofButton.Text = "천창";
             this.roofButton.UseVisualStyleBackColor = true;
             this.roofButton.Visible = false;
-            this.roofButton.CheckedChanged += new System.EventHandler(this.roofButton_CheckedChanged);
             // 
             // Acam2_label
             // 
@@ -560,15 +546,14 @@
             // facadeButton
             // 
             this.facadeButton.AutoSize = true;
+            this.facadeButton.Enabled = false;
             this.facadeButton.Location = new System.Drawing.Point(204, 8);
             this.facadeButton.Name = "facadeButton";
             this.facadeButton.Size = new System.Drawing.Size(61, 19);
             this.facadeButton.TabIndex = 126;
-            this.facadeButton.TabStop = true;
             this.facadeButton.Text = "파사드";
             this.facadeButton.UseVisualStyleBackColor = true;
             this.facadeButton.Visible = false;
-            this.facadeButton.CheckedChanged += new System.EventHandler(this.facadeButton_CheckedChanged);
             // 
             // direction_textBox
             // 
@@ -725,7 +710,7 @@
             // Main_pictureBox
             // 
             this.Main_pictureBox.BackColor = System.Drawing.Color.White;
-            this.Main_pictureBox.Location = new System.Drawing.Point(7, 1);
+            this.Main_pictureBox.Location = new System.Drawing.Point(12, 1);
             this.Main_pictureBox.Name = "Main_pictureBox";
             this.Main_pictureBox.Size = new System.Drawing.Size(476, 244);
             this.Main_pictureBox.TabIndex = 101;
@@ -833,9 +818,9 @@
             this.L2_textBox.Enabled = false;
             this.L2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.L2_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.L2_textBox.Location = new System.Drawing.Point(225, 70);
+            this.L2_textBox.Location = new System.Drawing.Point(213, 70);
             this.L2_textBox.Name = "L2_textBox";
-            this.L2_textBox.Size = new System.Drawing.Size(120, 15);
+            this.L2_textBox.Size = new System.Drawing.Size(140, 15);
             this.L2_textBox.TabIndex = 147;
             this.L2_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -918,7 +903,7 @@
             this.L1_textBox.Enabled = false;
             this.L1_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.L1_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.L1_textBox.Location = new System.Drawing.Point(225, 47);
+            this.L1_textBox.Location = new System.Drawing.Point(213, 47);
             this.L1_textBox.Name = "L1_textBox";
             this.L1_textBox.Size = new System.Drawing.Size(140, 15);
             this.L1_textBox.TabIndex = 138;
@@ -1270,7 +1255,7 @@
             // Main_pictureBox2
             // 
             this.Main_pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.Main_pictureBox2.Location = new System.Drawing.Point(7, 1);
+            this.Main_pictureBox2.Location = new System.Drawing.Point(0, 1);
             this.Main_pictureBox2.Name = "Main_pictureBox2";
             this.Main_pictureBox2.Size = new System.Drawing.Size(476, 244);
             this.Main_pictureBox2.TabIndex = 103;
@@ -1291,7 +1276,7 @@
             // Main_pictureBox3
             // 
             this.Main_pictureBox3.BackColor = System.Drawing.Color.Transparent;
-            this.Main_pictureBox3.Location = new System.Drawing.Point(7, 1);
+            this.Main_pictureBox3.Location = new System.Drawing.Point(0, 2);
             this.Main_pictureBox3.Name = "Main_pictureBox3";
             this.Main_pictureBox3.Size = new System.Drawing.Size(476, 243);
             this.Main_pictureBox3.TabIndex = 104;
@@ -1584,7 +1569,6 @@
         private TabPage 주창정보;
         private PictureBox Main_pictureBox2;
         private Panel panel4;
-        private CheckBox Natural_checkBox;
         private Label Acam2_label;
         private ComboBox RenewDi_comboBox;
         private Panel panel1;
