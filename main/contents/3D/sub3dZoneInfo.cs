@@ -21,7 +21,7 @@ namespace main.contents
         }
         private void create_datagridview1()
         {
-            new StackedHeaderDecorator(dataGridView1);//, true);
+            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.AllCells);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             dataGridView1.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -54,7 +54,7 @@ namespace main.contents
         }
         private void create_datagridview2()
         {
-            new StackedHeaderDecorator(dataGridView2, true);
+            new StackedHeaderDecorator(dataGridView2, DataGridViewAutoSizeColumnsMode.Fill);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             dataGridView2.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";

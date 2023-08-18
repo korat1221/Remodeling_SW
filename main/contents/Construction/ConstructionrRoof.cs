@@ -34,8 +34,9 @@ namespace main.contents
         public ConstructionRoof()
         {
             InitializeComponent();
-            new StackedHeaderDecorator(Ucalc_dataGridView, true);
-            Ucalc_dataGridView.BackgroundColor = SystemColors.InactiveBorder;
+            var Ucalc_dgv = new StackedHeaderDecorator(Ucalc_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            Ucalc_dgv.AddCellColor(6, Color.FromArgb(255, 255, 255));
+
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '지붕'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;

@@ -18,7 +18,7 @@ public class StackedHeaderDecorator
     private readonly StringFormat objFormat;
     private Dictionary<int, Color> columnColors = new Dictionary<int, Color>();
 
-    public StackedHeaderDecorator(DataGridView objDataGrid, bool fixedHeader = false)
+    public StackedHeaderDecorator(DataGridView objDataGrid, DataGridViewAutoSizeColumnsMode mode = DataGridViewAutoSizeColumnsMode.ColumnHeader)
     {
         this.objDataGrid = objDataGrid;
         objFormat = new StringFormat();
@@ -39,7 +39,8 @@ public class StackedHeaderDecorator
 
         objHeaderTree = objStackedHeaderGenerator.GenerateStackedHeader(objDataGrid);
 
-        objDataGrid.AutoSizeColumnsMode = fixedHeader ? DataGridViewAutoSizeColumnsMode.Fill : DataGridViewAutoSizeColumnsMode.ColumnHeader;
+        objDataGrid.AutoSizeColumnsMode = mode;
+//        objDataGrid.AutoSizeColumnsMode = fixedHeader ? DataGridViewAutoSizeColumnsMode.Fill : DataGridViewAutoSizeColumnsMode.AllCells;//.ColumnHeader;
 
         DataGridViewCellStyle defCellStyle = new DataGridViewCellStyle();
 
@@ -66,8 +67,8 @@ public class StackedHeaderDecorator
     }
 
 
-    public StackedHeaderDecorator(IStackedHeaderGenerator objStackedHeaderGenerator, DataGridView objDataGrid, bool fixedHeader = false)
-            : this(objDataGrid, fixedHeader)
+    public StackedHeaderDecorator(IStackedHeaderGenerator objStackedHeaderGenerator, DataGridView objDataGrid, DataGridViewAutoSizeColumnsMode mode = DataGridViewAutoSizeColumnsMode.ColumnHeader)
+            : this(objDataGrid, mode)
     {
         this.objStackedHeaderGenerator = objStackedHeaderGenerator;
     }
