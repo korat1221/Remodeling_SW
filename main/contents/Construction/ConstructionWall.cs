@@ -36,8 +36,7 @@ namespace main.contents
         public ConstructionWall()
         {
             InitializeComponent();
-            var Ucalc_dgv = new StackedHeaderDecorator(Ucalc_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
-            Ucalc_dgv.AddCellColor(6, Color.FromArgb(255,255,255));
+            new StackedHeaderDecorator(Ucalc_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, Ucalc_dataGridView_RowHandle);
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외벽'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
@@ -51,6 +50,16 @@ namespace main.contents
             //표면열전달저항기준 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, ISO_KS_comboBox, "외벽", "실내외표면열전달저항", "1");
             Load_table();
+        }
+
+        private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
+        {
+            if (column == 6)
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                return true;
+            }
+            else return false;
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)

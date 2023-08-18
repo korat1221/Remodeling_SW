@@ -32,8 +32,7 @@ namespace main.contents.Construction
         public ConstructionFloor()
         {
             InitializeComponent();
-            var Ucalc_dgv = new StackedHeaderDecorator(Ucalc_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
-            Ucalc_dgv.AddCellColor(6, Color.FromArgb(255, 255, 255));
+            new StackedHeaderDecorator(Ucalc_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, Ucalc_dataGridView_RowHandle);
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '최하층바닥'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
@@ -45,11 +44,14 @@ namespace main.contents.Construction
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Uvalue_comboBox, "바닥", "단열수준", "3");
             Load_table();
         }
-
-        private void Ucalc_dataGridView_RowHandle(DataGridViewRow row)
+        private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {
-            // row.Cells[5].Style.BackColor = SystemColors.Info;
-            row.Cells[6].Style.BackColor = Color.FromArgb(255, 255, 255);
+            if (column == 6)
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                return true;
+            }
+            else return false;
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
