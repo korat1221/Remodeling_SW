@@ -54,7 +54,7 @@
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1301, 450);
+            tabControl1.Size = new Size(664, 450);
             tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -63,7 +63,7 @@
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(792, 422);
+            tabPage1.Size = new Size(656, 422);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "존 정보";
             tabPage1.UseVisualStyleBackColor = true;
@@ -107,7 +107,7 @@
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView2.RowTemplate.Height = 25;
-            dataGridView2.Size = new Size(363, 275);
+            dataGridView2.Size = new Size(333, 410);
             dataGridView2.TabIndex = 0;
             dataGridView2.CellContentClick += dataGridView2_CellContentClick;
             // 
@@ -117,7 +117,7 @@
             tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(1293, 422);
+            tabPage2.Size = new Size(656, 422);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "존 외피 정보";
             tabPage2.UseVisualStyleBackColor = true;
@@ -127,7 +127,7 @@
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToResizeColumns = false;
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
@@ -142,7 +142,7 @@
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(20, 27);
+            dataGridView1.Location = new Point(8, 6);
             dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
@@ -161,7 +161,7 @@
             dataGridViewCellStyle6.SelectionForeColor = Color.Black;
             dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(1265, 251);
+            dataGridView1.Size = new Size(640, 408);
             dataGridView1.TabIndex = 97;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
@@ -172,7 +172,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1301, 450);
+            ClientSize = new Size(664, 450);
             Controls.Add(tabControl1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "sub3dZoneInfo";

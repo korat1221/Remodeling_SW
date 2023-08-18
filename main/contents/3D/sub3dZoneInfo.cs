@@ -21,7 +21,7 @@ namespace main.contents
         }
         private void create_datagridview1()
         {
-            new StackedHeaderDecorator(dataGridView1, true);
+            new StackedHeaderDecorator(dataGridView1);//, true);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             dataGridView1.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -61,8 +61,8 @@ namespace main.contents
             checkBoxColumn.Name = "check";
             dataGridView2.Columns.Add(checkBoxColumn);
 
-            dataGridView2.Columns.Add("A1", "존 번호");
-            dataGridView2.Columns.Add("A2", "바닥면적");
+            dataGridView2.Columns.Add("B1", "존 번호");
+            dataGridView2.Columns.Add("B2", "바닥면적");
 
             dataGridView2.Columns[0].Width = 30;
             dataGridView2.Columns[1].Width = 100;
