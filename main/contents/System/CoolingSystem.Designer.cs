@@ -28,45 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            GeneralPanel = new Panel();
-            textBox1 = new TextBox();
-            CoolingSystemNumText = new Label();
-            pictureBox1 = new PictureBox();
-            CoolingSystemTypeSelectCombobox = new ComboBox();
-            label6 = new Label();
-            text = new Label();
-            ZoneSelection = new Button();
-            label5 = new Label();
-            ZoneListName = new TextBox();
-            label3 = new Label();
-            label1 = new Label();
-            CoolingSystemNameText = new TextBox();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
             panel2 = new Panel();
             tabControl1 = new TabControl();
-            tabPage1 = new TabPage();
-            CGdesideBtu = new Button();
-            panel3 = new Panel();
-            CoolingGeneratorList = new DataGridView();
-            label22 = new Label();
-            label21 = new Label();
-            label20 = new Label();
-            label19 = new Label();
-            label18 = new Label();
-            label17 = new Label();
-            label16 = new Label();
-            label15 = new Label();
-            panel1 = new Panel();
+            Generator_tabpage = new TabPage();
+            CoolingGeneratorSum_dataGridView1 = new DataGridView();
+            CoolingGeneratorSelect_comboBox = new ComboBox();
+            button3 = new Button();
             label4 = new Label();
-            label14 = new Label();
-            label8 = new Label();
-            label13 = new Label();
-            label9 = new Label();
-            label12 = new Label();
-            label10 = new Label();
-            label11 = new Label();
+            tabControl2 = new TabControl();
+            Boiler_tabPage = new TabPage();
+            AirCondition_dataGridView = new DataGridView();
+            HP_tabPage = new TabPage();
+            AS_tabPage = new TabPage();
+            DH_tabPage = new TabPage();
+            Solar_tabPage = new TabPage();
+            tabPage5 = new TabPage();
             tabPage2 = new TabPage();
             tabPage3 = new TabPage();
             tabPage4 = new TabPage();
@@ -74,173 +56,43 @@
             AdditionalPanel = new Panel();
             CoolingGeneratorImage = new PictureBox();
             button1 = new Button();
+            CoolingSystemNameText = new TextBox();
+            label1 = new Label();
+            label2 = new Label();
+            label5 = new Label();
+            GeneralPanel = new Panel();
+            radioButton2 = new RadioButton();
+            radioButton1 = new RadioButton();
+            label9 = new Label();
+            label8 = new Label();
+            textBox1 = new TextBox();
+            textBox5 = new TextBox();
+            textBox6 = new TextBox();
+            textBox7 = new TextBox();
+            CZ_MaxCoolingLoad_Textbox = new TextBox();
+            CZ_AnnualCoolingNeed_Textbox = new TextBox();
+            textBox2 = new TextBox();
+            label24 = new Label();
+            label25 = new Label();
+            label26 = new Label();
             label23 = new Label();
             button2 = new Button();
-            label2 = new Label();
-            GeneralPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            label6 = new Label();
+            Zone_button = new Button();
+            CZ_FloorArea_Textbox = new TextBox();
+            label3 = new Label();
+            Icon_pictureBox = new PictureBox();
             panel2.SuspendLayout();
             tabControl1.SuspendLayout();
-            tabPage1.SuspendLayout();
-            panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)CoolingGeneratorList).BeginInit();
-            panel1.SuspendLayout();
+            Generator_tabpage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)CoolingGeneratorSum_dataGridView1).BeginInit();
+            tabControl2.SuspendLayout();
+            Boiler_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)AirCondition_dataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CoolingGeneratorImage).BeginInit();
+            GeneralPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             SuspendLayout();
-            // 
-            // GeneralPanel
-            // 
-            GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(button2);
-            GeneralPanel.Controls.Add(label23);
-            GeneralPanel.Controls.Add(textBox1);
-            GeneralPanel.Controls.Add(CoolingSystemNumText);
-            GeneralPanel.Controls.Add(pictureBox1);
-            GeneralPanel.Controls.Add(CoolingSystemTypeSelectCombobox);
-            GeneralPanel.Controls.Add(label6);
-            GeneralPanel.Controls.Add(text);
-            GeneralPanel.Controls.Add(ZoneSelection);
-            GeneralPanel.Controls.Add(label5);
-            GeneralPanel.Controls.Add(label2);
-            GeneralPanel.Controls.Add(ZoneListName);
-            GeneralPanel.Controls.Add(label3);
-            GeneralPanel.Controls.Add(label1);
-            GeneralPanel.Controls.Add(CoolingSystemNameText);
-            GeneralPanel.Location = new Point(12, 12);
-            GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(977, 101);
-            GeneralPanel.TabIndex = 17;
-            GeneralPanel.Paint += GeneralPanel_Paint;
-            // 
-            // textBox1
-            // 
-            textBox1.BackColor = SystemColors.Window;
-            textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Enabled = false;
-            textBox1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.Location = new Point(172, 70);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.ScrollBars = ScrollBars.Vertical;
-            textBox1.Size = new Size(420, 26);
-            textBox1.TabIndex = 99;
-            // 
-            // CoolingSystemNumText
-            // 
-            CoolingSystemNumText.AutoSize = true;
-            CoolingSystemNumText.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            CoolingSystemNumText.Location = new Point(97, 12);
-            CoolingSystemNumText.Name = "CoolingSystemNumText";
-            CoolingSystemNumText.Size = new Size(60, 15);
-            CoolingSystemNumText.TabIndex = 98;
-            CoolingSystemNumText.Text = "CS_001";
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(16, 30);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(61, 59);
-            pictureBox1.TabIndex = 97;
-            pictureBox1.TabStop = false;
-            // 
-            // CoolingSystemTypeSelectCombobox
-            // 
-            CoolingSystemTypeSelectCombobox.FormattingEnabled = true;
-            CoolingSystemTypeSelectCombobox.Location = new Point(453, 14);
-            CoolingSystemTypeSelectCombobox.Name = "CoolingSystemTypeSelectCombobox";
-            CoolingSystemTypeSelectCombobox.Size = new Size(121, 23);
-            CoolingSystemTypeSelectCombobox.TabIndex = 96;
-            CoolingSystemTypeSelectCombobox.SelectedIndexChanged += CoolingGeneratorSelectCombobox_SelectedIndexChanged;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label6.Location = new Point(367, 18);
-            label6.Name = "label6";
-            label6.Size = new Size(79, 15);
-            label6.TabIndex = 95;
-            label6.Text = "냉방설비유형";
-            // 
-            // text
-            // 
-            text.AutoSize = true;
-            text.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            text.Location = new Point(93, 44);
-            text.Name = "text";
-            text.Size = new Size(43, 15);
-            text.TabIndex = 94;
-            text.Text = "냉방존";
-            // 
-            // ZoneSelection
-            // 
-            ZoneSelection.Font = new Font("맑은 고딕", 13F, FontStyle.Bold, GraphicsUnit.Point);
-            ZoneSelection.ForeColor = Color.SteelBlue;
-            ZoneSelection.Location = new Point(141, 43);
-            ZoneSelection.Margin = new Padding(0);
-            ZoneSelection.Name = "ZoneSelection";
-            ZoneSelection.Size = new Size(25, 25);
-            ZoneSelection.TabIndex = 93;
-            ZoneSelection.Text = "+";
-            ZoneSelection.UseVisualStyleBackColor = true;
-            ZoneSelection.Click += ZoneSelection_Click;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.Location = new Point(797, 74);
-            label5.Name = "label5";
-            label5.Size = new Size(79, 15);
-            label5.TabIndex = 92;
-            label5.Text = "최대냉방부하";
-            label5.Click += label5_Click;
-            // 
-            // ZoneListName
-            // 
-            ZoneListName.BackColor = SystemColors.Window;
-            ZoneListName.BorderStyle = BorderStyle.FixedSingle;
-            ZoneListName.Enabled = false;
-            ZoneListName.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ZoneListName.Location = new Point(172, 41);
-            ZoneListName.Multiline = true;
-            ZoneListName.Name = "ZoneListName";
-            ZoneListName.ReadOnly = true;
-            ZoneListName.ScrollBars = ScrollBars.Vertical;
-            ZoneListName.Size = new Size(420, 26);
-            ZoneListName.TabIndex = 89;
-            ZoneListName.TextChanged += ZoneListName_TextChanged;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(12, 12);
-            label3.Name = "label3";
-            label3.Size = new Size(72, 15);
-            label3.TabIndex = 3;
-            label3.Text = "냉방시스템";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(180, 17);
-            label1.Name = "label1";
-            label1.Size = new Size(31, 15);
-            label1.TabIndex = 1;
-            label1.Text = "명칭";
-            // 
-            // CoolingSystemNameText
-            // 
-            CoolingSystemNameText.BackColor = SystemColors.Window;
-            CoolingSystemNameText.BorderStyle = BorderStyle.FixedSingle;
-            CoolingSystemNameText.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            CoolingSystemNameText.Location = new Point(221, 13);
-            CoolingSystemNameText.Name = "CoolingSystemNameText";
-            CoolingSystemNameText.Size = new Size(120, 22);
-            CoolingSystemNameText.TabIndex = 88;
             // 
             // panel2
             // 
@@ -249,12 +101,12 @@
             panel2.Controls.Add(tabControl1);
             panel2.Location = new Point(12, 136);
             panel2.Name = "panel2";
-            panel2.Size = new Size(977, 222);
+            panel2.Size = new Size(977, 287);
             panel2.TabIndex = 18;
             // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(Generator_tabpage);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
             tabControl1.Controls.Add(tabPage4);
@@ -262,260 +114,223 @@
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(973, 218);
+            tabControl1.Size = new Size(973, 283);
             tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // Generator_tabpage
             // 
-            tabPage1.Controls.Add(CGdesideBtu);
-            tabPage1.Controls.Add(panel3);
-            tabPage1.Controls.Add(label22);
-            tabPage1.Controls.Add(label21);
-            tabPage1.Controls.Add(label20);
-            tabPage1.Controls.Add(label19);
-            tabPage1.Controls.Add(label18);
-            tabPage1.Controls.Add(label17);
-            tabPage1.Controls.Add(label16);
-            tabPage1.Controls.Add(label15);
-            tabPage1.Controls.Add(panel1);
-            tabPage1.Location = new Point(4, 24);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(965, 190);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "생산";
-            tabPage1.UseVisualStyleBackColor = true;
+            Generator_tabpage.Controls.Add(CoolingGeneratorSum_dataGridView1);
+            Generator_tabpage.Controls.Add(CoolingGeneratorSelect_comboBox);
+            Generator_tabpage.Controls.Add(button3);
+            Generator_tabpage.Controls.Add(label4);
+            Generator_tabpage.Controls.Add(tabControl2);
+            Generator_tabpage.Location = new Point(4, 24);
+            Generator_tabpage.Name = "Generator_tabpage";
+            Generator_tabpage.Padding = new Padding(3);
+            Generator_tabpage.Size = new Size(965, 255);
+            Generator_tabpage.TabIndex = 0;
+            Generator_tabpage.Text = "생산";
+            Generator_tabpage.UseVisualStyleBackColor = true;
             // 
-            // CGdesideBtu
+            // CoolingGeneratorSum_dataGridView1
             // 
-            CGdesideBtu.Location = new Point(3, 69);
-            CGdesideBtu.Name = "CGdesideBtu";
-            CGdesideBtu.Size = new Size(75, 23);
-            CGdesideBtu.TabIndex = 18;
-            CGdesideBtu.Text = "적용";
-            CGdesideBtu.UseVisualStyleBackColor = true;
-            CGdesideBtu.Click += CGdesideBtu_Click;
+            CoolingGeneratorSum_dataGridView1.AllowUserToAddRows = false;
+            CoolingGeneratorSum_dataGridView1.AllowUserToDeleteRows = false;
+            CoolingGeneratorSum_dataGridView1.AllowUserToResizeColumns = false;
+            CoolingGeneratorSum_dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            CoolingGeneratorSum_dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            CoolingGeneratorSum_dataGridView1.BackgroundColor = Color.White;
+            CoolingGeneratorSum_dataGridView1.BorderStyle = BorderStyle.None;
+            CoolingGeneratorSum_dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            CoolingGeneratorSum_dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            CoolingGeneratorSum_dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            CoolingGeneratorSum_dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            CoolingGeneratorSum_dataGridView1.Location = new Point(3, 38);
+            CoolingGeneratorSum_dataGridView1.Name = "CoolingGeneratorSum_dataGridView1";
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = SystemColors.Control;
+            dataGridViewCellStyle8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
+            CoolingGeneratorSum_dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            CoolingGeneratorSum_dataGridView1.RowHeadersVisible = false;
+            CoolingGeneratorSum_dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle9.ForeColor = Color.Black;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
+            CoolingGeneratorSum_dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            CoolingGeneratorSum_dataGridView1.RowTemplate.Height = 25;
+            CoolingGeneratorSum_dataGridView1.Size = new Size(511, 53);
+            CoolingGeneratorSum_dataGridView1.TabIndex = 151;
             // 
-            // panel3
+            // CoolingGeneratorSelect_comboBox
             // 
-            panel3.BackColor = Color.AliceBlue;
-            panel3.Controls.Add(CoolingGeneratorList);
-            panel3.Location = new Point(80, 69);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(882, 118);
-            panel3.TabIndex = 17;
+            CoolingGeneratorSelect_comboBox.FormattingEnabled = true;
+            CoolingGeneratorSelect_comboBox.Location = new Point(73, 9);
+            CoolingGeneratorSelect_comboBox.Name = "CoolingGeneratorSelect_comboBox";
+            CoolingGeneratorSelect_comboBox.Size = new Size(121, 23);
+            CoolingGeneratorSelect_comboBox.TabIndex = 150;
             // 
-            // CoolingGeneratorList
+            // button3
             // 
-            CoolingGeneratorList.AllowUserToAddRows = false;
-            CoolingGeneratorList.AllowUserToDeleteRows = false;
-            CoolingGeneratorList.AllowUserToResizeColumns = false;
-            CoolingGeneratorList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            CoolingGeneratorList.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            CoolingGeneratorList.BackgroundColor = SystemColors.Control;
-            CoolingGeneratorList.BorderStyle = BorderStyle.None;
-            CoolingGeneratorList.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            CoolingGeneratorList.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            CoolingGeneratorList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            CoolingGeneratorList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            CoolingGeneratorList.Dock = DockStyle.Fill;
-            CoolingGeneratorList.Location = new Point(0, 0);
-            CoolingGeneratorList.Name = "CoolingGeneratorList";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            CoolingGeneratorList.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            CoolingGeneratorList.RowHeadersVisible = false;
-            CoolingGeneratorList.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            CoolingGeneratorList.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            CoolingGeneratorList.RowTemplate.Height = 25;
-            CoolingGeneratorList.Size = new Size(882, 118);
-            CoolingGeneratorList.TabIndex = 99;
-            CoolingGeneratorList.CellContentClick += CoolingGeneratorList_CellContentClick;
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Location = new Point(896, 30);
-            label22.Name = "label22";
-            label22.Size = new Size(46, 15);
-            label22.TabIndex = 16;
-            label22.Text = "label22";
-            // 
-            // label21
-            // 
-            label21.AutoSize = true;
-            label21.Location = new Point(771, 30);
-            label21.Name = "label21";
-            label21.Size = new Size(46, 15);
-            label21.TabIndex = 15;
-            label21.Text = "label21";
-            // 
-            // label20
-            // 
-            label20.AutoSize = true;
-            label20.Location = new Point(646, 30);
-            label20.Name = "label20";
-            label20.Size = new Size(46, 15);
-            label20.TabIndex = 14;
-            label20.Text = "label20";
-            // 
-            // label19
-            // 
-            label19.AutoSize = true;
-            label19.Location = new Point(521, 30);
-            label19.Name = "label19";
-            label19.Size = new Size(46, 15);
-            label19.TabIndex = 13;
-            label19.Text = "label19";
-            // 
-            // label18
-            // 
-            label18.AutoSize = true;
-            label18.Location = new Point(396, 30);
-            label18.Name = "label18";
-            label18.Size = new Size(46, 15);
-            label18.TabIndex = 12;
-            label18.Text = "label18";
-            // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            label17.Location = new Point(271, 30);
-            label17.Name = "label17";
-            label17.Size = new Size(46, 15);
-            label17.TabIndex = 11;
-            label17.Text = "label17";
-            // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            label16.Location = new Point(146, 30);
-            label16.Name = "label16";
-            label16.Size = new Size(46, 15);
-            label16.TabIndex = 10;
-            label16.Text = "label16";
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Location = new Point(21, 30);
-            label15.Name = "label15";
-            label15.Size = new Size(46, 15);
-            label15.TabIndex = 9;
-            label15.Text = "label15";
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.Khaki;
-            panel1.Controls.Add(label4);
-            panel1.Controls.Add(label14);
-            panel1.Controls.Add(label8);
-            panel1.Controls.Add(label13);
-            panel1.Controls.Add(label9);
-            panel1.Controls.Add(label12);
-            panel1.Controls.Add(label10);
-            panel1.Controls.Add(label11);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(3, 3);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(959, 24);
-            panel1.TabIndex = 8;
+            button3.BackColor = SystemColors.ControlLight;
+            button3.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            button3.FlatStyle = FlatStyle.System;
+            button3.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            button3.Location = new Point(198, 9);
+            button3.Margin = new Padding(0);
+            button3.Name = "button3";
+            button3.Size = new Size(23, 23);
+            button3.TabIndex = 147;
+            button3.Text = "+";
+            button3.UseVisualStyleBackColor = false;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(15, 4);
+            label4.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Location = new Point(12, 12);
             label4.Name = "label4";
-            label4.Size = new Size(55, 15);
-            label4.TabIndex = 0;
-            label4.Text = "냉방출력";
+            label4.Size = new Size(60, 17);
+            label4.TabIndex = 146;
+            label4.Text = "냉방설비";
             // 
-            // label14
+            // tabControl2
             // 
-            label14.AutoSize = true;
-            label14.Location = new Point(888, 4);
-            label14.Name = "label14";
-            label14.Size = new Size(55, 15);
-            label14.TabIndex = 7;
-            label14.Text = "공급방식";
+            tabControl2.Controls.Add(Boiler_tabPage);
+            tabControl2.Controls.Add(HP_tabPage);
+            tabControl2.Controls.Add(AS_tabPage);
+            tabControl2.Controls.Add(DH_tabPage);
+            tabControl2.Controls.Add(Solar_tabPage);
+            tabControl2.Controls.Add(tabPage5);
+            tabControl2.Dock = DockStyle.Bottom;
+            tabControl2.Location = new Point(3, 96);
+            tabControl2.Name = "tabControl2";
+            tabControl2.SelectedIndex = 0;
+            tabControl2.Size = new Size(959, 156);
+            tabControl2.TabIndex = 145;
             // 
-            // label8
+            // Boiler_tabPage
             // 
-            label8.AutoSize = true;
-            label8.Location = new Point(130, 4);
-            label8.Name = "label8";
-            label8.Size = new Size(87, 15);
-            label8.TabIndex = 1;
-            label8.Text = "냉방성능[제품]";
+            Boiler_tabPage.Controls.Add(AirCondition_dataGridView);
+            Boiler_tabPage.Location = new Point(4, 24);
+            Boiler_tabPage.Name = "Boiler_tabPage";
+            Boiler_tabPage.Padding = new Padding(3);
+            Boiler_tabPage.Size = new Size(951, 128);
+            Boiler_tabPage.TabIndex = 6;
+            Boiler_tabPage.Text = "실외기12kW";
+            Boiler_tabPage.UseVisualStyleBackColor = true;
             // 
-            // label13
+            // AirCondition_dataGridView
             // 
-            label13.AutoSize = true;
-            label13.Location = new Point(749, 4);
-            label13.Name = "label13";
-            label13.Size = new Size(79, 15);
-            label13.TabIndex = 6;
-            label13.Text = "냉방설비대수";
+            AirCondition_dataGridView.AllowUserToAddRows = false;
+            AirCondition_dataGridView.AllowUserToDeleteRows = false;
+            AirCondition_dataGridView.AllowUserToResizeColumns = false;
+            AirCondition_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AirCondition_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            AirCondition_dataGridView.BackgroundColor = Color.White;
+            AirCondition_dataGridView.BorderStyle = BorderStyle.None;
+            AirCondition_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            AirCondition_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle10.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle10.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            AirCondition_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            AirCondition_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            AirCondition_dataGridView.Location = new Point(6, 26);
+            AirCondition_dataGridView.Name = "AirCondition_dataGridView";
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = SystemColors.Control;
+            dataGridViewCellStyle11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
+            AirCondition_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            AirCondition_dataGridView.RowHeadersVisible = false;
+            AirCondition_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle12.ForeColor = Color.Black;
+            dataGridViewCellStyle12.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle12.SelectionForeColor = Color.Black;
+            AirCondition_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            AirCondition_dataGridView.RowTemplate.Height = 25;
+            AirCondition_dataGridView.Size = new Size(943, 96);
+            AirCondition_dataGridView.TabIndex = 22;
+            AirCondition_dataGridView.CellContentClick += AirCondition_dataGridView_CellContentClick;
             // 
-            // label9
+            // HP_tabPage
             // 
-            label9.AutoSize = true;
-            label9.Location = new Point(277, 4);
-            label9.Name = "label9";
-            label9.Size = new Size(55, 15);
-            label9.TabIndex = 2;
-            label9.Text = "제어유형";
+            HP_tabPage.BackColor = Color.White;
+            HP_tabPage.Location = new Point(4, 24);
+            HP_tabPage.Name = "HP_tabPage";
+            HP_tabPage.Padding = new Padding(3);
+            HP_tabPage.Size = new Size(951, 128);
+            HP_tabPage.TabIndex = 2;
+            HP_tabPage.Text = "공냉식냉동기";
             // 
-            // label12
+            // AS_tabPage
             // 
-            label12.AutoSize = true;
-            label12.Location = new Point(598, 4);
-            label12.Name = "label12";
-            label12.Size = new Size(91, 15);
-            label12.TabIndex = 5;
-            label12.Text = "외기냉방시스템";
+            AS_tabPage.Location = new Point(4, 24);
+            AS_tabPage.Name = "AS_tabPage";
+            AS_tabPage.Padding = new Padding(3);
+            AS_tabPage.Size = new Size(951, 128);
+            AS_tabPage.TabIndex = 3;
+            AS_tabPage.Text = "수냉식냉동기";
+            AS_tabPage.UseVisualStyleBackColor = true;
             // 
-            // label10
+            // DH_tabPage
             // 
-            label10.AutoSize = true;
-            label10.Location = new Point(392, 4);
-            label10.Name = "label10";
-            label10.Size = new Size(55, 15);
-            label10.TabIndex = 3;
-            label10.Text = "설치위치";
+            DH_tabPage.Location = new Point(4, 24);
+            DH_tabPage.Name = "DH_tabPage";
+            DH_tabPage.Padding = new Padding(3);
+            DH_tabPage.Size = new Size(951, 128);
+            DH_tabPage.TabIndex = 4;
+            DH_tabPage.Text = "흡수식냉동기";
+            DH_tabPage.UseVisualStyleBackColor = true;
             // 
-            // label11
+            // Solar_tabPage
             // 
-            label11.AutoSize = true;
-            label11.Location = new Point(507, 4);
-            label11.Name = "label11";
-            label11.Size = new Size(31, 15);
-            label11.TabIndex = 4;
-            label11.Text = "연료";
+            Solar_tabPage.Location = new Point(4, 24);
+            Solar_tabPage.Name = "Solar_tabPage";
+            Solar_tabPage.Padding = new Padding(3);
+            Solar_tabPage.Size = new Size(951, 128);
+            Solar_tabPage.TabIndex = 5;
+            Solar_tabPage.Text = "흡수식냉온수기";
+            Solar_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // tabPage5
+            // 
+            tabPage5.Location = new Point(4, 24);
+            tabPage5.Name = "tabPage5";
+            tabPage5.Padding = new Padding(3);
+            tabPage5.Size = new Size(951, 128);
+            tabPage5.TabIndex = 7;
+            tabPage5.Text = "지열히트펌프";
+            tabPage5.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
             tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(965, 190);
+            tabPage2.Size = new Size(965, 255);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "저장";
             tabPage2.UseVisualStyleBackColor = true;
@@ -525,7 +340,7 @@
             tabPage3.Location = new Point(4, 24);
             tabPage3.Name = "tabPage3";
             tabPage3.Padding = new Padding(3);
-            tabPage3.Size = new Size(965, 190);
+            tabPage3.Size = new Size(965, 255);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "분배";
             tabPage3.UseVisualStyleBackColor = true;
@@ -535,7 +350,7 @@
             tabPage4.Location = new Point(4, 24);
             tabPage4.Name = "tabPage4";
             tabPage4.Padding = new Padding(3);
-            tabPage4.Size = new Size(965, 190);
+            tabPage4.Size = new Size(965, 255);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "공급";
             tabPage4.UseVisualStyleBackColor = true;
@@ -554,9 +369,9 @@
             // 
             AdditionalPanel.BackColor = Color.White;
             AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
-            AdditionalPanel.Location = new Point(12, 354);
+            AdditionalPanel.Location = new Point(12, 429);
             AdditionalPanel.Name = "AdditionalPanel";
-            AdditionalPanel.Size = new Size(977, 339);
+            AdditionalPanel.Size = new Size(977, 264);
             AdditionalPanel.TabIndex = 18;
             // 
             // CoolingGeneratorImage
@@ -577,37 +392,324 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // label23
+            // CoolingSystemNameText
             // 
-            label23.AutoSize = true;
-            label23.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label23.Location = new Point(93, 74);
-            label23.Name = "label23";
-            label23.Size = new Size(43, 15);
-            label23.TabIndex = 100;
-            label23.Text = "공조기";
+            CoolingSystemNameText.BackColor = SystemColors.Window;
+            CoolingSystemNameText.BorderStyle = BorderStyle.FixedSingle;
+            CoolingSystemNameText.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CoolingSystemNameText.Location = new Point(191, 14);
+            CoolingSystemNameText.Name = "CoolingSystemNameText";
+            CoolingSystemNameText.Size = new Size(120, 22);
+            CoolingSystemNameText.TabIndex = 88;
+            CoolingSystemNameText.TextChanged += CoolingSystemNameText_TextChanged;
             // 
-            // button2
+            // label1
             // 
-            button2.Font = new Font("맑은 고딕", 13F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.ForeColor = Color.SteelBlue;
-            button2.Location = new Point(141, 71);
-            button2.Margin = new Padding(0);
-            button2.Name = "button2";
-            button2.Size = new Size(25, 25);
-            button2.TabIndex = 101;
-            button2.Text = "+";
-            button2.UseVisualStyleBackColor = true;
+            label1.AutoSize = true;
+            label1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(105, 18);
+            label1.Name = "label1";
+            label1.Size = new Size(31, 15);
+            label1.TabIndex = 1;
+            label1.Text = "명칭";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(749, 44);
+            label2.Location = new Point(444, 12);
             label2.Name = "label2";
             label2.Size = new Size(127, 15);
             label2.TabIndex = 90;
             label2.Text = "연간냉방에너지요구량";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.Location = new Point(615, 12);
+            label5.Name = "label5";
+            label5.Size = new Size(79, 15);
+            label5.TabIndex = 92;
+            label5.Text = "최대냉방부하";
+            label5.Click += label5_Click;
+            // 
+            // GeneralPanel
+            // 
+            GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(radioButton2);
+            GeneralPanel.Controls.Add(radioButton1);
+            GeneralPanel.Controls.Add(label9);
+            GeneralPanel.Controls.Add(label8);
+            GeneralPanel.Controls.Add(textBox1);
+            GeneralPanel.Controls.Add(textBox5);
+            GeneralPanel.Controls.Add(textBox6);
+            GeneralPanel.Controls.Add(textBox7);
+            GeneralPanel.Controls.Add(CZ_MaxCoolingLoad_Textbox);
+            GeneralPanel.Controls.Add(CZ_AnnualCoolingNeed_Textbox);
+            GeneralPanel.Controls.Add(textBox2);
+            GeneralPanel.Controls.Add(label24);
+            GeneralPanel.Controls.Add(label25);
+            GeneralPanel.Controls.Add(label26);
+            GeneralPanel.Controls.Add(label23);
+            GeneralPanel.Controls.Add(button2);
+            GeneralPanel.Controls.Add(label6);
+            GeneralPanel.Controls.Add(Zone_button);
+            GeneralPanel.Controls.Add(CZ_FloorArea_Textbox);
+            GeneralPanel.Controls.Add(label3);
+            GeneralPanel.Controls.Add(Icon_pictureBox);
+            GeneralPanel.Controls.Add(label5);
+            GeneralPanel.Controls.Add(label2);
+            GeneralPanel.Controls.Add(label1);
+            GeneralPanel.Controls.Add(CoolingSystemNameText);
+            GeneralPanel.Location = new Point(12, 12);
+            GeneralPanel.Name = "GeneralPanel";
+            GeneralPanel.Size = new Size(977, 101);
+            GeneralPanel.TabIndex = 17;
+            GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(142, 75);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(14, 13);
+            radioButton2.TabIndex = 141;
+            radioButton2.TabStop = true;
+            radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.Click += radioButton2_Click;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(142, 50);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(14, 13);
+            radioButton1.TabIndex = 140;
+            radioButton1.TabStop = true;
+            radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.Click += radioButton1_Click;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label9.Location = new Point(105, 74);
+            label9.Name = "label9";
+            label9.Size = new Size(34, 17);
+            label9.TabIndex = 139;
+            label9.Text = "신규";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.Location = new Point(105, 49);
+            label8.Name = "label8";
+            label8.Size = new Size(34, 17);
+            label8.TabIndex = 138;
+            label8.Text = "기존";
+            // 
+            // textBox1
+            // 
+            textBox1.BackColor = Color.White;
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Enabled = false;
+            textBox1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox1.ForeColor = SystemColors.ControlDark;
+            textBox1.Location = new Point(594, 74);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(120, 15);
+            textBox1.TabIndex = 137;
+            textBox1.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBox5
+            // 
+            textBox5.BackColor = Color.White;
+            textBox5.BorderStyle = BorderStyle.None;
+            textBox5.Enabled = false;
+            textBox5.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox5.ForeColor = SystemColors.ControlDark;
+            textBox5.Location = new Point(447, 74);
+            textBox5.Name = "textBox5";
+            textBox5.Size = new Size(120, 15);
+            textBox5.TabIndex = 136;
+            textBox5.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBox6
+            // 
+            textBox6.BackColor = Color.White;
+            textBox6.BorderStyle = BorderStyle.None;
+            textBox6.Enabled = false;
+            textBox6.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox6.ForeColor = SystemColors.ControlDark;
+            textBox6.Location = new Point(314, 74);
+            textBox6.Name = "textBox6";
+            textBox6.Size = new Size(120, 15);
+            textBox6.TabIndex = 135;
+            textBox6.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBox7
+            // 
+            textBox7.BackColor = Color.White;
+            textBox7.BorderStyle = BorderStyle.None;
+            textBox7.Enabled = false;
+            textBox7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox7.ForeColor = SystemColors.ControlDark;
+            textBox7.Location = new Point(718, 74);
+            textBox7.Name = "textBox7";
+            textBox7.Size = new Size(120, 15);
+            textBox7.TabIndex = 134;
+            textBox7.TextAlign = HorizontalAlignment.Center;
+            // 
+            // CZ_MaxCoolingLoad_Textbox
+            // 
+            CZ_MaxCoolingLoad_Textbox.BackColor = Color.White;
+            CZ_MaxCoolingLoad_Textbox.BorderStyle = BorderStyle.None;
+            CZ_MaxCoolingLoad_Textbox.Enabled = false;
+            CZ_MaxCoolingLoad_Textbox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CZ_MaxCoolingLoad_Textbox.ForeColor = SystemColors.ControlDark;
+            CZ_MaxCoolingLoad_Textbox.Location = new Point(594, 51);
+            CZ_MaxCoolingLoad_Textbox.Name = "CZ_MaxCoolingLoad_Textbox";
+            CZ_MaxCoolingLoad_Textbox.Size = new Size(120, 15);
+            CZ_MaxCoolingLoad_Textbox.TabIndex = 133;
+            CZ_MaxCoolingLoad_Textbox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // CZ_AnnualCoolingNeed_Textbox
+            // 
+            CZ_AnnualCoolingNeed_Textbox.BackColor = Color.White;
+            CZ_AnnualCoolingNeed_Textbox.BorderStyle = BorderStyle.None;
+            CZ_AnnualCoolingNeed_Textbox.Enabled = false;
+            CZ_AnnualCoolingNeed_Textbox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CZ_AnnualCoolingNeed_Textbox.ForeColor = SystemColors.ControlDark;
+            CZ_AnnualCoolingNeed_Textbox.Location = new Point(447, 51);
+            CZ_AnnualCoolingNeed_Textbox.Name = "CZ_AnnualCoolingNeed_Textbox";
+            CZ_AnnualCoolingNeed_Textbox.Size = new Size(120, 15);
+            CZ_AnnualCoolingNeed_Textbox.TabIndex = 132;
+            CZ_AnnualCoolingNeed_Textbox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBox2
+            // 
+            textBox2.BackColor = Color.White;
+            textBox2.BorderStyle = BorderStyle.None;
+            textBox2.Enabled = false;
+            textBox2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox2.ForeColor = SystemColors.ControlDark;
+            textBox2.Location = new Point(314, 51);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(120, 15);
+            textBox2.TabIndex = 131;
+            textBox2.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Font = new Font("나눔고딕", 8.999999F, FontStyle.Regular, GraphicsUnit.Point);
+            label24.Location = new Point(765, 30);
+            label24.Name = "label24";
+            label24.Size = new Size(26, 14);
+            label24.TabIndex = 130;
+            label24.Text = "[㎡]";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Font = new Font("나눔고딕", 8.999999F, FontStyle.Regular, GraphicsUnit.Point);
+            label25.Location = new Point(638, 30);
+            label25.Name = "label25";
+            label25.Size = new Size(33, 14);
+            label25.TabIndex = 129;
+            label25.Text = "[kW]";
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Font = new Font("나눔고딕", 8.999999F, FontStyle.Regular, GraphicsUnit.Point);
+            label26.Location = new Point(481, 30);
+            label26.Name = "label26";
+            label26.Size = new Size(52, 14);
+            label26.TabIndex = 128;
+            label26.Text = "[kWh/a]";
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label23.Location = new Point(751, 12);
+            label23.Name = "label23";
+            label23.Size = new Size(55, 15);
+            label23.TabIndex = 127;
+            label23.Text = "바닥면적";
+            // 
+            // button2
+            // 
+            button2.BackColor = SystemColors.ControlLight;
+            button2.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            button2.FlatStyle = FlatStyle.System;
+            button2.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            button2.Location = new Point(288, 70);
+            button2.Margin = new Padding(0);
+            button2.Name = "button2";
+            button2.Size = new Size(23, 23);
+            button2.TabIndex = 126;
+            button2.Text = "+";
+            button2.UseVisualStyleBackColor = false;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Location = new Point(186, 73);
+            label6.Name = "label6";
+            label6.Size = new Size(71, 17);
+            label6.TabIndex = 124;
+            label6.Text = "공급  AHU";
+            // 
+            // Zone_button
+            // 
+            Zone_button.BackColor = SystemColors.ControlLight;
+            Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Zone_button.FlatStyle = FlatStyle.System;
+            Zone_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            Zone_button.Location = new Point(288, 47);
+            Zone_button.Margin = new Padding(0);
+            Zone_button.Name = "Zone_button";
+            Zone_button.Size = new Size(23, 23);
+            Zone_button.TabIndex = 123;
+            Zone_button.Text = "+";
+            Zone_button.UseVisualStyleBackColor = false;
+            Zone_button.Click += Zone_button_Click;
+            // 
+            // CZ_FloorArea_Textbox
+            // 
+            CZ_FloorArea_Textbox.BackColor = Color.White;
+            CZ_FloorArea_Textbox.BorderStyle = BorderStyle.None;
+            CZ_FloorArea_Textbox.Enabled = false;
+            CZ_FloorArea_Textbox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CZ_FloorArea_Textbox.ForeColor = SystemColors.ControlDark;
+            CZ_FloorArea_Textbox.Location = new Point(718, 51);
+            CZ_FloorArea_Textbox.Name = "CZ_FloorArea_Textbox";
+            CZ_FloorArea_Textbox.Size = new Size(120, 15);
+            CZ_FloorArea_Textbox.TabIndex = 122;
+            CZ_FloorArea_Textbox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.Location = new Point(186, 50);
+            label3.Name = "label3";
+            label3.Size = new Size(52, 17);
+            label3.TabIndex = 121;
+            label3.Text = "공급 존";
+            // 
+            // Icon_pictureBox
+            // 
+            Icon_pictureBox.Location = new Point(23, 22);
+            Icon_pictureBox.Name = "Icon_pictureBox";
+            Icon_pictureBox.Size = new Size(50, 50);
+            Icon_pictureBox.TabIndex = 120;
+            Icon_pictureBox.TabStop = false;
             // 
             // CoolingSystem
             // 
@@ -624,69 +726,70 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "CoolingSystem";
             Text = "Form3";
-            GeneralPanel.ResumeLayout(false);
-            GeneralPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel2.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
-            panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)CoolingGeneratorList).EndInit();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            Generator_tabpage.ResumeLayout(false);
+            Generator_tabpage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)CoolingGeneratorSum_dataGridView1).EndInit();
+            tabControl2.ResumeLayout(false);
+            Boiler_tabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)AirCondition_dataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)CoolingGeneratorImage).EndInit();
+            GeneralPanel.ResumeLayout(false);
+            GeneralPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Panel GeneralPanel;
         private Panel panel2;
         private Panel AdditionalPanel;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private Label text;
-        private Button ZoneSelection;
-        private Label label5;
-        private Label label6;
         private PictureBox CoolingGeneratorImage;
-        private PictureBox pictureBox1;
         private Label label7;
-        public TextBox ZoneListName;
-        public Label CoolingSystemNumText;
-        public TextBox CoolingSystemNameText;
-        public ComboBox CoolingSystemTypeSelectCombobox;
         private Button button1;
         private TabControl tabControl1;
-        private TabPage tabPage1;
+        private TabPage Generator_tabpage;
         private TabPage tabPage2;
-        private Panel panel3;
-        private Label label22;
-        private Label label21;
-        private Label label20;
-        private Label label19;
-        private Label label18;
-        private Label label17;
-        private Label label16;
-        private Label label15;
-        private Panel panel1;
-        private Label label4;
-        private Label label14;
-        private Label label8;
-        private Label label13;
-        private Label label9;
-        private Label label12;
-        private Label label10;
-        private Label label11;
         private TabPage tabPage3;
         private TabPage tabPage4;
-        private DataGridView CoolingGeneratorList;
-        private Button CGdesideBtu;
-        public TextBox textBox1;
-        private Button button2;
-        private Label label23;
+        public TextBox CoolingSystemNameText;
+        private Label label1;
         private Label label2;
+        private Label label5;
+        private Panel GeneralPanel;
+        private TextBox textBox1;
+        private TextBox textBox5;
+        private TextBox textBox6;
+        private TextBox textBox7;
+        private TextBox CZ_MaxCoolingLoad_Textbox;
+        private TextBox CZ_AnnualCoolingNeed_Textbox;
+        private TextBox textBox2;
+        private Label label24;
+        private Label label25;
+        private Label label26;
+        private Label label23;
+        private Button button2;
+        private Label label6;
+        private Button Zone_button;
+        private TextBox CZ_FloorArea_Textbox;
+        private Label label3;
+        private PictureBox Icon_pictureBox;
+        private TabControl tabControl2;
+        private TabPage Boiler_tabPage;
+        private DataGridView AirCondition_dataGridView;
+        private TabPage HP_tabPage;
+        private TabPage AS_tabPage;
+        private TabPage DH_tabPage;
+        private TabPage Solar_tabPage;
+        private TabPage tabPage5;
+        private DataGridView CoolingGeneratorSum_dataGridView1;
+        private ComboBox CoolingGeneratorSelect_comboBox;
+        private Button button3;
+        private Label label4;
+        private RadioButton radioButton2;
+        private RadioButton radioButton1;
+        private Label label9;
+        private Label label8;
     }
 }
