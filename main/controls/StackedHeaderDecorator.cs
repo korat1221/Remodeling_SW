@@ -16,9 +16,12 @@ public class StackedHeaderDecorator
     private Header objHeaderTree;
     private int iNoOfLevels;
     private readonly StringFormat objFormat;
-    private Dictionary<int, Color> columnColors = new Dictionary<int, Color>();
 
-    public StackedHeaderDecorator(DataGridView objDataGrid, bool fixedHeader = false)
+    public delegate bool RenderProc(DataGridViewCell cell, int column, int row);
+
+    private RenderProc renderProc = null;
+
+    public StackedHeaderDecorator(DataGridView objDataGrid, DataGridViewAutoSizeColumnsMode mode = DataGridViewAutoSizeColumnsMode.ColumnHeader, RenderProc proc = null)
     {
         this.objDataGrid = objDataGrid;
         objFormat = new StringFormat();
@@ -39,7 +42,8 @@ public class StackedHeaderDecorator
 
         objHeaderTree = objStackedHeaderGenerator.GenerateStackedHeader(objDataGrid);
 
-        objDataGrid.AutoSizeColumnsMode = fixedHeader ? DataGridViewAutoSizeColumnsMode.Fill : DataGridViewAutoSizeColumnsMode.ColumnHeader;
+        objDataGrid.AutoSizeColumnsMode = mode;
+//        objDataGrid.AutoSizeColumnsMode = fixedHeader ? DataGridViewAutoSizeColumnsMode.Fill : DataGridViewAutoSizeColumnsMode.AllCells;//.ColumnHeader;
 
         DataGridViewCellStyle defCellStyle = new DataGridViewCellStyle();
 
@@ -58,6 +62,8 @@ public class StackedHeaderDecorator
         objDataGrid.CellPainting += dataGridView1_CellPainting;
         //    objDataGrid.RowsAdded += objDataGrid_RowsAdded;
         //    objDataGrid..RowsRemoved += objDataGrid_RowsRemoved;
+
+        renderProc = proc;
     }
 
     private void objDataGrid_CurrentCellDirtyStateChanged(object sender, EventArgs e)
@@ -66,16 +72,12 @@ public class StackedHeaderDecorator
     }
 
 
-    public StackedHeaderDecorator(IStackedHeaderGenerator objStackedHeaderGenerator, DataGridView objDataGrid, bool fixedHeader = false)
-            : this(objDataGrid, fixedHeader)
+    public StackedHeaderDecorator(IStackedHeaderGenerator objStackedHeaderGenerator, DataGridView objDataGrid, DataGridViewAutoSizeColumnsMode mode = DataGridViewAutoSizeColumnsMode.ColumnHeader, RenderProc proc = null)
+            : this(objDataGrid, mode, proc)
     {
         this.objStackedHeaderGenerator = objStackedHeaderGenerator;
     }
 
-    public void AddCellColor(int cell, Color color)
-    {
-        columnColors.Add(cell, color);
-    }
     void objDataGrid_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
     {
         Refresh();
@@ -143,9 +145,9 @@ public class StackedHeaderDecorator
                 }
                 else
                 {
-                    if (columnColors.ContainsKey(i))
+                    if (renderProc != null && renderProc(cell, i, k)) 
                     {
-                        cell.Style.BackColor = columnColors[i];
+                        continue;
                     }
                     else if (cell.GetType() == typeof(DataGridViewTextBoxCell))
                     {

@@ -36,10 +36,8 @@ namespace main.contents
         public ConstructionWall()
         {
             InitializeComponent();
-            var Ucalc_dgv = new StackedHeaderDecorator(Ucalc_dataGridView);
-            Ucalc_dgv.AddCellColor(6, Color.FromArgb(240, 241, 241));
+            new StackedHeaderDecorator(Ucalc_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, Ucalc_dataGridView_RowHandle);
 
-            Ucalc_dataGridView.BackgroundColor = SystemColors.InactiveBorder;
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외벽'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -52,6 +50,16 @@ namespace main.contents
             //표면열전달저항기준 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, ISO_KS_comboBox, "외벽", "실내외표면열전달저항", "1");
             Load_table();
+        }
+
+        private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
+        {
+            if (column == 6)
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                return true;
+            }
+            else return false;
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -598,10 +606,16 @@ namespace main.contents
 
             Ucalc_dataGridView.Columns.Add("A1", "번호");
             Ucalc_dataGridView.Columns.Add("A2", "구분");
-            Ucalc_dataGridView.Columns.Add("A3", "재료명");
+            Ucalc_dataGridView.Columns.Add("A3", "재료명         ");
             Ucalc_dataGridView.Columns.Add("A4", "열전도율.[W/m·K]");
             Ucalc_dataGridView.Columns.Add("A5", "두께.[mm]");
             Ucalc_dataGridView.Columns.Add("A6", "열저항.[m²·K/W]");
+            Ucalc_dataGridView.Columns[0].Width = 40;
+            Ucalc_dataGridView.Columns[1].Width = 40;
+            Ucalc_dataGridView.Columns[2].Width = 70;
+            Ucalc_dataGridView.Columns[3].Width = 130;
+            Ucalc_dataGridView.Columns[4].Width = 70;
+            Ucalc_dataGridView.Columns[6].Width = 70;
 
             //Ucalc_dataGridView.Columns[1].HeaderText = "번호";
             //Ucalc_dataGridView.Columns[2].HeaderText = "구분";

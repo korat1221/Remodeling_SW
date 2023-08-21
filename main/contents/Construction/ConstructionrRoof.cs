@@ -20,7 +20,7 @@ namespace main.contents
 {
     public partial class ConstructionRoof : Form
     {
-        String RoofNum, RoofName, Type, check_Type, OldRoof, UMethod, DiIndi, StructureType, check_StructureType, TBType, TBName, Color, ISO_KS, LinearPoint;
+        String RoofNum, RoofName, Type, check_Type, OldRoof, UMethod, DiIndi, StructureType, check_StructureType, TBType, TBName, Color_Envelope, ISO_KS, LinearPoint;
         double A, B, C, PsiKai, PerArea;
         double Rse, Rsi, dtot, Rtot, dins, check_dins;
         double OldRoof_R;
@@ -34,8 +34,8 @@ namespace main.contents
         public ConstructionRoof()
         {
             InitializeComponent();
-            new StackedHeaderDecorator(Ucalc_dataGridView);
-            Ucalc_dataGridView.BackgroundColor = SystemColors.InactiveBorder;
+            new StackedHeaderDecorator(Ucalc_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, Ucalc_dataGridView_RowHandle);
+
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '지붕'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -51,7 +51,15 @@ namespace main.contents
             //Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, StructureType_comboBox, "지붕", "구조유형", "3");
             Load_table();
         }
-
+        private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
+        {
+            if (column == 6)
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                return true;
+            }
+            else return false;
+        }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -249,8 +257,8 @@ namespace main.contents
         {
             if (Color_comboBox.SelectedItem != null)
             {
-                Color = Color_comboBox.SelectedItem.ToString();
-                String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + Color + "'");
+                Color_Envelope = Color_comboBox.SelectedItem.ToString();
+                String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + Color_Envelope + "'");
                 α = Convert.ToDouble(value[0][0]);
                 α_textBox.Text = String.Format("{0:F1}", α);
             }
@@ -537,6 +545,12 @@ namespace main.contents
             Ucalc_dataGridView.Columns.Add("A4", "열전도율.[W/m·K]");
             Ucalc_dataGridView.Columns.Add("A5", "두께.[mm]");
             Ucalc_dataGridView.Columns.Add("A6", "열저항.[m²·K/W]");
+            Ucalc_dataGridView.Columns[0].Width = 40;
+            Ucalc_dataGridView.Columns[1].Width = 40;
+            Ucalc_dataGridView.Columns[2].Width = 70;
+            Ucalc_dataGridView.Columns[3].Width = 130;
+            Ucalc_dataGridView.Columns[4].Width = 70;
+            Ucalc_dataGridView.Columns[6].Width = 70;
 
             //Ucalc_dataGridView.ColumnCount = 7;
             //Ucalc_dataGridView.Columns[1].HeaderText = "번호";
@@ -833,7 +847,7 @@ namespace main.contents
                 "재료9종류,재료9두께," +
                 "재료10종류,재료10두께," +
                 "흡수율,열관류율,열교가산치,유효열관류율",
-                "'" + RoofNum_textBox.Text + "','" + RoofName + "','" + Type + "','" + OldRoof + "','" + UMethod + "','" + DiIndi + "','" + StructureType + "','" + TBType + "','" + TBName + "','" + Color + "','" + ISO_KS + "','" + LinearPoint + "','" +
+                "'" + RoofNum_textBox.Text + "','" + RoofName + "','" + Type + "','" + OldRoof + "','" + UMethod + "','" + DiIndi + "','" + StructureType + "','" + TBType + "','" + TBName + "','" + Color_Envelope + "','" + ISO_KS + "','" + LinearPoint + "','" +
                 A.ToString() + "','" + B.ToString() + "','" + C.ToString() + "','" + PsiKai.ToString() + "','" + PerArea.ToString() + "','" +
                 Rse.ToString() + "','" + Rsi.ToString() + "','" + dtot.ToString() + "','" + Rtot.ToString() + "','" + dins.ToString() + "','" +
                 Material[0] + "','" + Material_d[0].ToString() + "','" +
@@ -942,7 +956,7 @@ namespace main.contents
             check_StructureType = null;
             TBType = null;
             TBName = null;
-            Color = null;
+            Color_Envelope = null;
             ISO_KS = null;
             LinearPoint = null;
         }
@@ -1017,8 +1031,8 @@ namespace main.contents
                 TBName_textBox.Text = TBName;
                 TBName2_textBox.Text = TBName;
 
-                Color = Load[0][9];
-                Color_comboBox.SelectedItem = Color;
+                Color_Envelope = Load[0][9];
+                Color_comboBox.SelectedItem = Color_Envelope;
 
                 ISO_KS = Load[0][10];
                 ISO_KS_comboBox.SelectedItem = ISO_KS;

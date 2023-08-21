@@ -25,7 +25,7 @@ namespace main.subcontents
         public Window_SpacerDB(String SingleDoubleType, String FrameMaterial, String LE_CL_V)
         {
             InitializeComponent();
-            new StackedHeaderDecorator(Spacer_dataGridView, true);
+            new StackedHeaderDecorator(Spacer_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
             load_table_SpacerDB(SingleDoubleType, FrameMaterial);
             this.LE_CL_V = LE_CL_V;
             //사용자DB 구분1 콤보박스

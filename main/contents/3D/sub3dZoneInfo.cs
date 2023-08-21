@@ -16,12 +16,58 @@ namespace main.contents
         public sub3dZoneInfo()
         {
             InitializeComponent();
-
-            dataGridView1.Columns[7].HeaderText = "면적" + Environment.NewLine + "[m²]";
-            dataGridView1.Columns[8].HeaderText = "방위" + Environment.NewLine + " - ";
-            dataGridView1.Columns[9].HeaderText = "기울기" + Environment.NewLine + "[°]";
+            create_datagridview1();
+            create_datagridview2();
         }
+        private void create_datagridview1()
+        {
+            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.AllCells);
+            DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
+            dataGridView1.Columns.Clear();
+            checkBoxColumn.HeaderText = "선택";
+            checkBoxColumn.Name = "check";
+            dataGridView1.Columns.Add(checkBoxColumn);
 
+            dataGridView1.Columns.Add("A1", "번호");
+            dataGridView1.Columns.Add("A2", "층");
+            dataGridView1.Columns.Add("A3", "존");
+            dataGridView1.Columns.Add("A4", "외피유형");
+            dataGridView1.Columns.Add("A5", "커튼월부위");
+            dataGridView1.Columns.Add("A6", "인접존");
+            dataGridView1.Columns.Add("A7", "면적[m²]");
+            dataGridView1.Columns.Add("A8", "방위");
+            dataGridView1.Columns.Add("A9", "기울기");
+            dataGridView1.Columns.Add("A10", "구조체");
+            dataGridView1.Columns.Add("A11", "천창유무");
+            dataGridView1.Columns[0].Width = 30;
+            dataGridView1.Columns[1].Width = 100;
+            dataGridView1.Columns[2].Width = 100;
+            dataGridView1.Columns[3].Width = 100;
+            dataGridView1.Columns[4].Width = 100;
+            dataGridView1.Columns[5].Width = 100;
+            dataGridView1.Columns[6].Width = 100;
+            dataGridView1.Columns[7].Width = 100;
+            dataGridView1.Columns[8].Width = 100;
+            dataGridView1.Columns[9].Width = 100;
+            dataGridView1.Columns[10].Width = 100;
+            dataGridView1.Columns[11].Width = 100;
+        }
+        private void create_datagridview2()
+        {
+            new StackedHeaderDecorator(dataGridView2, DataGridViewAutoSizeColumnsMode.Fill);
+            DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
+            dataGridView2.Columns.Clear();
+            checkBoxColumn.HeaderText = "선택";
+            checkBoxColumn.Name = "check";
+            dataGridView2.Columns.Add(checkBoxColumn);
+
+            dataGridView2.Columns.Add("B1", "존 번호");
+            dataGridView2.Columns.Add("B2", "바닥면적");
+
+            dataGridView2.Columns[0].Width = 30;
+            dataGridView2.Columns[1].Width = 100;
+            dataGridView2.Columns[2].Width = 100;
+        }
         private String _fixed(string v)
         {
             try
@@ -43,7 +89,8 @@ namespace main.contents
 
                 while (++i < rec.Length)
                 {
-                    dataGridView2.Rows.Add(null, rec[i][0], _fixed(rec[i][1]), rec[i][2], _fixed(rec[i][3]), _fixed(rec[i][4]), _fixed(rec[i][5]));
+                    dataGridView2.Rows.Add(null, rec[i][0], _fixed(rec[i][1]));
+                    //  dataGridView2.Rows.Add(null, rec[i][0], _fixed(rec[i][1]), rec[i][2], _fixed(rec[i][3]), _fixed(rec[i][4]), _fixed(rec[i][5]));
                 }
             }
             {
@@ -52,7 +99,7 @@ namespace main.contents
 
                 while (++i < rec.Length)
                 {
-                    dataGridView1.Rows.Add(null, rec[i][0], rec[i][1], rec[i][2], null, null, rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]),null);
+                    dataGridView1.Rows.Add(null, rec[i][0], rec[i][1], rec[i][2], null, null, rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]), null);
 
                     if (isWinType(rec[i][3]))
                     {
@@ -151,7 +198,7 @@ namespace main.contents
         {
             string[][] Value = null;
 
-            switch(Type)
+            switch (Type)
             {
                 case "커튼월창":
                     Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭", "");
@@ -186,7 +233,7 @@ namespace main.contents
                 dataGridView1.Rows[n].Cells[10] = ConstructionCombo;
             }
             else { }
-           
+
         }
 
         private void onDataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -210,38 +257,20 @@ namespace main.contents
 
                 dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 int SelectRow = e.RowIndex;
-                DataGridViewRow row = dataGridView1.Rows[SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < dataGridView1.RowCount; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        dataGridView1.Rows[k].Cells[0].Value = false;
-                        row2 = dataGridView1.Rows[k];
-                        row2.DefaultCellStyle.BackColor = SystemColors.Window;
-                        row2.DefaultCellStyle.ForeColor = SystemColors.WindowText;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = SystemColors.WindowText;
-                        row = dataGridView1.Rows[e.RowIndex];
-                    }
-                }
             }
         }
         public string Save()
         {
 
-            string num, num0, Type, CWType, ConsType, ret = "", tcode, RoofWin="";
+            string num, num0, Type, CWType, ConsType, ret = "", tcode, RoofWin = "";
             int i = -1;
             while (++i < dataGridView1.RowCount)
             {
-              if(dataGridView1.Rows[i].Cells[4].Value != null)
+                if (dataGridView1.Rows[i].Cells[4].Value != null)
                 {
                     if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "내벽" && dataGridView1.Rows[i].Cells[4].Value.ToString() != "층간바닥")
                     {
-                        if (dataGridView1.Rows[i].Cells[10].Value == null|| dataGridView1.Rows[i].Cells[10].Value.ToString() == "")
+                        if (dataGridView1.Rows[i].Cells[10].Value == null || dataGridView1.Rows[i].Cells[10].Value.ToString() == "")
                         {
                             MessageBox.Show(dataGridView1.Rows[i].Cells[1].Value.ToString() + "의 구조체를 선택하세요.");
                             return "[" + ret + "]";
@@ -250,7 +279,7 @@ namespace main.contents
                     }
                     else { }
                 }
-                else { }                    
+                else { }
             }
 
             i = -1;
@@ -317,7 +346,7 @@ namespace main.contents
                         { Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,구조체,구조체번호", "'" + rec[0][0] + "','" + num + "','" + ConsType + "','" + Value[0][0] + "'", "아이디"); }
                         else { }
                     }
-                    if(dataGridView1.Rows[i].Cells[11].Value == null)
+                    if (dataGridView1.Rows[i].Cells[11].Value == null)
                     {
                         RoofWin = "";
                     }
@@ -325,7 +354,7 @@ namespace main.contents
                     {
                         string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num0 + "'");
                         RoofWin = dataGridView1.Rows[i].Cells[11].Value.ToString();
-                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,천창유무", "'" + rec[0][0] + "','" + RoofWin  + "'", "아이디");
+                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,천창유무", "'" + rec[0][0] + "','" + RoofWin + "'", "아이디");
                     }
                 }
             }
@@ -338,7 +367,7 @@ namespace main.contents
 
         private string getTCode(string type)
         {
-            switch(type)
+            switch (type)
             {
                 case "창호":
                     return "_WIN_";
