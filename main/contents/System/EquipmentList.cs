@@ -34,8 +34,8 @@ namespace main.contents
         {
             InitializeComponent();
 
-            new StackedHeaderDecorator(Boiler_dataGridView);
-            new StackedHeaderDecorator(Pump_dataGridView);
+            new StackedHeaderDecorator(Boiler_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            new StackedHeaderDecorator(Pump_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
 
 
             Program.DB.initTable(DB.type.ProjDB, "User_Boiler");
@@ -76,6 +76,17 @@ namespace main.contents
             Boiler_dataGridView.Columns.Add("A10", "전력.소비전력" + Environment.NewLine + "[W]");
             Boiler_dataGridView.Columns.Add("A11", "전력.대기전력" + Environment.NewLine + "[W]");
             Boiler_dataGridView.Columns.Add("A12", "대수" + Environment.NewLine + "[EA]");
+            Boiler_dataGridView.Columns[0].Width = 40;
+            Boiler_dataGridView.Columns[1].Width = 60;
+            Boiler_dataGridView.Columns[2].Width = 60;
+            Boiler_dataGridView.Columns[3].Width = 100;
+            Boiler_dataGridView.Columns[4].Width = 90;
+            Boiler_dataGridView.Columns[5].Width = 60;
+            Boiler_dataGridView.Columns[6].Width = 130;
+            Boiler_dataGridView.Columns[8].Width = 80;
+            Boiler_dataGridView.Columns[9].Width = 80;
+            Boiler_dataGridView.Columns[10].Width = 50;
+            Boiler_dataGridView.Columns[11].Width = 50;
 
 
             //Boiler_dataGridView.ColumnCount = 13;
@@ -361,10 +372,18 @@ namespace main.contents
             Pump_dataGridView.Columns.Add("P5", "B효율" + Environment.NewLine + "[%]");
             Pump_dataGridView.Columns.Add("P6", "유량" + Environment.NewLine + "[CMH]");
             Pump_dataGridView.Columns.Add("P7", "양정" + Environment.NewLine + "[m]");
-            Pump_dataGridView.Columns.Add("P8", "계산");
+            Pump_dataGridView.Columns.Add("P8", "");
             Pump_dataGridView.Columns.Add("P9", "동력" + Environment.NewLine + "[kW]");
-            Pump_dataGridView.Columns.Add("P10", "계산");
+            Pump_dataGridView.Columns.Add("P10", "");
             Pump_dataGridView.Columns.Add("P11", "대수" + Environment.NewLine + "[EA]");
+            Pump_dataGridView.Columns[0].Width = 40;
+            Pump_dataGridView.Columns[1].Width = 60;
+            Pump_dataGridView.Columns[2].Width = 130;
+            Pump_dataGridView.Columns[3].Width = 130;
+            Pump_dataGridView.Columns[7].Width = 100;
+            Pump_dataGridView.Columns[8].Width = 40;
+            Pump_dataGridView.Columns[9].Width = 100;
+            Pump_dataGridView.Columns[10].Width = 40;
 
             //Pump_dataGridView.ColumnCount = 12;
             //Pump_dataGridView.Columns[1].HeaderText = "번호";

@@ -28,15 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             Zone_button = new Button();
             label1 = new Label();
@@ -76,6 +79,17 @@
             MainSystem_label = new Label();
             MainSystem_comboBox = new ComboBox();
             Qhs_tabPage = new TabPage();
+            StoragePump_dataGridView = new DataGridView();
+            label12 = new Label();
+            StoragePump_comboBox = new ComboBox();
+            StoragePump_textBox = new TextBox();
+            StoragePump_button = new Button();
+            StoragePump_label = new Label();
+            Vs_label1 = new Label();
+            Vs_label2 = new Label();
+            Vs_textBox = new TextBox();
+            label11 = new Label();
+            StorageUse_comboBox = new ComboBox();
             Qhd_tabPage = new TabPage();
             Pump_dataGridView = new DataGridView();
             Pump2_textBox = new TextBox();
@@ -102,11 +116,6 @@
             label4 = new Label();
             ce1Type_comboBox = new ComboBox();
             panel2 = new Panel();
-            label11 = new Label();
-            Storage_comboBox = new ComboBox();
-            dPanel_label = new Label();
-            dPanel_label2 = new Label();
-            Vs_textBox = new TextBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
@@ -115,6 +124,7 @@
             Boiler_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).BeginInit();
             Qhs_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)StoragePump_dataGridView).BeginInit();
             Qhd_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Pump_dataGridView).BeginInit();
             Qhce_tabPage.SuspendLayout();
@@ -292,33 +302,33 @@
             Boiler_dataGridView.BorderStyle = BorderStyle.None;
             Boiler_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Boiler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
-            Boiler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            Boiler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Boiler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Boiler_dataGridView.Location = new Point(6, 9);
             Boiler_dataGridView.Name = "Boiler_dataGridView";
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = SystemColors.Control;
-            dataGridViewCellStyle11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
-            Boiler_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            Boiler_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             Boiler_dataGridView.RowHeadersVisible = false;
             Boiler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle12.ForeColor = Color.Black;
-            dataGridViewCellStyle12.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle12.SelectionForeColor = Color.Black;
-            Boiler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            Boiler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             Boiler_dataGridView.RowTemplate.Height = 25;
             Boiler_dataGridView.Size = new Size(943, 113);
             Boiler_dataGridView.TabIndex = 22;
@@ -610,17 +620,173 @@
             // Qhs_tabPage
             // 
             Qhs_tabPage.BackColor = Color.White;
-            Qhs_tabPage.Controls.Add(dPanel_label);
-            Qhs_tabPage.Controls.Add(dPanel_label2);
+            Qhs_tabPage.Controls.Add(StoragePump_dataGridView);
+            Qhs_tabPage.Controls.Add(label12);
+            Qhs_tabPage.Controls.Add(StoragePump_comboBox);
+            Qhs_tabPage.Controls.Add(StoragePump_textBox);
+            Qhs_tabPage.Controls.Add(StoragePump_button);
+            Qhs_tabPage.Controls.Add(StoragePump_label);
+            Qhs_tabPage.Controls.Add(Vs_label1);
+            Qhs_tabPage.Controls.Add(Vs_label2);
             Qhs_tabPage.Controls.Add(Vs_textBox);
             Qhs_tabPage.Controls.Add(label11);
-            Qhs_tabPage.Controls.Add(Storage_comboBox);
+            Qhs_tabPage.Controls.Add(StorageUse_comboBox);
             Qhs_tabPage.Location = new Point(4, 24);
             Qhs_tabPage.Name = "Qhs_tabPage";
             Qhs_tabPage.Padding = new Padding(3);
             Qhs_tabPage.Size = new Size(969, 286);
             Qhs_tabPage.TabIndex = 2;
             Qhs_tabPage.Text = "저장";
+            // 
+            // StoragePump_dataGridView
+            // 
+            StoragePump_dataGridView.AllowUserToAddRows = false;
+            StoragePump_dataGridView.AllowUserToDeleteRows = false;
+            StoragePump_dataGridView.AllowUserToResizeColumns = false;
+            StoragePump_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            StoragePump_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            StoragePump_dataGridView.BackgroundColor = Color.White;
+            StoragePump_dataGridView.BorderStyle = BorderStyle.None;
+            StoragePump_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            StoragePump_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            StoragePump_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            StoragePump_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            StoragePump_dataGridView.Location = new Point(10, 79);
+            StoragePump_dataGridView.Name = "StoragePump_dataGridView";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            StoragePump_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            StoragePump_dataGridView.RowHeadersVisible = false;
+            StoragePump_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            StoragePump_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            StoragePump_dataGridView.RowTemplate.Height = 25;
+            StoragePump_dataGridView.Size = new Size(949, 129);
+            StoragePump_dataGridView.TabIndex = 186;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label12.Location = new Point(521, 41);
+            label12.Name = "label12";
+            label12.Size = new Size(83, 15);
+            label12.TabIndex = 185;
+            label12.Text = "축열펌프 유무";
+            // 
+            // StoragePump_comboBox
+            // 
+            StoragePump_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            StoragePump_comboBox.FormattingEnabled = true;
+            StoragePump_comboBox.Location = new Point(610, 38);
+            StoragePump_comboBox.Name = "StoragePump_comboBox";
+            StoragePump_comboBox.Size = new Size(120, 24);
+            StoragePump_comboBox.TabIndex = 184;
+            StoragePump_comboBox.SelectedIndexChanged += StoragePump_comboBox_SelectedIndexChanged;
+            // 
+            // StoragePump_textBox
+            // 
+            StoragePump_textBox.BackColor = Color.White;
+            StoragePump_textBox.BorderStyle = BorderStyle.None;
+            StoragePump_textBox.Enabled = false;
+            StoragePump_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            StoragePump_textBox.ForeColor = SystemColors.ControlDark;
+            StoragePump_textBox.Location = new Point(790, 43);
+            StoragePump_textBox.Name = "StoragePump_textBox";
+            StoragePump_textBox.Size = new Size(120, 15);
+            StoragePump_textBox.TabIndex = 183;
+            StoragePump_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // StoragePump_button
+            // 
+            StoragePump_button.BackColor = SystemColors.ControlLight;
+            StoragePump_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            StoragePump_button.FlatStyle = FlatStyle.System;
+            StoragePump_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            StoragePump_button.Location = new Point(912, 39);
+            StoragePump_button.Margin = new Padding(0);
+            StoragePump_button.Name = "StoragePump_button";
+            StoragePump_button.Size = new Size(23, 23);
+            StoragePump_button.TabIndex = 182;
+            StoragePump_button.Text = "+";
+            StoragePump_button.UseVisualStyleBackColor = false;
+            StoragePump_button.Click += StoragePump_button_Click;
+            // 
+            // StoragePump_label
+            // 
+            StoragePump_label.AutoSize = true;
+            StoragePump_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            StoragePump_label.Location = new Point(753, 43);
+            StoragePump_label.Name = "StoragePump_label";
+            StoragePump_label.Size = new Size(31, 15);
+            StoragePump_label.TabIndex = 181;
+            StoragePump_label.Text = "펌프";
+            // 
+            // Vs_label1
+            // 
+            Vs_label1.AutoSize = true;
+            Vs_label1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Vs_label1.Location = new Point(268, 42);
+            Vs_label1.Name = "Vs_label1";
+            Vs_label1.Size = new Size(76, 16);
+            Vs_label1.TabIndex = 180;
+            Vs_label1.Text = "축열탱크 용량";
+            // 
+            // Vs_label2
+            // 
+            Vs_label2.AutoSize = true;
+            Vs_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Vs_label2.ForeColor = SystemColors.ControlDark;
+            Vs_label2.Location = new Point(472, 42);
+            Vs_label2.Name = "Vs_label2";
+            Vs_label2.Size = new Size(32, 16);
+            Vs_label2.TabIndex = 179;
+            Vs_label2.Text = "Liter";
+            // 
+            // Vs_textBox
+            // 
+            Vs_textBox.BorderStyle = BorderStyle.FixedSingle;
+            Vs_textBox.Location = new Point(350, 39);
+            Vs_textBox.Name = "Vs_textBox";
+            Vs_textBox.Size = new Size(120, 23);
+            Vs_textBox.TabIndex = 178;
+            Vs_textBox.TextChanged += Vs_textBox_TextChanged;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label11.Location = new Point(34, 43);
+            label11.Name = "label11";
+            label11.Size = new Size(83, 15);
+            label11.TabIndex = 177;
+            label11.Text = "축열탱크 유무";
+            // 
+            // StorageUse_comboBox
+            // 
+            StorageUse_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            StorageUse_comboBox.FormattingEnabled = true;
+            StorageUse_comboBox.Location = new Point(123, 38);
+            StorageUse_comboBox.Name = "StorageUse_comboBox";
+            StorageUse_comboBox.Size = new Size(120, 24);
+            StorageUse_comboBox.TabIndex = 176;
+            StorageUse_comboBox.SelectedIndexChanged += StorageUse_comboBox_SelectedIndexChanged;
             // 
             // Qhd_tabPage
             // 
@@ -654,33 +820,33 @@
             Pump_dataGridView.BorderStyle = BorderStyle.None;
             Pump_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Pump_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle13.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle13.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle13.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle13.WrapMode = DataGridViewTriState.True;
-            Pump_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            Pump_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             Pump_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Pump_dataGridView.Location = new Point(14, 71);
             Pump_dataGridView.Name = "Pump_dataGridView";
-            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = SystemColors.Control;
-            dataGridViewCellStyle14.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle14.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle14.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle14.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = DataGridViewTriState.True;
-            Pump_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = SystemColors.Control;
+            dataGridViewCellStyle8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
+            Pump_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             Pump_dataGridView.RowHeadersVisible = false;
             Pump_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle15.ForeColor = Color.Black;
-            dataGridViewCellStyle15.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle15.SelectionForeColor = Color.Black;
-            Pump_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle9.ForeColor = Color.Black;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
+            Pump_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
             Pump_dataGridView.RowTemplate.Height = 25;
             Pump_dataGridView.Size = new Size(949, 129);
             Pump_dataGridView.TabIndex = 185;
@@ -849,33 +1015,33 @@
             ce_dataGridView.BorderStyle = BorderStyle.None;
             ce_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             ce_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle16.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle16.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle16.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle16.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle16.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle16.WrapMode = DataGridViewTriState.True;
-            ce_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle10.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle10.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            ce_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             ce_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             ce_dataGridView.Location = new Point(19, 79);
             ce_dataGridView.Name = "ce_dataGridView";
-            dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.BackColor = SystemColors.Control;
-            dataGridViewCellStyle17.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle17.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle17.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle17.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = DataGridViewTriState.True;
-            ce_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = SystemColors.Control;
+            dataGridViewCellStyle11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
+            ce_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
             ce_dataGridView.RowHeadersVisible = false;
             ce_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle18.ForeColor = Color.Black;
-            dataGridViewCellStyle18.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle18.SelectionForeColor = Color.Black;
-            ce_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle12.ForeColor = Color.Black;
+            dataGridViewCellStyle12.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle12.SelectionForeColor = Color.Black;
+            ce_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
             ce_dataGridView.RowTemplate.Height = 25;
             ce_dataGridView.Size = new Size(856, 201);
             ce_dataGridView.TabIndex = 193;
@@ -1005,55 +1171,6 @@
             panel2.Size = new Size(977, 221);
             panel2.TabIndex = 143;
             // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label11.Location = new Point(34, 43);
-            label11.Name = "label11";
-            label11.Size = new Size(83, 15);
-            label11.TabIndex = 177;
-            label11.Text = "축열탱크 유무";
-            // 
-            // Storage_comboBox
-            // 
-            Storage_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Storage_comboBox.FormattingEnabled = true;
-            Storage_comboBox.Location = new Point(123, 38);
-            Storage_comboBox.Name = "Storage_comboBox";
-            Storage_comboBox.Size = new Size(120, 24);
-            Storage_comboBox.TabIndex = 176;
-            Storage_comboBox.SelectedIndexChanged += Storage_comboBox_SelectedIndexChanged;
-            // 
-            // dPanel_label
-            // 
-            dPanel_label.AutoSize = true;
-            dPanel_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dPanel_label.Location = new Point(268, 42);
-            dPanel_label.Name = "dPanel_label";
-            dPanel_label.Size = new Size(76, 16);
-            dPanel_label.TabIndex = 180;
-            dPanel_label.Text = "축열탱크 용량";
-            // 
-            // dPanel_label2
-            // 
-            dPanel_label2.AutoSize = true;
-            dPanel_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dPanel_label2.ForeColor = SystemColors.ControlDark;
-            dPanel_label2.Location = new Point(472, 42);
-            dPanel_label2.Name = "dPanel_label2";
-            dPanel_label2.Size = new Size(32, 16);
-            dPanel_label2.TabIndex = 179;
-            dPanel_label2.Text = "Liter";
-            // 
-            // Vs_textBox
-            // 
-            Vs_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Vs_textBox.Location = new Point(350, 39);
-            Vs_textBox.Name = "Vs_textBox";
-            Vs_textBox.Size = new Size(120, 23);
-            Vs_textBox.TabIndex = 178;
-            // 
             // HeatingSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1077,6 +1194,7 @@
             ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).EndInit();
             Qhs_tabPage.ResumeLayout(false);
             Qhs_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)StoragePump_dataGridView).EndInit();
             Qhd_tabPage.ResumeLayout(false);
             Qhd_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Pump_dataGridView).EndInit();
@@ -1155,9 +1273,15 @@
         private DataGridView ce_dataGridView;
         private Button ce_Remove_button;
         private Label label11;
-        private ComboBox Storage_comboBox;
-        private Label dPanel_label;
-        private Label dPanel_label2;
+        private ComboBox StorageUse_comboBox;
+        private Label Vs_label1;
+        private Label Vs_label2;
         private TextBox Vs_textBox;
+        private DataGridView StoragePump_dataGridView;
+        private Label label12;
+        private ComboBox StoragePump_comboBox;
+        private TextBox StoragePump_textBox;
+        private Button StoragePump_button;
+        private Label StoragePump_label;
     }
 }

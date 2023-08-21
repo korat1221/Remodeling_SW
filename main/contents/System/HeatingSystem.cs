@@ -23,13 +23,13 @@ namespace main.contents
     public partial class HeatingSystem : Form
     {
         String Num, Name;
-        String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System, PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control, ce1Type, ce2Type;
+        String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System, PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control, ce1Type, ce2Type, StorageUse, StoragePumpUse, StoragePump;
         int Pump1Num, Pump2Num;
         String[] SystemType = { "보일러", "히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
         String[] ceType = { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방" };
         ArrayList SelectBoiler = new ArrayList(); ArrayList SelectPump = new ArrayList(); ArrayList Selectce1Zone = new ArrayList(); ArrayList Selectce2Zone = new ArrayList();
         int ce_SelectRow;
-
+        double Vs;
         public HeatingSystem()
         {
             InitializeComponent();
@@ -68,13 +68,21 @@ namespace main.contents
                 Sub2System_comboBox.Items.Add(SystemType[i]);
             }
             MainSystem_comboBox.SelectedIndex = 0;
-
+            //축열 유무 콤보박스
+            StorageUse_comboBox.Items.Clear();
+            StorageUse_comboBox.Items.Add("축열탱크 없음");
+            StorageUse_comboBox.Items.Add("축열탱크 있음");
+            StorageUse_comboBox.SelectedIndex = 0;
+            //축열펌프 유무 콤보박스
+            StoragePump_comboBox.Items.Clear();
+            StoragePump_comboBox.Items.Add("축열펌프 없음");
+            StoragePump_comboBox.Items.Add("축열펌프 있음");
+            StoragePump_comboBox.SelectedIndex = 0;
             //펌프 유무 콤보박스 
             PumpUse_comboBox.Items.Clear();
             PumpUse_comboBox.Items.Add("펌프 있음");
             PumpUse_comboBox.Items.Add("펌프 없음(설비 내장)");
             PumpUse_comboBox.SelectedIndex = 1;
-
             //펌프 방식 콤보박스
             PumpMethod_comboBox.Items.Clear();
             PumpMethod_comboBox.Items.Add("1차펌프");
@@ -396,9 +404,85 @@ namespace main.contents
 
 
         /////////////////////////////////////////////////////저장////////////////////////////////////////////////////////////////////
-        private void Storage_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void StorageUse_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (StorageUse_comboBox.SelectedItem != null)
+            {
+                StorageUse = StorageUse_comboBox.SelectedItem.ToString();
+                if (StorageUse == "축열탱크 있음")
+                {
+                    Vs_label1.Visible = true;
+                    Vs_textBox.Visible = true;
+                    Vs_label2.Visible = true;
+                }
+                else
+                {
+                    Vs_label1.Visible = false;
+                    Vs_textBox.Visible = false;
+                    Vs_label2.Visible = false;
+                }
+            }
+            else
+            {
+                Vs = 0;
+            }
+        }
 
+        private void Vs_textBox_TextChanged(object sender, EventArgs e) 
+        {
+            if (Vs_textBox.Text != null)
+            { Vs = Convert.ToDouble(Vs_textBox.Text.ToString()); }
+            else {  Vs = 0; }
+         }
+        private void StoragePump_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (StoragePump_comboBox.SelectedItem != null)
+            {
+                StoragePumpUse = StoragePump_comboBox.SelectedItem.ToString();
+                if (StoragePumpUse == "축열펌프 있음")
+                {
+                    StoragePump_label.Visible = true;
+                    StoragePump_textBox.Visible = true;
+                    StoragePump_button.Visible = true;
+                    Create_StoragePump_Table();
+                }
+                else
+                {
+                    StoragePump_label.Visible = false;
+                    StoragePump_textBox.Visible = false;
+                    StoragePump_button.Visible = false;
+                    StoragePump_dataGridView.Columns.Clear();
+                }
+            }
+            else
+            {
+                StoragePumpUse = null;
+            }
+        }
+
+        private void StoragePump_button_Click(object sender, EventArgs e)
+        {
+            if (StoragePump_dataGridView.Rows.Count == 0)
+            {
+                StoragePump_dataGridView.Rows.Add();
+            }
+            Heating_Pump heating_pump = new Heating_Pump();
+            DialogResult result = heating_pump.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    if (heating_pump.SelectPump != null)
+                    {
+                        StoragePump = heating_pump.SelectPump;
+                        string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + StoragePump.ToString() + "'");
+                        StoragePump_textBox.Text = Value[0][0];
+                        if (StoragePump_dataGridView.Rows.Count == 1)
+                        { Load_Pump_Table(0, StoragePump); }
+                    }
+                }
+                catch { }
+            }
         }
         /////////////////////////////////////////////////////분배////////////////////////////////////////////////////////////////////
         private void PumpUse_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -565,7 +649,24 @@ namespace main.contents
                 catch { }
             }
         }
+        private void Create_StoragePump_Table()
+        {
+            StoragePump_dataGridView.Columns.Clear();
+            new StackedHeaderDecorator(StoragePump_dataGridView);
+            StoragePump_dataGridView.Columns.Add("A0", "구분");
+            StoragePump_dataGridView.Columns.Add("A1", "펌프번호");
+            StoragePump_dataGridView.Columns.Add("A2", "명칭");
+            StoragePump_dataGridView.Columns.Add("A3", "종류");
+            StoragePump_dataGridView.Columns.Add("A4", "A효율.[%]");
+            StoragePump_dataGridView.Columns.Add("A5", "B효율.[%]");
+            StoragePump_dataGridView.Columns.Add("A6", "유량.[CMH]");
+            StoragePump_dataGridView.Columns.Add("A7", "동력.[kW]");
+            StoragePump_dataGridView.Columns.Add("A8", "양정.[m]");
+            StoragePump_dataGridView.Columns.Add("A9", "정유량 밸브");
+            StoragePump_dataGridView.Columns.Add("A10", "펌프 제어");
+            StoragePump_dataGridView.Columns.Add("A11", "대수.[EA]");
 
+        }
         private void Create_Pump_Table()
         {
             Pump_dataGridView.Columns.Clear();
