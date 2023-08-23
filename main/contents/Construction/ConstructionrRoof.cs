@@ -60,7 +60,6 @@ namespace main.contents
             }
             else return false;
         }
-
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;

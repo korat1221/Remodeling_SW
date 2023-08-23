@@ -48,7 +48,7 @@ public class StackedHeaderDecorator
         DataGridViewCellStyle defCellStyle = new DataGridViewCellStyle();
 
         defCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        defCellStyle.BackColor = Color.White;
+        defCellStyle.BackColor = Color.FromArgb(251, 251, 251);
         defCellStyle.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
         defCellStyle.ForeColor = SystemColors.WindowText;
         defCellStyle.SelectionBackColor = Color.White;
@@ -58,8 +58,8 @@ public class StackedHeaderDecorator
 
         objDataGrid.GridColor = Color.FromArgb(220, 220, 220);//Row 선 색
         objDataGrid.CellBorderStyle = DataGridViewCellBorderStyle.Single;
-
         objDataGrid.CellPainting += dataGridView1_CellPainting;
+
         //    objDataGrid.RowsAdded += objDataGrid_RowsAdded;
         //    objDataGrid..RowsRemoved += objDataGrid_RowsRemoved;
 
@@ -148,14 +148,15 @@ public class StackedHeaderDecorator
                     if (renderProc != null && renderProc(cell, i, k)) 
                     {
                         continue;
-                    }
+                    }                    
                     else if (cell.GetType() == typeof(DataGridViewTextBoxCell))
                     {
-                        cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? SystemColors.Info : Color.FromArgb(255, 255, 255); //입력 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 노랑색 
+                        cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? Color.FromArgb(255, 255, 243) : Color.FromArgb(255, 255, 255); //입력 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 노랑색 
                     }
-                    else if (cell.GetType() == typeof(DataGridViewComboBoxCell))
+                    else if (cell.GetType() == typeof(DataGridViewComboBoxCell)) 
                     {
-                        cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? Color.FromArgb(244, 227, 216) : Color.FromArgb(255, 255, 255);//콤보박스 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 주황색
+                         //cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? SystemColors.InactiveBorder : Color.FromArgb(255, 255, 255);//콤보박스 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 주황색
+                         cell.Style.BackColor = (cell.Value == null || cell.Value.ToString() == "") ? Color.FromArgb(255, 255, 243) : Color.FromArgb(255, 255, 255);//콤보박스 셀에 입력되어 있을 경우 회색, 안되어 있을 경우 주황색
                     }
                     else
                     {

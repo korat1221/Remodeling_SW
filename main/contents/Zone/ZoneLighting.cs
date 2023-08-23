@@ -503,16 +503,20 @@ namespace main.contents
             L1_textBox.Text = LightType;
             L2_textBox.Text = LightType2;
             L4_textBox.Text = LightConverter;
-            if (LightNumber.Contains("LP"))
+
+            if(LightNumber  != null)
             {
-                L5_textBox.Text = D_LightFi;
-                L6_textBox.Text = D_LightPi;
-            }
-            else
-            {
-                L5_textBox.Text = U_LightFi.ToString();
-                L6_textBox.Text = U_LightPi.ToString();
-            }
+                if (LightNumber.Contains("LP"))
+                {
+                    L5_textBox.Text = D_LightFi;
+                    L6_textBox.Text = D_LightPi;
+                }
+                else
+                {
+                    L5_textBox.Text = U_LightFi.ToString();
+                    L6_textBox.Text = U_LightPi.ToString();
+                }
+            }            
             L8_textBox.Text = LightFL.ToString();
 
             label5.ForeColor = Color.Black;

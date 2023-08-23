@@ -19,6 +19,7 @@ namespace main.subcontents.HeatingSystem
         double Count_DB;
         ArrayList SelectRow = new ArrayList();
         String SystemNum;
+        public string SelectZone;
 
         public Heating_Zone(String Num)
         {
@@ -29,33 +30,69 @@ namespace main.subcontents.HeatingSystem
 
         void load_table_DB()
         {
-            DataTable table_Zone = new DataTable();
+            //  DataTable table_Zone = new DataTable();
+            new StackedHeaderDecorator(Zone_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Zone_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             Zone_dataGridView.Columns.Add(checkBoxColumn);
-            table_Zone.Columns.Add("번호", typeof(string));
-            table_Zone.Columns.Add("층", typeof(string));
-            table_Zone.Columns.Add("존 명칭", typeof(string));
-            table_Zone.Columns.Add("용도프로필", typeof(string));
-            table_Zone.Columns.Add("연간 난방요구량", typeof(string));
-            table_Zone.Columns.Add("면적", typeof(string));
-            
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적", "냉난방유무 ='냉난방' OR 냉난방유무 = '난방'");
-            
-            for (int n = 0; n < Value.Length; n++)
-                {
-                string[][] 층 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "존 ='" + Value[n][0] + "'");
-                string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed", "Qhb_a", "번호 ='"+Value[n][0]+"'");
-                table_Zone.Rows.Add(Value[n][0], 층[0][0], Value[n][1], Value[n][2], string.Format("{0:F2}", Convert.ToDouble(요구량[0][0])), string.Format("{0:F1}", Convert.ToDouble(Value[n][3])));
-                Count_DB = Value.Length;
-                }
 
-            Zone_dataGridView.DataSource = table_Zone;
+            Zone_dataGridView.Columns.Add("A1", "번호");
+            Zone_dataGridView.Columns.Add("A2", "층");
+            Zone_dataGridView.Columns.Add("A3", "존명칭");
+            Zone_dataGridView.Columns.Add("A4", "용도프로필");
+            Zone_dataGridView.Columns.Add("A5", "연간 난방요구량.[kWh/a]");
+            Zone_dataGridView.Columns.Add("A6", "면적.[m²]");
+            //table_Zone.Columns.Add("번호", typeof(string));
+            //table_Zone.Columns.Add("층", typeof(string));
+            //table_Zone.Columns.Add("존 명칭", typeof(string));
+            //table_Zone.Columns.Add("용도프로필", typeof(string));
+            //table_Zone.Columns.Add("연간 난방요구량", typeof(string));
+            //table_Zone.Columns.Add("면적", typeof(string));
+
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적", "냉난방유무 ='냉난방' OR 냉난방유무 = '난방'");
+
+            for (int n = 0; n < Value.Length; n++)
+            {
+                string[][] 층 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "존 ='" + Value[n][0] + "'");
+                string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed", "Qhb_a", "번호 ='" + Value[n][0] + "'");
+
+                Zone_dataGridView.Rows.Add();
+                int nRow = Zone_dataGridView.Rows.Count - 1;
+                Zone_dataGridView.Rows[nRow].Cells[1].Value = Value[n][0];
+                Zone_dataGridView.Rows[nRow].Cells[2].Value = 층[0][0];
+                Zone_dataGridView.Rows[nRow].Cells[3].Value = Value[n][1];
+                Zone_dataGridView.Rows[nRow].Cells[4].Value = Value[n][2];
+                Zone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", Convert.ToDouble(요구량[0][0]));
+                Zone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(Value[n][3]));
+
+                //table_Zone.Rows.Add(Value[n][0], 층[0][0], Value[n][1], Value[n][2], string.Format("{0:F2}", Convert.ToDouble(요구량[0][0])), string.Format("{0:F1}", Convert.ToDouble(Value[n][3])));
+                Count_DB = Value.Length;
+            }
+            //Zone_dataGridView.DataSource = table_Zone;
         }
 
 
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = SystemColors.InactiveBorder;
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+        }
         private void SelectCheckBox()
         {
             foreach (DataGridViewRow row in Zone_dataGridView.Rows)
@@ -72,22 +109,22 @@ namespace main.subcontents.HeatingSystem
         {
             SelectRow.Clear();
             SelectCheckBox();
-
-            String[][] Size = Program.DB.getValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호, 난방시스템", "난방시스템 = '" + SystemNum + "'");
-            if (Size.Length > 0)
+            for (int k = 0; k < SelectRow.Count; k++)
             {
-                Program.DB.deleteValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "난방시스템 = '" + SystemNum + "'");
+                if (k == SelectRow.Count - 1)
+                {
+                    SelectZone += Zone_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString();
+                }
+                else
+                {
+                    SelectZone += Zone_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + ",";
+                }
             }
-            for (int n = 0; n < SelectRow.Count; n++)
-            {
-                DataGridViewRow row = Zone_dataGridView.Rows[Convert.ToInt32(SelectRow[n])];               
 
-                Program.DB.setValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호,난방시스템",
-                "'" + row.Cells[1].Value.ToString() + "','" + SystemNum + "'","");
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+          }
         }
 
     }
-}
+

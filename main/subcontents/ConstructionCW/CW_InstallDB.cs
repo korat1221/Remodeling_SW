@@ -24,7 +24,7 @@ namespace main.subcontents.ConstructionCW
 
         public CW_InstallDB(String InstallType)
         {
-            InitializeComponent();           
+            InitializeComponent();
             this.InstallType = InstallType;
             load_table_InstallDB();
             //사용자DB 구분1 콤보박스
@@ -73,7 +73,7 @@ namespace main.subcontents.ConstructionCW
 
         void load_table_InstallDB()
         {
-            new StackedHeaderDecorator(Install_dataGridView);
+            new StackedHeaderDecorator(Install_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Install_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -86,9 +86,9 @@ namespace main.subcontents.ConstructionCW
             Install_dataGridView.Columns.Add("A4", "구분1");
             Install_dataGridView.Columns.Add("A5", "구분2");
             Install_dataGridView.Columns.Add("A6", "구분3");
-            Install_dataGridView.Columns.Add("A7", "설치선형열관류율.상부.Ψg,top[W/m·K]");
-            Install_dataGridView.Columns.Add("A8", "설치선형열관류율.측면.Ψg,side[W/m·K]");
-            Install_dataGridView.Columns.Add("A9", "설치선형열관류율.하부.Ψg,buttom[W/m·K]");
+            Install_dataGridView.Columns.Add("A7", "설치선형열관류율.상부.Ψg,top.[W/m·K]");
+            Install_dataGridView.Columns.Add("A8", "설치선형열관류율.측면.Ψg,side.[W/m·K]");
+            Install_dataGridView.Columns.Add("A9", "설치선형열관류율.하부.Ψg,buttom.[W/m·K]");
             //table_CWInstall.Columns.Add("번호", typeof(string));
             //table_CWInstall.Columns.Add("DB유형", typeof(string));
             //table_CWInstall.Columns.Add("제품명", typeof(string));
@@ -101,7 +101,7 @@ namespace main.subcontents.ConstructionCW
 
             try
             {
-                string[][] User_CWInstall = Program.DB.getValue(DB.type.ProjDB, "User_CWInstall", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType  + "'");
+                string[][] User_CWInstall = Program.DB.getValue(DB.type.ProjDB, "User_CWInstall", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
                 for (int n = 0; n < User_CWInstall.Length; n++)
                 {
                     Install_dataGridView.Rows.Add();
@@ -114,8 +114,6 @@ namespace main.subcontents.ConstructionCW
                 }
             }
             catch { }
-
-
 
             if (InstallType != null && FrameType != null)
             {
@@ -140,6 +138,18 @@ namespace main.subcontents.ConstructionCW
             Count_InstallDB = CWInstall.Length;
         }
 
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else return false;
+        }
 
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
@@ -185,6 +195,8 @@ namespace main.subcontents.ConstructionCW
                 Program.DB.setValue(DB.type.ProjDB, "User_CWInstall", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율",
                     "'" + UserNum + "','" + "사용자" + "','" + UserDBName + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDBType3 + "','" + UserDB_Psi_InstallTop.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "'", "번호");
                 load_table_InstallDB();
+                UserNum = Program.UTIL.CreateNum("User_CWInstall", "번호", "UCWS_0");
+                UserNum_textBox.Text = UserNum;
             }
             else
             {

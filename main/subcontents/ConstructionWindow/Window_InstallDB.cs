@@ -78,7 +78,7 @@ namespace main.subcontents
 
         void load_table_InstallDB()
         {
-            new StackedHeaderDecorator(Install_dataGridView);
+            new StackedHeaderDecorator(Install_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Install_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -92,9 +92,9 @@ namespace main.subcontents
             Install_dataGridView.Columns.Add("A5", "구분2");
             Install_dataGridView.Columns.Add("A6", "구분3");
             Install_dataGridView.Columns.Add("A7", "구분4");
-            Install_dataGridView.Columns.Add("A8", "설치선형열관류율.상부.Ψg,top[W/m·K]");
-            Install_dataGridView.Columns.Add("A9", "설치선형열관류율.측면.Ψg,side[W/m·K]");
-            Install_dataGridView.Columns.Add("A10", "설치선형열관류율.하부.Ψg,buttom[W/m·K]");
+            Install_dataGridView.Columns.Add("A8", "설치선형열관류율.상부.Ψg,top.[W/m·K]");
+            Install_dataGridView.Columns.Add("A9", "설치선형열관류율.측면.Ψg,side.[W/m·K]");
+            Install_dataGridView.Columns.Add("A10", "설치선형열관류율.하부.Ψg,buttom.[W/m·K]");
             //table_WindowInstall.Columns.Add("번호", typeof(string));
             //table_WindowInstall.Columns.Add("DB유형", typeof(string));
             //table_WindowInstall.Columns.Add("제품명", typeof(string));
@@ -146,6 +146,18 @@ namespace main.subcontents
             Count_InstallDB = WinInstall.Length;
         }
 
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else return false;
+        }
 
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)

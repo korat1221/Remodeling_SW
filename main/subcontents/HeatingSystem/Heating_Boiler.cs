@@ -22,12 +22,12 @@ namespace main.subcontents.HeatingSystem
         public string SelectBoiler;
         //HeatingSystem heatingSystem;
 
-      // public Heating_Boiler(HeatingSystem system)
+        // public Heating_Boiler(HeatingSystem system)
         public Heating_Boiler(String DefaultUse)
         {
             InitializeComponent();
             //heatingSystem = system;
-            this.DefaultUse =DefaultUse;
+            this.DefaultUse = DefaultUse;
             load_table_DB();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
@@ -37,31 +37,51 @@ namespace main.subcontents.HeatingSystem
 
         void load_table_DB()
         {
-            DataTable Boiler_table = new DataTable();
+            //DataTable Boiler_table = new DataTable();
+            new StackedHeaderDecorator(Boiler_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Boiler_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             Boiler_dataGridView.Columns.Add(checkBoxColumn);
-            Boiler_table.Columns.Add("번호", typeof(string));
-            Boiler_table.Columns.Add("명칭", typeof(string));
-            Boiler_table.Columns.Add("연료", typeof(string));
-            if(DefaultUse != "기본DB 적용")
+
+            Boiler_dataGridView.Columns.Add("A1", "번호");
+            Boiler_dataGridView.Columns.Add("A2", "명칭");
+            Boiler_dataGridView.Columns.Add("A3", "연료");
+            //Boiler_table.Columns.Add("번호", typeof(string));
+            //Boiler_table.Columns.Add("명칭", typeof(string));
+            //Boiler_table.Columns.Add("연료", typeof(string));
+            if (DefaultUse != "기본DB 적용")
             {
-                Boiler_table.Columns.Add("Type", typeof(string));
-                Boiler_table.Columns.Add("용량" + Environment.NewLine + "[kW]", typeof(string));
-            }           
-            Boiler_table.Columns.Add("전부하효율" + Environment.NewLine + "[%]", typeof(string));
-            Boiler_table.Columns.Add("부분부하효율" + Environment.NewLine + "[%]", typeof(string));
-            Boiler_table.Columns.Add("소비전력" + Environment.NewLine + "[W]", typeof(string));
-            Boiler_table.Columns.Add("대기전력" + Environment.NewLine + "[W]", typeof(string));
+                Boiler_dataGridView.Columns.Add("A4", "Type");
+                Boiler_dataGridView.Columns.Add("A5", "용량.[kW]");
+                //Boiler_table.Columns.Add("Type", typeof(string));
+                //Boiler_table.Columns.Add("용량" + Environment.NewLine + "[kW]", typeof(string));
+            }
+            Boiler_dataGridView.Columns.Add("A6", "전부하효율.[%]");
+            Boiler_dataGridView.Columns.Add("A7", "부분부하효율.[%]");
+            Boiler_dataGridView.Columns.Add("A8", "소비전력.[W]");
+            Boiler_dataGridView.Columns.Add("A9", "대기전력.[W]");
+            //Boiler_table.Columns.Add("전부하효율" + Environment.NewLine + "[%]", typeof(string));
+            //Boiler_table.Columns.Add("부분부하효율" + Environment.NewLine + "[%]", typeof(string));
+            //Boiler_table.Columns.Add("소비전력" + Environment.NewLine + "[W]", typeof(string));
+            //Boiler_table.Columns.Add("대기전력" + Environment.NewLine + "[W]", typeof(string));
 
             if (DefaultUse == "기본DB 적용")
             {
                 string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Heating, "보일러", "번호,제품명,연료,전부하효율,부분부하효율,소비전력,대기전력", "");
                 for (int n = 0; n < DefaultDB_Value.Length; n++)
                 {
-                    Boiler_table.Rows.Add(DefaultDB_Value[n][0], DefaultDB_Value[n][1], DefaultDB_Value[n][2], (Convert.ToDouble(DefaultDB_Value[n][3]) * 100).ToString(), (Convert.ToDouble(DefaultDB_Value[n][4]) * 100).ToString(), string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[n][5])), string.Format("{0:F0}", Convert.ToDouble(DefaultDB_Value[n][6])));
+                    Boiler_dataGridView.Rows.Add();
+                    int nRow = Boiler_dataGridView.Rows.Count - 1;
+                    Boiler_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[n][0];
+                    Boiler_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[n][1];
+                    Boiler_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[n][2];
+                    Boiler_dataGridView.Rows[nRow].Cells[4].Value = (Convert.ToDouble(DefaultDB_Value[n][3]) * 100).ToString();
+                    Boiler_dataGridView.Rows[nRow].Cells[5].Value = (Convert.ToDouble(DefaultDB_Value[n][4]) * 100).ToString();
+                    Boiler_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[n][5]));
+                    Boiler_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F0}", Convert.ToDouble(DefaultDB_Value[n][6]));
+                    // Boiler_table.Rows.Add(DefaultDB_Value[n][0], DefaultDB_Value[n][1], DefaultDB_Value[n][2], (Convert.ToDouble(DefaultDB_Value[n][3]) * 100).ToString(), (Convert.ToDouble(DefaultDB_Value[n][4]) * 100).ToString(), string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[n][5])), string.Format("{0:F0}", Convert.ToDouble(DefaultDB_Value[n][6])));
                 }
             }
             else
@@ -90,12 +110,42 @@ namespace main.subcontents.HeatingSystem
                     {
                         대기전력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][8]));
                     }
-                    Boiler_table.Rows.Add(User_Value[n][0], User_Value[n][1], User_Value[n][2], User_Value[n][3], 용량, 전부하효율, 부분부하효율, 소비전력, 대기전력);
+                    Boiler_dataGridView.Rows.Add();
+                    int nRow = Boiler_dataGridView.Rows.Count - 1;
+                    Boiler_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                    Boiler_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                    Boiler_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                    Boiler_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                    Boiler_dataGridView.Rows[nRow].Cells[5].Value = 용량;
+                    Boiler_dataGridView.Rows[nRow].Cells[6].Value = 전부하효율;
+                    Boiler_dataGridView.Rows[nRow].Cells[7].Value = 부분부하효율;
+                    Boiler_dataGridView.Rows[nRow].Cells[8].Value = 소비전력;
+                    Boiler_dataGridView.Rows[nRow].Cells[9].Value = 대기전력;
+                    //Boiler_table.Rows.Add(User_Value[n][0], User_Value[n][1], User_Value[n][2], User_Value[n][3], 용량, 전부하효율, 부분부하효율, 소비전력, 대기전력);
                 }
             }
-            Boiler_dataGridView.DataSource = Boiler_table;
+            // Boiler_dataGridView.DataSource = Boiler_table;
         }
 
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = SystemColors.InactiveBorder;
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+        }
 
         private void SelectCheckBox()
         {
@@ -115,13 +165,13 @@ namespace main.subcontents.HeatingSystem
             SelectCheckBox();
             for (int k = 0; k < SelectRow.Count; k++)
             {
-                if(k == SelectRow.Count-1)
+                if (k == SelectRow.Count - 1)
                 {
                     SelectBoiler += Boiler_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString();
                 }
                 else
                 {
-                    SelectBoiler += Boiler_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + ",";                   
+                    SelectBoiler += Boiler_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + ",";
                 }
             }
 

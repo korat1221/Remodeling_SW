@@ -334,6 +334,7 @@
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             Controls.Add(Door_dataGridView);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "CW_DoorFrameDB";
             Text = "CW_DoorDB";
             GeneralPanel.ResumeLayout(false);

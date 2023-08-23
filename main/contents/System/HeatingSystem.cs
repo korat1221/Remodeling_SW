@@ -10,11 +10,15 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using static main.DB;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -27,7 +31,8 @@ namespace main.contents
         int Pump1Num, Pump2Num;
         String[] SystemType = { "보일러", "히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
         String[] ceType = { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방" };
-        ArrayList SelectBoiler = new ArrayList(); ArrayList SelectPump = new ArrayList(); ArrayList Selectce1Zone = new ArrayList(); ArrayList Selectce2Zone = new ArrayList();
+        String SelectZone_nonsplit;
+        ArrayList SelectZone_split = new ArrayList(); ArrayList SelectBoiler = new ArrayList(); ArrayList SelectPump = new ArrayList(); ArrayList Selectce1Zone = new ArrayList(); ArrayList Selectce2Zone = new ArrayList();
         int ce_SelectRow;
         double Vs;
         public HeatingSystem()
@@ -111,6 +116,41 @@ namespace main.contents
             }
         }
 
+        private void Zone_button_Click(object sender, EventArgs e)
+        {
+            Heating_Zone heatingzone = new Heating_Zone(Num);
+            DialogResult result = heatingzone.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    if (heatingzone.SelectZone != null)
+                    {
+                        SelectZone_nonsplit = heatingzone.SelectZone;
+
+                        string[] token = heatingzone.SelectZone.Split(',');
+                        SelectZone_split.Clear();
+                        foreach (var item in token)
+                        {
+                            SelectZone_split.Add(item.ToString());
+                        }
+                        String 내용;
+                        if (SelectZone_split.Count > 1)
+                        {
+                            내용 = SelectZone_split[0].ToString() + " 외 " + (SelectZone_split.Count - 1).ToString() + "개";
+                        }
+                        else if (SelectZone_split.Count == 1)
+                        {
+                            내용 = SelectZone_split[0].ToString();
+                        }
+                        else { 내용 = ""; }
+                        Zone_textBox.Text = 내용;
+
+                    }
+                }
+                catch { }
+            }
+        }
         /////////////////////////////////////////////////////생산////////////////////////////////////////////////////////////////////
 
         private void SystemLoacation_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -428,12 +468,12 @@ namespace main.contents
             }
         }
 
-        private void Vs_textBox_TextChanged(object sender, EventArgs e) 
+        private void Vs_textBox_TextChanged(object sender, EventArgs e)
         {
             if (Vs_textBox.Text != null)
             { Vs = Convert.ToDouble(Vs_textBox.Text.ToString()); }
-            else {  Vs = 0; }
-         }
+            else { Vs = 0; }
+        }
         private void StoragePump_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (StoragePump_comboBox.SelectedItem != null)
@@ -797,12 +837,12 @@ namespace main.contents
             {
                 Create_ce_Table();
             }
-            Heating_ceZone ceZone = new Heating_ceZone(Num, ce1Type);
+            Heating_ceZone ceZone = new Heating_ceZone(Num, SelectZone_nonsplit, ce1Type);
             DialogResult result = ceZone.ShowDialog();
             if (result == DialogResult.OK)
             {
                 Load_ce(ce1Type);
-                String[][] Value = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce1Type + "'");
+                String[][] Value = Program.DB.getValue_dedupe(DB.type.ProjDB, "Heating_ce_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce1Type + "'");
                 if (Value.Length > 0)
                 {
                     if (Value.Length == 1)
@@ -820,12 +860,12 @@ namespace main.contents
 
         private void ce2Zone_button_Click(object sender, EventArgs e)
         {
-            Heating_ceZone ceZone = new Heating_ceZone(Num, ce2Type);
+            Heating_ceZone ceZone = new Heating_ceZone(Num, SelectZone_nonsplit, ce2Type);
             DialogResult result = ceZone.ShowDialog();
             if (result == DialogResult.OK)
             {
                 Load_ce(ce2Type);
-                String[][] Value = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce2Type + "'");
+                String[][] Value = Program.DB.getValue_dedupe(DB.type.ProjDB, "Heating_ce_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce2Type + "'");
                 if (Value.Length > 0)
                 {
                     if (Value.Length == 1)
@@ -854,7 +894,7 @@ namespace main.contents
             {
                 String substring = ce_dataGridView.Rows[ce_SelectRow].Cells[1].Value.ToString().Substring(ce_dataGridView.Rows[ce_SelectRow].Cells[1].Value.ToString().Length - 6, 6); //공급설비번호
                 String substring2 = ce_dataGridView.Rows[ce_SelectRow].Cells[1].Value.ToString().Substring(0, 10); //존번호
-                Program.DB.deleteValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호 ='" + substring2 + "' AND 공급설비 = '" + substring + "' AND 난방시스템 = '" + Num + "'");
+                Program.DB.deleteValue(DB.type.ProjDB, "Heating_ce_Form", "존번호 ='" + substring2 + "' AND 공급설비 = '" + substring + "' AND 난방시스템 = '" + Num + "'");
                 ce_dataGridView.Rows.Remove(ce_dataGridView.Rows[ce_SelectRow]);
             }
         }
@@ -862,7 +902,7 @@ namespace main.contents
         {
             try
             {
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneHeatingSystem_Form", "존번호,공급설비종류,공급설비", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + CE + "'");
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,공급설비종류,공급설비", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + CE + "'");
 
                 int Sum = 1;
                 for (int n = 0; n < Value.Length; n++)
@@ -910,11 +950,27 @@ namespace main.contents
 
 
 
+        private void Save_button_Click(object sender, EventArgs e)
+        {
+            if (Name == null)
+            {
+                MessageBox.Show("난방시스템 명칭을 입력하세요.");
+            }
+            else
+            {
+                Save();
+            }
+
+        }
 
 
 
         private void Save()
         {
+            // Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,Type,기존외벽,덧댐커튼월,U적용방법,직접간접,구조유형,열교유형,열교종류,외장재색,표면열전달저항기준,선형점형," 
+            //, "'" + WallNum_textBox.Text + "','" + WallName + "','" + Type + "','" + 
+            //     α.ToString() + "','" + Uvalue.ToString() + "','" + dU.ToString() + "','" + Ueff.ToString()
+            //      + "'", "번호");
             this.DialogResult = DialogResult.OK;
             this.Hide();
             Program.getMenuForm().DoLoadForm(39, OnLoadListProc);
@@ -947,14 +1003,6 @@ namespace main.contents
             Num = ID;
         }
 
-        private void Zone_button_Click(object sender, EventArgs e)
-        {
-            Heating_Zone SelectZone = new Heating_Zone(Num);
-            DialogResult result = SelectZone.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-            }
-        }
 
     }
 }

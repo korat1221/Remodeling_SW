@@ -19,7 +19,7 @@ namespace main.contentslist
 
         double CountDB;
         int SelectRow;
-        DataTable ListTable = new DataTable();
+       // DataTable ListTable = new DataTable();
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
 
         public List_Floor()
@@ -68,19 +68,44 @@ namespace main.contentslist
 
         public void Create_Table()
         {
+            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             dataGridView1.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             dataGridView1.Columns.Add(checkBoxColumn);
-            ListTable.Columns.Add("층", typeof(string));
-            ListTable.Columns.Add("주요 용도프로필", typeof(string));
-            ListTable.Columns.Add("존 개수" + Environment.NewLine + "[EA]", typeof(string));
-            ListTable.Columns.Add("순바닥면적" + Environment.NewLine + "[m²]", typeof(string));
-            ListTable.Columns.Add("평균 천장고" + Environment.NewLine + "[m]", typeof(string));
-
-            dataGridView1.DataSource = ListTable;
+            dataGridView1.Columns.Add("A1", "층");
+            dataGridView1.Columns.Add("A2", "주요 용도프로필");
+            dataGridView1.Columns.Add("A3", "존 개수.[EA]");
+            dataGridView1.Columns.Add("A4", "순바닥면적.[m²]");
+            dataGridView1.Columns.Add("A5", "평균 천장고.[m]");
+            dataGridView1.Columns[0].Width = 40;
+            //ListTable.Columns.Add("층", typeof(string));
+            //ListTable.Columns.Add("주요 용도프로필", typeof(string));
+            //ListTable.Columns.Add("존 개수" + Environment.NewLine + "[EA]", typeof(string));
+            //ListTable.Columns.Add("순바닥면적" + Environment.NewLine + "[m²]", typeof(string));
+            //ListTable.Columns.Add("평균 천장고" + Environment.NewLine + "[m]", typeof(string));
+            // dataGridView1.DataSource = ListTable;
         }
 
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = SystemColors.InactiveBorder;
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+        }
         public void load_List()
         {
 
@@ -88,7 +113,8 @@ namespace main.contentslist
             string[][] Value;
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
 
-            ListTable.Rows.Clear();
+            //ListTable.Rows.Clear();
+            dataGridView1.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
                 string[][] Zone = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List[n][0] + "'");
@@ -117,10 +143,26 @@ namespace main.contentslist
                 }
 
                 if (순바닥면적.Contains(0)) //모든 존 정보가 저장되어 있을 때만 
-                { ListTable.Rows.Add(List[n][0], null, null, null, null); }
+                {
+                    dataGridView1.Rows.Add();
+                    int nRow = dataGridView1.Rows.Count - 1;
+                    dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
+                    dataGridView1.Rows[nRow].Cells[2].Value = null;
+                    dataGridView1.Rows[nRow].Cells[3].Value = null;
+                    dataGridView1.Rows[nRow].Cells[4].Value = null;
+                    dataGridView1.Rows[nRow].Cells[5].Value = null;
+                    //ListTable.Rows.Add(List[n][0], null, null, null, null);
+                 }
                 else
                 {
-                    ListTable.Rows.Add(List[n][0], 용도프로필[index], Zone.Length, String.Format("{0:F1}", 순바닥면적.Sum()), String.Format("{0:F1}", 천장고.Average()));
+                    dataGridView1.Rows.Add();
+                    int nRow = dataGridView1.Rows.Count - 1;
+                    dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
+                    dataGridView1.Rows[nRow].Cells[2].Value = 용도프로필[index];
+                    dataGridView1.Rows[nRow].Cells[3].Value = Zone.Length;
+                    dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F1}", 순바닥면적.Sum());
+                    dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F1}", 천장고.Average());
+                    //ListTable.Rows.Add(List[n][0], 용도프로필[index], Zone.Length, String.Format("{0:F1}", 순바닥면적.Sum()), String.Format("{0:F1}", 천장고.Average()));
                 }
                 string[][] SubList = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List[n][0]+"'");
                 
@@ -137,37 +179,9 @@ namespace main.contentslist
                 }
                 mainMenu.Add(new { text = List[n][0] , id = "{\\\"formID\\\":33,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}", children = subMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
             }
-            dataGridView1.DataSource = this.ListTable;
+            //dataGridView1.DataSource = this.ListTable;
             CountDB = List.Length;
            Program.UTIL.resetMainTree(3, 0, mainMenu.ToArray(), "32"); // 예시 코드: 메인 메뉴 동적 할당
-        }
-
-        //선택한 열 색 표시
-        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                SelectRow = e.RowIndex;
-                DataGridViewRow row = dataGridView1.Rows[SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < CountDB; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        dataGridView1.Rows[k].Cells[0].Value = false;
-                        row2 = dataGridView1.Rows[k];
-                        row2.DefaultCellStyle.BackColor = Color.White;
-                        row2.DefaultCellStyle.ForeColor = Color.Black;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = Color.Black;
-                        row = dataGridView1.Rows[e.RowIndex];
-                    }
-                }
-            }
         }
 
 

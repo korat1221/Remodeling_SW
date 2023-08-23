@@ -469,6 +469,7 @@
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             Controls.Add(Panel_dataGridView);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "CW_PanelDB";
             Text = "CW_PanelDB";
             GeneralPanel.ResumeLayout(false);

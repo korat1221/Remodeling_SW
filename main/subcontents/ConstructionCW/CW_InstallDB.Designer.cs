@@ -422,6 +422,7 @@
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "CW_InstallDB";
             Text = "CW_InstallDB";
             GeneralPanel.ResumeLayout(false);

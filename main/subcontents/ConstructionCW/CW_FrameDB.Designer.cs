@@ -777,6 +777,7 @@
             Controls.Add(panel1);
             Controls.Add(Save_button);
             Controls.Add(Frame_dataGridView);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "CW_FrameDB";
             Text = "CW_FrameDB";
             ((System.ComponentModel.ISupportInitialize)Frame_dataGridView).EndInit();

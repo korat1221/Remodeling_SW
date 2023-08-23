@@ -46,7 +46,7 @@ namespace main.subcontents.ConstructionCW
         }
         void load_table_PanelDB()
         {
-            new StackedHeaderDecorator(Panel_dataGridView);
+            new StackedHeaderDecorator(Panel_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Panel_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -117,6 +117,25 @@ namespace main.subcontents.ConstructionCW
             }
             //Panel_dataGridView.DataSource = table_CWPanel;
             Count_FrameDB = CWPanel.Length;
+        }
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
         }
 
 

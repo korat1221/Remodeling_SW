@@ -501,7 +501,6 @@ namespace main.contents
             ce_dataGridView.RowTemplate.Height = 25;
             ce_dataGridView.Size = new Size(932, 467);
             ce_dataGridView.TabIndex = 114;
-            ce_dataGridView.CellContentClick += ce_dataGridView_CellContentClick;
             ce_dataGridView.CellValueChanged += ce_dataGridView_CellValueChanged;
             // 
             // ce_Copy_button

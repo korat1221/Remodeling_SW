@@ -81,7 +81,7 @@
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
             // 
-            // Zone_dataGridView
+            // Pump_dataGridView
             // 
             Pump_dataGridView.AllowUserToAddRows = false;
             Pump_dataGridView.AllowUserToDeleteRows = false;
@@ -102,7 +102,7 @@
             Pump_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Pump_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Pump_dataGridView.Location = new Point(0, 74);
-            Pump_dataGridView.Name = "Zone_dataGridView";
+            Pump_dataGridView.Name = "Pump_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
             dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -132,6 +132,7 @@
             Controls.Add(Pump_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "Heating_Pump";
             Text = "Heating_Pump";
             GeneralPanel.ResumeLayout(false);

@@ -154,7 +154,6 @@
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(954, 575);
             dataGridView1.TabIndex = 19;
-            dataGridView1.CellContentClick += dataGridView_CellContentClick;
             dataGridView1.DoubleClick += dataGridView1_DoubleClick;
             // 
             // Icon_pictureBox

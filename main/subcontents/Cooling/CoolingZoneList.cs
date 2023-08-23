@@ -135,7 +135,7 @@ namespace main.subcontents
 
             for (int k = 0; k < CoolingZone_dataGridView.Rows.Count; k++)
             {
-                string[][] _zc = Program.DB.getValue_SameCheck(DB.type.ProjDB, "CoolingZone", "번호,시스템명칭", "번호  = '" + CoolingZone_dataGridView.Rows[k].Cells[1].Value + "'");
+                string[][] _zc = Program.DB.getValue_dedupe(DB.type.ProjDB, "CoolingZone", "번호,시스템명칭", "번호  = '" + CoolingZone_dataGridView.Rows[k].Cells[1].Value + "'");
                 if (_zc.Length > 0)
                 {
                     CoolingZone_dataGridView.Rows[k].Cells[3].Value = _zc[0][1].ToString();

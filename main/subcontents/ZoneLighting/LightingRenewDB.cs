@@ -47,21 +47,32 @@ namespace main.subcontents.ZoneLighting
 
         void load_table_RenewDB()
         {
-            DataTable table_Renew = new DataTable();
+            //DataTable table_Renew = new DataTable();
+            new StackedHeaderDecorator(Renew_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Renew_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             Renew_dataGridView.Columns.Add(checkBoxColumn);
-            table_Renew.Columns.Add("번호", typeof(string));
-            table_Renew.Columns.Add("DB유형", typeof(string));
-            table_Renew.Columns.Add("집광채광명칭", typeof(string));
-            table_Renew.Columns.Add("집광채광종류", typeof(string));
-            table_Renew.Columns.Add("제조사", typeof(string));
-            table_Renew.Columns.Add("집광채광 효율" + Environment.NewLine + "[-]", typeof(string));
-            table_Renew.Columns.Add("산광부 가로 길이" + Environment.NewLine + "[m]", typeof(string));
-            table_Renew.Columns.Add("산광부 세로 길이" + Environment.NewLine + "[m]", typeof(string));
-            table_Renew.Columns.Add("산광부 면적" + Environment.NewLine + "[m2]", typeof(string));
+
+            Renew_dataGridView.Columns.Add("A1", "번호");
+            Renew_dataGridView.Columns.Add("A2", "DB유형");
+            Renew_dataGridView.Columns.Add("A3", "명칭");
+            Renew_dataGridView.Columns.Add("A4", "종류");
+            Renew_dataGridView.Columns.Add("A5", "제조사");
+            Renew_dataGridView.Columns.Add("A6", "집광채광.효율.[-]");
+            Renew_dataGridView.Columns.Add("A7", "산광부.가로길이.[m]");
+            Renew_dataGridView.Columns.Add("A8", "산광부.세로길이.[m]");
+            Renew_dataGridView.Columns.Add("A9", "산광부.면적.[m2]");
+            //table_Renew.Columns.Add("번호", typeof(string));
+            //table_Renew.Columns.Add("DB유형", typeof(string));
+            //table_Renew.Columns.Add("집광채광명칭", typeof(string));
+            //table_Renew.Columns.Add("집광채광종류", typeof(string));
+            //table_Renew.Columns.Add("제조사", typeof(string));
+            //table_Renew.Columns.Add("집광채광 효율" + Environment.NewLine + "[-]", typeof(string));
+            //table_Renew.Columns.Add("산광부 가로 길이" + Environment.NewLine + "[m]", typeof(string));
+            //table_Renew.Columns.Add("산광부 세로 길이" + Environment.NewLine + "[m]", typeof(string));
+            //table_Renew.Columns.Add("산광부 면적" + Environment.NewLine + "[m2]", typeof(string));
 
 
             //집광채광 사용자 DB 추가 
@@ -70,7 +81,13 @@ namespace main.subcontents.ZoneLighting
                 string[][] User_Renew = Program.DB.getValue(DB.type.ProjDB, "User_Renew", "번호,DB유형,집광채광명칭,집광채광종류,제조사,집광채광효율,산광부가로길이,산광부세로길이,산광부면적", "");
                 for (int n = 0; n < User_Renew.Length; n++)
                 {
-                    table_Renew.Rows.Add(User_Renew[n][0], User_Renew[n][1], User_Renew[n][2], User_Renew[n][3], User_Renew[n][4], User_Renew[n][5], User_Renew[n][6], User_Renew[n][7], User_Renew[n][8]);
+                    Renew_dataGridView.Rows.Add();
+                    int nRow = Renew_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 9; k++)
+                    {
+                        Renew_dataGridView.Rows[nRow].Cells[k + 1].Value = User_Renew[n][k];
+                    }
+                    // table_Renew.Rows.Add(User_Renew[n][0], User_Renew[n][1], User_Renew[n][2], User_Renew[n][3], User_Renew[n][4], User_Renew[n][5], User_Renew[n][6], User_Renew[n][7], User_Renew[n][8]);
                 }
             }
             catch { }
@@ -79,13 +96,30 @@ namespace main.subcontents.ZoneLighting
 
             for (int n = 0; n < Renew.Length; n++)
             {
-                table_Renew.Rows.Add(Renew[n][0], Renew[n][1], Renew[n][2], Renew[n][3], Renew[n][4], Renew[n][5], Renew[n][6], Renew[n][7], Renew[n][8]);
+                Renew_dataGridView.Rows.Add();
+                int nRow = Renew_dataGridView.Rows.Count - 1;
+                for (int k = 0; k < 9; k++)
+                {
+                    Renew_dataGridView.Rows[nRow].Cells[k + 1].Value = Renew[n][k];
+                }
+                //table_Renew.Rows.Add(Renew[n][0], Renew[n][1], Renew[n][2], Renew[n][3], Renew[n][4], Renew[n][5], Renew[n][6], Renew[n][7], Renew[n][8]);
             }
-            Renew_dataGridView.DataSource = table_Renew;
+            //Renew_dataGridView.DataSource = table_Renew;
             Count_RenewDB = Renew.Length;
 
         }
-
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = SystemColors.InactiveBorder;
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else return false;
+        }
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
         {
             UserDB_Name = UserDBName_textBox.Text;

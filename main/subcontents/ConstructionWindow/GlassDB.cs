@@ -45,7 +45,7 @@ namespace main.subcontents
         }
         void load_table_GlassDB()
         {
-            new StackedHeaderDecorator(Glass_dataGridView);
+            new StackedHeaderDecorator(Glass_dataGridView,DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Glass_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -106,7 +106,20 @@ namespace main.subcontents
             //Glass_dataGridView.DataSource = table_WindowGlass;
             Count_FrameDB = WinGlass.Length;
         }
-      
+
+
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = SystemColors.InactiveBorder;
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else return false;
+        }
 
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
@@ -167,6 +180,8 @@ namespace main.subcontents
                 Program.DB.setValue(DB.type.ProjDB, "User_Glass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율",
                     "'" + UserNum + "','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + UserDB_SingleDoubleTriple + "','" + UserDB_ArAir + "','" + UserDB_LE_CL_V + "','" + UserDB_Ug.ToString() + "','" + UserDB_g.ToString() + "','" + UserDB_Tao.ToString() + "','" + UserDB_RExternal.ToString() + "','" + UserDB_RInternal.ToString() + "'", "번호");
                 load_table_GlassDB();
+                UserNum = Program.UTIL.CreateNum("User_Glass", "번호", "UWG_0");
+                UserNum_textBox.Text = UserNum;
             }
             else
             {
