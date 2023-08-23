@@ -36,7 +36,7 @@ namespace main.subcontents.ConstructionFloor
 
 
             //구분 콤보박스
-            if(FloorType =="신규" || FloorType == "철거 후 신규")
+            if (FloorType == "신규" || FloorType == "철거 후 신규")
             {
                 TB_Type_comboBox.Items.Clear();
                 TB_Type_comboBox.Items.Add("외단열");
@@ -73,7 +73,8 @@ namespace main.subcontents.ConstructionFloor
 
         void load_table_DB()
         {
-            new StackedHeaderDecorator(TB_dataGridView);
+            new StackedHeaderDecorator(TB_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
+
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             TB_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -86,9 +87,11 @@ namespace main.subcontents.ConstructionFloor
             TB_dataGridView.Columns.Add("A4", "제조사");
             TB_dataGridView.Columns.Add("A5", "구조유형");
             TB_dataGridView.Columns.Add("A6", "열교유형");
-            TB_dataGridView.Columns.Add("A7", "수직간격.[mm]");
-            TB_dataGridView.Columns.Add("A8", "수평간격.[mm]");
-            TB_dataGridView.Columns.Add("A9", "선형열관류율\r\n(단열재 두께 =" + string.Format("{0:F0}", d_Ins) + "mm).[W/mK]");
+            TB_dataGridView.Columns.Add("A7", "간격.수직.[mm]");
+            TB_dataGridView.Columns.Add("A8", "간격.수평.[mm]");
+            TB_dataGridView.Columns.Add("A9", "선형열관류율.(단열재 두께 =" + string.Format("{0:F0}", d_Ins) + "mm).[W/mK]");
+            TB_dataGridView.Columns[3].Width = 130;
+            TB_dataGridView.Columns[9].Width = 130;
             //table_TB.Columns.Add("번호", typeof(string));
             //table_TB.Columns.Add("DB유형", typeof(string));
             //table_TB.Columns.Add("제품명", typeof(string));
@@ -98,14 +101,14 @@ namespace main.subcontents.ConstructionFloor
             //table_TB.Columns.Add("수직간격" + Environment.NewLine + "[mm]", typeof(string));
             //table_TB.Columns.Add("수평간격" + Environment.NewLine + "[mm]", typeof(string));
             //table_TB.Columns.Add("선형\r\n열관류율" + Environment.NewLine + "d =" + string.Format("{0:F0}", d_Ins) + "mm", typeof(string));
-             string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥선형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
-             for (int n = 0; n < TB.Length; n++)
-             {
+            string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥선형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
+            for (int n = 0; n < TB.Length; n++)
+            {
                 double row_A = Convert.ToDouble(TB[n][8]);
                 double row_B = Convert.ToDouble(TB[n][9]);
                 double row_C = Convert.ToDouble(TB[n][10]);
                 double row_Psi = (row_A * Math.Pow(d_Ins, 2) + row_B * d_Ins + row_C) / 1000;
-                
+
                 TB_dataGridView.Rows.Add();
                 int nRow = TB_dataGridView.Rows.Count - 1;
                 for (int k = 0; k < 8; k++)
@@ -115,9 +118,22 @@ namespace main.subcontents.ConstructionFloor
                 TB_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F3}", row_Psi);
                 // table_TB.Rows.Add(TB[n][0], TB[n][1], TB[n][2], TB[n][3], TB[n][4], TB[n][5], TB[n][6], TB[n][7], string.Format("{0:F3}", row_Psi));
                 Count_DB = TB.Length;
-              }
+            }
             //TB_dataGridView.DataSource = table_TB;
         }
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else return false;
+        }
+
         private void Load_Image1()
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥선형열교이미지", "이미지_구조유형", "열교유형 = '" + TB_Type + "'");
@@ -134,7 +150,7 @@ namespace main.subcontents.ConstructionFloor
             {
                 TB_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 SelectRow = e.RowIndex;
-                DataGridViewRow row = TB_dataGridView.Rows[SelectRow];                
+                DataGridViewRow row = TB_dataGridView.Rows[SelectRow];
                 TBName = row.Cells[3].Value.ToString(); //제품명
                 TBName_textBox.Text = row.Cells[3].Value.ToString(); //제품명
                 Load_Image2();

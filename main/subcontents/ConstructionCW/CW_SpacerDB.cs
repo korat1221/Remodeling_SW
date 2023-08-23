@@ -40,7 +40,7 @@ namespace main.subcontents.ConstructionCW
         }
         void load_table_SpacerDB(String FrameTpe)
         {
-            new StackedHeaderDecorator(Spacer_dataGridView);
+            new StackedHeaderDecorator(Spacer_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Spacer_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -98,7 +98,18 @@ namespace main.subcontents.ConstructionCW
             //Spacer_dataGridView.DataSource = table_CWSpacer;
             Count_FrameDB = CWSpacer.Length;
         }
-
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else return false;
+        }
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -139,6 +150,8 @@ namespace main.subcontents.ConstructionCW
                 Program.DB.setValue(DB.type.ProjDB, "User_CWSpacer", "번호,DB유형,제품명,제조사,구분1,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율",
                     "'" + UserNum + "','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDB_Psi_fix.ToString() + "','" + UserDB_Psi_open.ToString() + "','" + UserDB_Psi_fix.ToString() + "','" + UserDB_Psi_open.ToString() + "'", "번호");
                 load_table_SpacerDB(UserDBType2);
+                UserNum = Program.UTIL.CreateNum("User_CWSpacer", "번호", "UCS_0");
+                UserNum_textBox.Text = UserNum;
             }
             else
             {
@@ -173,7 +186,7 @@ namespace main.subcontents.ConstructionCW
             if (e.RowIndex >= 0)
             {
                 Spacer_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                SelectRow = e.RowIndex;               
+                SelectRow = e.RowIndex;
             }
         }
 

@@ -107,7 +107,7 @@
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView2.RowTemplate.Height = 25;
-            dataGridView2.Size = new Size(333, 410);
+            dataGridView2.Size = new Size(185, 410);
             dataGridView2.TabIndex = 0;
             dataGridView2.CellContentClick += dataGridView2_CellContentClick;
             // 

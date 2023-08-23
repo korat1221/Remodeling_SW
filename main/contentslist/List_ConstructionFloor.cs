@@ -20,7 +20,7 @@ namespace main.contentslist
         String FloorNum;
         double CountDB;
         int SelectRow;
-        DataTable FloorList = new DataTable();
+       // DataTable FloorList = new DataTable();
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
 
         public List_ConstructionFloor()
@@ -81,65 +81,72 @@ namespace main.contentslist
 
         public void Create_Table()
         {
-
+            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             dataGridView1.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             dataGridView1.Columns.Add(checkBoxColumn);
-            FloorList.Columns.Add("번호", typeof(string));
-            FloorList.Columns.Add("명칭", typeof(string));
-            FloorList.Columns.Add("Type", typeof(string));
-            FloorList.Columns.Add("기초설치", typeof(string));
-            FloorList.Columns.Add("유효열관류율" + Environment.NewLine + "[W/m²·K]", typeof(string));
-            FloorList.Columns.Add("면적" + Environment.NewLine + "[m²]", typeof(string));
-            dataGridView1.DataSource = FloorList;
 
-
-
+            dataGridView1.Columns.Add("A1", "번호");
+            dataGridView1.Columns.Add("A2", "명칭");
+            dataGridView1.Columns.Add("A3", "Type");
+            dataGridView1.Columns.Add("A4", "기초설치");
+            dataGridView1.Columns.Add("A5", "유효열관류율.[W/m²·K]");
+            dataGridView1.Columns.Add("A6", "면적.[m²]");
+            dataGridView1.Columns[0].Width = 40;
+            //FloorList.Columns.Add("번호", typeof(string));
+            //FloorList.Columns.Add("명칭", typeof(string));
+            //FloorList.Columns.Add("Type", typeof(string));
+            //FloorList.Columns.Add("기초설치", typeof(string));
+            //FloorList.Columns.Add("유효열관류율" + Environment.NewLine + "[W/m²·K]", typeof(string));
+            //FloorList.Columns.Add("면적" + Environment.NewLine + "[m²]", typeof(string));
+            //dataGridView1.DataSource = FloorList;
         }
 
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = SystemColors.InactiveBorder;
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+        }
         public void load_List()
         {
             string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호,명칭,Type,기초설치,유효열관류율", "");
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
             String Blank = "";
-            FloorList.Rows.Clear();
+            // FloorList.Rows.Clear();
+            dataGridView1.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
-                FloorList.Rows.Add(List[n][0], List[n][1], List[n][2], List[n][3], String.Format("{0:F2}", Convert.ToDouble(List[n][4])));
+                // FloorList.Rows.Add(List[n][0], List[n][1], List[n][2], List[n][3], String.Format("{0:F2}", Convert.ToDouble(List[n][4])));
+
+                dataGridView1.Rows.Add();
+                int nRow = dataGridView1.Rows.Count - 1;
+                dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
+                dataGridView1.Rows[nRow].Cells[2].Value = List[n][1];
+                dataGridView1.Rows[nRow].Cells[3].Value = List[n][2];
+                dataGridView1.Rows[nRow].Cells[4].Value = List[n][3];
+                dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][4]));
+                dataGridView1.Rows[nRow].Cells[6].Value = null;
+
                 mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":5,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             }
-            dataGridView1.DataSource = FloorList;
+            //dataGridView1.DataSource = FloorList;
             CountDB = List.Length;
             Program.UTIL.resetMainTree(1, 3, mainMenu.ToArray(), "36"); // 예시 코드: 메인 메뉴 동적 할당
-        }
-
-        //선택한 열 색 표시
-        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                SelectRow = e.RowIndex;
-                DataGridViewRow row = dataGridView1.Rows[SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < CountDB; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        dataGridView1.Rows[k].Cells[0].Value = false;
-                        row2 = dataGridView1.Rows[k];
-                        row2.DefaultCellStyle.BackColor = Color.White;
-                        row2.DefaultCellStyle.ForeColor = Color.Black;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = Color.Black;
-                        row = dataGridView1.Rows[e.RowIndex];
-                    }
-                }
-            }
         }
 
 

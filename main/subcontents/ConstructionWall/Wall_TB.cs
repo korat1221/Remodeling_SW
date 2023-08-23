@@ -31,7 +31,7 @@ namespace main.subcontents.ConstructionWall
             this.StructureType = StructureType;
             this.d_Ins = dins;
             StructureType_textBox.Text = StructureType;
-            if(StructureType == "기존외벽") //덧댐인 경우에는 새로 시공되는 덧댐 부위를 초점으로 검토해야 하므로, 기존외벽이 다른 유형이더라도 콘크리트조로 가정하고, 덧댐 시공된 것으로 검토 
+            if (StructureType == "기존외벽") //덧댐인 경우에는 새로 시공되는 덧댐 부위를 초점으로 검토해야 하므로, 기존외벽이 다른 유형이더라도 콘크리트조로 가정하고, 덧댐 시공된 것으로 검토 
             {
                 this.StructureType = "콘크리트조";
             }
@@ -54,7 +54,7 @@ namespace main.subcontents.ConstructionWall
                     TB_Type_comboBox.Items.Add("내단열");
                     break;
             }
-            if(WallType =="내부덧댐")
+            if (WallType == "내부덧댐")
             {
                 TB_Type_comboBox.Items.Clear();
                 TB_Type_comboBox.Items.Add("내단열");
@@ -84,7 +84,7 @@ namespace main.subcontents.ConstructionWall
 
         void load_table_DB()
         {
-            new StackedHeaderDecorator(TB_dataGridView);
+            new StackedHeaderDecorator(TB_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             TB_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -110,7 +110,7 @@ namespace main.subcontents.ConstructionWall
 
             if (LinearPoint == "점형")
             {
-                TB_dataGridView.Columns.Add("A9", "점형열관류율\r\n(단열재 두께 =" + string.Format("{0:F0}", d_Ins) + "mm).[W/K]");
+                TB_dataGridView.Columns.Add("A9", "점형열관류율.(단열재 두께 =" + string.Format("{0:F0}", d_Ins) + "mm).[W/K]");
                 //table_TB.Columns.Add("점형\r\n열관류율" + Environment.NewLine + "d =" + string.Format("{0:F0}", d_Ins) + "mm", typeof(string));
                 string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
                 for (int n = 0; n < TB.Length; n++)
@@ -133,8 +133,8 @@ namespace main.subcontents.ConstructionWall
             }
             else
             {
-                TB_dataGridView.Columns.Add("A9", "선형열관류율\r\n(단열재 두께 =" + string.Format("{0:F0}", d_Ins) + "mm).[W/mK]");
-               // table_TB.Columns.Add("선형\r\n열관류율" + Environment.NewLine + "d =" + string.Format("{0:F0}", d_Ins) + "mm", typeof(string));
+                TB_dataGridView.Columns.Add("A9", "선형열관류율.(단열재 두께 =" + string.Format("{0:F0}", d_Ins) + "mm).[W/mK]");
+                // table_TB.Columns.Add("선형\r\n열관류율" + Environment.NewLine + "d =" + string.Format("{0:F0}", d_Ins) + "mm", typeof(string));
                 string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
                 for (int n = 0; n < TB.Length; n++)
                 {
@@ -154,7 +154,22 @@ namespace main.subcontents.ConstructionWall
                     Count_DB = TB.Length;
                 }
             }
+            TB_dataGridView.Columns[3].Width = 100;
+            TB_dataGridView.Columns[6].Width = 100;
+            TB_dataGridView.Columns[9].Width = 130;
             //TB_dataGridView.DataSource = table_TB;
+        }
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else return false;
         }
         private void Load_Image1()
         {
@@ -217,7 +232,7 @@ namespace main.subcontents.ConstructionWall
         }
         private void Load_Image2()
         {
-            
+
             try
             {
                 if (LinearPoint == "점형")

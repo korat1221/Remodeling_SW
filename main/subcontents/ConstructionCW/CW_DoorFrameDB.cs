@@ -24,6 +24,8 @@ namespace main.subcontents.ConstructionCW
         {
             InitializeComponent();
 
+
+
             load_table_DoorFrameDB();
             UserNum = Program.UTIL.CreateNum("User_CWDoorFrmae", "번호", "UCWD_0");
             UserNum_textBox.Text = UserNum;
@@ -33,7 +35,7 @@ namespace main.subcontents.ConstructionCW
         }
         void load_table_DoorFrameDB()
         {
-            new StackedHeaderDecorator(Door_dataGridView);
+            new StackedHeaderDecorator(Door_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Door_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -63,9 +65,9 @@ namespace main.subcontents.ConstructionCW
                     int nRow = Door_dataGridView.Rows.Count - 1;
                     for (int k = 0; k < 7; k++)
                     {
-                        Door_dataGridView.Rows[nRow].Cells[k+1].Value = User_CWDoorFrame[n][k];
+                        Door_dataGridView.Rows[nRow].Cells[k + 1].Value = User_CWDoorFrame[n][k];
                     }
-                   // table_CWDoor.Rows.Add(User_CWDoorFrame[n][0], User_CWDoorFrame[n][1], User_CWDoorFrame[n][2], User_CWDoorFrame[n][3], User_CWDoorFrame[n][4], User_CWDoorFrame[n][5], User_CWDoorFrame[n][6]);
+                    // table_CWDoor.Rows.Add(User_CWDoorFrame[n][0], User_CWDoorFrame[n][1], User_CWDoorFrame[n][2], User_CWDoorFrame[n][3], User_CWDoorFrame[n][4], User_CWDoorFrame[n][5], User_CWDoorFrame[n][6]);
                 }
             }
             catch { }
@@ -86,6 +88,18 @@ namespace main.subcontents.ConstructionCW
             }
             //Door_dataGridView.DataSource = table_CWDoor;
             Count_FrameDB = CWDoorFrame.Length;
+        }
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else return false;
         }
 
 
@@ -121,6 +135,8 @@ namespace main.subcontents.ConstructionCW
                 Program.DB.setValue(DB.type.ProjDB, "User_CWDoorFrame", "번호,DB유형,제품명,제조사,구분,프레임열관류율,프레임두께",
                     "'" + UserNum + "','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + UserDB_Type + "','" + UserDB_Ufd.ToString() + "','" + UserDB_dfd.ToString() + "'", "번호");
                 load_table_DoorFrameDB();
+                UserNum = Program.UTIL.CreateNum("User_CWDoorFrmae", "번호", "UCWD_0");
+                UserNum_textBox.Text = UserNum;
             }
             else
             {

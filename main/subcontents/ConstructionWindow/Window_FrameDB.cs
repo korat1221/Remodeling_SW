@@ -62,7 +62,7 @@ namespace main.subcontents
         }
         void load_table_FrameDB()
         {
-            new StackedHeaderDecorator(Frame_dataGridView);
+            new StackedHeaderDecorator(Frame_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Frame_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -126,6 +126,19 @@ namespace main.subcontents
             Count_FrameDB = WinFrame.Length;
         }
 
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 0)
+            {
+                cell.Style.BackColor = SystemColors.Control;
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = SystemColors.Control;
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else return false;
+            
+        }
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
         {
 

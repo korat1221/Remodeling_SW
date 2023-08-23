@@ -81,7 +81,7 @@
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
             // 
-            // Zone_dataGridView
+            // Boiler_dataGridView
             // 
             Boiler_dataGridView.AllowUserToAddRows = false;
             Boiler_dataGridView.AllowUserToDeleteRows = false;
@@ -102,7 +102,7 @@
             Boiler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Boiler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Boiler_dataGridView.Location = new Point(0, 74);
-            Boiler_dataGridView.Name = "Zone_dataGridView";
+            Boiler_dataGridView.Name = "Boiler_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
             dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -132,6 +132,7 @@
             Controls.Add(Boiler_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "Heating_Boiler";
             Text = "Heating_Boiler";
             GeneralPanel.ResumeLayout(false);

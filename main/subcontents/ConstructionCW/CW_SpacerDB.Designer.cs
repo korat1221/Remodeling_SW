@@ -380,6 +380,8 @@
             Controls.Add(panel1);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            MdiChildrenMinimizedAnchorBottom = false;
             Name = "CW_SpacerDB";
             Text = "CW_SpacerDB";
             GeneralPanel.ResumeLayout(false);

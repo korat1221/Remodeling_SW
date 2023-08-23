@@ -21,7 +21,7 @@ namespace main.contents
         }
         private void create_datagridview1()
         {
-            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.AllCells);
+            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.AllCells, dataGridView1_RowHandle);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             dataGridView1.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -54,7 +54,7 @@ namespace main.contents
         }
         private void create_datagridview2()
         {
-            new StackedHeaderDecorator(dataGridView2, DataGridViewAutoSizeColumnsMode.Fill);
+            new StackedHeaderDecorator(dataGridView2, DataGridViewAutoSizeColumnsMode.AllCells, dataGridView2_RowHandle);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             dataGridView2.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -68,6 +68,89 @@ namespace main.contents
             dataGridView2.Columns[1].Width = 100;
             dataGridView2.Columns[2].Width = 100;
         }
+        private bool dataGridView1_RowHandle(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                if (column == 1 || column == 2 || column == 3 || column == 7 || column == 8 || column == 9)
+                {
+                    cell.Style.BackColor = SystemColors.InactiveBorder;
+                    return true;
+                }
+                else if (column == 4 && cell.GetType() == typeof(DataGridViewComboBoxCell))
+                {
+                    cell.Style.BackColor = SystemColors.Info;
+                    //  cell.Style.BackColor = Color.FromArgb(255, 255, 243);
+                    return true;
+                }
+                else if (column == 4 && cell.GetType() != typeof(DataGridViewComboBoxCell))
+                {
+                    cell.Style.BackColor = SystemColors.InactiveBorder;//연한 파랑
+                    return true;
+                }
+                if (column == 5 || column == 6)
+                {
+                    cell.Style.BackColor = SystemColors.InactiveBorder;
+                    return true;
+                }
+                else if (column == 10 && cell.GetType() != typeof(DataGridViewComboBoxCell))
+                {
+                    cell.Style.BackColor = SystemColors.InactiveBorder;
+                    return true;
+                }
+                else if (column == 11 && cell.GetType() != typeof(DataGridViewComboBoxCell))
+                {
+                    cell.Style.BackColor = SystemColors.InactiveBorder;
+                    return true;
+                }
+                else return false;
+            }
+            else
+            {
+                if (column == 1 || column == 2 || column == 3 || column == 7 || column == 8 || column == 9)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    return true;
+                }
+                else if (column == 4 && cell.GetType() == typeof(DataGridViewComboBoxCell))
+                {
+                    cell.Style.BackColor = SystemColors.Info;
+                    // cell.Style.BackColor = Color.FromArgb(255, 255, 243);
+                    return true;
+                }
+                else if (column == 4 && cell.GetType() != typeof(DataGridViewComboBoxCell))
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255); //흰색
+                    return true;
+                }
+                if (column == 5 || column == 6)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    return true;
+                }
+                else if (column == 10 && cell.GetType() != typeof(DataGridViewComboBoxCell))
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    return true;
+                }
+                else if (column == 11 && cell.GetType() != typeof(DataGridViewComboBoxCell))
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    return true;
+                }
+                else return false;
+            }
+        }
+        private bool dataGridView2_RowHandle(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = Color.FromArgb(251, 251, 251);
+                return true;
+            }
+            else return false;
+        }
+
         private String _fixed(string v)
         {
             try
@@ -141,6 +224,7 @@ namespace main.contents
                     {
                         DataGridViewComboBoxCell RoofWinCombo = new DataGridViewComboBoxCell();
                         RoofWinCombo.Items.Add("천창있음");
+                        RoofWinCombo.Items.Add("");
 
                         RoofWinCombo.Value = rec[i][9];
                         dataGridView1.Rows[i].Cells[11] = RoofWinCombo;
@@ -352,7 +436,7 @@ namespace main.contents
                     }
                     else
                     {
-                        string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num0 + "'");
+                        string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num + "'");
                         RoofWin = dataGridView1.Rows[i].Cells[11].Value.ToString();
                         Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,천창유무", "'" + rec[0][0] + "','" + RoofWin + "'", "아이디");
                     }
@@ -467,7 +551,8 @@ namespace main.contents
                     {
                         DataGridViewComboBoxCell RoofWinCombo = new DataGridViewComboBoxCell();
                         RoofWinCombo.Items.Add("천창있음");
-                        row.Cells[10] = RoofWinCombo;
+                        RoofWinCombo.Items.Add("");
+                        row.Cells[11] = RoofWinCombo;
                         RoofWinCombo.ReadOnly = false;
                     }
                 }

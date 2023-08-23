@@ -57,7 +57,7 @@
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
             // 
-            // TB_dataGridView
+            // Zone_dataGridView
             // 
             Zone_dataGridView.AllowUserToAddRows = false;
             Zone_dataGridView.AllowUserToDeleteRows = false;
@@ -78,7 +78,7 @@
             Zone_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Zone_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Zone_dataGridView.Location = new Point(0, 39);
-            Zone_dataGridView.Name = "TB_dataGridView";
+            Zone_dataGridView.Name = "Zone_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
             dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -99,7 +99,7 @@
             Zone_dataGridView.Size = new Size(800, 397);
             Zone_dataGridView.TabIndex = 19;
             // 
-            // HeatingZone
+            // Heating_Zone
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -108,7 +108,8 @@
             Controls.Add(Zone_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
-            Name = "HeatingZone";
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Name = "Heating_Zone";
             Text = "HeatingZone";
             ((System.ComponentModel.ISupportInitialize)Zone_dataGridView).EndInit();
             ResumeLayout(false);

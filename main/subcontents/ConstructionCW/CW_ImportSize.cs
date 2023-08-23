@@ -74,9 +74,8 @@ namespace main.subcontents
 
         void load_table_SizeInfo()
         {
-            new StackedHeaderDecorator(Size_dataGridView);
+            new StackedHeaderDecorator(Size_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
 
-            DataTable table_CWSize = new DataTable();
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Size_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -127,6 +126,19 @@ namespace main.subcontents
             }
             //Size_dataGridView.DataSource = table_CWSize;
             Count_SizeInfo = CWSize.Length;
+        }
+
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else return false;
         }
 
         //데이터그리드뷰 체크박스 선택 시

@@ -418,6 +418,7 @@
             Controls.Add(TB_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "Wall_TB";
             Text = "Wall_TB";
             GeneralPanel.ResumeLayout(false);

@@ -166,10 +166,10 @@
     <Compile Update="subcontents\ConstructionWindow\Window_SpacerDB.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="subcontents\Cooling\GeneratorCooling.cs">
+    <Compile Update="subcontents\Cooling\CoolingZoneList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="subcontents\Cooling\ZoneCooling.cs">
+    <Compile Update="subcontents\Cooling\GeneratorCooling.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\ZoneLighting\LightingDB.cs">

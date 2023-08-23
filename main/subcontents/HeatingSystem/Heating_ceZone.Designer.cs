@@ -146,6 +146,7 @@
             Controls.Add(ceZone_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "Heating_ceZone";
             Text = "Heating_ceZone";
             GeneralPanel.ResumeLayout(false);

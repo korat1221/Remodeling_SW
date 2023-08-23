@@ -55,14 +55,14 @@ namespace main.subcontents.ConstructionRoof
                     TB_Type_comboBox.Items.Add("트러스(점형)");
                     TB_Type_comboBox.Items.Add("트러스(점형)");
                     break;
-                
+
             }
             if (RoofType == "기존지붕")
             {
                 TB_Type_comboBox.Items.Clear();
                 TB_Type_comboBox.Items.Add("내단열(보선형)");
             }
-            if(RoofType == "외부덧댐")
+            if (RoofType == "외부덧댐")
             {
                 TB_Type_comboBox.Items.Clear();
                 TB_Type_comboBox.Items.Add("트러스(점형)");
@@ -100,7 +100,8 @@ namespace main.subcontents.ConstructionRoof
 
         void load_table_DB()
         {
-            new StackedHeaderDecorator(TB_dataGridView);
+            new StackedHeaderDecorator(TB_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
+
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             TB_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -126,7 +127,7 @@ namespace main.subcontents.ConstructionRoof
 
             if (LinearPoint == "점형")
             {
-                TB_dataGridView.Columns.Add("A9", "점형열관류율\r\n(단열재 두께 =" + string.Format("{0:F0}", d_Ins) + "mm).[W/K]");
+                TB_dataGridView.Columns.Add("A9", "점형열관류율.(단열재 두께 =" + string.Format("{0:F0}", d_Ins) + "mm).[W/K]");
                 //table_TB.Columns.Add("점형\r\n열관류율" + Environment.NewLine + "d =" + string.Format("{0:F0}", d_Ins) + "mm", typeof(string));
                 string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕점형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
                 for (int n = 0; n < TB.Length; n++)
@@ -143,13 +144,13 @@ namespace main.subcontents.ConstructionRoof
                         TB_dataGridView.Rows[nRow].Cells[k + 1].Value = TB[n][k];
                     }
                     TB_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F3}", row_Kai);
-                   // table_TB.Rows.Add(TB[n][0], TB[n][1], TB[n][2], TB[n][3], TB[n][4], TB[n][5], TB[n][6], TB[n][7], string.Format("{0:F3}", row_Kai));
+                    // table_TB.Rows.Add(TB[n][0], TB[n][1], TB[n][2], TB[n][3], TB[n][4], TB[n][5], TB[n][6], TB[n][7], string.Format("{0:F3}", row_Kai));
                     Count_DB = TB.Length;
                 }
             }
             else
             {
-                TB_dataGridView.Columns.Add("A9", "선형열관류율\r\n(단열재 두께 =" + string.Format("{0:F0}", d_Ins) + "mm).[W/mK]");
+                TB_dataGridView.Columns.Add("A9", "선형열관류율.(단열재 두께 =" + string.Format("{0:F0}", d_Ins) + "mm).[W/mK]");
                 //table_TB.Columns.Add("선형\r\n열관류율" + Environment.NewLine + "d =" + string.Format("{0:F0}", d_Ins) + "mm", typeof(string));
                 string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕선형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
                 for (int n = 0; n < TB.Length; n++)
@@ -170,9 +171,23 @@ namespace main.subcontents.ConstructionRoof
                     Count_DB = TB.Length;
                 }
             }
-           // TB_dataGridView.DataSource = table_TB;
+            TB_dataGridView.Columns[3].Width = 100;
+            TB_dataGridView.Columns[6].Width = 100;
+            TB_dataGridView.Columns[9].Width = 130;
+            // TB_dataGridView.DataSource = table_TB;
         }
-
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else return false;
+        }
 
         private void Load_Image1()
         {
@@ -220,7 +235,7 @@ namespace main.subcontents.ConstructionRoof
             {
                 TB_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 SelectRow = e.RowIndex;
-                DataGridViewRow row = TB_dataGridView.Rows[SelectRow];                
+                DataGridViewRow row = TB_dataGridView.Rows[SelectRow];
                 TBName = row.Cells[3].Value.ToString(); //제품명
                 TBName_textBox.Text = row.Cells[3].Value.ToString(); //제품명
                 Load_Image2();

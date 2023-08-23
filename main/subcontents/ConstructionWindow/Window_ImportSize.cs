@@ -72,7 +72,7 @@ namespace main.subcontents
 
         void load_table_SizeInfo()
         {
-            new StackedHeaderDecorator(Size_dataGridView);
+            new StackedHeaderDecorator(Size_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Size_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -109,7 +109,7 @@ namespace main.subcontents
                 int nRow = Size_dataGridView.Rows.Count - 1;
                 for (int k = 0; k < 11; k++)
                 {
-                    Size_dataGridView.Rows[nRow].Cells[k + 1].Value = WinSize[n][0];
+                    Size_dataGridView.Rows[nRow].Cells[k + 1].Value = WinSize[n][k];
                 }
                 //table_WindowSize.Rows.Add(WinSize[n][0], WinSize[n][1], WinSize[n][2], WinSize[n][3], WinSize[n][4], WinSize[n][5], WinSize[n][6], WinSize[n][7], WinSize[n][8], WinSize[n][9], WinSize[n][10]);
             }
@@ -117,6 +117,18 @@ namespace main.subcontents
             Count_SizeInfo = WinSize.Length;
         }
 
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else return false;
+        }
         private void SelectCheckBox()
         {
             foreach (DataGridViewRow row in Size_dataGridView.Rows)

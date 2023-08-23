@@ -57,7 +57,7 @@ namespace main.subcontents.ConstructionCW
         }
         void load_table_FrameDB()
         {
-            new StackedHeaderDecorator(Frame_dataGridView);
+            new StackedHeaderDecorator(Frame_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Frame_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -93,9 +93,9 @@ namespace main.subcontents.ConstructionCW
                 {
                     Frame_dataGridView.Rows.Add();
                     int nRow = Frame_dataGridView.Rows.Count - 1;
-                    for(int i = 0; i < 6; i++)
+                    for (int i = 0; i < 6; i++)
                     {
-                        Frame_dataGridView.Rows[nRow].Cells[i+1].Value = User_CWFrame[n][i];
+                        Frame_dataGridView.Rows[nRow].Cells[i + 1].Value = User_CWFrame[n][i];
                     }
                     for (int i = 6; i < 11; i++)
                     {
@@ -116,10 +116,24 @@ namespace main.subcontents.ConstructionCW
                 {
                     Frame_dataGridView.Rows[nRow].Cells[i + 1].Value = CWFrame[n][i];
                 }
-               // table_CWFrame.Rows.Add(CWFrame[n][0], CWFrame[n][1], CWFrame[n][2], CWFrame[n][3], CWFrame[n][4], CWFrame[n][5], CWFrame[n][6], CWFrame[n][7], CWFrame[n][8], CWFrame[n][9], CWFrame[n][10]);
+                // table_CWFrame.Rows.Add(CWFrame[n][0], CWFrame[n][1], CWFrame[n][2], CWFrame[n][3], CWFrame[n][4], CWFrame[n][5], CWFrame[n][6], CWFrame[n][7], CWFrame[n][8], CWFrame[n][9], CWFrame[n][10]);
             }
-          //  Frame_dataGridView.DataSource = table_CWFrame;
+            //  Frame_dataGridView.DataSource = table_CWFrame;
             Count_FrameDB = CWFrame.Length;
+        }
+
+
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(251, 251, 251);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else return false;
         }
 
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
@@ -142,13 +156,13 @@ namespace main.subcontents.ConstructionCW
             UserDB_FrameShape = UserDB_FrameShape_comboBox.SelectedItem.ToString();
             UserDB_FrameShape_textBox.Text = UserDB_FrameShape;
             UserDB_FramedA = 0.06;
-            UserDBFramedA_textBox.Text =(0.06).ToString();
+            UserDBFramedA_textBox.Text = (0.06).ToString();
             UserDB_FramedB = 0.08;
             UserDBFramedB_textBox.Text = (0.08).ToString();
             Calc_Uf();
             Load_FrameImage();
         }
-             
+
         private void UserDBGlass_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UserDBGlass = UserDBGlass_comboBox.SelectedItem.ToString();
@@ -214,26 +228,26 @@ namespace main.subcontents.ConstructionCW
 
         private void Load_SpacerList()
         { //간봉 콤보박스 
-         
-                try
-                {
-                   string[][] UserCWSpacer = Program.DB.getValue(DB.type.ProjDB, "User_CWSpacer", "번호,제품명,구분1", "구분3 ='" + FrameType + "'");
+
+            try
+            {
+                string[][] UserCWSpacer = Program.DB.getValue(DB.type.ProjDB, "User_CWSpacer", "번호,제품명,구분1", "구분3 ='" + FrameType + "'");
                 for (int n = 0; n < UserCWSpacer.Length; n++)
-                  { SpacerList.Add(UserCWSpacer[n][1]); }
-                }
-                catch { }
-                string[][] CWSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월간봉", "번호,제품명,구분1", "구분3 ='" + FrameType + "'");
-                for (int n = 0; n < CWSpacer.Length; n++)
-                {
-                    SpacerList.Add(CWSpacer[n][2]);
-                }
-                string[] SpacerArray = SpacerList.ToArray();
-                UserDBSpacer_comboBox.Items.Clear();
-                UserDBSpacer_comboBox.Items.AddRange(SpacerArray);
+                { SpacerList.Add(UserCWSpacer[n][1]); }
+            }
+            catch { }
+            string[][] CWSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월간봉", "번호,제품명,구분1", "구분3 ='" + FrameType + "'");
+            for (int n = 0; n < CWSpacer.Length; n++)
+            {
+                SpacerList.Add(CWSpacer[n][2]);
+            }
+            string[] SpacerArray = SpacerList.ToArray();
+            UserDBSpacer_comboBox.Items.Clear();
+            UserDBSpacer_comboBox.Items.AddRange(SpacerArray);
         }
         private void Load_FrameImage()
         {
-            if (FrameType != null && UserDB_FrameShape != null )
+            if (FrameType != null && UserDB_FrameShape != null)
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월프레임이미지", "이미지", "유형 = '" + UserDB_FrameShape + "'");
 
@@ -297,7 +311,7 @@ namespace main.subcontents.ConstructionCW
             }
             if (UserDB_Ucw > 0 && UserDB_Ug > 0 && UserDB_Ag > 0 && UserDB_Psimt > 0)
             {
-                UserDB_Uf = (UserDB_Ucw * 4 - UserDB_Ug * UserDB_Ag - UserDB_Psimt * UserDB_Lfix - UserDB_PsiOpen * UserDB_Lopen) / UserDB_Af;  
+                UserDB_Uf = (UserDB_Ucw * 4 - UserDB_Ug * UserDB_Ag - UserDB_Psimt * UserDB_Lfix - UserDB_PsiOpen * UserDB_Lopen) / UserDB_Af;
             }
             if (UserDB_Uf > 0.5)
             {
@@ -332,6 +346,8 @@ namespace main.subcontents.ConstructionCW
                 Program.DB.setValue(DB.type.ProjDB, "User_CWFrame", "번호,DB유형,제품명,제조사,구분1,구분2,고정부프레임열관류율,개폐부프레임열관류율,패널엣지선형열관류율,M_T프레임두께,fr프레임두께,시험성적서이미지",
                     "'" + UserNum + "','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + FrameType + "','" + UserDBSpacer_Type + "','" + UserDB_Uf.ToString() + "','" + UserDB_Uf.ToString() + "','" + UserDB_Psip.ToString() + "','" + UserDB_FramedA.ToString() + "','" + UserDB_FramedB.ToString() + "','" + UserDB_Image + "'", "번호");
                 load_table_FrameDB();
+                UserNum = Program.UTIL.CreateNum("User_CWFrame", "번호", "UCW_0");
+                UserNum_textBox.Text = UserNum;
             }
             else
             {
