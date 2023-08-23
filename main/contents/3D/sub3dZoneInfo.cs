@@ -436,7 +436,7 @@ namespace main.contents
                     }
                     else
                     {
-                        string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num0 + "'");
+                        string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num + "'");
                         RoofWin = dataGridView1.Rows[i].Cells[11].Value.ToString();
                         Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,천창유무", "'" + rec[0][0] + "','" + RoofWin + "'", "아이디");
                     }
