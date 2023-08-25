@@ -150,7 +150,7 @@ namespace main.contents
             난방급탕Combo.Items.Add("난방+급탕");
             Boiler_dataGridView.Rows[nRow].Cells[4] = 난방급탕Combo;
 
-            Heating_Boiler heating_Boiler = new Heating_Boiler("기본DB 적용");
+            Heating_Boiler heating_Boiler = new Heating_Boiler("기본DB 적용", null);
             DialogResult result = heating_Boiler.ShowDialog();
             if (result == DialogResult.OK)
             {
