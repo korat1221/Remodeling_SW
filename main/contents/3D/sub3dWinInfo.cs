@@ -55,13 +55,13 @@ namespace main.contents
             }
 
             //음영정보 이미지로드
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "음영이미지", "이미지", "분류 = '이미지1'");
-            pictureBox1.Load(Program.gPath + Image[0][0]);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+          //  string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "음영이미지", "이미지", "분류 = '이미지1'");
+          ////  pictureBox1.Load(Program.gPath + Image[0][0]);
+          //  pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
-            string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "음영이미지", "이미지", "분류 = '이미지2'");
-            pictureBox2.Load(Program.gPath + Image1[0][0]);
-            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+          //  string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "음영이미지", "이미지", "분류 = '이미지2'");
+          //  pictureBox2.Load(Program.gPath + Image1[0][0]);
+          //  pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
 
             //음영정보
             R1 = Convert.ToDouble(rec[0][5]);

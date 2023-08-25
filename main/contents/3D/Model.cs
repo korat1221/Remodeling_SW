@@ -76,8 +76,7 @@ namespace main.contents
 
             forms[idx].Show();
 
-            ZoneShade zoneshade = new ZoneShade();
-            zoneshade.Calc_방위각();
+            
 
           
 
@@ -100,6 +99,8 @@ namespace main.contents
                     Program.UTIL.write3DModel(Program.ProjName + ".json", json);
                     Program.DB.executeSQL(DB.type.ProjDB, s.Substring(0, n));
                     Program.UTIL.reloadWebCtrl();
+                    ZoneShade zoneshade = new ZoneShade();
+                    zoneshade.Calc_방위각();
                 }
                 else
                 {
