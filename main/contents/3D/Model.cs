@@ -81,7 +81,7 @@ namespace main.contents
 
           
 
-            MessageBox.Show();
+           // MessageBox.Show();
        
 
 
