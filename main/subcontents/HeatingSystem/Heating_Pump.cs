@@ -9,6 +9,7 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,8 +20,8 @@ namespace main.subcontents.HeatingSystem
     {
 
         public string SelectPump;
-
-        public Heating_Pump()
+        ArrayList SelectPump_split = new ArrayList();
+        public Heating_Pump(String Pump)
         {
             InitializeComponent();
             //heatingSystem = system;
@@ -29,6 +30,11 @@ namespace main.subcontents.HeatingSystem
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
+            if (Pump != null)
+            {
+                this.SelectPump = Pump;
+                Load_SaveValue();
+            }
         }
 
         void load_table_DB()
@@ -132,6 +138,20 @@ namespace main.subcontents.HeatingSystem
 
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+        private void Load_SaveValue()
+        {
+            try
+            {
+                for (int n = 0; n < Pump_dataGridView.Rows.Count; n++)
+                {
+                    if (Pump_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectPump.ToString())
+                    {
+                        Pump_dataGridView.Rows[n].Cells[0].Value = true;
+                    }
+                }
+            }
+            catch { }
         }
     }
 }

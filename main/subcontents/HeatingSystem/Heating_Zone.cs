@@ -17,15 +17,21 @@ namespace main.subcontents.HeatingSystem
     public partial class Heating_Zone : Form
     {
         double Count_DB;
-        ArrayList SelectRow = new ArrayList();
+        ArrayList SelectRow = new ArrayList(); ArrayList SelectZone_split = new ArrayList();
         String SystemNum;
         public string SelectZone;
 
-        public Heating_Zone(String Num)
+        public Heating_Zone(String Num, String SelectZone_nonsplit)
         {
             InitializeComponent();
             load_table_DB();
             SystemNum = Num;
+            if(SelectZone_nonsplit != null)
+            { 
+                this.SelectZone = SelectZone_nonsplit;
+                Load_SaveValue();
+            }
+           
         }
 
         void load_table_DB()
@@ -124,7 +130,30 @@ namespace main.subcontents.HeatingSystem
             this.DialogResult = DialogResult.OK;
             this.Close();
           }
+        private void Load_SaveValue()
+        {
+            try
+            {  string[] token = SelectZone.Split(',');
+                SelectZone_split.Clear();
+                foreach (var item in token)
+                {
+                    SelectZone_split.Add(item.ToString());
+                }
+                for(int k = 0; k < SelectZone_split.Count; k++)
+                {
+                    for (int n = 0; n < Zone_dataGridView.Rows.Count; n++)
+                    {
+                        if (Zone_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectZone_split[k].ToString())
+                        {
+                            Zone_dataGridView.Rows[n].Cells[0].Value = true;
+                        }
+                    }
+                }
+                
+            }
+            catch { }
         }
+     }
 
-    }
+}
 

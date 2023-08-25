@@ -47,6 +47,7 @@ namespace main.subcontents.HeatingSystem
             catch { }
 
             load_table_DB();
+            Load_SaveValue();
         }
 
         void load_table_DB()
@@ -236,6 +237,49 @@ namespace main.subcontents.HeatingSystem
             }
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+        private void Load_SaveValue()
+        {
+            try
+            {
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,난방시스템,공급설비종류,공급설비", "난방시스템 = '" + SystemNum + "' And 공급설비종류 = '" + ceType + "'");
+
+                for (int n = 0; n < Value.Length; n++)
+                {
+                    int ZoneRow = 0;
+                    ceZone_dataGridView.Rows.Add();
+                    int AddRowNum = ceZone_dataGridView.Rows.Count - 1;
+                    for (int a = 0; a < ceZone_dataGridView.Rows.Count; a++)
+                    {
+                        if (ceZone_dataGridView.Rows[a].Cells[1].Value != null && ceZone_dataGridView.Rows[a].Cells[1].Value.ToString() == Value[n][0].ToString())
+                        {
+                            ZoneRow = a;
+                        }
+                    }
+                    String[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "공급설비", "존번호 = '"+ ceZone_dataGridView.Rows[ZoneRow].Cells[1].Value.ToString() + "' And 난방시스템 = '" + SystemNum + "' And 공급설비종류 = '" + ceType + "'");
+                    ceZone_dataGridView.Rows[ZoneRow].Cells[5].Value = Value2.Length;
+                    ceZone_dataGridView.Rows[AddRowNum].Cells[0].Value = ceZone_dataGridView.Rows[ZoneRow].Cells[0].Value + "_" + Value[n][3].Substring(Value[n][3].IndexOf("_") + 1, 1);
+
+                    DataGridViewComboBoxCell 일람표comboBox = new DataGridViewComboBoxCell();
+                    try
+                    {
+                        String[][] 일람표 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "명칭", "종류 = '" + ceType + "' AND 난방냉방 !='냉방'");
+                        for (int j = 0; j < 일람표.Length; j++)
+                        {
+                            일람표comboBox.Items.Add(일람표[j][0]);
+                        }
+                        ceZone_dataGridView.Rows[AddRowNum].Cells[7] = 일람표comboBox;
+                        일람표 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "명칭", "번호 = '" + Value[n][3].Substring(0, Value[n][3].IndexOf("_")) + "'");
+                        ceZone_dataGridView.Rows[AddRowNum].Cells[7].Value = 일람표[0][0];
+                    }
+                    catch { }
+
+                    DataGridViewRow AddRow = ceZone_dataGridView.Rows[AddRowNum];
+                    ceZone_dataGridView.Rows.RemoveAt(AddRowNum);
+                    ceZone_dataGridView.Rows.Insert(ZoneRow + 1, AddRow);
+                }
+            }
+            catch { }
         }
     }
 }
