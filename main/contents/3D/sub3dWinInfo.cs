@@ -13,52 +13,17 @@ namespace main.contents
 {
     public partial class sub3dWINInfo : Form
     {
-
-        public double[] 태양고도각 = new double[12];
-        public double[] 태양좌측방위각 = new double[12];
-        public double[] 태양우측방위각 = new double[12];
-
-        public double 창호세로길이, 창호가로길이, 주변지형물높이, 경사, 좌측돌출부길이, 좌측돌출부각도, 좌측돌출부이격거리;
-        public double 우측돌출부이격거리, 우측돌출부각도, 우측돌출부길이;
-        public double 지형물까지의거리, 주변지형물각도;
-        public double 상부돌출부이격거리, 상부돌출부길이, 상부돌출부각도, 방위각;
-
-
-        public double[] 설치면직달 = new double[12];
-        public double[] 설치면산란 = new double[12];
-
-        public double[] 지형물수직음영길이 = new double[12];
-        public double[] 지형물수평음영길이 = new double[12];
-        public double[] 지형물로인한음영길이 = new double[12];
-
-        public double[] 상부돌출음영길이좌 = new double[12];
-        public double[] 상부돌출음영길이우 = new double[12];
-        public double[] 상부돌출부음영길이 = new double[12];
-        public double[] 좌측돌출부음영길이 = new double[12];
-        public double[] 우측돌출부음영길이 = new double[12];
-
-        public double[] 수평음영길이 = new double[12];
-        public double[] 수직음영길이 = new double[12];
-        public double[] 직달일사감소 = new double[12];
-        public double[] 최종음영계수 = new double[12];
-
-
-        //존명칭 로드
-      
-
-
         public sub3dWINInfo()
         {
-
             InitializeComponent();
-           
-            //지역,방향,각도에 따른 월별 태양고도각 (기후데이터_고도각)
-            //방위에 따른 태양우측방위각,태양좌측 방위각 (기후데이터_태양방위각)   만들어야해 
         }
 
 
         private void onVisibleChanged(object sender, EventArgs e)
         {
+            double R1, R2,L1,L2,S1,S2,T1,T2;
+
+
             string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");   //지역, 프로젝트 조건?
 
             String ID = main.MainContents.selID.Replace("board-", "");
@@ -89,276 +54,33 @@ namespace main.contents
                 textBox4.Text = (rec[0][9]);
             }
 
-            //지역,방향,각도(경사)에 따른 월별 설치면직달일사세기 (기후데이터_직달일사량)
-            for (int i = 0; i<12; i++)
-            {
-                string[][] aa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_직달일사량", "일사량", "지역명 ='" + ValueA[0][0] + "' AND 방향 ='" + rec[0][10] + "' AND 각도 ='" + rec[0][11]+ "˚" + "' AND 기간 ='" + (i + 1).ToString()+"월" + "'");
-                설치면직달[i] = Convert.ToDouble(aa[0][0]);
-                //MessageBox.Show(설치면직달[i].ToString());
-            }
+            //음영정보 이미지로드
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "음영이미지", "이미지", "분류 = '이미지1'");
+            pictureBox1.Load(Program.gPath + Image[0][0]);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
-            //지역,방향,각도에 따른 월별 설치면산란일사세기 (기후데이터_산란일사량)
-            for (int i = 0; i < 12; i++)
-            {
-                string[][] aa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_산란일사량", "일사량", "지역명= '" + ValueA[0][0] +"' AND 방향 = '"+ rec[0][10] + "' AND 각도 ='" + rec[0][11] + "˚" + "' AND 기간 ='" + (i + 1).ToString() + "월" + "'");
-                설치면산란[i] = Convert.ToDouble(aa[0][0]);
-                //MessageBox.Show(설치면산란[i].ToString());
-            }
+            string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "음영이미지", "이미지", "분류 = '이미지2'");
+            pictureBox2.Load(Program.gPath + Image1[0][0]);
+            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
 
-            //지역,방향,각도에 따른 월별 태양고도각 (기후데이터_고도각)
-            for (int i = 0; i < 12; i++)
-            {
-                string[][] aa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명= '" + ValueA[0][0] + "' AND 방향 = '" + rec[0][10] + "' AND 각도 ='" + rec[0][11] + "˚" + "' AND 기간 ='" + (i + 1).ToString() + "월" + "'");
-                태양고도각[i] = Convert.ToDouble(aa[0][0]);
-                //MessageBox.Show(태양고도각[i].ToString());
-            }
+            //음영정보
+            R1 = Convert.ToDouble(rec[0][5]);
+            R1_textBox.Text = R1.ToString("0.00") + "m";
+            R2 = Convert.ToDouble(rec[0][1]);
+            R2_textBox.Text = R2.ToString("0.00") + "°";
+            L1 = Convert.ToDouble(rec[0][6]);
+            L1_textBox.Text = L1.ToString("0.00") + "m";
+            L2 = Convert.ToDouble(rec[0][2]);
+            L2_textBox.Text = L2.ToString("0.00") + "°";
+            S1 = Convert.ToDouble(rec[0][8]);
+            S1_textBox.Text = S1.ToString("0.00") + "m";
+            S2 = Convert.ToDouble(rec[0][4]);
+            S2_textBox.Text = S2.ToString("0.00") + "°";
+            T1 = Convert.ToDouble(rec[0][7]);
+            T1_textBox.Text = T1.ToString("0.00") + "m";
+            T2 = Convert.ToDouble(rec[0][4]);
+            T2_textBox.Text = T2.ToString("0.00") + "°";
 
         }
-
-        /////////////////////////////////////////////////////수직음영길이에 영향 메서드 (지형물에의한 음영길이, 상부돌출 음영길이)
-        //지형물에의한 음영길이
-        public void Calc_지형물음영() //창호세로길이, 지형물음영길이, 상부돌출부음영길이
-        {
-            지형물에의한음영길이 hsh_obst = new 지형물에의한음영길이();
-
-            지형물까지의거리 = hsh_obst.지형물거리(주변지형물높이, 주변지형물각도);
-
-            for (int i = 0; i < 12; i++)
-            {
-                지형물수직음영길이[i] = hsh_obst.수직음영길이(창호세로길이, 주변지형물높이, 지형물까지의거리, 태양고도각[i]);
-                지형물수평음영길이[i] = hsh_obst.수평음영길이(지형물수직음영길이[i], 태양고도각[i]);
-                지형물로인한음영길이[i] = hsh_obst.지형물음영거리(창호세로길이, 경사, 지형물수직음영길이[i], 지형물수평음영길이[i]);
-            }
-        }
-
-        //상부돌출 음영길이
-        public void Calc_상부음영()
-        {
-            상부음영길이 hk_ovh = new 상부음영길이();
-
-            상부돌출부이격거리 = hk_ovh.상부돌출부이격거리(상부돌출부길이, 상부돌출부각도, 창호세로길이);
-
-            for (int i = 0; i < 12; i++)
-            {
-                상부돌출음영길이좌[i] = hk_ovh.상부돌출부음영길이좌측(상부돌출부길이, 태양고도각[i], 태양좌측방위각[i], 방위각, 창호세로길이);
-                상부돌출음영길이우[i] = hk_ovh.상부돌출부음영길이우측(상부돌출부길이, 태양고도각[i], 태양우측방위각[i], 방위각, 창호세로길이);
-                상부돌출부음영길이[i] = hk_ovh.상부돌출부음영길이(상부돌출음영길이좌[i], 상부돌출음영길이우[i]);
-            }
-        }
-
-        //좌측돌출 음영길이
-        public void Calc_좌측음영()
-        {
-            좌측음영길이 wk_finl = new 좌측음영길이();
-
-            좌측돌출부이격거리 = wk_finl.좌측돌출부이격거리(좌측돌출부길이, 좌측돌출부각도, 창호가로길이);
-
-            for (int i = 0; i < 12; i++)
-            {
-                좌측돌출부음영길이[i] = wk_finl.좌측돌출부음영길이(좌측돌출부길이, 좌측돌출부이격거리, 태양우측방위각[i], 방위각, 창호가로길이);
-            }
-        }
-
-        //우측돌출 음영길이
-        public void Calc_우측음영()
-        {
-            우측음영길이 wk_finr = new 우측음영길이();
-
-            우측돌출부이격거리 = wk_finr.우측돌출부이격거리(우측돌출부길이, 우측돌출부각도, 창호가로길이);
-
-            for (int i = 0; i < 12; i++)
-            {
-                우측돌출부음영길이[i] = wk_finr.우측돌출부음영길이(우측돌출부길이, 우측돌출부이격거리, 태양우측방위각[i], 방위각, 창호가로길이);
-            }
-        }
-
-        public void Calc_음영계수()
-        {
-            음영계수 Fsh_obs = new 음영계수();
-            for (int i = 0; i < 12; i++)
-            {
-                수평음영길이[i] = Fsh_obs.수평(창호가로길이, 좌측돌출부음영길이[i], 우측돌출부음영길이[i]);
-                수직음영길이[i] = Fsh_obs.수직(창호세로길이, 지형물로인한음영길이[i], 지형물로인한음영길이[i]);
-                직달일사감소[i] = Fsh_obs.직달일사(수직음영길이[i], 수평음영길이[i], 창호세로길이, 창호가로길이);
-                최종음영계수[i] = Fsh_obs.음영(직달일사감소[i], 설치면직달[i], 설치면산란[i]);
-            }
-        }
-        //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-        public class 지형물에의한음영길이
-        {
-            double 지형물수직음영길이, 지형물수평음영길이, 지형물까지거리;
-            double 음영길이, 지형물로인한음영길이;
-
-            //수직음영길이 
-            public double 수직음영길이(double 창호세로길이, double 주변지형물높이, double 지형물까지거리, double 태양고도각)
-            {
-                지형물수직음영길이 = Math.Min(창호세로길이, Math.Max(0, 주변지형물높이 - 지형물까지거리 * Math.Tan(태양고도각 * Math.PI / 180.0)));
-                return 지형물수직음영길이;
-            }
-
-            //수평음영길이
-            public double 수평음영길이(double 지형물수직음영길이, double 태양고도각)
-            {
-                지형물수평음영길이 = 지형물수직음영길이 / Math.Tan(태양고도각 * Math.PI / 180.0);
-                return 지형물수평음영길이;
-            }
-
-            //지형물까지 거리 
-            public double 지형물거리(double 주변지형물높이, double 주변지형물각도)
-            {
-                지형물까지거리 = 주변지형물높이 / Math.Tan(주변지형물각도 * Math.PI / 180.0);
-                return 지형물까지거리;
-            }
-
-            //최종 지형물에의한 음영길이 
-            //창호세로길이, 경사, 수직음영길이, 수평음영길이
-            public double 지형물음영거리(double 창호세로길이, double 경사, double 지형물수직음영길이, double 지형물수평음영길이)
-            {
-                if (지형물수직음영길이 == 0)
-                {
-                    음영길이 = 0;
-                }
-                else
-                {
-                    음영길이 = Math.Sqrt(Math.Pow((지형물수직음영길이 / (Math.Tan(경사 * Math.PI / 180.0) + 지형물수직음영길이 / 지형물수평음영길이)), 2) + Math.Pow((Math.Tan(경사 * Math.PI / 180.0) * (지형물수직음영길이 / (Math.Tan(경사 * Math.PI / 180.0) + 지형물수직음영길이 / 지형물수평음영길이))), 2));
-                }
-
-                지형물로인한음영길이 = Math.Min(창호세로길이, 음영길이);
-                return 지형물로인한음영길이;
-            }
-        }
-
-        public class 상부음영길이
-        {
-            double 이격거리, 좌음영길이, 우음영길이, 좌측음영길이, 우측음영길이, 상부돌출음영길이;
-
-            public double 상부돌출부이격거리(double 상부돌출부길이, double 상부돌출부각도, double 창호세로길이)
-            {
-                이격거리 = (상부돌출부길이 / Math.Tan(상부돌출부각도 * Math.PI / 180.0)) - (창호세로길이 / 2);
-                return 이격거리;
-            }
-
-            public double 상부돌출부음영길이좌측(double 상부돌출부길이, double 태양고도각, double 태양좌측방위각, double 방위각, double 창호세로길이)
-            {
-                좌음영길이 = Math.Abs(상부돌출부길이 * Math.Tan(태양고도각 * Math.PI / 180.0) / Math.Cos(태양좌측방위각 - 방위각)) - 이격거리;
-                if (Math.Min(창호세로길이, 좌음영길이) < 0)
-                {
-                    좌측음영길이 = 0;
-                }
-                else
-                {
-                    좌측음영길이 = Math.Min(창호세로길이, 좌음영길이);
-                }
-                return 좌측음영길이;
-            }
-            public double 상부돌출부음영길이우측(double 상부돌출부길이, double 태양고도각, double 태양우측방위각, double 방위각, double 창호세로길이)
-            {
-                우음영길이 = Math.Abs(상부돌출부길이 * Math.Tan(태양고도각 * Math.PI / 180.0) / Math.Cos(태양우측방위각 - 방위각)) - 이격거리;
-                if (Math.Min(창호세로길이, 우음영길이) < 0)
-                {
-                    우측음영길이 = 0;
-                }
-                else
-                {
-                    우측음영길이 = Math.Min(창호세로길이, 우음영길이);
-                }
-                return 우측음영길이;
-            }
-            public double 상부돌출부음영길이(double 좌측음영길이, double 우측음영길이)
-            {
-                상부돌출음영길이 = (좌측음영길이 + 우측음영길이) / 2;
-                return 상부돌출음영길이;
-            }
-        }
-
-        public class 좌측음영길이
-        {
-            double 이격거리, 좌측음영, 좌측돌출음영길이;
-            public double 좌측돌출부이격거리(double 좌측돌출부길이, double 좌측돌출부각도, double 창호가로길이)
-            {
-                이격거리 = (좌측돌출부길이 / Math.Tan(좌측돌출부각도 * Math.PI / 180.0)) - (창호가로길이 / 2);
-                return 이격거리;
-            }
-            public double 좌측돌출부음영길이(double 좌측돌출부길이, double 이격거리, double 태양우측방위각, double 방위각, double 창호가로길이)
-            {
-                좌측음영 = Math.Abs(좌측돌출부길이 * Math.Tan(태양우측방위각 * Math.PI / 180.0 - 방위각 * Math.PI / 180.0)) - 이격거리;
-
-                if ((태양우측방위각 - 방위각) < 0)
-                {
-                    좌측돌출음영길이 = 0;
-                }
-                else
-                {
-                    if (좌측음영 < 0)
-                    {
-                        좌측돌출음영길이 = 0;
-                    }
-                    else
-                    {
-                        좌측돌출음영길이 = Math.Min(창호가로길이, 좌측음영);
-                    }
-                }
-                return 좌측돌출음영길이;
-            }
-        }
-
-        public class 우측음영길이
-        {
-            double 이격거리, 우측음영, 우측돌출음영길이;
-            public double 우측돌출부이격거리(double 우측돌출부길이, double 우측돌출부각도, double 창호가로길이)
-            {
-                이격거리 = (우측돌출부길이 / Math.Tan(우측돌출부각도 * Math.PI / 180.0)) - (창호가로길이 / 2);
-                return 이격거리;
-            }
-            public double 우측돌출부음영길이(double 우측돌출부길이, double 이격거리, double 태양우측방위각, double 방위각, double 창호가로길이)
-            {
-                우측음영 = Math.Abs(우측돌출부길이 * Math.Tan(태양우측방위각 * Math.PI / 180.0 - 방위각 * Math.PI / 180.0)) - 이격거리;
-
-                if ((태양우측방위각 - 방위각) > 0)
-                {
-                    우측돌출음영길이 = 0;
-                }
-                else
-                {
-                    if (우측음영 < 0)
-                    {
-                        우측돌출음영길이 = 0;
-                    }
-                    else
-                    {
-                        우측돌출음영길이 = Math.Min(창호가로길이, 우측음영);
-                    }
-                }
-                return 우측돌출음영길이;
-            }
-        }
-
-        public class 음영계수
-        {
-            double 수평음영, 수직음영, 직달일사감소계수, 최종음영계수;
-            public double 수평(double 창호가로길이, double 좌측돌출음영, double 우측돌출음영)
-            {
-                수평음영 = Math.Max(0, 창호가로길이 - (좌측돌출음영 + 우측돌출음영));
-                return 수평음영;
-            }
-            public double 수직(double 창호세로길이, double 지형물음영, double 상부돌출음영)
-            {
-                수직음영 = Math.Max(0, 창호세로길이 - (지형물음영 + 상부돌출음영));
-                return 수직음영;
-            }
-            public double 직달일사(double 수직음영, double 수평음영, double 창호세로길이, double 창호가로길이)
-            {
-                직달일사감소계수 = (수직음영 * 수평음영) / (창호세로길이 * 창호가로길이);
-                return 직달일사감소계수;
-            }
-            public double 음영(double 직달일사감소, double 설치면직달, double 설치면산란)
-            {
-                최종음영계수 = (직달일사감소 * 설치면직달 + 설치면산란) / (설치면직달 + 설치면산란);
-                return 최종음영계수;
-            }
-        }
-
-
     }
 }

@@ -75,6 +75,16 @@ namespace main.contents
             }
 
             forms[idx].Show();
+
+            ZoneShade zoneshade = new ZoneShade();
+            zoneshade.Calc_방위각();
+
+          
+
+            MessageBox.Show();
+       
+
+
         }
 
         void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
