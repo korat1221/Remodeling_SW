@@ -611,7 +611,7 @@ namespace main
             int kk = -1;
             while (++kk < ValueA.Length)
             {
-                Da = Convert.ToDouble(ValueA[0][0]);
+                //Da = Convert.ToDouble(ValueA[0][0]);
             }
             //MessageBox.Show(find_fd_sna.ToString());
 

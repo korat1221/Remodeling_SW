@@ -68,6 +68,7 @@ namespace main.contents
             ce_Copy_button = new Button();
             ce_Remove_button = new Button();
             ce_Add_button = new Button();
+            button1 = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
@@ -82,6 +83,7 @@ namespace main.contents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(button1);
             GeneralPanel.Controls.Add(label4);
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Location = new Point(12, 12);
@@ -548,6 +550,21 @@ namespace main.contents
             ce_Add_button.UseVisualStyleBackColor = false;
             ce_Add_button.Click += ce_Add_button_Click;
             // 
+            // button1
+            // 
+            button1.BackColor = SystemColors.ControlLight;
+            button1.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            button1.FlatStyle = FlatStyle.System;
+            button1.Font = new Font("나눔고딕", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            button1.Location = new Point(465, 17);
+            button1.Margin = new Padding(0);
+            button1.Name = "button1";
+            button1.Size = new Size(47, 23);
+            button1.TabIndex = 102;
+            button1.Text = "Copy";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
             // EquipmentList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -604,5 +621,6 @@ namespace main.contents
         private Button ce_Copy_button;
         private Button ce_Remove_button;
         private Button ce_Add_button;
+        private Button button1;
     }
 }

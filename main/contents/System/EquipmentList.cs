@@ -18,6 +18,7 @@ using static System.ComponentModel.Design.ObjectSelectorEditor;
 using main.subcontents.HeatingSystem;
 using main.subcontents.ConstructionWall;
 using main.subcontents.EquipmentList;
+using System.Security.Policy;
 
 namespace main.contents
 {
@@ -49,6 +50,9 @@ namespace main.contents
             Load_Boiler();
             Load_Pump();
             Load_ce();
+
+
+
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -89,6 +93,7 @@ namespace main.contents
             Boiler_dataGridView.Columns[9].Width = 80;
             Boiler_dataGridView.Columns[10].Width = 50;
             Boiler_dataGridView.Columns[11].Width = 50;
+
 
 
             //Boiler_dataGridView.ColumnCount = 13;
@@ -361,7 +366,7 @@ namespace main.contents
 
         private void Load_Boiler()
         {
-            try 
+            try
             {
                 string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "번호,명칭,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력,DB유형,난방급탕,대수", "");
                 string 용량 = "", 전부하효율 = "", 부분부하효율 = "", 소비전력 = "", 대기전력 = "";
@@ -652,7 +657,7 @@ namespace main.contents
                  + Value[8]
                  + "'", "번호");
             }
-            MessageBox.Show("저장되었습니다."); 
+            MessageBox.Show("저장되었습니다.");
         }
 
         private void Load_Pump()
@@ -693,7 +698,7 @@ namespace main.contents
                     Pump_dataGridView.Rows[nRow].Cells[4].Value = A효율;
                     Pump_dataGridView.Rows[nRow].Cells[5].Value = B효율;
                     Pump_dataGridView.Rows[nRow].Cells[6].Value = 유량;
-                    Pump_dataGridView.Rows[nRow].Cells[7].Value = 양정; 
+                    Pump_dataGridView.Rows[nRow].Cells[7].Value = 양정;
                     Pump_dataGridView.Rows[nRow].Cells[9].Value = 동력;
                     Pump_dataGridView.Rows[nRow].Cells[11].Value = Value[n][8];
                     DataGridViewButtonCell PumpHead_ButtonCell = new DataGridViewButtonCell();
@@ -739,7 +744,7 @@ namespace main.contents
 
         private Boolean ce_datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
-            if (ce_dataGridView.Rows[row].Cells[4].Value!= null&& ce_dataGridView.Rows[row].Cells[4].Value.ToString() =="복사난방")
+            if (ce_dataGridView.Rows[row].Cells[4].Value != null && ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "복사난방")
             {
                 if (column == 5 || column == 6 || column == 8)
                 {
@@ -774,7 +779,7 @@ namespace main.contents
             공급설비종류comboBox.Items.Add("복사난방");
             ce_dataGridView.Rows[nRow].Cells[4] = 공급설비종류comboBox;
 
-      
+
             DataGridViewComboBoxCell 온도제어방식comboBox = new DataGridViewComboBoxCell();
             온도제어방식comboBox.Items.Add("제어 없음");
             온도제어방식comboBox.Items.Add("실별 온도제어");
@@ -913,6 +918,12 @@ namespace main.contents
                 }
             }
             catch { }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
 
         }
     }

@@ -717,6 +717,7 @@ namespace main
             // string[][] ZoneCW_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneCW", "Name", "zoneNum='" + zoneNum + "'");
 
             //존의 창별 일사정보 가져오기
+            try
             {
                 int i = -1;
 
@@ -731,8 +732,10 @@ namespace main
                     }
                 }
             }
+            catch { }
 
             //존의 창별 음영정보 가져오기
+            try
             {
                 int i = -1;
 
@@ -747,21 +750,24 @@ namespace main
                     }
                 }
             }
+            catch { }
 
             //존의 창별 가동계수정보 가져오기
+            try
             {
                 int i = -1;
 
                 while (++i < zoneWin.Count)
                 {
-                  //  string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneWin_a", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
-                  //나중에 차양 가동계수 수정해야 함 
+                    //  string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneWin_a", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
+                    //나중에 차양 가동계수 수정해야 함 
                     for (int mth = 0; mth < 12; mth++)
                     {
                         zoneWins_a[i, mth] = 0;
                     }
                 }
-            }            
+            }
+            catch { }            
 
             // 창 일사 계산 
             for (int i = 0; i < zoneWin.Count; i++)

@@ -1803,54 +1803,54 @@ namespace main
                     }
                 }
 
-                ZoneLight zonelight = new ZoneLight(zones[i][0]);
-                zonelight.Calc_time(zones[i][0]);
-                string s = "";
-                {
-                    int j = -1;
+                //    ZoneLight zonelight = new ZoneLight(zones[i][0]);
+                //    zonelight.Calc_time(zones[i][0]);
+                //    string s = "";
+                //    {
+                //        int j = -1;
 
-                    while (++j < zonelight.Zone_useofdays.Length)
-                    {
-                        s += zonelight.Zone_nighttime[j];
-                        s += ",";
-                    }
-                    MessageBox.Show(s);
-                }
-                zonelight.Calc_Facade_general();
-                zonelight.Calc_Facade_shade();
-                zonelight.Calc_Facade_FDS();
-                zonelight.Calc_Facade_FD();
-                zonelight.Calc_Roof_general();
-                zonelight.Calc_Roof_FDS();
-                zonelight.Calc_Roof_FD();
-                zonelight.Calc_Sunlight_SCW();
-                zonelight.Calc_Sunlight_Pj_SC();
-                zonelight.Calc_W();
+                //        while (++j < zonelight.Zone_useofdays.Length)
+                //        {
+                //            s += zonelight.Zone_nighttime[j];
+                //            s += ",";
+                //        }
+                //        MessageBox.Show(s);
+                //    }
+                //    zonelight.Calc_Facade_general();
+                //    zonelight.Calc_Facade_shade();
+                //    zonelight.Calc_Facade_FDS();
+                //    zonelight.Calc_Facade_FD();
+                //    zonelight.Calc_Roof_general();
+                //    zonelight.Calc_Roof_FDS();
+                //    zonelight.Calc_Roof_FD();
+                //    zonelight.Calc_Sunlight_SCW();
+                //    zonelight.Calc_Sunlight_Pj_SC();
+                //    zonelight.Calc_W();
 
 
-                //월별 조명
-                for (int mth = 0; mth <= 11; mth++)
-                {
-                    //zonename 가져와야할까? 
-                    MTH = (mth + 1).ToString() + "월";
+                //    //월별 조명
+                //    for (int mth = 0; mth <= 11; mth++)
+                //    {
+                //        //zonename 가져와야할까? 
+                //        MTH = (mth + 1).ToString() + "월";
 
-                    Program.DB.setValue(DB.type.ProjDB, "Zone_LightResult", "번호,월," +
-                        "ITr,IRD,ISh_Ish,ISh_hA,Ish_vA,Ish_In_At,Wi,Ish_GDF,Ish," +
-                        "f_τeff_SNA,f_D,f_nearD,f_DCA,f_dclass,f_nearEm_SNA,f_fd_sna,f_fd_sa,f_nearEm_DC,f_fd_c,f_FDS,f_FD," +
-                        "as_bs,hs_bs,hg_hw," +
-                        "normal_ηR,saw_ηR,r_DSNA,r_DSA,r_dclass," +
-                        "r_nearEm_FDS,r_fd_sna,r_fd_sa,r_nearEm_DC,r_fd_c,r_FDS,r_FD," +
-                        "Sunlight_SCW,Sunlight_PjSC,Final_W",
+                //        Program.DB.setValue(DB.type.ProjDB, "Zone_LightResult", "번호,월," +
+                //            "ITr,IRD,ISh_Ish,ISh_hA,Ish_vA,Ish_In_At,Wi,Ish_GDF,Ish," +
+                //            "f_τeff_SNA,f_D,f_nearD,f_DCA,f_dclass,f_nearEm_SNA,f_fd_sna,f_fd_sa,f_nearEm_DC,f_fd_c,f_FDS,f_FD," +
+                //            "as_bs,hs_bs,hg_hw," +
+                //            "normal_ηR,saw_ηR,r_DSNA,r_DSA,r_dclass," +
+                //            "r_nearEm_FDS,r_fd_sna,r_fd_sa,r_nearEm_DC,r_fd_c,r_FDS,r_FD," +
+                //            "Sunlight_SCW,Sunlight_PjSC,Final_W",
 
-                    "'" + zones[i][0] + "','" + MTH + "','" +
-                     zonelight.Zone_ITr.ToString() + "','" + zonelight.Zone_IRD.ToString() + "','" + zonelight.Zone_ISh_Ish.ToString() + "','" + zonelight.Zone_ISh_hA.ToString() + "','" + zonelight.Zone_ISh_vA.ToString() + "','" + zonelight.Zone_Ish_In_At.ToString() + "','" + zonelight.Zone_Wi.ToString() + "','" + zonelight.Zone_Ish_GDF.ToString() + "','" + zonelight.Zone_Calc_Ish.ToString() + "','" +
-                     zonelight.Zone_τeff_SNA_j.ToString() + "','" + zonelight.Zone_D.ToString() + "','" + zonelight.Zone_nearD.ToString() + "','" + zonelight.Zone_DCA.ToString() + "','" + zonelight.dclass + "','" + zonelight.f_nearEm_SNA.ToString() + "','" + zonelight.find_fd_sna.ToString() + "','" + zonelight.find_fd_sa.ToString() + "','" + zonelight.f_naerEm_DC.ToString() + "','" + zonelight.find_fd_c.ToString() + "','" + zonelight.Zone_FDS[mth].ToString() + "','" + zonelight.Zone_Facade_FD[mth].ToString() + "','" +
-                     zonelight.Zone_as_bs.ToString() + "','" + zonelight.Zone_hs_bs.ToString() + "','" + zonelight.Zone_hg_hw.ToString() + "','" +
-                     zonelight.find_normal_ηR.ToString() + "','" + zonelight.find_saw_ηR.ToString() + "','" + zonelight.Zone_Roof_DSNA.ToString() + "','" + zonelight.Zone_Roof_DSA.ToString() + "','" + zonelight.roof_dclass + "','" +
-                     zonelight.r_nearEm_FDS.ToString() + "','" + zonelight.find_roof_fd_sna.ToString() + "','" + zonelight.find_roof_fd_sa.ToString() + "','" + zonelight.r_nearEm_DC.ToString() + "','" + zonelight.find_roof_fd_c.ToString() + "','" + zonelight.Zone_Roof_FDS[mth].ToString() + "','" + zonelight.Zone_Roof_FD[mth].ToString() + "','" +
-                     zonelight.Zone_Sunlight_SCW[mth].ToString() + "','" + zonelight.Zone_Sunlight_PjSC[mth].ToString() + "','" + zonelight.Zone_Final_W[mth].ToString()
-                     + "'", "번호,월");
-                }
+                //        "'" + zones[i][0] + "','" + MTH + "','" +
+                //         zonelight.Zone_ITr.ToString() + "','" + zonelight.Zone_IRD.ToString() + "','" + zonelight.Zone_ISh_Ish.ToString() + "','" + zonelight.Zone_ISh_hA.ToString() + "','" + zonelight.Zone_ISh_vA.ToString() + "','" + zonelight.Zone_Ish_In_At.ToString() + "','" + zonelight.Zone_Wi.ToString() + "','" + zonelight.Zone_Ish_GDF.ToString() + "','" + zonelight.Zone_Calc_Ish.ToString() + "','" +
+                //         zonelight.Zone_τeff_SNA_j.ToString() + "','" + zonelight.Zone_D.ToString() + "','" + zonelight.Zone_nearD.ToString() + "','" + zonelight.Zone_DCA.ToString() + "','" + zonelight.dclass + "','" + zonelight.f_nearEm_SNA.ToString() + "','" + zonelight.find_fd_sna.ToString() + "','" + zonelight.find_fd_sa.ToString() + "','" + zonelight.f_naerEm_DC.ToString() + "','" + zonelight.find_fd_c.ToString() + "','" + zonelight.Zone_FDS[mth].ToString() + "','" + zonelight.Zone_Facade_FD[mth].ToString() + "','" +
+                //         zonelight.Zone_as_bs.ToString() + "','" + zonelight.Zone_hs_bs.ToString() + "','" + zonelight.Zone_hg_hw.ToString() + "','" +
+                //         zonelight.find_normal_ηR.ToString() + "','" + zonelight.find_saw_ηR.ToString() + "','" + zonelight.Zone_Roof_DSNA.ToString() + "','" + zonelight.Zone_Roof_DSA.ToString() + "','" + zonelight.roof_dclass + "','" +
+                //         zonelight.r_nearEm_FDS.ToString() + "','" + zonelight.find_roof_fd_sna.ToString() + "','" + zonelight.find_roof_fd_sa.ToString() + "','" + zonelight.r_nearEm_DC.ToString() + "','" + zonelight.find_roof_fd_c.ToString() + "','" + zonelight.Zone_Roof_FDS[mth].ToString() + "','" + zonelight.Zone_Roof_FD[mth].ToString() + "','" +
+                //         zonelight.Zone_Sunlight_SCW[mth].ToString() + "','" + zonelight.Zone_Sunlight_PjSC[mth].ToString() + "','" + zonelight.Zone_Final_W[mth].ToString()
+                //         + "'", "번호,월");
+                //    }
             }
 
             MessageBox.Show("계산되었습니다.");
@@ -1867,7 +1867,16 @@ namespace main
         /////////////////////////////////////////////////////////////////////////////////////
 
         private Dictionary<string, Delegate> _calculations = new Dictionary<string, Delegate>();
-        public static Dictionary<string, Zone> Zones = new Dictionary<string, Zone>();
+        private static Dictionary<string, Zone> Zones = new Dictionary<string, Zone>();
+
+        public Zone getZone(string zoneNum)
+        {
+            if (Zones.ContainsKey(zoneNum))
+            {
+                return Zones[zoneNum];
+            }
+            else return null;
+        }
 
         public bool run(string[] calculations)
         {

@@ -33,7 +33,14 @@ namespace main
                 HeatingName = Value[0][0];
                 SelectZone_nonsplit = Value[0][1];
                 Split_Zone(SelectZone_nonsplit);
-               // Program.Cal_HCneed.
+
+                for(int n = 0; n < SelectZone_split.Count;  n++)
+                {
+                    Zone zone = Program.CALC.getZone(SelectZone_split[n].ToString());
+                    if (zone != null)
+                    { double wa = zone.Zone_HT_Di_Wall; }
+                }
+                
             }
             catch { }
             
