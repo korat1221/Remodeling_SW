@@ -18,6 +18,7 @@ namespace main
         public static DB DB = new DB();
         public static UTIL UTIL = new UTIL();
         public static CALC CALC = new CALC();
+        public static Zone Zone = new Zone();
 
         /// <summary>
         ///  The main entry point for the application.

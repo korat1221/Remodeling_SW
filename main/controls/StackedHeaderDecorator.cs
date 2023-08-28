@@ -249,7 +249,7 @@ bool isMultiLined()
 void objDataGrid_Paint(object sender, PaintEventArgs e)
     {
         iNoOfLevels = NoOfLevels(objHeaderTree);
-        if (iNoOfLevels > 0 && !isMultiLined())
+        if (iNoOfLevels > 1 && !isMultiLined())
         {
             iNoOfLevels--;
         }
