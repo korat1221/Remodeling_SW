@@ -1712,13 +1712,10 @@ namespace main
 
             while (++i < zones.Length)
             {
-                //if (Program.CALC.Zones.Contains(zones[i][0]))
-                //{
+                Zone zone1 = new Zone(zones[i][0]);
 
-                //}
-                //Program.Zones[zones[i][0]])
-                Zone zone1 = new Zone();
-                //Zone zone1 = new Zone(zones[i][0]);
+                Zones[zones[i][0]] = zone1;
+
                 zone1.ZoneHT();
                 zone1.ZoneHV();
                 zone1.Zonetao();
@@ -1870,7 +1867,7 @@ namespace main
         /////////////////////////////////////////////////////////////////////////////////////
 
         private Dictionary<string, Delegate> _calculations = new Dictionary<string, Delegate>();
-        static public Dictionary<string, Zone> Zones = new Dictionary<string, Zone>();
+        public static Dictionary<string, Zone> Zones = new Dictionary<string, Zone>();
 
         public bool run(string[] calculations)
         {
