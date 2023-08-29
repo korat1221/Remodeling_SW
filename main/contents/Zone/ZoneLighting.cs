@@ -1468,9 +1468,9 @@ namespace main.contents
 
                 ////////////////////////////////////////////////////////주향 창호 OR 커튼월 유형 및 빛 투과율 찾기 (세가지 케이스)////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //창호 구조체 타입 찾기 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
-                String[][] Win_Type = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호", "존 = '" + ZoneNum + "' And 방위 = '" + facade_di + "' And 외피유형 = '창호' And 천창유무 <> '천창있음'");
+                String[][] Win_Type = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호", "존 = '" + ZoneNum + "' And 방위 = '" + facade_di + "' And 외피유형 = '창호' And 천창유무 <> '천창있음'");
                 //커튼월창 구조체 타입 찾기 
-                String[][] CW_Type = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호", "존 = '" + ZoneNum + "' And 방위 = '" + facade_di + "' And 외피유형 = '커튼월창' And 천창유무 <> '천창있음'");
+                String[][] CW_Type = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호", "존 = '" + ZoneNum + "' And 방위 = '" + facade_di + "' And 외피유형 = '커튼월창' And 천창유무 <> '천창있음'");
 
                 double AreaSum_Wins = 0;
                 double[] AreaSum_ConstructionWin = new double[Win_Type.Length];
@@ -1732,9 +1732,9 @@ namespace main.contents
 
                 ////////////////////////////////////////////////////////주향 창호 OR 커튼월 유형 및 빛 투과율 찾기 (세가지 케이스)////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //창호 구조체 타입 찾기 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
-                String[][] Win_Type = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호", "존 = '" + ZoneNum + "' And 방위 = '" + roof_di + "' And 외피유형 = '창호' And 천창유무 = '천창있음'");
+                String[][] Win_Type = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호", "존 = '" + ZoneNum + "' And 방위 = '" + roof_di + "' And 외피유형 = '창호' And 천창유무 = '천창있음'");
                 //커튼월창 구조체 타입 찾기 
-                String[][] CW_Type = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호", "존 = '" + ZoneNum + "' And 방위 = '" + roof_di + "' And 외피유형 = '커튼월창' And 천창유무 = '천창있음'");
+                String[][] CW_Type = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호", "존 = '" + ZoneNum + "' And 방위 = '" + roof_di + "' And 외피유형 = '커튼월창' And 천창유무 = '천창있음'");
 
                 double AreaSum_Wins = 0;
                 double[] AreaSum_ConstructionWin = new double[Win_Type.Length];

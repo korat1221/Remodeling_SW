@@ -109,7 +109,7 @@ namespace main.contentslist
         public void load_List()
         {
 
-            string[][] List = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "");
+            string[][] List = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "");
             string[][] Value;
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
 
@@ -117,7 +117,7 @@ namespace main.contentslist
             dataGridView1.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
-                string[][] Zone = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List[n][0] + "'");
+                string[][] Zone = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List[n][0] + "'");
 
                 String[] 용도프로필 = new String[Zone.Length];
                 double[] 순바닥면적 = new double[Zone.Length];
@@ -164,7 +164,7 @@ namespace main.contentslist
                     dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F1}", 천장고.Average());
                     //ListTable.Rows.Add(List[n][0], 용도프로필[index], Zone.Length, String.Format("{0:F1}", 순바닥면적.Sum()), String.Format("{0:F1}", 천장고.Average()));
                 }
-                string[][] SubList = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List[n][0]+"'");
+                string[][] SubList = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List[n][0]+"'");
                 
                 List<object> subMenu = new List<object>();
                  for (int k = 0; k < SubList.Length; k++)

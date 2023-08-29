@@ -115,7 +115,7 @@ namespace main.contentslist
         }
         public void load_List(String Num)
         {
-            string[][] List = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + Num + "'");
+            string[][] List = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + Num + "'");
             String[][] Value;
             String Blank = "";
             //ListTable.Rows.Clear();

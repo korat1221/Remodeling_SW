@@ -1003,7 +1003,7 @@ namespace main.contents
         }
         private void Load_ce1Zone(String ce1Type)
         {
-            String[][] Value = Program.DB.getValue_dedupe(DB.type.ProjDB, "Heating_ce_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce1Type + "'");
+            String[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Heating_ce_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce1Type + "'");
             if (Value.Length > 0)
             {
                 if (Value.Length == 1)
@@ -1028,7 +1028,7 @@ namespace main.contents
         }
         private void Load_ce2Zone(String ce2Type)
         {
-            String[][] Value = Program.DB.getValue_dedupe(DB.type.ProjDB, "Heating_ce_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce2Type + "'");
+            String[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Heating_ce_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce2Type + "'");
             if (Value.Length > 0)
             {
                 if (Value.Length == 1)

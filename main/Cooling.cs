@@ -87,19 +87,7 @@ namespace main
 
         public void CoolingZoneMaker() // 테이블2개(CoolingZone,Zone_HCneed 필요)
         {
-            CoolingZone cz = new CoolingZone();
-            string[][] CoolingZoneName = Program.DB.getValue(DB.type.ProjDB, "CoolingZone", "존이름", "냉방설비유형 ='실외기≤12kW'"); //냉방존에 해당하는 존리스트 읽기
-            //cz.CZType =
-            for (int i = 0; i < CoolingSystemName.Length; i++) //냉방에너지요구량,이용일수,실내온도 입력
-            {
-                string[][] CoolingZoneWd = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed", "Qcb_wd_mth,dwd_mth,theta_i",
-                "번호='" + CoolingZoneName[i][0] + "' AND 난방_냉방 = '" + "냉방" + "'  AND  비이용일_이용일 =  '" + "이용일" + "'");
-                string[][] CoolingZoneWe = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed", "Qcb_we_mth",
-               "번호='" + CoolingZoneName[i][0] + "' AND 난방_냉방 = '" + "냉방" + "'  AND  비이용일_이용일 =  '" + "비이용일" + "'");
-                cz.QC_nd_zt_j[i] = Convert.ToDouble(CoolingZoneWd[i][0]) + Convert.ToDouble(CoolingZoneWe[i][0]);
-                cz.dwd[i] = Convert.ToDouble(CoolingZoneWd[i][1]);
-                cz.θi_c[i] = Convert.ToDouble(CoolingZoneWd[i][2]);
-            }
+           
 
         }
 
@@ -121,36 +109,36 @@ namespace main
         }
     }
 
-    class CoolingZone //냉방설비존/공조설비존 만들기
-    {
-        public string ZoneName, CZType, CoolingSystemType, CoolingSystemNumber, CoolingSystemName;
-        public double tC_op, QC_max; //
-        public double[] QC_nd_zt_j = new double[12], dwd = new double[12], θi_c = new double[12]; //getvalue로 값을 가져옴
-        public double[] QC_rate = new double[12]; //존결정이 완료 후 계산됨
-        public CoolingZone()
-        {
+    //class CoolingZone //냉방설비존/공조설비존 만들기
+    //{
+    //    public string ZoneName, CZType, CoolingSystemType, CoolingSystemNumber, CoolingSystemName;
+    //    public double tC_op, QC_max; //
+    //    public double[] QC_nd_zt_j = new double[12], dwd = new double[12], θi_c = new double[12]; //getvalue로 값을 가져옴
+    //    public double[] QC_rate = new double[12]; //존결정이 완료 후 계산됨
+    //    public CoolingZone()
+    //    {
 
-        }
-        public double SumQC_nd_zt_j(double[] 에너지요구량)
-        {
-           double sum = 0;
-           for(int i = 0; i < 12; i++) 
-           {
-               sum += QC_nd_zt_j[i];
-           }
-           return sum;
-        }
-        public double Averθi_c(double[] 실내온도)
-        {
-           double sum = 0;
-           for (int i = 0; i < 12; i++)
-           {
-               sum += θi_c[i];
-           }
-           double aver = sum / 12;
-           return aver;
-        }         
-    }
+    //    }
+    //    public double SumQC_nd_zt_j(double[] 에너지요구량)
+    //    {
+    //       double sum = 0;
+    //       for(int i = 0; i < 12; i++) 
+    //       {
+    //           sum += QC_nd_zt_j[i];
+    //       }
+    //       return sum;
+    //    }
+    //    public double Averθi_c(double[] 실내온도)
+    //    {
+    //       double sum = 0;
+    //       for (int i = 0; i < 12; i++)
+    //       {
+    //           sum += θi_c[i];
+    //       }
+    //       double aver = sum / 12;
+    //       return aver;
+    //    }         
+    //}
 
     class CoolingZoneSum //냉방설비존합/계산결과값 만들기
     {

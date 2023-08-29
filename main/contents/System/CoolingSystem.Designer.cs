@@ -61,6 +61,7 @@
             label2 = new Label();
             label5 = new Label();
             GeneralPanel = new Panel();
+            NumTextBox = new Label();
             radioButton2 = new RadioButton();
             radioButton1 = new RadioButton();
             label9 = new Label();
@@ -273,7 +274,6 @@
             AirCondition_dataGridView.RowTemplate.Height = 25;
             AirCondition_dataGridView.Size = new Size(943, 96);
             AirCondition_dataGridView.TabIndex = 22;
-            AirCondition_dataGridView.CellContentClick += AirCondition_dataGridView_CellContentClick;
             // 
             // HP_tabPage
             // 
@@ -407,7 +407,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(105, 18);
+            label1.Location = new Point(125, 18);
             label1.Name = "label1";
             label1.Size = new Size(31, 15);
             label1.TabIndex = 1;
@@ -437,6 +437,7 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(NumTextBox);
             GeneralPanel.Controls.Add(radioButton2);
             GeneralPanel.Controls.Add(radioButton1);
             GeneralPanel.Controls.Add(label9);
@@ -468,10 +469,19 @@
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
             // 
+            // NumTextBox
+            // 
+            NumTextBox.AutoSize = true;
+            NumTextBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            NumTextBox.Location = new Point(77, 16);
+            NumTextBox.Name = "NumTextBox";
+            NumTextBox.Size = new Size(0, 15);
+            NumTextBox.TabIndex = 142;
+            // 
             // radioButton2
             // 
             radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(142, 75);
+            radioButton2.Location = new Point(162, 75);
             radioButton2.Name = "radioButton2";
             radioButton2.Size = new Size(14, 13);
             radioButton2.TabIndex = 141;
@@ -482,7 +492,7 @@
             // radioButton1
             // 
             radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(142, 50);
+            radioButton1.Location = new Point(162, 50);
             radioButton1.Name = "radioButton1";
             radioButton1.Size = new Size(14, 13);
             radioButton1.TabIndex = 140;
@@ -494,7 +504,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label9.Location = new Point(105, 74);
+            label9.Location = new Point(125, 74);
             label9.Name = "label9";
             label9.Size = new Size(34, 17);
             label9.TabIndex = 139;
@@ -504,7 +514,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label8.Location = new Point(105, 49);
+            label8.Location = new Point(125, 49);
             label8.Name = "label8";
             label8.Size = new Size(34, 17);
             label8.TabIndex = 138;
@@ -659,7 +669,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label6.Location = new Point(186, 73);
+            label6.Location = new Point(207, 73);
             label6.Name = "label6";
             label6.Size = new Size(71, 17);
             label6.TabIndex = 124;
@@ -697,7 +707,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.Location = new Point(186, 50);
+            label3.Location = new Point(207, 50);
             label3.Name = "label3";
             label3.Size = new Size(52, 17);
             label3.TabIndex = 121;
@@ -791,5 +801,6 @@
         private RadioButton radioButton1;
         private Label label9;
         private Label label8;
+        private Label NumTextBox;
     }
 }

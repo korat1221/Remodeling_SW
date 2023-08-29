@@ -20,13 +20,13 @@ namespace main.contents
     public partial class CoolingSystem : Form
     {
 
-        String Num, Name, Age;
+        String Num, Name, Age; //시스템 번호, 이름, 기존/신규
         //검토해야됨
         String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System, PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control, ce1Type, ce2Type;
         int Pump1Num, Pump2Num;
         String[] SystemType = { "실외기12kW", "공냉식냉동기", "수냉식냉동기", "흡수식냉동기", "흡수식냉온수기", "지열히트펌프" };
         ArrayList SelectAirConditioning = new ArrayList(); ArrayList SelectPump = new ArrayList(); ArrayList Selectce1Zone = new ArrayList(); ArrayList Selectce2Zone = new ArrayList();
-
+        List<CoolingZone> CZS = new List<CoolingZone>();
 
         string[] ZoneNameList;
 
@@ -41,7 +41,7 @@ namespace main.contents
             CoolingGeneratorSelect_comboBox.Items.Clear();
             CoolingGeneratorSelect_comboBox.Items.AddRange(SystemType);
             CoolingGeneratorSelect_comboBox.SelectedIndex = 0;
-
+            
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -70,28 +70,35 @@ namespace main.contents
         }
         private void Zone_button_Click(object sender, EventArgs e)
         {
+            CZS.Clear();
             if (CoolingSystemNameText.Text == null || CoolingSystemNameText.Text == "")
             {
                 MessageBox.Show("명칭을 입력해 주세요!");
             }
             else
             {
-                CoolingZoneList ZC = new CoolingZoneList(CoolingSystemNameText.Text);
+                Num = NumTextBox.Text;
+                Name = CoolingSystemNameText.Text;
+                Cooling_Zone ZC = new Cooling_Zone(Num, Name);
+                
                 DialogResult result = ZC.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    string[][] coolingzone = Program.DB.getValue(DB.type.ProjDB, "CoolingZone", 
-                        "면적,연간냉방에너지요구량,최대냉방부하", 
-                        "시스템명칭='" + CoolingSystemNameText.Text +
+                    string[][] coolingzonelist = Program.DB.getValue(DB.type.ProjDB, "CoolingZone",
+                        "존번호",
+                        "번호='" + Num +
                         "'");
+                    coolingzone(coolingzonelist);
+                            
                     double area = 0;
                     double annualenergyneed = 0;
                     double maxload = 0;
-                    for (int i = 0; i<coolingzone.Length;i=i*12+1)
+                    //
+                    foreach ( CoolingZone _cz in CZS)
                     {
-                        area += Convert.ToDouble(coolingzone[i][0]);
-                        annualenergyneed += Convert.ToDouble(coolingzone[i][1]);
-                        maxload += Convert.ToDouble(coolingzone[i][2]);
+                        area += Convert.ToDouble(_cz.Area);
+                        annualenergyneed += Convert.ToDouble(_cz.Qcb_a());
+                        maxload += Convert.ToDouble(_cz.MaxLoad());
                     }
                     CZ_AnnualCoolingNeed_Textbox.Text = annualenergyneed.ToString("0");
                     CZ_FloorArea_Textbox.Text = area.ToString("0.00");
@@ -99,6 +106,38 @@ namespace main.contents
                 }
 
             }
+        }
+        public void coolingzone(string[][] czl) //냉방존 보여주기
+        {
+            //for (int i = 0; i < czl.Length; i++)
+            //{
+            //    CoolingZone CZ = new CoolingZone();
+
+            //    string[][] coolingzonename = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed",
+            //             "번호,이름,a", //값이있는 열
+            //             "난방_냉방='" + "냉방" + //조건1
+            //             "' AND 비이용일_이용일 = '" + "이용일" + //조건2
+            //             "' AND 번호 = '" + czl[i][0] +  //조건3
+            //               "'"); //마지막
+            //    CZ.Num = coolingzonename[i][0]; //존번호
+            //    CZ.Name = coolingzonename[i][1]; //존이름
+            //    CZ.Area = Convert.ToDouble(coolingzonename[i][2]); //순바닥면적
+
+            //    string[][] coolingzone = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed",
+            //      "Qcb_mth,theta_i,dwd_mth", 
+            //        "난방_냉방= '" + "냉방" + 
+            //        "' AND 비이용일_이용일 = '" + "이용일" + 
+            //        "' AND 번호 = '" + czl[i][0] +  
+            //        "'"); 
+            //    for (int mth = 0; mth < 12; mth++)
+            //    {
+            //        CZ.Qcb_mth[mth] = Convert.ToDouble(coolingzone[mth][0]);
+            //        CZ.theta_i[mth] = Convert.ToDouble(coolingzone[mth][0]);
+            //        CZ.dwd_mth[mth] = Convert.ToDouble(coolingzone[mth][0]);
+            //    }
+            //    CZS.Add(CZ);
+            //}
+
         }
 
 
@@ -337,13 +376,8 @@ namespace main.contents
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {
-            //  Num_textBox.Text = ID;
+            NumTextBox.Text = ID;
             Num = ID;
-        }
-
-        private void AirCondition_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }

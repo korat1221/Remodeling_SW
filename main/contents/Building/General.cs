@@ -254,7 +254,7 @@ namespace main.contents
                 {
                     ConstrucitonDate = Convert.ToDouble((Year + "." + Month));
                 }
-                string[][] Value = Program.DB.getValue_dedupe(DB.type.BaseDB_HCneed, "법규열관류율", "시기", "");
+                string[][] Value = Program.DB.getValue_SameCheck(DB.type.BaseDB_HCneed, "법규열관류율", "시기", "");
                
                 for (int i = 0; i < Value.Length; i++)
                 {

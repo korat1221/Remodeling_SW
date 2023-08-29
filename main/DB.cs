@@ -93,7 +93,7 @@ namespace main
         
         
             //냉방설비
-             {"CoolingZone", "CREATE TABLE IF NOT EXISTS CoolingZone (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32), 존이름 VARCHAR (32),냉방설비유형 VARCHAR (32),냉방존유형 VARCHAR (32))"},
+             {"CoolingZone", "CREATE TABLE IF NOT EXISTS CoolingZone (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32),명칭 VARCHAR (32),존번호 VARCHAR (32),존이름 VARCHAR (32))"},
         };
    
 
@@ -817,7 +817,7 @@ namespace main
         }
 
         //중복 제거하고 값 가져오기
-        public string[][] getValue_dedupe(type dbType, string table, string columns, string conditions = "")
+        public string[][] getValue_SameCheck(type dbType, string table, string columns, string conditions = "")
         {
             SQLiteCommand cmd = new SQLiteCommand();
             List<string[]> objects = new List<string[]>();
