@@ -29,9 +29,9 @@ namespace main.contents
         double theta_i_h_set, theta_i_c_set, Em, VA, VA_we;
         double OccupancyDensity, OccupancyDensity_Low, OccupancyDensity_Medium, OccupancyDensity_High;
         String OccupancyDensity_index, EquipIHG_index;
-        String ZoneName, Layer, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
+        String ZoneName, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
         double η, η2;
-
+        static string Layer; 
         public ZoneGeneral()
         {
             InitializeComponent();
@@ -649,7 +649,7 @@ namespace main.contents
         public static bool OnLoadListProc(Form form)
         {
             List_Zone f = (List_Zone)form;
-            f.load_List();
+            f.load_List(Layer);
             return true;
         }
 

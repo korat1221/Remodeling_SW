@@ -113,7 +113,7 @@ namespace main.contentslist
                 return true;
             }
         }
-        public void load_List()
+        public void load_List(String Num)
         {
             string[][] List = Program.DB.getValue_dedupe(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + Num + "'");
             String[][] Value;
@@ -174,7 +174,7 @@ namespace main.contentslist
         {           
             Num_textBox.Text = ID + " 정보";
             Num = ID;
-            load_List();
+            load_List(Num);
         }
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {

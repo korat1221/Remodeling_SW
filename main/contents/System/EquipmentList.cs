@@ -923,7 +923,12 @@ namespace main.contents
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            ZoneLight zonelight = Program.CALC.getZoneLight("1F_Zone001");
+             if (zonelight != null)
+             {
+                double wa = zonelight.Wr;
+                MessageBox.Show(wa.ToString());
+            }
 
         }
     }

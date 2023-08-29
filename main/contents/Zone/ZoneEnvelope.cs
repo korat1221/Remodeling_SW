@@ -330,7 +330,7 @@ namespace main.contents
                     }
                     else
                     {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율,흡수율", "명칭='" + ZoneE_Select[n][5] + "'");
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionzWall", "유효열관류율,흡수율", "명칭='" + ZoneE_Select[n][5] + "'");
                     }
 
                     if (Value.Length > 0)
@@ -548,15 +548,15 @@ namespace main.contents
         }
         public static bool OnLoadListProc(Form form)
         {
-            List_Zone f = (List_Zone)form;
-            f.load_List();
-            return true;
+        //    List_Zone f = (List_Zone)form;
+        //    f.load_List(Layer);
+          return true;
         }
         public static bool OnLoadProc(Form form)
         {
-            ZoneGeneral f = (ZoneGeneral)form;
-            f.LoadData(currentID);
-            return true;
+        //    ZoneGeneral f = (ZoneGeneral)form;
+        //    f.LoadData(currentID);
+          return true;
         }
         private void Save()
         {

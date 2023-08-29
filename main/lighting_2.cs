@@ -224,7 +224,7 @@ namespace main
             {
                 try
                 {
-                    string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,천창유리각,천창수평측면각,천창장변부길이,천창단변부길이,천창수평상부높이,", "번호='" + zoneNum + "'");
+                    string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,천창유리각,천창수평측면각,천창장변부길이,천창단변부길이,천창수평상부높이", "번호='" + zoneNum + "'");
                     int kk = -1;
                     while (++kk < ValueA.Length)
                     {
@@ -316,6 +316,9 @@ namespace main
                     Zone_nighttime[i] = time.Calc_nighttime(starttime, endtime, sunrise[i], sunset[i], Zone_useofdays[i], dayofuse);
                 }
             }
+            //MessageBox.Show(Zone_useofdays[0].ToString());
+            //MessageBox.Show(Zone_daytime[0].ToString());
+            //MessageBox.Show(Zone_nighttime[0].ToString());
         }
 
       
@@ -329,7 +332,7 @@ namespace main
                 Facade_general general = new Facade_general();
                 Zone_ITr = general.Calc_ITr(Zone_f_Aca, Zone_f_AD);
                 Zone_IRD = general.Calc_IRD(Zone_f_a, Zone_hLi, Zone_hTa);
-                //MessageBox.Show("투명도 계수 : " + Zone_ITr + "   " + "존 공간 계수 : " + Zone_IRD);
+                MessageBox.Show("투명도 계수 : " + Zone_ITr + "   " + "존 공간 계수 : " + Zone_IRD);
             }
             else return;
         }
@@ -611,7 +614,8 @@ namespace main
             int kk = -1;
             while (++kk < ValueA.Length)
             {
-                //Da = Convert.ToDouble(ValueA[0][0]);
+                if (ValueA[0][0] != null && ValueA[0][0] != "")
+                { Da = Convert.ToDouble(ValueA[0][0]); }
             }
             //MessageBox.Show(find_fd_sna.ToString());
 
@@ -678,8 +682,7 @@ namespace main
                     else return;
 
                 }
-
-                else if (roof_shade == "있음")
+                else 
                 {
                     if (Zone_Roof_DSA < 0.05 && Zone_Roof_DSA >= 0)
                     {

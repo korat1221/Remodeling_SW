@@ -65,9 +65,7 @@ namespace main
                     theta_e[i] = Convert.ToDouble(OTemp[i][1]);
                 }
             }
-            catch
-            {
-            }
+            catch { }
 
             //존 정보 가져오기
             try

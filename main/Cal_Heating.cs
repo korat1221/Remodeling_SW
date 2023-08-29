@@ -20,12 +20,16 @@ namespace main
         String StorageUse, StoragePumpUse, StoragePump; double Vs;
         String[] SystemType = { "보일러", "히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
         String[] ceType = { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방" };
+        int ZoneCount;
         ArrayList SelectZone_split = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList();
-        
+        public double[] Qhb_mth_sum = new double[12]; public double[] theta_ih_avg = new double[12]; public double[] theta_e = new double[12]; public double[] theta_u = new double[12];
+        double SL, RL;
         public Cal_Heating(String HeatingNum) 
         {
             this.HeatingNum = HeatingNum;
+            double[,] Qhb_mth; double[,] theta_ih;
 
+            //존 정보 불러오기
             try
             {
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "명칭,존", "번호 = '" + HeatingNum + "'");
@@ -33,23 +37,62 @@ namespace main
                 HeatingName = Value[0][0];
                 SelectZone_nonsplit = Value[0][1];
                 Split_Zone(SelectZone_nonsplit);
-
-                for(int n = 0; n < SelectZone_split.Count;  n++)
+                Qhb_mth = new double[SelectZone_split.Count, 12];
+                theta_ih = new double[SelectZone_split.Count, 12];
+                for (int n = 0; n < SelectZone_split.Count;  n++)
                 {
                     Zone zone = Program.CALC.getZone(SelectZone_split[n].ToString());
                     if (zone != null)
-                    { double wa = zone.Zone_HT_Di_Wall; }
+                    {
+                        for(int mth = 0 ; mth < 12; mth++)
+                        {
+                            Qhb_mth[n,mth] = zone.Qhb_mth[mth];
+                            theta_ih[n, mth]= zone.theta_i[1,0,mth]; //이용일 난방
+                        }                        
+                    }
+                    ZoneCount = ZoneCount + 1; 
                 }
-                
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    for (int n = 0; n < ZoneCount; n++)
+                    {
+                        Qhb_mth_sum[mth] += Qhb_mth[n, mth];
+                        theta_ih_avg[mth] += theta_ih[n, mth];
+
+                    }
+                    theta_ih_avg[mth] = theta_ih_avg[mth] / ZoneCount;                   
+                }  
             }
             catch { }
-            
+
+            //외기온도, 단열외피외 온도 불러오기
+            try
+            {
+                string[][] 지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
+                string[][] OTemp = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "기간,온도", "지역명 ='" + 지역[0][0] + "'");
+                int i = -1;
+                while (++i < 12)
+                {
+                    theta_e[i] = Convert.ToDouble(OTemp[i][1]);
+                    theta_u[i] = theta_ih_avg[i] - 0.8 * (theta_ih_avg[i] - theta_e[i]);
+                }
+            }
+            catch { }
+
+            //난방설비 일반정보 불러오기 
             try
             {
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "번호 = '" + HeatingNum + "'");
 
                 SystemLoacation = Value[0][0];
                 SLRL = Value[0][1];
+                if(SLRL != null && SLRL != "")
+                {
+                    string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환수온도", "공급온도,환수온도", "공급환수온도 = '" + SLRL + "'");
+                    SL = Convert.ToDouble(Value2[0][0]);
+                    RL = Convert.ToDouble(Value2[0][1]);
+                }
+              
                 Complex = Value[0][2];
                 MainSystem = Value[0][3];
                 Sub1System = Value[0][4];

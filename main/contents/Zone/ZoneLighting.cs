@@ -10,7 +10,7 @@ namespace main.contents
     {
 
         //변수
-        String ZoneNum, ZoneName, Layer;
+        String ZoneNum, ZoneName;
         //존 정보(가져오는 값)
         double Em, KA, FA;
         double Wr, Lr, A, hR, hm, hLi, hTa, K, admax, ad, bdsimple, bd, AD, unAD;
@@ -25,7 +25,7 @@ namespace main.contents
         double Foc; //ControlType에 따라 매칭값
         double Pci, Pj_lx; //매칭값
         double dayofuse;
-
+        static String Layer;
         //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
         //선택해야하는 정보(save 되어야 함)
 
@@ -50,7 +50,7 @@ namespace main.contents
         string NaturalType;
         //별도창
         string facade, doubleskinglass, atriumglass;
-        double zoneW, zoneL, zoneH, zoneGlassLight;
+        double facadeW, facadeL, facadeH, zoneGlassLight;
         string roof;
         double zoneRoofAngle1, zoneRoofAngle2, zoneRoofLenght1, zoneRoofLenght2, zoneRoofLenght3;
 
@@ -278,9 +278,9 @@ namespace main.contents
                     this.facade = naturallighting_facade.facadetype;
                     this.doubleskinglass = naturallighting_facade.doubleskinglasstype;
                     this.atriumglass = naturallighting_facade.atriumglasstype;
-                    this.zoneW = naturallighting_facade.W;
-                    this.zoneL = naturallighting_facade.L;
-                    this.zoneH = naturallighting_facade.H;
+                    this.facadeW = naturallighting_facade.W;
+                    this.facadeL = naturallighting_facade.L;
+                    this.facadeH = naturallighting_facade.H;
                     this.zoneGlassLight = naturallighting_facade.Tao;
 
                     Load_NaturalType2_image();
@@ -950,7 +950,7 @@ namespace main.contents
         public static bool OnLoadListProc(Form form)
         {
             List_Zone f = (List_Zone)form;
-            f.load_List();
+            f.load_List(Layer);
             return true;
         }
 
@@ -960,27 +960,23 @@ namespace main.contents
             {
                 MessageBox.Show("조명 종류를 선택하세요.");
             }
-            else if (facadeButton.Checked == true || roofButton.Checked == true)
+            else if (Renew_checkBox.Checked == true && RenewNum == null)
             {
-                if (NaturalType == null)
-                {
-                    MessageBox.Show("자연채광 정보를 입력하세요.");
-                }
-                else
-                {
-                    Save();
-                }
-            }
-            else if (Renew_checkBox.Checked == true)
-            {
-                if (RenewNum == null)
-                {
                     MessageBox.Show("집광채광을 선택하세요.");
-                }
-                else
-                {
-                    Save();
-                }
+            }
+            else if ((NaturalType == "천창")&& (zoneRoofLenght1 == 0 || zoneRoofLenght2 == 0 || zoneRoofLenght3 == 0))
+            {
+                MessageBox.Show("천창 상세 길이 정보를 입력하세요."); 
+            }
+            else if (( this.facade == "아트리움") && (facadeW == 0 || facadeL == 0 || facadeH == 0 ))
+            {
+                MessageBox.Show(" 아트리움 상세 길이 정보를 입력하세요.");
+
+            }
+            else if ((this.facade == "중정" ) && (facadeW == 0 || facadeL == 0 || facadeH == 0))
+            {
+                MessageBox.Show(" 중정 상세 길이 정보를 입력하세요.");
+
             }
             else
             {
@@ -1030,7 +1026,7 @@ namespace main.contents
                 {
                     Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,서브유형,주창유리빛투과율,주창유리면적비,이중외피유리,아트리움유리,파사드유리빛투과율,파사드너비,파사드길이,파사드높이",
                     "'" + Num_textBox.Text + "','" +
-                   facade + "','" + f_τD65_SNA + "','" + K1 + "','" + doubleskinglass + "','" + atriumglass + "','" + zoneGlassLight + "','" + zoneW + "','" + zoneL + "','" + zoneH + "','" + roof + "','" + zoneRoofAngle1 + "','" + zoneRoofAngle2 + "','" + zoneRoofLenght1 + "','" + zoneRoofLenght2 + "','" + zoneRoofLenght3 + "','" + ShadeType
+                   facade + "','" + f_τD65_SNA + "','" + K1 + "','" + doubleskinglass + "','" + atriumglass + "','" + zoneGlassLight + "','" + facadeW + "','" + facadeL + "','" + facadeH 
                     + "'", "번호");
                 }
                 else if (roofButton.Checked == true)
@@ -1178,9 +1174,9 @@ namespace main.contents
                             doubleskinglass = Load[0][4];
                             atriumglass = Load[0][5];
                             zoneGlassLight = Convert.ToDouble(Load[0][6]);
-                            zoneW = Convert.ToDouble(Load[0][7]);
-                            zoneL = Convert.ToDouble(Load[0][8]);
-                            zoneH = Convert.ToDouble(Load[0][9]);
+                            facadeW = Convert.ToDouble(Load[0][7]);
+                            facadeL = Convert.ToDouble(Load[0][8]);
+                            facadeH = Convert.ToDouble(Load[0][9]);
                         }
                         else if (NaturalType == roof)
                         {
@@ -1342,7 +1338,7 @@ namespace main.contents
                 //층정보 불러오기
                 String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,상인방높이", "존번호 = '" + ZoneNum + "'");
 
-                Layer = General_3D[0][0];
+                Layer = General_3D[0][0]+"F";
                 Layer_textBox.Text = Layer;
                 hLi = Convert.ToDouble(General_3D[0][1]);
             }
