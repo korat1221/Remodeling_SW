@@ -99,8 +99,37 @@ namespace main.contents
                     Program.UTIL.write3DModel(Program.ProjName + ".json", json);
                     Program.DB.executeSQL(DB.type.ProjDB, s.Substring(0, n));
                     Program.UTIL.reloadWebCtrl();
-                    ZoneShade zoneshade = new ZoneShade();
-                    zoneshade.Calc_방위각();
+
+                    string[][] Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "외피유형 = '창호'");
+                    if(Win.Length> 0)
+                    {
+                        for(int k = 0 ; k < Win.Length; k++)
+                        {
+                            ZoneShade zoneshade = new ZoneShade(Win[k][0]);
+                            //zoneshade.Calc_방위각();
+                            //MessageBox.Show(zoneshade.태양우측방위각[1].ToString());
+                            zoneshade.Calc_방위각();
+                            zoneshade.Calc_지형물음영();
+
+                            zoneshade.Calc_상부음영();
+                            zoneshade.Calc_좌측음영();
+                            zoneshade.Calc_우측음영();
+                            zoneshade.Calc_음영계수();
+
+                            //for (int i = 0; i < 12; i++)
+                            //{
+                            //    MessageBox.Show(zoneshade.상부돌출음영길이좌[i].ToString());
+                            //}
+
+                            //MessageBox.Show(zoneshade.지형물수평음영길이[1].ToString());
+                            //zoneshade.Calc_상부음영();
+                            //zoneshade.Calc_좌측음영();
+                            //zoneshade.Calc_우측음영();
+                            //zoneshade.Calc_음영계수();
+                            zoneshade.Save();
+                        }                       
+                    }
+                   
                 }
                 else
                 {
