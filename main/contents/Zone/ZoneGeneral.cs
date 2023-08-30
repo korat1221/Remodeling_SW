@@ -31,7 +31,7 @@ namespace main.contents
         String OccupancyDensity_index, EquipIHG_index;
         String ZoneName, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
         double η, η2;
-        static string Layer; 
+        static string Layer;
         public ZoneGeneral()
         {
             InitializeComponent();
@@ -45,6 +45,10 @@ namespace main.contents
             Main_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             Main_pictureBox.Controls.Add(RoomControl_pictureBox);
 
+            splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            pictureBox1.Load(Program.gPath + Image[0][0]);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.Controls.Add(RoomControl_pictureBox);
 
             //존 환기방식 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, AHU_comboBox, "존일반", "환기방식", "");
@@ -78,7 +82,8 @@ namespace main.contents
         private void Floor_textBox_TextChanged(object sender, EventArgs e)
         {
             if (Layer_textBox.Text != null)
-            { Layer = Layer_textBox.Text;
+            {
+                Layer = Layer_textBox.Text;
                 GetValue_ZoneEnvelope();
             }
         }
@@ -908,7 +913,7 @@ namespace main.contents
 
                 String[][] Wall = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체번호", "존 = '" + ZoneNum + "' And 외피유형 = '외벽'");
                 double Area_WallInWall = 0;
-               if(Wall[0][1]=="" || Wall[0][1]==null)
+                if (Wall[0][1] == "" || Wall[0][1] == null)
                 {
                     MessageBox.Show("3D 모델 화면에서 외피 구조체종류부터 입력해주세요.");
                 }

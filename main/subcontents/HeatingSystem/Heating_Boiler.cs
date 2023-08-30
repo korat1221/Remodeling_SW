@@ -18,7 +18,7 @@ namespace main.subcontents.HeatingSystem
 {
     public partial class Heating_Boiler : Form
     {
-        ArrayList SelectRow = new ArrayList(); ArrayList SelectZone_split = new ArrayList();
+        ArrayList SelectRow = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList();
         String DefaultUse;
         public string SelectBoiler;
         //HeatingSystem heatingSystem;
@@ -35,8 +35,7 @@ namespace main.subcontents.HeatingSystem
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             if (SelectBoiler_nonsplit != null)
             {
-                this.SelectBoiler = SelectBoiler_nonsplit;
-                Load_SaveValue();
+                Load_SaveValue(SelectBoiler_nonsplit);
             }
 
         }
@@ -184,21 +183,34 @@ namespace main.subcontents.HeatingSystem
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
-        private void Load_SaveValue()
+        private void reset()
         {
+            SelectRow.Clear(); 
+            SelectBoiler_split.Clear();
+            SelectBoiler = null;
+
+            for (int n = 0; n < Boiler_dataGridView.Rows.Count; n++)
+            {
+                Boiler_dataGridView.Rows[n].Cells[0].Value = false;
+            }
+
+        }
+        private void Load_SaveValue(String SelectBoiler_nonsplit)
+        {
+            reset();
             try
             {
-                string[] token = SelectBoiler.Split(',');
-                SelectZone_split.Clear();
+                string[] token = SelectBoiler_nonsplit.Split(',');
+                SelectBoiler_split.Clear();
                 foreach (var item in token)
                 {
-                    SelectZone_split.Add(item.ToString());
+                    SelectBoiler_split.Add(item.ToString());
                 }
-                for (int k = 0; k < SelectZone_split.Count; k++)
+                for (int k = 0; k < SelectBoiler_split.Count; k++)
                 {
                     for (int n = 0; n < Boiler_dataGridView.Rows.Count; n++)
                     {
-                        if (Boiler_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectZone_split[k].ToString())
+                        if (Boiler_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectBoiler_split[k].ToString())
                         {
                             Boiler_dataGridView.Rows[n].Cells[0].Value = true;
                         }

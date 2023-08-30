@@ -28,8 +28,7 @@ namespace main.subcontents.HeatingSystem
             SystemNum = Num;
             if(SelectZone_nonsplit != null)
             { 
-                this.SelectZone = SelectZone_nonsplit;
-                Load_SaveValue();
+                Load_SaveValue(SelectZone_nonsplit);
             }
            
         }
@@ -101,6 +100,7 @@ namespace main.subcontents.HeatingSystem
         }
         private void SelectCheckBox()
         {
+            SelectRow.Clear();
             foreach (DataGridViewRow row in Zone_dataGridView.Rows)
             {
                 if (Convert.ToBoolean(row.Cells["check"].Value))
@@ -112,34 +112,47 @@ namespace main.subcontents.HeatingSystem
         }
 
         private void Save_button_Click(object sender, EventArgs e)
-        {
-            SelectRow.Clear();
+        {            
             SelectCheckBox();
             for (int k = 0; k < SelectRow.Count; k++)
             {
                 if (k == SelectRow.Count - 1)
                 {
-                    SelectZone += Zone_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString();
+                    this.SelectZone += Zone_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString();
                 }
                 else
                 {
-                    SelectZone += Zone_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + ",";
+                    this.SelectZone += Zone_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + ",";
                 }
             }
 
             this.DialogResult = DialogResult.OK;
             this.Close();
           }
-        private void Load_SaveValue()
+        private void reset()
         {
+            SelectRow.Clear();
+            SelectZone_split.Clear();
+            this.SelectZone = null;
+
+            for (int n = 0; n < Zone_dataGridView.Rows.Count; n++)
+            {
+                Zone_dataGridView.Rows[n].Cells[0].Value = false;
+            }
+        }
+
+        private void Load_SaveValue(String SelectZone_nonsplit)
+        {
+            reset();
             try
-            {  string[] token = SelectZone.Split(',');
+            {
+                string[] token = SelectZone_nonsplit.Split(',');
                 SelectZone_split.Clear();
                 foreach (var item in token)
                 {
                     SelectZone_split.Add(item.ToString());
                 }
-                for(int k = 0; k < SelectZone_split.Count; k++)
+                for (int k = 0; k < SelectZone_split.Count; k++)
                 {
                     for (int n = 0; n < Zone_dataGridView.Rows.Count; n++)
                     {
@@ -149,11 +162,12 @@ namespace main.subcontents.HeatingSystem
                         }
                     }
                 }
-                
+
             }
             catch { }
+
         }
-     }
+    }
 
 }
 

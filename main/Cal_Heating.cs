@@ -20,6 +20,8 @@ namespace main
         String StorageUse, StoragePumpUse, StoragePump; double Vs;
         String[] SystemType = { "보일러", "히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
         String[] ceType = { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방" };
+        double PipeD, PipeInsD, PipeIns_Ramda;
+        String PipeIns;
         int ZoneCount;
         ArrayList SelectZone_split = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList();
         public double[] Qhb_mth_sum = new double[12]; public double[] theta_ih_avg = new double[12]; public double[] theta_e = new double[12]; public double[] theta_u = new double[12];
@@ -166,6 +168,15 @@ namespace main
                 {
                     Vs = Convert.ToDouble(Value[0][3]);
                 }
+            }
+            catch { }
+            try
+            {
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재", "번호 = '" + HeatingNum + "'");
+                PipeD = Convert.ToDouble(Value[0][0]);
+                PipeInsD = Convert.ToDouble(Value[0][1]);
+                PipeInsD = Convert.ToDouble(Value[0][2]);
+                PipeIns = Value[0][3];
             }
             catch { }
 

@@ -20,7 +20,6 @@ namespace main.subcontents.HeatingSystem
 {
     public partial class Heating_ceZone : Form
     {
-        public string SelectBoiler;
         String SystemNum, ceType;
         ArrayList SelectZone_split = new ArrayList();
         public Heating_ceZone(String SystemNum, String SelectZone_nonsplit, String CEType)
@@ -238,8 +237,14 @@ namespace main.subcontents.HeatingSystem
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+        private void reset()
+        {
+            SelectZone_split.Clear();
+        }
+
         private void Load_SaveValue()
         {
+            reset();
             try
             {
                 String[][] Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,난방시스템,공급설비종류,공급설비", "난방시스템 = '" + SystemNum + "' And 공급설비종류 = '" + ceType + "'");

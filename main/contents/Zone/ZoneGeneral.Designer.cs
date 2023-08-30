@@ -170,6 +170,9 @@ namespace main.contents
             BuildingUse_textBox = new System.Windows.Forms.TextBox();
             label73 = new System.Windows.Forms.Label();
             Ground_textBox = new System.Windows.Forms.TextBox();
+            splitContainer1 = new SplitContainer();
+            panel1 = new Panel();
+            pictureBox1 = new PictureBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
@@ -179,6 +182,11 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)Ground_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RoomControl_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.SuspendLayout();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -1697,12 +1705,43 @@ namespace main.contents
             Ground_textBox.TabIndex = 110;
             Ground_textBox.TextAlign = HorizontalAlignment.Center;
             // 
+            // splitContainer1
+            // 
+            splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.Location = new Point(0, 0);
+            splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.Controls.Add(panel1);
+            splitContainer1.Size = new Size(1200, 1030);
+            splitContainer1.SplitterDistance = 993;
+            splitContainer1.TabIndex = 111;
+            // 
+            // panel1
+            // 
+            panel1.AutoScroll = true;
+            panel1.BackColor = SystemColors.Window;
+            panel1.Controls.Add(pictureBox1);
+            panel1.Location = new Point(0, 729);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(993, 301);
+            panel1.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(24, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(932, 265);
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            // 
             // ZoneGeneral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
-            ClientSize = new Size(1200, 730);
+            ClientSize = new Size(1200, 1030);
             Controls.Add(Ground_textBox);
             Controls.Add(label73);
             Controls.Add(BuildingUse_textBox);
@@ -1719,6 +1758,7 @@ namespace main.contents
             Controls.Add(label21);
             Controls.Add(GeneralPanel);
             Controls.Add(AdditionalPanel);
+            Controls.Add(splitContainer1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "ZoneGeneral";
             Text = "Form3";
@@ -1735,6 +1775,11 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)Ground_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)RoomControl_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox).EndInit();
+            splitContainer1.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1881,5 +1926,8 @@ namespace main.contents
         private PictureBox AHU_pictureBox;
         private System.Windows.Forms.TextBox SA_Volume_textBox;
         private System.Windows.Forms.TextBox Ground_textBox;
+        private SplitContainer splitContainer1;
+        private Panel panel1;
+        private PictureBox pictureBox1;
     }
 }

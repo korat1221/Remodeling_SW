@@ -101,6 +101,18 @@
             label11 = new Label();
             StorageUse_comboBox = new ComboBox();
             Qhd_tabPage = new TabPage();
+            label22 = new Label();
+            label21 = new Label();
+            PipeIns_Ramda_textBox = new TextBox();
+            PipeD_textBox = new TextBox();
+            label19 = new Label();
+            label20 = new Label();
+            PipeInsD_textBox = new TextBox();
+            label17 = new Label();
+            label18 = new Label();
+            PipeIns_textBox = new TextBox();
+            PipeIns_button = new Button();
+            label16 = new Label();
             Pump_dataGridView = new DataGridView();
             Pump2_textBox = new TextBox();
             Pump2_button = new Button();
@@ -916,6 +928,18 @@
             // 
             // Qhd_tabPage
             // 
+            Qhd_tabPage.Controls.Add(label22);
+            Qhd_tabPage.Controls.Add(label21);
+            Qhd_tabPage.Controls.Add(PipeIns_Ramda_textBox);
+            Qhd_tabPage.Controls.Add(PipeD_textBox);
+            Qhd_tabPage.Controls.Add(label19);
+            Qhd_tabPage.Controls.Add(label20);
+            Qhd_tabPage.Controls.Add(PipeInsD_textBox);
+            Qhd_tabPage.Controls.Add(label17);
+            Qhd_tabPage.Controls.Add(label18);
+            Qhd_tabPage.Controls.Add(PipeIns_textBox);
+            Qhd_tabPage.Controls.Add(PipeIns_button);
+            Qhd_tabPage.Controls.Add(label16);
             Qhd_tabPage.Controls.Add(Pump_dataGridView);
             Qhd_tabPage.Controls.Add(Pump2_textBox);
             Qhd_tabPage.Controls.Add(Pump2_button);
@@ -934,6 +958,149 @@
             Qhd_tabPage.TabIndex = 3;
             Qhd_tabPage.Text = "분배";
             Qhd_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label22.ForeColor = SystemColors.ControlDark;
+            label22.Location = new Point(708, 39);
+            label22.Name = "label22";
+            label22.Size = new Size(55, 15);
+            label22.TabIndex = 197;
+            label22.Text = "열전도율";
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label21.ForeColor = SystemColors.ControlDark;
+            label21.Location = new Point(889, 38);
+            label21.Name = "label21";
+            label21.Size = new Size(43, 16);
+            label21.TabIndex = 196;
+            label21.Text = "W/mK";
+            // 
+            // PipeIns_Ramda_textBox
+            // 
+            PipeIns_Ramda_textBox.BackColor = Color.White;
+            PipeIns_Ramda_textBox.BorderStyle = BorderStyle.None;
+            PipeIns_Ramda_textBox.Enabled = false;
+            PipeIns_Ramda_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PipeIns_Ramda_textBox.ForeColor = SystemColors.ControlDark;
+            PipeIns_Ramda_textBox.Location = new Point(766, 39);
+            PipeIns_Ramda_textBox.Name = "PipeIns_Ramda_textBox";
+            PipeIns_Ramda_textBox.Size = new Size(120, 15);
+            PipeIns_Ramda_textBox.TabIndex = 195;
+            PipeIns_Ramda_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // PipeD_textBox
+            // 
+            PipeD_textBox.BackColor = Color.White;
+            PipeD_textBox.BorderStyle = BorderStyle.FixedSingle;
+            PipeD_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PipeD_textBox.ForeColor = SystemColors.ControlText;
+            PipeD_textBox.Location = new Point(94, 35);
+            PipeD_textBox.Name = "PipeD_textBox";
+            PipeD_textBox.Size = new Size(120, 22);
+            PipeD_textBox.TabIndex = 192;
+            PipeD_textBox.TextAlign = HorizontalAlignment.Center;
+            PipeD_textBox.TextChanged += PipeD_textBox_TextChanged;
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label19.ForeColor = SystemColors.ControlText;
+            label19.Location = new Point(32, 39);
+            label19.Name = "label19";
+            label19.Size = new Size(59, 15);
+            label19.TabIndex = 193;
+            label19.Text = "배관 관경";
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label20.ForeColor = SystemColors.ControlText;
+            label20.Location = new Point(217, 38);
+            label20.Name = "label20";
+            label20.Size = new Size(29, 16);
+            label20.TabIndex = 194;
+            label20.Text = "mm";
+            // 
+            // PipeInsD_textBox
+            // 
+            PipeInsD_textBox.BackColor = Color.White;
+            PipeInsD_textBox.BorderStyle = BorderStyle.FixedSingle;
+            PipeInsD_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PipeInsD_textBox.ForeColor = SystemColors.ControlText;
+            PipeInsD_textBox.Location = new Point(318, 35);
+            PipeInsD_textBox.Name = "PipeInsD_textBox";
+            PipeInsD_textBox.Size = new Size(120, 22);
+            PipeInsD_textBox.TabIndex = 189;
+            PipeInsD_textBox.TextAlign = HorizontalAlignment.Center;
+            PipeInsD_textBox.TextChanged += PipeInsD_textBox_TextChanged;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label17.ForeColor = SystemColors.ControlText;
+            label17.Location = new Point(260, 39);
+            label17.Name = "label17";
+            label17.Size = new Size(55, 15);
+            label17.TabIndex = 190;
+            label17.Text = "보온두께";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label18.ForeColor = SystemColors.ControlText;
+            label18.Location = new Point(441, 38);
+            label18.Name = "label18";
+            label18.Size = new Size(29, 16);
+            label18.TabIndex = 191;
+            label18.Text = "mm";
+            // 
+            // PipeIns_textBox
+            // 
+            PipeIns_textBox.BackColor = Color.White;
+            PipeIns_textBox.BorderStyle = BorderStyle.None;
+            PipeIns_textBox.Enabled = false;
+            PipeIns_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PipeIns_textBox.ForeColor = SystemColors.ControlDark;
+            PipeIns_textBox.Location = new Point(542, 39);
+            PipeIns_textBox.Name = "PipeIns_textBox";
+            PipeIns_textBox.Size = new Size(120, 15);
+            PipeIns_textBox.TabIndex = 188;
+            PipeIns_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // PipeIns_button
+            // 
+            PipeIns_button.BackColor = SystemColors.ControlLight;
+            PipeIns_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            PipeIns_button.FlatStyle = FlatStyle.System;
+            PipeIns_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            PipeIns_button.Location = new Point(664, 35);
+            PipeIns_button.Margin = new Padding(0);
+            PipeIns_button.Name = "PipeIns_button";
+            PipeIns_button.Size = new Size(23, 23);
+            PipeIns_button.TabIndex = 187;
+            PipeIns_button.Text = "+";
+            PipeIns_button.UseVisualStyleBackColor = false;
+            PipeIns_button.Click += PipeIns_button_Click;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label16.Location = new Point(473, 38);
+            label16.Name = "label16";
+            label16.Size = new Size(67, 15);
+            label16.TabIndex = 186;
+            label16.Text = "배관보온재";
             // 
             // Pump_dataGridView
             // 
@@ -955,7 +1122,7 @@
             dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
             Pump_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             Pump_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Pump_dataGridView.Location = new Point(14, 71);
+            Pump_dataGridView.Location = new Point(14, 120);
             Pump_dataGridView.Name = "Pump_dataGridView";
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle8.BackColor = SystemColors.Control;
@@ -984,7 +1151,7 @@
             Pump2_textBox.Enabled = false;
             Pump2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Pump2_textBox.ForeColor = SystemColors.ControlDark;
-            Pump2_textBox.Location = new Point(766, 25);
+            Pump2_textBox.Location = new Point(766, 74);
             Pump2_textBox.Name = "Pump2_textBox";
             Pump2_textBox.Size = new Size(120, 15);
             Pump2_textBox.TabIndex = 184;
@@ -996,7 +1163,7 @@
             Pump2_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Pump2_button.FlatStyle = FlatStyle.System;
             Pump2_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Pump2_button.Location = new Point(889, 21);
+            Pump2_button.Location = new Point(889, 70);
             Pump2_button.Margin = new Padding(0);
             Pump2_button.Name = "Pump2_button";
             Pump2_button.Size = new Size(23, 23);
@@ -1009,7 +1176,7 @@
             // 
             Pump2_label.AutoSize = true;
             Pump2_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump2_label.Location = new Point(712, 25);
+            Pump2_label.Location = new Point(710, 74);
             Pump2_label.Name = "Pump2_label";
             Pump2_label.Size = new Size(50, 15);
             Pump2_label.TabIndex = 182;
@@ -1019,7 +1186,7 @@
             // 
             PumpMethod_label.AutoSize = true;
             PumpMethod_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            PumpMethod_label.Location = new Point(249, 25);
+            PumpMethod_label.Location = new Point(256, 74);
             PumpMethod_label.Name = "PumpMethod_label";
             PumpMethod_label.Size = new Size(59, 15);
             PumpMethod_label.TabIndex = 179;
@@ -1029,7 +1196,7 @@
             // 
             PumpMethod_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PumpMethod_comboBox.FormattingEnabled = true;
-            PumpMethod_comboBox.Location = new Point(318, 20);
+            PumpMethod_comboBox.Location = new Point(318, 69);
             PumpMethod_comboBox.Name = "PumpMethod_comboBox";
             PumpMethod_comboBox.Size = new Size(120, 24);
             PumpMethod_comboBox.TabIndex = 178;
@@ -1039,7 +1206,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(33, 25);
+            label2.Location = new Point(32, 74);
             label2.Name = "label2";
             label2.Size = new Size(59, 15);
             label2.TabIndex = 175;
@@ -1049,7 +1216,7 @@
             // 
             PumpUse_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PumpUse_comboBox.FormattingEnabled = true;
-            PumpUse_comboBox.Location = new Point(94, 20);
+            PumpUse_comboBox.Location = new Point(94, 69);
             PumpUse_comboBox.Name = "PumpUse_comboBox";
             PumpUse_comboBox.Size = new Size(120, 24);
             PumpUse_comboBox.TabIndex = 174;
@@ -1062,7 +1229,7 @@
             Pump1_textBox.Enabled = false;
             Pump1_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Pump1_textBox.ForeColor = SystemColors.ControlDark;
-            Pump1_textBox.Location = new Point(542, 25);
+            Pump1_textBox.Location = new Point(542, 74);
             Pump1_textBox.Name = "Pump1_textBox";
             Pump1_textBox.Size = new Size(120, 15);
             Pump1_textBox.TabIndex = 167;
@@ -1074,7 +1241,7 @@
             Pump1_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Pump1_button.FlatStyle = FlatStyle.System;
             Pump1_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Pump1_button.Location = new Point(664, 21);
+            Pump1_button.Location = new Point(664, 70);
             Pump1_button.Margin = new Padding(0);
             Pump1_button.Name = "Pump1_button";
             Pump1_button.Size = new Size(23, 23);
@@ -1087,7 +1254,7 @@
             // 
             Pump1_label.AutoSize = true;
             Pump1_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Pump1_label.Location = new Point(488, 24);
+            Pump1_label.Location = new Point(473, 73);
             Pump1_label.Name = "Pump1_label";
             Pump1_label.Size = new Size(50, 15);
             Pump1_label.TabIndex = 165;
@@ -1461,5 +1628,17 @@
         private RadioButton radioButton3;
         private RadioButton radioButton1;
         private PictureBox pictureBox1;
+        private TextBox PipeIns_textBox;
+        private Button PipeIns_button;
+        private Label label16;
+        private TextBox PipeD_textBox;
+        private Label label19;
+        private Label label20;
+        private TextBox PipeInsD_textBox;
+        private Label label17;
+        private Label label18;
+        private Label label22;
+        private Label label21;
+        private TextBox PipeIns_Ramda_textBox;
     }
 }
