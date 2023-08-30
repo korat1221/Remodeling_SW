@@ -41,7 +41,7 @@ namespace main.contents
             CoolingGeneratorSelect_comboBox.Items.Clear();
             CoolingGeneratorSelect_comboBox.Items.AddRange(SystemType);
             CoolingGeneratorSelect_comboBox.SelectedIndex = 0;
-            
+
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -80,7 +80,7 @@ namespace main.contents
                 Num = NumTextBox.Text;
                 Name = CoolingSystemNameText.Text;
                 Cooling_Zone ZC = new Cooling_Zone(Num, Name);
-                
+
                 DialogResult result = ZC.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -89,12 +89,12 @@ namespace main.contents
                         "번호='" + Num +
                         "'");
                     coolingzone(coolingzonelist);
-                            
+
                     double area = 0;
                     double annualenergyneed = 0;
                     double maxload = 0;
                     //
-                    foreach ( CoolingZone _cz in CZS)
+                    foreach (CoolingZone _cz in CZS)
                     {
                         area += Convert.ToDouble(_cz.Area);
                         annualenergyneed += Convert.ToDouble(_cz.Qcb_a());

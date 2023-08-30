@@ -332,7 +332,7 @@ namespace main
                 Facade_general general = new Facade_general();
                 Zone_ITr = general.Calc_ITr(Zone_f_Aca, Zone_f_AD);
                 Zone_IRD = general.Calc_IRD(Zone_f_a, Zone_hLi, Zone_hTa);
-                MessageBox.Show("투명도 계수 : " + Zone_ITr + "   " + "존 공간 계수 : " + Zone_IRD);
+                //MessageBox.Show("투명도 계수 : " + Zone_ITr + "   " + "존 공간 계수 : " + Zone_IRD);
             }
             else return;
         }

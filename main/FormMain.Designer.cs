@@ -41,6 +41,10 @@
             splitContainer1.Location = new Point(0, 0);
             splitContainer1.Name = "splitContainer1";
             splitContainer1.Panel1MinSize = 200;
+            // 
+            // splitContainer1.Panel2
+            // 
+            splitContainer1.Panel2.AutoScroll = true;
             splitContainer1.Size = new Size(1259, 861);
             splitContainer1.SplitterDistance = 325;
             splitContainer1.TabIndex = 0;

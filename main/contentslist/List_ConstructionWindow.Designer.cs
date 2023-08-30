@@ -34,12 +34,12 @@ namespace main.contentslist
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            label4 = new Label();
             Copy_button = new Button();
             Remove_button = new Button();
             Add_button = new Button();
             dataGridView1 = new DataGridView();
             Icon_pictureBox = new PictureBox();
-            label4 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -59,6 +59,16 @@ namespace main.contentslist
             GeneralPanel.Size = new Size(977, 661);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Location = new Point(86, 32);
+            label4.Name = "label4";
+            label4.Size = new Size(31, 15);
+            label4.TabIndex = 95;
+            label4.Text = "창호";
             // 
             // Copy_button
             // 
@@ -156,20 +166,11 @@ namespace main.contentslist
             Icon_pictureBox.TabIndex = 0;
             Icon_pictureBox.TabStop = false;
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(86, 32);
-            label4.Name = "label4";
-            label4.Size = new Size(31, 15);
-            label4.TabIndex = 95;
-            label4.Text = "창호";
-            // 
             // List_ConstructionWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
             Controls.Add(GeneralPanel);

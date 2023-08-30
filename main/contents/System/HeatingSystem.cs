@@ -1275,7 +1275,7 @@ namespace main.contents
                 StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "'", "번호");
 
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,배관관경,배관보온두께,보온열전도율,배관보온재"
-            , "'" + Num_textBox.Text + "','" + PipeD.ToString() + "','" + PipeInsD.ToString() + "','" +PipeIns_Ramda.ToString()+ PipeIns + "'", "번호");
+            , "'" + Num_textBox.Text + "','" + PipeD.ToString() + "','" + PipeInsD.ToString() + "','" + PipeIns_Ramda.ToString() + PipeIns + "'", "번호");
 
             this.DialogResult = DialogResult.OK;
             this.Hide();
@@ -1299,7 +1299,7 @@ namespace main.contents
             ce1Type = null; ce2Type = null; ce_SelectRow = 0;
             StorageUse = null; StoragePumpUse = null; StoragePump = null; Vs = 0;
             SelectZone_split.Clear(); SelectBoiler_split.Clear();
-            PipeD = 0;  PipeInsD = 0; PipeIns_Ramda = 0; PipeIns = null;
+            PipeD = 0; PipeInsD = 0; PipeIns_Ramda = 0; PipeIns = null;
             ZoneArea = 0;
 
             Num_textBox.Text = null;
@@ -1340,9 +1340,9 @@ namespace main.contents
             StoragePump_dataGridView.Columns.Clear();
             StoragePump_dataGridView.Rows.Clear();
 
-            PipeD_textBox.Text = null; 
-            PipeInsD_textBox.Text = null; 
-            PipeIns_Ramda_textBox.Text = null; 
+            PipeD_textBox.Text = null;
+            PipeInsD_textBox.Text = null;
+            PipeIns_Ramda_textBox.Text = null;
             PipeIns_textBox.Text = null;
         }
 
@@ -1542,7 +1542,7 @@ namespace main.contents
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재", "번호 = '" + ID + "'");
                 PipeD = Convert.ToDouble(Value[0][0]);
                 PipeD_textBox.Text = PipeD.ToString();
-               
+
                 PipeInsD = Convert.ToDouble(Value[0][1]);
                 PipeInsD_textBox.Text = PipeInsD.ToString();
 

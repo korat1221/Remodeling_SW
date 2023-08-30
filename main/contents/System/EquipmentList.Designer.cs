@@ -40,6 +40,7 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            button1 = new Button();
             label4 = new Label();
             Icon_pictureBox = new PictureBox();
             tabControl1 = new TabControl();
@@ -68,7 +69,6 @@ namespace main.contents
             ce_Copy_button = new Button();
             ce_Remove_button = new Button();
             ce_Add_button = new Button();
-            button1 = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
@@ -91,6 +91,21 @@ namespace main.contents
             GeneralPanel.Size = new Size(977, 57);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // button1
+            // 
+            button1.BackColor = SystemColors.ControlLight;
+            button1.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            button1.FlatStyle = FlatStyle.System;
+            button1.Font = new Font("나눔고딕", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            button1.Location = new Point(465, 17);
+            button1.Margin = new Padding(0);
+            button1.Name = "button1";
+            button1.Size = new Size(47, 23);
+            button1.TabIndex = 102;
+            button1.Text = "Copy";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // label4
             // 
@@ -550,25 +565,11 @@ namespace main.contents
             ce_Add_button.UseVisualStyleBackColor = false;
             ce_Add_button.Click += ce_Add_button_Click;
             // 
-            // button1
-            // 
-            button1.BackColor = SystemColors.ControlLight;
-            button1.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            button1.FlatStyle = FlatStyle.System;
-            button1.Font = new Font("나눔고딕", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(465, 17);
-            button1.Margin = new Padding(0);
-            button1.Name = "button1";
-            button1.Size = new Size(47, 23);
-            button1.TabIndex = 102;
-            button1.Text = "Copy";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
-            // 
             // EquipmentList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
             Controls.Add(tabControl1);

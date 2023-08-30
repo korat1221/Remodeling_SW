@@ -87,6 +87,7 @@
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             Ucalc_tabPage = new TabPage();
+            pictureBox3 = new PictureBox();
             DiIndi2_textBox = new TextBox();
             Rse_textBox = new TextBox();
             label12 = new Label();
@@ -103,7 +104,6 @@
             Ucalc_dataGridView = new DataGridView();
             AddMaterial_button = new Button();
             tabControl1 = new TabControl();
-            pictureBox3 = new PictureBox();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -113,9 +113,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             Ucalc_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).BeginInit();
             tabControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -807,6 +807,15 @@
             Ucalc_tabPage.TabIndex = 0;
             Ucalc_tabPage.Text = "열관류율 계산";
             // 
+            // pictureBox3
+            // 
+            pictureBox3.BackColor = Color.Gainsboro;
+            pictureBox3.Location = new Point(564, 62);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(366, 236);
+            pictureBox3.TabIndex = 135;
+            pictureBox3.TabStop = false;
+            // 
             // DiIndi2_textBox
             // 
             DiIndi2_textBox.BackColor = Color.White;
@@ -1040,19 +1049,11 @@
             tabControl1.Size = new Size(977, 388);
             tabControl1.TabIndex = 96;
             // 
-            // pictureBox3
-            // 
-            pictureBox3.BackColor = Color.Gainsboro;
-            pictureBox3.Location = new Point(564, 62);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(366, 236);
-            pictureBox3.TabIndex = 135;
-            pictureBox3.TabStop = false;
-            // 
             // ConstructionFloor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
             Controls.Add(FloorType_pictureBox);
@@ -1079,9 +1080,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             Ucalc_tabPage.ResumeLayout(false);
             Ucalc_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).EndInit();
             tabControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Security.AccessControl;
+using System.Security.Policy;
 
 namespace main
 {
@@ -67,40 +68,48 @@ namespace main
             }
             catch { }
 
-            //존 정보 가져오기
+            //존 사용 정보 가져오기
             try
             {
                 string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "존이름,용도프로필,냉난방유무", "존번호='" + zoneNum + "'");
-
-
-
                 if (ZoneG.Length > 0)
                 {
                     zoneName = ZoneG[0][0];
                     zoneUsage = ZoneG[0][1];
                     zoneHC = ZoneG[0][2];
+                }
+            } catch { }
 
-                    String[][] ZoneU = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,허용셋백온도,난방최저온도,최저상대습도,최고상대습도", "용도명='" + ZoneG[0][1] + "'");
-                    if (ZoneU.Length > 0)
-                    {
-                        theta_i_h_set = Convert.ToDouble(ZoneU[0][0]);
-                        theta_i_c_set = Convert.ToDouble(ZoneU[0][1]);
-                        dtheta_i_NA = Convert.ToDouble(ZoneU[0][2]);
-                        Fx = 0.8;
-                        Fx_Floor = 0.5; //임의값 넣음 나중에 계산해야함 
-                        Fx_GWall = 0.5;//임의값 넣음 나중에 계산해야함 
-                        theta_s_c = 18;
-                        theta_i_h_min = Convert.ToDouble(ZoneU[0][3]);
-                        theta_e_min = -12;
-                        theta_SUP_Wi = 18;
-                        Mode_night = "운전정지";
-                        Mode_we = "운전정지";
-                        xi_c_set = 611.2 * Math.Exp(17.62 * theta_i_c_set / (243.12 + theta_i_c_set)) / 461.51 / (273.15 + theta_i_c_set) / 1.2 * (Convert.ToDouble(ZoneU[0][5]) / 100);
-                        xi_h_set = 611.2 * Math.Exp(17.62 * theta_i_h_set / (243.12 + theta_i_h_set)) / 461.51 / (273.15 + theta_i_h_set) / 1.2 * (Convert.ToDouble(ZoneU[0][4]) / 100);
-                    }
+            //존 용도프로필 정보 가져오기 
+            try
+            {
+                String[][] ZoneU = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,허용셋백온도,난방최저온도,최저상대습도,최고상대습도", "용도명='" + zoneUsage + "'");
+                if (ZoneU.Length > 0)
+                {
+                    theta_i_h_set = Convert.ToDouble(ZoneU[0][0]);
+                    theta_i_c_set = Convert.ToDouble(ZoneU[0][1]);
+                    dtheta_i_NA = Convert.ToDouble(ZoneU[0][2]);
+                    Fx = 0.8;
+                    Fx_Floor = 0.5; //임의값 넣음 나중에 계산해야함 
+                    Fx_GWall = 0.5;//임의값 넣음 나중에 계산해야함 
+                    theta_s_c = 18;
+                    theta_i_h_min = Convert.ToDouble(ZoneU[0][3]);
+                    theta_e_min = -12;
+                    theta_SUP_Wi = 18;
+                    Mode_night = "운전정지";
+                    Mode_we = "운전정지";
+                    xi_c_set = 611.2 * Math.Exp(17.62 * theta_i_c_set / (243.12 + theta_i_c_set)) / 461.51 / (273.15 + theta_i_c_set) / 1.2 * (Convert.ToDouble(ZoneU[0][5]) / 100);
+                    xi_h_set = 611.2 * Math.Exp(17.62 * theta_i_h_set / (243.12 + theta_i_h_set)) / 461.51 / (273.15 + theta_i_h_set) / 1.2 * (Convert.ToDouble(ZoneU[0][4]) / 100);
+                }
+            }
+            catch { }
 
-                    ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "사용시간,냉난방시간,연이용일수,순바닥면적,천장고, 면적당인체발열, 면적당기기발열, 존축열성능, 비이용일환기량,이용일환기량,n50", "존번호='" + zoneNum + "'");
-
+            //존 일반정보 가져오기
+            try
+            {
+                string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "사용시간,냉난방시간,연이용일수,순바닥면적,천장고, 면적당인체발열, 면적당기기발열, 존축열성능, 비이용일환기량,이용일환기량,n50", "존번호='" + zoneNum + "'");
+                if (ZoneG.Length > 0)
+                {
                     twd_d = Convert.ToDouble(ZoneG[0][0]);
                     th_op_d_we = 0;
                     th_op_d = Convert.ToDouble(ZoneG[0][1]);
@@ -115,42 +124,47 @@ namespace main
                     n50 = Convert.ToDouble(ZoneG[0][10]);
                     e = 0.07;
                     f = 15;
+                }
+            }
+            catch { }
 
-                    ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "환기유무,환기방식,비이용일환기량,이용일환기량,온도교환효율,전열교환효율", "존번호='" + zoneNum + "'");
-                    if (Convert.ToBoolean(ZoneG[0][0]))
+            //존 환기정보 가져오기 
+            try
+            {
+                string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "환기유무,환기방식,비이용일환기량,이용일환기량,온도교환효율,전열교환효율", "존번호='" + zoneNum + "'");
+                if (Convert.ToBoolean(ZoneG[0][0]))
+                {
+                    if (ZoneG[0][1] == "열회수환기")
                     {
-                        if (ZoneG[0][1] == "열회수환기")
-                        {
-                            Vmech_SUP_we = Convert.ToDouble(ZoneG[0][2]);
-                            Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
-                            Vmech_SUP_wd = Convert.ToDouble(ZoneG[0][3]);
-                            Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]);
-                            eta_V_mech = Convert.ToDouble(ZoneG[0][4]);
-                            eta_χV_mech = Convert.ToDouble(ZoneG[0][5]); //나중에 습도교환효율로 바꿔야함 
-                        }
-                        else
-                        {
-                            Vmech_SUP_wd = 0;
-                            Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][2]); ; //배기환기는 다 비이용일환기량으로 함 
-                            Vmech_SUP_we = 0;
-                            Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
-                        }
+                        Vmech_SUP_we = Convert.ToDouble(ZoneG[0][2]);
+                        Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
+                        Vmech_SUP_wd = Convert.ToDouble(ZoneG[0][3]);
+                        Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]);
+                        eta_V_mech = Convert.ToDouble(ZoneG[0][4]);
+                        eta_χV_mech = Convert.ToDouble(ZoneG[0][5]); //나중에 습도교환효율로 바꿔야함 
                     }
                     else
                     {
-                        Vmech_SUP_we = 0;
                         Vmech_SUP_wd = 0;
-                        Vmech_ETA_we = 0;
-                        Vmech_ETA_wd = 0;
+                        Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][2]); ; //배기환기는 다 비이용일환기량으로 함 
+                        Vmech_SUP_we = 0;
+                        Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
                     }
-                    Vmech_SUP_z = 0;
-                    Vmech_ETA_z = 0;
-                    ρacp_a = 0.34;
                 }
+                else
+                {
+                    Vmech_SUP_we = 0;
+                    Vmech_SUP_wd = 0;
+                    Vmech_ETA_we = 0;
+                    Vmech_ETA_wd = 0;
+                }
+                Vmech_SUP_z = 0;
+                Vmech_ETA_z = 0;
+                ρacp_a = 0.34;
             }
-            catch
-            {
-            }
+            catch { }
+
+                   
             //존 외벽 정보 가져오기
             try
             {
@@ -187,7 +201,7 @@ namespace main
                 int i = -1;
                 while (++i < ZoneF.Length)
                 {
-                    Floor floor = new Floor(Convert.ToDouble(ZoneF[i][0]), Convert.ToDouble(ZoneF[i][3]));
+                    Floor floor = new Floor(Convert.ToDouble(ZoneF[i][1]), Convert.ToDouble(ZoneF[i][3]));
                     zoneFloor.Add(floor);
                 }
             }

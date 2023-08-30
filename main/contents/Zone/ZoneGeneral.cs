@@ -31,7 +31,7 @@ namespace main.contents
         String OccupancyDensity_index, EquipIHG_index;
         String ZoneName, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
         double η, η2;
-        static string Layer; 
+        static string Layer;
         public ZoneGeneral()
         {
             InitializeComponent();
@@ -78,7 +78,8 @@ namespace main.contents
         private void Floor_textBox_TextChanged(object sender, EventArgs e)
         {
             if (Layer_textBox.Text != null)
-            { Layer = Layer_textBox.Text;
+            {
+                Layer = Layer_textBox.Text;
                 GetValue_ZoneEnvelope();
             }
         }
@@ -461,7 +462,6 @@ namespace main.contents
                 AHUTime = UseTime + 1;
                 UseTime_textBox.Text = UseTime.ToString();
                 HCTime_textBox.Text = HCTime.ToString();
-                AHUTime_textBox.Text = AHUTime.ToString();
                 PersonIHG_Cal(PersonIHG, UseTime);
             }
         }
@@ -821,7 +821,6 @@ namespace main.contents
                 UseTime_textBox.Text = UseTime.ToString();
 
                 AHUTime = Convert.ToDouble(Value[0][17]);
-                AHUTime_textBox.Text = AHUTime.ToString();
 
                 AnnualUseDay = Convert.ToDouble(Value[0][18]);
                 AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
@@ -881,10 +880,8 @@ namespace main.contents
                 String[][] BuildingValue = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "건물대상,건물용도", "");
 
                 BuildingCategory = BuildingValue[0][0];
-                BuildingCategory_textBox.Text = BuildingCategory;
 
                 BuildingUse = BuildingValue[0][1];
-                BuildingUse_textBox.Text = BuildingUse;
             }
             catch { }
 
@@ -900,7 +897,6 @@ namespace main.contents
                 Layer_textBox.Text = Layer;
 
                 Ground = General_3D[0][1];
-                Ground_textBox.Text = Ground;
                 Load_GroundImage();
 
 
@@ -908,7 +904,7 @@ namespace main.contents
 
                 String[][] Wall = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체번호", "존 = '" + ZoneNum + "' And 외피유형 = '외벽'");
                 double Area_WallInWall = 0;
-               if(Wall[0][1]=="" || Wall[0][1]==null)
+                if (Wall[0][1] == "" || Wall[0][1] == null)
                 {
                     MessageBox.Show("3D 모델 화면에서 외피 구조체종류부터 입력해주세요.");
                 }

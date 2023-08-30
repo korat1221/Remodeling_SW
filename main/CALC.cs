@@ -33,7 +33,8 @@ namespace main
 
             while (++i < zones.Length)
             {
-                Zone zone1 = new Zone(zones[i][0]);
+                  Zone zone1 = new Zone("1F_Zone001");
+                //   Zone zone1 = new Zone(zones[i][0]);
 
                 Zones[zones[i][0]] = zone1;
 
@@ -162,8 +163,8 @@ namespace main
                      + "'", "번호,월");
                 }
             }
-            Cal_Heating heating = new Cal_Heating("HS01");
-            MessageBox.Show(heating.Qhb_mth_sum[0].ToString());
+            //Cal_Heating heating = new Cal_Heating("HS01");
+            //MessageBox.Show(heating.Qhb_mth_sum[0].ToString());
 
             MessageBox.Show("계산되었습니다.");
             return true;

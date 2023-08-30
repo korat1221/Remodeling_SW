@@ -90,6 +90,7 @@
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             Ucalc_tabPage = new TabPage();
+            pictureBox3 = new PictureBox();
             Rse_textBox = new TextBox();
             label12 = new Label();
             Rsi_textBox = new TextBox();
@@ -106,7 +107,6 @@
             Ucalc_dataGridView = new DataGridView();
             AddMaterial_button = new Button();
             tabControl1 = new TabControl();
-            pictureBox3 = new PictureBox();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -116,14 +116,14 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             Ucalc_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).BeginInit();
             tabControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
             // 
-            GeneralPanel.BackColor = System.Drawing.Color.White;
+            GeneralPanel.BackColor = Color.White;
             GeneralPanel.Controls.Add(label1);
             GeneralPanel.Controls.Add(OldRoof_comboBox);
             GeneralPanel.Controls.Add(OldRoof_label);
@@ -271,7 +271,7 @@
             // 
             // Type_textBox
             // 
-            Type_textBox.BackColor = System.Drawing.Color.White;
+            Type_textBox.BackColor = Color.White;
             Type_textBox.BorderStyle = BorderStyle.None;
             Type_textBox.Enabled = false;
             Type_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -293,7 +293,7 @@
             // 
             // RoofNum_textBox
             // 
-            RoofNum_textBox.BackColor = System.Drawing.Color.White;
+            RoofNum_textBox.BackColor = Color.White;
             RoofNum_textBox.BorderStyle = BorderStyle.None;
             RoofNum_textBox.Enabled = false;
             RoofNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -324,7 +324,7 @@
             // Previous_button
             // 
             Previous_button.BackColor = SystemColors.ButtonHighlight;
-            Previous_button.ForeColor = System.Drawing.Color.Black;
+            Previous_button.ForeColor = Color.Black;
             Previous_button.Location = new Point(995, 668);
             Previous_button.Name = "Previous_button";
             Previous_button.Size = new Size(88, 25);
@@ -336,7 +336,7 @@
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = System.Drawing.Color.Black;
+            Save_button.ForeColor = Color.Black;
             Save_button.Location = new Point(1089, 668);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
@@ -362,7 +362,7 @@
             // 
             // TBName_textBox
             // 
-            TBName_textBox.BackColor = System.Drawing.Color.White;
+            TBName_textBox.BackColor = Color.White;
             TBName_textBox.BorderStyle = BorderStyle.None;
             TBName_textBox.Enabled = false;
             TBName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -435,7 +435,7 @@
             // 
             // panel2
             // 
-            panel2.BackColor = System.Drawing.Color.White;
+            panel2.BackColor = Color.White;
             panel2.Controls.Add(Ueff_label2);
             panel2.Controls.Add(Color_comboBox);
             panel2.Controls.Add(dU_label2);
@@ -497,7 +497,7 @@
             // 
             // Ueff_textBox
             // 
-            Ueff_textBox.BackColor = System.Drawing.Color.White;
+            Ueff_textBox.BackColor = Color.White;
             Ueff_textBox.BorderStyle = BorderStyle.None;
             Ueff_textBox.Enabled = false;
             Ueff_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -532,7 +532,7 @@
             // 
             // dU_textBox
             // 
-            dU_textBox.BackColor = System.Drawing.Color.White;
+            dU_textBox.BackColor = Color.White;
             dU_textBox.BorderStyle = BorderStyle.None;
             dU_textBox.Enabled = false;
             dU_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -556,7 +556,7 @@
             // 
             // α_textBox
             // 
-            α_textBox.BackColor = System.Drawing.Color.White;
+            α_textBox.BackColor = Color.White;
             α_textBox.BorderStyle = BorderStyle.None;
             α_textBox.Enabled = false;
             α_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -591,7 +591,7 @@
             // 
             // U_textBox
             // 
-            U_textBox.BackColor = System.Drawing.Color.White;
+            U_textBox.BackColor = Color.White;
             U_textBox.BorderStyle = BorderStyle.None;
             U_textBox.Enabled = false;
             U_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -634,7 +634,7 @@
             // 
             // dU_tabPage
             // 
-            dU_tabPage.BackColor = System.Drawing.Color.White;
+            dU_tabPage.BackColor = Color.White;
             dU_tabPage.Controls.Add(dU_label4);
             dU_tabPage.Controls.Add(dU2_textBox);
             dU_tabPage.Controls.Add(dU_label3);
@@ -657,7 +657,7 @@
             // 
             // dU_label4
             // 
-            dU_label4.BackColor = System.Drawing.Color.White;
+            dU_label4.BackColor = Color.White;
             dU_label4.BorderStyle = BorderStyle.None;
             dU_label4.Enabled = false;
             dU_label4.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -670,7 +670,7 @@
             // 
             // dU2_textBox
             // 
-            dU2_textBox.BackColor = System.Drawing.Color.White;
+            dU2_textBox.BackColor = Color.White;
             dU2_textBox.BorderStyle = BorderStyle.None;
             dU2_textBox.Enabled = false;
             dU2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -683,7 +683,7 @@
             // 
             // dU_label3
             // 
-            dU_label3.BackColor = System.Drawing.Color.White;
+            dU_label3.BackColor = Color.White;
             dU_label3.BorderStyle = BorderStyle.None;
             dU_label3.Enabled = false;
             dU_label3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -695,7 +695,7 @@
             // 
             // PsiKai_label2
             // 
-            PsiKai_label2.BackColor = System.Drawing.Color.White;
+            PsiKai_label2.BackColor = Color.White;
             PsiKai_label2.BorderStyle = BorderStyle.None;
             PsiKai_label2.Enabled = false;
             PsiKai_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -708,7 +708,7 @@
             // 
             // PsiKai_textBox
             // 
-            PsiKai_textBox.BackColor = System.Drawing.Color.White;
+            PsiKai_textBox.BackColor = Color.White;
             PsiKai_textBox.BorderStyle = BorderStyle.None;
             PsiKai_textBox.Enabled = false;
             PsiKai_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -721,7 +721,7 @@
             // 
             // PsiKai_label1
             // 
-            PsiKai_label1.BackColor = System.Drawing.Color.White;
+            PsiKai_label1.BackColor = Color.White;
             PsiKai_label1.BorderStyle = BorderStyle.None;
             PsiKai_label1.Enabled = false;
             PsiKai_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -733,7 +733,7 @@
             // 
             // PerArea_label2
             // 
-            PerArea_label2.BackColor = System.Drawing.Color.White;
+            PerArea_label2.BackColor = Color.White;
             PerArea_label2.BorderStyle = BorderStyle.None;
             PerArea_label2.Enabled = false;
             PerArea_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -746,7 +746,7 @@
             // 
             // PerArea_textBox
             // 
-            PerArea_textBox.BackColor = System.Drawing.Color.White;
+            PerArea_textBox.BackColor = Color.White;
             PerArea_textBox.BorderStyle = BorderStyle.None;
             PerArea_textBox.Enabled = false;
             PerArea_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -759,7 +759,7 @@
             // 
             // PerArea_label1
             // 
-            PerArea_label1.BackColor = System.Drawing.Color.White;
+            PerArea_label1.BackColor = Color.White;
             PerArea_label1.BorderStyle = BorderStyle.None;
             PerArea_label1.Enabled = false;
             PerArea_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -771,7 +771,7 @@
             // 
             // TBName2_textBox
             // 
-            TBName2_textBox.BackColor = System.Drawing.Color.White;
+            TBName2_textBox.BackColor = Color.White;
             TBName2_textBox.BorderStyle = BorderStyle.None;
             TBName2_textBox.Enabled = false;
             TBName2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
@@ -785,7 +785,7 @@
             // 
             // TBType_textBox
             // 
-            TBType_textBox.BackColor = System.Drawing.Color.White;
+            TBType_textBox.BackColor = Color.White;
             TBType_textBox.BorderStyle = BorderStyle.None;
             TBType_textBox.Enabled = false;
             TBType_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
@@ -815,7 +815,7 @@
             // 
             // Ucalc_tabPage
             // 
-            Ucalc_tabPage.BackColor = System.Drawing.Color.White;
+            Ucalc_tabPage.BackColor = Color.White;
             Ucalc_tabPage.Controls.Add(pictureBox3);
             Ucalc_tabPage.Controls.Add(Rse_textBox);
             Ucalc_tabPage.Controls.Add(label12);
@@ -839,9 +839,18 @@
             Ucalc_tabPage.TabIndex = 0;
             Ucalc_tabPage.Text = "열관류율 계산";
             // 
+            // pictureBox3
+            // 
+            pictureBox3.BackColor = Color.Gainsboro;
+            pictureBox3.Location = new Point(571, 61);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(366, 236);
+            pictureBox3.TabIndex = 136;
+            pictureBox3.TabStop = false;
+            // 
             // Rse_textBox
             // 
-            Rse_textBox.BackColor = System.Drawing.Color.White;
+            Rse_textBox.BackColor = Color.White;
             Rse_textBox.BorderStyle = BorderStyle.None;
             Rse_textBox.Enabled = false;
             Rse_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -865,7 +874,7 @@
             // 
             // Rsi_textBox
             // 
-            Rsi_textBox.BackColor = System.Drawing.Color.White;
+            Rsi_textBox.BackColor = Color.White;
             Rsi_textBox.BorderStyle = BorderStyle.None;
             Rsi_textBox.Enabled = false;
             Rsi_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -889,7 +898,7 @@
             // 
             // Material_Rtot_textBox
             // 
-            Material_Rtot_textBox.BackColor = System.Drawing.Color.White;
+            Material_Rtot_textBox.BackColor = Color.White;
             Material_Rtot_textBox.BorderStyle = BorderStyle.None;
             Material_Rtot_textBox.Enabled = false;
             Material_Rtot_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -902,7 +911,7 @@
             // 
             // Material_dtot_textBox
             // 
-            Material_dtot_textBox.BackColor = System.Drawing.Color.White;
+            Material_dtot_textBox.BackColor = Color.White;
             Material_dtot_textBox.BorderStyle = BorderStyle.None;
             Material_dtot_textBox.Enabled = false;
             Material_dtot_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1015,7 +1024,7 @@
             dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             Ucalc_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Ucalc_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -1033,9 +1042,9 @@
             Ucalc_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Ucalc_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             Ucalc_dataGridView.RowTemplate.Height = 25;
             Ucalc_dataGridView.Size = new Size(555, 234);
@@ -1068,19 +1077,11 @@
             tabControl1.Size = new Size(977, 388);
             tabControl1.TabIndex = 96;
             // 
-            // pictureBox3
-            // 
-            pictureBox3.BackColor = System.Drawing.Color.Gainsboro;
-            pictureBox3.Location = new Point(571, 61);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(366, 236);
-            pictureBox3.TabIndex = 136;
-            pictureBox3.TabStop = false;
-            // 
             // ConstructionRoof
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
             Controls.Add(RoofType_pictureBox);
@@ -1107,9 +1108,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             Ucalc_tabPage.ResumeLayout(false);
             Ucalc_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).EndInit();
             tabControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
