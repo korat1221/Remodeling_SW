@@ -30,10 +30,20 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.inst_textBox = new System.Windows.Forms.TextBox();
+            this.uw_textBox = new System.Windows.Forms.TextBox();
+            this.light_textBox = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.Spacer_textBox = new System.Windows.Forms.TextBox();
             this.frame_textBox = new System.Windows.Forms.TextBox();
             this.glass_textBox = new System.Windows.Forms.TextBox();
             this.WindowInstall_pictureBox = new System.Windows.Forms.PictureBox();
-            this.WindowType_pictureBox = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -41,13 +51,14 @@
             this.Area_textBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.Name_textBox1 = new System.Windows.Forms.TextBox();
-            this.FrameMaterial_textBox = new System.Windows.Forms.TextBox();
+            this.shgc_textBox = new System.Windows.Forms.TextBox();
             this.height_textBox = new System.Windows.Forms.TextBox();
             this.Width_textBox = new System.Windows.Forms.TextBox();
             this.Name_textBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.WindowType_pictureBox = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.T2_textBox = new System.Windows.Forms.TextBox();
             this.T1_textBox = new System.Windows.Forms.TextBox();
@@ -68,15 +79,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
-            this.Spacer_textBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox12 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WindowInstall_pictureBox)).BeginInit();
@@ -101,10 +103,12 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
-            this.tabPage1.Controls.Add(this.textBox12);
-            this.tabPage1.Controls.Add(this.textBox10);
-            this.tabPage1.Controls.Add(this.textBox2);
-            this.tabPage1.Controls.Add(this.textBox1);
+            this.tabPage1.Controls.Add(this.label16);
+            this.tabPage1.Controls.Add(this.label15);
+            this.tabPage1.Controls.Add(this.label14);
+            this.tabPage1.Controls.Add(this.inst_textBox);
+            this.tabPage1.Controls.Add(this.uw_textBox);
+            this.tabPage1.Controls.Add(this.light_textBox);
             this.tabPage1.Controls.Add(this.label13);
             this.tabPage1.Controls.Add(this.label11);
             this.tabPage1.Controls.Add(this.label9);
@@ -113,7 +117,6 @@
             this.tabPage1.Controls.Add(this.frame_textBox);
             this.tabPage1.Controls.Add(this.glass_textBox);
             this.tabPage1.Controls.Add(this.WindowInstall_pictureBox);
-            this.tabPage1.Controls.Add(this.WindowType_pictureBox);
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.label2);
@@ -121,13 +124,14 @@
             this.tabPage1.Controls.Add(this.Area_textBox);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.Name_textBox1);
-            this.tabPage1.Controls.Add(this.FrameMaterial_textBox);
+            this.tabPage1.Controls.Add(this.shgc_textBox);
             this.tabPage1.Controls.Add(this.height_textBox);
             this.tabPage1.Controls.Add(this.Width_textBox);
             this.tabPage1.Controls.Add(this.Name_textBox);
             this.tabPage1.Controls.Add(this.label8);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.WindowType_pictureBox);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -135,11 +139,132 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "창호 정보";
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label16.Location = new System.Drawing.Point(183, 137);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(18, 15);
+            this.label16.TabIndex = 133;
+            this.label16.Text = "m";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label15.Location = new System.Drawing.Point(183, 108);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(18, 15);
+            this.label15.TabIndex = 132;
+            this.label15.Text = "m";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label14.Location = new System.Drawing.Point(183, 78);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(23, 15);
+            this.label14.TabIndex = 131;
+            this.label14.Text = "㎡ ";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // inst_textBox
+            // 
+            this.inst_textBox.BackColor = System.Drawing.Color.White;
+            this.inst_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.inst_textBox.Location = new System.Drawing.Point(746, 310);
+            this.inst_textBox.Name = "inst_textBox";
+            this.inst_textBox.ReadOnly = true;
+            this.inst_textBox.Size = new System.Drawing.Size(100, 16);
+            this.inst_textBox.TabIndex = 130;
+            this.inst_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // uw_textBox
+            // 
+            this.uw_textBox.BackColor = System.Drawing.Color.White;
+            this.uw_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.uw_textBox.Location = new System.Drawing.Point(542, 308);
+            this.uw_textBox.Name = "uw_textBox";
+            this.uw_textBox.ReadOnly = true;
+            this.uw_textBox.Size = new System.Drawing.Size(100, 16);
+            this.uw_textBox.TabIndex = 129;
+            this.uw_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // light_textBox
+            // 
+            this.light_textBox.BackColor = System.Drawing.Color.White;
+            this.light_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.light_textBox.Location = new System.Drawing.Point(463, 153);
+            this.light_textBox.Name = "light_textBox";
+            this.light_textBox.ReadOnly = true;
+            this.light_textBox.Size = new System.Drawing.Size(60, 16);
+            this.light_textBox.TabIndex = 128;
+            this.light_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label13.Location = new System.Drawing.Point(748, 292);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(95, 15);
+            this.label13.TabIndex = 126;
+            this.label13.Text = "설치 열교가산치";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label11.Location = new System.Drawing.Point(545, 292);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(83, 15);
+            this.label11.TabIndex = 125;
+            this.label11.Text = "유효 열관류율";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label9.Location = new System.Drawing.Point(468, 137);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(55, 15);
+            this.label9.TabIndex = 124;
+            this.label9.Text = "빛투과율";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label7.Location = new System.Drawing.Point(475, 88);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(39, 15);
+            this.label7.TabIndex = 123;
+            this.label7.Text = "SHGC";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Spacer_textBox
+            // 
+            this.Spacer_textBox.BackColor = System.Drawing.Color.White;
+            this.Spacer_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Spacer_textBox.Location = new System.Drawing.Point(333, 137);
+            this.Spacer_textBox.Name = "Spacer_textBox";
+            this.Spacer_textBox.ReadOnly = true;
+            this.Spacer_textBox.Size = new System.Drawing.Size(100, 16);
+            this.Spacer_textBox.TabIndex = 122;
+            this.Spacer_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // frame_textBox
             // 
             this.frame_textBox.BackColor = System.Drawing.Color.White;
             this.frame_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.frame_textBox.Location = new System.Drawing.Point(419, 85);
+            this.frame_textBox.Location = new System.Drawing.Point(333, 108);
             this.frame_textBox.Name = "frame_textBox";
             this.frame_textBox.ReadOnly = true;
             this.frame_textBox.Size = new System.Drawing.Size(100, 16);
@@ -150,7 +275,7 @@
             // 
             this.glass_textBox.BackColor = System.Drawing.Color.White;
             this.glass_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.glass_textBox.Location = new System.Drawing.Point(419, 54);
+            this.glass_textBox.Location = new System.Drawing.Point(333, 78);
             this.glass_textBox.Name = "glass_textBox";
             this.glass_textBox.ReadOnly = true;
             this.glass_textBox.Size = new System.Drawing.Size(100, 16);
@@ -159,25 +284,17 @@
             // 
             // WindowInstall_pictureBox
             // 
-            this.WindowInstall_pictureBox.Location = new System.Drawing.Point(788, 45);
+            this.WindowInstall_pictureBox.Location = new System.Drawing.Point(739, 45);
             this.WindowInstall_pictureBox.Name = "WindowInstall_pictureBox";
-            this.WindowInstall_pictureBox.Size = new System.Drawing.Size(73, 169);
+            this.WindowInstall_pictureBox.Size = new System.Drawing.Size(122, 244);
             this.WindowInstall_pictureBox.TabIndex = 119;
             this.WindowInstall_pictureBox.TabStop = false;
-            // 
-            // WindowType_pictureBox
-            // 
-            this.WindowType_pictureBox.Location = new System.Drawing.Point(556, 45);
-            this.WindowType_pictureBox.Name = "WindowType_pictureBox";
-            this.WindowType_pictureBox.Size = new System.Drawing.Size(151, 169);
-            this.WindowType_pictureBox.TabIndex = 118;
-            this.WindowType_pictureBox.TabStop = false;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label6.Location = new System.Drawing.Point(320, 114);
+            this.label6.Location = new System.Drawing.Point(257, 137);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(31, 15);
             this.label6.TabIndex = 117;
@@ -188,7 +305,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label3.Location = new System.Drawing.Point(320, 85);
+            this.label3.Location = new System.Drawing.Point(257, 108);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(43, 15);
             this.label3.TabIndex = 116;
@@ -199,7 +316,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label2.Location = new System.Drawing.Point(320, 55);
+            this.label2.Location = new System.Drawing.Point(257, 78);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(31, 15);
             this.label2.TabIndex = 115;
@@ -210,7 +327,7 @@
             // 
             this.install_textBox.BackColor = System.Drawing.Color.White;
             this.install_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.install_textBox.Location = new System.Drawing.Point(140, 142);
+            this.install_textBox.Location = new System.Drawing.Point(97, 165);
             this.install_textBox.Name = "install_textBox";
             this.install_textBox.ReadOnly = true;
             this.install_textBox.Size = new System.Drawing.Size(100, 16);
@@ -221,7 +338,7 @@
             // 
             this.Area_textBox.BackColor = System.Drawing.Color.White;
             this.Area_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Area_textBox.Location = new System.Drawing.Point(140, 55);
+            this.Area_textBox.Location = new System.Drawing.Point(97, 78);
             this.Area_textBox.Name = "Area_textBox";
             this.Area_textBox.ReadOnly = true;
             this.Area_textBox.Size = new System.Drawing.Size(100, 16);
@@ -232,7 +349,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label4.Location = new System.Drawing.Point(42, 142);
+            this.label4.Location = new System.Drawing.Point(42, 165);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(31, 15);
             this.label4.TabIndex = 112;
@@ -244,32 +361,31 @@
             this.Name_textBox1.BackColor = System.Drawing.Color.White;
             this.Name_textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Name_textBox1.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.Name_textBox1.Location = new System.Drawing.Point(320, 23);
+            this.Name_textBox1.Location = new System.Drawing.Point(257, 34);
             this.Name_textBox1.Name = "Name_textBox1";
             this.Name_textBox1.ReadOnly = true;
             this.Name_textBox1.Size = new System.Drawing.Size(100, 16);
             this.Name_textBox1.TabIndex = 111;
-            this.Name_textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // FrameMaterial_textBox
+            // shgc_textBox
             // 
-            this.FrameMaterial_textBox.BackColor = System.Drawing.Color.White;
-            this.FrameMaterial_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.FrameMaterial_textBox.Enabled = false;
-            this.FrameMaterial_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FrameMaterial_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.FrameMaterial_textBox.Location = new System.Drawing.Point(341, 212);
-            this.FrameMaterial_textBox.Name = "FrameMaterial_textBox";
-            this.FrameMaterial_textBox.ReadOnly = true;
-            this.FrameMaterial_textBox.Size = new System.Drawing.Size(116, 15);
-            this.FrameMaterial_textBox.TabIndex = 108;
-            this.FrameMaterial_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shgc_textBox.BackColor = System.Drawing.Color.White;
+            this.shgc_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.shgc_textBox.Enabled = false;
+            this.shgc_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.shgc_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.shgc_textBox.Location = new System.Drawing.Point(463, 105);
+            this.shgc_textBox.Name = "shgc_textBox";
+            this.shgc_textBox.ReadOnly = true;
+            this.shgc_textBox.Size = new System.Drawing.Size(60, 15);
+            this.shgc_textBox.TabIndex = 108;
+            this.shgc_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // height_textBox
             // 
             this.height_textBox.BackColor = System.Drawing.Color.White;
             this.height_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.height_textBox.Location = new System.Drawing.Point(140, 114);
+            this.height_textBox.Location = new System.Drawing.Point(97, 137);
             this.height_textBox.Name = "height_textBox";
             this.height_textBox.ReadOnly = true;
             this.height_textBox.Size = new System.Drawing.Size(100, 16);
@@ -280,7 +396,7 @@
             // 
             this.Width_textBox.BackColor = System.Drawing.Color.White;
             this.Width_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Width_textBox.Location = new System.Drawing.Point(140, 85);
+            this.Width_textBox.Location = new System.Drawing.Point(97, 108);
             this.Width_textBox.Name = "Width_textBox";
             this.Width_textBox.ReadOnly = true;
             this.Width_textBox.Size = new System.Drawing.Size(100, 16);
@@ -292,18 +408,19 @@
             this.Name_textBox.BackColor = System.Drawing.Color.White;
             this.Name_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Name_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.Name_textBox.Location = new System.Drawing.Point(42, 23);
+            this.Name_textBox.Location = new System.Drawing.Point(42, 34);
             this.Name_textBox.Name = "Name_textBox";
             this.Name_textBox.ReadOnly = true;
             this.Name_textBox.Size = new System.Drawing.Size(100, 16);
             this.Name_textBox.TabIndex = 39;
+            this.Name_textBox.Text = "    ";
             this.Name_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label8.Location = new System.Drawing.Point(42, 114);
+            this.label8.Location = new System.Drawing.Point(42, 137);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(31, 15);
             this.label8.TabIndex = 38;
@@ -314,7 +431,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label5.Location = new System.Drawing.Point(42, 85);
+            this.label5.Location = new System.Drawing.Point(42, 108);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(31, 15);
             this.label5.TabIndex = 23;
@@ -325,12 +442,20 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label1.Location = new System.Drawing.Point(42, 55);
+            this.label1.Location = new System.Drawing.Point(42, 78);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(31, 15);
             this.label1.TabIndex = 17;
             this.label1.Text = "면적";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // WindowType_pictureBox
+            // 
+            this.WindowType_pictureBox.Location = new System.Drawing.Point(496, 45);
+            this.WindowType_pictureBox.Name = "WindowType_pictureBox";
+            this.WindowType_pictureBox.Size = new System.Drawing.Size(211, 244);
+            this.WindowType_pictureBox.TabIndex = 118;
+            this.WindowType_pictureBox.TabStop = false;
             // 
             // tabPage2
             // 
@@ -575,105 +700,6 @@
             this.webView22.TabIndex = 0;
             this.webView22.ZoomFactor = 1D;
             // 
-            // Spacer_textBox
-            // 
-            this.Spacer_textBox.BackColor = System.Drawing.Color.White;
-            this.Spacer_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Spacer_textBox.Location = new System.Drawing.Point(419, 113);
-            this.Spacer_textBox.Name = "Spacer_textBox";
-            this.Spacer_textBox.ReadOnly = true;
-            this.Spacer_textBox.Size = new System.Drawing.Size(100, 16);
-            this.Spacer_textBox.TabIndex = 122;
-            this.Spacer_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label7.Location = new System.Drawing.Point(324, 212);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(39, 15);
-            this.label7.TabIndex = 123;
-            this.label7.Text = "SHGC";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label9.Location = new System.Drawing.Point(480, 213);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(55, 15);
-            this.label9.TabIndex = 124;
-            this.label9.Text = "빛투과율";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label11.Location = new System.Drawing.Point(496, 278);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(83, 15);
-            this.label11.TabIndex = 125;
-            this.label11.Text = "유효 열관류율";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label13.Location = new System.Drawing.Point(692, 278);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(95, 15);
-            this.label13.TabIndex = 126;
-            this.label13.Text = "설치 열교가산치";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.Color.White;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Location = new System.Drawing.Point(294, 233);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(100, 16);
-            this.textBox1.TabIndex = 127;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox2
-            // 
-            this.textBox2.BackColor = System.Drawing.Color.White;
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox2.Location = new System.Drawing.Point(456, 233);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(100, 16);
-            this.textBox2.TabIndex = 128;
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox10
-            // 
-            this.textBox10.BackColor = System.Drawing.Color.White;
-            this.textBox10.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox10.Location = new System.Drawing.Point(480, 296);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.ReadOnly = true;
-            this.textBox10.Size = new System.Drawing.Size(100, 16);
-            this.textBox10.TabIndex = 129;
-            this.textBox10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox12
-            // 
-            this.textBox12.BackColor = System.Drawing.Color.White;
-            this.textBox12.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox12.Location = new System.Drawing.Point(692, 296);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.ReadOnly = true;
-            this.textBox12.Size = new System.Drawing.Size(100, 16);
-            this.textBox12.TabIndex = 130;
-            this.textBox12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // sub3dWINInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -694,7 +720,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).EndInit();
             this.ResumeLayout(false);
-
+            VisibleChanged += onVisibleChanged;
         }
 
         #endregion
@@ -742,7 +768,7 @@
         private TextBox R2_textBox;
         private TextBox height_textBox;
         private TextBox Width_textBox;
-        private TextBox FrameMaterial_textBox;
+        private TextBox shgc_textBox;
         private TextBox Area_textBox;
         private Label label4;
         private Label label3;
@@ -751,14 +777,16 @@
         private TextBox frame_textBox;
         private TextBox glass_textBox;
         private PictureBox WindowInstall_pictureBox;
-        private TextBox textBox12;
-        private TextBox textBox10;
-        private TextBox textBox2;
-        private TextBox textBox1;
+        private TextBox inst_textBox;
+        private TextBox uw_textBox;
+        private TextBox light_textBox;
         private Label label13;
         private Label label11;
         private Label label9;
         private Label label7;
         private TextBox Spacer_textBox;
+        private Label label14;
+        private Label label16;
+        private Label label15;
     }
 }

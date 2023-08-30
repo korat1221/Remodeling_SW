@@ -25,8 +25,8 @@ namespace main.contents
             if (rec.Length > 0)
             {
                 textBox3.Text = rec[0][2];
-                textBox1.Text = Double.Parse(rec[0][0]).ToString("#.##");
-                textBox2.Text = rec[0][1];
+                //textBox1.Text = Double.Parse(rec[0][0]).ToString("#.##");
+                //textBox2.Text = rec[0][1];
             }
 
             if (ID.IndexOf("_INWALL_") > 0)
