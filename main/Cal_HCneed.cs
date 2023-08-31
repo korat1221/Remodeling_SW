@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Security.AccessControl;
 using System.Security.Policy;
 
@@ -9,11 +10,11 @@ namespace main
     {
         public String zoneName;
         public String zoneUsage, zoneHC, Mode_night, Mode_we;
-        public double theta_i_h_set, theta_i_c_set, dtheta_i_NA, Fx, Fx_Floor, Fx_GWall, theta_s_c, theta_i_h_min, theta_e_min, theta_SUP_Wi;
+        public double Peope_Num, theta_i_h_set, theta_i_c_set, dtheta_i_NA, Fx, Fx_Floor, Fx_GWall, theta_s_c, theta_i_h_min, theta_e_min, theta_SUP_Wi;
         public double twd_d, th_op_d_we, th_op_d, dwd_a;
         public double zoneArea, zoneHeight;
         public double qI_p, qI_fac, Cwirk_A;
-        public double VA_we, VA_wd, n50, e, f, Vmech_SUP_we, Vmech_SUP_wd, Vmech_ETA_we, Vmech_ETA_wd, eta_V_mech, eta_χV_mech, xi_c_set, xi_h_set, Vmech_SUP_z, Vmech_ETA_z, ρacp_a;
+        public double VA_we, VA_wd, n50, e, f, Vmech_SUP_we, Vmech_SUP_wd, Vmech_ETA_we, Vmech_ETA_wd, eta_V_mech, eta_χV_mech, xi_c_set, xi_h_set, H_winter, H_summer, Vmech_SUP_z, Vmech_ETA_z, ρacp_a;
         public ArrayList zoneWall = new ArrayList(); 
         public ArrayList zoneRoof = new ArrayList(); 
         public ArrayList zoneFloor = new ArrayList(); 
@@ -23,7 +24,8 @@ namespace main
         public ArrayList zoneCW = new ArrayList();
         public double Zone_HT_tot, Zone_HT_Wall, Zone_HT_Roof, Zone_HT_Floor, Zone_HT_GWall, Zone_HT_Door, Zone_HT_Win, Zone_HT_CW;
         public double Zone_HT_Di_Wall, Zone_HT_Indi_Wall, Zone_HT_Di_Roof, Zone_HT_Indi_Roof, Zone_HT_Di_Win, Zone_HT_Indi_Win, Zone_HT_Di_Door, Zone_HT_Indi_Door;
-        public double Zone_HT_TB_tot, Zone_HT_TB_Wall, Zone_HT_TB_Roof, Zone_HT_TB_Floor, Zone_HT_TB_Gwall, Zone_HT_TB_Win, Zone_HT_TB_Door, Zone_HT_TB_CW;
+        public double Zone_HT_TB_tot, Zone_HT_TB_Wall, Zone_HT_TB_Roof, Zone_HT_TB_Floor, Zone_HT_TB_GWall, Zone_HT_TB_Win, Zone_HT_TB_Door, Zone_HT_TB_CW;
+        double[] nmech = new double[2]; double[] nz = new double[2]; double[] ninf = new double[2]; double[] nwin = new double[2];//[비이용일/이용일] = [we/wd]=[0/1]
         public double[] Zone_HV_tot = new double[2], Zone_HV_inf = new double[2], Zone_HV_win = new double[2], Zone_HV_z = new double[2], Zone_HV_mech = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
         public double[] Zone_H_tot = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
         public double[] tao = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
@@ -44,7 +46,7 @@ namespace main
         public double[,,] QVsink_tot = new double[2, 2, 12], QV_inf_sink = new double[2, 2, 12], QV_win_sink = new double[2, 2, 12], QV_z_sink = new double[2, 2, 12], QV_mech_sink = new double[2, 2, 12];
         public double[,,] QVsource_tot = new double[2, 2, 12], QV_inf_source = new double[2, 2, 12], QV_win_source = new double[2, 2, 12], QV_z_source = new double[2, 2, 12], QV_mech_source = new double[2, 2, 12];
         //QI
-        public double[,,] QI_tot = new double[2, 2, 12], QI_L = new double[2, 2, 12];
+        public double[,,] QI_tot = new double[2, 2, 12], QI_L = new double[2, 2, 12]; public double[] QI_Humidity = new double[12];
         public double[] QI_P = new double[2], QI_fac = new double[2];
         //
         public double[,,] Qsink = new double[2, 2, 12], Qsource = new double[2, 2, 12], gamma = new double[2, 2, 12], a = new double[2, 2, 12], eta = new double[2, 2, 12], dQc_b = new double[2, 2, 12], dQc_sink = new double[2, 2, 12];
@@ -71,19 +73,20 @@ namespace main
             //존 사용 정보 가져오기
             try
             {
-                string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "존이름,용도프로필,냉난방유무", "존번호='" + zoneNum + "'");
+                string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "존이름,용도프로필,냉난방유무,재실자수", "존번호='" + zoneNum + "'");
                 if (ZoneG.Length > 0)
                 {
                     zoneName = ZoneG[0][0];
                     zoneUsage = ZoneG[0][1];
                     zoneHC = ZoneG[0][2];
+                    Peope_Num = Convert.ToDouble(ZoneG[0][3]);
                 }
             } catch { }
 
             //존 용도프로필 정보 가져오기 
             try
             {
-                String[][] ZoneU = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,허용셋백온도,난방최저온도,최저상대습도,최고상대습도", "용도명='" + zoneUsage + "'");
+                String[][] ZoneU = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,허용셋백온도,난방최저온도,최저상대습도,최고상대습도,겨울습기발생량,여름습기발생량", "용도명='" + zoneUsage + "'");
                 if (ZoneU.Length > 0)
                 {
                     theta_i_h_set = Convert.ToDouble(ZoneU[0][0]);
@@ -100,6 +103,8 @@ namespace main
                     Mode_we = "운전정지";
                     xi_c_set = 611.2 * Math.Exp(17.62 * theta_i_c_set / (243.12 + theta_i_c_set)) / 461.51 / (273.15 + theta_i_c_set) / 1.2 * (Convert.ToDouble(ZoneU[0][5]) / 100);
                     xi_h_set = 611.2 * Math.Exp(17.62 * theta_i_h_set / (243.12 + theta_i_h_set)) / 461.51 / (273.15 + theta_i_h_set) / 1.2 * (Convert.ToDouble(ZoneU[0][4]) / 100);
+                    H_winter = Convert.ToDouble(ZoneU[0][6]);
+                    H_summer = Convert.ToDouble(ZoneU[0][7]);
                 }
             }
             catch { }
@@ -107,7 +112,7 @@ namespace main
             //존 일반정보 가져오기
             try
             {
-                string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "사용시간,냉난방시간,연이용일수,순바닥면적,천장고, 면적당인체발열, 면적당기기발열, 존축열성능, 비이용일환기량,이용일환기량,n50", "존번호='" + zoneNum + "'");
+                string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "사용시간,냉난방시간,연이용일수,순바닥면적,천장고, 면적당인체발열, 면적당기기발열, 존축열성능, 비이용일환기량,이용일환기량,n50,주이용일", "존번호='" + zoneNum + "'");
                 if (ZoneG.Length > 0)
                 {
                     twd_d = Convert.ToDouble(ZoneG[0][0]);
@@ -124,6 +129,17 @@ namespace main
                     n50 = Convert.ToDouble(ZoneG[0][10]);
                     e = 0.07;
                     f = 15;
+
+                    for(int mth = 0 ; mth < 12;  mth++)
+                    {
+                        string[][] Value;
+                        if (ZoneG[0][11] != "5.5")
+                        {
+                            Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "이용일수", "이용일수", "월='" + (mth + 1) + "월' AND 주간일수 ='주 " + ZoneG[0][11] + ".0 일 근무'"); }
+                        else { Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "이용일수", "이용일수", "월='" + (mth + 1) + "월' AND 주간일수 ='주 5.5 일 근무'"); }
+
+                        dwd_mth[mth] = Convert.ToDouble(Value[0][0]);
+                    }
                 }
             }
             catch { }
@@ -168,12 +184,12 @@ namespace main
             //존 외벽 정보 가져오기
             try
             {
-                String[][] ZoneW = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.유효열관류율,b.흡수율,b.직접간접 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + zoneNum + "' And  NOT b.직접간접 = '지면'");
+                String[][] ZoneW = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + zoneNum + "' And  NOT b.직접간접 = '지면'");
                 // string[][] ZoneW = Program.DB.querySQL(DB.type.ProjDB, "ZoneWall", "Area,Ueff,α,DirectInDirect", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < ZoneW.Length)
                 {
-                    Wall wall = new Wall(Convert.ToDouble(ZoneW[i][1]), Convert.ToDouble(ZoneW[i][3]), Convert.ToDouble(ZoneW[i][4]), ZoneW[i][5]);
+                    Wall wall = new Wall(ZoneW[i][0], ZoneW[i][2],Convert.ToDouble(ZoneW[i][1]), Convert.ToDouble(ZoneW[i][3]), Convert.ToDouble(ZoneW[i][4]), ZoneW[i][5], ZoneW[i][6], ZoneW[i][7]);
                     zoneWall.Add(wall);
                 }
             }
@@ -182,12 +198,12 @@ namespace main
             //존 지붕 정보 가져오기
             try
             {
-                String[][] ZoneR = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.유효열관류율,b.흡수율,b.직접간접 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionRoof AS b ON a.구조체번호 = b.번호 where a.존 = '" + zoneNum + "'");
+                String[][] ZoneR = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionRoof AS b ON a.구조체번호 = b.번호 where a.존 = '" + zoneNum + "'");
                 // string[][] ZoneR = Program.DB.getValue(DB.type.ProjDB, "ZoneRoof", "Area,Ueff,α,DirectInDirect", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < ZoneR.Length)
                 {
-                    Roof roof = new Roof(Convert.ToDouble(ZoneR[i][1]), Convert.ToDouble(ZoneR[i][3]), Convert.ToDouble(ZoneR[i][4]), ZoneR[i][5]);
+                    Roof roof = new Roof(ZoneR[i][0], ZoneR[i][2], Convert.ToDouble(ZoneR[i][1]), Convert.ToDouble(ZoneR[i][3]), Convert.ToDouble(ZoneR[i][4]), ZoneR[i][5], ZoneR[i][6], ZoneR[i][7]);
                     zoneRoof.Add(roof);
                 }
             }
@@ -201,7 +217,7 @@ namespace main
                 int i = -1;
                 while (++i < ZoneF.Length)
                 {
-                    Floor floor = new Floor(Convert.ToDouble(ZoneF[i][1]), Convert.ToDouble(ZoneF[i][3]));
+                    Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Convert.ToDouble(ZoneF[i][1]), Convert.ToDouble(ZoneF[i][3]));
                     zoneFloor.Add(floor);
                 }
             }
@@ -214,7 +230,7 @@ namespace main
                 int i = -1;
                 while (++i < ZoneG.Length)
                 {
-                    GWall gwall = new GWall(Convert.ToDouble(ZoneG[i][1]), Convert.ToDouble(ZoneG[i][3]));
+                    GWall gwall = new GWall(ZoneG[i][0], ZoneG[i][2], Convert.ToDouble(ZoneG[i][1]), Convert.ToDouble(ZoneG[i][3]));
                     zoneGWall.Add(gwall);
                 }
             }
@@ -223,12 +239,12 @@ namespace main
             //존 문 정보 가져오기<<나중에 문으로 바꿔야 함 
             try
             {
-                String[][] ZoneD = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.유효열관류율,b.흡수율,b.직접간접 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionDoor AS b ON a.구조체번호 = b.번호 where a.존 = '" + zoneNum + "'");
+                String[][] ZoneD = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionDoor AS b ON a.구조체번호 = b.번호 where a.존 = '" + zoneNum + "'");
                 //string[][] ZoneD = Program.DB.getValue(DB.type.ProjDB, "ZoneDoor", "Area,Ueff,α,DirectInDirect", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < ZoneD.Length)
                 {
-                    Door door = new Door(Convert.ToDouble(ZoneD[i][1]), Convert.ToDouble(ZoneD[i][3]), Convert.ToDouble(ZoneD[i][4]), ZoneD[i][5]);
+                    Door door = new Door(ZoneD[i][0], ZoneD[i][2], Convert.ToDouble(ZoneD[i][1]), Convert.ToDouble(ZoneD[i][3]), Convert.ToDouble(ZoneD[i][4]), ZoneD[i][5], ZoneD[i][6], ZoneD[i][7]);
                     zoneDoor.Add(door);
                 }
             }
@@ -236,13 +252,13 @@ namespace main
             //존 창문 정보 가져오기
             try
             {
-                String[][] ZoneWin = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.창호열관류율,b.설치열교가산치,b.창호유효열관류율,b.유리면적비,b.상위창호번호 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체번호 = b.번호 where a.존 = '" + zoneNum + "'");
+                String[][] ZoneWin = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.창호열관류율,b.설치열교가산치,b.창호유효열관류율,b.유리면적비,b.상위창호번호,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체번호 = b.번호 where a.존 = '" + zoneNum + "'");
                 //string[][] ZoneWin = Program.DB.getValue(DB.type.ProjDB, "ZoneWin", "Area,Uvalue,Uinst,DirectInDirect,Ff,g,τ,gtot,τtot", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < ZoneWin.Length)
                 {
                     String[][] ZoneWin_P = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접,태양열취득률,빛투과율", "번호='" + ZoneWin[i][7] + "'");
-                    Window win = new Window(Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]));
+                    Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]), ZoneWin[i][8], ZoneWin[i][9]);
                     zoneWin.Add(win);
                     //나중에 차양포함 태양열취득률, 빛투과율 반영해야 함
                 }
@@ -252,7 +268,7 @@ namespace main
             //존 커튼월 정보 가져오기
             try
             {
-                String[][] ZoneCW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,면적,커튼월부위,구조체번호", "존 = '" + zoneNum + "' AND 외피유형 = '커튼월창'");
+                String[][] ZoneCW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,면적,커튼월부위,구조체번호,방위,기울기.", "존 = '" + zoneNum + "' AND 외피유형 = '커튼월창'");
                 // string[][] ZoneCW = Program.DB.getValue(DB.type.ProjDB, "ZoneCW", "Area_g,Uvalue_g,Ff_g,g_g,gtot_g,τ_g,τtot_g,Area_p,Uvalue_p,α_p,Area_d,Uvalue_d,Ff_d,g_d,τ_d,Area_tot,Uinst", "zoneNum='" + zoneNum + "'");
                 int i = -1;
                 while (++i < ZoneCW.Length)
@@ -260,19 +276,19 @@ namespace main
                     if (ZoneCW[i][2] == "유리부분")
                     {
                         String[][] CW_g = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "유리부분열관류율,유리부분유리면적비,태양열취득률,빛투과율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
-                        CW cw = new CW(Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[i][0]), Convert.ToDouble(CW_g[i][1]), Convert.ToDouble(CW_g[i][2]), Convert.ToDouble(CW_g[i][3]), 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[i][4]));
+                        CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[i][0]), Convert.ToDouble(CW_g[i][1]), Convert.ToDouble(CW_g[i][2]), Convert.ToDouble(CW_g[i][3]), 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[i][4]), ZoneCW[i][4], ZoneCW[i][5]);
                         zoneCW.Add(cw);
                     }
                     else if (ZoneCW[i][2] == "패널부분")
                     {
                         String[][] CW_p = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "패널부분열관류율,패널흡수율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
-                        CW cw = new CW(0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[i][0]), Convert.ToDouble(CW_p[i][1]), 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[i][2]));
+                        CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[i][0]), Convert.ToDouble(CW_p[i][1]), 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[i][2]), ZoneCW[i][4], ZoneCW[i][5]);
                         zoneCW.Add(cw);
                     }
                     else
                     {
                         String[][] CW_d = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "출입문부분열관류율,출입문부분유리면적비,출입문태양열취득률,출입문빛투과율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
-                        CW cw = new CW(0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[i][0]), Convert.ToDouble(CW_d[i][1]), Convert.ToDouble(CW_d[i][2]), Convert.ToDouble(CW_d[i][3]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[i][4]));
+                        CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[i][0]), Convert.ToDouble(CW_d[i][1]), Convert.ToDouble(CW_d[i][2]), Convert.ToDouble(CW_d[i][3]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[i][4]), ZoneCW[i][4], ZoneCW[i][5]);
                         zoneCW.Add(cw);
                     }  //나중에 차양포함 태양열취득률, 빛투과율 반영해야 함
                 }
@@ -289,8 +305,15 @@ namespace main
             {
                 Wall zonewall = (Wall)zoneWall[i]; //List를 class 객체로 변환 
                 HTCalc htcalc = new HTCalc();
+
                 double[] zoneWall_HT = new double[zoneWall.Count];
+                double[] zoneWall_HT_TB = new double[zoneWall.Count];
+
                 zoneWall_HT[i] = htcalc.Calc(zonewall.Ueff(), zonewall.Area());
+                zoneWall_HT_TB[i] = htcalc.Calc(0.15, zonewall.Area());
+
+                Zone_HT_TB_Wall += zoneWall_HT_TB[i];
+
                 if (zonewall.DiIndi() == "직접외기")
                 {
                     Zone_HT_Di_Wall += zoneWall_HT[i];
@@ -308,8 +331,15 @@ namespace main
             {
                 Roof zoneroof = (Roof)zoneRoof[i]; //List를 class 객체로 변환 
                 HTCalc htcalc = new HTCalc();
+
                 double[] zoneRoof_HT = new double[zoneRoof.Count];
+                double[] zoneRoof_HT_TB = new double[zoneRoof.Count];
+
                 zoneRoof_HT[i] = htcalc.Calc(zoneroof.Ueff(), zoneroof.Area());
+                zoneRoof_HT_TB[i] = htcalc.Calc(0.15, zoneroof.Area());
+
+                Zone_HT_TB_Roof += zoneRoof_HT_TB[i];
+
                 if (zoneroof.DiIndi() == "직접외기")
                 {
                     Zone_HT_Di_Roof += zoneRoof_HT[i];
@@ -327,9 +357,15 @@ namespace main
             {
                 Floor zonefloor = (Floor)zoneFloor[i]; //List를 class 객체로 변환 
                 HTCalc htcalc = new HTCalc();
+
                 double[] zoneFloor_HT = new double[zoneFloor.Count];
+                double[] zoneFloor_HT_TB = new double[zoneFloor.Count];
+
                 zoneFloor_HT[i] = htcalc.Calc(zonefloor.Ueff(), zonefloor.Area());
+                zoneFloor_HT_TB[i] = htcalc.Calc(0.15, zonefloor.Area());
+
                 Zone_HT_Floor += zoneFloor_HT[i];
+                Zone_HT_TB_Floor += zoneFloor_HT_TB[i];
             }
 
             //지하벽 HT
@@ -337,9 +373,15 @@ namespace main
             {
                 GWall zonegwall = (GWall)zoneGWall[i]; //List를 class 객체로 변환 
                 HTCalc htcalc = new HTCalc();
+
                 double[] zoneGWall_HT = new double[zoneGWall.Count];
+                double[] zoneGWall_HT_TB = new double[zoneGWall.Count];
+
                 zoneGWall_HT[i] = htcalc.Calc(zonegwall.Ueff(), zonegwall.Area());
+                zoneGWall_HT_TB[i] = htcalc.Calc(0.15, zonegwall.Area());
+
                 Zone_HT_GWall += zoneGWall_HT[i];
+                Zone_HT_TB_GWall += zoneGWall_HT_TB[i]; 
             }
 
 
@@ -359,7 +401,7 @@ namespace main
                 {
                     Zone_HT_Indi_Door += zoneDoor_HT[i];
                 }
-                Zone_HT_Door = Zone_HT_Di_Door + Zone_HT_Indi_Door;
+                Zone_HT_Door = Zone_HT_Di_Door + Zone_HT_Indi_Door; //나중에 설치열교 관류열전달계수 적용 해야함 
             }
 
             //창 HT
@@ -397,25 +439,42 @@ namespace main
                 zoneCW_HT_TB[i] = htcalc.Calc(zonecw.Uinst(), zonecw.Area_tot());
                 Zone_HT_TB_CW += zoneCW_HT_TB[i];
             }
-            Zone_HT_TB_tot = Zone_HT_TB_Wall + Zone_HT_TB_Roof + Zone_HT_TB_Floor + Zone_HT_TB_Gwall + Zone_HT_TB_Win + Zone_HT_TB_Door + Zone_HT_TB_CW;
+
+            //접합부열교 
+
+            Zone_HT_TB_tot = Zone_HT_TB_Wall + Zone_HT_TB_Roof + Zone_HT_TB_Floor + Zone_HT_TB_GWall + Zone_HT_TB_Win + Zone_HT_TB_Door + Zone_HT_TB_CW;
             Zone_HT_tot = Zone_HT_TB_tot + Zone_HT_Wall + Zone_HT_Roof + Zone_HT_Floor + Zone_HT_GWall + Zone_HT_Win + Zone_HT_Door + Zone_HT_CW;
         }
 
         public void ZoneHV()  //환기 HV계산
         {
             HVCalc hvcalc = new HVCalc();
-            Zone_HV_mech[0] = hvcalc.HV_mech_Calc(Vmech_SUP_we, th_op_d_we, (zoneArea * zoneHeight));
-            Zone_HV_mech[1] = hvcalc.HV_mech_Calc(Vmech_SUP_wd, th_op_d, (zoneArea * zoneHeight));
-            Zone_HV_z[0] = hvcalc.HV_z_Calc(Vmech_SUP_we, Vmech_ETA_we, th_op_d_we, (zoneArea * zoneHeight));
-            Zone_HV_z[1] = hvcalc.HV_z_Calc(Vmech_SUP_wd, Vmech_ETA_wd, th_op_d, (zoneArea * zoneHeight));
-            Zone_HV_inf[0] = hvcalc.HV_inf_Calc(Vmech_SUP_we, Vmech_ETA_we, Vmech_SUP_z, Vmech_ETA_z, th_op_d_we, n50, (zoneArea * zoneHeight), e, f);
-            Zone_HV_inf[1] = hvcalc.HV_inf_Calc(Vmech_SUP_wd, Vmech_ETA_wd, Vmech_SUP_z, Vmech_ETA_z, th_op_d, n50, (zoneArea * zoneHeight), e, f);
-            Zone_HV_win[0] = 0.1 * (zoneArea * zoneHeight) * 0.34;
-            Zone_HV_win[1] = hvcalc.HV_win_Calc(Vmech_SUP_wd, Vmech_ETA_wd, Vmech_SUP_z, Vmech_ETA_z, th_op_d, twd_d, n50, (VA_wd / zoneHeight), (zoneArea * zoneHeight), e, f);
+           
+
+            nmech[0] = hvcalc.nmech_Calc(Vmech_SUP_we, th_op_d_we, (zoneArea * zoneHeight));
+            nmech[1] = hvcalc.nmech_Calc(Vmech_SUP_wd, th_op_d, (zoneArea * zoneHeight));
+            Zone_HV_mech[0] = hvcalc.HV_Calc(nmech[0], (zoneArea * zoneHeight));
+            Zone_HV_mech[1] = hvcalc.HV_Calc(nmech[1], (zoneArea * zoneHeight));
+
+            nz[0] = hvcalc.nz_Calc(Vmech_SUP_we, Vmech_ETA_we, th_op_d_we, (zoneArea * zoneHeight));
+            nz[1] = hvcalc.nz_Calc(Vmech_SUP_wd, Vmech_ETA_wd, th_op_d, (zoneArea * zoneHeight));
+            Zone_HV_z[0] = hvcalc.HV_Calc(nz[0], (zoneArea * zoneHeight));
+            Zone_HV_z[1] = hvcalc.HV_Calc(nz[1], (zoneArea * zoneHeight));
+
+            ninf[0] = hvcalc.ninf_Calc(Vmech_SUP_we, Vmech_ETA_we, Vmech_SUP_z, Vmech_ETA_z, th_op_d_we, n50, (zoneArea * zoneHeight), e, f);
+            ninf[1] = hvcalc.ninf_Calc(Vmech_SUP_wd, Vmech_ETA_wd, Vmech_SUP_z, Vmech_ETA_z, th_op_d, n50, (zoneArea * zoneHeight), e, f);
+            Zone_HV_inf[0] = hvcalc.HV_Calc(ninf[0], (zoneArea * zoneHeight));
+            Zone_HV_inf[1] = hvcalc.HV_Calc(ninf[1], (zoneArea * zoneHeight));
+
+            nwin[0] = 0.1;
+            nwin[1] = hvcalc.nwin_Calc(Vmech_SUP_wd, Vmech_ETA_wd, Vmech_SUP_z, Vmech_ETA_z, th_op_d, twd_d, n50, (VA_wd / zoneHeight), (zoneArea * zoneHeight), e, f);
+            Zone_HV_win[0] = hvcalc.HV_Calc(nwin[0], (zoneArea * zoneHeight));
+            Zone_HV_win[1] = hvcalc.HV_Calc(nwin[1], (zoneArea * zoneHeight));
+
             Zone_HV_tot[0] = Zone_HV_mech[0] + Zone_HV_z[0] + Zone_HV_inf[0] + Zone_HV_win[0];
             Zone_HV_tot[1] = Zone_HV_mech[1] + Zone_HV_z[1] + Zone_HV_inf[1] + Zone_HV_win[1];
         }
-
+       
         public void Zonetao()//시간상수 계산
         {
             Zone_H_tot[0] = Zone_HT_tot + Zone_HV_tot[0];
@@ -544,15 +603,11 @@ namespace main
             double[,] zoneWalls_Qssource = new double[zoneWall.Count, 12];
 
             {
-                int i = -1;               
-                string[][] ZoneW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "방위,기울기", "존='" + zoneNum + "' AND 외피유형 = '외벽'");
-                //  string[][] ZoneW_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneWall", "Name", "zoneNum='" + zoneNum + "'");
-
+                int i = -1;             
                 while (++i < zoneWall.Count)
                 {
                     Wall zonewall = (Wall)zoneWall[i];
-                    //string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneWall_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneW_Name[i][0] + "'");
-                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + ZoneW[i][0] + "' AND  각도 = '"+ ZoneW[i][1]+"˚" + "'");
+                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + zonewall.Direction() + "' AND  각도 = '"+ zonewall.Degree() + "˚" + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -589,14 +644,10 @@ namespace main
 
             {
                 int i = -1;
-                string[][] ZoneR = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "방위,기울기", "존='" + zoneNum + "' AND 외피유형 = '지붕'");
-                //string[][] ZoneR_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneRoof", "Name", "zoneNum='" + zoneNum + "'");
-
                 while (++i < zoneRoof.Count)
                 {
                     Roof zoneroof = (Roof)zoneRoof[i];
-                    //string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneRoof_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneR_Name[i][0] + "'");
-                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + ZoneR[i][0] + "' AND  각도 = '" + ZoneR[i][1] + "˚" + "'");
+                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + zoneroof.Direction() + "' AND  각도 = '" + zoneroof.Degree() + "˚" + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -632,14 +683,10 @@ namespace main
 
             {
                 int i = -1;
-                string[][] ZoneD = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "방위,기울기", "존='" + zoneNum + "' AND 외피유형 = '외부출입문'");
-               // string[][] ZoneD_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneDoor", "Name", "zoneNum='" + zoneNum + "'");
-
                 while (++i < zoneDoor.Count)
                 {
                     Door zonedoor = (Door)zoneDoor[i];
-                  //  string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneDoor_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneD_Name[i][0] + "'");
-                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + ZoneD[i][0] + "' AND  각도 = '" + ZoneD[i][1] + "˚" + "'");
+                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'  AND 방향 ='" + zonedoor.Direction() + "' AND  각도 = '" + zonedoor.Degree() + "˚" + "'");
                     for (int mth = 0; mth < 12; mth++)
                     {
                         zoneDoors_Is[i, mth] = Convert.ToDouble(token[mth][0]);
@@ -673,15 +720,10 @@ namespace main
 
             {
                 int i = -1;
-
-                string[][] ZoneCW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "방위,기울기", "존='" + zoneNum + "' AND 외피유형 = '커튼월창'");
-              //  string[][] ZoneCW_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneCW", "Name", "zoneNum='" + zoneNum + "'");
-
                 while (++i < zoneCW.Count)
                 {
                     CW zonecw = (CW)zoneCW[i];
-                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + ZoneCW[i][0] + "' AND  각도 = '" + ZoneCW[i][1] + "˚" + "'");
-                 //   string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneCW_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
+                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'  AND 방향 ='" + zonecw.Direction() + "' AND  각도 = '" + zonecw.Degree() + "˚" + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -724,10 +766,6 @@ namespace main
             double[,,] zoneWins_geff = new double[zoneWin.Count, 2, 12];
             double[,,] zoneWins_Qs = new double[zoneWin.Count, 2, 12];
 
-            string[][] ZoneWin = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "방위,기울기", "존='" + zoneNum + "' AND 외피유형 = '창호'");
-            // string[][] ZoneWin_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneWin", "Name", "zoneNum='" + zoneNum + "'");
-            // string[][] ZoneCW_Name = Program.DB.getValue(DB.type.ProjDB, "ZoneCW", "Name", "zoneNum='" + zoneNum + "'");
-
             //존의 창별 일사정보 가져오기
             try
             {
@@ -735,8 +773,8 @@ namespace main
 
                 while (++i < zoneWin.Count)
                 {
-                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + ZoneWin[i][0] + "' AND  각도 = '" + ZoneWin[i][1] + "˚" + "'");
-                    //string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneWin_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
+                    Window zonewin = (Window)zoneWin[i];
+                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + zonewin.Direction() + "' AND  각도 = '" + zonewin.Degree() + "˚" + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -818,11 +856,10 @@ namespace main
             try
             {
                 int i = -1;
-                string[][] ZoneCW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "방위,기울기", "존='" + zoneNum + "' AND 외피유형 = '커튼월창'");
                 while (++i < zoneCW.Count)
                 {
-                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + ZoneCW[i][0] + "' AND  각도 = '" + ZoneCW[i][1] + "˚" + "'");
-                    // string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneCW_Solar", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
+                    CW zonecw = (CW)zoneCW[i];
+                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + zonecw.Direction() + "' AND  각도 = '" + zonecw.Degree() + "˚" + "'");
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -940,6 +977,42 @@ namespace main
                 }
             }
         }
+        public void ZoneQ_DHU()
+        {
+            double[,] X_t = new double[24, 12]; //월별 시간별 절대습도
+            double[] dX_mth = new double[12]; //월별 실내외 습도차 누적
+            double[,] Q_DHU = new double[2,12]; //wewd, mth
+            for(int mth =1; mth <13;  mth++)
+            {
+                for(int h = 1; h <25; h++)
+                {
+                    string[][] T_Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_시간별_외기온도", "온도", "지역명 ='" + 지역[0][0] + "' And 시간 = '"+h+"' And 기간 ='"+mth+"월'");                    
+                    string[][] X_Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_시간별_상대습도", "습도", "지역명 ='" + 지역[0][0] + "' And 시간 = '" + h + "' And 기간 ='" + mth + "월'");
+                    
+                    X_t[h - 1, mth - 1] = 611.2 * Math.Exp(17.62 * Convert.ToDouble(T_Value[0][0]) / (243.12 + Convert.ToDouble(T_Value[0][0]))) / 461.51 / (273.15 + Convert.ToDouble(T_Value[0][0])) / 1.2 * Convert.ToDouble(X_Value[0][0]);
+                }
+            }
+            for (int mth = 1; mth < 13; mth++)
+            {
+                for (int h = 1; h < 25; h++)
+                {
+                   if(X_t[h - 1, mth - 1]>= xi_c_set)
+                    {
+                        dX_mth[mth - 1] += (X_t[h - 1, mth - 1] - xi_c_set);
+                    }
+                }
+            }
+
+            for(int wewd=0; wewd<2; wewd++)
+            {
+                for(int mth = 0; mth <12; mth++)
+                {
+                    Q_DHU[wewd,mth] = dX_mth[mth] * (ninf[wewd] + nwin[wewd]) * (zoneArea * zoneHeight) * 2501 * 1.2 / 3600 * 1000;
+
+                }
+            }
+
+        }
 
         public void ZoneQI() //내부발열 계산
         {
@@ -956,8 +1029,13 @@ namespace main
                 {
                     for (int mth = 0; mth <= 11; mth++)
                     {
+                        QI_Humidity[mth] = twd_d * H_summer * Peope_Num * 2260 / 3600;
                         QI_L[hc, wewd, mth] = 0;
-                        QI_tot[hc, wewd, mth] = QI_P[wewd] + QI_fac[wewd] + QI_L[hc, wewd, mth];
+                        if(hc ==1 &&  wewd == 1)
+                        {
+                            QI_tot[hc, wewd, mth] = QI_P[wewd] + QI_fac[wewd] + QI_L[hc, wewd, mth] + QI_Humidity[mth];
+                        }
+                        else { QI_tot[hc, wewd, mth] = QI_P[wewd] + QI_fac[wewd] + QI_L[hc, wewd, mth]; }                        
                     }
                 }
             }
@@ -972,7 +1050,7 @@ namespace main
             //대차축열량 및 축열열손실 계산 
             for (int mth = 0; mth <= 11; mth++)
             {
-                dwd_mth[mth] = dmth[mth] * dwd_a / 365;
+               
                 dwe_mth[mth] = dmth[mth] - dwd_mth[mth];
                 Qsink[0, 0, mth] = QTsink_tot[0, 0, mth] + QVsink_tot[0, 0, mth] + QSopsink_tot[0, 0, mth];
                 Qsource[0, 0, mth] = QTsource_tot[0, 0, mth] + QVsource_tot[0, 0, mth] + QSopsource_tot[0, 0, mth] + QStr_tot[0, 0, mth] + QI_tot[0, 0, mth];
@@ -1013,51 +1091,48 @@ namespace main
             QbCalc qbcalc = new QbCalc();
             for (int mth = 0; mth <= 11; mth++)
             {
-                Qhb_we_day[mth] = qbcalc.Qhb_Calc(Qsink[0, 0, mth], eta[0, 0, mth], Qsource[0, 0, mth]);
+                //  Qhb_we_day[mth] = qbcalc.Qhb_Calc(Qsink[0, 0, mth], eta[0, 0, mth], Qsource[0, 0, mth]);
+                Qhb_we_day[mth] = 0;
                 Qhb_wd_day[mth] = qbcalc.Qhb_Calc(Qsink[0, 1, mth], eta[0, 1, mth], Qsource[0, 1, mth]);
-                Qcb_we_day[mth] = qbcalc.Qcb_Calc(eta[1, 0, mth], Qsource[1, 0, mth]);
+                // Qcb_we_day[mth] = qbcalc.Qcb_Calc(eta[1, 0, mth], Qsource[1, 0, mth]);
+                Qcb_we_day[mth] = 0;
                 Qcb_wd_day[mth] = qbcalc.Qcb_Calc(eta[1, 1, mth], Qsource[1, 1, mth]);
 
-                Qhb_we_mth[mth] = (Qhb_we_day[mth] * dwe_mth[mth] - dQc_b[0, 0, mth]) / 1000; //kWh 단위
+                if (Qhb_we_day[mth] == double.NaN || Qhb_we_day[mth] < 0)
+                {
+                    Qhb_we_day[mth] = 0;
+                }
+                else { Qhb_we_day[mth] = Qhb_we_day[mth]; }
+
+                if (Qhb_wd_day[mth] == double.NaN || Qhb_wd_day[mth] < 0)
+                {
+                    Qhb_wd_day[mth] = 0;
+                }
+                else { Qhb_wd_day[mth] = Qhb_wd_day[mth]; }
+
+                if (Qcb_we_day[mth] == double.NaN || Qcb_we_day[mth] < 0)
+                {
+                    Qcb_we_day[mth] = 0;
+                }
+                else { Qcb_we_day[mth] = Qcb_we_day[mth]; }
+
+                if (Qcb_wd_day[mth] == double.NaN || Qcb_wd_day[mth] < 0)
+                {
+                    Qcb_wd_day[mth] = 0;
+                }
+                else { Qcb_wd_day[mth] = Qcb_wd_day[mth]; }
+
+                //  Qhb_we_mth[mth] = (Qhb_we_day[mth] * dwe_mth[mth] - dQc_b[0, 0, mth]) / 1000; //kWh 단위
+                Qhb_we_mth[mth] = 0;
                 Qhb_wd_mth[mth] = (Qhb_wd_day[mth] * dwd_mth[mth] + dQc_sink[0, 1, mth]) / 1000;
-                Qcb_we_mth[mth] = (Qcb_we_day[mth] * dwe_mth[mth]) / 1000;
+               // Qcb_we_mth[mth] = (Qcb_we_day[mth] * dwe_mth[mth]) / 1000;
+                Qcb_we_mth[mth] = 0;
                 Qcb_wd_mth[mth] = (Qcb_wd_day[mth] * dwd_mth[mth]) / 1000;
 
-                if (Double.IsNaN(Qhb_we_mth[mth]))
-                {
-                    Qhb_we_mth[mth] = 0;
-                }
-                else
-                {
-                    Qhb_we_mth[mth] = Qhb_we_mth[mth];
-                }
-                if (Double.IsNaN(Qhb_wd_mth[mth]))
-                {
-                    Qhb_wd_mth[mth] = 0;
-                }
-                else
-                {
-                    Qhb_wd_mth[mth] = Qhb_wd_mth[mth];
-                }
-                if (Double.IsNaN(Qcb_we_mth[mth]))
-                {
-                    Qcb_we_mth[mth] = 0;
-                }
-                else
-                {
-                    Qcb_we_mth[mth] = Qcb_we_mth[mth];
-                }
-                if (Double.IsNaN(Qcb_wd_mth[mth]))
-                {
-                    Qcb_wd_mth[mth] = 0;
-                }
-                else
-                {
-                    Qcb_wd_mth[mth] = Qcb_wd_mth[mth];
-                }
                 Qhb_mth[mth] = Qhb_wd_mth[mth] + Qhb_we_mth[mth];
                 Qcb_mth[mth] = Qcb_wd_mth[mth] + Qcb_we_mth[mth];
 
+               
                 Qhb_we_a += Qhb_we_mth[mth];
                 Qhb_wd_a += Qhb_wd_mth[mth];
                 Qcb_we_a += Qcb_we_mth[mth];
@@ -1066,24 +1141,39 @@ namespace main
                 Qcb_a += (Qcb_we_mth[mth] + Qcb_wd_mth[mth]);
             }
         }
-
-
     }
 
     public class Wall
     {
+        String wall_Num;
+        String wall_ConstructionNum;
         double wall_Area;
         double wall_Ueff;
         double wall_α;
         string wall_DiIndi;
+        String wall_Direction;
+        String wall_Degree;
 
-
-        public Wall(double Area, double Ueff, double α, string DiIndi)
+        public Wall(String EnvelopeNum, String ConstructionNum, double Area, double Ueff, double α, string DiIndi,String Direction, String Degree)
         {
+            this.wall_Num = EnvelopeNum;
+            this.wall_ConstructionNum = ConstructionNum;
             this.wall_Area = Area;
             this.wall_Ueff = Ueff;
             this.wall_α = α;
             this.wall_DiIndi = DiIndi;
+            this.wall_Direction = Direction;
+            this.wall_Degree = Degree;
+        }
+
+        public String Num()
+        {
+            return wall_Num;
+        }
+
+        public String CNum()
+        {
+            return wall_ConstructionNum;
         }
 
         public double Area()
@@ -1105,23 +1195,48 @@ namespace main
             return wall_DiIndi;
         }
 
+        public String Direction()
+        {
+            return wall_Direction;
+        }
+        public String Degree()
+        {
+            return wall_Degree;
+        }
+
     }
 
     public class Roof
     {
+        String Roof_Num;
+        String Roof_ConstructionNum;
         double Roof_Area;
         double Roof_Ueff;
         double Roof_α;
         String Roof_DiIndi;
+        String Roof_Direction;
+        String Roof_Degree;
 
-        public Roof(double Area, double Ueff, double α, String DiIndi)
+        public Roof(String EnvelopeNum, String ConstructionNum, double Area, double Ueff, double α, String DiIndi, String Direction, String Degree)
         {
+            this.Roof_Num = EnvelopeNum;
+            this.Roof_ConstructionNum = ConstructionNum;
             this.Roof_Area = Area;
             this.Roof_Ueff = Ueff;
             this.Roof_α = α;
             this.Roof_DiIndi = DiIndi;
+            this.Roof_Direction = Direction;
+            this.Roof_Degree = Degree;
+        }
+        public String Num()
+        {
+            return Roof_Num;
         }
 
+        public String CNum()
+        {
+            return Roof_ConstructionNum;
+        }
         public double Area()
         {
             return Roof_Area;
@@ -1140,11 +1255,21 @@ namespace main
         {
             return Roof_DiIndi;
         }
-
+        public String Direction()
+        {
+            return Roof_Direction;
+        }
+        public String Degree()
+        {
+            return Roof_Degree;
+        }
     }
 
     public class Window
     {
+        String Window_Num;
+        String Window_ConstructionNum;
+        String Window_SubConstructionNum;
         double Window_Area;
         double Window_Uvalue;
         double Window_Uinst;
@@ -1154,9 +1279,14 @@ namespace main
         double Window_tao;
         double Window_gtot;
         double Window_taotot;
+        String Window_Direction;
+        String Window_Degree;
 
-        public Window(double Area, double Uvalue, double Uinst, String DiIndi, double Ff, double g, double tao)
+        public Window(String EnvelopeNum, String ConstructionNum, String SubConstructionNum, double Area, double Uvalue, double Uinst, String DiIndi, double Ff, double g, double tao, String Direction, String Degree)
         {
+            this.Window_Num = EnvelopeNum;
+            this.Window_ConstructionNum = ConstructionNum;
+            this.Window_SubConstructionNum = SubConstructionNum;
             this.Window_Area = Area;
             this.Window_Uvalue = Uvalue;
             this.Window_Uinst = Uinst;
@@ -1164,8 +1294,24 @@ namespace main
             this.Window_Ff = Ff;
             this.Window_g = g;
             this.Window_tao = tao;
+            this.Window_Direction = Direction;
+            this.Window_Degree = Degree;
             //this.Window_gtot = gtot;
-           // this.Window_taotot = taotot;
+            // this.Window_taotot = taotot;
+        }
+
+        public String Num()
+        {
+            return Window_Num;
+        }
+
+        public String CNum()
+        {
+            return Window_ConstructionNum;
+        }
+        public String SubCNum()
+        {
+            return Window_SubConstructionNum;
         }
 
         public double Area()
@@ -1206,10 +1352,20 @@ namespace main
             return Window_taotot;
         }
 
+        public String Direction()
+        {
+            return Window_Direction;
+        }
+        public String Degree()
+        {
+            return Window_Degree;
+        }
     }
 
     public class CW
     {
+        String CW_Num;
+        String CW_ConstructionNum;
         double CW_Area_g;
         double CW_Uvalue_g;
         double CW_Ff_g;
@@ -1227,9 +1383,13 @@ namespace main
         double CW_tao_d;
         double CW_Area_tot;
         double CW_Uinst;
+        String CW_Direction;
+        String CW_Degree;
 
-        public CW(double Area_g, double Uvalue_g, double Ff_g, double g_g, double tao_g, double Area_p, double Uvalue_p, double α_p, double Area_d, double Uvalue_d, double Ff_d, double g_d, double tao_d, double Area_tot, double Uinst)
+        public CW(String EnvelopeNum, String ConstructionNum, double Area_g, double Uvalue_g, double Ff_g, double g_g, double tao_g, double Area_p, double Uvalue_p, double α_p, double Area_d, double Uvalue_d, double Ff_d, double g_d, double tao_d, double Area_tot, double Uinst, String Direction, String Degree)
         {
+            this.CW_Num = EnvelopeNum;
+            this.CW_ConstructionNum = ConstructionNum;
             this.CW_Area_g = Area_g;
             this.CW_Uvalue_g = Uvalue_g;
             this.CW_Ff_g = Ff_g;
@@ -1247,8 +1407,19 @@ namespace main
             this.CW_tao_d = tao_d;
             this.CW_Area_tot = Area_tot;
             this.CW_Uinst = Uinst;
+            this.CW_Direction = Direction;
+            this.CW_Degree = Degree;
         }
 
+        public String Num()
+        {
+            return CW_Num;
+        }
+
+        public String CNum()
+        {
+            return CW_ConstructionNum;
+        }
         public double Area_g()
         {
             return CW_Area_g;
@@ -1317,21 +1488,46 @@ namespace main
         {
             return CW_Uinst;
         }
+        public String Direction()
+        {
+            return CW_Direction;
+        }
+        public String Degree()
+        {
+            return CW_Degree;
+        }
     }
 
     public class Door
     {
+        String Door_Num;
+        String Door_ConstructionNum;
         double Door_Area;
         double Door_Ueff;
         double Door_α;
         String Door_DiIndi;
+        String Door_Direction;
+        String Door_Degree;
 
-        public Door(double Area, double Ueff, double α, String DiIndi)
+        public Door(String EnvelopeNum, String ConstructionNum, double Area, double Ueff, double α, String DiIndi, String Direction, String Degree)
         {
+            this.Door_Num = EnvelopeNum;
+            this.Door_ConstructionNum = ConstructionNum;
             this.Door_Area = Area;
             this.Door_Ueff = Ueff;
             this.Door_α = α;
             this.Door_DiIndi = DiIndi;
+            this.Door_Direction = Direction;
+            this.Door_Degree = Degree;
+        }
+        public String Num()
+        {
+            return Door_Num;
+        }
+
+        public String CNum()
+        {
+            return Door_ConstructionNum;
         }
 
         public double Area()
@@ -1352,20 +1548,41 @@ namespace main
         {
             return Door_DiIndi;
         }
+        public String Direction()
+        {
+            return Door_Direction;
+        }
+        public String Degree()
+        {
+            return Door_Degree;
+        }
 
     }
 
     public class Floor
     {
+        String Floor_Num;
+        String Floor_ConstructionNum;
         double Floor_Area;
         double Floor_Ueff;
 
-        public Floor(double Area, double Ueff)
+        public Floor(String EnvelopeNum, String ConstructionNum, double Area, double Ueff)
         {
+            this.Floor_Num = EnvelopeNum;
+            this.Floor_ConstructionNum = ConstructionNum;
             this.Floor_Area = Area;
             this.Floor_Ueff = Ueff;
         }
 
+        public String Num()
+        {
+            return Floor_Num;
+        }
+
+        public String CNum()
+        {
+            return Floor_ConstructionNum;
+        }
         public double Area()
         {
             return Floor_Area;
@@ -1378,13 +1595,26 @@ namespace main
 
     public class GWall
     {
+        String GWall_Num;
+        String GWall_ConstructionNum;
         double GWall_Area;
         double GWall_Ueff;
 
-        public GWall(double Area, double Ueff)
+        public GWall(String EnvelopeNum, String ConstructionNum, double Area, double Ueff)
         {
+            this.GWall_Num = EnvelopeNum;
+            this.GWall_ConstructionNum = ConstructionNum;
             this.GWall_Area = Area;
             this.GWall_Ueff = Ueff;
+        }
+        public String Num()
+        {
+            return GWall_Num;
+        }
+
+        public String CNum()
+        {
+            return GWall_ConstructionNum;
         }
 
         public double Area()
@@ -1411,25 +1641,26 @@ namespace main
     public class HVCalc
     {
         public double cpaρa = 0.34;
-
-        public double HV_mech_Calc(double Vmech_SUP, double tV_mech, double V)
+        public double HV_Calc(double n, double V)
+        {
+            double HV = n * V * cpaρa;
+            return HV;
+        }
+        public double nmech_Calc(double Vmech_SUP, double tV_mech, double V)
         {
             double nmech_SUP = Vmech_SUP / V;
             double nmech = nmech_SUP * tV_mech / 24;
-            double HV_mech = nmech * V * cpaρa;
-            return HV_mech;
+            return nmech;
         }
-
-        public double HV_z_Calc(double Vmech_SUP, double Vmech_ETA, double tV_mech, double V)
+        public double nz_Calc(double Vmech_SUP, double Vmech_ETA, double tV_mech, double V)
         {
             double nmech_SUP = Vmech_SUP / V;
             double nmech_ETA = Vmech_ETA / V;
             double nz_SUP = nmech_ETA - nmech_SUP;
             double nz_d = nz_SUP * tV_mech / 24;
-            double HV_z = nz_d * V * cpaρa;
-            return HV_z;
+            return nz_d ;
         }
-        public double HV_inf_Calc(double Vmech_SUP, double Vmech_ETA, double Vmech_SUP_z, double Vmech_ETA_z, double tV_mech, double n50, double V, double e, double f)
+        public double ninf_Calc(double Vmech_SUP, double Vmech_ETA, double Vmech_SUP_z, double Vmech_ETA_z, double tV_mech, double n50, double V, double e, double f)
         {
             double nmech_SUP = Vmech_SUP / V;
             double nmech_ETA = Vmech_ETA / V;
@@ -1447,11 +1678,9 @@ namespace main
                 fe = 1 / (1 + f / e * Math.Pow(((nETA - nSUP) / n50), 2));
                 ninf = n50 * e * (1 + (fe - 1) * tV_mech / 24);
             }
-            double HV_inf = ninf * V * cpaρa;
-            return HV_inf;
+            return ninf;
         }
-
-        public double HV_win_Calc(double Vmech_SUP, double Vmech_ETA, double Vmech_SUP_z, double Vmech_ETA_z, double tV_mech, double twd, double n50, double nwd, double V, double e, double f)
+        public double nwin_Calc(double Vmech_SUP, double Vmech_ETA, double Vmech_SUP_z, double Vmech_ETA_z, double tV_mech, double twd, double n50, double nwd, double V, double e, double f)
         {
             double nmech_SUP = Vmech_SUP / V;
             double nmech_ETA = Vmech_ETA / V;
@@ -1524,10 +1753,8 @@ namespace main
                 nwin = Math.Max(0, 0.1 + Δnwin * Math.Max((twd - tV_mech), 0) / 24 + Δnwin_mech * tV_mech / 24);
             }
 
-            double HV_win = nwin * V * cpaρa;
-            return HV_win;
+            return nwin;
         }
-
 
     }
 
@@ -1546,11 +1773,11 @@ namespace main
             double theta_i_h_we;
             double f_we;
 
-            if (Mode_we == "reduced operation")
+            if (Mode_we == "감소운전")
             {
                 f_we = 0.2 * (1 - 0.4 * tao / 250);
             }
-            else if (Mode_we == "stop operation")
+            else if (Mode_we == "운전정지")
             {
                 f_we = 0.3 * (1 - 0.2 * tao / 250);
             }
@@ -1570,11 +1797,11 @@ namespace main
             double theta_i_h_wd;
             double f_wd;
 
-            if (Mode_wd == "reduced operation")
+            if (Mode_wd == "감소운전")
             {
                 f_wd = 0.13 * tNA / 24 * Math.Exp((-tao / 250));
             }
-            else if (Mode_wd == "stop operation")
+            else if (Mode_wd == "운전정지")
             {
                 f_wd = 0.26 * tNA / 24 * Math.Exp((-tao / 250));
             }
@@ -1590,7 +1817,7 @@ namespace main
 
         public double theta_ic_Calc(double theta_i_c_set)
         {
-            double theta_i_c = theta_i_c_set - 2;
+            double theta_i_c = theta_i_c_set - 3;
 
             return theta_i_c;
         }
@@ -1775,7 +2002,14 @@ namespace main
             if (awe != 0)
             { dQc_b = Math.Min(Math.Min((Cwirk * 2 * (theta_i_h_set - theta_i_h) / awe), (Cwirk * Δtheta_i_NA / awe)), (Qsink - η * Qsource)); }
             else {  dQc_b = 0; }
-            return dQc_b;
+
+            if(dQc_b== double.NaN || dQc_b < 0)
+            {
+                dQc_b = 0;
+            }
+            else { dQc_b = dQc_b; }
+
+                return dQc_b;
         }
 
     }
@@ -1786,6 +2020,12 @@ namespace main
         {
             double Qhb;
             Qhb = Qsink - η * Qsource;
+
+            if (Qhb == double.NaN || Qhb < 0)
+            {
+                Qhb = 0;
+            }
+            else { Qhb = Qhb; }
             return Qhb;
         }
 
@@ -1793,6 +2033,11 @@ namespace main
         {
             double Qcb;
             Qcb = (1 - η) * Qsource;
+            if (Qcb == double.NaN || Qcb < 0)
+            {
+                Qcb = 0;
+            }
+            else { Qcb = Qcb; }
             return Qcb;
         }
     }

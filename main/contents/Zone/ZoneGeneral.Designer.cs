@@ -61,7 +61,10 @@ namespace main.contents
             label20 = new System.Windows.Forms.Label();
             PersonNum_textBox = new System.Windows.Forms.TextBox();
             OccupancyDensity_index_textBox = new System.Windows.Forms.TextBox();
+            label62 = new System.Windows.Forms.Label();
+            VentilationRate_textBox = new System.Windows.Forms.TextBox();
             label11 = new System.Windows.Forms.Label();
+            label61 = new System.Windows.Forms.Label();
             HCTime_textBox = new System.Windows.Forms.TextBox();
             WeekUseDay_comboBox = new System.Windows.Forms.ComboBox();
             label10 = new System.Windows.Forms.Label();
@@ -77,14 +80,11 @@ namespace main.contents
             label54 = new System.Windows.Forms.Label();
             label33 = new System.Windows.Forms.Label();
             NetVolume_textBox = new System.Windows.Forms.TextBox();
-            label61 = new System.Windows.Forms.Label();
             label56 = new System.Windows.Forms.Label();
             EquipIHG_comboBox = new System.Windows.Forms.ComboBox();
             label34 = new System.Windows.Forms.Label();
-            VentilationRate_textBox = new System.Windows.Forms.TextBox();
             label55 = new System.Windows.Forms.Label();
             label35 = new System.Windows.Forms.Label();
-            label62 = new System.Windows.Forms.Label();
             PersonIHG_textBox = new System.Windows.Forms.TextBox();
             label36 = new System.Windows.Forms.Label();
             label24 = new System.Windows.Forms.Label();
@@ -161,6 +161,9 @@ namespace main.contents
             Ground_pictureBox = new PictureBox();
             RoomControl_pictureBox = new PictureBox();
             Main_pictureBox = new PictureBox();
+            label12 = new System.Windows.Forms.Label();
+            Simulation_pictureBox = new PictureBox();
+            Simulation_button = new System.Windows.Forms.Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
@@ -170,6 +173,7 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)Ground_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RoomControl_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Simulation_pictureBox).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -526,6 +530,29 @@ namespace main.contents
             OccupancyDensity_index_textBox.TabIndex = 82;
             OccupancyDensity_index_textBox.TextAlign = HorizontalAlignment.Center;
             // 
+            // label62
+            // 
+            label62.AutoSize = true;
+            label62.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label62.ForeColor = SystemColors.ControlDark;
+            label62.Location = new Point(725, 48);
+            label62.Name = "label62";
+            label62.Size = new Size(55, 15);
+            label62.TabIndex = 101;
+            label62.Text = "환기횟수";
+            // 
+            // VentilationRate_textBox
+            // 
+            VentilationRate_textBox.BackColor = Color.White;
+            VentilationRate_textBox.BorderStyle = BorderStyle.None;
+            VentilationRate_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            VentilationRate_textBox.ForeColor = SystemColors.ControlDark;
+            VentilationRate_textBox.Location = new Point(795, 48);
+            VentilationRate_textBox.Name = "VentilationRate_textBox";
+            VentilationRate_textBox.Size = new Size(117, 15);
+            VentilationRate_textBox.TabIndex = 102;
+            VentilationRate_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
             // label11
             // 
             label11.AutoSize = true;
@@ -536,6 +563,17 @@ namespace main.contents
             label11.Size = new Size(67, 15);
             label11.TabIndex = 43;
             label11.Text = "냉난방시간";
+            // 
+            // label61
+            // 
+            label61.AutoSize = true;
+            label61.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label61.ForeColor = SystemColors.ControlDark;
+            label61.Location = new Point(917, 48);
+            label61.Name = "label61";
+            label61.Size = new Size(28, 15);
+            label61.TabIndex = 103;
+            label61.Text = "1/h";
             // 
             // HCTime_textBox
             // 
@@ -706,17 +744,6 @@ namespace main.contents
             NetVolume_textBox.TabIndex = 93;
             NetVolume_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label61
-            // 
-            label61.AutoSize = true;
-            label61.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label61.ForeColor = SystemColors.ControlDark;
-            label61.Location = new Point(917, 48);
-            label61.Name = "label61";
-            label61.Size = new Size(28, 15);
-            label61.TabIndex = 103;
-            label61.Text = "1/h";
-            // 
             // label56
             // 
             label56.AutoSize = true;
@@ -748,18 +775,6 @@ namespace main.contents
             label34.TabIndex = 68;
             label34.Text = "기기발열";
             // 
-            // VentilationRate_textBox
-            // 
-            VentilationRate_textBox.BackColor = Color.White;
-            VentilationRate_textBox.BorderStyle = BorderStyle.None;
-            VentilationRate_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            VentilationRate_textBox.ForeColor = SystemColors.ControlDark;
-            VentilationRate_textBox.Location = new Point(795, 48);
-            VentilationRate_textBox.Name = "VentilationRate_textBox";
-            VentilationRate_textBox.Size = new Size(117, 15);
-            VentilationRate_textBox.TabIndex = 102;
-            VentilationRate_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
             // label55
             // 
             label55.AutoSize = true;
@@ -781,17 +796,6 @@ namespace main.contents
             label35.Size = new Size(62, 15);
             label35.TabIndex = 65;
             label35.Text = "Wh/m²·d";
-            // 
-            // label62
-            // 
-            label62.AutoSize = true;
-            label62.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label62.ForeColor = SystemColors.ControlDark;
-            label62.Location = new Point(725, 48);
-            label62.Name = "label62";
-            label62.Size = new Size(55, 15);
-            label62.TabIndex = 101;
-            label62.Text = "환기횟수";
             // 
             // PersonIHG_textBox
             // 
@@ -1592,6 +1596,38 @@ namespace main.contents
             Main_pictureBox.TabIndex = 115;
             Main_pictureBox.TabStop = false;
             // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(0, 0);
+            label12.Name = "label12";
+            label12.Size = new Size(46, 15);
+            label12.TabIndex = 20;
+            label12.Text = "label12";
+            // 
+            // Simulation_pictureBox
+            // 
+            Simulation_pictureBox.BackColor = Color.OldLace;
+            Simulation_pictureBox.Location = new Point(1020, 33);
+            Simulation_pictureBox.Name = "Simulation_pictureBox";
+            Simulation_pictureBox.Size = new Size(42, 35);
+            Simulation_pictureBox.TabIndex = 21;
+            Simulation_pictureBox.TabStop = false;
+            // 
+            // Simulation_button
+            // 
+            Simulation_button.BackColor = Color.OldLace;
+            Simulation_button.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            Simulation_button.ForeColor = SystemColors.ControlDarkDark;
+            Simulation_button.Location = new Point(1008, 30);
+            Simulation_button.Name = "Simulation_button";
+            Simulation_button.Size = new Size(167, 41);
+            Simulation_button.TabIndex = 22;
+            Simulation_button.Text = "Zone Simulation  ";
+            Simulation_button.TextAlign = ContentAlignment.MiddleRight;
+            Simulation_button.UseVisualStyleBackColor = false;
+            Simulation_button.Click += button2_Click;
+            // 
             // ZoneGeneral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1599,6 +1635,9 @@ namespace main.contents
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 918);
+            Controls.Add(Simulation_pictureBox);
+            Controls.Add(Simulation_button);
+            Controls.Add(label12);
             Controls.Add(panel2);
             Controls.Add(GeneralPanel);
             Controls.Add(AdditionalPanel);
@@ -1618,7 +1657,9 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)Ground_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)RoomControl_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Simulation_pictureBox).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -1754,5 +1795,8 @@ namespace main.contents
         private PictureBox HC_pictureBox;
         private PictureBox AHU_pictureBox;
         private System.Windows.Forms.TextBox SA_Volume_textBox;
+        private System.Windows.Forms.Label label12;
+        private PictureBox Simulation_pictureBox;
+        private System.Windows.Forms.Button Simulation_button;
     }
 }

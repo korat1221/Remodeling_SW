@@ -39,6 +39,10 @@ namespace main.contents
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
+            Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "상위메뉴아이콘_on2", "상위메뉴명 = '결과 정보'");
+            Simulation_pictureBox.Load(Program.gPath + Image[0][0]);
+            Simulation_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
 
             Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필이미지", "이미지", "대분류 = '메인'");
             Main_pictureBox.Load(Program.gPath + Image[0][0]);
@@ -1026,6 +1030,14 @@ namespace main.contents
 
             }
             catch { }
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Program.CALC.run(new string[] {
+                "존 계산"
+            });
 
         }
 
