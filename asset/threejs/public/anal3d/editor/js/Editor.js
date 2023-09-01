@@ -1588,7 +1588,7 @@ Editor.prototype = {
 			el.vertices.forEach((el2) => {
 				collectSpacePoints(el2.position);
 			});	
-			this.drawPoints(el.id, color ? color : this.getColor(el.sid, el.type, el.winType), el.mid);
+			this.drawPoints(el.id, color ? color : this.getColor(el.sid, el.type, el.winType));
 		};
 	
 		while(++i < this.drawing_line.length) {
@@ -2346,7 +2346,7 @@ if (el.type == 'WIN') {
 							this.collectPoints(el2.position);
 						}
 					});	
-					this.drawPoints(id, color ? color : this.getColor(sid, el.type, el.winType), el.mid);
+					this.drawPoints(id, color ? color : this.getColor(sid, el.type, el.winType));
 				}
 			}
 		}	
@@ -2416,7 +2416,7 @@ if (el.type == 'WIN') {
 		// }
 	},
 
-	drawPoints: function (sid, color, mid) {
+	drawPoints: function (sid, color) {
 		if (sid) {
 			if (this.drawing_wall[sid]) {
 				let material = this.getMaterialById(this.drawing_wall[sid]);
@@ -2443,7 +2443,7 @@ if (el.type == 'WIN') {
 				this.addObject( mesh );
 				this.drawing_wall[sid] = material.id;
 				this.drawing_mesh[sid] = mesh;
-				mesh.sid = mid;
+				mesh.sid = sid;
 			}
 		}
 		// else if (this.test){
@@ -2591,6 +2591,16 @@ if (el.type == 'WIN') {
 	// 	}	
 	// },
 
+	getMID: function (id) {
+		for (const [cardi, value] of Object.entries(this.wall)) {
+			for (const [idx, el] of Object.entries(value)) {
+				if (el.id == id) {
+					return el.mid;
+				}
+			}
+		}	
+		return id;
+	},
 	buildSpaces: function() {
 		this.spacing.buildSpaces();
 	},

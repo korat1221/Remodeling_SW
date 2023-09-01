@@ -252,7 +252,7 @@
 						if (hit.object.sid) {
 							let id = hit.object.sid;
 							if (!editor.isShadowedID(hit.object.sid)) {
-								window.chrome.webview.postMessage(id);
+								window.chrome.webview.postMessage(editor.getMID(id));
 //								parent.postMessage({"selectWall":true,"fname":id},'*');							
 							}
 

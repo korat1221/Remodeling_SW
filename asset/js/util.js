@@ -131,6 +131,12 @@ class MainTree {
     unselectAll() {
         $('#cont-tree').jstree(true).deselect_all();
     }
+    select(id) {
+        if (!this.loading && this.onSelect) {
+            $('#cont-tree').jstree("deselect_all");
+            $('#cont-tree').jstree("select_node", this.tree.jstree("get_node", id));
+        }
+    }
 }
 
 function getParam(sname) {
