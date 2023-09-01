@@ -346,7 +346,7 @@ namespace main.contents
         public string Save()
         {
 
-            string num, num0, Type, CWType, ConsType, ret = "", tcode, RoofWin = "";
+            string num, num0, id, Type, CWType, ConsType, ret = "", tcode, RoofWin = "";
             int i = -1;
             while (++i < dataGridView1.RowCount)
             {
@@ -375,6 +375,9 @@ namespace main.contents
                     num = num0;
                     Type = dataGridView1.Rows[i].Cells[4].Value.ToString();
 
+                    string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num0 + "'");
+
+                    id = rec[0][0];
 
                     if (isWinType(Type) && (tcode = getTCode(Type)) != "")
                     {
@@ -388,11 +391,9 @@ namespace main.contents
                         num = num.Replace("_CW_", "__");
                         num = num.Replace("__", tcode);
 
-                        string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num0 + "'");
-
                         ret += "{\"id0\":\"" + num0 + "\",\"id\":\"" + num + "\",\"type\":\"" + Type + "\",\"wtype\":\"" + CWType + "\"},";
 
-                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,외피유형,커튼월부위", "'" + rec[0][0] + "','" + num + "','" + Type + "','" + CWType + "'", "아이디");
+                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,외피유형,커튼월부위", "'" + id + "','" + num + "','" + Type + "','" + CWType + "'", "아이디");
 
                     }
 
@@ -403,7 +404,6 @@ namespace main.contents
                     else
                     {
                         ConsType = dataGridView1.Rows[i].Cells[10].Value.ToString();
-                        string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num0 + "'");
                         string[][] Value = null;
                         switch (Type)
                         {
@@ -427,7 +427,7 @@ namespace main.contents
                                 break;
                         }
                         if (Value.Length > 0)
-                        { Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,구조체,구조체번호", "'" + rec[0][0] + "','" + num + "','" + ConsType + "','" + Value[0][0] + "'", "아이디"); }
+                        { Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,구조체,구조체번호", "'" + id + "','" + num + "','" + ConsType + "','" + Value[0][0] + "'", "아이디"); }
                         else { }
                     }
                     if (dataGridView1.Rows[i].Cells[11].Value == null)
@@ -436,9 +436,8 @@ namespace main.contents
                     }
                     else
                     {
-                        string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num + "'");
                         RoofWin = dataGridView1.Rows[i].Cells[11].Value.ToString();
-                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,천창유무", "'" + rec[0][0] + "','" + RoofWin + "'", "아이디");
+                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,천창유무", "'" + id + "','" + RoofWin + "'", "아이디");
                     }
                 }
             }
