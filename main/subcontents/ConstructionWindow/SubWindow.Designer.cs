@@ -89,7 +89,7 @@ namespace main.subcontents.ConstructionWindow
             Uw_comboBox = new ComboBox();
             label25 = new Label();
             label4 = new Label();
-            tabControl1 = new TabControl();
+            tabControl1 = new CustomTabControl();
             Frame_tabPage = new TabPage();
             label22 = new Label();
             df_btw_textBox = new TextBox();
@@ -886,10 +886,26 @@ namespace main.subcontents.ConstructionWindow
             tabControl1.Controls.Add(Frame_tabPage);
             tabControl1.Controls.Add(Install_tabPage);
             tabControl1.Controls.Add(Size_tabPage);
+            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
+            tabControl1.DisplayStyleProvider.FocusTrack = true;
+            tabControl1.DisplayStyleProvider.HotTrack = true;
+            tabControl1.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
+            tabControl1.DisplayStyleProvider.Opacity = 1F;
+            tabControl1.DisplayStyleProvider.Overlap = 0;
+            tabControl1.DisplayStyleProvider.Padding = new Point(6, 3);
+            tabControl1.DisplayStyleProvider.ShowTabCloser = false;
+            tabControl1.DisplayStyleProvider.TextColor = SystemColors.ControlText;
+            tabControl1.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
+            tabControl1.HotTrack = true;
+            tabControl1.ItemSize = new Size(128, 20);
             tabControl1.Location = new Point(12, 447);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(977, 239);
+            tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.TabIndex = 19;
             // 
             // Frame_tabPage
@@ -1865,7 +1881,7 @@ namespace main.subcontents.ConstructionWindow
         private TextBox GlassName_textBox;
         private TextBox SpacerName_textBox;
         private TextBox Install_textBox;
-        private TabControl tabControl1;
+        private CustomTabControl tabControl1;
         private TabPage Frame_tabPage;
         private TabPage Install_tabPage;
         private TabPage Size_tabPage;

@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CustomTabControl\CustomTabControl.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="subcontents\EquipmentList\PumpCal.cs">
       <SubType>Form</SubType>
     </Compile>
