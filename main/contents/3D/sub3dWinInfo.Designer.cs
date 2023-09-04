@@ -30,6 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.WindowInstall_pictureBox = new System.Windows.Forms.PictureBox();
+            this.WindowType_pictureBox = new System.Windows.Forms.PictureBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -43,7 +45,6 @@
             this.Spacer_textBox = new System.Windows.Forms.TextBox();
             this.frame_textBox = new System.Windows.Forms.TextBox();
             this.glass_textBox = new System.Windows.Forms.TextBox();
-            this.WindowInstall_pictureBox = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -58,7 +59,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.WindowType_pictureBox = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.T2_textBox = new System.Windows.Forms.TextBox();
             this.T1_textBox = new System.Windows.Forms.TextBox();
@@ -67,13 +67,9 @@
             this.L1_textBox = new System.Windows.Forms.TextBox();
             this.L2_textBox = new System.Windows.Forms.TextBox();
             this.R2_textBox = new System.Windows.Forms.TextBox();
-            this.T2_label = new System.Windows.Forms.Label();
             this.T1_label = new System.Windows.Forms.Label();
-            this.S2_label = new System.Windows.Forms.Label();
             this.S1_label = new System.Windows.Forms.Label();
             this.L1_label = new System.Windows.Forms.Label();
-            this.L2_label = new System.Windows.Forms.Label();
-            this.R2_label = new System.Windows.Forms.Label();
             this.R1_textBox = new System.Windows.Forms.TextBox();
             this.R1_label = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -103,6 +99,8 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
+            this.tabPage1.Controls.Add(this.WindowInstall_pictureBox);
+            this.tabPage1.Controls.Add(this.WindowType_pictureBox);
             this.tabPage1.Controls.Add(this.label16);
             this.tabPage1.Controls.Add(this.label15);
             this.tabPage1.Controls.Add(this.label14);
@@ -116,7 +114,6 @@
             this.tabPage1.Controls.Add(this.Spacer_textBox);
             this.tabPage1.Controls.Add(this.frame_textBox);
             this.tabPage1.Controls.Add(this.glass_textBox);
-            this.tabPage1.Controls.Add(this.WindowInstall_pictureBox);
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.label2);
@@ -131,13 +128,28 @@
             this.tabPage1.Controls.Add(this.label8);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.WindowType_pictureBox);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(945, 422);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "창호 정보";
+            // 
+            // WindowInstall_pictureBox
+            // 
+            this.WindowInstall_pictureBox.Location = new System.Drawing.Point(746, 78);
+            this.WindowInstall_pictureBox.Name = "WindowInstall_pictureBox";
+            this.WindowInstall_pictureBox.Size = new System.Drawing.Size(77, 200);
+            this.WindowInstall_pictureBox.TabIndex = 135;
+            this.WindowInstall_pictureBox.TabStop = false;
+            // 
+            // WindowType_pictureBox
+            // 
+            this.WindowType_pictureBox.Location = new System.Drawing.Point(520, 78);
+            this.WindowType_pictureBox.Name = "WindowType_pictureBox";
+            this.WindowType_pictureBox.Size = new System.Drawing.Size(151, 200);
+            this.WindowType_pictureBox.TabIndex = 134;
+            this.WindowType_pictureBox.TabStop = false;
             // 
             // label16
             // 
@@ -198,7 +210,7 @@
             // 
             this.light_textBox.BackColor = System.Drawing.Color.White;
             this.light_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.light_textBox.Location = new System.Drawing.Point(463, 153);
+            this.light_textBox.Location = new System.Drawing.Point(469, 153);
             this.light_textBox.Name = "light_textBox";
             this.light_textBox.ReadOnly = true;
             this.light_textBox.Size = new System.Drawing.Size(60, 16);
@@ -231,7 +243,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label9.Location = new System.Drawing.Point(468, 137);
+            this.label9.Location = new System.Drawing.Point(474, 137);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(55, 15);
             this.label9.TabIndex = 124;
@@ -242,7 +254,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label7.Location = new System.Drawing.Point(475, 88);
+            this.label7.Location = new System.Drawing.Point(481, 88);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(39, 15);
             this.label7.TabIndex = 123;
@@ -281,14 +293,6 @@
             this.glass_textBox.Size = new System.Drawing.Size(100, 16);
             this.glass_textBox.TabIndex = 120;
             this.glass_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // WindowInstall_pictureBox
-            // 
-            this.WindowInstall_pictureBox.Location = new System.Drawing.Point(739, 45);
-            this.WindowInstall_pictureBox.Name = "WindowInstall_pictureBox";
-            this.WindowInstall_pictureBox.Size = new System.Drawing.Size(122, 244);
-            this.WindowInstall_pictureBox.TabIndex = 119;
-            this.WindowInstall_pictureBox.TabStop = false;
             // 
             // label6
             // 
@@ -374,7 +378,7 @@
             this.shgc_textBox.Enabled = false;
             this.shgc_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.shgc_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.shgc_textBox.Location = new System.Drawing.Point(463, 105);
+            this.shgc_textBox.Location = new System.Drawing.Point(469, 105);
             this.shgc_textBox.Name = "shgc_textBox";
             this.shgc_textBox.ReadOnly = true;
             this.shgc_textBox.Size = new System.Drawing.Size(60, 15);
@@ -449,14 +453,6 @@
             this.label1.Text = "면적";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // WindowType_pictureBox
-            // 
-            this.WindowType_pictureBox.Location = new System.Drawing.Point(496, 45);
-            this.WindowType_pictureBox.Name = "WindowType_pictureBox";
-            this.WindowType_pictureBox.Size = new System.Drawing.Size(211, 244);
-            this.WindowType_pictureBox.TabIndex = 118;
-            this.WindowType_pictureBox.TabStop = false;
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.T2_textBox);
@@ -466,13 +462,9 @@
             this.tabPage2.Controls.Add(this.L1_textBox);
             this.tabPage2.Controls.Add(this.L2_textBox);
             this.tabPage2.Controls.Add(this.R2_textBox);
-            this.tabPage2.Controls.Add(this.T2_label);
             this.tabPage2.Controls.Add(this.T1_label);
-            this.tabPage2.Controls.Add(this.S2_label);
             this.tabPage2.Controls.Add(this.S1_label);
             this.tabPage2.Controls.Add(this.L1_label);
-            this.tabPage2.Controls.Add(this.L2_label);
-            this.tabPage2.Controls.Add(this.R2_label);
             this.tabPage2.Controls.Add(this.R1_textBox);
             this.tabPage2.Controls.Add(this.R1_label);
             this.tabPage2.Controls.Add(this.pictureBox1);
@@ -493,7 +485,7 @@
             this.T2_textBox.Enabled = false;
             this.T2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.T2_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.T2_textBox.Location = new System.Drawing.Point(720, 132);
+            this.T2_textBox.Location = new System.Drawing.Point(721, 105);
             this.T2_textBox.Name = "T2_textBox";
             this.T2_textBox.Size = new System.Drawing.Size(60, 15);
             this.T2_textBox.TabIndex = 122;
@@ -506,7 +498,7 @@
             this.T1_textBox.Enabled = false;
             this.T1_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.T1_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.T1_textBox.Location = new System.Drawing.Point(620, 100);
+            this.T1_textBox.Location = new System.Drawing.Point(651, 91);
             this.T1_textBox.Name = "T1_textBox";
             this.T1_textBox.Size = new System.Drawing.Size(60, 15);
             this.T1_textBox.TabIndex = 121;
@@ -519,7 +511,7 @@
             this.S2_textBox.Enabled = false;
             this.S2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.S2_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.S2_textBox.Location = new System.Drawing.Point(663, 271);
+            this.S2_textBox.Location = new System.Drawing.Point(683, 217);
             this.S2_textBox.Name = "S2_textBox";
             this.S2_textBox.Size = new System.Drawing.Size(60, 15);
             this.S2_textBox.TabIndex = 120;
@@ -532,7 +524,7 @@
             this.S1_textBox.Enabled = false;
             this.S1_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.S1_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.S1_textBox.Location = new System.Drawing.Point(568, 222);
+            this.S1_textBox.Location = new System.Drawing.Point(603, 192);
             this.S1_textBox.Name = "S1_textBox";
             this.S1_textBox.Size = new System.Drawing.Size(60, 15);
             this.S1_textBox.TabIndex = 119;
@@ -545,7 +537,7 @@
             this.L1_textBox.Enabled = false;
             this.L1_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.L1_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.L1_textBox.Location = new System.Drawing.Point(454, 269);
+            this.L1_textBox.Location = new System.Drawing.Point(381, 217);
             this.L1_textBox.Name = "L1_textBox";
             this.L1_textBox.Size = new System.Drawing.Size(60, 15);
             this.L1_textBox.TabIndex = 118;
@@ -558,7 +550,7 @@
             this.L2_textBox.Enabled = false;
             this.L2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.L2_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.L2_textBox.Location = new System.Drawing.Point(328, 236);
+            this.L2_textBox.Location = new System.Drawing.Point(269, 187);
             this.L2_textBox.Name = "L2_textBox";
             this.L2_textBox.Size = new System.Drawing.Size(60, 15);
             this.L2_textBox.TabIndex = 117;
@@ -571,47 +563,27 @@
             this.R2_textBox.Enabled = false;
             this.R2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.R2_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.R2_textBox.Location = new System.Drawing.Point(150, 236);
+            this.R2_textBox.Location = new System.Drawing.Point(125, 187);
             this.R2_textBox.Name = "R2_textBox";
             this.R2_textBox.Size = new System.Drawing.Size(60, 15);
             this.R2_textBox.TabIndex = 116;
             this.R2_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // T2_label
-            // 
-            this.T2_label.AutoSize = true;
-            this.T2_label.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.T2_label.Location = new System.Drawing.Point(720, 114);
-            this.T2_label.Name = "T2_label";
-            this.T2_label.Size = new System.Drawing.Size(59, 15);
-            this.T2_label.TabIndex = 115;
-            this.T2_label.Text = "상부 돌출";
-            // 
             // T1_label
             // 
             this.T1_label.AutoSize = true;
             this.T1_label.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.T1_label.Location = new System.Drawing.Point(621, 82);
+            this.T1_label.Location = new System.Drawing.Point(652, 73);
             this.T1_label.Name = "T1_label";
             this.T1_label.Size = new System.Drawing.Size(59, 15);
             this.T1_label.TabIndex = 114;
             this.T1_label.Text = "상부 돌출";
             // 
-            // S2_label
-            // 
-            this.S2_label.AutoSize = true;
-            this.S2_label.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.S2_label.Location = new System.Drawing.Point(652, 253);
-            this.S2_label.Name = "S2_label";
-            this.S2_label.Size = new System.Drawing.Size(71, 15);
-            this.S2_label.TabIndex = 113;
-            this.S2_label.Text = "주변 지형물";
-            // 
             // S1_label
             // 
             this.S1_label.AutoSize = true;
             this.S1_label.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.S1_label.Location = new System.Drawing.Point(568, 204);
+            this.S1_label.Location = new System.Drawing.Point(603, 174);
             this.S1_label.Name = "S1_label";
             this.S1_label.Size = new System.Drawing.Size(71, 15);
             this.S1_label.TabIndex = 112;
@@ -621,31 +593,11 @@
             // 
             this.L1_label.AutoSize = true;
             this.L1_label.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.L1_label.Location = new System.Drawing.Point(455, 251);
+            this.L1_label.Location = new System.Drawing.Point(382, 199);
             this.L1_label.Name = "L1_label";
             this.L1_label.Size = new System.Drawing.Size(59, 15);
             this.L1_label.TabIndex = 111;
             this.L1_label.Text = "좌측 돌출";
-            // 
-            // L2_label
-            // 
-            this.L2_label.AutoSize = true;
-            this.L2_label.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.L2_label.Location = new System.Drawing.Point(328, 218);
-            this.L2_label.Name = "L2_label";
-            this.L2_label.Size = new System.Drawing.Size(59, 15);
-            this.L2_label.TabIndex = 110;
-            this.L2_label.Text = "좌측 돌출";
-            // 
-            // R2_label
-            // 
-            this.R2_label.AutoSize = true;
-            this.R2_label.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.R2_label.Location = new System.Drawing.Point(150, 218);
-            this.R2_label.Name = "R2_label";
-            this.R2_label.Size = new System.Drawing.Size(59, 15);
-            this.R2_label.TabIndex = 109;
-            this.R2_label.Text = "우측 돌출";
             // 
             // R1_textBox
             // 
@@ -654,7 +606,7 @@
             this.R1_textBox.Enabled = false;
             this.R1_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.R1_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.R1_textBox.Location = new System.Drawing.Point(17, 269);
+            this.R1_textBox.Location = new System.Drawing.Point(14, 217);
             this.R1_textBox.Name = "R1_textBox";
             this.R1_textBox.Size = new System.Drawing.Size(60, 15);
             this.R1_textBox.TabIndex = 108;
@@ -664,7 +616,7 @@
             // 
             this.R1_label.AutoSize = true;
             this.R1_label.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.R1_label.Location = new System.Drawing.Point(17, 251);
+            this.R1_label.Location = new System.Drawing.Point(14, 199);
             this.R1_label.Name = "R1_label";
             this.R1_label.Size = new System.Drawing.Size(59, 15);
             this.R1_label.TabIndex = 107;
@@ -675,16 +627,16 @@
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Location = new System.Drawing.Point(8, 46);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(521, 295);
+            this.pictureBox1.Size = new System.Drawing.Size(440, 240);
             this.pictureBox1.TabIndex = 105;
             this.pictureBox1.TabStop = false;
             // 
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.Location = new System.Drawing.Point(421, 46);
+            this.pictureBox2.Location = new System.Drawing.Point(480, 44);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(521, 295);
+            this.pictureBox2.Size = new System.Drawing.Size(438, 240);
             this.pictureBox2.TabIndex = 106;
             this.pictureBox2.TabStop = false;
             // 
@@ -723,7 +675,7 @@
             VisibleChanged += onVisibleChanged;
         }
 
-        #endregion
+        #endregion 
 
         private TabControl tabControl1;
         private TabPage tabPage1;
@@ -750,13 +702,9 @@
         private TextBox textBox9;
         private PictureBox pictureBox2;
         private PictureBox pictureBox1;
-        private Label T2_label;
         private Label T1_label;
-        private Label S2_label;
         private Label S1_label;
         private Label L1_label;
-        private Label L2_label;
-        private Label R2_label;
         private TextBox R1_textBox;
         private Label R1_label;
         private TextBox T2_textBox;
@@ -773,10 +721,8 @@
         private Label label4;
         private Label label3;
         private Label label2;
-        private PictureBox WindowType_pictureBox;
         private TextBox frame_textBox;
         private TextBox glass_textBox;
-        private PictureBox WindowInstall_pictureBox;
         private TextBox inst_textBox;
         private TextBox uw_textBox;
         private TextBox light_textBox;
@@ -788,5 +734,7 @@
         private Label label14;
         private Label label16;
         private Label label15;
+        private PictureBox WindowType_pictureBox;
+        private PictureBox WindowInstall_pictureBox;
     }
 }

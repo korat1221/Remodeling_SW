@@ -43,7 +43,7 @@
             this.Spacer_textBox = new System.Windows.Forms.TextBox();
             this.frame_textBox = new System.Windows.Forms.TextBox();
             this.glass_textBox = new System.Windows.Forms.TextBox();
-            this.WindowInstall_pictureBox = new System.Windows.Forms.PictureBox();
+            this.CWInstall_pictureBox = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -58,7 +58,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.WindowType_pictureBox = new System.Windows.Forms.PictureBox();
+            this.CWType_pictureBox = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.T2_textBox = new System.Windows.Forms.TextBox();
             this.T1_textBox = new System.Windows.Forms.TextBox();
@@ -79,10 +79,12 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            this.glass2_textBox = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.WindowInstall_pictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WindowType_pictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CWInstall_pictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CWType_pictureBox)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -103,6 +105,8 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
+            this.tabPage1.Controls.Add(this.glass2_textBox);
+            this.tabPage1.Controls.Add(this.label10);
             this.tabPage1.Controls.Add(this.label16);
             this.tabPage1.Controls.Add(this.label15);
             this.tabPage1.Controls.Add(this.label14);
@@ -116,7 +120,7 @@
             this.tabPage1.Controls.Add(this.Spacer_textBox);
             this.tabPage1.Controls.Add(this.frame_textBox);
             this.tabPage1.Controls.Add(this.glass_textBox);
-            this.tabPage1.Controls.Add(this.WindowInstall_pictureBox);
+            this.tabPage1.Controls.Add(this.CWInstall_pictureBox);
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.label2);
@@ -131,7 +135,7 @@
             this.tabPage1.Controls.Add(this.label8);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.WindowType_pictureBox);
+            this.tabPage1.Controls.Add(this.CWType_pictureBox);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -176,7 +180,7 @@
             // 
             this.inst_textBox.BackColor = System.Drawing.Color.White;
             this.inst_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.inst_textBox.Location = new System.Drawing.Point(750, 307);
+            this.inst_textBox.Location = new System.Drawing.Point(746, 310);
             this.inst_textBox.Name = "inst_textBox";
             this.inst_textBox.ReadOnly = true;
             this.inst_textBox.Size = new System.Drawing.Size(100, 16);
@@ -187,7 +191,7 @@
             // 
             this.uw_textBox.BackColor = System.Drawing.Color.White;
             this.uw_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.uw_textBox.Location = new System.Drawing.Point(568, 307);
+            this.uw_textBox.Location = new System.Drawing.Point(542, 308);
             this.uw_textBox.Name = "uw_textBox";
             this.uw_textBox.ReadOnly = true;
             this.uw_textBox.Size = new System.Drawing.Size(100, 16);
@@ -198,7 +202,7 @@
             // 
             this.light_textBox.BackColor = System.Drawing.Color.White;
             this.light_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.light_textBox.Location = new System.Drawing.Point(458, 165);
+            this.light_textBox.Location = new System.Drawing.Point(463, 153);
             this.light_textBox.Name = "light_textBox";
             this.light_textBox.ReadOnly = true;
             this.light_textBox.Size = new System.Drawing.Size(60, 16);
@@ -209,7 +213,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label13.Location = new System.Drawing.Point(752, 289);
+            this.label13.Location = new System.Drawing.Point(748, 292);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(95, 15);
             this.label13.TabIndex = 126;
@@ -219,9 +223,8 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.BackColor = System.Drawing.Color.Transparent;
             this.label11.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label11.Location = new System.Drawing.Point(568, 289);
+            this.label11.Location = new System.Drawing.Point(545, 292);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(83, 15);
             this.label11.TabIndex = 125;
@@ -232,7 +235,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label9.Location = new System.Drawing.Point(463, 137);
+            this.label9.Location = new System.Drawing.Point(468, 137);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(55, 15);
             this.label9.TabIndex = 124;
@@ -243,7 +246,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label7.Location = new System.Drawing.Point(470, 78);
+            this.label7.Location = new System.Drawing.Point(475, 88);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(39, 15);
             this.label7.TabIndex = 123;
@@ -254,7 +257,7 @@
             // 
             this.Spacer_textBox.BackColor = System.Drawing.Color.White;
             this.Spacer_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Spacer_textBox.Location = new System.Drawing.Point(333, 137);
+            this.Spacer_textBox.Location = new System.Drawing.Point(333, 164);
             this.Spacer_textBox.Name = "Spacer_textBox";
             this.Spacer_textBox.ReadOnly = true;
             this.Spacer_textBox.Size = new System.Drawing.Size(100, 16);
@@ -265,7 +268,7 @@
             // 
             this.frame_textBox.BackColor = System.Drawing.Color.White;
             this.frame_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.frame_textBox.Location = new System.Drawing.Point(333, 108);
+            this.frame_textBox.Location = new System.Drawing.Point(333, 136);
             this.frame_textBox.Name = "frame_textBox";
             this.frame_textBox.ReadOnly = true;
             this.frame_textBox.Size = new System.Drawing.Size(100, 16);
@@ -283,19 +286,19 @@
             this.glass_textBox.TabIndex = 120;
             this.glass_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // WindowInstall_pictureBox
+            // CWInstall_pictureBox
             // 
-            this.WindowInstall_pictureBox.Location = new System.Drawing.Point(732, 45);
-            this.WindowInstall_pictureBox.Name = "WindowInstall_pictureBox";
-            this.WindowInstall_pictureBox.Size = new System.Drawing.Size(129, 241);
-            this.WindowInstall_pictureBox.TabIndex = 119;
-            this.WindowInstall_pictureBox.TabStop = false;
+            this.CWInstall_pictureBox.Location = new System.Drawing.Point(739, 45);
+            this.CWInstall_pictureBox.Name = "CWInstall_pictureBox";
+            this.CWInstall_pictureBox.Size = new System.Drawing.Size(122, 244);
+            this.CWInstall_pictureBox.TabIndex = 119;
+            this.CWInstall_pictureBox.TabStop = false;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label6.Location = new System.Drawing.Point(257, 137);
+            this.label6.Location = new System.Drawing.Point(257, 165);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(31, 15);
             this.label6.TabIndex = 117;
@@ -306,7 +309,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label3.Location = new System.Drawing.Point(257, 108);
+            this.label3.Location = new System.Drawing.Point(257, 137);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(43, 15);
             this.label3.TabIndex = 116;
@@ -319,9 +322,9 @@
             this.label2.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.label2.Location = new System.Drawing.Point(257, 78);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(31, 15);
+            this.label2.Size = new System.Drawing.Size(67, 15);
             this.label2.TabIndex = 115;
-            this.label2.Text = "유리";
+            this.label2.Text = "고정창유리";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // install_textBox
@@ -375,7 +378,7 @@
             this.shgc_textBox.Enabled = false;
             this.shgc_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.shgc_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.shgc_textBox.Location = new System.Drawing.Point(458, 108);
+            this.shgc_textBox.Location = new System.Drawing.Point(463, 105);
             this.shgc_textBox.Name = "shgc_textBox";
             this.shgc_textBox.ReadOnly = true;
             this.shgc_textBox.Size = new System.Drawing.Size(60, 15);
@@ -450,13 +453,13 @@
             this.label1.Text = "면적";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // WindowType_pictureBox
+            // CWType_pictureBox
             // 
-            this.WindowType_pictureBox.Location = new System.Drawing.Point(507, 45);
-            this.WindowType_pictureBox.Name = "WindowType_pictureBox";
-            this.WindowType_pictureBox.Size = new System.Drawing.Size(200, 241);
-            this.WindowType_pictureBox.TabIndex = 118;
-            this.WindowType_pictureBox.TabStop = false;
+            this.CWType_pictureBox.Location = new System.Drawing.Point(496, 45);
+            this.CWType_pictureBox.Name = "CWType_pictureBox";
+            this.CWType_pictureBox.Size = new System.Drawing.Size(211, 244);
+            this.CWType_pictureBox.TabIndex = 118;
+            this.CWType_pictureBox.TabStop = false;
             // 
             // tabPage2
             // 
@@ -701,6 +704,28 @@
             this.webView22.TabIndex = 0;
             this.webView22.ZoomFactor = 1D;
             // 
+            // glass2_textBox
+            // 
+            this.glass2_textBox.BackColor = System.Drawing.Color.White;
+            this.glass2_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.glass2_textBox.Location = new System.Drawing.Point(333, 107);
+            this.glass2_textBox.Name = "glass2_textBox";
+            this.glass2_textBox.ReadOnly = true;
+            this.glass2_textBox.Size = new System.Drawing.Size(100, 16);
+            this.glass2_textBox.TabIndex = 135;
+            this.glass2_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label10.Location = new System.Drawing.Point(257, 108);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(67, 15);
+            this.label10.TabIndex = 134;
+            this.label10.Text = "개폐창유리";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // sub3dCWInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -713,14 +738,15 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.WindowInstall_pictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WindowType_pictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CWInstall_pictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CWType_pictureBox)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).EndInit();
             this.ResumeLayout(false);
+            VisibleChanged += onVisibleChanged;
 
         }
 
@@ -789,5 +815,8 @@
         private Label label14;
         private Label label16;
         private Label label15;
+        private TextBox glass2_textBox;
+        private PictureBox CWInstall_pictureBox;
+        private PictureBox CWType_pictureBox;
     }
 }

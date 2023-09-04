@@ -40,13 +40,6 @@ namespace main
 
         public ZoneShade(String WinNum) // 생성자 안에 trycatch
         {
-            //String ID = main.MainContents.selID.Replace("board-", "");
-
-            //ID = ID.Replace("_win1", "");
-            //ID = ID.Replace("_win2", "");
-            //ID = ID.Replace("_win3", "");
-            //ID = ID.Replace("_win4", "");
-            //ID = ID.Replace("_win5", "");
 
             ID = WinNum;
             try
