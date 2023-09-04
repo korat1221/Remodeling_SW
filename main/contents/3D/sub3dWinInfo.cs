@@ -22,7 +22,7 @@ namespace main.contents
 
         private void onVisibleChanged(object sender, EventArgs e)
         {
-            double R1, R2,L1,L2,S1,S2,T1,T2, uw, install;
+            double R1, R2, L1, L2, S1, S2, T1, T2, uw, install;
             string Type, InstallType, FrameMaterial, SingleDoubleType, InstallName;
 
             string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");   //지역, 프로젝트 조건?
@@ -132,5 +132,9 @@ namespace main.contents
 
         }
 
+        private void label17_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

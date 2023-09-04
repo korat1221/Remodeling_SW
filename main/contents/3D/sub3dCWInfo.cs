@@ -77,7 +77,7 @@ namespace main.contents
 
             //커튼월정보 불러오기 
             String[][] CWLoad = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭,커튼월면적,너비,높이,프레임종류,고정유리종류,개폐유리종류,간봉종류,설치유형,태양열취득률,빛투과율,설치열교가산치,커튼월창유효열관류율,Type,설치종류,Ucw적용방법", "번호 = '" + rec[0][12] + "'");
-           
+
             // 텍스트정보 
             Name_textBox.Text = rec[0][9];
             Name_textBox1.Text = CWLoad[0][1];
@@ -100,15 +100,15 @@ namespace main.contents
             InstallType = CWLoad[0][9];
             InstallName = CWLoad[0][15];
 
-            UCWtype= CWLoad[0][16];
+            UCWtype = CWLoad[0][16];
 
             //UCWtype에 따른 비활성화/활성화
             if (UCWtype == "계산")
             {
                 label3.Visible = true;
-                label6.Visible= true;
-                frame_textBox.Visible= true;
-                Spacer_textBox.Visible= true;
+                label6.Visible = true;
+                frame_textBox.Visible = true;
+                Spacer_textBox.Visible = true;
             }
             else
             {
