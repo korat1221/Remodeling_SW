@@ -548,8 +548,8 @@ namespace System.Windows.Forms
 					graphics.FillPath(fillBrush, tabpath);
 
 					// Paint a focus indication
-			//		if (_TabControl.Focused)
-				//		DrawTabFocusIndicator(tabpath, index, graphics);
+					if (_TabControl.Focused)
+						DrawTabFocusIndicator(tabpath, index, graphics);
 
 					// Paint the closer
 					DrawTabCloser(index, graphics);
