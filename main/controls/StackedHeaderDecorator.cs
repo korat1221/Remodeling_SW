@@ -192,6 +192,7 @@ private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingE
             {
                 Rectangle rect = new Rectangle(e.CellBounds.X + 1, e.CellBounds.Y + 1, e.CellBounds.Width - 19, e.CellBounds.Height - 3);
                 format.LineAlignment = StringAlignment.Center;
+                format.Alignment = StringAlignment.Center;
 
                 e.Graphics.FillRectangle(backbrush, rect);
                 e.Graphics.DrawString(cell.FormattedValue.ToString(), e.CellStyle.Font, forebrush, rect, format);
