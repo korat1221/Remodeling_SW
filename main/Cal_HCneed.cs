@@ -247,12 +247,51 @@ namespace main
             //존 바닥 정보 가져오기
             try
             {
-                String[][] ZoneF = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.유효열관류율,b.직접간접 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionFloor AS b ON a.구조체번호 = b.번호 where a.존 = '" + zoneNum + "'");
+                String[][] ZoneF = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.유효열관류율,b.직접간접,b.기초설치 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionFloor AS b ON a.구조체번호 = b.번호 where a.존 = '" + zoneNum + "'");
                 // string[][] ZoneF = Program.DB.getValue(DB.type.ProjDB, "ZoneFloor", "Area,Ueff", "zoneNum='" + zoneNum + "'");
                 int i = -1;
+                double fx_f =1;
+
+                switch (ZoneF[0][5].ToString())
+                {
+                    case "지면위":
+                        {
+                            if (Convert.ToDouble(ZoneF[i][3]) >= 3)
+                            { fx_f = 0.3; }
+                            else if (Convert.ToDouble(ZoneF[i][3]) >= 1)
+                            { fx_f = 0.55; }
+                            else if (Convert.ToDouble(ZoneF[i][3]) > 0.3)
+                            { fx_f = 0.7; }
+                            else { fx_f = 0.8; }
+                            break;
+                        }
+                    case "단열지하": 
+                        {
+                            if (Convert.ToDouble(ZoneF[i][3]) >= 3)
+                            { fx_f = 0.2; }
+                            else if (Convert.ToDouble(ZoneF[i][3]) >= 1)
+                            { fx_f = 0.45; }
+                            else if (Convert.ToDouble(ZoneF[i][3]) > 0.3)
+                            { fx_f = 0.55; }
+                            else { fx_f = 0.7; }
+                            break;
+                        }
+                    case "비단열지하": 
+                        {
+                            if (Convert.ToDouble(ZoneF[i][3]) >= 3)
+                            { fx_f = 0.45; }
+                            else if (Convert.ToDouble(ZoneF[i][3]) >= 1)
+                            { fx_f = 0.75; }
+                            else if (Convert.ToDouble(ZoneF[i][3]) > 0.3)
+                            { fx_f = 0.8; }
+                            else { fx_f = 0.85; }
+                            break;
+                        }
+                }
+                
                 while (++i < ZoneF.Length)
                 {
-                    Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Convert.ToDouble(ZoneF[i][1]), Convert.ToDouble(ZoneF[i][3]));
+                    Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Convert.ToDouble(ZoneF[i][1]), Convert.ToDouble(ZoneF[i][3]), ZoneF[i][5], fx_f);
                     zoneFloor.Add(floor);
                 }
             }
@@ -547,41 +586,45 @@ namespace main
                     HTCalc htcalc = new HTCalc();
 
                     String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "냉난방유무", "존번호 = '" + zoneInwall.SideZone() + "'");
-                    if (zoneHC == "난방")
+                    if(Value.Length>0)
                     {
-                        if (Value[0][0] == "비냉난방" || Value[0][0] == "냉방")
+                        if (zoneHC == "난방")
                         {
-                            zoneInWall_HT[0, i] = htcalc.Calc(zoneInwall.U(), zoneInwall.Area());
+                            if (Value[0][0] == "비냉난방" || Value[0][0] == "냉방")
+                            {
+                                zoneInWall_HT[0, i] = htcalc.Calc(zoneInwall.U(), zoneInwall.Area());
+                            }
+                            else { zoneInWall_HT[0, i] = 0; }
                         }
-                        else { zoneInWall_HT[0, i] = 0; }
-                    }
-                    else if (zoneHC == "냉방")
-                    {
-                        if (Value[0][0] == "비냉난방" || Value[0][0] == "난방")
+                        else if (zoneHC == "냉방")
                         {
-                            zoneInWall_HT[1, i] = htcalc.Calc(zoneInwall.U(), zoneInwall.Area());
+                            if (Value[0][0] == "비냉난방" || Value[0][0] == "난방")
+                            {
+                                zoneInWall_HT[1, i] = htcalc.Calc(zoneInwall.U(), zoneInwall.Area());
+                            }
+                            else { zoneInWall_HT[1, i] = 0; }
                         }
-                        else { zoneInWall_HT[1, i] = 0; }
-                    }
-                    else if (zoneHC == "냉난방")
-                    {
-                        if (Value[0][0] == "비냉난방" || Value[0][0] == "냉방")
+                        else if (zoneHC == "냉난방")
                         {
-                            zoneInWall_HT[0, i] = htcalc.Calc(zoneInwall.U(), zoneInwall.Area());
-                        }
-                        else { zoneInWall_HT[0, i] = 0; }
+                            if (Value[0][0] == "비냉난방" || Value[0][0] == "냉방")
+                            {
+                                zoneInWall_HT[0, i] = htcalc.Calc(zoneInwall.U(), zoneInwall.Area());
+                            }
+                            else { zoneInWall_HT[0, i] = 0; }
 
-                        if (Value[0][0] == "비냉난방" || Value[0][0] == "난방")
-                        {
-                            zoneInWall_HT[1, i] = htcalc.Calc(zoneInwall.U(), zoneInwall.Area());
+                            if (Value[0][0] == "비냉난방" || Value[0][0] == "난방")
+                            {
+                                zoneInWall_HT[1, i] = htcalc.Calc(zoneInwall.U(), zoneInwall.Area());
+                            }
+                            else { zoneInWall_HT[1, i] = 0; }
                         }
-                        else { zoneInWall_HT[1, i] = 0; }
+                        else
+                        {
+                            zoneInWall_HT[0, i] = 0;
+                            zoneInWall_HT[1, i] = 0;
+                        }
                     }
-                    else
-                    {
-                        zoneInWall_HT[0, i] = 0;
-                        zoneInWall_HT[1, i] = 0;
-                    }
+                        
 
                     String 난방냉방, 비이;
                     String[][] theta_u;
@@ -603,7 +646,7 @@ namespace main
 
                                 if (theta_u.Length > 0 && theta_u[0][0] !="")
                                 {
-                                    if (Convert.ToDouble(theta_u[0][0]) < theta_i[hc, wewd, mth])
+                                    if (Convert.ToDouble(theta_u[0][0]) +4 < theta_i[hc, wewd, mth])
                                     {
                                         QT_u_sink_i[i, hc, wewd, mth] = qtcalc.Calc_sink(Convert.ToDouble(theta_u[0][0]), theta_i[hc, wewd, mth], zoneInWall_HT[hc, i]);
                                         QT_u_source_i[i, hc, wewd, mth] = 0;
@@ -1242,7 +1285,7 @@ namespace main
             }
             if (zoneHC == "난방" || zoneHC == "비냉난방") //비냉방이면 
             {
-                HT_z[0] = 0;
+                HT_z[1] = 0;
                 for (int i = 0; i < zoneInWall.Count; i++)
                 {
                     InWall zoneInwall = (InWall)zoneInWall[i]; //List를 class 객체로 변환 
@@ -1257,7 +1300,7 @@ namespace main
                     }
                 }
 
-                for (int i = 0; i < zoneSlab.Count; i++)//비냉방이면 
+                for (int i = 0; i < zoneSlab.Count; i++)
                 {
                     Slab zoneslab = (Slab)zoneSlab[i]; //List를 class 객체로 변환 
                     string[][] Value_s = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "냉난방유무", "존번호 = '" + zoneslab.SideZone() + "'");
@@ -1943,13 +1986,17 @@ namespace main
         String Floor_ConstructionNum;
         double Floor_Area;
         double Floor_Ueff;
+        String Floor_GroundType;
+        double Floor_Fx;
 
-        public Floor(String EnvelopeNum, String ConstructionNum, double Area, double Ueff)
+        public Floor(String EnvelopeNum, String ConstructionNum, double Area, double Ueff, String GroundType, double Fx)
         {
             this.Floor_Num = EnvelopeNum;
             this.Floor_ConstructionNum = ConstructionNum;
             this.Floor_Area = Area;
             this.Floor_Ueff = Ueff;
+            this.Floor_GroundType = GroundType;
+            this.Floor_Fx = Fx;
         }
 
         public String Num()
@@ -1968,6 +2015,14 @@ namespace main
         public double Ueff()
         {
             return Floor_Ueff;
+        }
+        public String GroundType()
+        {
+            return Floor_GroundType;
+        }
+        public double Fx()
+        {
+            return Floor_Fx;
         }
     }
 

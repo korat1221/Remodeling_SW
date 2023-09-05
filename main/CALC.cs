@@ -1,6 +1,7 @@
 ﻿using main;
 using main.subcontents;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,15 +29,96 @@ namespace main
 
         private static bool ZoneCalc()
         {
-            int i = -1;
-            string[][] zones = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호");
+            string[][] zones = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,냉난방유무");
+            String[,] zones_arr = new String[zones.Length, 2];//존번호, 냉난방유무
+            String[] zones_순번 = new String[zones.Length];// 계산 순서대로 존번호
+            int N_비냉난방 = 0, N_난방 = 0, N_냉방 = 0, N_냉난방 = 0; //순번 카운팅 
+            int T_비냉난방 = 0, T_난방 = 0, T_냉방 = 0, T_냉난방 = 0; //총계 카운팅 
+            if (zones.Length>0)
+            {
+                for (int n =0; n < zones.Length; n++) //배열로 바꿈 : 존번호, 냉난방유무
+                {
+                    zones_arr[n, 0] = zones[n][0];
+                    zones_arr[n, 1] = zones[n][1];
+                }
+                for (int n = 0; n < zones.Length; n++)
+                {
+                    if (zones_arr[n, 1] == "비냉난방")
+                    {
+                        T_비냉난방++;
+                    }
 
+                    if (zones_arr[n, 1] == "난방")
+                    {
+                        T_난방++;
+                    }
+
+                    if (zones_arr[n, 1] == "냉방")
+                    {
+                        T_냉방++;
+                    }
+
+                    if (zones_arr[n,1] == "냉난방")
+                    {
+                        T_냉난방++;
+                    }
+                }
+
+                for (int n = 0; n < zones.Length; n++)
+                {
+                    if (zones_arr[n, 1]== "비냉난방")
+                    {
+                        N_비냉난방++;
+                        if (N_비냉난방 > 0)
+                        { zones_순번[N_비냉난방 - 1] = zones_arr[n, 0]; }
+                    }
+                }
+                N_난방 =N_비냉난방;
+                for (int n = 0; n < zones.Length; n++)
+                {
+                    if (zones_arr[n, 1] == "난방")
+                    {
+                        N_난방++;
+                        if (N_난방 > 0)
+                        { zones_순번[N_난방 - 1] = zones_arr[n, 0]; }
+
+                    }
+
+                }
+
+                N_냉방 = N_난방;
+                for (int n = 0; n < zones.Length; n++)
+                {                   
+                    if (zones_arr[n, 1] == "냉방")
+                    {
+                        N_냉방++;
+                        if (N_냉방 > 0)
+                        { zones_순번[N_냉방 - 1] = zones_arr[n, 0]; }
+                    }
+                }
+
+                N_냉난방 = N_냉방;
+                for (int n = 0; n < zones.Length; n++)
+                {                   
+                    if (zones_arr[n, 1] == "냉난방")
+                    {
+                        N_냉난방++;
+                        if (N_냉난방 > 0)
+                        { zones_순번[N_냉난방 - 1] = zones_arr[n, 0]; }
+                    }
+                }
+
+            }
+
+            int i = -1;
+            Program.DB.deleteTable(DB.type.ProjDB, "Zone_HCneed");
+            Program.DB.initTable(DB.type.ProjDB, "Zone_HCneed");
             while (++i < zones.Length)
             {
-                  Zone zone1 = new Zone("1F_Zone001");
-                //   Zone zone1 = new Zone(zones[i][0]);
+                //  Zone zone1 = new Zone("1F_Zone001");
+                  Zone zone1 = new Zone(zones_순번[i]);
 
-                Zones[zones[i][0]] = zone1;
+                Zones[zones_순번[i]] = zone1;
 
                 zone1.ZoneHT();
                 zone1.ZoneHV();
@@ -45,8 +127,8 @@ namespace main
                 zone1.ZoneQT_u();
                 zone1.ZoneQT();
                 zone1.ZoneQV();
-                zone1.ZoneQSop(zones[i][0]);
-                zone1.ZoneQStr(zones[i][0]);
+                zone1.ZoneQSop(zones_순번[i]);
+                zone1.ZoneQStr(zones_순번[i]);
                 zone1.ZoneQ_DHU();
                 zone1.ZoneQI();
                 zone1.Zone_Theta_U();
@@ -102,7 +184,7 @@ namespace main
                                  "Qb_day," +
                                  "Qb_mth," +
                                  "Qb_a,비냉난방존온도",
-                                  "'" + zones[i][0] + "','" + zone1.zoneName + "','" +
+                                  "'" + zones_순번[i] + "','" + zone1.zoneName + "','" +
                                   HC + "','" + WEWD + "','" + MTH + "','" +
                                   zone1.Zone_HT_tot.ToString() + "','" + zone1.Zone_HT_Wall.ToString()+ "','" + zone1.Zone_HT_Roof.ToString()+ "','" + zone1.Zone_HT_Floor.ToString()+ "','" + zone1.Zone_HT_GWall.ToString()+ "','" + zone1.Zone_HT_Door.ToString()+ "','" + zone1.Zone_HT_Win.ToString() + "','" +zone1.Zone_HT_CW.ToString() + "','" +
                                   zone1.Zone_HT_Di_Wall.ToString() + "','" + zone1.Zone_HT_Indi_Wall.ToString() + "','" + zone1.Zone_HT_Di_Roof.ToString() + "','" + zone1.Zone_HT_Indi_Roof.ToString() + "','" + zone1.Zone_HT_Di_Win.ToString() + "','" + zone1.Zone_HT_Indi_Win.ToString() + "','" + zone1.Zone_HT_Di_Door.ToString() + "','" + zone1.Zone_HT_Indi_Door.ToString() + "','" +
@@ -127,21 +209,10 @@ namespace main
                         }
                     }
                 }
-                String[][] Delete;
-
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    if (zone1.zoneHC == "난방")
-                    { Delete = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones[i][0] + "'AND 난방_냉방 ='난방' AND 월 ='" + (mth + 1).ToString() + "월'"); }
-                    else if (zone1.zoneHC == "냉방")
-                    { Delete = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones[i][0] + "'AND 난방_냉방 ='냉방' AND 월 ='" + (mth + 1).ToString() + "월'"); }
-                    else if (zone1.zoneHC == "냉난방")
-                    { Delete = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones[i][0] + "AND 월 ='" + (mth + 1).ToString() + "월'"); }
-                    else { }
-                }
-                ZoneLight zonelight1 = new ZoneLight(zones[i][0]);
-                ZoneLights[zones[i][0]] = zonelight1;
-                zonelight1.Calc_time(zones[i][0]);                
+                
+                ZoneLight zonelight1 = new ZoneLight(zones_순번[i]);
+                ZoneLights[zones_순번[i]] = zonelight1;
+                zonelight1.Calc_time(zones_순번[i]);                
                 zonelight1.Calc_Facade_general();
                 zonelight1.Calc_Facade_shade();
                 zonelight1.Calc_Facade_FDS();
@@ -167,7 +238,7 @@ namespace main
                         "r_nearEm_FDS,r_fd_sna,r_fd_sa,r_nearEm_DC,r_fd_c,r_FDS,r_FD," +
                         "Sunlight_SCW,Sunlight_PjSC,Final_W",
 
-                    "'" + zones[i][0] + "','" + MTH + "','" +
+                    "'" + zones_순번[i] + "','" + MTH + "','" +
                      zonelight1.Zone_ITr.ToString() + "','" + zonelight1.Zone_IRD.ToString() + "','" + zonelight1.Zone_ISh_Ish.ToString() + "','" + zonelight1.Zone_ISh_hA.ToString() + "','" + zonelight1.Zone_ISh_vA.ToString() + "','" + zonelight1.Zone_Ish_In_At.ToString() + "','" + zonelight1.Zone_Wi.ToString() + "','" + zonelight1.Zone_Ish_GDF.ToString() + "','" + zonelight1.Zone_Calc_Ish.ToString() + "','" +
                      zonelight1.Zone_τeff_SNA_j.ToString() + "','" + zonelight1.Zone_D.ToString() + "','" + zonelight1.Zone_nearD.ToString() + "','" + zonelight1.Zone_DCA.ToString() + "','" + zonelight1.dclass + "','" + zonelight1.f_nearEm_SNA.ToString() + "','" + zonelight1.find_fd_sna.ToString() + "','" + zonelight1.find_fd_sa.ToString() + "','" + zonelight1.f_naerEm_DC.ToString() + "','" + zonelight1.find_fd_c.ToString() + "','" + zonelight1.Zone_FDS[mth].ToString() + "','" + zonelight1.Zone_Facade_FD[mth].ToString() + "','" +
                      zonelight1.Zone_as_bs.ToString() + "','" + zonelight1.Zone_hs_bs.ToString() + "','" + zonelight1.Zone_hg_hw.ToString() + "','" +
@@ -180,6 +251,47 @@ namespace main
             //Cal_Heating heating = new Cal_Heating("HS01");
             //MessageBox.Show(heating.Qhb_mth_sum[0].ToString());
 
+            String[][] Delete_row;
+            for (int n = 0; n < zones_순번.Length; n++)
+            {
+                String[][] HC = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "냉난방유무", "존번호 = '" + zones_순번[n] + "'");
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    try
+                    {
+                        if (HC[0][0]== "난방")
+                        {
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND 비이용일_이용일 ='비이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND 비이용일_이용일 ='이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방' AND 비이용일_이용일 ='비이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방' AND  비이용일_이용일 ='이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                        }
+                        else if (HC[0][0] == "냉방")
+                        {
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방'  AND 비이용일_이용일 ='비이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방'  AND 비이용일_이용일 ='이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND 비이용일_이용일 ='비이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND  비이용일_이용일 ='이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                        }
+                        else if (HC[0][0]== "냉난방")
+                        {
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "' AND 난방_냉방 ='난방' AND 비이용일_이용일 ='비이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "' AND 난방_냉방 ='난방' AND 비이용일_이용일 ='이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "' AND 난방_냉방 ='냉방' AND 비이용일_이용일 ='비이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "' AND 난방_냉방 ='냉방' AND 비이용일_이용일 ='이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                        }
+
+                        else
+                        {
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND 비이용일_이용일 ='비이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND  비이용일_이용일 ='이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방' AND 비이용일_이용일 ='비이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방' AND  비이용일_이용일 ='이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                        }
+                    }
+                    catch { }
+                }
+            }
             MessageBox.Show("계산되었습니다.");
             return true;
         }
