@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static main.DB;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.contents
@@ -24,14 +28,28 @@ namespace main.contents
         public sub3dWLInfo()
         {
             InitializeComponent();
-            new StackedHeaderDecorator(Ucalc_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            new StackedHeaderDecorator(Ucalc_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, Ucalc_dataGridView_RowHandle);
         }
 
+        private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
+        {
+            //if (column == 0 ||column ==  1 || column == 3|| column == 4)
+            //{
+            //    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+            //    return true;
+            //}
+            if (row == 0 || row == Ucalc_dataGridView.RowCount -2 || row == Ucalc_dataGridView.RowCount-1)
+            {
+                cell.Style.BackColor = SystemColors.Control; 
+                return true;
+            }
+            else return false;
+        }
         private void Load_Material_Num()
         {
-            for (int k = 0; k < Ucalc_dataGridView.RowCount; k++)
+            for (int k = 1; k < Ucalc_dataGridView.RowCount-2; k++)
             {
-                Ucalc_dataGridView.Rows[k].Cells[1].Value = (k + 1).ToString();
+                Ucalc_dataGridView.Rows[k].Cells[0].Value = k .ToString();
             }
         }
 
@@ -50,17 +68,14 @@ namespace main.contents
             Ucalc_dataGridView.Columns.Add("A5", "두께.[mm]");
             Ucalc_dataGridView.Columns.Add("A6", "열저항.[m²·K/W]");
 
-            Ucalc_dataGridView.Columns[0].Width = 40;
-            Ucalc_dataGridView.Columns[1].Width = 70;
-            Ucalc_dataGridView.Columns[2].Width = 130;
-            Ucalc_dataGridView.Columns[3].Width = 70;
-            Ucalc_dataGridView.Columns[4].Width = 70;
-            Ucalc_dataGridView.Columns[5].Width = 70;
+            Ucalc_dataGridView.Columns[0].Width = 20;
+            Ucalc_dataGridView.Columns[1].Width = 40;
+            Ucalc_dataGridView.Columns[2].Width = 100;
+            Ucalc_dataGridView.Columns[3].Width = 50;
+            Ucalc_dataGridView.Columns[4].Width = 50;
+            Ucalc_dataGridView.Columns[5].Width = 50;
 
-            //데이터그리드뷰에 행 추가해서 data 불러오기 , 구조체 번호 일치하는거
-            //int nRow = Ucalc_dataGridView.Rows.Add(5);
-
-           string[][] value1 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "아이디 = '" + ID + "'");
+           string[][] value1 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호,면적,번호", "아이디 = '" + ID + "'");
 
            String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭,Type,기존외벽,덧댐커튼월,U적용방법,직접간접,구조유형,열교유형,열교종류,외장재색,표면열전달저항기준,선형점형," +
                    "A,B,C,PsiKai,단위면적당적용," +
@@ -87,6 +102,21 @@ namespace main.contents
                 Material_d[i] = Convert.ToDouble(Load[0][(2 * i + 24)]);
             }
 
+            //표면열전달저항 및 합계
+            double Rsi, Rse, Rtot, Area, UW;
+
+            Rsi = Convert.ToDouble(Load[0][19]);
+            //Rsi_textBox.Text = string.Format("{0:F2}", Rsi);
+            Rse = Convert.ToDouble(Load[0][18]);
+            //Rse_textBox.Text = string.Format("{0:F2}", Rse);
+            Rtot = Convert.ToDouble(Load[0][21]);
+
+            int nRow1 = Ucalc_dataGridView.Rows.Add();
+            //Ucalc_dataGridView.Rows[nRow1].Cells[1].Value = "실내";
+            Ucalc_dataGridView.Rows[nRow1].Cells[2].Value = "실내표면열전달저항";
+            Ucalc_dataGridView.Rows[nRow1].Cells[5].Value = string.Format("{0:F2}", Rsi);
+
+
             for (int i = 0; i < 10; i++)
             {
                 if (Material[i] != "")
@@ -105,12 +135,12 @@ namespace main.contents
                         Material_R[i] = Convert.ToDouble(Load[0][(2 * i + 24)]) / 1000 / Material_λ[i];
 
 
-                        Ucalc_dataGridView.Rows[nRow].Cells[2].Value = Value[0][0];
-                        Ucalc_dataGridView.Rows[nRow].Cells[3].Value = Material[i];
-                        Ucalc_dataGridView.Rows[nRow].Cells[4].Value = Value[0][1];
-                        Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Load[0][(2 * i + 24)];
+                        Ucalc_dataGridView.Rows[nRow].Cells[1].Value = Value[0][0];
+                        Ucalc_dataGridView.Rows[nRow].Cells[2].Value = Material[i];
+                        Ucalc_dataGridView.Rows[nRow].Cells[3].Value = Value[0][1];
+                        Ucalc_dataGridView.Rows[nRow].Cells[4].Value = Load[0][(2 * i + 24)];
                         //  Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Info;
-                        Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Material_R[i]);
+                        Ucalc_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", Material_R[i]);
                     }
                     catch { }
 
@@ -120,10 +150,10 @@ namespace main.contents
                         try
                         {
                             OldWall_R = 1 / Convert.ToDouble(OldWall_U[0][0]);
-                            Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존외벽";
-                            Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldWall;
+                            Ucalc_dataGridView.Rows[nRow].Cells[1].Value = "기존외벽";
+                            Ucalc_dataGridView.Rows[nRow].Cells[2].Value = OldWall;
                             // Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
-                            Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldWall_R);
+                            Ucalc_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", OldWall_R);
                         }
                         catch { }
                         if (OldWall_U.Length == 0)
@@ -132,10 +162,10 @@ namespace main.contents
                             try
                             {
                                 CW_R = 1 / Convert.ToDouble(CW_U[0][0]);
-                                Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "덧댐커튼월";
-                                Ucalc_dataGridView.Rows[nRow].Cells[3].Value = CWName;
+                                Ucalc_dataGridView.Rows[nRow].Cells[1].Value = "덧댐커튼월";
+                                Ucalc_dataGridView.Rows[nRow].Cells[2].Value = CWName;
                                 //     Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
-                                Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", CW_R);
+                                Ucalc_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", CW_R);
                             }
                             catch { }
                         }
@@ -146,12 +176,67 @@ namespace main.contents
                 else { }
             }
 
+            int nRow2 = Ucalc_dataGridView.Rows.Add();
+            //Ucalc_dataGridView.Rows[nRow2].Cells[1].Value = "실외";
+            Ucalc_dataGridView.Rows[nRow2].Cells[2].Value = "실외표면열전달저항";
+            Ucalc_dataGridView.Rows[nRow2].Cells[5].Value = string.Format("{0:F2}", Rse);
+
+            int nRow3 = Ucalc_dataGridView.Rows.Add();
+            Ucalc_dataGridView.Rows[nRow3].Cells[2].Value = "합계";
+            Ucalc_dataGridView.Rows[nRow3].Cells[4].Value = string.Format("{0:F0}", Convert.ToDouble(Load[0][20]));
+            Ucalc_dataGridView.Rows[nRow3].Cells[5].Value = string.Format("{0:F2}", Rtot);
+
             Load_Material_Num();
+
+
+            //정보 불러오기
+            Name_textBox.Text = value1[0][2];
+            Name_textBox1.Text = Load[0][0];
+            Area = Convert.ToDouble(value1[0][1]);
+            Area_textBox.Text = String.Format("{0:F2}", Area);
+            DI_textBox.Text = Load[0][6];
+            abs_textBox.Text = Load[0][43];
+            UW = Convert.ToDouble(Load[0][46]);
+            uw_textBox.Text = String.Format("{0:F2}", UW);
+            Type_textBox.Text = Load[0][7];
+            TBType_textBox.Text = Load[0][8] + "  " + ":";
+            TBType2_textBox.Text = Load[0][9];
+
+            ////그림 불러오기 
+            //string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽유형이미지", "이미지", "외벽유형 = '" + Load[0][2] + "'");
+            //WallType_pictureBox.Visible = true;
+            //WallType_pictureBox.Load(Program.gPath + Image[0][0]);
+            //WallType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+
+            //Material_Rtot_textBox.Text = String.Format("{0:F2}", Rtot);
+
+            if (Load[0][12] == "점형")
+            {
+                string[][] Image3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_구조유형", "열교유형 = '" + Load[0][8] + "'");
+                Wallinst_pictureBox.Load(Program.gPath + Image3[0][0]);
+                Wallinst_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_고정유형", "제품명 = '" + Load[0][9] + "' And 열교유형 = '" + Load[0][8] + "'");
+                pictureBox2.Visible = true;
+                pictureBox2.Load(Program.gPath + Image[0][0]);
+                pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            else
+            {
+                string[][] Image3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_구조유형", "열교유형 = '" + Load[0][8] + "'");
+                Wallinst_pictureBox.Load(Program.gPath + Image3[0][0]);
+                Wallinst_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_고정유형", "제품명 = '" + Load[0][9] + "' And 열교유형 = '" + Load[0][8] + "'");
+                pictureBox2.Visible = true;
+                pictureBox2.Load(Program.gPath + Image[0][0]);
+                pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+
         }
 
 
 
 
 
-        }
     }
+}

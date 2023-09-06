@@ -28,113 +28,440 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            textBox1 = new TextBox();
-            label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(51, 45);
-            label1.Name = "label1";
-            label1.Size = new Size(78, 15);
-            label1.TabIndex = 1;
-            label1.Text = "외벽 길이 값:";
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.Name_textBox1 = new System.Windows.Forms.TextBox();
+            this.Name_textBox = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.DI_textBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.Area_textBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.Type_textBox = new System.Windows.Forms.TextBox();
+            this.TBType_textBox = new System.Windows.Forms.TextBox();
+            this.uw_textBox = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.Ucalc_dataGridView = new System.Windows.Forms.DataGridView();
+            this.Rse_textBox = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.Rsi_textBox = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.Material_Rtot_textBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.TBType2_textBox = new System.Windows.Forms.TextBox();
+            this.FloorType_pictureBox = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Base_textBox = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.Ucalc_dataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FloorType_pictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.SuspendLayout();
             // 
             // textBox1
             // 
-            textBox1.BackColor = Color.White;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(135, 44);
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(120, 16);
-            textBox1.TabIndex = 2;
-            textBox1.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(261, 45);
-            label2.Name = "label2";
-            label2.Size = new Size(18, 15);
-            label2.TabIndex = 3;
-            label2.Text = "m";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(51, 45);
-            label3.Name = "label3";
-            label3.Size = new Size(78, 15);
-            label3.TabIndex = 4;
-            label3.Text = "내벽 길이 값:";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(51, 85);
-            label4.Name = "label4";
-            label4.Size = new Size(46, 15);
-            label4.TabIndex = 6;
-            label4.Text = "구조체:";
+            this.textBox1.BackColor = System.Drawing.Color.White;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Location = new System.Drawing.Point(135, 44);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(120, 16);
+            this.textBox1.TabIndex = 2;
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox2
             // 
-            textBox2.BackColor = Color.White;
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Location = new Point(135, 82);
-            textBox2.Name = "textBox2";
-            textBox2.ReadOnly = true;
-            textBox2.Size = new Size(120, 16);
-            textBox2.TabIndex = 5;
-            textBox2.TextAlign = HorizontalAlignment.Center;
+            this.textBox2.BackColor = System.Drawing.Color.White;
+            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox2.Location = new System.Drawing.Point(135, 82);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(120, 16);
+            this.textBox2.TabIndex = 5;
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox3
             // 
-            textBox3.BackColor = Color.White;
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            textBox3.Location = new Point(51, 12);
-            textBox3.Name = "textBox3";
-            textBox3.ReadOnly = true;
-            textBox3.Size = new Size(120, 16);
-            textBox3.TabIndex = 7;
+            this.textBox3.BackColor = System.Drawing.Color.White;
+            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox3.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.textBox3.Location = new System.Drawing.Point(51, 12);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(120, 16);
+            this.textBox3.TabIndex = 7;
+            // 
+            // Name_textBox1
+            // 
+            this.Name_textBox1.BackColor = System.Drawing.Color.White;
+            this.Name_textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Name_textBox1.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Name_textBox1.Location = new System.Drawing.Point(251, 22);
+            this.Name_textBox1.Name = "Name_textBox1";
+            this.Name_textBox1.ReadOnly = true;
+            this.Name_textBox1.Size = new System.Drawing.Size(100, 16);
+            this.Name_textBox1.TabIndex = 113;
+            // 
+            // Name_textBox
+            // 
+            this.Name_textBox.BackColor = System.Drawing.Color.White;
+            this.Name_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Name_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Name_textBox.Location = new System.Drawing.Point(36, 22);
+            this.Name_textBox.Name = "Name_textBox";
+            this.Name_textBox.ReadOnly = true;
+            this.Name_textBox.Size = new System.Drawing.Size(150, 16);
+            this.Name_textBox.TabIndex = 112;
+            this.Name_textBox.Text = "    ";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label14.Location = new System.Drawing.Point(177, 58);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(23, 15);
+            this.label14.TabIndex = 136;
+            this.label14.Text = "㎡ ";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // DI_textBox
+            // 
+            this.DI_textBox.BackColor = System.Drawing.Color.White;
+            this.DI_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.DI_textBox.Location = new System.Drawing.Point(327, 58);
+            this.DI_textBox.Name = "DI_textBox";
+            this.DI_textBox.ReadOnly = true;
+            this.DI_textBox.Size = new System.Drawing.Size(100, 16);
+            this.DI_textBox.TabIndex = 135;
+            this.DI_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label5.Location = new System.Drawing.Point(251, 59);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(55, 15);
+            this.label5.TabIndex = 134;
+            this.label5.Text = "직접간접";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Area_textBox
+            // 
+            this.Area_textBox.BackColor = System.Drawing.Color.White;
+            this.Area_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Area_textBox.Location = new System.Drawing.Point(91, 58);
+            this.Area_textBox.Name = "Area_textBox";
+            this.Area_textBox.ReadOnly = true;
+            this.Area_textBox.Size = new System.Drawing.Size(100, 16);
+            this.Area_textBox.TabIndex = 133;
+            this.Area_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label6.Location = new System.Drawing.Point(36, 58);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(31, 15);
+            this.label6.TabIndex = 132;
+            this.label6.Text = "면적";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Type_textBox
+            // 
+            this.Type_textBox.BackColor = System.Drawing.Color.White;
+            this.Type_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Type_textBox.Enabled = false;
+            this.Type_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Type_textBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.Type_textBox.Location = new System.Drawing.Point(833, 139);
+            this.Type_textBox.Name = "Type_textBox";
+            this.Type_textBox.ReadOnly = true;
+            this.Type_textBox.Size = new System.Drawing.Size(60, 15);
+            this.Type_textBox.TabIndex = 140;
+            this.Type_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // TBType_textBox
+            // 
+            this.TBType_textBox.BackColor = System.Drawing.Color.White;
+            this.TBType_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TBType_textBox.Enabled = false;
+            this.TBType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.TBType_textBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.TBType_textBox.Location = new System.Drawing.Point(783, 356);
+            this.TBType_textBox.Name = "TBType_textBox";
+            this.TBType_textBox.ReadOnly = true;
+            this.TBType_textBox.Size = new System.Drawing.Size(80, 15);
+            this.TBType_textBox.TabIndex = 142;
+            this.TBType_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // uw_textBox
+            // 
+            this.uw_textBox.BackColor = System.Drawing.Color.White;
+            this.uw_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.uw_textBox.Location = new System.Drawing.Point(614, 382);
+            this.uw_textBox.Name = "uw_textBox";
+            this.uw_textBox.ReadOnly = true;
+            this.uw_textBox.Size = new System.Drawing.Size(100, 16);
+            this.uw_textBox.TabIndex = 144;
+            this.uw_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label11.Location = new System.Drawing.Point(636, 356);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(83, 15);
+            this.label11.TabIndex = 143;
+            this.label11.Text = "유효 열관류율";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Ucalc_dataGridView
+            // 
+            this.Ucalc_dataGridView.AllowUserToAddRows = false;
+            this.Ucalc_dataGridView.AllowUserToDeleteRows = false;
+            this.Ucalc_dataGridView.AllowUserToResizeColumns = false;
+            this.Ucalc_dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.Ucalc_dataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.Ucalc_dataGridView.BackgroundColor = System.Drawing.SystemColors.InactiveBorder;
+            this.Ucalc_dataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Ucalc_dataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.Ucalc_dataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Ucalc_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.Ucalc_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Ucalc_dataGridView.Location = new System.Drawing.Point(17, 114);
+            this.Ucalc_dataGridView.Name = "Ucalc_dataGridView";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Ucalc_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.Ucalc_dataGridView.RowHeadersVisible = false;
+            this.Ucalc_dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            this.Ucalc_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            this.Ucalc_dataGridView.RowTemplate.Height = 25;
+            this.Ucalc_dataGridView.Size = new System.Drawing.Size(532, 234);
+            this.Ucalc_dataGridView.TabIndex = 145;
+            // 
+            // Rse_textBox
+            // 
+            this.Rse_textBox.BackColor = System.Drawing.Color.White;
+            this.Rse_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Rse_textBox.Enabled = false;
+            this.Rse_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Rse_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.Rse_textBox.Location = new System.Drawing.Point(480, 356);
+            this.Rse_textBox.Name = "Rse_textBox";
+            this.Rse_textBox.Size = new System.Drawing.Size(80, 15);
+            this.Rse_textBox.TabIndex = 151;
+            this.Rse_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label12.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label12.Location = new System.Drawing.Point(304, 356);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(141, 15);
+            this.label12.TabIndex = 150;
+            this.label12.Text = "실외표면열전달저항[Rse]";
+            // 
+            // Rsi_textBox
+            // 
+            this.Rsi_textBox.BackColor = System.Drawing.Color.White;
+            this.Rsi_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Rsi_textBox.Enabled = false;
+            this.Rsi_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Rsi_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.Rsi_textBox.Location = new System.Drawing.Point(480, 93);
+            this.Rsi_textBox.Name = "Rsi_textBox";
+            this.Rsi_textBox.Size = new System.Drawing.Size(80, 15);
+            this.Rsi_textBox.TabIndex = 149;
+            this.Rsi_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label10.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label10.Location = new System.Drawing.Point(305, 93);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(138, 15);
+            this.label10.TabIndex = 148;
+            this.label10.Text = "실내표면열전달저항[Rsi]";
+            // 
+            // Material_Rtot_textBox
+            // 
+            this.Material_Rtot_textBox.BackColor = System.Drawing.Color.White;
+            this.Material_Rtot_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Material_Rtot_textBox.Enabled = false;
+            this.Material_Rtot_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Material_Rtot_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.Material_Rtot_textBox.Location = new System.Drawing.Point(480, 383);
+            this.Material_Rtot_textBox.Name = "Material_Rtot_textBox";
+            this.Material_Rtot_textBox.Size = new System.Drawing.Size(80, 15);
+            this.Material_Rtot_textBox.TabIndex = 147;
+            this.Material_Rtot_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label8.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label8.Location = new System.Drawing.Point(359, 383);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(31, 15);
+            this.label8.TabIndex = 146;
+            this.label8.Text = "합계";
+            // 
+            // TBType2_textBox
+            // 
+            this.TBType2_textBox.BackColor = System.Drawing.Color.White;
+            this.TBType2_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TBType2_textBox.Enabled = false;
+            this.TBType2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.TBType2_textBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.TBType2_textBox.Location = new System.Drawing.Point(865, 356);
+            this.TBType2_textBox.Name = "TBType2_textBox";
+            this.TBType2_textBox.ReadOnly = true;
+            this.TBType2_textBox.Size = new System.Drawing.Size(80, 15);
+            this.TBType2_textBox.TabIndex = 152;
+            this.TBType2_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // FloorType_pictureBox
+            // 
+            this.FloorType_pictureBox.Location = new System.Drawing.Point(585, 117);
+            this.FloorType_pictureBox.Name = "FloorType_pictureBox";
+            this.FloorType_pictureBox.Size = new System.Drawing.Size(178, 250);
+            this.FloorType_pictureBox.TabIndex = 153;
+            this.FloorType_pictureBox.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(787, 156);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(153, 174);
+            this.pictureBox1.TabIndex = 154;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label1.Location = new System.Drawing.Point(694, 383);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(49, 15);
+            this.label1.TabIndex = 155;
+            this.label1.Text = "W/㎡·K ";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Base_textBox
+            // 
+            this.Base_textBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
+            this.Base_textBox.BackColor = System.Drawing.Color.White;
+            this.Base_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Base_textBox.Enabled = false;
+            this.Base_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Base_textBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.Base_textBox.Location = new System.Drawing.Point(645, 139);
+            this.Base_textBox.Name = "Base_textBox";
+            this.Base_textBox.ReadOnly = true;
+            this.Base_textBox.Size = new System.Drawing.Size(60, 15);
+            this.Base_textBox.TabIndex = 157;
+            this.Base_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // sub3dFRInfo
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
-            ClientSize = new Size(800, 450);
-            Controls.Add(textBox3);
-            Controls.Add(label4);
-            Controls.Add(textBox2);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(textBox1);
-            Controls.Add(label1);
-            FormBorderStyle = FormBorderStyle.None;
-            Name = "sub3dFRInfo";
-            Text = "sub3dFRInfo";
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(984, 450);
+            this.Controls.Add(this.Base_textBox);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.TBType2_textBox);
+            this.Controls.Add(this.Rse_textBox);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.Rsi_textBox);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.Material_Rtot_textBox);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.Ucalc_dataGridView);
+            this.Controls.Add(this.uw_textBox);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.TBType_textBox);
+            this.Controls.Add(this.Type_textBox);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.DI_textBox);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.Area_textBox);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.Name_textBox1);
+            this.Controls.Add(this.Name_textBox);
+            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.FloorType_pictureBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "sub3dFRInfo";
+            this.Text = "sub3dWLInfo";
+            ((System.ComponentModel.ISupportInitialize)(this.Ucalc_dataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FloorType_pictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
             VisibleChanged += onVisibleChanged;
-            ResumeLayout(false);
-            PerformLayout();
         }
-
         #endregion
 
-        private Label label1;
         private TextBox textBox1;
-        private Label label2;
-        private Label label3;
-        private Label label4;
         private TextBox textBox2;
         private TextBox textBox3;
+        private TextBox Name_textBox1;
+        private TextBox Name_textBox;
+        private Label label14;
+        private TextBox DI_textBox;
+        private Label label5;
+        private TextBox Area_textBox;
+        private Label label6;
+        private TextBox Type_textBox;
+        private TextBox TBType_textBox;
+        private TextBox uw_textBox;
+        private Label label11;
+        private DataGridView Ucalc_dataGridView;
+        private TextBox Rse_textBox;
+        private Label label12;
+        private TextBox Rsi_textBox;
+        private Label label10;
+        private TextBox Material_Rtot_textBox;
+        private Label label8;
+        private TextBox TBType2_textBox;
+        private PictureBox FloorType_pictureBox;
+        private PictureBox pictureBox1;
+        private Label label1;
+        private TextBox Base_textBox;
     }
 }

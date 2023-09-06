@@ -13,32 +13,26 @@ namespace main.contents
 {
     public partial class sub3dIWInfo : Form
     {
+        double Area;
+
+
         public sub3dIWInfo()
         {
+            
             InitializeComponent();
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
             String ID = main.MainContents.selID.Replace("board-", "");
-            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체,번호", "아이디 = '" + ID + "'");
+            string[][] value1 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호,면적,번호,인접존,방위", "아이디 = '" + ID + "'");
 
-            if (rec.Length > 0)
-            {
-                textBox3.Text = rec[0][2];
-                textBox1.Text = Double.Parse(rec[0][0]).ToString("#.##");
-                textBox2.Text = rec[0][1];
-            }
+            Name_textBox.Text = value1[0][2];
+            //Name_textBox1.Text= value1[0][0];  ---> 구조체 번호는 없지..
+            di_textBox.Text = value1[0][4];
+            Area = Convert.ToDouble(value1[0][1]);
+            Area_textBox.Text = string.Format("{0:F2}", Area);
+            near_textBox.Text = value1[0][3];
 
-            if (ID.IndexOf("_INWALL_") > 0)
-            {
-                label3.Show();
-                label1.Hide();
-            }
-            else
-            {
-                label1.Show();
-                label3.Hide();
-            }
         }
     }
 }

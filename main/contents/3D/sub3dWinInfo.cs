@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,7 +23,7 @@ namespace main.contents
 
         private void onVisibleChanged(object sender, EventArgs e)
         {
-            double R1, R2, L1, L2, S1, S2, T1, T2, uw, install;
+            double R1, R2,L1,L2,S1,S2,T1,T2, uw, install;
             string Type, InstallType, FrameMaterial, SingleDoubleType, InstallName;
 
             string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");   //지역, 프로젝트 조건?
@@ -86,8 +87,67 @@ namespace main.contents
             //save한 음영계수값 불러오기 (최종만)
             string[][] value = Program.DB.getValue(DB.type.ProjDB, "Shade", "음영계수", "번호 = '" + ID + "'");
 
-            //창호정보 불러오기 
+            //창호정보 불러오기 // *************************창호 너비 높이 면적은 존 인벨롭에서 들어오는 값으로 해야함 (임시방편)
             String[][] SubLoad = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭,상위창호번호,창호면적,창호너비,창호높이,창호유효열관류율,설치열교가산치", "번호 = '" + rec[0][12] + "'");
+           
+            //구조체 지정 전까지 면적,너비,높이 빼고 전부 다 안보이게
+            if (rec[0][12] == "")
+            {
+                label1.Visible = true;
+                Area_textBox.Visible= true;
+                label14.Visible= true;
+                label5.Visible= true;
+                Width_textBox.Visible= true;
+                label15.Visible= true;
+                label8.Visible= true;
+                height_textBox.Visible= true;
+                label16.Visible= true;
+                label8.Visible = true;
+                height_textBox.Visible= true;
+                label16.Visible= true;
+                label4.Visible = false;
+                install_textBox.Visible= false;
+                label2.Visible= false;
+                glass_textBox.Visible = false;
+                label3.Visible= false;
+                frame_textBox.Visible = false;
+                label6.Visible= false;
+                Spacer_textBox.Visible = false;
+                label7.Visible= false;
+                shgc_textBox.Visible = false;
+                label9.Visible = false;
+                light_textBox.Visible = false;
+                label11.Visible= false;
+                uw_textBox.Visible = false;
+                label13.Visible = false;
+                inst_textBox.Visible = false;
+                WindowType_pictureBox.Visible = false;
+                WindowInstall_pictureBox.Visible= false;
+            }
+            else
+            {
+                label8.Visible = true;
+                height_textBox.Visible = true;
+                label16.Visible = true;
+                label4.Visible = true;
+                install_textBox.Visible = true;
+                label2.Visible = true;
+                glass_textBox.Visible = true;
+                frame_textBox.Visible = true;
+                Spacer_textBox.Visible = true;
+                label7.Visible = true;
+                shgc_textBox.Visible = true;
+                label9.Visible = true;
+                light_textBox.Visible = true;
+                label11.Visible = true;
+                uw_textBox.Visible = true;
+                label13.Visible = true;
+                inst_textBox.Visible = true;
+                WindowType_pictureBox.Visible = true;
+                WindowInstall_pictureBox.Visible = true;
+            }
+
+
 
             if (SubLoad.Length > 0)
             {
@@ -127,14 +187,7 @@ namespace main.contents
                 WindowInstall_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
             }
-
-
-
         }
 
-        private void label17_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
