@@ -48,7 +48,7 @@
             UserDB_Conductivity_textBox = new TextBox();
             label6 = new Label();
             panel1 = new Panel();
-            UserDB_Type1_comboBox = new ComboBox();
+            UserDB_Type1_comboBox = new CustomComboBox();
             label12 = new Label();
             UserDB_Note_textBox = new TextBox();
             label18 = new Label();
@@ -517,6 +517,6 @@
         private Label label7;
         private Label label12;
         private TextBox UserDB_Note_textBox;
-        private ComboBox UserDB_Type1_comboBox;
+        private CustomComboBox UserDB_Type1_comboBox;
     }
 }

@@ -50,9 +50,9 @@
             label6 = new Label();
             panel1 = new Panel();
             panel2 = new Panel();
-            MaterialType_comboBox = new ComboBox();
+            MaterialType_comboBox = new CustomComboBox();
             label24 = new Label();
-            UserDB_Type1_comboBox = new ComboBox();
+            UserDB_Type1_comboBox = new CustomComboBox();
             label12 = new Label();
             UserDB_Note_textBox = new TextBox();
             label18 = new Label();
@@ -536,9 +536,9 @@
         private Label label7;
         private Label label12;
         private TextBox UserDB_Note_textBox;
-        private ComboBox UserDB_Type1_comboBox;
+        private CustomComboBox UserDB_Type1_comboBox;
         private Panel panel2;
-        private ComboBox MaterialType_comboBox;
+        private CustomComboBox MaterialType_comboBox;
         private Label label24;
     }
 }

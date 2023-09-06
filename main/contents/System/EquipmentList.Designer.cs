@@ -43,7 +43,7 @@ namespace main.contents
             button1 = new Button();
             label4 = new Label();
             Icon_pictureBox = new PictureBox();
-            tabControl1 = new TabControl();
+            tabControl1 = new CustomTabControl();
             Boiler_tabPage = new TabPage();
             label2 = new Label();
             DefaultBoiler_Add_button = new Button();
@@ -139,6 +139,22 @@ namespace main.contents
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(977, 643);
             tabControl1.TabIndex = 145;
+            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
+            tabControl1.DisplayStyleProvider.FocusTrack = true;
+            tabControl1.DisplayStyleProvider.HotTrack = true;
+            tabControl1.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
+            tabControl1.DisplayStyleProvider.Opacity = 1F;
+            tabControl1.DisplayStyleProvider.Overlap = 0;
+            tabControl1.DisplayStyleProvider.Padding = new Point(6, 3);
+            tabControl1.DisplayStyleProvider.ShowTabCloser = false;
+            tabControl1.DisplayStyleProvider.TextColor = SystemColors.ControlText;
+            tabControl1.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
+            tabControl1.HotTrack = true;
+            tabControl1.ItemSize = new Size(128, 20);
+            tabControl1.SizeMode = TabSizeMode.Fixed;
             // 
             // Boiler_tabPage
             // 
@@ -594,7 +610,7 @@ namespace main.contents
         #endregion
 
         private Panel GeneralPanel;
-        private TabControl tabControl1;
+        private CustomTabControl tabControl1;
         private TabPage Boiler_tabPage;
         private TabPage HP_tabPage;
         private TabPage AS_tabPage;

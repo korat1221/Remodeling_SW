@@ -53,9 +53,9 @@
             UserDB_Manufacture_textBox = new TextBox();
             label6 = new Label();
             label16 = new Label();
-            SelectGlass1_comboBox = new ComboBox();
+            SelectGlass1_comboBox = new CustomComboBox();
             label17 = new Label();
-            SelectGlass2_comboBox = new ComboBox();
+            SelectGlass2_comboBox = new CustomComboBox();
             panel1 = new Panel();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -413,9 +413,9 @@
         private Label label32;
         private TextBox UserDB_RExternal_textBox;
         private TextBox ArAir_textBox;
-        private ComboBox SelectGlass2_comboBox;
+        private CustomComboBox SelectGlass2_comboBox;
         private Label label17;
-        private ComboBox SelectGlass1_comboBox;
+        private CustomComboBox SelectGlass1_comboBox;
         private Label label16;
         private DataGridView Glass_dataGridView;
         private DataGridView DoubleGlass_dataGridView;

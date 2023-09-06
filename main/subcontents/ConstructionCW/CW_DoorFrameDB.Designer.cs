@@ -44,7 +44,7 @@
             label9 = new Label();
             UserDB_Ufd_textBox = new TextBox();
             panel1 = new Panel();
-            UserDB_Type_comboBox = new ComboBox();
+            UserDB_Type_comboBox = new CustomComboBox();
             label2 = new Label();
             label3 = new Label();
             UserDB_Manufacture_textBox = new TextBox();
@@ -368,6 +368,6 @@
         private TextBox UserDB_Manufacture_textBox;
         private DataGridView Door_dataGridView;
         private Label label2;
-        private ComboBox UserDB_Type_comboBox;
+        private CustomComboBox UserDB_Type_comboBox;
     }
 }

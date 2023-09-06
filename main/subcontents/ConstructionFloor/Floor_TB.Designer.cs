@@ -33,7 +33,7 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             label7 = new Label();
-            TB_Type_comboBox = new ComboBox();
+            TB_Type_comboBox = new CustomComboBox();
             StructureType_textBox = new TextBox();
             label6 = new Label();
             WallType_textBox = new TextBox();
@@ -437,7 +437,7 @@
         private Button Save_button;
         private Panel panel1;
         private DataGridView TB_dataGridView;
-        private ComboBox TB_Type_comboBox;
+        private CustomComboBox TB_Type_comboBox;
         private Label label1;
         private Label label7;
         private TextBox StructureType_textBox;

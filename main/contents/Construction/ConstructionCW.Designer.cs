@@ -32,7 +32,7 @@
             label64 = new Label();
             label2 = new Label();
             AdditionalCW_textBox = new TextBox();
-            OldCW_comboBox = new ComboBox();
+            OldCW_comboBox = new CustomComboBox();
             Type_textBox = new TextBox();
             label6 = new Label();
             label3 = new Label();
@@ -52,13 +52,13 @@
             Spacer_button = new Button();
             FixGlassName_textBox = new TextBox();
             FixGlassDB_button = new Button();
-            Install_comboBox = new ComboBox();
+            Install_comboBox = new CustomComboBox();
             label16 = new Label();
             Spacer_label = new Label();
             label11 = new Label();
-            Frame_comboBox = new ComboBox();
+            Frame_comboBox = new CustomComboBox();
             Frame_label = new Label();
-            Ucw_comboBox = new ComboBox();
+            Ucw_comboBox = new CustomComboBox();
             label25 = new Label();
             label4 = new Label();
             panel2 = new Panel();
@@ -85,7 +85,7 @@
             PanelColor_label = new Label();
             dPanel_label = new Label();
             Panel_checkBox = new CheckBox();
-            PanelColor_comboBox = new ComboBox();
+            PanelColor_comboBox = new CustomComboBox();
             dPanel_label2 = new Label();
             dPanel_textBox = new TextBox();
             PanelGlass_label = new Label();
@@ -118,8 +118,8 @@
             Ug_unit_label = new Label();
             UCW_g_textBox = new TextBox();
             UCW_g_label = new Label();
-            DiIndi_comboBox = new ComboBox();
-            tabControl1 = new TabControl();
+            DiIndi_comboBox = new CustomComboBox();
+            tabControl1 = new CustomTabControl();
             Frame_tabPage = new TabPage();
             label60 = new Label();
             label31 = new Label();
@@ -1391,6 +1391,22 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(977, 239);
             tabControl1.TabIndex = 96;
+            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
+            tabControl1.DisplayStyleProvider.FocusTrack = true;
+            tabControl1.DisplayStyleProvider.HotTrack = true;
+            tabControl1.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
+            tabControl1.DisplayStyleProvider.Opacity = 1F;
+            tabControl1.DisplayStyleProvider.Overlap = 0;
+            tabControl1.DisplayStyleProvider.Padding = new Point(6, 3);
+            tabControl1.DisplayStyleProvider.ShowTabCloser = false;
+            tabControl1.DisplayStyleProvider.TextColor = SystemColors.ControlText;
+            tabControl1.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
+            tabControl1.HotTrack = true;
+            tabControl1.ItemSize = new Size(128, 20);
+            tabControl1.SizeMode = TabSizeMode.Fixed;
             // 
             // Frame_tabPage
             // 
@@ -2806,13 +2822,13 @@
         private Button Spacer_button;
         private TextBox FixGlassName_textBox;
         private Button FixGlassDB_button;
-        private ComboBox Install_comboBox;
+        private CustomComboBox Install_comboBox;
         private Label label16;
         private Label Spacer_label;
         private Label label11;
-        private ComboBox Frame_comboBox;
+        private CustomComboBox Frame_comboBox;
         private Label Frame_label;
-        private ComboBox Ucw_comboBox;
+        private CustomComboBox Ucw_comboBox;
         private Label label25;
         private Label label4;
         private Panel panel2;
@@ -2832,8 +2848,8 @@
         private Label Ug_unit_label;
         private TextBox UCW_g_textBox;
         private Label UCW_g_label;
-        private ComboBox DiIndi_comboBox;
-        private TabControl tabControl1;
+        private CustomComboBox DiIndi_comboBox;
+        private CustomTabControl tabControl1;
         private TabPage Frame_tabPage;
         private TextBox df_open_textBox;
         private TextBox df_mt_textBox;
@@ -2857,14 +2873,14 @@
         private Label label38;
         private PictureBox CWnstall_pictureBox;
         private TextBox AdditionalCW_textBox;
-        private ComboBox OldCW_comboBox;
+        private CustomComboBox OldCW_comboBox;
         private PictureBox CWType_pictureBox;
         private TextBox OpenGlassName_textBox;
         private Button OpenGlassDB_button;
         private Label label8;
         private Label label7;
         private CheckBox Panel_checkBox;
-        private ComboBox PanelColor_comboBox;
+        private CustomComboBox PanelColor_comboBox;
         private Label dPanel_label2;
         private TextBox dPanel_textBox;
         private Label PanelGlass_label;

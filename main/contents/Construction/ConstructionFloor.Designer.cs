@@ -33,7 +33,7 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             label1 = new Label();
-            OldFloor_comboBox = new ComboBox();
+            OldFloor_comboBox = new CustomComboBox();
             OldFloor_label = new Label();
             groupBox1 = new GroupBox();
             radioButton5 = new RadioButton();
@@ -55,14 +55,14 @@
             StructureType_textBox = new TextBox();
             label11 = new Label();
             UMethod_label = new Label();
-            Uvalue_comboBox = new ComboBox();
+            Uvalue_comboBox = new CustomComboBox();
             label25 = new Label();
             label4 = new Label();
             panel2 = new Panel();
             TBName_textBox = new TextBox();
             DiIndi_textBox = new TextBox();
             Ueff_label2 = new Label();
-            Base_comboBox = new ComboBox();
+            Base_comboBox = new CustomComboBox();
             dU_label2 = new Label();
             Ueff_textBox = new TextBox();
             Ueff_label = new Label();
@@ -97,13 +97,13 @@
             Material_dtot_textBox = new TextBox();
             label8 = new Label();
             label2 = new Label();
-            ISO_KS_comboBox = new ComboBox();
+            ISO_KS_comboBox = new CustomComboBox();
             MaterialDown_button = new Button();
             MaterialUP_button = new Button();
             Deletebutton = new Button();
             Ucalc_dataGridView = new DataGridView();
             AddMaterial_button = new Button();
-            tabControl1 = new TabControl();
+            tabControl1 = new CustomTabControl();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -1048,6 +1048,22 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(977, 388);
             tabControl1.TabIndex = 96;
+            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
+            tabControl1.DisplayStyleProvider.FocusTrack = true;
+            tabControl1.DisplayStyleProvider.HotTrack = true;
+            tabControl1.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
+            tabControl1.DisplayStyleProvider.Opacity = 1F;
+            tabControl1.DisplayStyleProvider.Overlap = 0;
+            tabControl1.DisplayStyleProvider.Padding = new Point(6, 3);
+            tabControl1.DisplayStyleProvider.ShowTabCloser = false;
+            tabControl1.DisplayStyleProvider.TextColor = SystemColors.ControlText;
+            tabControl1.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
+            tabControl1.HotTrack = true;
+            tabControl1.ItemSize = new Size(128, 20);
+            tabControl1.SizeMode = TabSizeMode.Fixed;
             // 
             // ConstructionFloor
             // 
@@ -1099,9 +1115,9 @@
         private Button TB_button;
         private TextBox StructureType_textBox;
         private Label label11;
-        private ComboBox Base_comboBox;
+        private CustomComboBox Base_comboBox;
         private Label UMethod_label;
-        private ComboBox Uvalue_comboBox;
+        private CustomComboBox Uvalue_comboBox;
         private Label label25;
         private Label label4;
         private Panel panel2;
@@ -1124,18 +1140,18 @@
         private Label label7;
         private Label label6;
         private Label label5;
-        private ComboBox OldFloor_comboBox;
+        private CustomComboBox OldFloor_comboBox;
         private Label OldFloor_label;
         private TabPage dU_tabPage;
         private TabPage Ucalc_tabPage;
-        private TabControl tabControl1;
+        private CustomTabControl tabControl1;
         private Button AddMaterial_button;
         private DataGridView Ucalc_dataGridView;
         private Button Deletebutton;
         private Button MaterialDown_button;
         private Button MaterialUP_button;
         private Label label2;
-        private ComboBox ISO_KS_comboBox;
+        private CustomComboBox ISO_KS_comboBox;
         private TextBox Material_Rtot_textBox;
         private TextBox Material_dtot_textBox;
         private Label label8;

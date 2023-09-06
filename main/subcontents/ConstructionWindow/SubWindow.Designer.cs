@@ -366,11 +366,12 @@ namespace main.subcontents.ConstructionWindow
             // 
             // AdditionalWindow_comboBox
             // 
+            AdditionalWindow_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             AdditionalWindow_comboBox.Enabled = false;
             AdditionalWindow_comboBox.FormattingEnabled = true;
             AdditionalWindow_comboBox.Location = new Point(673, 64);
             AdditionalWindow_comboBox.Name = "AdditionalWindow_comboBox";
-            AdditionalWindow_comboBox.Size = new Size(120, 23);
+            AdditionalWindow_comboBox.Size = new Size(120, 24);
             AdditionalWindow_comboBox.TabIndex = 0;
             AdditionalWindow_comboBox.SelectedIndexChanged += AdditionalWindow_comboBox_SelectedIndexChanged;
             // 
@@ -779,23 +780,25 @@ namespace main.subcontents.ConstructionWindow
             // 
             // DiIndi_comboBox
             // 
+            DiIndi_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             DiIndi_comboBox.Enabled = false;
             DiIndi_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             DiIndi_comboBox.FormattingEnabled = true;
             DiIndi_comboBox.Location = new Point(327, 23);
             DiIndi_comboBox.Name = "DiIndi_comboBox";
-            DiIndi_comboBox.Size = new Size(120, 24);
+            DiIndi_comboBox.Size = new Size(120, 23);
             DiIndi_comboBox.TabIndex = 55;
             DiIndi_comboBox.SelectedIndexChanged += DiIndil_comboBox_SelectedIndexChanged;
             // 
             // Install_comboBox
             // 
+            Install_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Install_comboBox.Enabled = false;
             Install_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Install_comboBox.FormattingEnabled = true;
             Install_comboBox.Location = new Point(175, 226);
             Install_comboBox.Name = "Install_comboBox";
-            Install_comboBox.Size = new Size(120, 24);
+            Install_comboBox.Size = new Size(120, 23);
             Install_comboBox.TabIndex = 52;
             Install_comboBox.SelectedIndexChanged += Install_comboBox_SelectedIndexChanged;
             // 
@@ -831,12 +834,13 @@ namespace main.subcontents.ConstructionWindow
             // 
             // Frame_comboBox
             // 
+            Frame_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Frame_comboBox.Enabled = false;
             Frame_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Frame_comboBox.FormattingEnabled = true;
             Frame_comboBox.Location = new Point(175, 52);
             Frame_comboBox.Name = "Frame_comboBox";
-            Frame_comboBox.Size = new Size(120, 24);
+            Frame_comboBox.Size = new Size(120, 23);
             Frame_comboBox.TabIndex = 40;
             Frame_comboBox.SelectedIndexChanged += Frame_comboBox_SelectedIndexChanged;
             // 
@@ -852,12 +856,13 @@ namespace main.subcontents.ConstructionWindow
             // 
             // Uw_comboBox
             // 
+            Uw_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Uw_comboBox.Enabled = false;
             Uw_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Uw_comboBox.FormattingEnabled = true;
             Uw_comboBox.Location = new Point(175, 23);
             Uw_comboBox.Name = "Uw_comboBox";
-            Uw_comboBox.Size = new Size(120, 24);
+            Uw_comboBox.Size = new Size(120, 23);
             Uw_comboBox.TabIndex = 38;
             Uw_comboBox.SelectedIndexChanged += UwMethod_comboBox_SelectedIndexChanged;
             // 
@@ -911,7 +916,6 @@ namespace main.subcontents.ConstructionWindow
             // Frame_tabPage
             // 
             Frame_tabPage.BackColor = Color.White;
-            Frame_tabPage.BorderStyle = BorderStyle.FixedSingle;
             Frame_tabPage.Controls.Add(label22);
             Frame_tabPage.Controls.Add(df_btw_textBox);
             Frame_tabPage.Controls.Add(df_fix_textBox);
@@ -926,10 +930,10 @@ namespace main.subcontents.ConstructionWindow
             Frame_tabPage.Controls.Add(FrameMaterial_textBox);
             Frame_tabPage.Controls.Add(label14);
             Frame_tabPage.Controls.Add(WindowFrame_pictureBox);
-            Frame_tabPage.Location = new Point(4, 24);
+            Frame_tabPage.Location = new Point(4, 25);
             Frame_tabPage.Name = "Frame_tabPage";
             Frame_tabPage.Padding = new Padding(3);
-            Frame_tabPage.Size = new Size(969, 211);
+            Frame_tabPage.Size = new Size(969, 210);
             Frame_tabPage.TabIndex = 0;
             Frame_tabPage.Text = "프레임 세부정보";
             // 
@@ -1128,10 +1132,10 @@ namespace main.subcontents.ConstructionWindow
             Install_tabPage.Controls.Add(dUinst_textBox);
             Install_tabPage.Controls.Add(label39);
             Install_tabPage.Controls.Add(WindowInstall_pictureBox);
-            Install_tabPage.Location = new Point(4, 24);
+            Install_tabPage.Location = new Point(4, 25);
             Install_tabPage.Name = "Install_tabPage";
             Install_tabPage.Padding = new Padding(3);
-            Install_tabPage.Size = new Size(969, 211);
+            Install_tabPage.Size = new Size(969, 210);
             Install_tabPage.TabIndex = 1;
             Install_tabPage.Text = "설치열교 정보";
             // 
@@ -1406,10 +1410,10 @@ namespace main.subcontents.ConstructionWindow
             Size_tabPage.Controls.Add(Height_textBox);
             Size_tabPage.Controls.Add(label51);
             Size_tabPage.Controls.Add(Width_textBox);
-            Size_tabPage.Location = new Point(4, 24);
+            Size_tabPage.Location = new Point(4, 25);
             Size_tabPage.Name = "Size_tabPage";
             Size_tabPage.Padding = new Padding(3);
-            Size_tabPage.Size = new Size(969, 211);
+            Size_tabPage.Size = new Size(969, 210);
             Size_tabPage.TabIndex = 2;
             Size_tabPage.Text = "사이즈 정보";
             // 

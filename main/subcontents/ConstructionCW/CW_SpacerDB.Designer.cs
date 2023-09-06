@@ -54,9 +54,9 @@
             label4 = new Label();
             Deletebutton = new Button();
             Spacer_dataGridView = new DataGridView();
-            UserDBType2_comboBox = new ComboBox();
+            UserDBType2_comboBox = new CustomComboBox();
             label8 = new Label();
-            UserDBType1_comboBox = new ComboBox();
+            UserDBType1_comboBox = new CustomComboBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
@@ -411,9 +411,9 @@
         private TextBox UserDB_Psi_fix_textBox;
         private Label label6;
         private Panel panel1;
-        private ComboBox UserDBType2_comboBox;
+        private CustomComboBox UserDBType2_comboBox;
         private Label label8;
-        private ComboBox UserDBType1_comboBox;
+        private CustomComboBox UserDBType1_comboBox;
         private DataGridView Spacer_dataGridView;
         private Button Deletebutton;
         private Label label4;

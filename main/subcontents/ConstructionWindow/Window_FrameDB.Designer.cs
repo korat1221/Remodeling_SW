@@ -67,7 +67,7 @@ namespace main.subcontents
             label30 = new Label();
             label29 = new Label();
             label8 = new Label();
-            UserDBSpacer_comboBox = new ComboBox();
+            UserDBSpacer_comboBox = new CustomComboBox();
             UserDB_PsiOpen_textBox = new TextBox();
             label18 = new Label();
             label17 = new Label();
@@ -75,10 +75,10 @@ namespace main.subcontents
             label16 = new Label();
             UserDBUw_textBox = new TextBox();
             label19 = new Label();
-            UserDB_FrameType_comboBox = new ComboBox();
-            UserDB_FrameShape_comboBox = new ComboBox();
-            UserDB_FrameMaterial_comboBox = new ComboBox();
-            UserDBGlass_comboBox = new ComboBox();
+            UserDB_FrameType_comboBox = new CustomComboBox();
+            UserDB_FrameShape_comboBox = new CustomComboBox();
+            UserDB_FrameMaterial_comboBox = new CustomComboBox();
+            UserDBGlass_comboBox = new CustomComboBox();
             label3 = new Label();
             label5 = new Label();
             label11 = new Label();
@@ -883,7 +883,7 @@ namespace main.subcontents
         private Label label30;
         private Label label29;
         private Label label8;
-        private ComboBox UserDBSpacer_comboBox;
+        private CustomComboBox UserDBSpacer_comboBox;
         private TextBox UserDB_PsiOpen_textBox;
         private Label label18;
         private Label label17;
@@ -891,10 +891,10 @@ namespace main.subcontents
         private Label label16;
         private TextBox UserDBUw_textBox;
         private Label label19;
-        private ComboBox UserDB_FrameType_comboBox;
-        private ComboBox UserDB_FrameShape_comboBox;
-        private ComboBox UserDB_FrameMaterial_comboBox;
-        private ComboBox UserDBGlass_comboBox;
+        private CustomComboBox UserDB_FrameType_comboBox;
+        private CustomComboBox UserDB_FrameShape_comboBox;
+        private CustomComboBox UserDB_FrameMaterial_comboBox;
+        private CustomComboBox UserDBGlass_comboBox;
         private Label label3;
         private Label label5;
         private Label label11;

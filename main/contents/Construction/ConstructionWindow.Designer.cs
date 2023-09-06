@@ -47,7 +47,7 @@ namespace main.contents
             label6 = new Label();
             label3 = new Label();
             label5 = new Label();
-            AdditionalWindow_comboBox = new ComboBox();
+            AdditionalWindow_comboBox = new CustomComboBox();
             Name_textBox = new TextBox();
             panel2 = new Panel();
             Size_textBox = new TextBox();
@@ -79,14 +79,14 @@ namespace main.contents
             Ug_unit_label = new Label();
             Ug_textBox = new TextBox();
             Ug_label = new Label();
-            DiIndi_comboBox = new ComboBox();
-            Install_comboBox = new ComboBox();
+            DiIndi_comboBox = new CustomComboBox();
+            Install_comboBox = new CustomComboBox();
             label16 = new Label();
             Spacer_label = new Label();
             label11 = new Label();
-            Frame_comboBox = new ComboBox();
+            Frame_comboBox = new CustomComboBox();
             Frame_label = new Label();
-            Uw_comboBox = new ComboBox();
+            Uw_comboBox = new CustomComboBox();
             label25 = new Label();
             label4 = new Label();
             WindowType_pictureBox = new PictureBox();
@@ -121,7 +121,7 @@ namespace main.contents
             label15 = new Label();
             label14 = new Label();
             WindowFrame_pictureBox = new PictureBox();
-            tabControl1 = new TabControl();
+            tabControl1 = new CustomTabControl();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -1246,6 +1246,22 @@ namespace main.contents
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(977, 239);
             tabControl1.TabIndex = 19;
+            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
+            tabControl1.DisplayStyleProvider.FocusTrack = true;
+            tabControl1.DisplayStyleProvider.HotTrack = true;
+            tabControl1.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
+            tabControl1.DisplayStyleProvider.Opacity = 1F;
+            tabControl1.DisplayStyleProvider.Overlap = 0;
+            tabControl1.DisplayStyleProvider.Padding = new Point(6, 3);
+            tabControl1.DisplayStyleProvider.ShowTabCloser = false;
+            tabControl1.DisplayStyleProvider.TextColor = SystemColors.ControlText;
+            tabControl1.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
+            tabControl1.HotTrack = true;
+            tabControl1.ItemSize = new Size(128, 20);
+            tabControl1.SizeMode = TabSizeMode.Fixed;
             // 
             // ConstructionWindow
             // 
@@ -1291,7 +1307,7 @@ namespace main.contents
         private Label label7;
         private Label label6;
         private Label label5;
-        private ComboBox AdditionalWindow_comboBox;
+        private CustomComboBox AdditionalWindow_comboBox;
         private Panel GeneralPanel;
         private Panel panel2;
         private TextBox Type_textBox;
@@ -1302,14 +1318,14 @@ namespace main.contents
         private RadioButton radioButton2;
         private RadioButton radioButton1;
         private Label label4;
-        private ComboBox DiIndi_comboBox;
-        private ComboBox comboBox9;
-        private ComboBox Install_comboBox;
+        private CustomComboBox DiIndi_comboBox;
+        private CustomComboBox comboBox9;
+        private CustomComboBox Install_comboBox;
         private Label label16;
         private Label Spacer_label;
         private Label label11;
         private Label Frame_label;
-        private ComboBox Uw_comboBox;
+        private CustomComboBox Uw_comboBox;
         private Label label25;
         private Label Psi_open_unit_label;
         private TextBox Psi_g_open_textBox;
@@ -1326,7 +1342,7 @@ namespace main.contents
         private Label Ug_label;
         private Button FrameDB_button;
         private TextBox FrameName_textBox;
-        private ComboBox Frame_comboBox;
+        private CustomComboBox Frame_comboBox;
         private TextBox GlassName_textBox;
         private Button GlassDB_button;
         private TextBox SpacerName_textBox;
@@ -1371,7 +1387,7 @@ namespace main.contents
         private Label label15;
         private Label label14;
         private PictureBox WindowFrame_pictureBox;
-        private TabControl tabControl1;
+        private CustomTabControl tabControl1;
         private TextBox Size_textBox;
         private Label label1;
         private Button ImportSize_button;

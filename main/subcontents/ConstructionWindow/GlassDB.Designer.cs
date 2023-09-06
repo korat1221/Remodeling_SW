@@ -51,7 +51,7 @@
             label12 = new Label();
             Deletebutton = new Button();
             AddUserDB_button = new Button();
-            LE_CL_V_comboBox = new ComboBox();
+            LE_CL_V_comboBox = new CustomComboBox();
             label14 = new Label();
             label3 = new Label();
             label4 = new Label();
@@ -64,9 +64,9 @@
             label11 = new Label();
             label9 = new Label();
             UserDB_Ug_textBox = new TextBox();
-            ArAir_comboBox = new ComboBox();
+            ArAir_comboBox = new CustomComboBox();
             label8 = new Label();
-            SingleDoubleTriple_comboBox = new ComboBox();
+            SingleDoubleTriple_comboBox = new CustomComboBox();
             label7 = new Label();
             Glass_dataGridView = new DataGridView();
             GeneralPanel.SuspendLayout();
@@ -527,7 +527,7 @@
         private Label label12;
         private Button Deletebutton;
         private Button AddUserDB_button;
-        private ComboBox LE_CL_V_comboBox;
+        private CustomComboBox LE_CL_V_comboBox;
         private Label label14;
         private Label label3;
         private Label label4;
@@ -540,9 +540,9 @@
         private Label label11;
         private Label label9;
         private TextBox UserDB_Ug_textBox;
-        private ComboBox ArAir_comboBox;
+        private CustomComboBox ArAir_comboBox;
         private Label label8;
-        private ComboBox SingleDoubleTriple_comboBox;
+        private CustomComboBox SingleDoubleTriple_comboBox;
         private Label label7;
         private DataGridView Glass_dataGridView;
         private Label label6;

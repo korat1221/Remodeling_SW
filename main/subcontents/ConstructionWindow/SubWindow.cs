@@ -48,10 +48,10 @@ namespace main.subcontents.ConstructionWindow
 
         private void Name_textBox_TextChanged(object sender, EventArgs e)
         {
-            if(Name_textBox.Text != null)
+            if (Name_textBox.Text != null)
             {
                 WindowName = Name_textBox.Text.ToString();
-            }          
+            }
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
@@ -261,7 +261,7 @@ namespace main.subcontents.ConstructionWindow
 
         private void UwMethod_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-           if(Uw_comboBox.SelectedItem != null)
+            if (Uw_comboBox.SelectedItem != null)
             {
                 UwMethod = Uw_comboBox.SelectedItem.ToString();
 
@@ -375,17 +375,17 @@ namespace main.subcontents.ConstructionWindow
 
         private void DiIndil_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(DiIndi_comboBox.SelectedItem != null)
+            if (DiIndi_comboBox.SelectedItem != null)
             {
                 DiIndi = DiIndi_comboBox.SelectedItem.ToString();
                 Rule_Uw();
                 Calc_dUinst();
-            }            
+            }
         }
 
         private void Frame_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(Frame_comboBox.SelectedItem != null)
+            if (Frame_comboBox.SelectedItem != null)
             {
                 FrameType = Frame_comboBox.SelectedItem.ToString();
                 switch (FrameType)
@@ -429,13 +429,13 @@ namespace main.subcontents.ConstructionWindow
                     }
                 }
                 catch { }
-            }           
+            }
         }
 
 
         private void Install_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(Install_comboBox.SelectedItem != null)
+            if (Install_comboBox.SelectedItem != null)
             {
                 InstallType = Install_comboBox.SelectedItem.ToString();
 
@@ -453,7 +453,7 @@ namespace main.subcontents.ConstructionWindow
                     }
                 }
                 catch { }
-            }          
+            }
         }
 
 
@@ -499,10 +499,10 @@ namespace main.subcontents.ConstructionWindow
 
         private void Previous_button_Click(object sender, EventArgs e)
         {
-                this.DialogResult = DialogResult.OK;
-                this.Hide();
-                Program.getMenuForm().DoLoadForm(29, OnLoadListProc);
-            
+            this.DialogResult = DialogResult.OK;
+            this.Hide();
+            Program.getMenuForm().DoLoadForm(29, OnLoadListProc);
+
         }
 
         public static bool OnLoadListProc(Form form)
@@ -780,7 +780,7 @@ namespace main.subcontents.ConstructionWindow
                 WindowType_pictureBox.Load(Program.gPath + Image1[0][0]);
                 WindowType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 string[][] Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호프레임이미지", "이미지", "유형1 = '" + FrameType + "' AND 유형2 = '기본형' AND 재료 = '" + FrameMaterial + "'");
-                WindowFrame_pictureBox.Visible= true;
+                WindowFrame_pictureBox.Visible = true;
                 WindowFrame_pictureBox.Load(Program.gPath + Image2[0][0]);
                 WindowFrame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 string[][] Image3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");

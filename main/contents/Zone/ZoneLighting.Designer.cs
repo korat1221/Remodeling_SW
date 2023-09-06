@@ -47,13 +47,13 @@ namespace main.contents
             fc_label = new Label();
             Pj_label = new Label();
             FL_label = new Label();
-            DimmingType_comboBox = new ComboBox();
+            DimmingType_comboBox = new CustomComboBox();
             DimmingType_label = new Label();
-            LightMethod_comboBox = new ComboBox();
+            LightMethod_comboBox = new CustomComboBox();
             LightMethod_label = new Label();
             LightType_label = new Label();
             ControlType_label = new Label();
-            ControlType_comboBox = new ComboBox();
+            ControlType_comboBox = new CustomComboBox();
             light_label = new Label();
             natural_label = new Label();
             NaturalType_label = new Label();
@@ -73,11 +73,11 @@ namespace main.contents
             RenewDi_label = new Label();
             Renew_checkBox = new CheckBox();
             RenewDB_button = new Button();
-            RenewDi_comboBox = new ComboBox();
-            Slope_comboBox = new ComboBox();
+            RenewDi_comboBox = new CustomComboBox();
+            Slope_comboBox = new CustomComboBox();
             Main_pictureBox = new PictureBox();
             type_pictureBox = new PictureBox();
-            tabControl1 = new TabControl();
+            tabControl1 = new CustomTabControl();
             조명정보 = new TabPage();
             L8_textBox = new TextBox();
             L6_textBox = new TextBox();
@@ -103,7 +103,7 @@ namespace main.contents
             Shade4_label = new Label();
             Shade3_label = new Label();
             WindowA_textBox = new TextBox();
-            Shade_comboBox = new ComboBox();
+            Shade_comboBox = new CustomComboBox();
             label3 = new Label();
             label2 = new Label();
             Shade7_label = new Label();
@@ -734,6 +734,22 @@ namespace main.contents
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(488, 272);
             tabControl1.TabIndex = 102;
+            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
+            tabControl1.DisplayStyleProvider.FocusTrack = true;
+            tabControl1.DisplayStyleProvider.HotTrack = true;
+            tabControl1.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
+            tabControl1.DisplayStyleProvider.Opacity = 1F;
+            tabControl1.DisplayStyleProvider.Overlap = 0;
+            tabControl1.DisplayStyleProvider.Padding = new Point(6, 3);
+            tabControl1.DisplayStyleProvider.ShowTabCloser = false;
+            tabControl1.DisplayStyleProvider.TextColor = SystemColors.ControlText;
+            tabControl1.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
+            tabControl1.HotTrack = true;
+            tabControl1.ItemSize = new Size(128, 20);
+            tabControl1.SizeMode = TabSizeMode.Fixed;
             // 
             // 조명정보
             // 
@@ -1537,12 +1553,12 @@ namespace main.contents
         private PictureBox Icon_pictureBox;
         private Label floor_label;
         private Label FloorName_label;
-        private ComboBox ControlType_comboBox;
+        private CustomComboBox ControlType_comboBox;
         private Label LightMethod_label;
         private Label zone_label;
         private Label light_label;
-        private ComboBox LightMethod_comboBox;
-        private ComboBox DimmingType_comboBox;
+        private CustomComboBox LightMethod_comboBox;
+        private CustomComboBox DimmingType_comboBox;
         private Label DimmingType_label;
         private Label LightType_label;
         private Label ControlType_label;
@@ -1564,15 +1580,15 @@ namespace main.contents
         private Button NaturalDB_button;
         private PictureBox type_pictureBox;
         private TextBox LightType_textBox;
-        private TabControl tabControl1;
+        private CustomTabControl tabControl1;
         private TabPage 집광채광정보;
         private TabPage 주창정보;
         private PictureBox Main_pictureBox2;
         private Panel panel4;
         private Label Acam2_label;
-        private ComboBox RenewDi_comboBox;
+        private CustomComboBox RenewDi_comboBox;
         private Panel panel1;
-        private ComboBox Slope_comboBox;
+        private CustomComboBox Slope_comboBox;
         private Button RenewDB_button;
         private CheckBox Renew_checkBox;
         private Label RenewDi_label;
@@ -1591,7 +1607,7 @@ namespace main.contents
         private Label Shade2_label;
         private Label Shade3_label;
         private TextBox WindowA_textBox;
-        private ComboBox Shade_comboBox;
+        private CustomComboBox Shade_comboBox;
         private Label label3;
         private Label label2;
         private Label Shade4_label;
