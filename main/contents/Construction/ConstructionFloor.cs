@@ -59,7 +59,7 @@ namespace main.contents.Construction
         {
             scriptable = true;
 
-            runScript("drawWall([{\"cate\":\"-\",\"width\": 80,\"temper\": 18.660557954943386},{\"cate\":2,\"width\": 80,\"temper\": -4.684837165869034},{\"cate\":-1,\"width\": 80,\"temper\": -5.000000000000002}])");
+            runScript("drawWall([{\"cate\":-1,\"width\": 80,\"temper\": 18.660557954943386},{\"cate\":2,\"width\": 80,\"temper\": -4.684837165869034},{\"cate\":-1,\"width\": 80,\"temper\": -5.000000000000002}])");
 
         }
         public void runScript(string script)
