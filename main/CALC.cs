@@ -111,8 +111,9 @@ namespace main
             }
 
             int i = -1;
-            Program.DB.deleteTable(DB.type.ProjDB, "Zone_HCneed");
-            Program.DB.initTable(DB.type.ProjDB, "Zone_HCneed");
+            Program.DB.deleteTable(DB.type.ProjDB, "Zone_HCneed_Result");
+            Program.DB.initTable(DB.type.ProjDB, "Zone_HCneed_Result");
+            Program.DB.initTable(DB.type.ProjDB, "Zone_Envelope_Result");
             while (++i < zones.Length)
             {
                 //  Zone zone1 = new Zone("1F_Zone001");
@@ -163,7 +164,7 @@ namespace main
                         {
                             MTH = (mth + 1).ToString() + "월";
 
-                            Program.DB.setValue(DB.type.ProjDB, "Zone_HCneed", "번호,이름," +
+                            Program.DB.setValue(DB.type.ProjDB, "Zone_HCneed_Result", "번호,이름," +
                                  "난방_냉방,비이용일_이용일,월," +
                                  "HT_tot,HT_Wall,HT_Roof,HT_Floor,HT_GWall,HT_Door,HT_Win,HT_CW," +
                                  "HT_Di_Wall,HT_Indi_Wall,HT_Di_Roof,HT_Indi_Roof,HT_Di_Win,HT_Indi_Win,HT_Di_Door,HT_Indi_Door," +
@@ -261,32 +262,32 @@ namespace main
                     {
                         if (HC[0][0]== "난방")
                         {
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND 비이용일_이용일 ='비이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND 비이용일_이용일 ='이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방' AND 비이용일_이용일 ='비이용일' and 월 ='" + (mth + 1).ToString() + "월'");
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방' AND  비이용일_이용일 ='이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND 비이용일_이용일 ='비이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND 비이용일_이용일 ='이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방' AND 비이용일_이용일 ='비이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방' AND  비이용일_이용일 ='이용일' and 월 ='" + (mth + 1).ToString() + "월'");
                         }
                         else if (HC[0][0] == "냉방")
                         {
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방'  AND 비이용일_이용일 ='비이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방'  AND 비이용일_이용일 ='이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND 비이용일_이용일 ='비이용일' and 월 ='" + (mth + 1).ToString() + "월'");
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND  비이용일_이용일 ='이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방'  AND 비이용일_이용일 ='비이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방'  AND 비이용일_이용일 ='이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND 비이용일_이용일 ='비이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND  비이용일_이용일 ='이용일' and 월 ='" + (mth + 1).ToString() + "월'");
                         }
                         else if (HC[0][0]== "냉난방")
                         {
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "' AND 난방_냉방 ='난방' AND 비이용일_이용일 ='비이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "' AND 난방_냉방 ='난방' AND 비이용일_이용일 ='이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "' AND 난방_냉방 ='냉방' AND 비이용일_이용일 ='비이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "' AND 난방_냉방 ='냉방' AND 비이용일_이용일 ='이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "' AND 난방_냉방 ='난방' AND 비이용일_이용일 ='비이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "' AND 난방_냉방 ='난방' AND 비이용일_이용일 ='이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "' AND 난방_냉방 ='냉방' AND 비이용일_이용일 ='비이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET 비냉난방존온도 ='' where 번호 = '" + zones_순번[n] + "' AND 난방_냉방 ='냉방' AND 비이용일_이용일 ='이용일' AND 월 ='" + (mth + 1).ToString() + "월'");
                         }
 
                         else
                         {
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND 비이용일_이용일 ='비이용일' and 월 ='" + (mth + 1).ToString() + "월'");
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND  비이용일_이용일 ='이용일' and 월 ='" + (mth + 1).ToString() + "월'");
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방' AND 비이용일_이용일 ='비이용일' and 월 ='" + (mth + 1).ToString() + "월'");
-                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방' AND  비이용일_이용일 ='이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND 비이용일_이용일 ='비이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='난방' AND  비이용일_이용일 ='이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방' AND 비이용일_이용일 ='비이용일' and 월 ='" + (mth + 1).ToString() + "월'");
+                            Delete_row = Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_HCneed_Result SET Qb_day='', Qb_mth='', Qb_a ='' where 번호 = '" + zones_순번[n] + "'AND 난방_냉방 ='냉방' AND  비이용일_이용일 ='이용일' and 월 ='" + (mth + 1).ToString() + "월'");
                         }
                     }
                     catch { }

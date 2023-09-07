@@ -28,9 +28,10 @@ namespace main.contents
         double α, Uvalue, dU, Ueff;
         int SelectRow;
         String[] Material = new String[10];
-        double[] Material_d = new double[10];
+        double[] Material_d = new double[10];//두께
         double[] Material_λ = new double[10];
         double[] Material_R = new double[10];
+        double[] Material_T = new double[12]; //온도
         bool scriptable = false;
 
         public ConstructionRoof()
@@ -752,6 +753,16 @@ namespace main.contents
                     Rtot += Material_R[k];
                 }
                 Rtot = Rsi + Rse + Rtot;
+                double Q = (20 - (-5)) / Rtot;
+
+                Material_T[0] = (20 - Q * Rsi);
+                for (int k = 1; k < Ucalc_dataGridView.RowCount + 1; k++)
+                {
+                    Material_T[k] = (Material_T[k - 1] - Q * Material_R[k - 1]);
+                }
+                Material_T[Ucalc_dataGridView.RowCount] = Material_T[Ucalc_dataGridView.RowCount - 1] - Q * Rse;
+
+
 
                 Material_dtot_textBox.Text = String.Format("{0:F0}", dtot);
                 Material_Rtot_textBox.Text = String.Format("{0:F2}", Rtot);
