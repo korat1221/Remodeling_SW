@@ -16,6 +16,7 @@ using main.subcontents.ConstructionCW;
 using System.Net;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
+using Microsoft.Web.WebView2.Core;
 
 namespace main.contents
 {
@@ -32,6 +33,7 @@ namespace main.contents
         double[] Material_d = new double[10];
         double[] Material_λ = new double[10];
         double[] Material_R = new double[10];
+        bool scriptable = false;
 
         public ConstructionWall()
         {
@@ -50,6 +52,27 @@ namespace main.contents
             //표면열전달저항기준 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, ISO_KS_comboBox, "외벽", "실내외표면열전달저항", "1");
             Load_table();
+            InitializeAsync();
+        }
+        async void InitializeAsync()
+        {
+            await webView21.EnsureCoreWebView2Async(null);
+            webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
+        }
+
+        void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            scriptable = true;
+
+            runScript("drawWall([{\"cate\":\"-\",\"width\": 80,\"temper\": 18.660557954943386},{\"cate\":2,\"width\": 80,\"temper\": -4.684837165869034},{\"cate\":-1,\"width\": 80,\"temper\": -5.000000000000002}])");
+
+        }
+        public void runScript(string script)
+        {
+            if (scriptable)
+            {
+                webView21.CoreWebView2.ExecuteScriptAsync(script);
+            }
         }
 
         private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
@@ -371,7 +394,7 @@ namespace main.contents
                 DiIndi_comboBox.Visible = false;
                 Ucalc_dataGridView.Show();
                 Ucalc_tabPage.Enabled = true;
-                pictureBox3.Visible = true;
+                webView21.Visible = true;
             }
             else if (UMethod == "법규")
             {
@@ -381,7 +404,7 @@ namespace main.contents
                 DiIndi_comboBox.Visible = true;
                 Ucalc_dataGridView.Hide();
                 Ucalc_tabPage.Enabled = false;
-                pictureBox3.Visible = false;
+                webView21.Visible = false;
             }
             else if (UMethod == "진단")
             {
@@ -390,7 +413,7 @@ namespace main.contents
                 DiIndi_comboBox.Visible = true;
                 Ucalc_dataGridView.Hide();
                 Ucalc_tabPage.Enabled = false;
-                pictureBox3.Visible = false;
+                webView21.Visible = false;
             }
         }
 

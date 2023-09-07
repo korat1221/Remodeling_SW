@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Microsoft.Web.WebView2.Core;
 
 namespace main.contents.Construction
 {
@@ -28,6 +29,7 @@ namespace main.contents.Construction
         double[] Material_d = new double[10];
         double[] Material_λ = new double[10];
         double[] Material_R = new double[10];
+        bool scriptable = false;
 
         public ConstructionFloor()
         {
@@ -43,7 +45,31 @@ namespace main.contents.Construction
             //단열수준콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Uvalue_comboBox, "바닥", "단열수준", "3");
             Load_table();
+
+            InitializeAsync();
+
         }
+        async void InitializeAsync()
+        {
+            await webView21.EnsureCoreWebView2Async(null);
+            webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
+        }
+
+        void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            scriptable = true;
+
+            runScript("drawWall([{\"cate\":\"-\",\"width\": 80,\"temper\": 18.660557954943386},{\"cate\":2,\"width\": 80,\"temper\": -4.684837165869034},{\"cate\":-1,\"width\": 80,\"temper\": -5.000000000000002}])");
+
+        }
+        public void runScript(string script)
+        {
+            if (scriptable)
+            {
+                webView21.CoreWebView2.ExecuteScriptAsync(script);
+            }
+        }
+
         private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {
             if (column == 6)
@@ -265,7 +291,7 @@ namespace main.contents.Construction
                 U_textBox.BorderStyle = BorderStyle.None;
                 Ucalc_dataGridView.Show();
                 Ucalc_tabPage.Enabled = true;
-                pictureBox3.Visible = true;
+                webView21.Visible = true;
             }
             else if (UMethod == "법규")
             {
@@ -274,7 +300,7 @@ namespace main.contents.Construction
                 U_textBox.BorderStyle = BorderStyle.None;
                 Ucalc_dataGridView.Hide();
                 Ucalc_tabPage.Enabled = false;
-                pictureBox3.Visible = false;
+                webView21.Visible = false;
             }
             else if (UMethod == "진단")
             {
@@ -282,7 +308,7 @@ namespace main.contents.Construction
                 U_textBox.BorderStyle = BorderStyle.FixedSingle;
                 Ucalc_dataGridView.Hide();
                 Ucalc_tabPage.Enabled = false;
-                pictureBox3.Visible = false;
+                webView21.Visible = false;
             }
         }
 

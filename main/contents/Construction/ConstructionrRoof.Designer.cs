@@ -90,7 +90,6 @@
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             Ucalc_tabPage = new TabPage();
-            pictureBox3 = new PictureBox();
             Rse_textBox = new TextBox();
             label12 = new Label();
             Rsi_textBox = new TextBox();
@@ -106,6 +105,7 @@
             Deletebutton = new Button();
             Ucalc_dataGridView = new DataGridView();
             AddMaterial_button = new Button();
+            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             tabControl1 = new CustomTabControl();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -116,8 +116,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             Ucalc_tabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             tabControl1.SuspendLayout();
             SuspendLayout();
             // 
@@ -816,7 +816,6 @@
             // Ucalc_tabPage
             // 
             Ucalc_tabPage.BackColor = Color.White;
-            Ucalc_tabPage.Controls.Add(pictureBox3);
             Ucalc_tabPage.Controls.Add(Rse_textBox);
             Ucalc_tabPage.Controls.Add(label12);
             Ucalc_tabPage.Controls.Add(Rsi_textBox);
@@ -832,21 +831,13 @@
             Ucalc_tabPage.Controls.Add(Deletebutton);
             Ucalc_tabPage.Controls.Add(Ucalc_dataGridView);
             Ucalc_tabPage.Controls.Add(AddMaterial_button);
-            Ucalc_tabPage.Location = new Point(4, 24);
+            Ucalc_tabPage.Controls.Add(webView21);
+            Ucalc_tabPage.Location = new Point(4, 25);
             Ucalc_tabPage.Name = "Ucalc_tabPage";
             Ucalc_tabPage.Padding = new Padding(3);
             Ucalc_tabPage.Size = new Size(969, 360);
             Ucalc_tabPage.TabIndex = 0;
             Ucalc_tabPage.Text = "열관류율 계산";
-            // 
-            // pictureBox3
-            // 
-            pictureBox3.BackColor = Color.Gainsboro;
-            pictureBox3.Location = new Point(571, 61);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(366, 236);
-            pictureBox3.TabIndex = 136;
-            pictureBox3.TabStop = false;
             // 
             // Rse_textBox
             // 
@@ -1067,15 +1058,22 @@
             AddMaterial_button.UseVisualStyleBackColor = false;
             AddMaterial_button.Click += AddMaterial_button_Click;
             // 
+            // webView21
+            // 
+            webView21.AllowExternalDrop = true;
+            webView21.CreationProperties = null;
+            webView21.DefaultBackgroundColor = Color.White;
+            webView21.Location = new Point(571, 61);
+            webView21.Name = "webView21";
+            webView21.Size = new Size(366, 284);
+            webView21.Source = new Uri("http://localhost:3000/transmit.html?type=roof", UriKind.Absolute);
+            webView21.TabIndex = 98;
+            webView21.ZoomFactor = 1D;
+            // 
             // tabControl1
             // 
             tabControl1.Controls.Add(Ucalc_tabPage);
             tabControl1.Controls.Add(dU_tabPage);
-            tabControl1.Location = new Point(12, 297);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(977, 388);
-            tabControl1.TabIndex = 96;
             tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
@@ -1091,7 +1089,12 @@
             tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
             tabControl1.HotTrack = true;
             tabControl1.ItemSize = new Size(128, 20);
+            tabControl1.Location = new Point(12, 297);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(977, 388);
             tabControl1.SizeMode = TabSizeMode.Fixed;
+            tabControl1.TabIndex = 96;
             // 
             // ConstructionRoof
             // 
@@ -1124,8 +1127,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             Ucalc_tabPage.ResumeLayout(false);
             Ucalc_tabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             tabControl1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -1209,6 +1212,6 @@
         private TextBox dU2_textBox;
         private TextBox dU_label3;
         private Label label1;
-        private PictureBox pictureBox3;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
     }
 }

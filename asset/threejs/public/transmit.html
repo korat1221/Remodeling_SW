@@ -1,0 +1,207 @@
+<html>
+  <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="js/konva.min.js"></script>
+  <style>
+    html,body {
+      overflow: hidden;
+    }
+    .cls-label {
+        position:absolute;
+        background-color:transparent;
+        text-align:right;
+        width:20px;
+        font-size:8pt;
+     }
+     .btn-order {
+        color:RGB(143,169,220);
+        background-color:#fff;
+        border:0;
+        box-shadow: none;
+     }
+     #emptbl > tbody > tr > td {
+        text-align:center;
+     }
+     #emptbl > tbody > tr > td:nth-child(8) {
+        text-align:left;
+     }
+     button {
+        padding-left: 10px;
+        padding-right: 10px;
+     }
+
+    .cls-label-bold {
+        width: 32px;
+        height: 12px;
+        text-align: center;
+        font-size: 11pt;
+    }
+
+    .cls-themo {
+        width:40px;
+        padding: 5px;
+        margin-left: 3px;
+    }
+
+  </style>
+  <body onload="init()">
+    <div id="cont-wall" style="width:320px;height:320px;position:relative"></div>
+    <script>
+
+      function getParam(sname) {
+        var params = location.search.substr(location.search.indexOf("?") + 1);
+        var sval = "";
+
+        params = params.split("&");
+
+        for (var i = 0; i < params.length; i++) {
+            temp = params[i].split("=");
+            if ([temp[0]] == sname) { sval = temp[1]; }
+        }
+
+        return sval;
+      }
+
+      let type = getParam('type');
+
+			function init() {
+
+        if (type === 'roof') {
+          $('#cont-wall').html('<div style="border:0;position:absolute;left:64px;top:28px;right:0px;bottom:144px"><div class="cls-label cls-label-bold" style="position: absolute;left: 116px;top: 162px;">실내</div><div class="cls-label-bold out-label" style="position: absolute;left: 116px;top: -24px;">실외</div><div style="position:absolute;left:64px;top:110px;right:0px;bottom:54px"><div class="cls-label" style="width:64px;height:12px;text-align:center;left: -144px;top: -36px;-webkit-transform: rotate(270deg); -moz-transform: rotate(270deg);-o-transform: rotate(270deg);-ms-transform: rotate(270deg);transform: rotate(270deg);">두께(mm)</div><div class="cls-label" style="position: absolute;width:64px;height:12px;text-align:center;left: 38px;top: 95px;">온도(<sup>o</sup>C)</div></div><div id="tbl-wall" style="overflow: hidden;background-color:#ddd;position:absolute;left:0;top:0;right:0;bottom:0;-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg);-o-transform: rotate(180deg);-ms-transform: rotate(180deg);transform: rotate(180deg);"></div><div id="cvs-wall" style="background-color:transparent;position:absolute;left:0;top:0;right:0;bottom:0"></div>');
+        }
+        else if (type === "floor") {
+          $('#cont-wall').html('<div style="border:0;position:absolute;left:64px;top:28px;right:0px;bottom:144px"><div class="cls-label cls-label-bold out-label" style="position: absolute;left: 116px;top: 162px;">실외</div><div class="cls-label-bold" style="position: absolute;left: 116px;top: -24px;">실내</div><div style="position:absolute;left:64px;top:110px;right:0px;bottom:54px"><div class="cls-label" style="width:64px;height:12px;text-align:center;left: -144px;top: -36px;-webkit-transform: rotate(270deg); -moz-transform: rotate(270deg);-o-transform: rotate(270deg);-ms-transform: rotate(270deg);transform: rotate(270deg);">두께(mm)</div><div class="cls-label" style="position: absolute;width:64px;height:12px;text-align:center;left: 38px;top: 95px;">온도(<sup>o</sup>C)</div></div><div id="tbl-wall" style="overflow: hidden;background-color:#ddd;position:absolute;left:0;top:0;right:0;bottom:0;-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg);-o-transform: rotate(180deg);-ms-transform: rotate(180deg);transform: rotate(180deg);"></div><div id="cvs-wall" style="background-color:transparent;position:absolute;left:0;top:0;right:0;bottom:0"></div>');
+        }
+        else {
+          $('#cont-wall').html('<div style="border:0;position:absolute;left:64px;top:32px;right:64px;bottom:32px"><div class="cls-label cls-label-bold" style="position: absolute;left: -61px;top: 64px;">실내</div><div  class="cls-label-bold out-label" style="position: absolute;left: 207px;top: 64px">실외</div><div style="position:absolute;left:64px;top:32px;right:64px;bottom:32px"><div class="cls-label" style="width:64px;height:12px;text-align:center;left: -144px;top: 87px;-webkit-transform: rotate(270deg); -moz-transform: rotate(270deg);-o-transform: rotate(270deg);-ms-transform: rotate(270deg);transform: rotate(270deg);">온도(<sup>o</sup>C)</div><div class="cls-label" style="position: absolute;width:64px;height:12px;text-align:center;left: -2px;top: 244px;">두께(mm)</div></div><div id="tbl-wall" style="overflow: hidden;background-color:#ddd;position:absolute;left:0;top:0;right:0;bottom:0"></div><div id="cvs-wall" style="background-color:transparent;position:absolute;left:0;top:0;right:0;bottom:0"></div><div class="cls-label" style="top: 27px;left: -30px;font-size: 9pt;font-weight: bold;color: #003eff;background-color:#fff;">20</div>');
+        }
+
+        var htSNum = 1;
+
+        if (type === 'roof' || type === 'floor') {
+          for (i = 0;i <= 5;i++) {
+            $('#cont-wall').append('<div class="cls-label" style="left:34px;top:' + (12 + i * 31) + 'px;">' + ((5 - i) * 100) + '</div>');
+          }
+
+          for (i = 0;i < 5;i++) {
+            $('#cont-wall').append('<div class="cls-label" style="top:210px;left:' + (50 + i * 64) + 'px;">' + (i * 10 - 10).toFixed(2) + '</div>');
+          }
+        }
+        else {
+          for (i = 0;i < 8;i++) {
+            let n = (25 - i * 5);
+            $('#cont-wall').append('<div class="cls-label" style="left:34px;top:' + (25 + i * 36) + 'px;">' + (n != 20 ? n : '') + '</div>');
+          }
+
+          for (i = 0;i <= 5;i++) {
+            $('#cont-wall').append('<div class="cls-label" style="top:290px;left:' + (50 + i * 39) + 'px;">' + (i * 100) + '</div>');
+          }
+        }
+         drawWall([]);
+      }
+
+      function getColor(gubun) {
+        if (type === "roof" || type === "floor") {
+          let colors = {
+            "1":"repeat url('/struct/1_1.png')", // 단열재
+            "2":"repeat url('/struct/1_2.png')", // 콘크리트
+            "3":"repeat url('/struct/1_3.png')", // 조적
+            "4":"repeat url('/struct/1_4.png')", // 패널
+            "5":"repeat url('/struct/1_5.png')", // 미장
+            "6":"repeat url('/struct/1_6.png')", // 기타
+          };
+          return colors[gubun] ? colors[gubun] : "#fff";
+        } else {
+          let colors = {
+            "1":"repeat url('/struct/1.png')", // 단열재
+            "2":"repeat url('/struct/2.png')", // 콘크리트
+            "3":"repeat url('/struct/3.png')", // 조적
+            "4":"repeat url('/struct/4.png')", // 패널
+            "5":"repeat url('/struct/5.png')", // 미장
+            "6":"repeat url('/struct/6.png')", // 기타
+          }
+          return colors[gubun] ? colors[gubun] : "#fff";
+        }
+      }
+
+      function drawWall(arr) {
+        var tot = 0, n = 0, m;
+        var lines = [];
+
+        arr.forEach((el, idx) => {          
+          el.color = getColor(el.cate);
+          tot += el.width;
+        });
+
+        if (type === "roof" || type === "floor") {
+          var height = 148;
+          var html = '<table style="width:100%;border-spacing: 0;height:' + height + 'px">';
+          lines.push((10 + 20) * 6.2);
+          lines.push(154);
+
+          arr.forEach((el, idx) => {
+
+              m = el.width / 3.3;
+              html += '<tr><td style="width:100%;background:' + el.color + ';height:' + m + 'px;background-size:' + (m < 40 ? 'contain' : 'cover') + '"></td></tr>';
+
+              height -= m;
+              n += m + 2;
+              lines.push((10 + el.temper) * 6.2);
+              lines.push(154 - n);
+          });
+
+          if (height > 0) {
+              html += '<tr><td style="background-color:#fff;height:' + height + 'px"></td></tr>';
+          }
+          html += '</table>';
+
+          var stage = new Konva.Stage({
+              container: 'cvs-wall',
+              width: 254,
+              height: 154,
+          });
+        }
+        else {  
+
+          var html = '<table style="width:100%;border-spacing: 0;height:252px"></tr>';
+          lines.push(0);
+          lines.push(254 - (10 + 20) * 7.2);
+
+          arr.forEach((el, idx) => {
+
+              m = el.width/2.75;// / 1.15;
+              html += '<td style="width:' + m + 'px;background:' + el.color + ';height:252px;background-size:' + (m < 38 ? 'contain' : 'cover') + '"></td>';
+
+              n += m + 2;
+              lines.push(n);
+              lines.push(254 - (10 + el.temper) * 7.2);
+          });
+
+          html += '<td style="background-color:#fff;height:252px"></td>';
+          html += '</tr></table>';
+
+          var stage = new Konva.Stage({
+              container: 'cvs-wall',
+              width: 240,
+              height: 254,
+          });
+        }
+
+        $('#tbl-wall').html(html);
+
+        var layer = new Konva.Layer();
+        
+        // add the shape to the layer
+        layer.add(new Konva.Line({
+            points: lines,
+            stroke: '#FF822F',
+            strokeWidth: 5,
+            lineCap: 'round',
+            lineJoin: 'round',
+        }));
+
+        stage.add(layer); 
+      }
+
+    </script>
+  </body>
+</html>
