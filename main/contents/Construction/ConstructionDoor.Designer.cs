@@ -30,7 +30,6 @@
         {
             this.GeneralPanel = new System.Windows.Forms.Panel();
             this.label64 = new System.Windows.Forms.Label();
-            this.AdditionalCW_textBox = new System.Windows.Forms.TextBox();
             this.OldDoor_comboBox = new CustomComboBox();
             this.Type_textBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -176,7 +175,6 @@
             // 
             this.GeneralPanel.BackColor = System.Drawing.Color.White;
             this.GeneralPanel.Controls.Add(this.label64);
-            this.GeneralPanel.Controls.Add(this.AdditionalCW_textBox);
             this.GeneralPanel.Controls.Add(this.OldDoor_comboBox);
             this.GeneralPanel.Controls.Add(this.Type_textBox);
             this.GeneralPanel.Controls.Add(this.label6);
@@ -199,19 +197,6 @@
             this.label64.Size = new System.Drawing.Size(31, 15);
             this.label64.TabIndex = 104;
             this.label64.Text = "명칭";
-            // 
-            // AdditionalCW_textBox
-            // 
-            this.AdditionalCW_textBox.BackColor = System.Drawing.Color.White;
-            this.AdditionalCW_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.AdditionalCW_textBox.Enabled = false;
-            this.AdditionalCW_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.AdditionalCW_textBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.AdditionalCW_textBox.Location = new System.Drawing.Point(630, 30);
-            this.AdditionalCW_textBox.Name = "AdditionalCW_textBox";
-            this.AdditionalCW_textBox.Size = new System.Drawing.Size(67, 15);
-            this.AdditionalCW_textBox.TabIndex = 93;
-            this.AdditionalCW_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // OldDoor_comboBox
             // 
@@ -1815,7 +1800,6 @@
         private TextBox abs_textBox;
         private Label UCW_g_label;
         private CustomComboBox DiIndi_comboBox;
-        private TextBox AdditionalCW_textBox;
         private CustomComboBox OldDoor_comboBox;
         private PictureBox DoorType_pictureBox;
         private Label label7;
