@@ -10,12 +10,30 @@
         {
             int n = Int32.Parse(main.MainContents.selID.Replace("space-", "")) + 1;
             String ID = n.ToString().PadLeft(3, '0');
-            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "주광너비,주광깊이,상인방높이,바닥면적,존번호", "존번호 LIKE '%Zone" + ID + "'");
+            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적,천장고", "존번호 LIKE '%Zone" + ID + "'");
 
             if (rec.Length > 0)
             {
-                textBox1.Text = rec[0][4];
-                textBox4.Text = rec[0][3] == "0" ? rec[0][3] : Double.Parse(rec[0][3]).ToString("#.##");
+                Name_textBox.Text= rec[0][0];
+                Name_textBox1.Text= rec[0][1];
+                textBox2.Text= rec[0][2];
+                Area_textBox.Text= rec[0][3];
+                textBox1.Text= rec[0][4];
+            }
+            else
+            {
+                Name_textBox.Visible= false;
+                Name_textBox1.Visible = false;
+                textBox2.Visible = false;
+                Area_textBox.Visible = false;
+                textBox1.Visible = false;
+
+                label6.Visible= false;
+                label14.Visible= false;
+                label2.Visible= false;
+                label1.Visible= false;
+                label3.Visible= false;
+
             }
         }
     }

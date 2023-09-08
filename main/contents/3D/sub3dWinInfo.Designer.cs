@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new CustomTabControl();
+            this.tabControl1 = new System.Windows.Forms.CustomTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label12 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -91,28 +91,28 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.DisplayStyleProvider.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.tabControl1.DisplayStyleProvider.BorderColorHot = System.Drawing.SystemColors.ControlDark;
+            this.tabControl1.DisplayStyleProvider.CloserColor = System.Drawing.Color.Empty;
+            this.tabControl1.DisplayStyleProvider.FocusTrack = true;
+            this.tabControl1.DisplayStyleProvider.HotTrack = true;
+            this.tabControl1.DisplayStyleProvider.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tabControl1.DisplayStyleProvider.Opacity = 1F;
+            this.tabControl1.DisplayStyleProvider.Overlap = 0;
+            this.tabControl1.DisplayStyleProvider.Padding = new System.Drawing.Point(6, 3);
+            this.tabControl1.DisplayStyleProvider.ShowTabCloser = false;
+            this.tabControl1.DisplayStyleProvider.TextColor = System.Drawing.SystemColors.ControlText;
+            this.tabControl1.DisplayStyleProvider.TextColorDisabled = System.Drawing.SystemColors.ControlDark;
+            this.tabControl1.DisplayStyleProvider.TextColorSelected = System.Drawing.SystemColors.ControlText;
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.HotTrack = true;
+            this.tabControl1.ItemSize = new System.Drawing.Size(128, 20);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(953, 450);
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 0;
-            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
-            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
-            tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
-            tabControl1.DisplayStyleProvider.FocusTrack = true;
-            tabControl1.DisplayStyleProvider.HotTrack = true;
-            tabControl1.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
-            tabControl1.DisplayStyleProvider.Opacity = 1F;
-            tabControl1.DisplayStyleProvider.Overlap = 0;
-            tabControl1.DisplayStyleProvider.Padding = new Point(6, 3);
-            tabControl1.DisplayStyleProvider.ShowTabCloser = false;
-            tabControl1.DisplayStyleProvider.TextColor = SystemColors.ControlText;
-            tabControl1.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
-            tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
-            tabControl1.HotTrack = true;
-            tabControl1.ItemSize = new Size(128, 20);
-            tabControl1.SizeMode = TabSizeMode.Fixed;
             // 
             // tabPage1
             // 
@@ -148,10 +148,10 @@
             this.tabPage1.Controls.Add(this.label8);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 24);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(945, 422);
+            this.tabPage1.Size = new System.Drawing.Size(945, 421);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "창호 정보";
             // 
@@ -457,7 +457,7 @@
             this.Name_textBox.Location = new System.Drawing.Point(42, 34);
             this.Name_textBox.Name = "Name_textBox";
             this.Name_textBox.ReadOnly = true;
-            this.Name_textBox.Size = new System.Drawing.Size(100, 16);
+            this.Name_textBox.Size = new System.Drawing.Size(120, 16);
             this.Name_textBox.TabIndex = 39;
             this.Name_textBox.Text = "    ";
             this.Name_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -512,10 +512,10 @@
             this.tabPage2.Controls.Add(this.pictureBox1);
             this.tabPage2.Controls.Add(this.pictureBox2);
             this.tabPage2.Controls.Add(this.webView22);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(945, 422);
+            this.tabPage2.Size = new System.Drawing.Size(945, 421);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "음영 정보";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -688,7 +688,7 @@
             this.webView22.CreationProperties = null;
             this.webView22.DefaultBackgroundColor = System.Drawing.Color.White;
             this.webView22.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.webView22.Location = new System.Drawing.Point(3, 366);
+            this.webView22.Location = new System.Drawing.Point(3, 365);
             this.webView22.Name = "webView22";
             this.webView22.Size = new System.Drawing.Size(939, 53);
             this.webView22.TabIndex = 0;

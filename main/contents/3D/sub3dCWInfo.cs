@@ -21,29 +21,13 @@ namespace main.contents
         {
             double R1, R2, L1, L2, S1, S2, T1, T2, uw, install;
             string Type, InstallType, FrameMaterial, SingleDoubleType, InstallName, UCWtype;
+            double Area;
 
             String ID = main.MainContents.selID.Replace("board-", "").Replace("_win2", "");
             //string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체,번호", "아이디 = '" + ID + "'");
-            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,구조체번호", "아이디 = '" + ID + "'");
+            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,구조체번호,면적", "아이디 = '" + ID + "'");
 
-            //if (rec.Length > 0)
-            //{
-            //    textBox3.Text = rec[0][2];
-            //    //textBox1.Text = Double.Parse(rec[0][0]).ToString("#.##");
-            //    //textBox2.Text = rec[0][1];
-            //}
-
-            //if (ID.IndexOf("_INWALL_") > 0)
-            //{
-            //    label3.Show();
-            //    label1.Hide();
-            //}
-            //else
-            //{
-            //    label1.Show();
-            //    label3.Hide();
-            //}
-
+         
             //음영정보 이미지로드
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "음영이미지", "이미지", "분류 = '이미지1'");
             pictureBox1.Load(Program.gPath + Image[0][0]);
@@ -127,11 +111,13 @@ namespace main.contents
             }
 
 
-
             // 텍스트정보 
             Name_textBox.Text = rec[0][9];
             Name_textBox1.Text = CWLoad[0][1];
-            Area_textBox.Text = CWLoad[0][2];
+
+            Area = Convert.ToDouble(rec[0][13]);
+            Area_textBox.Text = String.Format("{0:F2}", Area);
+            
             Width_textBox.Text = CWLoad[0][3];
             height_textBox.Text = CWLoad[0][4];
             install_textBox.Text = CWLoad[0][9];

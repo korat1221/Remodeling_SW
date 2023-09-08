@@ -25,6 +25,7 @@ namespace main.contents
         {
             double R1, R2,L1,L2,S1,S2,T1,T2, uw, install;
             string Type, InstallType, FrameMaterial, SingleDoubleType, InstallName;
+            double Area;
 
             string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");   //지역, 프로젝트 조건?
 
@@ -36,25 +37,7 @@ namespace main.contents
             ID = ID.Replace("_win4", "");
             ID = ID.Replace("_win5", "");
 
-            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,구조체번호", "아이디 = '" + ID + "'");
-
-            //if (rec.Length > 0)
-            //{
-            //    string[][] rec2 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "주광너비,주광깊이,상인방높이", "존번호 = '" + rec[0][0] + "'");
-
-            //    textBox23.Text = (rec[0][1] == "0" ? "0" : Double.Parse(rec[0][1]).ToString("#.##"));
-            //    textBox2.Text = (rec[0][2] == "0" ? "0" : Double.Parse(rec[0][2]).ToString("#.##"));
-            //    textBox1.Text = (rec[0][3] == "0" ? "0" : Double.Parse(rec[0][3]).ToString("#.##"));
-            //    textBox3.Text = (rec[0][4] == "0" ? "0" : Double.Parse(rec[0][4]).ToString("#.##"));
-            //    textBox9.Text = (rec[0][5] == "0" ? "0" : Double.Parse(rec[0][5]).ToString("#.##"));
-            //    textBox7.Text = (rec[0][6] == "0" ? "0" : Double.Parse(rec[0][6]).ToString("#.##"));
-            //    textBox8.Text = (rec[0][7] == "0" ? "0" : Double.Parse(rec[0][7]).ToString("#.##"));
-            //    textBox6.Text = (rec[0][8] == "0" ? "0" : Double.Parse(rec[0][8]).ToString("#.##"));
-            //    textBox10.Text = (rec2[0][0] == "0" ? "0" : Double.Parse(rec2[0][0]).ToString("#.##"));
-            //    textBox5.Text = (rec2[0][1] == "0" ? "0" : Double.Parse(rec2[0][1]).ToString("#.##"));
-            //    textBox11.Text = (rec2[0][2] == "0" ? "0" : Double.Parse(rec2[0][2]).ToString("#.##"));
-            //    textBox4.Text = (rec[0][9]);
-            //}
+            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,구조체번호,면적", "아이디 = '" + ID + "'");
 
             //음영정보 이미지로드
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "음영이미지", "이미지", "분류 = '이미지1'");
@@ -93,18 +76,6 @@ namespace main.contents
             //구조체 지정 전까지 면적,너비,높이 빼고 전부 다 안보이게
             if (rec[0][12] == "")
             {
-                label1.Visible = true;
-                Area_textBox.Visible= true;
-                label14.Visible= true;
-                label5.Visible= true;
-                Width_textBox.Visible= true;
-                label15.Visible= true;
-                label8.Visible= true;
-                height_textBox.Visible= true;
-                label16.Visible= true;
-                label8.Visible = true;
-                height_textBox.Visible= true;
-                label16.Visible= true;
                 label4.Visible = false;
                 install_textBox.Visible= false;
                 label2.Visible= false;
@@ -123,6 +94,8 @@ namespace main.contents
                 inst_textBox.Visible = false;
                 WindowType_pictureBox.Visible = false;
                 WindowInstall_pictureBox.Visible= false;
+                label10.Visible= false;
+                label12.Visible= false;
             }
             else
             {
@@ -147,16 +120,17 @@ namespace main.contents
                 WindowInstall_pictureBox.Visible = true;
             }
 
-
+            //정보
+            Name_textBox.Text = rec[0][9];
+            Area = Convert.ToDouble(rec[0][13]);
+            Area_textBox.Text = String.Format("{0:F2}", Area);
 
             if (SubLoad.Length > 0)
             {
                 String[][] MainLoad = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,프레임재료,프레임종류,유리종류,간봉종류,설치유형,설치종류,태양열취득률,빛투과율,Type,설치유형,프레임재료,이중단창,설치종류", "번호 = '" + SubLoad[0][2] + "'");
 
                 // 텍스트정보 
-                Name_textBox.Text = rec[0][9];
                 Name_textBox1.Text = SubLoad[0][1];
-                Area_textBox.Text = SubLoad[0][3];
                 Width_textBox.Text = SubLoad[0][4];
                 height_textBox.Text = SubLoad[0][5];
                 install_textBox.Text = MainLoad[0][6];

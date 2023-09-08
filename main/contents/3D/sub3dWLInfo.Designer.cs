@@ -31,9 +31,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
             this.Name_textBox1 = new System.Windows.Forms.TextBox();
             this.Name_textBox = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -56,39 +53,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.Wallinst_pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.Color.White;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Location = new System.Drawing.Point(135, 44);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(120, 16);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox2
-            // 
-            this.textBox2.BackColor = System.Drawing.Color.White;
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox2.Location = new System.Drawing.Point(135, 82);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(120, 16);
-            this.textBox2.TabIndex = 5;
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox3
-            // 
-            this.textBox3.BackColor = System.Drawing.Color.White;
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox3.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.textBox3.Location = new System.Drawing.Point(51, 12);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(120, 16);
-            this.textBox3.TabIndex = 7;
             // 
             // Name_textBox1
             // 
@@ -128,7 +92,7 @@
             // 
             this.DI_textBox.BackColor = System.Drawing.Color.White;
             this.DI_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.DI_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.DI_textBox.ForeColor = System.Drawing.Color.Black;
             this.DI_textBox.Location = new System.Drawing.Point(327, 58);
             this.DI_textBox.Name = "DI_textBox";
             this.DI_textBox.ReadOnly = true;
@@ -151,7 +115,7 @@
             // 
             this.Area_textBox.BackColor = System.Drawing.Color.White;
             this.Area_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Area_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.Area_textBox.ForeColor = System.Drawing.Color.Black;
             this.Area_textBox.Location = new System.Drawing.Point(91, 58);
             this.Area_textBox.Name = "Area_textBox";
             this.Area_textBox.ReadOnly = true;
@@ -187,7 +151,7 @@
             this.abs_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.abs_textBox.Enabled = false;
             this.abs_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.abs_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.abs_textBox.ForeColor = System.Drawing.Color.Black;
             this.abs_textBox.Location = new System.Drawing.Point(111, 93);
             this.abs_textBox.Name = "abs_textBox";
             this.abs_textBox.ReadOnly = true;
@@ -201,11 +165,11 @@
             this.Type_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Type_textBox.Enabled = false;
             this.Type_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Type_textBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.Type_textBox.Location = new System.Drawing.Point(833, 139);
+            this.Type_textBox.ForeColor = System.Drawing.Color.Black;
+            this.Type_textBox.Location = new System.Drawing.Point(656, 95);
             this.Type_textBox.Name = "Type_textBox";
             this.Type_textBox.ReadOnly = true;
-            this.Type_textBox.Size = new System.Drawing.Size(60, 15);
+            this.Type_textBox.Size = new System.Drawing.Size(80, 15);
             this.Type_textBox.TabIndex = 140;
             this.Type_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -215,11 +179,11 @@
             this.TBType_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TBType_textBox.Enabled = false;
             this.TBType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.TBType_textBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.TBType_textBox.Location = new System.Drawing.Point(801, 356);
+            this.TBType_textBox.ForeColor = System.Drawing.Color.Black;
+            this.TBType_textBox.Location = new System.Drawing.Point(656, 298);
             this.TBType_textBox.Name = "TBType_textBox";
             this.TBType_textBox.ReadOnly = true;
-            this.TBType_textBox.Size = new System.Drawing.Size(60, 15);
+            this.TBType_textBox.Size = new System.Drawing.Size(80, 15);
             this.TBType_textBox.TabIndex = 142;
             this.TBType_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -227,6 +191,7 @@
             // 
             this.uw_textBox.BackColor = System.Drawing.Color.White;
             this.uw_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.uw_textBox.ForeColor = System.Drawing.Color.Black;
             this.uw_textBox.Location = new System.Drawing.Point(327, 94);
             this.uw_textBox.Name = "uw_textBox";
             this.uw_textBox.ReadOnly = true;
@@ -293,17 +258,17 @@
             this.TBType2_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TBType2_textBox.Enabled = false;
             this.TBType2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.TBType2_textBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.TBType2_textBox.Location = new System.Drawing.Point(867, 356);
+            this.TBType2_textBox.ForeColor = System.Drawing.Color.Black;
+            this.TBType2_textBox.Location = new System.Drawing.Point(838, 298);
             this.TBType2_textBox.Name = "TBType2_textBox";
             this.TBType2_textBox.ReadOnly = true;
-            this.TBType2_textBox.Size = new System.Drawing.Size(60, 15);
+            this.TBType2_textBox.Size = new System.Drawing.Size(80, 15);
             this.TBType2_textBox.TabIndex = 152;
             this.TBType2_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Wallinst_pictureBox
             // 
-            this.Wallinst_pictureBox.Location = new System.Drawing.Point(787, 166);
+            this.Wallinst_pictureBox.Location = new System.Drawing.Point(610, 116);
             this.Wallinst_pictureBox.Name = "Wallinst_pictureBox";
             this.Wallinst_pictureBox.Size = new System.Drawing.Size(153, 174);
             this.Wallinst_pictureBox.TabIndex = 154;
@@ -322,7 +287,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(573, 166);
+            this.pictureBox2.Location = new System.Drawing.Point(792, 116);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(153, 174);
             this.pictureBox2.TabIndex = 156;
@@ -334,12 +299,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(984, 450);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Wallinst_pictureBox);
             this.Controls.Add(this.TBType2_textBox);
             this.Controls.Add(this.uw_textBox);
-            this.Controls.Add(this.label11);
             this.Controls.Add(this.TBType_textBox);
             this.Controls.Add(this.Type_textBox);
             this.Controls.Add(this.label7);
@@ -351,9 +316,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.Name_textBox1);
             this.Controls.Add(this.Name_textBox);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.Ucalc_dataGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "sub3dWLInfo";
@@ -367,9 +329,6 @@
         }
 
         #endregion
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
         private TextBox Name_textBox1;
         private TextBox Name_textBox;
         private Label label14;

@@ -28,7 +28,7 @@ namespace main.contents
 
             Name_textBox.Text = value1[0][2];
             //Name_textBox1.Text= value1[0][0];  ---> 구조체 번호는 없지..
-            di_textBox.Text = value1[0][4];
+            //di_textBox.Text = value1[0][4];
             Area = Convert.ToDouble(value1[0][1]);
             Area_textBox.Text = string.Format("{0:F2}", Area);
             near_textBox.Text = value1[0][3];
