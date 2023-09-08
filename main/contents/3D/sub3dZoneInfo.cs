@@ -312,8 +312,25 @@ namespace main.contents
                 {
                     ConstructionCombo.Items.Add(Value[k][1]);
                 }
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,구조체");
-                ConstructionCombo.Value = rec[n][1];
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,구조체번호,구조체","번호 = '" + dataGridView1.Rows[n].Cells[1].Value +"'");
+
+                int a =0; 
+                for (int k = 0; k < Value.Length; k++)
+                {
+                    if (rec[0][1] == Value[k][0])
+                    {
+                        a = a + 1;
+                        break;
+                    }
+                }
+                if(a > 0)
+                {
+                    ConstructionCombo.Value = rec[0][2];
+                }
+                else
+                {
+                    ConstructionCombo.Value = null;
+                }
                 dataGridView1.Rows[n].Cells[10] = ConstructionCombo;
             }
             else { }

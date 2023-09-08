@@ -54,22 +54,24 @@ namespace main.contents
             String ID = main.MainContents.selID.Replace("board-", "");
             string[][] value1 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호,면적,번호", "아이디 = '" + ID + "'");
 
-            if (value1[0][0] == "")
+            if (value1.Length > 0)
             {
-                Ucalc_dataGridView.Visible = false;
-                label7.Visible = false;
-                Base_textBox.Visible = false;
-                label5.Visible = false;
-                DI_textBox.Visible = false;
-                label11.Visible = false;
-                uw_textBox.Visible = false;
-                label1.Visible = false;
-                Name_textBox1.Visible = false;
-                Type_textBox.Visible = false;
-                pictureBox1.Visible = false;
-                pictureBox2.Visible = false;
-                TBType_textBox.Visible = false;
-            }
+                //외피에 구조체 지정 안되어 있을 경우
+                Boolean check = (value1[0][0] != "");
+                Ucalc_dataGridView.Visible = check;
+                label7.Visible = check;
+                Base_textBox.Visible = check;
+                label5.Visible = check;
+                DI_textBox.Visible = check;
+                label11.Visible = check;
+                uw_textBox.Visible = check;
+                label1.Visible = check;
+                Name_textBox1.Visible = check;
+                Type_textBox.Visible = check;
+                pictureBox1.Visible = check;
+                pictureBox2.Visible = check;
+                TBType_textBox.Visible = check;
+            
 
             try
             {
@@ -116,7 +118,7 @@ namespace main.contents
                 }
 
                 //표면열전달저항 및 합계
-           
+
                 Rsi = Convert.ToDouble(Load[0][18]);
                 //Rsi_textBox.Text = string.Format("{0:F2}", Rsi);
                 Rse = Convert.ToDouble(Load[0][17]);
@@ -188,8 +190,8 @@ namespace main.contents
 
 
                 //정보 불러오기
-                
-                Name_textBox1.Text = Load[0][0];
+
+                Name_textBox1.Text = Load[0][1];
                 DI_textBox.Text = Load[0][6];
                 UW = Convert.ToDouble(Load[0][44]);
                 uw_textBox.Text = String.Format("{0:F2}", UW);
@@ -222,4 +224,5 @@ namespace main.contents
             Area_textBox.Text = String.Format("{0:F2}", Area);
         }
     }
+   }
 }

@@ -32,12 +32,12 @@ namespace main.contents
             new StackedHeaderDecorator(Ucalc_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, Ucalc_dataGridView_RowHandle);
         }
 
-      
+
         private void Load_Material_Num()
         {
-            for (int k = 1; k < Ucalc_dataGridView.RowCount-2; k++)
+            for (int k = 1; k < Ucalc_dataGridView.RowCount - 2; k++)
             {
-                Ucalc_dataGridView.Rows[k].Cells[0].Value = k .ToString();
+                Ucalc_dataGridView.Rows[k].Cells[0].Value = k.ToString();
             }
         }
 
@@ -47,24 +47,24 @@ namespace main.contents
 
             string[][] value1 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호,면적,번호", "아이디 = '" + ID + "'");
 
-          
-            //외피에 구조체 지정 안되어 있을 경우
-            if (value1[0][0] == "")
+            if(value1.Length > 0)
             {
-                Ucalc_dataGridView.Visible = false;
-                label7.Visible = false;
-                abs_textBox.Visible = false;
-                label5.Visible = false;
-                DI_textBox.Visible = false;
-                label11.Visible = false;
-                uw_textBox.Visible = false;
-                label1.Visible = false;
-                Name_textBox1.Visible = false;
-                Type_textBox.Visible = false;
-                Wallinst_pictureBox.Visible = false;
-                pictureBox2.Visible = false;
-                TBType_textBox.Visible = false;
-            }
+                //외피에 구조체 지정 안되어 있을 경우
+                Boolean check = (value1[0][0] != "");
+                Ucalc_dataGridView.Visible = check;
+                label7.Visible = check;
+                abs_textBox.Visible = check;
+                label5.Visible = check;
+                DI_textBox.Visible = check;
+                label11.Visible = check;
+                uw_textBox.Visible = check;
+                label1.Visible = check;
+                Name_textBox1.Visible = check;
+                Type_textBox.Visible = check;
+                Wallinst_pictureBox.Visible = check;
+                pictureBox2.Visible = check;
+                TBType_textBox.Visible = check;
+                TBType2_textBox.Visible = check;
 
             try
             {  //데이터그리드뷰 생성
@@ -199,7 +199,7 @@ namespace main.contents
 
 
                 //정보 불러오기
-                Name_textBox1.Text = Load[0][0];
+                Name_textBox1.Text = Load[0][1];
                 DI_textBox.Text = Load[0][6];
                 abs_textBox.Text = Load[0][43];
                 UW = Convert.ToDouble(Load[0][46]);
@@ -243,13 +243,16 @@ namespace main.contents
                 Type_textBox.ForeColor = Color.Black;
                 TBType2_textBox.ForeColor = Color.Black;
 
-            } catch { }
+            }
+            catch { }
 
             //정보 불러오기
             Name_textBox.Text = value1[0][2];
             Area = Convert.ToDouble(value1[0][1]);
             Area_textBox.Text = String.Format("{0:F2}", Area);
         }
+
+     }
         private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {
             //if (column == 0 ||column ==  1 || column == 3|| column == 4)
