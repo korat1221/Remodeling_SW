@@ -680,6 +680,10 @@ namespace main.contents
                 if (e.ColumnIndex == 5)
                 {
                     double d = Convert.ToDouble(Ucalc_dataGridView.Rows[e.RowIndex].Cells[5].Value);
+                    if (Ucalc_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString() == "공기층")
+                    {
+                        Calc_Air_Layer(e.RowIndex, d);
+                    }
                     double λ = Convert.ToDouble(Ucalc_dataGridView.Rows[e.RowIndex].Cells[4].Value);
                     double R = d / 1000 / λ;
                     Ucalc_dataGridView.Rows[e.RowIndex].Cells[6].Value = String.Format("{0:F2}", R);
@@ -732,6 +736,49 @@ namespace main.contents
             }
         }
 
+        private void Calc_Air_Layer(int nRow, double d)
+        {
+            string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "공기층열저항", "두께,대류열저항", "구조체 = '외벽'");
+            double[,] arr_Value = new double[Value.Length, 2];
+            double R_up = 0, R_down = 0, d_up = 0, d_down = 0;
+            double ha, hr, Ramda_air;
+            for (int k = 0; k < Value.Length; k++)
+            {
+                arr_Value[k, 0] = Convert.ToDouble(Value[k][0]);
+                arr_Value[k, 1] = Convert.ToDouble(Value[k][1]);
+            }
+
+            for (int k = 0; k < Value.Length; k++)
+            {
+                if (arr_Value[k, 0] > d)
+                {
+                    d_down = arr_Value[k - 1, 0];
+                    R_down = arr_Value[k - 1, 1];
+                    d_up = arr_Value[k, 0];
+                    R_up = arr_Value[k, 1];
+                    break;
+                }
+            }
+
+            if (d > arr_Value[Value.Length - 1, 0])
+            {
+                d_down = arr_Value[Value.Length - 1, 0];
+                R_down = arr_Value[Value.Length - 1, 1];
+                d_up = arr_Value[Value.Length - 1, 0];
+                R_up = arr_Value[Value.Length - 1, 1];
+            }
+
+            if (d_up == d_down)
+            { ha = 1 / R_up; }
+            else { ha = 1 / ((R_up - R_down) / (d_up - d_down) * (d - d_up) + R_up); }
+
+            hr = 5.1 / (1 / 0.9 + 1 / 0.9 - 1);
+
+            Ramda_air = d / 1000 * (hr + ha);
+
+            Ucalc_dataGridView.Rows[nRow].Cells[4].Value = String.Format("{0:F2}", Ramda_air);
+
+        }
         private void Calc_U()
         {
             if (Ucalc_dataGridView.RowCount > 0)

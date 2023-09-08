@@ -34,7 +34,11 @@ namespace main.subcontents
             MaterialType_comboBox.Items.Add("조적");
             MaterialType_comboBox.Items.Add("패널");
             MaterialType_comboBox.Items.Add("미장");
-            MaterialType_comboBox.Items.Add("기타");
+            MaterialType_comboBox.Items.Add("목재");
+            MaterialType_comboBox.Items.Add("금속");
+            MaterialType_comboBox.Items.Add("타일");
+            MaterialType_comboBox.Items.Add("지중");
+            MaterialType_comboBox.Items.Add("공기층");
             MaterialType_comboBox.SelectedIndex = 0;
         }
         private void MaterialType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -50,18 +54,22 @@ namespace main.subcontents
         {
             string[][] Type2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "종류2", "구분 = '" + MaterialType + "'");
             List.Clear();
-            List.Add(Type2[0][0]);
-            for (int n = 1; n < Type2.Length; n++)
+            if(Type2.Length >0 )
             {
-                if (Type2[n - 1][0] != Type2[n][0])
+                List.Add(Type2[0][0]);
+                for (int n = 1; n < Type2.Length; n++)
                 {
-                    List.Add(Type2[n][0]);
+                    if (Type2[n - 1][0] != Type2[n][0])
+                    {
+                        List.Add(Type2[n][0]);
+                    }
                 }
+                string[] Array = List.ToArray();
+                UserDB_Type1_comboBox.Items.Clear();
+                UserDB_Type1_comboBox.Items.AddRange(Array);
+                UserDB_Type1_comboBox.SelectedIndex = 0;
             }
-            string[] Array = List.ToArray();
-            UserDB_Type1_comboBox.Items.Clear();
-            UserDB_Type1_comboBox.Items.AddRange(Array);
-            UserDB_Type1_comboBox.SelectedIndex = 0;
+          
         }
 
         void load_tableDB()
@@ -84,6 +92,11 @@ namespace main.subcontents
             table.Columns.Add("투습저항계수" + Environment.NewLine + "wet", typeof(string));
             table.Columns.Add("비고", typeof(string));
 
+            if(MaterialType=="공기층")
+            {
+                table.Rows.Add("M_000", "표준", "공기층",null,null,"0");
+            }
+            else { table.Rows.Clear(); }
             try
             {
                 string[][] User_DB = Program.DB.getValue(DB.type.ProjDB, "User_Material", "번호,DB유형,재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '" + MaterialType + "'");
