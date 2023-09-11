@@ -80,6 +80,7 @@ namespace main.subcontents.HeatingSystem
                     String[][] ZoneValve = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필", "존번호 = '" + SelectZone_split[n].ToString() + "'");
                     //Program.DB.querySQL(DB.type.ProjDB, "존번호,존이름,용도프로필 FROM Heating_ce_Form  AS a INNER JOIN  ZoneGeneral_Form AS b ON a.존번호 = b.존번호 where a.난방시스템 = '" + SystemNum + "'");
 
+                
                     ceZone_dataGridView.Rows.Add();
                     String[][] 층 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "존 = '" + ZoneValve[0][0] + "'");
                     ceZone_dataGridView.Rows[n].Cells[0].Value = n + 1; //번호

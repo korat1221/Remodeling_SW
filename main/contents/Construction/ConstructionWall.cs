@@ -894,7 +894,7 @@ namespace main.contents
                 {
                     Material_T[k] = (Material_T[k - 1] - Q * Material_R[k - 1]);
                 }
-                Material_T[Ucalc_dataGridView.RowCount + 1] = Material_T[Ucalc_dataGridView.RowCount - 1] - Q * Rse;
+                Material_T[Ucalc_dataGridView.RowCount + 1] = Material_T[Ucalc_dataGridView.RowCount] - Q * Rse;
 
                 Material_dtot_textBox.Text = String.Format("{0:F0}", dtot);
                 Material_Rtot_textBox.Text = String.Format("{0:F2}", Rtot);
@@ -1001,6 +1001,13 @@ namespace main.contents
 
         private void Save()
         {
+            if (TBName_textBox.Text == "열교없음")
+            {
+                TBType = null; TBName = null; LinearPoint = null;
+                A = 0; B = 0; C = 0; PsiKai = 0; PerArea = 0;
+                Calc_dU();
+                Calc_Ueff();
+            }
             Program.DB.setValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭,Type,기존외벽,덧댐커튼월,U적용방법,직접간접,구조유형,열교유형,열교종류,외장재색,표면열전달저항기준,선형점형," +
                 "A,B,C,PsiKai,단위면적당적용," +
                 "Rse,Rsi,두께합계,열저항합계,단열재두께," +

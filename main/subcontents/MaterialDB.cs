@@ -35,7 +35,7 @@ namespace main.subcontents
             MaterialType_comboBox.Items.Add("패널");
             MaterialType_comboBox.Items.Add("미장");
             MaterialType_comboBox.Items.Add("목재");
-            MaterialType_comboBox.Items.Add("금속");
+            MaterialType_comboBox.Items.Add("금속재");
             MaterialType_comboBox.Items.Add("타일");
             MaterialType_comboBox.Items.Add("지중");
             MaterialType_comboBox.Items.Add("공기층");

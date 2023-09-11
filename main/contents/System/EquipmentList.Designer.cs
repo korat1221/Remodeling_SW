@@ -40,7 +40,6 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
-            button1 = new Button();
             label4 = new Label();
             Icon_pictureBox = new PictureBox();
             tabControl1 = new CustomTabControl();
@@ -83,7 +82,6 @@ namespace main.contents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(button1);
             GeneralPanel.Controls.Add(label4);
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Location = new Point(12, 12);
@@ -91,21 +89,6 @@ namespace main.contents
             GeneralPanel.Size = new Size(977, 57);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
-            // 
-            // button1
-            // 
-            button1.BackColor = SystemColors.ControlLight;
-            button1.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            button1.FlatStyle = FlatStyle.System;
-            button1.Font = new Font("나눔고딕", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(465, 17);
-            button1.Margin = new Padding(0);
-            button1.Name = "button1";
-            button1.Size = new Size(47, 23);
-            button1.TabIndex = 102;
-            button1.Text = "Copy";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
             // 
             // label4
             // 
@@ -134,11 +117,6 @@ namespace main.contents
             tabControl1.Controls.Add(Solar_tabPage);
             tabControl1.Controls.Add(Pump_tabPage);
             tabControl1.Controls.Add(ce_tabPage);
-            tabControl1.Location = new Point(12, 75);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(977, 643);
-            tabControl1.TabIndex = 145;
             tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
@@ -154,7 +132,12 @@ namespace main.contents
             tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
             tabControl1.HotTrack = true;
             tabControl1.ItemSize = new Size(128, 20);
+            tabControl1.Location = new Point(12, 75);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(977, 643);
             tabControl1.SizeMode = TabSizeMode.Fixed;
+            tabControl1.TabIndex = 145;
             // 
             // Boiler_tabPage
             // 
@@ -166,10 +149,10 @@ namespace main.contents
             Boiler_tabPage.Controls.Add(Boiler_Copy_button);
             Boiler_tabPage.Controls.Add(Boiler_Remove_button);
             Boiler_tabPage.Controls.Add(UserBoiler_Add_button);
-            Boiler_tabPage.Location = new Point(4, 24);
+            Boiler_tabPage.Location = new Point(4, 25);
             Boiler_tabPage.Name = "Boiler_tabPage";
             Boiler_tabPage.Padding = new Padding(3);
-            Boiler_tabPage.Size = new Size(969, 615);
+            Boiler_tabPage.Size = new Size(969, 614);
             Boiler_tabPage.TabIndex = 6;
             Boiler_tabPage.Text = "보일러";
             Boiler_tabPage.UseVisualStyleBackColor = true;
@@ -313,39 +296,39 @@ namespace main.contents
             // HP_tabPage
             // 
             HP_tabPage.BackColor = Color.White;
-            HP_tabPage.Location = new Point(4, 24);
+            HP_tabPage.Location = new Point(4, 25);
             HP_tabPage.Name = "HP_tabPage";
             HP_tabPage.Padding = new Padding(3);
-            HP_tabPage.Size = new Size(969, 615);
+            HP_tabPage.Size = new Size(969, 614);
             HP_tabPage.TabIndex = 2;
             HP_tabPage.Text = "히트펌프";
             // 
             // AS_tabPage
             // 
-            AS_tabPage.Location = new Point(4, 24);
+            AS_tabPage.Location = new Point(4, 25);
             AS_tabPage.Name = "AS_tabPage";
             AS_tabPage.Padding = new Padding(3);
-            AS_tabPage.Size = new Size(969, 615);
+            AS_tabPage.Size = new Size(969, 614);
             AS_tabPage.TabIndex = 3;
             AS_tabPage.Text = "흡수식냉온수기";
             AS_tabPage.UseVisualStyleBackColor = true;
             // 
             // DH_tabPage
             // 
-            DH_tabPage.Location = new Point(4, 24);
+            DH_tabPage.Location = new Point(4, 25);
             DH_tabPage.Name = "DH_tabPage";
             DH_tabPage.Padding = new Padding(3);
-            DH_tabPage.Size = new Size(969, 615);
+            DH_tabPage.Size = new Size(969, 614);
             DH_tabPage.TabIndex = 4;
             DH_tabPage.Text = "지역난방";
             DH_tabPage.UseVisualStyleBackColor = true;
             // 
             // Solar_tabPage
             // 
-            Solar_tabPage.Location = new Point(4, 24);
+            Solar_tabPage.Location = new Point(4, 25);
             Solar_tabPage.Name = "Solar_tabPage";
             Solar_tabPage.Padding = new Padding(3);
-            Solar_tabPage.Size = new Size(969, 615);
+            Solar_tabPage.Size = new Size(969, 614);
             Solar_tabPage.TabIndex = 5;
             Solar_tabPage.Text = "태양열시스템";
             Solar_tabPage.UseVisualStyleBackColor = true;
@@ -357,10 +340,10 @@ namespace main.contents
             Pump_tabPage.Controls.Add(Pump_Copy_button);
             Pump_tabPage.Controls.Add(Pump_Remove_button);
             Pump_tabPage.Controls.Add(Pump_Add_button);
-            Pump_tabPage.Location = new Point(4, 24);
+            Pump_tabPage.Location = new Point(4, 25);
             Pump_tabPage.Name = "Pump_tabPage";
             Pump_tabPage.Padding = new Padding(3);
-            Pump_tabPage.Size = new Size(969, 615);
+            Pump_tabPage.Size = new Size(969, 614);
             Pump_tabPage.TabIndex = 7;
             Pump_tabPage.Text = "펌프";
             Pump_tabPage.UseVisualStyleBackColor = true;
@@ -473,10 +456,10 @@ namespace main.contents
             ce_tabPage.Controls.Add(ce_Copy_button);
             ce_tabPage.Controls.Add(ce_Remove_button);
             ce_tabPage.Controls.Add(ce_Add_button);
-            ce_tabPage.Location = new Point(4, 24);
+            ce_tabPage.Location = new Point(4, 25);
             ce_tabPage.Name = "ce_tabPage";
             ce_tabPage.Padding = new Padding(3);
-            ce_tabPage.Size = new Size(969, 615);
+            ce_tabPage.Size = new Size(969, 614);
             ce_tabPage.TabIndex = 8;
             ce_tabPage.Text = "공급설비";
             ce_tabPage.UseVisualStyleBackColor = true;
@@ -638,6 +621,5 @@ namespace main.contents
         private Button ce_Copy_button;
         private Button ce_Remove_button;
         private Button ce_Add_button;
-        private Button button1;
     }
 }

@@ -1160,7 +1160,6 @@ namespace main.contents
                         설치위치comboBox.Items.Add("내벽 설치");
                         설치위치comboBox.Items.Add("외벽 설치");
                         설치위치comboBox.Items.Add("창호측 설치");
-                        설치위치comboBox.Items.Add("창호측 설치");
                         ce_dataGridView.Rows[nRow].Cells[7] = 설치위치comboBox;
                     }
                     else
@@ -1266,16 +1265,15 @@ namespace main.contents
                 "보일러종류,보일러대수," +
                 "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수," +
                 "공급설비1종류,공급설비2종류," +
-                "축열유무,축열펌프유무,축열펌프,축열용량"
+                "축열유무,축열펌프유무,축열펌프,축열용량," +
+                "배관관경,배관보온두께,보온열전도율,배관보온재"
             , "'" + Num_textBox.Text + "','" + Name + "','" + SelectZone_nonsplit + "','" +
                 SystemLoacation + "','" + SLRL + "','" + Complex + "','" + MainSystem + "','" + Sub1System + "','" + Sub2System + "','" +
                 SelectBoiler_nonsplit + "','" + BoilerNum_nonsplit + "','" +
                 PumpUse + "','" + PumpMethod + "','" + Pump1 + "','" + Pump2 + "','" + Pump1Valve + "','" + Pump2Valve + "','" + Pump1Control + "','" + Pump2Control + "','" + Pump1Num.ToString() + "','" + Pump2Num.ToString() + "','" +
                 ce1Type + "','" + ce2Type + "','" +
-                StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "'", "번호");
-
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,배관관경,배관보온두께,보온열전도율,배관보온재"
-            , "'" + Num_textBox.Text + "','" + PipeD.ToString() + "','" + PipeInsD.ToString() + "','" + PipeIns_Ramda.ToString() + PipeIns + "'", "번호");
+                StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "','" +
+                PipeD.ToString() + "','" + PipeInsD.ToString() + "','" + PipeIns_Ramda.ToString() + "','" + PipeIns + "'", "번호");
 
             this.DialogResult = DialogResult.OK;
             this.Hide();

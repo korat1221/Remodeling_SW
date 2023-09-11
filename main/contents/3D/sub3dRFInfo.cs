@@ -209,7 +209,9 @@ namespace main.contents
                     abs_textBox.Text = Load[0][42];
                     UW = Convert.ToDouble(Load[0][45]);
                     uw_textBox.Text = String.Format("{0:F2}", UW);
-                    Type_textBox.Text = Load[0][6];
+                    if (Load[0][8] == null || Load[0][8] == "")
+                    { Type_textBox.Text = ""; }
+                    else { Type_textBox.Text = Load[0][6]; }
                     TBType_textBox.Text = Load[0][7];
                     TBType2_textBox.Text = Load[0][8];
 
