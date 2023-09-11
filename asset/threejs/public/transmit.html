@@ -102,22 +102,24 @@
       function getColor(gubun) {
         if (type === "roof" || type === "floor") {
           let colors = {
-            "1":"repeat url('/struct/1_1.png')", // 단열재
-            "2":"repeat url('/struct/1_2.png')", // 콘크리트
-            "3":"repeat url('/struct/1_3.png')", // 조적
-            "4":"repeat url('/struct/1_4.png')", // 패널
-            "5":"repeat url('/struct/1_5.png')", // 미장
-            "6":"repeat url('/struct/1_6.png')", // 기타
+            "단열재":"repeat url('/struct/1_1.png')", // 단열재
+            "콘크리트":"repeat url('/struct/1_2.png')", // 콘크리트
+            "조적":"repeat url('/struct/1_3.png')", // 조적
+            "패널":"repeat url('/struct/1_4.png')", // 패널
+            "미장":"repeat url('/struct/1_5.png')", // 미장
+            "기타":"repeat url('/struct/1_6.png')", // 기타
+            "공기층":"#fff",
           };
           return colors[gubun] ? colors[gubun] : "#fff";
         } else {
           let colors = {
-            "1":"repeat url('/struct/1.png')", // 단열재
-            "2":"repeat url('/struct/2.png')", // 콘크리트
-            "3":"repeat url('/struct/3.png')", // 조적
-            "4":"repeat url('/struct/4.png')", // 패널
-            "5":"repeat url('/struct/5.png')", // 미장
-            "6":"repeat url('/struct/6.png')", // 기타
+            "단열재":"repeat url('/struct/1.png')", // 단열재
+            "콘크리트":"repeat url('/struct/2.png')", // 콘크리트
+            "조적3":"repeat url('/struct/3.png')", // 조적
+            "패널":"repeat url('/struct/4.png')", // 패널
+            "미장":"repeat url('/struct/5.png')", // 미장
+            "기타":"repeat url('/struct/6.png')", // 기타
+            "공기층":"#fff",
           }
           return colors[gubun] ? colors[gubun] : "#fff";
         }

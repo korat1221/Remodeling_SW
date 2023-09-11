@@ -894,14 +894,26 @@ namespace main.contents
                 {
                     Material_T[k] = (Material_T[k - 1] - Q * Material_R[k - 1]);
                 }
-                Material_T[Ucalc_dataGridView.RowCount] = Material_T[Ucalc_dataGridView.RowCount - 1] - Q * Rse;
-
-
+                Material_T[Ucalc_dataGridView.RowCount + 1] = Material_T[Ucalc_dataGridView.RowCount - 1] - Q * Rse;
 
                 Material_dtot_textBox.Text = String.Format("{0:F0}", dtot);
                 Material_Rtot_textBox.Text = String.Format("{0:F2}", Rtot);
                 Uvalue = 1 / Rtot;
                 U_textBox.Text = string.Format("{0:F3}", Uvalue);
+
+                int i = 0;
+                int count = Ucalc_dataGridView.RowCount + 1;
+                string s = "{\"cate\":\"---\",\"width\": 80,\"temper\":  " + Material_T[0] + "},";
+
+                while (++i < count)
+                {
+                    s += "{\"cate\":\"" + Ucalc_dataGridView.Rows[i - 1].Cells[2].Value.ToString() + "\",\"width\": " + Material_d[i - 1] + ",\"temper\":  " + Material_T[i] + "},";
+                }
+
+                s += "{\"cate\":\"---\",\"width\": 80,\"temper\":  " + Material_T[i] + "},";
+
+                runScript("drawWall([" + s + "])");
+
             }
             else { return; }
         }
