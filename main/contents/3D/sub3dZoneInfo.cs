@@ -408,7 +408,7 @@ namespace main.contents
                         num = num.Replace("_CW_", "__");
                         num = num.Replace("__", tcode);
 
-                        ret += "{\"id0\":\"" + num0 + "\",\"id\":\"" + num + "\",\"type\":\"" + Type + "\",\"wtype\":\"" + CWType + "\"},";
+                        ret += "{\"id0\":\"" + id + "\",\"id\":\"" + num + "\",\"type\":\"" + Type + "\",\"wtype\":\"" + CWType + "\"},";
 
                         Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,외피유형,커튼월부위", "'" + id + "','" + num + "','" + Type + "','" + CWType + "'", "아이디");
 
@@ -458,7 +458,7 @@ namespace main.contents
                     }
                 }
             }
-            redrawList();
+ //           redrawList();
 
             MessageBox.Show("저장되었습니다.");
 

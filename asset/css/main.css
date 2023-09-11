@@ -4,6 +4,7 @@ html,body {
    border: 0; 
    height: 100%;
    overflow: hidden;
+   outline:none;
 } 
 .cont-main {
     width:1700px;

@@ -225,6 +225,19 @@ namespace main
                 }
             }
         }
+        public void loadMainMenu(int idx)
+        {
+            foreach (Form openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "FormMain")
+                {
+                    MainContents f = (MainContents)(((FormMain)openForm).splitContainer1.Panel1.Controls[0]);
+
+                    f.runScript("load(" + idx + ")");
+                    return;
+                }
+            }
+        }
 
         private String getRandomString()
         {

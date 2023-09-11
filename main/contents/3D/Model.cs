@@ -98,7 +98,7 @@ namespace main.contents
                     String json = s.Substring(n + 3);
                     Program.UTIL.write3DModel(Program.ProjName + ".json", json);
                     Program.DB.executeSQL(DB.type.ProjDB, s.Substring(0, n));
-                    Program.UTIL.reloadWebCtrl();
+       //             Program.UTIL.reloadWebCtrl();
 
                     string[][] Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "외피유형 = '창호'");
                     if(Win.Length> 0)
@@ -129,7 +129,7 @@ namespace main.contents
                             zoneshade.Save();
                         }                       
                     }
-                   
+                    Program.UTIL.loadMainMenu(2);
                 }
                 else
                 {

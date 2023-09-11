@@ -762,10 +762,10 @@
 			}
 
 			function updateObjInfo(arr) {
-				let _getWall = (wall, tid) => {
+				let _getWall = (wall, id) => {
 					for (const [cardi, value] of Object.entries(wall)) {
 						for (const [j, el] of Object.entries(value)) {
-							if (el.tid == tid) {
+							if (el.id == id) {
 								return el;
 							}
 						}
