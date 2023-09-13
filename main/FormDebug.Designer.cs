@@ -41,6 +41,7 @@
             comboBox3 = new ComboBox();
             label1 = new Label();
             label2 = new Label();
+            button7 = new Button();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
@@ -163,11 +164,22 @@
             label2.TabIndex = 12;
             label2.Text = "다중콤보박스";
             // 
+            // button7
+            // 
+            button7.Location = new Point(23, 570);
+            button7.Name = "button7";
+            button7.Size = new Size(187, 23);
+            button7.TabIndex = 13;
+            button7.Text = "난방시스템 계산하기";
+            button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
+            // 
             // FormDebug
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 633);
+            Controls.Add(button7);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(comboBox3);
@@ -205,5 +217,6 @@
         private ComboBox comboBox3;
         private Label label1;
         private Label label2;
+        private Button button7;
     }
 }

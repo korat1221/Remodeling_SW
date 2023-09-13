@@ -94,5 +94,13 @@ namespace main
         private void OnGormShown(object sender, EventArgs e)
         {
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Program.CALC.run(new string[] {
+                "난방시스템 계산"
+            });
+
+        }
     }
 }

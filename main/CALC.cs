@@ -24,7 +24,7 @@ namespace main
 
             _calculations["존 계산"] = new Func<bool>(ZoneCalc);
 
-            _calculations["존 계산 결과 저장"] = new Func<bool>(ZoneCalcSave);
+            _calculations["난방시스템 계산"] = new Func<bool>(HeatingSystemCalc);
         }
 
         private static bool ZoneCalc()
@@ -302,9 +302,73 @@ namespace main
             return true;
         }
 
-        private static bool ZoneCalcSave()
+        private static bool HeatingSystemCalc()
         {
+            string[][] HeatingNum = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호");
+            int i = -1;
+            while (++i < HeatingNum.Length)
+            {
+                Cal_Heating Heating1 = new Cal_Heating(HeatingNum[i][0]);
 
+                Heating1.Calc_thrL();
+                Heating1.Calc_beta_ce();
+                Heating1.Calc_Qce();
+                Heating1.Calc_beta_d();
+                Heating1.Calc_Qd();
+                Heating1.Calc_beta_s();
+                Heating1.Calc_Qh_s();
+                Heating1.Calc_beta_gen();
+                Heating1.Calc_Qh_gen_Boiler();
+
+                //Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Result", "번호," +
+                //               "월," +
+                //               "HT_tot,HT_InWall,HT_Slab,HT_Wall,HT_Roof,HT_Floor,HT_GWall,HT_Door,HT_Win,HT_CW," +
+                //               "HT_Di_Wall,HT_Indi_Wall,HT_Di_Roof,HT_Indi_Roof,HT_Di_Win,HT_Indi_Win,HT_Di_Door,HT_Indi_Door," +
+                //               "HT_TB_tot,HT_TB_Wall,HT_TB_Roof,HT_TB_Floor,HT_TB_Gwall,HT_TB_Win,HT_TB_Door,HT_TB_CW," +
+                //               "nmech,nz,ninf,nwin," +
+                //               "HV_tot,HV_inf,HV_win,HV_z,HV_mech," +
+                //               "H_tot,tao,dwe_mth,dwd_mth,theta_i,theta_e," +
+                //               "QTsink_tot,QT_u_sink,QTsink_Wall,QTsink_Roof,QTsink_Floor,QTsink_GWall,QTsink_Door,QTsink_Win,QTsink_CW," +
+                //               "QTsource_tot,QT_u_source,QTsource_Wall,QTsource_Roof,QTsource_Floor,QTsource_GWall,QTsource_Door,QTsource_Win,QTsource_CW," +
+                //               "QSopsink_tot,QSopsource_tot,QStr_tot," +
+                //               "QSopsink_Wall,QSopsink_Roof,QSopsink_Door,QSopsink_CW_p," +
+                //               "QSopsource_Wall,QSopsource_Roof,QSopsource_Door,QSopsource_CW_p," +
+                //               "QStr_Win,QStr_CW," +
+                //               "QVsink_tot,QV_inf_sink,QV_win_sink,QV_z_sink,QV_mech_sink," +
+                //               "QVsource_tot,QV_inf_source,QV_win_source,QV_z_source,QV_mech_source," +
+                //               "Q_DHU_win,Q_DHU_mech,Q_DHU_tot," +
+                //               "QI_tot,QI_L," +
+                //               "QI_P,QI_fac,QI_Humidity," +
+                //               "Qsink,Qsource,gamma,a,eta,dQc_b,dQc_sink," +
+                //               "Qb_day," +
+                //               "Qb_mth," +
+                //               "Qb_a,Q_max, t_max,비냉난방존온도",
+                //                "'" + zones_순번[i] + "','" + zone1.zoneName + "','" +
+                //                HC + "','" + WEWD + "','" + MTH + "','" +
+                //                zone1.Zone_HT_tot.ToString() + "','" + zone1.Zone_HT_Inwall.ToString() + "','" + zone1.Zone_HT_Slab.ToString() + "','" + zone1.Zone_HT_Wall.ToString() + "','" + zone1.Zone_HT_Roof.ToString() + "','" + zone1.Zone_HT_Floor.ToString() + "','" + zone1.Zone_HT_GWall.ToString() + "','" + zone1.Zone_HT_Door.ToString() + "','" + zone1.Zone_HT_Win.ToString() + "','" + zone1.Zone_HT_CW.ToString() + "','" +
+                //                zone1.Zone_HT_Di_Wall.ToString() + "','" + zone1.Zone_HT_Indi_Wall.ToString() + "','" + zone1.Zone_HT_Di_Roof.ToString() + "','" + zone1.Zone_HT_Indi_Roof.ToString() + "','" + zone1.Zone_HT_Di_Win.ToString() + "','" + zone1.Zone_HT_Indi_Win.ToString() + "','" + zone1.Zone_HT_Di_Door.ToString() + "','" + zone1.Zone_HT_Indi_Door.ToString() + "','" +
+                //                zone1.Zone_HT_TB_tot.ToString() + "','" + zone1.Zone_HT_TB_Wall.ToString() + "','" + zone1.Zone_HT_TB_Roof.ToString() + "','" + zone1.Zone_HT_TB_Floor.ToString() + "','" + zone1.Zone_HT_TB_GWall.ToString() + "','" + zone1.Zone_HT_TB_Win.ToString() + "','" + zone1.Zone_HT_TB_Door.ToString() + "','" + zone1.Zone_HT_TB_CW.ToString() + "','" +
+                //                zone1.nmech[wewd].ToString() + "','" + zone1.nz[wewd].ToString() + "','" + zone1.ninf[wewd].ToString() + "','" + zone1.nwin[wewd].ToString() + "','" +
+                //                zone1.Zone_HV_tot[wewd].ToString() + "','" + zone1.Zone_HV_inf[wewd].ToString() + "','" + zone1.Zone_HV_win[wewd].ToString() + "','" + zone1.Zone_HV_z[wewd].ToString() + "','" + zone1.Zone_HV_mech[wewd].ToString() + "','" +
+                //                zone1.Zone_H_tot[wewd].ToString() + "','" + zone1.tao[wewd].ToString() + "','" + zone1.dwe_mth[mth].ToString() + "','" + zone1.dwd_mth[mth].ToString() + "','" + zone1.theta_i[hc, wewd, mth].ToString() + "','" + zone1.theta_e[mth].ToString() + "','" +
+                //                zone1.QTsink_tot[hc, wewd, mth].ToString() + "','" + zone1.QT_u_sink[hc, wewd, mth].ToString() + "','" + zone1.QTsink_Wall[hc, wewd, mth].ToString() + "','" + zone1.QTsink_Roof[hc, wewd, mth].ToString() + "','" + zone1.QTsink_Floor[hc, wewd, mth].ToString() + "','" + zone1.QTsink_GWall[hc, wewd, mth].ToString() + "','" + zone1.QTsink_Door[hc, wewd, mth].ToString() + "','" + zone1.QTsink_Win[hc, wewd, mth].ToString() + "','" + zone1.QTsink_CW[hc, wewd, mth].ToString() + "','" +
+                //                zone1.QTsource_tot[hc, wewd, mth].ToString() + "','" + zone1.QT_u_source[hc, wewd, mth].ToString() + "','" + zone1.QTsource_Wall[hc, wewd, mth].ToString() + "','" + zone1.QTsource_Roof[hc, wewd, mth].ToString() + "','" + zone1.QTsource_Floor[hc, wewd, mth].ToString() + "','" + zone1.QTsource_GWall[hc, wewd, mth].ToString() + "','" + zone1.QTsource_Door[hc, wewd, mth].ToString() + "','" + zone1.QTsource_Win[hc, wewd, mth].ToString() + "','" + zone1.QTsource_CW[hc, wewd, mth].ToString() + "','" +
+                //                zone1.QSopsink_tot[hc, wewd, mth].ToString() + "','" + zone1.QSopsource_tot[hc, wewd, mth].ToString() + "','" + zone1.QStr_tot[hc, wewd, mth].ToString() + "','" +
+                //                zone1.QSopsink_Wall[mth].ToString() + "','" + zone1.QSopsink_Roof[mth].ToString() + "','" + zone1.QSopsink_Door[mth].ToString() + "','" + zone1.QSopsink_CW_p[mth].ToString() + "','" +
+                //                zone1.QSopsource_Wall[mth].ToString() + "','" + zone1.QSopsource_Roof[mth].ToString() + "','" + zone1.QSopsource_Door[mth].ToString() + "','" + zone1.QSopsource_CW_p[mth].ToString() + "','" +
+                //                zone1.QStr_Win[wewd, mth].ToString() + "','" + zone1.QStr_CW[wewd, mth].ToString() + "','" +
+                //                zone1.QVsink_tot[hc, wewd, mth].ToString() + "','" + zone1.QV_inf_sink[hc, wewd, mth].ToString() + "','" + zone1.QV_win_sink[hc, wewd, mth].ToString() + "','" + zone1.QV_z_sink[hc, wewd, mth].ToString() + "','" + zone1.QV_mech_sink[hc, wewd, mth].ToString() + "','" +
+                //                zone1.QVsource_tot[hc, wewd, mth].ToString() + "','" + zone1.QV_inf_source[hc, wewd, mth].ToString() + "','" + zone1.QV_win_source[hc, wewd, mth].ToString() + "','" + zone1.QV_z_source[hc, wewd, mth].ToString() + "','" + zone1.QV_mech_source[hc, wewd, mth].ToString() + "','" +
+                //                zone1.Q_DHU_win[wewd, mth].ToString() + "','" + zone1.Q_DHU_mech[mth].ToString() + "','" + zone1.Q_DHU_tot[wewd, mth].ToString() + "','" +
+                //                zone1.QI_tot[hc, wewd, mth].ToString() + "','" + zone1.QI_L[hc, wewd, mth].ToString() + "','" +
+                //                zone1.QI_P[wewd].ToString() + "','" + zone1.QI_fac[wewd].ToString() + "','" + zone1.QI_Humidity[mth].ToString() + "','" +
+                //                zone1.Qsink[hc, wewd, mth].ToString() + "','" + zone1.Qsource[hc, wewd, mth].ToString() + "','" + zone1.gamma[hc, wewd, mth].ToString() + "','" + zone1.a[hc, wewd, mth].ToString() + "','" + zone1.eta[hc, wewd, mth].ToString() + "','" + zone1.dQc_b[hc, wewd, mth].ToString() + "','" + zone1.dQc_sink[hc, wewd, mth].ToString() + "','" +
+                //                zone1.Qb_day[hc, wewd, mth].ToString() + "','" +
+                //                zone1.Qb_mth[hc, wewd, mth].ToString() + "','" +
+                //                zone1.Qb_a[hc].ToString() + "','" + zone1.Q_max[hc].ToString() + "','" + zone1.t_max[hc, mth].ToString() + "','" +
+                //                zone1.Theta_U[hc, wewd, mth].ToString()
+                //                + "'", "번호,난방_냉방,비이용일_이용일,월");
+            }
             return true;
         }
 
