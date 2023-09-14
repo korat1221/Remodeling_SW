@@ -13,7 +13,7 @@ namespace main
     {
         //CSV 파일 불러오기 
         //다른 클래스(하위) 객체화해서 Calc
-
+        public string ZoneNum;
         public double Wr, Lr, A, hR, hm, Zone_hLi, Zone_hTa, K;  //존 일반정보 csv 변수
 
         public string Location;  //존 용도프로필 csv 변수
@@ -95,9 +95,42 @@ namespace main
 
         public ZoneLight(String zoneNum) //Zone 생성자 생성
         {
+            this.ZoneNum = zoneNum;
+
+            try { 지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", ""); }
+            catch { }
+
             try
             {
-                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,너비,길이,순바닥면적,상인방높이,작업면높이,공간계수,기준조도", "번호='" + zoneNum + "'");
+                for (int i = 0; i < 12; i++)
+                {
+                    //string[][] Valueaaaa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_외부조도", "외부조도", " 지역명='" + 지역[0][0] + "' and 방향='" + energy_di + "' and 각도='" + energy_slope + "' and 기간 = '"+(i+1)+"월' ");
+                    String[][] Valueaaaa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_외부조도", "외부조도", " 지역명 = '" + 지역[0][0] + "' and 방향 = '" + energy_di + "' and 각도 = '" + energy_slope + "' and 기간 = '" + (i + 1) + "월'");
+                    ext[i] = Convert.ToDouble(Valueaaaa[0][0]);
+                }
+            }
+            catch { }
+
+
+            try
+            {
+                //월별일수, 월별평일수
+                for (int i = 0; i < 12; i++)
+                {
+                    String[][] ValueAA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_사용시간", "월별일수,월별평일수,julianday(time(해뜨는시간)),julianday(time(해지는시간))", "ID = '" + (i + 1) + "'");
+                    monthday[i] = Convert.ToDouble(ValueAA[0][0]);
+                    weekdays[i] = Convert.ToDouble(ValueAA[0][1]);
+                    sunrise[i] = Convert.ToDouble(ValueAA[0][2]);
+                    sunset[i] = Convert.ToDouble(ValueAA[0][3]);
+                }
+            }
+            catch { }
+        }
+        public void LoadData_LightGeneral()
+        {
+            try
+            {
+                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,너비,길이,순바닥면적,상인방높이,작업면높이,공간계수,기준조도", "번호='" + ZoneNum + "'");
                 int kk = -1;
                 while (++kk < ValueA.Length)
                 {
@@ -113,9 +146,12 @@ namespace main
                 }
             }
             catch { }
+        }
+        public void LoadData_LightSystem()
+        {
             try
             {
-                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "조명밀도,조명예상전력,재실계수,조도제어계수,광효율,대기전력", "번호='" + zoneNum + "'");
+                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "조명밀도,조명예상전력,재실계수,조도제어계수,광효율,대기전력", "번호='" + ZoneNum + "'");
                 int kk = -1;
                 while (++kk < ValueA.Length)
                 {
@@ -128,9 +164,12 @@ namespace main
                 }
             }
             catch { }
+        }
+        public void LoadData_NaturalLight()
+        {
             try
             {
-                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,자연채광유형,서브유형,집광채광체크", "번호='" + zoneNum + "'");
+                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,자연채광유형,서브유형,집광채광체크", "번호='" + ZoneNum + "'");
                 int kk = -1;
                 while (++kk < ValueA.Length)
                 {
@@ -140,9 +179,12 @@ namespace main
                 }
             }
             catch { }
+
+           
+            
             try
             {
-                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "주향,주창면적합,주광깊이,주광길이,주광면적,주창유리빛투과율,주창유리면적비,차양,디밍유형", "번호='" + zoneNum + "'");
+                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "주향,주창면적합,주광깊이,주광길이,주광면적,주창유리빛투과율,주창유리면적비,차양,디밍유형", "번호='" + ZoneNum + "'");
                 int kk = -1;
                 while (++kk < ValueA.Length)
                 {
@@ -184,14 +226,14 @@ namespace main
                 {
                     for (int i = 0; i < 12; i++)        /////////////////////////////////////////////////////////////////////추후에 차양 바꿔야함 
                     {
-                        string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "facade_trel_D_SA", "value", "zoneNum='" + zoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
+                        string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "facade_trel_D_SA", "value", "zoneNum='" + ZoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
                         trel_D_SA[i] = Convert.ToDouble(ValueA[0][0]);
                     }
                     // MessageBox.Show(trel_D_SA[0].ToString());
 
                     for (int i = 0; i < 12; i++)           /////////////////////////////////////////////////////////////////////추후에 차양 바꿔야함 
                     {
-                        string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "facade_trel_D_SNA", "value", "zoneNum='" + zoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
+                        string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "facade_trel_D_SNA", "value", "zoneNum='" + ZoneNum + "' AND 월 ='" + (i + 1).ToString() + "'");
                         trel_D_SNA[i] = Convert.ToDouble(ValueA[0][0]);
                     }
                     //MessageBox.Show(trel_D_SNA[0].ToString());
@@ -199,7 +241,7 @@ namespace main
                 catch { }
                 try
                 {
-                    string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,파사드길이,파사드너비,파사드높이,파사드유리빛투과율", "번호='" + zoneNum + "'");
+                    string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,파사드길이,파사드너비,파사드높이,파사드유리빛투과율", "번호='" + ZoneNum + "'");
                     int kk = -1;
                     while (++kk < ValueA.Length)
                     {
@@ -224,7 +266,7 @@ namespace main
             {
                 try
                 {
-                    string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,천창유리각,천창수평측면각,천창장변부길이,천창단변부길이,천창수평상부높이", "번호='" + zoneNum + "'");
+                    string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,천창유리각,천창수평측면각,천창장변부길이,천창단변부길이,천창수평상부높이", "번호='" + ZoneNum + "'");
                     int kk = -1;
                     while (++kk < ValueA.Length)
                     {
@@ -238,12 +280,14 @@ namespace main
                     }
                 }
                 catch { }
-               
-            }
 
+            }
+        }
+        public void LoadData_Renew()
+        {
             try
             {
-                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,집광채광번호,집광채광면적,사용자면적,집광채광효율,집광채광향,집광채광각도", "번호='" + zoneNum + "'");
+                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,집광채광번호,집광채광면적,사용자면적,집광채광효율,집광채광향,집광채광각도", "번호='" + ZoneNum + "'");
                 int kk = -1;
                 while (++kk < ValueA.Length)
                 {
@@ -263,35 +307,6 @@ namespace main
             }
             catch { }
 
-            try { 지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", ""); }
-            catch { }
-
-            try
-            {
-                for (int i = 0; i < 12; i++)
-                {
-                    //string[][] Valueaaaa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_외부조도", "외부조도", " 지역명='" + 지역[0][0] + "' and 방향='" + energy_di + "' and 각도='" + energy_slope + "' and 기간 = '"+(i+1)+"월' ");
-                    String[][] Valueaaaa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_외부조도", "외부조도", " 지역명 = '" + 지역[0][0] + "' and 방향 = '" + energy_di + "' and 각도 = '" + energy_slope + "' and 기간 = '" + (i + 1) + "월'");
-                    ext[i] = Convert.ToDouble(Valueaaaa[0][0]);
-                }
-            }
-            catch { }
-
-
-            try
-            {
-                //월별일수, 월별평일수
-                for (int i = 0; i < 12; i++)
-                {
-                    String[][] ValueAA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_사용시간", "월별일수,월별평일수,julianday(time(해뜨는시간)),julianday(time(해지는시간))", "ID = '" + (i + 1) + "'");
-                    monthday[i] = Convert.ToDouble(ValueAA[0][0]);
-                    weekdays[i] = Convert.ToDouble(ValueAA[0][1]);
-                    sunrise[i] = Convert.ToDouble(ValueAA[0][2]);
-                    sunset[i] = Convert.ToDouble(ValueAA[0][3]);
-                }
-            }
-            catch { }
-          
         }
 
         //시간정보 계산

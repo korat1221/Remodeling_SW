@@ -42,6 +42,7 @@
             label1 = new Label();
             label2 = new Label();
             button7 = new Button();
+            button8 = new Button();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
@@ -174,11 +175,22 @@
             button7.UseVisualStyleBackColor = true;
             button7.Click += button7_Click;
             // 
+            // button8
+            // 
+            button8.Location = new Point(491, 541);
+            button8.Name = "button8";
+            button8.Size = new Size(187, 23);
+            button8.TabIndex = 14;
+            button8.Text = "Alt계산하기";
+            button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
+            // 
             // FormDebug
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 633);
+            Controls.Add(button8);
             Controls.Add(button7);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -218,5 +230,6 @@
         private Label label1;
         private Label label2;
         private Button button7;
+        private Button button8;
     }
 }

@@ -723,7 +723,7 @@ namespace main
                 if (double.IsNaN(dtheta_gen[mth])) { dtheta_gen[mth] = 0; }
                 if (double.IsNaN(theta_av_gen[mth])) { theta_av_gen[mth] = 0; }
                 if (double.IsNaN(Qh_outg[mth])) { Qh_outg[mth] = 0; }
-            }
+            } 
         }        
     public void Calc_Qh_gen_Boiler()
         {

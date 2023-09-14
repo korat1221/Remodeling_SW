@@ -102,5 +102,13 @@ namespace main
             });
 
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+
+            Program.CALC.run(new string[] {
+                "법규 대안검토 계산"
+            });
+        }
     }
 }
