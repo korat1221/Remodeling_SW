@@ -159,6 +159,13 @@ namespace main.subcontents.ConstructionWindow
             Width_textBox = new TextBox();
             WindowType_pictureBox = new PictureBox();
             Previous_button = new Button();
+            τD65_SNA2_textBox = new TextBox();
+            label27 = new Label();
+            g2_textBox = new TextBox();
+            label13 = new Label();
+            Uw_inst2_textBox = new TextBox();
+            Uw3_unit_label = new Label();
+            Uw3_label = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -1779,7 +1786,7 @@ namespace main.subcontents.ConstructionWindow
             // 
             // WindowType_pictureBox
             // 
-            WindowType_pictureBox.Location = new Point(999, 54);
+            WindowType_pictureBox.Location = new Point(999, 84);
             WindowType_pictureBox.Name = "WindowType_pictureBox";
             WindowType_pictureBox.Size = new Size(151, 200);
             WindowType_pictureBox.TabIndex = 36;
@@ -1797,12 +1804,105 @@ namespace main.subcontents.ConstructionWindow
             Previous_button.UseVisualStyleBackColor = true;
             Previous_button.Click += Previous_button_Click;
             // 
+            // τD65_SNA2_textBox
+            // 
+            τD65_SNA2_textBox.BackColor = SystemColors.InactiveBorder;
+            τD65_SNA2_textBox.BorderStyle = BorderStyle.None;
+            τD65_SNA2_textBox.Enabled = false;
+            τD65_SNA2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            τD65_SNA2_textBox.ForeColor = SystemColors.ControlDark;
+            τD65_SNA2_textBox.Location = new Point(1070, 76);
+            τD65_SNA2_textBox.Name = "τD65_SNA2_textBox";
+            τD65_SNA2_textBox.ReadOnly = true;
+            τD65_SNA2_textBox.Size = new Size(66, 15);
+            τD65_SNA2_textBox.TabIndex = 154;
+            τD65_SNA2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label27.ForeColor = SystemColors.ControlDark;
+            label27.Location = new Point(1007, 76);
+            label27.Name = "label27";
+            label27.Size = new Size(55, 15);
+            label27.TabIndex = 153;
+            label27.Text = "빛투과율";
+            // 
+            // g2_textBox
+            // 
+            g2_textBox.BackColor = SystemColors.InactiveBorder;
+            g2_textBox.BorderStyle = BorderStyle.None;
+            g2_textBox.Enabled = false;
+            g2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            g2_textBox.ForeColor = SystemColors.ControlDark;
+            g2_textBox.Location = new Point(1070, 55);
+            g2_textBox.Name = "g2_textBox";
+            g2_textBox.ReadOnly = true;
+            g2_textBox.Size = new Size(66, 15);
+            g2_textBox.TabIndex = 152;
+            g2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label13.ForeColor = SystemColors.ControlDark;
+            label13.Location = new Point(995, 55);
+            label13.Name = "label13";
+            label13.Size = new Size(79, 15);
+            label13.TabIndex = 151;
+            label13.Text = "태양열취득률";
+            // 
+            // Uw_inst2_textBox
+            // 
+            Uw_inst2_textBox.BackColor = SystemColors.InactiveBorder;
+            Uw_inst2_textBox.BorderStyle = BorderStyle.None;
+            Uw_inst2_textBox.Enabled = false;
+            Uw_inst2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Uw_inst2_textBox.ForeColor = SystemColors.ControlDark;
+            Uw_inst2_textBox.Location = new Point(1070, 283);
+            Uw_inst2_textBox.Name = "Uw_inst2_textBox";
+            Uw_inst2_textBox.ReadOnly = true;
+            Uw_inst2_textBox.Size = new Size(66, 15);
+            Uw_inst2_textBox.TabIndex = 149;
+            Uw_inst2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Uw3_unit_label
+            // 
+            Uw3_unit_label.AutoSize = true;
+            Uw3_unit_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Uw3_unit_label.ForeColor = SystemColors.ControlDark;
+            Uw3_unit_label.Location = new Point(1136, 282);
+            Uw3_unit_label.Name = "Uw3_unit_label";
+            Uw3_unit_label.Size = new Size(50, 16);
+            Uw3_unit_label.TabIndex = 150;
+            Uw3_unit_label.Text = "W/m²·K";
+            // 
+            // Uw3_label
+            // 
+            Uw3_label.AutoSize = true;
+            Uw3_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            Uw3_label.ForeColor = SystemColors.ControlDark;
+            Uw3_label.Location = new Point(995, 283);
+            Uw3_label.Name = "Uw3_label";
+            Uw3_label.Size = new Size(79, 15);
+            Uw3_label.TabIndex = 148;
+            Uw3_label.Text = "유효열관류율";
+            // 
             // SubWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(τD65_SNA2_textBox);
+            Controls.Add(label27);
+            Controls.Add(g2_textBox);
+            Controls.Add(label13);
+            Controls.Add(Uw_inst2_textBox);
+            Controls.Add(Uw3_unit_label);
+            Controls.Add(Uw3_label);
             Controls.Add(Previous_button);
             Controls.Add(WindowType_pictureBox);
             Controls.Add(tabControl1);
@@ -1963,5 +2063,12 @@ namespace main.subcontents.ConstructionWindow
         private Label Uw2_label;
         private TextBox AdditionalWindow_textBox;
         private Button Previous_button;
+        private TextBox τD65_SNA2_textBox;
+        private Label label27;
+        private TextBox g2_textBox;
+        private Label label13;
+        private TextBox Uw_inst2_textBox;
+        private Label Uw3_unit_label;
+        private Label Uw3_label;
     }
 }

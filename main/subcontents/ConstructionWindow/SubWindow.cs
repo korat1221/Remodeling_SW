@@ -244,6 +244,8 @@ namespace main.subcontents.ConstructionWindow
 
             g_textBox.Text = String.Format("{0:F3}", g);
             τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
+            g2_textBox.Text = String.Format("{0:F3}", g);
+            τD65_SNA2_textBox.Text = String.Format("{0:F3}", τD65_SNA);
             Uw_textBox.Text = String.Format("{0:F3}", Uw);
 
         }
@@ -492,6 +494,7 @@ namespace main.subcontents.ConstructionWindow
                 {
                     Uw_inst = dUinst + Uw;
                     Uw_inst_textBox.Text = String.Format("{0:F3}", Uw_inst);
+                    Uw_inst2_textBox.Text = String.Format("{0:F3}", Uw_inst);
                 }
             }
 
@@ -541,6 +544,8 @@ namespace main.subcontents.ConstructionWindow
             Ug_textBox.Text = null;
             g_textBox.Text = null;
             τD65_SNA_textBox.Text = null;
+            g2_textBox.Text = null;
+            τD65_SNA2_textBox.Text = null;
             Psi_g_fix_textBox.Text = null;
             Psi_g_open_textBox.Text = null;
             Psi_InstallTop_textBox.Text = null;
@@ -583,6 +588,7 @@ namespace main.subcontents.ConstructionWindow
             Uw2_textBox.Text = null;
             dUinst_textBox.Text = null;
             Uw_inst_textBox.Text = null;
+            Uw_inst2_textBox.Text = null;
             Uf_open_textBox.Text = null;
             Uf_fix_textBox.Text = null;
             Uf_btw_textBox.Text = null;
@@ -702,9 +708,12 @@ namespace main.subcontents.ConstructionWindow
 
                 g = Convert.ToDouble(MainLoad[0][16]);
                 g_textBox.Text = String.Format("{0:F3}", g);
+                g2_textBox.Text = String.Format("{0:F3}", g);
+
 
                 τD65_SNA = Convert.ToDouble(MainLoad[0][17]);
                 τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
+                τD65_SNA2_textBox.Text = String.Format("{0:F3}", τD65_SNA);
 
                 Psi_g_fix = Convert.ToDouble(MainLoad[0][18]);
                 Psi_g_fix_textBox.Text = string.Format("{0:F3}", Psi_g_fix);
@@ -736,6 +745,7 @@ namespace main.subcontents.ConstructionWindow
 
                 Uw_inst = Convert.ToDouble(SubLoad[0][15]);
                 Uw_inst_textBox.Text = String.Format("{0:F3}", Uw_inst);
+                Uw_inst2_textBox.Text = String.Format("{0:F3}", Uw_inst);
 
                 Uf_open = Convert.ToDouble(MainLoad[0][24]);
                 Uf_open_textBox.Text = String.Format("{0:F2}", Uf_open);

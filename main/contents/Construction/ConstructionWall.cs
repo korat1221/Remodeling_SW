@@ -374,6 +374,7 @@ namespace main.contents
                 String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + Color_Envelope + "'");
                 α = Convert.ToDouble(value[0][0]);
                 α_textBox.Text = String.Format("{0:F1}", α);
+                α2_textBox.Text = String.Format("{0:F1}", α);
             }
         }
         private void Uvalue_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -975,6 +976,7 @@ namespace main.contents
         {
             Ueff = dU + Uvalue;
             Ueff_textBox.Text = string.Format("{0:F3}", Ueff);
+            Ueff2_textBox.Text = string.Format("{0:F3}", Ueff);
         }
 
         private void Previous_button_Click(object sender, EventArgs e)
@@ -1107,12 +1109,14 @@ namespace main.contents
             Material_Rtot_textBox.Text = null;
 
             α_textBox.Text = null;
+            α2_textBox.Text = null;
             U_textBox.Text = null;
 
             dU_textBox.Text = null;
             dU2_textBox.Text = "";
 
             Ueff_textBox.Text = null;
+            Ueff2_textBox.Text = null;
 
             Ucalc_dataGridView.Rows.Clear();
 
@@ -1295,6 +1299,7 @@ namespace main.contents
 
                 α = Convert.ToDouble(Load[0][43]);
                 α_textBox.Text = String.Format("{0:F1}", α);
+                α2_textBox.Text = String.Format("{0:F1}", α);
 
                 Uvalue = Convert.ToDouble(Load[0][44]);
                 U_textBox.Text = string.Format("{0:F3}", Uvalue);
@@ -1314,6 +1319,7 @@ namespace main.contents
 
                 Ueff = Convert.ToDouble(Load[0][46]);
                 Ueff_textBox.Text = string.Format("{0:F3}", Ueff);
+                Ueff2_textBox.Text = string.Format("{0:F3}", Ueff);
 
                 Ucalc_dataGridView.Rows.Clear();
                 for (int i = 0; i < 10; i++)

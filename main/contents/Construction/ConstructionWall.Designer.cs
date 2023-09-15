@@ -110,6 +110,11 @@
             AddMaterial_button = new Button();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             tabControl1 = new CustomTabControl();
+            label15 = new Label();
+            Ueff2_textBox = new TextBox();
+            label16 = new Label();
+            α2_textBox = new TextBox();
+            label18 = new Label();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -158,19 +163,21 @@
             // 
             // CW_comboBox
             // 
+            CW_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             CW_comboBox.FormattingEnabled = true;
             CW_comboBox.Location = new Point(837, 67);
             CW_comboBox.Name = "CW_comboBox";
-            CW_comboBox.Size = new Size(120, 23);
+            CW_comboBox.Size = new Size(120, 24);
             CW_comboBox.TabIndex = 108;
             CW_comboBox.SelectedIndexChanged += CW_comboBox_SelectedIndexChanged;
             // 
             // OldWall_comboBox
             // 
+            OldWall_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             OldWall_comboBox.FormattingEnabled = true;
             OldWall_comboBox.Location = new Point(699, 67);
             OldWall_comboBox.Name = "OldWall_comboBox";
-            OldWall_comboBox.Size = new Size(120, 23);
+            OldWall_comboBox.Size = new Size(120, 24);
             OldWall_comboBox.TabIndex = 109;
             OldWall_comboBox.SelectedIndexChanged += OldWall_comboBox_SelectedIndexChanged;
             // 
@@ -411,11 +418,12 @@
             // 
             // StructureType_comboBox
             // 
+            StructureType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             StructureType_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             StructureType_comboBox.FormattingEnabled = true;
             StructureType_comboBox.Location = new Point(175, 84);
             StructureType_comboBox.Name = "StructureType_comboBox";
-            StructureType_comboBox.Size = new Size(120, 24);
+            StructureType_comboBox.Size = new Size(120, 23);
             StructureType_comboBox.TabIndex = 52;
             StructureType_comboBox.SelectedIndexChanged += StructureType_comboBox_SelectedIndexChanged;
             // 
@@ -441,11 +449,12 @@
             // 
             // Uvalue_comboBox
             // 
+            Uvalue_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Uvalue_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Uvalue_comboBox.FormattingEnabled = true;
             Uvalue_comboBox.Location = new Point(175, 55);
             Uvalue_comboBox.Name = "Uvalue_comboBox";
-            Uvalue_comboBox.Size = new Size(120, 24);
+            Uvalue_comboBox.Size = new Size(120, 23);
             Uvalue_comboBox.TabIndex = 38;
             Uvalue_comboBox.SelectedIndexChanged += Uvalue_comboBox_SelectedIndexChanged;
             // 
@@ -512,11 +521,12 @@
             // 
             // Color_comboBox
             // 
+            Color_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Color_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Color_comboBox.FormattingEnabled = true;
             Color_comboBox.Location = new Point(175, 25);
             Color_comboBox.Name = "Color_comboBox";
-            Color_comboBox.Size = new Size(120, 24);
+            Color_comboBox.Size = new Size(120, 23);
             Color_comboBox.TabIndex = 121;
             Color_comboBox.SelectedIndexChanged += Color_comboBox_SelectedIndexChanged;
             // 
@@ -656,11 +666,12 @@
             // 
             // DiIndi_comboBox
             // 
+            DiIndi_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             DiIndi_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             DiIndi_comboBox.FormattingEnabled = true;
             DiIndi_comboBox.Location = new Point(309, 55);
             DiIndi_comboBox.Name = "DiIndi_comboBox";
-            DiIndi_comboBox.Size = new Size(120, 24);
+            DiIndi_comboBox.Size = new Size(120, 23);
             DiIndi_comboBox.TabIndex = 55;
             DiIndi_comboBox.SelectedIndexChanged += DiIndi_comboBox_SelectedIndexChanged;
             // 
@@ -688,10 +699,10 @@
             dU_tabPage.Controls.Add(TBType_textBox);
             dU_tabPage.Controls.Add(pictureBox2);
             dU_tabPage.Controls.Add(pictureBox1);
-            dU_tabPage.Location = new Point(4, 24);
+            dU_tabPage.Location = new Point(4, 25);
             dU_tabPage.Name = "dU_tabPage";
             dU_tabPage.Padding = new Padding(3);
-            dU_tabPage.Size = new Size(969, 360);
+            dU_tabPage.Size = new Size(969, 359);
             dU_tabPage.TabIndex = 2;
             dU_tabPage.Text = "열교 세부정보";
             // 
@@ -875,7 +886,7 @@
             Ucalc_tabPage.Location = new Point(4, 25);
             Ucalc_tabPage.Name = "Ucalc_tabPage";
             Ucalc_tabPage.Padding = new Padding(3);
-            Ucalc_tabPage.Size = new Size(969, 360);
+            Ucalc_tabPage.Size = new Size(969, 359);
             Ucalc_tabPage.TabIndex = 0;
             Ucalc_tabPage.Text = "열관류율 계산";
             // 
@@ -966,11 +977,12 @@
             // 
             // DiIndi2_comboBox
             // 
+            DiIndi2_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             DiIndi2_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             DiIndi2_comboBox.FormattingEnabled = true;
             DiIndi2_comboBox.Location = new Point(309, 3);
             DiIndi2_comboBox.Name = "DiIndi2_comboBox";
-            DiIndi2_comboBox.Size = new Size(120, 24);
+            DiIndi2_comboBox.Size = new Size(120, 23);
             DiIndi2_comboBox.TabIndex = 102;
             DiIndi2_comboBox.SelectedIndexChanged += DiIndi2_comboBox_SelectedIndexChanged;
             // 
@@ -986,11 +998,12 @@
             // 
             // ISO_KS_comboBox
             // 
+            ISO_KS_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             ISO_KS_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             ISO_KS_comboBox.FormattingEnabled = true;
             ISO_KS_comboBox.Location = new Point(172, 3);
             ISO_KS_comboBox.Name = "ISO_KS_comboBox";
-            ISO_KS_comboBox.Size = new Size(120, 24);
+            ISO_KS_comboBox.Size = new Size(120, 23);
             ISO_KS_comboBox.TabIndex = 100;
             ISO_KS_comboBox.SelectedIndexChanged += ISO_KS_comboBox_SelectedIndexChanged;
             // 
@@ -1136,6 +1149,67 @@
             tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.TabIndex = 96;
             // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label15.ForeColor = SystemColors.ControlDark;
+            label15.Location = new Point(992, 276);
+            label15.Name = "label15";
+            label15.Size = new Size(79, 15);
+            label15.TabIndex = 98;
+            label15.Text = "유효열관류율";
+            // 
+            // Ueff2_textBox
+            // 
+            Ueff2_textBox.BackColor = SystemColors.InactiveBorder;
+            Ueff2_textBox.BorderStyle = BorderStyle.None;
+            Ueff2_textBox.Enabled = false;
+            Ueff2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Ueff2_textBox.ForeColor = SystemColors.ControlDark;
+            Ueff2_textBox.Location = new Point(1067, 276);
+            Ueff2_textBox.Name = "Ueff2_textBox";
+            Ueff2_textBox.ReadOnly = true;
+            Ueff2_textBox.Size = new Size(66, 15);
+            Ueff2_textBox.TabIndex = 110;
+            Ueff2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label16.ForeColor = SystemColors.ControlDark;
+            label16.Location = new Point(1133, 275);
+            label16.Name = "label16";
+            label16.Size = new Size(50, 16);
+            label16.TabIndex = 133;
+            label16.Text = "W/m²·K";
+            // 
+            // α2_textBox
+            // 
+            α2_textBox.BackColor = SystemColors.InactiveBorder;
+            α2_textBox.BorderStyle = BorderStyle.None;
+            α2_textBox.Enabled = false;
+            α2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            α2_textBox.ForeColor = SystemColors.ControlDark;
+            α2_textBox.Location = new Point(1067, 72);
+            α2_textBox.Name = "α2_textBox";
+            α2_textBox.ReadOnly = true;
+            α2_textBox.Size = new Size(66, 15);
+            α2_textBox.TabIndex = 135;
+            α2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label18.ForeColor = SystemColors.ControlDark;
+            label18.Location = new Point(1010, 72);
+            label18.Name = "label18";
+            label18.Size = new Size(43, 15);
+            label18.TabIndex = 134;
+            label18.Text = "흡수율";
+            // 
             // ConstructionWall
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1143,6 +1217,11 @@
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(α2_textBox);
+            Controls.Add(label18);
+            Controls.Add(Ueff2_textBox);
+            Controls.Add(label16);
+            Controls.Add(label15);
             Controls.Add(WallType_pictureBox);
             Controls.Add(tabControl1);
             Controls.Add(label4);
@@ -1256,5 +1335,10 @@
         private TextBox dU_label3;
         private Label label1;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+        private Label label15;
+        private TextBox Ueff2_textBox;
+        private Label label16;
+        private TextBox α2_textBox;
+        private Label label18;
     }
 }

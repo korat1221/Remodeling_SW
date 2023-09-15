@@ -122,6 +122,13 @@ namespace main.contents
             label14 = new Label();
             WindowFrame_pictureBox = new PictureBox();
             tabControl1 = new CustomTabControl();
+            g2_textBox = new TextBox();
+            label13 = new Label();
+            Uw3_textBox = new TextBox();
+            Uw3_unit_label = new Label();
+            Uw3_label = new Label();
+            τD65_SNA2_textBox = new TextBox();
+            label27 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -322,10 +329,11 @@ namespace main.contents
             // 
             // AdditionalWindow_comboBox
             // 
+            AdditionalWindow_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             AdditionalWindow_comboBox.FormattingEnabled = true;
             AdditionalWindow_comboBox.Location = new Point(673, 64);
             AdditionalWindow_comboBox.Name = "AdditionalWindow_comboBox";
-            AdditionalWindow_comboBox.Size = new Size(120, 23);
+            AdditionalWindow_comboBox.Size = new Size(120, 24);
             AdditionalWindow_comboBox.TabIndex = 0;
             AdditionalWindow_comboBox.SelectedIndexChanged += AdditionalWindow_comboBox_SelectedIndexChanged;
             // 
@@ -749,21 +757,23 @@ namespace main.contents
             // 
             // DiIndi_comboBox
             // 
+            DiIndi_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             DiIndi_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             DiIndi_comboBox.FormattingEnabled = true;
             DiIndi_comboBox.Location = new Point(327, 23);
             DiIndi_comboBox.Name = "DiIndi_comboBox";
-            DiIndi_comboBox.Size = new Size(120, 24);
+            DiIndi_comboBox.Size = new Size(120, 23);
             DiIndi_comboBox.TabIndex = 55;
             DiIndi_comboBox.SelectedIndexChanged += DiIndil_comboBox_SelectedIndexChanged;
             // 
             // Install_comboBox
             // 
+            Install_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Install_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Install_comboBox.FormattingEnabled = true;
             Install_comboBox.Location = new Point(175, 226);
             Install_comboBox.Name = "Install_comboBox";
-            Install_comboBox.Size = new Size(120, 24);
+            Install_comboBox.Size = new Size(120, 23);
             Install_comboBox.TabIndex = 52;
             Install_comboBox.SelectedIndexChanged += Install_comboBox_SelectedIndexChanged;
             // 
@@ -799,11 +809,12 @@ namespace main.contents
             // 
             // Frame_comboBox
             // 
+            Frame_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Frame_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Frame_comboBox.FormattingEnabled = true;
             Frame_comboBox.Location = new Point(175, 52);
             Frame_comboBox.Name = "Frame_comboBox";
-            Frame_comboBox.Size = new Size(120, 24);
+            Frame_comboBox.Size = new Size(120, 23);
             Frame_comboBox.TabIndex = 40;
             Frame_comboBox.SelectedIndexChanged += Frame_comboBox_SelectedIndexChanged;
             // 
@@ -819,11 +830,12 @@ namespace main.contents
             // 
             // Uw_comboBox
             // 
+            Uw_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Uw_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Uw_comboBox.FormattingEnabled = true;
             Uw_comboBox.Location = new Point(175, 23);
             Uw_comboBox.Name = "Uw_comboBox";
-            Uw_comboBox.Size = new Size(120, 24);
+            Uw_comboBox.Size = new Size(120, 23);
             Uw_comboBox.TabIndex = 38;
             Uw_comboBox.SelectedIndexChanged += UwMethod_comboBox_SelectedIndexChanged;
             // 
@@ -849,7 +861,7 @@ namespace main.contents
             // 
             // WindowType_pictureBox
             // 
-            WindowType_pictureBox.Location = new Point(999, 54);
+            WindowType_pictureBox.Location = new Point(999, 91);
             WindowType_pictureBox.Name = "WindowType_pictureBox";
             WindowType_pictureBox.Size = new Size(151, 200);
             WindowType_pictureBox.TabIndex = 36;
@@ -893,10 +905,10 @@ namespace main.contents
             Install_tabPage.Controls.Add(label33);
             Install_tabPage.Controls.Add(label38);
             Install_tabPage.Controls.Add(WindowInstall_pictureBox);
-            Install_tabPage.Location = new Point(4, 24);
+            Install_tabPage.Location = new Point(4, 25);
             Install_tabPage.Name = "Install_tabPage";
             Install_tabPage.Padding = new Padding(3);
-            Install_tabPage.Size = new Size(969, 211);
+            Install_tabPage.Size = new Size(969, 210);
             Install_tabPage.TabIndex = 1;
             Install_tabPage.Text = "설치열교 정보";
             // 
@@ -1043,10 +1055,10 @@ namespace main.contents
             Frame_tabPage.Controls.Add(label15);
             Frame_tabPage.Controls.Add(label14);
             Frame_tabPage.Controls.Add(WindowFrame_pictureBox);
-            Frame_tabPage.Location = new Point(4, 24);
+            Frame_tabPage.Location = new Point(4, 25);
             Frame_tabPage.Name = "Frame_tabPage";
             Frame_tabPage.Padding = new Padding(3);
-            Frame_tabPage.Size = new Size(969, 211);
+            Frame_tabPage.Size = new Size(969, 210);
             Frame_tabPage.TabIndex = 0;
             Frame_tabPage.Text = "프레임 세부정보";
             // 
@@ -1241,11 +1253,6 @@ namespace main.contents
             // 
             tabControl1.Controls.Add(Frame_tabPage);
             tabControl1.Controls.Add(Install_tabPage);
-            tabControl1.Location = new Point(12, 447);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(977, 239);
-            tabControl1.TabIndex = 19;
             tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
@@ -1261,7 +1268,98 @@ namespace main.contents
             tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
             tabControl1.HotTrack = true;
             tabControl1.ItemSize = new Size(128, 20);
+            tabControl1.Location = new Point(12, 447);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(977, 239);
             tabControl1.SizeMode = TabSizeMode.Fixed;
+            tabControl1.TabIndex = 19;
+            // 
+            // g2_textBox
+            // 
+            g2_textBox.BackColor = SystemColors.InactiveBorder;
+            g2_textBox.BorderStyle = BorderStyle.None;
+            g2_textBox.Enabled = false;
+            g2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            g2_textBox.ForeColor = SystemColors.ControlDark;
+            g2_textBox.Location = new Point(1065, 57);
+            g2_textBox.Name = "g2_textBox";
+            g2_textBox.ReadOnly = true;
+            g2_textBox.Size = new Size(66, 15);
+            g2_textBox.TabIndex = 145;
+            g2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label13.ForeColor = SystemColors.ControlDark;
+            label13.Location = new Point(990, 57);
+            label13.Name = "label13";
+            label13.Size = new Size(79, 15);
+            label13.TabIndex = 144;
+            label13.Text = "태양열취득률";
+            // 
+            // Uw3_textBox
+            // 
+            Uw3_textBox.BackColor = SystemColors.InactiveBorder;
+            Uw3_textBox.BorderStyle = BorderStyle.None;
+            Uw3_textBox.Enabled = false;
+            Uw3_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Uw3_textBox.ForeColor = SystemColors.ControlDark;
+            Uw3_textBox.Location = new Point(1065, 292);
+            Uw3_textBox.Name = "Uw3_textBox";
+            Uw3_textBox.ReadOnly = true;
+            Uw3_textBox.Size = new Size(66, 15);
+            Uw3_textBox.TabIndex = 142;
+            Uw3_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Uw3_unit_label
+            // 
+            Uw3_unit_label.AutoSize = true;
+            Uw3_unit_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Uw3_unit_label.ForeColor = SystemColors.ControlDark;
+            Uw3_unit_label.Location = new Point(1131, 291);
+            Uw3_unit_label.Name = "Uw3_unit_label";
+            Uw3_unit_label.Size = new Size(50, 16);
+            Uw3_unit_label.TabIndex = 143;
+            Uw3_unit_label.Text = "W/m²·K";
+            // 
+            // Uw3_label
+            // 
+            Uw3_label.AutoSize = true;
+            Uw3_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            Uw3_label.ForeColor = SystemColors.ControlDark;
+            Uw3_label.Location = new Point(990, 292);
+            Uw3_label.Name = "Uw3_label";
+            Uw3_label.Size = new Size(79, 15);
+            Uw3_label.TabIndex = 141;
+            Uw3_label.Text = "창호열관류율";
+            // 
+            // τD65_SNA2_textBox
+            // 
+            τD65_SNA2_textBox.BackColor = SystemColors.InactiveBorder;
+            τD65_SNA2_textBox.BorderStyle = BorderStyle.None;
+            τD65_SNA2_textBox.Enabled = false;
+            τD65_SNA2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            τD65_SNA2_textBox.ForeColor = SystemColors.ControlDark;
+            τD65_SNA2_textBox.Location = new Point(1065, 78);
+            τD65_SNA2_textBox.Name = "τD65_SNA2_textBox";
+            τD65_SNA2_textBox.ReadOnly = true;
+            τD65_SNA2_textBox.Size = new Size(66, 15);
+            τD65_SNA2_textBox.TabIndex = 147;
+            τD65_SNA2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label27.ForeColor = SystemColors.ControlDark;
+            label27.Location = new Point(1002, 78);
+            label27.Name = "label27";
+            label27.Size = new Size(55, 15);
+            label27.TabIndex = 146;
+            label27.Text = "빛투과율";
             // 
             // ConstructionWindow
             // 
@@ -1270,6 +1368,13 @@ namespace main.contents
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(τD65_SNA2_textBox);
+            Controls.Add(label27);
+            Controls.Add(g2_textBox);
+            Controls.Add(label13);
+            Controls.Add(Uw3_textBox);
+            Controls.Add(Uw3_unit_label);
+            Controls.Add(Uw3_label);
             Controls.Add(Previous_button);
             Controls.Add(Save_button);
             Controls.Add(WindowType_pictureBox);
@@ -1393,5 +1498,12 @@ namespace main.contents
         private Button ImportSize_button;
         private Label label10;
         private Label label8;
+        private TextBox g2_textBox;
+        private Label label13;
+        private TextBox Uw3_textBox;
+        private Label Uw3_unit_label;
+        private Label Uw3_label;
+        private TextBox τD65_SNA2_textBox;
+        private Label label27;
     }
 }

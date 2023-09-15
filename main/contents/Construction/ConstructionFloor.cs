@@ -919,6 +919,7 @@ namespace main.contents.Construction
         {
             Ueff = dU + Uvalue;
             Ueff_textBox.Text = string.Format("{0:F3}", Ueff);
+            Ueff2_textBox.Text = string.Format("{0:F3}", Ueff);
         }
 
         private void Previous_button_Click(object sender, EventArgs e)
@@ -1057,6 +1058,7 @@ namespace main.contents.Construction
             dU2_textBox.Text = "";
 
             Ueff_textBox.Text = null;
+            Ueff2_textBox.Text = null;
 
             Ucalc_dataGridView.Rows.Clear();
 
@@ -1244,6 +1246,7 @@ namespace main.contents.Construction
 
                 Ueff = Convert.ToDouble(Load[0][44]);
                 Ueff_textBox.Text = string.Format("{0:F3}", Ueff);
+                Ueff2_textBox.Text = string.Format("{0:F3}", Ueff);
 
                 Ucalc_dataGridView.Rows.Clear();
                 for (int i = 0; i < 10; i++)

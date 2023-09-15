@@ -104,6 +104,9 @@
             AddMaterial_button = new Button();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             tabControl1 = new CustomTabControl();
+            Ueff2_textBox = new TextBox();
+            label16 = new Label();
+            label15 = new Label();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -150,10 +153,11 @@
             // 
             // OldFloor_comboBox
             // 
+            OldFloor_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             OldFloor_comboBox.FormattingEnabled = true;
             OldFloor_comboBox.Location = new Point(699, 67);
             OldFloor_comboBox.Name = "OldFloor_comboBox";
-            OldFloor_comboBox.Size = new Size(120, 23);
+            OldFloor_comboBox.Size = new Size(120, 24);
             OldFloor_comboBox.TabIndex = 109;
             OldFloor_comboBox.SelectedIndexChanged += OldFloor_comboBox_SelectedIndexChanged;
             // 
@@ -393,11 +397,12 @@
             // 
             // Uvalue_comboBox
             // 
+            Uvalue_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Uvalue_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Uvalue_comboBox.FormattingEnabled = true;
             Uvalue_comboBox.Location = new Point(175, 55);
             Uvalue_comboBox.Name = "Uvalue_comboBox";
-            Uvalue_comboBox.Size = new Size(120, 24);
+            Uvalue_comboBox.Size = new Size(120, 23);
             Uvalue_comboBox.TabIndex = 38;
             Uvalue_comboBox.SelectedIndexChanged += Uvalue_comboBox_SelectedIndexChanged;
             // 
@@ -489,11 +494,12 @@
             // 
             // Base_comboBox
             // 
+            Base_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Base_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Base_comboBox.FormattingEnabled = true;
             Base_comboBox.Location = new Point(175, 25);
             Base_comboBox.Name = "Base_comboBox";
-            Base_comboBox.Size = new Size(120, 24);
+            Base_comboBox.Size = new Size(120, 23);
             Base_comboBox.TabIndex = 121;
             Base_comboBox.SelectedIndexChanged += Base_comboBox_SelectedIndexChanged;
             // 
@@ -616,10 +622,10 @@
             dU_tabPage.Controls.Add(TBType_textBox);
             dU_tabPage.Controls.Add(pictureBox2);
             dU_tabPage.Controls.Add(pictureBox1);
-            dU_tabPage.Location = new Point(4, 24);
+            dU_tabPage.Location = new Point(4, 25);
             dU_tabPage.Name = "dU_tabPage";
             dU_tabPage.Padding = new Padding(3);
-            dU_tabPage.Size = new Size(969, 360);
+            dU_tabPage.Size = new Size(969, 359);
             dU_tabPage.TabIndex = 2;
             dU_tabPage.Text = "열교 세부정보";
             // 
@@ -918,11 +924,12 @@
             // 
             // ISO_KS_comboBox
             // 
+            ISO_KS_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             ISO_KS_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             ISO_KS_comboBox.FormattingEnabled = true;
             ISO_KS_comboBox.Location = new Point(172, 3);
             ISO_KS_comboBox.Name = "ISO_KS_comboBox";
-            ISO_KS_comboBox.Size = new Size(120, 24);
+            ISO_KS_comboBox.Size = new Size(120, 23);
             ISO_KS_comboBox.TabIndex = 100;
             ISO_KS_comboBox.SelectedIndexChanged += ISO_KS_comboBox_SelectedIndexChanged;
             // 
@@ -1068,6 +1075,42 @@
             tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.TabIndex = 96;
             // 
+            // Ueff2_textBox
+            // 
+            Ueff2_textBox.BackColor = SystemColors.InactiveBorder;
+            Ueff2_textBox.BorderStyle = BorderStyle.None;
+            Ueff2_textBox.Enabled = false;
+            Ueff2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Ueff2_textBox.ForeColor = SystemColors.ControlDark;
+            Ueff2_textBox.Location = new Point(1067, 251);
+            Ueff2_textBox.Name = "Ueff2_textBox";
+            Ueff2_textBox.ReadOnly = true;
+            Ueff2_textBox.Size = new Size(66, 15);
+            Ueff2_textBox.TabIndex = 140;
+            Ueff2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label16.ForeColor = SystemColors.ControlDark;
+            label16.Location = new Point(1133, 250);
+            label16.Name = "label16";
+            label16.Size = new Size(50, 16);
+            label16.TabIndex = 141;
+            label16.Text = "W/m²·K";
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label15.ForeColor = SystemColors.ControlDark;
+            label15.Location = new Point(992, 251);
+            label15.Name = "label15";
+            label15.Size = new Size(79, 15);
+            label15.TabIndex = 139;
+            label15.Text = "유효열관류율";
+            // 
             // ConstructionFloor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1075,6 +1118,9 @@
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(Ueff2_textBox);
+            Controls.Add(label16);
+            Controls.Add(label15);
             Controls.Add(FloorType_pictureBox);
             Controls.Add(tabControl1);
             Controls.Add(label4);
@@ -1182,5 +1228,8 @@
         private TextBox DiIndi2_textBox;
         private TextBox TBName_textBox;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+        private TextBox Ueff2_textBox;
+        private Label label16;
+        private Label label15;
     }
 }

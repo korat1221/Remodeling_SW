@@ -291,6 +291,8 @@ namespace main.contents
 
             g_textBox.Text = String.Format("{0:F3}", g);
             τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
+            g2_textBox.Text = String.Format("{0:F3}", g);
+            τD65_SNA2_textBox.Text = String.Format("{0:F3}", τD65_SNA);
 
         }
 
@@ -338,6 +340,12 @@ namespace main.contents
                     Uw2_textBox.Visible = false;
                     Uw2_textBox.Enabled = false;
                     Uw2_textBox.BorderStyle = BorderStyle.None;
+
+                    Uw3_label.Visible = false;
+                    Uw3_unit_label.Visible = false;
+                    Uw3_textBox.Visible = false;
+                    Uw3_textBox.Enabled = false;
+                    Uw3_textBox.BorderStyle = BorderStyle.None;
                 }
                 else if (UwMethod == "법규")
                 {
@@ -366,6 +374,12 @@ namespace main.contents
                     Uw2_textBox.Visible = true;
                     Uw2_textBox.Enabled = false;
                     Uw2_textBox.BorderStyle = BorderStyle.None;
+
+                    Uw3_label.Visible = true;
+                    Uw3_unit_label.Visible = true;
+                    Uw3_textBox.Visible = true;
+                    Uw3_textBox.Enabled = false;
+                    Uw3_textBox.BorderStyle = BorderStyle.None;
                 }
                 else if (UwMethod == "진단")
                 {
@@ -395,6 +409,13 @@ namespace main.contents
                     Uw2_textBox.Text = string.Empty;
                     Uw2_textBox.Enabled = true;
                     Uw2_textBox.BorderStyle = BorderStyle.FixedSingle;
+
+                    Uw3_label.Visible = true;
+                    Uw3_unit_label.Visible = true;
+                    Uw3_textBox.Visible = true;
+                    Uw3_textBox.Text = string.Empty;
+                    Uw3_textBox.Enabled = true;
+                    Uw3_textBox.BorderStyle = BorderStyle.FixedSingle;
                 }
                 Rule_Uw();
             }
@@ -406,6 +427,7 @@ namespace main.contents
             if (UwMethod == "진단" && Uw2_textBox.Text != string.Empty)
             {
                 Uw = Convert.ToDouble(Uw2_textBox.Text);
+                Uw3_textBox.Text = Uw2_textBox.Text;
             }
         }
 
@@ -626,8 +648,10 @@ namespace main.contents
                     Ug_textBox.Text = String.Format("{0:F3}", Ug);
                     g = Convert.ToDouble(window_doubleglassDB_form.Select_WindowGlass[7]);
                     g_textBox.Text = String.Format("{0:F3}", g);
+                    g2_textBox.Text = String.Format("{0:F3}", g);
                     τD65_SNA = Convert.ToDouble(window_doubleglassDB_form.Select_WindowGlass[8]);
                     τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
+                    τD65_SNA2_textBox.Text = String.Format("{0:F3}", τD65_SNA);
                     Calc_g_AdditionalWindow(); //덧댐일 경우 
                 }
 
@@ -841,7 +865,8 @@ namespace main.contents
                 }
                 Uw = Convert.ToDouble(Uvalue[0][0]);
                 Uw2_textBox.Text = String.Format("{0:F3}", Uw);
-               // MessageBox.Show("[(" + Uvalue[0][2] + " 시행)" + Uvalue[0][1] + "] " + Uvalue[0][3] + " 열관류율 적용");
+                Uw3_textBox.Text = String.Format("{0:F3}", Uw);
+                // MessageBox.Show("[(" + Uvalue[0][2] + " 시행)" + Uvalue[0][1] + "] " + Uvalue[0][3] + " 열관류율 적용");
             }
         }
 
@@ -973,13 +998,16 @@ namespace main.contents
 
             Ug_textBox.Text = null;
             g_textBox.Text = null;
+            g2_textBox.Text = null;
             τD65_SNA_textBox.Text = null;
+            τD65_SNA2_textBox.Text = null;
             Psi_g_fix_textBox.Text = null;
             Psi_g_open_textBox.Text = null;
             Psi_InstallTop_textBox.Text = null;
             Psi_InstallSide_textBox.Text = null;
             Psi_InstallButtom_textBox.Text = null;
             Uw2_textBox.Text = null;
+            Uw3_textBox.Text = null;
             Uf_open_textBox.Text = null;
             Uf_fix_textBox.Text = null;
             Uf_btw_textBox.Text = null;
@@ -1119,9 +1147,11 @@ namespace main.contents
 
                 g = Convert.ToDouble(Load[0][16]);
                 g_textBox.Text = String.Format("{0:F3}", g);
+                g2_textBox.Text = String.Format("{0:F3}", g);
 
                 τD65_SNA = Convert.ToDouble(Load[0][17]);
                 τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
+                τD65_SNA2_textBox.Text = String.Format("{0:F3}", τD65_SNA);
 
                 Psi_g_fix = Convert.ToDouble(Load[0][18]);
                 Psi_g_fix_textBox.Text = string.Format("{0:F3}", Psi_g_fix);
@@ -1147,6 +1177,7 @@ namespace main.contents
                 else
                 {
                     Uw2_textBox.Text = String.Format("{0:F3}", Uw);
+                    Uw3_textBox.Text = String.Format("{0:F3}", Uw);
                 }
                 Uf_open = Convert.ToDouble(Load[0][24]);
                 Uf_open_textBox.Text = String.Format("{0:F2}", Uf_open);
