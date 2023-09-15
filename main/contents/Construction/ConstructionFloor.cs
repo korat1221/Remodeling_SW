@@ -595,12 +595,14 @@ namespace main.contents.Construction
             Ucalc_dataGridView.Columns.Add("A4", "열전도율.[W/m·K]");
             Ucalc_dataGridView.Columns.Add("A5", "두께.[mm]");
             Ucalc_dataGridView.Columns.Add("A6", "열저항.[m²·K/W]");
+            Ucalc_dataGridView.Columns.Add("A7", "Color");
             Ucalc_dataGridView.Columns[0].Width = 40;
             Ucalc_dataGridView.Columns[1].Width = 40;
             Ucalc_dataGridView.Columns[2].Width = 70;
             Ucalc_dataGridView.Columns[3].Width = 130;
             Ucalc_dataGridView.Columns[4].Width = 70;
             Ucalc_dataGridView.Columns[6].Width = 70;
+            Ucalc_dataGridView.Columns[7].Visible = false;
 
             //Ucalc_dataGridView.ColumnCount = 7;
             //Ucalc_dataGridView.Columns[1].HeaderText = "번호";
@@ -644,7 +646,14 @@ namespace main.contents.Construction
                     Ucalc_dataGridView.Rows[nRow].Cells[2].Value = form.Select[10];
                     Ucalc_dataGridView.Rows[nRow].Cells[3].Value = form.Select[1];
                     Ucalc_dataGridView.Rows[nRow].Cells[4].Value = form.Select[4];
-                 //   Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Info;
+                   //Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Info;
+
+                    var Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "색상", "재료명 = '" + form.Select[1] + "'");
+
+                    if (Value.Length > 0)
+                    {
+                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = Value[0][0];
+                    }
                 }
                 Load_Material_Num();
                 Calc_dins();
@@ -858,14 +867,16 @@ namespace main.contents.Construction
 
                 int i =0;
                 int count = Ucalc_dataGridView.RowCount + 1;
-                string s = "{\"cate\":\"---\",\"width\": 80,\"temper\":  " + Material_T[0] + "},";
+                string s = "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 80,\"temper\":  " + Material_T[0] + "},";
 
                 while (++i < count)
                 {
-                    s += "{\"cate\":\"" + Ucalc_dataGridView.Rows[i - 1].Cells[2].Value.ToString() + "\",\"width\": " + Material_d[i - 1] + ",\"temper\":  " + Material_T[i] + "},";
+                    var cate = Ucalc_dataGridView.Rows[i - 1].Cells[2].Value != null ? Ucalc_dataGridView.Rows[i - 1].Cells[2].Value.ToString() : "---";
+                    var color = Ucalc_dataGridView.Rows[i - 1].Cells[7].Value != null ? Ucalc_dataGridView.Rows[i - 1].Cells[7].Value.ToString() : "FFFFFF";
+                    s += "{\"cate\":\"" + cate + "\",\"bgcolor\":\"" + color + "\",\"width\": " + Material_d[i - 1] + ",\"temper\":  " + Material_T[i] + "},";
                 }
 
-                s += "{\"cate\":\"---\",\"width\": 80,\"temper\":  " + Material_T[i] + "},";
+                s += "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 80,\"temper\":  " + Material_T[i] + "},";
 
                 runScript("drawWall([" + s + "])");
             }
@@ -1252,7 +1263,7 @@ namespace main.contents.Construction
                         Value = Program.DB.getValue(DB.type.ProjDB, "User_Material", "구분,열전도율", "재료명 = '" + Material[i] + "'");
                         if (Value.Length == 0)
                         {
-                            Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분,열전도율", "재료명 = '" + Material[i] + "'");
+                            Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분,열전도율,색상", "재료명 = '" + Material[i] + "'");
                         }
                         try
                         {
@@ -1266,6 +1277,7 @@ namespace main.contents.Construction
                             Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Load[0][(2 * i + 23)];
                         //    Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Info;
                             Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Material_R[i]);
+                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = Value[0][2];
                         }
                         catch { }
 
@@ -1279,6 +1291,7 @@ namespace main.contents.Construction
                                 Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldFloor;
                           //      Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
                                 Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldFloor_R);
+                                Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "FFFFFF";
                             }
                             catch { }
 

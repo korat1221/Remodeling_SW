@@ -99,29 +99,35 @@
          drawWall([]);
       }
 
-      function getColor(gubun) {
+      function getImage(gubun) {
         if (type === "roof" || type === "floor") {
-          let colors = {
-            "단열재":"repeat url('/struct/1_1.png')", // 단열재
-            "콘크리트":"repeat url('/struct/1_2.png')", // 콘크리트
-            "조적":"repeat url('/struct/1_3.png')", // 조적
-            "패널":"repeat url('/struct/1_4.png')", // 패널
-            "미장":"repeat url('/struct/1_5.png')", // 미장
-            "기타":"repeat url('/struct/1_6.png')", // 기타
-            "공기층":"#fff",
+          let categories = {
+            "공기층":"repeat url('/struct/가로/공기층.png')",
+            "금속재":"repeat url('/struct/가로/금속.png')",
+            "단열재":"repeat url('/struct/가로/단열재.png')",
+            "목재":"repeat url('/struct/가로/목재.png')",
+            "미장":"repeat url('/struct/가로/미장.png')",
+            "조적":"repeat url('/struct/가로/조적.png')",
+            "지중":"repeat url('/struct/가로/지중.png')",
+            "콘크리트":"repeat url('/struct/가로/콘크리트.png')",
+            "타일":"repeat url('/struct/가로/타일.png')",
+            "패널":"repeat url('/struct/가로/패널.png')",
           };
-          return colors[gubun] ? colors[gubun] : "#fff";
+          return categories[gubun] ? categories[gubun] : "#fff";
         } else {
-          let colors = {
-            "단열재":"repeat url('/struct/1.png')", // 단열재
-            "콘크리트":"repeat url('/struct/2.png')", // 콘크리트
-            "조적3":"repeat url('/struct/3.png')", // 조적
-            "패널":"repeat url('/struct/4.png')", // 패널
-            "미장":"repeat url('/struct/5.png')", // 미장
-            "기타":"repeat url('/struct/6.png')", // 기타
-            "공기층":"#fff",
+          let categories = {
+            "공기층":"repeat url('/struct/세로/공기층.png')",
+            "금속재":"repeat url('/struct/세로/금속.png')",
+            "단열재":"repeat url('/struct/세로/단열재.png')",
+            "목재":"repeat url('/struct/세로/목재.png')",
+            "미장":"repeat url('/struct/세로/미장.png')",
+            "조적":"repeat url('/struct/세로/조적.png')",
+            "지중":"repeat url('/struct/세로/지중.png')",
+            "콘크리트":"repeat url('/struct/세로/콘크리트.png')",
+            "타일":"repeat url('/struct/세로/타일.png')",
+            "패널":"repeat url('/struct/세로/패널.png')",
           }
-          return colors[gubun] ? colors[gubun] : "#fff";
+          return categories[gubun] ? categories[gubun] : "#fff";
         }
       }
 
@@ -130,7 +136,7 @@
         var lines = [];
 
         arr.forEach((el, idx) => {          
-          el.color = getColor(el.cate);
+          el.image = getImage(el.cate);
           tot += el.width;
         });
 
@@ -143,7 +149,7 @@
           arr.forEach((el, idx) => {
 
               m = el.width / 3.3;
-              html += '<tr><td style="width:100%;background:' + el.color + ';height:' + m + 'px;background-size:' + (m < 40 ? 'contain' : 'cover') + '"></td></tr>';
+              html += '<tr><td style="width:100%;background-color:#' + el.bgcolor + ' !important;background:' + el.image + ';height:' + m + 'px;background-size:contain"></td></tr>';
 
               height -= m;
               n += m + 2;
@@ -171,7 +177,7 @@
           arr.forEach((el, idx) => {
 
               m = el.width/2.75;// / 1.15;
-              html += '<td style="width:' + m + 'px;background:' + el.color + ';height:252px;background-size:' + (m < 38 ? 'contain' : 'cover') + '"></td>';
+              html += '<td style="width:' + m + 'px;background-color:#' + el.bgcolor + ' !important;background:' + el.image + ';height:252px;background-size:contain"></td>';
 
               n += m + 2;
               lines.push(n);
