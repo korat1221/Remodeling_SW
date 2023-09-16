@@ -828,7 +828,7 @@ namespace main.contents
                 {
                 }
             }
-        }
+        } 
         private void Calc_RseRsi()
         {
             if (ISO_KS != null && DiIndi != null)

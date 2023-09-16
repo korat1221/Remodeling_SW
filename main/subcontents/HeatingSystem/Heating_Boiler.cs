@@ -185,7 +185,7 @@ namespace main.subcontents.HeatingSystem
         }
         private void reset()
         {
-            SelectRow.Clear(); 
+            SelectRow.Clear();
             SelectBoiler_split.Clear();
             SelectBoiler = null;
 

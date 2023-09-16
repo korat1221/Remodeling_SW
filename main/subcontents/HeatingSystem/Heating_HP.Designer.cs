@@ -1,6 +1,6 @@
 ﻿namespace main.subcontents.HeatingSystem
 {
-    partial class Heating_Boiler
+    partial class Heating_HP
     {
         /// <summary>
         /// Required designer variable.
@@ -32,18 +32,22 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            label9 = new Label();
+            Carrier_comboBox = new CustomComboBox();
             label4 = new Label();
             Icon_pictureBox = new PictureBox();
             Save_button = new Button();
-            Boiler_dataGridView = new DataGridView();
+            HP_dataGridView = new DataGridView();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HP_dataGridView).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(label9);
+            GeneralPanel.Controls.Add(Carrier_comboBox);
             GeneralPanel.Controls.Add(label4);
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Location = new Point(0, -2);
@@ -51,15 +55,36 @@
             GeneralPanel.Size = new Size(800, 74);
             GeneralPanel.TabIndex = 18;
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label9.Location = new Point(343, 45);
+            label9.Name = "label9";
+            label9.Size = new Size(31, 15);
+            label9.TabIndex = 156;
+            label9.Text = "연료";
+            // 
+            // Carrier_comboBox
+            // 
+            Carrier_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            Carrier_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Carrier_comboBox.FormattingEnabled = true;
+            Carrier_comboBox.Location = new Point(380, 41);
+            Carrier_comboBox.Name = "Carrier_comboBox";
+            Carrier_comboBox.Size = new Size(120, 23);
+            Carrier_comboBox.TabIndex = 155;
+            Carrier_comboBox.SelectedIndexChanged += Carrier_comboBox_SelectedIndexChanged;
+            // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label4.Location = new Point(68, 32);
             label4.Name = "label4";
-            label4.Size = new Size(71, 15);
+            label4.Size = new Size(83, 15);
             label4.TabIndex = 103;
-            label4.Text = "난방 보일러";
+            label4.Text = "난방 히트펌프";
             // 
             // Icon_pictureBox
             // 
@@ -73,7 +98,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(627, 442);
+            Save_button.Location = new Point(365, 442);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -81,17 +106,17 @@
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
             // 
-            // Boiler_dataGridView
+            // HP_dataGridView
             // 
-            Boiler_dataGridView.AllowUserToAddRows = false;
-            Boiler_dataGridView.AllowUserToDeleteRows = false;
-            Boiler_dataGridView.AllowUserToResizeColumns = false;
-            Boiler_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            Boiler_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            Boiler_dataGridView.BackgroundColor = SystemColors.Control;
-            Boiler_dataGridView.BorderStyle = BorderStyle.None;
-            Boiler_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            Boiler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            HP_dataGridView.AllowUserToAddRows = false;
+            HP_dataGridView.AllowUserToDeleteRows = false;
+            HP_dataGridView.AllowUserToResizeColumns = false;
+            HP_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            HP_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            HP_dataGridView.BackgroundColor = SystemColors.Control;
+            HP_dataGridView.BorderStyle = BorderStyle.None;
+            HP_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            HP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
@@ -99,10 +124,10 @@
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            Boiler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            Boiler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Boiler_dataGridView.Location = new Point(0, 74);
-            Boiler_dataGridView.Name = "Boiler_dataGridView";
+            HP_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            HP_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            HP_dataGridView.Location = new Point(0, 74);
+            HP_dataGridView.Name = "HP_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
             dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -110,35 +135,35 @@
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            Boiler_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            Boiler_dataGridView.RowHeadersVisible = false;
-            Boiler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            HP_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            HP_dataGridView.RowHeadersVisible = false;
+            HP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            Boiler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Boiler_dataGridView.RowTemplate.Height = 25;
-            Boiler_dataGridView.Size = new Size(800, 358);
-            Boiler_dataGridView.TabIndex = 19;
+            HP_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            HP_dataGridView.RowTemplate.Height = 25;
+            HP_dataGridView.Size = new Size(516, 358);
+            HP_dataGridView.TabIndex = 19;
             // 
-            // Heating_Boiler
+            // Heating_HP
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(797, 479);
-            Controls.Add(Boiler_dataGridView);
+            ClientSize = new Size(515, 479);
+            Controls.Add(HP_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            Name = "Heating_Boiler";
-            Text = "Heating_Boiler";
+            Name = "Heating_HP";
+            Text = "Heating_HP";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HP_dataGridView).EndInit();
             ResumeLayout(false);
         }
 
@@ -146,10 +171,12 @@
 
         private Panel GeneralPanel;
         private Button Save_button;
-        private DataGridView Boiler_dataGridView;
+        private DataGridView HP_dataGridView;
         private TextBox textBox2;
         private TextBox d_ins_textBox;
         private Label label4;
         private PictureBox Icon_pictureBox;
+        private Label label9;
+        private CustomComboBox Carrier_comboBox;
     }
 }

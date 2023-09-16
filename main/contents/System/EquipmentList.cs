@@ -25,10 +25,11 @@ namespace main.contents
     public partial class EquipmentList : Form
     {
         DataGridViewCheckBoxColumn Boiler_checkBoxColumn = new DataGridViewCheckBoxColumn();
+        DataGridViewCheckBoxColumn HP_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn Pump_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn ce_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn Solar_checkBoxColumn = new DataGridViewCheckBoxColumn();
-        int Boiler_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow;
+        int Boiler_SelectRow, HP_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow;
 
 
         public EquipmentList()
@@ -45,9 +46,11 @@ namespace main.contents
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             Create_Boiler_Table();
+            Create_HP_Table();
             Create_Pump_Table();
             Create_ce_Table();
             Load_Boiler();
+            Load_HP();
             Load_Pump();
             Load_ce();
 
@@ -292,7 +295,7 @@ namespace main.contents
             {
                 if (Boiler_dataGridView.Rows[Boiler_SelectRow].Cells[k].Value != null)
                 {
-                    Boiler_dataGridView.Rows[nRow].Cells[k].Value = Boiler_dataGridView.Rows[Pump_SelectRow].Cells[k].Value;
+                    Boiler_dataGridView.Rows[nRow].Cells[k].Value = Boiler_dataGridView.Rows[Boiler_SelectRow].Cells[k].Value;
                     //           Boiler_dataGridView.Rows[nRow].Cells[k].Style.BackColor = Color.White;
                 }
                 //else
@@ -311,24 +314,6 @@ namespace main.contents
             {
                 Boiler_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 Boiler_SelectRow = e.RowIndex;
-                DataGridViewRow row = Boiler_dataGridView.Rows[Boiler_SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < Boiler_dataGridView.RowCount; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        Boiler_dataGridView.Rows[k].Cells[0].Value = false;
-                        row2 = Boiler_dataGridView.Rows[k];
-                        row2.DefaultCellStyle.BackColor = SystemColors.Window;
-                        row2.DefaultCellStyle.ForeColor = SystemColors.WindowText;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = SystemColors.WindowText;
-                        row = Boiler_dataGridView.Rows[e.RowIndex];
-                    }
-                }
             }
         }
 
@@ -412,6 +397,230 @@ namespace main.contents
             }
             catch { }
         }
+
+        //////////////////////////////////////////////////히트펌프/////////////////////////////////////////////////////////////////
+        public void Create_HP_Table()
+        {
+            new StackedHeaderDecorator(HP_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            HP_dataGridView.Columns.Clear();
+            HP_checkBoxColumn.HeaderText = "선택";
+            HP_checkBoxColumn.Name = "check";
+            HP_dataGridView.Columns.Add(HP_checkBoxColumn);
+
+            HP_dataGridView.Columns.Add("A1", "번호");
+            HP_dataGridView.Columns.Add("A2", "DB유형");
+            HP_dataGridView.Columns.Add("A3", "명칭");
+            HP_dataGridView.Columns.Add("A4", "연료");
+            HP_dataGridView.Columns.Add("A5", "정격.용량" + Environment.NewLine + "[kW]");
+            HP_dataGridView.Columns.Add("A6", "정격.COP" + Environment.NewLine + "[kW]");
+            HP_dataGridView.Columns.Add("A7", "정격.소비전력" + Environment.NewLine + "[kW]");
+            HP_dataGridView.Columns.Add("A8", "한랭지.용량" + Environment.NewLine + "[kW]");
+            HP_dataGridView.Columns.Add("A9", "한랭지.COP" + Environment.NewLine + "[kW]");
+            HP_dataGridView.Columns.Add("A10", "한랭지.소비전력" + Environment.NewLine + "[kW]");
+            HP_dataGridView.Columns.Add("A11", "대수" + Environment.NewLine + "[EA]");
+            HP_dataGridView.Columns[0].Width = 40;
+            HP_dataGridView.Columns[1].Width = 60;
+            HP_dataGridView.Columns[2].Width = 60;
+            HP_dataGridView.Columns[3].Width = 100;
+            HP_dataGridView.Columns[4].Width = 60;
+            HP_dataGridView.Columns[6].Width = 80;
+            HP_dataGridView.Columns[7].Width = 80;
+            HP_dataGridView.Columns[9].Width = 80;
+            HP_dataGridView.Columns[10].Width = 80;
+            HP_dataGridView.Columns[11].Width = 80;
+
+        }
+
+        private void UserHP_Add_button_Click(object sender, EventArgs e)
+        {
+            int nRow = HP_dataGridView.Rows.Add();
+            Load_HP_Num();
+
+            HP_dataGridView.Rows[nRow].Cells[2].Value = "도면";
+
+            DataGridViewComboBoxCell 연료Combo = new DataGridViewComboBoxCell();
+            연료Combo.Items.Add("전기");
+            연료Combo.Items.Add("LNG");
+            연료Combo.Items.Add("LPG");
+            HP_dataGridView.Rows[nRow].Cells[4] = 연료Combo;
+        }
+
+        private void DefaultHP_Add_button_Click(object sender, EventArgs e)
+        {
+            ArrayList SelectHP = new ArrayList();
+            int nRow = HP_dataGridView.Rows.Add();
+            Load_HP_Num();
+            HP_dataGridView.Rows[nRow].Cells[2].Value = "기본";
+
+            Heating_HP heating_HP = new Heating_HP("기본DB 적용", null);
+            DialogResult result = heating_HP.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    if (heating_HP.SelectHP != null)
+                    {
+
+                        string[] token = heating_HP.SelectHP.Split(',');
+                        SelectHP.Clear();
+                        foreach (var item in token)
+                        {
+                            SelectHP.Add(item.ToString());
+                        }
+                        string[][] Value; Double[][] Value2;
+                        String 내용;
+                        Value = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프", "등급,정격COP,한랭지COP", "등급 = '" + SelectHP[0].ToString() + "'");
+                        String name = Value[0][0];
+                        HP_dataGridView.Rows[nRow].Cells[4].Value = heating_HP.Carrier;
+                        HP_dataGridView.Rows[nRow].Cells[6].Value = Value[0][1];
+                        HP_dataGridView.Rows[nRow].Cells[9].Value = Value[0][2];
+
+                        if(HP_dataGridView.Rows[nRow].Cells[5].Value ==null)
+                        {
+                            HP_dataGridView.Rows[nRow].Cells[7].Value = 0;
+                        }
+
+                        if (HP_dataGridView.Rows[nRow].Cells[8].Value == null)
+                        {
+                            HP_dataGridView.Rows[nRow].Cells[10].Value = 0;
+                        }
+                        else
+                        {
+                            HP_dataGridView.Rows[nRow].Cells[10].Value = Convert.ToDouble(HP_dataGridView.Rows[nRow].Cells[8].Value.ToString()) / Convert.ToDouble(Value[0][2]);
+                        }
+                        //         HP_dataGridView.Rows[nRow].Cells[12].Style.BackColor = SystemColors.Info;
+                    }
+                }
+                catch { }
+            }
+        }
+
+        private void HP_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                if (e.ColumnIndex == 5)
+                {
+                    if (HP_dataGridView.Rows[e.RowIndex].Cells[5].Value != null && HP_dataGridView.Rows[e.RowIndex].Cells[6].Value != null)
+                    { HP_dataGridView.Rows[e.RowIndex].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(HP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()) / Convert.ToDouble(HP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())); }
+                }
+                if (e.ColumnIndex == 8)
+                {
+                    if (HP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && HP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null)
+                    { HP_dataGridView.Rows[e.RowIndex].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(HP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()) / Convert.ToDouble(HP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString())); }
+                }
+                if (e.ColumnIndex == 6)
+                {
+                    if (HP_dataGridView.Rows[e.RowIndex].Cells[5].Value != null && HP_dataGridView.Rows[e.RowIndex].Cells[6].Value != null)
+                    { HP_dataGridView.Rows[e.RowIndex].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(HP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()) / Convert.ToDouble(HP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())); }
+                }
+                if (e.ColumnIndex == 9)
+                {
+                    if (HP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && HP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null)
+                    { HP_dataGridView.Rows[e.RowIndex].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(HP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()) / Convert.ToDouble(HP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString())); }
+                }
+            }
+        }
+
+
+        private void HP_Remove_button_Click(object sender, EventArgs e)
+        {
+            HP_dataGridView.Rows.Remove(HP_dataGridView.Rows[HP_SelectRow]);
+            Load_HP_Num();
+        }
+
+        private void HP_Copy_button_Click(object sender, EventArgs e)
+        {
+            int nRow = HP_dataGridView.Rows.Add();
+            Load_HP_Num();
+            if (HP_dataGridView.Rows[HP_SelectRow].Cells[2].Value == "도면")
+            {
+                DataGridViewComboBoxCell 연료Combo = new DataGridViewComboBoxCell();
+                연료Combo.Items.Add("LNG");
+                연료Combo.Items.Add("LPG");
+                연료Combo.Items.Add("전기");
+                HP_dataGridView.Rows[nRow].Cells[4] = 연료Combo;
+            }
+
+
+            for (int k = 2; k < 12; k++)
+            {
+                if (HP_dataGridView.Rows[HP_SelectRow].Cells[k].Value != null)
+                {
+                    HP_dataGridView.Rows[nRow].Cells[k].Value = HP_dataGridView.Rows[HP_SelectRow].Cells[k].Value;
+                }
+            }
+            if (HP_dataGridView.Rows[HP_SelectRow].Cells[3].Value != null)
+            {
+                HP_dataGridView.Rows[nRow].Cells[3].Value = HP_dataGridView.Rows[HP_SelectRow].Cells[3].Value.ToString() + "_복사";
+            }
+        }
+        private void HP_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                HP_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                HP_SelectRow = e.RowIndex;
+              
+            }
+        }
+
+        private void Load_HP_Num()
+        {
+            for (int k = 0; k < HP_dataGridView.RowCount; k++)
+            {
+                if (k + 1 < 10)
+                { HP_dataGridView.Rows[k].Cells[1].Value = "UHP0" + (k + 1).ToString(); }
+                else { HP_dataGridView.Rows[k].Cells[1].Value = "UHP" + (k + 1).ToString(); }
+            }
+        }
+
+        private void HP_Save_button_Click(object sender, EventArgs e)
+        {
+            Program.DB.deleteValue(DB.type.ProjDB, "User_HP", "");
+
+            for (int k = 0; k < HP_dataGridView.RowCount; k++)
+            {
+                String[] Value = new String[12];
+                for (int i = 1; i < 12; i++)
+                {
+                    if (HP_dataGridView.Rows[k].Cells[i].Value != null)
+                    { Value[i - 1] = HP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    else { Value[i - 1] = ""; }
+                }
+                Program.DB.setValue(DB.type.ProjDB, "User_HP", "번호,DB유형,명칭,연료,정격용량,정격COP,정격소비전력,한랭지용량,한랭지COP,한랭지소비전력,대수",
+                "'" + Value[0] + "','"
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] 
+                 + "'", "번호");
+            }
+            MessageBox.Show("저장되었습니다.");
+        }
+
+        private void Load_HP()
+        {
+            try
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_HP", "번호,DB유형,명칭,연료,정격용량,정격COP,정격소비전력,한랭지용량,한랭지COP,한랭지소비전력,대수", "");
+                for (int n = 0; n < User_Value.Length; n++)
+                {
+                    HP_dataGridView.Rows.Add();
+                    int nRow = HP_dataGridView.Rows.Count - 1;
+                    HP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0]; //번호
+                    HP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                    HP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                    HP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                    HP_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                    HP_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
+                    HP_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
+                    HP_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                    HP_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
+                    HP_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
+                    HP_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][10];
+                }
+            }
+            catch { }
+        }
+
         ///////////////////////////////////////////////////펌프/////////////////////////////////////////////////////////////////
         public void Create_Pump_Table()
         {
@@ -429,7 +638,7 @@ namespace main.contents
             Pump_dataGridView.Columns.Add("P6", "유량" + Environment.NewLine + "[CMH]");
             Pump_dataGridView.Columns.Add("P7", "양정" + Environment.NewLine + "[m]");
             Pump_dataGridView.Columns.Add("P8", "");
-            Pump_dataGridView.Columns.Add("P9", "동력" + Environment.NewLine + "[kW]");
+            Pump_dataGridView.Columns.Add("P9", "동력" + Environment.NewLine + "[W]");
             Pump_dataGridView.Columns.Add("P10", "");
             Pump_dataGridView.Columns.Add("P11", "대수" + Environment.NewLine + "[EA]");
             Pump_dataGridView.Columns[0].Width = 40;
@@ -876,7 +1085,7 @@ namespace main.contents
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_ce", "번호,명칭,난방냉방,종류,용량,소비전력,온도제어방식,대수",
                 "'" + Value[0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6]  + "','"
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','"
                  + Value[7]
                  + "'", "번호");
             }
@@ -931,5 +1140,6 @@ namespace main.contents
             }
 
         }
+
     }
 }

@@ -675,14 +675,16 @@ namespace main.contents
         {
             if (PipeD_textBox.Text != null)
             {
-                PipeD = Convert.ToDouble(PipeD_textBox.Text);
+                try { PipeD = Convert.ToDouble(PipeD_textBox.Text); }
+                catch { }
             }
         }
         private void PipeInsD_textBox_TextChanged(object sender, EventArgs e)
         {
             if (PipeInsD_textBox.Text != null)
             {
-                PipeInsD = Convert.ToDouble(PipeInsD_textBox.Text);
+                try { PipeInsD = Convert.ToDouble(PipeInsD_textBox.Text); }
+                catch { }
             }
         }
         private void Calc_Pipe()
@@ -919,7 +921,7 @@ namespace main.contents
             Pump_dataGridView.Columns.Add("A4", "A효율.[%]");
             Pump_dataGridView.Columns.Add("A5", "B효율.[%]");
             Pump_dataGridView.Columns.Add("A6", "유량.[CMH]");
-            Pump_dataGridView.Columns.Add("A7", "동력.[kW]");
+            Pump_dataGridView.Columns.Add("A7", "동력.[W]");
             Pump_dataGridView.Columns.Add("A8", "양정.[m]");
             Pump_dataGridView.Columns.Add("A9", "정유량 밸브");
             Pump_dataGridView.Columns.Add("A10", "펌프 제어");
