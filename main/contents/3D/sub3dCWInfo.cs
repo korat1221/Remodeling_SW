@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.Web.WebView2.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,10 +15,33 @@ namespace main.contents
 {
     public partial class sub3dCWInfo : Form
     {
+        bool scriptable = false;
+
         public sub3dCWInfo()
         {
             InitializeComponent();
+            InitializeAsync();
+
+            webView22.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);
+
         }
+        async void InitializeAsync()
+        {
+            await webView22.EnsureCoreWebView2Async(null);
+            webView22.CoreWebView2.NavigationCompleted += OnNaviCompleted;
+        }
+        void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            scriptable = true;
+        }
+        public void runScript(string script)
+        {
+            if (scriptable)
+            {
+                webView22.CoreWebView2.ExecuteScriptAsync(script);
+            }
+        }
+
         private void onVisibleChanged(object sender, EventArgs e)
         {
             double R1, R2, L1, L2, S1, S2, T1, T2, uw, install;
@@ -29,7 +54,7 @@ namespace main.contents
 
             if (rec.Length > 0)
             {
-
+                string _ID = rec[0][9];
 
                 //음영정보 이미지로드
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "음영이미지", "이미지", "분류 = '이미지1'");
@@ -176,8 +201,15 @@ namespace main.contents
                     CWInstall_pictureBox.Load(Program.gPath + Image3[0][0]);
                     CWInstall_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                 }
-            }
+                string s = "";
+                string[][] res = Program.DB.querySQL(DB.type.ProjDB, "SELECT 음영계수 FROM Shade_3D WHERE 유형 = '최종음영' AND 번호 = '" + _ID + "' ORDER BY 월 ASC");
 
+                for (int k = 0; k < res.Length; k++)
+                {
+                    s += Convert.ToDouble(res[k][0]) * 100 + ",";
+                }
+                runScript("drawChart([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\"}])");
+            }
         }
     }
 }

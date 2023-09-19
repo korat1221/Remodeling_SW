@@ -687,9 +687,9 @@
             webView22.CreationProperties = null;
             webView22.DefaultBackgroundColor = Color.White;
             webView22.Dock = DockStyle.Bottom;
-            webView22.Location = new Point(3, 365);
+            webView22.Location = new Point(3, 217);
             webView22.Name = "webView22";
-            webView22.Size = new Size(939, 53);
+            webView22.Size = new Size(939, 201);
             webView22.TabIndex = 0;
             webView22.ZoomFactor = 1D;
             // 

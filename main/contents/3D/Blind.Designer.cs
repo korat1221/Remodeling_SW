@@ -28,14 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Blind));
             GeneralPanel = new Panel();
             textBox2 = new TextBox();
             label3 = new Label();
             label1 = new Label();
             textBox1 = new TextBox();
             panel2 = new Panel();
-            AdditionalPanel = new Panel();
+            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            label2 = new Label();
+            pictureBox1 = new PictureBox();
             GeneralPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -55,7 +60,7 @@
             // 
             textBox2.BackColor = SystemColors.Window;
             textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             textBox2.Location = new Point(155, 52);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(120, 22);
@@ -64,20 +69,20 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label3.Location = new Point(74, 56);
             label3.Name = "label3";
-            label3.Size = new Size(55, 15);
+            label3.Size = new Size(51, 16);
             label3.TabIndex = 3;
             label3.Text = "차양정보";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label1.Location = new Point(102, 19);
             label1.Name = "label1";
-            label1.Size = new Size(19, 15);
+            label1.Size = new Size(18, 16);
             label1.TabIndex = 1;
             label1.Text = "층";
             // 
@@ -85,7 +90,7 @@
             // 
             textBox1.BackColor = SystemColors.Window;
             textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             textBox1.Location = new Point(155, 16);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(120, 22);
@@ -100,14 +105,34 @@
             panel2.Size = new Size(977, 149);
             panel2.TabIndex = 18;
             // 
-            // AdditionalPanel
+            // webView21
             // 
-            AdditionalPanel.BackColor = Color.White;
-            AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
-            AdditionalPanel.Location = new Point(12, 303);
-            AdditionalPanel.Name = "AdditionalPanel";
-            AdditionalPanel.Size = new Size(977, 390);
-            AdditionalPanel.TabIndex = 18;
+            webView21.AllowExternalDrop = true;
+            webView21.CreationProperties = null;
+            webView21.DefaultBackgroundColor = Color.White;
+            webView21.Location = new Point(199, 311);
+            webView21.Name = "webView21";
+            webView21.Size = new Size(790, 407);
+            webView21.TabIndex = 0;
+            webView21.ZoomFactor = 1D;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(45, 453);
+            label2.Name = "label2";
+            label2.Size = new Size(89, 15);
+            label2.TabIndex = 19;
+            label2.Text = "차양가동율(on)";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(140, 449);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(51, 19);
+            pictureBox1.TabIndex = 20;
+            pictureBox1.TabStop = false;
             // 
             // Blind
             // 
@@ -116,25 +141,32 @@
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(pictureBox1);
+            Controls.Add(label2);
+            Controls.Add(webView21);
             Controls.Add(panel2);
             Controls.Add(GeneralPanel);
-            Controls.Add(AdditionalPanel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Blind";
             Text = "Form3";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Panel GeneralPanel;
         private Panel panel2;
-        private Panel AdditionalPanel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox2;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+        private Label label2;
+        private PictureBox pictureBox1;
     }
 }
