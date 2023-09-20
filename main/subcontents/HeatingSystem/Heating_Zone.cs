@@ -122,7 +122,7 @@ namespace main.subcontents.HeatingSystem
                 }
                 else
                 {
-                    this.SelectZone += Zone_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + ",";
+                    this.SelectZone += Zone_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + "+";
                 }
             }
 
@@ -146,7 +146,7 @@ namespace main.subcontents.HeatingSystem
             reset();
             try
             {
-                string[] token = SelectZone_nonsplit.Split(',');
+                string[] token = SelectZone_nonsplit.Split('+');
                 SelectZone_split.Clear();
                 foreach (var item in token)
                 {

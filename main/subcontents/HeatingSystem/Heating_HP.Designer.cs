@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
-            label9 = new Label();
-            Carrier_comboBox = new CustomComboBox();
             label4 = new Label();
             Icon_pictureBox = new PictureBox();
+            Carrier_label = new Label();
+            Carrier_comboBox = new CustomComboBox();
             Save_button = new Button();
             HP_dataGridView = new DataGridView();
             GeneralPanel.SuspendLayout();
@@ -46,35 +46,14 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
-            GeneralPanel.Controls.Add(label9);
-            GeneralPanel.Controls.Add(Carrier_comboBox);
             GeneralPanel.Controls.Add(label4);
             GeneralPanel.Controls.Add(Icon_pictureBox);
+            GeneralPanel.Controls.Add(Carrier_label);
+            GeneralPanel.Controls.Add(Carrier_comboBox);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(800, 74);
             GeneralPanel.TabIndex = 18;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label9.Location = new Point(343, 45);
-            label9.Name = "label9";
-            label9.Size = new Size(31, 15);
-            label9.TabIndex = 156;
-            label9.Text = "연료";
-            // 
-            // Carrier_comboBox
-            // 
-            Carrier_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Carrier_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Carrier_comboBox.FormattingEnabled = true;
-            Carrier_comboBox.Location = new Point(380, 41);
-            Carrier_comboBox.Name = "Carrier_comboBox";
-            Carrier_comboBox.Size = new Size(120, 23);
-            Carrier_comboBox.TabIndex = 155;
-            Carrier_comboBox.SelectedIndexChanged += Carrier_comboBox_SelectedIndexChanged;
             // 
             // label4
             // 
@@ -93,6 +72,27 @@
             Icon_pictureBox.Size = new Size(50, 50);
             Icon_pictureBox.TabIndex = 102;
             Icon_pictureBox.TabStop = false;
+            // 
+            // Carrier_label
+            // 
+            Carrier_label.AutoSize = true;
+            Carrier_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            Carrier_label.Location = new Point(423, 45);
+            Carrier_label.Name = "Carrier_label";
+            Carrier_label.Size = new Size(31, 15);
+            Carrier_label.TabIndex = 156;
+            Carrier_label.Text = "연료";
+            // 
+            // Carrier_comboBox
+            // 
+            Carrier_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            Carrier_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Carrier_comboBox.FormattingEnabled = true;
+            Carrier_comboBox.Location = new Point(460, 41);
+            Carrier_comboBox.Name = "Carrier_comboBox";
+            Carrier_comboBox.Size = new Size(120, 23);
+            Carrier_comboBox.TabIndex = 155;
+            Carrier_comboBox.SelectedIndexChanged += Carrier_comboBox_SelectedIndexChanged;
             // 
             // Save_button
             // 
@@ -117,35 +117,35 @@
             HP_dataGridView.BorderStyle = BorderStyle.None;
             HP_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             HP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            HP_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            HP_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             HP_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            HP_dataGridView.Location = new Point(0, 74);
+            HP_dataGridView.Location = new Point(0, 68);
             HP_dataGridView.Name = "HP_dataGridView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            HP_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            HP_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             HP_dataGridView.RowHeadersVisible = false;
             HP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            HP_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            HP_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
             HP_dataGridView.RowTemplate.Height = 25;
-            HP_dataGridView.Size = new Size(516, 358);
+            HP_dataGridView.Size = new Size(593, 364);
             HP_dataGridView.TabIndex = 19;
             // 
             // Heating_HP
@@ -153,7 +153,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(515, 479);
+            ClientSize = new Size(592, 479);
             Controls.Add(HP_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
@@ -176,7 +176,7 @@
         private TextBox d_ins_textBox;
         private Label label4;
         private PictureBox Icon_pictureBox;
-        private Label label9;
+        private Label Carrier_label;
         private CustomComboBox Carrier_comboBox;
     }
 }

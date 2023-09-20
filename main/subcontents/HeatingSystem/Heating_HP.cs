@@ -21,45 +21,61 @@ namespace main.subcontents.HeatingSystem
         ArrayList SelectRow = new ArrayList(); ArrayList SelectHP_split = new ArrayList();
         String DefaultUse;
         public string SelectHP;
-        public string Carrier;
-        public Heating_HP(String DefaultUse, String SelectHP_nonsplit)
+        public string Carrier, HeatSource;
+
+        public Heating_HP(String DefaultUse, String SelectHP_nonsplit, String HeatSource)
         {
             InitializeComponent();
             this.DefaultUse = DefaultUse;
+            this.HeatSource = HeatSource;   
+            visible_Carrier_ComboBox(DefaultUse);
+
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            create_table(DefaultUse);
+            create_table(DefaultUse, HeatSource);
 
             Carrier_comboBox.Items.Clear();
             Carrier_comboBox.Items.Add("전기");
             Carrier_comboBox.Items.Add("LNG");
             Carrier_comboBox.Items.Add("LPG");
             Carrier_comboBox.SelectedIndex = 0;
+
+
             if (SelectHP_nonsplit != null)
             {
                 Load_SaveValue(SelectHP_nonsplit);
             }
-            
-
         }
 
+
+        private void visible_Carrier_ComboBox(String DefaultValue)
+        {
+            if (DefaultValue == "기본DB 적용")
+            {
+                Carrier_comboBox.Visible = true;
+                Carrier_label.Visible = true;
+            }
+            else { Carrier_comboBox.Visible = false;
+                Carrier_label.Visible = false; 
+            }
+        }
         private void Carrier_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            if(Carrier_comboBox.SelectedItem != null )
+
+            if (Carrier_comboBox.SelectedItem != null)
             {
                 Carrier = Carrier_comboBox.SelectedItem.ToString();
-                if( Carrier !="전기" )
+                if (Carrier != "전기")
                 {
-                    load_table_DB(DefaultUse, "가스");
+                    load_table_DB(DefaultUse, "가스","외기 히트펌프");
                 }
-                else { load_table_DB(DefaultUse, Carrier); }
-                
-            }
+                else { load_table_DB(DefaultUse, Carrier,"외기 히트펌프"); }
 
+            }
         }
-        void create_table(String DefaultUse)
+
+        void create_table(String DefaultUs, String HeatSource)
         {
             new StackedHeaderDecorator(HP_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -74,13 +90,58 @@ namespace main.subcontents.HeatingSystem
                 HP_dataGridView.Columns.Add("A2", "정격COP");
                 HP_dataGridView.Columns.Add("A3", "한랭지COP");
             }
+            else
+            {
+                if (HeatSource == "지하수 히트펌프")
+                {
+                    HP_dataGridView.Columns.Add("A1", "번호");
+                    HP_dataGridView.Columns.Add("A2", "명칭");
+                    HP_dataGridView.Columns.Add("A3", "연료");
+                    HP_dataGridView.Columns.Add("A4", "공급유형");
+                    HP_dataGridView.Columns.Add("A5", "정격(10℃).용량" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A6", "정격(10℃).COP" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A7", "정격(10℃).소비전력" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A8", "(15℃).용량" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A9", "(15℃).COP" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A10", "(15℃).소비전력" + Environment.NewLine + "[kW]");
+
+                }
+                else if (HeatSource == "지열 히트펌프")
+                {
+                    HP_dataGridView.Columns.Add("A1", "번호");
+                    HP_dataGridView.Columns.Add("A2", "명칭");
+                    HP_dataGridView.Columns.Add("A3", "연료");
+                    HP_dataGridView.Columns.Add("A4", "공급유형");
+                    HP_dataGridView.Columns.Add("A5", "수직/수평");
+                    HP_dataGridView.Columns.Add("A6", "정격(0℃).용량" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A7", "정격(0℃).COP" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A8", "정격(0℃).소비전력" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A9", "(5℃).용량" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A10", "(5℃).COP" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A11", "(5℃).소비전력" + Environment.NewLine + "[kW]");
+
+                }
+                else
+                {
+                    HP_dataGridView.Columns.Add("A1", "번호");
+                    HP_dataGridView.Columns.Add("A2", "명칭");
+                    HP_dataGridView.Columns.Add("A3", "연료");
+                    HP_dataGridView.Columns.Add("A4", "공급유형");
+                    HP_dataGridView.Columns.Add("A5", "정격.용량" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A6", "정격.COP" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A7", "정격.소비전력" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A8", "한랭지.용량" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A9", "한랭지.COP" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A10", "한랭지.소비전력" + Environment.NewLine + "[kW]");
+                }
+            }
         }
-        void load_table_DB(String DefaultUse, String Carrier)
+        void load_table_DB(String DefaultUse, String Carrier, String HeatSource)
         {
             HP_dataGridView.Rows.Clear();
             if (DefaultUse == "기본DB 적용")
             {
-                string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프", "등급,정격COP,한랭지COP", "연료='"+Carrier+"'");
+                string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프", "등급,정격COP,한랭지COP", "연료='" + Carrier + "'");
                 for (int n = 0; n < DefaultDB_Value.Length; n++)
                 {
                     HP_dataGridView.Rows.Add();
@@ -92,43 +153,68 @@ namespace main.subcontents.HeatingSystem
             }
             else
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_HP", "번호,명칭,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력", "난방급탕 ='난방' OR 난방급탕 = '난방+급탕'");
-                for (int n = 0; n < User_Value.Length; n++)
+                if (HeatSource == "지하수 히트펌프")
                 {
-                    string 용량 = "", 전부하효율 = "", 부분부하효율 = "", 소비전력 = "", 대기전력 = "";
-                    if (User_Value[n][4] != null && User_Value[n][4] != "")
+                    string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundWHP", "번호,명칭,연료,공급유형,정격용량,정격COP,정격소비전력,등급2용량,등급2COP,등급2소비전력", "");
+                    for (int n = 0; n < User_Value.Length; n++)
                     {
-                        용량 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
+
+                        HP_dataGridView.Rows.Add();
+                        int nRow = HP_dataGridView.Rows.Count - 1;
+                        HP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                        HP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                        HP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                        HP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                        HP_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
+                        HP_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][5]));
+                        HP_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][6]));
+                        HP_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][7]));
+                        HP_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][8]));
+                        HP_dataGridView.Rows[nRow].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][9]));
                     }
-                    if (User_Value[n][5] != null && User_Value[n][5] != "")
-                    {
-                        전부하효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][5]));
-                    }
-                    if (User_Value[n][6] != null && User_Value[n][6] != "")
-                    {
-                        부분부하효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][6]));
-                    }
-                    if (User_Value[n][7] != null && User_Value[n][7] != "")
-                    {
-                        소비전력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][7]));
-                    }
-                    if (User_Value[n][8] != null && User_Value[n][8] != "")
-                    {
-                        대기전력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][8]));
-                    }
-                    HP_dataGridView.Rows.Add();
-                    int nRow = HP_dataGridView.Rows.Count - 1;
-                    HP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
-                    HP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
-                    HP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
-                    HP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-                    HP_dataGridView.Rows[nRow].Cells[5].Value = 용량;
-                    HP_dataGridView.Rows[nRow].Cells[6].Value = 전부하효율;
-                    HP_dataGridView.Rows[nRow].Cells[7].Value = 부분부하효율;
-                    HP_dataGridView.Rows[nRow].Cells[8].Value = 소비전력;
-                    HP_dataGridView.Rows[nRow].Cells[9].Value = 대기전력;
-                    //HP_table.Rows.Add(User_Value[n][0], User_Value[n][1], User_Value[n][2], User_Value[n][3], 용량, 전부하효율, 부분부하효율, 소비전력, 대기전력);
                 }
+                else if (HeatSource == "지열 히트펌프")
+                {
+                    string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "번호,명칭,연료,공급유형,수직수평,정격용량,정격COP,정격소비전력,등급2용량,등급2COP,등급2소비전력", "");
+                    for (int n = 0; n < User_Value.Length; n++)
+                    {
+
+                        HP_dataGridView.Rows.Add();
+                        int nRow = HP_dataGridView.Rows.Count - 1;
+                        HP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                        HP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                        HP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                        HP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                        HP_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                        HP_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][5]));
+                        HP_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][6]));
+                        HP_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][7]));
+                        HP_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][8]));
+                        HP_dataGridView.Rows[nRow].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][9]));
+                        HP_dataGridView.Rows[nRow].Cells[11].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][10]));
+                    }
+                }
+                else
+                {
+                    string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "번호,명칭,연료,공급유형,정격용량,정격COP,정격소비전력,한랭지용량,한랭지COP,한랭지소비전력", "");
+                    for (int n = 0; n < User_Value.Length; n++)
+                    {
+
+                        HP_dataGridView.Rows.Add();
+                        int nRow = HP_dataGridView.Rows.Count - 1;
+                        HP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                        HP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                        HP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                        HP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                        HP_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
+                        HP_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][5]));
+                        HP_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][6]));
+                        HP_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][7]));
+                        HP_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][8]));
+                        HP_dataGridView.Rows[nRow].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][9]));
+                    }
+                }
+
             }
             // HP_dataGridView.DataSource = HP_table;
         }
@@ -177,7 +263,7 @@ namespace main.subcontents.HeatingSystem
                 }
                 else
                 {
-                    SelectHP += HP_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + ",";
+                    SelectHP += HP_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + "+";
                 }
             }
 
@@ -201,7 +287,7 @@ namespace main.subcontents.HeatingSystem
             reset();
             try
             {
-                string[] token = SelectHP_nonsplit.Split(',');
+                string[] token = SelectHP_nonsplit.Split('+');
                 SelectHP_split.Clear();
                 foreach (var item in token)
                 {

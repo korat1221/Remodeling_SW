@@ -176,7 +176,7 @@ namespace main.subcontents.HeatingSystem
                 }
                 else
                 {
-                    SelectBoiler += Boiler_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + ",";
+                    SelectBoiler += Boiler_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + "+";
                 }
             }
 
@@ -200,7 +200,7 @@ namespace main.subcontents.HeatingSystem
             reset();
             try
             {
-                string[] token = SelectBoiler_nonsplit.Split(',');
+                string[] token = SelectBoiler_nonsplit.Split('+');
                 SelectBoiler_split.Clear();
                 foreach (var item in token)
                 {

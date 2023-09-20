@@ -35,7 +35,7 @@ namespace main.subcontents.HeatingSystem
             {
                 if (SelectZone_nonsplit != null)
                 {
-                    string[] token = SelectZone_nonsplit.Split(',');
+                    string[] token = SelectZone_nonsplit.Split('+');
                     SelectZone_split.Clear();
                     foreach (var item in token)
                     {
