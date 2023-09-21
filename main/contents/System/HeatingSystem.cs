@@ -707,6 +707,10 @@ namespace main.contents
                 {
                     Sub2UserList_textBox.Text = 내용;
                 }
+                if(HP_dataGridView.Columns.Count == 0) 
+                {
+                    create_HP_Table();
+                }
                 Load_HP_Table(HeatSource);
             }
             else
@@ -715,6 +719,32 @@ namespace main.contents
             }
         }
 
+        private void create_HP_Table()
+        {
+            DataGridViewCheckBoxColumn HP_checkBoxColumn = new DataGridViewCheckBoxColumn();
+            new StackedHeaderDecorator(HP_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            HP_dataGridView.Columns.Clear();
+            HP_checkBoxColumn.HeaderText = "선택";
+            HP_checkBoxColumn.Name = "check";
+            HP_dataGridView.Columns.Add(HP_checkBoxColumn);
+            HP_dataGridView.Columns.Add("A1", "번호");
+            HP_dataGridView.Columns.Add("A2", "명칭");
+            HP_dataGridView.Columns.Add("A3", "연료");
+            HP_dataGridView.Columns.Add("A4", "열원유형");
+            HP_dataGridView.Columns.Add("A5", "공급유형");
+            HP_dataGridView.Columns.Add("A6", "수직/수평");
+            HP_dataGridView.Columns.Add("A7", "정격.용량.[kW]");
+            HP_dataGridView.Columns.Add("A8", "정격.COP.[kW]");
+            HP_dataGridView.Columns.Add("A9", "정격.소비전력.[kW]");
+            HP_dataGridView.Columns.Add("A10", "등급2.용량.[kW]");
+            HP_dataGridView.Columns.Add("A11", "등급2.COP.[kW]");
+            HP_dataGridView.Columns.Add("A12", "등급2.소비전력.[kW]");
+            HP_dataGridView.Columns.Add("A13", "공급방식");
+            HP_dataGridView.Columns.Add("A14", "제어방식");
+            HP_dataGridView.Columns.Add("A15", "대수.[EA]");
+            HP_dataGridView.Columns[0].Width = 30;
+
+        }
         private void Load_HP_Table(String HeatSource)
         {
             try
@@ -724,29 +754,6 @@ namespace main.contents
                 else if (HeatSource == "지열 히트펌프") { source = "지열"; }
                 else { source = "지하수"; }
                    
-
-                DataGridViewCheckBoxColumn HP_checkBoxColumn = new DataGridViewCheckBoxColumn();
-                new StackedHeaderDecorator(HP_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
-                HP_dataGridView.Columns.Clear();
-                HP_checkBoxColumn.HeaderText = "선택";
-                HP_checkBoxColumn.Name = "check";
-                HP_dataGridView.Columns.Add(HP_checkBoxColumn);
-                HP_dataGridView.Columns.Add("A1", "번호");
-                HP_dataGridView.Columns.Add("A2", "명칭");
-                HP_dataGridView.Columns.Add("A3", "연료");
-                HP_dataGridView.Columns.Add("A4", "열원유형");
-                HP_dataGridView.Columns.Add("A5", "공급유형");
-                HP_dataGridView.Columns.Add("A6", "수직/수평");
-                HP_dataGridView.Columns.Add("A7", "정격.용량.[kW]");
-                HP_dataGridView.Columns.Add("A8", "정격.COP.[kW]");
-                HP_dataGridView.Columns.Add("A9", "정격.소비전력.[kW]");
-                HP_dataGridView.Columns.Add("A10", "등급2.용량.[kW]");
-                HP_dataGridView.Columns.Add("A11", "등급2.COP.[kW]");
-                HP_dataGridView.Columns.Add("A12", "등급2.소비전력.[kW]");
-                HP_dataGridView.Columns.Add("A13", "공급방식");
-                HP_dataGridView.Columns.Add("A14", "제어방식");
-                HP_dataGridView.Columns.Add("A15", "대수.[EA]");
-                HP_dataGridView.Columns[0].Width = 30;
 
 
 
@@ -950,7 +957,6 @@ namespace main.contents
                     for (int k = 0; k < HP_dataGridView.Rows.Count; k++)
                     {
                         HP_dataGridView.Rows[k].Cells[13].Value = HP_split[k];
-                        HP_dataGridView.Rows[k].Cells[13].Value = HP_split[k];
                     }
                 }
                 else
@@ -978,7 +984,6 @@ namespace main.contents
                     for (int k = 0; k < HP_dataGridView.Rows.Count; k++)
                     {
                         HP_dataGridView.Rows[k].Cells[14].Value = HP_split[k];
-                        HP_dataGridView.Rows[k].Cells[14].Value = HP_split[k];
                     }
                 }
                 else
@@ -1005,7 +1010,6 @@ namespace main.contents
                     }
                     for (int k = 0; k < HP_dataGridView.Rows.Count; k++)
                     {
-                        HP_dataGridView.Rows[k].Cells[15].Value = HP_split[k];
                         HP_dataGridView.Rows[k].Cells[15].Value = HP_split[k];
                     }
                 }

@@ -66,11 +66,14 @@ namespace main.subcontents.HeatingSystem
             if (Carrier_comboBox.SelectedItem != null)
             {
                 Carrier = Carrier_comboBox.SelectedItem.ToString();
-                if (Carrier != "전기")
+                if (Carrier != "전기"&& DefaultUse =="기존DB 적용")
                 {
                     load_table_DB(DefaultUse, "가스","외기 히트펌프");
                 }
-                else { load_table_DB(DefaultUse, Carrier,"외기 히트펌프"); }
+                else if (Carrier == "전기" && DefaultUse == "기존DB 적용") 
+                { load_table_DB(DefaultUse, Carrier,"외기 히트펌프"); }
+                else 
+                { load_table_DB(DefaultUse, Carrier, HeatSource); }
 
             }
         }

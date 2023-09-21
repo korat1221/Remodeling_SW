@@ -294,6 +294,16 @@ namespace main
             while (++i < HeatingNum.Length)
             {
                 Cal_Heating Heating1 = new Cal_Heating(HeatingNum[i][0]);
+                Heating1.Load_Zonedata();
+                Heating1.Load_HeatingGeneral();
+                Heating1.Load_Boiler();
+                Heating1.Load_PumpData();
+                Heating1.Load_ceData();
+                Heating1.Load_StorageData();
+                Heating1.Load_PipeData();
+                Heating1.Load_AirHP(); 
+                Heating1.Load_GroundHP();
+                Heating1.Load_GWHP(); 
 
                 Heating1.Calc_thrL();
                 Heating1.Calc_beta_ce();
@@ -304,6 +314,7 @@ namespace main
                 Heating1.Calc_Qh_s();
                 Heating1.Calc_beta_gen();
                 Heating1.Calc_Qh_gen_Boiler();
+                Heating1.Calc_Q_Air_HP();
 
                 //Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Result", "번호," +
                 //               "월," +
