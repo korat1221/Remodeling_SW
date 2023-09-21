@@ -78,8 +78,8 @@
         var htSNum = 1;
 
         if (type === 'roof' || type === 'floor') {
-          for (i = 0;i <= 5;i++) {
-            $('#cont-wall').append('<div class="cls-label" style="left:34px;top:' + (12 + i * 31) + 'px;">' + ((5 - i) * 100) + '</div>');
+          for (i = 0;i <= 7;i++) {
+            $('#cont-wall').append('<div class="cls-label" style="left:34px;top:' + (10 + i * 20) + 'px;">' + (i > 0 ? ((7 - i) * 100) : '') + '</div>');
           }
 
           for (i = 0;i < 5;i++) {
@@ -92,8 +92,8 @@
             $('#cont-wall').append('<div class="cls-label" style="left:34px;top:' + (25 + i * 36) + 'px;">' + (n != 20 ? n : '') + '</div>');
           }
 
-          for (i = 0;i <= 5;i++) {
-            $('#cont-wall').append('<div class="cls-label" style="top:290px;left:' + (50 + i * 39) + 'px;">' + (i * 100) + '</div>');
+          for (i = 0;i <= 7;i++) {
+            $('#cont-wall').append('<div class="cls-label" style="top:290px;left:' + (42 + i * 25) + 'px;">' + (i > 0 ? ((i - 1) * 100) : '') + '</div>');
           }
         }
          drawWall([]);
@@ -141,20 +141,20 @@
         });
 
         if (type === "roof" || type === "floor") {
-          var height = 148;
+          var height = 152;
           var html = '<table style="width:100%;border-spacing: 0;height:' + height + 'px">';
           lines.push((10 + 20) * 6.2);
-          lines.push(154);
+          lines.push(152);
 
           arr.forEach((el, idx) => {
 
-              m = el.width / 3.3;
+              m = el.width / 4.9;
               html += '<tr><td style="width:100%;background-color:#' + el.bgcolor + ' !important;background:' + el.image + ';height:' + m + 'px;background-size:contain"></td></tr>';
 
               height -= m;
-              n += m + 2;
+              n += m + 1;
               lines.push((10 + el.temper) * 6.2);
-              lines.push(154 - n);
+              lines.push(152 - n);
           });
 
           if (height > 0) {
@@ -165,7 +165,7 @@
           var stage = new Konva.Stage({
               container: 'cvs-wall',
               width: 254,
-              height: 154,
+              height: 164,
           });
         }
         else {  
@@ -176,7 +176,7 @@
 
           arr.forEach((el, idx) => {
 
-              m = el.width/2.75;// / 1.15;
+              m = el.width/4.5;
               html += '<td style="width:' + m + 'px;background-color:#' + el.bgcolor + ' !important;background:' + el.image + ';height:252px;background-size:contain"></td>';
 
               n += m + 2;
