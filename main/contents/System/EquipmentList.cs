@@ -25,12 +25,12 @@ namespace main.contents
     public partial class EquipmentList : Form
     {
         DataGridViewCheckBoxColumn Boiler_checkBoxColumn = new DataGridViewCheckBoxColumn();
+        DataGridViewCheckBoxColumn Solar_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn AirHP_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn GWHP_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn GroundHP_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn Pump_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn ce_checkBoxColumn = new DataGridViewCheckBoxColumn();
-        DataGridViewCheckBoxColumn Solar_checkBoxColumn = new DataGridViewCheckBoxColumn();
         int Boiler_SelectRow, HP_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow;
 
 
@@ -46,11 +46,13 @@ namespace main.contents
             Program.DB.initTable(DB.type.ProjDB, "User_GroundWHP");
             Program.DB.initTable(DB.type.ProjDB, "User_Pump");
             Program.DB.initTable(DB.type.ProjDB, "User_ce");
+            Program.DB.initTable(DB.type.ProjDB, "User_ Solar");
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             Create_Boiler_Table();
+            Create_Solar_Table();
             Create_AirHP_Table();
             Create_GroundHP_Table();
             Create_GWHP_Table();
@@ -405,6 +407,286 @@ namespace main.contents
             catch { }
         }
 
+        ///////////////////////////////////////////////////태양열/////////////////////////////////////////////////////////////////
+        public void Create_Solar_Table()
+        {
+            new StackedHeaderDecorator(Solar_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            Solar_dataGridView.Columns.Clear();
+            Solar_checkBoxColumn.HeaderText = "선택";
+            Solar_checkBoxColumn.Name = "check";
+            Solar_dataGridView.Columns.Add(Solar_checkBoxColumn);
+
+            Solar_dataGridView.Columns.Add("A1", "번호");
+            Solar_dataGridView.Columns.Add("A2", "DB유형");
+            Solar_dataGridView.Columns.Add("A3", "명칭");
+            Solar_dataGridView.Columns.Add("A4", "난방/급탕");
+            Solar_dataGridView.Columns.Add("A5", "모듈면적.A[m2]");
+            Solar_dataGridView.Columns.Add("A6", "효율.η0]");
+            Solar_dataGridView.Columns.Add("A7", "손실계수.1차.k1");
+            Solar_dataGridView.Columns.Add("A8", "손실계수.2차.k2");
+            Solar_dataGridView.Columns.Add("A9", "50°의 입사각.Khem(50֠)");
+            Solar_dataGridView.Columns.Add("A10", "유효 열용량.C");
+            Solar_dataGridView.Columns[0].Width = 40;
+        }
+
+        private void UserSolar_Add_button_Click(object sender, EventArgs e)
+        {
+            int nRow = Solar_dataGridView.Rows.Add();
+            Load_Solar_Num();
+
+            Solar_dataGridView.Rows[nRow].Cells[2].Value = "도면";
+
+            DataGridViewComboBoxCell 난방급탕Combo = new DataGridViewComboBoxCell();
+            난방급탕Combo.Items.Add("난방");
+            난방급탕Combo.Items.Add("급탕");
+            난방급탕Combo.Items.Add("난방+급탕");
+            Solar_dataGridView.Rows[nRow].Cells[4] = 난방급탕Combo;
+
+        }
+
+        private void DefaultSolar_Add_button_Click(object sender, EventArgs e)
+        {
+            ArrayList SelectSolar = new ArrayList();
+            int nRow = Solar_dataGridView.Rows.Add();
+            Load_Solar_Num();
+            Solar_dataGridView.Rows[nRow].Cells[2].Value = "기본";
+
+            DataGridViewComboBoxCell 난방급탕Combo = new DataGridViewComboBoxCell();
+            난방급탕Combo.Items.Add("난방");
+            난방급탕Combo.Items.Add("급탕");
+            난방급탕Combo.Items.Add("난방+급탕");
+            Solar_dataGridView.Rows[nRow].Cells[4] = 난방급탕Combo;
+
+            Heating_Solar heating_Solar = new Heating_Solar("기본DB 적용", null);
+            DialogResult result = heating_Solar.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    if (heating_Solar.SelectSolar != null)
+                    {
+
+                        string[] token = heating_Solar.SelectSolar.Split(',');
+                        SelectSolar.Clear();
+                        foreach (var item in token)
+                        {
+                            SelectSolar.Add(item.ToString());
+                        }
+                        string[][] Value; Double[][] Value2;
+                        String 내용;
+                        Value = Program.DB.getValue(DB.type.BaseDB_Heating, "보일러", "제품명,연료,종류,전부하효율,부분부하효율,소비전력,대기전력", "번호 = '" + SelectSolar[0].ToString() + "'");
+                        String name = Value[0][0];
+
+                        if (Value[0][1] == "가스")
+                        {
+                            DataGridViewComboBoxCell 연료Combo = new DataGridViewComboBoxCell();
+                            연료Combo.Items.Add("LNG");
+                            연료Combo.Items.Add("LPG");
+                            Solar_dataGridView.Rows[nRow].Cells[5] = 연료Combo;
+                        }
+                        else { Solar_dataGridView.Rows[nRow].Cells[5].Value = Value[0][1]; }
+                        Solar_dataGridView.Rows[nRow].Cells[6].Value = Value[0][2];
+                        Solar_dataGridView.Rows[nRow].Cells[8].Value = Convert.ToDouble(Value[0][3]) * 100;
+                        Solar_dataGridView.Rows[nRow].Cells[9].Value = Convert.ToDouble(Value[0][4]) * 100;
+                        Solar_dataGridView.Rows[nRow].Cells[10].Value = Value[0][5];
+                        Solar_dataGridView.Rows[nRow].Cells[11].Value = Value[0][6];
+                    }
+                }
+                catch { }
+            }
+        }
+
+        private void Solar_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                if (e.ColumnIndex == 5)
+                {
+                    if (Solar_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString() == "도면")
+                    { Load_Solar_Type(e.RowIndex); }
+                }
+                else if (e.ColumnIndex == 7 || e.ColumnIndex == 8)
+                {
+                    if (Solar_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                    {
+                        if (Convert.ToDouble(Solar_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) < 1)
+                        {
+                            MessageBox.Show("퍼센트 단위로 입력하세요.(Ex : 90.1% ⇒ 90.1)");
+                            Solar_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Load_Solar_Type(int nRow)
+        {
+            DataGridViewComboBoxCell TypeCombo = new DataGridViewComboBoxCell();
+
+            switch (Solar_dataGridView.Rows[nRow].Cells[5].Value)
+            {
+                case "LPG":
+                    TypeCombo.Items.Clear();
+                    TypeCombo.Items.Add("콘덴싱가스보일러");
+                    TypeCombo.Items.Add("일반가스보일러");
+                    break;
+                case "LNG":
+                    TypeCombo.Items.Clear();
+                    TypeCombo.Items.Add("콘덴싱가스보일러");
+                    TypeCombo.Items.Add("일반가스보일러");
+                    break;
+                case "기름":
+                    TypeCombo.Items.Clear();
+                    TypeCombo.Items.Add("콘덴싱기름보일러");
+                    TypeCombo.Items.Add("일반기름보일러");
+                    break;
+                case "펠릿":
+                    TypeCombo.Items.Clear();
+                    TypeCombo.Items.Add("펠릿콘덴싱보일러");
+                    TypeCombo.Items.Add("펠릿노통형보일러");
+                    break;
+                case "전기":
+                    TypeCombo.Items.Clear();
+                    TypeCombo.Items.Add("전기보일러");
+                    break;
+            }
+            Solar_dataGridView.Rows[nRow].Cells[6] = TypeCombo;
+        }
+
+        private void Solar_Remove_button_Click(object sender, EventArgs e)
+        {
+            Solar_dataGridView.Rows.Remove(Solar_dataGridView.Rows[Solar_SelectRow]);
+            Load_Solar_Num();
+        }
+
+        private void Solar_Copy_button_Click(object sender, EventArgs e)
+        {
+            int nRow = Solar_dataGridView.Rows.Add();
+            Load_Solar_Num();
+            if (Solar_dataGridView.Rows[Solar_SelectRow].Cells[2].Value == "도면")
+            {
+                DataGridViewComboBoxCell 연료Combo = new DataGridViewComboBoxCell();
+                연료Combo.Items.Add("LNG");
+                연료Combo.Items.Add("LPG");
+                연료Combo.Items.Add("기름");
+                연료Combo.Items.Add("펠릿");
+                연료Combo.Items.Add("전기");
+                Solar_dataGridView.Rows[nRow].Cells[5] = 연료Combo;
+            }
+
+            DataGridViewComboBoxCell 난방급탕Combo = new DataGridViewComboBoxCell();
+            난방급탕Combo.Items.Add("난방");
+            난방급탕Combo.Items.Add("급탕");
+            난방급탕Combo.Items.Add("난방+급탕");
+            Solar_dataGridView.Rows[nRow].Cells[4] = 난방급탕Combo;
+
+            for (int k = 2; k < 13; k++)
+            {
+                if (Solar_dataGridView.Rows[Solar_SelectRow].Cells[k].Value != null)
+                {
+                    Solar_dataGridView.Rows[nRow].Cells[k].Value = Solar_dataGridView.Rows[Solar_SelectRow].Cells[k].Value;
+                    //           Solar_dataGridView.Rows[nRow].Cells[k].Style.BackColor = Color.White;
+                }
+                //else
+                //{
+                //    Solar_dataGridView.Rows[nRow].Cells[k].Style.BackColor = SystemColors.Info;
+                //}
+            }
+            if (Solar_dataGridView.Rows[Solar_SelectRow].Cells[3].Value != null)
+            {
+                Solar_dataGridView.Rows[nRow].Cells[3].Value = Solar_dataGridView.Rows[Solar_SelectRow].Cells[3].Value.ToString() + "_복사";
+            }
+        }
+        private void Solar_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                Solar_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                Solar_SelectRow = e.RowIndex;
+            }
+        }
+
+        private void Load_Solar_Num()
+        {
+            for (int k = 0; k < Solar_dataGridView.RowCount; k++)
+            {
+                if (k + 1 < 10)
+                { Solar_dataGridView.Rows[k].Cells[1].Value = "UBS0" + (k + 1).ToString(); }
+                else { Solar_dataGridView.Rows[k].Cells[1].Value = "UBS" + (k + 1).ToString(); }
+            }
+        }
+
+        private void Solar_Save_button_Click(object sender, EventArgs e)
+        {
+            Program.DB.deleteValue(DB.type.ProjDB, "User_Solar", "");
+
+            for (int k = 0; k < Solar_dataGridView.RowCount; k++)
+            {
+                String[] Value = new String[12];
+                for (int i = 1; i < 13; i++)
+                {
+                    if (Solar_dataGridView.Rows[k].Cells[i].Value != null)
+                    { Value[i - 1] = Solar_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    else { Value[i - 1] = ""; }
+                }
+                Program.DB.setValue(DB.type.ProjDB, "User_Solar", "번호,DB유형,명칭,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력,대수",
+                "'" + Value[0] + "','"
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','"
+                 + Value[11]
+                 + "'", "번호");
+            }
+            MessageBox.Show("저장되었습니다.");
+        }
+
+        private void Load_Solar()
+        {
+            try
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "번호,명칭,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력,DB유형,난방급탕,대수", "");
+                string 용량 = "", 전부하효율 = "", 부분부하효율 = "", 소비전력 = "", 대기전력 = "";
+                for (int n = 0; n < User_Value.Length; n++)
+                {
+                    Solar_dataGridView.Rows.Add();
+                    int nRow = Solar_dataGridView.Rows.Count - 1;
+
+                    if (User_Value[n][4] != null && User_Value[n][4] != "")
+                    {
+                        double a = Convert.ToDouble(User_Value[n][4]);
+                        용량 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
+                    }
+                    if (User_Value[n][5] != null && User_Value[n][5] != "")
+                    {
+                        전부하효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][5]));
+                    }
+                    if (User_Value[n][6] != null && User_Value[n][6] != "")
+                    {
+                        부분부하효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][6]));
+                    }
+                    if (User_Value[n][7] != null && User_Value[n][7] != "")
+                    {
+                        소비전력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][7]));
+                    }
+                    if (User_Value[n][8] != null && User_Value[n][8] != "")
+                    {
+                        대기전력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][8]));
+                    }
+                    Solar_dataGridView.Rows[nRow].Cells[7].Value = 용량;
+                    Solar_dataGridView.Rows[nRow].Cells[8].Value = 전부하효율;
+                    Solar_dataGridView.Rows[nRow].Cells[9].Value = 부분부하효율;
+                    Solar_dataGridView.Rows[nRow].Cells[10].Value = 소비전력;
+                    Solar_dataGridView.Rows[nRow].Cells[11].Value = 대기전력;
+                    Solar_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0]; //번호
+                    Solar_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][9]; //DB유형
+                    Solar_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][1]; //명칭
+                    Solar_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][10]; //난방급탕
+                    Solar_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][2]; //연료
+                    Solar_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][3]; //Type
+                    Solar_dataGridView.Rows[nRow].Cells[12].Value = User_Value[n][11]; //대수
+                }
+            }
+            catch { }
+        }
+
         //////////////////////////////////////////////////외기 히트펌프/////////////////////////////////////////////////////////////////
         public void Create_AirHP_Table()
         {
@@ -472,7 +754,7 @@ namespace main.contents
             공급유형Combo.Items.Add("수방식");
             AirHP_dataGridView.Rows[nRow].Cells[5] = 공급유형Combo;
 
-            Heating_HP heating_HP = new Heating_HP("기본DB 적용", null,"외기 히트펌프");
+            Heating_HP heating_HP = new Heating_HP("기본DB 적용", null, "외기 히트펌프");
             DialogResult result = heating_HP.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -790,7 +1072,7 @@ namespace main.contents
             GWHP_dataGridView.Rows[nRow].Cells[5] = 공급유형Combo;
         }
 
-     
+
         private void GWHP_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)

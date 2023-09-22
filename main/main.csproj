@@ -21,6 +21,9 @@
     <Compile Update="subcontents\EquipmentList\PumpCal.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\HeatingSystem\Heating_Solar.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\HeatingSystem\Heating_HP.cs">
       <SubType>Form</SubType>
     </Compile>

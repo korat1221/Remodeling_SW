@@ -1,20 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
-using System.Drawing;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Numerics;
-using System.Reflection.PortableExecutable;
-using System.Runtime.Intrinsics.Arm;
-using System.Runtime.Intrinsics.X86;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
+﻿using System.Collections;
 
 namespace main
 {
@@ -250,7 +234,7 @@ namespace main
         {
             try
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "외기히트펌프종류,외기히트펌프공급방식,외기히트펌프제어방식,외기히트펌프대수", "번호 = '" + HeatingNum + "'");
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "외기히트펌프번호,외기히트펌프공급방식,외기히트펌프제어방식,외기히트펌프대수", "번호 = '" + HeatingNum + "'");
 
                 String HeatSource = "외기";
                 SelectHP_nonsplit[0, 0] = Value[0][0];
@@ -260,10 +244,10 @@ namespace main
                 Split_HPSupply(HPSupply_nonsplit[0, 0], HeatSource);
 
                 HPControl_nonsplit[0, 0] = Value[0][2];
-                Split_HPControl(HPSupply_nonsplit[0, 0], HeatSource);
+                Split_HPControl(HPControl_nonsplit[0, 0], HeatSource);
 
                 HPNum_nonsplit[0, 0] = Value[0][3];
-                Split_HPNum(HPSupply_nonsplit[0, 0], HeatSource);
+                Split_HPNum(HPNum_nonsplit[0, 0], HeatSource);
 
             }
             catch { }
@@ -274,7 +258,7 @@ namespace main
         {
             try
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "지열히트펌프종류,지열히트펌프공급방식,지열히트펌프제어방식,지열히트펌프대수", "번호 = '" + HeatingNum + "'");
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "지열히트펌프번호,지열히트펌프공급방식,지열히트펌프제어방식,지열히트펌프대수", "번호 = '" + HeatingNum + "'");
 
                 String HeatSource = "지열";
                 SelectHP_nonsplit[1, 0] = Value[0][0];
@@ -284,10 +268,10 @@ namespace main
                 Split_HPSupply(HPSupply_nonsplit[1, 0], HeatSource);
 
                 HPControl_nonsplit[1, 0] = Value[0][2];
-                Split_HPControl(HPSupply_nonsplit[1, 0], HeatSource);
+                Split_HPControl(HPControl_nonsplit[1, 0], HeatSource);
 
                 HPNum_nonsplit[1, 0] = Value[0][3];
-                Split_HPNum(HPSupply_nonsplit[1, 0], HeatSource);
+                Split_HPNum(HPNum_nonsplit[1, 0], HeatSource);
 
             }
             catch { }
@@ -298,7 +282,7 @@ namespace main
         {
             try
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "지하수히트펌프종류,지하수히트펌프공급방식,지하수히트펌프제어방식,지하수히트펌프대수", "번호 = '" + HeatingNum + "'");
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "지하수히트펌프번호,지하수히트펌프공급방식,지하수히트펌프제어방식,지하수히트펌프대수", "번호 = '" + HeatingNum + "'");
 
                 String HeatSource = "지하수";
                 SelectHP_nonsplit[2, 0] = Value[0][0];
@@ -308,10 +292,10 @@ namespace main
                 Split_HPSupply(HPSupply_nonsplit[2, 0], HeatSource);
 
                 HPControl_nonsplit[2, 0] = Value[0][2];
-                Split_HPControl(HPSupply_nonsplit[2, 0], HeatSource);
+                Split_HPControl(HPControl_nonsplit[2, 0], HeatSource);
 
                 HPNum_nonsplit[2, 0] = Value[0][3];
-                Split_HPNum(HPSupply_nonsplit[2, 0], HeatSource);
+                Split_HPNum(HPNum_nonsplit[2, 0], HeatSource);
 
             }
             catch { }
@@ -458,9 +442,9 @@ namespace main
         {
             if (nonSplit != null)
             {
-                if (nonSplit.Contains(","))
+                if (nonSplit.Contains("+"))
                 {
-                    string[] token = nonSplit.Split(',');
+                    string[] token = nonSplit.Split('+');
                     SelectZone_split.Clear();
                     foreach (var item in token)
                     {
@@ -480,7 +464,7 @@ namespace main
             {
                 if (nonSplit.Contains(','))
                 {
-                    string[] token = nonSplit.Split(',');
+                    string[] token = nonSplit.Split('+');
                     SelectBoiler_split.Clear();
                     foreach (var item in token)
                     {
@@ -503,7 +487,7 @@ namespace main
             {
                 if (nonSplit.Contains(','))
                 {
-                    string[] token = nonSplit.Split(',');
+                    string[] token = nonSplit.Split('+');
                     BoilerNum_split.Clear();
                     foreach (var item in token)
                     {
@@ -1053,7 +1037,7 @@ namespace main
 
         public void Calc_Q_Air_HP()
         {
-            for(int n=0; n < SelectAirHP_split.Count; n++)
+            for (int n = 0; n < SelectAirHP_split.Count; n++)
             {
 
                 string[][] airHP = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "번호,연료,공급유형,정격용량,정격COP,정격소비전력,한랭지용량,한랭지COP,한랭지소비전력", "번호 = '" + SelectAirHP_split[n] + "'");
@@ -1067,11 +1051,18 @@ namespace main
                 double Pi_15 = Convert.ToDouble(airHP[0][6]); //정격용량
                 double COP_15 = Convert.ToDouble(airHP[0][7]); //정격COP
                 double W_15 = Convert.ToDouble(airHP[0][8]); //정격소비전력 
-                
-                double Pi_2,Pi_7, COP_2, COP_7, W_2, W_7; //2도, -7도
-                double[] 수방식_비율_Pi = { 0.64, 0.8, 0.95};//-7,2,7
+
+                double Pi_2, Pi_7, COP_2, COP_7, W_2, W_7; //2도, -7도
+                double[] 수방식_비율_Pi = { 0.64, 0.8, 0.95 };//-7,2,7
                 double[] 직팽인버터_비율_Pi = { 0.81, 0.96, 1 };//-7,2,7,
                 double[] 직팽없음_비율_Pi = { 0.81, 0.96, 1 };//-7,2,7,
+                double[] COP_standard = new double[4];
+
+                double themp_상수 = 10.00;
+                COP_standard[0] = ((-7 + 15 - themp_상수) * (-7 + 15 + 273.15) / 15 + SL + 7 - 15) / (SL - themp_상수) + (-7 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 + 7)) / 15; //-7일 경우,
+                COP_standard[1] = ((2 + 15 - themp_상수) * (2 + 15 + 273.15) / 15 + SL - 2 - 15) / (SL - themp_상수) + (2 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 - 2)) / 15; //2일 경우,
+                COP_standard[2] = ((7 + 15 - themp_상수) * (7 + 15 + 273.15) / 15 + SL - 7 - 15) / (SL - themp_상수) + (7 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 - 7)) / 15; //7일 경우,
+                COP_standard[3] = ((-15 + 15 - themp_상수) * (-15 + 15 + 273.15) / 15 + SL - (-15) - 15) / (SL - themp_상수) + (-15 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 - (-15))) / 15; //-15일 경우,
 
                 if (Pi_15 > 0)
                 {
@@ -1080,14 +1071,21 @@ namespace main
 
                     W_2 = (W_nom - W_15) / 22 * 2 - (W_nom - W_15) / 22 * 7 + W_nom;
                     W_7 = (W_nom - W_15) / 22 * (-7) - (W_nom - W_15) / 22 * 7 + W_nom;
+
+                    COP_2 = Pi_2 / W_2;
+                    COP_7 = Pi_7 / W_7;
                 }
                 else
                 {
-                    if(SupplyType == "수방식")
-                    { Pi_2 = Pi_nom * 수방식_비율_Pi [1]/ 수방식_비율_Pi[2];
-                      Pi_7 = Pi_nom * 수방식_비율_Pi[0] / 수방식_비율_Pi[2];
+                    COP_7 = COP_nom * COP_standard[0] / COP_standard[2];
+                    COP_2 = COP_nom * COP_standard[1] / COP_standard[2];
+
+                    if (SupplyType == "수방식")
+                    {
+                        Pi_2 = Pi_nom * 수방식_비율_Pi[1] / 수방식_비율_Pi[2];
+                        Pi_7 = Pi_nom * 수방식_비율_Pi[0] / 수방식_비율_Pi[2];
                     }
-                    else if(AirHPControl_split[0]=="인버터제어")
+                    else if (AirHPControl_split[0] == "인버터제어")
                     {
                         Pi_2 = Pi_nom * 직팽인버터_비율_Pi[1] / 직팽인버터_비율_Pi[2];
                         Pi_7 = Pi_nom * 직팽인버터_비율_Pi[0] / 직팽인버터_비율_Pi[2];
@@ -1097,55 +1095,51 @@ namespace main
                         Pi_2 = Pi_nom * 직팽없음_비율_Pi[1] / 직팽없음_비율_Pi[2];
                         Pi_7 = Pi_nom * 직팽없음_비율_Pi[0] / 직팽없음_비율_Pi[2];
                     }
-                }
-                
-
-
-
-
-
-
-
-                double[,] kbuh = new double[4, 12], DH = new double[3, 12], Wi = new double[3, 12], H = new double[5, 12], Wtime = new double[3, 12]; 
-            double[] fLg = new double[12];
-            try
-            {
-                for(int mth = 1; mth <= 12; mth++)
-                {
-                    for(int k =1; k <= 4; k++)
-                    {
-                        string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_하이브리드", "빈도", "지역명 ='" + 지역[0][0] + "' and 유형 ='선택운전' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
-                        kbuh[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]);
-
-                    }
-                }
-                for (int mth = 1; mth <= 12; mth++)
-                {
-                    for (int k = 1; k <= 3; k++)
-                    {
-                        string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_일반", "빈도", "지역명 ='" + 지역[0][0] + "' and 단위 ='[Kh]' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
-                        DH[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]);
-                    }
-
-                    Wi[0, mth - 1] = Math.Max(DH[0, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]) - kbuh[0, mth - 1], 0);
-                    Wi[1, mth - 1] = Math.Max(DH[1, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]) - kbuh[1, mth - 1], 0);
-                    Wi[2, mth - 1] = Math.Max(DH[2, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]) - kbuh[2, mth - 1], 0);
+                    W_7 = Pi_7 / COP_7;
+                    W_2 = Pi_2 / COP_2;
                 }
 
-                for (int mth = 1; mth <= 12; mth++)
+
+
+                double[,] kbuh = new double[4, 12], DH = new double[3, 12], Wi = new double[3, 12], H = new double[5, 12], Wtime = new double[3, 12];
+                double[] fLg = new double[12];
+                try
                 {
-                    for (int k = 1; k <= 5; k++)
+                    for (int mth = 1; mth <= 12; mth++)
                     {
-                        string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_일반", "빈도", "지역명 ='" + 지역[0][0] + "' and 단위 ='[h]' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
-                        H[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]);
+                        for (int k = 1; k <= 4; k++)
+                        {
+                            string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_하이브리드", "빈도", "지역명 ='" + 지역[0][0] + "' and 유형 ='선택운전' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
+                            kbuh[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]);
+
+                        }
+                    }
+                    for (int mth = 1; mth <= 12; mth++)
+                    {
+                        for (int k = 1; k <= 3; k++)
+                        {
+                            string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_일반", "빈도", "지역명 ='" + 지역[0][0] + "' and 단위 ='[Kh]' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
+                            DH[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]);
+                        }
+
+                        Wi[0, mth - 1] = Math.Max(DH[0, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]) - kbuh[0, mth - 1], 0);
+                        Wi[1, mth - 1] = Math.Max(DH[1, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]) - kbuh[1, mth - 1], 0);
+                        Wi[2, mth - 1] = Math.Max(DH[2, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]) - kbuh[2, mth - 1], 0);
                     }
 
-                    Wtime[0, mth - 1] = H[0, mth - 1] / (H[0, mth - 1] + H[1, mth - 1] + H[2, mth - 1]+ H[3,mth - 1]+ H[4,mth-1]);
-                    Wtime[1, mth - 1] = H[1, mth - 1] / (H[0, mth - 1] + H[1, mth - 1] + H[2, mth - 1] + H[3, mth - 1] + H[4, mth - 1]);
-                    Wtime[2, mth - 1] = H[2, mth - 1] / (H[0, mth - 1] + H[1, mth - 1] + H[2, mth - 1] + H[3, mth - 1] + H[4, mth - 1]);
-                    if (AirHPSupply_split.Count > 0)
+                    for (int mth = 1; mth <= 12; mth++)
                     {
-                        if (AirHPSupply_split[0] == "공기식")
+                        for (int k = 1; k <= 4; k++)
+                        {
+                            string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_일반", "빈도", "지역명 ='" + 지역[0][0] + "' and 단위 ='[h]' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
+                            H[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]);
+                        }
+
+                        Wtime[0, mth - 1] = H[0, mth - 1] / (H[0, mth - 1] + H[1, mth - 1] + H[2, mth - 1] + H[3, mth - 1] + H[4, mth - 1]);
+                        Wtime[1, mth - 1] = H[1, mth - 1] / (H[0, mth - 1] + H[1, mth - 1] + H[2, mth - 1] + H[3, mth - 1] + H[4, mth - 1]);
+                        Wtime[2, mth - 1] = H[2, mth - 1] / (H[0, mth - 1] + H[1, mth - 1] + H[2, mth - 1] + H[3, mth - 1] + H[4, mth - 1]);
+
+                        if (SupplyType == "공기식")
                         { fLg[mth - 1] = 1; }
                         else
                         {
@@ -1153,19 +1147,208 @@ namespace main
                         }
                     }
                 }
-            }
-            catch { }
+                catch { }
 
-            double[,] Qh_outgi = new double[3,12];
+                double[,] Qh_outgi = new double[3, 12];
 
-            for (int mth = 0; mth < 12; mth++)
-            {
-                for (int i = 0; i < 3; i++)
+                for (int mth = 0; mth < 12; mth++)
                 {
-                    Qh_outgi[i,mth] = Qh_outg[mth] * Wi[i,mth];
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Qh_outgi[i, mth] = Qh_outg[mth] * Wi[i, mth];
+                    }
                 }
+
+                double[] Pi_max = new double[3];//-7.2.7 
+                double[] Pi_min = new double[3];
+                double[] beta_ = new double[3], beta = new double[3];
+                double[] COP_max = new double[3], COP_min = new double[3], COP_cal = new double[3];
+                if (AirHPControl_split[0] != "인버터제어")
+                {
+                    Pi_max[0] = Pi_7;
+                    Pi_max[1] = Pi_2;
+                    Pi_max[2] = Pi_nom;
+                    Pi_min[0] = Pi_7;
+                    Pi_min[1] = Pi_2;
+                    Pi_min[2] = Pi_nom;
+
+                }
+                else
+                {
+                    Pi_max[0] = (1 + 0.035 * ((-7) + 7) * Pi_7 / 0.9);
+                    Pi_max[1] = (1 + 0.035 * ((2) + 7) * Pi_2 / 0.9);
+                    Pi_max[2] = (1 + 0.035 * ((7) + 7) * Pi_nom / 0.9);
+                    Pi_min[0] = Pi_max[0] * 0.2;
+                    Pi_min[1] = Pi_max[1] * 0.2;
+                    Pi_min[2] = Pi_max[2] * 0.2;
+                }
+
+                beta_[0] = Pi_7 / Pi_max[0];
+                beta_[1] = Pi_2 / Pi_max[1];
+                beta_[2] = Pi_nom / Pi_max[2];
+
+                if (beta_[0] >= 0.8)
+                { COP_max[0] = COP_7; }
+                else { COP_max[0] = COP_7 - 4; }
+                if (beta_[1] >= 0.8)
+                { COP_max[1] = COP_2; }
+                else { COP_max[1] = COP_2 - 4; }
+                if (beta_[2] >= 0.8)
+                { COP_max[2] = COP_7; }
+                else { COP_max[2] = COP_7 - 4; }
+
+                if (AirHPControl_split[0] != "인버터제어")
+                {
+                    COP_min[0] = COP_max[0];
+                    COP_min[1] = COP_max[1];
+                    COP_min[2] = COP_max[2];
+                }
+                else
+                {
+                    COP_min[0] = COP_max[0] - 2;
+                    COP_min[1] = COP_max[1] - 2;
+                    COP_min[2] = COP_max[2] - 2;
+                }
+
+                if (beta_[0] >= 0.8)
+                {
+                    COP_cal[0] = COP_7 + 0.2;
+                    beta[0] = 0.6;
+                }
+                else
+                {
+                    COP_cal[0] = COP_7;
+                    beta[0] = beta_[0];
+                }
+                if (beta_[1] >= 0.8)
+                {
+                    COP_cal[1] = COP_2 + 0.2;
+                    beta[1] = 0.6;
+                }
+                else
+                {
+                    COP_cal[1] = COP_2;
+                    beta[1] = beta_[1];
+                }
+                if (beta_[2] >= 0.8)
+                {
+                    COP_cal[2] = COP_nom + 0.2;
+                    beta[2] = 0.6;
+                }
+                else
+                {
+                    COP_cal[2] = COP_nom;
+                    beta[2] = beta_[2];
+                }
+
+                double[,] th_sng = new double[3, 12]; double[,] Qh_outg_prel_sng = new double[3, 12], Q_max = new double[3, 12], Q_min = new double[3, 12];
+                double[,] th_op_sng = new double[3, 12], Pi_sng = new double[3, 12]; double[,] beta_hpi = new double[3, 12]; double[,] Qh_outg_sng = new double[3, 12];
+                double[,] COP_hp_pint = new double[3, 12];
+                double[] FC = new double[12], fpint = new double[12];
+                double[,] COPpint = new double[3, 12];
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    for (int k = 0; k < 3; k++)
+                    {
+                        th_sng[k, mth] = H[k, mth] * th_avg[mth] / (dmth[mth] * 24);
+                        Qh_outg_prel_sng[k, mth] = Qh_outgi[k, mth] * fLg[mth] - Pi_max[k] * 0;
+                        Q_max[k, mth] = Pi_max[k] * th_sng[k, mth];
+                        Q_min[k, mth] = Pi_min[k] * th_sng[k, mth];
+
+
+                        if (Qh_outg_prel_sng[k, mth] < Q_min[k, mth])
+                        {
+                            th_op_sng[k, mth] = Qh_outg_prel_sng[k, mth] / Pi_min[k];
+                        }
+                        else
+                        {
+                            th_op_sng[k, mth] = th_sng[k, mth];
+                        }
+
+                        if (th_op_sng[k, mth] < 0.001)
+                        {
+                            Pi_sng[k, mth] = 0;
+                        }
+                        else if (th_op_sng[k, mth] == th_sng[k, mth])
+                        {
+                            Pi_sng[k, mth] = Math.Min(Pi_max[k], Qh_outg_prel_sng[k, mth] / th_op_sng[k, mth]);
+                        }
+                        else
+                        {
+                            Pi_sng[k, mth] = Pi_min[k];
+                        }
+
+                        beta_hpi[k, mth] = Math.Max(Pi_sng[k, mth] / Pi_max[k], 0.2);
+
+                        if (beta_[k] >= 0.8)
+                        {
+                            beta[k] = 0.6;
+                        }
+                        else
+                        {
+                            beta[k] = beta_[k];
+                        }
+
+                        Qh_outg_sng[k, mth] = Pi_sng[k, mth] * th_op_sng[k, mth];
+
+                        if (beta[k] <= beta_hpi[k, mth])
+                        {
+                            COP_hp_pint[k, mth] = COP_cal[k] + (beta_hpi[k, mth] - beta[k]) / (1 - beta[k]) * (COP_max[k] - COP_cal[k]);
+                        }
+                        else
+                        {
+                            COP_hp_pint[k, mth] = COP_min[k] + (beta_hpi[k, mth] - 0.2) / (1 - 0.2) * (COP_cal[k] - COP_min[k]);
+                        }
+                    }
+                    if (SupplyType == "공기식")
+                    {
+                        FC[mth] =  Math.Round((Qh_outg_sng[0, mth] + Qh_outg_sng[1, mth] + Qh_outg_sng[2, mth]) / (Pi_max[0] * th_op_sng[0, mth] + Pi_max[1] * th_op_sng[1, mth] + Pi_max[2] * th_op_sng[2, mth]), 1);
+                        if(double.IsNaN(FC[mth]))
+                        { FC[mth] = 0.1; }
+                        string[][] Valuef = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프부하계수", "값", "구분 ='" + AirHPSupply_split[0] + "' AND FC ='"+ FC[mth]+"'");
+                        fpint[mth] = Convert.ToDouble(Valuef[0][0]);
+                    }
+                    else
+                    {
+                        FC[mth] = Math.Round(Math.Min(th_op_sng[0, mth] / (th_avg[mth]), 1), 1);
+                        if (double.IsNaN(FC[mth]))
+                        { FC[mth] = 0.1; }
+
+                        string[][] Valuef;
+                        if (ce1Type =="복사난방"|| ce2Type =="복사난방")
+                        {
+                            Valuef = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프부하계수", "값", "구분 ='바닥난방' AND FC ='" + FC[mth] + "'");
+                        }
+                        else
+                        {
+                            Valuef = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프부하계수", "값", "구분 ='방열기' AND FC ='" + FC[mth] + "'");
+                        }
+                        fpint[mth] = Convert.ToDouble(Valuef[0][0]);
+                    }
+
+                    for(int k =0; k < 3; k++)
+                    {
+                        if (SupplyType == "공기식")
+                        {
+                            COPpint[k, mth] = fpint[mth] * COP_max[k];
+                        }
+                        else
+                        {
+                            if (FC[mth]<1)
+                            { COPpint[k, mth] = fpint[mth] * COP_min[k]; }
+                            else { COPpint[k, mth] = fpint[mth] * COP_max[k]; }
+                        }
+                    }
+                    if (Carrier == "전기")
+                    { Qh_f[mth] = Qh_outg_sng[0, mth] / COP_hp_pint[0, mth] + Qh_outg_sng[1, mth] / COP_hp_pint[1, mth] + Qh_outg_sng[2, mth] / COP_hp_pint[2, mth]; }
+                    else
+                    {
+                        Qh_f[mth] = (Qh_outg_sng[0, mth] / COP_hp_pint[0, mth] + Qh_outg_sng[1, mth] / COP_hp_pint[1, mth] + Qh_outg_sng[2, mth] / COP_hp_pint[2, mth]) * 1.11 / (1 + 0.1);
+                    }
+                }
+
+
             }
-        }
 
         }
 
