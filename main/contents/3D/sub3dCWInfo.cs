@@ -202,7 +202,7 @@ namespace main.contents
                     CWInstall_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                 }
                 string s = "";
-                string[][] res = Program.DB.querySQL(DB.type.ProjDB, "SELECT 음영계수 FROM Shade_3D WHERE 유형 = '최종음영' AND 번호 = '" + _ID + "' ORDER BY 월 ASC");
+                string[][] res = Program.DB.querySQL(DB.type.ProjDB, "SELECT 음영계수 FROM Shade_3D WHERE 유형 = '최종음영' AND 번호 = '" + _ID + "' ORDER BY 월*1 ASC");
 
                 for (int k = 0; k < res.Length; k++)
                 {
