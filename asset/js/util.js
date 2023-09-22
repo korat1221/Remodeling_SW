@@ -134,7 +134,19 @@ class MainTree {
     select(id) {
         if (!this.loading && this.onSelect) {
             $('#cont-tree').jstree("deselect_all");
-            $('#cont-tree').jstree("select_node", this.tree.jstree("get_node", id));
+
+            let o = this.tree.jstree("get_node", id);
+
+            if (!o && id.indexOf('_WIN_') > 0) {
+                let wins = ['_win1','_win2','_win3','_win4','_win5'];
+                let i = id.indexOf('_win'), n = -1;
+                let _id = id.substr(0,i);
+
+                while(!o && ++n < 5) {
+                    o = this.tree.jstree("get_node", _id + wins[n]);
+                }
+            }
+            $('#cont-tree').jstree("select_node", o);
         }
     }
 }
