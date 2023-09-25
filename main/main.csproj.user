@@ -175,6 +175,15 @@
     <Compile Update="subcontents\CoolingSystem\GeneratorCooling.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\RESystem_PV\PV_BatteryDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\RESystem_PV\PV_InverterDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\RESystem_PV\PV_ModuleDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\ZoneLighting\LightingDB.cs">
       <SubType>Form</SubType>
     </Compile>

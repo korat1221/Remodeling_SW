@@ -552,8 +552,8 @@ namespace main.contents
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_Solar", "번호,DB유형,명칭,난방급탕,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량",
                 "'" + Value[0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" 
-                 + Value[9] 
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','"
+                 + Value[9]
                  + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
