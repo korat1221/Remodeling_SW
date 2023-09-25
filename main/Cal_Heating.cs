@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
 namespace main
 {
@@ -7,6 +8,7 @@ namespace main
         String HeatingNum, HeatingName; String SelectZone_nonsplit;
         String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System;
         String SelectBoiler_nonsplit, BoilerNum_nonsplit;
+        String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit;
         String[,] SelectHP_nonsplit = new String[3, 1], HPNum_nonsplit = new String[3, 1], HPSupply_nonsplit = new String[3, 1], HPControl_nonsplit = new String[3, 1]; //외기/지열/지하수 순 
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Count, Pump2Count;
         String ce1Type, ce2Type; int ce_SelectRow;
@@ -32,6 +34,8 @@ namespace main
         ArrayList AirHPSupply_split = new ArrayList(); ArrayList GroundHPSupply_split = new ArrayList(); ArrayList GWHPSupply_split = new ArrayList();
         ArrayList AirHPControl_split = new ArrayList(); ArrayList GroundHPControl_split = new ArrayList(); ArrayList GWHPControl_split = new ArrayList();
         ArrayList AirHPNum_split = new ArrayList(); ArrayList GroundHPNum_split = new ArrayList(); ArrayList GWHPNum_split = new ArrayList();
+        ArrayList SelectSolar_split = new ArrayList(); ArrayList SolarNum_split = new ArrayList(); ArrayList SolarDirection_split = new ArrayList(); ArrayList SolarDegree_split = new ArrayList();
+
         string[][] 지역, 외기온도;
         public Cal_Heating(String HeatingNum)
         {
@@ -163,7 +167,93 @@ namespace main
             catch { }
 
         }
+        public void Load_Solar()
+        {
+            try
+            {
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "태양열번호,모듈개수,모듈방위,모듈기울기", "번호 = '" + HeatingNum + "'");
+                SelectSolar_nonsplit = Value[0][0];
+                Split_Solar(SelectSolar_nonsplit);
 
+                SolarNum_nonsplit = Value[0][1];
+                Split_SolarNum(SolarNum_nonsplit);
+
+                SolarDirection_nonsplit = Value[0][2];
+                Split_SolarDirection(SolarDirection_nonsplit);
+
+                SolarDegree_nonsplit = Value[0][3];
+                Split_SolarDegree(SolarDegree_nonsplit);
+            }
+            catch { }
+        }
+        private void Split_Solar(String nonSplit)
+        {
+            if (nonSplit != null)
+            {
+                if (nonSplit.Contains('+'))
+                {
+                    string[] token = nonSplit.Split('+');
+                    SelectSolar_split.Clear();
+                    foreach (var item in token)
+                    {
+                        SelectSolar_split.Add(item.ToString());
+                    }
+                }
+            }
+            else { return; }
+
+        }
+        private void Split_SolarNum(String nonSplit)
+        {
+            if (nonSplit != null)
+            {
+                if (nonSplit.Contains('+'))
+                {
+                    string[] token = nonSplit.Split('+');
+                    SolarNum_split.Clear();
+                    foreach (var item in token)
+                    {
+                        SolarNum_split.Add(item.ToString());
+                    }
+                }
+            }
+            else { return; }
+
+        }
+        private void Split_SolarDirection(String nonSplit)
+        {
+            if (nonSplit != null)
+            {
+                if (nonSplit.Contains('+'))
+                {
+                    string[] token = nonSplit.Split('+');
+                    SolarDirection_split.Clear();
+                    foreach (var item in token)
+                    {
+                        SolarDirection_split.Add(item.ToString());
+                    }
+                }
+            }
+            else { return; }
+
+        }
+        private void Split_SolarDegree(String nonSplit)
+        {
+            if (nonSplit != null)
+            {
+                if (nonSplit.Contains('+'))
+                {                   
+                    string[] token = nonSplit.Split('+');
+                    SolarDegree_split.Clear();
+                    foreach (var item in token)
+                    {
+                        SolarDegree_split.Add(item.ToString());
+                    }
+                }
+            }
+            else { return; }
+
+        }
         public void Load_PumpData()
         {
 
@@ -1034,7 +1124,49 @@ namespace main
 
             }
         }
+        public void Calc_Solar()
+        {
+            double qsol_HN_d, dtheta_korr;
+            double[] qsol_HN_mth= new double[12], eta = new double[12], qsol_mth = new double[12], Qsol_mth = new double[12], Qw_sol = new double[12], Qh_sol = new double[12], Ww_gen = new double[12];
+            string[][] Solarvalue;
+            double Ac; 
 
+            for (int  k = 0; k < SelectSolar_split.Count; k++)
+            {
+                Solarvalue = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "번호,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "번호 ='" + SelectSolar_split[k] + "'");
+                Solar solar = new Solar(Solarvalue[0][0], Convert.ToDouble(Solarvalue[0][1]), Convert.ToDouble(Solarvalue[0][2]), Convert.ToDouble(Solarvalue[0][3]), Convert.ToDouble(Solarvalue[0][4]), Convert.ToDouble(Solarvalue[0][5]), Convert.ToDouble(Solarvalue[0][6]), Convert.ToDouble(SolarNum_split[k]), SolarDirection_split[k].ToString(), SolarDegree_split[k].ToString());
+           
+                for (int mth = 0; mth < 12; mth++)
+                {
+                   string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'방향='" + SolarDirection_split[k] + "' and 각도 ='" + SolarDegree_split[k] + "' and 기간 ='"+mth+1+"월'");
+                    qsol_HN_d = Convert.ToDouble(value[0][0]);
+                    qsol_HN_mth[mth] = qsol_HN_d * dmth[mth] * 24 / 1000;
+
+                    string[][] value2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select Max(일사량) from 기후데이터_전일사량 where 지역명 = '" + 지역[0][0] + "'방향 = '" + SolarDirection_split[k] + "' and 각도 = '" + SolarDegree_split[k] + "'");
+
+                    Ac = Qh_max_sum * 2 * 1.03 * 1.03 / Convert.ToDouble(value2[0][0]) / 24 * 1000;
+                    if(solar.M_Area()* solar.M_Count() /Ac <1)
+                    {
+                        dtheta_korr = Math.Min(-20 + 20 * solar.M_Area() * solar.M_Count() / Ac, 0);
+                    }
+                    else
+                    {
+                        dtheta_korr = Math.Min(-14 + 14 * solar.M_Area() * solar.M_Count() / Ac, 0);
+                    }
+                    value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_태양열", "온도차", "지역명 ='" + 지역[0][0] + "'방위='" + SolarDirection_split[k] + "' and 기간 ='" + mth + 1 + "월'");
+                    eta[mth] = solar.eta() * solar._50() - solar.K1() * Convert.ToDouble(value[0][0]) / qsol_HN_d - solar.K2() * Convert.ToDouble(value[0][0]) * Convert.ToDouble(value[0][0]) / qsol_HN_d;
+                    qsol_mth[mth] = eta[mth] * qsol_HN_mth[mth];
+                    Qsol_mth[mth] = qsol_mth[mth] * solar.M_Area() * solar.M_Count() / 1.03 / 1.03;
+
+                    Qw_sol[mth] = Math.Min(Qsol_mth[mth], Qh_outg[mth] * 2) * Qh_outg[mth] / (Qh_outg[mth] + Qh_outg[mth]);
+                    Qh_sol[mth] = Math.Min(Qsol_mth[mth], Qh_outg[mth] * 2) * Qh_outg[mth] / (Qh_outg[mth] + Qh_outg[mth]);
+
+                    Ww_gen[mth] = 0.025 * Qw_sol[mth];
+                }
+            }
+
+            
+        }
         public void Calc_Q_Air_HP()
         {
             for (int n = 0; n < SelectAirHP_split.Count; n++)
@@ -1528,6 +1660,37 @@ namespace main
         public string COP2() { return this.HP_COP2; }
         public string W2() { return this.HP_W2; }
         public string Count() { return this.HP_Count; }
+
+    }
+
+    public class Solar
+    {
+        String Solar_Num, Solar_Direction, Solar_Degree;
+        double SolarM_Area, Solar_eta, Solar_K1, Solar_K2, Solar_50, Solar_C, SolarM_Count; 
+        public Solar(String Num, double M_Area, double eta, double K1, double K2, double _50, double C, double M_Count, String Direction, String Degree)
+        {
+            this.Solar_Num = Num;
+            this.SolarM_Area = M_Area;
+            this.Solar_eta = eta;
+            this.Solar_K1 = K1;
+            this.Solar_K2 = K2;
+            this.Solar_50 = _50;
+            this.Solar_C = C;
+            this.SolarM_Count = M_Count;
+            this.Solar_Direction = Direction;
+            this.Solar_Degree = Degree; 
+        }
+        public string Num() { return this.Solar_Num; }
+        public double M_Area() { return this.SolarM_Area; }
+        public double eta() { return this.Solar_eta; }
+        public double K1() { return this.Solar_K1; }
+        public double K2() { return this.Solar_K2; }    
+        public double _50() { return this.Solar_50; }   
+        public double C() { return this.Solar_C;}
+        public double M_Count() {return this.SolarM_Count;}
+        public string Direction() { return this.Solar_Direction;}
+        public string Degree() { return this.Solar_Degree;} 
+
 
     }
 }

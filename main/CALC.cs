@@ -297,6 +297,7 @@ namespace main
                 Heating1.Load_Zonedata();
                 Heating1.Load_HeatingGeneral();
                 Heating1.Load_Boiler();
+                Heating1.Load_Solar();
                 Heating1.Load_PumpData();
                 Heating1.Load_ceData();
                 Heating1.Load_StorageData();
@@ -314,6 +315,7 @@ namespace main
                 Heating1.Calc_Qh_s();
                 Heating1.Calc_beta_gen();
                 Heating1.Calc_Qh_gen_Boiler();
+                Heating1.Calc_Solar();
                 Heating1.Calc_Q_Air_HP();
 
                 //Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Result", "번호," +

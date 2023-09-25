@@ -81,7 +81,7 @@ namespace main.subcontents.HeatingSystem
             }
             else
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "번호,제품명,모듈면적,효율,1차열손실계수,2차열손실계수,50도입사각,유효열용량", "난방급탕 ='난방' OR 난방급탕 = '난방+급탕'");
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "번호,명칭,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "난방급탕 ='난방' OR 난방급탕 = '난방+급탕'");
                 for (int n = 0; n < User_Value.Length; n++)
                 {
                    

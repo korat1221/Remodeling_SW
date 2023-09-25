@@ -94,9 +94,9 @@ namespace main.contents
             DefaultSolar_Add_button = new Button();
             label12 = new Label();
             Solar_dataGridView = new DataGridView();
-            UserSolar_Add_button = new Button();
-            Solar_Remove_button = new Button();
             Solar_Copy_button = new Button();
+            Solar_Remove_button = new Button();
+            UserSolar_Add_button = new Button();
             Pump_tabPage = new TabPage();
             Pump_Save_button = new Button();
             Pump_dataGridView = new DataGridView();
@@ -762,9 +762,9 @@ namespace main.contents
             Solar_tabPage.Controls.Add(DefaultSolar_Add_button);
             Solar_tabPage.Controls.Add(label12);
             Solar_tabPage.Controls.Add(Solar_dataGridView);
-            Solar_tabPage.Controls.Add(UserSolar_Add_button);
-            Solar_tabPage.Controls.Add(Solar_Remove_button);
             Solar_tabPage.Controls.Add(Solar_Copy_button);
+            Solar_tabPage.Controls.Add(Solar_Remove_button);
+            Solar_tabPage.Controls.Add(UserSolar_Add_button);
             Solar_tabPage.Location = new Point(4, 25);
             Solar_tabPage.Name = "Solar_tabPage";
             Solar_tabPage.Padding = new Padding(3);
@@ -783,6 +783,7 @@ namespace main.contents
             Solar_Save_button.TabIndex = 113;
             Solar_Save_button.Text = "SAVE";
             Solar_Save_button.UseVisualStyleBackColor = true;
+            Solar_Save_button.Click +=Solar_Save_button_Click;
             // 
             // label9
             // 
@@ -860,21 +861,22 @@ namespace main.contents
             Solar_dataGridView.RowTemplate.Height = 25;
             Solar_dataGridView.Size = new Size(932, 467);
             Solar_dataGridView.TabIndex = 109;
+            Solar_dataGridView.CellContentClick += Solar_dataGridView_CellContentClick;
             // 
-            // UserSolar_Add_button
+            // Solar_Copy_button
             // 
-            UserSolar_Add_button.BackColor = SystemColors.ControlLight;
-            UserSolar_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            UserSolar_Add_button.FlatStyle = FlatStyle.System;
-            UserSolar_Add_button.Font = new Font("나눔고딕", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            UserSolar_Add_button.Location = new Point(909, 33);
-            UserSolar_Add_button.Margin = new Padding(0);
-            UserSolar_Add_button.Name = "UserSolar_Add_button";
-            UserSolar_Add_button.Size = new Size(47, 23);
-            UserSolar_Add_button.TabIndex = 108;
-            UserSolar_Add_button.Text = "Copy";
-            UserSolar_Add_button.UseVisualStyleBackColor = false;
-            UserSolar_Add_button.Click += UserSolar_Add_button_Click;
+            Solar_Copy_button.BackColor = SystemColors.ControlLight;
+            Solar_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Solar_Copy_button.FlatStyle = FlatStyle.System;
+            Solar_Copy_button.Font = new Font("나눔고딕", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            Solar_Copy_button.Location = new Point(909, 33);
+            Solar_Copy_button.Margin = new Padding(0);
+            Solar_Copy_button.Name = "Solar_Copy_button";
+            Solar_Copy_button.Size = new Size(47, 23);
+            Solar_Copy_button.TabIndex = 108;
+            Solar_Copy_button.Text = "Copy";
+            Solar_Copy_button.UseVisualStyleBackColor = false;
+            Solar_Copy_button.Click += Solar_Copy_button_Click;
             // 
             // Solar_Remove_button
             // 
@@ -891,20 +893,20 @@ namespace main.contents
             Solar_Remove_button.UseVisualStyleBackColor = false;
             Solar_Remove_button.Click += Solar_Remove_button_Click;
             // 
-            // Solar_Copy_button
+            // UserSolar_Add_button
             // 
-            Solar_Copy_button.BackColor = SystemColors.ControlLight;
-            Solar_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            Solar_Copy_button.FlatStyle = FlatStyle.System;
-            Solar_Copy_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Solar_Copy_button.Location = new Point(835, 33);
-            Solar_Copy_button.Margin = new Padding(0);
-            Solar_Copy_button.Name = "Solar_Copy_button";
-            Solar_Copy_button.Size = new Size(23, 23);
-            Solar_Copy_button.TabIndex = 106;
-            Solar_Copy_button.Text = "+";
-            Solar_Copy_button.UseVisualStyleBackColor = false;
-            Solar_Copy_button.Click += Solar_Copy_button_Click;
+            UserSolar_Add_button.BackColor = SystemColors.ControlLight;
+            UserSolar_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            UserSolar_Add_button.FlatStyle = FlatStyle.System;
+            UserSolar_Add_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            UserSolar_Add_button.Location = new Point(835, 33);
+            UserSolar_Add_button.Margin = new Padding(0);
+            UserSolar_Add_button.Name = "UserSolar_Add_button";
+            UserSolar_Add_button.Size = new Size(23, 23);
+            UserSolar_Add_button.TabIndex = 106;
+            UserSolar_Add_button.Text = "+";
+            UserSolar_Add_button.UseVisualStyleBackColor = false;
+            UserSolar_Add_button.Click +=  UserSolar_Add_button_Click;
             // 
             // Pump_tabPage
             // 
@@ -1228,8 +1230,8 @@ namespace main.contents
         private Button DefaultSolar_Add_button;
         private Label label12;
         private DataGridView Solar_dataGridView;
-        private Button UserSolar_Add_button;
-        private Button Solar_Remove_button;
         private Button Solar_Copy_button;
+        private Button Solar_Remove_button;
+        private Button UserSolar_Add_button;
     }
 }
