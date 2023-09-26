@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,11 @@ namespace main.subcontents.RESystem_PV
         public String[] Select_PVModule = new string[10];
         String UserNum, UserDB_Name, UserDB_Manufacture, UserDB_year, UserDB_celltype;
         double UserDB_width, UserDB_height, UserDB_output, UserDB_Kpk;
-
-        public PV_ModuleDB()
+        string DefaultUse;
+        public PV_ModuleDB(string defaultUse)
         {
             InitializeComponent();
+            DefaultUse = defaultUse;
             load_table_PVModuleDB();
 
             //제작년도 COMBOBOX
@@ -40,28 +42,48 @@ namespace main.subcontents.RESystem_PV
             //번호
             UserNum = Program.UTIL.CreateNum("User_PVModule", "번호", "UPV_0");
             UserNum_textBox.Text = UserNum;
-
         }
 
         void load_table_PVModuleDB()
         {
             //데이터 그리드뷰 만들기
-            DataTable table_PVModule = new DataTable();
+            new StackedHeaderDecorator(PVModule_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             PVModule_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             PVModule_dataGridView.Columns.Add(checkBoxColumn);
-            table_PVModule.Columns.Add("번호", typeof(string));
-            table_PVModule.Columns.Add("DB유형", typeof(string));
-            table_PVModule.Columns.Add("제품명", typeof(string));
-            table_PVModule.Columns.Add("제조사", typeof(string));
-            table_PVModule.Columns.Add("제작년도", typeof(string));
-            table_PVModule.Columns.Add("CELLTYPE", typeof(string));
-            table_PVModule.Columns.Add("Kpk" + Environment.NewLine + "kW/m2", typeof(string));
-            table_PVModule.Columns.Add("가로길이" + Environment.NewLine + "m", typeof(string));
-            table_PVModule.Columns.Add("세로길이" + Environment.NewLine + "m", typeof(string));
-            table_PVModule.Columns.Add("정격출력" + Environment.NewLine + "W", typeof(string));
+            PVModule_dataGridView.Columns.Add("A1", "번호");
+            PVModule_dataGridView.Columns.Add("A2", "DB유형");
+            PVModule_dataGridView.Columns.Add("A3", "제품명");
+            PVModule_dataGridView.Columns.Add("A4", "제조사");
+            PVModule_dataGridView.Columns.Add("A5", "제작년도");
+            PVModule_dataGridView.Columns.Add("A6", "Cell Type");
+            PVModule_dataGridView.Columns.Add("A7", "Kpk");
+            if (DefaultUse != "기본DB 적용")
+            {
+                PVModule_dataGridView.Columns.Add("A8", "가로길이");
+                PVModule_dataGridView.Columns.Add("A9", "세로길이");
+                PVModule_dataGridView.Columns.Add("A10", "정격출력");
+            }
+
+            if (DefaultUse == "기본DB 적용")
+            {
+                string[][] PVModule = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광모듈DB", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,Kpk", "");                
+                for (int n = 0; n < PVModule.Length; n++)
+                {
+                    PVModule_dataGridView.Rows.Add();
+                    PVModule_dataGridView.Rows[n].Cells[1].Value = PVModule[n][0];
+                    PVModule_dataGridView.Rows[n].Cells[2].Value = PVModule[n][1];
+                    PVModule_dataGridView.Rows[n].Cells[3].Value = PVModule[n][2];
+                    PVModule_dataGridView.Rows[n].Cells[4].Value = PVModule[n][3];
+                    PVModule_dataGridView.Rows[n].Cells[5].Value = PVModule[n][4];
+                    PVModule_dataGridView.Rows[n].Cells[6].Value = PVModule[n][5];
+                    PVModule_dataGridView.Rows[n].Cells[7].Value = PVModule[n][6];                  
+                }
+            }
+
+            
 
             //사용자 DB 추가
             try
@@ -69,22 +91,13 @@ namespace main.subcontents.RESystem_PV
                 string[][] User_PVModule = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,Kpk,가로길이,세로길이,정격출력", "");
                 for (int n = 0; n < User_PVModule.Length; n++)
                 {
-                    table_PVModule.Rows.Add(User_PVModule[n][0], User_PVModule[n][1], User_PVModule[n][2], User_PVModule[n][3], User_PVModule[n][4], User_PVModule[n][5], User_PVModule[n][6], User_PVModule[n][7], User_PVModule[n][8], User_PVModule[n][9]);
+                    //table_PVModule.Rows.Add(User_PVModule[n][0], User_PVModule[n][1], User_PVModule[n][2], User_PVModule[n][3], User_PVModule[n][4], User_PVModule[n][5], User_PVModule[n][6], User_PVModule[n][7], User_PVModule[n][8], User_PVModule[n][9]);
                 }
             }
             catch { }
 
 
-            //표준 DB 불러오기
-            string[][] PVModule = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광모듈DB", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,Kpk,가로길이,세로길이,정격출력", "");
-
-            for (int n = 0; n < PVModule.Length; n++)
-            {
-                table_PVModule.Rows.Add(PVModule[n][0], PVModule[n][1], PVModule[n][2], PVModule[n][3], PVModule[n][4], PVModule[n][5], String.Format("{0:F2}", Convert.ToDouble(PVModule[n][6])), PVModule[n][7], PVModule[n][8], PVModule[n][9]);
-            }
-
-            PVModule_dataGridView.DataSource = table_PVModule;
-            Count_PVModuleDB = PVModule.Length;
+            
         }
 
         private void Door_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -240,9 +253,9 @@ namespace main.subcontents.RESystem_PV
             Select_PVModule[4] = row.Cells[5].Value.ToString(); //제작년도
             Select_PVModule[5] = row.Cells[6].Value.ToString(); //CELLTYPE
             Select_PVModule[6] = row.Cells[7].Value.ToString(); //Kpk
-            Select_PVModule[7] = row.Cells[8].Value.ToString(); //가로길이
-            Select_PVModule[8] = row.Cells[9].Value.ToString(); //세로길이
-            Select_PVModule[9] = row.Cells[10].Value.ToString(); //정격출력
+            //Select_PVModule[7] = row.Cells[8].Value.ToString(); //가로길이
+            //Select_PVModule[8] = row.Cells[9].Value.ToString(); //세로길이
+            //Select_PVModule[9] = row.Cells[10].Value.ToString(); //정격출력
 
             this.DialogResult = DialogResult.OK;
             this.Close();

@@ -19,19 +19,22 @@ using main.subcontents.HeatingSystem;
 using main.subcontents.ConstructionWall;
 using main.subcontents.EquipmentList;
 using System.Security.Policy;
+using main.subcontents.RESystem_PV;
 
 namespace main.contents
 {
     public partial class EquipmentList : Form
     {
         DataGridViewCheckBoxColumn Boiler_checkBoxColumn = new DataGridViewCheckBoxColumn();
+        DataGridViewCheckBoxColumn ABS_checkBoxColumn = new DataGridViewCheckBoxColumn();
+        DataGridViewCheckBoxColumn PV_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn Solar_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn AirHP_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn GWHP_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn GroundHP_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn Pump_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn ce_checkBoxColumn = new DataGridViewCheckBoxColumn();
-        int Boiler_SelectRow, HP_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow;
+        int Boiler_SelectRow, HP_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow, PV_SelectRow, ABS_SelectRow;
 
 
         public EquipmentList()
@@ -41,6 +44,8 @@ namespace main.contents
 
 
             Program.DB.initTable(DB.type.ProjDB, "User_Boiler");
+            Program.DB.initTable(DB.type.ProjDB, "User_ABS");
+            Program.DB.initTable(DB.type.ProjDB, "User_PVModule");
             Program.DB.initTable(DB.type.ProjDB, "User_AirHP");
             Program.DB.initTable(DB.type.ProjDB, "User_GroundHP");
             Program.DB.initTable(DB.type.ProjDB, "User_GroundWHP");
@@ -52,6 +57,8 @@ namespace main.contents
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             Create_Boiler_Table();
+            Create_PV_Table();
+            Create_ABS_Table();
             Create_Solar_Table();
             Create_AirHP_Table();
             Create_GroundHP_Table();
@@ -63,6 +70,8 @@ namespace main.contents
             Load_Pump();
             Load_ce();
             Load_Solar();
+            Load_PV();
+            Load_ABS();
 
 
 
@@ -408,6 +417,466 @@ namespace main.contents
             catch { }
         }
 
+        ///////////////////////////////////////////////////흡수식냉온수기/////////////////////////////////////////////////////////////////
+        public void Create_ABS_Table()
+        {
+            new StackedHeaderDecorator(ABS_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, ABS_datagridviewDesign);
+            ABS_dataGridView.Columns.Clear();
+            ABS_checkBoxColumn.HeaderText = "선택";
+            ABS_checkBoxColumn.Name = "check";
+            ABS_dataGridView.Columns.Add(ABS_checkBoxColumn);
+
+            ABS_dataGridView.Columns.Add("A1", "번호");
+            ABS_dataGridView.Columns.Add("A2", "DB유형");
+            ABS_dataGridView.Columns.Add("A3", "난방/냉방");
+            ABS_dataGridView.Columns.Add("A4", "연료");
+            ABS_dataGridView.Columns.Add("A5", "냉방.용량.[kW]");
+            ABS_dataGridView.Columns.Add("A6", "냉방.성능.ξ");
+            ABS_dataGridView.Columns.Add("A7", "난방.용량.[kW]");
+            ABS_dataGridView.Columns.Add("A8", "난방.성능.COP");
+            ABS_dataGridView.Columns.Add("A9", "냉수.입구온도.[℃]");
+            ABS_dataGridView.Columns.Add("A10", "냉수.출구온도.[℃]");
+            ABS_dataGridView.Columns.Add("A11", "온수.입구온도.[℃]");
+            ABS_dataGridView.Columns.Add("A12", "온수.출구온도.[℃]");
+            ABS_dataGridView.Columns.Add("A13", "대기전력.[W]");
+            ABS_dataGridView.Columns.Add("A14", "통합성능.IPLV");
+            ABS_dataGridView.Columns.Add("A15", "대수.[EA]");
+            ABS_dataGridView.Columns[0].Width = 40;
+        }
+
+
+        private Boolean ABS_datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            
+            if (ABS_dataGridView.Rows[row].Cells[2].Value != null && ABS_dataGridView.Rows[row].Cells[2].Value.ToString() == "기본")
+            {
+                if (column == 14)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+            else return false;
+        }
+
+        private void UserABS_Add_button_Click(object sender, EventArgs e)
+        {
+            int nRow = ABS_dataGridView.Rows.Add();
+            Load_ABS_Num();
+            ABS_dataGridView.Rows[nRow].Cells[2].Value = "도면";
+            DataGridViewComboBoxCell 난방냉방Combo = new DataGridViewComboBoxCell();
+            난방냉방Combo.Items.Add("냉방");
+            난방냉방Combo.Items.Add("냉난방");
+            ABS_dataGridView.Rows[nRow].Cells[3] = 난방냉방Combo;
+            DataGridViewComboBoxCell 연료Combo = new DataGridViewComboBoxCell();
+            연료Combo.Items.Add("LNG");
+            연료Combo.Items.Add("LPG");
+            ABS_dataGridView.Rows[nRow].Cells[4] = 연료Combo;
+
+        }
+
+        private void DefaultABS_Add_button_Click(object sender, EventArgs e)
+        {
+            ArrayList SelectABS = new ArrayList();
+            int nRow = ABS_dataGridView.Rows.Add();
+            Load_ABS_Num();
+            ABS_dataGridView.Rows[nRow].Cells[2].Value = "기본";
+            DataGridViewComboBoxCell 난방냉방Combo = new DataGridViewComboBoxCell();
+            난방냉방Combo.Items.Add("냉방");
+            난방냉방Combo.Items.Add("냉난방");
+            ABS_dataGridView.Rows[nRow].Cells[3] = 난방냉방Combo;
+            DataGridViewComboBoxCell 연료Combo = new DataGridViewComboBoxCell();
+            연료Combo.Items.Add("LNG");
+            연료Combo.Items.Add("LPG");
+            ABS_dataGridView.Rows[nRow].Cells[4] = 연료Combo;
+
+            ABS_DB abs_db = new ABS_DB("기본DB 적용", null);
+            DialogResult result = abs_db.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    if (abs_db.SelectABS != null)
+                    {
+
+                        string[][] Value = Program.DB.getValue(DB.type.BaseDB_Heating, "흡수식냉온수기", "통합성능", "번호 = '" + abs_db.SelectABS.ToString() + "'");
+
+                        ABS_dataGridView.Rows[nRow].Cells[14].Value = Value[0][0];
+                    }
+                }
+                catch { }
+            }
+        }
+
+        private void ABS_Remove_button_Click(object sender, EventArgs e)
+        {
+            ABS_dataGridView.Rows.Remove(ABS_dataGridView.Rows[ABS_SelectRow]);
+            Load_ABS_Num();
+        }
+
+        private void ABS_Copy_button_Click(object sender, EventArgs e)
+        {
+            int nRow = ABS_dataGridView.Rows.Add();
+            Load_ABS_Num();
+
+
+
+            for (int k = 2; k < 16; k++)
+            {
+                if (ABS_dataGridView.Rows[ABS_SelectRow].Cells[k].Value != null)
+                {
+                    ABS_dataGridView.Rows[nRow].Cells[k].Value = ABS_dataGridView.Rows[ABS_SelectRow].Cells[k].Value;
+                }
+            }
+            if (ABS_dataGridView.Rows[ABS_SelectRow].Cells[3].Value != null)
+            {
+                ABS_dataGridView.Rows[nRow].Cells[3].Value = ABS_dataGridView.Rows[ABS_SelectRow].Cells[3].Value.ToString() + "_복사";
+            }
+
+            if (ABS_dataGridView.Rows[nRow].Cells[2].Value == "도면")
+            {
+                DataGridViewComboBoxCell 난방냉방Combo = new DataGridViewComboBoxCell();
+                난방냉방Combo.Items.Add("냉방");
+                난방냉방Combo.Items.Add("냉난방");
+                ABS_dataGridView.Rows[nRow].Cells[3] = 난방냉방Combo;
+                DataGridViewComboBoxCell 연료Combo = new DataGridViewComboBoxCell();
+                연료Combo.Items.Add("LNG");
+                연료Combo.Items.Add("LPG");
+                ABS_dataGridView.Rows[nRow].Cells[4] = 연료Combo;
+            }
+        }
+        private void ABS_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                ABS_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                ABS_SelectRow = e.RowIndex;
+            }
+        }
+        private void ABS_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0)
+                {
+                    if (e.ColumnIndex == 3 )
+                    {
+                        if (ABS_dataGridView.Rows[e.RowIndex].Cells[3].Value != null && ABS_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString() == "냉방")
+                        {
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[7].Value = "-";
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[8].Value = "-";
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[11].Value = "-";
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[12].Value = "-";
+                        }
+                        if (ABS_dataGridView.Rows[e.RowIndex].Cells[3].Value != null && ABS_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString() == "냉난방")
+                        {
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[7].Value = null;
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[8].Value = null;
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[11].Value = null;
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[12].Value = null;
+                        }
+                    }
+
+                }
+
+            }
+            catch { }
+
+        }
+
+        private void Load_ABS_Num()
+        {
+            for (int k = 0; k < ABS_dataGridView.RowCount; k++)
+            {
+                if (k + 1 < 10)
+                { ABS_dataGridView.Rows[k].Cells[1].Value = "UAS0" + (k + 1).ToString(); }
+                else { ABS_dataGridView.Rows[k].Cells[1].Value = "UAS" + (k + 1).ToString(); }
+            }
+        }
+
+        private void ABS_Save_button_Click(object sender, EventArgs e)
+        {
+            Program.DB.deleteValue(DB.type.ProjDB, "User_ABS", "");
+
+            for (int k = 0; k < ABS_dataGridView.RowCount; k++)
+            {
+                String[] Value = new String[10];
+                for (int i = 1; i < 16; i++)
+                {
+                    if (ABS_dataGridView.Rows[k].Cells[i].Value != null)
+                    { Value[i - 1] = ABS_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    else { Value[i - 1] = ""; }
+                }
+                Program.DB.setValue(DB.type.ProjDB, "User_ABS", "번호,DB유형,난방냉방,연료,냉방용량,냉방성능,난방용량,난방성능,냉수입구온도,냉수출구온도,온수입구온도,온수출구온도,대기전력,통합성능,대수",
+                "'" + Value[0] + "','"
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','"
+                 + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" 
+                 + Value[15]
+                 + "'", "번호");
+            }
+            MessageBox.Show("저장되었습니다.");
+        }
+
+        private void Load_ABS()
+        {
+            try
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호,DB유형,난방냉방,연료,냉방용량,냉방성능,난방용량,난방성능,냉수입구온도,냉수출구온도,온수입구온도,온수출구온도,대기전력,통합성능,대수", "");
+
+                for (int n = 0; n < User_Value.Length; n++)
+                {
+                    ABS_dataGridView.Rows.Add();
+                    int nRow = ABS_dataGridView.Rows.Count - 1;
+                    ABS_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                    ABS_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                    ABS_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                    ABS_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                    ABS_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                    ABS_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
+                    ABS_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
+                    ABS_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                    ABS_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
+                    ABS_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
+                    ABS_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][10];
+                    ABS_dataGridView.Rows[nRow].Cells[12].Value = User_Value[n][11];
+                    ABS_dataGridView.Rows[nRow].Cells[13].Value = User_Value[n][12];
+                    ABS_dataGridView.Rows[nRow].Cells[14].Value = User_Value[n][13];
+                    ABS_dataGridView.Rows[nRow].Cells[15].Value = User_Value[n][14];
+                }
+            }
+            catch { }
+        }
+        ///////////////////////////////////////////////////태양광/////////////////////////////////////////////////////////////////
+        public void Create_PV_Table()
+        {
+            new StackedHeaderDecorator(PV_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, PV_datagridviewDesign);
+            PV_dataGridView.Columns.Clear();
+            PV_checkBoxColumn.HeaderText = "선택";
+            PV_checkBoxColumn.Name = "check";
+            PV_dataGridView.Columns.Add(PV_checkBoxColumn);
+
+            PV_dataGridView.Columns.Add("A1", "번호");
+            PV_dataGridView.Columns.Add("A2", "DB유형");
+            PV_dataGridView.Columns.Add("A3", "제품명");
+            PV_dataGridView.Columns.Add("A4", "제조사");
+            PV_dataGridView.Columns.Add("A5", "제작년도");
+            PV_dataGridView.Columns.Add("A6", "Cell Type");
+            PV_dataGridView.Columns.Add("A7", "모듈.가로길이.[m]");
+            PV_dataGridView.Columns.Add("A8", "모듈.세로길이.[m]");
+            PV_dataGridView.Columns.Add("A9", "모듈.정격출력.[W]");
+            PV_dataGridView.Columns.Add("A10", "Kpk");
+            PV_dataGridView.Columns[0].Width = 40;
+        }
+
+
+        private Boolean PV_datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (PV_dataGridView.Rows[row].Cells[2].Value != null && PV_dataGridView.Rows[row].Cells[2].Value.ToString() == "도면")
+            {
+                if (column == 10)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+            if (PV_dataGridView.Rows[row].Cells[2].Value != null && PV_dataGridView.Rows[row].Cells[2].Value.ToString() == "기본")
+            {
+                if (column == 7 || column == 8 || column == 9)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+            else return false;
+        }
+
+        private void UserPV_Add_button_Click(object sender, EventArgs e)
+        {
+            int nRow = PV_dataGridView.Rows.Add();
+            Load_PV_Num();
+            PV_dataGridView.Rows[nRow].Cells[2].Value = "도면";
+            DataGridViewComboBoxCell 제작년도Combo = new DataGridViewComboBoxCell();
+            제작년도Combo.Items.Add("25년 이내");
+            제작년도Combo.Items.Add("25년 이상");
+            PV_dataGridView.Rows[nRow].Cells[5] = 제작년도Combo;
+
+            DataGridViewComboBoxCell 셀타입Combo = new DataGridViewComboBoxCell();
+            셀타입Combo.Items.Add("단결정(Single Cry. Si.)");
+            셀타입Combo.Items.Add("다결정(Poly Cry. Si.)");
+            셀타입Combo.Items.Add("비결정질 Si 박막");
+            셀타입Combo.Items.Add("그외 Si 박막");
+            셀타입Combo.Items.Add("CIGS 박막");
+            셀타입Combo.Items.Add("CdTe 박막");
+            PV_dataGridView.Rows[nRow].Cells[6] = 셀타입Combo;
+
+        }
+
+        private void DefaultPV_Add_button_Click(object sender, EventArgs e)
+        {
+            ArrayList SelectPV = new ArrayList();
+            int nRow = PV_dataGridView.Rows.Add();
+            Load_PV_Num();
+            PV_dataGridView.Rows[nRow].Cells[2].Value = "기본";
+
+            PV_ModuleDB pv_DB = new PV_ModuleDB("기본DB 적용");
+            DialogResult result = pv_DB.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    if (pv_DB.Select_PVModule[0] != null)
+                    {
+
+                        string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광모듈DB", "제조사,제작년도,CELLTYPE,Kpk", "번호 = '" + pv_DB.Select_PVModule[0].ToString() + "'");
+
+                        PV_dataGridView.Rows[nRow].Cells[4].Value = Value[0][0];
+                        PV_dataGridView.Rows[nRow].Cells[5].Value = Value[0][1];
+                        PV_dataGridView.Rows[nRow].Cells[6].Value = Value[0][2];
+                        PV_dataGridView.Rows[nRow].Cells[10].Value = Value[0][3];
+                    }
+                }
+                catch { }
+            }
+        }
+
+        private void PV_Remove_button_Click(object sender, EventArgs e)
+        {
+            PV_dataGridView.Rows.Remove(PV_dataGridView.Rows[PV_SelectRow]);
+            Load_PV_Num();
+        }
+
+        private void PV_Copy_button_Click(object sender, EventArgs e)
+        {
+            int nRow = PV_dataGridView.Rows.Add();
+            Load_PV_Num();
+
+
+
+            for (int k = 2; k < 11; k++)
+            {
+                if (PV_dataGridView.Rows[PV_SelectRow].Cells[k].Value != null)
+                {
+                    PV_dataGridView.Rows[nRow].Cells[k].Value = PV_dataGridView.Rows[PV_SelectRow].Cells[k].Value;
+                }
+            }
+            if (PV_dataGridView.Rows[PV_SelectRow].Cells[3].Value != null)
+            {
+                PV_dataGridView.Rows[nRow].Cells[3].Value = PV_dataGridView.Rows[PV_SelectRow].Cells[3].Value.ToString() + "_복사";
+            }
+
+            if (PV_dataGridView.Rows[nRow].Cells[2].Value == "도면")
+            {
+                DataGridViewComboBoxCell 제작년도Combo = new DataGridViewComboBoxCell();
+                제작년도Combo.Items.Add("단결정(Single Cry. Si.)");
+                제작년도Combo.Items.Add("다결정(Poly Cry. Si.)");
+                PV_dataGridView.Rows[nRow].Cells[5] = 제작년도Combo;
+
+                DataGridViewComboBoxCell 셀타입Combo = new DataGridViewComboBoxCell();
+                셀타입Combo.Items.Add("단결정(Single Cry. Si.)");
+                셀타입Combo.Items.Add("다결정(Poly Cry. Si.)");
+                셀타입Combo.Items.Add("비결정질 Si 박막");
+                셀타입Combo.Items.Add("그외 Si 박막");
+                셀타입Combo.Items.Add("CIGS 박막");
+                셀타입Combo.Items.Add("CdTe 박막");
+            }
+        }
+        private void PV_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                PV_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                PV_SelectRow = e.RowIndex;
+            }
+        }
+        private void PV_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0)
+                {
+                    if (e.ColumnIndex == 7 || e.ColumnIndex == 8 || e.ColumnIndex == 9)
+                    {
+                        if (PV_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && PV_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && PV_dataGridView.Rows[e.RowIndex].Cells[9].Value != null)
+                        { PV_dataGridView.Rows[e.RowIndex].Cells[10].Value = string.Format("{0:F2}", Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString()) / Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()) / 1000); }
+                        // UserDB_Kpk = UserDB_output / (UserDB_height * UserDB_width) / 1000;
+                    }
+
+                }
+
+            }
+            catch { }
+
+        }
+
+        private void Load_PV_Num()
+        {
+            for (int k = 0; k < PV_dataGridView.RowCount; k++)
+            {
+                if (k + 1 < 10)
+                { PV_dataGridView.Rows[k].Cells[1].Value = "UPV0" + (k + 1).ToString(); }
+                else { PV_dataGridView.Rows[k].Cells[1].Value = "UPV" + (k + 1).ToString(); }
+            }
+        }
+
+        private void PV_Save_button_Click(object sender, EventArgs e)
+        {
+            Program.DB.deleteValue(DB.type.ProjDB, "User_PVModule", "");
+
+            for (int k = 0; k < PV_dataGridView.RowCount; k++)
+            {
+                String[] Value = new String[10];
+                for (int i = 1; i < 11; i++)
+                {
+                    if (PV_dataGridView.Rows[k].Cells[i].Value != null)
+                    { Value[i - 1] = PV_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    else { Value[i - 1] = ""; }
+                }
+                Program.DB.setValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk",
+                "'" + Value[0] + "','"
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','"
+                 + Value[9]
+                 + "'", "번호");
+            }
+            MessageBox.Show("저장되었습니다.");
+        }
+
+        private void Load_PV()
+        {
+            try
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk", "");
+
+                for (int n = 0; n < User_Value.Length; n++)
+                {
+                    PV_dataGridView.Rows.Add();
+                    int nRow = PV_dataGridView.Rows.Count - 1;
+                    PV_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                    PV_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                    PV_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                    PV_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                    PV_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                    PV_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
+                    PV_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
+                    PV_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                    PV_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
+                    PV_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
+                }
+            }
+            catch { }
+        }
+
         ///////////////////////////////////////////////////태양열/////////////////////////////////////////////////////////////////
         public void Create_Solar_Table()
         {
@@ -583,6 +1052,8 @@ namespace main.contents
             }
             catch { }
         }
+
+
 
         //////////////////////////////////////////////////외기 히트펌프/////////////////////////////////////////////////////////////////
         public void Create_AirHP_Table()
@@ -1706,6 +2177,5 @@ namespace main.contents
             }
 
         }
-
     }
 }

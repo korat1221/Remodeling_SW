@@ -372,7 +372,7 @@ namespace main.contents
 
         private void PVDB_button_Click(object sender, EventArgs e)
         {
-            PV_ModuleDB PV_ModuleDB_form = new PV_ModuleDB();
+            PV_ModuleDB PV_ModuleDB_form = new PV_ModuleDB("장비일람표 DB");
 
             DialogResult result = PV_ModuleDB_form.ShowDialog();
             if (result == DialogResult.OK)
