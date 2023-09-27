@@ -20,6 +20,7 @@ using main.subcontents.ConstructionWall;
 using main.subcontents.EquipmentList;
 using System.Security.Policy;
 using main.subcontents.RESystem_PV;
+using main.subcontents;
 
 namespace main.contents
 {
@@ -28,13 +29,15 @@ namespace main.contents
         DataGridViewCheckBoxColumn Boiler_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn ABS_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn PV_checkBoxColumn = new DataGridViewCheckBoxColumn();
+        DataGridViewCheckBoxColumn FC_checkBoxColumn = new DataGridViewCheckBoxColumn();
+        DataGridViewCheckBoxColumn WP_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn Solar_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn AirHP_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn GWHP_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn GroundHP_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn Pump_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn ce_checkBoxColumn = new DataGridViewCheckBoxColumn();
-        int Boiler_SelectRow, HP_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow, PV_SelectRow, ABS_SelectRow;
+        int Boiler_SelectRow, HP_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow, PV_SelectRow, FC_SelectRow, WP_SelectRow, ABS_SelectRow;
 
 
         public EquipmentList()
@@ -46,6 +49,8 @@ namespace main.contents
             Program.DB.initTable(DB.type.ProjDB, "User_Boiler");
             Program.DB.initTable(DB.type.ProjDB, "User_ABS");
             Program.DB.initTable(DB.type.ProjDB, "User_PVModule");
+            Program.DB.initTable(DB.type.ProjDB, "User_FC");
+            Program.DB.initTable(DB.type.ProjDB, "User_WP");
             Program.DB.initTable(DB.type.ProjDB, "User_AirHP");
             Program.DB.initTable(DB.type.ProjDB, "User_GroundHP");
             Program.DB.initTable(DB.type.ProjDB, "User_GroundWHP");
@@ -58,6 +63,8 @@ namespace main.contents
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             Create_Boiler_Table();
             Create_PV_Table();
+            Create_FC_Table();
+            Create_WP_Table();
             Create_ABS_Table();
             Create_Solar_Table();
             Create_AirHP_Table();
@@ -71,6 +78,8 @@ namespace main.contents
             Load_ce();
             Load_Solar();
             Load_PV();
+            Load_FC();
+            Load_WP();
             Load_ABS();
 
 
@@ -447,7 +456,7 @@ namespace main.contents
 
         private Boolean ABS_datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
-            
+
             if (ABS_dataGridView.Rows[row].Cells[2].Value != null && ABS_dataGridView.Rows[row].Cells[2].Value.ToString() == "기본")
             {
                 if (column == 14)
@@ -563,7 +572,7 @@ namespace main.contents
             {
                 if (e.RowIndex >= 0)
                 {
-                    if (e.ColumnIndex == 3 )
+                    if (e.ColumnIndex == 3)
                     {
                         if (ABS_dataGridView.Rows[e.RowIndex].Cells[3].Value != null && ABS_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString() == "냉방")
                         {
@@ -614,7 +623,7 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "User_ABS", "번호,DB유형,난방냉방,연료,냉방용량,냉방성능,난방용량,난방성능,냉수입구온도,냉수출구온도,온수입구온도,온수출구온도,대기전력,통합성능,대수",
                 "'" + Value[0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','"
-                 + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" 
+                 + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','"
                  + Value[15]
                  + "'", "번호");
             }
@@ -650,6 +659,7 @@ namespace main.contents
             }
             catch { }
         }
+
         ///////////////////////////////////////////////////태양광/////////////////////////////////////////////////////////////////
         public void Create_PV_Table()
         {
@@ -762,8 +772,6 @@ namespace main.contents
             int nRow = PV_dataGridView.Rows.Add();
             Load_PV_Num();
 
-
-
             for (int k = 2; k < 11; k++)
             {
                 if (PV_dataGridView.Rows[PV_SelectRow].Cells[k].Value != null)
@@ -792,6 +800,7 @@ namespace main.contents
                 셀타입Combo.Items.Add("CdTe 박막");
             }
         }
+
         private void PV_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -800,6 +809,7 @@ namespace main.contents
                 PV_SelectRow = e.RowIndex;
             }
         }
+
         private void PV_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -872,6 +882,422 @@ namespace main.contents
                     PV_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
                     PV_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
                     PV_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
+                }
+            }
+            catch { }
+        }
+
+        ///////////////////////////////////////////////////연료전지/////////////////////////////////////////////////////////////////
+        public void Create_FC_Table()
+        {
+            new StackedHeaderDecorator(FC_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, FC_datagridviewDesign);
+            FC_dataGridView.Columns.Clear();
+            FC_checkBoxColumn.HeaderText = "선택";
+            FC_checkBoxColumn.Name = "check";
+            FC_dataGridView.Columns.Add(FC_checkBoxColumn);
+
+            FC_dataGridView.Columns.Add("A1", "번호");
+            FC_dataGridView.Columns.Add("A2", "DB유형");
+            FC_dataGridView.Columns.Add("A3", "제품명");
+            FC_dataGridView.Columns.Add("A4", "제조사");
+            FC_dataGridView.Columns.Add("A5", "연료전지종류");
+            FC_dataGridView.Columns.Add("A6", "시스템출력(전기).[kW]");
+            FC_dataGridView.Columns.Add("A7", "정격효율.[%]");
+            FC_dataGridView.Columns.Add("A8", "발전효율.[%]");
+            FC_dataGridView.Columns.Add("A9", "축열탱크");
+            FC_dataGridView.Columns[0].Width = 40;
+        }
+
+        private Boolean FC_datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (FC_dataGridView.Rows[row].Cells[2].Value != null && FC_dataGridView.Rows[row].Cells[2].Value.ToString() == "도면")
+            {
+                if (column == 10)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+
+            if (FC_dataGridView.Rows[row].Cells[2].Value != null && FC_dataGridView.Rows[row].Cells[2].Value.ToString() == "기본")
+            {
+                if (column == 11)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+            else return false;
+        }
+
+        private void UserFC_Add_button_Click(object sender, EventArgs e)
+        {
+            int nRow = FC_dataGridView.Rows.Add();
+            Load_FC_Num();
+            FC_dataGridView.Rows[nRow].Cells[2].Value = "도면";
+            DataGridViewComboBoxCell 연로전지종류Combo = new DataGridViewComboBoxCell();
+            연로전지종류Combo.Items.Add("PEMFC");
+            연로전지종류Combo.Items.Add("DMFC");
+            연로전지종류Combo.Items.Add("SOFC");
+            FC_dataGridView.Rows[nRow].Cells[5] = 연로전지종류Combo;
+
+            DataGridViewComboBoxCell 축열탱크Combo = new DataGridViewComboBoxCell();
+            축열탱크Combo.Items.Add("외장형");
+            축열탱크Combo.Items.Add("내장형");
+            FC_dataGridView.Rows[nRow].Cells[9] = 축열탱크Combo;
+        }
+
+        private void DefaultFC_Add_button_Click(object sender, EventArgs e)
+        {
+            ArrayList SelectFC = new ArrayList();
+            int nRow = FC_dataGridView.Rows.Add();
+            Load_FC_Num();
+            FC_dataGridView.Rows[nRow].Cells[2].Value = "기본";
+
+            FC_DB fc_DB = new FC_DB("기본DB 적용");
+            DialogResult result = fc_DB.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    if (fc_DB.Select_FC[0] != null)
+                    {
+                        string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "연료전지DB", "제조사,연료전지종류,정격효율,발전효율", "번호 = '" + fc_DB.Select_FC[0].ToString() + "'");
+
+                        FC_dataGridView.Rows[nRow].Cells[4].Value = Value[0][0];
+                        FC_dataGridView.Rows[nRow].Cells[5].Value = Value[0][1];
+                        FC_dataGridView.Rows[nRow].Cells[7].Value = Value[0][2];
+                        FC_dataGridView.Rows[nRow].Cells[8].Value = Value[0][3];
+
+                        DataGridViewComboBoxCell 축열탱크Combo = new DataGridViewComboBoxCell();
+                        축열탱크Combo.Items.Add("외장형");
+                        축열탱크Combo.Items.Add("내장형");
+                        FC_dataGridView.Rows[nRow].Cells[9] = 축열탱크Combo;
+                    }
+                }
+                catch { }
+            }
+        }
+
+        private void FC_Remove_button_Click(object sender, EventArgs e)
+        {
+            FC_dataGridView.Rows.Remove(FC_dataGridView.Rows[FC_SelectRow]);
+            Load_FC_Num();
+        }
+
+        private void FC_Copy_button_Click(object sender, EventArgs e)
+        {
+            int nRow = FC_dataGridView.Rows.Add();
+            Load_FC_Num();
+
+            DataGridViewComboBoxCell 연로전지종류Combo = new DataGridViewComboBoxCell();
+            연로전지종류Combo.Items.Add("PEMFC");
+            연로전지종류Combo.Items.Add("DMFC");
+            연로전지종류Combo.Items.Add("SOFC");
+            FC_dataGridView.Rows[nRow].Cells[5] = 연로전지종류Combo;
+
+            DataGridViewComboBoxCell 축열탱크Combo = new DataGridViewComboBoxCell();
+            축열탱크Combo.Items.Add("외장형");
+            축열탱크Combo.Items.Add("내장형");
+            FC_dataGridView.Rows[nRow].Cells[9] = 축열탱크Combo;
+
+            for (int k = 2; k < 10; k++)
+            {
+                if (FC_dataGridView.Rows[FC_SelectRow].Cells[k].Value != null)
+                {
+                    FC_dataGridView.Rows[nRow].Cells[k].Value = FC_dataGridView.Rows[FC_SelectRow].Cells[k].Value;
+                }
+            }
+
+            if (FC_dataGridView.Rows[FC_SelectRow].Cells[3].Value != null)
+            {
+                FC_dataGridView.Rows[nRow].Cells[3].Value = FC_dataGridView.Rows[FC_SelectRow].Cells[3].Value.ToString() + "_복사";
+            }
+
+        }
+
+        private void FC_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                FC_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                FC_SelectRow = e.RowIndex;
+            }
+        }
+
+        private void Load_FC_Num()
+        {
+            for (int k = 0; k < FC_dataGridView.RowCount; k++)
+            {
+                if (k + 1 < 10)
+                { FC_dataGridView.Rows[k].Cells[1].Value = "UFC0" + (k + 1).ToString(); }
+                else { FC_dataGridView.Rows[k].Cells[1].Value = "UFC" + (k + 1).ToString(); }
+            }
+        }
+
+        private void FC_Save_button_Click(object sender, EventArgs e)
+        {
+            Program.DB.deleteValue(DB.type.ProjDB, "User_FC", "");
+
+            for (int k = 0; k < FC_dataGridView.RowCount; k++)
+            {
+                String[] Value = new String[9];
+                for (int i = 1; i < 10; i++)
+                {
+                    if (FC_dataGridView.Rows[k].Cells[i].Value != null)
+                    { Value[i - 1] = FC_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    else { Value[i - 1] = ""; }
+                }
+                Program.DB.setValue(DB.type.ProjDB, "User_FC", "번호,DB유형,제품명,제조사,연료전지종류,시스템출력,정격효율,발전효율,축열탱크",
+                "'" + Value[0] + "','"
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "'", "번호");
+            }
+            MessageBox.Show("저장되었습니다.");
+        }
+
+        private void Load_FC()
+        {
+            try
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_FC", "번호,DB유형,제품명,제조사,연료전지종류,시스템출력,정격효율,발전효율,축열탱크", "");
+
+                for (int n = 0; n < User_Value.Length; n++)
+                {
+                    FC_dataGridView.Rows.Add();
+                    int nRow = FC_dataGridView.Rows.Count - 1;
+                    FC_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                    FC_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                    FC_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                    FC_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                    FC_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                    FC_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
+                    FC_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
+                    FC_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                    FC_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
+                }
+            }
+            catch { }
+        }
+
+        ///////////////////////////////////////////////////풍력/////////////////////////////////////////////////////////////////
+        public void Create_WP_Table()
+        {
+            new StackedHeaderDecorator(WP_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, WP_datagridviewDesign);
+            WP_dataGridView.Columns.Clear();
+            WP_checkBoxColumn.HeaderText = "선택";
+            WP_checkBoxColumn.Name = "check";
+            WP_dataGridView.Columns.Add(WP_checkBoxColumn);
+
+            WP_dataGridView.Columns.Add("A1", "번호");
+            WP_dataGridView.Columns.Add("A2", "DB유형");
+            WP_dataGridView.Columns.Add("A3", "제품명");
+            WP_dataGridView.Columns.Add("A4", "제조사");
+            WP_dataGridView.Columns.Add("A5", "타입");
+            WP_dataGridView.Columns.Add("A6", "세부타입");
+            WP_dataGridView.Columns.Add("A7", "정격.출력.[kW]");
+            WP_dataGridView.Columns.Add("A8", "팬.허브면적.[㎡]");
+            WP_dataGridView.Columns.Add("A9", "허브.높이.[m]");
+            WP_dataGridView.Columns.Add("A10", "풍속.시동.[m/s]");
+            WP_dataGridView.Columns.Add("A11", "풍속.종단.[m/s]");
+            WP_dataGridView.Columns.Add("A12", "풍속.최적.[m/s]");
+            WP_dataGridView.Columns.Add("A13", "전력계수.시동풍속.Cp,min");
+            WP_dataGridView.Columns.Add("A14", "전력계수.최적풍속.Cp,op");
+            WP_dataGridView.Columns.Add("A15", "전력계수.종단풍속.Cp,max");
+            WP_dataGridView.Columns[0].Width = 40;
+        }
+
+        private Boolean WP_datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (WP_dataGridView.Rows[row].Cells[2].Value != null && WP_dataGridView.Rows[row].Cells[2].Value.ToString() == "도면")
+            {
+                return false;
+            }
+
+            if (WP_dataGridView.Rows[row].Cells[2].Value != null && WP_dataGridView.Rows[row].Cells[2].Value.ToString() == "기본")
+            {
+               return false;
+            }
+            else return false;
+        }
+
+        private void UserWP_Add_button_Click(object sender, EventArgs e)
+        {
+            int nRow = WP_dataGridView.Rows.Add();
+            Load_WP_Num();
+            WP_dataGridView.Rows[nRow].Cells[2].Value = "도면";
+            DataGridViewComboBoxCell 타입Combo = new DataGridViewComboBoxCell();
+            타입Combo.Items.Add("수직형");
+            타입Combo.Items.Add("수평형");
+            WP_dataGridView.Rows[nRow].Cells[5] = 타입Combo;
+
+        }
+
+        private void WP_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0)
+                {
+                    if (e.ColumnIndex == 5)
+                    {
+                        if (WP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString() == "수평형")
+                        {
+                            DataGridViewTextBoxCell 수평형 = new DataGridViewTextBoxCell();
+                            WP_dataGridView.Rows[e.RowIndex].Cells[6] = 수평형;
+                            WP_dataGridView.Rows[e.RowIndex].Cells[6].Value = "수평형"; 
+                        }
+
+                        if (WP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString() == "수직형")
+                        {
+                            DataGridViewComboBoxCell 세부타입Combo = new DataGridViewComboBoxCell();
+                            세부타입Combo.Items.Add("사보니우스");
+                            세부타입Combo.Items.Add("다리우스");
+                            세부타입Combo.Items.Add("H-blade");
+                            세부타입Combo.Items.Add("복합형");
+                            WP_dataGridView.Rows[e.RowIndex].Cells[6] = 세부타입Combo;
+                        }
+                    }
+
+                }
+            }
+            catch { }
+        }
+
+        //private void DefaultWP_Add_button_Click(object sender, EventArgs e)
+        //{
+        //    ArrayList SelectWP = new ArrayList();
+        //    int nRow = WP_dataGridView.Rows.Add();
+        //    Load_WP_Num();
+        //    WP_dataGridView.Rows[nRow].Cells[2].Value = "기본";
+
+        //    WP_DB WP_DB = new WP_DB("기본DB 적용");
+        //    DialogResult result = WP_DB.ShowDialog();
+        //    if (result == DialogResult.OK)
+        //    {
+        //        try
+        //        {
+        //            if (WP_DB.Select_WP[0] != null)
+        //            {
+        //                string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "연료전지DB", "제조사,연료전지종류,정격효율,발전효율", "번호 = '" + WP_DB.Select_WP[0].ToString() + "'");
+
+        //                WP_dataGridView.Rows[nRow].Cells[4].Value = Value[0][0];
+        //                WP_dataGridView.Rows[nRow].Cells[5].Value = Value[0][1];
+        //                WP_dataGridView.Rows[nRow].Cells[7].Value = Value[0][2];
+        //                WP_dataGridView.Rows[nRow].Cells[8].Value = Value[0][3];
+
+        //                DataGridViewComboBoxCell 축열탱크Combo = new DataGridViewComboBoxCell();
+        //                축열탱크Combo.Items.Add("외장형");
+        //                축열탱크Combo.Items.Add("내장형");
+        //                WP_dataGridView.Rows[nRow].Cells[9] = 축열탱크Combo;
+        //            }
+        //        }
+        //        catch { }
+        //    }
+        //}
+
+        private void WP_Remove_button_Click(object sender, EventArgs e)
+        {
+            WP_dataGridView.Rows.Remove(WP_dataGridView.Rows[WP_SelectRow]);
+            Load_WP_Num();
+        }
+
+        private void WP_Copy_button_Click(object sender, EventArgs e)
+        {
+            int nRow = WP_dataGridView.Rows.Add();
+            Load_WP_Num();
+
+            DataGridViewComboBoxCell 타입Combo = new DataGridViewComboBoxCell();
+            타입Combo.Items.Add("수직형");
+            타입Combo.Items.Add("수평형");
+            WP_dataGridView.Rows[nRow].Cells[5] = 타입Combo;
+
+            for (int k = 2; k < 16; k++)
+            {
+                if (WP_dataGridView.Rows[WP_SelectRow].Cells[k].Value != null)
+                {
+                    WP_dataGridView.Rows[nRow].Cells[k].Value = WP_dataGridView.Rows[WP_SelectRow].Cells[k].Value;
+                }
+            }
+
+            if (WP_dataGridView.Rows[WP_SelectRow].Cells[3].Value != null)
+            {
+                WP_dataGridView.Rows[nRow].Cells[3].Value = WP_dataGridView.Rows[WP_SelectRow].Cells[3].Value.ToString() + "_복사";
+            }
+
+        }
+
+        private void WP_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                WP_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                WP_SelectRow = e.RowIndex;
+            }
+        }
+
+        private void Load_WP_Num()
+        {
+            for (int k = 0; k < WP_dataGridView.RowCount; k++)
+            {
+                if (k + 1 < 10)
+                { WP_dataGridView.Rows[k].Cells[1].Value = "UWP0" + (k + 1).ToString(); }
+                else { WP_dataGridView.Rows[k].Cells[1].Value = "UWP" + (k + 1).ToString(); }
+            }
+        }
+
+        private void WP_Save_button_Click(object sender, EventArgs e)
+        {
+            Program.DB.deleteValue(DB.type.ProjDB, "User_WP", "");
+
+            for (int k = 0; k < WP_dataGridView.RowCount; k++)
+            {
+                String[] Value = new String[15];
+                for (int i = 1; i < 16; i++)
+                {
+                    if (WP_dataGridView.Rows[k].Cells[i].Value != null)
+                    { Value[i - 1] = WP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    else { Value[i - 1] = ""; }
+                }
+                Program.DB.setValue(DB.type.ProjDB, "User_WP", "번호,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,종단풍속,최적풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수",
+                "'" + Value[0] + "','"
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "'", "번호");
+            }
+            MessageBox.Show("저장되었습니다.");
+        }
+
+        private void Load_WP()
+        {
+            try
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_WP", "번호, DB유형, 제품명, 제조사, 타입, 세부타입, 정격출력, 회전면적, 허브높이, 시동풍속, 종단풍속, 최적풍속, 시동풍속전력계수, 최적풍속전력계수, 종단풍속전력계수", "");
+
+                for (int n = 0; n < User_Value.Length; n++)
+                {
+                    WP_dataGridView.Rows.Add();
+                    int nRow = WP_dataGridView.Rows.Count - 1;
+                    WP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                    WP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                    WP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                    WP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                    WP_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                    WP_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
+                    WP_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
+                    WP_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                    WP_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
+                    WP_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
+                    WP_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][10];
+                    WP_dataGridView.Rows[nRow].Cells[12].Value = User_Value[n][11];
+                    WP_dataGridView.Rows[nRow].Cells[13].Value = User_Value[n][12];
+                    WP_dataGridView.Rows[nRow].Cells[14].Value = User_Value[n][13];
+                    WP_dataGridView.Rows[nRow].Cells[15].Value = User_Value[n][14];    
                 }
             }
             catch { }
@@ -2177,5 +2603,21 @@ namespace main.contents
             }
 
         }
+
+        private void EquipmentList_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage5_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

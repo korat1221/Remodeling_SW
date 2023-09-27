@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.subcontents;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,6 +47,19 @@ namespace main.contents
         {
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+        }
+
+        private void FCDB_button_Click(object sender, EventArgs e)
+        {
+            FC_DB FC_DB_form = new FC_DB("장비일람표 DB");
+
+            DialogResult result = FC_DB_form.ShowDialog();
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

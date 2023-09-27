@@ -35,14 +35,15 @@
             label3 = new Label();
             label1 = new Label();
             panel2 = new Panel();
-            AdditionalPanel = new Panel();
-            label5 = new Label();
+            FCDB_button = new Button();
             Batteryname = new TextBox();
+            label6 = new Label();
             Inverter = new TextBox();
             PVModuleType = new TextBox();
+            AdditionalPanel = new Panel();
+            label5 = new Label();
             Battery = new Label();
             label7 = new Label();
-            label6 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
@@ -64,12 +65,12 @@
             // 
             // pictureBox1
             // 
-          //  pictureBox1.Image = Properties.Resources.pv;
             pictureBox1.Location = new Point(18, 16);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(40, 35);
             pictureBox1.TabIndex = 91;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // PVtype_Combobox
             // 
@@ -112,6 +113,7 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(FCDB_button);
             panel2.Controls.Add(Batteryname);
             panel2.Controls.Add(label6);
             panel2.Controls.Add(Inverter);
@@ -124,24 +126,20 @@
             panel2.TabIndex = 18;
             panel2.Paint += panel2_Paint;
             // 
-            // AdditionalPanel
+            // FCDB_button
             // 
-            AdditionalPanel.BackColor = Color.White;
-            AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
-            AdditionalPanel.Location = new Point(12, 303);
-            AdditionalPanel.Name = "AdditionalPanel";
-            AdditionalPanel.Size = new Size(977, 390);
-            AdditionalPanel.TabIndex = 18;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label5.Location = new Point(12, 81);
-            label5.Name = "label5";
-            label5.Size = new Size(79, 15);
-            label5.TabIndex = 95;
-            label5.Text = "구성요소정보";
+            FCDB_button.BackColor = SystemColors.ControlLight;
+            FCDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            FCDB_button.FlatStyle = FlatStyle.System;
+            FCDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            FCDB_button.Location = new Point(326, 8);
+            FCDB_button.Margin = new Padding(0);
+            FCDB_button.Name = "FCDB_button";
+            FCDB_button.Size = new Size(23, 23);
+            FCDB_button.TabIndex = 96;
+            FCDB_button.Text = "+";
+            FCDB_button.UseVisualStyleBackColor = false;
+            FCDB_button.Click += FCDB_button_Click;
             // 
             // Batteryname
             // 
@@ -155,6 +153,16 @@
             Batteryname.TabIndex = 105;
             Batteryname.TextAlign = HorizontalAlignment.Center;
             Batteryname.Visible = false;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Location = new Point(16, 8);
+            label6.Name = "label6";
+            label6.Size = new Size(55, 15);
+            label6.TabIndex = 101;
+            label6.Text = "연료전지";
             // 
             // Inverter
             // 
@@ -180,6 +188,25 @@
             PVModuleType.TabIndex = 100;
             PVModuleType.TextAlign = HorizontalAlignment.Center;
             // 
+            // AdditionalPanel
+            // 
+            AdditionalPanel.BackColor = Color.White;
+            AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
+            AdditionalPanel.Location = new Point(12, 303);
+            AdditionalPanel.Name = "AdditionalPanel";
+            AdditionalPanel.Size = new Size(977, 390);
+            AdditionalPanel.TabIndex = 18;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label5.Location = new Point(12, 81);
+            label5.Name = "label5";
+            label5.Size = new Size(79, 15);
+            label5.TabIndex = 95;
+            label5.Text = "구성요소정보";
+            // 
             // Battery
             // 
             Battery.AutoSize = true;
@@ -200,16 +227,6 @@
             label7.Size = new Size(43, 15);
             label7.TabIndex = 102;
             label7.Text = "인버터";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label6.Location = new Point(16, 8);
-            label6.Name = "label6";
-            label6.Size = new Size(71, 15);
-            label6.TabIndex = 101;
-            label6.Text = "태양광 모듈";
             // 
             // FuelCell
             // 
@@ -248,8 +265,9 @@
         private TextBox Batteryname;
         private Label label6;
         private TextBox Inverter;
-        private Label label7;
         private TextBox PVModuleType;
+        private Button FCDB_button;
+        private Label label7;
         private Label Battery;
     }
 }

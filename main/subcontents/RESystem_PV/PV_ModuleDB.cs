@@ -83,8 +83,6 @@ namespace main.subcontents.RESystem_PV
                 }
             }
 
-            
-
             //사용자 DB 추가
             try
             {
@@ -95,9 +93,6 @@ namespace main.subcontents.RESystem_PV
                 }
             }
             catch { }
-
-
-            
         }
 
         private void Door_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)

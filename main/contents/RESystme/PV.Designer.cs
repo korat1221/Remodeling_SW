@@ -198,7 +198,6 @@
             // 
             // pictureBox1
             // 
-          //  pictureBox1.Image = Properties.Resources.pv;
             pictureBox1.Location = new Point(18, 16);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(40, 35);
@@ -564,7 +563,7 @@
             // 
             // pictureBox2
             // 
-           // pictureBox2.Image = Properties.Resources.그림1;
+            pictureBox2.Image = Properties.Resources.그림1;
             pictureBox2.Location = new Point(625, 5);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(349, 211);
@@ -950,7 +949,6 @@
             // 
             // batteryimage
             // 
-           // batteryimage.Image = Properties.Resources.배터리1;
             batteryimage.Location = new Point(494, 60);
             batteryimage.Name = "batteryimage";
             batteryimage.Size = new Size(71, 90);
@@ -1016,7 +1014,6 @@
             // 
             // pictureBox3
             // 
-           // pictureBox3.Image = Properties.Resources.그림3;
             pictureBox3.Location = new Point(369, 6);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(593, 227);

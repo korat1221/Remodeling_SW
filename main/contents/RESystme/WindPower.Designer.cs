@@ -35,12 +35,18 @@
             textBox1 = new TextBox();
             panel2 = new Panel();
             AdditionalPanel = new Panel();
+            pictureBox1 = new PictureBox();
+            FCDB_button = new Button();
+            label6 = new Label();
             GeneralPanel.SuspendLayout();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(pictureBox1);
             GeneralPanel.Controls.Add(textBox2);
             GeneralPanel.Controls.Add(label3);
             GeneralPanel.Controls.Add(label1);
@@ -95,6 +101,8 @@
             // 
             panel2.BackColor = Color.White;
             panel2.BorderStyle = BorderStyle.Fixed3D;
+            panel2.Controls.Add(FCDB_button);
+            panel2.Controls.Add(label6);
             panel2.Location = new Point(12, 136);
             panel2.Name = "panel2";
             panel2.Size = new Size(977, 149);
@@ -108,6 +116,39 @@
             AdditionalPanel.Name = "AdditionalPanel";
             AdditionalPanel.Size = new Size(977, 390);
             AdditionalPanel.TabIndex = 18;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(19, 36);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(40, 35);
+            pictureBox1.TabIndex = 92;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
+            // 
+            // FCDB_button
+            // 
+            FCDB_button.BackColor = SystemColors.ControlLight;
+            FCDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            FCDB_button.FlatStyle = FlatStyle.System;
+            FCDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            FCDB_button.Location = new Point(327, 15);
+            FCDB_button.Margin = new Padding(0);
+            FCDB_button.Name = "FCDB_button";
+            FCDB_button.Size = new Size(23, 23);
+            FCDB_button.TabIndex = 102;
+            FCDB_button.Text = "+";
+            FCDB_button.UseVisualStyleBackColor = false;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Location = new Point(17, 15);
+            label6.Name = "label6";
+            label6.Size = new Size(31, 15);
+            label6.TabIndex = 103;
+            label6.Text = "풍력";
             // 
             // WindPower
             // 
@@ -124,6 +165,9 @@
             Text = "Form3";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -132,9 +176,12 @@
         private Panel GeneralPanel;
         private Panel panel2;
         private Panel AdditionalPanel;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox2;
+        private Label label1;
+        private TextBox textBox1;
+        private Label label3;
+        private TextBox textBox2;
+        private PictureBox pictureBox1;
+        private Button FCDB_button;
+        private Label label6;
     }
 }
