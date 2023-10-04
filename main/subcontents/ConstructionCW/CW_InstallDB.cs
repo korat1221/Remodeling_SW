@@ -108,7 +108,7 @@ namespace main.subcontents.ConstructionCW
                     int nRow = Install_dataGridView.Rows.Count - 1;
                     for (int k = 0; k < 9; k++)
                     {
-                        Install_dataGridView.Rows[nRow].Cells[k + 1].Value = User_CWInstall[n][0];
+                        Install_dataGridView.Rows[nRow].Cells[k + 1].Value = User_CWInstall[n][k];
                     }
                     //table_CWInstall.Rows.Add(User_CWInstall[n][0], User_CWInstall[n][1], User_CWInstall[n][2], User_CWInstall[n][3], User_CWInstall[n][4], User_CWInstall[n][5], User_CWInstall[n][6], User_CWInstall[n][7], User_CWInstall[n][8]);
                 }
@@ -130,7 +130,7 @@ namespace main.subcontents.ConstructionCW
                 int nRow = Install_dataGridView.Rows.Count - 1;
                 for (int k = 0; k < 9; k++)
                 {
-                    Install_dataGridView.Rows[nRow].Cells[k + 1].Value = CWInstall[n][0];
+                    Install_dataGridView.Rows[nRow].Cells[k + 1].Value = CWInstall[n][k];
                 }
                 //table_CWInstall.Rows.Add(CWInstall[n][0], CWInstall[n][1], CWInstall[n][2], CWInstall[n][3], CWInstall[n][4], CWInstall[n][5], CWInstall[n][6], CWInstall[n][7], CWInstall[n][8]);
             }

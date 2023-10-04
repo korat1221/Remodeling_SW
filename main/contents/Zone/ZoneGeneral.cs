@@ -370,16 +370,7 @@ namespace main.contents
         }
         private void BuildingUse_textBox_TextChanged(object sender, EventArgs e)
         {
-            String[][] Index = Program.DB.getValue(DB.type.BaseDB_HCneed, "인덱스", "아이디", "이름 = '" + BuildingUse + "'");
-
-            string id = Index[0][0].ToString();
-
-            if (id != "")
-            {
-                string[][] res = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 이름, 값, 아이디 FROM 인덱스 WHERE 부모아이디=" + id);
-
-                Program.UTIL.FillComboBox_Category(Usage_comboBox, res, "1");
-            }
+         
         }
         //주간이용일수 선택 시 연간이용일수 계산
         private void WeekUseDay_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -886,6 +877,17 @@ namespace main.contents
                 BuildingCategory = BuildingValue[0][0];
 
                 BuildingUse = BuildingValue[0][1];
+
+                String[][] Index = Program.DB.getValue(DB.type.BaseDB_HCneed, "인덱스", "아이디", "이름 = '" + BuildingUse + "'");
+
+                string id = Index[0][0].ToString();
+
+                if (id != "")
+                {
+                    string[][] res = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 이름, 값, 아이디 FROM 인덱스 WHERE 부모아이디=" + id);
+
+                    Program.UTIL.FillComboBox_Category(Usage_comboBox, res, "1");
+                }
             }
             catch { }
 
