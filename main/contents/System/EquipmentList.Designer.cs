@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Reflection.Emit;
+using System.Windows.Forms;
 
 namespace main.contents
 {
@@ -65,22 +66,16 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle33 = new DataGridViewCellStyle();
             PV_dataGridView = new DataGridView();
             GeneralPanel = new Panel();
-            label4 = new Label();
             Icon_pictureBox = new PictureBox();
             tabControl1 = new CustomTabControl();
             HP_tabPage = new TabPage();
             AirHP_dataGridView = new DataGridView();
-            label3 = new Label();
             HP_Save_button = new Button();
             DefaultAirHP_Add_button = new Button();
-            label5 = new Label();
             AirHP_Copy_button = new Button();
             AirHP_Remove_button = new Button();
             UserAirHP_Add_button = new Button();
             Boiler_tabPage = new TabPage();
-            label2 = new Label();
-            DefaultBoiler_Add_button = new Button();
-            label1 = new Label();
             Boiler_Save_button = new Button();
             Boiler_dataGridView = new DataGridView();
             Boiler_Copy_button = new Button();
@@ -88,17 +83,22 @@ namespace main.contents
             UserBoiler_Add_button = new Button();
             AS_tabPage = new TabPage();
             ABS_dataGridView = new DataGridView();
-            label6 = new Label();
             ABS_Save_button = new Button();
+            DH_Save_button = new Button();
             DefaultABS_Add_button = new Button();
-            label7 = new Label();
             ABS_Copy_button = new Button();
             ABS_Remove_button = new Button();
             UserABS_Add_button = new Button();
             DH_tabPage = new TabPage();
+            DH_dataGridView = new DataGridView();
+            DefaultDH_Add_button = new Button();
+            DH_Copy_button = new Button();
+            DH_Remove_button = new Button();
+            UserDH_Add_button = new Button();
             Solar_tabPage = new TabPage();
             Solar_Save_button = new Button();
             Pump_tabPage = new TabPage();
+            DefaultBoiler_Add_button = new Button();
             Pump_Save_button = new Button();
             Pump_dataGridView = new DataGridView();
             Pump_Copy_button = new Button();
@@ -118,10 +118,8 @@ namespace main.contents
             button15 = new Button();
             tabPage5 = new TabPage();
             FC_dataGridView = new DataGridView();
-            label15 = new Label();
             FC_Save_button = new Button();
             DefaultFC_Add_button = new Button();
-            label16 = new Label();
             FC_Copy_button = new Button();
             FC_Remove_button = new Button();
             UserFC_Add_button = new Button();
@@ -137,18 +135,14 @@ namespace main.contents
             UserGroundHP_Add_button = new Button();
             tabPage2 = new TabPage();
             button6 = new Button();
-            label9 = new Label();
-            label12 = new Label();
             DefaultSolar_Add_button = new Button();
             UserSolar_Add_button = new Button();
             Solar_Remove_button = new Button();
             Solar_dataGridView = new DataGridView();
             Solar_Copy_button = new Button();
             tabPage1 = new TabPage();
-            label13 = new Label();
             PV_Save_button = new Button();
             DefaultPV_Add_button = new Button();
-            label14 = new Label();
             PV_Copy_button = new Button();
             PV_Remove_button = new Button();
             UserPV_Add_button = new Button();
@@ -158,6 +152,19 @@ namespace main.contents
             tabPage8 = new TabPage();
             tabPage7 = new TabPage();
             customTabControl2 = new CustomTabControl();
+            label3 = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
+            label4 = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            label6 = new System.Windows.Forms.Label();
+            label7 = new System.Windows.Forms.Label();
+            label8 = new System.Windows.Forms.Label();
+            label9 = new System.Windows.Forms.Label();
+            label10 = new System.Windows.Forms.Label();
+            label11 = new System.Windows.Forms.Label();
+            label12 = new System.Windows.Forms.Label();
+            label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)PV_dataGridView).BeginInit();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -168,6 +175,8 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).BeginInit();
             AS_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ABS_dataGridView).BeginInit();
+            DH_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)DH_dataGridView).BeginInit();
             Solar_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Pump_dataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).BeginInit();
@@ -243,16 +252,6 @@ namespace main.contents
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(70, 22);
-            label4.Name = "label4";
-            label4.Size = new Size(67, 15);
-            label4.TabIndex = 101;
-            label4.Text = "장비일람표";
-            // 
             // Icon_pictureBox
             // 
             Icon_pictureBox.Location = new Point(14, 4);
@@ -294,11 +293,11 @@ namespace main.contents
             // HP_tabPage
             // 
             HP_tabPage.BackColor = Color.White;
-            HP_tabPage.Controls.Add(AirHP_dataGridView);
             HP_tabPage.Controls.Add(label3);
+            HP_tabPage.Controls.Add(label5);
+            HP_tabPage.Controls.Add(AirHP_dataGridView);
             HP_tabPage.Controls.Add(HP_Save_button);
             HP_tabPage.Controls.Add(DefaultAirHP_Add_button);
-            HP_tabPage.Controls.Add(label5);
             HP_tabPage.Controls.Add(AirHP_Copy_button);
             HP_tabPage.Controls.Add(AirHP_Remove_button);
             HP_tabPage.Controls.Add(UserAirHP_Add_button);
@@ -353,16 +352,6 @@ namespace main.contents
             AirHP_dataGridView.CellContentClick += AirHP_dataGridView_CellContentClick;
             AirHP_dataGridView.CellValueChanged += AirHP_dataGridView_CellValueChanged;
             // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(739, 9);
-            label3.Name = "label3";
-            label3.Size = new Size(87, 15);
-            label3.TabIndex = 111;
-            label3.Text = "도면 기반 입력";
-            // 
             // HP_Save_button
             // 
             HP_Save_button.BackColor = SystemColors.ButtonHighlight;
@@ -389,16 +378,6 @@ namespace main.contents
             DefaultAirHP_Add_button.Text = "+";
             DefaultAirHP_Add_button.UseVisualStyleBackColor = false;
             DefaultAirHP_Add_button.Click += DefaultAirHP_Add_button_Click;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label5.Location = new Point(595, 9);
-            label5.Name = "label5";
-            label5.Size = new Size(104, 15);
-            label5.TabIndex = 109;
-            label5.Text = "기본 DB기반 입력";
             // 
             // AirHP_Copy_button
             // 
@@ -447,9 +426,6 @@ namespace main.contents
             // 
             // Boiler_tabPage
             // 
-            Boiler_tabPage.Controls.Add(label2);
-            Boiler_tabPage.Controls.Add(DefaultBoiler_Add_button);
-            Boiler_tabPage.Controls.Add(label1);
             Boiler_tabPage.Controls.Add(Boiler_Save_button);
             Boiler_tabPage.Controls.Add(Boiler_dataGridView);
             Boiler_tabPage.Controls.Add(Boiler_Copy_button);
@@ -462,41 +438,6 @@ namespace main.contents
             Boiler_tabPage.TabIndex = 6;
             Boiler_tabPage.Text = "보일러";
             Boiler_tabPage.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(740, 8);
-            label2.Name = "label2";
-            label2.Size = new Size(87, 15);
-            label2.TabIndex = 105;
-            label2.Text = "도면 기반 입력";
-            // 
-            // DefaultBoiler_Add_button
-            // 
-            DefaultBoiler_Add_button.BackColor = SystemColors.ControlLight;
-            DefaultBoiler_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            DefaultBoiler_Add_button.FlatStyle = FlatStyle.System;
-            DefaultBoiler_Add_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            DefaultBoiler_Add_button.Location = new Point(703, 4);
-            DefaultBoiler_Add_button.Margin = new Padding(0);
-            DefaultBoiler_Add_button.Name = "DefaultBoiler_Add_button";
-            DefaultBoiler_Add_button.Size = new Size(23, 23);
-            DefaultBoiler_Add_button.TabIndex = 104;
-            DefaultBoiler_Add_button.Text = "+";
-            DefaultBoiler_Add_button.UseVisualStyleBackColor = false;
-            DefaultBoiler_Add_button.Click += DefaultBoiler_Add_button_Click;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(596, 8);
-            label1.Name = "label1";
-            label1.Size = new Size(104, 15);
-            label1.TabIndex = 103;
-            label1.Text = "기본 DB기반 입력";
             // 
             // Boiler_Save_button
             // 
@@ -601,11 +542,11 @@ namespace main.contents
             // 
             // AS_tabPage
             // 
+            AS_tabPage.Controls.Add(label8);
+            AS_tabPage.Controls.Add(label9);
             AS_tabPage.Controls.Add(ABS_dataGridView);
-            AS_tabPage.Controls.Add(label6);
             AS_tabPage.Controls.Add(ABS_Save_button);
             AS_tabPage.Controls.Add(DefaultABS_Add_button);
-            AS_tabPage.Controls.Add(label7);
             AS_tabPage.Controls.Add(ABS_Copy_button);
             AS_tabPage.Controls.Add(ABS_Remove_button);
             AS_tabPage.Controls.Add(UserABS_Add_button);
@@ -661,16 +602,6 @@ namespace main.contents
             ABS_dataGridView.CellContentClick += ABS_dataGridView_CellContentClick;
             ABS_dataGridView.CellValueChanged += ABS_dataGridView_CellValueChanged;
             // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label6.Location = new Point(739, 11);
-            label6.Name = "label6";
-            label6.Size = new Size(87, 15);
-            label6.TabIndex = 119;
-            label6.Text = "도면 기반 입력";
-            // 
             // ABS_Save_button
             // 
             ABS_Save_button.BackColor = SystemColors.ButtonHighlight;
@@ -697,16 +628,6 @@ namespace main.contents
             DefaultABS_Add_button.Text = "+";
             DefaultABS_Add_button.UseVisualStyleBackColor = false;
             DefaultABS_Add_button.Click += DefaultABS_Add_button_Click;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label7.Location = new Point(595, 11);
-            label7.Name = "label7";
-            label7.Size = new Size(104, 15);
-            label7.TabIndex = 117;
-            label7.Text = "기본 DB기반 입력";
             // 
             // ABS_Copy_button
             // 
@@ -755,6 +676,14 @@ namespace main.contents
             // 
             // DH_tabPage
             // 
+            DH_tabPage.Controls.Add(label10);
+            DH_tabPage.Controls.Add(label11);
+            DH_tabPage.Controls.Add(DH_dataGridView);
+            DH_tabPage.Controls.Add(DH_Save_button);
+            DH_tabPage.Controls.Add(DefaultDH_Add_button);
+            DH_tabPage.Controls.Add(DH_Copy_button);
+            DH_tabPage.Controls.Add(DH_Remove_button);
+            DH_tabPage.Controls.Add(UserDH_Add_button);
             DH_tabPage.Location = new Point(4, 25);
             DH_tabPage.Name = "DH_tabPage";
             DH_tabPage.Padding = new Padding(3);
@@ -762,6 +691,101 @@ namespace main.contents
             DH_tabPage.TabIndex = 4;
             DH_tabPage.Text = "지역난방";
             DH_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // DH_dataGridView
+            // 
+            DH_dataGridView.AllowUserToAddRows = false;
+            DH_dataGridView.AllowUserToDeleteRows = false;
+            DH_dataGridView.AllowUserToResizeColumns = false;
+            DH_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            DH_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            DH_dataGridView.BackgroundColor = SystemColors.Window;
+            DH_dataGridView.BorderStyle = BorderStyle.None;
+            DH_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            DH_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            DH_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            DH_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DH_dataGridView.Location = new Point(18, 38);
+            DH_dataGridView.Name = "DH_dataGridView";
+            DH_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            DH_dataGridView.RowHeadersVisible = false;
+            DH_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            DH_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            DH_dataGridView.RowTemplate.Height = 25;
+            DH_dataGridView.Size = new Size(932, 150);
+            DH_dataGridView.TabIndex = 128;
+            DH_dataGridView.CellContentClick += DH_dataGridView_CellContentClick;
+            // DH_Save_button
+            // 
+            DH_Save_button.BackColor = SystemColors.ButtonHighlight;
+            DH_Save_button.ForeColor = Color.Black;
+            DH_Save_button.Location = new Point(862, 194);
+            DH_Save_button.Name = "DH_Save_button";
+            DH_Save_button.Size = new Size(88, 25);
+            DH_Save_button.TabIndex = 129;
+            DH_Save_button.Text = "SAVE";
+            DH_Save_button.UseVisualStyleBackColor = true;
+            DH_Save_button.Click += DH_Save_button_Click;
+            // 
+            // DefaultDH_Add_button
+            // 
+            DefaultDH_Add_button.BackColor = SystemColors.ControlLight;
+            DefaultDH_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DefaultDH_Add_button.FlatStyle = FlatStyle.System;
+            DefaultDH_Add_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            DefaultDH_Add_button.Location = new Point(702, 7);
+            DefaultDH_Add_button.Margin = new Padding(0);
+            DefaultDH_Add_button.Name = "DefaultDH_Add_button";
+            DefaultDH_Add_button.Size = new Size(23, 23);
+            DefaultDH_Add_button.TabIndex = 126;
+            DefaultDH_Add_button.Text = "+";
+            DefaultDH_Add_button.UseVisualStyleBackColor = false;
+            DefaultDH_Add_button.Click += DefaultDH_Add_button_Click;
+            // 
+            // DH_Copy_button
+            // 
+            DH_Copy_button.BackColor = SystemColors.ControlLight;
+            DH_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DH_Copy_button.FlatStyle = FlatStyle.System;
+            DH_Copy_button.Font = new Font("나눔고딕", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            DH_Copy_button.Location = new Point(903, 7);
+            DH_Copy_button.Margin = new Padding(0);
+            DH_Copy_button.Name = "DH_Copy_button";
+            DH_Copy_button.Size = new Size(47, 23);
+            DH_Copy_button.TabIndex = 124;
+            DH_Copy_button.Text = "Copy";
+            DH_Copy_button.UseVisualStyleBackColor = false;
+            DH_Copy_button.Click += DH_Copy_button_Click;
+            // 
+            // DH_Remove_button
+            // 
+            DH_Remove_button.BackColor = SystemColors.ControlLight;
+            DH_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DH_Remove_button.FlatStyle = FlatStyle.System;
+            DH_Remove_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            DH_Remove_button.Location = new Point(866, 7);
+            DH_Remove_button.Margin = new Padding(0);
+            DH_Remove_button.Name = "DH_Remove_button";
+            DH_Remove_button.Size = new Size(23, 23);
+            DH_Remove_button.TabIndex = 123;
+            DH_Remove_button.Text = "-";
+            DH_Remove_button.UseVisualStyleBackColor = false;
+            DH_Remove_button.Click += DH_Remove_button_Click;
+            // 
+            // UserDH_Add_button
+            // 
+            UserDH_Add_button.BackColor = SystemColors.ControlLight;
+            UserDH_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            UserDH_Add_button.FlatStyle = FlatStyle.System;
+            UserDH_Add_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            UserDH_Add_button.Location = new Point(829, 7);
+            UserDH_Add_button.Margin = new Padding(0);
+            UserDH_Add_button.Name = "UserDH_Add_button";
+            UserDH_Add_button.Size = new Size(23, 23);
+            UserDH_Add_button.TabIndex = 122;
+            UserDH_Add_button.Text = "+";
+            UserDH_Add_button.UseVisualStyleBackColor = false;
+            UserDH_Add_button.Click += UserDH_Add_button_Click;
             // 
             // Solar_tabPage
             // 
@@ -795,6 +819,21 @@ namespace main.contents
             Pump_tabPage.TabIndex = 7;
             Pump_tabPage.Text = "수냉식냉동기";
             Pump_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // DefaultBoiler_Add_button
+            // 
+            DefaultBoiler_Add_button.BackColor = SystemColors.ControlLight;
+            DefaultBoiler_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DefaultBoiler_Add_button.FlatStyle = FlatStyle.System;
+            DefaultBoiler_Add_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            DefaultBoiler_Add_button.Location = new Point(703, 4);
+            DefaultBoiler_Add_button.Margin = new Padding(0);
+            DefaultBoiler_Add_button.Name = "DefaultBoiler_Add_button";
+            DefaultBoiler_Add_button.Size = new Size(23, 23);
+            DefaultBoiler_Add_button.TabIndex = 104;
+            DefaultBoiler_Add_button.Text = "+";
+            DefaultBoiler_Add_button.UseVisualStyleBackColor = false;
+            DefaultBoiler_Add_button.Click += DefaultBoiler_Add_button_Click;
             // 
             // Pump_Save_button
             // 
@@ -1127,11 +1166,11 @@ namespace main.contents
             // 
             // tabPage5
             // 
+            tabPage5.Controls.Add(label12);
+            tabPage5.Controls.Add(label13);
             tabPage5.Controls.Add(FC_dataGridView);
-            tabPage5.Controls.Add(label15);
             tabPage5.Controls.Add(FC_Save_button);
             tabPage5.Controls.Add(DefaultFC_Add_button);
-            tabPage5.Controls.Add(label16);
             tabPage5.Controls.Add(FC_Copy_button);
             tabPage5.Controls.Add(FC_Remove_button);
             tabPage5.Controls.Add(UserFC_Add_button);
@@ -1187,16 +1226,6 @@ namespace main.contents
             FC_dataGridView.TabIndex = 128;
             FC_dataGridView.CellContentClick += FC_dataGridView_CellContentClick;
             // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label15.Location = new Point(739, 11);
-            label15.Name = "label15";
-            label15.Size = new Size(87, 15);
-            label15.TabIndex = 127;
-            label15.Text = "도면 기반 입력";
-            // 
             // FC_Save_button
             // 
             FC_Save_button.BackColor = SystemColors.ButtonHighlight;
@@ -1223,16 +1252,6 @@ namespace main.contents
             DefaultFC_Add_button.Text = "+";
             DefaultFC_Add_button.UseVisualStyleBackColor = false;
             DefaultFC_Add_button.Click += DefaultFC_Add_button_Click;
-            // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            label16.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label16.Location = new Point(595, 11);
-            label16.Name = "label16";
-            label16.Size = new Size(104, 15);
-            label16.TabIndex = 125;
-            label16.Text = "기본 DB기반 입력";
             // 
             // FC_Copy_button
             // 
@@ -1487,9 +1506,9 @@ namespace main.contents
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(label6);
+            tabPage2.Controls.Add(label7);
             tabPage2.Controls.Add(button6);
-            tabPage2.Controls.Add(label9);
-            tabPage2.Controls.Add(label12);
             tabPage2.Controls.Add(DefaultSolar_Add_button);
             tabPage2.Controls.Add(UserSolar_Add_button);
             tabPage2.Controls.Add(Solar_Remove_button);
@@ -1513,26 +1532,6 @@ namespace main.contents
             button6.TabIndex = 102;
             button6.Text = "SAVE";
             button6.UseVisualStyleBackColor = true;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label9.Location = new Point(735, 11);
-            label9.Name = "label9";
-            label9.Size = new Size(87, 15);
-            label9.TabIndex = 112;
-            label9.Text = "도면 기반 입력";
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label12.Location = new Point(591, 11);
-            label12.Name = "label12";
-            label12.Size = new Size(104, 15);
-            label12.TabIndex = 110;
-            label12.Text = "기본 DB기반 입력";
             // 
             // DefaultSolar_Add_button
             // 
@@ -1640,11 +1639,11 @@ namespace main.contents
             // tabPage1
             // 
             tabPage1.BackColor = Color.White;
+            tabPage1.Controls.Add(label1);
+            tabPage1.Controls.Add(label2);
             tabPage1.Controls.Add(PV_dataGridView);
-            tabPage1.Controls.Add(label13);
             tabPage1.Controls.Add(PV_Save_button);
             tabPage1.Controls.Add(DefaultPV_Add_button);
-            tabPage1.Controls.Add(label14);
             tabPage1.Controls.Add(PV_Copy_button);
             tabPage1.Controls.Add(PV_Remove_button);
             tabPage1.Controls.Add(UserPV_Add_button);
@@ -1655,16 +1654,6 @@ namespace main.contents
             tabPage1.TabIndex = 2;
             tabPage1.Text = "태양광시스템";
             tabPage1.Click += tabPage1_Click;
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label13.Location = new Point(739, 13);
-            label13.Name = "label13";
-            label13.Size = new Size(87, 15);
-            label13.TabIndex = 119;
-            label13.Text = "도면 기반 입력";
             // 
             // PV_Save_button
             // 
@@ -1692,16 +1681,6 @@ namespace main.contents
             DefaultPV_Add_button.Text = "+";
             DefaultPV_Add_button.UseVisualStyleBackColor = false;
             DefaultPV_Add_button.Click += DefaultPV_Add_button_Click;
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label14.Location = new Point(595, 13);
-            label14.Name = "label14";
-            label14.Size = new Size(104, 15);
-            label14.TabIndex = 117;
-            label14.Text = "기본 DB기반 입력";
             // 
             // PV_Copy_button
             // 
@@ -1856,6 +1835,136 @@ namespace main.contents
             customTabControl2.SizeMode = TabSizeMode.Fixed;
             customTabControl2.TabIndex = 147;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.Location = new Point(739, 9);
+            label3.Name = "label3";
+            label3.Size = new Size(87, 15);
+            label3.TabIndex = 115;
+            label3.Text = "도면 기반 입력";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label5.Location = new Point(595, 9);
+            label5.Name = "label5";
+            label5.Size = new Size(104, 15);
+            label5.TabIndex = 114;
+            label5.Text = "기본 DB기반 입력";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Location = new Point(70, 25);
+            label4.Name = "label4";
+            label4.Size = new Size(67, 15);
+            label4.TabIndex = 102;
+            label4.Text = "장비일람표";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Location = new Point(739, 13);
+            label1.Name = "label1";
+            label1.Size = new Size(87, 15);
+            label1.TabIndex = 123;
+            label1.Text = "도면 기반 입력";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Location = new Point(595, 13);
+            label2.Name = "label2";
+            label2.Size = new Size(104, 15);
+            label2.TabIndex = 122;
+            label2.Text = "기본 DB기반 입력";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label6.Location = new Point(735, 11);
+            label6.Name = "label6";
+            label6.Size = new Size(87, 15);
+            label6.TabIndex = 125;
+            label6.Text = "도면 기반 입력";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label7.Location = new Point(591, 11);
+            label7.Name = "label7";
+            label7.Size = new Size(104, 15);
+            label7.TabIndex = 124;
+            label7.Text = "기본 DB기반 입력";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label8.Location = new Point(739, 11);
+            label8.Name = "label8";
+            label8.Size = new Size(87, 15);
+            label8.TabIndex = 127;
+            label8.Text = "도면 기반 입력";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label9.Location = new Point(595, 11);
+            label9.Name = "label9";
+            label9.Size = new Size(104, 15);
+            label9.TabIndex = 126;
+            label9.Text = "기본 DB기반 입력";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label10.Location = new Point(739, 11);
+            label10.Name = "label10";
+            label10.Size = new Size(87, 15);
+            label10.TabIndex = 130;
+            label10.Text = "도면 기반 입력";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label11.Location = new Point(595, 11);
+            label11.Name = "label11";
+            label11.Size = new Size(104, 15);
+            label11.TabIndex = 129;
+            label11.Text = "기본 DB기반 입력";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label12.Location = new Point(739, 11);
+            label12.Name = "label12";
+            label12.Size = new Size(87, 15);
+            label12.TabIndex = 132;
+            label12.Text = "도면 기반 입력";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label13.Location = new Point(595, 11);
+            label13.Name = "label13";
+            label13.Size = new Size(104, 15);
+            label13.TabIndex = 131;
+            label13.Text = "기본 DB기반 입력";
+            // 
             // EquipmentList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1880,11 +1989,13 @@ namespace main.contents
             HP_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)AirHP_dataGridView).EndInit();
             Boiler_tabPage.ResumeLayout(false);
-            Boiler_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).EndInit();
             AS_tabPage.ResumeLayout(false);
             AS_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ABS_dataGridView).EndInit();
+            DH_tabPage.ResumeLayout(false);
+            DH_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)DH_dataGridView).EndInit();
             Solar_tabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Pump_dataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).EndInit();
@@ -1918,15 +2029,12 @@ namespace main.contents
         private TabPage AS_tabPage;
         private TabPage DH_tabPage;
         private TabPage Solar_tabPage;
-        private Label label4;
         private PictureBox Icon_pictureBox;
         private Button Boiler_Copy_button;
         private Button Boiler_Remove_button;
         private Button UserBoiler_Add_button;
         private DataGridView Boiler_dataGridView;
-        private Label label2;
         private Button DefaultBoiler_Add_button;
-        private Label label1;
         private TabPage Pump_tabPage;
         private Button Pump_Save_button;
         private DataGridView Pump_dataGridView;
@@ -1939,9 +2047,7 @@ namespace main.contents
         private Button ce_Remove_button;
         private Button ce_Add_button;
         private DataGridView AirHP_dataGridView;
-        private Label label3;
         private Button DefaultAirHP_Add_button;
-        private Label label5;
         private Button AirHP_Copy_button;
         private Button AirHP_Remove_button;
         private Button UserAirHP_Add_button;
@@ -1960,10 +2066,8 @@ namespace main.contents
         private Button button15;
         private TabPage tabPage5;
         private DataGridView FC_dataGridView;
-        private Label label15;
         private Button FC_Save_button;
         private Button DefaultFC_Add_button;
-        private Label label16;
         private Button FC_Copy_button;
         private Button FC_Remove_button;
         private Button UserFC_Add_button;
@@ -1979,8 +2083,6 @@ namespace main.contents
         private Button UserGroundHP_Add_button;
         private TabPage tabPage2;
         private Button button6;
-        private Label label9;
-        private Label label12;
         private Button DefaultSolar_Add_button;
         private Button UserSolar_Add_button;
         private Button Solar_Remove_button;
@@ -1988,10 +2090,8 @@ namespace main.contents
         private Button Solar_Copy_button;
         private TabPage tabPage1;
         private DataGridView PV_dataGridView;
-        private Label label13;
         private Button PV_Save_button;
         private Button DefaultPV_Add_button;
-        private Label label14;
         private Button PV_Copy_button;
         private Button PV_Remove_button;
         private Button UserPV_Add_button;
@@ -2002,12 +2102,29 @@ namespace main.contents
         private TabPage tabPage7;
         private CustomTabControl customTabControl2;
         private DataGridView ABS_dataGridView;
-        private Label label6;
         private Button ABS_Save_button;
         private Button DefaultABS_Add_button;
-        private Label label7;
         private Button ABS_Copy_button;
         private Button ABS_Remove_button;
         private Button UserABS_Add_button;
+        private Button DH_Copy_button;
+        private Button DH_Remove_button;
+        private Button UserDH_Add_button;
+        private Button DefaultDH_Add_button;
+        private Button DH_Save_button;
+        private DataGridView DH_dataGridView;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }

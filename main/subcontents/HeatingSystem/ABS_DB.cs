@@ -51,6 +51,7 @@ namespace main.subcontents.HeatingSystem
             ABS_dataGridView.Columns.Add(checkBoxColumn);
 
             ABS_dataGridView.Columns.Add("A1", "번호");
+            ABS_dataGridView.Columns[0].Width =100;
             if (DefaultUse != "기본DB 적용")
             {
                 ABS_dataGridView.Columns.Add("A2", "DB유형");
@@ -84,42 +85,21 @@ namespace main.subcontents.HeatingSystem
             }
             else
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호,DB유형,난방냉방,연료,냉방용량,냉방성능,난방용량,난방성능,냉수입구온도,냉수출구온도,온수입구온도,온수출구온도,대기전력,통합성능", "난방냉방 ='냉난방'");
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호,난방냉방,연료,난방용량,난방성능,온수입구온도,온수출구온도,대기전력,통합성능", "난방냉방 ='냉난방'");
                 for (int n = 0; n < User_Value.Length; n++)
                 {
-                    string 용량 = "", 전부하효율 = "", 부분부하효율 = "", 소비전력 = "", 대기전력 = "";
-                    if (User_Value[n][4] != null && User_Value[n][4] != "")
-                    {
-                        용량 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
-                    }
-                    if (User_Value[n][5] != null && User_Value[n][5] != "")
-                    {
-                        전부하효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][5]));
-                    }
-                    if (User_Value[n][6] != null && User_Value[n][6] != "")
-                    {
-                        부분부하효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][6]));
-                    }
-                    if (User_Value[n][7] != null && User_Value[n][7] != "")
-                    {
-                        소비전력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][7]));
-                    }
-                    if (User_Value[n][8] != null && User_Value[n][8] != "")
-                    {
-                        대기전력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][8]));
-                    }
+                  
                     ABS_dataGridView.Rows.Add();
                     int nRow = ABS_dataGridView.Rows.Count - 1;
                     ABS_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
                     ABS_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
                     ABS_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
                     ABS_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-                    ABS_dataGridView.Rows[nRow].Cells[5].Value = 용량;
-                    ABS_dataGridView.Rows[nRow].Cells[6].Value = 전부하효율;
-                    ABS_dataGridView.Rows[nRow].Cells[7].Value = 부분부하효율;
-                    ABS_dataGridView.Rows[nRow].Cells[8].Value = 소비전력;
-                    ABS_dataGridView.Rows[nRow].Cells[9].Value = 대기전력;
-                    //ABS_table.Rows.Add(User_Value[n][0], User_Value[n][1], User_Value[n][2], User_Value[n][3], 용량, 전부하효율, 부분부하효율, 소비전력, 대기전력);
+                    ABS_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                    ABS_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
+                    ABS_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
+                    ABS_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                    ABS_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
                 }
             }
             // ABS_dataGridView.DataSource = ABS_table;

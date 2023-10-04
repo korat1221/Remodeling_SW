@@ -18,7 +18,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="subcontents\GWHP_DB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\GroundHP_DB.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\EquipmentList\PumpCal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\HeatingSystem\DH_DB.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\HeatingSystem\ABS_DB.cs">
@@ -27,7 +36,7 @@
     <Compile Update="subcontents\HeatingSystem\Heating_Solar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="subcontents\HeatingSystem\Heating_HP.cs">
+    <Compile Update="subcontents\AirHP_DB.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\HeatingSystem\Heating_ceZone.cs">

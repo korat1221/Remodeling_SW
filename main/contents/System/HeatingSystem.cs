@@ -803,40 +803,64 @@ namespace main.contents
             if (HeatSource == "외기 히트펌프")
             {
                 nonsplit = SelectHP_nonsplit[0, 0];
+                AirHP_DB heating_HP = new AirHP_DB("장비일람표 적용", nonsplit);
+                DialogResult result = heating_HP.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    try
+                    {
+                        if (heating_HP.SelectHP != null)
+                        {
+                                SelectHP_nonsplit[0, 0] = heating_HP.SelectHP;
+                           
+                            Split_HP(heating_HP.SelectHP, HeatSource);
+                        }
+                    }
+                    catch { }
+                }
             }
             else if (HeatSource == "지열 히트펌프")
             {
                 nonsplit = SelectHP_nonsplit[1, 0];
+                GroundHP_DB heating_HP = new GroundHP_DB("장비일람표 적용", nonsplit, HeatSource);
+                DialogResult result = heating_HP.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    try
+                    {
+                        if (heating_HP.SelectHP != null)
+                        {
+                           
+                                SelectHP_nonsplit[1, 0] = heating_HP.SelectHP;
+                           
+                            Split_HP(heating_HP.SelectHP, HeatSource);
+                        }
+                    }
+                    catch { }
+                }
             }
             else
             {
                 nonsplit = SelectHP_nonsplit[2, 0];
-            }
-            Heating_HP heating_HP = new Heating_HP("장비일람표 적용", nonsplit, HeatSource);
-            DialogResult result = heating_HP.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                try
+                GWHP_DB heating_HP = new GWHP_DB("장비일람표 적용", nonsplit, HeatSource);
+
+                DialogResult result = heating_HP.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    if (heating_HP.SelectHP != null)
+                    try
                     {
-                        if (HeatSource == "외기 히트펌프")
+                        if (heating_HP.SelectHP != null)
                         {
-                            SelectHP_nonsplit[0, 0] = heating_HP.SelectHP;
+                                SelectHP_nonsplit[2, 0] = heating_HP.SelectHP;
+                           
+                            Split_HP(heating_HP.SelectHP, HeatSource);
                         }
-                        else if (HeatSource == "지열 히트펌프")
-                        {
-                            SelectHP_nonsplit[1, 0] = heating_HP.SelectHP;
-                        }
-                        else
-                        {
-                            SelectHP_nonsplit[2, 0] = heating_HP.SelectHP;
-                        }
-                        Split_HP(heating_HP.SelectHP, HeatSource);
                     }
+                    catch { }
                 }
-                catch { }
             }
+           
+           
         }
 
         private void Split_HP(String nonSplit, String HeatSource)
