@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace main.subcontents.Cooling
+namespace main.subcontents.CoolingSystem
 {
-    public partial class GeneratorCooling : Form
+    public partial class Cooling_WaterCooler : Form
     {
-        public GeneratorCooling()
+        public Cooling_WaterCooler()
         {
             InitializeComponent();
         }
