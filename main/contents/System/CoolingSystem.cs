@@ -38,8 +38,8 @@ namespace main.contents
 
         //생산설비 종합정의
         double Power_f, EER_f, Stanby_f; //공통
-        int Number_f;
-        string Num_f, Install_f, Fuel_f, Economizer_f; //공통
+        int Number_f; //제품번호
+        string Name_f, Num_f, Install_f, Fuel_f, Economizer_f; //공통
         double ColdWInput_f, ColdWOutput_f; //실외기 제외 모든유형 공통
         string Control_f; //흡수식 제외 모든항목
         string Comp_f; //공냉식, 수냉식, 지열히트펌프 유형
@@ -51,20 +51,21 @@ namespace main.contents
         double Power_total, Consume_total, EER_total, Stanby_total, CWInput_total, CWOutput_total;
         string Carrier_total, Economizer_total, Number_total, MultiConnectionType_total;
 
-        string SelectZone_nonsplit;
-         int ce_SelectRow; 
+
         //펌프정의
-        string SLRL, Complex, MainSystem, Sub1System, Sub2System, PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control, ce1Type, ce2Type;
+        string SLRL, Complex, MainSystem, Sub1System, Sub2System, PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control, ce1Type, ce2Type, ce3Type;
         int Pump1Num, Pump2Num;
 
 
         //공급설비정의
-        string[] ceType = { "실내기", "공조기", "팬코일유닛", "복사냉방(천장)", "복사냉방(벽)", "바닥매립형컨백터" };
+        string[] ceType = { "공조기", "실내기", "팬코일유닛", "복사냉방(천장)", "복사냉방(벽)", "바닥매립형컨백터" };
 
         ArrayList SelectAirConditioning = new ArrayList(); ArrayList SelectPump = new ArrayList(); ArrayList Selectce1Zone = new ArrayList(); ArrayList Selectce2Zone = new ArrayList();
+        int ce_SelectRow;
+
 
         //시스템 주요항목
-        string[] ZoneNameList;
+        List<string> ZoneNameList = new List<string>();
 
 
         public CoolingSystem()
@@ -74,6 +75,7 @@ namespace main.contents
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
+            Num_f = NumTextBox.Text.ToString();
 
             //시스템 콤보박스
             CoolingGeneratorSelect_comboBox.Items.Clear();
@@ -92,6 +94,10 @@ namespace main.contents
             PumpMethod_comboBox.Items.Add("1차펌프");
             PumpMethod_comboBox.Items.Add("1차폐회로+2차펌프");
 
+            //공급설비 콤보박스
+            ce1Type_comboBox.Items.AddRange(ceType.ToArray());
+            ce2Type_comboBox.Items.AddRange(ceType.ToArray());
+
         }
         private string[] storagelist()
         {
@@ -109,7 +115,7 @@ namespace main.contents
         {
             if (CoolingSystemNameText.Text != null)
             {
-                Name = CoolingSystemNameText.Text.ToString();
+                Name_f = CoolingSystemNameText.Text.ToString();
             }
         }
 
@@ -135,26 +141,24 @@ namespace main.contents
         {
             if (CoolingSystemNameText.Text == null || CoolingSystemNameText.Text == "")
             {
-                MessageBox.Show("명칭을 입력해 주세요!");
+                MessageBox.Show("먼저 명칭을 입력해 주세요!", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
                 string[] coolingzone_connect = new string[3];
-                Num = NumTextBox.Text;
-                Name = CoolingSystemNameText.Text;
+                Num_f = NumTextBox.Text;
+                Name_f = CoolingSystemNameText.Text;
                 SelectedZone = SelectedZoneText.Text;
-                coolingzone_connect[0] = Num;
-                coolingzone_connect[1] = Name;
+                coolingzone_connect[0] = Num_f;
+                coolingzone_connect[1] = Name_f;
                 coolingzone_connect[2] = SelectedZone;
+
                 Cooling_Zone ZC = new Cooling_Zone(coolingzone_connect);
 
                 DialogResult result = ZC.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    string[][] zonenames = Program.DB.getValue(DB.type.ProjDB, "CoolingZone",
-                        "존번호",
-                        "번호='" + Num +
-                        "'");
+                    string[][] zonenames = Program.DB.getValue(DB.type.ProjDB, "CoolingZone", "존번호", "번호='" + Num_f + "'");
                     double area = 0;
                     double annualenergyneed = 0;
                     double maxload = 0;
@@ -171,6 +175,7 @@ namespace main.contents
                         "존번호='" + zonenames[i][0] + //조건1
                         "'"); //마지막
                         area += Convert.ToDouble(ZoneGet1[0][0]);
+                        ZoneNameList.Add(zonenames[i][0].ToString());
                     }
                     CZ_AnnualCoolingNeed_Textbox.Text = annualenergyneed.ToString("0");
                     CZ_FloorArea_Textbox.Text = area.ToString("0.00");
@@ -185,6 +190,7 @@ namespace main.contents
                     else SelectedZoneText.Text = "";
                 }
             }
+
         }
 
 
@@ -367,6 +373,41 @@ namespace main.contents
             }
         }
 
+        private void imagemake(string _type) //공급설비 그림 넣기
+        {
+            string[][] image = Program.DB.getValue(DB.type.BaseDB_Cooling, "냉방설비이미지", "이미지", "항목유형= '공급설비' And 설비유형='" + _type + "'");
+            if (_type == ce1Type)
+            {
+                ce1_pictureBox.Visible = true;
+                ce1_pictureBox.Size = new System.Drawing.Size(260, 60);
+                ce1_pictureBox.Location = new Point(250, 10);
+                ce1_pictureBox.Load(Program.gPath + image[0][0]);
+                ce1_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                ce1_pictureBox.BackColor = Color.Transparent;
+                ce1_pictureBox.Parent = DistpictureBox;
+            }
+            else if (_type == ce2Type)
+            {
+                ce2_pictureBox.Visible = true;
+                ce2_pictureBox.Size = new System.Drawing.Size(260, 60);
+                ce2_pictureBox.Location = new Point(250, 80);
+                ce2_pictureBox.Load(Program.gPath + image[0][0]);
+                ce2_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                ce2_pictureBox.BackColor = Color.Transparent;
+                ce2_pictureBox.Parent = DistpictureBox;
+            }
+            else if (_type == ce3Type)
+            {
+                ce3_pictureBox.Visible = true;
+                ce3_pictureBox.Size = new System.Drawing.Size(260, 60);
+                ce3_pictureBox.Location = new Point(250, 150);
+                ce3_pictureBox.Load(Program.gPath + image[0][0]);
+                ce3_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                ce3_pictureBox.BackColor = Color.Transparent;
+                ce3_pictureBox.Parent = DistpictureBox;
+            }
+
+        }
         #endregion
         private void CoolGeneratorSelect_Button_Click_1(object sender, EventArgs e)
         {
@@ -587,7 +628,22 @@ namespace main.contents
 
         private void GAirCon_Save_button_Click(object sender, EventArgs e)
         {
+            for (int k = 0; k < AirCon_dataGridView.Rows.Count; k++)
+            {
+                List<string> Value = new List<string>();
+                for (int i = 0; i < 5; i++)
+                {
+                    if (AirCon_dataGridView.Rows[k].Cells[i+1].Value != null)
+                    { 
+                        Value.Add(AirCon_dataGridView.Rows[k].Cells[i+1].Value.ToString());
+                    }
+                    else { MessageBox.Show("선택항목을 완료해주세요.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);}
+                }
 
+                Program.DB.setValue(DB.type.ProjDB, "User_AirCon", "번호,명칭,제어유형,외기냉방유무,설치대수",
+                 "'" + Value[0] + "','" + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "'", "번호");
+            }
+            MessageBox.Show("저장되었습니다.");
         }
 
         #endregion
@@ -616,9 +672,7 @@ namespace main.contents
                         Power.Add(Convert.ToDouble(DefaultDB_Value[0][2]));
                         EER.Add(Convert.ToDouble(DefaultDB_Value[0][4]));
                         Stanby.Add(Convert.ToDouble(DefaultDB_Value[0][7]));
-                        //CWInput.Add(Convert.ToDouble(DefaultDB_Value[0][11]));
-                        //CWOutput.Add(Convert.ToDouble(DefaultDB_Value[0][12]));
-
+                        
 
                         for (int i = 0; i < DefaultDB_Value.Length; i++)
                         {
@@ -1002,8 +1056,8 @@ namespace main.contents
         }
         #endregion
         //그리드 디자인
-        
-        
+
+
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
             if (row % 2 == 1)
@@ -1302,25 +1356,32 @@ namespace main.contents
         #endregion
 
         #region I.공급설비
-        
+
 
         private void ce1Type_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             if (ce1Type_comboBox.SelectedItem != null)
             {
                 ce1Type = ce1Type_comboBox.SelectedItem.ToString();
+                imagemake(ce1Type);
+
             }
             else
             {
                 ce1Type = null;
             }
         }
-        
+
+
+
         private void ce2Type_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ce2Type_comboBox.SelectedItem != null)
             {
                 ce2Type = ce2Type_comboBox.SelectedItem.ToString();
+                imagemake(ce2Type);
+
                 if (ce1Type == ce2Type)
                 {
                     MessageBox.Show("공급설비1과 다른 종류의 공급설비를 선택하세요.");
@@ -1342,20 +1403,19 @@ namespace main.contents
             ce_dataGridView.Columns.Add(ce_checkBoxColumn);
             ce_dataGridView.Columns.Add("A1", "번호");
             ce_dataGridView.Columns.Add("A2", "종류");
-            
+
             ce_dataGridView.Columns.Add("A3", "일람표 명칭");
             ce_dataGridView.Columns.Add("A4", "용량.[kW]");
             ce_dataGridView.Columns.Add("A5", "소비전력.[kW]");
-            
-            ce_dataGridView.Columns.Add("A6", "적용 존.존명칭");
-            ce_dataGridView.Columns.Add("A7", "적용 존.설치위치");
+
+            ce_dataGridView.Columns.Add("A6", "적용 존명칭");
+
             ce_dataGridView.Columns[0].Width = 30;
             ce_dataGridView.Columns[1].Width = 150;
             ce_dataGridView.Columns[2].Width = 120;
             ce_dataGridView.Columns[3].Width = 130;
             ce_dataGridView.Columns[4].Width = 70;
             ce_dataGridView.Columns[5].Width = 70;
-            ce_dataGridView.Columns[6].Width = 130;
 
         }
         private void ce1Zone_button_Click(object sender, EventArgs e)
@@ -1364,17 +1424,30 @@ namespace main.contents
             {
                 Create_ce_Table();
             }
-            Heating_ceZone ceZone = new Heating_ceZone(Num, SelectZone_nonsplit, ce1Type); //작성해야됨
+            Cooling_ceZone ceZone = new Cooling_ceZone(Num_f, ZoneNameList, ce1Type); //작성해야됨
             DialogResult result = ceZone.ShowDialog();
             if (result == DialogResult.OK)
             {
                 Load_ce(ce1Type);
                 Load_ce1Zone(ce1Type);
             }
+
         }
+
+        private void ce2Zone_button_Click(object sender, EventArgs e)
+        {
+            Cooling_ceZone ceZone = new Cooling_ceZone(Num_f, ZoneNameList, ce2Type);
+            DialogResult result = ceZone.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Load_ce(ce2Type);
+                Load_ce2Zone(ce2Type);
+            }
+        }
+
         private void Load_ce1Zone(String ce1Type)
         {
-            String[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Heating_ce_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce1Type + "'");
+            String[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Cooling_ce_Form", "존번호", "냉방시스템 = '" + Num_f + "' And 공급설비종류 = '" + ce1Type + "'");
             if (Value.Length > 0)
             {
                 if (Value.Length == 1)
@@ -1387,19 +1460,10 @@ namespace main.contents
                 }
             }
         }
-        private void ce2Zone_button_Click(object sender, EventArgs e)
-        {
-            Heating_ceZone ceZone = new Heating_ceZone(Num, SelectZone_nonsplit, ce2Type);
-            DialogResult result = ceZone.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                Load_ce(ce2Type);
-                Load_ce2Zone(ce2Type);
-            }
-        }
+
         private void Load_ce2Zone(String ce2Type)
         {
-            String[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Heating_ce_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce2Type + "'");
+            String[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Heating_ce_Form", "존번호", "냉방시스템 = '" + Num_f + "' And 공급설비종류 = '" + ce2Type + "'");
             if (Value.Length > 0)
             {
                 if (Value.Length == 1)
@@ -1412,6 +1476,7 @@ namespace main.contents
                 }
             }
         }
+
         private void ce_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -1419,6 +1484,7 @@ namespace main.contents
                 ce_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 ce_SelectRow = e.RowIndex;
             }
+
         }
         private void ce_Remove_button_Click(object sender, EventArgs e)
         {
@@ -1426,38 +1492,22 @@ namespace main.contents
             {
                 String substring = ce_dataGridView.Rows[ce_SelectRow].Cells[1].Value.ToString().Substring(ce_dataGridView.Rows[ce_SelectRow].Cells[1].Value.ToString().Length - 6, 6); //공급설비번호
                 String substring2 = ce_dataGridView.Rows[ce_SelectRow].Cells[1].Value.ToString().Substring(0, 10); //존번호
-                Program.DB.deleteValue(DB.type.ProjDB, "Heating_ce_Form", "존번호 ='" + substring2 + "' AND 공급설비 = '" + substring + "' AND 난방시스템 = '" + Num + "'");
+                Program.DB.deleteValue(DB.type.ProjDB, "Cooling_ce_Form", "존번호 ='" + substring2 + "' AND 공급설비 = '" + substring + "' AND 냉방시스템 = '" + Num_f + "'");
                 ce_dataGridView.Rows.Remove(ce_dataGridView.Rows[ce_SelectRow]);
             }
+
         }
+
         private void Load_ce(string CE)
         {
             try
             {
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,공급설비종류,공급설비", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + CE + "'");
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form", "존번호,공급설비종류,공급설비", "냉방시스템 = '" + Num_f + "' And 공급설비종류 = '" + CE + "'");
 
                 int Sum = 1;
                 for (int n = 0; n < Value.Length; n++)
                 {
                     int nRow = ce_dataGridView.Rows.Add();
-                    if (CE != "복사난방")
-                    {
-                        DataGridViewComboBoxCell 설치위치comboBox = new DataGridViewComboBoxCell();
-                        설치위치comboBox.Items.Add("내벽 설치");
-                        설치위치comboBox.Items.Add("외벽 설치");
-                        설치위치comboBox.Items.Add("창호측 설치");
-                        ce_dataGridView.Rows[nRow].Cells[7] = 설치위치comboBox;
-                    }
-                    else
-                    {
-                        DataGridViewComboBoxCell 설치위치comboBox = new DataGridViewComboBoxCell();
-                        설치위치comboBox.Items.Add("습식바닥");
-                        설치위치comboBox.Items.Add("건식바닥");
-                        설치위치comboBox.Items.Add("벽체");
-                        설치위치comboBox.Items.Add("천장");
-                        ce_dataGridView.Rows[nRow].Cells[7] = 설치위치comboBox;
-                    }
-
 
                     ce_dataGridView.Rows[nRow].Cells[2].Value = Value[n][1];//종류
                     int index = Value[n][2].IndexOf("_");
@@ -1493,7 +1543,7 @@ namespace main.contents
 
         private void Save_ce()
         {
-            Program.DB.deleteValue(DB.type.ProjDB, "Heating_ce_Form", "난방시스템 = '" + Num + "'");
+            Program.DB.deleteValue(DB.type.ProjDB, "Cooling_ce_Form", "냉방시스템 = '" + Num_f + "'");
 
             for (int n = 0; n < ce_dataGridView.Rows.Count; n++)
             {
@@ -1501,12 +1551,12 @@ namespace main.contents
                 int index = ce_dataGridView.Rows[n].Cells[1].Value.ToString().IndexOf("CE");
                 존번호 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(0, index - 1);
                 공급설비 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(index, ce_dataGridView.Rows[n].Cells[1].Value.ToString().Length - index);
-                Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,난방시스템,공급설비종류,공급설비,설치위치"
-                , "'" + 존번호 + "','" + Num + "','" + ce_dataGridView.Rows[n].Cells[2].Value + "'+'" +
-                    공급설비 + "','" + ce_dataGridView.Rows[n].Cells[7].Value + "'", "");
+                Program.DB.setValue(DB.type.ProjDB, "Cooling_ce_Form", "존번호,냉방시스템,공급설비종류,공급설비"
+                , "'" + 존번호 + "','" + Num_f + "','" + ce_dataGridView.Rows[n].Cells[2].Value + "'+'" +
+                    공급설비 + "'", "");
             }
         }
-       
+
         #endregion
 
 
@@ -1530,7 +1580,22 @@ namespace main.contents
 
         }
 
-       
+        private void ce1_pictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ce2_pictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ce3_pictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 
 }

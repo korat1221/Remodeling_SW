@@ -123,6 +123,7 @@
             ceZone_dataGridView.RowTemplate.Height = 25;
             ceZone_dataGridView.Size = new Size(800, 358);
             ceZone_dataGridView.TabIndex = 22;
+            ceZone_dataGridView.CellContentClick += ceZone_dataGridView_CellContentClick;
             // 
             // Save_button
             // 
@@ -134,6 +135,7 @@
             Save_button.TabIndex = 23;
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
+            Save_button.Click += Save_button_Click;
             // 
             // Cooling_ceZone
             // 
