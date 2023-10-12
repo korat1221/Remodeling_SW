@@ -203,12 +203,8 @@ namespace main.subcontents
                     if (zonecheck.Length > 0 && zonecheck[0][0] == SystemNum)
                     {
                         Program.DB.setValue(DB.type.ProjDB, "CoolingZone",
-                       "번호,명칭,존번호,존이름",
-                                 "'" +
-                                 null + "','" +
-                                 null + "','" +
-                                 CoolingZone_dataGridView.Rows[k].Cells[1].Value + "','" +
-                                 CoolingZone_dataGridView.Rows[k].Cells[2].Value + "'", "존번호");
+                       "번호,명칭,존번호,존이름,공급설비종류,공급설비",
+                                 "'" + null + "','" + null + "','" + CoolingZone_dataGridView.Rows[k].Cells[1].Value + "','" + CoolingZone_dataGridView.Rows[k].Cells[2].Value + "'","존번호");
                     }
                     else
                     {
