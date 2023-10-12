@@ -21,18 +21,19 @@ namespace main.subcontents.HeatingSystem
         ArrayList SelectRow = new ArrayList(); ArrayList SelectHP_split = new ArrayList();
         String DefaultUse;
         public string SelectHP;
-        public string Carrier, HeatSource;
+        public string Carrier, HeatSource , HC;
 
-        public GroundHP_DB(String DefaultUse, String SelectHP_nonsplit, String HeatSource)
+        public GroundHP_DB(String DefaultUse, String SelectHP_nonsplit, String HeatSource, String HC)
         {
             InitializeComponent();
             this.DefaultUse = DefaultUse;
             this.HeatSource = HeatSource;
+            this.HC = HC;
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            create_table(DefaultUse, HeatSource);
+            create_table(DefaultUse, HeatSource, HC);
 
 
 
@@ -43,7 +44,7 @@ namespace main.subcontents.HeatingSystem
         }
 
 
-        void create_table(String DefaultUs, String HeatSource)
+        void create_table(String DefaultUs, String HeatSource, String HC)
         {
             new StackedHeaderDecorator(HP_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -54,24 +55,42 @@ namespace main.subcontents.HeatingSystem
 
             if (DefaultUse == "기본DB 적용")
             {
-                HP_dataGridView.Columns.Add("A1", "등급");
-                HP_dataGridView.Columns.Add("A2", "정격COP");
-                HP_dataGridView.Columns.Add("A3", "한랭지COP");
+                //HP_dataGridView.Columns.Add("A1", "등급");
+                //HP_dataGridView.Columns.Add("A2", "정격COP");
+                //HP_dataGridView.Columns.Add("A3", "한랭지COP");
             }
             else
             {
+               if(HC =="냉방")
+                {
+                    HP_dataGridView.Columns.Add("A1", "번호");
+                    HP_dataGridView.Columns.Add("A2", "명칭");
+                    HP_dataGridView.Columns.Add("A3", "연료");
+                    HP_dataGridView.Columns.Add("A4", "공급유형");
+                    HP_dataGridView.Columns.Add("A5", "수직/수평");
+                    HP_dataGridView.Columns.Add("A6", "냉방용량" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A7", "정격(0℃).COP" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A8", "정격(0℃).소비전력" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A9", "(5℃).용량" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A10", "(5℃).COP" + Environment.NewLine + "[kW]");
+                    HP_dataGridView.Columns.Add("A11", "(5℃).소비전력" + Environment.NewLine + "[kW]");
 
-                HP_dataGridView.Columns.Add("A1", "번호");
-                HP_dataGridView.Columns.Add("A2", "명칭");
-                HP_dataGridView.Columns.Add("A3", "연료");
-                HP_dataGridView.Columns.Add("A4", "공급유형");
-                HP_dataGridView.Columns.Add("A5", "수직/수평");
-                HP_dataGridView.Columns.Add("A6", "정격(0℃).용량" + Environment.NewLine + "[kW]");
-                HP_dataGridView.Columns.Add("A7", "정격(0℃).COP" + Environment.NewLine + "[kW]");
-                HP_dataGridView.Columns.Add("A8", "정격(0℃).소비전력" + Environment.NewLine + "[kW]");
-                HP_dataGridView.Columns.Add("A9", "(5℃).용량" + Environment.NewLine + "[kW]");
-                HP_dataGridView.Columns.Add("A10", "(5℃).COP" + Environment.NewLine + "[kW]");
-                HP_dataGridView.Columns.Add("A11", "(5℃).소비전력" + Environment.NewLine + "[kW]");
+                }
+                else
+                {
+                    HP_dataGridView.Columns.Add("A1", "번호");
+                    HP_dataGridView.Columns.Add("A2", "명칭");
+                    HP_dataGridView.Columns.Add("A3", "연료");
+                    HP_dataGridView.Columns.Add("A4", "공급유형");
+                    HP_dataGridView.Columns.Add("A5", "수직/수평");
+                    HP_dataGridView.Columns.Add("A6", "정격(0℃).용량.[kW]");
+                    HP_dataGridView.Columns.Add("A7", "정격(0℃).COP.[-]");
+                    HP_dataGridView.Columns.Add("A8", "정격(0℃).소비전력.[kW]");
+                    HP_dataGridView.Columns.Add("A9", "(5℃).용량.[kW]");
+                    HP_dataGridView.Columns.Add("A10", "(5℃).COP.[-]");
+                    HP_dataGridView.Columns.Add("A11", "(5℃).소비전력.[kW]");
+                }
+               
 
             }
         }
@@ -92,7 +111,7 @@ namespace main.subcontents.HeatingSystem
             }
             else
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "번호,명칭,연료,공급유형,수직수평,정격용량,정격COP,정격소비전력,등급2용량,등급2COP,등급2소비전력", "");
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "번호,명칭,연료,공급유형,수직수평,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력", "");
                 for (int n = 0; n < User_Value.Length; n++)
                 {
 

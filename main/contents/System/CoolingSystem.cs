@@ -51,7 +51,8 @@ namespace main.contents
         double Power_total, Consume_total, EER_total, Stanby_total, CWInput_total, CWOutput_total;
         string Carrier_total, Economizer_total, Number_total, MultiConnectionType_total;
 
-
+        string SelectZone_nonsplit;
+         int ce_SelectRow; 
         //펌프정의
         string SLRL, Complex, MainSystem, Sub1System, Sub2System, PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control, ce1Type, ce2Type;
         int Pump1Num, Pump2Num;

@@ -40,10 +40,11 @@ namespace main.contents
         DataGridViewCheckBoxColumn GroundHP_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn Pump_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn ce_checkBoxColumn = new DataGridViewCheckBoxColumn();
-        int Boiler_SelectRow, HP_SelectRow, AirCooler_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow, PV_SelectRow, ABS_SelectRow, DH_SelectRow, FC_SelectRow, WP_SelectRow;
+        int Boiler_SelectRow, HP_SelectRow, AirCooler_SelectRow, WaterCooler_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow, PV_SelectRow, ABS_SelectRow, DH_SelectRow, FC_SelectRow, WP_SelectRow;
 
         //냉방추가
         DataGridViewCheckBoxColumn AirCooler_checkBoxColumn = new DataGridViewCheckBoxColumn();
+        DataGridViewCheckBoxColumn WaterCooler_checkBoxColumn = new DataGridViewCheckBoxColumn();
         public EquipmentList()
         {
             InitializeComponent();
@@ -82,10 +83,16 @@ namespace main.contents
             Create_Pump_Table();
             Create_ce_Table();
 
+            //냉방추가
+            Create_AirCooler_Table();
+            Create_WaterCooler_Table();
 
             Load_Boiler();
-            Load_HP();
+            Load_AirHP();
+            Load_GroundHP();
+            Load_GWHP();
             Load_AirCooler();
+            Load_WaterCooler();
             Load_Pump();
             Load_ce();
             Load_Solar();
@@ -96,8 +103,6 @@ namespace main.contents
             Load_DH();
 
 
-            //냉방추가
-            Create_AirCooler_Table();
 
         }
 
@@ -123,12 +128,12 @@ namespace main.contents
             Boiler_dataGridView.Columns.Add("A4", "난방/급탕");
             Boiler_dataGridView.Columns.Add("A5", "연료");
             Boiler_dataGridView.Columns.Add("A6", "Type");
-            Boiler_dataGridView.Columns.Add("A7", "용량" + Environment.NewLine + "[kW]");
-            Boiler_dataGridView.Columns.Add("A8", "효율.전부하효율" + Environment.NewLine + "[%]");
-            Boiler_dataGridView.Columns.Add("A9", "효율.부분부하효율" + Environment.NewLine + "[%]");
-            Boiler_dataGridView.Columns.Add("A10", "전력.소비전력" + Environment.NewLine + "[W]");
-            Boiler_dataGridView.Columns.Add("A11", "전력.대기전력" + Environment.NewLine + "[W]");
-            Boiler_dataGridView.Columns.Add("A12", "대수" + Environment.NewLine + "[EA]");
+            Boiler_dataGridView.Columns.Add("A7", "용량.[kW]");
+            Boiler_dataGridView.Columns.Add("A8", "효율.전부하.[%]");
+            Boiler_dataGridView.Columns.Add("A9", "효율.부분부하.[%]");
+            Boiler_dataGridView.Columns.Add("A10", "전력.소비전력.[W]");
+            Boiler_dataGridView.Columns.Add("A11", "전력.대기전력.[W]");
+            Boiler_dataGridView.Columns.Add("A12", "대수.[EA]");
             Boiler_dataGridView.Columns[0].Width = 40;
             Boiler_dataGridView.Columns[1].Width = 60;
             Boiler_dataGridView.Columns[2].Width = 60;
@@ -138,24 +143,15 @@ namespace main.contents
             Boiler_dataGridView.Columns[6].Width = 130;
             Boiler_dataGridView.Columns[8].Width = 80;
             Boiler_dataGridView.Columns[9].Width = 80;
-            Boiler_dataGridView.Columns[10].Width = 50;
-            Boiler_dataGridView.Columns[11].Width = 50;
+            Boiler_dataGridView.Columns[10].Width = 80;
+            Boiler_dataGridView.Columns[11].Width = 80;
+            DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
+            설치유형Combo.HeaderText = "설치";
+            설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
+            Boiler_dataGridView.Columns.Add(설치유형Combo);
+            Boiler_dataGridView.Columns[13].Width = 100;
 
 
-
-            //Boiler_dataGridView.ColumnCount = 13;
-            //Boiler_dataGridView.Columns[1].HeaderText = "번호";
-            //Boiler_dataGridView.Columns[2].HeaderText = "DB유형";
-            //Boiler_dataGridView.Columns[3].HeaderText = "명칭";
-            //Boiler_dataGridView.Columns[4].HeaderText = "난방/급탕";
-            //Boiler_dataGridView.Columns[5].HeaderText = "연료";
-            //Boiler_dataGridView.Columns[6].HeaderText = "Type";
-            //Boiler_dataGridView.Columns[7].HeaderText = "용량" + Environment.NewLine + "[kW]";
-            //Boiler_dataGridView.Columns[8].HeaderText = "전부하효율" + Environment.NewLine + "[%]";
-            //Boiler_dataGridView.Columns[9].HeaderText = "부분부하효율" + Environment.NewLine + "[%]";
-            //Boiler_dataGridView.Columns[10].HeaderText = "소비전력" + Environment.NewLine + "[W]";
-            //Boiler_dataGridView.Columns[11].HeaderText = "대기전력" + Environment.NewLine + "[W]";
-            //Boiler_dataGridView.Columns[12].HeaderText = "대수" + Environment.NewLine + "[EA]";
         }
 
         private void UserBoiler_Add_button_Click(object sender, EventArgs e)
@@ -377,17 +373,17 @@ namespace main.contents
 
             for (int k = 0; k < Boiler_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[12];
-                for (int i = 1; i < 13; i++)
+                String[] Value = new String[13];
+                for (int i = 1; i < 14; i++)
                 {
                     if (Boiler_dataGridView.Rows[k].Cells[i].Value != null)
                     { Value[i - 1] = Boiler_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_Boiler", "번호,DB유형,명칭,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력,대수",
+                Program.DB.setValue(DB.type.ProjDB, "User_Boiler", "번호,DB유형,명칭,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력,대수,신규기존",
                 "'" + Value[0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','"
-                 + Value[11]
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','"
+                 + Value[12]
                  + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
@@ -397,7 +393,7 @@ namespace main.contents
         {
             try
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "번호,명칭,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력,DB유형,난방급탕,대수", "");
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "번호,명칭,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력,DB유형,난방급탕,대수,신규기존", "");
                 string 용량 = "", 전부하효율 = "", 부분부하효율 = "", 소비전력 = "", 대기전력 = "";
                 for (int n = 0; n < User_Value.Length; n++)
                 {
@@ -437,6 +433,7 @@ namespace main.contents
                     Boiler_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][2]; //연료
                     Boiler_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][3]; //Type
                     Boiler_dataGridView.Rows[nRow].Cells[12].Value = User_Value[n][11]; //대수
+                    Boiler_dataGridView.Rows[nRow].Cells[13].Value = User_Value[n][12]; //대수
                 }
             }
             catch { }
@@ -468,6 +465,12 @@ namespace main.contents
             ABS_dataGridView.Columns.Add("A14", "통합성능.IPLV");
             ABS_dataGridView.Columns.Add("A15", "대수.[EA]");
             ABS_dataGridView.Columns[0].Width = 40;
+
+            DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
+            설치유형Combo.HeaderText = "설치";
+            설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
+            ABS_dataGridView.Columns.Add(설치유형Combo);
+            ABS_dataGridView.Columns[16].Width = 100;
         }
 
 
@@ -520,16 +523,16 @@ namespace main.contents
             연료Combo.Items.Add("LPG");
             ABS_dataGridView.Rows[nRow].Cells[4] = 연료Combo;
 
-            ABS_DB abs_db = new ABS_DB("기본DB 적용", null);
+            ABS_DB abs_db = new ABS_DB("기본DB 적용", null, "냉난방");
             DialogResult result = abs_db.ShowDialog();
             if (result == DialogResult.OK)
             {
                 try
                 {
-                    if (abs_db.SelectABS != null)
+                    if (abs_db.SelectAS != null)
                     {
 
-                        string[][] Value = Program.DB.getValue(DB.type.BaseDB_Heating, "흡수식냉온수기", "통합성능", "번호 = '" + abs_db.SelectABS.ToString() + "'");
+                        string[][] Value = Program.DB.getValue(DB.type.BaseDB_Heating, "흡수식냉온수기", "통합성능", "번호 = '" + abs_db.SelectAS.ToString() + "'");
 
                         ABS_dataGridView.Rows[nRow].Cells[14].Value = Value[0][0];
                     }
@@ -551,7 +554,7 @@ namespace main.contents
 
 
 
-            for (int k = 2; k < 16; k++)
+            for (int k = 2; k < 17; k++)
             {
                 if (ABS_dataGridView.Rows[ABS_SelectRow].Cells[k].Value != null)
                 {
@@ -630,18 +633,18 @@ namespace main.contents
 
             for (int k = 0; k < ABS_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[15];
-                for (int i = 1; i < 16; i++)
+                String[] Value = new String[16];
+                for (int i = 1; i < 17; i++)
                 {
                     if (ABS_dataGridView.Rows[k].Cells[i].Value != null)
                     { Value[i - 1] = ABS_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_ABS", "번호,DB유형,난방냉방,연료,냉방용량,냉방성능,난방용량,난방성능,냉수입구온도,냉수출구온도,온수입구온도,온수출구온도,대기전력,통합성능,대수",
+                Program.DB.setValue(DB.type.ProjDB, "User_ABS", "번호,DB유형,난방냉방,연료,냉방용량,냉방성능,난방용량,난방성능,냉수입구온도,냉수출구온도,온수입구온도,온수출구온도,대기전력,통합성능,대수,신규기존",
                 "'" + Value[0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','"
-                 + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','"
-                 + Value[14]
+                 + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','"
+                 + Value[15]
 
                  + "'", "번호");
             }
@@ -652,7 +655,7 @@ namespace main.contents
         {
             try
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호,DB유형,난방냉방,연료,냉방용량,냉방성능,난방용량,난방성능,냉수입구온도,냉수출구온도,온수입구온도,온수출구온도,대기전력,통합성능,대수", "");
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호,DB유형,난방냉방,연료,냉방용량,냉방성능,난방용량,난방성능,냉수입구온도,냉수출구온도,온수입구온도,온수출구온도,대기전력,통합성능,대수,신규기존", "");
 
                 for (int n = 0; n < User_Value.Length; n++)
                 {
@@ -673,6 +676,7 @@ namespace main.contents
                     ABS_dataGridView.Rows[nRow].Cells[13].Value = User_Value[n][12];
                     ABS_dataGridView.Rows[nRow].Cells[14].Value = User_Value[n][13];
                     ABS_dataGridView.Rows[nRow].Cells[15].Value = User_Value[n][14];
+                    ABS_dataGridView.Rows[nRow].Cells[16].Value = User_Value[n][15];
                 }
             }
             catch { }
@@ -700,6 +704,12 @@ namespace main.contents
             DH_dataGridView.Columns.Add("A9", "2차측.환수온도.[℃]");
             DH_dataGridView.Columns.Add("A10", "대수.[EA]");
             DH_dataGridView.Columns[0].Width = 40;
+
+            DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
+            설치유형Combo.HeaderText = "설치";
+            설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
+            DH_dataGridView.Columns.Add(설치유형Combo);
+            DH_dataGridView.Columns[11].Width = 100;
         }
 
 
@@ -784,7 +794,7 @@ namespace main.contents
 
 
 
-            for (int k = 2; k < 11; k++)
+            for (int k = 2; k < 12; k++)
             {
                 if (DH_dataGridView.Rows[DH_SelectRow].Cells[k].Value != null)
                 {
@@ -833,17 +843,17 @@ namespace main.contents
 
             for (int k = 0; k < DH_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[11];
-                for (int i = 1; i < 11; i++)
+                String[] Value = new String[12];
+                for (int i = 1; i < 12; i++)
                 {
                     if (DH_dataGridView.Rows[k].Cells[i].Value != null)
                     { Value[i - 1] = DH_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_DH", "번호,DB유형,명칭,용도,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차,대수",
+                Program.DB.setValue(DB.type.ProjDB, "User_DH", "번호,DB유형,명칭,용도,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차,대수,신규기존",
                 "'" + Value[0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','"
-                 + Value[9]
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','"
+                 + Value[10]
 
                  + "'", "번호");
             }
@@ -854,7 +864,7 @@ namespace main.contents
         {
             try
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_DH", "번호,DB유형,명칭,용도,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차,대수", "");
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_DH", "번호,DB유형,명칭,용도,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차,대수,신규기존", "");
 
                 for (int n = 0; n < User_Value.Length; n++)
                 {
@@ -870,6 +880,7 @@ namespace main.contents
                     DH_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
                     DH_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
                     DH_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
+                    DH_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][10];
                 }
             }
             catch { }
@@ -896,6 +907,11 @@ namespace main.contents
             PV_dataGridView.Columns.Add("A9", "모듈.정격출력.[W]");
             PV_dataGridView.Columns.Add("A10", "Kpk");
             PV_dataGridView.Columns[0].Width = 40;
+            DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
+            설치유형Combo.HeaderText = "설치";
+            설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
+            PV_dataGridView.Columns.Add(설치유형Combo);
+            PV_dataGridView.Columns[11].Width = 100;
         }
 
 
@@ -988,7 +1004,7 @@ namespace main.contents
             int nRow = PV_dataGridView.Rows.Add();
             Load_PV_Num();
 
-            for (int k = 2; k < 11; k++)
+            for (int k = 2; k < 12; k++)
             {
                 if (PV_dataGridView.Rows[PV_SelectRow].Cells[k].Value != null)
                 {
@@ -1062,17 +1078,17 @@ namespace main.contents
 
             for (int k = 0; k < PV_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[10];
-                for (int i = 1; i < 11; i++)
+                String[] Value = new String[11];
+                for (int i = 1; i < 12; i++)
                 {
                     if (PV_dataGridView.Rows[k].Cells[i].Value != null)
                     { Value[i - 1] = PV_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk",
+                Program.DB.setValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk,신규기존",
                 "'" + Value[0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','"
-                 + Value[9]
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','"
+                 + Value[10]
                  + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
@@ -1082,7 +1098,7 @@ namespace main.contents
         {
             try
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk", "");
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk,신규기존", "");
 
                 for (int n = 0; n < User_Value.Length; n++)
                 {
@@ -1098,6 +1114,7 @@ namespace main.contents
                     PV_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
                     PV_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
                     PV_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
+                    PV_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][10];
                 }
             }
             catch { }
@@ -1124,6 +1141,12 @@ namespace main.contents
             FC_dataGridView.Columns.Add("A8", "발전효율.[%]");
             FC_dataGridView.Columns.Add("A9", "축열탱크");
             FC_dataGridView.Columns[0].Width = 40;
+
+            DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
+            설치유형Combo.HeaderText = "설치";
+            설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
+            FC_dataGridView.Columns.Add(설치유형Combo);
+            FC_dataGridView.Columns[10].Width = 100;
         }
 
         private Boolean FC_datagridviewDesign(DataGridViewCell cell, int column, int row)
@@ -1227,7 +1250,7 @@ namespace main.contents
             축열탱크Combo.Items.Add("내장형");
             FC_dataGridView.Rows[nRow].Cells[9] = 축열탱크Combo;
 
-            for (int k = 2; k < 10; k++)
+            for (int k = 2; k < 11; k++)
             {
                 if (FC_dataGridView.Rows[FC_SelectRow].Cells[k].Value != null)
                 {
@@ -1267,16 +1290,16 @@ namespace main.contents
 
             for (int k = 0; k < FC_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[9];
-                for (int i = 1; i < 10; i++)
+                String[] Value = new String[10];
+                for (int i = 1; i < 11; i++)
                 {
                     if (FC_dataGridView.Rows[k].Cells[i].Value != null)
                     { Value[i - 1] = FC_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_FC", "번호,DB유형,제품명,제조사,연료전지종류,시스템출력,정격효율,발전효율,축열탱크",
+                Program.DB.setValue(DB.type.ProjDB, "User_FC", "번호,DB유형,제품명,제조사,연료전지종류,시스템출력,정격효율,발전효율,축열탱크,신규기존",
                 "'" + Value[0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "'", "번호");
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
         }
@@ -1285,7 +1308,7 @@ namespace main.contents
         {
             try
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_FC", "번호,DB유형,제품명,제조사,연료전지종류,시스템출력,정격효율,발전효율,축열탱크", "");
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_FC", "번호,DB유형,제품명,제조사,연료전지종류,시스템출력,정격효율,발전효율,축열탱크,신규기존", "");
 
                 for (int n = 0; n < User_Value.Length; n++)
                 {
@@ -1300,6 +1323,7 @@ namespace main.contents
                     FC_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
                     FC_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
                     FC_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
+                    FC_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
                 }
             }
             catch { }
@@ -1331,6 +1355,11 @@ namespace main.contents
             WP_dataGridView.Columns.Add("A14", "전력계수.최적풍속.Cp,op");
             WP_dataGridView.Columns.Add("A15", "전력계수.종단풍속.Cp,max");
             WP_dataGridView.Columns[0].Width = 40;
+            DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
+            설치유형Combo.HeaderText = "설치";
+            설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
+            WP_dataGridView.Columns.Add(설치유형Combo);
+            WP_dataGridView.Columns[16].Width = 100;
         }
 
         private Boolean WP_datagridviewDesign(DataGridViewCell cell, int column, int row)
@@ -1390,37 +1419,6 @@ namespace main.contents
             catch { }
         }
 
-        //private void DefaultWP_Add_button_Click(object sender, EventArgs e)
-        //{
-        //    ArrayList SelectWP = new ArrayList();
-        //    int nRow = WP_dataGridView.Rows.Add();
-        //    Load_WP_Num();
-        //    WP_dataGridView.Rows[nRow].Cells[2].Value = "기본";
-
-        //    WP_DB WP_DB = new WP_DB("기본DB 적용");
-        //    DialogResult result = WP_DB.ShowDialog();
-        //    if (result == DialogResult.OK)
-        //    {
-        //        try
-        //        {
-        //            if (WP_DB.Select_WP[0] != null)
-        //            {
-        //                string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "연료전지DB", "제조사,연료전지종류,정격효율,발전효율", "번호 = '" + WP_DB.Select_WP[0].ToString() + "'");
-
-        //                WP_dataGridView.Rows[nRow].Cells[4].Value = Value[0][0];
-        //                WP_dataGridView.Rows[nRow].Cells[5].Value = Value[0][1];
-        //                WP_dataGridView.Rows[nRow].Cells[7].Value = Value[0][2];
-        //                WP_dataGridView.Rows[nRow].Cells[8].Value = Value[0][3];
-
-        //                DataGridViewComboBoxCell 축열탱크Combo = new DataGridViewComboBoxCell();
-        //                축열탱크Combo.Items.Add("외장형");
-        //                축열탱크Combo.Items.Add("내장형");
-        //                WP_dataGridView.Rows[nRow].Cells[9] = 축열탱크Combo;
-        //            }
-        //        }
-        //        catch { }
-        //    }
-        //}
 
         private void WP_Remove_button_Click(object sender, EventArgs e)
         {
@@ -1438,7 +1436,7 @@ namespace main.contents
             타입Combo.Items.Add("수평형");
             WP_dataGridView.Rows[nRow].Cells[5] = 타입Combo;
 
-            for (int k = 2; k < 16; k++)
+            for (int k = 2; k < 17; k++)
             {
                 if (WP_dataGridView.Rows[WP_SelectRow].Cells[k].Value != null)
                 {
@@ -1478,16 +1476,16 @@ namespace main.contents
 
             for (int k = 0; k < WP_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[15];
-                for (int i = 1; i < 16; i++)
+                String[] Value = new String[16];
+                for (int i = 1; i < 17; i++)
                 {
                     if (WP_dataGridView.Rows[k].Cells[i].Value != null)
                     { Value[i - 1] = WP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_WP", "번호,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,종단풍속,최적풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수",
+                Program.DB.setValue(DB.type.ProjDB, "User_WP", "번호,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,종단풍속,최적풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수,신규기존",
                 "'" + Value[0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "'", "번호");
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
         }
@@ -1496,7 +1494,7 @@ namespace main.contents
         {
             try
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_WP", "번호, DB유형, 제품명, 제조사, 타입, 세부타입, 정격출력, 회전면적, 허브높이, 시동풍속, 종단풍속, 최적풍속, 시동풍속전력계수, 최적풍속전력계수, 종단풍속전력계수", "");
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_WP", "번호, DB유형, 제품명, 제조사, 타입, 세부타입, 정격출력, 회전면적, 허브높이, 시동풍속, 종단풍속, 최적풍속, 시동풍속전력계수, 최적풍속전력계수, 종단풍속전력계수,신규기존", "");
 
                 for (int n = 0; n < User_Value.Length; n++)
                 {
@@ -1517,182 +1515,7 @@ namespace main.contents
                     WP_dataGridView.Rows[nRow].Cells[13].Value = User_Value[n][12];
                     WP_dataGridView.Rows[nRow].Cells[14].Value = User_Value[n][13];
                     WP_dataGridView.Rows[nRow].Cells[15].Value = User_Value[n][14];
-                }
-            }
-            catch { }
-        }
-
-        ///////////////////////////////////////////////////태양열/////////////////////////////////////////////////////////////////
-        public void Create_Solar_Table()
-        {
-            new StackedHeaderDecorator(Solar_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
-            Solar_dataGridView.Columns.Clear();
-            Solar_checkBoxColumn.HeaderText = "선택";
-            Solar_checkBoxColumn.Name = "check";
-            Solar_dataGridView.Columns.Add(Solar_checkBoxColumn);
-
-            Solar_dataGridView.Columns.Add("A1", "번호");
-            Solar_dataGridView.Columns.Add("A2", "DB유형");
-            Solar_dataGridView.Columns.Add("A3", "명칭");
-            Solar_dataGridView.Columns.Add("A4", "난방/급탕");
-            Solar_dataGridView.Columns.Add("A5", "모듈면적.A[m2]");
-            Solar_dataGridView.Columns.Add("A6", "효율.ηo");
-            Solar_dataGridView.Columns.Add("A7", "손실계수.1차.k1");
-            Solar_dataGridView.Columns.Add("A8", "손실계수.2차.k2");
-            Solar_dataGridView.Columns.Add("A9", "50°의 입사각.Khem(50֠)");
-            Solar_dataGridView.Columns.Add("A10", "유효 열용량.C");
-            Solar_dataGridView.Columns[0].Width = 40;
-        }
-
-        private void UserSolar_Add_button_Click(object sender, EventArgs e)
-        {
-            int nRow = Solar_dataGridView.Rows.Add();
-            Load_Solar_Num();
-
-            Solar_dataGridView.Rows[nRow].Cells[2].Value = "도면";
-
-            DataGridViewComboBoxCell 난방급탕Combo = new DataGridViewComboBoxCell();
-            난방급탕Combo.Items.Add("난방");
-            난방급탕Combo.Items.Add("급탕");
-            난방급탕Combo.Items.Add("난방+급탕");
-            Solar_dataGridView.Rows[nRow].Cells[4] = 난방급탕Combo;
-
-        }
-
-        private void DefaultSolar_Add_button_Click(object sender, EventArgs e)
-        {
-            ArrayList SelectSolar = new ArrayList();
-            int nRow = Solar_dataGridView.Rows.Add();
-            Load_Solar_Num();
-            Solar_dataGridView.Rows[nRow].Cells[2].Value = "기본";
-
-            DataGridViewComboBoxCell 난방급탕Combo = new DataGridViewComboBoxCell();
-            난방급탕Combo.Items.Add("난방");
-            난방급탕Combo.Items.Add("급탕");
-            난방급탕Combo.Items.Add("난방+급탕");
-            Solar_dataGridView.Rows[nRow].Cells[4] = 난방급탕Combo;
-
-            Heating_Solar heating_Solar = new Heating_Solar("기본DB 적용", null);
-            DialogResult result = heating_Solar.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                try
-                {
-                    if (heating_Solar.SelectSolar != null)
-                    {
-
-                        string[] token = heating_Solar.SelectSolar.Split('+');
-                        SelectSolar.Clear();
-                        foreach (var item in token)
-                        {
-                            SelectSolar.Add(item.ToString());
-                        }
-                        string[][] Value; Double[][] Value2;
-                        String 내용;
-                        Value = Program.DB.getValue(DB.type.BaseDB_Heating, "태양열시스템", "효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "번호 = '" + SelectSolar[0].ToString() + "'");
-                        String name = Value[0][0];
-
-                        Solar_dataGridView.Rows[nRow].Cells[6].Value = Value[0][0];
-                        Solar_dataGridView.Rows[nRow].Cells[7].Value = Value[0][1];
-                        Solar_dataGridView.Rows[nRow].Cells[8].Value = Value[0][2];
-                        Solar_dataGridView.Rows[nRow].Cells[9].Value = Value[0][3];
-                        Solar_dataGridView.Rows[nRow].Cells[10].Value = Value[0][4];
-                    }
-                }
-                catch { }
-            }
-        }
-
-        private void Solar_Remove_button_Click(object sender, EventArgs e)
-        {
-            Solar_dataGridView.Rows.Remove(Solar_dataGridView.Rows[Solar_SelectRow]);
-            Load_Solar_Num();
-        }
-
-        private void Solar_Copy_button_Click(object sender, EventArgs e)
-        {
-            int nRow = Solar_dataGridView.Rows.Add();
-            Load_Solar_Num();
-
-            DataGridViewComboBoxCell 난방급탕Combo = new DataGridViewComboBoxCell();
-            난방급탕Combo.Items.Add("난방");
-            난방급탕Combo.Items.Add("급탕");
-            난방급탕Combo.Items.Add("난방+급탕");
-            Solar_dataGridView.Rows[nRow].Cells[4] = 난방급탕Combo;
-
-            for (int k = 2; k < 11; k++)
-            {
-                if (Solar_dataGridView.Rows[Solar_SelectRow].Cells[k].Value != null)
-                {
-                    Solar_dataGridView.Rows[nRow].Cells[k].Value = Solar_dataGridView.Rows[Solar_SelectRow].Cells[k].Value;
-                }
-            }
-            if (Solar_dataGridView.Rows[Solar_SelectRow].Cells[3].Value != null)
-            {
-                Solar_dataGridView.Rows[nRow].Cells[3].Value = Solar_dataGridView.Rows[Solar_SelectRow].Cells[3].Value.ToString() + "_복사";
-            }
-        }
-        private void Solar_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                Solar_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                Solar_SelectRow = e.RowIndex;
-            }
-        }
-
-        private void Load_Solar_Num()
-        {
-            for (int k = 0; k < Solar_dataGridView.RowCount; k++)
-            {
-                if (k + 1 < 10)
-                { Solar_dataGridView.Rows[k].Cells[1].Value = "UBS0" + (k + 1).ToString(); }
-                else { Solar_dataGridView.Rows[k].Cells[1].Value = "UBS" + (k + 1).ToString(); }
-            }
-        }
-
-        private void Solar_Save_button_Click(object sender, EventArgs e)
-        {
-            Program.DB.deleteValue(DB.type.ProjDB, "User_Solar", "");
-
-            for (int k = 0; k < Solar_dataGridView.RowCount; k++)
-            {
-                String[] Value = new String[10];
-                for (int i = 1; i < 11; i++)
-                {
-                    if (Solar_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = Solar_dataGridView.Rows[k].Cells[i].Value.ToString(); }
-                    else { Value[i - 1] = ""; }
-                }
-                Program.DB.setValue(DB.type.ProjDB, "User_Solar", "번호,DB유형,명칭,난방급탕,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량",
-                "'" + Value[0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','"
-                 + Value[9]
-                 + "'", "번호");
-            }
-            MessageBox.Show("저장되었습니다.");
-        }
-
-        private void Load_Solar()
-        {
-            try
-            {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "번호,DB유형,명칭,난방급탕,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "");
-
-                for (int n = 0; n < User_Value.Length; n++)
-                {
-                    Solar_dataGridView.Rows.Add();
-                    int nRow = Solar_dataGridView.Rows.Count - 1;
-                    Solar_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
-                    Solar_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
-                    Solar_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
-                    Solar_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-                    Solar_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
-                    Solar_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
-                    Solar_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
-                    Solar_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
-                    Solar_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
-                    Solar_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
+                    WP_dataGridView.Rows[nRow].Cells[16].Value = User_Value[n][15];
                 }
             }
             catch { }
@@ -1724,7 +1547,7 @@ namespace main.contents
             AirHP_dataGridView.Columns.Add(연료Combo);
 
             DataGridViewComboBoxColumn 공급유형Combo = new DataGridViewComboBoxColumn();
-            공급유형Combo.HeaderText = "부하측" + Environment.NewLine + "공급유형";
+            공급유형Combo.HeaderText = "부하측.공급유형";
             공급유형Combo.Items.AddRange("직팽식", "수방식");
             AirHP_dataGridView.Columns.Add(공급유형Combo);
 
@@ -1737,8 +1560,8 @@ namespace main.contents
             AirHP_dataGridView.Columns.Add("A13", "한랭지.용량.[kW]");
             AirHP_dataGridView.Columns.Add("A14", "한랭지.COP.[-]");
             AirHP_dataGridView.Columns.Add("A15", "한랭지.소비전력.[kW]");
-            AirHP_dataGridView.Columns.Add("A16", "대기" + Environment.NewLine + "전력" + Environment.NewLine + "[W]");
-            AirHP_dataGridView.Columns.Add("A17", "대수" + Environment.NewLine + "[EA]");
+            AirHP_dataGridView.Columns.Add("A16", "대기전력.[W]");
+            AirHP_dataGridView.Columns.Add("A17", "대수.[EA]");
 
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
             설치유형Combo.HeaderText = "설치";
@@ -1747,10 +1570,11 @@ namespace main.contents
 
             AirHP_dataGridView.Columns[0].Width = 40;
             AirHP_dataGridView.Columns[1].Width = 60;
-            AirHP_dataGridView.Columns[2].Width = 40;
-            AirHP_dataGridView.Columns[16].Width = 40;
-            AirHP_dataGridView.Columns[17].Width = 40;
-            AirHP_dataGridView.Columns[18].Width = 80;
+            AirHP_dataGridView.Columns[2].Width = 60;
+            AirHP_dataGridView.Columns[3].Width = 60;
+            AirHP_dataGridView.Columns[4].Width = 70;
+            AirHP_dataGridView.Columns[5].Width = 70;
+            AirHP_dataGridView.Columns[6].Width = 70;
 
         }
 
@@ -1812,26 +1636,6 @@ namespace main.contents
         {
             if (e.RowIndex >= 0)
             {
-                //if (e.ColumnIndex == 6)
-                //{
-                //    if (AirHP_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null)
-                //    { AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString())); }
-                //}
-                //if (e.ColumnIndex == 9)
-                //{
-                //    if (AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null)
-                //    { AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value = string.Format("{0:F1}", Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString())); }
-                //}
-                //if (e.ColumnIndex == 7)
-                //{
-                //    if (AirHP_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null)
-                //    { AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString())); }
-                //}
-                //if (e.ColumnIndex == 10)
-                //{
-                //    if (AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null)
-                //    { AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value = string.Format("{0:F1}", Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString())); }
-                //}
                 double 냉방용량 = 0, 냉방소비전력 = 0, 냉방COP = 0, 난방용량 = 0, 난방소비전력 = 0, 난방COP = 0, 한랭지용량 = 0, 한랭지소비전력 = 0, 한랭지COP = 0;
                 if (AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && Information.IsNumeric(AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()))
                 {
@@ -2003,30 +1807,12 @@ namespace main.contents
                   Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "'", "번호");
             }
 
-        
-
-            Program.DB.deleteValue(DB.type.ProjDB, "User_GroundWHP", "");
-
-            for (int k = 0; k < GWHP_dataGridView.RowCount; k++)
-            {
-                String[] Value = new String[12];
-                for (int i = 1; i < 13; i++)
-                {
-                    if (GWHP_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = GWHP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
-                    else { Value[i - 1] = ""; }
-                }
-                Program.DB.setValue(DB.type.ProjDB, "User_GroundWHP", "번호,DB유형,명칭,연료,공급유형,정격용량,정격COP,정격소비전력,등급2용량,등급2COP,등급2소비전력,대수",
-                "'" + Value[0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11]
-                 + "'", "번호");
-            }
 
             MessageBox.Show("저장되었습니다.");
         }
 
 
-        private void Load_HP()
+        private void Load_AirHP()
         {
             try
             {
@@ -2057,52 +1843,6 @@ namespace main.contents
             }
             catch { }
 
-            try
-            {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "번호,DB유형,명칭,연료,수직수평,공급유형,정격용량,정격COP,정격소비전력,등급2용량,등급2COP,등급2소비전력,대수", "");
-                for (int n = 0; n < User_Value.Length; n++)
-                {
-                    GroundHP_dataGridView.Rows.Add();
-                    int nRow = GroundHP_dataGridView.Rows.Count - 1;
-                    GroundHP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0]; //번호
-                    GroundHP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
-                    GroundHP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
-                    GroundHP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-                    GroundHP_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
-                    GroundHP_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
-                    GroundHP_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
-                    GroundHP_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
-                    GroundHP_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
-                    GroundHP_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
-                    GroundHP_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][10];
-                    GroundHP_dataGridView.Rows[nRow].Cells[12].Value = User_Value[n][11];
-                    GroundHP_dataGridView.Rows[nRow].Cells[13].Value = User_Value[n][12];
-                }
-            }
-            catch { }
-
-            try
-            {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundWHP", "번호,DB유형,명칭,연료,공급유형,정격용량,정격COP,정격소비전력,등급2용량,등급2COP,등급2소비전력,대수", "");
-                for (int n = 0; n < User_Value.Length; n++)
-                {
-                    GWHP_dataGridView.Rows.Add();
-                    int nRow = GWHP_dataGridView.Rows.Count - 1;
-                    GWHP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0]; //번호
-                    GWHP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
-                    GWHP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
-                    GWHP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-                    GWHP_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
-                    GWHP_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
-                    GWHP_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
-                    GWHP_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
-                    GWHP_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
-                    GWHP_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
-                    GWHP_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][10];
-                    GWHP_dataGridView.Rows[nRow].Cells[12].Value = User_Value[n][11];
-                }
-            }
-            catch { }
         }
         #endregion
         //////////////////////////////////////////////////지하수 히트펌프/////////////////////////////////////////////////////////////////
@@ -2118,25 +1858,29 @@ namespace main.contents
             GWHP_dataGridView.Columns.Add("A1", "번호");
             GWHP_dataGridView.Columns.Add("A2", "DB유형");
             GWHP_dataGridView.Columns.Add("A3", "명칭");
-            GWHP_dataGridView.Columns.Add("A4", "연료"); ;
+            GWHP_dataGridView.Columns.Add("A4", "연료");
             GWHP_dataGridView.Columns.Add("A5", "공급유형");
-            GWHP_dataGridView.Columns.Add("A6", "정격(10℃).용량" + Environment.NewLine + "[kW]");
-            GWHP_dataGridView.Columns.Add("A7", "정격(10℃).COP" + Environment.NewLine + "[kW]");
-            GWHP_dataGridView.Columns.Add("A8", "정격(10℃).소비전력" + Environment.NewLine + "[kW]");
-            GWHP_dataGridView.Columns.Add("A9", "(15℃).용량" + Environment.NewLine + "[kW]");
-            GWHP_dataGridView.Columns.Add("A10", "(15℃).COP" + Environment.NewLine + "[kW]");
-            GWHP_dataGridView.Columns.Add("A11", "(15℃).소비전력" + Environment.NewLine + "[kW]");
-            GWHP_dataGridView.Columns.Add("A12", "대수" + Environment.NewLine + "[EA]");
+            GWHP_dataGridView.Columns.Add("A6", "수직/수평");
+            GWHP_dataGridView.Columns.Add("A7", "냉방.용량.[kW]");
+            GWHP_dataGridView.Columns.Add("A8", "냉방.EER.[kW]");
+            GWHP_dataGridView.Columns.Add("A9", "냉방.소비전력.[kW]");
+            GWHP_dataGridView.Columns.Add("A10", "난방정격(10℃).용량.[kW]");
+            GWHP_dataGridView.Columns.Add("A11", "난방정격(10℃).COP.[kW]");
+            GWHP_dataGridView.Columns.Add("A12", "난방정격(10℃).소비전력.[kW]");
+            GWHP_dataGridView.Columns.Add("A13", "난방(15℃).용량.[kW]");
+            GWHP_dataGridView.Columns.Add("A14", "난방(15℃).COP.[kW]");
+            GWHP_dataGridView.Columns.Add("A15", "난방(15℃).소비전력.[kW]");
+            GWHP_dataGridView.Columns.Add("A16", "대수.[EA]");
+            GWHP_dataGridView.Columns.Add("A17", "냉수온도.입구.[℃]");
+            GWHP_dataGridView.Columns.Add("A18", "냉수온도.출구.[℃]");
+            GWHP_dataGridView.Columns.Add("A19", "압축기");
+            GWHP_dataGridView.Columns.Add("A20", "증발기");
+            GWHP_dataGridView.Columns.Add("A21", "설치");
+
             GWHP_dataGridView.Columns[0].Width = 40;
             GWHP_dataGridView.Columns[1].Width = 60;
             GWHP_dataGridView.Columns[2].Width = 60;
-            GWHP_dataGridView.Columns[3].Width = 100;
             GWHP_dataGridView.Columns[4].Width = 60;
-            GWHP_dataGridView.Columns[7].Width = 80;
-            GWHP_dataGridView.Columns[8].Width = 80;
-            GWHP_dataGridView.Columns[10].Width = 80;
-            GWHP_dataGridView.Columns[11].Width = 80;
-            GWHP_dataGridView.Columns[12].Width = 80;
 
         }
 
@@ -2149,16 +1893,28 @@ namespace main.contents
 
             DataGridViewComboBoxCell 연료Combo = new DataGridViewComboBoxCell();
             연료Combo.Items.Add("전기");
-            연료Combo.Items.Add("LNG");
-            연료Combo.Items.Add("LPG");
+            연료Combo.Items.Add("가스");
             GWHP_dataGridView.Rows[nRow].Cells[4] = 연료Combo;
 
-
-
             DataGridViewComboBoxCell 공급유형Combo = new DataGridViewComboBoxCell();
-            공급유형Combo.Items.Add("공기식");
+            공급유형Combo.Items.Add("직팽식");
             공급유형Combo.Items.Add("수방식");
             GWHP_dataGridView.Rows[nRow].Cells[5] = 공급유형Combo;
+
+            DataGridViewComboBoxCell 수직수평Combo = new DataGridViewComboBoxCell();
+            수직수평Combo.Items.Add("수직형");
+            수직수평Combo.Items.Add("수평형");
+            GWHP_dataGridView.Rows[nRow].Cells[6] = 수직수평Combo;
+
+            DataGridViewComboBoxCell PressCombo = new DataGridViewComboBoxCell();
+            PressCombo.Items.AddRange(new string[] { "왕복동", "스크롤", "스크류", "터보" });
+            GWHP_dataGridView.Rows[nRow].Cells[19] = PressCombo;
+            DataGridViewComboBoxCell EvapocomboBox = new DataGridViewComboBoxCell();
+            EvapocomboBox.Items.AddRange(new string[] { "판형", "다관식" });
+            GWHP_dataGridView.Rows[nRow].Cells[20] = EvapocomboBox;
+            DataGridViewComboBoxCell 설치Combo = new DataGridViewComboBoxCell();
+            설치Combo.Items.AddRange(new string[] { "기존", "신규", "철거후신규" });
+            GWHP_dataGridView.Rows[nRow].Cells[21] = 설치Combo;
         }
 
 
@@ -2166,25 +1922,97 @@ namespace main.contents
         {
             if (e.RowIndex >= 0)
             {
-                if (e.ColumnIndex == 6)
+
+                double 냉방용량 = 0, 냉방소비전력 = 0, 냉방EER = 0;
+                double 난방정격용량 = 0, 난방정격소비전력 = 0, 난방정격COP = 0;
+                double 난방15도용량 = 0, 난방15도소비전력 = 0, 난방15도COP = 0;
+                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()))
                 {
-                    if (GWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null)
-                    { GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString())); }
+                    냉방용량 = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString());
                 }
-                if (e.ColumnIndex == 9)
+                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()))
                 {
-                    if (GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null && GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null)
-                    { GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value = string.Format("{0:F1}", Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString())); }
+                    냉방EER = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString());
                 }
-                if (e.ColumnIndex == 7)
+                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString()))
                 {
-                    if (GWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null)
-                    { GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString())); }
+                    냉방소비전력 = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString());
                 }
-                if (e.ColumnIndex == 10)
+
+                if (e.ColumnIndex == 7 || e.ColumnIndex == 8)
                 {
-                    if (GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null && GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null)
-                    { GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value = string.Format("{0:F1}", Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString())); }
+                    if (냉방용량 > 0 && 냉방EER > 0)
+                    {
+                        냉방소비전력 = 냉방용량 / 냉방EER;
+                        GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = string.Format("{0:F1}", 냉방소비전력);
+                    }
+                }
+                if (e.ColumnIndex == 7 || e.ColumnIndex == 9)
+                {
+                    if (냉방용량 > 0 && 냉방소비전력 > 0)
+                    {
+                        냉방EER = 냉방용량 / 냉방소비전력;
+                        GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value = string.Format("{0:F1}", 냉방EER);
+                    }
+                }
+
+                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()))
+                {
+                    난방정격용량 = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString());
+                }
+                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString()))
+                {
+                    난방정격COP = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString());
+                }
+                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString()))
+                {
+                    난방정격소비전력 = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString());
+                }
+
+                if (e.ColumnIndex == 10 || e.ColumnIndex == 11)
+                {
+                    if (난방정격용량 > 0 && 난방정격COP > 0)
+                    {
+                        난방정격소비전력 = 난방정격용량 / 난방정격COP;
+                        GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = string.Format("{0:F1}", 난방정격소비전력);
+                    }
+                }
+                if (e.ColumnIndex == 10 || e.ColumnIndex == 12)
+                {
+                    if (난방정격용량 > 0 && 난방정격소비전력 > 0)
+                    {
+                        난방정격COP = 난방정격용량 / 난방정격소비전력;
+                        GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value = string.Format("{0:F1}", 난방정격COP);
+                    }
+                }
+                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()))
+                {
+                    난방15도용량 = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString());
+                }
+                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString()))
+                {
+                    난방15도COP = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString());
+                }
+                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString()))
+                {
+                    난방15도소비전력 = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString());
+                }
+
+                if (e.ColumnIndex == 13 || e.ColumnIndex == 14)
+                {
+                    if (난방15도용량 > 0 && 난방15도COP > 0)
+                    {
+                        난방15도소비전력 = 난방15도용량 / 난방15도COP;
+                        GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = string.Format("{0:F1}", 난방15도소비전력);
+                    }
+                }
+                if (e.ColumnIndex == 13 || e.ColumnIndex == 15)
+                {
+                    if (난방15도용량 > 0 && 난방15도소비전력 > 0)
+                    {
+                        난방15도COP = 난방15도용량 / 난방15도소비전력;
+                        GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value = string.Format("{0:F1}", 난방15도COP);
+                    }
                 }
             }
         }
@@ -2203,19 +2031,23 @@ namespace main.contents
             if (GWHP_dataGridView.Rows[HP_SelectRow].Cells[2].Value == "도면")
             {
                 DataGridViewComboBoxCell 연료Combo = new DataGridViewComboBoxCell();
-                연료Combo.Items.Add("LNG");
-                연료Combo.Items.Add("LPG");
+                연료Combo.Items.Add("가스");
                 연료Combo.Items.Add("전기");
                 GWHP_dataGridView.Rows[nRow].Cells[4] = 연료Combo;
 
                 DataGridViewComboBoxCell 공급유형Combo = new DataGridViewComboBoxCell();
-                공급유형Combo.Items.Add("공기식");
+                공급유형Combo.Items.Add("직팽식");
                 공급유형Combo.Items.Add("수방식");
                 GWHP_dataGridView.Rows[nRow].Cells[5] = 공급유형Combo;
+
+                DataGridViewComboBoxCell 수직수평Combo = new DataGridViewComboBoxCell();
+                수직수평Combo.Items.Add("수직형");
+                수직수평Combo.Items.Add("수평형");
+                GWHP_dataGridView.Rows[nRow].Cells[6] = 수직수평Combo;
             }
 
 
-            for (int k = 2; k < 13; k++)
+            for (int k = 2; k < 18; k++)
             {
                 if (GWHP_dataGridView.Rows[HP_SelectRow].Cells[k].Value != null)
                 {
@@ -2246,6 +2078,47 @@ namespace main.contents
                 else { GWHP_dataGridView.Rows[k].Cells[1].Value = "UWHP" + (k + 1).ToString(); }
             }
         }
+        private void GWHP_Save_button_Click(object sender, EventArgs e)
+        {
+
+            Program.DB.deleteValue(DB.type.ProjDB, "User_GWHP", "");
+
+            for (int k = 0; k < GWHP_dataGridView.RowCount; k++)
+            {
+                String[] Value = new String[21];
+                for (int i = 1; i < 22; i++)
+                {
+                    if (GWHP_dataGridView.Rows[k].Cells[i].Value != null)
+                    { Value[i - 1] = GWHP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    else { Value[i - 1] = ""; }
+                }
+                Program.DB.setValue(DB.type.ProjDB, "User_GWHP", "번호,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,신규기존",
+                "'" + Value[0] + "','"
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" +
+                 Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "','" + Value[18] + "','" + Value[19] + "','" + Value[20]
+                 + "'", "번호");
+            }
+
+            MessageBox.Show("저장되었습니다.");
+        }
+
+
+        private void Load_GWHP()
+        {
+
+            try
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GWHP", "번호,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,신규기존", "");
+                for (int n = 0; n < User_Value.Length; n++)
+                {
+                    GWHP_dataGridView.Rows.Add();
+                    int nRow = GWHP_dataGridView.Rows.Count - 1;
+                    for (int i = 0; i < 21; i++)
+                    { GWHP_dataGridView.Rows[nRow].Cells[1 + i].Value = User_Value[n][i]; }
+                }
+            }
+            catch { }
+        }
         #endregion
 
         //////////////////////////////////////////////////지열 히트펌프/////////////////////////////////////////////////////////////////
@@ -2264,23 +2137,26 @@ namespace main.contents
             GroundHP_dataGridView.Columns.Add("A4", "연료");
             GroundHP_dataGridView.Columns.Add("A5", "공급유형");
             GroundHP_dataGridView.Columns.Add("A6", "수직/수평");
-            GroundHP_dataGridView.Columns.Add("A7", "정격(0℃).용량" + Environment.NewLine + "[kW]");
-            GroundHP_dataGridView.Columns.Add("A8", "정격(0℃).COP" + Environment.NewLine + "[kW]");
-            GroundHP_dataGridView.Columns.Add("A9", "정격(0℃).소비전력" + Environment.NewLine + "[kW]");
-            GroundHP_dataGridView.Columns.Add("A10", "(5℃).용량" + Environment.NewLine + "[kW]");
-            GroundHP_dataGridView.Columns.Add("A11", "(5℃).COP" + Environment.NewLine + "[kW]");
-            GroundHP_dataGridView.Columns.Add("A12", "(5℃).소비전력" + Environment.NewLine + "[kW]");
-            GroundHP_dataGridView.Columns.Add("A13", "대수" + Environment.NewLine + "[EA]");
+            GroundHP_dataGridView.Columns.Add("A7", "냉방.용량.[kW]");
+            GroundHP_dataGridView.Columns.Add("A8", "냉방.EER.[kW]");
+            GroundHP_dataGridView.Columns.Add("A9", "냉방.소비전력.[kW]");
+            GroundHP_dataGridView.Columns.Add("A10", "난방정격(0℃).용량.[kW]");
+            GroundHP_dataGridView.Columns.Add("A11", "난방정격(0℃).COP.[kW]");
+            GroundHP_dataGridView.Columns.Add("A12", "난방정격(0℃).소비전력.[kW]");
+            GroundHP_dataGridView.Columns.Add("A13", "난방(5℃).용량.[kW]");
+            GroundHP_dataGridView.Columns.Add("A14", "난방(5℃).COP.[kW]");
+            GroundHP_dataGridView.Columns.Add("A15", "난방(5℃).소비전력.[kW]");
+            GroundHP_dataGridView.Columns.Add("A16", "대수.[EA]");
+            GroundHP_dataGridView.Columns.Add("A17", "냉수온도.입구.[℃]");
+            GroundHP_dataGridView.Columns.Add("A18", "냉수온도.출구.[℃]");
+            GroundHP_dataGridView.Columns.Add("A19", "압축기");
+            GroundHP_dataGridView.Columns.Add("A20", "증발기");
+            GroundHP_dataGridView.Columns.Add("A21", "설치");
+
             GroundHP_dataGridView.Columns[0].Width = 40;
             GroundHP_dataGridView.Columns[1].Width = 60;
             GroundHP_dataGridView.Columns[2].Width = 60;
-            GroundHP_dataGridView.Columns[3].Width = 100;
             GroundHP_dataGridView.Columns[4].Width = 60;
-            GroundHP_dataGridView.Columns[8].Width = 80;
-            GroundHP_dataGridView.Columns[9].Width = 80;
-            GroundHP_dataGridView.Columns[11].Width = 80;
-            GroundHP_dataGridView.Columns[12].Width = 80;
-            GroundHP_dataGridView.Columns[13].Width = 80;
 
         }
 
@@ -2293,12 +2169,11 @@ namespace main.contents
 
             DataGridViewComboBoxCell 연료Combo = new DataGridViewComboBoxCell();
             연료Combo.Items.Add("전기");
-            연료Combo.Items.Add("LNG");
-            연료Combo.Items.Add("LPG");
+            연료Combo.Items.Add("가스");
             GroundHP_dataGridView.Rows[nRow].Cells[4] = 연료Combo;
 
             DataGridViewComboBoxCell 공급유형Combo = new DataGridViewComboBoxCell();
-            공급유형Combo.Items.Add("공기식");
+            공급유형Combo.Items.Add("직팽식");
             공급유형Combo.Items.Add("수방식");
             GroundHP_dataGridView.Rows[nRow].Cells[5] = 공급유형Combo;
 
@@ -2306,6 +2181,16 @@ namespace main.contents
             수직수평Combo.Items.Add("수직형");
             수직수평Combo.Items.Add("수평형");
             GroundHP_dataGridView.Rows[nRow].Cells[6] = 수직수평Combo;
+
+            DataGridViewComboBoxCell PressCombo = new DataGridViewComboBoxCell();
+            PressCombo.Items.AddRange(new string[] { "왕복동", "스크롤", "스크류", "터보" });
+            GroundHP_dataGridView.Rows[nRow].Cells[19] = PressCombo;
+            DataGridViewComboBoxCell EvapocomboBox = new DataGridViewComboBoxCell();
+            EvapocomboBox.Items.AddRange(new string[] { "판형", "다관식" });
+            GroundHP_dataGridView.Rows[nRow].Cells[20] = EvapocomboBox;
+            DataGridViewComboBoxCell 설치Combo = new DataGridViewComboBoxCell();
+            설치Combo.Items.AddRange(new string[] { "기존", "신규", "철거후신규" });
+            GroundHP_dataGridView.Rows[nRow].Cells[21] = 설치Combo;
         }
 
 
@@ -2313,25 +2198,97 @@ namespace main.contents
         {
             if (e.RowIndex >= 0)
             {
-                if (e.ColumnIndex == 7)
+
+                double 냉방용량 = 0, 냉방소비전력 = 0, 냉방EER = 0;
+                double 난방정격용량 = 0, 난방정격소비전력 = 0, 난방정격COP = 0;
+                double 난방5도용량 = 0, 난방5도소비전력 = 0, 난방5도COP = 0;
+                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()))
                 {
-                    if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null)
-                    { GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())); }
+                    냉방용량 = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString());
                 }
-                if (e.ColumnIndex == 10)
+                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()))
                 {
-                    if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null)
-                    { GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = string.Format("{0:F1}", Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString())); }
+                    냉방EER = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString());
                 }
-                if (e.ColumnIndex == 8)
+                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString()))
                 {
-                    if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null)
-                    { GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())); }
+                    냉방소비전력 = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString());
                 }
-                if (e.ColumnIndex == 11)
+
+                if (e.ColumnIndex == 7 || e.ColumnIndex == 8)
                 {
-                    if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null)
-                    { GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = string.Format("{0:F1}", Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString())); }
+                    if (냉방용량 > 0 && 냉방EER > 0)
+                    {
+                        냉방소비전력 = 냉방용량 / 냉방EER;
+                        GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = string.Format("{0:F1}", 냉방소비전력);
+                    }
+                }
+                if (e.ColumnIndex == 7 || e.ColumnIndex == 9)
+                {
+                    if (냉방용량 > 0 && 냉방소비전력 > 0)
+                    {
+                        냉방EER = 냉방용량 / 냉방소비전력;
+                        GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value = string.Format("{0:F1}", 냉방EER);
+                    }
+                }
+
+                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()))
+                {
+                    난방정격용량 = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString());
+                }
+                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString()))
+                {
+                    난방정격COP = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString());
+                }
+                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString()))
+                {
+                    난방정격소비전력 = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString());
+                }
+
+                if (e.ColumnIndex == 10 || e.ColumnIndex == 11)
+                {
+                    if (난방정격용량 > 0 && 난방정격COP > 0)
+                    {
+                        난방정격소비전력 = 난방정격용량 / 난방정격COP;
+                        GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = string.Format("{0:F1}", 난방정격소비전력);
+                    }
+                }
+                if (e.ColumnIndex == 10 || e.ColumnIndex == 12)
+                {
+                    if (난방정격용량 > 0 && 난방정격소비전력 > 0)
+                    {
+                        난방정격COP = 난방정격용량 / 난방정격소비전력;
+                        GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value = string.Format("{0:F1}", 난방정격COP);
+                    }
+                }
+                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()))
+                {
+                    난방5도용량 = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString());
+                }
+                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString()))
+                {
+                    난방5도COP = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString());
+                }
+                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString()))
+                {
+                    난방5도소비전력 = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString());
+                }
+
+                if (e.ColumnIndex == 13 || e.ColumnIndex == 14)
+                {
+                    if (난방5도용량 > 0 && 난방5도COP > 0)
+                    {
+                        난방5도소비전력 = 난방5도용량 / 난방5도COP;
+                        GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = string.Format("{0:F1}", 난방5도소비전력);
+                    }
+                }
+                if (e.ColumnIndex == 13 || e.ColumnIndex == 15)
+                {
+                    if (난방5도용량 > 0 && 난방5도소비전력 > 0)
+                    {
+                        난방5도COP = 난방5도용량 / 난방5도소비전력;
+                        GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value = string.Format("{0:F1}", 난방5도COP);
+                    }
                 }
             }
         }
@@ -2350,13 +2307,12 @@ namespace main.contents
             if (GroundHP_dataGridView.Rows[HP_SelectRow].Cells[2].Value == "도면")
             {
                 DataGridViewComboBoxCell 연료Combo = new DataGridViewComboBoxCell();
-                연료Combo.Items.Add("LNG");
-                연료Combo.Items.Add("LPG");
+                연료Combo.Items.Add("가스");
                 연료Combo.Items.Add("전기");
                 GroundHP_dataGridView.Rows[nRow].Cells[4] = 연료Combo;
 
                 DataGridViewComboBoxCell 공급유형Combo = new DataGridViewComboBoxCell();
-                공급유형Combo.Items.Add("공기식");
+                공급유형Combo.Items.Add("직팽식");
                 공급유형Combo.Items.Add("수방식");
                 GroundHP_dataGridView.Rows[nRow].Cells[5] = 공급유형Combo;
 
@@ -2367,7 +2323,7 @@ namespace main.contents
             }
 
 
-            for (int k = 2; k < 13; k++)
+            for (int k = 2; k < 18; k++)
             {
                 if (GroundHP_dataGridView.Rows[HP_SelectRow].Cells[k].Value != null)
                 {
@@ -2398,7 +2354,49 @@ namespace main.contents
                 else { GroundHP_dataGridView.Rows[k].Cells[1].Value = "UGHP" + (k + 1).ToString(); }
             }
         }
+        private void GroundHP_Save_button_Click(object sender, EventArgs e)
+        {
 
+            Program.DB.deleteValue(DB.type.ProjDB, "User_GroundHP", "");
+
+            for (int k = 0; k < GroundHP_dataGridView.RowCount; k++)
+            {
+                String[] Value = new String[21];
+                for (int i = 1; i < 22; i++)
+                {
+                    if (GroundHP_dataGridView.Rows[k].Cells[i].Value != null)
+                    { Value[i - 1] = GroundHP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    else { Value[i - 1] = ""; }
+                }
+                Program.DB.setValue(DB.type.ProjDB, "User_GroundHP", "번호,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,신규기존",
+                "'" + Value[0] + "','"
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" +
+                 Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "','" + Value[18] + "','" + Value[19] + "','" + Value[20]
+                 + "'", "번호");
+            }
+
+            MessageBox.Show("저장되었습니다.");
+        }
+
+
+        private void Load_GroundHP()
+        {
+
+            try
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "번호,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,신규기존", "");
+                for (int n = 0; n < User_Value.Length; n++)
+                {
+                    GroundHP_dataGridView.Rows.Add();
+                    int nRow = GroundHP_dataGridView.Rows.Count - 1;
+                    for (int i = 0; i < 21; i++)
+                    { GroundHP_dataGridView.Rows[nRow].Cells[1 + i].Value = User_Value[n][i]; }
+                }
+            }
+            catch { }
+
+
+        }
         #endregion
 
         ///////////////////////////////////////////////////펌프/////////////////////////////////////////////////////////////////
@@ -2430,6 +2428,11 @@ namespace main.contents
             Pump_dataGridView.Columns[8].Width = 30;
             Pump_dataGridView.Columns[9].Width = 100;
             Pump_dataGridView.Columns[10].Width = 30;
+            DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
+            설치유형Combo.HeaderText = "설치";
+            설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
+            Pump_dataGridView.Columns.Add(설치유형Combo);
+            Pump_dataGridView.Columns[12].Width = 100;
 
             //Pump_dataGridView.ColumnCount = 12;
             //Pump_dataGridView.Columns[1].HeaderText = "번호";
@@ -2522,7 +2525,7 @@ namespace main.contents
             Pump_dataGridView.Rows[nRow].Cells[10] = PumpPower_ButtonCell;
             PumpPower_ButtonCell.Value = "+";
 
-            for (int k = 2; k < 12; k++)
+            for (int k = 2; k < 13; k++)
             {
                 if (Pump_dataGridView.Rows[Pump_SelectRow].Cells[k].Value != null)
                 {
@@ -2602,7 +2605,7 @@ namespace main.contents
 
             for (int k = 0; k < Pump_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[9];
+                String[] Value = new String[10];
                 for (int i = 1; i < 7; i++)
                 {
                     if (Pump_dataGridView.Rows[k].Cells[i].Value != null)
@@ -2621,11 +2624,15 @@ namespace main.contents
                 if (Pump_dataGridView.Rows[k].Cells[11].Value != null)
                 { Value[8] = Pump_dataGridView.Rows[k].Cells[11].Value.ToString(); }
                 else { Value[8] = ""; }
+                //신규기존
+                if (Pump_dataGridView.Rows[k].Cells[12].Value != null)
+                { Value[9] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString(); }
+                else { Value[9] = ""; }
 
                 Program.DB.setValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정,대수",
                 "'" + Value[0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','"
-                 + Value[8]
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','"
+                 + Value[9]
                  + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
@@ -2635,7 +2642,7 @@ namespace main.contents
         {
             try
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정,대수", "");
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정,대수,신규기존", "");
                 for (int n = 0; n < Value.Length; n++)
                 {
                     string A효율 = "", B효율 = "", 유량 = "", 동력 = "", 양정 = "";
@@ -2672,6 +2679,7 @@ namespace main.contents
                     Pump_dataGridView.Rows[nRow].Cells[7].Value = 양정;
                     Pump_dataGridView.Rows[nRow].Cells[9].Value = 동력;
                     Pump_dataGridView.Rows[nRow].Cells[11].Value = Value[n][8];
+                    Pump_dataGridView.Rows[nRow].Cells[12].Value = Value[n][9];
                     DataGridViewButtonCell PumpHead_ButtonCell = new DataGridViewButtonCell();
                     Pump_dataGridView.Rows[nRow].Cells[8] = PumpHead_ButtonCell;
                     PumpHead_ButtonCell.Value = "+";
@@ -2704,15 +2712,11 @@ namespace main.contents
             ce_dataGridView.Columns[0].Width = 40;
             ce_dataGridView.Columns[1].Width = 50;
             ce_dataGridView.Columns[7].Width = 150;
-            //ce_dataGridView.ColumnCount = 9;
-            //ce_dataGridView.Columns[1].HeaderText = "번호";
-            //ce_dataGridView.Columns[2].HeaderText = "명칭";
-            //ce_dataGridView.Columns[3].HeaderText = "난방/냉방";
-            //ce_dataGridView.Columns[4].HeaderText = "종류";
-            //ce_dataGridView.Columns[5].HeaderText = "용량" + Environment.NewLine + "[kW]";
-            //ce_dataGridView.Columns[6].HeaderText = "소비전력" + Environment.NewLine + "[kW]";
-            //ce_dataGridView.Columns[7].HeaderText = "온도제어방식";
-            //ce_dataGridView.Columns[8].HeaderText = "대수" + Environment.NewLine + "[EA]";
+            DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
+            설치유형Combo.HeaderText = "설치";
+            설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
+            ce_dataGridView.Columns.Add(설치유형Combo);
+            ce_dataGridView.Columns[9].Width = 100;
         }
 
         private Boolean ce_datagridviewDesign(DataGridViewCell cell, int column, int row)
@@ -2777,17 +2781,19 @@ namespace main.contents
                     DataGridViewComboBoxCell 공급설비종류comboBox = new DataGridViewComboBoxCell();
                     공급설비종류comboBox.Items.AddRange(new string[] { "실내기", "팬코일유닛", "바닥매립형컨백터" });
                     ce_dataGridView.Rows[e.RowIndex].Cells[4] = 공급설비종류comboBox;
+                    ce_dataGridView.Rows[e.RowIndex].Cells[7].ReadOnly = false;
                 }
                 else if (ce_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() == "난방")
                 {
                     DataGridViewComboBoxCell 공급설비종류comboBox = new DataGridViewComboBoxCell();
                     공급설비종류comboBox.Items.AddRange(new string[] { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방", "바닥매립형컨백터" });
                     ce_dataGridView.Rows[e.RowIndex].Cells[4] = 공급설비종류comboBox;
+                    ce_dataGridView.Rows[e.RowIndex].Cells[7].ReadOnly = false;
                 }
                 else return;
             }
             else return;
-           
+
 
         }
 
@@ -2819,7 +2825,7 @@ namespace main.contents
             공급설비종류comboBox.Items.Add("재실기준 자동온도제어");
             ce_dataGridView.Rows[nRow].Cells[7] = 공급설비종류comboBox;
 
-            for (int k = 2; k < 9; k++)
+            for (int k = 2; k < 10; k++)
             {
                 if (ce_dataGridView.Rows[ce_SelectRow].Cells[k].Value != null)
                 {
@@ -2854,17 +2860,17 @@ namespace main.contents
 
             for (int k = 0; k < ce_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[8];
-                for (int i = 1; i < 9; i++)
+                String[] Value = new String[9];
+                for (int i = 1; i < 10; i++)
                 {
                     if (ce_dataGridView.Rows[k].Cells[i].Value != null)
                     { Value[i - 1] = ce_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_ce", "번호,명칭,난방냉방,종류,용량,소비전력,온도제어방식,대수",
+                Program.DB.setValue(DB.type.ProjDB, "User_ce", "번호,명칭,난방냉방,종류,용량,소비전력,온도제어방식,대수,신규기존",
                 "'" + Value[0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','"
-                 + Value[7]
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','"
+                 + Value[8]
                  + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
@@ -2873,7 +2879,7 @@ namespace main.contents
         {
             try
             {
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_ce", "번호,명칭,난방냉방,종류,용량,소비전력,온도제어방식,대수", "");
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_ce", "번호,명칭,난방냉방,종류,용량,소비전력,온도제어방식,대수,신규기존", "");
                 for (int n = 0; n < Value.Length; n++)
                 {
                     ce_dataGridView.Rows.Add();
@@ -2896,7 +2902,7 @@ namespace main.contents
                     온도제어방식comboBox.Items.Add("재실기준 자동온도제어");
                     ce_dataGridView.Rows[nRow].Cells[7] = 온도제어방식comboBox;
 
-                    for (int k = 0; k < 8; k++)
+                    for (int k = 0; k < 9; k++)
                     { ce_dataGridView.Rows[nRow].Cells[k + 1].Value = Value[n][k]; }
                 }
             }
@@ -2904,8 +2910,7 @@ namespace main.contents
 
         }
         #endregion
-
-
+        ///////////////////////////////////////////////////공냉식냉동기/////////////////////////////////////////////////////////////////
         #region 12. 공냉식냉동기
         public void Create_AirCooler_Table()
         {
@@ -2920,7 +2925,7 @@ namespace main.contents
             AirCooler_dataGridView.Columns.Add("A1", "번호");
             AirCooler_dataGridView.Columns.Add("A2", "DB유형");
             AirCooler_dataGridView.Columns.Add("A3", "명칭");
-            AirCooler_dataGridView.Columns.Add("A4", "냉방성능.냉방출력[kW]");
+            AirCooler_dataGridView.Columns.Add("A4", "냉방성능.출력[kW]");
             AirCooler_dataGridView.Columns.Add("A5", "냉방성능.소비전력[kW]");
             AirCooler_dataGridView.Columns.Add("A6", "냉방성능.EER");
 
@@ -2930,7 +2935,7 @@ namespace main.contents
             AirCooler_dataGridView.Columns.Add(PressCombo);
 
             DataGridViewComboBoxColumn 연료Combo = new DataGridViewComboBoxColumn();
-            연료Combo.HeaderText = "열원";
+            연료Combo.HeaderText = "연료";
             연료Combo.Items.AddRange(new string[] { "가스", "전기" });
             AirCooler_dataGridView.Columns.Add(연료Combo);
 
@@ -3046,6 +3051,38 @@ namespace main.contents
 
         private void AirCooler_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+
+            double 냉방용량 = 0, 냉방소비전력 = 0, 냉방EER = 0;
+            if (AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && Information.IsNumeric(AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()))
+            {
+                냉방용량 = Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString());
+            }
+            if (AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value != null && Information.IsNumeric(AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()))
+            {
+                냉방소비전력 = Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
+            }
+            if (AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && Information.IsNumeric(AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString()))
+            {
+                냉방EER = Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
+            }
+
+            if (e.ColumnIndex == 4 || e.ColumnIndex == 6)
+            {
+                if (냉방용량 > 0 && 냉방EER > 0)
+                {
+                    냉방소비전력 = 냉방용량 / 냉방EER;
+                    AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = string.Format("{0:F1}", 냉방소비전력);
+                }
+            }
+            if (e.ColumnIndex == 4 || e.ColumnIndex == 5)
+            {
+                if (냉방용량 > 0 && 냉방소비전력 > 0)
+                {
+                    냉방EER = 냉방용량 / 냉방소비전력;
+                    AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value = string.Format("{0:F1}", 냉방EER);
+                }
+            }
+
             if (e.ColumnIndex == 12)
             {
                 int k = e.RowIndex;
@@ -3121,38 +3158,415 @@ namespace main.contents
                 }
             }
             catch { }
-            #endregion
+        }
+        #endregion
+        ///////////////////////////////////////////////////수냉식냉동기/////////////////////////////////////////////////////////////////
+        #region 13. 수냉식냉동기
+        public void Create_WaterCooler_Table()
+        {
+            WaterCooler_dataGridView.Rows.Clear();
+            WaterCooler_dataGridView.Columns.Clear();
+
+            new StackedHeaderDecorator(WaterCooler_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            WaterCooler_checkBoxColumn.HeaderText = "선택";
+            WaterCooler_checkBoxColumn.Name = "check";
+            WaterCooler_dataGridView.Columns.Add(WaterCooler_checkBoxColumn);
+
+            WaterCooler_dataGridView.Columns.Add("A1", "번호");
+            WaterCooler_dataGridView.Columns.Add("A2", "DB유형");
+            WaterCooler_dataGridView.Columns.Add("A3", "명칭");
+            WaterCooler_dataGridView.Columns.Add("A4", "냉방성능.출력[kW]");
+            WaterCooler_dataGridView.Columns.Add("A5", "냉방성능.소비전력[kW]");
+            WaterCooler_dataGridView.Columns.Add("A6", "냉방성능.EER");
+
+            DataGridViewComboBoxColumn PressCombo = new DataGridViewComboBoxColumn();
+            PressCombo.HeaderText = "압축기";
+            PressCombo.Items.AddRange(new string[] { "왕복동", "스크롤", "스크류", "터보" });
+            WaterCooler_dataGridView.Columns.Add(PressCombo);
+
+            DataGridViewComboBoxColumn 연료Combo = new DataGridViewComboBoxColumn();
+            연료Combo.HeaderText = "연료";
+            연료Combo.Items.AddRange(new string[] { "가스", "전기" });
+            WaterCooler_dataGridView.Columns.Add(연료Combo);
+
+            WaterCooler_dataGridView.Columns.Add("A9", "대기전력[W]");
+            WaterCooler_dataGridView.Columns.Add("A10", "대수.[EA]");
+
+            DataGridViewComboBoxColumn 설치Combo = new DataGridViewComboBoxColumn();
+            설치Combo.HeaderText = "설치";
+            설치Combo.Items.AddRange(new string[] { "기존", "신규", "철거후신규" });
+            WaterCooler_dataGridView.Columns.Add(설치Combo);
+
+            DataGridViewComboBoxColumn EvapocomboBox = new DataGridViewComboBoxColumn();
+            EvapocomboBox.HeaderText = "증발기";
+            EvapocomboBox.Items.AddRange(new string[] { "판형", "다관식" });
+            WaterCooler_dataGridView.Columns.Add(EvapocomboBox);
+
+            WaterCooler_dataGridView.Columns.Add("A14", "냉수온도.입구[℃]");
+            WaterCooler_dataGridView.Columns.Add("A15", "냉수온도.출구[℃]");
+
+            WaterCooler_dataGridView.Columns[0].Width = 40;
+            WaterCooler_dataGridView.Columns[1].Width = 60;
+            WaterCooler_dataGridView.Columns[2].Width = 60;
+            WaterCooler_dataGridView.Columns[3].Width = 80;
+
+            WaterCooler_dataGridView.Columns[1].ReadOnly = true;
+            WaterCooler_dataGridView.Columns[2].ReadOnly = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void DefaultWaterCooler_Add_button_Click(object sender, EventArgs e)
         {
-            ZoneLight zonelight = Program.CALC.getZoneLight("1F_Zone001");
-            if (zonelight != null)
+            Cooling_WaterCooler WaterCooler = new Cooling_WaterCooler("기본DB 적용"); //기존 표준값 제품 선택을 함
+            DialogResult result = WaterCooler.ShowDialog();
+            if (result == DialogResult.OK)
             {
-                double wa = zonelight.Wr;
-                MessageBox.Show(wa.ToString());
+                //if (WaterCooler.SelectWaterCooler != null)
+                //{
+                //    foreach (string SAC in WaterCooler.SelectWaterCooler)
+                //    {
+                //        string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Cooling, "AirCon", "번호,냉방표준성능,대기전력,열원",
+                //            "번호='" + SAC + "'");
+                //        //시작
+                //        int nRow = WaterCooler_dataGridView.Rows.Add();
+                //        Load_WaterCooler_Num();
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[2].Value = "기본";
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[3].Value = null;
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[4].Value = null;
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[5].Value = null;
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[0][1];
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[7].Value = null;
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[0][3];
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[9].Value = DefaultDB_Value[0][2];
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[10].Value = null;
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[11].Value = null;
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[12].Value = null;
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[13].Value = null;
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[14].Value = null;
+                //        WaterCooler_dataGridView.Rows[nRow].Cells[15].Value = null;
+
+                //    }
+                //}
+            }
+        }
+
+        private void UserWaterCooler_Add_button_Click(object sender, EventArgs e)
+        {
+            int nRow = WaterCooler_dataGridView.Rows.Add();//한줄 추가
+            Load_WaterCooler_Num();//번호생성기
+            WaterCooler_dataGridView.Rows[nRow].Cells[2].Value = "도면";
+        }
+
+        private void WaterCooler_Remove_button_Click(object sender, EventArgs e)
+        {
+            int SelectRow;
+            for (int i = 0; i < WaterCooler_dataGridView.Rows.Count; i++)
+            {
+                if (Convert.ToBoolean(WaterCooler_dataGridView.Rows[i].Cells[0].Value))
+                {
+                    SelectRow = i;
+                    WaterCooler_dataGridView.Rows.Remove(WaterCooler_dataGridView.Rows[SelectRow]);
+                }
+            }
+            Load_WaterCooler_Num();
+        }
+
+        private void WaterCooler_Copy_button_Click(object sender, EventArgs e)
+        {
+            for (int j = 0; j < WaterCooler_dataGridView.RowCount; j++)
+            {
+                if (Convert.ToBoolean(WaterCooler_dataGridView.Rows[j].Cells[0].Value))
+                {
+                    int nRow = WaterCooler_dataGridView.Rows.Add();
+                    for (int k = 2; k < 15; k++)
+                    {
+                        WaterCooler_dataGridView.Rows[nRow].Cells[k].Value = WaterCooler_dataGridView.Rows[j].Cells[k].Value;
+                    }
+                    Load_WaterCooler_Num();
+                }
+            }
+        }
+
+        private void Load_WaterCooler_Num() //번호생성기
+        {
+            for (int k = 0; k < WaterCooler_dataGridView.RowCount; k++)
+            {
+                WaterCooler_dataGridView.Rows[k].Cells[1].Value = "UWC" + string.Format("{0:00}", k + 1);
+            }
+        }
+
+        private void WaterCooler_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+
+            double 냉방용량 = 0, 냉방소비전력 = 0, 냉방EER = 0;
+            if (WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && Information.IsNumeric(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()))
+            {
+                냉방용량 = Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString());
+            }
+            if (WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value != null && Information.IsNumeric(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()))
+            {
+                냉방소비전력 = Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
+            }
+            if (WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && Information.IsNumeric(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString()))
+            {
+                냉방EER = Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
             }
 
+            if (e.ColumnIndex == 4 || e.ColumnIndex == 6)
+            {
+                if (냉방용량 > 0 && 냉방EER > 0)
+                {
+                    냉방소비전력 = 냉방용량 / 냉방EER;
+                    WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = string.Format("{0:F1}", 냉방소비전력);
+                }
+            }
+            if (e.ColumnIndex == 4 || e.ColumnIndex == 5)
+            {
+                if (냉방용량 > 0 && 냉방소비전력 > 0)
+                {
+                    냉방EER = 냉방용량 / 냉방소비전력;
+                    WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value = string.Format("{0:F1}", 냉방EER);
+                }
+            }
         }
 
-        private void EquipmentList_Load(object sender, EventArgs e)
+        private void WaterCooler_Save_button_Click(object sender, EventArgs e)
         {
+            Program.DB.deleteValue(DB.type.ProjDB, "User_WaterCooler", "");
 
+            for (int k = 0; k < WaterCooler_dataGridView.RowCount; k++)
+            {
+                String[] Value = new String[14];
+                for (int i = 0; i < 14; i++)
+                {
+                    if (WaterCooler_dataGridView.Rows[k].Cells[i + 1].Value != null)
+                    {
+                        Value[i] = WaterCooler_dataGridView.Rows[k].Cells[i + 1].Value.ToString();
+                    }
+                    else { Value[i] = ""; }
+                }
+                Program.DB.setValue(DB.type.ProjDB, "User_WaterCooler", "번호,DB유형,명칭,냉방출력,냉방소비전력,EER,압축기,연료,대기전력,대수,설치,증발기,냉수입구온도,냉수출구온도",
+                "'" + Value[0] + "','"
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','"
+                 + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','"
+                 + Value[11] + "','" + Value[12] + "','" + Value[13] + "'", "번호");
+            }
+            MessageBox.Show("저장되었습니다.");
         }
 
-        private void tabPage1_Click(object sender, EventArgs e)
+        private void Load_WaterCooler()
         {
+            try
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_WaterCooler", "번호,DB유형,명칭,냉방출력,냉방소비전력,EER,압축기,연료,대기전력,대수,설치,증발기,냉수입구온도,냉수출구온도", "");
 
+                for (int n = 0; n < User_Value.Length; n++)
+                {
+                    WaterCooler_dataGridView.Rows.Add();
+                    int nRow = WaterCooler_dataGridView.Rows.Count - 1;
+                    WaterCooler_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];  //번호
+                    WaterCooler_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];  //DB유형
+                    WaterCooler_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];  //명칭
+                    WaterCooler_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];  //냉방성능.냉방출력[kW]
+                    WaterCooler_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];  //냉방성능.소비전력[kW]
+                    WaterCooler_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];  //냉방성능.EER
+                    WaterCooler_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6]; //압축기
+                    WaterCooler_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];  //열원
+                    WaterCooler_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];  //대기전력[W]
+                    WaterCooler_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];  //대수
+                    WaterCooler_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][10]; //설치
+                    WaterCooler_dataGridView.Rows[nRow].Cells[12].Value = User_Value[n][11];  //증발기
+                    WaterCooler_dataGridView.Rows[nRow].Cells[13].Value = User_Value[n][12]; //냉수입구온도
+                    WaterCooler_dataGridView.Rows[nRow].Cells[14].Value = User_Value[n][13];  //냉수출구온도
+                }
+            }
+            catch { }
         }
+        #endregion
 
-        private void tabPage5_Click(object sender, EventArgs e)
+        ///////////////////////////////////////////////////태양열/////////////////////////////////////////////////////////////////
+        #region 14.태양열
+        public void Create_Solar_Table()
         {
+            new StackedHeaderDecorator(Solar_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            Solar_dataGridView.Columns.Clear();
+            Solar_checkBoxColumn.HeaderText = "선택";
+            Solar_checkBoxColumn.Name = "check";
+            Solar_dataGridView.Columns.Add(Solar_checkBoxColumn);
 
+            Solar_dataGridView.Columns.Add("A1", "번호");
+            Solar_dataGridView.Columns.Add("A2", "DB유형");
+            Solar_dataGridView.Columns.Add("A3", "명칭");
+            Solar_dataGridView.Columns.Add("A4", "난방/급탕");
+            Solar_dataGridView.Columns.Add("A5", "모듈면적.A[m2]");
+            Solar_dataGridView.Columns.Add("A6", "효율.ηo");
+            Solar_dataGridView.Columns.Add("A7", "손실계수.1차.k1");
+            Solar_dataGridView.Columns.Add("A8", "손실계수.2차.k2");
+            Solar_dataGridView.Columns.Add("A9", "50°의 입사각.Khem(50֠)");
+            Solar_dataGridView.Columns.Add("A10", "유효 열용량.C");
+            Solar_dataGridView.Columns[0].Width = 40;
+            DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
+            설치유형Combo.HeaderText = "설치";
+            설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
+            Solar_dataGridView.Columns.Add(설치유형Combo);
+            Solar_dataGridView.Columns[11].Width = 100;
         }
 
-        private void tabPage7_Click(object sender, EventArgs e)
+        private void UserSolar_Add_button_Click(object sender, EventArgs e)
         {
+            int nRow = Solar_dataGridView.Rows.Add();
+            Load_Solar_Num();
+
+            Solar_dataGridView.Rows[nRow].Cells[2].Value = "도면";
+
+            DataGridViewComboBoxCell 난방급탕Combo = new DataGridViewComboBoxCell();
+            난방급탕Combo.Items.Add("난방");
+            난방급탕Combo.Items.Add("급탕");
+            난방급탕Combo.Items.Add("난방+급탕");
+            Solar_dataGridView.Rows[nRow].Cells[4] = 난방급탕Combo;
 
         }
+
+        private void DefaultSolar_Add_button_Click(object sender, EventArgs e)
+        {
+            ArrayList SelectSolar = new ArrayList();
+            int nRow = Solar_dataGridView.Rows.Add();
+            Load_Solar_Num();
+            Solar_dataGridView.Rows[nRow].Cells[2].Value = "기본";
+
+            DataGridViewComboBoxCell 난방급탕Combo = new DataGridViewComboBoxCell();
+            난방급탕Combo.Items.Add("난방");
+            난방급탕Combo.Items.Add("급탕");
+            난방급탕Combo.Items.Add("난방+급탕");
+            Solar_dataGridView.Rows[nRow].Cells[4] = 난방급탕Combo;
+
+            Heating_Solar heating_Solar = new Heating_Solar("기본DB 적용", null);
+            DialogResult result = heating_Solar.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    if (heating_Solar.SelectSolar != null)
+                    {
+
+                        string[] token = heating_Solar.SelectSolar.Split('+');
+                        SelectSolar.Clear();
+                        foreach (var item in token)
+                        {
+                            SelectSolar.Add(item.ToString());
+                        }
+                        string[][] Value; Double[][] Value2;
+                        String 내용;
+                        Value = Program.DB.getValue(DB.type.BaseDB_Heating, "태양열시스템", "효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "번호 = '" + SelectSolar[0].ToString() + "'");
+                        String name = Value[0][0];
+
+                        Solar_dataGridView.Rows[nRow].Cells[6].Value = Value[0][0];
+                        Solar_dataGridView.Rows[nRow].Cells[7].Value = Value[0][1];
+                        Solar_dataGridView.Rows[nRow].Cells[8].Value = Value[0][2];
+                        Solar_dataGridView.Rows[nRow].Cells[9].Value = Value[0][3];
+                        Solar_dataGridView.Rows[nRow].Cells[10].Value = Value[0][4];
+                    }
+                }
+                catch { }
+            }
+        }
+
+        private void Solar_Remove_button_Click(object sender, EventArgs e)
+        {
+            Solar_dataGridView.Rows.Remove(Solar_dataGridView.Rows[Solar_SelectRow]);
+            Load_Solar_Num();
+        }
+
+        private void Solar_Copy_button_Click(object sender, EventArgs e)
+        {
+            int nRow = Solar_dataGridView.Rows.Add();
+            Load_Solar_Num();
+
+            DataGridViewComboBoxCell 난방급탕Combo = new DataGridViewComboBoxCell();
+            난방급탕Combo.Items.Add("난방");
+            난방급탕Combo.Items.Add("급탕");
+            난방급탕Combo.Items.Add("난방+급탕");
+            Solar_dataGridView.Rows[nRow].Cells[4] = 난방급탕Combo;
+
+            for (int k = 2; k < 12; k++)
+            {
+                if (Solar_dataGridView.Rows[Solar_SelectRow].Cells[k].Value != null)
+                {
+                    Solar_dataGridView.Rows[nRow].Cells[k].Value = Solar_dataGridView.Rows[Solar_SelectRow].Cells[k].Value;
+                }
+            }
+            if (Solar_dataGridView.Rows[Solar_SelectRow].Cells[3].Value != null)
+            {
+                Solar_dataGridView.Rows[nRow].Cells[3].Value = Solar_dataGridView.Rows[Solar_SelectRow].Cells[3].Value.ToString() + "_복사";
+            }
+        }
+        private void Solar_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                Solar_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                Solar_SelectRow = e.RowIndex;
+            }
+        }
+
+        private void Load_Solar_Num()
+        {
+            for (int k = 0; k < Solar_dataGridView.RowCount; k++)
+            {
+                if (k + 1 < 10)
+                { Solar_dataGridView.Rows[k].Cells[1].Value = "UBS0" + (k + 1).ToString(); }
+                else { Solar_dataGridView.Rows[k].Cells[1].Value = "UBS" + (k + 1).ToString(); }
+            }
+        }
+
+        private void Solar_Save_button_Click(object sender, EventArgs e)
+        {
+            Program.DB.deleteValue(DB.type.ProjDB, "User_Solar", "");
+
+            for (int k = 0; k < Solar_dataGridView.RowCount; k++)
+            {
+                String[] Value = new String[11];
+                for (int i = 1; i < 12; i++)
+                {
+                    if (Solar_dataGridView.Rows[k].Cells[i].Value != null)
+                    { Value[i - 1] = Solar_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    else { Value[i - 1] = ""; }
+                }
+                Program.DB.setValue(DB.type.ProjDB, "User_Solar", "번호,DB유형,명칭,난방급탕,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량,신규기존",
+                "'" + Value[0] + "','"
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','"
+                 + Value[10]
+                 + "'", "번호");
+            }
+            MessageBox.Show("저장되었습니다.");
+        }
+
+        private void Load_Solar()
+        {
+            try
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "번호,DB유형,명칭,난방급탕,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량,신규기존", "");
+
+                for (int n = 0; n < User_Value.Length; n++)
+                {
+                    Solar_dataGridView.Rows.Add();
+                    int nRow = Solar_dataGridView.Rows.Count - 1;
+                    Solar_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                    Solar_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                    Solar_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                    Solar_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                    Solar_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                    Solar_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
+                    Solar_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
+                    Solar_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                    Solar_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
+                    Solar_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
+                    Solar_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][10];
+                }
+            }
+            catch { }
+        }
+
+        #endregion
+
     }
 }
