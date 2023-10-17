@@ -102,7 +102,6 @@ namespace main.subcontents.CoolingSystem
                     SelectAirCon.Add(row.Cells[1].Value.ToString()); //선택항목 이름 저장함
                 }
             }
-
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

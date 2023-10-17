@@ -139,11 +139,7 @@ namespace main.contents
         //3. 존 선택
         private void Zone_button_Click(object sender, EventArgs e)
         {
-            if (CoolingSystemNameText.Text == null || CoolingSystemNameText.Text == "")
-            {
-                MessageBox.Show("먼저 명칭을 입력해 주세요!", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
+            if (CoolingSystemNameText.Text != null && CoolingSystemNameText.Text != "")
             {
                 string[] coolingzone_connect = new string[3];
                 Num_f = NumTextBox.Text;
@@ -180,6 +176,7 @@ namespace main.contents
                     CZ_AnnualCoolingNeed_Textbox.Text = annualenergyneed.ToString("0");
                     CZ_FloorArea_Textbox.Text = area.ToString("0.00");
                     CZ_MaxCoolingLoad_Textbox.Text = maxload.ToString("0.00");
+
                     if (zonenames.Length > 0)
                     {
                         int num = zonenames.Length - 1;
@@ -187,8 +184,12 @@ namespace main.contents
                         if (zonenames.Length == 1) ZoneS_label.Text = "존 공급방식:  단일존";
                         else ZoneS_label.Text = "존 공급방식:  멀티존";
                     }
-                    else SelectedZoneText.Text = "";
                 }
+            }
+            else
+            {
+                MessageBox.Show("먼저 명칭을 입력해 주세요!", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
 
         }
@@ -234,7 +235,7 @@ namespace main.contents
         {
             CG = CoolingGeneratorSelect_comboBox.Text;
             LoadtabPage(CG);
-            LoadImage();
+            Distribute_Image();
         }
 
         private void LoadtabPage(string _CG) //탭활성화 및 열원설비 콤보박스
@@ -274,7 +275,7 @@ namespace main.contents
         }
 
         #region //그림작성
-        private void LoadImage() // 1.분배설비 그림넣기
+        private void Distribute_Image() // 1.분배설비 그림넣기
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_Cooling, "냉방설비이미지", "이미지", "항목유형 = '분배설비'");
             DistpictureBox.Size = new System.Drawing.Size(610, 254);
@@ -482,10 +483,10 @@ namespace main.contents
         {
             Cooling_AirCon AirCon_Load = new Cooling_AirCon();
             DialogResult result = AirCon_Load.ShowDialog();
-            AirConLoad_table();
 
             if (result == DialogResult.OK)
             {
+                AirConLoad_table();
                 if (AirCon_Load.SelectAirCon != null)
                 {
                     List<string> check = new List<string>();
@@ -493,24 +494,25 @@ namespace main.contents
                     Number_f = 0;
                     foreach (string SAC in AirCon_Load.SelectAirCon)
                     {
-                        string[][] DefaultDB_Value = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", " 번호,명칭,냉방정격용량,냉방정격소비전력,냉방정격COP,대기전력,연료,설치",
+                        string[][] DefaultDB_Value = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", " 번호,명칭,DB유형,냉방정격용량,냉방정격소비전력,냉방정격COP,대기전력,연료,설치",
                                "번호='" + SAC + "'");
                         for (int i = 0; i < DefaultDB_Value.Length; i++)
                         {
-                            check.Add(DefaultDB_Value[i][7].ToString());
+                            check.Add(DefaultDB_Value[i][8].ToString());
                             AirCon_dataGridView.Rows.Add();
                             int nRow = AirCon_dataGridView.Rows.Count - 1;
 
                             AirCon_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[i][0];
                             AirCon_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[i][1];
-                            AirCon_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][2]));
-                            AirCon_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][3]));
-                            AirCon_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][4]));
-                            AirCon_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][5]));
-                            AirCon_dataGridView.Rows[nRow].Cells[10].Value = DefaultDB_Value[i][6];
+                            AirCon_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[i][2];
+                            AirCon_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][3])); // 냉방출력
+                            AirCon_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][4])); //소비전력
+                            AirCon_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][5])); //COP
+                            AirCon_dataGridView.Rows[nRow].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][6])); //대기전력
+                            AirCon_dataGridView.Rows[nRow].Cells[11].Value = DefaultDB_Value[i][7]; //연료
 
-                            Power.Add(Convert.ToDouble(DefaultDB_Value[i][2]));
-                            EER.Add(Convert.ToDouble(DefaultDB_Value[i][4]));
+                            Power.Add(Convert.ToDouble(DefaultDB_Value[i][3]));
+                            EER.Add(Convert.ToDouble(DefaultDB_Value[i][5]));
                             Number_f = 1 + Number_f;
                         }
                     }
@@ -533,63 +535,90 @@ namespace main.contents
                     PowerTotal_textBox.Text = string.Format("{0:0.0}", Power_f);
                     EERTotal_textBox.Text = string.Format("{0:0.0}", EER_f);
                     InstallTotal_textBox.Text = string.Format("{0:0.0}", Number_f);
+                    G_label.Visible = true;
+                    G_label.Text = string.Format("설치대수: {0}", Number_f);
+                    ZoneS_label.Visible = true;
+                    Install_f = installmake(A, B, C);
 
-                    if (A == 0)
-                    {
-                        if (B == 0)
-                        {
-                            if (C > 1)
-                            {
-                                radioButton3.Checked = true;
-                                Install_f = "신규";
-                            }
-                        }
-                        else if (B > 0)
-                        {
-                            if (C == 0)
-                            {
-                                radioButton2.Checked = true;
-                                Install_f = "신규";
-                            }
-                            else if (C > 0)
-                            {
-                                radioButton3.Checked = true;
-                                Install_f = "신규";
-                            }
-                        }
-                        radioButton2.Checked = true;
-                        Install_f = "신규";
-                    }
-                    else if (A > 0)
-                    {
-                        if (B == 0)
-                        {
-                            if (C > 1)
-                            {
-                                radioButton3.Checked = true;
-                                Install_f = "신규";
-                            }
-                            else if (C == 0)
-                            {
-                                radioButton1.Checked = true;
-                                Install_f = "기존";
-                            }
-                        }
-                        else if (B > 0)
-                        {
-                            radioButton3.Checked = true;
-                            Install_f = "신규";
-                        }
-                    }
                 }
                 CoolingGeneratorImageSelect(CG, Install_f);
             }
+
+        }
+
+        private string installmake(int a, int b, int c)
+        {
+            //100
+            //101
+            //110
+            //111        
+
+            string check = null;
+            if (a > 0)
+            {
+                if (b == 0)
+                {
+                    if (c == 0)
+                    {
+                        radioButton1.Checked = true;
+                        check = "기존";
+                    }
+                    else if (c > 0)
+                    {
+                        radioButton3.Checked = true;
+                        check = "신규";
+                    }
+                }
+                else if (b > 0)
+                {
+                    if (c == 0)
+                    {
+                        radioButton3.Checked = true;
+                        check = "신규";
+                    }
+                    else if (c > 0)
+                    {
+                        radioButton3.Checked = true;
+                        check = "신규";
+                    }
+                }
+            }
+            //001
+            //010
+            //011
+            else if (a == 0)
+            {
+                if (b == 0)
+                {
+                    if (c > 1)
+                    {
+                        radioButton3.Checked = true;
+                        check = "신규";
+                    }                 
+                }
+                else if (b > 0)
+                {
+                    if (c == 0)
+                    {
+                        radioButton2.Checked = true;
+                        check = "신규";
+                    }
+                       
+                    else if (c > 0) 
+                    {
+                        radioButton3.Checked = true;
+                        check = "신규";
+                    }
+                        
+                }
+            }
+            return check;
         }
 
         private void AirConLoad_table()
         {
             string[][] items = Program.DB.getValue_SameCheck(DB.type.BaseDB_Cooling, "CoolSystem", " 제어유형,압축기유형,멀티공급유형",
-                               "냉동기유형='실외기12kW'");
+                               "냉동기유형='실외기12kW'"); //각 유형별 항목 만들기
             new StackedHeaderDecorator(AirCon_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             AirCon_dataGridView.Columns.Clear();
@@ -599,6 +628,7 @@ namespace main.contents
 
             AirCon_dataGridView.Columns.Add("A1", "번호");
             AirCon_dataGridView.Columns.Add("A2", "명칭");
+            AirCon_dataGridView.Columns.Add("A3", "DB유형");
 
             DataGridViewComboBoxColumn ControlcomboBox = new DataGridViewComboBoxColumn();
             ControlcomboBox.HeaderText = "제어유형";
@@ -615,12 +645,12 @@ namespace main.contents
             EconomcomboBox.Items.AddRange(new string[] { "있음", "없음" });
             AirCon_dataGridView.Columns.Add(EconomcomboBox);
 
-            AirCon_dataGridView.Columns.Add("A5", "설치대수");
-            AirCon_dataGridView.Columns.Add("A6", "냉방출력[kW]");
-            AirCon_dataGridView.Columns.Add("A7", "소비전력[kW]");
-            AirCon_dataGridView.Columns.Add("A8", "냉방성능[EER]");
-            AirCon_dataGridView.Columns.Add("A9", "대기전력");
-            AirCon_dataGridView.Columns.Add("A10", "연료");
+            AirCon_dataGridView.Columns.Add("A6", "설치대수");
+            AirCon_dataGridView.Columns.Add("A7", "냉방출력[kW]");
+            AirCon_dataGridView.Columns.Add("A8", "소비전력[kW]");
+            AirCon_dataGridView.Columns.Add("A9", "냉방성능[EER]");
+            AirCon_dataGridView.Columns.Add("A10", "대기전력");
+            AirCon_dataGridView.Columns.Add("A11", "연료");
 
             AirCon_dataGridView.Columns[0].Width = 40;
             AirCon_dataGridView.Columns[1].Width = 50;
@@ -631,17 +661,17 @@ namespace main.contents
             for (int k = 0; k < AirCon_dataGridView.Rows.Count; k++)
             {
                 List<string> Value = new List<string>();
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 6; i++)
                 {
-                    if (AirCon_dataGridView.Rows[k].Cells[i+1].Value != null)
-                    { 
-                        Value.Add(AirCon_dataGridView.Rows[k].Cells[i+1].Value.ToString());
+                    if (AirCon_dataGridView.Rows[k].Cells[i + 1].Value != null)
+                    {
+                        Value.Add(AirCon_dataGridView.Rows[k].Cells[i + 1].Value.ToString());
                     }
-                    else { MessageBox.Show("선택항목을 완료해주세요.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);}
+                    else { MessageBox.Show("선택항목을 완료해주세요.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information); }
                 }
-
-                Program.DB.setValue(DB.type.ProjDB, "User_AirCon", "번호,명칭,제어유형,외기냉방유무,설치대수",
-                 "'" + Value[0] + "','" + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "'", "번호");
+                //8개 항목
+                Program.DB.setValue(DB.type.ProjDB, "User_CoolingSystem", "번호,명칭,장비번호,장비명칭,DB유형,제어유형,외기냉방유무,설치대수",
+                 "'" + Num_f + "','" + Name_f + "','" + Value[0] + "','" + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "'", "번호, 장비번호");
             }
             MessageBox.Show("저장되었습니다.");
         }
@@ -672,7 +702,7 @@ namespace main.contents
                         Power.Add(Convert.ToDouble(DefaultDB_Value[0][2]));
                         EER.Add(Convert.ToDouble(DefaultDB_Value[0][4]));
                         Stanby.Add(Convert.ToDouble(DefaultDB_Value[0][7]));
-                        
+
 
                         for (int i = 0; i < DefaultDB_Value.Length; i++)
                         {
@@ -712,7 +742,6 @@ namespace main.contents
                 }
             }
         }
-
         private void AirCoolerLoad_table(string CoolingSystem)
         {
             string[][] items = Program.DB.getValue_SameCheck(DB.type.BaseDB_Cooling, "CoolSystem", " 제어유형,압축기유형,멀티공급유형",
