@@ -110,6 +110,27 @@ namespace main.contentslist
         {
 
             string[][] List = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "");
+
+            int[] List_arr = new int[List.Length];
+            string[] List_F = new string [List.Length];
+
+            for (int n = 0; n < List.Length; n++)
+            { List_arr[n] =Convert.ToInt32( List[n][0].Substring(0, List[n][0].IndexOf('F'))); }
+
+            for (int i = 0; i < List_arr.Length - 1; i++)   //i = 0 to N - 1
+            {
+                for (int j = i + 1; j < List_arr.Length; j++)  //j = i + 1 to N
+                {
+                    if (List_arr[i] > List_arr[j])       //부등호 방향: 오름차순(>), 내림차순(<)
+                    {
+                        int temp = List_arr[i]; 
+                        List_arr[i] = List_arr[j]; 
+                        List_arr[j] = temp; //SWAP
+                    }
+                }
+            }
+            for (int n = 0; n < List.Length; n++)
+            { List_F[n] = List_arr[n]+"F"; }
             string[][] Value;
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
 
@@ -117,7 +138,7 @@ namespace main.contentslist
             dataGridView1.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
-                string[][] Zone = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List[n][0] + "'");
+                string[][] Zone = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List_F[n] + "'");
 
                 String[] 용도프로필 = new String[Zone.Length];
                 double[] 순바닥면적 = new double[Zone.Length];
@@ -146,7 +167,7 @@ namespace main.contentslist
                 {
                     dataGridView1.Rows.Add();
                     int nRow = dataGridView1.Rows.Count - 1;
-                    dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
+                    dataGridView1.Rows[nRow].Cells[1].Value = List_F[n];
                     dataGridView1.Rows[nRow].Cells[2].Value = null;
                     dataGridView1.Rows[nRow].Cells[3].Value = null;
                     dataGridView1.Rows[nRow].Cells[4].Value = null;
@@ -157,14 +178,14 @@ namespace main.contentslist
                 {
                     dataGridView1.Rows.Add();
                     int nRow = dataGridView1.Rows.Count - 1;
-                    dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
+                    dataGridView1.Rows[nRow].Cells[1].Value = List_F[n];
                     dataGridView1.Rows[nRow].Cells[2].Value = 용도프로필[index];
                     dataGridView1.Rows[nRow].Cells[3].Value = Zone.Length;
                     dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F1}", 순바닥면적.Sum());
                     dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F1}", 천장고.Average());
                     //ListTable.Rows.Add(List[n][0], 용도프로필[index], Zone.Length, String.Format("{0:F1}", 순바닥면적.Sum()), String.Format("{0:F1}", 천장고.Average()));
                 }
-                string[][] SubList = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List[n][0]+"'");
+                string[][] SubList = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List_F[n]+ "'");
                 
                 List<object> subMenu = new List<object>();
                  for (int k = 0; k < SubList.Length; k++)
@@ -177,7 +198,7 @@ namespace main.contentslist
 
                     subMenu.Add(new { text = SubList[k][0], id = "{\\\"formID\\\":12,\\\"ID\\\":\\\"" + SubList[k][0] + "\\\"}", children = subsubMenu.ToArray()}); // 예시 코드: 메인 메뉴 동적 할당
                 }
-                mainMenu.Add(new { text = List[n][0] , id = "{\\\"formID\\\":33,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}", children = subMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
+                mainMenu.Add(new { text = List_F[n], id = "{\\\"formID\\\":33,\\\"ID\\\":\\\"" + List_F[n] + "\\\"}", children = subMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
             }
             //dataGridView1.DataSource = this.ListTable;
             CountDB = List.Length;

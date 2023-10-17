@@ -34,6 +34,9 @@
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
@@ -46,9 +49,6 @@
             DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             label15 = new Label();
             OldSystem_textBox = new TextBox();
@@ -75,6 +75,7 @@
             HP_tabPage = new TabPage();
             HP_dataGridView = new DataGridView();
             AS_tabPage = new TabPage();
+            AS_dataGridView = new DataGridView();
             DH_tabPage = new TabPage();
             Solar_tabPage = new TabPage();
             Solar_dataGridView = new DataGridView();
@@ -148,11 +149,22 @@
             label5 = new Label();
             label4 = new Label();
             ce1Type_comboBox = new CustomComboBox();
-            panel2 = new Panel();
-            pictureBox1 = new PictureBox();
             Previous_button = new Button();
             Save_button = new Button();
-            AS_dataGridView = new DataGridView();
+            ImagePanel = new Panel();
+            panel4 = new Panel();
+            ce3_pictureBox = new PictureBox();
+            ce2_pictureBox = new PictureBox();
+            ce1_pictureBox = new PictureBox();
+            StoType_pictureBox = new PictureBox();
+            StopictureBox = new PictureBox();
+            DistpictureBox = new PictureBox();
+            ZoneS_label = new Label();
+            panel3 = new Panel();
+            Press_pictureBox = new PictureBox();
+            SyspictureBox = new PictureBox();
+            panel1 = new Panel();
+            SourcepictureBox = new PictureBox();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -164,6 +176,7 @@
             HP_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)HP_dataGridView).BeginInit();
             AS_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)AS_dataGridView).BeginInit();
             Solar_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Solar_dataGridView).BeginInit();
             Qhs_tabPage.SuspendLayout();
@@ -172,9 +185,19 @@
             ((System.ComponentModel.ISupportInitialize)Pump_dataGridView).BeginInit();
             Qhce_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).BeginInit();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)AS_dataGridView).BeginInit();
+            ImagePanel.SuspendLayout();
+            panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ce3_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ce2_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ce1_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)StoType_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)StopictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DistpictureBox).BeginInit();
+            panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Press_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SyspictureBox).BeginInit();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)SourcepictureBox).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -585,6 +608,48 @@
             AS_tabPage.TabIndex = 3;
             AS_tabPage.Text = "흡수식온수기";
             AS_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // AS_dataGridView
+            // 
+            AS_dataGridView.AllowUserToAddRows = false;
+            AS_dataGridView.AllowUserToDeleteRows = false;
+            AS_dataGridView.AllowUserToResizeColumns = false;
+            AS_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AS_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            AS_dataGridView.BackgroundColor = Color.White;
+            AS_dataGridView.BorderStyle = BorderStyle.None;
+            AS_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            AS_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            AS_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            AS_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            AS_dataGridView.Location = new Point(6, 7);
+            AS_dataGridView.Name = "AS_dataGridView";
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = SystemColors.Control;
+            dataGridViewCellStyle8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
+            AS_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            AS_dataGridView.RowHeadersVisible = false;
+            AS_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle9.ForeColor = Color.Black;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
+            AS_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            AS_dataGridView.RowTemplate.Height = 25;
+            AS_dataGridView.Size = new Size(943, 113);
+            AS_dataGridView.TabIndex = 23;
             // 
             // DH_tabPage
             // 
@@ -1606,24 +1671,6 @@
             ce1Type_comboBox.TabIndex = 176;
             ce1Type_comboBox.SelectedIndexChanged += ce1Type_comboBox_SelectedIndexChanged;
             // 
-            // panel2
-            // 
-            panel2.BackColor = Color.White;
-            panel2.Controls.Add(pictureBox1);
-            panel2.Location = new Point(12, 439);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(977, 221);
-            panel2.TabIndex = 143;
-            panel2.Paint += panel2_Paint;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(23, 13);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(931, 201);
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
-            // 
             // Previous_button
             // 
             Previous_button.BackColor = SystemColors.ButtonHighlight;
@@ -1647,47 +1694,141 @@
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
             // 
-            // AS_dataGridView
+            // ImagePanel
             // 
-            AS_dataGridView.AllowUserToAddRows = false;
-            AS_dataGridView.AllowUserToDeleteRows = false;
-            AS_dataGridView.AllowUserToResizeColumns = false;
-            AS_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            AS_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            AS_dataGridView.BackgroundColor = Color.White;
-            AS_dataGridView.BorderStyle = BorderStyle.None;
-            AS_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            AS_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            AS_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            AS_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            AS_dataGridView.Location = new Point(6, 7);
-            AS_dataGridView.Name = "AS_dataGridView";
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            AS_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
-            AS_dataGridView.RowHeadersVisible = false;
-            AS_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle9.ForeColor = Color.Black;
-            dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
-            AS_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
-            AS_dataGridView.RowTemplate.Height = 25;
-            AS_dataGridView.Size = new Size(943, 113);
-            AS_dataGridView.TabIndex = 23;
+            ImagePanel.BackColor = Color.White;
+            ImagePanel.BorderStyle = BorderStyle.Fixed3D;
+            ImagePanel.Controls.Add(panel4);
+            ImagePanel.Controls.Add(panel3);
+            ImagePanel.Controls.Add(panel1);
+            ImagePanel.Location = new Point(16, 439);
+            ImagePanel.Name = "ImagePanel";
+            ImagePanel.Size = new Size(977, 264);
+            ImagePanel.TabIndex = 146;
+            // 
+            // panel4
+            // 
+            panel4.BackgroundImageLayout = ImageLayout.None;
+            panel4.Controls.Add(ce3_pictureBox);
+            panel4.Controls.Add(ce2_pictureBox);
+            panel4.Controls.Add(ce1_pictureBox);
+            panel4.Controls.Add(StoType_pictureBox);
+            panel4.Controls.Add(StopictureBox);
+            panel4.Controls.Add(DistpictureBox);
+            panel4.Controls.Add(ZoneS_label);
+            panel4.Dock = DockStyle.Fill;
+            panel4.Location = new Point(310, 0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(663, 260);
+            panel4.TabIndex = 4;
+            // 
+            // ce3_pictureBox
+            // 
+            ce3_pictureBox.Location = new Point(390, 15);
+            ce3_pictureBox.Name = "ce3_pictureBox";
+            ce3_pictureBox.Size = new Size(69, 53);
+            ce3_pictureBox.TabIndex = 160;
+            ce3_pictureBox.TabStop = false;
+            ce3_pictureBox.Visible = false;
+            // 
+            // ce2_pictureBox
+            // 
+            ce2_pictureBox.Location = new Point(289, 15);
+            ce2_pictureBox.Name = "ce2_pictureBox";
+            ce2_pictureBox.Size = new Size(69, 53);
+            ce2_pictureBox.TabIndex = 159;
+            ce2_pictureBox.TabStop = false;
+            ce2_pictureBox.Visible = false;
+            // 
+            // ce1_pictureBox
+            // 
+            ce1_pictureBox.Location = new Point(191, 15);
+            ce1_pictureBox.Name = "ce1_pictureBox";
+            ce1_pictureBox.Size = new Size(69, 53);
+            ce1_pictureBox.TabIndex = 158;
+            ce1_pictureBox.TabStop = false;
+            ce1_pictureBox.Visible = false;
+            // 
+            // StoType_pictureBox
+            // 
+            StoType_pictureBox.Location = new Point(21, 24);
+            StoType_pictureBox.Name = "StoType_pictureBox";
+            StoType_pictureBox.Size = new Size(46, 35);
+            StoType_pictureBox.TabIndex = 157;
+            StoType_pictureBox.TabStop = false;
+            StoType_pictureBox.Visible = false;
+            // 
+            // StopictureBox
+            // 
+            StopictureBox.Location = new Point(6, 9);
+            StopictureBox.Name = "StopictureBox";
+            StopictureBox.Size = new Size(73, 63);
+            StopictureBox.TabIndex = 156;
+            StopictureBox.TabStop = false;
+            StopictureBox.Visible = false;
+            // 
+            // DistpictureBox
+            // 
+            DistpictureBox.Location = new Point(0, 0);
+            DistpictureBox.Name = "DistpictureBox";
+            DistpictureBox.Size = new Size(100, 100);
+            DistpictureBox.TabIndex = 0;
+            DistpictureBox.TabStop = false;
+            // 
+            // ZoneS_label
+            // 
+            ZoneS_label.AutoSize = true;
+            ZoneS_label.Font = new Font("맑은 고딕", 9F, FontStyle.Italic, GraphicsUnit.Point);
+            ZoneS_label.ForeColor = SystemColors.ControlDarkDark;
+            ZoneS_label.Location = new Point(477, 9);
+            ZoneS_label.Name = "ZoneS_label";
+            ZoneS_label.Size = new Size(0, 15);
+            ZoneS_label.TabIndex = 155;
+            // 
+            // panel3
+            // 
+            panel3.BackgroundImageLayout = ImageLayout.None;
+            panel3.Controls.Add(Press_pictureBox);
+            panel3.Controls.Add(SyspictureBox);
+            panel3.Dock = DockStyle.Left;
+            panel3.Location = new Point(200, 0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(110, 260);
+            panel3.TabIndex = 3;
+            // 
+            // Press_pictureBox
+            // 
+            Press_pictureBox.Location = new Point(17, 77);
+            Press_pictureBox.Name = "Press_pictureBox";
+            Press_pictureBox.Size = new Size(50, 40);
+            Press_pictureBox.TabIndex = 2;
+            Press_pictureBox.TabStop = false;
+            Press_pictureBox.Visible = false;
+            // 
+            // SyspictureBox
+            // 
+            SyspictureBox.Location = new Point(4, 49);
+            SyspictureBox.Name = "SyspictureBox";
+            SyspictureBox.Size = new Size(100, 100);
+            SyspictureBox.TabIndex = 1;
+            SyspictureBox.TabStop = false;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(SourcepictureBox);
+            panel1.Dock = DockStyle.Left;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(200, 260);
+            panel1.TabIndex = 2;
+            // 
+            // SourcepictureBox
+            // 
+            SourcepictureBox.Location = new Point(0, 0);
+            SourcepictureBox.Name = "SourcepictureBox";
+            SourcepictureBox.Size = new Size(100, 100);
+            SourcepictureBox.TabIndex = 2;
+            SourcepictureBox.TabStop = false;
             // 
             // HeatingSystem
             // 
@@ -1696,9 +1837,9 @@
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(ImagePanel);
             Controls.Add(Previous_button);
             Controls.Add(Save_button);
-            Controls.Add(panel2);
             Controls.Add(tabControl1);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.None;
@@ -1718,6 +1859,7 @@
             HP_tabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)HP_dataGridView).EndInit();
             AS_tabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)AS_dataGridView).EndInit();
             Solar_tabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Solar_dataGridView).EndInit();
             Qhs_tabPage.ResumeLayout(false);
@@ -1729,9 +1871,20 @@
             Qhce_tabPage.ResumeLayout(false);
             Qhce_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).EndInit();
-            panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)AS_dataGridView).EndInit();
+            ImagePanel.ResumeLayout(false);
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)ce3_pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ce2_pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ce1_pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)StoType_pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)StopictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DistpictureBox).EndInit();
+            panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)Press_pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SyspictureBox).EndInit();
+            panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)SourcepictureBox).EndInit();
             ResumeLayout(false);
         }
 
@@ -1760,7 +1913,6 @@
         private CustomComboBox Sub1System_comboBox;
         private Label MainSystem_label;
         private CustomComboBox MainSystem_comboBox;
-        private Panel panel2;
         private CustomTabControl tabControl2;
         private TabPage HP_tabPage;
         private TabPage AS_tabPage;
@@ -1826,7 +1978,6 @@
         private RadioButton radioButton4;
         private RadioButton radioButton3;
         private RadioButton radioButton1;
-        private PictureBox pictureBox1;
         private TextBox PipeIns_textBox;
         private Button PipeIns_button;
         private Label label16;
@@ -1842,5 +1993,19 @@
         private DataGridView HP_dataGridView;
         private DataGridView Solar_dataGridView;
         private DataGridView AS_dataGridView;
+        private Panel ImagePanel;
+        private Panel panel4;
+        private PictureBox ce3_pictureBox;
+        private PictureBox ce2_pictureBox;
+        private PictureBox ce1_pictureBox;
+        private PictureBox StoType_pictureBox;
+        private PictureBox StopictureBox;
+        private PictureBox DistpictureBox;
+        private Label ZoneS_label;
+        private Panel panel3;
+        private PictureBox Press_pictureBox;
+        private PictureBox SyspictureBox;
+        private Panel panel1;
+        private PictureBox SourcepictureBox;
     }
 }

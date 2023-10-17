@@ -87,6 +87,7 @@ namespace main.contentslist
             dataGridView1.Columns.Add(checkBoxColumn);
             List.Columns.Add("번호", typeof(string));
             List.Columns.Add("명칭", typeof(string));
+            List.Columns.Add("주요설비", typeof(string));
             dataGridView1.DataSource = List;
 
 
@@ -95,13 +96,13 @@ namespace main.contentslist
 
         public void load_List()
         {
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭", "");
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비", "");
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
             String Blank = "";
             this.List.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
-                this.List.Rows.Add(List[n][0], List[n][1]);
+                this.List.Rows.Add(List[n][0], List[n][1], List[n][2]);
                 mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":19,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             }
             dataGridView1.DataSource = this.List;

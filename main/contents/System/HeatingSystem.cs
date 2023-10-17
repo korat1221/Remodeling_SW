@@ -37,7 +37,7 @@ namespace main.contents
         String ce1Type, ce2Type; int ce_SelectRow;
         String StorageUse, StoragePumpUse, StoragePump; double Vs;
         String[] SystemType = { "보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
-        String[] ceType = { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방" };
+        String[] ceType = { "실내기", "방열기", "팬코일유닛", "복사난방" };
         double PipeD, PipeInsD, PipeIns_Ramda;
         String PipeIns;
         double ZoneArea;
@@ -49,8 +49,8 @@ namespace main.contents
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '난방시스템'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.Load(Program.gPath + "images/HeatingSystem/BoilerSystem.png");
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            //pictureBox1.Load(Program.gPath + "images/HeatingSystem/BoilerSystem.png");
+            //pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
             //복합설비 콤보박스  
             Complex_comboBox.Items.Clear();
@@ -247,6 +247,8 @@ namespace main.contents
             if (MainSystem_comboBox.SelectedItem != null)
             {
                 MainSystem = MainSystem_comboBox.SelectedItem.ToString();
+                LoadImage();
+                MainSystemImage(MainSystem, "신규");
                 LoadtabPage(MainSystem);
                 if (MainSystem == Sub1System)
                 {
@@ -256,6 +258,11 @@ namespace main.contents
                 {
                     MessageBox.Show("이미 Sub2설비로 선택되어 있습니다. 다른 설비를 선택하세요.");
                 }
+
+                if (MainSystem == "지열 히트펌프" || MainSystem == "지하수 히트펌프")
+                { GroundImage("지열","신규"); }
+                else
+                { GroundImage(null, "신규"); }
             }
             else
             {
@@ -277,6 +284,10 @@ namespace main.contents
                 {
                     MessageBox.Show("이미 Sub2설비로 선택되어 있습니다. 다른 설비를 선택하세요.");
                 }
+                if (Sub1System == "지열 히트펌프" || Sub1System == "지하수 히트펌프")
+                { GroundImage("지열", "신규"); }
+                else
+                { GroundImage(null, "신규"); }
             }
             else
             {
@@ -298,6 +309,10 @@ namespace main.contents
                 {
                     MessageBox.Show("이미 Sub1설비로 선택되어 있습니다. 다른 설비를 선택하세요.");
                 }
+                if (Sub2System == "지열 히트펌프" || Sub2System == "지하수 히트펌프")
+                { GroundImage("지열", "신규"); }
+                else
+                { GroundImage(null, "신규"); }
             }
             else
             {
@@ -333,7 +348,7 @@ namespace main.contents
             }
             else if (Sub1System == "외기 히트펌프" || Sub1System == "지열 히트펌프" || Sub1System == "지하수 히트펌프")
             {
-                Load_HPForm(Sub1System);
+                Load_HPForm(Sub1System);               
             }
             else if (MainSystem == "태양열시스템")
             {
@@ -353,7 +368,7 @@ namespace main.contents
             }
             else if (Sub2System == "외기 히트펌프" || Sub2System == "지열 히트펌프" || Sub2System == "지하수 히트펌프")
             {
-                Load_HPForm(Sub2System);
+                Load_HPForm(Sub2System);              
             }
             else if (Sub2System == "태양열시스템")
             {
@@ -901,7 +916,7 @@ namespace main.contents
                     {
                         AS_dataGridView.Rows[nRow].Cells[k].Value = User_Value[0][k - 1];
                     }
-                   
+
                 }
             }
             catch { }
@@ -913,7 +928,7 @@ namespace main.contents
             for (int k = 0; k < AS_dataGridView.Rows.Count; k++)
             {
 
-                if (AS_dataGridView.Rows[k].Cells[8].Value == null )
+                if (AS_dataGridView.Rows[k].Cells[8].Value == null)
                 {
                     MessageBox.Show("흡수식온수기 대수를 입력하세요.");
                     break;
@@ -927,7 +942,7 @@ namespace main.contents
                 {
                     ASNum_nonsplit += AS_dataGridView.Rows[k].Cells[8].Value.ToString();
                 }
-                else if (AS_dataGridView.Rows[k].Cells[8].Value != null )
+                else if (AS_dataGridView.Rows[k].Cells[8].Value != null)
                 {
                     ASNum_nonsplit += AS_dataGridView.Rows[k].Cells[8].Value.ToString() + "+";
                 }
@@ -987,7 +1002,7 @@ namespace main.contents
             else if (HeatSource == "지열 히트펌프")
             {
                 nonsplit = SelectHP_nonsplit[1, 0];
-                GroundHP_DB heating_HP = new GroundHP_DB("장비일람표 적용", nonsplit, HeatSource,"난방");
+                GroundHP_DB heating_HP = new GroundHP_DB("장비일람표 적용", nonsplit, HeatSource, "난방");
                 DialogResult result = heating_HP.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -1196,7 +1211,7 @@ namespace main.contents
                 {
                     for (int k = 0; k < SelectGWHP_split.Count; k++)
                     {
-                        string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundWHP", "번호,명칭,연료,공급유형,정격용량,정격COP,정격소비전력,등급2용량,등급2COP,등급2소비전력", "번호='" + SelectGWHP_split[k] + "'");
+                        string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundWHP", "번호,명칭,연료,공급유형,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력", "번호='" + SelectGWHP_split[k] + "'");
                         for (int n = 0; n < User_Value.Length; n++)
                         {
 
@@ -1230,7 +1245,7 @@ namespace main.contents
                 {
                     for (int k = 0; k < SelectGroundHP_split.Count; k++)
                     {
-                        string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "번호,명칭,연료,공급유형,수직수평,정격용량,정격COP,정격소비전력,등급2용량,등급2COP,등급2소비전력", "번호='" + SelectGroundHP_split[k] + "'");
+                        string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "번호,명칭,연료,공급유형,수직수평,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력", "번호='" + SelectGroundHP_split[k] + "'");
                         for (int n = 0; n < User_Value.Length; n++)
                         {
 
@@ -1264,7 +1279,7 @@ namespace main.contents
                 {
                     for (int k = 0; k < SelectAirHP_split.Count; k++)
                     {
-                        string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "번호,명칭,연료,공급유형,정격용량,정격COP,정격소비전력,한랭지용량,한랭지COP,한랭지소비전력", "번호='" + SelectAirHP_split[k] + "'");
+                        string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "번호,명칭,연료,공급유형,난방정격용량,난방정격COP,난방정격소비전력,한랭지용량,한랭지COP,한랭지소비전력", "번호='" + SelectAirHP_split[k] + "'");
                         for (int n = 0; n < User_Value.Length; n++)
                         {
 
@@ -1473,6 +1488,7 @@ namespace main.contents
                     Vs_textBox.Visible = false;
                     Vs_label2.Visible = false;
                 }
+                StorageImage("신규");
             }
             else
             {
@@ -1942,6 +1958,7 @@ namespace main.contents
             if (ce1Type_comboBox.SelectedItem != null)
             {
                 ce1Type = ce1Type_comboBox.SelectedItem.ToString();
+                ce_Image(ce1Type, "신규");
             }
             else
             {
@@ -1954,6 +1971,7 @@ namespace main.contents
             if (ce2Type_comboBox.SelectedItem != null)
             {
                 ce2Type = ce2Type_comboBox.SelectedItem.ToString();
+                ce_Image(ce2Type, "신규");
                 if (ce1Type == ce2Type)
                 {
                     MessageBox.Show("공급설비1과 다른 종류의 공급설비를 선택하세요.");
@@ -2141,19 +2159,91 @@ namespace main.contents
         }
 
 
+        ///////////////////////////////////////그림 넣기///////////////////////////////////////////////////////////
 
 
 
+        private void LoadImage() // 1.분배설비 그림넣기
+        {
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형 = '분배설비'");
+            DistpictureBox.Size = new System.Drawing.Size(610, 254);
+            DistpictureBox.Location = new Point(0, 25);
+            DistpictureBox.Load(Program.gPath + Image[0][0]);
+            DistpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+        }
 
 
+        private void MainSystemImage(string type, string install)//2.냉방설비 그림
+        {
+           
+            string[][] image1 = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지",
+                "설비유형='" + type + "' And 설치유형='" + install + "'");
+            SyspictureBox.Size = new System.Drawing.Size(110, 170);
+            SyspictureBox.Location = new Point(0, 90);
+            SyspictureBox.Load(Program.gPath + image1[0][0]);
+            SyspictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+        }
 
+        private void StorageImage(string install)//2.난방설비 그림
+        {
+            if (StorageUse == "축열탱크 없음") 
+            {
+                StopictureBox.Visible = false;
+            }
+            else
+            {
+                string[][] stoimage = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형='저장설비' And 설치유형='"+install+"'");
+                StopictureBox.Visible = true;
+                StopictureBox.Size = new System.Drawing.Size(135, 135);
+                StopictureBox.Location = new Point(12, 98);
+                StopictureBox.Load(Program.gPath + stoimage[0][0]);
+                StopictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                StopictureBox.BackColor = Color.Transparent;
+                StopictureBox.Parent = DistpictureBox;
+            }
+        }
 
+        private void ce_Image(string _type, string _Install) //공급설비 그림 넣기
+        {
+            string[][] image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형= '공급설비' And 설비유형='" + _type + "' And 설치유형 = '"+_Install+"'");
+            if (_type == ce1Type)
+            {
+                ce1_pictureBox.Visible = true;
+                ce1_pictureBox.Size = new System.Drawing.Size(260, 60);
+                ce1_pictureBox.Location = new Point(250, 10);
+                ce1_pictureBox.Load(Program.gPath + image[0][0]);
+                ce1_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                ce1_pictureBox.BackColor = Color.Transparent;
+                ce1_pictureBox.Parent = DistpictureBox;
+            }
+            else if (_type == ce2Type)
+            {
+                ce2_pictureBox.Visible = true;
+                ce2_pictureBox.Size = new System.Drawing.Size(260, 60);
+                ce2_pictureBox.Location = new Point(250, 80);
+                ce2_pictureBox.Load(Program.gPath + image[0][0]);
+                ce2_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                ce2_pictureBox.BackColor = Color.Transparent;
+                ce2_pictureBox.Parent = DistpictureBox;
+            }
 
-
-
-
-
-
+        }
+        private void GroundImage(string 지열, string Install_f)  // 지열 그림
+        {
+            if(지열 == "지열")
+            {
+                SourcepictureBox.Visible = true;
+            }
+            else
+            {
+                SourcepictureBox.Visible= false;
+            }
+                string[][] image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "설비유형='지열' And 설치유형='" + Install_f + "'");
+                SourcepictureBox.Size = new System.Drawing.Size(250, 200);
+                SourcepictureBox.Location = new Point(0, 60);
+                SourcepictureBox.Load(Program.gPath + image[0][0]);
+                SourcepictureBox.SizeMode = PictureBoxSizeMode.Zoom;            
+        }
 
 
 
