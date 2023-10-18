@@ -76,7 +76,7 @@ namespace main.contents
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
             Num_f = NumTextBox.Text.ToString();
-
+            Num_f = Num_f;
             //시스템 콤보박스
             CoolingGeneratorSelect_comboBox.Items.Clear();
             CoolingGeneratorSelect_comboBox.Items.AddRange(Systemtype.ToArray());
