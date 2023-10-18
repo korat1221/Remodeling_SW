@@ -31,7 +31,7 @@ namespace main.contents
         String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System;
         String SelectBoiler_nonsplit, BoilerNum_nonsplit;
         String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit;
-        String SelectAS_nonsplit, ASNum_nonsplit;
+        String SelectAS_nonsplit, ASNum_nonsplit; String SelectDH_nonsplit;
         String[,] SelectHP_nonsplit = new String[3, 1], HPNum_nonsplit = new String[3, 1], HPSupply_nonsplit = new String[3, 1], HPControl_nonsplit = new String[3, 1]; //외기/지열/지하수 순 
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Num, Pump2Num;
         String ce1Type, ce2Type; int ce_SelectRow;
@@ -41,7 +41,7 @@ namespace main.contents
         double PipeD, PipeInsD, PipeIns_Ramda;
         String PipeIns;
         double ZoneArea;
-        ArrayList SelectZone_split = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList(); ArrayList SelectAirHP_split = new ArrayList(); ArrayList SelectGroundHP_split = new ArrayList(); ArrayList SelectGWHP_split = new ArrayList(); ArrayList SelectSolar_split = new ArrayList(); ArrayList SelectAS_split = new ArrayList();
+        ArrayList SelectZone_split = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList(); ArrayList SelectAirHP_split = new ArrayList(); ArrayList SelectGroundHP_split = new ArrayList(); ArrayList SelectGWHP_split = new ArrayList(); ArrayList SelectSolar_split = new ArrayList(); ArrayList SelectAS_split = new ArrayList(); ArrayList SelectDH_split = new ArrayList();
 
         public HeatingSystem()
         {
@@ -49,8 +49,6 @@ namespace main.contents
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '난방시스템'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            //pictureBox1.Load(Program.gPath + "images/HeatingSystem/BoilerSystem.png");
-            //pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
             //복합설비 콤보박스  
             Complex_comboBox.Items.Clear();
@@ -130,7 +128,7 @@ namespace main.contents
                 Name = Name_textBox.Text.ToString();
             }
         }
-
+        #region 존
         private void Zone_button_Click(object sender, EventArgs e)
         {
             Heating_Zone heatingzone = new Heating_Zone(Num, SelectZone_nonsplit);
@@ -167,7 +165,7 @@ namespace main.contents
                 else
                 {
                     SelectZone_split.Clear();
-                    SelectZone_split.Add(SelectZone_split);
+                    SelectZone_split.Add(nonSplit);
                     내용 = SelectZone_split[0].ToString();
                 }
                 Zone_textBox.Text = 내용;
@@ -175,6 +173,9 @@ namespace main.contents
             else { 내용 = ""; }
 
         }
+        #endregion
+
+        #region 생산
         /////////////////////////////////////////////////////생산////////////////////////////////////////////////////////////////////
 
         private void SystemLoacation_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -260,9 +261,11 @@ namespace main.contents
                 }
 
                 if (MainSystem == "지열 히트펌프" || MainSystem == "지하수 히트펌프")
-                { GroundImage("지열","신규"); }
+                { HeatSourceImage("지열", "신규"); }
+                else if (MainSystem == "지역난방")
+                { HeatSourceImage("지역난방", "신규"); }
                 else
-                { GroundImage(null, "신규"); }
+                { HeatSourceImage(null, "신규"); }
             }
             else
             {
@@ -285,9 +288,11 @@ namespace main.contents
                     MessageBox.Show("이미 Sub2설비로 선택되어 있습니다. 다른 설비를 선택하세요.");
                 }
                 if (Sub1System == "지열 히트펌프" || Sub1System == "지하수 히트펌프")
-                { GroundImage("지열", "신규"); }
+                { HeatSourceImage("지열", "신규"); }
+                else if (Sub1System == "지역난방")
+                { HeatSourceImage("지역난방", "신규"); }
                 else
-                { GroundImage(null, "신규"); }
+                { HeatSourceImage(null, "신규"); }
             }
             else
             {
@@ -310,9 +315,11 @@ namespace main.contents
                     MessageBox.Show("이미 Sub1설비로 선택되어 있습니다. 다른 설비를 선택하세요.");
                 }
                 if (Sub2System == "지열 히트펌프" || Sub2System == "지하수 히트펌프")
-                { GroundImage("지열", "신규"); }
+                { HeatSourceImage("지열", "신규"); }
+                else if (Sub2System == "지역난방")
+                { HeatSourceImage("지역난방", "신규"); }
                 else
-                { GroundImage(null, "신규"); }
+                { HeatSourceImage(null, "신규"); }
             }
             else
             {
@@ -337,7 +344,11 @@ namespace main.contents
             else if (MainSystem == "흡수식온수기")
             {
                 Load_ASForm();
+            }else if(MainSystem =="지역난방")
+            {
+                Load_DHForm();
             }
+            
         }
 
         private void Sub1UserList_button_Click(object sender, EventArgs e)
@@ -348,15 +359,19 @@ namespace main.contents
             }
             else if (Sub1System == "외기 히트펌프" || Sub1System == "지열 히트펌프" || Sub1System == "지하수 히트펌프")
             {
-                Load_HPForm(Sub1System);               
+                Load_HPForm(Sub1System);
             }
-            else if (MainSystem == "태양열시스템")
+            else if (Sub1System == "태양열시스템")
             {
                 Load_SolarForm();
             }
-            else if (MainSystem == "흡수식온수기")
+            else if (Sub1System == "흡수식온수기")
             {
                 Load_ASForm();
+            }
+            else if (Sub1System == "지역난방")
+            {
+                Load_DHForm();
             }
         }
 
@@ -368,15 +383,19 @@ namespace main.contents
             }
             else if (Sub2System == "외기 히트펌프" || Sub2System == "지열 히트펌프" || Sub2System == "지하수 히트펌프")
             {
-                Load_HPForm(Sub2System);              
+                Load_HPForm(Sub2System);
             }
             else if (Sub2System == "태양열시스템")
             {
                 Load_SolarForm();
             }
-            else if (MainSystem == "흡수식온수기")
+            else if (Sub2System == "흡수식온수기")
             {
                 Load_ASForm();
+            }
+            else if (Sub2System == "지역난방")
+            {
+                Load_DHForm();
             }
         }
 
@@ -404,7 +423,9 @@ namespace main.contents
             }
         }
 
+        #endregion
 
+        #region 보일러
         /////////////////////////////////////////////////////보일러////////////////////////////////////////////////////////////////////
         private void Load_BoilerForm()
         {
@@ -591,6 +612,9 @@ namespace main.contents
             else { return; }
 
         }
+        #endregion
+
+        #region 태양열
         /////////////////////////////////////////////////////태양열////////////////////////////////////////////////////////////////////
         private void Load_SolarForm()
         {
@@ -822,6 +846,10 @@ namespace main.contents
             else { return; }
 
         }
+
+        #endregion
+
+        #region 흡수식온수기
         /////////////////////////////////////////////////////흡수식온수기////////////////////////////////////////////////////////////////////
         private void Load_ASForm()
         {
@@ -855,14 +883,14 @@ namespace main.contents
                         SelectAS_split.Add(item.ToString());
                     }
 
-                    string[][] ASName = Program.DB.getValue(DB.type.ProjDB, "User_AS", "명칭", "번호 = '" + SelectAS_split[0].ToString() + "'");
+                    string[][] ASName = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호", "번호 = '" + SelectAS_split[0].ToString() + "'");
                     내용 = ASName[0][0] + " 외 " + (SelectAS_split.Count - 1).ToString() + "개";
                 }
                 else
                 {
                     SelectAS_split.Clear();
                     SelectAS_split.Add(nonSplit);
-                    string[][] ASName = Program.DB.getValue(DB.type.ProjDB, "User_AS", "명칭", "번호 = '" + SelectAS_split[0].ToString() + "'");
+                    string[][] ASName = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호", "번호 = '" + SelectAS_split[0].ToString() + "'");
                     내용 = ASName[0][0];
                 }
 
@@ -903,12 +931,13 @@ namespace main.contents
                 AS_dataGridView.Columns.Add("A5", "온수.입구온도.[℃]");
                 AS_dataGridView.Columns.Add("A6", "온수.출구온도.[℃]");
                 AS_dataGridView.Columns.Add("A7", "대기전력.[W]");
-                AS_dataGridView.Columns.Add("A8", "대수.[EA]");
+                AS_dataGridView.Columns.Add("A8", "통합성능.[-]");
+                AS_dataGridView.Columns.Add("A9", "대수.[EA]");
                 AS_dataGridView.Columns[0].Width = 30;
 
                 for (int n = 0; n < SelectAS_split.Count; n++)
                 {
-                    string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_AS", "번호,연료,난방용량,난방성능,온수입구온도,온수출구온도,대기전력,통합성능,대수", "번호 = '" + SelectAS_split[n].ToString() + "'");
+                    string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호,연료,난방용량,난방성능,온수입구온도,온수출구온도,대기전력,통합성능,대수", "번호 = '" + SelectAS_split[n].ToString() + "'");
 
                     AS_dataGridView.Rows.Add();
                     int nRow = AS_dataGridView.Rows.Count - 1;
@@ -938,13 +967,13 @@ namespace main.contents
 
             for (int k = 0; k < AS_dataGridView.Rows.Count; k++)
             {
-                if (k == AS_dataGridView.Rows.Count - 1 && AS_dataGridView.Rows[k].Cells[8].Value != null)
+                if (k == AS_dataGridView.Rows.Count - 1 && AS_dataGridView.Rows[k].Cells[9].Value != null)
                 {
-                    ASNum_nonsplit += AS_dataGridView.Rows[k].Cells[8].Value.ToString();
+                    ASNum_nonsplit += AS_dataGridView.Rows[k].Cells[9].Value.ToString();
                 }
-                else if (AS_dataGridView.Rows[k].Cells[8].Value != null)
+                else if (AS_dataGridView.Rows[k].Cells[9].Value != null)
                 {
-                    ASNum_nonsplit += AS_dataGridView.Rows[k].Cells[8].Value.ToString() + "+";
+                    ASNum_nonsplit += AS_dataGridView.Rows[k].Cells[9].Value.ToString() + "+";
                 }
             }
         }
@@ -964,17 +993,125 @@ namespace main.contents
                     }
                     for (int k = 0; k < AS_dataGridView.Rows.Count; k++)
                     {
-                        AS_dataGridView.Rows[k].Cells[8].Value = AS_split[k];
+                        AS_dataGridView.Rows[k].Cells[9].Value = AS_split[k];
                     }
                 }
                 else
                 {
-                    AS_dataGridView.Rows[0].Cells[8].Value = nonSplit;
+                    AS_dataGridView.Rows[0].Cells[9].Value = nonSplit;
                 }
             }
             else { return; }
 
         }
+
+        #endregion
+
+        #region 지역난방
+        /////////////////////////////////////////////////////지역난방///////////////////////////////////////////////////////////////////
+        private void Load_DHForm()
+        {
+            DH_DB heating_DH = new DH_DB("장비일람표 적용", SelectDH_nonsplit);
+            DialogResult result = heating_DH.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    if (heating_DH.SelectDH != null)
+                    {
+                        SelectDH_nonsplit = heating_DH.SelectDH;
+                        Split_DH(heating_DH.SelectDH);
+                    }
+                }
+                catch { }
+            }
+        }
+
+        private void Split_DH(String nonSplit)
+        {
+            String 내용;
+            if (nonSplit != null)
+            {
+                if (nonSplit.Contains('+'))
+                {
+                    string[] token = nonSplit.Split('+');
+                    SelectDH_split.Clear();
+                    foreach (var item in token)
+                    {
+                        SelectDH_split.Add(item.ToString());
+                    }
+
+                    string[][] DHName = Program.DB.getValue(DB.type.ProjDB, "User_DH", "명칭", "번호 = '" + SelectDH_split[0].ToString() + "'");
+                    내용 = DHName[0][0] + " 외 " + (SelectDH_split.Count - 1).ToString() + "개";
+                }
+                else
+                {
+                    SelectDH_split.Clear();
+                    SelectDH_split.Add(nonSplit);
+                    string[][] DHName = Program.DB.getValue(DB.type.ProjDB, "User_DH", "명칭", "번호 = '" + SelectDH_split[0].ToString() + "'");
+                    내용 = DHName[0][0];
+                }
+
+                if (MainSystem == "지역난방")
+                {
+                    MainUserList_textBox.Text = 내용;
+                }
+                else if (Sub1System == "지역난방")
+                {
+                    Sub1UserList_textBox.Text = 내용;
+                }
+                else if (Sub2System == "지역난방")
+                {
+                    Sub2UserList_textBox.Text = 내용;
+                }
+                Load_DH_Table();
+            }
+            else
+            {
+                내용 = "";
+            }
+        }
+
+        private void Load_DH_Table()
+        {
+            try
+            {
+                DataGridViewCheckBoxColumn DH_checkBoxColumn = new DataGridViewCheckBoxColumn();
+                new StackedHeaderDecorator(DH_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+                DH_dataGridView.Columns.Clear();
+                DH_checkBoxColumn.HeaderText = "선택";
+                DH_checkBoxColumn.Name = "check";
+                DH_dataGridView.Columns.Add(DH_checkBoxColumn);
+                DH_dataGridView.Columns.Add("A1", "번호");
+                DH_dataGridView.Columns.Add("A2", "명칭");
+                DH_dataGridView.Columns.Add("A3", "용도");
+                DH_dataGridView.Columns.Add("A4", "용량.[kW]");
+                DH_dataGridView.Columns.Add("A5", "1차온도.공급온도.[℃]");
+                DH_dataGridView.Columns.Add("A6", "1차온도.환수온도.[℃]");
+                DH_dataGridView.Columns.Add("A7", "2차온도.공급온도.[℃]");
+                DH_dataGridView.Columns.Add("A8", "2차온도.환수온도.[℃]");
+                DH_dataGridView.Columns[0].Width = 30;
+
+                for (int n = 0; n < SelectDH_split.Count; n++)
+                {
+                    string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_DH", "번호,명칭,용도,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차", "번호 = '" + SelectDH_split[n].ToString() + "'");
+
+                    DH_dataGridView.Rows.Add();
+                    int nRow = DH_dataGridView.Rows.Count - 1;
+                    for (int k = 1; k < 9; k++)
+                    {
+                        DH_dataGridView.Rows[nRow].Cells[k].Value = User_Value[0][k - 1];
+                    }
+
+                }
+            }
+            catch { }
+        }
+
+
+        #endregion
+
+        #region 히트펌프
         /////////////////////////////////////////////////////히트펌프///////////////////////////////////////////////////////////////////
         private void Load_HPForm(String HeatSource)
         {
@@ -1470,6 +1607,10 @@ namespace main.contents
             else { return; }
 
         }
+
+        #endregion
+
+        #region 저장
         /////////////////////////////////////////////////////저장////////////////////////////////////////////////////////////////////
         private void StorageUse_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1602,6 +1743,9 @@ namespace main.contents
             StoragePump_dataGridView.Rows[0].Cells[8].Value = 양정;
         }
 
+        #endregion
+
+        #region 분배
         /////////////////////////////////////////////////////분배////////////////////////////////////////////////////////////////////
         ///
         private void PipeD_textBox_TextChanged(object sender, EventArgs e)
@@ -1952,6 +2096,10 @@ namespace main.contents
                 }
             }
         }
+
+        #endregion
+
+        #region 공급
         /////////////////////////////////////////////////////공급////////////////////////////////////////////////////////////////////
         private void ce1Type_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -2153,12 +2301,14 @@ namespace main.contents
                 존번호 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(0, index - 1);
                 공급설비 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(index, ce_dataGridView.Rows[n].Cells[1].Value.ToString().Length - index);
                 Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,난방시스템,공급설비종류,공급설비,설치위치"
-                , "'" + 존번호 + "','" + Num + "','" + ce_dataGridView.Rows[n].Cells[2].Value + "'+'" +
+                , "'" + 존번호 + "','" + Num + "','" + ce_dataGridView.Rows[n].Cells[2].Value+ "','" +
                     공급설비 + "','" + ce_dataGridView.Rows[n].Cells[7].Value + "'", "");
             }
         }
 
+        #endregion
 
+        #region 이미지
         ///////////////////////////////////////그림 넣기///////////////////////////////////////////////////////////
 
 
@@ -2175,7 +2325,7 @@ namespace main.contents
 
         private void MainSystemImage(string type, string install)//2.냉방설비 그림
         {
-           
+
             string[][] image1 = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지",
                 "설비유형='" + type + "' And 설치유형='" + install + "'");
             SyspictureBox.Size = new System.Drawing.Size(110, 170);
@@ -2186,13 +2336,13 @@ namespace main.contents
 
         private void StorageImage(string install)//2.난방설비 그림
         {
-            if (StorageUse == "축열탱크 없음") 
+            if (StorageUse == "축열탱크 없음")
             {
                 StopictureBox.Visible = false;
             }
             else
             {
-                string[][] stoimage = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형='저장설비' And 설치유형='"+install+"'");
+                string[][] stoimage = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형='저장설비' And 설치유형='" + install + "'");
                 StopictureBox.Visible = true;
                 StopictureBox.Size = new System.Drawing.Size(135, 135);
                 StopictureBox.Location = new Point(12, 98);
@@ -2205,7 +2355,7 @@ namespace main.contents
 
         private void ce_Image(string _type, string _Install) //공급설비 그림 넣기
         {
-            string[][] image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형= '공급설비' And 설비유형='" + _type + "' And 설치유형 = '"+_Install+"'");
+            string[][] image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형= '공급설비' And 설비유형='" + _type + "' And 설치유형 = '" + _Install + "'");
             if (_type == ce1Type)
             {
                 ce1_pictureBox.Visible = true;
@@ -2228,27 +2378,31 @@ namespace main.contents
             }
 
         }
-        private void GroundImage(string 지열, string Install_f)  // 지열 그림
+        private void HeatSourceImage(string HeatSource, string Install_f)  // 지열 그림
         {
-            if(지열 == "지열")
+            if (HeatSource == "지열" || HeatSource == "지역난방")
             {
                 SourcepictureBox.Visible = true;
             }
             else
             {
-                SourcepictureBox.Visible= false;
+                SourcepictureBox.Visible = false;
             }
-                string[][] image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "설비유형='지열' And 설치유형='" + Install_f + "'");
+            try
+            {
+                string[][] image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형 = '열원' AND 설비유형='" + HeatSource + "' And 설치유형='" + Install_f + "'");
                 SourcepictureBox.Size = new System.Drawing.Size(250, 200);
                 SourcepictureBox.Location = new Point(0, 60);
                 SourcepictureBox.Load(Program.gPath + image[0][0]);
-                SourcepictureBox.SizeMode = PictureBoxSizeMode.Zoom;            
+                SourcepictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            catch { }
+
         }
 
+        #endregion
 
-
-
-
+        #region 세이브
         private void Save_button_Click(object sender, EventArgs e)
         {
             if (Name == null)
@@ -2261,14 +2415,12 @@ namespace main.contents
             }
 
         }
-
-
-
         private void Save()
         {
             NonSplit_BoilerNum();
             NonSplit_Solar();
             NonSplit_HP();
+            NonSplit_AS();
             Save_Pump();
             Save_ce();
 
@@ -2279,6 +2431,8 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,외기히트펌프번호,외기히트펌프공급방식,외기히트펌프제어방식,외기히트펌프대수", "'" + Num_textBox.Text + "','" + SelectHP_nonsplit[0, 0] + "','" + HPSupply_nonsplit[0, 0] + "','" + HPControl_nonsplit[0, 0] + "','" + HPNum_nonsplit[0, 0] + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,지열히트펌프번호,지열히트펌프공급방식,지열히트펌프제어방식,지열히트펌프대수", "'" + Num_textBox.Text + "','" + SelectHP_nonsplit[1, 0] + "','" + HPSupply_nonsplit[1, 0] + "','" + HPControl_nonsplit[1, 0] + "','" + HPNum_nonsplit[1, 0] + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,지하수히트펌프번호,지하수히트펌프공급방식,지하수히트펌프제어방식,지하수히트펌프대수", "'" + Num_textBox.Text + "','" + SelectHP_nonsplit[2, 0] + "','" + HPSupply_nonsplit[2, 0] + "','" + HPControl_nonsplit[2, 0] + "','" + HPNum_nonsplit[2, 0] + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,흡수식온수기번호,흡수식온수기대수", "'" + Num_textBox.Text + "','" + SelectAS_nonsplit + "','" + ASNum_nonsplit + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,지역난방번호", "'" + Num_textBox.Text + "','" + SelectDH_nonsplit + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "'" + Num_textBox.Text + "','" + PumpUse + "','" + PumpMethod + "','" + Pump1 + "','" + Pump2 + "','" + Pump1Valve + "','" + Pump2Valve + "','" + Pump1Control + "','" + Pump2Control + "','" + Pump1Num.ToString() + "','" + Pump2Num.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,공급설비1종류,공급설비2종류", "'" + Num_textBox.Text + "','" + ce1Type + "','" + ce2Type + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,축열유무,축열펌프유무,축열펌프,축열용량", "'" + Num_textBox.Text + "','" + StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "'", "번호");
@@ -2356,6 +2510,9 @@ namespace main.contents
             PipeIns_textBox.Text = null;
         }
 
+        #endregion
+
+        #region 로드
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             reset();
@@ -2426,29 +2583,51 @@ namespace main.contents
 
             try
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "외기히트펌프종류,외기히트펌프공급방식,외기히트펌프제어방식,외기히트펌프대수," +
-                    "지열히트펌프종류,지열히트펌프공급방식,지열히트펌프제어방식,지열히트펌프대수," +
-                    "지하수히트펌프종류,지하수히트펌프공급방식,지하수히트펌프제어방식,지하수히트펌프대수", "번호 = '" + ID + "'");
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "외기히트펌프번호,외기히트펌프공급방식,외기히트펌프제어방식,외기히트펌프대수," +
+                    "지열히트펌프번호,지열히트펌프공급방식,지열히트펌프제어방식,지열히트펌프대수," +
+                    "지하수히트펌프번호,지하수히트펌프공급방식,지하수히트펌프제어방식,지하수히트펌프대수", "번호 = '" + ID + "'");
                 for (int i = 0; i < 3; i++)
                 {
                     String HeatSource;
                     if (i == 0) { HeatSource = "외기 히트펌프"; } else if (i == 1) { HeatSource = "지열 히트펌프"; } else { HeatSource = "지하수 히트펌프"; }
-                    SelectHP_nonsplit[i, 0] = Value[0][0 + 3 * i];
-                    Split_HP(SelectHP_nonsplit[i, 0], HeatSource);
+                    if (Value[0][0 + 3 * i] != "")
+                    {
+                        SelectHP_nonsplit[i, 0] = Value[0][0 + 3 * i];
+                        Split_HP(SelectHP_nonsplit[i, 0], HeatSource);
 
-                    HPSupply_nonsplit[i, 0] = Value[0][1 + 3 * i];
-                    Split_HPSupply(HPSupply_nonsplit[i, 0]);
+                        HPSupply_nonsplit[i, 0] = Value[0][1 + 3 * i];
+                        Split_HPSupply(HPSupply_nonsplit[i, 0]);
 
-                    HPControl_nonsplit[i, 0] = Value[0][2 + 3 * i];
-                    Split_HPControl(HPSupply_nonsplit[i, 0]);
+                        HPControl_nonsplit[i, 0] = Value[0][2 + 3 * i];
+                        Split_HPControl(HPControl_nonsplit[i, 0]);
 
-                    HPNum_nonsplit[i, 0] = Value[0][3 + 3 * i];
-                    Split_HPNum(HPSupply_nonsplit[i, 0]);
+                        HPNum_nonsplit[i, 0] = Value[0][3 + 3 * i];
+                        Split_HPNum(HPNum_nonsplit[i, 0]);
+                    }
                 }
 
             }
             catch { }
 
+            try
+            {
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "흡수식온수기번호,흡수식온수기대수", "번호 = '" + ID + "'");
+                SelectAS_nonsplit = Value[0][0];
+                Split_AS(SelectAS_nonsplit);
+
+                ASNum_nonsplit = Value[0][1];
+                Split_ASNum(ASNum_nonsplit);
+            }
+            catch { }
+
+            try
+            {
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "지역난방번호", "번호 = '" + ID + "'");
+                SelectDH_nonsplit = Value[0][0];
+                Split_DH(SelectDH_nonsplit);
+
+            }
+            catch { }
 
             try
             {
@@ -2456,56 +2635,60 @@ namespace main.contents
 
                 PumpUse_comboBox.SelectedItem = Value[0][0];
                 PumpUse = Value[0][0];
+                if (PumpUse == "펌프 있음")
+                { 
+                    Pump_dataGridView.Visible = true; 
+                    PumpMethod_comboBox.SelectedItem = Value[0][1];
+                    PumpMethod = Value[0][1];
 
-                PumpMethod_comboBox.SelectedItem = Value[0][1];
-                PumpMethod = Value[0][1];
-
-                Pump1 = Value[0][2];
-                if (Pump1 != null && Pump1 != "")
-                {
-                    string[][] Pump_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + Pump1.ToString() + "'");
-                    Pump1_textBox.Text = Pump_Value[0][0];
-                    if (Pump_dataGridView.Rows.Count == 0)
+                    Pump1 = Value[0][2];
+                    if (Pump1 != null && Pump1 != "")
                     {
-                        Pump_dataGridView.Rows.Add();
+                        string[][] Pump_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + Pump1.ToString() + "'");
+                        Pump1_textBox.Text = Pump_Value[0][0];
+                        if (Pump_dataGridView.Rows.Count == 0)
+                        {
+                            Pump_dataGridView.Rows.Add();
+                        }
+                        Load_Pump_Table(0, Pump1);
                     }
-                    Load_Pump_Table(0, Pump1);
-                }
 
-                Pump2 = Value[0][3];
-                if (Pump2 != null && Pump2 != "")
-                {
-                    string[][] Pump_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + Pump2.ToString() + "'");
-                    Pump2_textBox.Text = Pump_Value[0][0];
-                    if (Pump_dataGridView.Rows.Count == 1)
+                    Pump2 = Value[0][3];
+                    if (Pump2 != null && Pump2 != "")
                     {
-                        Pump_dataGridView.Rows.Add();
+                        string[][] Pump_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + Pump2.ToString() + "'");
+                        Pump2_textBox.Text = Pump_Value[0][0];
+                        if (Pump_dataGridView.Rows.Count == 1)
+                        {
+                            Pump_dataGridView.Rows.Add();
+                        }
+                        Load_Pump_Table(1, Pump2);
                     }
-                    Load_Pump_Table(1, Pump2);
-                }
 
-                Pump1Valve = Value[0][4];
-                Pump2Valve = Value[0][5];
-                Pump1Control = Value[0][6];
-                Pump2Control = Value[0][7];
-                Pump1Num = Convert.ToInt16(Value[0][8]);
-                Pump2Num = Convert.ToInt16(Value[0][9]);
+                    Pump1Valve = Value[0][4];
+                    Pump2Valve = Value[0][5];
+                    Pump1Control = Value[0][6];
+                    Pump2Control = Value[0][7];
+                    Pump1Num = Convert.ToInt16(Value[0][8]);
+                    Pump2Num = Convert.ToInt16(Value[0][9]);
 
-                if (Pump_dataGridView.Rows.Count > 0)
-                {
-                    Pump_dataGridView.Rows[0].Cells[9].Value = Pump1Valve;
-                    Pump_dataGridView.Rows[0].Cells[10].Value = Pump1Control;
-                    Pump_dataGridView.Rows[0].Cells[11].Value = Pump1Num;
+                    if (Pump_dataGridView.Rows.Count > 0)
+                    {
+                        Pump_dataGridView.Rows[0].Cells[9].Value = Pump1Valve;
+                        Pump_dataGridView.Rows[0].Cells[10].Value = Pump1Control;
+                        Pump_dataGridView.Rows[0].Cells[11].Value = Pump1Num;
+                    }
+                    else if (Pump_dataGridView.Rows.Count > 1)
+                    {
+                        Pump_dataGridView.Rows[0].Cells[9].Value = Pump1Valve;
+                        Pump_dataGridView.Rows[0].Cells[10].Value = Pump1Control;
+                        Pump_dataGridView.Rows[0].Cells[11].Value = Pump1Num;
+                        Pump_dataGridView.Rows[1].Cells[9].Value = Pump2Valve;
+                        Pump_dataGridView.Rows[1].Cells[10].Value = Pump2Control;
+                        Pump_dataGridView.Rows[1].Cells[11].Value = Pump2Num;
+                    }
                 }
-                else if (Pump_dataGridView.Rows.Count > 1)
-                {
-                    Pump_dataGridView.Rows[0].Cells[9].Value = Pump1Valve;
-                    Pump_dataGridView.Rows[0].Cells[10].Value = Pump1Control;
-                    Pump_dataGridView.Rows[0].Cells[11].Value = Pump1Num;
-                    Pump_dataGridView.Rows[1].Cells[9].Value = Pump2Valve;
-                    Pump_dataGridView.Rows[1].Cells[10].Value = Pump2Control;
-                    Pump_dataGridView.Rows[1].Cells[11].Value = Pump2Num;
-                }
+                else { Pump_dataGridView.Visible = false; }
             }
             catch { }
 
@@ -2572,14 +2755,22 @@ namespace main.contents
 
                 StoragePumpUse = Value[0][1];
                 StoragePump_comboBox.SelectedItem = StoragePumpUse;
-
-                StoragePump = Value[0][2];
-
-                if (StoragePump_dataGridView.Rows.Count == 0)
+                if(StoragePumpUse == "축열펌프 없음")
                 {
-                    StoragePump_dataGridView.Rows.Add();
+                    StoragePump_dataGridView.Visible = false;
                 }
-                Load_StoragePump(StoragePump);
+                else
+                {
+                    StoragePump_dataGridView.Visible = true;
+                    StoragePump = Value[0][2];
+
+                    if (StoragePump_dataGridView.Rows.Count == 0)
+                    {
+                        StoragePump_dataGridView.Rows.Add();
+                    }
+                    Load_StoragePump(StoragePump);
+                }
+              
 
                 if (Value[0][3] != null && Value[0][3] != "")
                 {
@@ -2610,11 +2801,15 @@ namespace main.contents
 
         }
 
+        #endregion
+
+        #region 리셋 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {
             Num_textBox.Text = ID;
             Num = ID;
         }
 
+        #endregion
     }
 }

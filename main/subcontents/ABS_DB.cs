@@ -102,7 +102,7 @@ namespace main.subcontents.HeatingSystem
             {
                 if (HC == "난방")
                 {
-                    string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_AS", "번호,연료,난방용량,난방성능,온수입구온도,온수출구온도,대기전력,통합성능", "난방냉방 ='냉난방'");
+                    string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호,연료,난방용량,난방성능,온수입구온도,온수출구온도,대기전력,통합성능", "난방냉방 ='냉난방'");
                     for (int n = 0; n < User_Value.Length; n++)
                     {
 

@@ -89,12 +89,13 @@ namespace main.subcontents.HeatingSystem
                     HP_dataGridView.Columns.Add("A9", "(5℃).용량.[kW]");
                     HP_dataGridView.Columns.Add("A10", "(5℃).COP.[-]");
                     HP_dataGridView.Columns.Add("A11", "(5℃).소비전력.[kW]");
+                    load_table_DB("장비일람표 적용");
                 }
                
 
             }
         }
-        void load_table_DB(String DefaultUse, String Carrier, String HeatSource)
+        void load_table_DB(String DefaultUse)
         {
             HP_dataGridView.Rows.Clear();
             if (DefaultUse == "기본DB 적용")
