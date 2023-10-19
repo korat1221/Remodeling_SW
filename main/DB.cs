@@ -147,7 +147,13 @@ namespace main
             //요구량 baseDB
             if (GetFileSize("basedb_hcneed.sqlite") > 0)
             {
+#if !DEBUG
+
                 baseDB_hcneed = openDBInMemry("basedb_hcneed.sqlite");
+#else
+                baseDB_hcneed = new SQLiteConnection(@"Data Source=basedb_hcneed.sqlite");
+                baseDB_hcneed.Open();
+#endif
 
                 if (baseDB_hcneed.State != ConnectionState.Open)
                 {
@@ -168,7 +174,12 @@ namespace main
             //조명 baseDB
             if (GetFileSize("basedb_lighting.sqlite") > 0)
             {
+#if !DEBUG
                 baseDB_lighting = openDBInMemry("basedb_lighting.sqlite");
+#else
+                baseDB_lighting = new SQLiteConnection(@"Data Source=basedb_lighting.sqlite");
+                baseDB_lighting.Open();
+#endif
 
                 if (baseDB_lighting.State != ConnectionState.Open)
                 {
@@ -188,7 +199,12 @@ namespace main
             //난방 baseDB
             if (GetFileSize("basedb_heating.sqlite") > 0)
             {
+#if !DEBUG
                 baseDB_heating = openDBInMemry("basedb_heating.sqlite");
+#else
+                baseDB_heating = new SQLiteConnection(@"Data Source=basedb_heating.sqlite");
+                baseDB_heating.Open();
+#endif
 
                 if (baseDB_heating.State != ConnectionState.Open)
                 {
@@ -208,7 +224,12 @@ namespace main
             //냉방 baseDB
             if (GetFileSize("basedb_cooling.sqlite") > 0)
             {
+#if !DEBUG
                 baseDB_cooling = openDBInMemry("basedb_cooling.sqlite");
+#else
+                baseDB_cooling = new SQLiteConnection(@"Data Source=basedb_cooling.sqlite");
+                baseDB_cooling.Open();
+#endif
 
                 if (baseDB_cooling.State != ConnectionState.Open)
                 {
@@ -229,7 +250,12 @@ namespace main
             //신재생 baseDB
             if (GetFileSize("basedb_resystem.sqlite") > 0)
             {
+#if !DEBUG
                 baseDB_resystem = openDBInMemry("basedb_resystem.sqlite");
+#else
+                baseDB_resystem = new SQLiteConnection(@"Data Source=basedb_resystem.sqlite");
+                baseDB_resystem.Open();
+#endif
 
                 if (baseDB_resystem.State != ConnectionState.Open)
                 {
@@ -251,7 +277,12 @@ namespace main
                 File.Copy("templ.sqlite", projPath, true);
             }
 
+#if !DEBUG
             projDB = openDBInMemry(projPath);
+#else
+            projDB = new SQLiteConnection(@"Data Source=" + projPath);
+            projDB.Open();
+#endif
 
             if (projDB.State != ConnectionState.Open)
             {
@@ -308,6 +339,7 @@ namespace main
         }
         public void saveProj()
         {
+#if !DEBUG
             if (gProjFName != "")
             {
                 var file = new SQLiteConnection(@"Data Source=" + gProjFName);
@@ -316,6 +348,7 @@ namespace main
                 projDB.BackupDatabase(file, "main", "main", -1, null, 0);
                 file.Close();
             }
+#endif
         }
 
         public void closeDB()
