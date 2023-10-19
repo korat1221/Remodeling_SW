@@ -673,7 +673,9 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "User_CoolingSystem", "번호,명칭,장비번호,장비명칭,DB유형,제어유형,외기냉방유무,설치대수",
                  "'" + Num_f + "','" + Name_f + "','" + Value[0] + "','" + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "'", "번호, 장비번호");
             }
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 

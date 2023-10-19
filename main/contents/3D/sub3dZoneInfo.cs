@@ -460,7 +460,9 @@ namespace main.contents
             }
 //           redrawList();
 
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
 
             return "[" + ret + "]";

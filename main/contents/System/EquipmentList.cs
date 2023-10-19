@@ -386,7 +386,9 @@ namespace main.contents
                  + Value[12]
                  + "'", "번호");
             }
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 
@@ -649,7 +651,9 @@ namespace main.contents
 
                  + "'", "번호");
             }
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 
@@ -859,7 +863,9 @@ namespace main.contents
 
                  + "'", "번호");
             }
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 
@@ -1094,7 +1100,9 @@ namespace main.contents
                  + Value[10]
                  + "'", "번호");
             }
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 
@@ -1305,7 +1313,9 @@ namespace main.contents
                 "'" + Value[0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "'", "번호");
             }
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 
@@ -1492,7 +1502,9 @@ namespace main.contents
                 "'" + Value[0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "'", "번호");
             }
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 
@@ -1813,7 +1825,9 @@ namespace main.contents
                   Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "'", "번호");
             }
 
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 
@@ -2105,7 +2119,9 @@ namespace main.contents
                  + "'", "번호");
             }
 
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 
@@ -2382,7 +2398,9 @@ namespace main.contents
                  + "'", "번호");
             }
 
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 
@@ -2643,7 +2661,9 @@ namespace main.contents
                  + Value[9]
                  + "'", "번호");
             }
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 
@@ -2882,7 +2902,9 @@ namespace main.contents
                  + Value[8]
                  + "'", "번호");
             }
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
         private void Load_ce()
@@ -3137,7 +3159,9 @@ namespace main.contents
                  + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','"
                  + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "'", "번호");
             }
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 
@@ -3361,7 +3385,9 @@ namespace main.contents
                  + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','"
                  + Value[11] + "','" + Value[12] + "','" + Value[13] + "'", "번호");
             }
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 
@@ -3549,7 +3575,9 @@ namespace main.contents
                  + Value[10]
                  + "'", "번호");
             }
+#if INMEMORY_DB
             Program.DB.saveProj();
+#endif
             MessageBox.Show("저장되었습니다.");
         }
 

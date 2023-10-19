@@ -8,6 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1722.45" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.117" />
