@@ -458,8 +458,9 @@ namespace main.contents
                     }
                 }
             }
- //           redrawList();
+//           redrawList();
 
+            Program.DB.saveProj();
             MessageBox.Show("저장되었습니다.");
 
             return "[" + ret + "]";

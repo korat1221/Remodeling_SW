@@ -2055,7 +2055,7 @@ Editor.prototype = {
 		let _setWallFloor = (cardi0, id0, cardi, id) => {
 			for (const [floor, fl] of Object.entries(floors)) {
 				if (fl.walls.find(el => el.cardi == cardi0 && el.id == id0)) {
-					let flr = parseInt(floor);
+					let flr = Math.floor(floor);
 					this.wall[cardi][id].floor = (flr >= 0) ? flr + 1 : flr;
 					return;
 				}
@@ -2068,7 +2068,7 @@ Editor.prototype = {
 				let el = space[i];
 
 				if (el.cardi == 'DOWN') {
-					let h = parseInt(this.wall[el.cardi][el.id].bbox[0][1]);
+					let h = Math.floor(this.wall[el.cardi][el.id].bbox[0][1]);
 
 					if (!floors0[h]) floors0[h] = {count:1,walls:[el]};
 					else {
@@ -2090,7 +2090,7 @@ Editor.prototype = {
 		let heights = Object.keys(floors0);
 
 		heights.sort((a,b) => {
-			return parseInt(a) - parseInt(b);
+			return Math.floor(a) - Math.floor(b);
 		});
 
 		i = -1;

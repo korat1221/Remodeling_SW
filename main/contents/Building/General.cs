@@ -425,6 +425,7 @@ namespace main.contents
             ReviewDate.ToString()
                  + "'", "프로젝트명");
 
+            Program.DB.saveProj();
             MessageBox.Show("저장되었습니다.");
         }
 
