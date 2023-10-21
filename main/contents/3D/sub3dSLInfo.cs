@@ -13,16 +13,20 @@ namespace main.contents
 {
     public partial class sub3dSLInfo : Form
     {
+        string sid = "";
         public sub3dSLInfo()
         {
             InitializeComponent();
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
-            String ID = main.MainContents.selID.Replace("board-", "");
-            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체,번호", "아이디 = '" + ID + "'");
+            if (main.MainContents.selID != sid)
+            {
+                sid = main.MainContents.selID;
 
-            
+                String ID = main.MainContents.selID.Replace("board-", "");
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체,번호", "아이디 = '" + ID + "'");
+            }
         }
     }
 }

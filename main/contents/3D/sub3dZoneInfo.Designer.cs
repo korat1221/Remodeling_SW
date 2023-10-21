@@ -50,12 +50,6 @@
             // 
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
-            tabControl1.Dock = DockStyle.Fill;
-            tabControl1.Location = new Point(0, 0);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(664, 450);
-            tabControl1.TabIndex = 0;
             tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
@@ -69,17 +63,23 @@
             tabControl1.DisplayStyleProvider.TextColor = SystemColors.ControlText;
             tabControl1.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
+            tabControl1.Dock = DockStyle.Fill;
             tabControl1.HotTrack = true;
             tabControl1.ItemSize = new Size(128, 20);
+            tabControl1.Location = new Point(0, 0);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(664, 450);
             tabControl1.SizeMode = TabSizeMode.Fixed;
+            tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
             tabPage1.Controls.Add(dataGridView2);
-            tabPage1.Location = new Point(4, 24);
+            tabPage1.Location = new Point(4, 25);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(656, 422);
+            tabPage1.Size = new Size(656, 421);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "존 정보";
             tabPage1.UseVisualStyleBackColor = true;
@@ -130,10 +130,10 @@
             // tabPage2
             // 
             tabPage2.Controls.Add(dataGridView1);
-            tabPage2.Location = new Point(4, 24);
+            tabPage2.Location = new Point(4, 25);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(656, 422);
+            tabPage2.Size = new Size(656, 421);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "존 외피 정보";
             tabPage2.UseVisualStyleBackColor = true;
@@ -178,12 +178,13 @@
             dataGridViewCellStyle6.SelectionForeColor = Color.Black;
             dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(650, 416);
+            dataGridView1.Size = new Size(650, 415);
             dataGridView1.TabIndex = 97;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
             dataGridView1.CurrentCellDirtyStateChanged += dataGridView1_CurrentCellDirtyStateChanged;
             dataGridView1.DataError += onDataError;
+            dataGridView1.SortCompare += dataGridView1_SortCompare;
             // 
             // sub3dZoneInfo
             // 

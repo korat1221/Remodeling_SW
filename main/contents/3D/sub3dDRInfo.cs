@@ -13,31 +13,37 @@ namespace main.contents
 {
     public partial class sub3dDRInfo : Form
     {
+        string sid = "";
         public sub3dDRInfo()
         {
             InitializeComponent();
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
-            String ID = main.MainContents.selID.Replace("board-", "");
-            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체,번호", "아이디 = '" + ID + "'");
+            if (main.MainContents.selID != sid)
+            {
+                sid = main.MainContents.selID;
 
-            if (rec.Length > 0)
-            {
-                textBox3.Text = rec[0][2];
-                textBox1.Text = Double.Parse(rec[0][0]).ToString("#.##");
-                textBox2.Text = rec[0][1];
-            }
+                String ID = main.MainContents.selID.Replace("board-", "");
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체,번호", "아이디 = '" + ID + "'");
 
-            if (ID.IndexOf("_INWALL_") > 0)
-            {
-                label3.Show();
-                label1.Hide();
-            }
-            else
-            {
-                label1.Show();
-                label3.Hide();
+                if (rec.Length > 0)
+                {
+                    textBox3.Text = rec[0][2];
+                    textBox1.Text = Double.Parse(rec[0][0]).ToString("#.##");
+                    textBox2.Text = rec[0][1];
+                }
+
+                if (ID.IndexOf("_INWALL_") > 0)
+                {
+                    label3.Show();
+                    label1.Hide();
+                }
+                else
+                {
+                    label1.Show();
+                    label3.Hide();
+                }
             }
         }
     }

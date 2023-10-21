@@ -13,6 +13,7 @@ namespace main.contents
 {
     public partial class sub3dZoneInfo : Form
     {
+        string sid = "";
         public sub3dZoneInfo()
         {
             InitializeComponent();
@@ -51,6 +52,9 @@ namespace main.contents
             dataGridView1.Columns[9].Width = 100;
             dataGridView1.Columns[10].Width = 100;
             dataGridView1.Columns[11].Width = 100;
+
+            dataGridView1.Rows.Add(null, "", "", "", null, null, "", "", "", "", null);
+
         }
         private void create_datagridview2()
         {
@@ -163,8 +167,14 @@ namespace main.contents
         }
         private void redrawList()
         {
-            dataGridView1.Rows.Clear();
             dataGridView2.Rows.Clear();
+
+            int n = dataGridView1.Rows.Count;
+
+            while (--n > 0)
+            {
+                dataGridView1.Rows.RemoveAt(n);
+            }
 
             {
                 int i = -1;
@@ -182,67 +192,73 @@ namespace main.contents
 
                 while (++i < rec.Length)
                 {
-                    dataGridView1.Rows.Add(null, rec[i][0], rec[i][1], rec[i][2], null, null, rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]), null);
+                    //      if (dataGridView1.isFilteredValues(null, rec[i][0], rec[i][1], rec[i][2], isWinType(rec[i][3]) ? rec[i][3] : "", isCWallType(rec[i][4]) ? rec[i][4] : "", rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]), isWinCW(rec[i][3]) ? rec[i][9] : ""))
+                    {
+                        dataGridView1.Rows.Add(null, rec[i][0], rec[i][1], rec[i][2], null, null, rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]), null);
 
-                    if (isWinType(rec[i][3]))
-                    {
-                        DataGridViewComboBoxCell TypeCombo = new DataGridViewComboBoxCell();
-                        TypeCombo.Items.Add("커튼월창");
-                        TypeCombo.Items.Add("창호");
-                        TypeCombo.Items.Add("외부출입문");
+                        if (isWinType(rec[i][3]))
+                        {
+                            DataGridViewComboBoxCell TypeCombo = new DataGridViewComboBoxCell();
+                            TypeCombo.Items.Add("커튼월창");
+                            TypeCombo.Items.Add("창호");
+                            TypeCombo.Items.Add("외부출입문");
 
-                        TypeCombo.Value = rec[i][3];
-                        dataGridView1.Rows[i].Cells[4] = TypeCombo;
-                        Load_ConstructionList(i, rec[i][3]);
-                    }
-                    else
-                    {
-                        DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
-                        TypeLabel.Value = rec[i][3];
-                        dataGridView1.Rows[i].Cells[4] = TypeLabel;
-                        TypeLabel.ReadOnly = true;
-                        Load_ConstructionList(i, rec[i][3]);
-                    }
-                    if (isCWallType(rec[i][4]))
-                    {
-                        DataGridViewComboBoxCell CWTypeCombo = new DataGridViewComboBoxCell();
-                        CWTypeCombo.Items.Add("유리부분");
-                        CWTypeCombo.Items.Add("패널부분");
-                        CWTypeCombo.Items.Add("출입문부분");
+                            TypeCombo.Value = rec[i][3];
+                            dataGridView1.Rows[i + 1].Cells[4] = TypeCombo;
+                            Load_ConstructionList(i, rec[i][3]);
+                        }
+                        else
+                        {
+                            DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
+                            TypeLabel.Value = rec[i][3];
+                            dataGridView1.Rows[i + 1].Cells[4] = TypeLabel;
+                            TypeLabel.ReadOnly = true;
+                            Load_ConstructionList(i, rec[i][3]);
+                        }
+                        if (isCWallType(rec[i][4]))
+                        {
+                            DataGridViewComboBoxCell CWTypeCombo = new DataGridViewComboBoxCell();
+                            CWTypeCombo.Items.Add("유리부분");
+                            CWTypeCombo.Items.Add("패널부분");
+                            CWTypeCombo.Items.Add("출입문부분");
 
-                        CWTypeCombo.Value = rec[i][4];
-                        dataGridView1.Rows[i].Cells[5] = CWTypeCombo;
-                    }
-                    else
-                    {
-                        DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
-                        TypeLabel.Value = "";
-                        dataGridView1.Rows[i].Cells[5] = TypeLabel;
-                        TypeLabel.ReadOnly = true;
-                    }
-                    if (isWinCW(rec[i][3])) //천창유무 
-                    {
-                        DataGridViewComboBoxCell RoofWinCombo = new DataGridViewComboBoxCell();
-                        RoofWinCombo.Items.Add("천창있음");
-                        RoofWinCombo.Items.Add("");
+                            CWTypeCombo.Value = rec[i][4];
+                            dataGridView1.Rows[i + 1].Cells[5] = CWTypeCombo;
+                        }
+                        else
+                        {
+                            DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
+                            TypeLabel.Value = "";
+                            dataGridView1.Rows[i + 1].Cells[5] = TypeLabel;
+                            TypeLabel.ReadOnly = true;
+                        }
+                        if (isWinCW(rec[i][3])) //천창유무 
+                        {
+                            DataGridViewComboBoxCell RoofWinCombo = new DataGridViewComboBoxCell();
+                            RoofWinCombo.Items.Add("천창있음");
+                            RoofWinCombo.Items.Add("");
 
-                        RoofWinCombo.Value = rec[i][9];
-                        dataGridView1.Rows[i].Cells[11] = RoofWinCombo;
+                            RoofWinCombo.Value = rec[i][9];
+                            dataGridView1.Rows[i + 1].Cells[11] = RoofWinCombo;
+                        }
+                        else
+                        {
+                            DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
+                            TypeLabel.Value = "";
+                            dataGridView1.Rows[i + 1].Cells[11] = TypeLabel;
+                            TypeLabel.ReadOnly = true;
+                        }
                     }
-                    else
-                    {
-                        DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
-                        TypeLabel.Value = "";
-                        dataGridView1.Rows[i].Cells[11] = TypeLabel;
-                        TypeLabel.ReadOnly = true;
-                    }
-
                 }
             }
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
-            redrawList();
+            if (main.MainContents.selID != sid)
+            {
+                sid = main.MainContents.selID;
+                redrawList();
+            }
         }
 
         private bool isWinType(string type)
@@ -312,9 +328,9 @@ namespace main.contents
                 {
                     ConstructionCombo.Items.Add(Value[k][1]);
                 }
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,구조체번호,구조체","번호 = '" + dataGridView1.Rows[n].Cells[1].Value +"'");
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,구조체번호,구조체", "번호 = '" + dataGridView1.Rows[n].Cells[1].Value + "'");
 
-                int a =0; 
+                int a = 0;
                 for (int k = 0; k < Value.Length; k++)
                 {
                     if (rec[0][1] == Value[k][0])
@@ -323,7 +339,7 @@ namespace main.contents
                         break;
                     }
                 }
-                if(a > 0)
+                if (a > 0)
                 {
                     ConstructionCombo.Value = rec[0][2];
                 }
@@ -344,7 +360,7 @@ namespace main.contents
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex > 0)
             {
                 if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
@@ -364,7 +380,7 @@ namespace main.contents
         {
 
             string num, num0, id, Type, CWType, ConsType, ret = "", tcode, RoofWin = "";
-            int i = -1;
+            int i = 0;
             while (++i < dataGridView1.RowCount)
             {
                 if (dataGridView1.Rows[i].Cells[4].Value != null)
@@ -383,7 +399,7 @@ namespace main.contents
                 else { }
             }
 
-            i = -1;
+            i = 0;
             while (++i < dataGridView1.RowCount)
             {
                 if (dataGridView1.Rows[i].Cells[1].Value != null)
@@ -458,11 +474,7 @@ namespace main.contents
                     }
                 }
             }
-//           redrawList();
-
-#if INMEMORY_DB
-            Program.DB.saveProj();
-#endif
+            //           redrawList();
             MessageBox.Show("저장되었습니다.");
 
             return "[" + ret + "]";
@@ -523,7 +535,7 @@ namespace main.contents
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex > 0)
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
@@ -586,6 +598,27 @@ namespace main.contents
                 // This fires the cell value changed handler below
                 dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
+        }
+
+        private void dataGridView1_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
+        {
+            if (e.RowIndex1 > 0 && e.RowIndex2 > 0 && (e.CellValue1 != null || e.CellValue2 != null))
+            {
+                if (e.CellValue1 == null && e.CellValue2 != null)
+                {
+                    e.SortResult = -1;
+                }
+                else if (e.CellValue1 != null && e.CellValue2 == null)
+                {
+                    e.SortResult = 1;
+                }
+                else
+                {
+                    e.SortResult = System.String.Compare(
+                        e.CellValue1.ToString(), e.CellValue2.ToString());
+                }
+            }
+            e.Handled = true;
         }
     }
 }

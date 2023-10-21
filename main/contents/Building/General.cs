@@ -425,9 +425,6 @@ namespace main.contents
             ReviewDate.ToString()
                  + "'", "프로젝트명");
 
-#if INMEMORY_DB
-            Program.DB.saveProj();
-#endif
             MessageBox.Show("저장되었습니다.");
         }
 

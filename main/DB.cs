@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define INMEMORY_DB
+using System;
 using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Data;
@@ -343,20 +344,6 @@ namespace main
 
             return true;
         }
-#if INMEMORY_DB
-        public void saveProj()
-        {
-            if (gProjFName != "")
-            {
-                var file = new SQLiteConnection(@"Data Source=" + gProjFName);
-
-                file.Open();
-                projDB.BackupDatabase(file, "main", "main", -1, null, 0);
-                file.Close();
-            }
-    }
-#endif
-
         public void closeDB()
         {
             if (baseDB_hcneed != null)
@@ -386,6 +373,16 @@ namespace main
             }
             if (projDB != null)
             {
+#if INMEMORY_DB
+                if (gProjFName != "")
+                {
+                    var file = new SQLiteConnection(@"Data Source=" + gProjFName);
+
+                    file.Open();
+                    projDB.BackupDatabase(file, "main", "main", -1, null, 0);
+                    file.Close();
+                }
+#endif
                 projDB.Close();
                 projDB.Dispose();
             }

@@ -75,15 +75,6 @@ namespace main.contents
             }
 
             forms[idx].Show();
-
-            
-
-          
-
-           // MessageBox.Show();
-       
-
-
         }
 
         void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)

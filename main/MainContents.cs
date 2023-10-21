@@ -80,6 +80,8 @@ namespace main
         static FormParam? formParam;
         static public String? selID;
         static public FormID currentForm = FormID.General;
+        string selID_old = "";
+        int tick_old = 0;
 
         public MainContents()
         {
@@ -266,46 +268,33 @@ namespace main
 
             void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
+            int tick = Environment.TickCount;
+
             selID = args.TryGetWebMessageAsString();
 
-            if (Deserialize(selID))
+            if (tick - tick_old > 1000 || selID != selID_old)
             {
-                if (formParam.formID == 99999991)
+                if (Deserialize(selID))
                 {
-                    DoLoadForm(8, OnLoadProc);
-
-                    if (MessageBox.Show("모델을 다시 로드 할 경우, 입력 정보 전체 삭제됩니다. 계속하시겠습니까 ?", "YesOrNo", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (formParam.formID == 99999991)
                     {
-                        using (OpenFileDialog openFileDialog = new OpenFileDialog())
-                        {
-                            openFileDialog.Filter = "obj 파일 (*.obj)|*.obj";
-                            openFileDialog.FilterIndex = 2;
-                            openFileDialog.RestoreDirectory = true;
+                        DoLoadForm(8, OnLoadProc);
 
-                            if (openFileDialog.ShowDialog() == DialogResult.OK)
+                        if (MessageBox.Show("모델을 다시 로드 할 경우, 입력 정보 전체 삭제됩니다. 계속하시겠습니까 ?", "YesOrNo", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            using (OpenFileDialog openFileDialog = new OpenFileDialog())
                             {
-                                //Get the path of specified file
-                                Program.UTIL.load3DModel(openFileDialog.FileName);
+                                openFileDialog.Filter = "obj 파일 (*.obj)|*.obj";
+                                openFileDialog.FilterIndex = 2;
+                                openFileDialog.RestoreDirectory = true;
+
+                                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                                {
+                                    //Get the path of specified file
+                                    Program.UTIL.load3DModel(openFileDialog.FileName);
+                                }
                             }
                         }
-                    }
-                }
-                else if (formParam.formID >= 0 && formParam.formID < 100)
-                {
-                    DoLoadForm(formParam.formID, OnLoadProc);
-                }
-            }
-            else
-            {
-                String json = "{\"formID\":" + selID + ",\"ID\":\"0\"}";
-
-                if (Deserialize(json))
-                {
-                    if (formParam.formID == 8)
-                    {
-                        Program.UTIL.setObjInfo(Program.UTIL.read3DModel(Program.ProjName + ".json"));
-
-                        DoLoadForm(8, OnLoadProc);
                     }
                     else if (formParam.formID >= 0 && formParam.formID < 100)
                     {
@@ -314,56 +303,76 @@ namespace main
                 }
                 else
                 {
-                    Program.UTIL.sendMessage(selID);
+                    String json = "{\"formID\":" + selID + ",\"ID\":\"0\"}";
 
-                    if (selID.IndexOf("_win2") >= 0 || selID.IndexOf("_win3") >= 0 || selID.IndexOf("_win4") >= 0)
+                    if (Deserialize(json))
                     {
-                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"3\"}");
-                    }
-                    else if (selID.IndexOf("_WALL_") >= 0)
-                    {
-                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"4\"}");
-                    }
-                    else if (selID.IndexOf("_ROOF_") >= 0)
-                    {
-                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"5\"}");
-                    }
-                    else if (selID.IndexOf("_FLOOR_") >= 0)
-                    {
-                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"6\"}");
-                    }
-                    else if (selID.IndexOf("_win1") >= 0)
-                    {
-                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"7\"}");
-                    }
-                    else if (selID.IndexOf("_win5") >= 0)
-                    {
-                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"8\"}");
-                    }
-                    else if (selID.IndexOf("_INWALL_") >= 0)
-                    {
-                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"9\"}");
-                    }
-                    else if (selID.IndexOf("_INFLOOR_") >= 0)
-                    {
-                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"10\"}");
-                    }
-                    else if (selID.IndexOf("space-") >= 0)
-                    {
-                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"2\"}");
-                    }
-                    else if (selID.IndexOf("bridge-") >= 0)
-                    {
-                        formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"1\"}");
+                        if (formParam.formID == 8)
+                        {
+                            Program.UTIL.setObjInfo(Program.UTIL.read3DModel(Program.ProjName + ".json"));
+
+                            DoLoadForm(8, OnLoadProc);
+                        }
+                        else if (formParam.formID >= 0 && formParam.formID < 100)
+                        {
+                            DoLoadForm(formParam.formID, OnLoadProc);
+                        }
                     }
                     else
                     {
-                        return;
-                    }
+                        Program.UTIL.sendMessage(selID);
 
-                    DoLoadForm(formParam.formID, OnLoadProc);
+                        if (selID.IndexOf("_win2") >= 0 || selID.IndexOf("_win3") >= 0 || selID.IndexOf("_win4") >= 0)
+                        {
+                            formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"3\"}");
+                        }
+                        else if (selID.IndexOf("_WALL_") >= 0)
+                        {
+                            formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"4\"}");
+                        }
+                        else if (selID.IndexOf("_ROOF_") >= 0)
+                        {
+                            formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"5\"}");
+                        }
+                        else if (selID.IndexOf("_FLOOR_") >= 0)
+                        {
+                            formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"6\"}");
+                        }
+                        else if (selID.IndexOf("_win1") >= 0)
+                        {
+                            formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"7\"}");
+                        }
+                        else if (selID.IndexOf("_win5") >= 0)
+                        {
+                            formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"8\"}");
+                        }
+                        else if (selID.IndexOf("_INWALL_") >= 0)
+                        {
+                            formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"9\"}");
+                        }
+                        else if (selID.IndexOf("_INFLOOR_") >= 0)
+                        {
+                            formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"10\"}");
+                        }
+                        else if (selID.IndexOf("space-") >= 0)
+                        {
+                            formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"2\"}");
+                        }
+                        else if (selID.IndexOf("bridge-") >= 0)
+                        {
+                            formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"1\"}");
+                        }
+                        else
+                        {
+                            return;
+                        }
+
+                        DoLoadForm(formParam.formID, OnLoadProc);
+                    }
                 }
             }
+            tick_old = tick;
+            selID_old = selID;
         }
         void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
         {
