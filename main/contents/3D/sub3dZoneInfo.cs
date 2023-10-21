@@ -14,6 +14,10 @@ namespace main.contents
     public partial class sub3dZoneInfo : Form
     {
         string sid = "";
+        public void resetSID()
+        {
+            sid = "";
+        }
         public sub3dZoneInfo()
         {
             InitializeComponent();
@@ -205,7 +209,7 @@ namespace main.contents
 
                             TypeCombo.Value = rec[i][3];
                             dataGridView1.Rows[i + 1].Cells[4] = TypeCombo;
-                            Load_ConstructionList(i, rec[i][3]);
+                            Load_ConstructionList(i + 1, rec[i][3]);
                         }
                         else
                         {
@@ -213,7 +217,7 @@ namespace main.contents
                             TypeLabel.Value = rec[i][3];
                             dataGridView1.Rows[i + 1].Cells[4] = TypeLabel;
                             TypeLabel.ReadOnly = true;
-                            Load_ConstructionList(i, rec[i][3]);
+                            Load_ConstructionList(i + 1, rec[i][3]);
                         }
                         if (isCWallType(rec[i][4]))
                         {
@@ -254,7 +258,7 @@ namespace main.contents
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
-            if (main.MainContents.selID != sid)
+            if (main.MainContents.selID.IndexOf("999999") < 0 && main.MainContents.selID != sid)
             {
                 sid = main.MainContents.selID;
                 redrawList();

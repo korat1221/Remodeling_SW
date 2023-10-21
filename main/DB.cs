@@ -374,14 +374,7 @@ namespace main
             if (projDB != null)
             {
 #if INMEMORY_DB
-                if (gProjFName != "")
-                {
-                    var file = new SQLiteConnection(@"Data Source=" + gProjFName);
-
-                    file.Open();
-                    projDB.BackupDatabase(file, "main", "main", -1, null, 0);
-                    file.Close();
-                }
+                saveProject();
 #endif
                 projDB.Close();
                 projDB.Dispose();
@@ -391,6 +384,17 @@ namespace main
             {
                 calcDB.Close();
                 calcDB.Dispose();
+            }
+        }
+        public void saveProject()
+        {
+            if (gProjFName != "")
+            {
+                var file = new SQLiteConnection(@"Data Source=" + gProjFName);
+
+                file.Open();
+                projDB.BackupDatabase(file, "main", "main", -1, null, 0);
+                file.Close();
             }
         }
 

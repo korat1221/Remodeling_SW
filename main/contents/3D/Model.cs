@@ -120,7 +120,9 @@ namespace main.contents
                             zoneshade.Save();
                         }                       
                     }
+                    resetZoneDraw();
                     Program.UTIL.loadMainMenu(2);
+                    Program.DB.saveProject();
                 }
                 else
                 {
@@ -129,9 +131,24 @@ namespace main.contents
             }
             catch (Exception ex)
             {
-
+                int i;
+                i = 0;
             }
         }
+        private void resetZoneDraw()
+        {
+            foreach (Form form in splitContainer1.Panel2.Controls)
+            {
+                if (form.Name == "sub3dZoneInfo")
+                {
+                    sub3dZoneInfo f = (sub3dZoneInfo)form;
+                    
+                    f.resetSID();
+                    return;
+                }
+            }
+        }
+
         void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             scriptable = true;
