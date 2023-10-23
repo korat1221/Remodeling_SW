@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.contents
 {
@@ -26,7 +28,7 @@ namespace main.contents
         }
         private void create_datagridview1()
         {
-            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.AllCells, dataGridView1_RowHandle);
+            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.AllCells, dataGridView1_RowHandle, true);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             dataGridView1.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -59,6 +61,11 @@ namespace main.contents
 
             dataGridView1.Rows.Add(null, "", "", "", null, null, "", "", "", "", null);
 
+            fillFilterCombos();
+
+            comboBox1.SetLoaded();
+            comboBox2.SetLoaded();
+            comboBox3.SetLoaded();
         }
         private void create_datagridview2()
         {
@@ -169,16 +176,28 @@ namespace main.contents
 
             return "0";
         }
+        private void fillFilterCombos()
+        {
+            int i = -1;
+            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "층,존,외피유형");
+
+            comboBox1.Add("All");
+            comboBox2.Add("All");
+            comboBox3.Add("All");
+
+            while (++i < rec.Length)
+            {
+                comboBox1.Add(rec[i][0]);
+                comboBox2.Add(rec[i][1]);
+                comboBox3.Add(rec[i][2]);
+            }
+        }
         private void redrawList()
         {
+            dataGridView1.Rows.Clear();
             dataGridView2.Rows.Clear();
 
-            int n = dataGridView1.Rows.Count;
-
-            while (--n > 0)
-            {
-                dataGridView1.Rows.RemoveAt(n);
-            }
+            dataGridView1.Rows.Add(null, "", "", "", null, null, "", "", "", "", null);
 
             {
                 int i = -1;
@@ -191,14 +210,14 @@ namespace main.contents
                 }
             }
             {
-                int i = -1;
+                int i = -1, idx;
                 string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,천창유무");
 
                 while (++i < rec.Length)
                 {
-                    //      if (dataGridView1.isFilteredValues(null, rec[i][0], rec[i][1], rec[i][2], isWinType(rec[i][3]) ? rec[i][3] : "", isCWallType(rec[i][4]) ? rec[i][4] : "", rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]), isWinCW(rec[i][3]) ? rec[i][9] : ""))
+                    if (comboBox1.IsChecked(rec[i][1]) && comboBox2.IsChecked(rec[i][2]) && comboBox3.IsChecked(rec[i][3]))
                     {
-                        dataGridView1.Rows.Add(null, rec[i][0], rec[i][1], rec[i][2], null, null, rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]), null);
+                        idx = dataGridView1.Rows.Add(null, rec[i][0], rec[i][1], rec[i][2], null, null, rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]), null);
 
                         if (isWinType(rec[i][3]))
                         {
@@ -208,16 +227,16 @@ namespace main.contents
                             TypeCombo.Items.Add("외부출입문");
 
                             TypeCombo.Value = rec[i][3];
-                            dataGridView1.Rows[i + 1].Cells[4] = TypeCombo;
-                            Load_ConstructionList(i + 1, rec[i][3]);
+                            dataGridView1.Rows[idx].Cells[4] = TypeCombo;
+                            Load_ConstructionList(idx, rec[i][3]);
                         }
                         else
                         {
                             DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
                             TypeLabel.Value = rec[i][3];
-                            dataGridView1.Rows[i + 1].Cells[4] = TypeLabel;
+                            dataGridView1.Rows[idx].Cells[4] = TypeLabel;
                             TypeLabel.ReadOnly = true;
-                            Load_ConstructionList(i + 1, rec[i][3]);
+                            Load_ConstructionList(idx, rec[i][3]);
                         }
                         if (isCWallType(rec[i][4]))
                         {
@@ -227,13 +246,13 @@ namespace main.contents
                             CWTypeCombo.Items.Add("출입문부분");
 
                             CWTypeCombo.Value = rec[i][4];
-                            dataGridView1.Rows[i + 1].Cells[5] = CWTypeCombo;
+                            dataGridView1.Rows[idx].Cells[5] = CWTypeCombo;
                         }
                         else
                         {
                             DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
                             TypeLabel.Value = "";
-                            dataGridView1.Rows[i + 1].Cells[5] = TypeLabel;
+                            dataGridView1.Rows[idx].Cells[5] = TypeLabel;
                             TypeLabel.ReadOnly = true;
                         }
                         if (isWinCW(rec[i][3])) //천창유무 
@@ -243,13 +262,13 @@ namespace main.contents
                             RoofWinCombo.Items.Add("");
 
                             RoofWinCombo.Value = rec[i][9];
-                            dataGridView1.Rows[i + 1].Cells[11] = RoofWinCombo;
+                            dataGridView1.Rows[idx].Cells[11] = RoofWinCombo;
                         }
                         else
                         {
                             DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
                             TypeLabel.Value = "";
-                            dataGridView1.Rows[i + 1].Cells[11] = TypeLabel;
+                            dataGridView1.Rows[idx].Cells[11] = TypeLabel;
                             TypeLabel.ReadOnly = true;
                         }
                     }
@@ -623,6 +642,58 @@ namespace main.contents
                 }
             }
             e.Handled = true;
+        }
+
+        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex == 0)
+            {
+                int cellX = dataGridView1.Location.X + e.CellBounds.X;
+                int cellY = dataGridView1.Location.Y + e.CellBounds.Y;
+
+                if (e.ColumnIndex == 2)
+                {
+                    if (!comboBox1.Visible)
+                    {
+                        comboBox1.Location = new Point(cellX, cellY);
+                        comboBox1.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
+                        comboBox1.Show();
+                    }
+                }
+                else if (e.ColumnIndex == 3)
+                {
+                    if (!comboBox2.Visible)
+                    {
+                        comboBox2.Location = new Point(cellX, cellY);
+                        comboBox2.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
+                        comboBox2.Show();
+                    }
+                }
+                else if (e.ColumnIndex == 4)
+                {
+                    if (!comboBox3.Visible)
+                    {
+                        comboBox3.Location = new Point(cellX, cellY);
+                        comboBox3.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
+                        comboBox3.Show();
+                    }
+                }
+            }
+        }
+
+        private void sub3dZoneInfo_Deactivate(object sender, EventArgs e)
+        {
+            comboBox1.Hide();
+            comboBox2.Hide();
+            comboBox3.Hide();
+        }
+
+        private void comboBox_DropDownClosed(object sender, EventArgs e)
+        {
+            if (comboBox1.ValueChanged || comboBox2.ValueChanged || comboBox3.ValueChanged)
+            {
+                redrawList();
+            }
         }
     }
 }

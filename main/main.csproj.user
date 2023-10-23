@@ -112,6 +112,9 @@
     <Compile Update="contents\Zone\ZoneSystem.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="controls\CheckedComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="controls\CustomComboBox.cs">
       <SubType>Component</SubType>
     </Compile>

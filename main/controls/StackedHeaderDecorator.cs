@@ -15,13 +15,14 @@ public class StackedHeaderDecorator
     private readonly DataGridView objDataGrid;
     private Header objHeaderTree;
     private int iNoOfLevels;
+    private bool filtered = false;
     private readonly StringFormat objFormat;
 
     public delegate bool RenderProc(DataGridViewCell cell, int column, int row);
 
     private RenderProc renderProc = null;
 
-    public StackedHeaderDecorator(DataGridView objDataGrid, DataGridViewAutoSizeColumnsMode mode = DataGridViewAutoSizeColumnsMode.ColumnHeader, RenderProc proc = null)
+    public StackedHeaderDecorator(DataGridView objDataGrid, DataGridViewAutoSizeColumnsMode mode = DataGridViewAutoSizeColumnsMode.ColumnHeader, RenderProc proc = null, bool filter = false )
     {
         this.objDataGrid = objDataGrid;
         objFormat = new StringFormat();
@@ -64,6 +65,8 @@ public class StackedHeaderDecorator
         //    objDataGrid..RowsRemoved += objDataGrid_RowsRemoved;
 
         renderProc = proc;
+
+        filtered = filter;
     }
 
     private void objDataGrid_CurrentCellDirtyStateChanged(object sender, EventArgs e)
@@ -178,7 +181,21 @@ private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingE
 
         //e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, 0, 0)), rect2);
 
-        if (objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewComboBoxCell)
+        if (filtered && e.RowIndex == 0 && e.ColumnIndex == 0)
+        {
+            e.Paint(e.ClipBounds, DataGridViewPaintParts.Border);
+            e.Paint(e.ClipBounds, DataGridViewPaintParts.ContentBackground);
+
+            using (Brush backbrush = new SolidBrush(SystemColors.Window))
+            {
+                Rectangle rect = new Rectangle(e.CellBounds.X + 1, e.CellBounds.Y + 1, e.CellBounds.Width - 2, e.CellBounds.Height - 2);
+
+                e.Graphics.FillRectangle(backbrush, rect);
+            }
+
+            e.Handled = true;
+        }
+        else if (objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewComboBoxCell)
         {
             var cell = objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
             var foreColor = cell.Style.ForeColor.Name == "0" ? Color.Black : cell.Style.ForeColor;

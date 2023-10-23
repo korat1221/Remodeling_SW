@@ -38,6 +38,9 @@
             tabPage1 = new TabPage();
             dataGridView2 = new DataGridView();
             tabPage2 = new TabPage();
+            comboBox3 = new CheckedComboBox();
+            comboBox2 = new CheckedComboBox();
+            comboBox1 = new CheckedComboBox();
             dataGridView1 = new DataGridView();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -90,7 +93,6 @@
             dataGridView2.AllowUserToDeleteRows = false;
             dataGridView2.AllowUserToResizeColumns = false;
             dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            dataGridView2.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataGridView2.BackgroundColor = Color.White;
             dataGridView2.BorderStyle = BorderStyle.None;
             dataGridView2.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
@@ -122,13 +124,16 @@
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            dataGridView2.RowTemplate.Height = 25;
+            dataGridView2.RowTemplate.Height = 24;
             dataGridView2.Size = new Size(185, 410);
             dataGridView2.TabIndex = 0;
             dataGridView2.CellContentClick += dataGridView2_CellContentClick;
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(comboBox3);
+            tabPage2.Controls.Add(comboBox2);
+            tabPage2.Controls.Add(comboBox1);
             tabPage2.Controls.Add(dataGridView1);
             tabPage2.Location = new Point(4, 25);
             tabPage2.Name = "tabPage2";
@@ -138,13 +143,63 @@
             tabPage2.Text = "존 외피 정보";
             tabPage2.UseVisualStyleBackColor = true;
             // 
+            // comboBox3
+            // 
+            comboBox3.CheckOnClick = true;
+            comboBox3.DrawMode = DrawMode.OwnerDrawVariable;
+            comboBox3.DropDownHeight = 1;
+            comboBox3.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            comboBox3.FormattingEnabled = true;
+            comboBox3.IntegralHeight = false;
+            comboBox3.Location = new Point(262, 25);
+            comboBox3.Margin = new Padding(3, 0, 3, 0);
+            comboBox3.Name = "comboBox3";
+            comboBox3.Size = new Size(121, 23);
+            comboBox3.TabIndex = 100;
+            comboBox3.ValueSeparator = ", ";
+            comboBox3.Visible = false;
+            comboBox3.DropDownClosed += comboBox_DropDownClosed;
+            // 
+            // comboBox2
+            // 
+            comboBox2.CheckOnClick = true;
+            comboBox2.DrawMode = DrawMode.OwnerDrawVariable;
+            comboBox2.DropDownHeight = 1;
+            comboBox2.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            comboBox2.FormattingEnabled = true;
+            comboBox2.IntegralHeight = false;
+            comboBox2.Location = new Point(135, 25);
+            comboBox2.Margin = new Padding(3, 0, 3, 0);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(121, 23);
+            comboBox2.TabIndex = 99;
+            comboBox2.ValueSeparator = ", ";
+            comboBox2.Visible = false;
+            comboBox2.DropDownClosed += comboBox_DropDownClosed;
+            // 
+            // comboBox1
+            // 
+            comboBox1.CheckOnClick = true;
+            comboBox1.DrawMode = DrawMode.OwnerDrawVariable;
+            comboBox1.DropDownHeight = 1;
+            comboBox1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            comboBox1.FormattingEnabled = true;
+            comboBox1.IntegralHeight = false;
+            comboBox1.Location = new Point(8, 25);
+            comboBox1.Margin = new Padding(3, 0, 3, 0);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(121, 23);
+            comboBox1.TabIndex = 98;
+            comboBox1.ValueSeparator = ", ";
+            comboBox1.Visible = false;
+            comboBox1.DropDownClosed += comboBox_DropDownClosed;
+            // 
             // dataGridView1
             // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToResizeColumns = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
@@ -177,10 +232,11 @@
             dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle6.SelectionForeColor = Color.Black;
             dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.RowTemplate.Height = 24;
             dataGridView1.Size = new Size(650, 415);
             dataGridView1.TabIndex = 97;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.CellPainting += dataGridView1_CellPainting;
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
             dataGridView1.CurrentCellDirtyStateChanged += dataGridView1_CurrentCellDirtyStateChanged;
             dataGridView1.DataError += onDataError;
@@ -195,6 +251,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "sub3dZoneInfo";
             Text = "sub3dZoneInfo";
+            Deactivate += sub3dZoneInfo_Deactivate;
             VisibleChanged += onVisibleChanged;
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
@@ -211,5 +268,8 @@
         private TabPage tabPage2;
         private DataGridView dataGridView2;
         private DataGridView dataGridView1;
+        private CheckedComboBox comboBox1;
+        private CheckedComboBox comboBox3;
+        private CheckedComboBox comboBox2;
     }
 }
