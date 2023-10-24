@@ -654,6 +654,34 @@ Zoning.prototype = {
 				}
 				return false;
 			};
+			
+			let _getBoundingBox = (vertices) => {
+				let box = [
+					[99999999,99999999,99999999],
+					[-99999999,-99999999,-99999999],
+				], i = -1;
+			
+				while(++i < vertices.length) {
+					vertices[i].position.forEach(el => {
+			
+						if (box[0][0] > el[0]) box[0][0] = el[0];
+						if (box[0][1] > el[1]) box[0][1] = el[1];
+						if (box[0][2] > el[2]) box[0][2] = el[2];
+				
+						if (box[1][0] < el[0]) box[1][0] = el[0];
+						if (box[1][1] < el[1]) box[1][1] = el[1];
+						if (box[1][2] < el[2]) box[1][2] = el[2];
+					});
+				}
+	
+				return box;
+			};
+	
+			let _equalBBox = (a, b) => {
+				return (this.util.equalPoint(new THREE.Vector3(a[0][0], a[0][1], a[0][2]), new THREE.Vector3(b[0][0], b[0][1], b[0][2])) &&
+				this.util.equalPoint(new THREE.Vector3(a[1][0], a[1][1], a[1][2]), new THREE.Vector3(b[1][0], b[1][1], b[1][2])));
+			};
+
 		//
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -826,25 +854,37 @@ Zoning.prototype = {
 				}
 
 				let type = Object.keys(posInfo).length > 1 ? 'INWALL' : '', inwalled = [];
+				let bbox = _getBoundingBox(vertices);
 
-				for (const [cardi, _slope] of Object.entries(posInfo)) {
-					if (!this.editor.wall[cardi]) this.editor.wall[cardi] = {};
+				let found = false;
+				for (const [cardi, value] of Object.entries(this.editor.wall)) {
+					for (const [j, el] of Object.entries(value)) {
+						if (el.bbox && _equalBBox(el.bbox, bbox)) {
+							found = true;
+						}
+					}
+				}
+		
+				if (!found) {
+					for (const [cardi, _slope] of Object.entries(posInfo)) {
+						if (!this.editor.wall[cardi]) this.editor.wall[cardi] = {};
 
-					let vtx = vertices.slice();
-					vtx.forEach(el => el.slope = _slope);
-					this.editor.wall[cardi][this.editor.wnum] = {"vertices":vtx,'type':(type != '' ? type : _getType(_slope, cardi, !!(_getCenterY(vtx) < 0)))};
+						let vtx = vertices.slice();
+						vtx.forEach(el => el.slope = _slope);
+						this.editor.wall[cardi][this.editor.wnum] = {"vertices":vtx,'type':(type != '' ? type : _getType(_slope, cardi, !!(_getCenterY(vtx) < 0))), "bbox":bbox};
+
+						if (type == 'INWALL') {
+							inwalled.push({idx:this.editor.wnum,cardi:cardi});
+						}
+						this.editor.wnum++;
+					}
 
 					if (type == 'INWALL') {
-						inwalled.push({idx:this.editor.wnum,cardi:cardi});
-					}
-					this.editor.wnum++;
-				}
-
-				if (type == 'INWALL') {
-					k = -1;
-					while(++k < 2) {
-						let el = inwalled[k];
-						this.editor.wall[el.cardi][el.idx].inwalled = inwalled[1 - k];
+						k = -1;
+						while(++k < 2) {
+							let el = inwalled[k];
+							this.editor.wall[el.cardi][el.idx].inwalled = inwalled[1 - k];
+						}
 					}
 				}
 			}
