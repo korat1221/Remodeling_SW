@@ -274,6 +274,10 @@ void objDataGrid_Paint(object sender, PaintEventArgs e)
         objGraphics = e.Graphics;
         objDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
         objDataGrid.ColumnHeadersHeight = iNoOfLevels * 20;
+        if (filtered)
+        {
+            objDataGrid.ColumnHeadersHeight += 23;
+        }
         if (null != objHeaderTree)
         {
             RenderColumnHeaders();
@@ -321,7 +325,7 @@ public void Render(Header objHeader)
     {
         if (objHeader.Children.Count == 0)
         {
-            Rectangle r1 = objDataGrid.GetColumnDisplayRectangle(objHeader.ColumnId, true);
+            Rectangle r1 = objDataGrid.GetColumnDisplayRectangle(objHeader.ColumnId, true), r0, r2;
             if (r1.Width == 0)
             {
                 return;
@@ -329,8 +333,10 @@ public void Render(Header objHeader)
             r1.Y = objHeader.Y;
             r1.Width += 1;
             r1.X -= 1;
-            r1.Height = objHeader.Height;
+            r1.Height = filtered ? (objHeader.Height - 23) : objHeader.Height;
             objGraphics.SetClip(r1);
+
+            r0 = r1;
 
             if (r1.X + objDataGrid.Columns[objHeader.ColumnId].Width < objDataGrid.DisplayRectangle.Width)
             {
@@ -338,7 +344,18 @@ public void Render(Header objHeader)
             }
             r1.X -= 1;
             r1.Width = objDataGrid.Columns[objHeader.ColumnId].Width + 1;
-            objGraphics.DrawRectangle(new Pen(Color.FromArgb(220, 220, 220), 1), r1);
+
+            if (filtered) {
+                r2 = r1;
+
+                r2.Height = objHeader.Height;
+                objGraphics.SetClip(r2);
+                objGraphics.DrawRectangle(new Pen(Color.FromArgb(220, 220, 220), 1), r2);
+                objGraphics.SetClip(r0);
+            }
+            else {
+                objGraphics.DrawRectangle(new Pen(Color.FromArgb(220, 220, 220), 1), r1);
+            }
             objGraphics.DrawString(objHeader.Name,
                                     objDataGrid.ColumnHeadersDefaultCellStyle.Font,
                                     new SolidBrush(objDataGrid.ColumnHeadersDefaultCellStyle.ForeColor),

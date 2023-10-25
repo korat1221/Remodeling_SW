@@ -197,8 +197,6 @@ namespace main.contents
             dataGridView1.Rows.Clear();
             dataGridView2.Rows.Clear();
 
-            dataGridView1.Rows.Add(null, "", "", "", null, null, "", "", "", "", null);
-
             {
                 int i = -1;
                 string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "존번호,바닥면적,주향,주광너비,주광깊이,상인방높이");
