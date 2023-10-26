@@ -1,4 +1,4 @@
-﻿#define INMEMORY_DB
+﻿//#define INMEMORY_DB
 using System;
 using System.Buffers.Text;
 using System.Collections.Generic;
@@ -388,6 +388,7 @@ namespace main
         }
         public void saveProject()
         {
+#if INMEMORY_DB
             if (gProjFName != "")
             {
                 var file = new SQLiteConnection(@"Data Source=" + gProjFName);
@@ -396,6 +397,7 @@ namespace main
                 projDB.BackupDatabase(file, "main", "main", -1, null, 0);
                 file.Close();
             }
+#endif
         }
 
         public void initTable (type dbType, string table)
