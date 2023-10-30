@@ -13,7 +13,7 @@
             {
                 sid = main.MainContents.selID;
 
-                int n = Int32.Parse(main.MainContents.selID.Replace("space-", "")) + 1;
+                int n = Int32.Parse(main.MainContents.selID.Replace("space-", ""));
                 String ID = n.ToString().PadLeft(3, '0');
                 string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적,천장고", "존번호 LIKE '%Zone" + ID + "'");
 

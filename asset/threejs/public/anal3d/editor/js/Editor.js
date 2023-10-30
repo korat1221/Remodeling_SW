@@ -1767,14 +1767,25 @@ Editor.prototype = {
 					if (wall) {
 						wall_length = wall.wall_length;
 					}
-				}					
+				}			
+				
+				let k = -1;
+
+				while(++k < space.length) {
+					let el = space[k];
+		
+					if  (el.cardi === 'DOWN') {
+						area += this.wall[el.cardi][el.id].area;
+					}
+		
+				}
+	
 				let floor = this.wall[space[0].cardi][space[0].id];
 
 				if (floor) {
 
 					zid = floor.zid;
 //					zid = floor.floor + "F_Zone" + ((floor.sid ? floor.sid : "") + "").padStart(3, '0')
-					area = floor.area;
 					depth = wall_length != 0 ? area / wall_length : 0;
 					if (win) {
 						height = (win.box[0][1] > win.box[1][1] ? win.box[0][1] : win.box[1][1]) - floor.bbox[0][1];

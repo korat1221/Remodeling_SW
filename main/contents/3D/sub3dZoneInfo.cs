@@ -59,8 +59,6 @@ namespace main.contents
             dataGridView1.Columns[10].Width = 100;
             dataGridView1.Columns[11].Width = 100;
 
-            dataGridView1.Rows.Add(null, "", "", "", null, null, "", "", "", "", null);
-
             fillFilterCombos();
 
             comboBox1.SetLoaded();
@@ -381,7 +379,7 @@ namespace main.contents
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > 0)
+            if (e.RowIndex >= 0)
             {
                 if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
@@ -420,7 +418,7 @@ namespace main.contents
                 else { }
             }
 
-            i = 0;
+            i = -1;
             while (++i < dataGridView1.RowCount)
             {
                 if (dataGridView1.Rows[i].Cells[1].Value != null)
@@ -525,7 +523,7 @@ namespace main.contents
                 {
                     ID = ID.Substring(n + 5);
 
-                    n = Int32.Parse(ID) - 1;
+                    n = Int32.Parse(ID);
                     Program.UTIL.sendMessage("space-" + n);
                 }
             }
@@ -556,7 +554,7 @@ namespace main.contents
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > 0)
+            if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
@@ -653,7 +651,7 @@ namespace main.contents
                 {
                     if (!comboBox1.Visible)
                     {
-                        comboBox1.Location = new Point(cellX, cellY);
+                        comboBox1.Location = new Point(cellX, cellY - 23);
                         comboBox1.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
                         comboBox1.Show();
                     }
@@ -662,7 +660,7 @@ namespace main.contents
                 {
                     if (!comboBox2.Visible)
                     {
-                        comboBox2.Location = new Point(cellX, cellY);
+                        comboBox2.Location = new Point(cellX, cellY - 23);
                         comboBox2.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
                         comboBox2.Show();
                     }
@@ -671,7 +669,7 @@ namespace main.contents
                 {
                     if (!comboBox3.Visible)
                     {
-                        comboBox3.Location = new Point(cellX, cellY);
+                        comboBox3.Location = new Point(cellX, cellY - 23);
                         comboBox3.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
                         comboBox3.Show();
                     }

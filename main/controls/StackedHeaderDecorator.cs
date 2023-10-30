@@ -181,7 +181,7 @@ private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingE
 
         //e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, 0, 0)), rect2);
 
-        if (filtered && e.RowIndex == 0 && e.ColumnIndex == 0)
+        /*if (filtered && e.RowIndex == 0 && e.ColumnIndex == 0)
         {
             e.Paint(e.ClipBounds, DataGridViewPaintParts.Border);
             e.Paint(e.ClipBounds, DataGridViewPaintParts.ContentBackground);
@@ -195,7 +195,7 @@ private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingE
 
             e.Handled = true;
         }
-        else if (objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewComboBoxCell)
+        else */if (objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewComboBoxCell)
         {
             var cell = objDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
             var foreColor = cell.Style.ForeColor.Name == "0" ? Color.Black : cell.Style.ForeColor;
@@ -273,10 +273,13 @@ void objDataGrid_Paint(object sender, PaintEventArgs e)
         }
         objGraphics = e.Graphics;
         objDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        objDataGrid.ColumnHeadersHeight = iNoOfLevels * 20;
         if (filtered)
         {
-            objDataGrid.ColumnHeadersHeight += 23;
+            objDataGrid.ColumnHeadersHeight = iNoOfLevels * 20 + 23;
+        }
+        else
+        {
+            objDataGrid.ColumnHeadersHeight = iNoOfLevels * 20;
         }
         if (null != objHeaderTree)
         {
