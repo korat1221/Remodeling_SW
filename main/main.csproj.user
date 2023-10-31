@@ -16,6 +16,9 @@
     <Compile Update="contents\3D\Shade.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="contents\3D\StruFill.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="contents\3D\sub3dCWInfo.cs">
       <SubType>Form</SubType>
     </Compile>

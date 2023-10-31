@@ -38,6 +38,7 @@
             tabPage1 = new TabPage();
             dataGridView2 = new DataGridView();
             tabPage2 = new TabPage();
+            button1 = new Button();
             comboBox3 = new CheckedComboBox();
             comboBox2 = new CheckedComboBox();
             comboBox1 = new CheckedComboBox();
@@ -131,6 +132,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(button1);
             tabPage2.Controls.Add(comboBox3);
             tabPage2.Controls.Add(comboBox2);
             tabPage2.Controls.Add(comboBox1);
@@ -142,6 +144,17 @@
             tabPage2.TabIndex = 1;
             tabPage2.Text = "존 외피 정보";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(444, 25);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 101;
+            button1.Text = "일괄적용";
+            button1.UseVisualStyleBackColor = true;
+            button1.Visible = false;
+            button1.Click += button1_Click;
             // 
             // comboBox3
             // 
@@ -267,9 +280,10 @@
         private TabPage tabPage1;
         private TabPage tabPage2;
         private DataGridView dataGridView2;
-        private DataGridView dataGridView1;
+        public DataGridView dataGridView1;
         private CheckedComboBox comboBox1;
-        private CheckedComboBox comboBox3;
+        public CheckedComboBox comboBox3;
         private CheckedComboBox comboBox2;
+        private Button button1;
     }
 }

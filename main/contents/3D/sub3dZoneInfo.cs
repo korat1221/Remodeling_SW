@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.contents._3D;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,6 +11,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace main.contents
 {
@@ -399,7 +401,7 @@ namespace main.contents
         {
 
             string num, num0, id, Type, CWType, ConsType, ret = "", tcode, RoofWin = "";
-            int i = 0;
+            int i = -1;
             while (++i < dataGridView1.RowCount)
             {
                 if (dataGridView1.Rows[i].Cells[4].Value != null)
@@ -651,7 +653,7 @@ namespace main.contents
                 {
                     if (!comboBox1.Visible)
                     {
-                        comboBox1.Location = new Point(cellX, cellY - 23);
+                        comboBox1.Location = new Point(cellX, cellY);
                         comboBox1.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
                         comboBox1.Show();
                     }
@@ -660,7 +662,7 @@ namespace main.contents
                 {
                     if (!comboBox2.Visible)
                     {
-                        comboBox2.Location = new Point(cellX, cellY - 23);
+                        comboBox2.Location = new Point(cellX, cellY);
                         comboBox2.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
                         comboBox2.Show();
                     }
@@ -669,9 +671,18 @@ namespace main.contents
                 {
                     if (!comboBox3.Visible)
                     {
-                        comboBox3.Location = new Point(cellX, cellY - 23);
+                        comboBox3.Location = new Point(cellX, cellY);
                         comboBox3.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
                         comboBox3.Show();
+                    }
+                }
+                else if (e.ColumnIndex == 10)
+                {
+                    if (!button1.Visible)
+                    {
+                        button1.Location = new Point(cellX, cellY - 1);
+                        button1.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
+                        button1.Show();
                     }
                 }
             }
@@ -682,6 +693,7 @@ namespace main.contents
             comboBox1.Hide();
             comboBox2.Hide();
             comboBox3.Hide();
+            button1.Hide();
         }
 
         private void comboBox_DropDownClosed(object sender, EventArgs e)
@@ -690,6 +702,15 @@ namespace main.contents
             {
                 redrawList();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            StruFill modal = new StruFill(this);
+
+            modal.StartPosition = FormStartPosition.CenterParent;
+
+            modal.ShowDialog();
         }
     }
 }
