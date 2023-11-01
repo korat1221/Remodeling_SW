@@ -171,7 +171,7 @@ public class CheckedComboBox : System.Windows.Forms.ComboBox {
         public string GetCheckedItemsStringValue() {
             if (IsAllItemChecked())
             {
-                return "모두선택";
+                return "All";
             }
             else
             {

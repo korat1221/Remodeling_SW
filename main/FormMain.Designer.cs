@@ -53,7 +53,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.AutoScroll = true;
-            splitContainer1.Size = new Size(1259, 829);
+            splitContainer1.Size = new Size(1259, 811);
             splitContainer1.SplitterDistance = 325;
             splitContainer1.TabIndex = 0;
             splitContainer1.Resize += OnResize;
@@ -65,7 +65,7 @@
             // toolStripContainer1.ContentPanel
             // 
             toolStripContainer1.ContentPanel.Controls.Add(splitContainer1);
-            toolStripContainer1.ContentPanel.Size = new Size(1259, 829);
+            toolStripContainer1.ContentPanel.Size = new Size(1259, 811);
             toolStripContainer1.Dock = DockStyle.Fill;
             toolStripContainer1.LeftToolStripPanelVisible = false;
             toolStripContainer1.Location = new Point(0, 0);
@@ -83,22 +83,23 @@
             // toolStrip1
             // 
             toolStrip1.Dock = DockStyle.None;
+            toolStrip1.ImageScalingSize = new Size(35, 35);
             toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1 });
             toolStrip1.Location = new Point(3, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Padding = new Padding(4);
-            toolStrip1.Size = new Size(73, 31);
+            toolStrip1.Size = new Size(89, 50);
             toolStrip1.TabIndex = 0;
             // 
             // toolStripButton1
             // 
             toolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
             toolStripButton1.Image = (Image)resources.GetObject("toolStripButton1.Image");
-            toolStripButton1.ImageScaling = ToolStripItemImageScaling.None;
             toolStripButton1.ImageTransparentColor = Color.Magenta;
             toolStripButton1.Name = "toolStripButton1";
-            toolStripButton1.Size = new Size(23, 20);
+            toolStripButton1.Size = new Size(39, 39);
             toolStripButton1.Text = "toolStripButton1";
+            toolStripButton1.Click += toolStripButton1_Click;
             // 
             // FormMain
             // 

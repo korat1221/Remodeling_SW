@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.contents;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -47,6 +48,19 @@ namespace main
             f1.Size = new Size(splitContainer1.Panel1.Width, splitContainer1.Panel1.Height);
 
             f1.DoResizeMain(new Size(splitContainer1.Panel2.Width, splitContainer1.Panel2.Height));
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            Program.getMenuForm().DoLoadForm(40, OnLoadProc);
+        }
+        public static bool OnLoadProc(Form form)
+        {
+            Intro f = (Intro)form;
+
+            f.LoadData("");
+
+            return true;
         }
     }
 }
