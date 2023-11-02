@@ -33,6 +33,9 @@
             toolStripContainer1 = new ToolStripContainer();
             toolStrip1 = new ToolStrip();
             toolStripButton1 = new ToolStripButton();
+            toolStripSplitButton1 = new ToolStripSplitButton();
+            toolStripSplitButton2 = new ToolStripSplitButton();
+            toolStripSplitButton3 = new ToolStripSplitButton();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.SuspendLayout();
             toolStripContainer1.ContentPanel.SuspendLayout();
@@ -84,11 +87,11 @@
             // 
             toolStrip1.Dock = DockStyle.None;
             toolStrip1.ImageScalingSize = new Size(35, 35);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1, toolStripSplitButton1, toolStripSplitButton2, toolStripSplitButton3 });
             toolStrip1.Location = new Point(3, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Padding = new Padding(4);
-            toolStrip1.Size = new Size(89, 50);
+            toolStrip1.Size = new Size(242, 50);
             toolStrip1.TabIndex = 0;
             // 
             // toolStripButton1
@@ -100,6 +103,33 @@
             toolStripButton1.Size = new Size(39, 39);
             toolStripButton1.Text = "toolStripButton1";
             toolStripButton1.Click += toolStripButton1_Click;
+            // 
+            // toolStripSplitButton1
+            // 
+            toolStripSplitButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripSplitButton1.Image = (Image)resources.GetObject("toolStripSplitButton1.Image");
+            toolStripSplitButton1.ImageTransparentColor = Color.Magenta;
+            toolStripSplitButton1.Name = "toolStripSplitButton1";
+            toolStripSplitButton1.Size = new Size(51, 39);
+            toolStripSplitButton1.Text = "toolStripSplitButton1";
+            // 
+            // toolStripSplitButton2
+            // 
+            toolStripSplitButton2.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripSplitButton2.Image = (Image)resources.GetObject("toolStripSplitButton2.Image");
+            toolStripSplitButton2.ImageTransparentColor = Color.Magenta;
+            toolStripSplitButton2.Name = "toolStripSplitButton2";
+            toolStripSplitButton2.Size = new Size(51, 39);
+            toolStripSplitButton2.Text = "toolStripSplitButton2";
+            // 
+            // toolStripSplitButton3
+            // 
+            toolStripSplitButton3.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripSplitButton3.Image = (Image)resources.GetObject("toolStripSplitButton3.Image");
+            toolStripSplitButton3.ImageTransparentColor = Color.Magenta;
+            toolStripSplitButton3.Name = "toolStripSplitButton3";
+            toolStripSplitButton3.Size = new Size(51, 39);
+            toolStripSplitButton3.Text = "toolStripSplitButton3";
             // 
             // FormMain
             // 
@@ -129,5 +159,8 @@
         private ToolStripContainer toolStripContainer1;
         private ToolStrip toolStrip1;
         private ToolStripButton toolStripButton1;
+        private ToolStripSplitButton toolStripSplitButton1;
+        private ToolStripSplitButton toolStripSplitButton2;
+        private ToolStripSplitButton toolStripSplitButton3;
     }
 }
