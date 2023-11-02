@@ -33,9 +33,9 @@
             toolStripContainer1 = new ToolStripContainer();
             toolStrip1 = new ToolStrip();
             toolStripButton1 = new ToolStripButton();
-            toolStripSplitButton1 = new ToolStripSplitButton();
-            toolStripSplitButton2 = new ToolStripSplitButton();
-            toolStripSplitButton3 = new ToolStripSplitButton();
+            toolStripSplitButton1 = new ToolStripButton();
+            toolStripSplitButton2 = new ToolStripButton();
+            toolStripSplitButton3 = new ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.SuspendLayout();
             toolStripContainer1.ContentPanel.SuspendLayout();
@@ -159,8 +159,8 @@
         private ToolStripContainer toolStripContainer1;
         private ToolStrip toolStrip1;
         private ToolStripButton toolStripButton1;
-        private ToolStripSplitButton toolStripSplitButton1;
-        private ToolStripSplitButton toolStripSplitButton2;
-        private ToolStripSplitButton toolStripSplitButton3;
+        private ToolStripButton toolStripSplitButton1;
+        private ToolStripButton toolStripSplitButton2;
+        private ToolStripButton toolStripSplitButton3;
     }
 }
