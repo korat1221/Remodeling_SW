@@ -343,8 +343,9 @@ namespace main.subcontents.ConstructionCW
             }
             else if (UserDBName != null && UserDB_FrameShape != null && UserDB_Uf > 0 && UserDB_Ucw > 0 && UserDB_Ug > 0 && UserDB_Psimt > 0)
             {
-                Program.DB.setValue(DB.type.ProjDB, "User_CWFrame", "번호,DB유형,제품명,제조사,구분1,구분2,고정부프레임열관류율,개폐부프레임열관류율,패널엣지선형열관류율,M_T프레임두께,fr프레임두께,시험성적서이미지",
-                    "'" + UserNum + "','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + FrameType + "','" + UserDBSpacer_Type + "','" + UserDB_Uf.ToString() + "','" + UserDB_Uf.ToString() + "','" + UserDB_Psip.ToString() + "','" + UserDB_FramedA.ToString() + "','" + UserDB_FramedB.ToString() + "','" + UserDB_Image + "'", "번호");
+                string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                Program.DB.setValue(DB.type.ProjDB, "User_CWFrame", "번호,프로젝트유형,DB유형,제품명,제조사,구분1,구분2,고정부프레임열관류율,개폐부프레임열관류율,패널엣지선형열관류율,M_T프레임두께,fr프레임두께,시험성적서이미지",
+                    "'" + UserNum + "','" + 프로젝트유형[0][0] +"','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + FrameType + "','" + UserDBSpacer_Type + "','" + UserDB_Uf.ToString() + "','" + UserDB_Uf.ToString() + "','" + UserDB_Psip.ToString() + "','" + UserDB_FramedA.ToString() + "','" + UserDB_FramedB.ToString() + "','" + UserDB_Image + "'", "번호");
                 load_table_FrameDB();
                 UserNum = Program.UTIL.CreateNum("User_CWFrame", "번호", "UCW_0");
                 UserNum_textBox.Text = UserNum;

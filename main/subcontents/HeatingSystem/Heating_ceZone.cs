@@ -224,9 +224,10 @@ namespace main.subcontents.HeatingSystem
 
                     try
                     {
+                        string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
                         string[][] 공급설비일람표 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "번호", "명칭 = '" + ceZone_dataGridView.Rows[i].Cells[7].Value + "'");
-                        Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,난방시스템,공급설비종류,공급설비",
-                         "'" + 존번호 + "','"
+                        Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,프로젝트유형,난방시스템,공급설비종류,공급설비",
+                         "'" + 존번호 + "','" + 프로젝트유형[0][0] + "','"
                          + SystemNum + "','"
                          + ceType + "','"
                          + 공급설비일람표[0][0] + "_" + substring2 + "'", "");

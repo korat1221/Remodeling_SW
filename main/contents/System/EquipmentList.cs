@@ -41,14 +41,14 @@ namespace main.contents
         DataGridViewCheckBoxColumn Pump_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn ce_checkBoxColumn = new DataGridViewCheckBoxColumn();
         int Boiler_SelectRow, HP_SelectRow, AirCooler_SelectRow, WaterCooler_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow, PV_SelectRow, ABS_SelectRow, DH_SelectRow, FC_SelectRow, WP_SelectRow;
-
+        string[][] 프로젝트유형;
         //냉방추가
         DataGridViewCheckBoxColumn AirCooler_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn WaterCooler_checkBoxColumn = new DataGridViewCheckBoxColumn();
         public EquipmentList()
         {
             InitializeComponent();
-
+            프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             Program.DB.initTable(DB.type.ProjDB, "User_Boiler");
             Program.DB.initTable(DB.type.ProjDB, "User_ABS");
             Program.DB.initTable(DB.type.ProjDB, "User_ DH");
@@ -380,8 +380,8 @@ namespace main.contents
                     { Value[i - 1] = Boiler_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_Boiler", "번호,DB유형,명칭,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력,대수,신규기존",
-                "'" + Value[0] + "','"
+                Program.DB.setValue(DB.type.ProjDB, "User_Boiler", "번호,프로젝트유형,DB유형,명칭,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력,대수,신규기존",
+                "'" + Value[0] + "','"+ 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','"
                  + Value[12]
                  + "'", "번호");
@@ -640,8 +640,8 @@ namespace main.contents
                     { Value[i - 1] = ABS_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_ABS", "번호,DB유형,난방냉방,연료,냉방용량,냉방성능,난방용량,난방성능,냉수입구온도,냉수출구온도,온수입구온도,온수출구온도,대기전력,통합성능,대수,신규기존",
-                "'" + Value[0] + "','"
+                Program.DB.setValue(DB.type.ProjDB, "User_ABS", "번호,프로젝트유형,DB유형,난방냉방,연료,냉방용량,냉방성능,난방용량,난방성능,냉수입구온도,냉수출구온도,온수입구온도,온수출구온도,대기전력,통합성능,대수,신규기존",
+                "'" + Value[0] + "','"+ 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','"
                  + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','"
                  + Value[15]
@@ -850,8 +850,8 @@ namespace main.contents
                     { Value[i - 1] = DH_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_DH", "번호,DB유형,명칭,용도,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차,대수,신규기존",
-                "'" + Value[0] + "','"
+                Program.DB.setValue(DB.type.ProjDB, "User_DH", "번호,프로젝트유형,DB유형,명칭,용도,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차,대수,신규기존",
+                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','"
                  + Value[10]
 
@@ -1085,8 +1085,8 @@ namespace main.contents
                     { Value[i - 1] = PV_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk,신규기존",
-                "'" + Value[0] + "','"
+                Program.DB.setValue(DB.type.ProjDB, "User_PVModule", "번호,프로젝트유형,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk,신규기존",
+                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','"
                  + Value[10]
                  + "'", "번호");
@@ -1297,8 +1297,8 @@ namespace main.contents
                     { Value[i - 1] = FC_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_FC", "번호,DB유형,제품명,제조사,연료전지종류,시스템출력,정격효율,발전효율,축열탱크,신규기존",
-                "'" + Value[0] + "','"
+                Program.DB.setValue(DB.type.ProjDB, "User_FC", "번호,프로젝트유형,DB유형,제품명,제조사,연료전지종류,시스템출력,정격효율,발전효율,축열탱크,신규기존",
+                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
@@ -1483,8 +1483,8 @@ namespace main.contents
                     { Value[i - 1] = WP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_WP", "번호,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,종단풍속,최적풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수,신규기존",
-                "'" + Value[0] + "','"
+                Program.DB.setValue(DB.type.ProjDB, "User_WP", "번호,프로젝트유형,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,종단풍속,최적풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수,신규기존",
+                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
@@ -1801,8 +1801,8 @@ namespace main.contents
                     }
                     else { Value[i] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_AirHP", "번호,DB유형,명칭,난방냉방,연료,공급유형,냉방정격용량,냉방정격COP,냉방정격소비전력,난방정격용량,난방정격COP,난방정격소비전력,한랭지용량,한랭지COP,한랭지소비전력,대기전력,대수,설치",
-                "'" + Value[0] + "','"
+                Program.DB.setValue(DB.type.ProjDB, "User_AirHP", "번호,프로젝트유형,DB유형,명칭,난방냉방,연료,공급유형,냉방정격용량,냉방정격COP,냉방정격소비전력,난방정격용량,난방정격COP,난방정격소비전력,한랭지용량,한랭지COP,한랭지소비전력,대기전력,대수,설치",
+                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" +
                   Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "'", "번호");
             }
@@ -2091,8 +2091,8 @@ namespace main.contents
                     { Value[i - 1] = GWHP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_GWHP", "번호,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,신규기존",
-                "'" + Value[0] + "','"
+                Program.DB.setValue(DB.type.ProjDB, "User_GWHP", "번호,프로젝트유형,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,신규기존",
+                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" +
                  Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "','" + Value[18] + "','" + Value[19] + "','" + Value[20]
                  + "'", "번호");
@@ -2367,8 +2367,8 @@ namespace main.contents
                     { Value[i - 1] = GroundHP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_GroundHP", "번호,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,신규기존",
-                "'" + Value[0] + "','"
+                Program.DB.setValue(DB.type.ProjDB, "User_GroundHP", "번호,프로젝트유형,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,신규기존",
+                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" +
                  Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "','" + Value[18] + "','" + Value[19] + "','" + Value[20]
                  + "'", "번호");
@@ -2627,8 +2627,8 @@ namespace main.contents
                 { Value[9] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString(); }
                 else { Value[9] = ""; }
 
-                Program.DB.setValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정,대수",
-                "'" + Value[0] + "','"
+                Program.DB.setValue(DB.type.ProjDB, "User_Pump", "번호,프로젝트유형,명칭,종류,A효율,B효율,유량,동력,양정,대수",
+                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','"
                  + Value[9]
                  + "'", "번호");
@@ -2865,8 +2865,8 @@ namespace main.contents
                     { Value[i - 1] = ce_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_ce", "번호,명칭,난방냉방,종류,용량,소비전력,온도제어방식,대수,신규기존",
-                "'" + Value[0] + "','"
+                Program.DB.setValue(DB.type.ProjDB, "User_ce", "번호,프로젝트유형,명칭,난방냉방,종류,용량,소비전력,온도제어방식,대수,신규기존",
+                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','"
                  + Value[8]
                  + "'", "번호");
@@ -3529,8 +3529,8 @@ namespace main.contents
                     { Value[i - 1] = Solar_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_Solar", "번호,DB유형,명칭,난방급탕,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량,신규기존",
-                "'" + Value[0] + "','"
+                Program.DB.setValue(DB.type.ProjDB, "User_Solar", "번호,프로젝트유형,DB유형,명칭,난방급탕,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량,신규기존",
+                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','"
                  + Value[10]
                  + "'", "번호");

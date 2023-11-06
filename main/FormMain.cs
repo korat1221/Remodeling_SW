@@ -52,9 +52,13 @@ namespace main
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            Program.getMenuForm().DoLoadForm(40, OnLoadProc);
+            Program.getMenuForm().DoLoadForm(40, OnLoadProc1);
         }
-        public static bool OnLoadProc(Form form)
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            Program.getMenuForm().DoLoadForm(41, OnLoadProc2);
+        }
+        public static bool OnLoadProc1(Form form)
         {
             Intro f = (Intro)form;
 
@@ -62,5 +66,15 @@ namespace main
 
             return true;
         }
+        public static bool OnLoadProc2(Form form)
+        {
+            ProjectList f = (ProjectList)form;
+
+            f.LoadData("");
+
+            return true;
+        }
+
+        
     }
 }

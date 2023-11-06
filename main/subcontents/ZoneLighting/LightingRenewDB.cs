@@ -163,10 +163,11 @@ namespace main.subcontents.ZoneLighting
         //SetValue 
         private void AddUserDB_button_Click(object sender, EventArgs e)
         {
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             if (UserDB_Name != null && UserDB_Manufacture != null && UserDB_RenewType != null && UserDB_eff != 0 && UserDB_Length1 != 0 && UserDB_Length2 != 0 && UserDB_A != 0)
             {
-                Program.DB.setValue(DB.type.ProjDB, "User_Renew", "번호,DB유형,집광채광명칭,집광채광종류,제조사,집광채광효율,산광부가로길이,산광부세로길이,산광부면적",
-                    "'" + UserNum + "','" + "사용자" + "','" + UserDB_Name + "','" + UserDB_RenewType + "','" + UserDB_Manufacture + "','" + UserDB_eff.ToString() + "','" + UserDB_Length1.ToString() + "','" + UserDB_Length2.ToString() + "','" + UserDB_A.ToString() + "'", "번호");
+                Program.DB.setValue(DB.type.ProjDB, "User_Renew", "번호,프로젝트유형,DB유형,집광채광명칭,집광채광종류,제조사,집광채광효율,산광부가로길이,산광부세로길이,산광부면적",
+                    "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDB_Name + "','" + UserDB_RenewType + "','" + UserDB_Manufacture + "','" + UserDB_eff.ToString() + "','" + UserDB_Length1.ToString() + "','" + UserDB_Length2.ToString() + "','" + UserDB_A.ToString() + "'", "번호");
                 load_table_RenewDB();
             }
             else

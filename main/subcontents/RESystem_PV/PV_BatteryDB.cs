@@ -153,10 +153,11 @@ namespace main.subcontents.RESystem_PV
         //SetValue
         private void AddUserDB_button_Click(object sender, EventArgs e)
         {
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             if (UserDB_Name != null && UserDB_Manufacture != null && UserDB_type != null && UserDB_V != 0 && UserDB_Ah != 0)
             {
-                Program.DB.setValue(DB.type.ProjDB, "User_PVBattery", "번호,DB유형,제품명,제조사,전력,암페어시,배터리타입",
-                    "'" + UserNum + "','" + "사용자" + "','" + UserDB_Name + "','" + UserDB_Manufacture + "','" + UserDB_V.ToString() + "','" + UserDB_Ah.ToString() + "','" + UserDB_type + "'", "번호");
+                Program.DB.setValue(DB.type.ProjDB, "User_PVBattery", "번호,프로젝트유형,DB유형,제품명,제조사,전력,암페어시,배터리타입",
+                    "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDB_Name + "','" + UserDB_Manufacture + "','" + UserDB_V.ToString() + "','" + UserDB_Ah.ToString() + "','" + UserDB_type + "'", "번호");
                 load_table_PVbatteryeDB();
             }
             else

@@ -42,14 +42,14 @@ namespace main.contents
         String PipeIns;
         double ZoneArea;
         ArrayList SelectZone_split = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList(); ArrayList SelectAirHP_split = new ArrayList(); ArrayList SelectGroundHP_split = new ArrayList(); ArrayList SelectGWHP_split = new ArrayList(); ArrayList SelectSolar_split = new ArrayList(); ArrayList SelectAS_split = new ArrayList(); ArrayList SelectDH_split = new ArrayList();
-
+        string[][] 프로젝트유형;
         public HeatingSystem()
         {
             InitializeComponent();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '난방시스템'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-
+            프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             //복합설비 콤보박스  
             Complex_comboBox.Items.Clear();
             Complex_comboBox.Items.Add("단일설비가동");
@@ -2300,8 +2300,8 @@ namespace main.contents
                 int index = ce_dataGridView.Rows[n].Cells[1].Value.ToString().IndexOf("CE");
                 존번호 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(0, index - 1);
                 공급설비 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(index, ce_dataGridView.Rows[n].Cells[1].Value.ToString().Length - index);
-                Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,난방시스템,공급설비종류,공급설비,설치위치"
-                , "'" + 존번호 + "','" + Num + "','" + ce_dataGridView.Rows[n].Cells[2].Value+ "','" +
+                Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,프로젝트유형,난방시스템,공급설비종류,공급설비,설치위치"
+                , "'" + 존번호 + "','" + 프로젝트유형[0][0] + "','" + Num + "','" + ce_dataGridView.Rows[n].Cells[2].Value+ "','" +
                     공급설비 + "','" + ce_dataGridView.Rows[n].Cells[7].Value + "'", "");
             }
         }
@@ -2424,19 +2424,19 @@ namespace main.contents
             Save_Pump();
             Save_ce();
 
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,존", "'" + Num_textBox.Text + "','" + Name + "','" + SelectZone_nonsplit + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "'" + Num_textBox.Text + "','" + SystemLoacation + "','" + SLRL + "','" + Complex + "','" + MainSystem + "','" + Sub1System + "','" + Sub2System + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,보일러종류,보일러대수", "'" + Num_textBox.Text + "','" + SelectBoiler_nonsplit + "','" + BoilerNum_nonsplit + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,태양열번호,모듈개수,모듈방위,모듈기울기", "'" + Num_textBox.Text + "','" + SelectSolar_nonsplit + "','" + SolarNum_nonsplit + "','" + SolarDirection_nonsplit + "','" + SolarDegree_nonsplit + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,외기히트펌프번호,외기히트펌프공급방식,외기히트펌프제어방식,외기히트펌프대수", "'" + Num_textBox.Text + "','" + SelectHP_nonsplit[0, 0] + "','" + HPSupply_nonsplit[0, 0] + "','" + HPControl_nonsplit[0, 0] + "','" + HPNum_nonsplit[0, 0] + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,지열히트펌프번호,지열히트펌프공급방식,지열히트펌프제어방식,지열히트펌프대수", "'" + Num_textBox.Text + "','" + SelectHP_nonsplit[1, 0] + "','" + HPSupply_nonsplit[1, 0] + "','" + HPControl_nonsplit[1, 0] + "','" + HPNum_nonsplit[1, 0] + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,지하수히트펌프번호,지하수히트펌프공급방식,지하수히트펌프제어방식,지하수히트펌프대수", "'" + Num_textBox.Text + "','" + SelectHP_nonsplit[2, 0] + "','" + HPSupply_nonsplit[2, 0] + "','" + HPControl_nonsplit[2, 0] + "','" + HPNum_nonsplit[2, 0] + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,흡수식온수기번호,흡수식온수기대수", "'" + Num_textBox.Text + "','" + SelectAS_nonsplit + "','" + ASNum_nonsplit + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,지역난방번호", "'" + Num_textBox.Text + "','" + SelectDH_nonsplit + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "'" + Num_textBox.Text + "','" + PumpUse + "','" + PumpMethod + "','" + Pump1 + "','" + Pump2 + "','" + Pump1Valve + "','" + Pump2Valve + "','" + Pump1Control + "','" + Pump2Control + "','" + Pump1Num.ToString() + "','" + Pump2Num.ToString() + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,공급설비1종류,공급설비2종류", "'" + Num_textBox.Text + "','" + ce1Type + "','" + ce2Type + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,축열유무,축열펌프유무,축열펌프,축열용량", "'" + Num_textBox.Text + "','" + StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,배관관경,배관보온두께,보온열전도율,배관보온재", "'" + Num_textBox.Text + "','" + PipeD.ToString() + "','" + PipeInsD.ToString() + "','" + PipeIns_Ramda.ToString() + "','" + PipeIns + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,명칭,존", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + Name + "','" + SelectZone_nonsplit + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SystemLoacation + "','" + SLRL + "','" + Complex + "','" + MainSystem + "','" + Sub1System + "','" + Sub2System + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,보일러종류,보일러대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectBoiler_nonsplit + "','" + BoilerNum_nonsplit + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,태양열번호,모듈개수,모듈방위,모듈기울기", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectSolar_nonsplit + "','" + SolarNum_nonsplit + "','" + SolarDirection_nonsplit + "','" + SolarDegree_nonsplit + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,외기히트펌프번호,외기히트펌프공급방식,외기히트펌프제어방식,외기히트펌프대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectHP_nonsplit[0, 0] + "','" + HPSupply_nonsplit[0, 0] + "','" + HPControl_nonsplit[0, 0] + "','" + HPNum_nonsplit[0, 0] + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,지열히트펌프번호,지열히트펌프공급방식,지열히트펌프제어방식,지열히트펌프대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectHP_nonsplit[1, 0] + "','" + HPSupply_nonsplit[1, 0] + "','" + HPControl_nonsplit[1, 0] + "','" + HPNum_nonsplit[1, 0] + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,지하수히트펌프번호,지하수히트펌프공급방식,지하수히트펌프제어방식,지하수히트펌프대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectHP_nonsplit[2, 0] + "','" + HPSupply_nonsplit[2, 0] + "','" + HPControl_nonsplit[2, 0] + "','" + HPNum_nonsplit[2, 0] + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,흡수식온수기번호,흡수식온수기대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectAS_nonsplit + "','" + ASNum_nonsplit + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,지역난방번호", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectDH_nonsplit + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PumpUse + "','" + PumpMethod + "','" + Pump1 + "','" + Pump2 + "','" + Pump1Valve + "','" + Pump2Valve + "','" + Pump1Control + "','" + Pump2Control + "','" + Pump1Num.ToString() + "','" + Pump2Num.ToString() + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,공급설비1종류,공급설비2종류", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + ce1Type + "','" + ce2Type + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,축열유무,축열펌프유무,축열펌프,축열용량", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,배관관경,배관보온두께,보온열전도율,배관보온재", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PipeD.ToString() + "','" + PipeInsD.ToString() + "','" + PipeIns_Ramda.ToString() + "','" + PipeIns + "'", "번호");
 
 
 

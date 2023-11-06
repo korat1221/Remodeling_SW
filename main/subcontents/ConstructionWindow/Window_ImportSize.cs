@@ -167,9 +167,9 @@ namespace main.subcontents
                 double 고정유리면적 = Convert.ToDouble(row.Cells[5].Value);
                 double 개폐유리면적 = Convert.ToDouble(row.Cells[6].Value);
                 double 유리면적비 = (고정유리면적 + 개폐유리면적) / 창호면적;
-
-                Program.DB.setValue(DB.type.ProjDB, "SubWindow", "번호,명칭,상위창호번호,창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이,유리면적비",
-                "'" +번호 + "','" + 명칭 + "','" + 상위창호기호+ "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','"
+                string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                Program.DB.setValue(DB.type.ProjDB, "SubWindow", "번호,프로젝트유형,명칭,상위창호번호,창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이,유리면적비",
+                "'" + 번호 + "','" + 프로젝트유형[0][0] + "','" + 명칭 + "','" + 상위창호기호+ "','" + row.Cells[2].Value.ToString() + "','" + row.Cells[3].Value.ToString() + "','" + row.Cells[4].Value.ToString() + "','"
                 + row.Cells[5].Value.ToString() + "','" + row.Cells[6].Value.ToString() + "','" + row.Cells[7].Value.ToString() + "','" + row.Cells[8].Value.ToString() + "','" + row.Cells[9].Value.ToString() + "','"
                 + row.Cells[10].Value.ToString() + "','" + row.Cells[11].Value.ToString() + "','" +유리면적비 + "'", "번호");
 

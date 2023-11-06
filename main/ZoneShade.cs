@@ -466,8 +466,9 @@ namespace main
         {
             for(int i = 0; i<12; i++)
             {
-                Program.DB.setValue(DB.type.ProjDB, "Shade", "번호,유형,각도,월,음영계수",
-               "'" + ID + "','" + "최종음영" + "','" + "" + "','" + (i+1)+"월" + "','" + 최종음영계수[i].ToString()
+                string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                Program.DB.setValue(DB.type.ProjDB, "Shade_3D", "번호,프로젝트유형,유형,각도,월,음영계수",
+               "'" + ID + "','" + 프로젝트유형[0][0] +"','" + "최종음영" + "','" + "" + "','" + (i+1)+"월" + "','" + 최종음영계수[i].ToString()
                + "'", ID);
             }
         }

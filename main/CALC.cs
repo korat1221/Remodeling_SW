@@ -31,7 +31,7 @@ namespace main
 
         private static bool ZoneCalc()
         {
-            string[][] 검토유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형");
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             string[][] zones = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,냉난방유무");
             String[,] zones_arr = new String[zones.Length, 2];//존번호, 냉난방유무
             String[] zones_순번 = new String[zones.Length];// 계산 순서대로 존번호
@@ -249,7 +249,7 @@ namespace main
                                  "Qb_day," +
                                  "Qb_mth," +
                                  "Qb_a,Q_max, t_max,비냉난방존온도",
-                                  "'" + 검토유형[0][0] + "','" + zones_순번[i] + "','" + zone1.zoneName + "','" +
+                                  "'" + 프로젝트유형[0][0] + "','" + zones_순번[i] + "','" + zone1.zoneName + "','" +
                                   HC + "','" + WEWD + "','" + MTH + "','" +
                                   zone1.Zone_HT_tot.ToString() + "','"+zone1.Zone_HT_Inwall.ToString() + "','"+zone1.Zone_HT_Slab.ToString()+ "','" + zone1.Zone_HT_Wall.ToString()+ "','" + zone1.Zone_HT_Roof.ToString()+ "','" + zone1.Zone_HT_Floor.ToString()+ "','" + zone1.Zone_HT_GWall.ToString()+ "','" + zone1.Zone_HT_Door.ToString()+ "','" + zone1.Zone_HT_Win.ToString() + "','" +zone1.Zone_HT_CW.ToString() + "','" +
                                   zone1.Zone_HT_Di_Wall.ToString() + "','" + zone1.Zone_HT_Indi_Wall.ToString() + "','" + zone1.Zone_HT_Di_Roof.ToString() + "','" + zone1.Zone_HT_Indi_Roof.ToString() + "','" + zone1.Zone_HT_Di_Win.ToString() + "','" + zone1.Zone_HT_Indi_Win.ToString() + "','" + zone1.Zone_HT_Di_Door.ToString() + "','" + zone1.Zone_HT_Indi_Door.ToString() + "','" +

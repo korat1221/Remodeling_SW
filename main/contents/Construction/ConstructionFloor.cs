@@ -974,7 +974,8 @@ namespace main.contents.Construction
                 Calc_dU();
                 Calc_Ueff();
             }
-            Program.DB.setValue(DB.type.ProjDB, "ConstructionFloor", "번호,명칭,Type,기존바닥,기초설치,U적용방법,직접간접,구조유형,열교유형,열교종류,표면열전달저항기준,선형점형," +
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            Program.DB.setValue(DB.type.ProjDB, "ConstructionFloor", "번호,프로젝트유형,명칭,Type,기존바닥,기초설치,U적용방법,직접간접,구조유형,열교유형,열교종류,표면열전달저항기준,선형점형," +
                 "A,B,C,PsiKai,단위면적당적용," +
                 "Rse,Rsi,두께합계,열저항합계,단열재두께," +
                 "재료1종류,재료1두께," +
@@ -988,7 +989,7 @@ namespace main.contents.Construction
                 "재료9종류,재료9두께," +
                 "재료10종류,재료10두께," +
                 "열관류율,열교가산치,유효열관류율",
-                "'" + FloorNum_textBox.Text + "','" + FloorName + "','" + Type + "','" + OldFloor + "','" + Base + "','" + UMethod + "','" + DiIndi + "','" + StructureType + "','" + TBType + "','" + TBName + "','" + ISO_KS + "','" + LinearPoint + "','" +
+                "'" + FloorNum_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + FloorName + "','" + Type + "','" + OldFloor + "','" + Base + "','" + UMethod + "','" + DiIndi + "','" + StructureType + "','" + TBType + "','" + TBName + "','" + ISO_KS + "','" + LinearPoint + "','" +
                 A.ToString() + "','" + B.ToString() + "','" + C.ToString() + "','" + PsiKai.ToString() + "','" + PerArea.ToString() + "','" +
                 Rse.ToString() + "','" + Rsi.ToString() + "','" + dtot.ToString() + "','" + Rtot.ToString() + "','" + dins.ToString() + "','" +
                 Material[0] + "','" + Material_d[0].ToString() + "','" +

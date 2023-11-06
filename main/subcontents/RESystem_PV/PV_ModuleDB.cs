@@ -204,10 +204,11 @@ namespace main.subcontents.RESystem_PV
         //SetValue
         private void AddUserDB_button_Click(object sender, EventArgs e)
         {
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             if (UserDB_Name != null && UserDB_Manufacture != null && UserDB_year != null && UserDB_celltype != null && UserDB_width != 0 && UserDB_height != 0 && UserDB_output != 0)
             {
-                Program.DB.setValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,Kpk,가로길이,세로길이,정격출력",
-                    "'" + UserNum + "','" + "사용자" + "','" + UserDB_Name + "','" + UserDB_Manufacture + "','" + UserDB_year + "','" + UserDB_celltype + "','" + UserDB_Kpk.ToString() + "','" + UserDB_width.ToString() + "','" + UserDB_height.ToString() + "','" + UserDB_output.ToString() + "'", "번호");
+                Program.DB.setValue(DB.type.ProjDB, "User_PVModule", "번호,프로젝트유형,DB유형,제품명,제조사,제작년도,CELLTYPE,Kpk,가로길이,세로길이,정격출력",
+                    "'" + UserNum + "','" + 프로젝트유형[0][0] +"','" + "사용자" + "','" + UserDB_Name + "','" + UserDB_Manufacture + "','" + UserDB_year + "','" + UserDB_celltype + "','" + UserDB_Kpk.ToString() + "','" + UserDB_width.ToString() + "','" + UserDB_height.ToString() + "','" + UserDB_output.ToString() + "'", "번호");
                 load_table_PVModuleDB();
             }
             else

@@ -1031,7 +1031,8 @@ namespace main.contents
                 Calc_dU();
                 Calc_Ueff();
             }
-            Program.DB.setValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭,Type,기존외벽,덧댐커튼월,U적용방법,직접간접,구조유형,열교유형,열교종류,외장재색,표면열전달저항기준,선형점형," +
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            Program.DB.setValue(DB.type.ProjDB, "ConstructionWall", "번호,프로젝트유형,명칭,Type,기존외벽,덧댐커튼월,U적용방법,직접간접,구조유형,열교유형,열교종류,외장재색,표면열전달저항기준,선형점형," +
                 "A,B,C,PsiKai,단위면적당적용," +
                 "Rse,Rsi,두께합계,열저항합계,단열재두께," +
                 "재료1종류,재료1두께," +
@@ -1045,7 +1046,7 @@ namespace main.contents
                 "재료9종류,재료9두께," +
                 "재료10종류,재료10두께," +
                 "흡수율,열관류율,열교가산치,유효열관류율",
-                "'" + WallNum_textBox.Text + "','" + WallName + "','" + Type + "','" + OldWall + "','" + CWName + "','" + UMethod + "','" + DiIndi + "','" + StructureType + "','" + TBType + "','" + TBName + "','" + Color_Envelope + "','" + ISO_KS + "','" + LinearPoint + "','" +
+                "'" + WallNum_textBox.Text + "','" + 프로젝트유형[0][0] +"','" + WallName + "','" + Type + "','" + OldWall + "','" + CWName + "','" + UMethod + "','" + DiIndi + "','" + StructureType + "','" + TBType + "','" + TBName + "','" + Color_Envelope + "','" + ISO_KS + "','" + LinearPoint + "','" +
                 A.ToString() + "','" + B.ToString() + "','" + C.ToString() + "','" + PsiKai.ToString() + "','" + PerArea.ToString() + "','" +
                 Rse.ToString() + "','" + Rsi.ToString() + "','" + dtot.ToString() + "','" + Rtot.ToString() + "','" + dins.ToString() + "','" +
                 Material[0] + "','" + Material_d[0].ToString() + "','" +

@@ -24,60 +24,39 @@ namespace main.contents
 {
     public partial class Intro : Form
     {
-        String ProjectName, ProjectType;
+        String ProjectName, ProjectType,ProjectTypeNum;
         public Intro()
         {
             InitializeComponent();
             Logo_pictureBox.Load(Program.gPath + "images/1sticon/0.Logo.png");
             Logo_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            //프로젝트명
-            if (ProjectName != null) { ProjectName_textBox.Text = ProjectName.ToString(); }
-            else { }
 
-            //프로젝트유형
-            ProjectType_textBox.Visible = false;
-            ProjectType_pictureBox.Visible = false;
+
         }
 
-        private void ProjectName_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if(ProjectName_textBox.Text != null)
-            {
-                ProjectName = ProjectName_textBox.Text.ToString();
-            }
-        }
+
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             ProjectType = "기존";
-            ProjectType_textBox.Visible = true;
-            ProjectType_textBox.Text = ProjectType.ToString();
-            ProjectType_pictureBox.Visible = true;
-            ProjectType_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro1.png");
-            ProjectType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            ProjectTypeNum = "1";
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             ProjectType = "리트로핏";
-            ProjectType_textBox.Visible = true;
-            ProjectType_textBox.Text = ProjectType.ToString();
-            ProjectType_pictureBox.Visible = true;
-            ProjectType_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro2.png");
-            ProjectType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-
-
+            ProjectTypeNum = "2";
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             ProjectType = "리모델링";
-            ProjectType_textBox.Visible = true;
-            ProjectType_textBox.Text = ProjectType.ToString();
-            ProjectType_pictureBox.Visible = true;
-            ProjectType_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro3.png");
-            ProjectType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            ProjectTypeNum = "3";
         }
-
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            ProjectType = "신규";
+            ProjectTypeNum = "4";
+        }
 
         private void panel5_Paint(object sender, PaintEventArgs e)
         {
@@ -151,21 +130,28 @@ namespace main.contents
         //}
         private void Save_button_Click(object sender, EventArgs e)
         {
-            if (ProjectName == null)
-            {
-                MessageBox.Show("프로젝트 명칭을 입력하세요.");
-            }
-            else if (ProjectType == null)
+           
+           if (ProjectType == null)
             {
                 MessageBox.Show("프로젝트 타입을 선택하세요.");
             }
             else { Save(); }
+
+            Program.getMenuForm().DoLoadForm(41, OnLoadProc2);
+        }
+        public static bool OnLoadProc2(Form form)
+        {
+            ProjectList f = (ProjectList)form;
+
+            f.LoadData("");
+
+            return true;
         }
 
         private void Save()
         {
-            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,프로젝트유형",
-            "'" + ProjectName + "','" + ProjectType + "'", "프로젝트명");
+            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형,프로젝트유형번호",
+            "'" + ProjectType+"','"+ProjectTypeNum + "'", "프로젝트명");
 
             MessageBox.Show("저장되었습니다.");
         }
@@ -173,11 +159,9 @@ namespace main.contents
         private void reset()
         {
             ProjectName = null;
-            ProjectName_textBox.Text = null;
 
             ProjectType = null;
-            ProjectType_textBox.Text = null;
-
+            ProjectTypeNum = null;
 
         }
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
@@ -185,14 +169,11 @@ namespace main.contents
             reset();
             try
             {
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,프로젝트유형", "");
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,프로젝트유형,프로젝트유형번호", "");
 
                 ProjectName = Value[0][0];
-                ProjectName_textBox.Text = ProjectName.ToString();
-
                 ProjectType = Value[0][1];
-                ProjectType_textBox.Text = ProjectType.ToString();
-
+                ProjectTypeNum = Value[0][2];
 
             }
             catch { }
@@ -203,5 +184,6 @@ namespace main.contents
         {
         }
 
+       
     }
 }

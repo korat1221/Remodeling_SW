@@ -58,6 +58,7 @@ namespace main
             List_CoolingSystem,
             List_HeatingSystem,
             Intro,
+            ProjectList,
             None
 
         }
@@ -72,7 +73,7 @@ namespace main
             new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow(),
             new List_Floor(), new List_Zone(),
             new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor(), new PrintReport(),new List_CoolingSystem(), new List_HeatingSystem(),
-            new Intro() }; //나중에 PV를 냉방리스트로 바꿔야함 
+            new Intro(), new ProjectList()}; //나중에 PV를 냉방리스트로 바꿔야함 
         bool scriptable = false;
         public class FormParam
         {
@@ -255,7 +256,12 @@ namespace main
 
                 f.LoadData(formParam.ID);
             }
+            else if (formParam.formID == 41)
+            {
+                ProjectList f = (ProjectList)form;
 
+                f.LoadData(formParam.ID);
+            }
 
             return true;
         }

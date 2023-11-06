@@ -129,11 +129,11 @@ namespace main.subcontents.ConstructionCW
 
         private void AddUserDB_button_Click(object sender, EventArgs e)
         {
-
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             if (UserDBName != null && UserDB_Ufd != 0 && UserDB_dfd != 0)
             {
-                Program.DB.setValue(DB.type.ProjDB, "User_CWDoorFrame", "번호,DB유형,제품명,제조사,구분,프레임열관류율,프레임두께",
-                    "'" + UserNum + "','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + UserDB_Type + "','" + UserDB_Ufd.ToString() + "','" + UserDB_dfd.ToString() + "'", "번호");
+                Program.DB.setValue(DB.type.ProjDB, "User_CWDoorFrame", "번호,프로젝트유형,DB유형,제품명,제조사,구분,프레임열관류율,프레임두께",
+                    "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + UserDB_Type + "','" + UserDB_Ufd.ToString() + "','" + UserDB_dfd.ToString() + "'", "번호");
                 load_table_DoorFrameDB();
                 UserNum = Program.UTIL.CreateNum("User_CWDoorFrmae", "번호", "UCWD_0");
                 UserNum_textBox.Text = UserNum;

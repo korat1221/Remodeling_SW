@@ -560,14 +560,15 @@ namespace main.contents
         }
         private void Save()
         {
-            Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호," +
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형," +
                 "천장축열선택,외벽축열선택,내벽축열선택,바닥축열선택," +
                 "천장축열,외벽축열,내벽축열,바닥축열," +
                 "천장면적,외벽면적,내벽면적,바닥면적," +
                 "존축열성능," +
                 "존기밀타입,기밀적용유형," +
                 "q50,n50",
-            "'" + ZoneNum + "','"
+            "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','"
             + Ceiling_index + "','" + Wall_index + "','" + InWall_index + "','" + Slab_index + "','"
             + Cwirk_Ceiling.ToString() + "','" + Cwirk_Wall.ToString() + "','" + Cwirk_InWall.ToString() + "','" + Cwirk_Slab.ToString() + "','"
             + Area_Ceiling.ToString() + "','" + Area_Wall.ToString() + "','" + Area_InWall.ToString() + "','" + Area_Slab.ToString() + "','"

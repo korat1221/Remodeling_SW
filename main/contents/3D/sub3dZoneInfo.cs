@@ -481,7 +481,9 @@ namespace main.contents
                                 break;
                         }
                         if (Value.Length > 0)
-                        { Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,구조체,구조체번호", "'" + id + "','" + num + "','" + ConsType + "','" + Value[0][0] + "'", "아이디"); }
+                        {
+                            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                            Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,프로젝트유형,구조체,구조체번호", "'" + id + "','" + num + "','" + 프로젝트유형[0][0] + "','" + ConsType + "','" + Value[0][0] + "'", "아이디"); }
                         else { }
                     }
                     if (dataGridView1.Rows[i].Cells[11].Value == null)

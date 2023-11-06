@@ -204,8 +204,9 @@ namespace main.subcontents
         {
             if (UserDBName != null && UserDBType2 != null && UserDBType3 != null && UserDBType4 != null && UserDB_Psi_InstallTop != 0 && UserDB_Psi_InstallSide != 0 && UserDB_Psi_InstallButtom != 0)
             {
-                Program.DB.setValue(DB.type.ProjDB, "User_WindowInstall", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율",
-                    "'" + UserNum + "','" + "사용자" + "','" + UserDBName + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDBType3 + "','" + UserDBType4 + "','" + UserDB_Psi_InstallTop.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "'", "번호");
+                string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                Program.DB.setValue(DB.type.ProjDB, "User_WindowInstall", "번호,프로젝트유형,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율",
+                    "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDBName + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDBType3 + "','" + UserDBType4 + "','" + UserDB_Psi_InstallTop.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "'", "번호");
                 load_table_InstallDB();
             }
             else

@@ -921,13 +921,13 @@ namespace main
                             MTH = (mth + 1).ToString() + "월";
                             if (검토유형[0][0] =="기존")
                             {
-                                Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "검토유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
+                                Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
                                    "난방_냉방,비이용일_이용일,월," +
                                    "HT,HT_TB," +
                                    "QTsink,QTsource," +
                                    "QT_TB_sink,QT_TB_source," +
                                    "QTsink_tot,QTsource_tot",
-                                   "'" + 검토유형[0][0] + "','" + zonewall.Num() + "','" + ZoneNum + "','" + zonewall.CNum() + "','" + "외벽" + "','" + zonewall.DiIndi() + "','" +
+                                   "'1,'" + zonewall.Num() + "','" + ZoneNum + "','" + zonewall.CNum() + "','" + "외벽" + "','" + zonewall.DiIndi() + "','" +
                                     HC[hc] + "','" + WEWD[wewd] + "','" + MTH + "','" +
                                    (zonewall.Ueff() * zonewall.Area()).ToString() + "','" + (0.15 * zonewall.Area()).ToString() + "','" +
                                   zoneWalls_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneWalls_QTsource[i, hc, wewd, mth].ToString() + "','" +
@@ -1011,13 +1011,13 @@ namespace main
                             MTH = (mth + 1).ToString() + "월";
                             if (검토유형[0][0] == "기존")
                             {
-                                 Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "검토유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
+                                 Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
                                 "난방_냉방,비이용일_이용일,월," +
                                 "HT,HT_TB," +
                                 "QTsink,QTsource," +
                                 "QT_TB_sink,QT_TB_source," +
                                 "QTsink_tot,QTsource_tot",
-                                "'" + 검토유형[0][0] + "','" + zoneroof.Num() + "','" + ZoneNum + "','" + zoneroof.CNum() + "','" + "지붕" + "','" + zoneroof.DiIndi() + "','" +
+                                "'1','" + zoneroof.Num() + "','" + ZoneNum + "','" + zoneroof.CNum() + "','" + "지붕" + "','" + zoneroof.DiIndi() + "','" +
                                  HC[hc] + "','" + WEWD[wewd] + "','" + MTH + "','" +
                                 (zoneroof.Ueff() * zoneroof.Area()).ToString() + "','" + (0.15 * zoneroof.Area()).ToString() + "','" +
                                 zoneRoofs_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneRoofs_QTsource[i, hc, wewd, mth].ToString() + "','" +
@@ -1086,13 +1086,13 @@ namespace main
 
                             if (검토유형[0][0] == "기존")
                             {
-                                Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "검토유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
+                                Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
                                 "난방_냉방,비이용일_이용일,월," +
                                 "HT,HT_TB," +
                                 "QTsink,QTsource," +
                                 "QT_TB_sink,QT_TB_source," +
                                 "QTsink_tot,QTsource_tot",
-                                "'" + 검토유형[0][0] + "','" + zonefloor.Num() + "','" + ZoneNum + "','" + zonefloor.CNum() + "','" + "최하층바닥" + "','" + zonefloor.GroundType() + "','" +
+                                "'1','" + zonefloor.Num() + "','" + ZoneNum + "','" + zonefloor.CNum() + "','" + "최하층바닥" + "','" + zonefloor.GroundType() + "','" +
                                  HC[hc] + "','" + WEWD[wewd] + "','" + (mth + 1).ToString() + "월" + "','" +
                                 (zonefloor.Ueff() * zonefloor.Area()).ToString() + "','" + (0.15 * zonefloor.Area()).ToString() + "','" +
                                 zoneFloors_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneFloors_QTsource[i, hc, wewd, mth].ToString() + "','" +
@@ -1152,13 +1152,13 @@ namespace main
                             if (검토유형[0][0] == "기존")
                             {
                                 MTH = (mth + 1).ToString() + "월";
-                                Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "검토유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
+                                Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
                                 "난방_냉방,비이용일_이용일,월," +
                                 "HT,HT_TB," +
                                 "QTsink,QTsource," +
                                 "QT_TB_sink,QT_TB_source," +
                                 "QTsink_tot,QTsource_tot",
-                                "'" + 검토유형[0][0] + "','" + zonegwall.Num() + "','" + ZoneNum + "','" + zonegwall.CNum() + "','" + "외벽" + "','" + "지면" + "','" +
+                                "'1','" + zonegwall.Num() + "','" + ZoneNum + "','" + zonegwall.CNum() + "','" + "외벽" + "','" + "지면" + "','" +
                                  HC[hc] + "','" + WEWD[wewd] + "','" + MTH + "','" +
                                 (zonegwall.Ueff() * zonegwall.Area()).ToString() + "','" + (0.15 * zonegwall.Area()).ToString() + "','" +
                                 zoneGWalls_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneGWalls_QTsource[i, hc, wewd, mth].ToString() + "','" +
@@ -1231,13 +1231,13 @@ namespace main
                             MTH = (mth + 1).ToString() + "월";
                             if (검토유형[0][0] == "기존")
                             {
-                                    Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "검토유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
+                                    Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
                                 "난방_냉방,비이용일_이용일,월," +
                                 "HT,HT_TB," +
                                 "QTsink,QTsource," +
                                 "QT_TB_sink,QT_TB_source," +
                                 "QTsink_tot,QTsource_tot",
-                                "'" + 검토유형[0][0] + "','" + zonedoor.Num() + "','" + ZoneNum + "','" + zonedoor.CNum() + "','" + "외부출입문" + "','" + zonedoor.DiIndi() + "','" +
+                                "'1','" + zonedoor.Num() + "','" + ZoneNum + "','" + zonedoor.CNum() + "','" + "외부출입문" + "','" + zonedoor.DiIndi() + "','" +
                                  HC[hc] + "','" + WEWD[wewd] + "','" + MTH + "','" +
                                 (zonedoor.Ueff() * zonedoor.Area()).ToString() + "','" + (0.15 * zonedoor.Area()).ToString() + "','" +
                                 zoneDoors_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneDoors_QTsource[i, hc, wewd, mth].ToString() + "','" +
@@ -1323,13 +1323,13 @@ namespace main
                             MTH = (mth + 1).ToString() + "월";
                             if (검토유형[0][0] == "기존")
                             {
-                                Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "검토유형,외피번호,존번호,구조체번호,외피유형,직접간접,커튼월유형," +
+                                Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접,커튼월유형," +
                                "난방_냉방,비이용일_이용일,월," +
                                 "HT,HT_TB," +
                                 "QTsink,QTsource," +
                                 "QT_TB_sink,QT_TB_source," +
                                 "QTsink_tot,QTsource_tot",
-                                "'" + 검토유형[0][0] + "','" + zonecw.Num() + "','" + ZoneNum + "','" + zonecw.CNum() + "','" + "커튼월창" + "','" + "직접외기" + "','" + zonecw.CWType() + "','" +
+                                "'1','" + zonecw.Num() + "','" + ZoneNum + "','" + zonecw.CNum() + "','" + "커튼월창" + "','" + "직접외기" + "','" + zonecw.CWType() + "','" +
                                 HC[hc] + "','" + WEWD[wewd] + "','" + (mth + 1).ToString() + "월" + "','" +
                                (zonecw.Uvalue_g() * zonecw.Area_g()).ToString() + "','" + (zonecw.Uinst() * zonecw.Area_g()).ToString() + "','" +
                                zoneCWs_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneCWs_QTsource[i, hc, wewd, mth].ToString() + "','" +
@@ -1402,13 +1402,13 @@ namespace main
 
                             if (검토유형[0][0] == "기존")
                             {
-                                    Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "검토유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
+                                    Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
                                 "난방_냉방,비이용일_이용일,월," +
                                 "HT,HT_TB," +
                                 "QTsink,QTsource," +
                                 "QT_TB_sink,QT_TB_source," +
                                 "QTsink_tot,QTsource_tot",
-                                "'" + 검토유형[0][0] + "','" + zonewin.Num() + "','" + ZoneNum + "','" + zonewin.CNum() + "','" + "창호" + "','" + zonewin.DiIndi() + "','" +
+                                "'1','" + zonewin.Num() + "','" + ZoneNum + "','" + zonewin.CNum() + "','" + "창호" + "','" + zonewin.DiIndi() + "','" +
                                  HC[hc] + "','" + WEWD[wewd] + "','" + MTH + "','" +
                                 (zonewin.Uvalue() * zonewin.Area()).ToString() + "','" + (0.15 * zonewin.Area()).ToString() + "','" +
                                 zoneWins_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneWins_QTsource[i, hc, wewd, mth].ToString() + "','" +
