@@ -14,61 +14,47 @@ namespace main.subcontents.CoolingSystem
     {
         string DefaultUse;
         public List<string> SelectWaterCooler = new List<string>();
-        public Cooling_WaterCooler(string DefaultUse)
+        public Cooling_WaterCooler()
         {
             InitializeComponent();
-            this.DefaultUse = DefaultUse;
-            load_table_DB();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            load_table_DB();
         }
 
 
         private void load_table_DB() //번호자동생성, 
         {
-
-            if (DefaultUse == "기본DB 적용")
-            {
-                DefaultTablemake();
-            }
-            else
-            {
-                UserTablemake();
-
-                string[][] DefaultDB_Value = Program.DB.getValue(DB.type.ProjDB, "User_WaterCooler", " 번호,명칭,냉방출력,냉방소비전력,EER,압축기,연료,대기전력,설치,증발기,냉수입구온도,냉수출구온도", ""); //수정 필요
-
-                for (int i = 0; i < DefaultDB_Value.Length; i++)
-                {
-                    WaterCooler_dataGridView.Rows.Add();
-                    int nRow = WaterCooler_dataGridView.Rows.Count - 1;
-                    WaterCooler_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[i][0];
-                    WaterCooler_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[i][1];
-                    WaterCooler_dataGridView.Rows[nRow].Cells[3].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][2]));
-                    WaterCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][3]));
-                    WaterCooler_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][4])); //EER
-                    WaterCooler_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[i][5]; //압축기
-                    WaterCooler_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[i][6]; //연료
-                    WaterCooler_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[i][7]; //대기전력
-                    WaterCooler_dataGridView.Rows[nRow].Cells[9].Value = DefaultDB_Value[i][8]; //설치
-                    WaterCooler_dataGridView.Rows[nRow].Cells[10].Value = DefaultDB_Value[i][9]; //증발기
-                    WaterCooler_dataGridView.Rows[nRow].Cells[11].Value = DefaultDB_Value[i][10]; //냉수입구온도
-                    WaterCooler_dataGridView.Rows[nRow].Cells[12].Value = DefaultDB_Value[i][11]; //냉수출구온도
-                }
-            }
-        }
-        private void DefaultTablemake()
-        {
             new StackedHeaderDecorator(WaterCooler_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
-            //WaterCooler_dataGridView.Columns.Clear();
-            //checkBoxColumn.HeaderText = "선택";
-            //checkBoxColumn.Name = "check";
-            //WaterCooler_dataGridView.Columns.Add(checkBoxColumn);
+            WaterCooler_dataGridView.Columns.Clear();
+            checkBoxColumn.HeaderText = "선택";
+            checkBoxColumn.Name = "check";
+            WaterCooler_dataGridView.Columns.Add(checkBoxColumn);
+            UserTablemake();
+            string[][] DefaultDB_Value = Program.DB.getValue(DB.type.ProjDB, "User_WaterCooler", " 번호,명칭,냉방출력,냉방소비전력,EER,압축기,연료,대기전력,설치,증발기,냉수입구온도,냉수출구온도", ""); //수정 필요
 
-            WaterCooler_dataGridView.Columns.Add("A1", "수냉식냉동기 DB 준비중입니다.");
+            for (int i = 0; i < DefaultDB_Value.Length; i++)
+            {
+                WaterCooler_dataGridView.Rows.Add();
+                int nRow = WaterCooler_dataGridView.Rows.Count - 1;
+                WaterCooler_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[i][0];
+                WaterCooler_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[i][1];
+                WaterCooler_dataGridView.Rows[nRow].Cells[3].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][2]));
+                WaterCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][3]));
+                WaterCooler_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][4])); //EER
+                WaterCooler_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[i][5]; //압축기
+                WaterCooler_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[i][6]; //연료
+                WaterCooler_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[i][7]; //대기전력
+                WaterCooler_dataGridView.Rows[nRow].Cells[9].Value = DefaultDB_Value[i][8]; //설치
+                WaterCooler_dataGridView.Rows[nRow].Cells[10].Value = DefaultDB_Value[i][9]; //증발기
+                WaterCooler_dataGridView.Rows[nRow].Cells[11].Value = DefaultDB_Value[i][10]; //냉수입구온도
+                WaterCooler_dataGridView.Rows[nRow].Cells[12].Value = DefaultDB_Value[i][11]; //냉수출구온도
+            }
+
         }
-
+      
         private void UserTablemake()
         {
             new StackedHeaderDecorator(WaterCooler_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);

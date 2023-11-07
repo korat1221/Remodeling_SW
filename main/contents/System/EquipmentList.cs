@@ -2969,7 +2969,7 @@ namespace main.contents
 
         private void DefaultAirCooler_Add_button_Click(object sender, EventArgs e)
         {
-            Cooling_AirCooler AirCooler = new Cooling_AirCooler("기본DB 적용"); //기존 표준값 제품 선택을 함
+            Cooling_AirCooler AirCooler = new Cooling_AirCooler();
             DialogResult result = AirCooler.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -3214,36 +3214,36 @@ namespace main.contents
 
         private void DefaultWaterCooler_Add_button_Click(object sender, EventArgs e)
         {
-            Cooling_WaterCooler WaterCooler = new Cooling_WaterCooler("기본DB 적용"); //기존 표준값 제품 선택을 함
+            Cooling_WaterCooler WaterCooler = new Cooling_WaterCooler(); //기존 표준값 제품 선택을 함
             DialogResult result = WaterCooler.ShowDialog();
             if (result == DialogResult.OK)
             {
-                //if (WaterCooler.SelectWaterCooler != null)
-                //{
-                //    foreach (string SAC in WaterCooler.SelectWaterCooler)
-                //    {
-                //        string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Cooling, "AirCon", "번호,냉방표준성능,대기전력,열원",
-                //            "번호='" + SAC + "'");
-                //        //시작
-                //        int nRow = WaterCooler_dataGridView.Rows.Add();
-                //        Load_WaterCooler_Num();
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[2].Value = "기본";
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[3].Value = null;
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[4].Value = null;
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[5].Value = null;
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[0][1];
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[7].Value = null;
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[0][3];
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[9].Value = DefaultDB_Value[0][2];
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[10].Value = null;
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[11].Value = null;
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[12].Value = null;
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[13].Value = null;
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[14].Value = null;
-                //        WaterCooler_dataGridView.Rows[nRow].Cells[15].Value = null;
+                if (WaterCooler.SelectWaterCooler != null)
+                {
+                    foreach (string SAC in WaterCooler.SelectWaterCooler)
+                    {
+                        string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Cooling, "AirCon", "번호,냉방표준성능,대기전력,열원",
+                            "번호='" + SAC + "'");
+                        //시작
+                        int nRow = WaterCooler_dataGridView.Rows.Add();
+                        Load_WaterCooler_Num();
+                        WaterCooler_dataGridView.Rows[nRow].Cells[2].Value = "기본";
+                        WaterCooler_dataGridView.Rows[nRow].Cells[3].Value = null;
+                        WaterCooler_dataGridView.Rows[nRow].Cells[4].Value = null;
+                        WaterCooler_dataGridView.Rows[nRow].Cells[5].Value = null;
+                        WaterCooler_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[0][1];
+                        WaterCooler_dataGridView.Rows[nRow].Cells[7].Value = null;
+                        WaterCooler_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[0][3];
+                        WaterCooler_dataGridView.Rows[nRow].Cells[9].Value = DefaultDB_Value[0][2];
+                        WaterCooler_dataGridView.Rows[nRow].Cells[10].Value = null;
+                        WaterCooler_dataGridView.Rows[nRow].Cells[11].Value = null;
+                        WaterCooler_dataGridView.Rows[nRow].Cells[12].Value = null;
+                        WaterCooler_dataGridView.Rows[nRow].Cells[13].Value = null;
+                        WaterCooler_dataGridView.Rows[nRow].Cells[14].Value = null;
+                        WaterCooler_dataGridView.Rows[nRow].Cells[15].Value = null;
 
-                //    }
-                //}
+                    }
+                }
             }
         }
 

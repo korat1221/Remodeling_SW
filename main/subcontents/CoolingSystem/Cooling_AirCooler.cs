@@ -14,70 +14,17 @@ namespace main.subcontents.CoolingSystem
     {
         string DefaultUse;
         public List<string> SelectAirCooler = new List<string>();
-        public Cooling_AirCooler(string DefaultUse)
+        public Cooling_AirCooler()
         {
-            InitializeComponent();
-            this.DefaultUse = DefaultUse;
-            load_table_DB();
+            InitializeComponent();  
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            load_table_DB();
         }
 
 
         private void load_table_DB() //번호자동생성, 
-        {
-
-            if (DefaultUse == "기본DB 적용")
-            {
-                DefaultTablemake();
-
-                string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Cooling, "AirCon", "번호,명칭,냉방표준성능,대기관련구분,대기전력,열원", "");
-                for (int i = 0; i < DefaultDB_Value.Length; i++)
-                {
-                    string[] check = DefaultDB_Value[i][1].Split('<');
-                    string[] check2 = check[1].Split('k');
-                    if (Convert.ToDouble(check2[0]) >= 17.5)
-                    {
-                        AirCooler_dataGridView.Rows.Add();
-                        int nRow = AirCooler_dataGridView.Rows.Count - 1;
-                        AirCooler_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[i][0];
-                        AirCooler_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[i][1];
-                        AirCooler_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[i][2];
-                        AirCooler_dataGridView.Rows[nRow].Cells[4].Value = DefaultDB_Value[i][3];
-                        AirCooler_dataGridView.Rows[nRow].Cells[5].Value = DefaultDB_Value[i][4];
-                        AirCooler_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[i][5];
-
-                    }
-                }
-            }
-            else
-            {
-                UserTablemake();
-
-                string[][] DefaultDB_Value = Program.DB.getValue(DB.type.ProjDB, "User_AirCooler", " 번호,명칭,냉방출력,냉방소비전력,EER,압축기,연료,대기전력,설치,부하측공급형식,증발기,냉수입구온도,냉수출구온도", ""); //수정 필요
-
-                for (int i = 0; i < DefaultDB_Value.Length; i++)
-                {
-                    AirCooler_dataGridView.Rows.Add();
-                    int nRow = AirCooler_dataGridView.Rows.Count - 1;
-                    AirCooler_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[i][0];
-                    AirCooler_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[i][1];
-                    AirCooler_dataGridView.Rows[nRow].Cells[3].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][2]));
-                    AirCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][3]));
-                    AirCooler_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][4])); //EER
-                    AirCooler_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[i][5]; //압축기
-                    AirCooler_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[i][6]; //연료
-                    AirCooler_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[i][7]; //대기전력
-                    AirCooler_dataGridView.Rows[nRow].Cells[9].Value = DefaultDB_Value[i][8]; //설치
-                    AirCooler_dataGridView.Rows[nRow].Cells[10].Value = DefaultDB_Value[i][9]; //부하공급
-                    AirCooler_dataGridView.Rows[nRow].Cells[11].Value = DefaultDB_Value[i][10]; //증발기
-                    AirCooler_dataGridView.Rows[nRow].Cells[12].Value = DefaultDB_Value[i][11]; //냉수입구온도
-                    AirCooler_dataGridView.Rows[nRow].Cells[13].Value = DefaultDB_Value[i][12]; //냉수출구온도
-                }
-            }
-        }
-        private void DefaultTablemake()
         {
             new StackedHeaderDecorator(AirCooler_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -85,13 +32,29 @@ namespace main.subcontents.CoolingSystem
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             AirCooler_dataGridView.Columns.Add(checkBoxColumn);
+            UserTablemake();
 
-            AirCooler_dataGridView.Columns.Add("A1", "번호");
-            AirCooler_dataGridView.Columns.Add("A2", "명칭");
-            AirCooler_dataGridView.Columns.Add("A3", "냉방성능");
-            AirCooler_dataGridView.Columns.Add("A4", "대기상태시.유형");
-            AirCooler_dataGridView.Columns.Add("A4", "대기상태시.대기전력");
-            AirCooler_dataGridView.Columns.Add("A5", "열원");
+            string[][] DefaultDB_Value = Program.DB.getValue(DB.type.ProjDB, "User_AirCooler", " 번호,명칭,냉방출력,냉방소비전력,EER,압축기,연료,대기전력,설치,부하측공급형식,증발기,냉수입구온도,냉수출구온도", ""); //수정 필요
+
+            for (int i = 0; i < DefaultDB_Value.Length; i++)
+            {
+                AirCooler_dataGridView.Rows.Add();
+                int nRow = AirCooler_dataGridView.Rows.Count - 1;
+                AirCooler_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[i][0];
+                AirCooler_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[i][1];
+                AirCooler_dataGridView.Rows[nRow].Cells[3].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][2]));
+                AirCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][3]));
+                AirCooler_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][4])); //EER
+                AirCooler_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[i][5]; //압축기
+                AirCooler_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[i][6]; //연료
+                AirCooler_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[i][7]; //대기전력
+                AirCooler_dataGridView.Rows[nRow].Cells[9].Value = DefaultDB_Value[i][8]; //설치
+                AirCooler_dataGridView.Rows[nRow].Cells[10].Value = DefaultDB_Value[i][9]; //부하공급
+                AirCooler_dataGridView.Rows[nRow].Cells[11].Value = DefaultDB_Value[i][10]; //증발기
+                AirCooler_dataGridView.Rows[nRow].Cells[12].Value = DefaultDB_Value[i][11]; //냉수입구온도
+                AirCooler_dataGridView.Rows[nRow].Cells[13].Value = DefaultDB_Value[i][12]; //냉수출구온도
+            }
+
         }
 
         private void UserTablemake()
