@@ -986,12 +986,11 @@ namespace main.contents
 
         private void Save()
         {
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-            Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,프로젝트유형,너비,길이,순바닥면적,상인방높이,작업면높이,공간계수,기준조도," +
+            Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,너비,길이,순바닥면적,상인방높이,작업면높이,공간계수,기준조도," +
                 "조명방식,제어방식,디밍유형,조명밀도,조명예상전력,대기전력,재실계수,조도제어계수," +
                 "조명번호, 등기구명칭, 램프유형, 컨버터_안정기, 광효율, 조명계수," +
                 "집광채광체크",
-                "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] +"','" + Wr + "','" + Lr + "','" + A + "','" + hLi + "','" + hTa + "','" + K + "','" + Em + "','" + 
+                "'" + Num_textBox.Text + "','" + Wr + "','" + Lr + "','" + A + "','" + hLi + "','" + hTa + "','" + K + "','" + Em + "','" + 
                 Method + "','" + control + "','" + dimming + "','" + Pj.ToString() + "','" + Pn.ToString() + "','" +
                 Pci.ToString() + "','" + Fo.ToString() + "','" + Fc.ToString() + "','" +
                 LightNumber + "','" + LightType + "','" + LightType2 + "','" + LightConverter + "','" + lm_W + "','" + LightFL.ToString() + "','" +

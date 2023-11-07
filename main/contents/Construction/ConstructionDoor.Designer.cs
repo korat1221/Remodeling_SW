@@ -28,1740 +28,1748 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.GeneralPanel = new System.Windows.Forms.Panel();
-            this.label64 = new System.Windows.Forms.Label();
-            this.OldDoor_comboBox = new CustomComboBox();
-            this.Type_textBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.Icon_pictureBox = new System.Windows.Forms.PictureBox();
-            this.Name_textBox = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.CWNum_textBox = new System.Windows.Forms.TextBox();
-            this.Previous_button = new System.Windows.Forms.Button();
-            this.Save_button = new System.Windows.Forms.Button();
-            this.Install_comboBox = new CustomComboBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.Door_comboBox = new CustomComboBox();
-            this.Frame_label = new System.Windows.Forms.Label();
-            this.Udoor_comboBox = new CustomComboBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label88 = new System.Windows.Forms.Label();
-            this.label89 = new System.Windows.Forms.Label();
-            this.GlassShgc_textBox = new System.Windows.Forms.TextBox();
-            this.label86 = new System.Windows.Forms.Label();
-            this.DoorU_textBox = new System.Windows.Forms.TextBox();
-            this.label87 = new System.Windows.Forms.Label();
-            this.GlassU_textBox = new System.Windows.Forms.TextBox();
-            this.label84 = new System.Windows.Forms.Label();
-            this.label85 = new System.Windows.Forms.Label();
-            this.label83 = new System.Windows.Forms.Label();
-            this.GlssType_ComboBox = new CustomComboBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.GlassH_textBox = new System.Windows.Forms.TextBox();
-            this.label82 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.bottom_textBox = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.over_textBox = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.DoorTh_textBox = new System.Windows.Forms.TextBox();
-            this.DoorIn_ComboBox = new CustomComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.UD_textBox = new System.Windows.Forms.TextBox();
-            this.τd_label = new System.Windows.Forms.Label();
-            this.PanelColor_label = new System.Windows.Forms.Label();
-            this.Panel_checkBox = new System.Windows.Forms.CheckBox();
-            this.DoorColor_comboBox = new CustomComboBox();
-            this.dPanel_label2 = new System.Windows.Forms.Label();
-            this.GlassL_textBox = new System.Windows.Forms.TextBox();
-            this.Panel_label = new System.Windows.Forms.Label();
-            this.αp_label2 = new System.Windows.Forms.Label();
-            this.UCW_p_label2 = new System.Windows.Forms.Label();
-            this.Panel_textBox = new System.Windows.Forms.TextBox();
-            this.Area_textBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.Install_textBox = new System.Windows.Forms.TextBox();
-            this.Install_button = new System.Windows.Forms.Button();
-            this.FrameName_textBox = new System.Windows.Forms.TextBox();
-            this.FrameDB_button = new System.Windows.Forms.Button();
-            this.αp_label = new System.Windows.Forms.Label();
-            this.UCW_p_label = new System.Windows.Forms.Label();
-            this.g_textBox = new System.Windows.Forms.TextBox();
-            this.Ug_unit_label = new System.Windows.Forms.Label();
-            this.abs_textBox = new System.Windows.Forms.TextBox();
-            this.UCW_g_label = new System.Windows.Forms.Label();
-            this.DiIndi_comboBox = new CustomComboBox();
-            this.DoorType_pictureBox = new System.Windows.Forms.PictureBox();
-            this.Size_tabPage = new System.Windows.Forms.TabPage();
-            this.Material_textBox = new System.Windows.Forms.TextBox();
-            this.FrameIn_textBox = new System.Windows.Forms.TextBox();
-            this.DoorIn_textBox = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.Area_textBox1 = new System.Windows.Forms.TextBox();
-            this.UnderL_textBox = new System.Windows.Forms.TextBox();
-            this.OverL_textBox = new System.Windows.Forms.TextBox();
-            this.Size_textBox = new System.Windows.Forms.TextBox();
-            this.Length_textBox = new System.Windows.Forms.TextBox();
-            this.Height_textBox = new System.Windows.Forms.TextBox();
-            this.label67 = new System.Windows.Forms.Label();
-            this.label69 = new System.Windows.Forms.Label();
-            this.label71 = new System.Windows.Forms.Label();
-            this.label73 = new System.Windows.Forms.Label();
-            this.label74 = new System.Windows.Forms.Label();
-            this.label75 = new System.Windows.Forms.Label();
-            this.label77 = new System.Windows.Forms.Label();
-            this.label78 = new System.Windows.Forms.Label();
-            this.label65 = new System.Windows.Forms.Label();
-            this.label66 = new System.Windows.Forms.Label();
-            this.Install_tabPage = new System.Windows.Forms.TabPage();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.label49 = new System.Windows.Forms.Label();
-            this.d_InstallButtom_textBox = new System.Windows.Forms.TextBox();
-            this.d_InstallSide_textBox = new System.Windows.Forms.TextBox();
-            this.d_InstallTop_textBox = new System.Windows.Forms.TextBox();
-            this.dUinst_textBox = new System.Windows.Forms.TextBox();
-            this.Psi_InstallButtom_textBox = new System.Windows.Forms.TextBox();
-            this.Psi_InstallSide_textBox = new System.Windows.Forms.TextBox();
-            this.Psi_InstallTop_textBox = new System.Windows.Forms.TextBox();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label52 = new System.Windows.Forms.Label();
-            this.label53 = new System.Windows.Forms.Label();
-            this.label54 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.label45 = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.tabControl1 = new System.Windows.Forms.CustomTabControl();
-            this.GeneralPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Icon_pictureBox)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DoorType_pictureBox)).BeginInit();
-            this.Size_tabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.Install_tabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            this.tabControl1.SuspendLayout();
-            this.SuspendLayout();
+            GeneralPanel = new Panel();
+            label64 = new Label();
+            OldDoor_comboBox = new CustomComboBox();
+            Type_textBox = new TextBox();
+            label6 = new Label();
+            label3 = new Label();
+            label5 = new Label();
+            Icon_pictureBox = new PictureBox();
+            Name_textBox = new TextBox();
+            groupBox1 = new GroupBox();
+            radioButton3 = new RadioButton();
+            radioButton2 = new RadioButton();
+            radioButton1 = new RadioButton();
+            DoorNum_textBox = new TextBox();
+            Previous_button = new Button();
+            Save_button = new Button();
+            Install_comboBox = new CustomComboBox();
+            label16 = new Label();
+            label11 = new Label();
+            Door_label = new Label();
+            Udoor_comboBox = new CustomComboBox();
+            label25 = new Label();
+            label4 = new Label();
+            panel2 = new Panel();
+            DoorH_textBox = new TextBox();
+            DoorL_textBox = new TextBox();
+            DoorDB_textBox = new TextBox();
+            label28 = new Label();
+            DoorArea_textBox = new TextBox();
+            label30 = new Label();
+            label21 = new Label();
+            label22 = new Label();
+            label27 = new Label();
+            label86 = new Label();
+            DoorU_textBox = new TextBox();
+            label87 = new Label();
+            GlassU_textBox = new TextBox();
+            label84 = new Label();
+            label85 = new Label();
+            label83 = new Label();
+            GlassType_ComboBox = new CustomComboBox();
+            label29 = new Label();
+            GlassH_textBox = new TextBox();
+            glass2_label = new Label();
+            label1 = new Label();
+            UD_textBox = new TextBox();
+            τd_label = new Label();
+            DoorlColor_label = new Label();
+            glass_checkBox = new CheckBox();
+            DoorColor_comboBox = new CustomComboBox();
+            GlassL_textBox = new TextBox();
+            glass1_label = new Label();
+            αp_label2 = new Label();
+            glassArea_label2 = new Label();
+            GlassArea_textBox = new TextBox();
+            Install_textBox = new TextBox();
+            Install_button = new Button();
+            DoorDB_button = new Button();
+            αp_label = new Label();
+            GlassArea_label = new Label();
+            g_textBox = new TextBox();
+            Ug_unit_label = new Label();
+            abs_textBox = new TextBox();
+            UCW_g_label = new Label();
+            DiIndi_comboBox = new CustomComboBox();
+            DoorType_pictureBox = new PictureBox();
+            Size_tabPage = new TabPage();
+            bottom_textBox = new TextBox();
+            label23 = new Label();
+            label26 = new Label();
+            over_textBox = new TextBox();
+            label9 = new Label();
+            label12 = new Label();
+            Material_textBox = new TextBox();
+            FrameIn_textBox = new TextBox();
+            DoorIn_textBox = new TextBox();
+            label14 = new Label();
+            label13 = new Label();
+            label10 = new Label();
+            pictureBox2 = new PictureBox();
+            UnderL_textBox = new TextBox();
+            OverL_textBox = new TextBox();
+            Size_textBox = new TextBox();
+            label67 = new Label();
+            label69 = new Label();
+            label71 = new Label();
+            label75 = new Label();
+            Install_tabPage = new TabPage();
+            label20 = new Label();
+            label19 = new Label();
+            label18 = new Label();
+            label17 = new Label();
+            label15 = new Label();
+            pictureBox3 = new PictureBox();
+            label49 = new Label();
+            d_InstallButtom_textBox = new TextBox();
+            d_InstallSide_textBox = new TextBox();
+            d_InstallTop_textBox = new TextBox();
+            dUinst_textBox = new TextBox();
+            Psi_InstallButtom_textBox = new TextBox();
+            Psi_InstallSide_textBox = new TextBox();
+            Psi_InstallTop_textBox = new TextBox();
+            label51 = new Label();
+            label52 = new Label();
+            label53 = new Label();
+            label54 = new Label();
+            label44 = new Label();
+            label45 = new Label();
+            label41 = new Label();
+            label40 = new Label();
+            label24 = new Label();
+            label33 = new Label();
+            label38 = new Label();
+            pictureBox4 = new PictureBox();
+            tabControl1 = new CustomTabControl();
+            tabPage1 = new TabPage();
+            DoorArea2_textBox = new TextBox();
+            DoorH2_textBox = new TextBox();
+            label7 = new Label();
+            DoorL2_textBox = new TextBox();
+            label2 = new Label();
+            label8 = new Label();
+            label34 = new Label();
+            GlassArea2_textBox = new TextBox();
+            label35 = new Label();
+            pictureBox1 = new PictureBox();
+            GeneralPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
+            groupBox1.SuspendLayout();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)DoorType_pictureBox).BeginInit();
+            Size_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            Install_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            SuspendLayout();
             // 
             // GeneralPanel
             // 
-            this.GeneralPanel.BackColor = System.Drawing.Color.White;
-            this.GeneralPanel.Controls.Add(this.label64);
-            this.GeneralPanel.Controls.Add(this.OldDoor_comboBox);
-            this.GeneralPanel.Controls.Add(this.Type_textBox);
-            this.GeneralPanel.Controls.Add(this.label6);
-            this.GeneralPanel.Controls.Add(this.label3);
-            this.GeneralPanel.Controls.Add(this.label5);
-            this.GeneralPanel.Controls.Add(this.Icon_pictureBox);
-            this.GeneralPanel.Controls.Add(this.Name_textBox);
-            this.GeneralPanel.Controls.Add(this.groupBox1);
-            this.GeneralPanel.Controls.Add(this.CWNum_textBox);
-            this.GeneralPanel.Location = new System.Drawing.Point(12, 12);
-            this.GeneralPanel.Name = "GeneralPanel";
-            this.GeneralPanel.Size = new System.Drawing.Size(977, 101);
-            this.GeneralPanel.TabIndex = 17;
+            GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(label64);
+            GeneralPanel.Controls.Add(OldDoor_comboBox);
+            GeneralPanel.Controls.Add(Type_textBox);
+            GeneralPanel.Controls.Add(label6);
+            GeneralPanel.Controls.Add(label3);
+            GeneralPanel.Controls.Add(label5);
+            GeneralPanel.Controls.Add(Icon_pictureBox);
+            GeneralPanel.Controls.Add(Name_textBox);
+            GeneralPanel.Controls.Add(groupBox1);
+            GeneralPanel.Controls.Add(DoorNum_textBox);
+            GeneralPanel.Location = new Point(12, 12);
+            GeneralPanel.Name = "GeneralPanel";
+            GeneralPanel.Size = new Size(977, 101);
+            GeneralPanel.TabIndex = 17;
+            GeneralPanel.Paint += GeneralPanel_Paint;
             // 
             // label64
             // 
-            this.label64.AutoSize = true;
-            this.label64.Location = new System.Drawing.Point(142, 19);
-            this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(31, 15);
-            this.label64.TabIndex = 104;
-            this.label64.Text = "명칭";
+            label64.AutoSize = true;
+            label64.Location = new Point(142, 19);
+            label64.Name = "label64";
+            label64.Size = new Size(31, 15);
+            label64.TabIndex = 104;
+            label64.Text = "명칭";
             // 
             // OldDoor_comboBox
             // 
-            this.OldDoor_comboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.OldDoor_comboBox.FormattingEnabled = true;
-            this.OldDoor_comboBox.Location = new System.Drawing.Point(654, 53);
-            this.OldDoor_comboBox.Name = "OldDoor_comboBox";
-            this.OldDoor_comboBox.Size = new System.Drawing.Size(120, 24);
-            this.OldDoor_comboBox.TabIndex = 0;
+            OldDoor_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            OldDoor_comboBox.FormattingEnabled = true;
+            OldDoor_comboBox.Location = new Point(654, 53);
+            OldDoor_comboBox.Name = "OldDoor_comboBox";
+            OldDoor_comboBox.Size = new Size(120, 24);
+            OldDoor_comboBox.TabIndex = 0;
+            OldDoor_comboBox.SelectedIndexChanged += OldDoor_comboBox_SelectedIndexChanged;
             // 
             // Type_textBox
             // 
-            this.Type_textBox.BackColor = System.Drawing.Color.White;
-            this.Type_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Type_textBox.Enabled = false;
-            this.Type_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Type_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Type_textBox.Location = new System.Drawing.Point(177, 57);
-            this.Type_textBox.Name = "Type_textBox";
-            this.Type_textBox.Size = new System.Drawing.Size(120, 15);
-            this.Type_textBox.TabIndex = 96;
-            this.Type_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Type_textBox.BackColor = Color.White;
+            Type_textBox.BorderStyle = BorderStyle.None;
+            Type_textBox.Enabled = false;
+            Type_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Type_textBox.ForeColor = SystemColors.ControlDark;
+            Type_textBox.Location = new Point(177, 57);
+            Type_textBox.Name = "Type_textBox";
+            Type_textBox.Size = new Size(120, 15);
+            Type_textBox.TabIndex = 96;
+            Type_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(328, 57);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(31, 15);
-            this.label6.TabIndex = 94;
-            this.label6.Text = "신규";
+            label6.AutoSize = true;
+            label6.Location = new Point(328, 57);
+            label6.Name = "label6";
+            label6.Size = new Size(31, 15);
+            label6.TabIndex = 94;
+            label6.Text = "신규";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(142, 57);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(33, 15);
-            this.label3.TabIndex = 92;
-            this.label3.Text = "TYPE";
+            label3.AutoSize = true;
+            label3.Location = new Point(142, 57);
+            label3.Name = "label3";
+            label3.Size = new Size(33, 15);
+            label3.TabIndex = 92;
+            label3.Text = "TYPE";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(327, 31);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 15);
-            this.label5.TabIndex = 93;
-            this.label5.Text = "기존";
+            label5.AutoSize = true;
+            label5.Location = new Point(327, 31);
+            label5.Name = "label5";
+            label5.Size = new Size(31, 15);
+            label5.TabIndex = 93;
+            label5.Text = "기존";
             // 
             // Icon_pictureBox
             // 
-            this.Icon_pictureBox.Location = new System.Drawing.Point(30, 14);
-            this.Icon_pictureBox.Name = "Icon_pictureBox";
-            this.Icon_pictureBox.Size = new System.Drawing.Size(50, 50);
-            this.Icon_pictureBox.TabIndex = 91;
-            this.Icon_pictureBox.TabStop = false;
+            Icon_pictureBox.Location = new Point(30, 14);
+            Icon_pictureBox.Name = "Icon_pictureBox";
+            Icon_pictureBox.Size = new Size(50, 50);
+            Icon_pictureBox.TabIndex = 91;
+            Icon_pictureBox.TabStop = false;
             // 
             // Name_textBox
             // 
-            this.Name_textBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Name_textBox.Location = new System.Drawing.Point(177, 16);
-            this.Name_textBox.Name = "Name_textBox";
-            this.Name_textBox.Size = new System.Drawing.Size(120, 23);
-            this.Name_textBox.TabIndex = 4;
+            Name_textBox.BorderStyle = BorderStyle.FixedSingle;
+            Name_textBox.Location = new Point(177, 16);
+            Name_textBox.Name = "Name_textBox";
+            Name_textBox.Size = new Size(120, 23);
+            Name_textBox.TabIndex = 4;
+            Name_textBox.TextChanged += Name_textBox_TextChanged;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.radioButton3);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(365, 9);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(259, 69);
-            this.groupBox1.TabIndex = 24;
-            this.groupBox1.TabStop = false;
+            groupBox1.Controls.Add(radioButton3);
+            groupBox1.Controls.Add(radioButton2);
+            groupBox1.Controls.Add(radioButton1);
+            groupBox1.Location = new Point(365, 9);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(259, 69);
+            groupBox1.TabIndex = 24;
+            groupBox1.TabStop = false;
             // 
             // radioButton3
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(146, 43);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(93, 19);
-            this.radioButton3.TabIndex = 2;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "철거 후 신규";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            radioButton3.AutoSize = true;
+            radioButton3.Location = new Point(146, 43);
+            radioButton3.Name = "radioButton3";
+            radioButton3.Size = new Size(93, 19);
+            radioButton3.TabIndex = 2;
+            radioButton3.TabStop = true;
+            radioButton3.Text = "철거 후 신규";
+            radioButton3.UseVisualStyleBackColor = true;
+            radioButton3.CheckedChanged += radioButton3_CheckedChanged;
             // 
             // radioButton2
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(17, 43);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(49, 19);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "신규";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(17, 43);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(49, 19);
+            radioButton2.TabIndex = 1;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "신규";
+            radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
             // 
             // radioButton1
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(17, 18);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(85, 19);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "기존출입문";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(17, 18);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(85, 19);
+            radioButton1.TabIndex = 0;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "기존출입문";
+            radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
             // 
-            // CWNum_textBox
+            // DoorNum_textBox
             // 
-            this.CWNum_textBox.BackColor = System.Drawing.Color.White;
-            this.CWNum_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.CWNum_textBox.Enabled = false;
-            this.CWNum_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.CWNum_textBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.CWNum_textBox.Location = new System.Drawing.Point(80, 19);
-            this.CWNum_textBox.Name = "CWNum_textBox";
-            this.CWNum_textBox.Size = new System.Drawing.Size(67, 15);
-            this.CWNum_textBox.TabIndex = 90;
-            this.CWNum_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            DoorNum_textBox.BackColor = Color.White;
+            DoorNum_textBox.BorderStyle = BorderStyle.None;
+            DoorNum_textBox.Enabled = false;
+            DoorNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DoorNum_textBox.ForeColor = SystemColors.ControlText;
+            DoorNum_textBox.Location = new Point(80, 19);
+            DoorNum_textBox.Name = "DoorNum_textBox";
+            DoorNum_textBox.Size = new Size(67, 15);
+            DoorNum_textBox.TabIndex = 90;
+            DoorNum_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // Previous_button
             // 
-            this.Previous_button.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Previous_button.ForeColor = System.Drawing.Color.Black;
-            this.Previous_button.Location = new System.Drawing.Point(995, 668);
-            this.Previous_button.Name = "Previous_button";
-            this.Previous_button.Size = new System.Drawing.Size(88, 25);
-            this.Previous_button.TabIndex = 93;
-            this.Previous_button.Text = "<<PREVIOUS";
-            this.Previous_button.UseVisualStyleBackColor = true;
+            Previous_button.BackColor = SystemColors.ButtonHighlight;
+            Previous_button.ForeColor = Color.Black;
+            Previous_button.Location = new Point(995, 668);
+            Previous_button.Name = "Previous_button";
+            Previous_button.Size = new Size(88, 25);
+            Previous_button.TabIndex = 93;
+            Previous_button.Text = "<<PREVIOUS";
+            Previous_button.UseVisualStyleBackColor = true;
             // 
             // Save_button
             // 
-            this.Save_button.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Save_button.ForeColor = System.Drawing.Color.Black;
-            this.Save_button.Location = new System.Drawing.Point(1089, 668);
-            this.Save_button.Name = "Save_button";
-            this.Save_button.Size = new System.Drawing.Size(88, 25);
-            this.Save_button.TabIndex = 92;
-            this.Save_button.Text = "SAVE";
-            this.Save_button.UseVisualStyleBackColor = true;
+            Save_button.BackColor = SystemColors.ButtonHighlight;
+            Save_button.ForeColor = Color.Black;
+            Save_button.Location = new Point(1089, 668);
+            Save_button.Name = "Save_button";
+            Save_button.Size = new Size(88, 25);
+            Save_button.TabIndex = 92;
+            Save_button.Text = "SAVE";
+            Save_button.UseVisualStyleBackColor = true;
             // 
             // Install_comboBox
             // 
-            this.Install_comboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.Install_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Install_comboBox.FormattingEnabled = true;
-            this.Install_comboBox.Location = new System.Drawing.Point(175, 268);
-            this.Install_comboBox.Name = "Install_comboBox";
-            this.Install_comboBox.Size = new System.Drawing.Size(120, 23);
-            this.Install_comboBox.TabIndex = 52;
+            Install_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            Install_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Install_comboBox.FormattingEnabled = true;
+            Install_comboBox.Location = new Point(175, 272);
+            Install_comboBox.Name = "Install_comboBox";
+            Install_comboBox.Size = new Size(120, 23);
+            Install_comboBox.TabIndex = 52;
+            Install_comboBox.SelectedIndexChanged += Install_comboBox_SelectedIndexChanged;
             // 
             // label16
             // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label16.Location = new System.Drawing.Point(45, 272);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(29, 16);
-            this.label16.TabIndex = 51;
-            this.label16.Text = "설치";
+            label16.AutoSize = true;
+            label16.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label16.Location = new Point(45, 272);
+            label16.Name = "label16";
+            label16.Size = new Size(29, 16);
+            label16.TabIndex = 51;
+            label16.Text = "설치";
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label11.Location = new System.Drawing.Point(45, 164);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(29, 16);
-            this.label11.TabIndex = 41;
-            this.label11.Text = "유리";
+            label11.AutoSize = true;
+            label11.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label11.Location = new Point(45, 164);
+            label11.Name = "label11";
+            label11.Size = new Size(29, 16);
+            label11.TabIndex = 41;
+            label11.Text = "유리";
+            label11.Visible = false;
             // 
-            // Door_comboBox
+            // Door_label
             // 
-            this.Door_comboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.Door_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Door_comboBox.FormattingEnabled = true;
-            this.Door_comboBox.Location = new System.Drawing.Point(175, 46);
-            this.Door_comboBox.Name = "Door_comboBox";
-            this.Door_comboBox.Size = new System.Drawing.Size(120, 23);
-            this.Door_comboBox.TabIndex = 40;
-            // 
-            // Frame_label
-            // 
-            this.Frame_label.AutoSize = true;
-            this.Frame_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Frame_label.Location = new System.Drawing.Point(45, 50);
-            this.Frame_label.Name = "Frame_label";
-            this.Frame_label.Size = new System.Drawing.Size(29, 16);
-            this.Frame_label.TabIndex = 39;
-            this.Frame_label.Text = "문짝";
+            Door_label.AutoSize = true;
+            Door_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Door_label.Location = new Point(45, 50);
+            Door_label.Name = "Door_label";
+            Door_label.Size = new Size(65, 16);
+            Door_label.TabIndex = 39;
+            Door_label.Text = "문짝ㆍ문틀 ";
             // 
             // Udoor_comboBox
             // 
-            this.Udoor_comboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.Udoor_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Udoor_comboBox.FormattingEnabled = true;
-            this.Udoor_comboBox.Location = new System.Drawing.Point(175, 16);
-            this.Udoor_comboBox.Name = "Udoor_comboBox";
-            this.Udoor_comboBox.Size = new System.Drawing.Size(120, 23);
-            this.Udoor_comboBox.TabIndex = 38;
+            Udoor_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            Udoor_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Udoor_comboBox.FormattingEnabled = true;
+            Udoor_comboBox.Location = new Point(175, 16);
+            Udoor_comboBox.Name = "Udoor_comboBox";
+            Udoor_comboBox.Size = new Size(120, 23);
+            Udoor_comboBox.TabIndex = 38;
+            Udoor_comboBox.SelectedIndexChanged += Udoor_comboBox_SelectedIndexChanged;
             // 
             // label25
             // 
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label25.Location = new System.Drawing.Point(45, 20);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(80, 16);
-            this.label25.TabIndex = 37;
-            this.label25.Text = "Ucw 적용방법";
+            label25.AutoSize = true;
+            label25.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label25.Location = new Point(45, 20);
+            label25.Name = "label25";
+            label25.Size = new Size(94, 16);
+            label25.TabIndex = 37;
+            label25.Text = "UDoor 적용방법";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(12, 115);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(119, 15);
-            this.label4.TabIndex = 94;
-            this.label4.Text = "외부출입문 구성요소";
+            label4.AutoSize = true;
+            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Location = new Point(12, 115);
+            label4.Name = "label4";
+            label4.Size = new Size(119, 15);
+            label4.TabIndex = 94;
+            label4.Text = "외부출입문 구성요소";
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.White;
-            this.panel2.Controls.Add(this.label88);
-            this.panel2.Controls.Add(this.label89);
-            this.panel2.Controls.Add(this.GlassShgc_textBox);
-            this.panel2.Controls.Add(this.label86);
-            this.panel2.Controls.Add(this.DoorU_textBox);
-            this.panel2.Controls.Add(this.label87);
-            this.panel2.Controls.Add(this.GlassU_textBox);
-            this.panel2.Controls.Add(this.label84);
-            this.panel2.Controls.Add(this.label85);
-            this.panel2.Controls.Add(this.label83);
-            this.panel2.Controls.Add(this.GlssType_ComboBox);
-            this.panel2.Controls.Add(this.label29);
-            this.panel2.Controls.Add(this.GlassH_textBox);
-            this.panel2.Controls.Add(this.label82);
-            this.panel2.Controls.Add(this.label27);
-            this.panel2.Controls.Add(this.bottom_textBox);
-            this.panel2.Controls.Add(this.label23);
-            this.panel2.Controls.Add(this.label26);
-            this.panel2.Controls.Add(this.over_textBox);
-            this.panel2.Controls.Add(this.label9);
-            this.panel2.Controls.Add(this.label12);
-            this.panel2.Controls.Add(this.label8);
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.DoorTh_textBox);
-            this.panel2.Controls.Add(this.DoorIn_ComboBox);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.UD_textBox);
-            this.panel2.Controls.Add(this.τd_label);
-            this.panel2.Controls.Add(this.PanelColor_label);
-            this.panel2.Controls.Add(this.Panel_checkBox);
-            this.panel2.Controls.Add(this.DoorColor_comboBox);
-            this.panel2.Controls.Add(this.dPanel_label2);
-            this.panel2.Controls.Add(this.GlassL_textBox);
-            this.panel2.Controls.Add(this.Panel_label);
-            this.panel2.Controls.Add(this.αp_label2);
-            this.panel2.Controls.Add(this.UCW_p_label2);
-            this.panel2.Controls.Add(this.Panel_textBox);
-            this.panel2.Controls.Add(this.Area_textBox);
-            this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.Install_textBox);
-            this.panel2.Controls.Add(this.Install_button);
-            this.panel2.Controls.Add(this.FrameName_textBox);
-            this.panel2.Controls.Add(this.FrameDB_button);
-            this.panel2.Controls.Add(this.αp_label);
-            this.panel2.Controls.Add(this.UCW_p_label);
-            this.panel2.Controls.Add(this.g_textBox);
-            this.panel2.Controls.Add(this.Ug_unit_label);
-            this.panel2.Controls.Add(this.abs_textBox);
-            this.panel2.Controls.Add(this.UCW_g_label);
-            this.panel2.Controls.Add(this.DiIndi_comboBox);
-            this.panel2.Controls.Add(this.Install_comboBox);
-            this.panel2.Controls.Add(this.label16);
-            this.panel2.Controls.Add(this.label11);
-            this.panel2.Controls.Add(this.Door_comboBox);
-            this.panel2.Controls.Add(this.Frame_label);
-            this.panel2.Controls.Add(this.Udoor_comboBox);
-            this.panel2.Controls.Add(this.label25);
-            this.panel2.Location = new System.Drawing.Point(12, 133);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(977, 307);
-            this.panel2.TabIndex = 95;
+            panel2.BackColor = Color.White;
+            panel2.Controls.Add(DoorH_textBox);
+            panel2.Controls.Add(DoorL_textBox);
+            panel2.Controls.Add(DoorDB_textBox);
+            panel2.Controls.Add(label28);
+            panel2.Controls.Add(DoorArea_textBox);
+            panel2.Controls.Add(label30);
+            panel2.Controls.Add(label21);
+            panel2.Controls.Add(label22);
+            panel2.Controls.Add(label27);
+            panel2.Controls.Add(label86);
+            panel2.Controls.Add(DoorU_textBox);
+            panel2.Controls.Add(label87);
+            panel2.Controls.Add(GlassU_textBox);
+            panel2.Controls.Add(label84);
+            panel2.Controls.Add(label85);
+            panel2.Controls.Add(label83);
+            panel2.Controls.Add(GlassType_ComboBox);
+            panel2.Controls.Add(label29);
+            panel2.Controls.Add(GlassH_textBox);
+            panel2.Controls.Add(glass2_label);
+            panel2.Controls.Add(label1);
+            panel2.Controls.Add(UD_textBox);
+            panel2.Controls.Add(τd_label);
+            panel2.Controls.Add(DoorlColor_label);
+            panel2.Controls.Add(glass_checkBox);
+            panel2.Controls.Add(DoorColor_comboBox);
+            panel2.Controls.Add(GlassL_textBox);
+            panel2.Controls.Add(glass1_label);
+            panel2.Controls.Add(αp_label2);
+            panel2.Controls.Add(glassArea_label2);
+            panel2.Controls.Add(GlassArea_textBox);
+            panel2.Controls.Add(Install_textBox);
+            panel2.Controls.Add(Install_button);
+            panel2.Controls.Add(DoorDB_button);
+            panel2.Controls.Add(αp_label);
+            panel2.Controls.Add(GlassArea_label);
+            panel2.Controls.Add(g_textBox);
+            panel2.Controls.Add(Ug_unit_label);
+            panel2.Controls.Add(abs_textBox);
+            panel2.Controls.Add(UCW_g_label);
+            panel2.Controls.Add(DiIndi_comboBox);
+            panel2.Controls.Add(Install_comboBox);
+            panel2.Controls.Add(label16);
+            panel2.Controls.Add(label11);
+            panel2.Controls.Add(Door_label);
+            panel2.Controls.Add(Udoor_comboBox);
+            panel2.Controls.Add(label25);
+            panel2.Location = new Point(12, 133);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(977, 307);
+            panel2.TabIndex = 95;
+            panel2.Paint += panel2_Paint;
             // 
-            // label88
+            // DoorH_textBox
             // 
-            this.label88.AutoSize = true;
-            this.label88.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label88.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label88.Location = new System.Drawing.Point(845, 214);
-            this.label88.Name = "label88";
-            this.label88.Size = new System.Drawing.Size(11, 16);
-            this.label88.TabIndex = 171;
-            this.label88.Text = "-";
+            DoorH_textBox.BackColor = Color.White;
+            DoorH_textBox.BorderStyle = BorderStyle.None;
+            DoorH_textBox.Enabled = false;
+            DoorH_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DoorH_textBox.ForeColor = SystemColors.ControlDark;
+            DoorH_textBox.Location = new Point(351, 117);
+            DoorH_textBox.Name = "DoorH_textBox";
+            DoorH_textBox.Size = new Size(120, 15);
+            DoorH_textBox.TabIndex = 179;
+            DoorH_textBox.TextAlign = HorizontalAlignment.Center;
+            DoorH_textBox.TextChanged += DoorH_textBox_TextChanged;
             // 
-            // label89
+            // DoorL_textBox
             // 
-            this.label89.AutoSize = true;
-            this.label89.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label89.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label89.Location = new System.Drawing.Point(539, 214);
-            this.label89.Name = "label89";
-            this.label89.Size = new System.Drawing.Size(125, 16);
-            this.label89.TabIndex = 170;
-            this.label89.Text = "[SHGC] 태양열 취득율";
+            DoorL_textBox.BackColor = Color.White;
+            DoorL_textBox.BorderStyle = BorderStyle.None;
+            DoorL_textBox.Enabled = false;
+            DoorL_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DoorL_textBox.ForeColor = SystemColors.ControlDark;
+            DoorL_textBox.Location = new Point(175, 117);
+            DoorL_textBox.Name = "DoorL_textBox";
+            DoorL_textBox.Size = new Size(120, 15);
+            DoorL_textBox.TabIndex = 178;
+            DoorL_textBox.TextAlign = HorizontalAlignment.Center;
+            DoorL_textBox.TextChanged += DoorL_textBox_TextChanged;
             // 
-            // GlassShgc_textBox
+            // DoorDB_textBox
             // 
-            this.GlassShgc_textBox.BackColor = System.Drawing.Color.White;
-            this.GlassShgc_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.GlassShgc_textBox.Enabled = false;
-            this.GlassShgc_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.GlassShgc_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.GlassShgc_textBox.Location = new System.Drawing.Point(707, 215);
-            this.GlassShgc_textBox.Name = "GlassShgc_textBox";
-            this.GlassShgc_textBox.Size = new System.Drawing.Size(116, 15);
-            this.GlassShgc_textBox.TabIndex = 169;
-            this.GlassShgc_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            DoorDB_textBox.BackColor = Color.White;
+            DoorDB_textBox.BorderStyle = BorderStyle.None;
+            DoorDB_textBox.Enabled = false;
+            DoorDB_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DoorDB_textBox.ForeColor = SystemColors.ControlDark;
+            DoorDB_textBox.Location = new Point(175, 89);
+            DoorDB_textBox.Name = "DoorDB_textBox";
+            DoorDB_textBox.Size = new Size(120, 15);
+            DoorDB_textBox.TabIndex = 177;
+            DoorDB_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label86
+            // label28
             // 
-            this.label86.AutoSize = true;
-            this.label86.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label86.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label86.Location = new System.Drawing.Point(824, 243);
-            this.label86.Name = "label86";
-            this.label86.Size = new System.Drawing.Size(50, 16);
-            this.label86.TabIndex = 168;
-            this.label86.Text = "W/m²·K";
+            label28.AutoSize = true;
+            label28.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label28.ForeColor = SystemColors.ControlDark;
+            label28.Location = new Point(825, 117);
+            label28.Name = "label28";
+            label28.Size = new Size(22, 16);
+            label28.TabIndex = 176;
+            label28.Text = "m²";
             // 
-            // DoorU_textBox
+            // DoorArea_textBox
             // 
-            this.DoorU_textBox.BackColor = System.Drawing.Color.White;
-            this.DoorU_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.DoorU_textBox.Enabled = false;
-            this.DoorU_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.DoorU_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.DoorU_textBox.Location = new System.Drawing.Point(707, 243);
-            this.DoorU_textBox.Name = "DoorU_textBox";
-            this.DoorU_textBox.Size = new System.Drawing.Size(116, 15);
-            this.DoorU_textBox.TabIndex = 167;
-            this.DoorU_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            DoorArea_textBox.BackColor = Color.White;
+            DoorArea_textBox.BorderStyle = BorderStyle.None;
+            DoorArea_textBox.Enabled = false;
+            DoorArea_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DoorArea_textBox.ForeColor = SystemColors.ControlDark;
+            DoorArea_textBox.Location = new Point(708, 117);
+            DoorArea_textBox.Name = "DoorArea_textBox";
+            DoorArea_textBox.Size = new Size(116, 15);
+            DoorArea_textBox.TabIndex = 175;
+            DoorArea_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label87
+            // label30
             // 
-            this.label87.AutoSize = true;
-            this.label87.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label87.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label87.Location = new System.Drawing.Point(539, 243);
-            this.label87.Name = "label87";
-            this.label87.Size = new System.Drawing.Size(93, 16);
-            this.label87.TabIndex = 166;
-            this.label87.Text = "[UD] 문열관류율";
+            label30.AutoSize = true;
+            label30.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label30.ForeColor = SystemColors.ControlDark;
+            label30.Location = new Point(540, 117);
+            label30.Name = "label30";
+            label30.Size = new Size(68, 16);
+            label30.TabIndex = 174;
+            label30.Text = "[Ad] 문면적";
             // 
-            // GlassU_textBox
+            // label21
             // 
-            this.GlassU_textBox.BackColor = System.Drawing.Color.White;
-            this.GlassU_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.GlassU_textBox.Enabled = false;
-            this.GlassU_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.GlassU_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.GlassU_textBox.Location = new System.Drawing.Point(707, 186);
-            this.GlassU_textBox.Name = "GlassU_textBox";
-            this.GlassU_textBox.Size = new System.Drawing.Size(116, 15);
-            this.GlassU_textBox.TabIndex = 165;
-            this.GlassU_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            label21.AutoSize = true;
+            label21.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label21.ForeColor = SystemColors.ControlDark;
+            label21.Location = new Point(477, 117);
+            label21.Name = "label21";
+            label21.Size = new Size(29, 16);
+            label21.TabIndex = 173;
+            label21.Text = "mm";
             // 
-            // label84
+            // label22
             // 
-            this.label84.AutoSize = true;
-            this.label84.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label84.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label84.Location = new System.Drawing.Point(824, 186);
-            this.label84.Name = "label84";
-            this.label84.Size = new System.Drawing.Size(50, 16);
-            this.label84.TabIndex = 163;
-            this.label84.Text = "W/m²·K";
-            // 
-            // label85
-            // 
-            this.label85.AutoSize = true;
-            this.label85.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label85.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label85.Location = new System.Drawing.Point(539, 186);
-            this.label85.Name = "label85";
-            this.label85.Size = new System.Drawing.Size(105, 16);
-            this.label85.TabIndex = 164;
-            this.label85.Text = "[Ug] 유리 열관류율";
-            // 
-            // label83
-            // 
-            this.label83.AutoSize = true;
-            this.label83.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label83.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label83.Location = new System.Drawing.Point(824, 272);
-            this.label83.Name = "label83";
-            this.label83.Size = new System.Drawing.Size(50, 16);
-            this.label83.TabIndex = 162;
-            this.label83.Text = "W/m²·K";
-            // 
-            // GlssType_ComboBox
-            // 
-            this.GlssType_ComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.GlssType_ComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.GlssType_ComboBox.FormattingEnabled = true;
-            this.GlssType_ComboBox.Location = new System.Drawing.Point(351, 186);
-            this.GlssType_ComboBox.Name = "GlssType_ComboBox";
-            this.GlssType_ComboBox.Size = new System.Drawing.Size(120, 23);
-            this.GlssType_ComboBox.TabIndex = 161;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label29.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label29.Location = new System.Drawing.Point(301, 190);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(29, 16);
-            this.label29.TabIndex = 160;
-            this.label29.Text = "mm";
-            // 
-            // GlassH_textBox
-            // 
-            this.GlassH_textBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.GlassH_textBox.Location = new System.Drawing.Point(175, 187);
-            this.GlassH_textBox.Name = "GlassH_textBox";
-            this.GlassH_textBox.Size = new System.Drawing.Size(120, 23);
-            this.GlassH_textBox.TabIndex = 159;
-            // 
-            // label82
-            // 
-            this.label82.AutoSize = true;
-            this.label82.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label82.Location = new System.Drawing.Point(140, 192);
-            this.label82.Name = "label82";
-            this.label82.Size = new System.Drawing.Size(29, 16);
-            this.label82.TabIndex = 158;
-            this.label82.Text = "세로";
+            label22.AutoSize = true;
+            label22.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label22.Location = new Point(316, 117);
+            label22.Name = "label22";
+            label22.Size = new Size(29, 16);
+            label22.TabIndex = 171;
+            label22.Text = "세로";
             // 
             // label27
             // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label27.Location = new System.Drawing.Point(45, 104);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(29, 16);
-            this.label27.TabIndex = 157;
-            this.label27.Text = "문틀";
+            label27.AutoSize = true;
+            label27.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label27.Location = new Point(140, 117);
+            label27.Name = "label27";
+            label27.Size = new Size(29, 16);
+            label27.TabIndex = 169;
+            label27.Text = "가로";
             // 
-            // bottom_textBox
+            // label86
             // 
-            this.bottom_textBox.BackColor = System.Drawing.Color.White;
-            this.bottom_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.bottom_textBox.Enabled = false;
-            this.bottom_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.bottom_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.bottom_textBox.Location = new System.Drawing.Point(707, 131);
-            this.bottom_textBox.Name = "bottom_textBox";
-            this.bottom_textBox.Size = new System.Drawing.Size(116, 15);
-            this.bottom_textBox.TabIndex = 156;
-            this.bottom_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            label86.AutoSize = true;
+            label86.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label86.ForeColor = SystemColors.ControlDark;
+            label86.Location = new Point(825, 219);
+            label86.Name = "label86";
+            label86.Size = new Size(50, 16);
+            label86.TabIndex = 168;
+            label86.Text = "W/m²·K";
+            label86.Visible = false;
             // 
-            // label23
+            // DoorU_textBox
             // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label23.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label23.Location = new System.Drawing.Point(824, 131);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(50, 16);
-            this.label23.TabIndex = 154;
-            this.label23.Text = "W/m²·K";
+            DoorU_textBox.BackColor = Color.White;
+            DoorU_textBox.BorderStyle = BorderStyle.None;
+            DoorU_textBox.Enabled = false;
+            DoorU_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DoorU_textBox.ForeColor = SystemColors.ControlDark;
+            DoorU_textBox.Location = new Point(708, 219);
+            DoorU_textBox.Name = "DoorU_textBox";
+            DoorU_textBox.Size = new Size(116, 15);
+            DoorU_textBox.TabIndex = 167;
+            DoorU_textBox.TextAlign = HorizontalAlignment.Center;
+            DoorU_textBox.Visible = false;
             // 
-            // label26
+            // label87
             // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label26.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label26.Location = new System.Drawing.Point(539, 131);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(158, 16);
-            this.label26.TabIndex = 155;
-            this.label26.Text = "[Ψbottom] 문틀하부열관류율";
+            label87.AutoSize = true;
+            label87.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label87.ForeColor = SystemColors.ControlDark;
+            label87.Location = new Point(540, 219);
+            label87.Name = "label87";
+            label87.Size = new Size(145, 16);
+            label87.TabIndex = 166;
+            label87.Text = "[UD] 문열관류율[유리반영]";
+            label87.Visible = false;
             // 
-            // over_textBox
+            // GlassU_textBox
             // 
-            this.over_textBox.BackColor = System.Drawing.Color.White;
-            this.over_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.over_textBox.Enabled = false;
-            this.over_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.over_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.over_textBox.Location = new System.Drawing.Point(707, 104);
-            this.over_textBox.Name = "over_textBox";
-            this.over_textBox.Size = new System.Drawing.Size(116, 15);
-            this.over_textBox.TabIndex = 153;
-            this.over_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            GlassU_textBox.BackColor = Color.White;
+            GlassU_textBox.BorderStyle = BorderStyle.None;
+            GlassU_textBox.Enabled = false;
+            GlassU_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            GlassU_textBox.ForeColor = SystemColors.ControlDark;
+            GlassU_textBox.Location = new Point(708, 189);
+            GlassU_textBox.Name = "GlassU_textBox";
+            GlassU_textBox.Size = new Size(116, 15);
+            GlassU_textBox.TabIndex = 165;
+            GlassU_textBox.TextAlign = HorizontalAlignment.Center;
+            GlassU_textBox.Visible = false;
             // 
-            // label9
+            // label84
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label9.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label9.Location = new System.Drawing.Point(824, 104);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(50, 16);
-            this.label9.TabIndex = 151;
-            this.label9.Text = "W/m²·K";
+            label84.AutoSize = true;
+            label84.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label84.ForeColor = SystemColors.ControlDark;
+            label84.Location = new Point(828, 189);
+            label84.Name = "label84";
+            label84.Size = new Size(50, 16);
+            label84.TabIndex = 163;
+            label84.Text = "W/m²·K";
+            label84.Visible = false;
             // 
-            // label12
+            // label85
             // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label12.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label12.Location = new System.Drawing.Point(539, 104);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(170, 16);
-            this.label12.TabIndex = 152;
-            this.label12.Text = "[Ψover] 문틀상부/측면열관류율";
+            label85.AutoSize = true;
+            label85.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label85.ForeColor = SystemColors.ControlDark;
+            label85.Location = new Point(539, 189);
+            label85.Name = "label85";
+            label85.Size = new Size(105, 16);
+            label85.TabIndex = 164;
+            label85.Text = "[Ug] 유리 열관류율";
+            label85.Visible = false;
             // 
-            // label8
+            // label83
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label8.Location = new System.Drawing.Point(322, 80);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(29, 16);
-            this.label8.TabIndex = 150;
-            this.label8.Text = "두께";
+            label83.AutoSize = true;
+            label83.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label83.ForeColor = SystemColors.ControlDark;
+            label83.Location = new Point(824, 272);
+            label83.Name = "label83";
+            label83.Size = new Size(50, 16);
+            label83.TabIndex = 162;
+            label83.Text = "W/m²·K";
             // 
-            // label2
+            // GlassType_ComboBox
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label2.Location = new System.Drawing.Point(473, 78);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 16);
-            this.label2.TabIndex = 149;
-            this.label2.Text = "mm";
+            GlassType_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            GlassType_ComboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            GlassType_ComboBox.FormattingEnabled = true;
+            GlassType_ComboBox.Location = new Point(175, 189);
+            GlassType_ComboBox.Name = "GlassType_ComboBox";
+            GlassType_ComboBox.Size = new Size(120, 23);
+            GlassType_ComboBox.TabIndex = 161;
+            GlassType_ComboBox.Visible = false;
             // 
-            // DoorTh_textBox
+            // label29
             // 
-            this.DoorTh_textBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.DoorTh_textBox.Location = new System.Drawing.Point(351, 75);
-            this.DoorTh_textBox.Name = "DoorTh_textBox";
-            this.DoorTh_textBox.Size = new System.Drawing.Size(120, 23);
-            this.DoorTh_textBox.TabIndex = 148;
+            label29.AutoSize = true;
+            label29.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label29.ForeColor = SystemColors.ControlDark;
+            label29.Location = new Point(477, 160);
+            label29.Name = "label29";
+            label29.Size = new Size(29, 16);
+            label29.TabIndex = 160;
+            label29.Text = "mm";
+            label29.Visible = false;
             // 
-            // DoorIn_ComboBox
+            // GlassH_textBox
             // 
-            this.DoorIn_ComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.DoorIn_ComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.DoorIn_ComboBox.FormattingEnabled = true;
-            this.DoorIn_ComboBox.Location = new System.Drawing.Point(175, 75);
-            this.DoorIn_ComboBox.Name = "DoorIn_ComboBox";
-            this.DoorIn_ComboBox.Size = new System.Drawing.Size(120, 23);
-            this.DoorIn_ComboBox.TabIndex = 147;
+            GlassH_textBox.BorderStyle = BorderStyle.FixedSingle;
+            GlassH_textBox.Location = new Point(351, 157);
+            GlassH_textBox.Name = "GlassH_textBox";
+            GlassH_textBox.Size = new Size(120, 23);
+            GlassH_textBox.TabIndex = 159;
+            GlassH_textBox.TextAlign = HorizontalAlignment.Center;
+            GlassH_textBox.Visible = false;
+            GlassH_textBox.TextChanged += GlassH_textBox_TextChanged;
+            // 
+            // glass2_label
+            // 
+            glass2_label.AutoSize = true;
+            glass2_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            glass2_label.Location = new Point(316, 162);
+            glass2_label.Name = "glass2_label";
+            glass2_label.Size = new Size(29, 16);
+            glass2_label.TabIndex = 158;
+            glass2_label.Text = "세로";
+            glass2_label.Visible = false;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(140, 50);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 16);
-            this.label1.TabIndex = 146;
-            this.label1.Text = "제품";
+            label1.AutoSize = true;
+            label1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(140, 85);
+            label1.Name = "label1";
+            label1.Size = new Size(29, 16);
+            label1.TabIndex = 146;
+            label1.Text = "제품";
             // 
             // UD_textBox
             // 
-            this.UD_textBox.BackColor = System.Drawing.Color.White;
-            this.UD_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.UD_textBox.Enabled = false;
-            this.UD_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.UD_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.UD_textBox.Location = new System.Drawing.Point(707, 273);
-            this.UD_textBox.Name = "UD_textBox";
-            this.UD_textBox.Size = new System.Drawing.Size(116, 15);
-            this.UD_textBox.TabIndex = 142;
-            this.UD_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            UD_textBox.BackColor = Color.White;
+            UD_textBox.BorderStyle = BorderStyle.None;
+            UD_textBox.Enabled = false;
+            UD_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UD_textBox.ForeColor = SystemColors.ControlDark;
+            UD_textBox.Location = new Point(708, 273);
+            UD_textBox.Name = "UD_textBox";
+            UD_textBox.Size = new Size(116, 15);
+            UD_textBox.TabIndex = 142;
+            UD_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // τd_label
             // 
-            this.τd_label.AutoSize = true;
-            this.τd_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.τd_label.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.τd_label.Location = new System.Drawing.Point(539, 272);
-            this.τd_label.Name = "τd_label";
-            this.τd_label.Size = new System.Drawing.Size(152, 16);
-            this.τd_label.TabIndex = 141;
-            this.τd_label.Text = "[UD,install] 문유효열관류율";
+            τd_label.AutoSize = true;
+            τd_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            τd_label.ForeColor = SystemColors.ControlDark;
+            τd_label.Location = new Point(539, 272);
+            τd_label.Name = "τd_label";
+            τd_label.Size = new Size(152, 16);
+            τd_label.TabIndex = 141;
+            τd_label.Text = "[UD,install] 문유효열관류율";
             // 
-            // PanelColor_label
+            // DoorlColor_label
             // 
-            this.PanelColor_label.AutoSize = true;
-            this.PanelColor_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PanelColor_label.Location = new System.Drawing.Point(322, 50);
-            this.PanelColor_label.Name = "PanelColor_label";
-            this.PanelColor_label.Size = new System.Drawing.Size(18, 16);
-            this.PanelColor_label.TabIndex = 124;
-            this.PanelColor_label.Text = "색";
+            DoorlColor_label.AutoSize = true;
+            DoorlColor_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DoorlColor_label.Location = new Point(140, 50);
+            DoorlColor_label.Name = "DoorlColor_label";
+            DoorlColor_label.Size = new Size(18, 16);
+            DoorlColor_label.TabIndex = 124;
+            DoorlColor_label.Text = "색";
             // 
-            // Panel_checkBox
+            // glass_checkBox
             // 
-            this.Panel_checkBox.AutoSize = true;
-            this.Panel_checkBox.Font = new System.Drawing.Font("맑은 고딕", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Panel_checkBox.Location = new System.Drawing.Point(88, 163);
-            this.Panel_checkBox.Name = "Panel_checkBox";
-            this.Panel_checkBox.Size = new System.Drawing.Size(48, 17);
-            this.Panel_checkBox.TabIndex = 122;
-            this.Panel_checkBox.Text = "적용";
-            this.Panel_checkBox.UseVisualStyleBackColor = true;
+            glass_checkBox.AutoSize = true;
+            glass_checkBox.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            glass_checkBox.Location = new Point(88, 163);
+            glass_checkBox.Name = "glass_checkBox";
+            glass_checkBox.Size = new Size(48, 17);
+            glass_checkBox.TabIndex = 122;
+            glass_checkBox.Text = "적용";
+            glass_checkBox.UseVisualStyleBackColor = true;
+            glass_checkBox.Visible = false;
+            glass_checkBox.CheckedChanged += glass_checkBox_CheckedChanged;
             // 
             // DoorColor_comboBox
             // 
-            this.DoorColor_comboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.DoorColor_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.DoorColor_comboBox.FormattingEnabled = true;
-            this.DoorColor_comboBox.Location = new System.Drawing.Point(351, 46);
-            this.DoorColor_comboBox.Name = "DoorColor_comboBox";
-            this.DoorColor_comboBox.Size = new System.Drawing.Size(120, 23);
-            this.DoorColor_comboBox.TabIndex = 121;
-            // 
-            // dPanel_label2
-            // 
-            this.dPanel_label2.AutoSize = true;
-            this.dPanel_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.dPanel_label2.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.dPanel_label2.Location = new System.Drawing.Point(301, 161);
-            this.dPanel_label2.Name = "dPanel_label2";
-            this.dPanel_label2.Size = new System.Drawing.Size(29, 16);
-            this.dPanel_label2.TabIndex = 120;
-            this.dPanel_label2.Text = "mm";
+            DoorColor_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            DoorColor_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DoorColor_comboBox.FormattingEnabled = true;
+            DoorColor_comboBox.Location = new Point(175, 50);
+            DoorColor_comboBox.Name = "DoorColor_comboBox";
+            DoorColor_comboBox.Size = new Size(120, 23);
+            DoorColor_comboBox.TabIndex = 121;
+            DoorColor_comboBox.SelectedIndexChanged += DoorColor_comboBox_SelectedIndexChanged;
             // 
             // GlassL_textBox
             // 
-            this.GlassL_textBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.GlassL_textBox.Location = new System.Drawing.Point(175, 158);
-            this.GlassL_textBox.Name = "GlassL_textBox";
-            this.GlassL_textBox.Size = new System.Drawing.Size(120, 23);
-            this.GlassL_textBox.TabIndex = 119;
+            GlassL_textBox.BorderStyle = BorderStyle.FixedSingle;
+            GlassL_textBox.Location = new Point(175, 157);
+            GlassL_textBox.Name = "GlassL_textBox";
+            GlassL_textBox.Size = new Size(120, 23);
+            GlassL_textBox.TabIndex = 119;
+            GlassL_textBox.TextAlign = HorizontalAlignment.Center;
+            GlassL_textBox.Visible = false;
+            GlassL_textBox.TextChanged += GlassL_textBox_TextChanged;
             // 
-            // Panel_label
+            // glass1_label
             // 
-            this.Panel_label.AutoSize = true;
-            this.Panel_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Panel_label.Location = new System.Drawing.Point(140, 163);
-            this.Panel_label.Name = "Panel_label";
-            this.Panel_label.Size = new System.Drawing.Size(29, 16);
-            this.Panel_label.TabIndex = 117;
-            this.Panel_label.Text = "가로";
+            glass1_label.AutoSize = true;
+            glass1_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            glass1_label.Location = new Point(140, 162);
+            glass1_label.Name = "glass1_label";
+            glass1_label.Size = new Size(29, 16);
+            glass1_label.TabIndex = 117;
+            glass1_label.Text = "가로";
+            glass1_label.Visible = false;
             // 
             // αp_label2
             // 
-            this.αp_label2.AutoSize = true;
-            this.αp_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.αp_label2.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.αp_label2.Location = new System.Drawing.Point(845, 50);
-            this.αp_label2.Name = "αp_label2";
-            this.αp_label2.Size = new System.Drawing.Size(11, 16);
-            this.αp_label2.TabIndex = 114;
-            this.αp_label2.Text = "-";
+            αp_label2.AutoSize = true;
+            αp_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            αp_label2.ForeColor = SystemColors.ControlDark;
+            αp_label2.Location = new Point(828, 50);
+            αp_label2.Name = "αp_label2";
+            αp_label2.Size = new Size(11, 16);
+            αp_label2.TabIndex = 114;
+            αp_label2.Text = "-";
             // 
-            // UCW_p_label2
+            // glassArea_label2
             // 
-            this.UCW_p_label2.AutoSize = true;
-            this.UCW_p_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.UCW_p_label2.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.UCW_p_label2.Location = new System.Drawing.Point(824, 158);
-            this.UCW_p_label2.Name = "UCW_p_label2";
-            this.UCW_p_label2.Size = new System.Drawing.Size(22, 16);
-            this.UCW_p_label2.TabIndex = 113;
-            this.UCW_p_label2.Text = "m²";
+            glassArea_label2.AutoSize = true;
+            glassArea_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            glassArea_label2.ForeColor = SystemColors.ControlDark;
+            glassArea_label2.Location = new Point(824, 161);
+            glassArea_label2.Name = "glassArea_label2";
+            glassArea_label2.Size = new Size(22, 16);
+            glassArea_label2.TabIndex = 113;
+            glassArea_label2.Text = "m²";
+            glassArea_label2.Visible = false;
             // 
-            // Panel_textBox
+            // GlassArea_textBox
             // 
-            this.Panel_textBox.BackColor = System.Drawing.Color.White;
-            this.Panel_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Panel_textBox.Enabled = false;
-            this.Panel_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Panel_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Panel_textBox.Location = new System.Drawing.Point(175, 196);
-            this.Panel_textBox.Name = "Panel_textBox";
-            this.Panel_textBox.Size = new System.Drawing.Size(120, 15);
-            this.Panel_textBox.TabIndex = 112;
-            this.Panel_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // Area_textBox
-            // 
-            this.Area_textBox.BackColor = System.Drawing.Color.White;
-            this.Area_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Area_textBox.Enabled = false;
-            this.Area_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Area_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Area_textBox.Location = new System.Drawing.Point(707, 158);
-            this.Area_textBox.Name = "Area_textBox";
-            this.Area_textBox.Size = new System.Drawing.Size(116, 15);
-            this.Area_textBox.TabIndex = 109;
-            this.Area_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label7.Location = new System.Drawing.Point(140, 80);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(29, 16);
-            this.label7.TabIndex = 106;
-            this.label7.Text = "내부";
+            GlassArea_textBox.BackColor = Color.White;
+            GlassArea_textBox.BorderStyle = BorderStyle.None;
+            GlassArea_textBox.Enabled = false;
+            GlassArea_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            GlassArea_textBox.ForeColor = SystemColors.ControlDark;
+            GlassArea_textBox.Location = new Point(708, 160);
+            GlassArea_textBox.Name = "GlassArea_textBox";
+            GlassArea_textBox.Size = new Size(116, 15);
+            GlassArea_textBox.TabIndex = 109;
+            GlassArea_textBox.TextAlign = HorizontalAlignment.Center;
+            GlassArea_textBox.Visible = false;
             // 
             // Install_textBox
             // 
-            this.Install_textBox.BackColor = System.Drawing.Color.White;
-            this.Install_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Install_textBox.Enabled = false;
-            this.Install_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Install_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Install_textBox.Location = new System.Drawing.Point(351, 273);
-            this.Install_textBox.Name = "Install_textBox";
-            this.Install_textBox.Size = new System.Drawing.Size(120, 15);
-            this.Install_textBox.TabIndex = 95;
-            this.Install_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Install_textBox.BackColor = Color.White;
+            Install_textBox.BorderStyle = BorderStyle.None;
+            Install_textBox.Enabled = false;
+            Install_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Install_textBox.ForeColor = SystemColors.ControlDark;
+            Install_textBox.Location = new Point(351, 275);
+            Install_textBox.Name = "Install_textBox";
+            Install_textBox.Size = new Size(120, 15);
+            Install_textBox.TabIndex = 95;
+            Install_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // Install_button
             // 
-            this.Install_button.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.Install_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.Install_button.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.Install_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.Install_button.Location = new System.Drawing.Point(473, 269);
-            this.Install_button.Margin = new System.Windows.Forms.Padding(0);
-            this.Install_button.Name = "Install_button";
-            this.Install_button.Size = new System.Drawing.Size(23, 23);
-            this.Install_button.TabIndex = 94;
-            this.Install_button.Text = "+";
-            this.Install_button.UseVisualStyleBackColor = false;
+            Install_button.BackColor = SystemColors.ControlLight;
+            Install_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Install_button.FlatStyle = FlatStyle.System;
+            Install_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Install_button.Location = new Point(473, 272);
+            Install_button.Margin = new Padding(0);
+            Install_button.Name = "Install_button";
+            Install_button.Size = new Size(23, 23);
+            Install_button.TabIndex = 94;
+            Install_button.Text = "+";
+            Install_button.UseVisualStyleBackColor = false;
             // 
-            // FrameName_textBox
+            // DoorDB_button
             // 
-            this.FrameName_textBox.BackColor = System.Drawing.Color.White;
-            this.FrameName_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.FrameName_textBox.Enabled = false;
-            this.FrameName_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FrameName_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.FrameName_textBox.Location = new System.Drawing.Point(351, 60);
-            this.FrameName_textBox.Name = "FrameName_textBox";
-            this.FrameName_textBox.Size = new System.Drawing.Size(120, 15);
-            this.FrameName_textBox.TabIndex = 89;
-            this.FrameName_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // FrameDB_button
-            // 
-            this.FrameDB_button.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.FrameDB_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.FrameDB_button.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.FrameDB_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.FrameDB_button.Location = new System.Drawing.Point(299, 46);
-            this.FrameDB_button.Margin = new System.Windows.Forms.Padding(0);
-            this.FrameDB_button.Name = "FrameDB_button";
-            this.FrameDB_button.Size = new System.Drawing.Size(23, 23);
-            this.FrameDB_button.TabIndex = 88;
-            this.FrameDB_button.Text = "+";
-            this.FrameDB_button.UseVisualStyleBackColor = false;
+            DoorDB_button.BackColor = SystemColors.ControlLight;
+            DoorDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DoorDB_button.FlatStyle = FlatStyle.System;
+            DoorDB_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            DoorDB_button.Location = new Point(299, 85);
+            DoorDB_button.Margin = new Padding(0);
+            DoorDB_button.Name = "DoorDB_button";
+            DoorDB_button.Size = new Size(23, 23);
+            DoorDB_button.TabIndex = 88;
+            DoorDB_button.Text = "+";
+            DoorDB_button.UseVisualStyleBackColor = false;
+            DoorDB_button.Click += DoorDB_button_Click;
             // 
             // αp_label
             // 
-            this.αp_label.AutoSize = true;
-            this.αp_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.αp_label.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.αp_label.Location = new System.Drawing.Point(539, 50);
-            this.αp_label.Name = "αp_label";
-            this.αp_label.Size = new System.Drawing.Size(58, 16);
-            this.αp_label.TabIndex = 77;
-            this.αp_label.Text = "[α] 흡수율";
+            αp_label.AutoSize = true;
+            αp_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            αp_label.ForeColor = SystemColors.ControlDark;
+            αp_label.Location = new Point(539, 50);
+            αp_label.Name = "αp_label";
+            αp_label.Size = new Size(58, 16);
+            αp_label.TabIndex = 77;
+            αp_label.Text = "[α] 흡수율";
             // 
-            // UCW_p_label
+            // GlassArea_label
             // 
-            this.UCW_p_label.AutoSize = true;
-            this.UCW_p_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.UCW_p_label.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.UCW_p_label.Location = new System.Drawing.Point(539, 158);
-            this.UCW_p_label.Name = "UCW_p_label";
-            this.UCW_p_label.Size = new System.Drawing.Size(79, 16);
-            this.UCW_p_label.TabIndex = 74;
-            this.UCW_p_label.Text = "[Ag] 유리면적";
+            GlassArea_label.AutoSize = true;
+            GlassArea_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            GlassArea_label.ForeColor = SystemColors.ControlDark;
+            GlassArea_label.Location = new Point(539, 161);
+            GlassArea_label.Name = "GlassArea_label";
+            GlassArea_label.Size = new Size(79, 16);
+            GlassArea_label.TabIndex = 74;
+            GlassArea_label.Text = "[Ag] 유리면적";
+            GlassArea_label.Visible = false;
             // 
             // g_textBox
             // 
-            this.g_textBox.BackColor = System.Drawing.Color.White;
-            this.g_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.g_textBox.Enabled = false;
-            this.g_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.g_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.g_textBox.Location = new System.Drawing.Point(707, 79);
-            this.g_textBox.Name = "g_textBox";
-            this.g_textBox.Size = new System.Drawing.Size(116, 15);
-            this.g_textBox.TabIndex = 69;
-            this.g_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            g_textBox.BackColor = Color.White;
+            g_textBox.BorderStyle = BorderStyle.None;
+            g_textBox.Enabled = false;
+            g_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            g_textBox.ForeColor = SystemColors.ControlDark;
+            g_textBox.Location = new Point(708, 85);
+            g_textBox.Name = "g_textBox";
+            g_textBox.Size = new Size(116, 15);
+            g_textBox.TabIndex = 69;
+            g_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // Ug_unit_label
             // 
-            this.Ug_unit_label.AutoSize = true;
-            this.Ug_unit_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Ug_unit_label.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Ug_unit_label.Location = new System.Drawing.Point(825, 76);
-            this.Ug_unit_label.Name = "Ug_unit_label";
-            this.Ug_unit_label.Size = new System.Drawing.Size(50, 16);
-            this.Ug_unit_label.TabIndex = 64;
-            this.Ug_unit_label.Text = "W/m²·K";
+            Ug_unit_label.AutoSize = true;
+            Ug_unit_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Ug_unit_label.ForeColor = SystemColors.ControlDark;
+            Ug_unit_label.Location = new Point(825, 85);
+            Ug_unit_label.Name = "Ug_unit_label";
+            Ug_unit_label.Size = new Size(50, 16);
+            Ug_unit_label.TabIndex = 64;
+            Ug_unit_label.Text = "W/m²·K";
             // 
             // abs_textBox
             // 
-            this.abs_textBox.BackColor = System.Drawing.Color.White;
-            this.abs_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.abs_textBox.Enabled = false;
-            this.abs_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.abs_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.abs_textBox.Location = new System.Drawing.Point(707, 51);
-            this.abs_textBox.Name = "abs_textBox";
-            this.abs_textBox.Size = new System.Drawing.Size(116, 15);
-            this.abs_textBox.TabIndex = 66;
-            this.abs_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            abs_textBox.BackColor = Color.White;
+            abs_textBox.BorderStyle = BorderStyle.None;
+            abs_textBox.Enabled = false;
+            abs_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            abs_textBox.ForeColor = SystemColors.ControlDark;
+            abs_textBox.Location = new Point(708, 50);
+            abs_textBox.Name = "abs_textBox";
+            abs_textBox.Size = new Size(116, 15);
+            abs_textBox.TabIndex = 66;
+            abs_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // UCW_g_label
             // 
-            this.UCW_g_label.AutoSize = true;
-            this.UCW_g_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.UCW_g_label.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.UCW_g_label.Location = new System.Drawing.Point(540, 76);
-            this.UCW_g_label.Name = "UCW_g_label";
-            this.UCW_g_label.Size = new System.Drawing.Size(149, 16);
-            this.UCW_g_label.TabIndex = 65;
-            this.UCW_g_label.Text = "[Uo,design] 문짝 열관류율";
+            UCW_g_label.AutoSize = true;
+            UCW_g_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UCW_g_label.ForeColor = SystemColors.ControlDark;
+            UCW_g_label.Location = new Point(540, 85);
+            UCW_g_label.Name = "UCW_g_label";
+            UCW_g_label.Size = new Size(159, 16);
+            UCW_g_label.TabIndex = 65;
+            UCW_g_label.Text = "[UD] 문열관류율[유리 미반영]";
             // 
             // DiIndi_comboBox
             // 
-            this.DiIndi_comboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.DiIndi_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.DiIndi_comboBox.FormattingEnabled = true;
-            this.DiIndi_comboBox.Location = new System.Drawing.Point(351, 16);
-            this.DiIndi_comboBox.Name = "DiIndi_comboBox";
-            this.DiIndi_comboBox.Size = new System.Drawing.Size(120, 23);
-            this.DiIndi_comboBox.TabIndex = 55;
+            DiIndi_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            DiIndi_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DiIndi_comboBox.FormattingEnabled = true;
+            DiIndi_comboBox.Location = new Point(351, 16);
+            DiIndi_comboBox.Name = "DiIndi_comboBox";
+            DiIndi_comboBox.Size = new Size(120, 23);
+            DiIndi_comboBox.TabIndex = 55;
+            DiIndi_comboBox.SelectedIndexChanged += DiIndi_comboBox_SelectedIndexChanged;
             // 
             // DoorType_pictureBox
             // 
-            this.DoorType_pictureBox.Location = new System.Drawing.Point(992, 54);
-            this.DoorType_pictureBox.Name = "DoorType_pictureBox";
-            this.DoorType_pictureBox.Size = new System.Drawing.Size(178, 386);
-            this.DoorType_pictureBox.TabIndex = 97;
-            this.DoorType_pictureBox.TabStop = false;
+            DoorType_pictureBox.Location = new Point(992, 54);
+            DoorType_pictureBox.Name = "DoorType_pictureBox";
+            DoorType_pictureBox.Size = new Size(178, 386);
+            DoorType_pictureBox.TabIndex = 97;
+            DoorType_pictureBox.TabStop = false;
             // 
             // Size_tabPage
             // 
-            this.Size_tabPage.BackColor = System.Drawing.Color.White;
-            this.Size_tabPage.Controls.Add(this.Material_textBox);
-            this.Size_tabPage.Controls.Add(this.FrameIn_textBox);
-            this.Size_tabPage.Controls.Add(this.DoorIn_textBox);
-            this.Size_tabPage.Controls.Add(this.label14);
-            this.Size_tabPage.Controls.Add(this.label13);
-            this.Size_tabPage.Controls.Add(this.label10);
-            this.Size_tabPage.Controls.Add(this.pictureBox2);
-            this.Size_tabPage.Controls.Add(this.pictureBox1);
-            this.Size_tabPage.Controls.Add(this.Area_textBox1);
-            this.Size_tabPage.Controls.Add(this.UnderL_textBox);
-            this.Size_tabPage.Controls.Add(this.OverL_textBox);
-            this.Size_tabPage.Controls.Add(this.Size_textBox);
-            this.Size_tabPage.Controls.Add(this.Length_textBox);
-            this.Size_tabPage.Controls.Add(this.Height_textBox);
-            this.Size_tabPage.Controls.Add(this.label67);
-            this.Size_tabPage.Controls.Add(this.label69);
-            this.Size_tabPage.Controls.Add(this.label71);
-            this.Size_tabPage.Controls.Add(this.label73);
-            this.Size_tabPage.Controls.Add(this.label74);
-            this.Size_tabPage.Controls.Add(this.label75);
-            this.Size_tabPage.Controls.Add(this.label77);
-            this.Size_tabPage.Controls.Add(this.label78);
-            this.Size_tabPage.Controls.Add(this.label65);
-            this.Size_tabPage.Controls.Add(this.label66);
-            this.Size_tabPage.Location = new System.Drawing.Point(4, 25);
-            this.Size_tabPage.Name = "Size_tabPage";
-            this.Size_tabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.Size_tabPage.Size = new System.Drawing.Size(969, 210);
-            this.Size_tabPage.TabIndex = 3;
-            this.Size_tabPage.Text = "치수 정보";
+            Size_tabPage.BackColor = Color.White;
+            Size_tabPage.Controls.Add(bottom_textBox);
+            Size_tabPage.Controls.Add(label23);
+            Size_tabPage.Controls.Add(label26);
+            Size_tabPage.Controls.Add(over_textBox);
+            Size_tabPage.Controls.Add(label9);
+            Size_tabPage.Controls.Add(label12);
+            Size_tabPage.Controls.Add(Material_textBox);
+            Size_tabPage.Controls.Add(FrameIn_textBox);
+            Size_tabPage.Controls.Add(DoorIn_textBox);
+            Size_tabPage.Controls.Add(label14);
+            Size_tabPage.Controls.Add(label13);
+            Size_tabPage.Controls.Add(label10);
+            Size_tabPage.Controls.Add(pictureBox2);
+            Size_tabPage.Controls.Add(UnderL_textBox);
+            Size_tabPage.Controls.Add(OverL_textBox);
+            Size_tabPage.Controls.Add(Size_textBox);
+            Size_tabPage.Controls.Add(label67);
+            Size_tabPage.Controls.Add(label69);
+            Size_tabPage.Controls.Add(label71);
+            Size_tabPage.Controls.Add(label75);
+            Size_tabPage.Location = new Point(4, 25);
+            Size_tabPage.Name = "Size_tabPage";
+            Size_tabPage.Padding = new Padding(3);
+            Size_tabPage.Size = new Size(969, 210);
+            Size_tabPage.TabIndex = 3;
+            Size_tabPage.Text = "문짝ㆍ문틀 정보";
+            // 
+            // bottom_textBox
+            // 
+            bottom_textBox.BackColor = Color.White;
+            bottom_textBox.BorderStyle = BorderStyle.None;
+            bottom_textBox.Enabled = false;
+            bottom_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            bottom_textBox.ForeColor = SystemColors.ControlDark;
+            bottom_textBox.Location = new Point(675, 82);
+            bottom_textBox.Name = "bottom_textBox";
+            bottom_textBox.Size = new Size(116, 15);
+            bottom_textBox.TabIndex = 190;
+            bottom_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label23.ForeColor = SystemColors.ControlDark;
+            label23.Location = new Point(792, 82);
+            label23.Name = "label23";
+            label23.Size = new Size(50, 16);
+            label23.TabIndex = 188;
+            label23.Text = "W/m²·K";
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label26.ForeColor = SystemColors.ControlDark;
+            label26.Location = new Point(507, 82);
+            label26.Name = "label26";
+            label26.Size = new Size(158, 16);
+            label26.TabIndex = 189;
+            label26.Text = "[Ψbottom] 문틀하부열관류율";
+            // 
+            // over_textBox
+            // 
+            over_textBox.BackColor = Color.White;
+            over_textBox.BorderStyle = BorderStyle.None;
+            over_textBox.Enabled = false;
+            over_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            over_textBox.ForeColor = SystemColors.ControlDark;
+            over_textBox.Location = new Point(675, 55);
+            over_textBox.Name = "over_textBox";
+            over_textBox.Size = new Size(116, 15);
+            over_textBox.TabIndex = 187;
+            over_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label9.ForeColor = SystemColors.ControlDark;
+            label9.Location = new Point(792, 55);
+            label9.Name = "label9";
+            label9.Size = new Size(50, 16);
+            label9.TabIndex = 185;
+            label9.Text = "W/m²·K";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label12.ForeColor = SystemColors.ControlDark;
+            label12.Location = new Point(507, 55);
+            label12.Name = "label12";
+            label12.Size = new Size(170, 16);
+            label12.TabIndex = 186;
+            label12.Text = "[Ψover] 문틀상부/측면열관류율";
             // 
             // Material_textBox
             // 
-            this.Material_textBox.BackColor = System.Drawing.Color.White;
-            this.Material_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Material_textBox.Enabled = false;
-            this.Material_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Material_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Material_textBox.Location = new System.Drawing.Point(181, 62);
-            this.Material_textBox.Name = "Material_textBox";
-            this.Material_textBox.Size = new System.Drawing.Size(80, 15);
-            this.Material_textBox.TabIndex = 184;
-            this.Material_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Material_textBox.BackColor = Color.White;
+            Material_textBox.BorderStyle = BorderStyle.None;
+            Material_textBox.Enabled = false;
+            Material_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Material_textBox.ForeColor = SystemColors.ControlDark;
+            Material_textBox.Location = new Point(181, 62);
+            Material_textBox.Name = "Material_textBox";
+            Material_textBox.Size = new Size(80, 15);
+            Material_textBox.TabIndex = 184;
+            Material_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // FrameIn_textBox
             // 
-            this.FrameIn_textBox.BackColor = System.Drawing.Color.White;
-            this.FrameIn_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.FrameIn_textBox.Enabled = false;
-            this.FrameIn_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FrameIn_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.FrameIn_textBox.Location = new System.Drawing.Point(267, 61);
-            this.FrameIn_textBox.Name = "FrameIn_textBox";
-            this.FrameIn_textBox.Size = new System.Drawing.Size(80, 15);
-            this.FrameIn_textBox.TabIndex = 183;
-            this.FrameIn_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            FrameIn_textBox.BackColor = Color.White;
+            FrameIn_textBox.BorderStyle = BorderStyle.None;
+            FrameIn_textBox.Enabled = false;
+            FrameIn_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            FrameIn_textBox.ForeColor = SystemColors.ControlDark;
+            FrameIn_textBox.Location = new Point(267, 61);
+            FrameIn_textBox.Name = "FrameIn_textBox";
+            FrameIn_textBox.Size = new Size(80, 15);
+            FrameIn_textBox.TabIndex = 183;
+            FrameIn_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // DoorIn_textBox
             // 
-            this.DoorIn_textBox.BackColor = System.Drawing.Color.White;
-            this.DoorIn_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.DoorIn_textBox.Enabled = false;
-            this.DoorIn_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.DoorIn_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.DoorIn_textBox.Location = new System.Drawing.Point(361, 62);
-            this.DoorIn_textBox.Name = "DoorIn_textBox";
-            this.DoorIn_textBox.Size = new System.Drawing.Size(80, 15);
-            this.DoorIn_textBox.TabIndex = 182;
-            this.DoorIn_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            DoorIn_textBox.BackColor = Color.White;
+            DoorIn_textBox.BorderStyle = BorderStyle.None;
+            DoorIn_textBox.Enabled = false;
+            DoorIn_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DoorIn_textBox.ForeColor = SystemColors.ControlDark;
+            DoorIn_textBox.Location = new Point(361, 62);
+            DoorIn_textBox.Name = "DoorIn_textBox";
+            DoorIn_textBox.Size = new Size(80, 15);
+            DoorIn_textBox.TabIndex = 182;
+            DoorIn_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label14.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label14.Location = new System.Drawing.Point(377, 33);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(51, 16);
-            this.label14.TabIndex = 181;
-            this.label14.Text = "문짝내부";
+            label14.AutoSize = true;
+            label14.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label14.ForeColor = SystemColors.ControlDark;
+            label14.Location = new Point(377, 33);
+            label14.Name = "label14";
+            label14.Size = new Size(51, 16);
+            label14.TabIndex = 181;
+            label14.Text = "문짝내부";
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label13.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label13.Location = new System.Drawing.Point(283, 33);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(51, 16);
-            this.label13.TabIndex = 180;
-            this.label13.Text = "문틀내부";
+            label13.AutoSize = true;
+            label13.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label13.ForeColor = SystemColors.ControlDark;
+            label13.Location = new Point(283, 33);
+            label13.Name = "label13";
+            label13.Size = new Size(51, 16);
+            label13.TabIndex = 180;
+            label13.Text = "문틀내부";
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label10.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label10.Location = new System.Drawing.Point(196, 33);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(29, 16);
-            this.label10.TabIndex = 179;
-            this.label10.Text = "재질";
+            label10.AutoSize = true;
+            label10.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label10.ForeColor = SystemColors.ControlDark;
+            label10.Location = new Point(196, 33);
+            label10.Name = "label10";
+            label10.Size = new Size(29, 16);
+            label10.TabIndex = 179;
+            label10.Text = "재질";
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(171, 91);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(278, 111);
-            this.pictureBox2.TabIndex = 178;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(28, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(104, 199);
-            this.pictureBox1.TabIndex = 177;
-            this.pictureBox1.TabStop = false;
-            // 
-            // Area_textBox1
-            // 
-            this.Area_textBox1.BackColor = System.Drawing.Color.White;
-            this.Area_textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Area_textBox1.Enabled = false;
-            this.Area_textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Area_textBox1.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Area_textBox1.Location = new System.Drawing.Point(697, 32);
-            this.Area_textBox1.Name = "Area_textBox1";
-            this.Area_textBox1.Size = new System.Drawing.Size(116, 15);
-            this.Area_textBox1.TabIndex = 176;
-            this.Area_textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            pictureBox2.Location = new Point(171, 91);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(278, 111);
+            pictureBox2.TabIndex = 178;
+            pictureBox2.TabStop = false;
             // 
             // UnderL_textBox
             // 
-            this.UnderL_textBox.BackColor = System.Drawing.Color.White;
-            this.UnderL_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.UnderL_textBox.Enabled = false;
-            this.UnderL_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.UnderL_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.UnderL_textBox.Location = new System.Drawing.Point(697, 157);
-            this.UnderL_textBox.Name = "UnderL_textBox";
-            this.UnderL_textBox.Size = new System.Drawing.Size(116, 15);
-            this.UnderL_textBox.TabIndex = 173;
-            this.UnderL_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            UnderL_textBox.BackColor = Color.White;
+            UnderL_textBox.BorderStyle = BorderStyle.None;
+            UnderL_textBox.Enabled = false;
+            UnderL_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UnderL_textBox.ForeColor = SystemColors.ControlDark;
+            UnderL_textBox.Location = new Point(697, 157);
+            UnderL_textBox.Name = "UnderL_textBox";
+            UnderL_textBox.Size = new Size(116, 15);
+            UnderL_textBox.TabIndex = 173;
+            UnderL_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // OverL_textBox
             // 
-            this.OverL_textBox.BackColor = System.Drawing.Color.White;
-            this.OverL_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.OverL_textBox.Enabled = false;
-            this.OverL_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.OverL_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.OverL_textBox.Location = new System.Drawing.Point(697, 130);
-            this.OverL_textBox.Name = "OverL_textBox";
-            this.OverL_textBox.Size = new System.Drawing.Size(116, 15);
-            this.OverL_textBox.TabIndex = 167;
-            this.OverL_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            OverL_textBox.BackColor = Color.White;
+            OverL_textBox.BorderStyle = BorderStyle.None;
+            OverL_textBox.Enabled = false;
+            OverL_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            OverL_textBox.ForeColor = SystemColors.ControlDark;
+            OverL_textBox.Location = new Point(697, 130);
+            OverL_textBox.Name = "OverL_textBox";
+            OverL_textBox.Size = new Size(116, 15);
+            OverL_textBox.TabIndex = 167;
+            OverL_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // Size_textBox
             // 
-            this.Size_textBox.BackColor = System.Drawing.Color.White;
-            this.Size_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Size_textBox.Enabled = false;
-            this.Size_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Size_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Size_textBox.Location = new System.Drawing.Point(26, 14);
-            this.Size_textBox.Name = "Size_textBox";
-            this.Size_textBox.Size = new System.Drawing.Size(120, 15);
-            this.Size_textBox.TabIndex = 103;
-            this.Size_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // Length_textBox
-            // 
-            this.Length_textBox.BackColor = System.Drawing.Color.White;
-            this.Length_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Length_textBox.Enabled = false;
-            this.Length_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Length_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Length_textBox.Location = new System.Drawing.Point(697, 91);
-            this.Length_textBox.Name = "Length_textBox";
-            this.Length_textBox.Size = new System.Drawing.Size(116, 15);
-            this.Length_textBox.TabIndex = 161;
-            this.Length_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // Height_textBox
-            // 
-            this.Height_textBox.BackColor = System.Drawing.Color.White;
-            this.Height_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Height_textBox.Enabled = false;
-            this.Height_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Height_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Height_textBox.Location = new System.Drawing.Point(697, 61);
-            this.Height_textBox.Name = "Height_textBox";
-            this.Height_textBox.Size = new System.Drawing.Size(116, 15);
-            this.Height_textBox.TabIndex = 159;
-            this.Height_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Size_textBox.BackColor = Color.White;
+            Size_textBox.BorderStyle = BorderStyle.None;
+            Size_textBox.Enabled = false;
+            Size_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Size_textBox.ForeColor = SystemColors.ControlDark;
+            Size_textBox.Location = new Point(26, 14);
+            Size_textBox.Name = "Size_textBox";
+            Size_textBox.Size = new Size(120, 15);
+            Size_textBox.TabIndex = 103;
+            Size_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label67
             // 
-            this.label67.AutoSize = true;
-            this.label67.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label67.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label67.Location = new System.Drawing.Point(822, 156);
-            this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(18, 16);
-            this.label67.TabIndex = 175;
-            this.label67.Text = "m";
+            label67.AutoSize = true;
+            label67.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label67.ForeColor = SystemColors.ControlDark;
+            label67.Location = new Point(822, 156);
+            label67.Name = "label67";
+            label67.Size = new Size(18, 16);
+            label67.TabIndex = 175;
+            label67.Text = "m";
             // 
             // label69
             // 
-            this.label69.AutoSize = true;
-            this.label69.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label69.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label69.Location = new System.Drawing.Point(535, 156);
-            this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(79, 16);
-            this.label69.TabIndex = 171;
-            this.label69.Text = "하부 설치 길이";
+            label69.AutoSize = true;
+            label69.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label69.ForeColor = SystemColors.ControlDark;
+            label69.Location = new Point(535, 156);
+            label69.Name = "label69";
+            label69.Size = new Size(79, 16);
+            label69.TabIndex = 171;
+            label69.Text = "하부 설치 길이";
             // 
             // label71
             // 
-            this.label71.AutoSize = true;
-            this.label71.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label71.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label71.Location = new System.Drawing.Point(822, 129);
-            this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(18, 16);
-            this.label71.TabIndex = 169;
-            this.label71.Text = "m";
-            // 
-            // label73
-            // 
-            this.label73.AutoSize = true;
-            this.label73.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label73.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label73.Location = new System.Drawing.Point(822, 90);
-            this.label73.Name = "label73";
-            this.label73.Size = new System.Drawing.Size(18, 16);
-            this.label73.TabIndex = 165;
-            this.label73.Text = "m";
-            // 
-            // label74
-            // 
-            this.label74.AutoSize = true;
-            this.label74.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label74.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label74.Location = new System.Drawing.Point(822, 61);
-            this.label74.Name = "label74";
-            this.label74.Size = new System.Drawing.Size(18, 16);
-            this.label74.TabIndex = 164;
-            this.label74.Text = "m";
+            label71.AutoSize = true;
+            label71.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label71.ForeColor = SystemColors.ControlDark;
+            label71.Location = new Point(822, 129);
+            label71.Name = "label71";
+            label71.Size = new Size(18, 16);
+            label71.TabIndex = 169;
+            label71.Text = "m";
             // 
             // label75
             // 
-            this.label75.AutoSize = true;
-            this.label75.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label75.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label75.Location = new System.Drawing.Point(535, 129);
-            this.label75.Name = "label75";
-            this.label75.Size = new System.Drawing.Size(113, 16);
-            this.label75.TabIndex = 163;
-            this.label75.Text = "상부/측면부 설치길이";
-            // 
-            // label77
-            // 
-            this.label77.AutoSize = true;
-            this.label77.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label77.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label77.Location = new System.Drawing.Point(539, 90);
-            this.label77.Name = "label77";
-            this.label77.Size = new System.Drawing.Size(40, 16);
-            this.label77.TabIndex = 160;
-            this.label77.Text = "문길이";
-            // 
-            // label78
-            // 
-            this.label78.AutoSize = true;
-            this.label78.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label78.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label78.Location = new System.Drawing.Point(539, 61);
-            this.label78.Name = "label78";
-            this.label78.Size = new System.Drawing.Size(40, 16);
-            this.label78.TabIndex = 158;
-            this.label78.Text = "문높이";
-            // 
-            // label65
-            // 
-            this.label65.AutoSize = true;
-            this.label65.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label65.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label65.Location = new System.Drawing.Point(818, 33);
-            this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(22, 16);
-            this.label65.TabIndex = 134;
-            this.label65.Text = "m²";
-            // 
-            // label66
-            // 
-            this.label66.AutoSize = true;
-            this.label66.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label66.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label66.Location = new System.Drawing.Point(539, 33);
-            this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(40, 16);
-            this.label66.TabIndex = 135;
-            this.label66.Text = "문면적";
+            label75.AutoSize = true;
+            label75.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label75.ForeColor = SystemColors.ControlDark;
+            label75.Location = new Point(535, 129);
+            label75.Name = "label75";
+            label75.Size = new Size(113, 16);
+            label75.TabIndex = 163;
+            label75.Text = "상부/측면부 설치길이";
             // 
             // Install_tabPage
             // 
-            this.Install_tabPage.BackColor = System.Drawing.Color.White;
-            this.Install_tabPage.Controls.Add(this.label20);
-            this.Install_tabPage.Controls.Add(this.label19);
-            this.Install_tabPage.Controls.Add(this.label18);
-            this.Install_tabPage.Controls.Add(this.label17);
-            this.Install_tabPage.Controls.Add(this.label15);
-            this.Install_tabPage.Controls.Add(this.pictureBox3);
-            this.Install_tabPage.Controls.Add(this.label49);
-            this.Install_tabPage.Controls.Add(this.d_InstallButtom_textBox);
-            this.Install_tabPage.Controls.Add(this.d_InstallSide_textBox);
-            this.Install_tabPage.Controls.Add(this.d_InstallTop_textBox);
-            this.Install_tabPage.Controls.Add(this.dUinst_textBox);
-            this.Install_tabPage.Controls.Add(this.Psi_InstallButtom_textBox);
-            this.Install_tabPage.Controls.Add(this.Psi_InstallSide_textBox);
-            this.Install_tabPage.Controls.Add(this.Psi_InstallTop_textBox);
-            this.Install_tabPage.Controls.Add(this.label51);
-            this.Install_tabPage.Controls.Add(this.label52);
-            this.Install_tabPage.Controls.Add(this.label53);
-            this.Install_tabPage.Controls.Add(this.label54);
-            this.Install_tabPage.Controls.Add(this.label44);
-            this.Install_tabPage.Controls.Add(this.label45);
-            this.Install_tabPage.Controls.Add(this.label41);
-            this.Install_tabPage.Controls.Add(this.label40);
-            this.Install_tabPage.Controls.Add(this.label24);
-            this.Install_tabPage.Controls.Add(this.label33);
-            this.Install_tabPage.Controls.Add(this.label38);
-            this.Install_tabPage.Controls.Add(this.pictureBox4);
-            this.Install_tabPage.Location = new System.Drawing.Point(4, 25);
-            this.Install_tabPage.Name = "Install_tabPage";
-            this.Install_tabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.Install_tabPage.Size = new System.Drawing.Size(969, 210);
-            this.Install_tabPage.TabIndex = 1;
-            this.Install_tabPage.Text = "설치열교 정보";
+            Install_tabPage.BackColor = Color.White;
+            Install_tabPage.Controls.Add(label20);
+            Install_tabPage.Controls.Add(label19);
+            Install_tabPage.Controls.Add(label18);
+            Install_tabPage.Controls.Add(label17);
+            Install_tabPage.Controls.Add(label15);
+            Install_tabPage.Controls.Add(pictureBox3);
+            Install_tabPage.Controls.Add(label49);
+            Install_tabPage.Controls.Add(d_InstallButtom_textBox);
+            Install_tabPage.Controls.Add(d_InstallSide_textBox);
+            Install_tabPage.Controls.Add(d_InstallTop_textBox);
+            Install_tabPage.Controls.Add(dUinst_textBox);
+            Install_tabPage.Controls.Add(Psi_InstallButtom_textBox);
+            Install_tabPage.Controls.Add(Psi_InstallSide_textBox);
+            Install_tabPage.Controls.Add(Psi_InstallTop_textBox);
+            Install_tabPage.Controls.Add(label51);
+            Install_tabPage.Controls.Add(label52);
+            Install_tabPage.Controls.Add(label53);
+            Install_tabPage.Controls.Add(label54);
+            Install_tabPage.Controls.Add(label44);
+            Install_tabPage.Controls.Add(label45);
+            Install_tabPage.Controls.Add(label41);
+            Install_tabPage.Controls.Add(label40);
+            Install_tabPage.Controls.Add(label24);
+            Install_tabPage.Controls.Add(label33);
+            Install_tabPage.Controls.Add(label38);
+            Install_tabPage.Controls.Add(pictureBox4);
+            Install_tabPage.Location = new Point(4, 25);
+            Install_tabPage.Name = "Install_tabPage";
+            Install_tabPage.Padding = new Padding(3);
+            Install_tabPage.Size = new Size(969, 210);
+            Install_tabPage.TabIndex = 1;
+            Install_tabPage.Text = "설치열교 정보";
             // 
             // label20
             // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label20.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label20.Location = new System.Drawing.Point(186, 107);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(29, 16);
-            this.label20.TabIndex = 167;
-            this.label20.Text = "실내";
+            label20.AutoSize = true;
+            label20.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label20.ForeColor = SystemColors.ControlDark;
+            label20.Location = new Point(186, 107);
+            label20.Name = "label20";
+            label20.Size = new Size(29, 16);
+            label20.TabIndex = 167;
+            label20.Text = "실내";
             // 
             // label19
             // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label19.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label19.Location = new System.Drawing.Point(186, 22);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(29, 16);
-            this.label19.TabIndex = 166;
-            this.label19.Text = "실외";
+            label19.AutoSize = true;
+            label19.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label19.ForeColor = SystemColors.ControlDark;
+            label19.Location = new Point(186, 22);
+            label19.Name = "label19";
+            label19.Size = new Size(29, 16);
+            label19.TabIndex = 166;
+            label19.Text = "실외";
             // 
             // label18
             // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label18.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label18.Location = new System.Drawing.Point(26, 134);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(29, 16);
-            this.label18.TabIndex = 165;
-            this.label18.Text = "하부";
+            label18.AutoSize = true;
+            label18.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label18.ForeColor = SystemColors.ControlDark;
+            label18.Location = new Point(26, 134);
+            label18.Name = "label18";
+            label18.Size = new Size(29, 16);
+            label18.TabIndex = 165;
+            label18.Text = "하부";
             // 
             // label17
             // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label17.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label17.Location = new System.Drawing.Point(15, 55);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(55, 16);
-            this.label17.TabIndex = 164;
-            this.label17.Text = "상부/측면";
+            label17.AutoSize = true;
+            label17.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label17.ForeColor = SystemColors.ControlDark;
+            label17.Location = new Point(15, 55);
+            label17.Name = "label17";
+            label17.Size = new Size(55, 16);
+            label17.TabIndex = 164;
+            label17.Text = "상부/측면";
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label15.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label15.Location = new System.Drawing.Point(578, 22);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(50, 16);
-            this.label15.TabIndex = 163;
-            this.label15.Text = "W/m²·K";
+            label15.AutoSize = true;
+            label15.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label15.ForeColor = SystemColors.ControlDark;
+            label15.Location = new Point(578, 22);
+            label15.Name = "label15";
+            label15.Size = new Size(50, 16);
+            label15.TabIndex = 163;
+            label15.Text = "W/m²·K";
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(84, 21);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(242, 75);
-            this.pictureBox3.TabIndex = 136;
-            this.pictureBox3.TabStop = false;
+            pictureBox3.Location = new Point(84, 21);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(242, 75);
+            pictureBox3.TabIndex = 136;
+            pictureBox3.TabStop = false;
             // 
             // label49
             // 
-            this.label49.AutoSize = true;
-            this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label49.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label49.Location = new System.Drawing.Point(848, 166);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(18, 16);
-            this.label49.TabIndex = 135;
-            this.label49.Text = "m";
+            label49.AutoSize = true;
+            label49.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label49.ForeColor = SystemColors.ControlDark;
+            label49.Location = new Point(848, 166);
+            label49.Name = "label49";
+            label49.Size = new Size(18, 16);
+            label49.TabIndex = 135;
+            label49.Text = "m";
             // 
             // d_InstallButtom_textBox
             // 
-            this.d_InstallButtom_textBox.BackColor = System.Drawing.Color.White;
-            this.d_InstallButtom_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.d_InstallButtom_textBox.Enabled = false;
-            this.d_InstallButtom_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.d_InstallButtom_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.d_InstallButtom_textBox.Location = new System.Drawing.Point(694, 167);
-            this.d_InstallButtom_textBox.Name = "d_InstallButtom_textBox";
-            this.d_InstallButtom_textBox.ReadOnly = true;
-            this.d_InstallButtom_textBox.Size = new System.Drawing.Size(116, 15);
-            this.d_InstallButtom_textBox.TabIndex = 134;
-            this.d_InstallButtom_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            d_InstallButtom_textBox.BackColor = Color.White;
+            d_InstallButtom_textBox.BorderStyle = BorderStyle.None;
+            d_InstallButtom_textBox.Enabled = false;
+            d_InstallButtom_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            d_InstallButtom_textBox.ForeColor = SystemColors.ControlDark;
+            d_InstallButtom_textBox.Location = new Point(694, 167);
+            d_InstallButtom_textBox.Name = "d_InstallButtom_textBox";
+            d_InstallButtom_textBox.ReadOnly = true;
+            d_InstallButtom_textBox.Size = new Size(116, 15);
+            d_InstallButtom_textBox.TabIndex = 134;
+            d_InstallButtom_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // d_InstallSide_textBox
             // 
-            this.d_InstallSide_textBox.BackColor = System.Drawing.Color.White;
-            this.d_InstallSide_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.d_InstallSide_textBox.Enabled = false;
-            this.d_InstallSide_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.d_InstallSide_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.d_InstallSide_textBox.Location = new System.Drawing.Point(694, 131);
-            this.d_InstallSide_textBox.Name = "d_InstallSide_textBox";
-            this.d_InstallSide_textBox.ReadOnly = true;
-            this.d_InstallSide_textBox.Size = new System.Drawing.Size(116, 15);
-            this.d_InstallSide_textBox.TabIndex = 131;
-            this.d_InstallSide_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            d_InstallSide_textBox.BackColor = Color.White;
+            d_InstallSide_textBox.BorderStyle = BorderStyle.None;
+            d_InstallSide_textBox.Enabled = false;
+            d_InstallSide_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            d_InstallSide_textBox.ForeColor = SystemColors.ControlDark;
+            d_InstallSide_textBox.Location = new Point(694, 131);
+            d_InstallSide_textBox.Name = "d_InstallSide_textBox";
+            d_InstallSide_textBox.ReadOnly = true;
+            d_InstallSide_textBox.Size = new Size(116, 15);
+            d_InstallSide_textBox.TabIndex = 131;
+            d_InstallSide_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // d_InstallTop_textBox
             // 
-            this.d_InstallTop_textBox.BackColor = System.Drawing.Color.White;
-            this.d_InstallTop_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.d_InstallTop_textBox.Enabled = false;
-            this.d_InstallTop_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.d_InstallTop_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.d_InstallTop_textBox.Location = new System.Drawing.Point(694, 95);
-            this.d_InstallTop_textBox.Name = "d_InstallTop_textBox";
-            this.d_InstallTop_textBox.ReadOnly = true;
-            this.d_InstallTop_textBox.Size = new System.Drawing.Size(116, 15);
-            this.d_InstallTop_textBox.TabIndex = 129;
-            this.d_InstallTop_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            d_InstallTop_textBox.BackColor = Color.White;
+            d_InstallTop_textBox.BorderStyle = BorderStyle.None;
+            d_InstallTop_textBox.Enabled = false;
+            d_InstallTop_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            d_InstallTop_textBox.ForeColor = SystemColors.ControlDark;
+            d_InstallTop_textBox.Location = new Point(694, 95);
+            d_InstallTop_textBox.Name = "d_InstallTop_textBox";
+            d_InstallTop_textBox.ReadOnly = true;
+            d_InstallTop_textBox.Size = new Size(116, 15);
+            d_InstallTop_textBox.TabIndex = 129;
+            d_InstallTop_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // dUinst_textBox
             // 
-            this.dUinst_textBox.BackColor = System.Drawing.Color.White;
-            this.dUinst_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dUinst_textBox.Enabled = false;
-            this.dUinst_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.dUinst_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.dUinst_textBox.Location = new System.Drawing.Point(453, 22);
-            this.dUinst_textBox.Name = "dUinst_textBox";
-            this.dUinst_textBox.ReadOnly = true;
-            this.dUinst_textBox.Size = new System.Drawing.Size(116, 15);
-            this.dUinst_textBox.TabIndex = 128;
-            this.dUinst_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            dUinst_textBox.BackColor = Color.White;
+            dUinst_textBox.BorderStyle = BorderStyle.None;
+            dUinst_textBox.Enabled = false;
+            dUinst_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dUinst_textBox.ForeColor = SystemColors.ControlDark;
+            dUinst_textBox.Location = new Point(453, 22);
+            dUinst_textBox.Name = "dUinst_textBox";
+            dUinst_textBox.ReadOnly = true;
+            dUinst_textBox.Size = new Size(116, 15);
+            dUinst_textBox.TabIndex = 128;
+            dUinst_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // Psi_InstallButtom_textBox
             // 
-            this.Psi_InstallButtom_textBox.BackColor = System.Drawing.Color.White;
-            this.Psi_InstallButtom_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Psi_InstallButtom_textBox.Enabled = false;
-            this.Psi_InstallButtom_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Psi_InstallButtom_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Psi_InstallButtom_textBox.Location = new System.Drawing.Point(457, 167);
-            this.Psi_InstallButtom_textBox.Name = "Psi_InstallButtom_textBox";
-            this.Psi_InstallButtom_textBox.Size = new System.Drawing.Size(116, 15);
-            this.Psi_InstallButtom_textBox.TabIndex = 122;
-            this.Psi_InstallButtom_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Psi_InstallButtom_textBox.BackColor = Color.White;
+            Psi_InstallButtom_textBox.BorderStyle = BorderStyle.None;
+            Psi_InstallButtom_textBox.Enabled = false;
+            Psi_InstallButtom_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Psi_InstallButtom_textBox.ForeColor = SystemColors.ControlDark;
+            Psi_InstallButtom_textBox.Location = new Point(457, 167);
+            Psi_InstallButtom_textBox.Name = "Psi_InstallButtom_textBox";
+            Psi_InstallButtom_textBox.Size = new Size(116, 15);
+            Psi_InstallButtom_textBox.TabIndex = 122;
+            Psi_InstallButtom_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // Psi_InstallSide_textBox
             // 
-            this.Psi_InstallSide_textBox.BackColor = System.Drawing.Color.White;
-            this.Psi_InstallSide_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Psi_InstallSide_textBox.Enabled = false;
-            this.Psi_InstallSide_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Psi_InstallSide_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Psi_InstallSide_textBox.Location = new System.Drawing.Point(457, 131);
-            this.Psi_InstallSide_textBox.Name = "Psi_InstallSide_textBox";
-            this.Psi_InstallSide_textBox.Size = new System.Drawing.Size(116, 15);
-            this.Psi_InstallSide_textBox.TabIndex = 114;
-            this.Psi_InstallSide_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Psi_InstallSide_textBox.BackColor = Color.White;
+            Psi_InstallSide_textBox.BorderStyle = BorderStyle.None;
+            Psi_InstallSide_textBox.Enabled = false;
+            Psi_InstallSide_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Psi_InstallSide_textBox.ForeColor = SystemColors.ControlDark;
+            Psi_InstallSide_textBox.Location = new Point(457, 131);
+            Psi_InstallSide_textBox.Name = "Psi_InstallSide_textBox";
+            Psi_InstallSide_textBox.Size = new Size(116, 15);
+            Psi_InstallSide_textBox.TabIndex = 114;
+            Psi_InstallSide_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // Psi_InstallTop_textBox
             // 
-            this.Psi_InstallTop_textBox.BackColor = System.Drawing.Color.White;
-            this.Psi_InstallTop_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Psi_InstallTop_textBox.Enabled = false;
-            this.Psi_InstallTop_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Psi_InstallTop_textBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.Psi_InstallTop_textBox.Location = new System.Drawing.Point(457, 95);
-            this.Psi_InstallTop_textBox.Name = "Psi_InstallTop_textBox";
-            this.Psi_InstallTop_textBox.Size = new System.Drawing.Size(116, 15);
-            this.Psi_InstallTop_textBox.TabIndex = 108;
-            this.Psi_InstallTop_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Psi_InstallTop_textBox.BackColor = Color.White;
+            Psi_InstallTop_textBox.BorderStyle = BorderStyle.None;
+            Psi_InstallTop_textBox.Enabled = false;
+            Psi_InstallTop_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Psi_InstallTop_textBox.ForeColor = SystemColors.ControlDark;
+            Psi_InstallTop_textBox.Location = new Point(457, 95);
+            Psi_InstallTop_textBox.Name = "Psi_InstallTop_textBox";
+            Psi_InstallTop_textBox.Size = new Size(116, 15);
+            Psi_InstallTop_textBox.TabIndex = 108;
+            Psi_InstallTop_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label51
             // 
-            this.label51.AutoSize = true;
-            this.label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label51.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label51.Location = new System.Drawing.Point(848, 130);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(18, 16);
-            this.label51.TabIndex = 133;
-            this.label51.Text = "m";
+            label51.AutoSize = true;
+            label51.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label51.ForeColor = SystemColors.ControlDark;
+            label51.Location = new Point(848, 130);
+            label51.Name = "label51";
+            label51.Size = new Size(18, 16);
+            label51.TabIndex = 133;
+            label51.Text = "m";
             // 
             // label52
             // 
-            this.label52.AutoSize = true;
-            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label52.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label52.Location = new System.Drawing.Point(848, 94);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(18, 16);
-            this.label52.TabIndex = 132;
-            this.label52.Text = "m";
+            label52.AutoSize = true;
+            label52.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label52.ForeColor = SystemColors.ControlDark;
+            label52.Location = new Point(848, 94);
+            label52.Name = "label52";
+            label52.Size = new Size(18, 16);
+            label52.TabIndex = 132;
+            label52.Text = "m";
             // 
             // label53
             // 
-            this.label53.AutoSize = true;
-            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label53.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label53.Location = new System.Drawing.Point(725, 58);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(51, 16);
-            this.label53.TabIndex = 130;
-            this.label53.Text = "설치길이";
+            label53.AutoSize = true;
+            label53.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label53.ForeColor = SystemColors.ControlDark;
+            label53.Location = new Point(725, 58);
+            label53.Name = "label53";
+            label53.Size = new Size(51, 16);
+            label53.TabIndex = 130;
+            label53.Text = "설치길이";
             // 
             // label54
             // 
-            this.label54.AutoSize = true;
-            this.label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label54.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label54.Location = new System.Drawing.Point(361, 21);
-            this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(89, 16);
-            this.label54.TabIndex = 127;
-            this.label54.Text = "열교가산치[ΔU]";
+            label54.AutoSize = true;
+            label54.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label54.ForeColor = SystemColors.ControlDark;
+            label54.Location = new Point(361, 21);
+            label54.Name = "label54";
+            label54.Size = new Size(89, 16);
+            label54.TabIndex = 127;
+            label54.Text = "열교가산치[ΔU]";
             // 
             // label44
             // 
-            this.label44.AutoSize = true;
-            this.label44.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label44.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label44.Location = new System.Drawing.Point(577, 166);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(46, 16);
-            this.label44.TabIndex = 125;
-            this.label44.Text = "W/m·K";
+            label44.AutoSize = true;
+            label44.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label44.ForeColor = SystemColors.ControlDark;
+            label44.Location = new Point(577, 166);
+            label44.Name = "label44";
+            label44.Size = new Size(46, 16);
+            label44.TabIndex = 125;
+            label44.Text = "W/m·K";
             // 
             // label45
             // 
-            this.label45.AutoSize = true;
-            this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label45.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label45.Location = new System.Drawing.Point(397, 166);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(29, 16);
-            this.label45.TabIndex = 124;
-            this.label45.Text = "하부";
+            label45.AutoSize = true;
+            label45.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label45.ForeColor = SystemColors.ControlDark;
+            label45.Location = new Point(397, 166);
+            label45.Name = "label45";
+            label45.Size = new Size(29, 16);
+            label45.TabIndex = 124;
+            label45.Text = "하부";
             // 
             // label41
             // 
-            this.label41.AutoSize = true;
-            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label41.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label41.Location = new System.Drawing.Point(577, 130);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(46, 16);
-            this.label41.TabIndex = 119;
-            this.label41.Text = "W/m·K";
+            label41.AutoSize = true;
+            label41.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label41.ForeColor = SystemColors.ControlDark;
+            label41.Location = new Point(577, 130);
+            label41.Name = "label41";
+            label41.Size = new Size(46, 16);
+            label41.TabIndex = 119;
+            label41.Text = "W/m·K";
             // 
             // label40
             // 
-            this.label40.AutoSize = true;
-            this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label40.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label40.Location = new System.Drawing.Point(577, 94);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(46, 16);
-            this.label40.TabIndex = 118;
-            this.label40.Text = "W/m·K";
+            label40.AutoSize = true;
+            label40.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label40.ForeColor = SystemColors.ControlDark;
+            label40.Location = new Point(577, 94);
+            label40.Name = "label40";
+            label40.Size = new Size(46, 16);
+            label40.TabIndex = 118;
+            label40.Text = "W/m·K";
             // 
             // label24
             // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label24.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label24.Location = new System.Drawing.Point(397, 130);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(29, 16);
-            this.label24.TabIndex = 117;
-            this.label24.Text = "측면";
+            label24.AutoSize = true;
+            label24.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label24.ForeColor = SystemColors.ControlDark;
+            label24.Location = new Point(397, 130);
+            label24.Name = "label24";
+            label24.Size = new Size(29, 16);
+            label24.TabIndex = 117;
+            label24.Text = "측면";
             // 
             // label33
             // 
-            this.label33.AutoSize = true;
-            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label33.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label33.Location = new System.Drawing.Point(397, 94);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(29, 16);
-            this.label33.TabIndex = 113;
-            this.label33.Text = "상부";
+            label33.AutoSize = true;
+            label33.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label33.ForeColor = SystemColors.ControlDark;
+            label33.Location = new Point(397, 94);
+            label33.Name = "label33";
+            label33.Size = new Size(29, 16);
+            label33.TabIndex = 113;
+            label33.Text = "상부";
             // 
             // label38
             // 
-            this.label38.AutoSize = true;
-            this.label38.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label38.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label38.Location = new System.Drawing.Point(479, 58);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(73, 16);
-            this.label38.TabIndex = 107;
-            this.label38.Text = "선형열관류율";
+            label38.AutoSize = true;
+            label38.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label38.ForeColor = SystemColors.ControlDark;
+            label38.Location = new Point(479, 58);
+            label38.Name = "label38";
+            label38.Size = new Size(73, 16);
+            label38.TabIndex = 107;
+            label38.Text = "선형열관류율";
             // 
             // pictureBox4
             // 
-            this.pictureBox4.Location = new System.Drawing.Point(84, 107);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(242, 75);
-            this.pictureBox4.TabIndex = 0;
-            this.pictureBox4.TabStop = false;
+            pictureBox4.Location = new Point(84, 107);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(242, 75);
+            pictureBox4.TabIndex = 0;
+            pictureBox4.TabStop = false;
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.Size_tabPage);
-            this.tabControl1.Controls.Add(this.Install_tabPage);
-            this.tabControl1.DisplayStyleProvider.BorderColor = System.Drawing.SystemColors.ControlDark;
-            this.tabControl1.DisplayStyleProvider.BorderColorHot = System.Drawing.SystemColors.ControlDark;
-            this.tabControl1.DisplayStyleProvider.CloserColor = System.Drawing.Color.Empty;
-            this.tabControl1.DisplayStyleProvider.FocusTrack = true;
-            this.tabControl1.DisplayStyleProvider.HotTrack = true;
-            this.tabControl1.DisplayStyleProvider.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tabControl1.DisplayStyleProvider.Opacity = 1F;
-            this.tabControl1.DisplayStyleProvider.Overlap = 0;
-            this.tabControl1.DisplayStyleProvider.Padding = new System.Drawing.Point(6, 3);
-            this.tabControl1.DisplayStyleProvider.ShowTabCloser = false;
-            this.tabControl1.DisplayStyleProvider.TextColor = System.Drawing.SystemColors.ControlText;
-            this.tabControl1.DisplayStyleProvider.TextColorDisabled = System.Drawing.SystemColors.ControlDark;
-            this.tabControl1.DisplayStyleProvider.TextColorSelected = System.Drawing.SystemColors.ControlText;
-            this.tabControl1.HotTrack = true;
-            this.tabControl1.ItemSize = new System.Drawing.Size(128, 20);
-            this.tabControl1.Location = new System.Drawing.Point(12, 446);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(977, 239);
-            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabControl1.TabIndex = 96;
+            tabControl1.Controls.Add(Size_tabPage);
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(Install_tabPage);
+            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
+            tabControl1.DisplayStyleProvider.FocusTrack = true;
+            tabControl1.DisplayStyleProvider.HotTrack = true;
+            tabControl1.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
+            tabControl1.DisplayStyleProvider.Opacity = 1F;
+            tabControl1.DisplayStyleProvider.Overlap = 0;
+            tabControl1.DisplayStyleProvider.Padding = new Point(6, 3);
+            tabControl1.DisplayStyleProvider.ShowTabCloser = false;
+            tabControl1.DisplayStyleProvider.TextColor = SystemColors.ControlText;
+            tabControl1.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
+            tabControl1.HotTrack = true;
+            tabControl1.ItemSize = new Size(128, 20);
+            tabControl1.Location = new Point(12, 446);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(977, 239);
+            tabControl1.SizeMode = TabSizeMode.Fixed;
+            tabControl1.TabIndex = 96;
+            // 
+            // tabPage1
+            // 
+            tabPage1.Controls.Add(DoorArea2_textBox);
+            tabPage1.Controls.Add(DoorH2_textBox);
+            tabPage1.Controls.Add(label7);
+            tabPage1.Controls.Add(DoorL2_textBox);
+            tabPage1.Controls.Add(label2);
+            tabPage1.Controls.Add(label8);
+            tabPage1.Controls.Add(label34);
+            tabPage1.Controls.Add(GlassArea2_textBox);
+            tabPage1.Controls.Add(label35);
+            tabPage1.Controls.Add(pictureBox1);
+            tabPage1.Location = new Point(4, 25);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(969, 210);
+            tabPage1.TabIndex = 4;
+            tabPage1.Text = "치수정보";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // DoorArea2_textBox
+            // 
+            DoorArea2_textBox.BackColor = Color.White;
+            DoorArea2_textBox.BorderStyle = BorderStyle.None;
+            DoorArea2_textBox.Enabled = false;
+            DoorArea2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DoorArea2_textBox.ForeColor = SystemColors.ControlDark;
+            DoorArea2_textBox.Location = new Point(446, 68);
+            DoorArea2_textBox.Name = "DoorArea2_textBox";
+            DoorArea2_textBox.Size = new Size(116, 15);
+            DoorArea2_textBox.TabIndex = 188;
+            DoorArea2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // DoorH2_textBox
+            // 
+            DoorH2_textBox.BackColor = Color.White;
+            DoorH2_textBox.BorderStyle = BorderStyle.None;
+            DoorH2_textBox.Enabled = false;
+            DoorH2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DoorH2_textBox.ForeColor = SystemColors.ControlDark;
+            DoorH2_textBox.Location = new Point(8, 98);
+            DoorH2_textBox.Name = "DoorH2_textBox";
+            DoorH2_textBox.Size = new Size(60, 15);
+            DoorH2_textBox.TabIndex = 187;
+            DoorH2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.ForeColor = SystemColors.ControlDark;
+            label7.Location = new Point(158, 7);
+            label7.Name = "label7";
+            label7.Size = new Size(29, 16);
+            label7.TabIndex = 186;
+            label7.Text = "mm";
+            // 
+            // DoorL2_textBox
+            // 
+            DoorL2_textBox.BackColor = Color.White;
+            DoorL2_textBox.BorderStyle = BorderStyle.None;
+            DoorL2_textBox.Enabled = false;
+            DoorL2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DoorL2_textBox.ForeColor = SystemColors.ControlDark;
+            DoorL2_textBox.Location = new Point(93, 7);
+            DoorL2_textBox.Name = "DoorL2_textBox";
+            DoorL2_textBox.Size = new Size(60, 15);
+            DoorL2_textBox.TabIndex = 185;
+            DoorL2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.ForeColor = SystemColors.ControlDark;
+            label2.Location = new Point(568, 68);
+            label2.Name = "label2";
+            label2.Size = new Size(22, 16);
+            label2.TabIndex = 184;
+            label2.Text = "m²";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.ForeColor = SystemColors.ControlDark;
+            label8.Location = new Point(331, 68);
+            label8.Name = "label8";
+            label8.Size = new Size(68, 16);
+            label8.TabIndex = 182;
+            label8.Text = "[Ad] 문면적";
+            // 
+            // label34
+            // 
+            label34.AutoSize = true;
+            label34.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label34.ForeColor = SystemColors.ControlDark;
+            label34.Location = new Point(567, 127);
+            label34.Name = "label34";
+            label34.Size = new Size(22, 16);
+            label34.TabIndex = 181;
+            label34.Text = "m²";
+            // 
+            // GlassArea2_textBox
+            // 
+            GlassArea2_textBox.BackColor = Color.White;
+            GlassArea2_textBox.BorderStyle = BorderStyle.None;
+            GlassArea2_textBox.Enabled = false;
+            GlassArea2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            GlassArea2_textBox.ForeColor = SystemColors.ControlDark;
+            GlassArea2_textBox.Location = new Point(446, 127);
+            GlassArea2_textBox.Name = "GlassArea2_textBox";
+            GlassArea2_textBox.Size = new Size(116, 15);
+            GlassArea2_textBox.TabIndex = 180;
+            GlassArea2_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label35
+            // 
+            label35.AutoSize = true;
+            label35.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label35.ForeColor = SystemColors.ControlDark;
+            label35.Location = new Point(330, 127);
+            label35.Name = "label35";
+            label35.Size = new Size(79, 16);
+            label35.TabIndex = 179;
+            label35.Text = "[Ag] 유리면적";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(63, 28);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(122, 176);
+            pictureBox1.TabIndex = 178;
+            pictureBox1.TabStop = false;
             // 
             // ConstructionDoor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ClientSize = new System.Drawing.Size(1200, 730);
-            this.Controls.Add(this.DoorType_pictureBox);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.Previous_button);
-            this.Controls.Add(this.Save_button);
-            this.Controls.Add(this.GeneralPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "ConstructionDoor";
-            this.Text = "Form3";
-            this.GeneralPanel.ResumeLayout(false);
-            this.GeneralPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Icon_pictureBox)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DoorType_pictureBox)).EndInit();
-            this.Size_tabPage.ResumeLayout(false);
-            this.Size_tabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.Install_tabPage.ResumeLayout(false);
-            this.Install_tabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            this.tabControl1.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
+            BackColor = SystemColors.InactiveBorder;
+            ClientSize = new Size(1200, 730);
+            Controls.Add(DoorType_pictureBox);
+            Controls.Add(tabControl1);
+            Controls.Add(label4);
+            Controls.Add(panel2);
+            Controls.Add(Previous_button);
+            Controls.Add(Save_button);
+            Controls.Add(GeneralPanel);
+            FormBorderStyle = FormBorderStyle.None;
+            Name = "ConstructionDoor";
+            Text = "ㅣ";
+            GeneralPanel.ResumeLayout(false);
+            GeneralPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)DoorType_pictureBox).EndInit();
+            Size_tabPage.ResumeLayout(false);
+            Size_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            Install_tabPage.ResumeLayout(false);
+            Install_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -1782,8 +1790,7 @@
         private CustomComboBox Install_comboBox;
         private Label label16;
         private Label label11;
-        private CustomComboBox Door_comboBox;
-        private Label Frame_label;
+        private Label Door_label;
         private CustomComboBox Udoor_comboBox;
         private Label label25;
         private Label label4;
@@ -1791,10 +1798,9 @@
         private Button ImportSize_button;
         private TextBox Install_textBox;
         private Button Install_button;
-        private TextBox FrameName_textBox;
-        private Button FrameDB_button;
+        private Button DoorDB_button;
         private Label αp_label;
-        private Label UCW_p_label;
+        private Label GlassArea_label;
         private TextBox g_textBox;
         private Label Ug_unit_label;
         private TextBox abs_textBox;
@@ -1802,21 +1808,19 @@
         private CustomComboBox DiIndi_comboBox;
         private CustomComboBox OldDoor_comboBox;
         private PictureBox DoorType_pictureBox;
-        private Label label7;
-        private CheckBox Panel_checkBox;
+        private CheckBox glass_checkBox;
         private CustomComboBox DoorColor_comboBox;
         private Label dPanel_label2;
         private TextBox GlassL_textBox;
-        private Label Panel_label;
+        private Label glass1_label;
         private Label αp_label2;
-        private Label UCW_p_label2;
-        private TextBox Panel_textBox;
-        private TextBox Area_textBox;
-        private Label PanelColor_label;
+        private Label glassArea_label2;
+        private TextBox GlassArea_textBox;
+        private Label DoorlColor_label;
         private TextBox UD_textBox;
         private Label τd_label;
-        private global::System.Windows.Forms.Label label64;
-        private TextBox CWNum_textBox;
+        private Label label64;
+        private TextBox DoorNum_textBox;
         private Label label1;
         private Label label27;
         private TextBox bottom_textBox;
@@ -1825,15 +1829,13 @@
         private TextBox over_textBox;
         private Label label9;
         private Label label12;
-        private Label label8;
-        private Label label2;
         private TextBox DoorTh_textBox;
         private CustomComboBox DoorIn_ComboBox;
         private Label label83;
-        private CustomComboBox GlssType_ComboBox;
+        private CustomComboBox GlassType_ComboBox;
         private Label label29;
         private TextBox GlassH_textBox;
-        private Label label82;
+        private Label glass2_label;
         private Label label88;
         private Label label89;
         private TextBox GlassShgc_textBox;
@@ -1851,7 +1853,6 @@
         private Label label13;
         private Label label10;
         private PictureBox pictureBox2;
-        private PictureBox pictureBox1;
         private TextBox Area_textBox1;
         private TextBox UnderL_textBox;
         private TextBox OverL_textBox;
@@ -1896,5 +1897,25 @@
         private Label label20;
         private Label label19;
         private Label label18;
+        private Label label28;
+        private TextBox DoorArea_textBox;
+        private Label label30;
+        private Label label21;
+        private Label label22;
+        private TabPage tabPage1;
+        private Label label2;
+        private Label label8;
+        private Label label34;
+        private TextBox GlassArea2_textBox;
+        private Label label35;
+        private PictureBox pictureBox1;
+        private TextBox Door_textBox;
+        private TextBox DoorDB_textBox;
+        private TextBox DoorArea2_textBox;
+        private TextBox DoorH2_textBox;
+        private Label label7;
+        private TextBox DoorL2_textBox;
+        private TextBox DoorH_textBox;
+        private TextBox DoorL_textBox;
     }
 }
