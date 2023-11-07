@@ -204,7 +204,7 @@ namespace main.contents
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문유형이미지", "이미지", "유형 = '" + Type + "'");
             DoorType_pictureBox.Visible = true;
-            DoorType_pictureBox.Load(Program.gPath + Image[0][0]);
+            //DoorType_pictureBox.Load(Program.gPath + Image[0][0]);
             DoorType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
@@ -213,7 +213,7 @@ namespace main.contents
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문유형이미지", "이미지", "유형 = '" + "치수" + "'");
             pictureBox1.Visible = true;
-            pictureBox1.Load(Program.gPath + Image[0][0]);
+            //pictureBox1.Load(Program.gPath + Image[0][0]);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
