@@ -25,35 +25,18 @@ namespace main.contents
 {
     public partial class ProjectList : Form
     {
-        String ProjectType;
+        public static String ProjectType = "1";
+
+        Dictionary<string, string> types = new Dictionary<string, string>();
+
         public ProjectList()
         {
             InitializeComponent();
-            string[][] Value = Program.DB.getValue(type.ProjDB, "BuildingGeneral", "프로젝트유형", "");
-            ProjectType = Value[0][0];
-            ProjectType_textBox.Text = ProjectType;
-            if (ProjectType == null) { }
-            else if (ProjectType == "기존")
-            {
-                Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro1.png");
-                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }
-            else if (ProjectType == "리모델링")
-            {
-                Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro2.png");
-                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }
-            else if (ProjectType == "리트로핏")
-            {
-                Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro3.png");
-                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }
-            else
-            {
-                Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro2.png");
-                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }
 
+            types.Add("1", "기존건물");
+            types.Add("2", "리트로핏");
+            types.Add("3", "리모델링");
+            types.Add("4", "신규건물");
         }
 
 
@@ -65,27 +48,50 @@ namespace main.contents
         }
 
 
-        private void reset()
-        {
-            ProjectType = null;
-        }
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
-            reset();
             try
             {
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형", "");
+                ProjectType_textBox.Text = types[ProjectType];
+                if (ProjectType == null) { }
+                else if (ProjectType == "1")
+                {
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro1.png");
+                    Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                else if (ProjectType == "2")
+                {
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro2.png");
+                    Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                else if (ProjectType == "3")
+                {
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro3.png");
+                    Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                else
+                {
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro2.png");
+                    Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
 
-                ProjectType = Value[0][1];
+                dataGridView1.Rows.Clear();
 
+                string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type FROM projects");
+                for (int n = 0; n < res.Length; n++)
+                {
+                    dataGridView1.Rows.Add();
+                    int nRow = dataGridView1.Rows.Count - 1;
+
+                    for (int k = 0; k < 4; k++)
+                    {
+                        dataGridView1.Rows[nRow].Cells[k + 1].Value = (k == 3) ? types[res[n][k]] : res[n][k];
+                    }
+                }
 
             }
             catch { }
 
-        }
-
-        public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
-        {
         }
 
         private void Copy_button_Click(object sender, EventArgs e)

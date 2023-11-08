@@ -48,7 +48,8 @@ namespace main
             BaseDB_Cooling,
             BaseDB_RESystem,
             ProjDB,
-            CalcDB
+            CalcDB,
+            ProjListDB
         }
 
         private Dictionary<string, string> tables = new Dictionary<string, string>()
@@ -119,7 +120,7 @@ namespace main
             {"Zone_HCneed_Result", "CREATE TABLE IF NOT EXISTS Zone_HCneed_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트유형 VARCHAR (32),번호 VARCHAR (32), 이름 VARCHAR (32), 난방_냉방 VARCHAR (32), 비이용일_이용일 VARCHAR (32), 월 VARCHAR (32), HT_tot VARCHAR (32), HT_InWall VARCHAR (32),HT_Slab VARCHAR (32),HT_Wall VARCHAR (32), HT_Roof VARCHAR (32), HT_Floor VARCHAR (32), HT_GWall VARCHAR (32), HT_Door VARCHAR (32), HT_Win VARCHAR (32), HT_CW VARCHAR (32), HT_Di_Wall VARCHAR (32), HT_Indi_Wall VARCHAR (32), HT_Di_Roof VARCHAR (32), HT_Indi_Roof VARCHAR (32), HT_Di_Win VARCHAR (32), HT_Indi_Win VARCHAR (32), HT_Di_Door VARCHAR (32), HT_Indi_Door VARCHAR (32), HT_TB_tot VARCHAR (32), HT_TB_Wall VARCHAR (32), HT_TB_Roof VARCHAR (32), HT_TB_Floor VARCHAR (32), HT_TB_Gwall VARCHAR (32), HT_TB_Win VARCHAR (32), HT_TB_Door VARCHAR (32), HT_TB_CW VARCHAR (32), nmech VARCHAR (32), nz VARCHAR (32), ninf VARCHAR (32), nwin VARCHAR (32),  HV_tot VARCHAR (32), HV_inf VARCHAR (32), HV_win VARCHAR (32), HV_z VARCHAR (32), HV_mech VARCHAR (32), H_tot VARCHAR (32), tao VARCHAR (32), dwe_mth VARCHAR (32), dwd_mth VARCHAR (32), theta_i VARCHAR (32), theta_e VARCHAR (32), QTsink_tot VARCHAR (32), QT_u_sink VARCHAR (32), QTsink_Wall VARCHAR (32), QTsink_Roof VARCHAR (32), QTsink_Floor VARCHAR (32), QTsink_GWall VARCHAR (32), QTsink_Door VARCHAR (32), QTsink_Win VARCHAR (32), QTsink_CW VARCHAR (32), QTsource_tot VARCHAR (32), QT_u_source VARCHAR (32), QTsource_Wall VARCHAR (32), QTsource_Roof VARCHAR (32), QTsource_Floor VARCHAR (32), QTsource_GWall VARCHAR (32), QTsource_Door VARCHAR (32), QTsource_Win VARCHAR (32), QTsource_CW VARCHAR (32), QSopsink_tot VARCHAR (32), QSopsource_tot VARCHAR (32), QStr_tot VARCHAR (32), QSopsink_Wall VARCHAR (32), QSopsink_Roof VARCHAR (32), QSopsink_Door VARCHAR (32), QSopsink_CW_p VARCHAR (32), QSopsource_Wall VARCHAR (32), QSopsource_Roof VARCHAR (32), QSopsource_Door VARCHAR (32), QSopsource_CW_p VARCHAR (32), QStr_Win VARCHAR (32), QStr_CW VARCHAR (32), QVsink_tot VARCHAR (32), QV_inf_sink VARCHAR (32), QV_win_sink VARCHAR (32), QV_z_sink VARCHAR (32), QV_mech_sink VARCHAR (32), QVsource_tot VARCHAR (32), QV_inf_source VARCHAR (32), QV_win_source VARCHAR (32), QV_z_source VARCHAR (32), QV_mech_source VARCHAR (32), Q_DHU_win VARCHAR (32), Q_DHU_mech VARCHAR (32), Q_DHU_tot VARCHAR (32), QI_tot VARCHAR (32), QI_L VARCHAR (32), QI_P VARCHAR (32), QI_fac VARCHAR (32), QI_Humidity VARCHAR (32), Qsink VARCHAR (32), Qsource VARCHAR (32), gamma VARCHAR (32), a VARCHAR (32), eta VARCHAR (32), dQc_b VARCHAR (32), dQc_sink VARCHAR (32),Qb_day VARCHAR (32),Qb_mth VARCHAR (32),Qb_a VARCHAR (32), Q_max VARCHAR (32), t_max VARCHAR (32), 비냉난방존온도 VARCHAR (32))"}
         };
 
-        private SQLiteConnection? baseDB_hcneed, baseDB_lighting, baseDB_heating, baseDB_cooling, baseDB_resystem, projDB, calcDB;
+        private SQLiteConnection? baseDB_hcneed, baseDB_lighting, baseDB_heating, baseDB_cooling, baseDB_resystem, projDB, calcDB, proj_listDB;
 
 #if INMEMORY_DB
         private string gProjFName = "";
@@ -342,6 +343,35 @@ namespace main
                 return false;
             }
 
+            proj_listDB = new SQLiteConnection(@"Data Source=projects.sqlite");
+            proj_listDB.Open();
+
+            if (proj_listDB.State != ConnectionState.Open)
+            {
+                baseDB_hcneed.Close();
+                baseDB_hcneed.Dispose();
+
+                baseDB_lighting.Close();
+                baseDB_lighting.Dispose();
+
+                baseDB_heating.Close();
+                baseDB_heating.Dispose();
+
+                baseDB_cooling.Close();
+                baseDB_cooling.Dispose();
+
+
+                baseDB_resystem.Close();
+                baseDB_resystem.Dispose();
+
+                projDB.Close();
+                projDB.Dispose();
+
+                calcDB.Close();
+                calcDB.Dispose();
+                return false;
+            }
+
             return true;
         }
         public void closeDB()
@@ -384,6 +414,12 @@ namespace main
             {
                 calcDB.Close();
                 calcDB.Dispose();
+            }
+
+            if (proj_listDB != null)
+            {
+                proj_listDB.Close();
+                proj_listDB.Dispose();
             }
         }
         public void saveProject()
@@ -469,6 +505,12 @@ namespace main
                             cmd.ExecuteNonQuery();
                         }
                         break;
+                    case type.ProjListDB:
+                        {
+                            SQLiteCommand cmd = new SQLiteCommand(exec, proj_listDB);
+                            cmd.ExecuteNonQuery();
+                        }
+                        break;
                     case type.CalcDB:
                         {
                             SQLiteCommand cmd = new SQLiteCommand(exec, calcDB);
@@ -504,6 +546,9 @@ namespace main
                         break;
                     case type.ProjDB:
                         cmd.Connection = projDB;
+                        break;
+                    case type.ProjListDB:
+                        cmd.Connection = proj_listDB;
                         break;
                     case type.CalcDB:
                         cmd.Connection = calcDB;

@@ -24,7 +24,6 @@ namespace main.contents
 {
     public partial class Intro : Form
     {
-        String ProjectName, ProjectType,ProjectTypeNum;
         public Intro()
         {
             InitializeComponent();
@@ -37,25 +36,21 @@ namespace main.contents
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            ProjectType = "기존";
-            ProjectTypeNum = "1";
+            ProjectList.ProjectType = "1";
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            ProjectType = "리트로핏";
-            ProjectTypeNum = "2";
+            ProjectList.ProjectType = "2";
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
-            ProjectType = "리모델링";
-            ProjectTypeNum = "3";
+            ProjectList.ProjectType = "3";
         }
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
-            ProjectType = "신규";
-            ProjectTypeNum = "4";
+            ProjectList.ProjectType = "4";
         }
 
         private void panel5_Paint(object sender, PaintEventArgs e)
@@ -76,67 +71,8 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
 
         }
-
-        private void Import_button_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = ".sqlite files (*.sqlite)|*.sqlite";
-            openFileDialog.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                //try
-                //{
-                //   string[][] FileValue = getValue(Path.GetFileNameWithoutExtension(openFileDialog.FileName),"BuildingGeneral", "주소", "프로젝트유형='기존'");
-                //    MessageBox.Show(Path.GetFileNameWithoutExtension(openFileDialog.FileName));
-                //}
-                //catch
-                //{
-                //    MessageBox.Show("파일의 형식이 올바르지않습니다. 데이터를 확인해주세요.");
-                //}
-            }
-        }
-        //public string[][] getValue(string filename, string table, string columns, string conditions = "")
-        //{
-        //    SQLiteCommand cmd = new SQLiteCommand();
-        //    List<string[]> objects = new List<string[]>();             
-        //    cmd.Connection = new SQLiteConnection(filename);
-        //    if (conditions != "")
-        //    {
-        //        cmd.CommandText = "SELECT " + columns + " FROM " + table + " WHERE " + conditions;
-        //    }
-        //    else
-        //    {
-        //        cmd.CommandText = "SELECT " + columns + " FROM " + table;
-        //    }
-
-        //    using (SQLiteDataReader reader = cmd.ExecuteReader())
-        //    {
-        //        string json = string.Empty;
-
-        //        while (reader.Read())
-        //        {
-        //            string[] rec = new string[reader.FieldCount];
-
-        //            for (int i = 0; i < reader.FieldCount; i++)
-        //            {
-        //                rec[i] = reader[i].ToString();
-        //            }
-        //            objects.Add(rec);
-        //        }
-        //    }
-
-        //    return objects.ToArray();
-        //}
         private void Save_button_Click(object sender, EventArgs e)
         {
-           
-           if (ProjectType == null)
-            {
-                MessageBox.Show("프로젝트 타입을 선택하세요.");
-            }
-            else { Save(); }
-
             Program.getMenuForm().DoLoadForm(41, OnLoadProc2);
         }
         public static bool OnLoadProc2(Form form)
@@ -147,43 +83,14 @@ namespace main.contents
 
             return true;
         }
-
-        private void Save()
-        {
-            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형,프로젝트유형번호",
-            "'" + ProjectType+"','"+ProjectTypeNum + "'", "프로젝트명");
-
-            MessageBox.Show("저장되었습니다.");
-        }
-
-        private void reset()
-        {
-            ProjectName = null;
-
-            ProjectType = null;
-            ProjectTypeNum = null;
-
-        }
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
-            reset();
-            try
-            {
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,프로젝트유형,프로젝트유형번호", "");
-
-                ProjectName = Value[0][0];
-                ProjectType = Value[0][1];
-                ProjectTypeNum = Value[0][2];
-
-            }
-            catch { }
-
         }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {
         }
 
-       
+
     }
 }

@@ -39,6 +39,11 @@
             New_button = new Button();
             dataGridView1 = new DataGridView();
             Icon_pictureBox = new PictureBox();
+            chk = new DataGridViewCheckBoxColumn();
+            num = new DataGridViewTextBoxColumn();
+            pnum = new DataGridViewTextBoxColumn();
+            pname = new DataGridViewTextBoxColumn();
+            type = new DataGridViewTextBoxColumn();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -89,7 +94,7 @@
             Copy_button.BackColor = SystemColors.ControlLight;
             Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Copy_button.FlatStyle = FlatStyle.System;
-            Copy_button.Font = new Font("나눔고딕", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            Copy_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
             Copy_button.Location = new Point(762, 105);
             Copy_button.Margin = new Padding(0);
             Copy_button.Name = "Copy_button";
@@ -104,7 +109,7 @@
             Delete_button.BackColor = SystemColors.ControlLight;
             Delete_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Delete_button.FlatStyle = FlatStyle.System;
-            Delete_button.Font = new Font("나눔고딕 ExtraBold", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            Delete_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
             Delete_button.Location = new Point(687, 105);
             Delete_button.Margin = new Padding(0);
             Delete_button.Name = "Delete_button";
@@ -118,7 +123,7 @@
             New_button.BackColor = SystemColors.ControlLight;
             New_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             New_button.FlatStyle = FlatStyle.System;
-            New_button.Font = new Font("나눔고딕 ExtraBold", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            New_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
             New_button.Location = new Point(612, 105);
             New_button.Margin = new Padding(0);
             New_button.Name = "New_button";
@@ -147,6 +152,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { chk, num, pnum, pname, type });
             dataGridView1.Location = new Point(151, 142);
             dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -177,6 +183,51 @@
             Icon_pictureBox.TabIndex = 98;
             Icon_pictureBox.TabStop = false;
             // 
+            // chk
+            // 
+            chk.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            chk.FillWeight = 91.37056F;
+            chk.HeaderText = "";
+            chk.Name = "chk";
+            chk.Resizable = DataGridViewTriState.False;
+            chk.Width = 24;
+            // 
+            // num
+            // 
+            num.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            num.FillWeight = 106.2909F;
+            num.HeaderText = "번호";
+            num.Name = "num";
+            num.ReadOnly = true;
+            num.Resizable = DataGridViewTriState.False;
+            num.Width = 60;
+            // 
+            // pnum
+            // 
+            pnum.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            pnum.FillWeight = 22.2307777F;
+            pnum.HeaderText = "프로젝트 번호";
+            pnum.Name = "pnum";
+            pnum.ReadOnly = true;
+            pnum.Resizable = DataGridViewTriState.False;
+            pnum.Width = 110;
+            // 
+            // pname
+            // 
+            pname.FillWeight = 257.877F;
+            pname.HeaderText = "프로젝트명";
+            pname.Name = "pname";
+            // 
+            // type
+            // 
+            type.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            type.FillWeight = 22.2307777F;
+            type.HeaderText = "유형 상세";
+            type.Name = "type";
+            type.ReadOnly = true;
+            type.Resizable = DataGridViewTriState.False;
+            type.Width = 96;
+            // 
             // ProjectList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -204,5 +255,10 @@
         private DataGridView dataGridView1;
         private PictureBox Icon_pictureBox;
         private TextBox ProjectType_textBox;
+        private DataGridViewCheckBoxColumn chk;
+        private DataGridViewTextBoxColumn num;
+        private DataGridViewTextBoxColumn pnum;
+        private DataGridViewTextBoxColumn pname;
+        private DataGridViewTextBoxColumn type;
     }
 }
