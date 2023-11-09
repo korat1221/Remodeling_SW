@@ -260,8 +260,8 @@ namespace main
                 if (openForm.Name == "Model")
                 {
                     Model f = (Model)openForm;
-                    string p = Program.ProjName + Path.GetExtension(path);
-                    string path2 = Program.gPath + "threejs\\public\\models";
+                    string p = "model" + Path.GetExtension(path);
+                    string path2 = Program.gPath + "threejs\\public\\models\\" + ProjectList.CurProjID;
 
                     DirectoryInfo di = new DirectoryInfo(path2);  //Create Directoryinfo value by sDirPath  
 
@@ -275,7 +275,7 @@ namespace main
 
                     if (File.Exists(path2 + "\\" + p))
                     {
-                        f.runScript("open3DModel('/models/" + p + "')");
+                        f.runScript("open3DModel('/models/" + ProjectList.CurProjID + "/" + p + "')");
                     }
                     return;
                 }
@@ -293,9 +293,10 @@ namespace main
                 }
             }
         }
-        public void write3DModel(string fname, string data)
+        public void write3DModel(string data)
         {
-            string path2 = Program.gPath + "threejs\\public\\models";
+            string fname = "model.json";
+            string path2 = Program.gPath + "threejs\\public\\models\\" + ProjectList.CurProjID;
 
             DirectoryInfo di = new DirectoryInfo(path2);  //Create Directoryinfo value by sDirPath  
 
@@ -308,9 +309,10 @@ namespace main
             File.WriteAllText(path2 + "\\" + fname, data);
         }
 
-        public string read3DModel(string fname)
+        public string read3DModel()
         {
-            string path2 = Program.gPath + "threejs\\public\\models";
+            string fname = "model.json";
+            string path2 = Program.gPath + "threejs\\public\\models\\" + ProjectList.CurProjID;
 
             DirectoryInfo di = new DirectoryInfo(path2);  //Create Directoryinfo value by sDirPath  
 

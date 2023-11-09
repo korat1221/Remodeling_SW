@@ -87,7 +87,7 @@ namespace main.contents
                     if ((n = s.IndexOf("@@@")) >= 0)
                     {
                         String json = s.Substring(n + 3);
-                        Program.UTIL.write3DModel(Program.ProjName + ".json", json);
+                        Program.UTIL.write3DModel(json);
                         Program.DB.executeSQL(DB.type.ProjDB, s.Substring(0, n));
                         //             Program.UTIL.reloadWebCtrl();
 
@@ -169,7 +169,7 @@ namespace main.contents
         {
             scriptable = true;
 
-            runScript("load3DModel(" + Program.UTIL.read3DModel(Program.ProjName + ".json") + ")");
+            runScript("load3DModel(" + Program.UTIL.read3DModel() + ")");
 
         }
         public void runScript(string script)

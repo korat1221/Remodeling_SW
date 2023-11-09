@@ -14,7 +14,6 @@ namespace main
         public const string VIRTUAL_PATH_NAME = "EnergyCalc";
 
         public static String? gPath;
-        public static String? ProjName;
         public static DB DB = new DB();
         public static UTIL UTIL = new UTIL();
         public static CALC CALC = new CALC();
@@ -44,8 +43,6 @@ namespace main
             String str = System.Reflection.Assembly.GetEntryAssembly().Location;
             gPath = str.Substring(0, str.IndexOf("\\main") + 1) + "asset\\";
 #endif
-
-            ProjName = "test";
 
             Directory.SetCurrentDirectory(gPath + "threejs\\");
             {

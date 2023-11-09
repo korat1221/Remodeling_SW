@@ -38,12 +38,12 @@
             Delete_button = new Button();
             New_button = new Button();
             dataGridView1 = new DataGridView();
-            Icon_pictureBox = new PictureBox();
             chk = new DataGridViewCheckBoxColumn();
             num = new DataGridViewTextBoxColumn();
             pnum = new DataGridViewTextBoxColumn();
             pname = new DataGridViewTextBoxColumn();
             type = new DataGridViewTextBoxColumn();
+            Icon_pictureBox = new PictureBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -174,14 +174,8 @@
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(678, 504);
             dataGridView1.TabIndex = 99;
-            // 
-            // Icon_pictureBox
-            // 
-            Icon_pictureBox.Location = new Point(362, 86);
-            Icon_pictureBox.Name = "Icon_pictureBox";
-            Icon_pictureBox.Size = new Size(50, 50);
-            Icon_pictureBox.TabIndex = 98;
-            Icon_pictureBox.TabStop = false;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
             // 
             // chk
             // 
@@ -227,6 +221,14 @@
             type.ReadOnly = true;
             type.Resizable = DataGridViewTriState.False;
             type.Width = 96;
+            // 
+            // Icon_pictureBox
+            // 
+            Icon_pictureBox.Location = new Point(362, 86);
+            Icon_pictureBox.Name = "Icon_pictureBox";
+            Icon_pictureBox.Size = new Size(50, 50);
+            Icon_pictureBox.TabIndex = 98;
+            Icon_pictureBox.TabStop = false;
             // 
             // ProjectList
             // 

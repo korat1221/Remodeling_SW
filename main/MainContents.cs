@@ -7,6 +7,7 @@ using main.subcontents.ConstructionWindow;
 using Microsoft.Web.WebView2.Core;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using static main.contents.Model;
 using static main.MainContents;
 
 namespace main
@@ -324,7 +325,7 @@ namespace main
                     {
                         if (formParam.formID == 8)
                         {
-                            Program.UTIL.setObjInfo(Program.UTIL.read3DModel(Program.ProjName + ".json"));
+                            Program.UTIL.setObjInfo(Program.UTIL.read3DModel());
 
                             DoLoadForm(8, OnLoadProc);
                         }
@@ -447,7 +448,8 @@ namespace main
         }
         public void DoLoadFormDirect(int idx)
         {
-    //        Program.UTIL.unselectAll();
+            //        Program.UTIL.unselectAll();
+            formParam.formID = idx;
             DoLoadForm(idx, OnLoadProc);
         }
 
@@ -556,6 +558,20 @@ namespace main
                     {
                         openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
                         forms[idx] = new ConstructionFloor();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+            else if (idx == 8)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new Model();
                         forms[idx].TopLevel = false;
                         openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
                         return;

@@ -26,12 +26,15 @@ namespace main.contents
     public partial class ProjectList : Form
     {
         public static String ProjectType = "1";
+        public static String CurProjID = "2023-11-001";
 
         Dictionary<string, string> types = new Dictionary<string, string>();
 
         public ProjectList()
         {
             InitializeComponent();
+
+            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
 
             types.Add("1", "기존건물");
             types.Add("2", "리트로핏");
@@ -87,6 +90,13 @@ namespace main.contents
                     {
                         dataGridView1.Rows[nRow].Cells[k + 1].Value = (k == 3) ? types[res[n][k]] : res[n][k];
                     }
+
+                    if (res[n][1] == CurProjID)
+                    {
+                        DataGridViewCheckBoxCell cell = dataGridView1.Rows[nRow].Cells[0] as DataGridViewCheckBoxCell;
+
+                        cell.Value = true;
+                    }
                 }
 
             }
@@ -102,5 +112,58 @@ namespace main.contents
             {
             }
         }
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = SystemColors.InactiveBorder;
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int k = dataGridView1.CurrentCell.RowIndex;
+            if (k > -1)
+            {
+                CurProjID = dataGridView1.Rows[k].Cells[2].Value.ToString();
+                Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
+                Program.getMenuForm().ResetForm(8);
+                Program.getMenuForm().DoLoadFormDirect(0);
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+
+                for (int k = 0; k < dataGridView1.Rows.Count; k++)
+                {
+                    if (k != dataGridView1.CurrentCell.RowIndex)
+                    {
+                        dataGridView1.Rows[k].Cells[0].Value = false;
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[k].Cells[0].Value = true;
+                    }
+
+                }
+            }
+        }
+
     }
 }
