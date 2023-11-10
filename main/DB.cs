@@ -343,36 +343,22 @@ namespace main
                 return false;
             }
 
+            return true;
+        }
+        public bool openPListDB()
+        {
             proj_listDB = new SQLiteConnection(@"Data Source=projects.sqlite");
             proj_listDB.Open();
 
-            if (proj_listDB.State != ConnectionState.Open)
+            return !!(proj_listDB.State == ConnectionState.Open);
+        }
+        public void closePListDB()
+        {
+            if (proj_listDB != null)
             {
-                baseDB_hcneed.Close();
-                baseDB_hcneed.Dispose();
-
-                baseDB_lighting.Close();
-                baseDB_lighting.Dispose();
-
-                baseDB_heating.Close();
-                baseDB_heating.Dispose();
-
-                baseDB_cooling.Close();
-                baseDB_cooling.Dispose();
-
-
-                baseDB_resystem.Close();
-                baseDB_resystem.Dispose();
-
-                projDB.Close();
-                projDB.Dispose();
-
-                calcDB.Close();
-                calcDB.Dispose();
-                return false;
+                proj_listDB.Close();
+                proj_listDB.Dispose();
             }
-
-            return true;
         }
         public void closeDB()
         {
@@ -414,12 +400,6 @@ namespace main
             {
                 calcDB.Close();
                 calcDB.Dispose();
-            }
-
-            if (proj_listDB != null)
-            {
-                proj_listDB.Close();
-                proj_listDB.Dispose();
             }
         }
         public void saveProject()

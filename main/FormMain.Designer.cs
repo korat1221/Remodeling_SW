@@ -128,6 +128,7 @@
             toolStripButton4.Name = "toolStripButton4";
             toolStripButton4.Size = new Size(39, 39);
             toolStripButton4.Text = "toolStripButton4";
+            toolStripButton4.Click += toolStripButton4_Click;
             // 
             // toolStripButton2
             // 

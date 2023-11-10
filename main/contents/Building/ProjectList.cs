@@ -78,32 +78,32 @@ namespace main.contents
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
 
-                dataGridView1.Rows.Clear();
-
-                string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type FROM projects");
-                for (int n = 0; n < res.Length; n++)
-                {
-                    dataGridView1.Rows.Add();
-                    int nRow = dataGridView1.Rows.Count - 1;
-
-                    for (int k = 0; k < 4; k++)
-                    {
-                        dataGridView1.Rows[nRow].Cells[k + 1].Value = (k == 3) ? types[res[n][k]] : res[n][k];
-                    }
-
-                    if (res[n][1] == CurProjID)
-                    {
-                        DataGridViewCheckBoxCell cell = dataGridView1.Rows[nRow].Cells[0] as DataGridViewCheckBoxCell;
-
-                        cell.Value = true;
-                    }
-                }
-
+                drawList();
             }
             catch { }
 
         }
 
+        private void drawList()
+        {
+            dataGridView1.Rows.Clear();
+
+            string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type FROM projects WHERE type=" + ProjectType);
+            for (int n = 0; n < res.Length; n++)
+            {
+                dataGridView1.Rows.Add();
+                int nRow = dataGridView1.Rows.Count - 1;
+
+                for (int k = 0; k < 4; k++)
+                {
+                    dataGridView1.Rows[nRow].Cells[k + 1].Value = (k == 3) ? types[res[n][k]] : res[n][k];
+                }
+
+                DataGridViewCheckBoxCell cell = dataGridView1.Rows[nRow].Cells[0] as DataGridViewCheckBoxCell;
+
+                cell.Value = !!(res[n][1] == CurProjID);
+            }
+        }
         private void Copy_button_Click(object sender, EventArgs e)
         {
             ProjectCopy projectcopy = new ProjectCopy();
@@ -138,7 +138,12 @@ namespace main.contents
             if (k > -1)
             {
                 CurProjID = dataGridView1.Rows[k].Cells[2].Value.ToString();
+
+                Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET current = 0");
+                Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET current = 1 WHERE pnum='" + CurProjID + "'");
+
                 Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
+                Program.DB.initTables(DB.type.ProjDB);
                 Program.getMenuForm().ResetForm(8);
                 Program.getMenuForm().DoLoadFormDirect(0);
             }
@@ -165,5 +170,82 @@ namespace main.contents
             }
         }
 
+        private void New_button_Click(object sender, EventArgs e)
+        {
+            DateTime dt = DateTime.Now;
+            int num = 1;
+            string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT pnum FROM projects ORDER BY pnum DESC");
+
+            if (res.Length > 0)
+            {
+                string[] s = res[0][0].Split('-');
+
+                if (s.Length == 3)
+                {
+                    num = Int32.Parse(s[2]) + 1;
+                }
+            }
+
+            string pid = dt.Year + "-" + dt.Month.ToString().PadLeft(2, '0') + "-" + num.ToString().PadLeft(3, '0');
+
+            Program.DB.executeSQL(DB.type.ProjListDB, "INSERT INTO projects (pnum, type, title) VALUES ('" + pid + "'," + ProjectType + ",'')");
+
+            File.Copy("templ.sqlite", Program.gPath + "projects\\" + pid + ".sqlite", true);
+
+            Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
+
+            drawList();
+        }
+
+        private void Delete_button_Click(object sender, EventArgs e)
+        {
+            int k = dataGridView1.CurrentCell.RowIndex;
+            if (k < 0)
+            {
+                MessageBox.Show("먼저 삭제할 프로젝트를 선택하세요.");
+            }
+            else
+            {
+                string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT COUNT(*) FROM projects");
+
+                if (res.Length <= 0)
+                {
+                    MessageBox.Show("프로그램 설정 파일이 훼손되었습니다.");
+                }
+                else if (Int32.Parse(res[0][0]) <= 1)
+                {
+                    MessageBox.Show("정상적인 프로그램 사용을 위해서 하나 이상의 프로젝트가 남아있어야 합니다.");
+                }
+                else
+                {
+                    DialogResult result = MessageBox.Show("선택하신 프로젝트 정보가 영구적으로 삭제됩니다. 계속하시겠습니까 ?", "",
+                        MessageBoxButtons.YesNo);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        string pid = dataGridView1.Rows[k].Cells[2].Value.ToString();
+
+                        Program.DB.executeSQL(DB.type.ProjListDB, "DELETE FROM projects WHERE pnum='" + pid + "'");
+
+                        File.Delete(Program.gPath + "projects\\" + pid + ".sqlite");
+
+                        Directory.Delete(Program.gPath + "threejs\\public\\models\\" + pid, true);
+
+                        if (CurProjID == pid)
+                        {
+                            res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT pnum FROM projects WHERE type = " + ProjectType + " ORDER BY pnum DESC");
+
+                            if (res.Length > 0)
+                            {
+                                CurProjID = res[0][0];
+                            }
+                        }
+
+                        drawList();
+                        MessageBox.Show("프로젝트를 삭제하였습니다.");
+                    }
+                }
+            }
+        }
     }
 }

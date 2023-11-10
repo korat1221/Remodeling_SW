@@ -20,6 +20,16 @@ namespace main
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            if (Program.DB.openPListDB())
+            {
+                string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT pnum FROM projects WHERE current= 1");
+
+                if (res.Length > 0)
+                {
+                    ProjectList.CurProjID = res[0][0];
+                }
+            }
+
             Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
             MainContents f1 = new MainContents();
 
@@ -37,6 +47,7 @@ namespace main
         private void OnClosed(object sender, FormClosedEventArgs e)
         {
             Program.DB.closeDB();
+            Program.DB.closePListDB();
             main.Program.killServer();
         }
 
@@ -58,6 +69,11 @@ namespace main
         {
             Program.getMenuForm().DoLoadForm(41, OnLoadProc2);
         }
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+            Program.getMenuForm().DoLoadForm(42, OnLoadProc3);
+        }
+
         public static bool OnLoadProc1(Form form)
         {
             Intro f = (Intro)form;
@@ -74,7 +90,14 @@ namespace main
 
             return true;
         }
+        public static bool OnLoadProc3(Form form)
+        {
+            OpenProject f = (OpenProject)form;
 
-        
+            f.LoadData("");
+
+            return true;
+        }
+
     }
 }
