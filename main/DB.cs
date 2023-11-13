@@ -442,7 +442,14 @@ namespace main
                 MessageBox.Show(e.Message);
             }
         }
-
+        public void executeSQL(SQLiteConnection db, string exec)
+        {
+            if (exec != "")
+            {
+                SQLiteCommand cmd = new SQLiteCommand(exec, db);
+                cmd.ExecuteNonQuery();
+            }
+        }
         public void executeSQL(type dbType, string exec)
         {
             if (exec != "")
@@ -499,6 +506,33 @@ namespace main
                         break;
                 }
             }
+        }
+        public string[][] querySQL(SQLiteConnection db, string query)
+        {
+            SQLiteCommand cmd = new SQLiteCommand();
+            List<string[]> objects = new List<string[]>();
+
+            cmd.Connection = db;
+
+            cmd.CommandText = query;
+
+            using (SQLiteDataReader reader = cmd.ExecuteReader())
+            {
+                string json = string.Empty;
+
+                while (reader.Read())
+                {
+                    string[] rec = new string[reader.FieldCount];
+
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        rec[i] = reader[i].ToString();
+                    }
+                    objects.Add(rec);
+                }
+            }
+
+            return objects.ToArray();
         }
         public string[][] querySQL(type dbType, string query)
         {

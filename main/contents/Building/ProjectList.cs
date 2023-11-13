@@ -19,7 +19,7 @@ using System.Security.Cryptography;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using System.Data.SQLite;
-using main.subcontents.HeatingSystem;
+using System.Drawing.Configuration;
 
 namespace main.contents
 {
@@ -27,6 +27,8 @@ namespace main.contents
     {
         public static String ProjectType = "1";
         public static String CurProjID = "2023-11-001";
+
+        private bool drawing = false;
 
         Dictionary<string, string> types = new Dictionary<string, string>();
 
@@ -86,6 +88,7 @@ namespace main.contents
 
         private void drawList()
         {
+            drawing = true;
             dataGridView1.Rows.Clear();
 
             string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type FROM projects WHERE type=" + ProjectType);
@@ -103,13 +106,80 @@ namespace main.contents
 
                 cell.Value = !!(res[n][1] == CurProjID);
             }
+            drawing = false;
         }
+        static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
+        {
+            // Get information about the source directory
+            var dir = new DirectoryInfo(sourceDir);
+
+            // Check if the source directory exists
+            if (!dir.Exists)
+                throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
+
+            // Cache directories before we start copying
+            DirectoryInfo[] dirs = dir.GetDirectories();
+
+            // Create the destination directory
+            Directory.CreateDirectory(destinationDir);
+
+            // Get the files in the source directory and copy to the destination directory
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                string targetFilePath = Path.Combine(destinationDir, file.Name);
+                file.CopyTo(targetFilePath);
+            }
+
+            // If recursive and copying subdirectories, recursively call this method
+            if (recursive)
+            {
+                foreach (DirectoryInfo subDir in dirs)
+                {
+                    string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
+                    CopyDirectory(subDir.FullName, newDestinationDir, true);
+                }
+            }
+        }
+
         private void Copy_button_Click(object sender, EventArgs e)
         {
-            ProjectCopy projectcopy = new ProjectCopy();
-            DialogResult result = projectcopy.ShowDialog();
-            if (result == DialogResult.OK)
+            int k = GetSelectedIndex();
+            if (k >= 0)
             {
+                string pid0 = dataGridView1.Rows[k].Cells[2].Value.ToString();
+                ProjectCopy projectcopy = new ProjectCopy();
+                DialogResult result = projectcopy.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    string pid = AddProject(pid0, dataGridView1.Rows[k].Cells[3].Value.ToString());
+
+                    SQLiteConnection db = new SQLiteConnection(@"Data Source=" + Program.gPath + "projects\\" + pid + ".sqlite");
+                    db.Open();
+
+                    string[][] res = Program.DB.querySQL(db, "SELECT name FROM sqlite_master WHERE type IN('table', 'view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN('table', 'view') ORDER BY 1");
+                    for (int n = 0; n < res.Length; n++)
+                    {
+                        string table = res[n][0];
+                        
+                        if (projectcopy.tables.Find(p => p == table) == null)
+                        {
+                            Program.DB.executeSQL(db, "DROP TABLE " + table);
+                        }
+                    }
+
+                    db.Close();
+
+                    if (projectcopy.model_copy)
+                    {
+                        Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
+
+                        CopyDirectory(Program.gPath + "threejs\\public\\models\\" + pid0, Program.gPath + "threejs\\public\\models\\" + pid, true);
+                    }
+
+                    drawList();
+
+                    MessageBox.Show("프로젝트를 복사하였습니다.");
+                }
             }
         }
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
@@ -129,23 +199,6 @@ namespace main.contents
                 cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
                 cell.Style.SelectionForeColor = Color.Black;
                 return true;
-            }
-        }
-
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int k = dataGridView1.CurrentCell.RowIndex;
-            if (k > -1)
-            {
-                CurProjID = dataGridView1.Rows[k].Cells[2].Value.ToString();
-
-                Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET current = 0");
-                Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET current = 1 WHERE pnum='" + CurProjID + "'");
-
-                Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
-                Program.DB.initTables(DB.type.ProjDB);
-                Program.getMenuForm().ResetForm(8);
-                Program.getMenuForm().DoLoadFormDirect(0);
             }
         }
 
@@ -172,6 +225,12 @@ namespace main.contents
 
         private void New_button_Click(object sender, EventArgs e)
         {
+            AddProject();
+
+            drawList();
+        }
+        string AddProject(string pid0 = "", string title = "")
+        {
             DateTime dt = DateTime.Now;
             int num = 1;
             string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT pnum FROM projects ORDER BY pnum DESC");
@@ -188,18 +247,36 @@ namespace main.contents
 
             string pid = dt.Year + "-" + dt.Month.ToString().PadLeft(2, '0') + "-" + num.ToString().PadLeft(3, '0');
 
-            Program.DB.executeSQL(DB.type.ProjListDB, "INSERT INTO projects (pnum, type, title) VALUES ('" + pid + "'," + ProjectType + ",'')");
+            Program.DB.executeSQL(DB.type.ProjListDB, "INSERT INTO projects (pnum, type, title) VALUES ('" + pid + "'," + ProjectType + ",'" + title + "')");
 
-            File.Copy("templ.sqlite", Program.gPath + "projects\\" + pid + ".sqlite", true);
+            if (pid0 != "")
+            {
+                File.Copy(Program.gPath + "projects\\" + pid0 + ".sqlite", Program.gPath + "projects\\" + pid + ".sqlite", true);
+            }
+            else
+            {
+                File.Copy("templ.sqlite", Program.gPath + "projects\\" + pid + ".sqlite", true);
+            }
 
             Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
 
-            drawList();
+            return pid;
+        }
+        private int GetSelectedIndex()
+        {
+            for (int k = 0; k < dataGridView1.Rows.Count; k++)
+            {
+                if (Convert.ToBoolean(dataGridView1.Rows[k].Cells[0].Value) == true)
+                {
+                    return k;
+                }
+            }
+            return -1;
         }
 
         private void Delete_button_Click(object sender, EventArgs e)
         {
-            int k = dataGridView1.CurrentCell.RowIndex;
+            int k = GetSelectedIndex();
             if (k < 0)
             {
                 MessageBox.Show("먼저 삭제할 프로젝트를 선택하세요.");
@@ -243,6 +320,30 @@ namespace main.contents
 
                         drawList();
                         MessageBox.Show("프로젝트를 삭제하였습니다.");
+                    }
+                }
+            }
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!drawing)
+            {
+                int k = dataGridView1.CurrentCell != null ? dataGridView1.CurrentCell.RowIndex : -1;
+
+                if (k >= 0 && dataGridView1.Rows[k].Cells[3].Value != null)
+                {
+                    string pid = dataGridView1.Rows[k].Cells[2].Value.ToString();
+                    string title = dataGridView1.Rows[k].Cells[3].Value.ToString();
+
+                    string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT title FROM projects WHERE pnum='" + pid + "'");
+
+                    if (res.Length > 0)
+                    {
+                        if (res[0][0] != title)
+                        {
+                            Program.DB.querySQL(DB.type.ProjListDB, "UPDATE projects SET title='" + title + "' WHERE pnum='" + pid + "'");
+                        }
                     }
                 }
             }

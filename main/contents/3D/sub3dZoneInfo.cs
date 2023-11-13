@@ -21,6 +21,13 @@ namespace main.contents
         public void resetSID()
         {
             sid = "";
+
+            fillFilterCombos();
+
+            comboBox1.SetLoaded();
+            comboBox2.SetLoaded();
+            comboBox3.SetLoaded();
+
         }
         public sub3dZoneInfo()
         {
@@ -180,6 +187,10 @@ namespace main.contents
         {
             int i = -1;
             string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "층,존,외피유형");
+
+            comboBox1.Items.Clear();
+            comboBox2.Items.Clear();
+            comboBox3.Items.Clear();
 
             comboBox1.Add("All");
             comboBox2.Add("All");

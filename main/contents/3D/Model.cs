@@ -44,8 +44,6 @@ namespace main.contents
             SLInfo
         };
         Form[] forms = new Form[] { new sub3dZoneInfo(), new sub3dBridgeInfo(), new sub3dSpaceInfo(), new sub3dCWInfo(), new sub3dWLInfo(), new sub3dRFInfo(), new sub3dFRInfo(), new sub3dWINInfo(), new sub3dDRInfo(), new sub3dIWInfo(), new sub3dSLInfo() };
-        System.Windows.Forms.Timer tmBridge = new System.Windows.Forms.Timer();
-        string bridgeResult = "";
 
         public Model()
         {
@@ -67,13 +65,22 @@ namespace main.contents
             await webView21.EnsureCoreWebView2Async(null);
             webView21.CoreWebView2.WebMessageReceived += OnJSMessage;
             webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
-
-            tmBridge.Interval = 200;
-            tmBridge.Tick += new EventHandler(tmBridgeProc);
         }
-        void tmBridgeProc(object sender, EventArgs e)
+        public void DoLoadForm(int idx)
         {
-            tmBridge.Stop();
+            int i = -1;
+            while (++i < forms.Length)
+            {
+                forms[i].Hide();
+            }
+
+            forms[idx].Show();
+        }
+
+        void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
+        {
+            string bridgeResult = args.TryGetWebMessageAsString();
+
             if (bridgeResult != "")
             {
                 String s = bridgeResult;
@@ -133,23 +140,6 @@ namespace main.contents
                 {
                 }
             }
-        }
-        public void DoLoadForm(int idx)
-        {
-            int i = -1;
-            while (++i < forms.Length)
-            {
-                forms[i].Hide();
-            }
-
-            forms[idx].Show();
-        }
-
-        void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
-        {
-            tmBridge.Stop();
-            bridgeResult = args.TryGetWebMessageAsString();
-            tmBridge.Start();
         }
         private void resetZoneDraw()
         {
