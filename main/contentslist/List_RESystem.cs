@@ -100,21 +100,15 @@ namespace main.contentslist
         }
         public void load_List()
         {
-
-            List<object> mainMenu = new List<object>();
             List<object> subMenu = new List<object>();
-               
-                    List<object> subsubMenu = new List<object>();
-                    subsubMenu.Add(new { text = "태양광시스템", id = "{\\\"formID\\\":21,\\\"ID\\\":\\\"" + "_1" + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-                    subsubMenu.Add(new { text = "연료전지", id = "{\\\"formID\\\":22,\\\"ID\\\":\\\"" +  "_2" + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-                    subsubMenu.Add(new { text = "풍력시스템", id = "{\\\"formID\\\":23,\\\"ID\\\":\\\"" +  "_3" + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-                    subsubMenu.Add(new { text = "공급의무비율", id = "{\\\"formID\\\":24,\\\"ID\\\":\\\"" + "_4" + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-                    subsubMenu.Add(new { text = "에너지자립률", id = "{\\\"formID\\\":25,\\\"ID\\\":\\\"" +"_5" + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
 
-            mainMenu.Add(new { text = "신재생시스템", id = "{\\\"formID\\\":43,\\\"ID\\\":\\\"" + subMenu.ToArray()+ "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            //mainMenu.Add(new { text = "신재생시스템", id = "{\\\"formID\\\":43,\\\"ID\\\":\\\"" + "신재생시스템" + "\\\"}", children = subMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
-           
-           Program.UTIL.resetMainTree(4, 5, mainMenu.ToArray(), "43"); // 예시 코드: 메인 메뉴 동적 할당
+            subMenu.Add(new { text = "태양광시스템", id = "{\\\"formID\\\":21,\\\"ID\\\":\\\"SOLAR_1\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            subMenu.Add(new { text = "연료전지", id = "{\\\"formID\\\":22,\\\"ID\\\":\\\"SOLAR_2\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            subMenu.Add(new { text = "풍력시스템", id = "{\\\"formID\\\":23,\\\"ID\\\":\\\"SOLAR_3\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            subMenu.Add(new { text = "공급의무비율", id = "{\\\"formID\\\":24,\\\"ID\\\":\\\"SOLAR_4\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            subMenu.Add(new { text = "에너지자립률", id = "{\\\"formID\\\":25,\\\"ID\\\":\\\"SOLAR_5\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+
+           Program.UTIL.resetMainTree(4, 5, subMenu.ToArray(), "43"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
 

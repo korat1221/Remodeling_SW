@@ -8,13 +8,16 @@ function Windowing( editor ) {
 }
 
 Windowing.prototype = {
-    collectWindows: function ( offset, bbox, type, wtype ) {
+    collectWindows: function (pos, type, wtype ) {
 		let _verticesInfo = (vertices) => {
 			let i = -1, v = new THREE.Vector3();
+			var plane = new THREE.Plane();
+			let v2 = new THREE.Vector3();
 
 			while(++i < vertices.length) {
-				this.util.asTriangle(vertices[i].position).closestPointToPoint ( center, v );
-				if (this.util.equalPoint(center, v)) {
+				let T = this.util.asTriangle(vertices[i].position);
+				T.getPlane(plane);
+				if (Math.abs(plane.distanceToPoint(center)) < 0.001 && T.containsPoint(plane.projectPoint(center, v2))) {
 					return {"slope":vertices[i].slope};
 				}
 			}
@@ -22,10 +25,16 @@ Windowing.prototype = {
 		};
 		
 		let center = new THREE.Vector3(), area;
-		let pos = [[offset.x + bbox.min.x,offset.y + bbox.min.y,offset.z + bbox.min.z],[offset.x + bbox.max.x,offset.y + bbox.min.y,offset.z + bbox.max.z],[offset.x + bbox.max.x,offset.y + bbox.max.y,offset.z + bbox.max.z],[offset.x + bbox.min.x,offset.y + bbox.max.y,offset.z + bbox.min.z]], vtx;
+		let vtx, i = -1;
 
-		bbox.getCenter(center);
-		center.add(offset);
+		while(++i < pos.length) {
+			center.x += pos[i][0];
+			center.y += pos[i][1];
+			center.z += pos[i][2];
+		}
+		center.x /= pos.length;
+		center.y /= pos.length;
+		center.z /= pos.length;
 
 		for (const [cardi, value] of Object.entries(this.editor.wall)) {
 			for (const [idx, el] of Object.entries(value)) {
@@ -381,7 +390,7 @@ Windowing.prototype = {
 			let P1 = new THREE.Vector3(offset.x + position.array[i * 3],offset.y + position.array[(i * 3) + 1],offset.z + position.array[(i * 3) + 2]);
 			let P2 = new THREE.Vector3(offset.x + position.array[j * 3],offset.y + position.array[(j * 3) + 1],offset.z + position.array[(j * 3) + 2]);
 
-			if (pnts.find(el => el.equals(P1)) && pnts.find(el => el.equals(P2))) {
+			if (pnts.find(el => el.equals(P1)) && pnts.find(el => el.equals(P2)) && !(P1.x !== P2.x && P1.y !== P2.y && P1.z !== P2.z)) {
 				let L = new THREE.Line3(P1, P2);
 				let C = new THREE.Vector3();
 
@@ -398,7 +407,7 @@ Windowing.prototype = {
 			while(++j < lines.length) {
 				if (i != j && _lineConnected(lines[i],lines[j])) {
 					let bbox = _convertBBox([lines[i],lines[j]]);
-					if (bbox && !bboxes.find(el2 => (el2.equals(bbox)))) {
+					if (bbox && bbox.min.y !== bbox.max.y && !bboxes.find(el2 => (el2.equals(bbox)))) {
 						bboxes.push(bbox);
 					}
 				}
@@ -415,7 +424,7 @@ Windowing.prototype = {
 			}
 		}
 		bboxes.forEach(el => {
-			this.collectWindows( new THREE.Vector3(), el, 'WIN', '2' );
+			this.collectWindows([[el.min.x,el.min.y,el.min.z],[el.max.x,el.min.y,el.max.z],[el.max.x,el.max.y,el.max.z],[el.min.x,el.max.y,el.min.z]], 'WIN', '2' );
 		});
 	},
 };

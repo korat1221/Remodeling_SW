@@ -539,16 +539,37 @@ function Loader( editor ) {
 
 					windowing.collectBoundingBoxes();
 
-					let _isFlat = (a) => {
-						let size = new THREE.Vector3();
-						(new THREE.Box3( a.min, a.max )).getSize(size);
-						return !(size.x > 0 && size.y > 0 && size.z > 0);
+					let _getWindow = (offset, position) => {
+						let pos = [];
+						if (position) {
+							let i = 0;
+							while(i < position.length) {
+								let p = [offset.x + position.array[i],offset.y + position.array[i + 1],offset.z + position.array[i + 2]];
+								if (!pos.find(el => !!(el[0] === p[0] && el[1] === p[1] && el[2] === p[2]))) {
+									pos.push(p);
+								}
+								i += 3;
+							}
+	
+							if (pos.length == 4) {
+								if (editor.distance(pos[1], pos[2]) > editor.distance(pos[1], pos[3])) {
+									var tmp = pos[2];
+									pos[2] = pos[3];
+									pos[3] = tmp;
+								}
+								pos.push(pos[0]);
+					
+								return pos;
+							}
+						}
+						return null;
 					};
 
 					object.traverse( function( child ) {            
 						if (child instanceof THREE.LineSegments) {
-							if (_isFlat(child.geometry.boundingBox)) {
-								windowing.collectWindows(offset, child.geometry.boundingBox);   
+							let pos = _getWindow(offset, child.geometry.getAttribute("position"));
+							if (pos) {
+								windowing.collectWindows(pos);   
 							}
 							else {
 								windowing.collectWindowsHidden(offset, child.geometry.getAttribute("position"));   
@@ -557,13 +578,10 @@ function Loader( editor ) {
 					});  
 					windowing.calcWindowsHidden();   
 
-				//	let n = 0;
 					object.traverse( function( child ) {            
 						if (child instanceof THREE.LineSegments) {
-							if (!_isFlat(child.geometry.boundingBox)) {
-						//		if (n == 0)
+							if (!_getWindow(offset, child.geometry.getAttribute("position"))) {
 								windowing.collectWindowsHidden2(offset, child.geometry.getAttribute("position"));   
-						//		n++;								
 							}
 						}
 					});  

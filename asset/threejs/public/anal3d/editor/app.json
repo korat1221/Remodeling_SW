@@ -237,6 +237,34 @@
                             "filmOffset": 0
                         }
                     }
+                },
+                {
+                    "uuid": "c279e9a7-de9f-4726-9d4f-c10f8c8579ef",
+                    "type": "PointLight",
+                    "name": "PointLight 2",
+                    "layers": 1,
+                    "matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-45.29890546315348,6.949,1.042671306962779,1],
+                    "up": [0,1,0],
+                    "color": 16777215,
+                    "intensity": 0.15,
+                    "distance": 0,
+                    "decay": 0.1,
+                    "shadow": {
+                        "camera": {
+                            "uuid": "235bddbd-9f09-44b5-ae6c-bf3f0bcf3c0f",
+                            "type": "PerspectiveCamera",
+                            "layers": 1,
+                            "up": [0,1,0],
+                            "fov": 90,
+                            "zoom": 1,
+                            "near": 0.5,
+                            "far": 500,
+                            "focus": 10,
+                            "aspect": 1,
+                            "filmGauge": 35,
+                            "filmOffset": 0
+                        }
+                    }
                 }
             ]
         }

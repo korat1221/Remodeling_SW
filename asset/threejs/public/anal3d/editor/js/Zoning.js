@@ -596,7 +596,7 @@ Zoning.prototype = {
 
 						po.posT.getPlane(plane);
 
-						if (Math.abs(plane.distanceToPoint(v)) < 0.00000001 && po.posT.containsPoint(plane.projectPoint(v, v2))) {
+						if (Math.abs(plane.distanceToPoint(v)) < 0.001 && po.posT.containsPoint(plane.projectPoint(v, v2))) {
 							T.getNormal(n);
 
 							let cardi = this.util.asCardinal(n.x,n.y,n.z);
