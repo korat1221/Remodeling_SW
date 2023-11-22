@@ -85,6 +85,31 @@ namespace main.contents
         }
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
+            string[][] Value = Program.DB.querySQL(DB.type.ProjListDB, "Select type from projects where current = '1'");
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            radioButton3.Checked = false;
+            radioButton4.Checked = false;
+
+            if (Value.Length > 0)
+            {
+                switch (Value[0][0])
+                {
+                    case "1":
+                        radioButton1.Checked = true;
+                        break;
+                    case "2":
+                        radioButton2.Checked = true;
+                        break;
+                    case "3":
+                        radioButton3.Checked = true;
+                        break;
+                    case "4":
+                        radioButton4.Checked = true;
+                        break;
+
+                }
+            }
         }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화

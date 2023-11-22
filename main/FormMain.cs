@@ -65,13 +65,10 @@ namespace main
         {
             Program.getMenuForm().DoLoadForm(40, OnLoadProc1);
         }
-        private void toolStripButton3_Click(object sender, EventArgs e)
-        {
-            Program.getMenuForm().DoLoadForm(41, OnLoadProc2);
-        }
+
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-            Program.getMenuForm().DoLoadForm(42, OnLoadProc3);
+            Program.getMenuForm().DoLoadForm(41, OnLoadProc2);
         }
 
         public static bool OnLoadProc1(Form form)

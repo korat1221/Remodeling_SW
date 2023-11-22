@@ -472,11 +472,6 @@ namespace main.contents.Construction
                 MessageBox.Show("내부 덧댐일 경우 열교 평가는 하지 않습니다.");
                 TBName_textBox.Text = "열교없음";
             }
-            if (Type == "내부덧댐")
-            {
-                MessageBox.Show("내부 덧댐일 경우 열교 평가는 하지 않습니다.");
-                TBName_textBox.Text = "열교없음";
-            }
             else if (Type == "기존바닥")
             {
                 MessageBox.Show("기존 바닥일 경우 열교 평가는 하지 않습니다.");
@@ -867,16 +862,15 @@ namespace main.contents.Construction
 
                 int i =0;
                 int count = Ucalc_dataGridView.RowCount + 1;
-                string s = "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 80,\"temper\":  " + Material_T[0] + "},";
-
+                string s = "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 80,\"temper\":  " + Material_T[ count] + "},";
                 while (++i < count)
                 {
-                    var cate = Ucalc_dataGridView.Rows[i - 1].Cells[2].Value != null ? Ucalc_dataGridView.Rows[i - 1].Cells[2].Value.ToString() : "---";
-                    var color = Ucalc_dataGridView.Rows[i - 1].Cells[7].Value != null ? Ucalc_dataGridView.Rows[i - 1].Cells[7].Value.ToString() : "FFFFFF";
-                    s += "{\"cate\":\"" + cate + "\",\"bgcolor\":\"" + color + "\",\"width\": " + Material_d[i - 1] + ",\"temper\":  " + Material_T[i] + "},";
+                    var cate = Ucalc_dataGridView.Rows[-i + count -1].Cells[2].Value != null ? Ucalc_dataGridView.Rows[-i + count - 1].Cells[2].Value.ToString() : "---";
+                    var color = Ucalc_dataGridView.Rows[-i + count - 1].Cells[7].Value != null ? Ucalc_dataGridView.Rows[-i + count - 1].Cells[7].Value.ToString() : "FFFFFF";
+                    s += "{\"cate\":\"" + cate + "\",\"bgcolor\":\"" + color + "\",\"width\": " + Material_d[-i + count - 1] + ",\"temper\":  " + Material_T[-i + count -1] + "},";
                 }
 
-                s += "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 80,\"temper\":  " + Material_T[i] + "},";
+                s += "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 80,\"temper\":  " + "20" + "},";
 
                 runScript("drawWall([" + s + "])");
             }
@@ -942,11 +936,18 @@ namespace main.contents.Construction
             {
                 MessageBox.Show("바닥 리모델링 유형을 선택하세요.");
             }
-            else if (Type != "기존바닥")
+            else if (Type != "기존바닥"&& Type !="내부덧댐")
             {
-                if (TBName == null)
+                if(Base !="지면위" && Base !="단열지하실")
                 {
-                    MessageBox.Show("열교를 입력하세요.");
+                    if (TBName == null)
+                    {
+                        MessageBox.Show("열교를 입력하세요.");
+                    }
+                    else
+                    {
+                        Save();
+                    }
                 }
                 else
                 {

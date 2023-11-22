@@ -90,7 +90,7 @@ namespace main.contents
 
 
                     //save한 음영계수값 불러오기 (최종만)
-                    string[][] value = Program.DB.getValue(DB.type.ProjDB, "Shade", "음영계수", "번호 = '" + ID + "'");
+                    string[][] value = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", "번호 = '" + ID + "'");
 
                     //커튼월정보 불러오기  // *************************창호 너비 높이 면적은 존 인벨롭에서 들어오는 값으로 해야함 (임시방편)
                     String[][] CWLoad = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭,커튼월면적,너비,높이,프레임종류,고정유리종류,개폐유리종류,간봉종류,설치유형,태양열취득률,빛투과율,설치열교가산치,커튼월창유효열관류율,Type,설치종류,Ucw적용방법", "번호 = '" + rec[0][12] + "'");

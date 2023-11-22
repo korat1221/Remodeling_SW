@@ -34,21 +34,15 @@
             { "type": "DHWSystem", "text": "급탕시스템", "id": "{\"formID\":18}" },
             { "type": "HeatingSystem", "text": "난방시스템", "id": "{\"formID\":39}", "children": [{ "text": "HS01", "id": "{\"formID\":19}" }] },
             { "type":  "CoolingSystem", "text": "냉방시스템", "id": "{\"formID\":38}", "children": [{ "text": "CW01", "id": "{\"formID\":20}" }] },
-        ],
-        [
-            { "type": "PVSystem", "text": "태양광시스템", "id": "{\"formID\":21}" },
-            { "type": "FuelCell", "text": "연료전지", "id": "{\"formID\":22}" },
-            { "type": "WindPower", "text": "풍력시스템", "id": "{\"formID\":23}" },
-            { "type": "SupplyRatio", "text": "공급의무비율", "id": "{\"formID\":24}" },
-            { "type": "EIndependeceRate", "text": "에너지자립률", "id": "{\"formID\":25}" }
-        ],
+            { "type": "RENSystem", "text": "신재생시스템", "id": "{\"formID\":43}"}
+        ],       
         [
             { "type": "ReportExisting", "text": "기존_표준", "id": "{\"formID\":26}" },
             { "type": "ReportRemodeling", "text": "기존_설계", "id": "{\"formID\":27}" },
             { "type": "PrintReport", "text": "레포트출력", "id": "{\"formID\":37}" },
         ]
     ];
-    let gDefaultSelect = ["0", "2", "8", "12", "16", "21", "26"];
+    let gDefaultSelect = ["0", "2", "8", "12", "16", "26"];
     let first = true;
 
     function setObjInfo(o) {
@@ -79,7 +73,6 @@
             { "normal": "url(images/1sticon/3.3D.png)", "active": "url(images/1sticon/3.3D_on2.png)" },
             { "normal": "url(images/1sticon/4.Zone.png)", "active": "url(images/1sticon/4.Zone_on2.png)" },
             { "normal": "url(images/1sticon/5.System.png)", "active": "url(images/1sticon/5.System_on2.png)" },
-            { "normal": "url(images/1sticon/6.RESystem.png)", "active": "url(images/1sticon/6.RESystem_on2.png)" },
             { "normal": "url(images/1sticon/7.Result.png)", "active": "url(images/1sticon/7.Result_on2.png)" },
         ];
 
@@ -129,10 +122,6 @@
             <div class="cont-item" onclick="load(4)">
                 <div class="cont-icon item4" style="background-image: url('images/1sticon/5.System.png');"></div>
                 <div class="cont-title">설비 정보</div>
-            </div>
-            <div class="cont-item" onclick="load(5)">
-                <div class="cont-icon item5" style="background-image: url('images/1sticon/6.RESystem.png');"></div>
-                <div class="cont-title">신재생 정보</div>
             </div>
             <div class="cont-item" onclick="load(6)">
                 <div class="cont-icon item6" style="background-image: url('images/1sticon/7.Result.png');"></div>

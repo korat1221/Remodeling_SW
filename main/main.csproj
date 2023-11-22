@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="contentslist\List_RESystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="contents\Building\OpenProject.cs">
       <SubType>Form</SubType>
     </Compile>

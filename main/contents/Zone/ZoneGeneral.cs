@@ -622,7 +622,10 @@ namespace main.contents
                 }
                 else if (η == 0 || η2 == 0)
                 { MessageBox.Show("온도교환효율과 전열교환효율을 선택하세요."); }
-                else { }
+                else
+                {
+                    save();
+                }
             }
             else if (Usage == null)
             {

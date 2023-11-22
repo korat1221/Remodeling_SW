@@ -20,13 +20,14 @@ using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using System.Data.SQLite;
 using System.Drawing.Configuration;
+using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace main.contents
 {
     public partial class ProjectList : Form
     {
-        public static String ProjectType = "1";
-        public static String CurProjID = "2023-11-001";
+        public static String ProjectType = null;
+        public static String CurProjID = null;
 
         private bool drawing = false;
 
@@ -36,7 +37,7 @@ namespace main.contents
         {
             InitializeComponent();
 
-            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
+            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.Fill);
 
             types.Add("1", "기존건물");
             types.Add("2", "리트로핏");
@@ -53,45 +54,63 @@ namespace main.contents
         }
 
 
+
+        public static bool OnLoadProc2(Form form)
+        {
+            Intro f = (Intro)form;
+
+            f.LoadData("");
+
+            return true;
+        }
+
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             try
             {
-                ProjectType_textBox.Text = types[ProjectType];
-                if (ProjectType == null) { }
+
+                if (ProjectType == null)
+                {
+                    MessageBox.Show("프로젝트 유형부터 선택하세요.");
+                    Program.getMenuForm().DoLoadForm(40, OnLoadProc2);
+                }
                 else if (ProjectType == "1")
                 {
                     Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro1.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    drawList(1.ToString());
                 }
                 else if (ProjectType == "2")
                 {
                     Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro2.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    drawList(1.ToString());
                 }
                 else if (ProjectType == "3")
                 {
                     Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro3.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    drawList(1.ToString());
                 }
                 else
                 {
                     Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro2.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    drawList(4.ToString());
                 }
+                ProjectType_textBox.Text = types[ProjectType];
 
-                drawList();
             }
             catch { }
 
         }
 
-        private void drawList()
+        private void drawList(String ProjectType2)
         {
             drawing = true;
             dataGridView1.Rows.Clear();
 
-            string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type FROM projects WHERE type=" + ProjectType);
+            string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type FROM projects WHERE type='" + ProjectType + "'OR type = '" + ProjectType2 + "'");
             for (int n = 0; n < res.Length; n++)
             {
                 dataGridView1.Rows.Add();
@@ -147,6 +166,8 @@ namespace main.contents
             if (k >= 0)
             {
                 string pid0 = dataGridView1.Rows[k].Cells[2].Value.ToString();
+
+                //  Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET type = '" + ProjectType + "', title = WHERE pnum = '" + pid + "'");
                 ProjectCopy projectcopy = new ProjectCopy();
                 DialogResult result = projectcopy.ShowDialog();
                 if (result == DialogResult.OK)
@@ -160,7 +181,7 @@ namespace main.contents
                     for (int n = 0; n < res.Length; n++)
                     {
                         string table = res[n][0];
-                        
+
                         if (projectcopy.tables.Find(p => p == table) == null)
                         {
                             Program.DB.executeSQL(db, "DROP TABLE " + table);
@@ -176,7 +197,7 @@ namespace main.contents
                         CopyDirectory(Program.gPath + "threejs\\public\\models\\" + pid0, Program.gPath + "threejs\\public\\models\\" + pid, true);
                     }
 
-                    drawList();
+                    drawList(ProjectType.ToString());
 
                     MessageBox.Show("프로젝트를 복사하였습니다.");
                 }
@@ -184,12 +205,18 @@ namespace main.contents
         }
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
+
             if (row % 2 == 1)
             {
                 cell.Style.BackColor = SystemColors.InactiveBorder;
                 cell.Style.ForeColor = Color.Black;
                 cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
                 cell.Style.SelectionForeColor = Color.Black;
+                if (column == 3 && cell.Value.ToString() == null)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 243);
+                    return true;
+                }
                 return true;
             }
             else
@@ -198,8 +225,14 @@ namespace main.contents
                 cell.Style.ForeColor = Color.Black;
                 cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
                 cell.Style.SelectionForeColor = Color.Black;
+                if (column == 3 && cell.Value.ToString() == null)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 243);
+                    return true;
+                }
                 return true;
             }
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -227,7 +260,7 @@ namespace main.contents
         {
             AddProject();
 
-            drawList();
+            drawList(ProjectType.ToString());
         }
         string AddProject(string pid0 = "", string title = "")
         {
@@ -304,9 +337,11 @@ namespace main.contents
 
                         Program.DB.executeSQL(DB.type.ProjListDB, "DELETE FROM projects WHERE pnum='" + pid + "'");
 
-                        File.Delete(Program.gPath + "projects\\" + pid + ".sqlite");
+                        if (File.Exists(Program.gPath + "projects\\" + pid + ".sqlite"))
+                            File.Delete(Program.gPath + "projects\\" + pid + ".sqlite");
 
-                        Directory.Delete(Program.gPath + "threejs\\public\\models\\" + pid, true);
+                        if (Directory.Exists(Program.gPath + "threejs\\public\\models\\" + pid))
+                            Directory.Delete(Program.gPath + "threejs\\public\\models\\" + pid, true);
 
                         if (CurProjID == pid)
                         {
@@ -318,7 +353,7 @@ namespace main.contents
                             }
                         }
 
-                        drawList();
+                        drawList(ProjectType.ToString());
                         MessageBox.Show("프로젝트를 삭제하였습니다.");
                     }
                 }
@@ -347,6 +382,44 @@ namespace main.contents
                     }
                 }
             }
+        }
+
+        private void OpenCurrentProject()
+        {
+            int k = dataGridView1.CurrentCell.RowIndex;
+            if (k > -1)
+            {
+                ProjectList.CurProjID = dataGridView1.Rows[k].Cells[2].Value.ToString();
+
+                Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET current = 0");
+                Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET current = 1 WHERE pnum='" + ProjectList.CurProjID + "'");
+
+                Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
+                Program.DB.initTables(DB.type.ProjDB);
+                Program.getMenuForm().ResetForm(8);
+                Program.getMenuForm().DoLoadFormDirect(0);
+            }
+        }
+
+        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            OpenCurrentProject();
+        }
+
+        private void Save_button_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count == 0) { return; }
+            for (int k = 0; k < dataGridView1.Rows.Count; k++)
+            {
+                if (dataGridView1.Rows[k].Cells[3].Value.ToString() == "")
+                { MessageBox.Show("프로젝트명을 전부 입력하세요."); }
+                else
+                {
+                    Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET title= '"+dataGridView1.Rows[k].Cells[3].Value.ToString()+"' WHERE pnum='" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "'");
+                    MessageBox.Show("저장되었습니다.");
+                }
+            }
+
         }
     }
 }

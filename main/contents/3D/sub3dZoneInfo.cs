@@ -31,6 +31,7 @@ namespace main.contents
         }
         public sub3dZoneInfo()
         {
+            Program.DB.initTables(DB.type.ProjDB);
             InitializeComponent();
             create_datagridview1();
             create_datagridview2();

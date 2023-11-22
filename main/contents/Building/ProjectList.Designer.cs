@@ -32,6 +32,7 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            Save_button = new Button();
             ProjectType_textBox = new TextBox();
             label4 = new Label();
             Copy_button = new Button();
@@ -52,6 +53,7 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(Save_button);
             GeneralPanel.Controls.Add(ProjectType_textBox);
             GeneralPanel.Controls.Add(label4);
             GeneralPanel.Controls.Add(Copy_button);
@@ -64,6 +66,21 @@
             GeneralPanel.Size = new Size(977, 661);
             GeneralPanel.TabIndex = 133;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // Save_button
+            // 
+            Save_button.BackColor = SystemColors.ControlLight;
+            Save_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Save_button.FlatStyle = FlatStyle.System;
+            Save_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            Save_button.Location = new Point(762, 500);
+            Save_button.Margin = new Padding(0);
+            Save_button.Name = "Save_button";
+            Save_button.Size = new Size(67, 23);
+            Save_button.TabIndex = 105;
+            Save_button.Text = "Save";
+            Save_button.UseVisualStyleBackColor = false;
+            Save_button.Click += Save_button_Click;
             // 
             // ProjectType_textBox
             // 
@@ -174,9 +191,10 @@
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(678, 504);
+            dataGridView1.Size = new Size(678, 355);
             dataGridView1.TabIndex = 99;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.CellContentDoubleClick += dataGridView1_CellContentDoubleClick;
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
             // 
             // chk
@@ -264,5 +282,6 @@
         private DataGridViewTextBoxColumn pnum;
         private DataGridViewTextBoxColumn pname;
         private DataGridViewTextBoxColumn type;
+        private Button Save_button;
     }
 }

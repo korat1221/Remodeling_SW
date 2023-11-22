@@ -77,7 +77,7 @@ namespace main.contents
 
 
                     //save한 음영계수값 불러오기 (최종만)
-                    string[][] value = Program.DB.getValue(DB.type.ProjDB, "Shade", "음영계수", "번호 = '" + ID + "'");
+                    string[][] value = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", "번호 = '" + ID + "'");
 
                     //창호정보 불러오기 // *************************창호 너비 높이 면적은 존 인벨롭에서 들어오는 값으로 해야함 (임시방편)
                     String[][] SubLoad = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭,상위창호번호,창호면적,창호너비,창호높이,창호유효열관류율,설치열교가산치", "번호 = '" + rec[0][12] + "'");

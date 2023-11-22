@@ -487,6 +487,7 @@ namespace main.contents
             reset();
             try
             {
+                string[][] Value1 = Program.DB.querySQL(DB.type.ProjListDB, "Select type, title from projects where current = '1'");
                 String[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,프로젝트유형,사업성능목표,건물진단실시," +
                 "건물대상,건물용도,건물명,주소,지역인덱스,지역,지역구분," +
                 "외벽구조유형,지붕구조유형,준공연도,준공월," +
@@ -495,10 +496,25 @@ namespace main.contents
                 "지상층수,지하층수," +
                 "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기", "");
 
-                ProjectName = Value[0][0];
+                ProjectName = Value1[0][1];
                 ProjectName_textBox.Text = ProjectName.ToString();
 
-                ProjectType = Value[0][1];
+                switch (Value1[0][0])
+                {
+                    case "1":
+                        ProjectType = "기존";
+                        break;
+                    case "2":
+                        ProjectType = "리트로핏";
+                        break;
+                    case "3":
+                        ProjectType = "리모델링";
+                        break;
+                    case "4":
+                        ProjectType = "신규";
+                        break;
+
+                }
                 ProjectType_textBox.Text = ProjectType.ToString();
 
                 Target = Value[0][2];
