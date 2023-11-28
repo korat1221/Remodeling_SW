@@ -96,5 +96,24 @@ namespace main
             return true;
         }
 
+        private void EnergyNeed_Sim_Click(object sender, EventArgs e)
+        {
+            Program.CALC.run(new string[] {
+                "존 계산"
+            });
+            MessageBox.Show("계산되엇습니다.");
+        }
+
+        private void FinalEnergy_Sim_Click(object sender, EventArgs e)
+        {
+            Program.CALC.run(new string[] {
+                "존 계산"
+            });
+
+            Program.CALC.run(new string[] {
+                "난방시스템 계산"
+            });
+            MessageBox.Show("계산되엇습니다.");
+        }
     }
 }

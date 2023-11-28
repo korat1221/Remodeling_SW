@@ -919,21 +919,20 @@ namespace main
                                 }
                             }
                             MTH = (mth + 1).ToString() + "월";
-                            if (검토유형[0][0] =="기존")
-                            {
+
                                 Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
                                    "난방_냉방,비이용일_이용일,월," +
                                    "HT,HT_TB," +
                                    "QTsink,QTsource," +
                                    "QT_TB_sink,QT_TB_source," +
                                    "QTsink_tot,QTsource_tot",
-                                   "'1,'" + zonewall.Num() + "','" + ZoneNum + "','" + zonewall.CNum() + "','" + "외벽" + "','" + zonewall.DiIndi() + "','" +
+                                   "'1','" + zonewall.Num() + "','" + ZoneNum + "','" + zonewall.CNum() + "','" + "외벽" + "','" + zonewall.DiIndi() + "','" +
                                     HC[hc] + "','" + WEWD[wewd] + "','" + MTH + "','" +
                                    (zonewall.Ueff() * zonewall.Area()).ToString() + "','" + (0.15 * zonewall.Area()).ToString() + "','" +
                                   zoneWalls_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneWalls_QTsource[i, hc, wewd, mth].ToString() + "','" +
                                   zoneWalls_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneWalls_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
                                   (zoneWalls_QTsink[i, hc, wewd, mth] + zoneWalls_QTsink_TB[i, hc, wewd, mth]).ToString() + "','" + (zoneWalls_QTsource[i, hc, wewd, mth] + zoneWalls_QTsource_TB[i, hc, wewd, mth]).ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-                            }
+
                            
 
                             QTsink_Wall[hc, wewd, mth] += zoneWalls_QTsink[i, hc, wewd, mth];
@@ -1009,8 +1008,7 @@ namespace main
                                 }
                             }
                             MTH = (mth + 1).ToString() + "월";
-                            if (검토유형[0][0] == "기존")
-                            {
+
                                  Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
                                 "난방_냉방,비이용일_이용일,월," +
                                 "HT,HT_TB," +
@@ -1023,7 +1021,7 @@ namespace main
                                 zoneRoofs_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneRoofs_QTsource[i, hc, wewd, mth].ToString() + "','" +
                                 zoneRoofs_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneRoofs_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
                                 (zoneRoofs_QTsink[i, hc, wewd, mth] + zoneRoofs_QTsink_TB[i, hc, wewd, mth]).ToString() + "','" + (zoneRoofs_QTsource[i, hc, wewd, mth] + zoneRoofs_QTsource_TB[i, hc, wewd, mth]).ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-                            }
+                            
                             QTsink_Roof[hc, wewd, mth] += zoneRoofs_QTsink[i, hc, wewd, mth];
                             QTsource_Roof[hc, wewd, mth] += zoneRoofs_QTsource[i, hc, wewd, mth];
                             QTsink_TB[hc, wewd, mth] += zoneRoofs_QTsink_TB[i, hc, wewd, mth];
@@ -1084,8 +1082,7 @@ namespace main
                                 zoneFloors_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], 0.15 * zonefloor.Area());
                             }
 
-                            if (검토유형[0][0] == "기존")
-                            {
+ 
                                 Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
                                 "난방_냉방,비이용일_이용일,월," +
                                 "HT,HT_TB," +
@@ -1098,7 +1095,7 @@ namespace main
                                 zoneFloors_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneFloors_QTsource[i, hc, wewd, mth].ToString() + "','" +
                                 zoneFloors_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneFloors_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
                                (zoneFloors_QTsink_TB[i, hc, wewd, mth] + zoneFloors_QTsink[i, hc, wewd, mth]).ToString() + "','" + (zoneFloors_QTsource[i, hc, wewd, mth] + zoneFloors_QTsource_TB[i, hc, wewd, mth]).ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-                            }
+                            
                             QTsink_Floor[hc, wewd, mth] += zoneFloors_QTsink[i, hc, wewd, mth];
                             QTsource_Floor[hc, wewd, mth] += zoneFloors_QTsource[i, hc, wewd, mth];
                             QTsink_TB[hc, wewd, mth] += zoneFloors_QTsink_TB[i, hc, wewd, mth];
@@ -1149,8 +1146,7 @@ namespace main
                                 zoneGWalls_QTsource[i, hc, wewd, mth] = qtcalc.Calc_source(theta_s_GWall[hc, wewd, mth], theta_i[hc, wewd, mth], zonegwall.Ueff() * zonegwall.Area());
                                 zoneGWalls_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_s_GWall[hc, wewd, mth], theta_i[hc, wewd, mth], 0.15 * zonegwall.Area());
                             }
-                            if (검토유형[0][0] == "기존")
-                            {
+ 
                                 MTH = (mth + 1).ToString() + "월";
                                 Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
                                 "난방_냉방,비이용일_이용일,월," +
@@ -1164,7 +1160,7 @@ namespace main
                                 zoneGWalls_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneGWalls_QTsource[i, hc, wewd, mth].ToString() + "','" +
                                 zoneGWalls_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneGWalls_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
                                 (zoneGWalls_QTsink[i, hc, wewd, mth] + zoneGWalls_QTsink_TB[i, hc, wewd, mth]).ToString() + "','" + (zoneGWalls_QTsource[i, hc, wewd, mth] + zoneGWalls_QTsource_TB[i, hc, wewd, mth]).ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-                            }
+                            
 
                             QTsink_GWall[hc, wewd, mth] += zoneGWalls_QTsink[i, hc, wewd, mth];
                             QTsource_GWall[hc, wewd, mth] += zoneGWalls_QTsource[i, hc, wewd, mth];
@@ -1229,8 +1225,7 @@ namespace main
                                 }
                             }
                             MTH = (mth + 1).ToString() + "월";
-                            if (검토유형[0][0] == "기존")
-                            {
+
                                     Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
                                 "난방_냉방,비이용일_이용일,월," +
                                 "HT,HT_TB," +
@@ -1243,7 +1238,7 @@ namespace main
                                 zoneDoors_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneDoors_QTsource[i, hc, wewd, mth].ToString() + "','" +
                                 zoneDoors_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneDoors_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
                                 (zoneDoors_QTsink[i, hc, wewd, mth] + zoneDoors_QTsink_TB[i, hc, wewd, mth]).ToString() + "','" + (zoneDoors_QTsource[i, hc, wewd, mth] + zoneDoors_QTsource_TB[i, hc, wewd, mth]).ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-                            }
+                            
 
                             QTsink_Door[hc, wewd, mth] += zoneDoors_QTsink[i, hc, wewd, mth];
                             QTsource_Door[hc, wewd, mth] += zoneDoors_QTsource[i, hc, wewd, mth];
@@ -1321,8 +1316,7 @@ namespace main
                             }
 
                             MTH = (mth + 1).ToString() + "월";
-                            if (검토유형[0][0] == "기존")
-                            {
+      
                                 Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접,커튼월유형," +
                                "난방_냉방,비이용일_이용일,월," +
                                 "HT,HT_TB," +
@@ -1335,7 +1329,7 @@ namespace main
                                zoneCWs_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneCWs_QTsource[i, hc, wewd, mth].ToString() + "','" +
                                zoneCWs_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneCWs_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
                                (zoneCWs_QTsink[i, hc, wewd, mth] + zoneCWs_QTsink_TB[i, hc, wewd, mth]).ToString() + "','" + (zoneCWs_QTsource[i, hc, wewd, mth] + zoneCWs_QTsource_TB[i, hc, wewd, mth]).ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-                            }
+                            
 
                             QTsink_CW[hc, wewd, mth] += zoneCWs_QTsink[i, hc, wewd, mth];
                             QTsource_CW[hc, wewd, mth] += zoneCWs_QTsource[i, hc, wewd, mth];
@@ -1400,8 +1394,7 @@ namespace main
                             }
                             MTH = (mth + 1).ToString() + "월";
 
-                            if (검토유형[0][0] == "기존")
-                            {
+          
                                     Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
                                 "난방_냉방,비이용일_이용일,월," +
                                 "HT,HT_TB," +
@@ -1414,7 +1407,7 @@ namespace main
                                 zoneWins_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneWins_QTsource[i, hc, wewd, mth].ToString() + "','" +
                                 zoneWins_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneWins_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
                                 zoneWins_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneWins_QTsource[i, hc, wewd, mth].ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-                            }
+                            
 
                             QTsink_Win[hc, wewd, mth] += zoneWins_QTsink[i, hc, wewd, mth];
                             QTsource_Win[hc, wewd, mth] += zoneWins_QTsource[i, hc, wewd, mth];

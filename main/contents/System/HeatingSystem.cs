@@ -2148,13 +2148,14 @@ namespace main.contents
             // ce_dataGridView.Columns.Add("A7", "적용 존.존번호");
             ce_dataGridView.Columns.Add("A6", "적용 존.존명칭");
             ce_dataGridView.Columns.Add("A7", "적용 존.설치위치");
+            ce_dataGridView.Columns.Add("A8", "하루 중\r\n가동시간");
             ce_dataGridView.Columns[0].Width = 30;
             ce_dataGridView.Columns[1].Width = 150;
             ce_dataGridView.Columns[2].Width = 120;
             ce_dataGridView.Columns[3].Width = 130;
             ce_dataGridView.Columns[4].Width = 70;
             ce_dataGridView.Columns[5].Width = 70;
-            ce_dataGridView.Columns[6].Width = 130;
+            ce_dataGridView.Columns[6].Width = 70;
 
         }
         private void ce1Zone_button_Click(object sender, EventArgs e)
@@ -2257,6 +2258,14 @@ namespace main.contents
                         ce_dataGridView.Rows[nRow].Cells[7] = 설치위치comboBox;
                     }
 
+                    DataGridViewComboBoxCell 가동시간comboBox = new DataGridViewComboBoxCell();
+                    for(int h =0; h<25; h++)
+                    {
+                        가동시간comboBox.Items.Add(h + "h");
+                    }
+                    ce_dataGridView.Rows[nRow].Cells[8] = 가동시간comboBox;
+
+
 
                     ce_dataGridView.Rows[nRow].Cells[2].Value = Value[n][1];//종류
                     int index = Value[n][2].IndexOf("_");
@@ -2300,9 +2309,9 @@ namespace main.contents
                 int index = ce_dataGridView.Rows[n].Cells[1].Value.ToString().IndexOf("CE");
                 존번호 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(0, index - 1);
                 공급설비 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(index, ce_dataGridView.Rows[n].Cells[1].Value.ToString().Length - index);
-                Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,프로젝트유형,난방시스템,공급설비종류,공급설비,설치위치"
+                Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,프로젝트유형,난방시스템,공급설비종류,공급설비,설치위치,가동시간"
                 , "'" + 존번호 + "','" + 프로젝트유형[0][0] + "','" + Num + "','" + ce_dataGridView.Rows[n].Cells[2].Value+ "','" +
-                    공급설비 + "','" + ce_dataGridView.Rows[n].Cells[7].Value + "'", "");
+                    공급설비 + "','" + ce_dataGridView.Rows[n].Cells[7].Value + "','" + ce_dataGridView.Rows[n].Cells[8].Value + "'", "");
             }
         }
 

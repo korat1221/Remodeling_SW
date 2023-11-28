@@ -13,7 +13,7 @@ namespace main
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Count, Pump2Count;
         String ce1Type, ce2Type; int ce_SelectRow;
         public ArrayList ce_Type1 = new ArrayList(); public ArrayList ce_Type2 = new ArrayList(); public ArrayList Pump = new ArrayList();
-        String StorageUse, StoragePumpUse, StoragePump; double Vs;
+        String StorageUse, StoragePumpUse, StoragePump; public double Vs;
         String[] SystemType = { "보일러", "히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
         String[] ceType = { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방" };
         double PipeD, PipeInsD, PipeIns_Ramda;
@@ -24,17 +24,21 @@ namespace main
         public double Qh_max_sum, Qh_a_sum, th_op_day_avg, theta_i_h_set_avg; public double[] th_avg = new double[12]; public double[] dop_mth_avg = new double[12];
         double SL, RL;
         double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-        double[] thrL = new double[12]; double[] thrL_day = new double[12]; double[] dhrB = new double[12]; double[] fLNA = new double[12]; double[] fLwe = new double[12];
-        double[] beta_h_ce = new double[12]; double[] beta_h_d = new double[12]; double[] beta_h_s = new double[12]; double[] beta_h_gen = new double[12];
-        double[] theta_av_ce = new double[12]; double[] theta_av_d = new double[12]; double[] theta_av_s = new double[12]; double[] theta_av_gen = new double[12];
-        double[] dtheta_ce = new double[12]; double[] dtheta_d = new double[12]; double[] dtheta_s = new double[12]; double[] dtheta_gen = new double[12];
-        double[] Qh_ce = new double[12], Qh_d = new double[12], Qh_s = new double[12], Qh_gen = new double[12], Qh_outg = new double[12], Qh_f = new double[12];
-        double[] Wh_ce = new double[12], Wh_d = new double[12], Wh_s = new double[12], Wh_g = new double[12];
+        public double[] thrL = new double[12], thrL_day = new double[12], dhrB = new double[12],fLNA = new double[12], fLwe = new double[12];
+        public double[] beta_h_ce = new double[12], beta_h_d = new double[12], beta_h_s = new double[12], beta_h_gen = new double[12];
+        public double[] theta_av_ce = new double[12], theta_av_d = new double[12], theta_av_s = new double[12], theta_av_gen = new double[12];
+        public double[] dtheta_ce = new double[12],dtheta_d = new double[12], dtheta_s = new double[12], dtheta_gen = new double[12];
+        public double[] Qh_ce = new double[12], Qh_d = new double[12], Qh_s = new double[12], Qh_gen = new double[12], Qh_outg = new double[12], Qh_f = new double[12];
+        public double[] Wh_ce = new double[12], Wh_d = new double[12], Wh_s = new double[12], Wh_g = new double[12];
+        public double dtheta_ce1, dtheta_ce2, Psi_pipe, L, Qs_po_day;
+        public double[] Qh_gen_day = new double[12], Pgen_Pn = new double[12], Pgen_Pint = new double[12], Pgen_P0 = new double[12], eta_gen_Pn = new double[12], eta_gen_Pint = new double[12];
         ArrayList SelectAirHP_split = new ArrayList(); ArrayList SelectGroundHP_split = new ArrayList(); ArrayList SelectGWHP_split = new ArrayList();
         ArrayList AirHPSupply_split = new ArrayList(); ArrayList GroundHPSupply_split = new ArrayList(); ArrayList GWHPSupply_split = new ArrayList();
         ArrayList AirHPControl_split = new ArrayList(); ArrayList GroundHPControl_split = new ArrayList(); ArrayList GWHPControl_split = new ArrayList();
         ArrayList AirHPNum_split = new ArrayList(); ArrayList GroundHPNum_split = new ArrayList(); ArrayList GWHPNum_split = new ArrayList();
         ArrayList SelectSolar_split = new ArrayList(); ArrayList SolarNum_split = new ArrayList(); ArrayList SolarDirection_split = new ArrayList(); ArrayList SolarDegree_split = new ArrayList();
+
+
 
         string[][] 지역, 외기온도;
         public Cal_Heating(String HeatingNum)
@@ -294,7 +298,7 @@ namespace main
         {
             try
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "축열유무,축열펌프유무,축열펌프,축열용량", "번호 = '" + HeatingNum + "'");
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "Q유무,축열펌프유무,축열펌프,축열용량", "번호 = '" + HeatingNum + "'");
                 StorageUse = Value[0][0];
                 StoragePumpUse = Value[0][1];
                 StoragePump = Value[0][2];
@@ -394,7 +398,7 @@ namespace main
 
         private void Split_HP(String nonSplit, String HeatSource)
         {
-            if (nonSplit != null)
+            if (nonSplit != "")
             {
                 if (nonSplit.Contains('+'))
                 {
@@ -417,11 +421,17 @@ namespace main
                 else
                 {
                     if (HeatSource == "외기")
-                    { SelectAirHP_split.Add(nonSplit.ToString()); }
+                    {
+                        SelectAirHP_split.Clear();
+                        SelectAirHP_split.Add(nonSplit.ToString()); }
                     else if (HeatSource == "지열")
-                    { SelectGroundHP_split.Add(nonSplit.ToString()); }
+                    {
+                        SelectGroundHP_split.Clear();
+                        SelectGroundHP_split.Add(nonSplit.ToString()); }
                     else
-                    { SelectGWHP_split.Add(nonSplit.ToString()); }
+                    {
+                        SelectGWHP_split.Clear();
+                        SelectGWHP_split.Add(nonSplit.ToString()); }
                 }
             }
             else { return; }
@@ -544,7 +554,7 @@ namespace main
                 else
                 {
                     SelectZone_split.Clear();
-                    SelectZone_split.Add(SelectZone_split);
+                    SelectZone_split.Add(nonSplit);
                 }
             }
         }
@@ -728,6 +738,7 @@ namespace main
                     string[][] 일람표정보 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "온도제어방식", "번호 = '" + ceSystemNum + "'");
                     Control = 일람표정보[0][0];
                     theta = Calc_theta_ce(ceType, SLRL, Location, Control);
+                    dtheta_ce1 = theta; 
                     CE ce = new CE(Num, ce_ZoneNum, ceSystemNum, ceType, Location, Control, theta);
                     ce_Type1.Add(ce);
                 }
@@ -750,11 +761,61 @@ namespace main
                     string[][] 일람표정보 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "온도제어방식", "번호 = '" + ceSystemNum + "'");
                     Control = 일람표정보[0][0];
                     theta = Calc_theta_ce(ceType, SLRL, Location, Control);
+                    dtheta_ce2 = theta;
                     CE ce = new CE(Num, ce_ZoneNum, ceSystemNum, ceType, Location, Control, theta);
                     ce_Type2.Add(ce);
                 }
             }
             catch { }
+
+
+            try
+            {
+                string[][] Zone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "냉난방유무 ='냉난방' OR 냉난방유무 = '난방'");
+                for (int n = 0; n < Zone.Length; n++)
+                {
+                    string[][] ce = Program.DB.querySQL(DB.type.ProjDB, "select a.용량, b.가동시간 FROM User_Ce AS a INNER JOIN Heating_ce_Form AS b ON a.명칭 = b.공급설비종류 where b.존번호 = '" + Zone[n][0] + "'");
+                    double[] 가동비율 = new double[ce.Length];
+                    double 가동비율_tot =0;
+
+                    for(int a =0; a < ce.Length; a++)
+                    {
+                        가동비율[a] = Convert.ToDouble(ce[a][0]) * Convert.ToDouble(ce[a][1]);
+                        가동비율_tot += 가동비율[a];
+                    }
+
+
+                    for (int a = 0; a < ce.Length; a++)
+                    {
+                        string[][] Qhb = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i, t_max", "번호 = '" + Zone[n][0] + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + 1 + "월'");
+                        double kkk = Convert.ToDouble(Qhb[0][0]) * 가동비율[a] / 가동비율_tot;
+
+                    }
+                }
+            }
+            catch { }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             for (int k = 0; k < ce_Type1.Count; k++)
             {
                 CE ce = (CE)ce_Type1[k];
@@ -764,7 +825,7 @@ namespace main
                     for (int mth = 1; mth < 13; mth++)
                     {
                         string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i, t_max", "번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
-                        Qh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value[0][0]) * ce.theta_ce() / (Convert.ToDouble(Value[0][1]) - theta_e[mth]), 0);
+                        Qh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value[0][0]) * ce.theta_ce() / (Convert.ToDouble(Value[0][1]) - theta_e[mth -1]), 0);
                         if (double.IsNaN(Qh_ce[mth - 1]))
                         {
                             Qh_ce[mth - 1] = 0;
@@ -790,7 +851,7 @@ namespace main
                     for (int mth = 1; mth < 13; mth++)
                     {
                         string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i", "번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
-                        Qh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value[0][0]) * ce.theta_ce() / (Convert.ToDouble(Value[0][1]) - theta_e[mth]), 0);
+                        Qh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value[0][0]) * ce.theta_ce() / (Convert.ToDouble(Value[0][1]) - theta_e[mth -1]), 0);
                         if (double.IsNaN(Wh_ce[mth - 1]))
                         {
                             Qh_ce[mth - 1] = 0;
@@ -829,7 +890,9 @@ namespace main
         }
         public void Calc_Qd()
         {
-            double R_pipe, R_se, Ramda_se, Psi_pipe, L, L1 = 0, L2 = 0;
+            
+
+            double R_pipe, R_se, Ramda_se, L1 = 0, L2 = 0;
 
             //배관 열저항
             {
@@ -985,7 +1048,7 @@ namespace main
         }
         public void Calc_Qh_s()
         {
-            double Qs_po_day = 0;
+            
             double[] thetai = new double[12];
             if (Vs > 0)
             {
@@ -1077,9 +1140,9 @@ namespace main
                     double fHN_HI = Convert.ToDouble(Value[0][0]);
                     double qP0_70 = E * Math.Pow(Power, F) / 100;
                     double tw_Pn_day = 1; //나중에 급탕과 연결 해야 함 
-                    double[] Pd_in = new double[12], Pgen_Pn = new double[12], Pgen_Pint = new double[12], Pgen_P0 = new double[12], eta_gen_Pn = new double[12], eta_gen_Pint = new double[12];
+                    double[] Pd_in = new double[12];
                     double beta_gen_pint = 0.3, qp0_theta;
-                    double[] Qh_gen_day = new double[12]; double[] Qh_gen_mth = new double[12];
+                    double[] Qh_gen_mth = new double[12];
 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -1171,65 +1234,78 @@ namespace main
         {
             for (int n = 0; n < SelectAirHP_split.Count; n++)
             {
+                
+                string[][] airHP = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "번호,연료,공급유형,난방정격용량,난방정격COP,난방정격소비전력,한랭지용량,한랭지COP,한랭지소비전력", "번호 = '" + SelectAirHP_split[n] + "'");
+                String Num =null;
+                String Carrier =null;
+                String SupplyType = null;
+                double Pi_nom =0; //정격용량
+                double COP_nom =0; //정격COP
+                double W_nom =0; //정격소비전력 
+                double Pi_15 =0; //정격용량
+                double COP_15 =0; //정격COP
+                double W_15 =0; //정격소비전력 
 
-                string[][] airHP = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "번호,연료,공급유형,정격용량,정격COP,정격소비전력,한랭지용량,한랭지COP,한랭지소비전력", "번호 = '" + SelectAirHP_split[n] + "'");
-
-                String Num = airHP[0][0];
-                String Carrier = airHP[0][1];
-                String SupplyType = airHP[0][2];
-                double Pi_nom = Convert.ToDouble(airHP[0][3]); //정격용량
-                double COP_nom = Convert.ToDouble(airHP[0][4]); //정격COP
-                double W_nom = Convert.ToDouble(airHP[0][5]); //정격소비전력 
-                double Pi_15 = Convert.ToDouble(airHP[0][6]); //정격용량
-                double COP_15 = Convert.ToDouble(airHP[0][7]); //정격COP
-                double W_15 = Convert.ToDouble(airHP[0][8]); //정격소비전력 
-
-                double Pi_2, Pi_7, COP_2, COP_7, W_2, W_7; //2도, -7도
+                double Pi_2 = 0, Pi_7=0, COP_2 = 0, COP_7 = 0, W_2=0, W_7=0; //2도, -7도
                 double[] 수방식_비율_Pi = { 0.64, 0.8, 0.95 };//-7,2,7
                 double[] 직팽인버터_비율_Pi = { 0.81, 0.96, 1 };//-7,2,7,
                 double[] 직팽없음_비율_Pi = { 0.81, 0.96, 1 };//-7,2,7,
                 double[] COP_standard = new double[4];
 
-                double themp_상수 = 10.00;
-                COP_standard[0] = ((-7 + 15 - themp_상수) * (-7 + 15 + 273.15) / 15 + SL + 7 - 15) / (SL - themp_상수) + (-7 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 + 7)) / 15; //-7일 경우,
-                COP_standard[1] = ((2 + 15 - themp_상수) * (2 + 15 + 273.15) / 15 + SL - 2 - 15) / (SL - themp_상수) + (2 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 - 2)) / 15; //2일 경우,
-                COP_standard[2] = ((7 + 15 - themp_상수) * (7 + 15 + 273.15) / 15 + SL - 7 - 15) / (SL - themp_상수) + (7 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 - 7)) / 15; //7일 경우,
-                COP_standard[3] = ((-15 + 15 - themp_상수) * (-15 + 15 + 273.15) / 15 + SL - (-15) - 15) / (SL - themp_상수) + (-15 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 - (-15))) / 15; //-15일 경우,
-
-                if (Pi_15 > 0)
+                try
                 {
-                    Pi_2 = (Pi_nom - Pi_15) / 22 * 2 - (Pi_nom - Pi_15) / 22 * 7 + Pi_nom;
-                    Pi_7 = (Pi_nom - Pi_15) / 22 * (-7) - (Pi_nom - Pi_15) / 22 * 7 + Pi_nom;
+                    Num = airHP[0][0];
+                    Carrier = airHP[0][1];
+                    SupplyType = airHP[0][2];
+                    Pi_nom = Convert.ToDouble(airHP[0][3]); //정격용량
+                    COP_nom = Convert.ToDouble(airHP[0][4]); //정격COP
+                    W_nom = Convert.ToDouble(airHP[0][5]); //정격소비전력 
+                    Pi_15 = Convert.ToDouble(airHP[0][6]); //정격용량
+                    COP_15 = Convert.ToDouble(airHP[0][7]); //정격COP
+                    W_15 = Convert.ToDouble(airHP[0][8]); //정격소비전력 
 
-                    W_2 = (W_nom - W_15) / 22 * 2 - (W_nom - W_15) / 22 * 7 + W_nom;
-                    W_7 = (W_nom - W_15) / 22 * (-7) - (W_nom - W_15) / 22 * 7 + W_nom;
+                    double themp_상수 = 10.00;
+                    COP_standard[0] = ((-7 + 15 - themp_상수) * (-7 + 15 + 273.15) / 15 + SL + 7 - 15) / (SL - themp_상수) + (-7 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 + 7)) / 15; //-7일 경우,
+                    COP_standard[1] = ((2 + 15 - themp_상수) * (2 + 15 + 273.15) / 15 + SL - 2 - 15) / (SL - themp_상수) + (2 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 - 2)) / 15; //2일 경우,
+                    COP_standard[2] = ((7 + 15 - themp_상수) * (7 + 15 + 273.15) / 15 + SL - 7 - 15) / (SL - themp_상수) + (7 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 - 7)) / 15; //7일 경우,
+                    COP_standard[3] = ((-15 + 15 - themp_상수) * (-15 + 15 + 273.15) / 15 + SL - (-15) - 15) / (SL - themp_상수) + (-15 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 - (-15))) / 15; //-15일 경우,
 
-                    COP_2 = Pi_2 / W_2;
-                    COP_7 = Pi_7 / W_7;
-                }
-                else
-                {
-                    COP_7 = COP_nom * COP_standard[0] / COP_standard[2];
-                    COP_2 = COP_nom * COP_standard[1] / COP_standard[2];
-
-                    if (SupplyType == "수방식")
+                    if (Pi_15 > 0)
                     {
-                        Pi_2 = Pi_nom * 수방식_비율_Pi[1] / 수방식_비율_Pi[2];
-                        Pi_7 = Pi_nom * 수방식_비율_Pi[0] / 수방식_비율_Pi[2];
-                    }
-                    else if (AirHPControl_split[0] == "인버터제어")
-                    {
-                        Pi_2 = Pi_nom * 직팽인버터_비율_Pi[1] / 직팽인버터_비율_Pi[2];
-                        Pi_7 = Pi_nom * 직팽인버터_비율_Pi[0] / 직팽인버터_비율_Pi[2];
+                        Pi_2 = (Pi_nom - Pi_15) / 22 * 2 - (Pi_nom - Pi_15) / 22 * 7 + Pi_nom;
+                        Pi_7 = (Pi_nom - Pi_15) / 22 * (-7) - (Pi_nom - Pi_15) / 22 * 7 + Pi_nom;
+
+                        W_2 = (W_nom - W_15) / 22 * 2 - (W_nom - W_15) / 22 * 7 + W_nom;
+                        W_7 = (W_nom - W_15) / 22 * (-7) - (W_nom - W_15) / 22 * 7 + W_nom;
+
+                        COP_2 = Pi_2 / W_2;
+                        COP_7 = Pi_7 / W_7;
                     }
                     else
                     {
-                        Pi_2 = Pi_nom * 직팽없음_비율_Pi[1] / 직팽없음_비율_Pi[2];
-                        Pi_7 = Pi_nom * 직팽없음_비율_Pi[0] / 직팽없음_비율_Pi[2];
+                        COP_7 = COP_nom * COP_standard[0] / COP_standard[2];
+                        COP_2 = COP_nom * COP_standard[1] / COP_standard[2];
+
+                        if (SupplyType == "수방식")
+                        {
+                            Pi_2 = Pi_nom * 수방식_비율_Pi[1] / 수방식_비율_Pi[2];
+                            Pi_7 = Pi_nom * 수방식_비율_Pi[0] / 수방식_비율_Pi[2];
+                        }
+                        else if (AirHPControl_split[0] == "인버터제어")
+                        {
+                            Pi_2 = Pi_nom * 직팽인버터_비율_Pi[1] / 직팽인버터_비율_Pi[2];
+                            Pi_7 = Pi_nom * 직팽인버터_비율_Pi[0] / 직팽인버터_비율_Pi[2];
+                        }
+                        else
+                        {
+                            Pi_2 = Pi_nom * 직팽없음_비율_Pi[1] / 직팽없음_비율_Pi[2];
+                            Pi_7 = Pi_nom * 직팽없음_비율_Pi[0] / 직팽없음_비율_Pi[2];
+                        }
+                        W_7 = Pi_7 / COP_7;
+                        W_2 = Pi_2 / COP_2;
                     }
-                    W_7 = Pi_7 / COP_7;
-                    W_2 = Pi_2 / COP_2;
                 }
+                catch { }
 
 
 
@@ -1484,7 +1560,41 @@ namespace main
 
         }
 
+        public void nan()
+        {
+            for(int mth =0; mth < 12; mth++)
+            {
+                if (double.IsNaN(Qh_ce[mth])) { Qh_ce[mth] = 0; }
+                if (double.IsNaN(Qh_d[mth]) ) { Qh_d[mth] = 0; }
+                if (double.IsNaN(Qh_s[mth])) { Qh_s[mth] = 0; }
+                if (double.IsNaN(Qh_gen[mth])) { Qh_gen[mth] = 0; }
+                if (double.IsNaN(Qh_f[mth]) ) { Qh_f[mth] = 0; }
 
+                if (double.IsNaN(Wh_ce[mth])) { Wh_ce[mth] = 0; }
+                if (double.IsNaN(Wh_d[mth])) { Wh_d[mth] = 0; }
+                if (double.IsNaN(Wh_s[mth])) { Wh_s[mth] = 0; }
+                if (double.IsNaN(Wh_g[mth])) { Wh_g[mth] = 0; }
+
+                if (double.IsNaN(Qh_gen_day[mth])){ Qh_gen_day[mth] = 0; }
+                if (double.IsNaN(Pgen_Pn[mth])){ Pgen_Pn[mth] = 0; }
+                if (double.IsNaN(Pgen_Pint[mth])) { Pgen_Pint[mth]=0; }
+                if (double.IsNaN(Pgen_P0[mth])) { Pgen_P0[mth] = 0; }
+                if (double.IsNaN(eta_gen_Pn[mth])) { eta_gen_Pn[mth]=0; }
+                if (double.IsNaN(eta_gen_Pint[mth])) { eta_gen_Pint[mth] = 0; }
+
+                if (Qh_ce[mth] < 0) { Qh_ce[mth] = 0; }
+                if (Qh_d[mth] < 0) { Qh_d[mth] = 0; }
+                if (Qh_s[mth] < 0) { Qh_s[mth] = 0; }
+                if (Qh_gen[mth] < 0) { Qh_gen[mth] = 0; }
+                if (Qh_f[mth] < 0) { Qh_f[mth] = 0; }
+
+                if (Wh_ce[mth] < 0) { Wh_ce[mth] = 0; }
+                if (Wh_d[mth] < 0) { Wh_d[mth] = 0; }
+                if (Wh_s[mth] < 0) { Wh_s[mth] = 0; }
+                if (Wh_g[mth] < 0) { Wh_g[mth] = 0; }
+            }
+          
+        }
     }
 
     public class CE

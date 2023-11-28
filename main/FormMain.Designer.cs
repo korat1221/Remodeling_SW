@@ -127,6 +127,7 @@
             EnergyNeed_Sim.Name = "EnergyNeed_Sim";
             EnergyNeed_Sim.Size = new Size(39, 39);
             EnergyNeed_Sim.Text = "toolStripButton2";
+            EnergyNeed_Sim.Click += EnergyNeed_Sim_Click;
             // 
             // FinalEnergy_Sim
             // 
@@ -136,6 +137,7 @@
             FinalEnergy_Sim.Name = "FinalEnergy_Sim";
             FinalEnergy_Sim.Size = new Size(39, 39);
             FinalEnergy_Sim.Text = "toolStripButton5";
+            FinalEnergy_Sim.Click += FinalEnergy_Sim_Click;
             // 
             // Report_Rule
             // 

@@ -41,7 +41,7 @@
             webView21.Dock = DockStyle.Fill;
             webView21.Location = new Point(0, 0);
             webView21.Name = "webView21";
-            webView21.Size = new Size(1097, 1220);
+            webView21.Size = new Size(1097, 1100);
             webView21.Source = new Uri("http://localhost:3000/report.html", UriKind.Absolute);
             webView21.TabIndex = 1;
             webView21.ZoomFactor = 1D;
@@ -50,7 +50,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1097, 1220);
+            ClientSize = new Size(1097, 1100);
             Controls.Add(webView21);
             FormBorderStyle = FormBorderStyle.None;
             Name = "PrintReport";

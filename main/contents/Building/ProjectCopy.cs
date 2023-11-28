@@ -76,7 +76,7 @@ namespace main.contents
             {
                 model_copy = true;
                 tables.Add("Shade_3D");
-                tables.Add("Zonegeneral_3D");
+                tables.Add("ZoneGeneral_3D");
                 tables.Add("ZoneEnvelope_3D");
                 tables.Add("ThermalBridge_3D");
             }
