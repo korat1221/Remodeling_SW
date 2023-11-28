@@ -774,7 +774,7 @@ namespace main
                 string[][] Zone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "냉난방유무 ='냉난방' OR 냉난방유무 = '난방'");
                 for (int n = 0; n < Zone.Length; n++)
                 {
-                    string[][] ce = Program.DB.querySQL(DB.type.ProjDB, "select a.용량, b.가동시간 FROM User_Ce AS a INNER JOIN Heating_ce_Form AS b ON a.명칭 = b.공급설비종류 where b.존번호 = '" + Zone[n][0] + "'");
+                    string[][] ce = Program.DB.querySQL(DB.type.ProjDB, "select a.용량, b.가동시간, a.명칭 FROM User_Ce AS a INNER JOIN Heating_ce_Form AS b ON a.명칭 = b.공급설비종류 where b.존번호 = '" + Zone[n][0] + "'");
                     double[] 가동비율 = new double[ce.Length];
                     double 가동비율_tot =0;
 
@@ -787,8 +787,15 @@ namespace main
 
                     for (int a = 0; a < ce.Length; a++)
                     {
-                        string[][] Qhb = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i, t_max", "번호 = '" + Zone[n][0] + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + 1 + "월'");
-                        double kkk = Convert.ToDouble(Qhb[0][0]) * 가동비율[a] / 가동비율_tot;
+                        for(int mth =1; mth<13; mth++)
+                        {
+                            string[][] Qhb = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i, t_max", "번호 = '" + Zone[n][0] + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
+                            double Qhb_mth = Convert.ToDouble(Qhb[0][0]) * 가동비율[a] / 가동비율_tot;
+
+                            Program.DB.querySQL(DB.type.ProjDB, "UPDATE Heating_ce_Form SET "+"요구량"+ mth.ToString()+"월 = '" + Qhb_mth.ToString() + "' where 존번호 = '" + Zone[n][0] + "' AND 공급설비종류 ='" + ce[a][2] + "'");
+
+
+                        }
 
                     }
                 }
