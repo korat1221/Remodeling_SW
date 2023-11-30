@@ -26,6 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="contentslist\List_DHWSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="contentslist\List_RESystem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -38,6 +41,24 @@
     <Compile Update="contents\Building\Intro.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="contents\Result\PrintReport_Cooling.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Result\PrintReport_DHWSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Result\PrintReport_AHUSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Result\PrintReport_Lighting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Result\PrintReport_HCneed.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\System\DHWSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\GWHP_DB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -45,6 +66,21 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\EquipmentList\PumpCal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\DHWSystem\DHWDH_DB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\DHWSystem\DHW_Boiler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\DHWSystem\DHW_Pump.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\DHWSystem\DHW_Solar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\DHWSystem\DHW_Zone.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\HeatingSystem\DH_DB.cs">

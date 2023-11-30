@@ -55,13 +55,19 @@ namespace main
             List_ConstructionWall,
             List_ConstructionRoof,
             List_ConstructionFloor,
-            PrintReport,
+            PrintReport_HCneed,
             List_CoolingSystem,
             List_HeatingSystem,
             Intro,
             ProjectList,
             OpenProject,
             List_RESystem,
+            PrintReport_Lighting,
+            PrintReport_Heating,
+            PrintReport_Cooling,
+            PrintReport_DHSystem,
+            PrintReport_AHUSystem,
+            List_DHWSystem,
             None
 
         }
@@ -75,8 +81,10 @@ namespace main
             new FormDebug(),
             new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow(),
             new List_Floor(), new List_Zone(),
-            new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor(), new PrintReport(),new List_CoolingSystem(), new List_HeatingSystem(),
-            new Intro(), new ProjectList(), new OpenProject(), new List_RESystem()}; //나중에 PV를 냉방리스트로 바꿔야함 
+            new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor(), new PrintReport_HCneed(),new List_CoolingSystem(), new List_HeatingSystem(),
+            new Intro(), new ProjectList(), new OpenProject(), new List_RESystem(),
+            new PrintReport_Lighting(),new PrintReport_Heating(),new PrintReport_Cooling(),new PrintReport_DHWSystem(),new PrintReport_AHUSystem(),
+            new List_DHWSystem()}; //나중에 PV를 냉방리스트로 바꿔야함 
         bool scriptable = false;
         public class FormParam
         {
@@ -139,6 +147,12 @@ namespace main
 
                 f.LoadData(formParam.ID);
             }
+            if (formParam.formID == 1)
+            {
+                EnergyUse f = (EnergyUse)form;
+
+                f.LoadData(formParam.ID);
+            }
             if (formParam.formID == 2)
             {
                 ConstructionCW f = (ConstructionCW)form;
@@ -174,7 +188,13 @@ namespace main
                 Model f = (Model)form;
 
                 f.DoLoadForm(Int32.Parse(formParam.ID));
-            }            
+            }
+            else if (formParam.formID == 18)
+            {
+                DHWSystem f = (DHWSystem)form;
+
+                f.LoadData(formParam.ID);
+            }
             else if (formParam.formID == 19)
             {
                 HeatingSystem f = (HeatingSystem)form;
@@ -237,7 +257,7 @@ namespace main
             }
             else if (formParam.formID == 37)
             {
-                PrintReport f = (PrintReport)form;
+                PrintReport_HCneed f = (PrintReport_HCneed)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -274,6 +294,42 @@ namespace main
             else if (formParam.formID == 43)
             {
                 List_RESystem f = (List_RESystem)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 44)
+            {
+                PrintReport_Lighting f = (PrintReport_Lighting)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 45)
+            {
+                PrintReport_Heating f = (PrintReport_Heating)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 46)
+            {
+                PrintReport_Cooling f = (PrintReport_Cooling)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 47)
+            {
+                PrintReport_DHWSystem f = (PrintReport_DHWSystem)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 48)
+            {
+                PrintReport_AHUSystem f = (PrintReport_AHUSystem)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 49)
+            {
+                List_DHWSystem f = (List_DHWSystem)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -445,6 +501,12 @@ namespace main
 
                     f.LoadData("");
                 }
+                else if (i == 37)
+                {
+                    PrintReport_HCneed f = (PrintReport_HCneed)forms[i];
+
+                    f.LoadData("");
+                }
                 else if (i == 38)
                 {
                     List_CoolingSystem f = (List_CoolingSystem)forms[i];
@@ -460,6 +522,12 @@ namespace main
                 else if (i == 43)
                 {
                     List_RESystem f = (List_RESystem)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 49)
+                {
+                    List_DHWSystem f = (List_DHWSystem)forms[i];
 
                     f.LoadData("");
                 }
@@ -591,6 +659,20 @@ namespace main
                     {
                         openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
                         forms[idx] = new Model();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+            else if (idx == 18)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new DHWSystem();
                         forms[idx].TopLevel = false;
                         openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
                         return;

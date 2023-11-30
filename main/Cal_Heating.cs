@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Security.Policy;
 
 namespace main
 {
@@ -67,29 +68,31 @@ namespace main
             try
             {
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "명칭,존", "번호 = '" + HeatingNum + "'");
-
                 HeatingName = Value[0][0];
                 SelectZone_nonsplit = Value[0][1];
                 Split_Zone(SelectZone_nonsplit);
-                Qhb_mth = new double[SelectZone_split.Count, 12];
-                theta_ih = new double[SelectZone_split.Count, 12];
-                th = new double[SelectZone_split.Count, 12];
-                Qh_max = new double[SelectZone_split.Count];
-                Qh_a = new double[SelectZone_split.Count];
-                dop_mth = new double[SelectZone_split.Count, 12];
-                th_op_day = new double[SelectZone_split.Count];
-                theta_i_h_set = new double[SelectZone_split.Count];
 
-                for (int n = 0; n < SelectZone_split.Count; n++)
+
+                string[][] Value_ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "공급설비,존번호", "난방시스템 = '" + HeatingNum + "'");
+                Qhb_mth = new double[Value_ce.Length, 12];
+                theta_ih = new double[Value_ce.Length, 12];
+                th = new double[Value_ce.Length, 12];
+                Qh_max = new double[Value.Length];
+                Qh_a = new double[Value_ce.Length];
+                dop_mth = new double[Value_ce.Length, 12];
+                th_op_day = new double[Value_ce.Length];
+                theta_i_h_set = new double[Value_ce.Length];
+
+                for (int n = 0; n < Value_ce.Length; n++)
                 {
-                    Zone zone = Program.CALC.getZone(SelectZone_split[n].ToString());
+                    Zone zone = Program.CALC.getZone(Value_ce[n][1].ToString());
                     if (zone != null)
                     {
                         for (int mth = 0; mth < 12; mth++)
                         {
-                            Qhb_mth[n, mth] = zone.Qhb_mth[mth];
+                            string[][] Qhb_ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "요구량"+(mth+1).ToString()+"월", "공급설비 = '" + Value_ce[n][0] + "'");
+                            Qhb_mth[n, mth] = Convert.ToDouble(Qhb_ce[0][0]);
                             theta_ih[n, mth] = zone.theta_i[1, 0, mth]; //이용일 난방
-                            Qh_max[n] = zone.Q_max[0]; //난방부하
                             th[n, mth] = zone.t_max[0, mth]; // 난방 시간 
                             Qh_a[n] = zone.Qb_a[0]; //연간 난방요구량
                             dop_mth[n, mth] = zone.dwd_mth[mth];
@@ -99,9 +102,15 @@ namespace main
                     }
                     ZoneCount = ZoneCount + 1;
                 }
+                for(int k  = 0; k < Value.Length; k++)
+                {
+                    Zone zone = Program.CALC.getZone(Value[k][1].ToString());
+                    Qh_max[k] = zone.Q_max[0];//최대부하 
+                    Qh_max_sum += Qh_max[k];
+                }
                 for (int n = 0; n < ZoneCount; n++)
                 {
-                    Qh_max_sum += Qh_max[n];
+                   
                     Qh_a_sum += Qh_a[n];
 
                     //요구량 가중
@@ -730,7 +739,7 @@ namespace main
                 {
                     String Num, ce_ZoneNum, ceSystemNum, ceType, Location, Control;
                     double theta;
-                    Num = Value[n][0] + "_" + Value[n][1];
+                    Num = Value[n][1];
                     ce_ZoneNum = Value[n][0];
                     ceSystemNum = Value[n][1].Substring(0, Value[n][1].IndexOf("_"));
                     ceType = ce1Type;
@@ -753,7 +762,7 @@ namespace main
                 {
                     String Num, ce_ZoneNum, ceSystemNum, ceType, Location, Control;
                     double theta;
-                    Num = Value[n][0] + "_" + Value[n][1];
+                    Num = Value[n][1];
                     ce_ZoneNum = Value[n][0];
                     ceSystemNum = Value[n][1].Substring(0, Value[n][1].IndexOf("_"));
                     ceType = ce2Type;
@@ -769,60 +778,6 @@ namespace main
             catch { }
 
 
-            try
-            {
-                string[][] Zone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "냉난방유무 ='냉난방' OR 냉난방유무 = '난방'");
-                for (int n = 0; n < Zone.Length; n++)
-                {
-                    string[][] ce = Program.DB.querySQL(DB.type.ProjDB, "select a.용량, b.가동시간, a.명칭 FROM User_Ce AS a INNER JOIN Heating_ce_Form AS b ON a.명칭 = b.공급설비종류 where b.존번호 = '" + Zone[n][0] + "'");
-                    double[] 가동비율 = new double[ce.Length];
-                    double 가동비율_tot =0;
-
-                    for(int a =0; a < ce.Length; a++)
-                    {
-                        가동비율[a] = Convert.ToDouble(ce[a][0]) * Convert.ToDouble(ce[a][1]);
-                        가동비율_tot += 가동비율[a];
-                    }
-
-
-                    for (int a = 0; a < ce.Length; a++)
-                    {
-                        for(int mth =1; mth<13; mth++)
-                        {
-                            string[][] Qhb = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i, t_max", "번호 = '" + Zone[n][0] + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
-                            double Qhb_mth = Convert.ToDouble(Qhb[0][0]) * 가동비율[a] / 가동비율_tot;
-
-                            Program.DB.querySQL(DB.type.ProjDB, "UPDATE Heating_ce_Form SET "+"요구량"+ mth.ToString()+"월 = '" + Qhb_mth.ToString() + "' where 존번호 = '" + Zone[n][0] + "' AND 공급설비종류 ='" + ce[a][2] + "'");
-
-
-                        }
-
-                    }
-                }
-            }
-            catch { }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             for (int k = 0; k < ce_Type1.Count; k++)
             {
                 CE ce = (CE)ce_Type1[k];
@@ -831,8 +786,9 @@ namespace main
                 {
                     for (int mth = 1; mth < 13; mth++)
                     {
-                        string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i, t_max", "번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
-                        Qh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value[0][0]) * ce.theta_ce() / (Convert.ToDouble(Value[0][1]) - theta_e[mth -1]), 0);
+                        string[][] ceValue = Program.DB.querySQL(DB.type.ProjDB, "select a.요구량"+mth+"월, b.theta_i FROM Heating_ce_Form AS a INNER JOIN Zone_HCneed_Result AS b ON a.존번호 = b.번호 where a.공급설비 = '" + ce.Num() + "' and 번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
+                         //string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i, t_max", "번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
+                        Qh_ce[mth - 1] += Math.Max(Convert.ToDouble(ceValue[0][0]) * ce.theta_ce() / (Convert.ToDouble(ceValue[0][1]) - theta_e[mth -1]), 0);
                         if (double.IsNaN(Qh_ce[mth - 1]))
                         {
                             Qh_ce[mth - 1] = 0;
@@ -857,8 +813,9 @@ namespace main
                 {
                     for (int mth = 1; mth < 13; mth++)
                     {
-                        string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i", "번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
-                        Qh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value[0][0]) * ce.theta_ce() / (Convert.ToDouble(Value[0][1]) - theta_e[mth -1]), 0);
+                        string[][] ceValue = Program.DB.querySQL(DB.type.ProjDB, "select a.요구량" + mth + "월, b.theta_i FROM Heating_ce_Form AS a INNER JOIN Zone_HCneed_Result AS b ON a.존번호 = b.번호 where a.공급설비 = '" + ce.Num() + "' and 번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
+                        // string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i", "번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
+                        Qh_ce[mth - 1] += Math.Max(Convert.ToDouble(ceValue[0][0]) * ce.theta_ce() / (Convert.ToDouble(ceValue[0][1]) - theta_e[mth -1]), 0);
                         if (double.IsNaN(Wh_ce[mth - 1]))
                         {
                             Qh_ce[mth - 1] = 0;

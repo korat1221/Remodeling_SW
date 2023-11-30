@@ -2234,7 +2234,7 @@ namespace main.contents
         {
             try
             {
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,공급설비종류,공급설비", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + CE + "'");
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,공급설비종류,공급설비,가동시간", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + CE + "'");
 
                 int Sum = 1;
                 for (int n = 0; n < Value.Length; n++)
@@ -2257,15 +2257,21 @@ namespace main.contents
                         설치위치comboBox.Items.Add("천장");
                         ce_dataGridView.Rows[nRow].Cells[7] = 설치위치comboBox;
                     }
-
+                    String[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "냉난방시간", "존번호='" + Value[n][0] +"'");
                     DataGridViewComboBoxCell 가동시간comboBox = new DataGridViewComboBoxCell();
-                    for(int h =0; h<25; h++)
+                   
+                    for(int h =0; h < Convert.ToInt16(Value2[0][0])+1; h++)
                     {
-                        가동시간comboBox.Items.Add(h + "h");
+                        가동시간comboBox.Items.Add(h.ToString());
                     }
+                        
                     ce_dataGridView.Rows[nRow].Cells[8] = 가동시간comboBox;
-
-
+                    if (Value[n][3] == null || Value[n][3] == "")
+                    { ce_dataGridView.Rows[nRow].Cells[8].Value = Value2[0][0]; }
+                    else
+                    {
+                        ce_dataGridView.Rows[nRow].Cells[8].Value = Value[n][3];
+                    }
 
                     ce_dataGridView.Rows[nRow].Cells[2].Value = Value[n][1];//종류
                     int index = Value[n][2].IndexOf("_");
@@ -2726,8 +2732,9 @@ namespace main.contents
                             존번호 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(0, index - 1);
                             공급설비 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(index, ce_dataGridView.Rows[n].Cells[1].Value.ToString().Length - index);
 
-                            string[][] CE_Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "설치위치", "난방시스템 = '" + ID + "' And 존번호 = '" + 존번호 + "' And 공급설비 = '" + 공급설비 + "'");
+                            string[][] CE_Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "설치위치,가동시간", "난방시스템 = '" + ID + "' And 존번호 = '" + 존번호 + "' And 공급설비 = '" + 공급설비 + "'");
                             ce_dataGridView.Rows[n].Cells[7].Value = CE_Value[0][0].ToString();
+                            ce_dataGridView.Rows[n].Cells[8].Value = CE_Value[0][1].ToString();
                         }
                     }
                     catch { }
@@ -2747,8 +2754,9 @@ namespace main.contents
                             존번호 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(0, index - 1);
                             공급설비 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(index, ce_dataGridView.Rows[n].Cells[1].Value.ToString().Length - index);
 
-                            string[][] CE_Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "설치위치", "난방시스템 = '" + ID + "' And 존번호 = '" + 존번호 + "' And 공급설비 = '" + 공급설비 + "'");
+                            string[][] CE_Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "설치위치,가동시간", "난방시스템 = '" + ID + "' And 존번호 = '" + 존번호 + "' And 공급설비 = '" + 공급설비 + "'");
                             ce_dataGridView.Rows[n].Cells[7].Value = CE_Value[0][0].ToString();
+                            ce_dataGridView.Rows[n].Cells[8].Value = CE_Value[0][1].ToString();
                         }
                     }
                     catch { }

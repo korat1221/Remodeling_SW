@@ -14,10 +14,10 @@ using System.Windows.Forms;
 
 namespace main.contents.Result
 {
-    public partial class PrintReport : Form
+    public partial class PrintReport_Lighting : Form
     {
         bool scriptable = false;
-        public PrintReport()
+        public PrintReport_Lighting()
         {
             InitializeComponent();
 
@@ -51,6 +51,7 @@ namespace main.contents.Result
                 webView21.CoreWebView2.ExecuteScriptAsync(script);
             }
         }
+      
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {

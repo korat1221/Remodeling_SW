@@ -2188,8 +2188,6 @@ namespace main
                 }
             }
 
-
-
             for (int hc = 0; hc < 2; hc++)
             {
                 for (int wewd = 0; wewd < 2; wewd++)
@@ -2202,6 +2200,30 @@ namespace main
                         HV_u = 0.6 * (zoneArea * zoneHeight) * 0.34;
                         Theta_U[hc, wewd, mth] = (Qsource_h[hc, wewd, mth] + HT_Di_tot * theta_e[mth] + HT_Indi_tot * Theta_Indi[hc, mth] + H_Theta_F[hc, mth] + H_Theta_G[hc, mth] + HT_z[hc] * Theta_set[hc] + HV_u * theta_e[mth]) / (HT_Di_tot + HT_Indi_tot + Zone_HT_Floor + Zone_HT_GWall + HT_z[hc] + HV_u);
                     }
+                }
+            }
+            for (int wewd = 0; wewd < 2; wewd++)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    if (zoneHC =="냉난방")
+                    {
+                         for (int hc = 0; hc < 2; hc++)
+                         {
+                            Theta_U[hc, wewd, mth] = theta_i[hc, wewd, mth];
+                         }
+                    }
+                    else if (zoneHC == "난방")
+                    {
+                            Theta_U[0, wewd, mth] = theta_i[0, wewd, mth];
+                      
+                    }
+                    else if (zoneHC == "냉방")
+                    {
+                        Theta_U[1, wewd, mth] = theta_i[1, wewd, mth];
+
+                    }
+                    else { }
                 }
             }
         }
@@ -2360,6 +2382,29 @@ namespace main
 
                 Qb_a[0] = Qhb_a;
                 Qb_a[1] = Qcb_a;
+
+                if(zoneHC =="비냉난방" )
+                {
+                    Qb_mth[0, 0, mth] = 0;
+                    Qb_mth[0, 1, mth] = 0;
+                    Qb_mth[1, 0, mth] = 0;
+                    Qb_mth[1, 1, mth] = 0;
+                    Qb_a[0] = 0;
+                    Qb_a[1] = 0;
+                }
+                else if ( zoneHC == "냉방")
+                {
+                    Qb_mth[0, 0, mth] = 0;
+                    Qb_mth[0, 1, mth] = 0;
+                    Qb_a[0] = 0;
+                }
+                else if (zoneHC == "난방")
+                {
+                    Qb_mth[1, 0, mth] = 0;
+                    Qb_mth[1, 1, mth] = 0;
+                    Qb_a[1] = 0;
+                }
+                else { }
             }
         }
 
@@ -2413,6 +2458,35 @@ namespace main
                 t_max[0,mth] = th_mth[0, mth] + th_mth[1, mth];
                 t_max[1, mth] = tc_mth[0, mth] + tc_mth[1, mth];
             }
+
+            if (zoneHC == "비냉난방")
+            {
+                Q_max[0] = 0;
+                Q_max[1] = 0;
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    t_max[0, mth] = 0;
+                    t_max[1, mth] = 0;
+                }
+            }
+            else if (zoneHC == "냉방")
+            {
+                Q_max[0] = 0;
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    t_max[0, mth] = 0;
+                }
+            }
+            else if (zoneHC == "난방")
+            {
+                Q_max[1] = 0;
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    t_max[1, mth] = 0;
+                }
+            }
+            else { }
+
         }
         
     }
