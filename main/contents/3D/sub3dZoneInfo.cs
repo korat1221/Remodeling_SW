@@ -495,7 +495,8 @@ namespace main.contents
                         if (Value.Length > 0)
                         {
                             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-                            Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,프로젝트유형,구조체,구조체번호", "'" + id + "','" + num + "','" + 프로젝트유형[0][0] + "','" + ConsType + "','" + Value[0][0] + "'", "아이디"); }
+                            Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,프로젝트유형,구조체,구조체번호", "'" + id + "','" + num + "','" + 프로젝트유형[0][0] + "','" + ConsType + "','" + Value[0][0] + "'", "아이디");
+                        }
                         else { }
                     }
                     if (dataGridView1.Rows[i].Cells[11].Value == null)
@@ -690,6 +691,15 @@ namespace main.contents
                         comboBox3.Show();
                     }
                 }
+                else if (e.ColumnIndex == 8)
+                {
+                    if (!button2.Visible)
+                    {
+                        button2.Location = new Point(cellX, cellY - 1);
+                        button2.Size = new Size(e.CellBounds.Width + 10, e.CellBounds.Height);
+                        button2.Show();
+                    }
+                }
                 else if (e.ColumnIndex == 10)
                 {
                     if (!button1.Visible)
@@ -708,6 +718,7 @@ namespace main.contents
             comboBox2.Hide();
             comboBox3.Hide();
             button1.Hide();
+            button2.Hide();
         }
 
         private void comboBox_DropDownClosed(object sender, EventArgs e)
@@ -725,6 +736,22 @@ namespace main.contents
             modal.StartPosition = FormStartPosition.CenterParent;
 
             modal.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Cardinal modal = new Cardinal();
+
+            modal.StartPosition = FormStartPosition.CenterParent;
+
+            DialogResult res = modal.ShowDialog();
+
+            if (res.Equals(DialogResult.OK))
+            {
+                redrawList();
+
+                Program.UTIL.modelScript("setRotation(" + modal.rotation + ")");
+            }
         }
     }
 }

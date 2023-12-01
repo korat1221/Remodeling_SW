@@ -296,6 +296,7 @@ window.addEventListener("message", async (event) => {
     if (o.wall) {
         if (!gObjInfo) gObjInfo = {};
      //   gObjInfo.room = o.room;
+        gObjInfo.rotation = o.rotation;
         gObjInfo.wall = o.wall;
         gObjInfo.snum = o.snum;
         gObjInfo.spaces = o.spaces;

@@ -429,7 +429,12 @@ Zoning.prototype = {
 					}
 					else
 					{
-						dfs(current, [...stack,Number(node)],[...visited]);
+						if (loops.length < 30000) {
+							dfs(current, [...stack,Number(node)],[...visited]);
+						}
+						else {
+							this.editor.perfect = false;
+						}
 					}
 				}
 			};	

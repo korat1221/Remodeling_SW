@@ -237,6 +237,10 @@ Utility.prototype = {
 			}
 		}
 	},
+
+	asDirection: function(x, y, z) {
+		return (Math.atan2(z, x) * 180 / Math.PI) + 180;
+	}
 };
 
 export { Utility };

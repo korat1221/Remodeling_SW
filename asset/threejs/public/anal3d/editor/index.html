@@ -805,7 +805,11 @@
 					}
 				}
 			}
-			
+			function setRotation(rotation) {
+				objInfo.rotation = rotation;
+				editor.loadInfo(objInfo);
+				window.chrome.webview.postMessage("@@@" + JSON.stringify(objInfo));	   
+			}			
 		</script>
 		
 	</body>
