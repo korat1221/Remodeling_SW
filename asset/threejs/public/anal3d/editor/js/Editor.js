@@ -2082,7 +2082,7 @@ Editor.prototype = {
 				let el = space[i];
 
 				if (el.cardi == 'DOWN') {
-					let h = Math.floor(this.wall[el.cardi][el.id].bbox[0][1]);
+					let h = Math.round(this.wall[el.cardi][el.id].bbox[0][1]);
 
 					if (!floors0[h]) floors0[h] = {count:1,walls:[el]};
 					else {
