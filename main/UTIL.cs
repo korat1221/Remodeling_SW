@@ -281,6 +281,18 @@ namespace main
                 }
             }
         }
+        public void modelScript(string scr)
+        {
+            foreach (Form openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "Model")
+                {
+                    Model f = (Model)openForm;
+                    f.runScript(scr);
+                    return;
+                }
+            }
+        }
         public void sendMessage(string msg)
         {
             foreach (Form openForm in Application.OpenForms)

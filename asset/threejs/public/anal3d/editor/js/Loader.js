@@ -512,6 +512,8 @@ function Loader( editor ) {
 					object.name = filename;
 					editor.clear();
 
+					editor.rotation = 0;
+
 					let zoning = new Zoning( editor );
 					let windowing = new Windowing( editor );
 					let spacing = new Spacing( editor );

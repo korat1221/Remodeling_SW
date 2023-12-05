@@ -179,6 +179,7 @@ function Editor() {
 	this.drawing_wall = {};
 
 	this.bridges = {};
+	this.rotation = 0;
 
 	this.drawing_mesh = {};
 	this.drawing_line = [];
@@ -187,6 +188,8 @@ function Editor() {
 	this.raycaster = new THREE.Raycaster();
 	this.mouse = new THREE.Vector2();
 	this.intersects = [];
+
+	this.perfect = true;
 
 	this.textureLoader = new THREE.TextureLoader();
 	this.textureMaterial = new THREE.MeshBasicMaterial({
@@ -1825,7 +1828,7 @@ Editor.prototype = {
 				sql += "INSERT INTO ThermalBridge_3D (ID,열교항목,열교길이) VALUES (" + el + ",'" + _bridges[el] + "','" + this.bridges[el].dist + "');";
 			});
 
-			window.chrome.webview.postMessage(sql + "@@@" + JSON.stringify({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"tree":tree,"tree2":tree}));	   
+			window.chrome.webview.postMessage(sql + "@@@" + JSON.stringify({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"rotation":this.rotation,"tree":tree,"tree2":tree,"perfect":this.perfect}));	   
 //			parent.postMessage({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"tree":this.getTreeInfo(1),"tree2":this.getTreeInfo(0)},'*');
 		}
 	},
@@ -2079,7 +2082,7 @@ Editor.prototype = {
 				let el = space[i];
 
 				if (el.cardi == 'DOWN') {
-					let h = Math.floor(this.wall[el.cardi][el.id].bbox[0][1]);
+					let h = Math.round(this.wall[el.cardi][el.id].bbox[0][1]);
 
 					if (!floors0[h]) floors0[h] = {count:1,walls:[el]};
 					else {
@@ -2457,6 +2460,7 @@ Editor.prototype = {
 				const geometry = new THREE.BufferGeometry();
 				geometry.setFromPoints(this.points);
 				let mesh = new THREE.Mesh( geometry, material );
+				mesh.rotation.y = (this.rotation * Math.PI / 180);
 				this.addObject( mesh );
 				this.drawing_wall[sid] = material.id;
 				this.drawing_mesh[sid] = mesh;
@@ -2623,7 +2627,7 @@ Editor.prototype = {
 	},
 
 	saveInfo: function () {
-		return {"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum};
+		return {"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"rotation":this.rotation};
 	},
 
 	loadInfo: function (o) {
@@ -2635,6 +2639,7 @@ Editor.prototype = {
 			this.shadows = o.shadows;
 			this.snum = o.snum;
 			this.wnum = o.wnum;
+			this.rotation = o.rotation ? o.rotation : 0;
 			this.drawInfoTree();
 		}
 	},
@@ -2687,6 +2692,7 @@ Editor.prototype = {
 					transparent:true
 				} ) 
 			);
+			mesh.rotation.y = (this.rotation * Math.PI / 180);
 			this.addObject( mesh );
 			this.drawing_line.push({mesh:mesh,line:line});
 		}

@@ -94,6 +94,12 @@ namespace main.contents
                     if ((n = s.IndexOf("@@@")) >= 0)
                     {
                         String json = s.Substring(n + 3);
+
+                        if (json.IndexOf("\"perfect\":false") >= 0)
+                        {
+                            MessageBox.Show("치수 정밀도가 훼손된 모델입니다. 치수 정밀도 훼손 원인은 모델 생성 작업시 모델 회전 작업이 포함된 경우입니다.", "인식이 불완전하게 되었습니다.", MessageBoxButtons.OK);
+                        }
+
                         Program.UTIL.write3DModel(json);
                         Program.DB.executeSQL(DB.type.ProjDB, s.Substring(0, n));
                         //             Program.UTIL.reloadWebCtrl();
@@ -128,8 +134,9 @@ namespace main.contents
                             }
                         }
                         resetZoneDraw();
-                        Program.UTIL.loadMainMenu(2);
                         Program.DB.saveProject();
+
+                        runScript("location.reload();");
                     }
                     else
                     {

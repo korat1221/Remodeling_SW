@@ -43,6 +43,7 @@
             comboBox2 = new CheckedComboBox();
             comboBox1 = new CheckedComboBox();
             dataGridView1 = new DataGridView();
+            button2 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
@@ -132,6 +133,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(button2);
             tabPage2.Controls.Add(button1);
             tabPage2.Controls.Add(comboBox3);
             tabPage2.Controls.Add(comboBox2);
@@ -147,7 +149,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(444, 25);
+            button1.Location = new Point(475, 25);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 101;
@@ -255,6 +257,17 @@
             dataGridView1.DataError += onDataError;
             dataGridView1.SortCompare += dataGridView1_SortCompare;
             // 
+            // button2
+            // 
+            button2.Location = new Point(389, 25);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 102;
+            button2.Text = "주향변경";
+            button2.UseVisualStyleBackColor = true;
+            button2.Visible = false;
+            button2.Click += button2_Click;
+            // 
             // sub3dZoneInfo
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -285,5 +298,6 @@
         public CheckedComboBox comboBox3;
         private CheckedComboBox comboBox2;
         private Button button1;
+        private Button button2;
     }
 }
