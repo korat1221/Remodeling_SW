@@ -137,6 +137,8 @@ namespace main.contents
                         Program.DB.saveProject();
 
                         runScript("location.reload();");
+
+                        Program.UTIL.loadMainMenu(2);
                     }
                     else
                     {
