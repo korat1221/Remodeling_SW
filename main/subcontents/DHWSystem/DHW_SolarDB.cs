@@ -16,15 +16,15 @@ using System.Windows.Forms;
 
 namespace main.subcontents.DHWSystem
 {
-    public partial class DHW_Solar : Form
+    public partial class DHW_SolarDB : Form
     {
         ArrayList SelectRow = new ArrayList(); ArrayList SelectSolar_split = new ArrayList();
         String DefaultUse;
         public string SelectSolar;
         //HeatingSystem heatingSystem;
 
-        // public DHW_Solar(HeatingSystem system)
-        public DHW_Solar(String DefaultUse, String SelectSolar_nonsplit)
+        // public DHW_SolarDB(HeatingSystem system)
+        public DHW_SolarDB(String DefaultUse, String SelectSolar_nonsplit)
         {
             InitializeComponent();
             //heatingSystem = system;
@@ -82,7 +82,7 @@ namespace main.subcontents.DHWSystem
             }
             else
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "번호,명칭,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "난방급탕 ='난방' OR 난방급탕 = '난방+급탕'");
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "번호,명칭,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "난방급탕 ='급탕' OR 난방급탕 = '난방+급탕'");
                 for (int n = 0; n < User_Value.Length; n++)
                 {
                    

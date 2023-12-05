@@ -2456,7 +2456,7 @@ namespace main.contents
             펌프종류comboBox.Items.Add("냉수순환펌프");
             펌프종류comboBox.Items.Add("온수순환펌프");
             펌프종류comboBox.Items.Add("냉온수순환펌프");
-            펌프종류comboBox.Items.Add("급탕순환펌프");
+            펌프종류comboBox.Items.Add("급탕펌프");
             펌프종류comboBox.Items.Add("냉각수순환펌프");
             펌프종류comboBox.Items.Add("지열순환펌프");
             Pump_dataGridView.Rows[nRow].Cells[3] = 펌프종류comboBox;
@@ -2511,7 +2511,7 @@ namespace main.contents
             펌프종류comboBox.Items.Add("냉수순환펌프");
             펌프종류comboBox.Items.Add("온수순환펌프");
             펌프종류comboBox.Items.Add("냉온수순환펌프");
-            펌프종류comboBox.Items.Add("급탕순환펌프");
+            펌프종류comboBox.Items.Add("급탕펌프");
             펌프종류comboBox.Items.Add("냉각수순환펌프");
             펌프종류comboBox.Items.Add("지열순환펌프");
             Pump_dataGridView.Rows[nRow].Cells[3] = 펌프종류comboBox;

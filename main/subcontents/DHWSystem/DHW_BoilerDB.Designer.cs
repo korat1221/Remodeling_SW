@@ -1,6 +1,6 @@
 ﻿namespace main.subcontents.DHWSystem
 {
-    partial class DHW_Solar
+    partial class DHW_BoilerDB
     {
         /// <summary>
         /// Required designer variable.
@@ -35,10 +35,10 @@
             label4 = new Label();
             Icon_pictureBox = new PictureBox();
             Save_button = new Button();
-            Solar_dataGridView = new DataGridView();
+            Boiler_dataGridView = new DataGridView();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Solar_dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -59,7 +59,7 @@
             label4.Name = "label4";
             label4.Size = new Size(71, 15);
             label4.TabIndex = 103;
-            label4.Text = "난방 보일러";
+            label4.Text = "급탕 보일러";
             // 
             // Icon_pictureBox
             // 
@@ -81,17 +81,17 @@
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
             // 
-            // Solar_dataGridView
+            // Boiler_dataGridView
             // 
-            Solar_dataGridView.AllowUserToAddRows = false;
-            Solar_dataGridView.AllowUserToDeleteRows = false;
-            Solar_dataGridView.AllowUserToResizeColumns = false;
-            Solar_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            Solar_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            Solar_dataGridView.BackgroundColor = SystemColors.Control;
-            Solar_dataGridView.BorderStyle = BorderStyle.None;
-            Solar_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            Solar_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            Boiler_dataGridView.AllowUserToAddRows = false;
+            Boiler_dataGridView.AllowUserToDeleteRows = false;
+            Boiler_dataGridView.AllowUserToResizeColumns = false;
+            Boiler_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Boiler_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            Boiler_dataGridView.BackgroundColor = SystemColors.Control;
+            Boiler_dataGridView.BorderStyle = BorderStyle.None;
+            Boiler_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            Boiler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
@@ -99,10 +99,10 @@
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            Solar_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            Solar_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Solar_dataGridView.Location = new Point(0, 74);
-            Solar_dataGridView.Name = "Solar_dataGridView";
+            Boiler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            Boiler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Boiler_dataGridView.Location = new Point(0, 74);
+            Boiler_dataGridView.Name = "Boiler_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
             dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -110,35 +110,35 @@
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            Solar_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            Solar_dataGridView.RowHeadersVisible = false;
-            Solar_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            Boiler_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            Boiler_dataGridView.RowHeadersVisible = false;
+            Boiler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            Solar_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Solar_dataGridView.RowTemplate.Height = 25;
-            Solar_dataGridView.Size = new Size(800, 358);
-            Solar_dataGridView.TabIndex = 19;
+            Boiler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            Boiler_dataGridView.RowTemplate.Height = 25;
+            Boiler_dataGridView.Size = new Size(800, 358);
+            Boiler_dataGridView.TabIndex = 19;
             // 
-            // DHW_Solar
+            // DHW_BoilerDB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(797, 479);
-            Controls.Add(Solar_dataGridView);
+            Controls.Add(Boiler_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            Name = "DHW_Solar";
-            Text = "DHW_Solar";
+            Name = "DHW_BoilerDB";
+            Text = "DHW_BoilerDB";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Solar_dataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).EndInit();
             ResumeLayout(false);
         }
 
@@ -146,7 +146,7 @@
 
         private Panel GeneralPanel;
         private Button Save_button;
-        private DataGridView Solar_dataGridView;
+        private DataGridView Boiler_dataGridView;
         private TextBox textBox2;
         private TextBox d_ins_textBox;
         private Label label4;

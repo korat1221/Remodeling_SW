@@ -26,6 +26,8 @@ namespace main
 
             _calculations["난방시스템 계산"] = new Func<bool>(HeatingSystemCalc);
 
+            _calculations["급탕시스템 계산"] = new Func<bool>(DHWSystemCalc);
+
             _calculations["법규 대안검토 계산"] =new Func<bool>(AltCalc);
         }
 
@@ -143,31 +145,30 @@ namespace main
                 zonelight1.Calc_W();
 
                 //월별 조명
-                //for (int mth = 0; mth <= 11; mth++)
-                //{
-                //    //zonename 가져와야할까? 
-                //    MTH = (mth + 1).ToString() + "월";
+                for (int mth = 0; mth <= 11; mth++)
+                {
+                    //zonename 가져와야할까? 
+                    MTH = (mth + 1).ToString() + "월";
 
-                //    Program.DB.setValue(DB.type.ProjDB, "Zone_LightResult", "번호,월," +
-                //        "ITr,IRD,ISh_Ish,ISh_hA,Ish_vA,Ish_In_At,Wi,Ish_GDF,Ish," +
-                //        "f_τeff_SNA,f_D,f_nearD,f_DCA,f_dclass,f_nearEm_SNA,f_fd_sna,f_fd_sa,f_nearEm_DC,f_fd_c,f_FDS,f_FD," +
-                //        "as_bs,hs_bs,hg_hw," +
-                //        "normal_ηR,saw_ηR,r_DSNA,r_DSA,r_dclass," +
-                //        "r_nearEm_FDS,r_fd_sna,r_fd_sa,r_nearEm_DC,r_fd_c,r_FDS,r_FD," +
-                //        "Sunlight_SCW,Sunlight_PjSC,Final_W",
+                    Program.DB.setValue(DB.type.ProjDB, "Zone_LightResult", "번호,월," +
+                        "ITr,IRD,ISh_Ish,ISh_hA,Ish_vA,Ish_In_At,Wi,Ish_GDF,Ish," +
+                        "f_τeff_SNA,f_D,f_nearD,f_DCA,f_dclass,f_nearEm_SNA,f_fd_sna,f_fd_sa,f_nearEm_DC,f_fd_c,f_FDS,f_FD," +
+                        "as_bs,hs_bs,hg_hw," +
+                        "normal_ηR,saw_ηR,r_DSNA,r_DSA,r_dclass," +
+                        "r_nearEm_FDS,r_fd_sna,r_fd_sa,r_nearEm_DC,r_fd_c,r_FDS,r_FD," +
+                        "Sunlight_SCW,Sunlight_PjSC,Final_W",
 
-                //    "'" + zones_순번[i] + "','" + MTH + "','" +
-                //     zonelight1.Zone_ITr.ToString() + "','" + zonelight1.Zone_IRD.ToString() + "','" + zonelight1.Zone_ISh_Ish.ToString() + "','" + zonelight1.Zone_ISh_hA.ToString() + "','" + zonelight1.Zone_ISh_vA.ToString() + "','" + zonelight1.Zone_Ish_In_At.ToString() + "','" + zonelight1.Zone_Wi.ToString() + "','" + zonelight1.Zone_Ish_GDF.ToString() + "','" + zonelight1.Zone_Calc_Ish.ToString() + "','" +
-                //     zonelight1.Zone_τeff_SNA_j.ToString() + "','" + zonelight1.Zone_D.ToString() + "','" + zonelight1.Zone_nearD.ToString() + "','" + zonelight1.Zone_DCA.ToString() + "','" + zonelight1.dclass + "','" + zonelight1.f_nearEm_SNA.ToString() + "','" + zonelight1.find_fd_sna.ToString() + "','" + zonelight1.find_fd_sa.ToString() + "','" + zonelight1.f_naerEm_DC.ToString() + "','" + zonelight1.find_fd_c.ToString() + "','" + zonelight1.Zone_FDS[mth].ToString() + "','" + zonelight1.Zone_Facade_FD[mth].ToString() + "','" +
-                //     zonelight1.Zone_as_bs.ToString() + "','" + zonelight1.Zone_hs_bs.ToString() + "','" + zonelight1.Zone_hg_hw.ToString() + "','" +
-                //     zonelight1.find_normal_ηR.ToString() + "','" + zonelight1.find_saw_ηR.ToString() + "','" + zonelight1.Zone_Roof_DSNA.ToString() + "','" + zonelight1.Zone_Roof_DSA.ToString() + "','" + zonelight1.roof_dclass + "','" +
-                //     zonelight1.r_nearEm_FDS.ToString() + "','" + zonelight1.find_roof_fd_sna.ToString() + "','" + zonelight1.find_roof_fd_sa.ToString() + "','" + zonelight1.r_nearEm_DC.ToString() + "','" + zonelight1.find_roof_fd_c.ToString() + "','" + zonelight1.Zone_Roof_FDS[mth].ToString() + "','" + zonelight1.Zone_Roof_FD[mth].ToString() + "','" +
-                //     zonelight1.Zone_Sunlight_SCW[mth].ToString() + "','" + zonelight1.Zone_Sunlight_PjSC[mth].ToString() + "','" + zonelight1.Zone_Final_W[mth].ToString()
-                //     + "'", "번호,월");
-                //}
+                    "'" + zones_순번[i] + "','" + MTH + "','" +
+                     zonelight1.Zone_ITr.ToString() + "','" + zonelight1.Zone_IRD.ToString() + "','" + zonelight1.Zone_ISh_Ish.ToString() + "','" + zonelight1.Zone_ISh_hA.ToString() + "','" + zonelight1.Zone_ISh_vA.ToString() + "','" + zonelight1.Zone_Ish_In_At.ToString() + "','" + zonelight1.Zone_Wi.ToString() + "','" + zonelight1.Zone_Ish_GDF.ToString() + "','" + zonelight1.Zone_Calc_Ish.ToString() + "','" +
+                     zonelight1.Zone_τeff_SNA_j.ToString() + "','" + zonelight1.Zone_D.ToString() + "','" + zonelight1.Zone_nearD.ToString() + "','" + zonelight1.Zone_DCA.ToString() + "','" + zonelight1.dclass + "','" + zonelight1.f_nearEm_SNA.ToString() + "','" + zonelight1.find_fd_sna.ToString() + "','" + zonelight1.find_fd_sa.ToString() + "','" + zonelight1.f_naerEm_DC.ToString() + "','" + zonelight1.find_fd_c.ToString() + "','" + zonelight1.Zone_FDS[mth].ToString() + "','" + zonelight1.Zone_Facade_FD[mth].ToString() + "','" +
+                     zonelight1.Zone_as_bs.ToString() + "','" + zonelight1.Zone_hs_bs.ToString() + "','" + zonelight1.Zone_hg_hw.ToString() + "','" +
+                     zonelight1.find_normal_ηR.ToString() + "','" + zonelight1.find_saw_ηR.ToString() + "','" + zonelight1.Zone_Roof_DSNA.ToString() + "','" + zonelight1.Zone_Roof_DSA.ToString() + "','" + zonelight1.roof_dclass + "','" +
+                     zonelight1.r_nearEm_FDS.ToString() + "','" + zonelight1.find_roof_fd_sna.ToString() + "','" + zonelight1.find_roof_fd_sa.ToString() + "','" + zonelight1.r_nearEm_DC.ToString() + "','" + zonelight1.find_roof_fd_c.ToString() + "','" + zonelight1.Zone_Roof_FDS[mth].ToString() + "','" + zonelight1.Zone_Roof_FD[mth].ToString() + "','" +
+                     zonelight1.Zone_Sunlight_SCW[mth].ToString() + "','" + zonelight1.Zone_Sunlight_PjSC[mth].ToString() + "','" + zonelight1.Zone_Final_W[mth].ToString()
+                     + "'", "번호,월");
+                }
 
 
-                //  Zone zone1 = new Zone("1F_Zone001");
                 Zone zone1 = new Zone(zones_순번[i]);
 
                 Zones[zones_순번[i]] = zone1;
@@ -348,10 +349,7 @@ namespace main
                 Heating1.Calc_Solar();
                 Heating1.Calc_Q_Air_HP();
                 Heating1.nan();
-        //     public double[] theta_av_ce = new double[12], theta_av_d = new double[12], theta_av_s = new double[12], theta_av_gen = new double[12];
-        //public double[] dtheta_ce = new double[12], dtheta_d = new double[12], dtheta_s = new double[12], dtheta_gen = new double[12];
-        //public double[] Qh_ce = new double[12], Qh_d = new double[12], Qh_s = new double[12], Qh_gen = new double[12], Qh_outg = new double[12], Qh_f = new double[12];
-        //public double[] Wh_ce = new double[12], Wh_d = new double[12], Wh_s = new double[12], Wh_g = new double[12];
+
                 for (int mth = 0; mth <= 11; mth++)
                 {
                   
@@ -364,7 +362,8 @@ namespace main
                              "theta_av_ce,theta_av_d,theta_av_s,theta_av_gen,"+
                              "dtheta_ce,dtheta_d,dtheta_s,dtheta_gen," +
                              "dtheta_ce1,dtheta_ce2,Psi_pipe,L,Qs_po_day,Vs," +
-                             "Qh_gen_day,Pgen_Pn,Pgen_Pint,Pgen_P0,eta_gen_Pn,eta_gen_Pint,"+
+                             "Qh_gen_day,Pgen_Pn,Pgen_Pint,Pgen_P0,eta_gen_Pn,eta_gen_Pint," +
+                             "fpint_Air,Qh_outg_sngminus7,Qh_outg_sng2,Qh_outg_sng7,COPminus7,COP2,COP7," +
                              "Qh_ce,Qh_d,Qh_s,Qh_gen,Qh_outg,Qh_f," +
                              "Wh_ce,Wh_d,Wh_s,Wh_g",
                              "'" + 프로젝트유형[0][0] + "','" + HeatingNum[i][0] + "','" + MTH + "','" +
@@ -375,6 +374,7 @@ namespace main
                               Heating1.dtheta_ce[mth] + "','" + Heating1.dtheta_d[mth] + "','" +Heating1.dtheta_s[mth] + "','" +Heating1.dtheta_gen[mth] + "','" +
                               Heating1.dtheta_ce1 + "','" + Heating1.dtheta_ce2 + "','" + Heating1.Psi_pipe + "','" + Heating1.L + "','" + Heating1.Qs_po_day + "','" + Heating1.Vs + "','" +
                               Heating1.Qh_gen_day[mth] + "','" + Heating1.Pgen_Pn[mth] + "','" + Heating1.Pgen_Pint[mth] + "','" + Heating1.Pgen_P0[mth] + "','" + Heating1.eta_gen_Pn[mth] + "','" + Heating1.eta_gen_Pint[mth] + "','" +
+                              Heating1.fpint[mth] + "','" + Heating1.Qh_outg_sng[0, mth] + "','" + Heating1.Qh_outg_sng[1, mth] + "','" + Heating1.Qh_outg_sng[2, mth] + "','" + Heating1.COPpint[0,mth] + "','" + Heating1.COPpint[1, mth] + "','" + Heating1.COPpint[2, mth] + "','" +
                               Heating1.Qh_ce[mth] + "','" + Heating1.Qh_d[mth] + "','" +Heating1.Qh_s[mth] + "','" +Heating1.Qh_gen[mth] + "','" +Heating1.Qh_outg[mth] + "','" +Heating1.Qh_f[mth] + "','" +
                               Heating1.Wh_ce[mth] + "','" +Heating1.Wh_d[mth] + "','" +Heating1.Wh_s[mth] + "','" +Heating1.Wh_g[mth]
                               + "'", "번호,월");;
@@ -384,6 +384,50 @@ namespace main
             }
             return true;
         }
+
+        private static bool DHWSystemCalc()
+        {
+            string[][] HeatingNum = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호");
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            int i = -1;
+            String MTH;
+            while (++i < HeatingNum.Length)
+            {
+                Cal_DHW DHW1 = new Cal_DHW(HeatingNum[i][0]);
+                DHW1.Load_Zonedata();
+                DHW1.Load_DHWGeneral();
+                DHW1.Load_Boiler();
+                DHW1.Load_Solar();
+                DHW1.Load_PumpData();
+                DHW1.Load_StorageData();
+                DHW1.Load_PipeData();
+
+                DHW1.Calc_Qd();
+                DHW1.Calc_Qh_s();
+                DHW1.Calc_Qh_gen_Boiler();
+                DHW1.Calc_Solar();
+                DHW1.nan();
+                for (int mth = 0; mth <= 11; mth++)
+                {
+
+                    MTH = (mth + 1).ToString() + "월";
+                    Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result", "프로젝트유형,번호," +
+                             "월," +
+                             "Qwb_mth_sum,theta_ih_avg,Qw_a_sum,th_op_day_avg,theta_i_h_set_avg,dop_mth_avg," +
+                             "Qw_d,Qw_s,Qw_gen,Qw_outg,Qw_f," +
+                             "Ww_d,Ww_s,Ww_g," +
+                             "Qw_gen_day,Qw_gen_p0_day,eta_pn_w",
+                             "'" + 프로젝트유형[0][0] + "','" + HeatingNum[i][0] + "','" + MTH + "','" +
+                             DHW1.Qwb_mth_sum[mth] + "','" + DHW1.theta_ih_avg[mth] + "','" + DHW1.Qw_a_sum + "','" + DHW1.th_op_day_avg + "','" + DHW1.theta_i_h_set_avg + "','" + DHW1.dop_mth_avg[mth] + "','" +
+                             DHW1.Qw_d[mth] + "','" + DHW1.Qw_s[mth] + "','" + DHW1.Qw_gen[mth] + "','" + DHW1.Qw_outg[mth] + "','" + DHW1.Qw_f[mth] + "','" +
+                             DHW1.Ww_d[mth] + "','" + DHW1.Ww_s[mth] + "','" + DHW1.Ww_g[mth] + "','" +
+                             DHW1.Qw_gen_day[mth] + "','" + DHW1.Qw_gen_p0_day[mth] + "','" + DHW1.eta_pn_w[mth]
+                              + "'", "번호,월"); ;
+                }
+            }
+            return true;
+        }
+
         private static bool AltCalc()
         {
             Cal_Alt_Rule cal = new Cal_Alt_Rule();

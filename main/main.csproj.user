@@ -97,9 +97,6 @@
     <Compile Update="contents\System\CoolingSystem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\System\DHWSystem2.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="contents\System\EquipmentList.cs">
       <SubType>Form</SubType>
     </Compile>

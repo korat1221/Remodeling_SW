@@ -59,6 +59,9 @@
     <Compile Update="contents\System\DHWSystem.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\DHWSystem\DHW_PumpDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\GWHP_DB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,13 +74,10 @@
     <Compile Update="subcontents\DHWSystem\DHWDH_DB.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="subcontents\DHWSystem\DHW_Boiler.cs">
+    <Compile Update="subcontents\DHWSystem\DHW_BoilerDB.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="subcontents\DHWSystem\DHW_Pump.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="subcontents\DHWSystem\DHW_Solar.cs">
+    <Compile Update="subcontents\DHWSystem\DHW_SolarDB.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\DHWSystem\DHW_Zone.cs">

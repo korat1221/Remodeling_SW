@@ -29,7 +29,7 @@ namespace main.contentslist
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '급탕시스템'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            Program.DB.initTable(DB.type.ProjDB, "HeatingSystem_Form");
+            Program.DB.initTable(DB.type.ProjDB, "DHWSystem_Form");
             Create_Table();
         }
 
@@ -42,7 +42,7 @@ namespace main.contentslist
 
         private void Add_button_Click(object sender, EventArgs e)
         {
-            Num = Program.UTIL.CreateNum("HeatingSystem_Form", "번호", "DW");
+            Num = Program.UTIL.CreateNum("DHWSystem_Form", "번호", "DW");
 
             Program.getMenuForm().ResetForm(18);
 
@@ -51,7 +51,7 @@ namespace main.contentslist
 
         public static bool OnLoadProc(Form form)
         {
-            HeatingSystem f = (HeatingSystem)form;
+            DHWSystem f = (DHWSystem)form;
 
             if (inEditing == "Edit")
             {
@@ -96,7 +96,7 @@ namespace main.contentslist
 
         public void load_List()
         {
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비", "");
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호,명칭,주요설비", "");
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
             String Blank = "";
             this.List.Rows.Clear();
@@ -147,7 +147,7 @@ namespace main.contentslist
                 if (k > -1)
                 {
                     String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                    Program.DB.deleteValue(DB.type.ProjDB, "HeatingSystem_Form", "번호 ='" + Delete_Num + "'");
+                    Program.DB.deleteValue(DB.type.ProjDB, "DHWSystem_Form", "번호 ='" + Delete_Num + "'");
                     load_List();
 
                 }
@@ -168,14 +168,14 @@ namespace main.contentslist
 
         private void Copy_button_Click(object sender, EventArgs e)
         {
-            Num = Program.UTIL.CreateNum("HeatingSystem_Form", "번호", "HS");
+            Num = Program.UTIL.CreateNum("DHWSystem_Form", "번호", "HS");
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
                 String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
 
-                Program.DB.CopyValue(DB.type.ProjDB, "HeatingSystem_Form", "번호 ='" + Copy_Num + "'", Num);
-                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  HeatingSystem_Form" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
+                Program.DB.CopyValue(DB.type.ProjDB, "DHWSystem_Form", "번호 ='" + Copy_Num + "'", Num);
+                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  DHWSystem_Form" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
                 Load_form(Num, "Copy");
 
             }

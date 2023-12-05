@@ -84,7 +84,7 @@ namespace main.subcontents.DHWSystem
                 }
                 else
                 {
-                    string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_DH", "번호,명칭,용도,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차", "용도 ='난방용(복사난방)' OR 용도 ='난방용(공조난방)'");
+                    string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_DH", "번호,명칭,용도,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차", "용도 ='급탕일반용' OR 용도 ='급탕재열용' OR 용도 ='급탕예열용'");
                     for (int n = 0; n < User_Value.Length; n++)
                     {
 

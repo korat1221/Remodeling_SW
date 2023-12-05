@@ -66,7 +66,7 @@
             label4.Name = "label4";
             label4.Size = new Size(67, 15);
             label4.TabIndex = 97;
-            label4.Text = "난방시스템";
+            label4.Text = "급탕시스템";
             // 
             // Copy_button
             // 

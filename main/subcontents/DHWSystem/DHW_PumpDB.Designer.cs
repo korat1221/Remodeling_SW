@@ -1,6 +1,6 @@
 ﻿namespace main.subcontents.DHWSystem
 {
-    partial class DHW_Boiler
+    partial class DHW_PumpDB
     {
         /// <summary>
         /// Required designer variable.
@@ -35,10 +35,10 @@
             label4 = new Label();
             Icon_pictureBox = new PictureBox();
             Save_button = new Button();
-            Boiler_dataGridView = new DataGridView();
+            Pump_dataGridView = new DataGridView();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Pump_dataGridView).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -57,9 +57,9 @@
             label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label4.Location = new Point(68, 32);
             label4.Name = "label4";
-            label4.Size = new Size(71, 15);
+            label4.Size = new Size(135, 15);
             label4.TabIndex = 103;
-            label4.Text = "난방 보일러";
+            label4.Text = "급탕펌프";
             // 
             // Icon_pictureBox
             // 
@@ -81,17 +81,17 @@
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
             // 
-            // Boiler_dataGridView
+            // Pump_dataGridView
             // 
-            Boiler_dataGridView.AllowUserToAddRows = false;
-            Boiler_dataGridView.AllowUserToDeleteRows = false;
-            Boiler_dataGridView.AllowUserToResizeColumns = false;
-            Boiler_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            Boiler_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            Boiler_dataGridView.BackgroundColor = SystemColors.Control;
-            Boiler_dataGridView.BorderStyle = BorderStyle.None;
-            Boiler_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            Boiler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            Pump_dataGridView.AllowUserToAddRows = false;
+            Pump_dataGridView.AllowUserToDeleteRows = false;
+            Pump_dataGridView.AllowUserToResizeColumns = false;
+            Pump_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Pump_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            Pump_dataGridView.BackgroundColor = SystemColors.Control;
+            Pump_dataGridView.BorderStyle = BorderStyle.None;
+            Pump_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            Pump_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
@@ -99,10 +99,10 @@
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            Boiler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            Boiler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Boiler_dataGridView.Location = new Point(0, 74);
-            Boiler_dataGridView.Name = "Boiler_dataGridView";
+            Pump_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            Pump_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Pump_dataGridView.Location = new Point(0, 74);
+            Pump_dataGridView.Name = "Pump_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
             dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -110,35 +110,35 @@
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            Boiler_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            Boiler_dataGridView.RowHeadersVisible = false;
-            Boiler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            Pump_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            Pump_dataGridView.RowHeadersVisible = false;
+            Pump_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            Boiler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Boiler_dataGridView.RowTemplate.Height = 25;
-            Boiler_dataGridView.Size = new Size(800, 358);
-            Boiler_dataGridView.TabIndex = 19;
+            Pump_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            Pump_dataGridView.RowTemplate.Height = 25;
+            Pump_dataGridView.Size = new Size(800, 358);
+            Pump_dataGridView.TabIndex = 19;
             // 
-            // DHW_Boiler
+            // DHW_PumpDB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(797, 479);
-            Controls.Add(Boiler_dataGridView);
+            Controls.Add(Pump_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            Name = "DHW_Boiler";
-            Text = "DHW_Boiler";
+            Name = "DHW_PumpDB";
+            Text = "DHW_PumpDB";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Pump_dataGridView).EndInit();
             ResumeLayout(false);
         }
 
@@ -146,7 +146,7 @@
 
         private Panel GeneralPanel;
         private Button Save_button;
-        private DataGridView Boiler_dataGridView;
+        private DataGridView Pump_dataGridView;
         private TextBox textBox2;
         private TextBox d_ins_textBox;
         private Label label4;

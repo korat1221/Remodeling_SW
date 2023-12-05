@@ -16,12 +16,12 @@ using System.Windows.Forms;
 
 namespace main.subcontents.DHWSystem
 {
-    public partial class DHW_Pump : Form
+    public partial class DHW_PumpDB : Form
     {
 
         public string SelectPump;
         ArrayList SelectPump_split = new ArrayList();
-        public DHW_Pump(String Pump)
+        public DHW_PumpDB(String Pump)
         {
             InitializeComponent();
             //heatingSystem = system;
@@ -64,7 +64,7 @@ namespace main.subcontents.DHWSystem
             //Pump_table.Columns.Add("양정" + Environment.NewLine + "[m]", typeof(string));
 
 
-            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "종류 ='온수순환펌프' OR 종류 = '냉온수순환펌프'");
+            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "종류 ='급탕펌프'");
             for (int n = 0; n < User_Value.Length; n++)
             {
                 string A효율 = "", B효율 = "", 유량 = "", 동력 = "", 양정 = "";

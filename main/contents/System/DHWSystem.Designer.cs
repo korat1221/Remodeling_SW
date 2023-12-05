@@ -102,6 +102,8 @@
             MainSystem_label = new Label();
             MainSystem_comboBox = new CustomComboBox();
             Qhs_tabPage = new TabPage();
+            label4 = new Label();
+            StorageType_comboBox = new CustomComboBox();
             StoragePump_dataGridView = new DataGridView();
             label12 = new Label();
             StoragePump_comboBox = new CustomComboBox();
@@ -997,6 +999,8 @@
             // Qhs_tabPage
             // 
             Qhs_tabPage.BackColor = Color.White;
+            Qhs_tabPage.Controls.Add(label4);
+            Qhs_tabPage.Controls.Add(StorageType_comboBox);
             Qhs_tabPage.Controls.Add(StoragePump_dataGridView);
             Qhs_tabPage.Controls.Add(label12);
             Qhs_tabPage.Controls.Add(StoragePump_comboBox);
@@ -1014,6 +1018,27 @@
             Qhs_tabPage.Size = new Size(969, 285);
             Qhs_tabPage.TabIndex = 2;
             Qhs_tabPage.Text = "저장";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Location = new Point(516, 43);
+            label4.Name = "label4";
+            label4.Size = new Size(83, 15);
+            label4.TabIndex = 188;
+            label4.Text = "축열탱크 방식";
+            // 
+            // StorageType_comboBox
+            // 
+            StorageType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            StorageType_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            StorageType_comboBox.FormattingEnabled = true;
+            StorageType_comboBox.Location = new Point(605, 39);
+            StorageType_comboBox.Name = "StorageType_comboBox";
+            StorageType_comboBox.Size = new Size(120, 23);
+            StorageType_comboBox.TabIndex = 187;
+            StorageType_comboBox.SelectedIndexChanged += StorageType_comboBox_SelectedIndexChanged;
             // 
             // StoragePump_dataGridView
             // 
@@ -1035,7 +1060,7 @@
             dataGridViewCellStyle16.WrapMode = DataGridViewTriState.True;
             StoragePump_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             StoragePump_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            StoragePump_dataGridView.Location = new Point(10, 79);
+            StoragePump_dataGridView.Location = new Point(14, 150);
             StoragePump_dataGridView.Name = "StoragePump_dataGridView";
             dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle17.BackColor = SystemColors.Control;
@@ -1061,7 +1086,7 @@
             // 
             label12.AutoSize = true;
             label12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label12.Location = new Point(521, 41);
+            label12.Location = new Point(34, 79);
             label12.Name = "label12";
             label12.Size = new Size(83, 15);
             label12.TabIndex = 185;
@@ -1072,7 +1097,7 @@
             StoragePump_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             StoragePump_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             StoragePump_comboBox.FormattingEnabled = true;
-            StoragePump_comboBox.Location = new Point(610, 38);
+            StoragePump_comboBox.Location = new Point(123, 75);
             StoragePump_comboBox.Name = "StoragePump_comboBox";
             StoragePump_comboBox.Size = new Size(120, 23);
             StoragePump_comboBox.TabIndex = 184;
@@ -1085,7 +1110,7 @@
             StoragePump_textBox.Enabled = false;
             StoragePump_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             StoragePump_textBox.ForeColor = SystemColors.ControlDark;
-            StoragePump_textBox.Location = new Point(790, 43);
+            StoragePump_textBox.Location = new Point(350, 79);
             StoragePump_textBox.Name = "StoragePump_textBox";
             StoragePump_textBox.Size = new Size(120, 15);
             StoragePump_textBox.TabIndex = 183;
@@ -1097,7 +1122,7 @@
             StoragePump_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             StoragePump_button.FlatStyle = FlatStyle.System;
             StoragePump_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            StoragePump_button.Location = new Point(912, 39);
+            StoragePump_button.Location = new Point(472, 75);
             StoragePump_button.Margin = new Padding(0);
             StoragePump_button.Name = "StoragePump_button";
             StoragePump_button.Size = new Size(23, 23);
@@ -1110,7 +1135,7 @@
             // 
             StoragePump_label.AutoSize = true;
             StoragePump_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            StoragePump_label.Location = new Point(753, 43);
+            StoragePump_label.Location = new Point(268, 79);
             StoragePump_label.Name = "StoragePump_label";
             StoragePump_label.Size = new Size(31, 15);
             StoragePump_label.TabIndex = 181;
@@ -1826,5 +1851,7 @@
         private Panel panel1;
         private PictureBox SourcepictureBox;
         private DataGridView DH_dataGridView;
+        private Label label4;
+        private CustomComboBox StorageType_comboBox;
     }
 }

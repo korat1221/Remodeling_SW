@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace main.subcontents.DHWSystem
 {
-    public partial class DHW_Boiler : Form
+    public partial class DHW_BoilerDB : Form
     {
         ArrayList SelectRow = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList();
         String DefaultUse;
@@ -24,7 +24,7 @@ namespace main.subcontents.DHWSystem
         //HeatingSystem heatingSystem;
 
         // public Heating_Boiler(HeatingSystem system)
-        public DHW_Boiler(String DefaultUse, String SelectBoiler_nonsplit)
+        public DHW_BoilerDB(String DefaultUse, String SelectBoiler_nonsplit)
         {
             InitializeComponent();
             //heatingSystem = system;
@@ -91,7 +91,7 @@ namespace main.subcontents.DHWSystem
             }
             else
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "번호,명칭,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력", "난방급탕 ='난방' OR 난방급탕 = '난방+급탕'");
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "번호,명칭,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력", "난방급탕 ='급탕' OR 난방급탕 = '난방+급탕'");
                 for (int n = 0; n < User_Value.Length; n++)
                 {
                     string 용량 = "", 전부하효율 = "", 부분부하효율 = "", 소비전력 = "", 대기전력 = "";
