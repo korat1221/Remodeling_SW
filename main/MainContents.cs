@@ -28,7 +28,7 @@ namespace main
             ConstructionDoor,
             Model,
             Shade,
-            Blind,
+            ConstructionBlind,
             ThermalBridge,
             ZoneGeneral,
             ZoneEnvelope,
@@ -68,12 +68,13 @@ namespace main
             PrintReport_DHSystem,
             PrintReport_AHUSystem,
             List_DHWSystem,
+            List_ConstructionBlind,
             None
 
         }
         Form[] forms = new Form[] { new General(), new EnergyUse(),
             new ConstructionCW(), new ConstructionWall(), new ConstructionRoof(), new ConstructionFloor(), new ConstructionWindow(), new ConstructionDoor(),
-            new Model(), new Shade(), new Blind(), new ThermalBridge(),
+            new Model(), new Shade(), new ConstructionBlind(), new ThermalBridge(),
             new ZoneGeneral(), new ZoneEnvelope(), new ZoneLighting(), new ZoneSystem(),
             new EquipmentList(),new AHUSystem(), new DHWSystem(), new HeatingSystem(), new CoolingSystem(),
             new PV(), new FuelCell(), new WindPower(), new SupplyRatio(), new EIndependenceRate(),
@@ -84,7 +85,7 @@ namespace main
             new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor(), new PrintReport_HCneed(),new List_CoolingSystem(), new List_HeatingSystem(),
             new Intro(), new ProjectList(), new OpenProject(), new List_RESystem(),
             new PrintReport_Lighting(),new PrintReport_Heating(),new PrintReport_Cooling(),new PrintReport_DHWSystem(),new PrintReport_AHUSystem(),
-            new List_DHWSystem()}; //나중에 PV를 냉방리스트로 바꿔야함 
+            new List_DHWSystem(),new List_ConstructionBlind()}; //나중에 PV를 냉방리스트로 바꿔야함 
         bool scriptable = false;
         public class FormParam
         {
@@ -188,6 +189,12 @@ namespace main
                 Model f = (Model)form;
 
                 f.DoLoadForm(Int32.Parse(formParam.ID));
+            }
+            else if (formParam.formID == 10)
+            {
+               ConstructionBlind f = (ConstructionBlind)form;
+
+                f.LoadData(formParam.ID);
             }
             else if (formParam.formID == 18)
             {
@@ -330,6 +337,12 @@ namespace main
             else if (formParam.formID == 49)
             {
                 List_DHWSystem f = (List_DHWSystem)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 50)
+            {
+                List_ConstructionBlind f = (List_ConstructionBlind)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -531,6 +544,12 @@ namespace main
 
                     f.LoadData("");
                 }
+                else if (i == 50)
+                {
+                    List_ConstructionBlind f = (List_ConstructionBlind)forms[i];
+
+                    f.LoadData("");
+                }
             }
         }
         public void DoLoadFormDirect(int idx)
@@ -659,6 +678,20 @@ namespace main
                     {
                         openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
                         forms[idx] = new Model();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+            else if (idx == 10)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new ConstructionBlind();
                         forms[idx].TopLevel = false;
                         openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
                         return;

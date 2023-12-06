@@ -56,6 +56,7 @@ namespace main.contents
             dataGridView1.Columns.Add("A9", "기울기");
             dataGridView1.Columns.Add("A10", "구조체");
             dataGridView1.Columns.Add("A11", "천창유무");
+            dataGridView1.Columns.Add("A12", "차양적용");
             dataGridView1.Columns[0].Width = 30;
             dataGridView1.Columns[1].Width = 100;
             dataGridView1.Columns[2].Width = 100;
@@ -126,6 +127,11 @@ namespace main.contents
                     cell.Style.BackColor = SystemColors.InactiveBorder;
                     return true;
                 }
+                else if (column == 12 && cell.GetType() != typeof(DataGridViewComboBoxCell))
+                {
+                    cell.Style.BackColor = SystemColors.InactiveBorder;
+                    return true;
+                }
                 else return false;
             }
             else
@@ -157,6 +163,11 @@ namespace main.contents
                     return true;
                 }
                 else if (column == 11 && cell.GetType() != typeof(DataGridViewComboBoxCell))
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    return true;
+                }
+                else if (column == 12 && cell.GetType() != typeof(DataGridViewComboBoxCell))
                 {
                     cell.Style.BackColor = Color.FromArgb(255, 255, 255);
                     return true;
@@ -221,7 +232,7 @@ namespace main.contents
             }
             {
                 int i = -1, idx;
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,천창유무");
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,천창유무,차양적용");
 
                 while (++i < rec.Length)
                 {
@@ -274,11 +285,20 @@ namespace main.contents
                             RoofWinCombo.Value = rec[i][9];
                             dataGridView1.Rows[idx].Cells[11] = RoofWinCombo;
                         }
+                        if (isWinCW(rec[i][3])) //차양적용
+                        {
+                            DataGridViewComboBoxCell BlindCombo = new DataGridViewComboBoxCell();
+                            string[][] BlindValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "번호");
+                            for (int a = 0; a < BlindValue.Length; a++) { BlindCombo.Items.Add(BlindValue[a][0].ToString()); }
+
+                            BlindCombo.Value = rec[i][10];
+                            dataGridView1.Rows[idx].Cells[12] = BlindCombo;
+                        }
                         else
                         {
                             DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
                             TypeLabel.Value = "";
-                            dataGridView1.Rows[idx].Cells[11] = TypeLabel;
+                            dataGridView1.Rows[idx].Cells[12] = TypeLabel;
                             TypeLabel.ReadOnly = true;
                         }
                     }
@@ -412,7 +432,7 @@ namespace main.contents
         public string Save()
         {
 
-            string num, num0, id, Type, CWType, ConsType, ret = "", tcode, RoofWin = "";
+            string num, num0, id, Type, CWType, ConsType, ret = "", tcode, RoofWin = "",Blind ="";
             int i = -1;
             while (++i < dataGridView1.RowCount)
             {
@@ -507,6 +527,15 @@ namespace main.contents
                     {
                         RoofWin = dataGridView1.Rows[i].Cells[11].Value.ToString();
                         Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,천창유무", "'" + id + "','" + RoofWin + "'", "아이디");
+                    }
+                    if (dataGridView1.Rows[i].Cells[12].Value == null)
+                    {
+                        Blind = "";
+                    }
+                    else
+                    {
+                        Blind = dataGridView1.Rows[i].Cells[12].Value.ToString();
+                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,차양적용", "'" + id + "','" + Blind + "'", "아이디");
                     }
                 }
             }
@@ -612,6 +641,7 @@ namespace main.contents
                         DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
                         TypeLabel.Value = "";
                         row.Cells[11] = TypeLabel;
+                        row.Cells[12] = TypeLabel;
                         TypeLabel.ReadOnly = true;
                     }
                     else
@@ -619,8 +649,17 @@ namespace main.contents
                         DataGridViewComboBoxCell RoofWinCombo = new DataGridViewComboBoxCell();
                         RoofWinCombo.Items.Add("천창있음");
                         RoofWinCombo.Items.Add("");
+
                         row.Cells[11] = RoofWinCombo;
                         RoofWinCombo.ReadOnly = false;
+
+                        DataGridViewComboBoxCell BlindCombo = new DataGridViewComboBoxCell();
+                        string[][] BlindValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "번호");
+                        for(int i = 0; i < BlindValue.Length; i++) { BlindCombo.Items.Add(BlindValue[i][0].ToString()); }
+
+                        row.Cells[12] = BlindCombo;
+                        BlindCombo.ReadOnly = false; 
+
                     }
                 }
 

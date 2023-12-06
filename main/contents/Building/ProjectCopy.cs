@@ -71,6 +71,8 @@ namespace main.contents
                 tables.Add("User_WindowInstall");
                 tables.Add("User_CWInstall");
                 tables.Add("User_Material");
+                tables.Add("User_Blind");
+                tables.Add("ConstructionBlind");
             }
             if (Model_checkBox.Checked)
             {
@@ -114,6 +116,7 @@ namespace main.contents
                 tables.Add("User_AbsorbCooler");
                 tables.Add("User_SoilCooler");
                 tables.Add("User_CoolerTop");
+                tables.Add("DHWSystem_Form");
             }
 
             this.DialogResult = DialogResult.OK;

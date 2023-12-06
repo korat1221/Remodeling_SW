@@ -26,6 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="contentslist\List_ConstructionBlind.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="contentslist\List_DHWSystem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,6 +60,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="contents\System\DHWSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\ConstructionBlind\BlindDB.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\DHWSystem\DHW_PumpDB.cs">

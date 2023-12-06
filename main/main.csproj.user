@@ -10,7 +10,7 @@
     <Compile Update="contentslist\List_CoolingSystem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\3D\Blind.cs">
+    <Compile Update="contents\Construction\ConstructionBlind.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="contents\3D\Cardinal.cs">
