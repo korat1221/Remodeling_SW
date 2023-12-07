@@ -163,6 +163,9 @@
     <Compile Update="subcontents\ConstructionDoor\DoorDefault.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\ConstructionDoor\DoorInstall.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\ConstructionWindow\SubWindow.cs">
       <SubType>Form</SubType>
     </Compile>

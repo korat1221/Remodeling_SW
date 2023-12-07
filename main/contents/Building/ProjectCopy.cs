@@ -73,6 +73,7 @@ namespace main.contents
                 tables.Add("User_Material");
                 tables.Add("User_Blind");
                 tables.Add("ConstructionBlind");
+                tables.Add("User_DoorInstall");
             }
             if (Model_checkBox.Checked)
             {
