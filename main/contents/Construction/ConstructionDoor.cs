@@ -1,6 +1,7 @@
 ﻿using main.contentslist;
 using main.subcontents;
 using main.subcontents.ConstructionCW;
+using main.subcontents.ConstructionDoor;
 using main.subcontents.ConstructionWall;
 using System;
 using System.Collections.Generic;
@@ -20,29 +21,23 @@ namespace main.contents
     {
 
         double DoorArea, DoorL, DoorH, GlassL, GlassH, GlassArea;//치수정보
-        double DoorUD, DoorOver, DoorBottom;//문열관류율,문틀상하부열관류율
+        double DoorUD, DoorOver, DoorBottom, DoorUDGlass, DoorUDinsGlass;//문열관류율,문틀상하부열관류율,유리반영문열관류율,유효문열관류율
         String Material, FrameIn, DoorIn, DoorDB; //문짝문틀정보,제품명
         double OverL, UnderL;//상부하부길이
         String[] Select = new String[14];
 
-
-
         private String CWNum;
-        String DoorName, Type, OldDoor, UDoorMethod, DiIndi, FrameType, check_FrameType, FrameName, FixGlassName, OpenGlassName, SpacerName, InstallType, check_InstallType, InstallName, LE_CL_V, check_LE_CL_V, SizeName;
+        String DoorName, Type, OldDoor, UDoorMethod, DiIndi, FrameType, check_FrameType, FrameName, FixGlassName, OpenGlassName, SpacerName, InstallType, installlocation, check_InstallType, Install2, Install1, LE_CL_V, check_LE_CL_V, SizeName, GlassName;
         String PanelName, PanelGlassName, LE_CL_V_Panel, DoorColor;
-        String DoorFrame, check_DoorFrame, DoorGlassName, DoorSpacer, LE_CL_V_Door, check_LE_CL_V_Door;
-        String[][] Size;
-        double Ug_Fix, Ug_Open, g, τ, Psi_g_fix, Psi_g_open, Uf_mt, Uf_open, df_mt, df_open;
+        double Ug_Fix, Ug_Open, Ug, g, τ, Psi_g_fix, Psi_g_open, Uf_mt, Uf_open, df_mt, df_open;
         double Up, Ug_panel, Conductivity_p, αd, Psi_p, dPanel;
-        double Ug_Door, gd, τd, Psi_g_Door, df_door, Uf_door;
         double Psi_InstallTop, Psi_InstallSide, Psi_InstallButtom;
         double Ucw, UD, Ucw_p, Ucw_d;
         double Ucw_inst, dUinst;// dUinst는 열교가산치, Ucw_inst는 유효열관류율(커튼월창열관류율+열교가산치)
         double Ucw_g_inst, Ucw_p_inst, Ucw_d_inst;
-        double Area, Width, Height, Ag_fix, Ag_open, Lg_fix, Lg_open, Ap, Lp, Af_mt, Af_open, Af_d, Ag_d, Lg_d;
-        String[][] Old; String[][] f_shgc; String[][] f_τ;
+        double Area, Width, Height, Ag_fix, Ag_open, Lg_fix, Lg_open, Ap, Lp, Af_mt, Af_open;
         Boolean glass_check, Door_check;
-        double Ff_g, Ff_d;
+        double Ff_g;
 
 
 
@@ -79,6 +74,7 @@ namespace main.contents
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
+
         private void Name_textBox_TextChanged(object sender, EventArgs e)
         {
             if (Name_textBox.Text != null)
@@ -199,24 +195,6 @@ namespace main.contents
             }
         }
 
-        //출입문유형 그림 
-        private void Load_DoorType_image(String Type)
-        {
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문유형이미지", "이미지", "유형 = '" + Type + "'");
-            DoorType_pictureBox.Visible = true;
-            //DoorType_pictureBox.Load(Program.gPath + Image[0][0]);
-            DoorType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-        }
-
-        //치수정보 그림 
-        private void Load_DoorType_image2()
-        {
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문유형이미지", "이미지", "유형 = '" + "치수" + "'");
-            pictureBox1.Visible = true;
-            //pictureBox1.Load(Program.gPath + Image[0][0]);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-        }
-
 
         private void Udoor_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -229,7 +207,7 @@ namespace main.contents
                     Rule_UD();
                 }
             }
-            
+
             g_textBox.Text = string.Empty;
         }
 
@@ -288,14 +266,14 @@ namespace main.contents
 
                 label1.Visible = false;
                 DoorDB_textBox.Visible = false;
-                label27.Visible= false;
-                DoorL_textBox.Visible= false;
-                label22.Visible= false;
+                label27.Visible = false;
+                DoorL_textBox.Visible = false;
+                label22.Visible = false;
                 DoorH_textBox.Visible = false;
-                label21.Visible= false;
+                label21.Visible = false;
                 label30.Visible = false;
                 DoorArea_textBox.Visible = false;
-                label28.Visible= false;
+                label28.Visible = false;
                 DoorDB_button.Visible = false;
                 label11.Visible = false;
                 glass_checkBox.Visible = false;
@@ -500,6 +478,130 @@ namespace main.contents
             }
         }
 
+        private void DiIndi_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (DiIndi_comboBox.SelectedItem != null)
+            {
+                DiIndi = DiIndi_comboBox.SelectedItem.ToString();
+                Rule_UD();
+                //Calc_dUinst();
+            }
+            else { }
+        }
+
+
+        //유리 버튼 클릭 시
+        private void GlassDB_button_Click(object sender, EventArgs e)
+        {
+            GlassDB door_glassDB_form = new GlassDB();
+            DialogResult result = door_glassDB_form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                GlassName = door_glassDB_form.Select_Glass[1];
+                GlassName_textBox.Text = GlassName;
+                Ug = Convert.ToDouble(door_glassDB_form.Select_Glass[6]);
+                GlassU_textBox.Text = String.Format("{0:F3}", Ug);
+            }
+
+            UD_Glass();
+        }
+
+
+        //설치열교 버튼 클릭 시
+        private void Install_button_Click_1(object sender, EventArgs e)
+        {
+            //DoorInstall doorinstall_form   = new DoorInstall(InstallType, installlocation);
+            //DialogResult result = doorinstall_form.ShowDialog();
+
+            if (UDoorMethod == "계산")
+            {
+                if (InstallType == null)
+                {
+                    MessageBox.Show(" 설치구조유형부터 선택하세요.");
+                }
+                else
+                {
+                    DoorInstall DoorInstall_form = new DoorInstall(InstallType, installlocation);
+                    DialogResult result = DoorInstall_form.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        Install1 = DoorInstall_form.Select_DoorInstall[1];
+                        Install2 = DoorInstall_form.Select_DoorInstall[2];
+                        Install_textBox.Text = Install2;
+                        tabControl1.SelectedTab = tabControl1.TabPages["Install_tabPage"];
+                        Psi_InstallTop = Convert.ToDouble(DoorInstall_form.Select_DoorInstall[3]);
+                        Psi_InstallSide = Convert.ToDouble(DoorInstall_form.Select_DoorInstall[4]);
+                        Psi_InstallButtom = Convert.ToDouble(DoorInstall_form.Select_DoorInstall[5]);
+
+                        Psi_InstallTop_textBox.Text = String.Format("{0:F3}", Psi_InstallTop);
+                        Psi_InstallSide_textBox.Text = String.Format("{0:F3}", Psi_InstallSide);
+                        Psi_InstallButtom_textBox.Text = String.Format("{0:F3}", Psi_InstallButtom);
+
+                        d_InstallTop_textBox.Text = Convert.ToString(DoorL / 1000);
+                        d_InstallSide_textBox.Text = Convert.ToString(DoorH / 1000 * 2);
+                        d_InstallButtom_textBox.Text = Convert.ToString(DoorL / 1000);
+
+                        dUinst_textBox.Text = String.Format("{0:F3}", (Psi_InstallTop * (DoorL / 1000) + Psi_InstallSide * (DoorH / 1000 * 2) + Psi_InstallButtom * (DoorL / 1000)) / (DoorArea / 1000000));
+
+                    }
+                }
+            }
+            else //법규이거나 진단일 경우 
+            {
+                if (InstallType == null)
+                {
+                    MessageBox.Show(" 설치구조유형부터 선택하세요.");
+                }
+                else
+                {
+                    DoorInstall DoorInstall_form = new DoorInstall(InstallType);
+                    DialogResult result = DoorInstall_form.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        Install1 = DoorInstall_form.Select_DoorInstall[1];
+                        Install2 = DoorInstall_form.Select_DoorInstall[2];
+                        Install_textBox.Text = Install2;
+                        tabControl1.SelectedTab = tabControl1.TabPages["Install_tabPage"];
+                        Psi_InstallTop = Convert.ToDouble(DoorInstall_form.Select_DoorInstall[3]);
+                        Psi_InstallSide = Convert.ToDouble(DoorInstall_form.Select_DoorInstall[4]);
+                        Psi_InstallButtom = Convert.ToDouble(DoorInstall_form.Select_DoorInstall[5]);
+
+                        Psi_InstallTop_textBox.Text = String.Format("{0:F3}", Psi_InstallTop);
+                        Psi_InstallSide_textBox.Text = String.Format("{0:F3}", Psi_InstallSide);
+                        Psi_InstallButtom_textBox.Text = String.Format("{0:F3}", Psi_InstallButtom);
+
+                        d_InstallTop_textBox.Text = Convert.ToString(DoorL / 1000);
+                        d_InstallSide_textBox.Text = Convert.ToString(DoorH / 1000 * 2);
+                        d_InstallButtom_textBox.Text = Convert.ToString(DoorL / 1000);
+
+                        dUinst_textBox.Text = String.Format("{0:F3}", (Psi_InstallTop * (DoorL / 1000) + Psi_InstallSide * (DoorH / 1000 * 2) + Psi_InstallButtom * (DoorL / 1000)) / (DoorArea / 1000000));
+
+                    }
+                }
+            }
+            UDinstall_Glass();
+            Load_DoorType_image4();
+            Load_DoorType_image5();
+        }
+
+
+        //출입문type그림
+        private void Load_DoorType_image(String Type)
+        {
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문유형이미지", "이미지", "유형 = '" + Type + "'");
+            DoorType_pictureBox.Visible = true;
+            DoorType_pictureBox.Load(Program.gPath + Image[0][0]);
+            DoorType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+        }
+
+        //치수정보 그림 
+        private void Load_DoorType_image2()
+        {
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문유형이미지", "이미지", "유형 = '" + "치수" + "'");
+            pictureBox1.Visible = true;
+            pictureBox1.Load(Program.gPath + Image[0][0]);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+        }
 
         //문짝문틀정보 그림
         private void Load_DoorType_image3()
@@ -510,28 +612,24 @@ namespace main.contents
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
-
-        //private void Load_DoorType_image(String Type)
-        //{
-        //    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문유형이미지", "이미지", "유형 = '" + Type + "'");
-        //    DoorType_pictureBox.Visible = true;
-        //    DoorType_pictureBox.Load(Program.gPath + Image[0][0]);
-        //    DoorType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-        //}
-
-
-
-
-        private void DiIndi_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        //설치열교정보 그림
+        //상부
+        private void Load_DoorType_image4()
         {
-            if (DiIndi_comboBox.SelectedItem != null)
-            {
-                DiIndi = DiIndi_comboBox.SelectedItem.ToString();
-                Rule_UD();
-                Calc_dUinst();
-            }
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문설치열교이미지", "열교유형이미지", "구분1 = '" + Install1 + "' AND 구분2 = '" + Install2 + "'");
+            pictureBox3.Visible = true;
+            pictureBox3.Load(Program.gPath + Image[0][0]);
+            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
+        //하부
+        private void Load_DoorType_image5()
+        {
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문설치열교이미지", "하부열교유형이미지", "구분1 = '" + Install1 + "' AND 구분2 = '" + Install2 + "'");
+            pictureBox4.Visible = true;
+            pictureBox4.Load(Program.gPath + Image[0][0]);
+            pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
+        }
 
 
         //Calc
@@ -560,211 +658,36 @@ namespace main.contents
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private void UCW_g_textBox_TextChanged(object sender, EventArgs e)
+        //유리 포함 문 열관류율 
+        public void UD_Glass()
         {
-            if (UDoorMethod == "진단" && abs_textBox.Text != string.Empty)
+            if (g_textBox.Text != null && DoorArea_textBox.Text != null && GlassArea_textBox.Text != null && GlassU_textBox.Text != null)
             {
-                UD = Convert.ToDouble(abs_textBox.Text);
+                DoorUDGlass = (DoorUD * (DoorArea / 1000000) - (GlassArea / 1000000) + Ug * (GlassArea / 1000000) + DoorOver * (2 * DoorH / 1000 + DoorL / 1000) + DoorBottom * DoorL / 1000) / (DoorArea / 1000000);
+                DoorU_textBox.Text = String.Format("{0:F3}", DoorUDGlass);
             }
-            Calc_Ucw();
-            Calc_dUinst();
-        }
-
-        private void UCW_p_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if (UDoorMethod == "진단" && glass_checkBox.Checked && GlassArea_textBox.Text != string.Empty)
-            {
-                Ucw_p = Convert.ToDouble(GlassArea_textBox.Text);
-            }
-            Calc_Ucw();
-            Calc_dUinst();
         }
 
 
-
-        //private void Frame_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    if (Door_comboBox.SelectedItem != null)
-        //    {
-        //        FrameType = Door_comboBox.SelectedItem.ToString();
-        //        //프레임 유형 다시 선택했을 경우 
-        //        try
-        //        {
-        //            if (check_FrameType != null)
-        //            {
-        //                if (FrameType != check_FrameType)
-        //                {
-        //                    MessageBox.Show("프레임, 간봉, 설치열교를 다시 선택하세요.");
-        //                    FrameName = "";
-
-        //                    SpacerName = "";
-        //                    InstallName = "";
-        //                    Install_textBox.Text = "";
-        //                }
-        //            }
-        //        }
-        //        catch { }
-        //        Calc_Ucw();
-        //        Calc_dUinst();
-        //    }
-        //}
-
-        private void FrameDB_button_Click(object sender, EventArgs e)
+        //문 유효 열관류율
+        public void UDinstall_Glass()
         {
-            if (FrameType == null)
+            if (dUinst_textBox.Text != null)
             {
-                MessageBox.Show("프레임 유형부터 선택하세요.");
+                DoorUDinsGlass = DoorUDGlass + Convert.ToDouble(dUinst_textBox.Text);
+                UD_textBox.Text = String.Format("{0:F3}", DoorUDinsGlass);
             }
-            else
-            {
-                CW_FrameDB cw_frameDB_form = new CW_FrameDB(FrameType);
-
-                DialogResult result = cw_frameDB_form.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    FrameName = cw_frameDB_form.Select_CWFrame[1];
-
-
-                    tabControl1.SelectedTab = tabControl1.TabPages["Frame_tabPage"];
-                    check_FrameType = cw_frameDB_form.Select_CWFrame[3];
-                    Uf_mt = Convert.ToDouble(cw_frameDB_form.Select_CWFrame[5]);
-                    Uf_open = Convert.ToDouble(cw_frameDB_form.Select_CWFrame[6]);
-                    Psi_p = Convert.ToDouble(cw_frameDB_form.Select_CWFrame[7]);
-                    df_mt = Convert.ToDouble(cw_frameDB_form.Select_CWFrame[8]);
-                    df_open = Convert.ToDouble(cw_frameDB_form.Select_CWFrame[9]);
-
-                }
-            }
-            Calc_Ucw();
-            Calc_dUinst();
-
         }
 
-        private void FixGlassDB_button_Click(object sender, EventArgs e)
-        {
-            GlassDB cw_glassDB_form = new GlassDB();
-            DialogResult result = cw_glassDB_form.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                FixGlassName = cw_glassDB_form.Select_Glass[1];
-                tabControl1.SelectedTab = tabControl1.TabPages["Glass_tabPage"];
-                LE_CL_V = cw_glassDB_form.Select_Glass[5];
-                Ug_Fix = Convert.ToDouble(cw_glassDB_form.Select_Glass[6]);
-                g = Convert.ToDouble(cw_glassDB_form.Select_Glass[7]);
-                g_textBox.Text = String.Format("{0:F3}", g);
-                τ = Convert.ToDouble(cw_glassDB_form.Select_Glass[8]);
-            }
 
-            //유리를 다시 선택했을 경우 
-            try
-            {
-                if (check_LE_CL_V != null)
-                {
-                    if (LE_CL_V != check_LE_CL_V)
-                    {
-                        MessageBox.Show("간봉을 다시 선택하세요.");
-                        SpacerName = "";
-                    }
-                }
-
-            }
-            catch { }
-            Calc_Ucw();
-            Calc_dUinst();
-
-        }
-
-        private void OpenGlassDB_button_Click(object sender, EventArgs e)
-        {
-            GlassDB cw_glassDB_form = new GlassDB();
-            DialogResult result = cw_glassDB_form.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                OpenGlassName = cw_glassDB_form.Select_Glass[1];
-                tabControl1.SelectedTab = tabControl1.TabPages["Glass_tabPage"];
-                Ug_Open = Convert.ToDouble(cw_glassDB_form.Select_Glass[6]);
-
-            }
-            Calc_Ucw();
-            Calc_dUinst();
-
-        }
-
-        private void Spacer_button_Click(object sender, EventArgs e)
-        {
-            if (FrameType == null)
-            {
-                MessageBox.Show("프레임부터 선택하세요.");
-            }
-            else if (LE_CL_V == null)
-            {
-                MessageBox.Show("유리부터 선택하세요.");
-            }
-            else
-            {
-                CW_SpacerDB cw_spacerDB_form = new CW_SpacerDB(FrameType, LE_CL_V);
-                DialogResult result = cw_spacerDB_form.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    check_FrameType = cw_spacerDB_form.Select_Spacer[4];
-                    check_LE_CL_V = cw_spacerDB_form.Select_Spacer[9];
-                    SpacerName = cw_spacerDB_form.Select_Spacer[3];
-
-                    if (LE_CL_V.Contains("LE"))
-                    {
-                        Psi_g_fix = Convert.ToDouble(cw_spacerDB_form.Select_Spacer[7]);
-                        Psi_g_open = Convert.ToDouble(cw_spacerDB_form.Select_Spacer[8]);
-                    }
-                    else
-                    {
-                        Psi_g_fix = Convert.ToDouble(cw_spacerDB_form.Select_Spacer[5]);
-                        Psi_g_open = Convert.ToDouble(cw_spacerDB_form.Select_Spacer[6]);
-                    }
-                    tabControl1.SelectedTab = tabControl1.TabPages["Glass_tabPage"];
-
-                }
-            }
-            Calc_Ucw();
-            Calc_dUinst();
-        }
 
         private void glass_checkBox_CheckedChanged(object sender, EventArgs e)
         {
             Act_UDoorMethod();
             glasscheck();
-            Calc_Ucw();
-            Calc_dUinst();
             glass_check = glass_checkBox.Checked;
         }
+
         private void glasscheck()
         {
             if (glass_checkBox.Checked)
@@ -777,7 +700,8 @@ namespace main.contents
                 GlassArea_label.Visible = true;
                 GlassArea_textBox.Visible = true;
                 glassArea_label2.Visible = true;
-                GlassType_ComboBox.Visible = true;
+                GlassName_textBox.Visible = true;
+                GlassDB_button.Visible = true;
                 label85.Visible = true;
                 GlassU_textBox.Visible = true;
                 label84.Visible = true;
@@ -800,7 +724,8 @@ namespace main.contents
                 GlassArea_label.Visible = false;
                 GlassArea_textBox.Visible = false;
                 glassArea_label2.Visible = false;
-                GlassType_ComboBox.Visible = false;
+                GlassName_textBox.Visible = false;
+                GlassDB_button.Visible = false;
                 label85.Visible = false;
                 GlassU_textBox.Visible = false;
                 label84.Visible = false;
@@ -813,176 +738,6 @@ namespace main.contents
             }
         }
 
-        private void PanelDB_button_Click(object sender, EventArgs e)
-        {
-            CW_PanelDB cw_panelDB_form = new CW_PanelDB();
-            DialogResult result = cw_panelDB_form.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                PanelName = cw_panelDB_form.Select_CWPanel[1];
-                Conductivity_p = Convert.ToDouble(cw_panelDB_form.Select_CWPanel[4]);
-            }
-            Calc_Up();
-            Calc_Ucw();
-            Calc_dUinst();
-        }
-
-        private void dPanel_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if (GlassL_textBox.Text != null)
-            {
-                dPanel = Convert.ToDouble(GlassL_textBox.Text);
-                Calc_Up();
-            }
-        }
-        private void PanelGlassDB_button_Click(object sender, EventArgs e)
-        {
-            GlassDB cw_glassDB_form = new GlassDB();
-            DialogResult result = cw_glassDB_form.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                PanelGlassName = cw_glassDB_form.Select_Glass[1];
-
-                Ug_panel = Convert.ToDouble(cw_glassDB_form.Select_Glass[6]);
-                LE_CL_V_Panel = cw_glassDB_form.Select_Glass[5];
-            }
-            Calc_Up();
-            Calc_Ucw();
-            Calc_dUinst();
-        }
-
-        private void Calc_Up()
-        {
-            double R;
-
-            if (LE_CL_V_Panel != "LE")
-            {
-                R = 0.197;
-            }
-            else
-            {
-                R = 0.364;
-            }
-
-            Up = 1 / ((dPanel / 1000) / Conductivity_p + (1 / Ug_panel) - 0.17 + R);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private void Door_checkBox_CheckedChanged(object sender, EventArgs e)
-        {
-            Act_UDoorMethod();
-
-            Calc_Ucw();
-            Calc_dUinst();
-        }
-
-
-        private void DoorFrameDB_button_Click(object sender, EventArgs e)
-        {
-            CW_DoorFrameDB cw_doorframeDB_form = new CW_DoorFrameDB();
-
-            DialogResult result = cw_doorframeDB_form.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                DoorFrame = cw_doorframeDB_form.Select_DoorFrame[1];
-
-                tabControl1.SelectedTab = tabControl1.TabPages["Frame_tabPage"];
-                check_DoorFrame = cw_doorframeDB_form.Select_DoorFrame[3];
-                Uf_door = Convert.ToDouble(cw_doorframeDB_form.Select_DoorFrame[4]);
-                df_door = Convert.ToDouble(cw_doorframeDB_form.Select_DoorFrame[5]);
-
-            }
-            Calc_Ucw();
-            Calc_dUinst();
-
-        }
-
-
-        private void DoorGlassDB_button_Click(object sender, EventArgs e)
-        {
-            GlassDB cw_glassDB_form = new GlassDB();
-            DialogResult result = cw_glassDB_form.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                DoorGlassName = cw_glassDB_form.Select_Glass[1];
-
-                LE_CL_V_Door = cw_glassDB_form.Select_Glass[5];
-                Ug_Door = Convert.ToDouble(cw_glassDB_form.Select_Glass[6]);
-
-                gd = Convert.ToDouble(cw_glassDB_form.Select_Glass[7]);
-
-                τd = Convert.ToDouble(cw_glassDB_form.Select_Glass[8]);
-                UD_textBox.Text = String.Format("{0:F3}", τd);
-                tabControl1.SelectedTab = tabControl1.TabPages["Glass_tabPage"];
-            }
-
-            //유리를 다시 선택했을 경우 
-            try
-            {
-                if (check_LE_CL_V_Door != null)
-                {
-                    if (LE_CL_V_Door != check_LE_CL_V_Door)
-                    {
-                        MessageBox.Show("간봉을 다시 선택하세요.");
-                        DoorSpacer = "";
-
-                    }
-                }
-
-            }
-            catch { }
-            Calc_Ucw();
-            Calc_dUinst();
-
-        }
-
-        private void DoorSpacerDB_button_Click(object sender, EventArgs e)
-        {
-            if (DoorFrame == null)
-            {
-                MessageBox.Show("출입문 프레임부터 선택하세요.");
-            }
-            else if (LE_CL_V_Door == null)
-            {
-                MessageBox.Show("출입문 유리부터 선택하세요.");
-            }
-            else
-            {
-                CW_SpacerDB cw_spacerDB_form = new CW_SpacerDB(DoorFrame, LE_CL_V_Door);
-                DialogResult result = cw_spacerDB_form.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    check_DoorFrame = cw_spacerDB_form.Select_Spacer[4];
-                    check_LE_CL_V_Door = cw_spacerDB_form.Select_Spacer[9];
-                    DoorSpacer = cw_spacerDB_form.Select_Spacer[3];
-
-                    if (LE_CL_V_Door.Contains("LE"))
-                    {
-                        Psi_g_Door = Convert.ToDouble(cw_spacerDB_form.Select_Spacer[7]);
-                    }
-                    else
-                    {
-                        Psi_g_Door = Convert.ToDouble(cw_spacerDB_form.Select_Spacer[5]);
-                    }
-
-                    tabControl1.SelectedTab = tabControl1.TabPages["Glass_tabPage"];
-                }
-            }
-            Calc_Ucw();
-            Calc_dUinst();
-
-        }
 
         private void Install_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -998,204 +753,15 @@ namespace main.contents
                         if (InstallType != check_InstallType)
                         {
                             MessageBox.Show("설치 위치를 다시 선택하세요.");
-                            InstallName = "";
+                            Install2 = "";
                             Install_textBox.Text = "";
                         }
                     }
                 }
                 catch { }
-                Calc_dUinst();
             }
         }
 
-        private void Install_button_Click(object sender, EventArgs e)
-        {
-            if (UDoorMethod == "계산")
-            {
-                if (FrameType == null)
-                {
-                    MessageBox.Show("프레임부터 선택하세요.");
-                }
-                else if (InstallType == null)
-                {
-                    MessageBox.Show(" 설치구조유형부터 선택하세요.");
-                }
-                else
-                {
-                    CW_InstallDB cw_installDB_form = new CW_InstallDB(InstallType, FrameType);
-                    DialogResult result = cw_installDB_form.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
-                        InstallName = cw_installDB_form.Select_CWInstall[4];
-                        Install_textBox.Text = InstallName;
-                        check_InstallType = cw_installDB_form.Select_CWInstall[2];
-                        tabControl1.SelectedTab = tabControl1.TabPages["Install_tabPage"];
-                        Psi_InstallTop = Convert.ToDouble(cw_installDB_form.Select_CWInstall[5]);
-                        Psi_InstallSide = Convert.ToDouble(cw_installDB_form.Select_CWInstall[6]);
-                        Psi_InstallButtom = Convert.ToDouble(cw_installDB_form.Select_CWInstall[7]);
-
-                        Psi_InstallTop_textBox.Text = String.Format("{0:F3}", Psi_InstallTop);
-                        Psi_InstallSide_textBox.Text = String.Format("{0:F3}", Psi_InstallSide);
-                        Psi_InstallButtom_textBox.Text = String.Format("{0:F3}", Psi_InstallButtom);
-
-
-                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
-                        pictureBox4.Visible = true;
-                        pictureBox4.Load(Program.gPath + Image[0][0]);
-                        pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
-                    }
-                }
-            }
-            else //법규이거나 진단일 경우 
-            {
-                if (InstallType == null)
-                {
-                    MessageBox.Show(" 설치구조유형부터 선택하세요.");
-                }
-                else
-                {
-                    CW_InstallDB window_installDB_form = new CW_InstallDB(InstallType);
-                    DialogResult result = window_installDB_form.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
-                        InstallName = window_installDB_form.Select_CWInstall[4];
-                        Install_textBox.Text = InstallName;
-                        check_InstallType = window_installDB_form.Select_CWInstall[2];
-                        FrameType = window_installDB_form.Select_CWInstall[3];
-                        tabControl1.SelectedTab = tabControl1.TabPages["Install_tabPage"];
-                        Psi_InstallTop = Convert.ToDouble(window_installDB_form.Select_CWInstall[5]);
-                        Psi_InstallSide = Convert.ToDouble(window_installDB_form.Select_CWInstall[6]);
-                        Psi_InstallButtom = Convert.ToDouble(window_installDB_form.Select_CWInstall[7]);
-
-                        Psi_InstallTop_textBox.Text = String.Format("{0:F3}", Psi_InstallTop);
-                        Psi_InstallSide_textBox.Text = String.Format("{0:F3}", Psi_InstallSide);
-                        Psi_InstallButtom_textBox.Text = String.Format("{0:F3}", Psi_InstallButtom);
-
-
-                        string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
-                        pictureBox4.Visible = true;
-                        pictureBox4.Load(Program.gPath + Image[0][0]);
-                        pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
-                    }
-                }
-
-            }
-            Calc_dUinst();
-
-        }
-
-        private void ImportSize_button_Click_1(object sender, EventArgs e)
-        {
-            CW_ImportSize Importsize_form = new CW_ImportSize(CWNum, DoorName);
-
-            DialogResult result = Importsize_form.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                SizeName = Importsize_form.Select[1];
-                Area = Convert.ToDouble(Importsize_form.Select[3]);
-                Width = Convert.ToDouble(Importsize_form.Select[4]);
-                Height = Convert.ToDouble(Importsize_form.Select[5]);
-                Ag_fix = Convert.ToDouble(Importsize_form.Select[6]);
-                Ag_open = Convert.ToDouble(Importsize_form.Select[7]);
-                Lg_fix = Convert.ToDouble(Importsize_form.Select[8]);
-                Lg_open = Convert.ToDouble(Importsize_form.Select[9]);
-                Ap = Convert.ToDouble(Importsize_form.Select[10]);
-                Lp = Convert.ToDouble(Importsize_form.Select[11]);
-                Af_mt = Convert.ToDouble(Importsize_form.Select[12]);
-                Af_open = Convert.ToDouble(Importsize_form.Select[13]);
-                Af_d = Convert.ToDouble(Importsize_form.Select[14]);
-                Ag_d = Convert.ToDouble(Importsize_form.Select[15]);
-                Lg_d = Convert.ToDouble(Importsize_form.Select[16]);
-
-                Size_textBox.Text = SizeName + " 치수 적용";
-                GlassArea_textBox.Text = String.Format("{0:F2}", Area);
-
-                Height_textBox.Text = String.Format("{0:F2}", Height);
-                Height_textBox.Text = String.Format("{0:F2}", Lg_fix);
-                Length_textBox.Text = String.Format("{0:F2}", Lg_open);
-                OverL_textBox.Text = String.Format("{0:F2}", Lp);
-                UnderL_textBox.Text = String.Format("{0:F2}", Lg_d);
-            }
-            Calc_Ucw();
-            Calc_dUinst();
-            d_InstallTop_textBox.Text = String.Format("{0:F2}", Width);
-            d_InstallButtom_textBox.Text = String.Format("{0:F2}", Width);
-            d_InstallSide_textBox.Text = String.Format("{0:F2}", (Height * 2));
-            tabControl1.SelectedTab = tabControl1.TabPages["Install_tabPage"];
-
-        }
-
-
-
-
-        public void Calc_Ucw()
-        {
-            double Af_mt_g = Af_mt * (Ag_fix + Ag_open + Af_open) / (Area - Af_mt);
-            double Af_mt_p = Af_mt * Ap / (Area - Af_mt);
-            double Af_mt_d = Af_mt * (Ag_d + Af_d) / (Area - Af_mt);
-
-            if (UDoorMethod == "계산")
-            {
-                if (Ug_Fix != 0 && Uf_open != 0 && Psi_g_fix != 0 && Area != 0)
-                {
-                    Ucw = ((Ug_Fix * Ag_fix) + (Ug_Open * Ag_open) + (Up * Ag_open) + (Ug_Door * Ag_d) + (Uf_mt * Af_mt) + (Uf_open * Af_open) + (Uf_door * Af_d) + (Psi_g_fix * Lg_fix) + (Psi_g_open * Lg_open) + (Psi_p * Lp) + (Psi_g_Door * Lg_d)) / Area;
-                }
-
-                if (Ug_Fix != 0 && Uf_open != 0 && Psi_g_fix != 0 && Area != 0)
-                {
-                    UD = ((Ug_Fix * Ag_fix) + (Ug_Open * Ag_open) + (Uf_mt * Af_mt_g) + (Uf_open * Af_open) + (Psi_g_fix * Lg_fix) + (Psi_g_open * Lg_open)) / (Ag_fix + Ag_open + Af_mt_g + Af_open);
-                    abs_textBox.Text = String.Format("{0:F3}", UD);
-                    Ff_g = (Ag_fix + Ag_open) / (Ag_fix + Ag_open + Af_mt_g + Af_open);
-                }
-
-                if (glass_checkBox.Checked)
-                {
-                    if (Up != 0 && Psi_p != 0 && Area != 0)
-                    {
-                        Ucw_p = ((Up * Ag_open) + (Uf_mt * Af_mt_p) + +(Psi_p * Lp)) / (Ap + Af_mt_p);
-                        GlassArea_textBox.Text = String.Format("{0:F3}", Ucw_p);
-                    }
-                }
-                else
-                {
-                    Ucw_p = 0;
-                }
-
-            }
-            else
-            {
-                Ucw = ((Ag_fix + Ag_open + Af_open + Af_mt_g) * UD + (Ap + Af_mt_p) * Ucw_p + (Af_d + Ag_d + Af_mt_d) * Ucw_d) / Area;
-            }
-        }
-
-        public void Calc_dUinst()
-        {
-            if (Ucw != 0 && Area != 0)
-            {
-                dUinst = ((Psi_InstallTop * Width) + (Psi_InstallButtom * Width) + (Psi_InstallSide * Height * 2)) / Area;
-
-                if (dUinst.Equals(double.NaN) == false)
-                {
-                    dUinst_textBox.Text = String.Format("{0:F3}", dUinst);
-                }
-            }
-
-            Ucw_inst = Ucw + dUinst;
-            Ucw_g_inst = UD + dUinst;
-
-            if (glass_checkBox.Checked)
-            {
-                if (Up != 0 && Area != 0)
-                {
-                    Ucw_p_inst = Ucw_p + dUinst;
-                }
-            }
-            else
-            {
-                Ucw_p_inst = 0;
-            }
-
-        }
 
         private void Previous_button_Click(object sender, EventArgs e)
         {
@@ -1221,7 +787,7 @@ namespace main.contents
             {
                 MessageBox.Show("유리를 선택하세요.");
             }
-            else if (InstallName == null)
+            else if (Install2 == null)
             {
                 MessageBox.Show("설치열교를 선택하세요.");
             }
@@ -1286,7 +852,7 @@ namespace main.contents
                       "상부설치열관류율,측면설치열관류율,하부설치열관류율," +
                       "사이즈명칭,커튼월면적,너비,높이,고정창유리면적,개폐창유리면적,고정창유리둘레길이,개폐창유리둘레길이,M_T프레임면적,개폐창프레임면적," +
                       "커튼월창열관류율,유리부분열관류율,설치열교가산치,커튼월창유효열관류율,유리부분유효열관류율,유리부분유리면적비",
-                    "'" + DoorNum_textBox.Text + "','" + DoorName + "','" + Type + "','" + OldDoor + "','" + UDoorMethod + "','" + DiIndi + "','" + FrameType + "','" + FrameName + "','" + FixGlassName + "','" + OpenGlassName + "','" + SpacerName + "','" + InstallType + "','" + InstallName + "','" + LE_CL_V + "','" + glass_check.ToString() + "','" + Door_check.ToString() + "','" +
+                    "'" + DoorNum_textBox.Text + "','" + DoorName + "','" + Type + "','" + OldDoor + "','" + UDoorMethod + "','" + DiIndi + "','" + FrameType + "','" + FrameName + "','" + FixGlassName + "','" + OpenGlassName + "','" + SpacerName + "','" + InstallType + "','" + Install2 + "','" + LE_CL_V + "','" + glass_check.ToString() + "','" + Door_check.ToString() + "','" +
                     Ug_Fix.ToString() + "','" + Ug_Open.ToString() + "','" + g.ToString() + "','" + τ.ToString() + "','" + Psi_g_fix.ToString() + "','" + Psi_g_open.ToString() + "','" + Uf_mt.ToString() + "','" + Uf_open.ToString() + "','" + df_mt.ToString() + "','" + df_open.ToString() + "','" +
                     Psi_InstallTop.ToString() + "','" + Psi_InstallSide.ToString() + "','" + Psi_InstallButtom.ToString() + "','" +
                     SizeName + "','" + Area.ToString() + "','" + Width.ToString() + "','" + Height.ToString() + "','" + Ag_fix.ToString() + "','" + Ag_open.ToString() + "','" + Lg_fix.ToString() + "','" + Lg_open.ToString() + "','" + Af_mt.ToString() + "','" + Af_open.ToString() + "','" +

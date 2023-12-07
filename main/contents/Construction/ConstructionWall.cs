@@ -456,7 +456,7 @@ namespace main.contents
         {
             if (DiIndi2_comboBox.SelectedItem != null)
             {
-                DiIndi = DiIndi_comboBox.SelectedItem.ToString();
+                DiIndi = DiIndi2_comboBox.SelectedItem.ToString();
                 Calc_RseRsi();
                 Calc_Ueff();
             }

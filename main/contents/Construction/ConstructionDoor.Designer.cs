@@ -52,6 +52,8 @@
             label25 = new Label();
             label4 = new Label();
             panel2 = new Panel();
+            GlassName_textBox = new TextBox();
+            GlassDB_button = new Button();
             DoorH_textBox = new TextBox();
             DoorL_textBox = new TextBox();
             DoorDB_textBox = new TextBox();
@@ -68,7 +70,6 @@
             label84 = new Label();
             label85 = new Label();
             label83 = new Label();
-            GlassType_ComboBox = new CustomComboBox();
             label29 = new Label();
             GlassH_textBox = new TextBox();
             glass2_label = new Label();
@@ -334,6 +335,7 @@
             Previous_button.TabIndex = 93;
             Previous_button.Text = "<<PREVIOUS";
             Previous_button.UseVisualStyleBackColor = true;
+            Previous_button.Click += Previous_button_Click;
             // 
             // Save_button
             // 
@@ -345,6 +347,7 @@
             Save_button.TabIndex = 92;
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
+            Save_button.Click += Save_button_Click;
             // 
             // Install_comboBox
             // 
@@ -422,6 +425,8 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(GlassName_textBox);
+            panel2.Controls.Add(GlassDB_button);
             panel2.Controls.Add(DoorH_textBox);
             panel2.Controls.Add(DoorL_textBox);
             panel2.Controls.Add(DoorDB_textBox);
@@ -438,7 +443,6 @@
             panel2.Controls.Add(label84);
             panel2.Controls.Add(label85);
             panel2.Controls.Add(label83);
-            panel2.Controls.Add(GlassType_ComboBox);
             panel2.Controls.Add(label29);
             panel2.Controls.Add(GlassH_textBox);
             panel2.Controls.Add(glass2_label);
@@ -474,6 +478,34 @@
             panel2.Size = new Size(977, 307);
             panel2.TabIndex = 95;
             panel2.Paint += panel2_Paint;
+            // 
+            // GlassName_textBox
+            // 
+            GlassName_textBox.BackColor = Color.White;
+            GlassName_textBox.BorderStyle = BorderStyle.None;
+            GlassName_textBox.Enabled = false;
+            GlassName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            GlassName_textBox.ForeColor = SystemColors.ControlDark;
+            GlassName_textBox.Location = new Point(175, 190);
+            GlassName_textBox.Name = "GlassName_textBox";
+            GlassName_textBox.Size = new Size(120, 15);
+            GlassName_textBox.TabIndex = 181;
+            GlassName_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // GlassDB_button
+            // 
+            GlassDB_button.BackColor = SystemColors.ControlLight;
+            GlassDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            GlassDB_button.FlatStyle = FlatStyle.System;
+            GlassDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            GlassDB_button.Location = new Point(296, 186);
+            GlassDB_button.Margin = new Padding(0);
+            GlassDB_button.Name = "GlassDB_button";
+            GlassDB_button.Size = new Size(23, 23);
+            GlassDB_button.TabIndex = 180;
+            GlassDB_button.Text = "+";
+            GlassDB_button.UseVisualStyleBackColor = false;
+            GlassDB_button.Click += GlassDB_button_Click;
             // 
             // DoorH_textBox
             // 
@@ -521,7 +553,7 @@
             label28.AutoSize = true;
             label28.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label28.ForeColor = SystemColors.ControlDark;
-            label28.Location = new Point(825, 117);
+            label28.Location = new Point(828, 117);
             label28.Name = "label28";
             label28.Size = new Size(22, 16);
             label28.TabIndex = 176;
@@ -587,7 +619,7 @@
             label86.AutoSize = true;
             label86.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label86.ForeColor = SystemColors.ControlDark;
-            label86.Location = new Point(825, 219);
+            label86.Location = new Point(828, 219);
             label86.Name = "label86";
             label86.Size = new Size(50, 16);
             label86.TabIndex = 168;
@@ -663,22 +695,11 @@
             label83.AutoSize = true;
             label83.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label83.ForeColor = SystemColors.ControlDark;
-            label83.Location = new Point(824, 272);
+            label83.Location = new Point(828, 272);
             label83.Name = "label83";
             label83.Size = new Size(50, 16);
             label83.TabIndex = 162;
             label83.Text = "W/m²·K";
-            // 
-            // GlassType_ComboBox
-            // 
-            GlassType_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            GlassType_ComboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            GlassType_ComboBox.FormattingEnabled = true;
-            GlassType_ComboBox.Location = new Point(175, 189);
-            GlassType_ComboBox.Name = "GlassType_ComboBox";
-            GlassType_ComboBox.Size = new Size(120, 23);
-            GlassType_ComboBox.TabIndex = 161;
-            GlassType_ComboBox.Visible = false;
             // 
             // label29
             // 
@@ -820,7 +841,7 @@
             glassArea_label2.AutoSize = true;
             glassArea_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             glassArea_label2.ForeColor = SystemColors.ControlDark;
-            glassArea_label2.Location = new Point(824, 161);
+            glassArea_label2.Location = new Point(828, 161);
             glassArea_label2.Name = "glassArea_label2";
             glassArea_label2.Size = new Size(22, 16);
             glassArea_label2.TabIndex = 113;
@@ -867,6 +888,7 @@
             Install_button.TabIndex = 94;
             Install_button.Text = "+";
             Install_button.UseVisualStyleBackColor = false;
+            Install_button.Click += Install_button_Click_1;
             // 
             // DoorDB_button
             // 
@@ -924,7 +946,7 @@
             Ug_unit_label.AutoSize = true;
             Ug_unit_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Ug_unit_label.ForeColor = SystemColors.ControlDark;
-            Ug_unit_label.Location = new Point(825, 85);
+            Ug_unit_label.Location = new Point(828, 85);
             Ug_unit_label.Name = "Ug_unit_label";
             Ug_unit_label.Size = new Size(50, 16);
             Ug_unit_label.TabIndex = 64;
@@ -1010,7 +1032,7 @@
             bottom_textBox.Enabled = false;
             bottom_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             bottom_textBox.ForeColor = SystemColors.ControlDark;
-            bottom_textBox.Location = new Point(675, 82);
+            bottom_textBox.Location = new Point(708, 82);
             bottom_textBox.Name = "bottom_textBox";
             bottom_textBox.Size = new Size(116, 15);
             bottom_textBox.TabIndex = 190;
@@ -1021,7 +1043,7 @@
             label23.AutoSize = true;
             label23.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label23.ForeColor = SystemColors.ControlDark;
-            label23.Location = new Point(792, 82);
+            label23.Location = new Point(828, 82);
             label23.Name = "label23";
             label23.Size = new Size(50, 16);
             label23.TabIndex = 188;
@@ -1045,7 +1067,7 @@
             over_textBox.Enabled = false;
             over_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             over_textBox.ForeColor = SystemColors.ControlDark;
-            over_textBox.Location = new Point(675, 55);
+            over_textBox.Location = new Point(708, 55);
             over_textBox.Name = "over_textBox";
             over_textBox.Size = new Size(116, 15);
             over_textBox.TabIndex = 187;
@@ -1056,7 +1078,7 @@
             label9.AutoSize = true;
             label9.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label9.ForeColor = SystemColors.ControlDark;
-            label9.Location = new Point(792, 55);
+            label9.Location = new Point(828, 55);
             label9.Name = "label9";
             label9.Size = new Size(50, 16);
             label9.TabIndex = 185;
@@ -1080,7 +1102,7 @@
             Material_textBox.Enabled = false;
             Material_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Material_textBox.ForeColor = SystemColors.ControlDark;
-            Material_textBox.Location = new Point(181, 62);
+            Material_textBox.Location = new Point(111, 62);
             Material_textBox.Name = "Material_textBox";
             Material_textBox.Size = new Size(80, 15);
             Material_textBox.TabIndex = 184;
@@ -1093,7 +1115,7 @@
             FrameIn_textBox.Enabled = false;
             FrameIn_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             FrameIn_textBox.ForeColor = SystemColors.ControlDark;
-            FrameIn_textBox.Location = new Point(267, 61);
+            FrameIn_textBox.Location = new Point(197, 61);
             FrameIn_textBox.Name = "FrameIn_textBox";
             FrameIn_textBox.Size = new Size(80, 15);
             FrameIn_textBox.TabIndex = 183;
@@ -1106,7 +1128,7 @@
             DoorIn_textBox.Enabled = false;
             DoorIn_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             DoorIn_textBox.ForeColor = SystemColors.ControlDark;
-            DoorIn_textBox.Location = new Point(361, 62);
+            DoorIn_textBox.Location = new Point(291, 62);
             DoorIn_textBox.Name = "DoorIn_textBox";
             DoorIn_textBox.Size = new Size(80, 15);
             DoorIn_textBox.TabIndex = 182;
@@ -1117,7 +1139,7 @@
             label14.AutoSize = true;
             label14.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label14.ForeColor = SystemColors.ControlDark;
-            label14.Location = new Point(377, 33);
+            label14.Location = new Point(307, 33);
             label14.Name = "label14";
             label14.Size = new Size(51, 16);
             label14.TabIndex = 181;
@@ -1128,7 +1150,7 @@
             label13.AutoSize = true;
             label13.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label13.ForeColor = SystemColors.ControlDark;
-            label13.Location = new Point(283, 33);
+            label13.Location = new Point(213, 33);
             label13.Name = "label13";
             label13.Size = new Size(51, 16);
             label13.TabIndex = 180;
@@ -1139,7 +1161,7 @@
             label10.AutoSize = true;
             label10.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label10.ForeColor = SystemColors.ControlDark;
-            label10.Location = new Point(196, 33);
+            label10.Location = new Point(126, 33);
             label10.Name = "label10";
             label10.Size = new Size(29, 16);
             label10.TabIndex = 179;
@@ -1147,7 +1169,7 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Location = new Point(171, 91);
+            pictureBox2.Location = new Point(101, 82);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(278, 111);
             pictureBox2.TabIndex = 178;
@@ -1160,7 +1182,7 @@
             UnderL_textBox.Enabled = false;
             UnderL_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UnderL_textBox.ForeColor = SystemColors.ControlDark;
-            UnderL_textBox.Location = new Point(697, 157);
+            UnderL_textBox.Location = new Point(708, 157);
             UnderL_textBox.Name = "UnderL_textBox";
             UnderL_textBox.Size = new Size(116, 15);
             UnderL_textBox.TabIndex = 173;
@@ -1173,7 +1195,7 @@
             OverL_textBox.Enabled = false;
             OverL_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             OverL_textBox.ForeColor = SystemColors.ControlDark;
-            OverL_textBox.Location = new Point(697, 130);
+            OverL_textBox.Location = new Point(708, 130);
             OverL_textBox.Name = "OverL_textBox";
             OverL_textBox.Size = new Size(116, 15);
             OverL_textBox.TabIndex = 167;
@@ -1197,7 +1219,7 @@
             label67.AutoSize = true;
             label67.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label67.ForeColor = SystemColors.ControlDark;
-            label67.Location = new Point(822, 156);
+            label67.Location = new Point(828, 156);
             label67.Name = "label67";
             label67.Size = new Size(18, 16);
             label67.TabIndex = 175;
@@ -1219,7 +1241,7 @@
             label71.AutoSize = true;
             label71.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label71.ForeColor = SystemColors.ControlDark;
-            label71.Location = new Point(822, 129);
+            label71.Location = new Point(828, 129);
             label71.Name = "label71";
             label71.Size = new Size(18, 16);
             label71.TabIndex = 169;
@@ -1277,7 +1299,7 @@
             label20.AutoSize = true;
             label20.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label20.ForeColor = SystemColors.ControlDark;
-            label20.Location = new Point(186, 107);
+            label20.Location = new Point(186, 76);
             label20.Name = "label20";
             label20.Size = new Size(29, 16);
             label20.TabIndex = 167;
@@ -1288,7 +1310,7 @@
             label19.AutoSize = true;
             label19.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label19.ForeColor = SystemColors.ControlDark;
-            label19.Location = new Point(186, 22);
+            label19.Location = new Point(186, 5);
             label19.Name = "label19";
             label19.Size = new Size(29, 16);
             label19.TabIndex = 166;
@@ -1299,7 +1321,7 @@
             label18.AutoSize = true;
             label18.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label18.ForeColor = SystemColors.ControlDark;
-            label18.Location = new Point(26, 134);
+            label18.Location = new Point(26, 144);
             label18.Name = "label18";
             label18.Size = new Size(29, 16);
             label18.TabIndex = 165;
@@ -1329,9 +1351,9 @@
             // 
             // pictureBox3
             // 
-            pictureBox3.Location = new Point(84, 21);
+            pictureBox3.Location = new Point(84, 22);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(242, 75);
+            pictureBox3.Size = new Size(242, 53);
             pictureBox3.TabIndex = 136;
             pictureBox3.TabStop = false;
             // 
@@ -1564,9 +1586,9 @@
             // 
             // pictureBox4
             // 
-            pictureBox4.Location = new Point(84, 107);
+            pictureBox4.Location = new Point(84, 82);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(242, 75);
+            pictureBox4.Size = new Size(242, 124);
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
             // 
@@ -1832,7 +1854,6 @@
         private TextBox DoorTh_textBox;
         private CustomComboBox DoorIn_ComboBox;
         private Label label83;
-        private CustomComboBox GlassType_ComboBox;
         private Label label29;
         private TextBox GlassH_textBox;
         private Label glass2_label;
@@ -1917,5 +1938,7 @@
         private TextBox DoorL2_textBox;
         private TextBox DoorH_textBox;
         private TextBox DoorL_textBox;
+        private TextBox GlassName_textBox;
+        private Button GlassDB_button;
     }
 }
