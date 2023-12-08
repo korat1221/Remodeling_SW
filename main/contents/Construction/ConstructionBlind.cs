@@ -252,7 +252,7 @@ namespace main.contents
                     res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='남' And 기간 = '" + mth.ToString() + "월'");
                     s += Convert.ToDouble(res1[0][0]) * 100 + ",";
                 }
-                res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='동' And 기간 = '" + 12.ToString() + "월'");
+                res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='남' And 기간 = '" + 12.ToString() + "월'");
                 s += Convert.ToDouble(res1[0][0]) * 100;
 
 

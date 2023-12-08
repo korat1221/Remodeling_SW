@@ -401,7 +401,8 @@ namespace main
                 while (++i < ZoneWin.Length)
                 {
                     String[][] ZoneWin_P = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접,태양열취득률,빛투과율", "번호='" + ZoneWin[i][7] + "'");
-                    Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]), ZoneWin[i][8], ZoneWin[i][9]);
+                    string[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호='" + ZoneWin[i][0] + "'");
+                    Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]), Convert.ToDouble(Blind[0][0]), Convert.ToDouble(Blind[0][1]), ZoneWin[i][8], ZoneWin[i][9]);
                     zoneWin.Add(win);
                     //나중에 차양포함 태양열취득률, 빛투과율 반영해야 함
                 }
@@ -424,19 +425,20 @@ namespace main
                     if (ZoneCW[i][2] == "유리부분")
                     {
                         String[][] CW_g = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "유리부분열관류율,유리부분유리면적비,태양열취득률,빛투과율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
-                        CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[i][0]), Convert.ToDouble(CW_g[i][1]), Convert.ToDouble(CW_g[i][2]), Convert.ToDouble(CW_g[i][3]), 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[i][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
-                        zoneCW.Add(cw);
+                        string[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호='" + ZoneCW[i][3] + "'");
+                        CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[i][0]), Convert.ToDouble(CW_g[i][1]), Convert.ToDouble(CW_g[i][2]), Convert.ToDouble(Blind[0][0]),  Convert.ToDouble(CW_g[i][3]), Convert.ToDouble(Blind[0][1]), 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[i][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
+                        zoneCW.Add(cw); 
                     }
                     else if (ZoneCW[i][2] == "패널부분")
                     {
                         String[][] CW_p = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "패널부분열관류율,패널흡수율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
-                        CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[i][0]), Convert.ToDouble(CW_p[i][1]), 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[i][2]), ZoneCW[i][4], ZoneCW[i][5], "패널부분");
+                        CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0,0,0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[i][0]), Convert.ToDouble(CW_p[i][1]), 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[i][2]), ZoneCW[i][4], ZoneCW[i][5], "패널부분");
                         zoneCW.Add(cw);
                     }
                     else
                     {
                         String[][] CW_d = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "출입문부분열관류율,출입문부분유리면적비,출입문태양열취득률,출입문빛투과율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
-                        CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[i][0]), Convert.ToDouble(CW_d[i][1]), Convert.ToDouble(CW_d[i][2]), Convert.ToDouble(CW_d[i][3]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[i][4]), ZoneCW[i][4], ZoneCW[i][5], "출입문부분");
+                        CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0,0,0,0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[i][0]), Convert.ToDouble(CW_d[i][1]), Convert.ToDouble(CW_d[i][2]), Convert.ToDouble(CW_d[i][3]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[i][4]), ZoneCW[i][4], ZoneCW[i][5], "출입문부분");
                         zoneCW.Add(cw);
                     }  //나중에 차양포함 태양열취득률, 빛투과율 반영해야 함
                 }
@@ -1734,12 +1736,13 @@ namespace main
 
                 while (++i < zoneWin.Count)
                 {
+                    Window zonewin = (Window)zoneWin[i];
                     //나중에 음영 수정해야 함 
-                    // string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneWin_Shadow", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
-
+                    // string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneWin_Shadow", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");                   
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        zoneWins_Fs[i, mth] = 1;
+                        string[][] Shade = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", "번호= '" + zonewin.Num() + "' And 유형 ='최종음영' And 월 = '" + (mth + 1).ToString() + "월'");
+                        zoneWins_Fs[i, mth] = Convert.ToDouble(Shade[0][0]);    
                     }
                 }
             }
@@ -1752,11 +1755,15 @@ namespace main
 
                 while (++i < zoneWin.Count)
                 {
+                    Window zonewin = (Window)zoneWin[i];
+                    String[][] BlindValue = Program.DB.querySQL(DB.type.ProjDB, "select a.제어방식2 FROM ConstructionBlind AS a INNER JOIN Blind_3D AS b ON a.번호 = b.차양번호 where b.번호 = '" + zonewin.Num() + "'");
+
                     //  string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneWin_a", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
                     //나중에 차양 가동계수 수정해야 함 
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        zoneWins_a[i, mth] = 0;
+                        string[][] Blind_a = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + BlindValue[0][0], "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + zonewin.Direction() + "' And 기간 = '" + (mth + 1).ToString() + "월'");
+                        zoneWins_a[i, mth] = Convert.ToDouble(Blind_a[0][0]);
                     }
                 }
             }
@@ -1841,11 +1848,13 @@ namespace main
 
                 while (++i < zoneCW.Count)
                 {
+                    CW zonecw = (CW)zoneCW[i];
                     // string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneCW_shadow", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
                     //나중에 음영정보 수정해야함 
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        zoneCWs_Fs[i, mth] = 1;
+                        string[][] Shade = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", "번호= '" + zonecw.Num() + "' And 유형 ='최종음영' And 월 = '" + (mth + 1).ToString() + "월'");
+                        zoneCWs_Fs[i, mth] = Convert.ToDouble(Shade[0][0]);
                     }
                 }
             }
@@ -1855,11 +1864,15 @@ namespace main
 
                 while (++i < zoneCW.Count)
                 {
-                    // string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneCW_a", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneCW_Name[i][0] + "'");
-                    //나중에 차양정보 수정해야함 
+                    CW zonecw = (CW)zoneCW[i];
+                    String[][] BlindValue = Program.DB.querySQL(DB.type.ProjDB, "select a.제어방식2 FROM ConstructionBlind AS a INNER JOIN Blind_3D AS b ON a.번호 = b.차양번호 where b.번호 = '" + zonecw.Num() + "'");
+
+                    //  string[][] token = Program.DB.getValue(DB.type.ProjDB, "ZoneWin_a", "value", "zoneNum='" + zoneNum + "' AND 구조체='" + ZoneWin_Name[i][0] + "'");
+                    //나중에 차양 가동계수 수정해야 함 
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        zoneCWs_a[i, mth] = 0;
+                        string[][] Blind_a = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + BlindValue[0][0], "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + zonecw.Direction() + "' And 기간 = '" + (mth + 1).ToString() + "월'");
+                        zoneCWs_a[i, mth] = Convert.ToDouble(Blind_a[0][0]);
                     }
                 }
             }
@@ -2693,7 +2706,7 @@ namespace main
         String Window_Direction;
         String Window_Degree;
 
-        public Window(String EnvelopeNum, String ConstructionNum, String SubConstructionNum, double Area, double Uvalue, double Uinst, String DiIndi, double Ff, double g, double tao, String Direction, String Degree)
+        public Window(String EnvelopeNum, String ConstructionNum, String SubConstructionNum, double Area, double Uvalue, double Uinst, String DiIndi, double Ff, double g, double tao, double gtot, double taotot, String Direction, String Degree)
         {
             this.Window_Num = EnvelopeNum;
             this.Window_ConstructionNum = ConstructionNum;
@@ -2705,6 +2718,8 @@ namespace main
             this.Window_Ff = Ff;
             this.Window_g = g;
             this.Window_tao = tao;
+            this.Window_gtot = gtot;
+            this.Window_taotot = taotot;
             this.Window_Direction = Direction;
             this.Window_Degree = Degree;
             //this.Window_gtot = gtot;
@@ -2798,7 +2813,7 @@ namespace main
         String CW_Degree;
         String CW_CWType;
 
-        public CW(String EnvelopeNum, String ConstructionNum, double Area_g, double Uvalue_g, double Ff_g, double g_g, double tao_g, double Area_p, double Uvalue_p, double α_p, double Area_d, double Uvalue_d, double Ff_d, double g_d, double tao_d, double Area_tot, double Uinst, String Direction, String Degree, string cWType)
+        public CW(String EnvelopeNum, String ConstructionNum, double Area_g, double Uvalue_g, double Ff_g, double g_g, double gtot_g, double tao_g, double taotot_g,double Area_p, double Uvalue_p, double α_p, double Area_d, double Uvalue_d, double Ff_d, double g_d, double tao_d, double Area_tot, double Uinst, String Direction, String Degree, string cWType)
         {
             this.CW_Num = EnvelopeNum;
             this.CW_ConstructionNum = ConstructionNum;
@@ -2806,9 +2821,9 @@ namespace main
             this.CW_Uvalue_g = Uvalue_g;
             this.CW_Ff_g = Ff_g;
             this.CW_g_g = g_g;
-            // this.CW_gtot_g = gtot_g;
+            this.CW_gtot_g = gtot_g;
             this.CW_tao_g = tao_g;
-            // this.CW_taotot_g = taotot_g;
+            this.CW_taotot_g = taotot_g;
             this.CW_Area_p = Area_p;
             this.CW_Uvalue_p = Uvalue_p;
             this.CW_α_p = α_p;

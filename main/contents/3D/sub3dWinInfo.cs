@@ -1,4 +1,5 @@
 ﻿using main.subcontents.ConstructionRoof;
+using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,18 +11,37 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace main.contents
 {
     public partial class sub3dWINInfo : Form
     {
+        bool scriptable = false;
         string sid = "";
+        double shgc, light, Ug, Glass_Ex, Glass_In;
         public sub3dWINInfo()
         {
             InitializeComponent();
+            InitializeAsync();
+            webView21.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);
         }
-
-
+        async void InitializeAsync()
+        {
+            await webView21.EnsureCoreWebView2Async(null);
+            webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
+        }
+        void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            scriptable = true;
+        }
+        public void runScript(string script)
+        {
+            if (scriptable)
+            {
+                webView21.CoreWebView2.ExecuteScriptAsync(script);
+            }
+        }
         private void onVisibleChanged(object sender, EventArgs e)
         {
             if (main.MainContents.selID != sid)
@@ -138,43 +158,107 @@ namespace main.contents
 
                     if (SubLoad.Length > 0)
                     {
-                        String[][] MainLoad = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,프레임재료,프레임종류,유리종류,간봉종류,설치유형,설치종류,태양열취득률,빛투과율,Type,설치유형,프레임재료,이중단창,설치종류", "번호 = '" + SubLoad[0][2] + "'");
+                        String[][] MainLoad = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,프레임재료,프레임종류,유리종류,간봉종류,설치유형,설치종류,태양열취득률,빛투과율,Type,설치유형,프레임재료,이중단창,설치종류,유리열관류율", "번호 = '" + SubLoad[0][2] + "'");
 
                         // 텍스트정보 
                         Name_textBox1.Text = SubLoad[0][1];
                         if (MainLoad[0][6] == "내단열" || MainLoad[0][6] == "외단열")
                         { install_textBox.Text = "콘크리트조 " + MainLoad[0][6]; }
                         else { install_textBox.Text = MainLoad[0][6]; }
-                        glass_textBox.Text = MainLoad[0][4];
-                        frame_textBox.Text = MainLoad[0][2];
-                        Spacer_textBox.Text = MainLoad[0][5];
-                        shgc_textBox.Text = MainLoad[0][8];
-                        light_textBox.Text = MainLoad[0][9];
-                        uw = Convert.ToDouble(SubLoad[0][6]);
-                        uw_textBox.Text = uw.ToString("0.000");
-                        install = Convert.ToDouble(SubLoad[0][7]);
-                        inst_textBox.Text = install.ToString("0.000");
-                        Type = MainLoad[0][10];
-                        InstallType = MainLoad[0][11];
-                        FrameMaterial = MainLoad[0][12];
-                        SingleDoubleType = MainLoad[0][13];
-                        InstallName = MainLoad[0][14];
+                        glass_textBox.Text = MainLoad[0][4];       
+                            frame_textBox.Text = MainLoad[0][2];
+                            Spacer_textBox.Text = MainLoad[0][5];
+                            shgc_textBox.Text = MainLoad[0][8];
+                            shgc = Convert.ToDouble(MainLoad[0][8]);
+                            SHGC_off_textBox.Text = shgc.ToString("0.000");
+                            SHGC_on_textBox.Text = shgc.ToString("0.000");
 
-                        //그림로드
-                        string[][] Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
-                        WindowType_pictureBox.Visible = true;
-                        WindowType_pictureBox.Load(Program.gPath + Image2[0][0]);
-                        WindowType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                            light_textBox.Text = MainLoad[0][9];
+                            light = Convert.ToDouble(MainLoad[0][9]);
+                            Tao_off_textBox.Text = light.ToString("0.000");
+                            Tao_on_textBox.Text = light.ToString("0.000");
 
-                        string[][] Image3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");
-                        WindowInstall_pictureBox.Visible = true;
-                        WindowInstall_pictureBox.Load(Program.gPath + Image3[0][0]);
-                        WindowInstall_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                            uw = Convert.ToDouble(SubLoad[0][6]);
+                            uw_textBox.Text = uw.ToString("0.000");
+                            install = Convert.ToDouble(SubLoad[0][7]);
+                            inst_textBox.Text = install.ToString("0.000");
+                            Type = MainLoad[0][10];
+                            InstallType = MainLoad[0][11];
+                            FrameMaterial = MainLoad[0][12];
+                            SingleDoubleType = MainLoad[0][13];
+                            InstallName = MainLoad[0][14];
+                            Ug = Convert.ToDouble(MainLoad[0][15]);
+                            Ug_off_textBox.Text = Ug.ToString("0.000");
+                            Ug_on_textBox.Text = Ug.ToString("0.000");
 
+                            //그림로드
+                            string[][] Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
+                            WindowType_pictureBox.Visible = true;
+                            WindowType_pictureBox.Load(Program.gPath + Image2[0][0]);
+                            WindowType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+                            string[][] Image3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");
+                            WindowInstall_pictureBox.Visible = true;
+                            WindowInstall_pictureBox.Load(Program.gPath + Image3[0][0]);
+                            WindowInstall_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+                        
                     }
+                    //차양정보 불러오기
+                    String[][] BlindValue = Program.DB.querySQL(DB.type.ProjDB, "select a.제품명,a.종류,a.설치,a.투과수준,a.색깔,a.외부반사율,a.내부반사율,a.투과율,a.흡수율,a.제어방식1,a.제어방식2,b.방위 FROM ConstructionBlind AS  a INNER JOIN ZoneEnvelope_3D AS b ON a.번호 = b.차양적용 where b.아이디 = '" + ID + "'");
+
+                    if (BlindValue.Length > 0)
+                    {
+                        BlindName_textBox.Text = BlindValue[0][0];
+                        BlindType_textBox.Text = BlindValue[0][1];
+                        BlindInstall_textBox.Text = BlindValue[0][2];
+                        BlindTrans_textBox.Text = BlindValue[0][3];
+                        BlindColor_textBox.Text = BlindValue[0][4];
+                        BlindControl_textBox.Text = BlindValue[0][9];
+
+                        LoadGraph(BlindValue[0][10], BlindValue[0][11]);
+
+                        String[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D","차양포함태양열취득률,차양포함빛투과율", "아이디 = '" + ID + "'");
+                        if(Blind.Length > 0)
+                        {
+                            SHGC_on_textBox.Text = Convert.ToDouble(Blind[0][0]).ToString("0.000");
+                            Tao_on_textBox.Text = Convert.ToDouble(Blind[0][1]).ToString("0.000");
+                        }                        
+                    }
+
                 }
             }
         }
+           
+            private void LoadGraph(String ControlType2, String Direction)
+            {
+                try
+                {
+                    string s = "", s2 = "";
+                    string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
+                    string[][] res1;
+                    for (int mth = 1; mth < 12; mth++)
+                    {
+                        res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + Direction + "' And 기간 = '" + mth.ToString() + "월'");
+                        s += Convert.ToDouble(res1[0][0]) * 100 + ",";
+                    }
+                    res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + Direction + "' And 기간 = '" + 12.ToString() + "월'");
+                    s += Convert.ToDouble(res1[0][0]) * 100;
 
-    }
+
+
+                    string[][] res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT AVG(일사량) FROM 기후데이터_전일사량 WHERE 지역명 = '" + Location[0][0] + "' AND 기간 LIKE '%월' GROUP BY 기간 ORDER BY 기간*1 ASC");
+
+                    for (int k = 0; k < res2.Length; k++)
+                    {
+                        s2 += Convert.ToDouble(res2[k][0]) + ",";
+                    }
+
+                    runScript("drawChart3([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150}])");
+
+                }
+                catch { }
+            }
+
+        }    
 }

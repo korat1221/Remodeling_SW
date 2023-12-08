@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(sub3dCWInfo));
             tabControl1 = new CustomTabControl();
             tabPage1 = new TabPage();
             label7 = new Label();
@@ -77,6 +78,37 @@
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
             webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            Blind_tabPage = new TabPage();
+            label30 = new Label();
+            label24 = new Label();
+            label23 = new Label();
+            label28 = new Label();
+            Tao_on_textBox = new TextBox();
+            SHGC_on_textBox = new TextBox();
+            Ug_on_textBox = new TextBox();
+            Tao_off_textBox = new TextBox();
+            label26 = new Label();
+            SHGC_off_textBox = new TextBox();
+            label27 = new Label();
+            Ug_off_textBox = new TextBox();
+            label29 = new Label();
+            BlindControl_textBox = new TextBox();
+            label21 = new Label();
+            pictureBox3 = new PictureBox();
+            pictureBox4 = new PictureBox();
+            label22 = new Label();
+            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            BlindColor_textBox = new TextBox();
+            label12 = new Label();
+            BlindTrans_textBox = new TextBox();
+            label17 = new Label();
+            BlindInstall_textBox = new TextBox();
+            label18 = new Label();
+            BlindType_textBox = new TextBox();
+            label19 = new Label();
+            label25 = new Label();
+            BlindName_textBox = new TextBox();
+            label20 = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CWInstall_pictureBox).BeginInit();
@@ -85,12 +117,17 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView22).BeginInit();
+            Blind_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
             // 
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(Blind_tabPage);
             tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
@@ -693,6 +730,392 @@
             webView22.TabIndex = 0;
             webView22.ZoomFactor = 1D;
             // 
+            // Blind_tabPage
+            // 
+            Blind_tabPage.Controls.Add(label30);
+            Blind_tabPage.Controls.Add(label24);
+            Blind_tabPage.Controls.Add(label23);
+            Blind_tabPage.Controls.Add(label28);
+            Blind_tabPage.Controls.Add(Tao_on_textBox);
+            Blind_tabPage.Controls.Add(SHGC_on_textBox);
+            Blind_tabPage.Controls.Add(Ug_on_textBox);
+            Blind_tabPage.Controls.Add(Tao_off_textBox);
+            Blind_tabPage.Controls.Add(label26);
+            Blind_tabPage.Controls.Add(SHGC_off_textBox);
+            Blind_tabPage.Controls.Add(label27);
+            Blind_tabPage.Controls.Add(Ug_off_textBox);
+            Blind_tabPage.Controls.Add(label29);
+            Blind_tabPage.Controls.Add(BlindControl_textBox);
+            Blind_tabPage.Controls.Add(label21);
+            Blind_tabPage.Controls.Add(pictureBox3);
+            Blind_tabPage.Controls.Add(pictureBox4);
+            Blind_tabPage.Controls.Add(label22);
+            Blind_tabPage.Controls.Add(webView21);
+            Blind_tabPage.Controls.Add(BlindColor_textBox);
+            Blind_tabPage.Controls.Add(label12);
+            Blind_tabPage.Controls.Add(BlindTrans_textBox);
+            Blind_tabPage.Controls.Add(label17);
+            Blind_tabPage.Controls.Add(BlindInstall_textBox);
+            Blind_tabPage.Controls.Add(label18);
+            Blind_tabPage.Controls.Add(BlindType_textBox);
+            Blind_tabPage.Controls.Add(label19);
+            Blind_tabPage.Controls.Add(label25);
+            Blind_tabPage.Controls.Add(BlindName_textBox);
+            Blind_tabPage.Controls.Add(label20);
+            Blind_tabPage.Location = new Point(4, 25);
+            Blind_tabPage.Name = "Blind_tabPage";
+            Blind_tabPage.Padding = new Padding(3);
+            Blind_tabPage.Size = new Size(945, 421);
+            Blind_tabPage.TabIndex = 2;
+            Blind_tabPage.Text = "차양 정보";
+            Blind_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // label30
+            // 
+            label30.AutoSize = true;
+            label30.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label30.ForeColor = SystemColors.ControlDark;
+            label30.Location = new Point(785, 31);
+            label30.Name = "label30";
+            label30.Size = new Size(44, 16);
+            label30.TabIndex = 137;
+            label30.Text = "차양on";
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label24.ForeColor = SystemColors.ControlDark;
+            label24.Location = new Point(604, 31);
+            label24.Name = "label24";
+            label24.Size = new Size(43, 16);
+            label24.TabIndex = 136;
+            label24.Text = "차양off";
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label23.ForeColor = SystemColors.ControlDark;
+            label23.Location = new Point(873, 64);
+            label23.Name = "label23";
+            label23.Size = new Size(50, 16);
+            label23.TabIndex = 135;
+            label23.Text = "W/m²·K";
+            // 
+            // label28
+            // 
+            label28.AutoSize = true;
+            label28.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label28.ForeColor = SystemColors.ControlDark;
+            label28.Location = new Point(691, 64);
+            label28.Name = "label28";
+            label28.Size = new Size(50, 16);
+            label28.TabIndex = 134;
+            label28.Text = "W/m²·K";
+            // 
+            // Tao_on_textBox
+            // 
+            Tao_on_textBox.BackColor = Color.White;
+            Tao_on_textBox.BorderStyle = BorderStyle.None;
+            Tao_on_textBox.Enabled = false;
+            Tao_on_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Tao_on_textBox.ForeColor = SystemColors.ControlDark;
+            Tao_on_textBox.Location = new Point(747, 141);
+            Tao_on_textBox.Name = "Tao_on_textBox";
+            Tao_on_textBox.Size = new Size(120, 15);
+            Tao_on_textBox.TabIndex = 133;
+            Tao_on_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // SHGC_on_textBox
+            // 
+            SHGC_on_textBox.BackColor = Color.White;
+            SHGC_on_textBox.BorderStyle = BorderStyle.None;
+            SHGC_on_textBox.Enabled = false;
+            SHGC_on_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            SHGC_on_textBox.ForeColor = SystemColors.ControlDark;
+            SHGC_on_textBox.Location = new Point(747, 101);
+            SHGC_on_textBox.Name = "SHGC_on_textBox";
+            SHGC_on_textBox.Size = new Size(120, 15);
+            SHGC_on_textBox.TabIndex = 132;
+            SHGC_on_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Ug_on_textBox
+            // 
+            Ug_on_textBox.BackColor = Color.White;
+            Ug_on_textBox.BorderStyle = BorderStyle.None;
+            Ug_on_textBox.Enabled = false;
+            Ug_on_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Ug_on_textBox.ForeColor = SystemColors.ControlDark;
+            Ug_on_textBox.Location = new Point(747, 65);
+            Ug_on_textBox.Name = "Ug_on_textBox";
+            Ug_on_textBox.Size = new Size(120, 15);
+            Ug_on_textBox.TabIndex = 130;
+            Ug_on_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Tao_off_textBox
+            // 
+            Tao_off_textBox.BackColor = Color.White;
+            Tao_off_textBox.BorderStyle = BorderStyle.None;
+            Tao_off_textBox.Enabled = false;
+            Tao_off_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Tao_off_textBox.ForeColor = SystemColors.ControlDark;
+            Tao_off_textBox.Location = new Point(565, 138);
+            Tao_off_textBox.Name = "Tao_off_textBox";
+            Tao_off_textBox.Size = new Size(120, 15);
+            Tao_off_textBox.TabIndex = 128;
+            Tao_off_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label26.ForeColor = SystemColors.ControlDark;
+            label26.Location = new Point(468, 137);
+            label26.Name = "label26";
+            label26.Size = new Size(51, 16);
+            label26.TabIndex = 127;
+            label26.Text = "빛투과율";
+            // 
+            // SHGC_off_textBox
+            // 
+            SHGC_off_textBox.BackColor = Color.White;
+            SHGC_off_textBox.BorderStyle = BorderStyle.None;
+            SHGC_off_textBox.Enabled = false;
+            SHGC_off_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            SHGC_off_textBox.ForeColor = SystemColors.ControlDark;
+            SHGC_off_textBox.Location = new Point(565, 102);
+            SHGC_off_textBox.Name = "SHGC_off_textBox";
+            SHGC_off_textBox.Size = new Size(120, 15);
+            SHGC_off_textBox.TabIndex = 126;
+            SHGC_off_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label27.ForeColor = SystemColors.ControlDark;
+            label27.Location = new Point(468, 101);
+            label27.Name = "label27";
+            label27.Size = new Size(73, 16);
+            label27.TabIndex = 125;
+            label27.Text = "태양열취득률";
+            // 
+            // Ug_off_textBox
+            // 
+            Ug_off_textBox.BackColor = Color.White;
+            Ug_off_textBox.BorderStyle = BorderStyle.None;
+            Ug_off_textBox.Enabled = false;
+            Ug_off_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Ug_off_textBox.ForeColor = SystemColors.ControlDark;
+            Ug_off_textBox.Location = new Point(565, 66);
+            Ug_off_textBox.Name = "Ug_off_textBox";
+            Ug_off_textBox.Size = new Size(120, 15);
+            Ug_off_textBox.TabIndex = 123;
+            Ug_off_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label29.ForeColor = SystemColors.ControlDark;
+            label29.Location = new Point(468, 65);
+            label29.Name = "label29";
+            label29.Size = new Size(76, 16);
+            label29.TabIndex = 122;
+            label29.Text = "유리 열관류율";
+            // 
+            // BlindControl_textBox
+            // 
+            BlindControl_textBox.BackColor = Color.White;
+            BlindControl_textBox.BorderStyle = BorderStyle.None;
+            BlindControl_textBox.Enabled = false;
+            BlindControl_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindControl_textBox.ForeColor = SystemColors.ControlDark;
+            BlindControl_textBox.Location = new Point(275, 143);
+            BlindControl_textBox.Name = "BlindControl_textBox";
+            BlindControl_textBox.Size = new Size(120, 15);
+            BlindControl_textBox.TabIndex = 121;
+            BlindControl_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new Point(6, 286);
+            label21.Name = "label21";
+            label21.Size = new Size(120, 15);
+            label21.TabIndex = 120;
+            label21.Text = "일사량(kWh/m²·mth)";
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.Location = new Point(130, 279);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(28, 26);
+            pictureBox3.TabIndex = 119;
+            pictureBox3.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
+            pictureBox4.Location = new Point(107, 254);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(51, 19);
+            pictureBox4.TabIndex = 118;
+            pictureBox4.TabStop = false;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Location = new Point(6, 254);
+            label22.Name = "label22";
+            label22.Size = new Size(67, 15);
+            label22.TabIndex = 117;
+            label22.Text = "차양가동율";
+            // 
+            // webView21
+            // 
+            webView21.AllowExternalDrop = true;
+            webView21.CreationProperties = null;
+            webView21.DefaultBackgroundColor = Color.White;
+            webView21.Location = new Point(164, 229);
+            webView21.Name = "webView21";
+            webView21.Size = new Size(781, 192);
+            webView21.TabIndex = 116;
+            webView21.ZoomFactor = 1D;
+            // 
+            // BlindColor_textBox
+            // 
+            BlindColor_textBox.BackColor = Color.White;
+            BlindColor_textBox.BorderStyle = BorderStyle.None;
+            BlindColor_textBox.Enabled = false;
+            BlindColor_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindColor_textBox.ForeColor = SystemColors.ControlDark;
+            BlindColor_textBox.Location = new Point(275, 103);
+            BlindColor_textBox.Name = "BlindColor_textBox";
+            BlindColor_textBox.Size = new Size(120, 15);
+            BlindColor_textBox.TabIndex = 115;
+            BlindColor_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label12.ForeColor = SystemColors.ControlDark;
+            label12.Location = new Point(218, 101);
+            label12.Name = "label12";
+            label12.Size = new Size(29, 16);
+            label12.TabIndex = 114;
+            label12.Text = "색깔";
+            // 
+            // BlindTrans_textBox
+            // 
+            BlindTrans_textBox.BackColor = Color.White;
+            BlindTrans_textBox.BorderStyle = BorderStyle.None;
+            BlindTrans_textBox.Enabled = false;
+            BlindTrans_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindTrans_textBox.ForeColor = SystemColors.ControlDark;
+            BlindTrans_textBox.Location = new Point(275, 67);
+            BlindTrans_textBox.Name = "BlindTrans_textBox";
+            BlindTrans_textBox.Size = new Size(120, 15);
+            BlindTrans_textBox.TabIndex = 113;
+            BlindTrans_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label17.ForeColor = SystemColors.ControlDark;
+            label17.Location = new Point(218, 65);
+            label17.Name = "label17";
+            label17.Size = new Size(51, 16);
+            label17.TabIndex = 112;
+            label17.Text = "투과수준";
+            // 
+            // BlindInstall_textBox
+            // 
+            BlindInstall_textBox.BackColor = Color.White;
+            BlindInstall_textBox.BorderStyle = BorderStyle.None;
+            BlindInstall_textBox.Enabled = false;
+            BlindInstall_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindInstall_textBox.ForeColor = SystemColors.ControlDark;
+            BlindInstall_textBox.Location = new Point(93, 139);
+            BlindInstall_textBox.Name = "BlindInstall_textBox";
+            BlindInstall_textBox.Size = new Size(120, 15);
+            BlindInstall_textBox.TabIndex = 111;
+            BlindInstall_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label18.ForeColor = SystemColors.ControlDark;
+            label18.Location = new Point(48, 138);
+            label18.Name = "label18";
+            label18.Size = new Size(29, 16);
+            label18.TabIndex = 110;
+            label18.Text = "설치";
+            // 
+            // BlindType_textBox
+            // 
+            BlindType_textBox.BackColor = Color.White;
+            BlindType_textBox.BorderStyle = BorderStyle.None;
+            BlindType_textBox.Enabled = false;
+            BlindType_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindType_textBox.ForeColor = SystemColors.ControlDark;
+            BlindType_textBox.Location = new Point(93, 103);
+            BlindType_textBox.Name = "BlindType_textBox";
+            BlindType_textBox.Size = new Size(120, 15);
+            BlindType_textBox.TabIndex = 109;
+            BlindType_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label19.ForeColor = SystemColors.ControlDark;
+            label19.Location = new Point(48, 102);
+            label19.Name = "label19";
+            label19.Size = new Size(29, 16);
+            label19.TabIndex = 108;
+            label19.Text = "종류";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label25.ForeColor = SystemColors.ControlDark;
+            label25.Location = new Point(218, 141);
+            label25.Name = "label25";
+            label25.Size = new Size(51, 16);
+            label25.TabIndex = 107;
+            label25.Text = "제어방법";
+            // 
+            // BlindName_textBox
+            // 
+            BlindName_textBox.BackColor = Color.White;
+            BlindName_textBox.BorderStyle = BorderStyle.None;
+            BlindName_textBox.Enabled = false;
+            BlindName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindName_textBox.ForeColor = SystemColors.ControlDark;
+            BlindName_textBox.Location = new Point(93, 67);
+            BlindName_textBox.Name = "BlindName_textBox";
+            BlindName_textBox.Size = new Size(120, 15);
+            BlindName_textBox.TabIndex = 106;
+            BlindName_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label20.ForeColor = SystemColors.ControlDark;
+            label20.Location = new Point(48, 66);
+            label20.Name = "label20";
+            label20.Size = new Size(29, 16);
+            label20.TabIndex = 105;
+            label20.Text = "제품";
+            // 
             // sub3dCWInfo
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -713,6 +1136,11 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)webView22).EndInit();
+            Blind_tabPage.ResumeLayout(false);
+            Blind_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
         }
 
@@ -733,8 +1161,8 @@
         private Label label10;
         private TextBox Name_textBox;
         private Label label8;
-        private TextBox textBox5;
-        private TextBox textBox6;
+        private TextBox SHGC_off_textBox;
+        private TextBox Ug_off_textBox;
         private TextBox textBox7;
         private TextBox textBox8;
         private TextBox textBox9;
@@ -775,5 +1203,34 @@
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
         private TextBox L1_textBox;
+        private TabPage Blind_tabPage;
+        private TextBox BlindColor_textBox;
+        private Label label12;
+        private TextBox BlindTrans_textBox;
+        private Label label17;
+        private TextBox BlindInstall_textBox;
+        private Label label18;
+        private TextBox BlindType_textBox;
+        private Label label19;
+        private Label label25;
+        private TextBox BlindName_textBox;
+        private Label label20;
+        private Label label28;
+        private TextBox Tao_on_textBox;
+        private TextBox SHGC_on_textBox;
+        private TextBox Ug_on_textBox;
+        private TextBox Tao_off_textBox;
+        private Label label26;
+        private Label label27;
+        private Label label29;
+        private TextBox BlindControl_textBox;
+        private Label label21;
+        private PictureBox pictureBox3;
+        private PictureBox pictureBox4;
+        private Label label22;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+        private Label label30;
+        private Label label24;
+        private Label label23;
     }
 }

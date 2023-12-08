@@ -16,7 +16,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 namespace main.contents
 {
     public partial class sub3dZoneInfo : Form
-    {
+    { String ConsType, ConsNum;
         string sid = "";
         public void resetSID()
         {
@@ -432,7 +432,7 @@ namespace main.contents
         public string Save()
         {
 
-            string num, num0, id, Type, CWType, ConsType, ret = "", tcode, RoofWin = "",Blind ="";
+            string num, num0, id, Type, CWType, ret = "", tcode, RoofWin = "",Blind ="";
             int i = -1;
             while (++i < dataGridView1.RowCount)
             {
@@ -511,11 +511,14 @@ namespace main.contents
                             case "외부출입문":
                                 Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호", "명칭 = '" + ConsType + "'"); ; //출입문으로 나중에 바꿔야함 
                                 break;
+
+                                
                         }
                         if (Value.Length > 0)
                         {
+                            ConsNum = Value[0][0];
                             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-                            Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,프로젝트유형,구조체,구조체번호", "'" + id + "','" + num + "','" + 프로젝트유형[0][0] + "','" + ConsType + "','" + Value[0][0] + "'", "아이디");
+                            Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,프로젝트유형,구조체,구조체번호", "'" + id + "','" + num + "','" + 프로젝트유형[0][0] + "','" + ConsType + "','" + ConsNum + "'", "아이디");
                         }
                         else { }
                     }
@@ -536,6 +539,60 @@ namespace main.contents
                     {
                         Blind = dataGridView1.Rows[i].Cells[12].Value.ToString();
                         Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,차양적용", "'" + id + "','" + Blind + "'", "아이디");
+                        String[][] SubLoad = Program.DB.querySQL(DB.type.ProjDB, "select a.상위창호번호 FROM SubWindow AS a INNER JOIN ZoneEnvelope_3D AS b ON b.구조체번호 = a.번호 where b.아이디 = '" + id + "' AND b.외피유형 = '창호'");
+                        String[][] BlindValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "설치,외부반사율,투과율,흡수율", "번호 = '" + Blind + "'");
+                        if (SubLoad.Length > 0)
+                        {
+                            String[][] MainLoad = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "유리종류,태양열취득률,빛투과율,유리열관류율", "번호 = '" + SubLoad[0][0] + "'");
+
+                            double SHGC_on = Calc_Blind_SHGC(Convert.ToDouble(MainLoad[0][1]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Convert.ToDouble(BlindValue[0][3]), Convert.ToDouble(MainLoad[0][3]), BlindValue[0][0]);
+
+                            double Glass_Ex, Glass_In;
+                            if (MainLoad[0][0].Contains("+"))
+                            {
+                                string[][] glass = Program.DB.getValue(DB.type.ProjDB, "User_DoubleGlass", "외부반사율,내부반사율", "제품명 ='" + MainLoad[0][0] + "'");
+                                Glass_Ex = Convert.ToDouble(glass[0][0]);
+                                Glass_In = Convert.ToDouble(glass[0][1]);
+                            }
+                            else
+                            {
+
+                                string[][] glass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "외부반사율,내부반사율", "제품명 ='" + MainLoad[0][0] + "'");
+                                if (glass.Length == 0)
+                                {
+                                    glass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "외부반사율,내부반사율", "제품명 ='" + MainLoad[0][0] + "'");
+                                }
+
+                                Glass_Ex = Convert.ToDouble(glass[0][0]);
+                                Glass_In = Convert.ToDouble(glass[0][1]);
+                            }
+                            double Tao_on = Calc_Blind_Tao(Convert.ToDouble(MainLoad[0][2]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Glass_Ex, Glass_In, BlindValue[0][0]);
+                            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                            Program.DB.setValue(DB.type.ProjDB, "Blind_3D", "아이디,번호,프로젝트유형,차양번호,차양포함태양열취득률,차양포함빛투과율", "'" + id + "','" + num + "','" + 프로젝트유형[0][0] + "','" + Blind + "','" + SHGC_on.ToString() + "','" + Tao_on.ToString() + "'", "아이디");
+                        }
+                        String[][] CWValue = Program.DB.querySQL(DB.type.ProjDB, "select a.고정유리종류,a.태양열취득률,a.빛투과율,a.고정유리열관류율 FROM ConstructionCW AS a INNER JOIN ZoneEnvelope_3D AS b ON b.구조체번호 = a.번호 where b.아이디 = '" + id + "' AND b.외피유형 = '커튼월창'");
+                        if (CWValue.Length > 0)
+                        {
+                            double SHGC_on = Calc_Blind_SHGC(Convert.ToDouble(CWValue[0][1]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Convert.ToDouble(BlindValue[0][3]), Convert.ToDouble(CWValue[0][3]), BlindValue[0][0]);
+
+                            double Glass_Ex, Glass_In;
+
+                                string[][] glass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "외부반사율,내부반사율", "제품명 ='" + CWValue[0][0] + "'");
+                                if (glass.Length == 0)
+                                {
+                                    glass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "외부반사율,내부반사율", "제품명 ='" + CWValue[0][0] + "'");
+                                }
+
+                                Glass_Ex = Convert.ToDouble(glass[0][0]);
+                                Glass_In = Convert.ToDouble(glass[0][1]);
+
+                            double Tao_on = Calc_Blind_Tao(Convert.ToDouble(CWValue[0][2]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Glass_Ex, Glass_In, BlindValue[0][0]);
+                            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                            Program.DB.setValue(DB.type.ProjDB, "Blind_3D", "아이디,번호,프로젝트유형,차양번호,차양포함태양열취득률,차양포함빛투과율", "'" + id + "','" + num + "','" + 프로젝트유형[0][0] + "','" + Blind + "','" + SHGC_on.ToString() + "','" + Tao_on.ToString() + "'", "아이디");
+                        }
+
+
+
                     }
                 }
             }
@@ -544,7 +601,44 @@ namespace main.contents
 
             return "[" + ret + "]";
         }
+        private double Calc_Blind_SHGC(double SHGC, double Ex, double Trans, double Alpha, double Ug, string Install)
+        {
+            double SHGC_on =0;
+            switch (Install)
+            {
+                case "외부측":
+                    SHGC_on = Alpha * SHGC + Trans * Math.Pow(1 / Ug + 1 / 5 + 1 / 10, -1) / 10 + Alpha * (1 - SHGC) * Math.Pow(1 / Ug + 1 / 5 + 1 / 10, -1) / 5;
+                    break;
 
+                case "중간":
+                    SHGC_on = SHGC * Alpha + (Trans + (1 - SHGC) * Ex) * Math.Pow(1 / Ug + 1 / 3, -1) / 3;
+                    break;
+
+                case "내부측":
+                    SHGC_on = SHGC * (1 - SHGC * Ex - Trans * Math.Pow(1 / Ug + 1 / 30, -1) / 30);
+                    break; ;
+            }
+            return SHGC_on;
+        }
+        private double Calc_Blind_Tao(double Tao, double Ex, double Trans, double Glass_Ex, double Glass_In, string Install)
+        {
+            double Tao_on =0;
+            switch (Install)
+            {
+                case "외부측":
+                    Tao_on = Tao * Trans / (1 - Glass_Ex * Ex);
+                    break;
+
+                case "중간":
+                    Tao_on = (Tao * Trans / (1 - Glass_Ex * Ex) + Tao * Trans / (1 - Glass_In * Ex) + Tao) / 3;
+                    break;
+
+                case "내부측":
+                    Tao_on = Tao * Trans / (1 - Glass_In * Ex);
+                    break; ;
+            }
+            return Tao_on;
+        }
         private string getTCode(string type)
         {
             switch (type)

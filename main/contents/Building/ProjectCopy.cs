@@ -78,6 +78,7 @@ namespace main.contents
             if (Model_checkBox.Checked)
             {
                 model_copy = true;
+                tables.Add("Blind_3D");
                 tables.Add("Shade_3D");
                 tables.Add("ZoneGeneral_3D");
                 tables.Add("ZoneEnvelope_3D");
