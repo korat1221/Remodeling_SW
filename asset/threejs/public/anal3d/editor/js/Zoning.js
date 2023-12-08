@@ -60,6 +60,23 @@ Zoning.prototype = {
 
         return null;
     },
+	isLineOverlapped: function (a, b) {
+		let _isOnLine = (a, b, c) => {
+			let A = this.util.asVector(a);
+			let B = this.util.asVector(b);
+			let P = this.util.asVector(c);
+		
+			if ((new THREE.Vector3()).crossVectors(A.clone().sub(P), B.clone().sub(P)).length() >= 0.01) {
+				return false;
+			}
+		
+			let L = A.distanceTo(B);
+	
+			return A.distanceTo(P) <= L && B.distanceTo(P) <= L;
+		};
+	
+		return !!(_isOnLine(a[0], a[1], b[0]) && _isOnLine(a[0], a[1], b[1]));
+	},
 	collectEdges: function () {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,7 +146,9 @@ Zoning.prototype = {
             let a = math.intersect([L1.start.x, L1.start.y, L1.start.z], [L1.end.x, L1.end.y, L1.end.z], [L2.start.x, L2.start.y, L2.start.z], [L2.end.x, L2.end.y, L2.end.z]);
             let _isInside = (L, P) => {
                 let l = L.distance();
-                return L.start.distanceTo(P) <= l && L.end.distanceTo(P) <= l;
+				let _a = L.start.distanceTo(P);
+				let _b = L.end.distanceTo(P);
+                return (_a < 0.00000001 || _a >= 0.001) && _a <= l && (_b < 0.00000001 || _b >= 0.001) && _b <= l;
             };
     
             if (a) {
@@ -143,8 +162,49 @@ Zoning.prototype = {
 		let _pushLine = (L) => {
 			let L2 = this.util.asLine(L);
 			if (!this.util.equalPoint(L2.start, L2.end) && !edges.find(el => el.lineL.equals(L2))) {
-				edges.push({line:L, lineL:L2, walls:[]});
+				edges.push({line:L, lineL:L2, walls:[], dist:L2.distance()});
 			}
+		};
+		
+		let _getEdges = (pnt, limit, idx) => {
+			let arr = [], _i = -1;
+			while(++_i < this.editor.edges.length) {
+				let el = this.editor.edges[_i];
+
+				if (this.util.equalPoint(pnt,el.lineL.start) || this.util.equalPoint(pnt,el.lineL.end)) {
+					arr.push(_i);
+				}
+			}	
+
+			if (arr.length === 0) {
+				this.points.splice(idx,1);
+				return null;
+			}
+			return arr.length == limit ? arr : null;
+		};
+		let _mergeEdges = (a, b, P) => {
+			let L1 = this.editor.edges[a];
+			let L2 = this.editor.edges[b];
+			let A = this.util.equalPoint(L1.lineL.start,P) ? L1.lineL.end : L1.lineL.start;
+			let B = this.util.equalPoint(L2.lineL.start,P) ? L2.lineL.end : L2.lineL.start;
+
+			L1.line[0] = [A.x,A.y,A.z];
+			L1.line[1] = [B.x,B.y,B.z];
+			L1.lineL.start = A;
+			L1.lineL.end = B;
+
+			this.editor.edges.splice(b,1);
+		};
+		let _deletableEdge = (idx) => {
+			let k = -1;
+			let L = this.editor.edges[idx];
+
+			while(++k < idx) {
+				if (this.isLineOverlapped(L.line, this.editor.edges[k].line)) {
+					return true;
+				}
+			}
+			return false;
 		};
 
 		//
@@ -168,20 +228,18 @@ Zoning.prototype = {
 		this.points = [];
 
 		while(++i < this.editor.edges.length) {
-			j = -1;
+			j = i;
 			while(++j < this.editor.edges.length) {
-				if (i != j) {
-					if ((P = _intersectLines(this.editor.edges[i].lineL, this.editor.edges[j].lineL)) != null) {
-						if (!nodes[i]) nodes[i] = [];
-						nodes[i].push(P);
-						if (!nodes[j]) nodes[j] = [];
-						nodes[j].push(P);
+				if ((P = _intersectLines(this.editor.edges[i].lineL, this.editor.edges[j].lineL)) != null) {
+					if (!nodes[i]) nodes[i] = [];
+					nodes[i].push(P);
+					if (!nodes[j]) nodes[j] = [];
+					nodes[j].push(P);
 
-						this.editor.edges[i].deleted = true;
-						this.editor.edges[j].deleted = true;
+					this.editor.edges[i].deleted = true;
+					this.editor.edges[j].deleted = true;
 
-						if (!this.points.find(el => this.util.equalPoint(el,P))) this.points.push(P);
-					}
+					if (!this.points.find(el => this.util.equalPoint(el,P))) this.points.push(P);
 				}
 			}	
 		}	
@@ -193,8 +251,8 @@ Zoning.prototype = {
 				if (!nodes[i]) nodes[i] = [];
 				nodes[i].push(el.lineL.start);
 				nodes[i].push(el.lineL.end);
-				this.points.push(el.lineL.start);
-				this.points.push(el.lineL.end);
+				if (!this.points.find(el2 => this.util.equalPoint(el2,el.lineL.start))) this.points.push(el.lineL.start);
+				if (!this.points.find(el2 => this.util.equalPoint(el2,el.lineL.end))) this.points.push(el.lineL.end);
 			}
 		}
 
@@ -219,6 +277,45 @@ Zoning.prototype = {
 		}
 
 		this.editor.edges = edges;
+
+
+		this.editor.edges.sort((a, b) => {
+			return a.dist - b.dist;
+		});
+
+		let deleted_points = [];
+
+		i = this.points.length;
+		while(--i >= 0) {
+			let edges = _getEdges(this.points[i], 2, i);
+
+			if (edges) {
+				let a = this.editor.edges[edges[0]].line;
+				let b = this.editor.edges[edges[1]].line;
+
+				if (this.editor.isOnLine(a[0], a[1], b[0]) || this.editor.isOnLine(a[0], a[1], b[1])) {
+					deleted_points.push(this.points[i]);
+					this.points.splice(i,1);
+				}
+			}
+		}
+
+		i = -1;
+		while(++i < deleted_points.length) {
+			let edges = _getEdges(deleted_points[i], 2);
+
+			if (edges) {
+				_mergeEdges(edges[0], edges[1], deleted_points[i]);
+			}
+		}
+
+		i = this.editor.edges.length;
+
+		while(--i >= 0) {
+			if (_deletableEdge(i)) {
+				this.editor.edges.splice(i, 1);
+			}
+		}
     },
 
     collectWalls: function () {
@@ -304,8 +401,6 @@ Zoning.prototype = {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		let i = -1, j, k, n,lines = {}, planes = [], o, extra_lines = [], that = this;
-
-		let point_buffer = [], debug_temp = false;
 
 		while(++i < this.points.length) {
 			let P = this.points[i];

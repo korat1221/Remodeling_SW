@@ -1036,56 +1036,26 @@ Editor.prototype = {
 		return false;
 	},
 	isPointOnLine: function (pointA, pointB, pointToCheck) {
-		var c = new THREE.Vector3();   
+		let c = new THREE.Vector3();   
 		c.crossVectors(pointA.clone().sub(pointToCheck), pointB.clone().sub(pointToCheck));
-		return c.length() < 0.001;
+		return c.length() < 0.01;
+	},
+	isOnLine: function (a, b, c) {
+		let pointA = this.util.asVector(a);
+		let pointB = this.util.asVector(b);
+		let pointToCheck = this.util.asVector(c);
+
+		if (!this.isPointOnLine(pointA, pointB, pointToCheck)) {
+			return false;
+		}
+	
+		let l = pointA.distanceTo(pointB);
+
+		return pointA.distanceTo(pointToCheck) <= l && pointB.distanceTo(pointToCheck) <= l;
 	},
 	isLineOverlapped: function (a, b) {
-		let that = this;
-		let _isOnLine = function (a, b, c) {
-			let pointA = new THREE.Vector3(a[0], a[1], a[2]);
-			let pointB = new THREE.Vector3(b[0], b[1], b[2]);
-			let pointToCheck = new THREE.Vector3(c[0], c[1], c[2]);
-
-			if (!that.isPointOnLine(pointA, pointB, pointToCheck)) {
-				return false;
-			}
-		
-			var dx = pointB.x - pointA.x;
-			var dy = pointB.y - pointA.y;
-		
-			// if a line is a more horizontal than vertical:
-			if (Math.abs(dx) >= Math.abs(dy)) {
-				if (dx > 0) {
-					return pointA.x <= pointToCheck.x && pointToCheck.x <= pointB.x;
-				} else {
-					return pointB.x <= pointToCheck.x && pointToCheck.x <= pointA.x;
-				}
-			} else {
-				if (dy > 0 ) {
-					return pointA.y <= pointToCheck.y && pointToCheck.y <= pointB.y;
-				} else {
-					return pointB.y <= pointToCheck.y && pointToCheck.y <= pointA.y;
-				}
-			}
-		}
-		return !!(_isOnLine(a[0], a[1], b[0]) && _isOnLine(a[0], a[1], b[1]) && this.isLineInclude(a,b));
+		return !!(this.isOnLine(a[0], a[1], b[0]) && this.isOnLine(a[0], a[1], b[1]));
 	},
-	isLineInclude: function (a, b) {
-			let a1 = new THREE.Vector3(a[0][0], a[0][1], a[0][2]);
-		let a2 = new THREE.Vector3(a[1][0], a[1][1], a[1][2]);
-		let b1 = new THREE.Vector3(b[0][0], b[0][1], b[0][2]);
-		let b2 = new THREE.Vector3(b[1][0], b[1][1], b[1][2]);
-		let len0 = a1.distanceTo(a2);			
-		let len = a1.distanceTo(b1), l;
-
-		if ((l = a1.distanceTo(b2)) > len) len = l;
-		if ((l = a2.distanceTo(b1)) > len) len = l;
-		if ((l = a2.distanceTo(b2)) > len) len = l;
-
-		return !!(len0 >= len);
-	},
-
 	collectEdgedWalls: function () {
 		let _getEdgedWalls = (edge) => {
 			for (const [cardi, value] of Object.entries(this.wall)) {
