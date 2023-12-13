@@ -61,6 +61,7 @@ namespace main.contents.Result
             subMenu.Add(new { text = "냉방소요량", id = "{\\\"formID\\\":46,\\\"ID\\\":\\\"Result_3\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             subMenu.Add(new { text = "급탕소요량", id = "{\\\"formID\\\":47,\\\"ID\\\":\\\"Result_4\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             subMenu.Add(new { text = "공조소요량", id = "{\\\"formID\\\":48,\\\"ID\\\":\\\"Result_5\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            subMenu.Add(new { text = "연료별소요량", id = "{\\\"formID\\\":52,\\\"ID\\\":\\\"Result_6\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
 
             Program.UTIL.resetMainTree(5, 2, subMenu.ToArray(), "37"); // 예시 코드: 메인 메뉴 동적 할당
         }

@@ -26,6 +26,7 @@ namespace main
         public double[] Ww_d = new double[12], Ww_s = new double[12], Ww_g = new double[12];
         public double Psi_pipe, L, Qs_po_day;
         public double[] Qw_gen_day = new double[12], Qw_gen_p0_day = new double[12], eta_pn_w = new double[12];
+        public String Carrier; 
         ArrayList SelectSolar_split = new ArrayList(); ArrayList SolarNum_split = new ArrayList(); ArrayList SolarDirection_split = new ArrayList(); ArrayList SolarDegree_split = new ArrayList();
 
 
@@ -529,7 +530,7 @@ namespace main
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "번호,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력", "번호 = '" + SelectBoiler_split[n] + "'");
                     String Num = Value[0][0];
                     String Combi = Value[0][1];
-                    String Carrier = Value[0][2];
+                    Carrier = Value[0][2];
                     String Type = Value[0][3];
                     double Power = Convert.ToDouble(Value[0][4]);
                     double eta_Pn = Convert.ToDouble(Value[0][5]) / 100;

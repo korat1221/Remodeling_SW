@@ -70,6 +70,7 @@ namespace main
             List_DHWSystem,
             List_ConstructionBlind,
             List_ConstructionDoor,
+            PrintReport_Final,
             None
 
         }
@@ -86,7 +87,8 @@ namespace main
             new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor(), new PrintReport_HCneed(),new List_CoolingSystem(), new List_HeatingSystem(),
             new Intro(), new ProjectList(), new OpenProject(), new List_RESystem(),
             new PrintReport_Lighting(),new PrintReport_Heating(),new PrintReport_Cooling(),new PrintReport_DHWSystem(),new PrintReport_AHUSystem(),
-            new List_DHWSystem(),new List_ConstructionBlind(),new List_ConstructionDoor()}; //나중에 PV를 냉방리스트로 바꿔야함 
+            new List_DHWSystem(),new List_ConstructionBlind(),new List_ConstructionDoor(),
+            new PrintReport_Final()}; //나중에 PV를 냉방리스트로 바꿔야함 
         bool scriptable = false;
         public class FormParam
         {
@@ -356,6 +358,12 @@ namespace main
             else if (formParam.formID == 51)
             {
                 List_ConstructionDoor f = (List_ConstructionDoor)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 52)
+            {
+                PrintReport_Final f = (PrintReport_Final)form;
 
                 f.LoadData(formParam.ID);
             }

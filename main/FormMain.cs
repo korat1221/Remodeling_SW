@@ -116,6 +116,9 @@ namespace main
             Program.CALC.run(new string[] {
                 "급탕시스템 계산"
             });
+            Program.CALC.run(new string[] {
+            "연료별 에너지소요량 계산"
+            });
             MessageBox.Show("계산되엇습니다.");
         }
     }

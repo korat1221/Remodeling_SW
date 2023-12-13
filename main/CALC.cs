@@ -28,6 +28,8 @@ namespace main
 
             _calculations["급탕시스템 계산"] = new Func<bool>(DHWSystemCalc);
 
+            _calculations["연료별 에너지소요량 계산"] = new Func<bool>(FinalEnergyCalc);
+
             _calculations["법규 대안검토 계산"] =new Func<bool>(AltCalc);
         }
 
@@ -365,7 +367,7 @@ namespace main
                              "Qh_gen_day,Pgen_Pn,Pgen_Pint,Pgen_P0,eta_gen_Pn,eta_gen_Pint," +
                              "fpint_Air,Qh_outg_sngminus7,Qh_outg_sng2,Qh_outg_sng7,COPminus7,COP2,COP7," +
                              "Qh_ce,Qh_d,Qh_s,Qh_gen,Qh_outg,Qh_f," +
-                             "Wh_ce,Wh_d,Wh_s,Wh_g",
+                             "Wh_ce,Wh_d,Wh_s,Wh_g,연료",
                              "'" + 프로젝트유형[0][0] + "','" + HeatingNum[i][0] + "','" + MTH + "','" +
                               Heating1.Qhb_mth_sum[mth] + "','" + Heating1.Qh_max_sum + "','" + Heating1.Qh_a_sum + "','" + Heating1.th_op_day_avg + "','" + Heating1.theta_i_h_set_avg + "','" + Heating1.th_avg[mth] + "','" + Heating1.dop_mth_avg[mth] + "','" +
                               Heating1.thrL[mth] + "','" + Heating1.thrL_day[mth] + "','" + Heating1.dhrB[mth] + "','" + Heating1.fLNA[mth] + "','" + Heating1.fLwe[mth] + "','" +
@@ -376,7 +378,7 @@ namespace main
                               Heating1.Qh_gen_day[mth] + "','" + Heating1.Pgen_Pn[mth] + "','" + Heating1.Pgen_Pint[mth] + "','" + Heating1.Pgen_P0[mth] + "','" + Heating1.eta_gen_Pn[mth] + "','" + Heating1.eta_gen_Pint[mth] + "','" +
                               Heating1.fpint[mth] + "','" + Heating1.Qh_outg_sng[0, mth] + "','" + Heating1.Qh_outg_sng[1, mth] + "','" + Heating1.Qh_outg_sng[2, mth] + "','" + Heating1.COPpint[0,mth] + "','" + Heating1.COPpint[1, mth] + "','" + Heating1.COPpint[2, mth] + "','" +
                               Heating1.Qh_ce[mth] + "','" + Heating1.Qh_d[mth] + "','" +Heating1.Qh_s[mth] + "','" +Heating1.Qh_gen[mth] + "','" +Heating1.Qh_outg[mth] + "','" +Heating1.Qh_f[mth] + "','" +
-                              Heating1.Wh_ce[mth] + "','" +Heating1.Wh_d[mth] + "','" +Heating1.Wh_s[mth] + "','" +Heating1.Wh_g[mth]
+                              Heating1.Wh_ce[mth] + "','" +Heating1.Wh_d[mth] + "','" +Heating1.Wh_s[mth] + "','" +Heating1.Wh_g[mth] + "','" + Heating1.Carrier
                               + "'", "번호,월");;
 
 
@@ -387,13 +389,13 @@ namespace main
 
         private static bool DHWSystemCalc()
         {
-            string[][] HeatingNum = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호");
+            string[][] DHWNum = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호");
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             int i = -1;
             String MTH;
-            while (++i < HeatingNum.Length)
+            while (++i < DHWNum.Length)
             {
-                Cal_DHW DHW1 = new Cal_DHW(HeatingNum[i][0]);
+                Cal_DHW DHW1 = new Cal_DHW(DHWNum[i][0]);
                 DHW1.Load_Zonedata();
                 DHW1.Load_DHWGeneral();
                 DHW1.Load_Boiler();
@@ -416,18 +418,50 @@ namespace main
                              "Qwb_mth_sum,theta_ih_avg,Qw_a_sum,th_op_day_avg,theta_i_h_set_avg,dop_mth_avg," +
                              "Qw_d,Qw_s,Qw_gen,Qw_outg,Qw_f," +
                              "Ww_d,Ww_s,Ww_g," +
-                             "Qw_gen_day,Qw_gen_p0_day,eta_pn_w",
-                             "'" + 프로젝트유형[0][0] + "','" + HeatingNum[i][0] + "','" + MTH + "','" +
+                             "Qw_gen_day,Qw_gen_p0_day,eta_pn_w,연료",
+                             "'" + 프로젝트유형[0][0] + "','" + DHWNum[i][0] + "','" + MTH + "','" +
                              DHW1.Qwb_mth_sum[mth] + "','" + DHW1.theta_ih_avg[mth] + "','" + DHW1.Qw_a_sum + "','" + DHW1.th_op_day_avg + "','" + DHW1.theta_i_h_set_avg + "','" + DHW1.dop_mth_avg[mth] + "','" +
                              DHW1.Qw_d[mth] + "','" + DHW1.Qw_s[mth] + "','" + DHW1.Qw_gen[mth] + "','" + DHW1.Qw_outg[mth] + "','" + DHW1.Qw_f[mth] + "','" +
                              DHW1.Ww_d[mth] + "','" + DHW1.Ww_s[mth] + "','" + DHW1.Ww_g[mth] + "','" +
-                             DHW1.Qw_gen_day[mth] + "','" + DHW1.Qw_gen_p0_day[mth] + "','" + DHW1.eta_pn_w[mth]
+                             DHW1.Qw_gen_day[mth] + "','" + DHW1.Qw_gen_p0_day[mth] + "','" + DHW1.eta_pn_w[mth] + "','" +DHW1.Carrier
                               + "'", "번호,월"); ;
                 }
             }
             return true;
         }
 
+        private bool FinalEnergyCalc() // 오차율 계산 
+        {
+            Cal_FinalEnergy final1 = new Cal_FinalEnergy();
+            final1.Calc_Qbase_elec();
+            final1.Calc_Qbase_gas();
+            final1.Calc_Error();
+            String MTH;
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
+            for (int mth = 0; mth <= 11; mth++)
+            {
+                MTH = (mth + 1).ToString() + "월";
+                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트유형,번호,월,연료," +
+                    "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
+                    "'" + 프로젝트유형[0][0] + "','" + 번호[0][0] + "','" + MTH + "','" + "전기" + "','" +
+                    final1.Qhf_elec[mth] + "','" + final1.Qcf_elec[mth] + "','" + final1.Qwf_elec[mth] + "','" + final1.Qlf_elec[mth] + "','" +
+                    final1.Qvf_elec[mth] + "','" + final1.Qbase_elec[mth] + "','" + final1.Qf_elec_tot_mth[mth]
+                    +"'", "번호,월,연료"); ;
+
+            }
+            for (int mth = 0; mth <= 11; mth++)
+            {
+                MTH = (mth + 1).ToString() + "월";             
+                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트유형,번호,월,연료," +
+                    "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
+                    "'" + 프로젝트유형[0][0] + "','" + 번호[0][0] + "','" + MTH + "','" + "가스" + "','" +
+                    final1.Qhf_gas[mth] + "','" + final1.Qcf_gas[mth] + "','" + final1.Qwf_gas[mth] + "','" + "0" + "','" +
+                    final1.Qvf_gas[mth] + "','" + final1.Qbase_gas[mth] + "','" + final1.Qf_gas_tot_mth[mth]
+                    + "'", "번호,월,연료"); ;
+            }
+            return true; 
+        }
         private static bool AltCalc()
         {
             Cal_Alt_Rule cal = new Cal_Alt_Rule();

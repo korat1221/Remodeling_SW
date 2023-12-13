@@ -47,6 +47,9 @@
     <Compile Update="contents\Building\Intro.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="contents\Result\PrintReport_Final.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="contents\Result\PrintReport_Cooling.cs">
       <SubType>Form</SubType>
     </Compile>

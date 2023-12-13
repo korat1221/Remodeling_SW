@@ -408,14 +408,32 @@ namespace main.contents
 
         private void Save()
         {
-            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,프로젝트유형,사업성능목표,건물진단실시," +
+            string ProjectTypeNum =null;
+            switch(ProjectType)
+            {
+                case "기존":
+                    ProjectTypeNum = "1";
+                    break;
+                case "리트로핏":
+                    ProjectTypeNum = "2";
+                    break;
+                case "리모델링":
+                    ProjectTypeNum = "3";
+                    break;
+                case "신규":
+                    ProjectTypeNum = "4";
+                    break;
+            }
+                
+
+            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,프로젝트유형,프로젝트유형번호,사업성능목표,건물진단실시," +
                 "건물대상,건물용도,건물명,주소,지역인덱스,지역,지역구분," +
                 "외벽구조유형,지붕구조유형,준공연도,준공월," +
                 "준공시기,법규시기," +
                 "연면적,건축면적," +
                 "지상층수,지하층수," +
                 "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기",
-            "'" + ProjectName + "','" + ProjectType + "','" + Target + "','" + Diagnosis + "','" +
+            "'" + ProjectName + "','" + ProjectType + "','" + ProjectTypeNum + "','" + Target + "','" + Diagnosis + "','" +
             BuildingCategory + "','" + BuildingUse + "','" + BuildingName + "','" + BuildingLocation + "','" + Climate_comboBox.SelectedItem.ToString() + "','" + Climate + "','" + BylawClimate + "','" +
             WallType + "','" + RoofType + "','" + Year + "','" + Month + "','" +
             ConstrucitonDate.ToString() + "','" + BylawDate.ToString() + "','" +
