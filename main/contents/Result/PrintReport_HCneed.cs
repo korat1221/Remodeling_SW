@@ -87,6 +87,10 @@ namespace main.contents.Result
 
             i = -1;
 
+            try
+            {
+
+          
             while (++i < ZoneG.Length)
             {
                 string[][] value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "번호,이름,난방_냉방,비이용일_이용일,월,HT_tot,HT_InWall,HT_Slab,HT_Wall,HT_Roof,HT_Floor,HT_GWall,HT_Door,HT_Win,HT_CW,HT_Di_Wall,HT_Indi_Wall,HT_Di_Roof,HT_Indi_Roof,HT_Di_Win,HT_Indi_Win,HT_Di_Door,	HT_Indi_Door,HT_TB_tot,HT_TB_Wall,HT_TB_Roof,HT_TB_Floor,HT_TB_Gwall,HT_TB_Win,HT_TB_Door,HT_TB_CW,nmech	,nz,ninf,nwin,HV_tot,HV_inf,HV_win,HV_z,HV_mech,H_tot,tao,dwe_mth,dwd_mth,theta_i,theta_e,QTsink_tot,QT_u_sink,QTsink_Wall,QTsink_Roof,QTsink_Floor,QTsink_GWall,QTsink_Door,QTsink_Win,QTsink_CW,QTsource_tot,QT_u_source,QTsource_Wall,QTsource_Roof,QTsource_Floor,QTsource_GWall,QTsource_Door,QTsource_Win,QTsource_CW,QSopsink_tot,QSopsource_tot,QStr_tot,QSopsink_Wall,QSopsink_Roof,QSopsink_Door,QSopsink_CW_p,QSopsource_Wall,QSopsource_Roof,QSopsource_Door,QSopsource_CW_p,QStr_Win,QStr_CW,QVsink_tot,QV_inf_sink,QV_win_sink,QV_z_sink,QV_mech_sink,QVsource_tot,QV_inf_source,QV_win_source,QV_z_source,QV_mech_source,Q_DHU_win,Q_DHU_mech,Q_DHU_tot,QI_tot,QI_L,QI_P,QI_fac,QI_Humidity,Qsink,Qsource,gamma,a,eta,dQc_b,dQc_sink,Qb_day,Qb_mth,Qb_a,Q_max,t_max,비냉난방존온도", "번호 ='" + ZoneG[i][0] + "'");
@@ -1069,7 +1073,8 @@ namespace main.contents.Result
 
             runScript("init(" + s + "," + s2 + ")");
 
-
+            }
+            catch { }
         }
 
 

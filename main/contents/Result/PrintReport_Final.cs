@@ -59,6 +59,7 @@ namespace main.contents.Result
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
 
             List<object> items = new List<object>();
+            List<object> items2 = new List<object>();
             List<object> data = new List<object>();
 
             List<object>[] __data = new List<object>[700];
@@ -75,7 +76,6 @@ namespace main.contents.Result
 
             while (++i < 번호.Length)
             {
-                items.Add("Final_Report.htm");
                 try
                 {
                     string[][] 연도 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "BuildingEnergyUse", "연도", "연료 = '전기'");
@@ -99,10 +99,11 @@ namespace main.contents.Result
                 }
 
                     string[][] Value1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "연료='전기'");
-                    if (Convert.ToDouble(Value1[0][0]) > 1)
-                    {
-                        string[][] Elec1, Elec2;
-                        for (int mth = 0; mth < 11; mth++)
+                int yearnum =0; 
+                if (Convert.ToDouble(Value1[0][0]) > 1)
+                {
+                    string[][] Elec1, Elec2;
+                    for (int mth = 0; mth < 11; mth++)
                         {
                             Elec1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' AND 연료='전기'");
                             Elec2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 2).ToString() + "월' AND 연료='전기'");
@@ -110,7 +111,7 @@ namespace main.contents.Result
                             {
                                 Quse_elec_mth[k,mth] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value1[0][0]) / 30 + Convert.ToDouble(Elec2[k][0]) * (30 - Convert.ToDouble(Value1[0][0])) / 30);
                             }
-                           
+                        yearnum = Elec1.Length;
                         }
 
                         Elec1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (12).ToString() + "월' AND 연료='전기'");
@@ -129,8 +130,9 @@ namespace main.contents.Result
                             for (int k = 0; k < Elec.Length; k++) //연도별
                             {
                                 Quse_elec_mth[k,mth] += Convert.ToDouble(Elec[k][0]);
-                            }
                         }
+                        yearnum = Elec.Length;
+                    }
                     }
 
                 for (int mth = 0; mth < 12; mth++)
@@ -139,11 +141,12 @@ namespace main.contents.Result
                     {
                         Quse_elec_mth[3, mth] += Quse_elec_mth[k, mth];
                     }
+                    Quse_elec_mth[3, mth] = Quse_elec_mth[3, mth] / yearnum;
                     Quse_elec_a[0] += Quse_elec_mth[0, mth];
                     Quse_elec_a[1] += Quse_elec_mth[1, mth];
                     Quse_elec_a[2] += Quse_elec_mth[2, mth];
                     Quse_elec_a[3] += Quse_elec_mth[3, mth];
-                }
+                } 
 
                 __data[6].Add(new { idx = i, val = Quse_elec_a[0] }); //연간 에너지사용량
                 __data[7].Add(new { idx = i, val = Quse_elec_a[1] });
@@ -208,10 +211,10 @@ namespace main.contents.Result
                 __data[38].Add(new { idx = i, val = (Qtot_a / Area).ToString("0.0") });
 
                 Error_mth_avg = Error_mth_avg / 12;
-                __data[40].Add(new { idx = i, val = Error_mth_avg.ToString("0.0") });
+                __data[40].Add(new { idx = i, val = Error_mth_avg.ToString("0.0")+"%" });
 
                 double Error_a =(Quse_elec_a[3] - Qtot_a) / Quse_elec_a[3] * 100;
-                __data[41].Add(new { idx = i, val = Error_a.ToString("0.0") });
+                __data[41].Add(new { idx = i, val = Error_a.ToString("0.0")+"%" });
 
 
                 ////////////////////////////////////////////////////////////////////
@@ -266,12 +269,16 @@ namespace main.contents.Result
                 data.Add(new { cname = "error_mth_avg", data = __data[40] });
                 data.Add(new { cname = "error_a", data = __data[41] });
 
-                s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
-                s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
-
-                runScript("init(" + s + "," + s2 + ")");
-
+  
             }
+
+             items.Add("Error_Report.htm");
+
+            s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
+            s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
+
+            runScript("init(" + s + "," + s2 + ")");
+
         }
 
 

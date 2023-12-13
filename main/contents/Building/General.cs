@@ -45,7 +45,22 @@ namespace main.contents
             else { }
 
             //프로젝트유형
-            ProjectType = "리트로핏";
+            string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select type from projects where current = '1'");
+            switch (번호[0][0])
+            {
+                case "1":
+                    ProjectType = "기존";
+                    break;
+                case "2":
+                    ProjectType = "리트로핏";
+                    break;
+                case "3":
+                    ProjectType = "리모델링";
+                    break;
+                case "4":
+                    ProjectType = "신규";
+                    break;
+            }
             if (ProjectType != null) { ProjectType_textBox.Text = ProjectType.ToString(); }
             else { }
 
@@ -424,16 +439,16 @@ namespace main.contents
                     ProjectTypeNum = "4";
                     break;
             }
-                
 
-            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,프로젝트유형,프로젝트유형번호,사업성능목표,건물진단실시," +
+            string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
+            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트명,프로젝트유형,프로젝트유형번호,사업성능목표,건물진단실시," +
                 "건물대상,건물용도,건물명,주소,지역인덱스,지역,지역구분," +
                 "외벽구조유형,지붕구조유형,준공연도,준공월," +
                 "준공시기,법규시기," +
                 "연면적,건축면적," +
                 "지상층수,지하층수," +
                 "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기",
-            "'" + ProjectName + "','" + ProjectType + "','" + ProjectTypeNum + "','" + Target + "','" + Diagnosis + "','" +
+            "'" + 번호[0][0] + "','" + ProjectName + "','" + ProjectType + "','" + ProjectTypeNum + "','" + Target + "','" + Diagnosis + "','" +
             BuildingCategory + "','" + BuildingUse + "','" + BuildingName + "','" + BuildingLocation + "','" + Climate_comboBox.SelectedItem.ToString() + "','" + Climate + "','" + BylawClimate + "','" +
             WallType + "','" + RoofType + "','" + Year + "','" + Month + "','" +
             ConstrucitonDate.ToString() + "','" + BylawDate.ToString() + "','" +

@@ -35,7 +35,7 @@ namespace main
 
         private static bool ZoneCalc()
         {
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             string[][] zones = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,냉난방유무");
             String[,] zones_arr = new String[zones.Length, 2];//존번호, 냉난방유무
             String[] zones_순번 = new String[zones.Length];// 계산 순서대로 존번호
@@ -229,7 +229,7 @@ namespace main
                         {
                             MTH = (mth + 1).ToString() + "월";
 
-                            Program.DB.setValue(DB.type.ProjDB, "Zone_HCneed_Result", "프로젝트유형,번호,이름," +
+                            Program.DB.setValue(DB.type.ProjDB, "Zone_HCneed_Result", "프로젝트번호,프로젝트유형,번호,이름," +
                                  "난방_냉방,비이용일_이용일,월," +
                                  "HT_tot,HT_InWall,HT_Slab,HT_Wall,HT_Roof,HT_Floor,HT_GWall,HT_Door,HT_Win,HT_CW," +
                                  "HT_Di_Wall,HT_Indi_Wall,HT_Di_Roof,HT_Indi_Roof,HT_Di_Win,HT_Indi_Win,HT_Di_Door,HT_Indi_Door," +
@@ -252,7 +252,7 @@ namespace main
                                  "Qb_day," +
                                  "Qb_mth," +
                                  "Qb_a,Q_max, t_max,비냉난방존온도",
-                                  "'" + 프로젝트유형[0][0] + "','" + zones_순번[i] + "','" + zone1.zoneName + "','" +
+                                  "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + zones_순번[i] + "','" + zone1.zoneName + "','" +
                                   HC + "','" + WEWD + "','" + MTH + "','" +
                                   zone1.Zone_HT_tot.ToString() + "','"+zone1.Zone_HT_Inwall.ToString() + "','"+zone1.Zone_HT_Slab.ToString()+ "','" + zone1.Zone_HT_Wall.ToString()+ "','" + zone1.Zone_HT_Roof.ToString()+ "','" + zone1.Zone_HT_Floor.ToString()+ "','" + zone1.Zone_HT_GWall.ToString()+ "','" + zone1.Zone_HT_Door.ToString()+ "','" + zone1.Zone_HT_Win.ToString() + "','" +zone1.Zone_HT_CW.ToString() + "','" +
                                   zone1.Zone_HT_Di_Wall.ToString() + "','" + zone1.Zone_HT_Indi_Wall.ToString() + "','" + zone1.Zone_HT_Di_Roof.ToString() + "','" + zone1.Zone_HT_Indi_Roof.ToString() + "','" + zone1.Zone_HT_Di_Win.ToString() + "','" + zone1.Zone_HT_Indi_Win.ToString() + "','" + zone1.Zone_HT_Di_Door.ToString() + "','" + zone1.Zone_HT_Indi_Door.ToString() + "','" +
@@ -289,7 +289,7 @@ namespace main
         private static bool HeatingSystemCalc()
         {
             string[][] HeatingNum = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호");
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             int i = -1;
             String MTH;
             try
@@ -356,7 +356,7 @@ namespace main
                 {
                   
                     MTH = (mth + 1).ToString() + "월";
-                    Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Result", "프로젝트유형,번호," +
+                    Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                              "월," +
                              " Qhb_mth_sum, Qh_max_sum,Qh_a_sum,th_op_day_avg, theta_i_h_set_avg,th_avg,dop_mth_avg," +
                              "thrL,thrL_day,dhrB,fLNA,fLwe," +
@@ -368,7 +368,7 @@ namespace main
                              "fpint_Air,Qh_outg_sngminus7,Qh_outg_sng2,Qh_outg_sng7,COPminus7,COP2,COP7," +
                              "Qh_ce,Qh_d,Qh_s,Qh_gen,Qh_outg,Qh_f," +
                              "Wh_ce,Wh_d,Wh_s,Wh_g,연료",
-                             "'" + 프로젝트유형[0][0] + "','" + HeatingNum[i][0] + "','" + MTH + "','" +
+                             "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + HeatingNum[i][0] + "','" + MTH + "','" +
                               Heating1.Qhb_mth_sum[mth] + "','" + Heating1.Qh_max_sum + "','" + Heating1.Qh_a_sum + "','" + Heating1.th_op_day_avg + "','" + Heating1.theta_i_h_set_avg + "','" + Heating1.th_avg[mth] + "','" + Heating1.dop_mth_avg[mth] + "','" +
                               Heating1.thrL[mth] + "','" + Heating1.thrL_day[mth] + "','" + Heating1.dhrB[mth] + "','" + Heating1.fLNA[mth] + "','" + Heating1.fLwe[mth] + "','" +
                               Heating1.beta_h_ce[mth] + "','" + Heating1.beta_h_d[mth] + "','" + Heating1.beta_h_s[mth] + "','" + Heating1.beta_h_gen[mth] + "','" +
@@ -390,7 +390,7 @@ namespace main
         private static bool DHWSystemCalc()
         {
             string[][] DHWNum = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호");
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             int i = -1;
             String MTH;
             while (++i < DHWNum.Length)
@@ -413,13 +413,13 @@ namespace main
                 {
 
                     MTH = (mth + 1).ToString() + "월";
-                    Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result", "프로젝트유형,번호," +
+                    Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                              "월," +
                              "Qwb_mth_sum,theta_ih_avg,Qw_a_sum,th_op_day_avg,theta_i_h_set_avg,dop_mth_avg," +
                              "Qw_d,Qw_s,Qw_gen,Qw_outg,Qw_f," +
                              "Ww_d,Ww_s,Ww_g," +
                              "Qw_gen_day,Qw_gen_p0_day,eta_pn_w,연료",
-                             "'" + 프로젝트유형[0][0] + "','" + DHWNum[i][0] + "','" + MTH + "','" +
+                             "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + DHWNum[i][0] + "','" + MTH + "','" +
                              DHW1.Qwb_mth_sum[mth] + "','" + DHW1.theta_ih_avg[mth] + "','" + DHW1.Qw_a_sum + "','" + DHW1.th_op_day_avg + "','" + DHW1.theta_i_h_set_avg + "','" + DHW1.dop_mth_avg[mth] + "','" +
                              DHW1.Qw_d[mth] + "','" + DHW1.Qw_s[mth] + "','" + DHW1.Qw_gen[mth] + "','" + DHW1.Qw_outg[mth] + "','" + DHW1.Qw_f[mth] + "','" +
                              DHW1.Ww_d[mth] + "','" + DHW1.Ww_s[mth] + "','" + DHW1.Ww_g[mth] + "','" +
@@ -437,14 +437,14 @@ namespace main
             final1.Calc_Qbase_gas();
             final1.Calc_Error();
             String MTH;
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
             for (int mth = 0; mth <= 11; mth++)
             {
                 MTH = (mth + 1).ToString() + "월";
-                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트유형,번호,월,연료," +
+                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                     "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
-                    "'" + 프로젝트유형[0][0] + "','" + 번호[0][0] + "','" + MTH + "','" + "전기" + "','" +
+                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 번호[0][0] + "','" + MTH + "','" + "전기" + "','" +
                     final1.Qhf_elec[mth] + "','" + final1.Qcf_elec[mth] + "','" + final1.Qwf_elec[mth] + "','" + final1.Qlf_elec[mth] + "','" +
                     final1.Qvf_elec[mth] + "','" + final1.Qbase_elec[mth] + "','" + final1.Qf_elec_tot_mth[mth]
                     +"'", "번호,월,연료"); ;
@@ -453,9 +453,9 @@ namespace main
             for (int mth = 0; mth <= 11; mth++)
             {
                 MTH = (mth + 1).ToString() + "월";             
-                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트유형,번호,월,연료," +
+                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                     "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
-                    "'" + 프로젝트유형[0][0] + "','" + 번호[0][0] + "','" + MTH + "','" + "가스" + "','" +
+                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 번호[0][0] + "','" + MTH + "','" + "가스" + "','" +
                     final1.Qhf_gas[mth] + "','" + final1.Qcf_gas[mth] + "','" + final1.Qwf_gas[mth] + "','" + "0" + "','" +
                     final1.Qvf_gas[mth] + "','" + final1.Qbase_gas[mth] + "','" + final1.Qf_gas_tot_mth[mth]
                     + "'", "번호,월,연료"); ;
