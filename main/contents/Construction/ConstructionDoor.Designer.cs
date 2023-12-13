@@ -124,11 +124,11 @@
             label15 = new Label();
             pictureBox3 = new PictureBox();
             label49 = new Label();
-            d_InstallButtom_textBox = new TextBox();
+            d_InstallBottom_textBox = new TextBox();
             d_InstallSide_textBox = new TextBox();
             d_InstallTop_textBox = new TextBox();
             dUinst_textBox = new TextBox();
-            Psi_InstallButtom_textBox = new TextBox();
+            Psi_InstallBottom_textBox = new TextBox();
             Psi_InstallSide_textBox = new TextBox();
             Psi_InstallTop_textBox = new TextBox();
             label51 = new Label();
@@ -624,7 +624,6 @@
             label86.Size = new Size(50, 16);
             label86.TabIndex = 168;
             label86.Text = "W/m²·K";
-            label86.Visible = false;
             // 
             // DoorU_textBox
             // 
@@ -638,7 +637,6 @@
             DoorU_textBox.Size = new Size(116, 15);
             DoorU_textBox.TabIndex = 167;
             DoorU_textBox.TextAlign = HorizontalAlignment.Center;
-            DoorU_textBox.Visible = false;
             // 
             // label87
             // 
@@ -650,7 +648,6 @@
             label87.Size = new Size(145, 16);
             label87.TabIndex = 166;
             label87.Text = "[UD] 문열관류율[유리반영]";
-            label87.Visible = false;
             // 
             // GlassU_textBox
             // 
@@ -1268,11 +1265,11 @@
             Install_tabPage.Controls.Add(label15);
             Install_tabPage.Controls.Add(pictureBox3);
             Install_tabPage.Controls.Add(label49);
-            Install_tabPage.Controls.Add(d_InstallButtom_textBox);
+            Install_tabPage.Controls.Add(d_InstallBottom_textBox);
             Install_tabPage.Controls.Add(d_InstallSide_textBox);
             Install_tabPage.Controls.Add(d_InstallTop_textBox);
             Install_tabPage.Controls.Add(dUinst_textBox);
-            Install_tabPage.Controls.Add(Psi_InstallButtom_textBox);
+            Install_tabPage.Controls.Add(Psi_InstallBottom_textBox);
             Install_tabPage.Controls.Add(Psi_InstallSide_textBox);
             Install_tabPage.Controls.Add(Psi_InstallTop_textBox);
             Install_tabPage.Controls.Add(label51);
@@ -1368,19 +1365,19 @@
             label49.TabIndex = 135;
             label49.Text = "m";
             // 
-            // d_InstallButtom_textBox
+            // d_InstallBottom_textBox
             // 
-            d_InstallButtom_textBox.BackColor = Color.White;
-            d_InstallButtom_textBox.BorderStyle = BorderStyle.None;
-            d_InstallButtom_textBox.Enabled = false;
-            d_InstallButtom_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            d_InstallButtom_textBox.ForeColor = SystemColors.ControlDark;
-            d_InstallButtom_textBox.Location = new Point(694, 167);
-            d_InstallButtom_textBox.Name = "d_InstallButtom_textBox";
-            d_InstallButtom_textBox.ReadOnly = true;
-            d_InstallButtom_textBox.Size = new Size(116, 15);
-            d_InstallButtom_textBox.TabIndex = 134;
-            d_InstallButtom_textBox.TextAlign = HorizontalAlignment.Center;
+            d_InstallBottom_textBox.BackColor = Color.White;
+            d_InstallBottom_textBox.BorderStyle = BorderStyle.None;
+            d_InstallBottom_textBox.Enabled = false;
+            d_InstallBottom_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            d_InstallBottom_textBox.ForeColor = SystemColors.ControlDark;
+            d_InstallBottom_textBox.Location = new Point(694, 167);
+            d_InstallBottom_textBox.Name = "d_InstallBottom_textBox";
+            d_InstallBottom_textBox.ReadOnly = true;
+            d_InstallBottom_textBox.Size = new Size(116, 15);
+            d_InstallBottom_textBox.TabIndex = 134;
+            d_InstallBottom_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // d_InstallSide_textBox
             // 
@@ -1424,18 +1421,18 @@
             dUinst_textBox.TabIndex = 128;
             dUinst_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Psi_InstallButtom_textBox
+            // Psi_InstallBottom_textBox
             // 
-            Psi_InstallButtom_textBox.BackColor = Color.White;
-            Psi_InstallButtom_textBox.BorderStyle = BorderStyle.None;
-            Psi_InstallButtom_textBox.Enabled = false;
-            Psi_InstallButtom_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Psi_InstallButtom_textBox.ForeColor = SystemColors.ControlDark;
-            Psi_InstallButtom_textBox.Location = new Point(457, 167);
-            Psi_InstallButtom_textBox.Name = "Psi_InstallButtom_textBox";
-            Psi_InstallButtom_textBox.Size = new Size(116, 15);
-            Psi_InstallButtom_textBox.TabIndex = 122;
-            Psi_InstallButtom_textBox.TextAlign = HorizontalAlignment.Center;
+            Psi_InstallBottom_textBox.BackColor = Color.White;
+            Psi_InstallBottom_textBox.BorderStyle = BorderStyle.None;
+            Psi_InstallBottom_textBox.Enabled = false;
+            Psi_InstallBottom_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Psi_InstallBottom_textBox.ForeColor = SystemColors.ControlDark;
+            Psi_InstallBottom_textBox.Location = new Point(457, 167);
+            Psi_InstallBottom_textBox.Name = "Psi_InstallBottom_textBox";
+            Psi_InstallBottom_textBox.Size = new Size(116, 15);
+            Psi_InstallBottom_textBox.TabIndex = 122;
+            Psi_InstallBottom_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // Psi_InstallSide_textBox
             // 
@@ -1895,7 +1892,7 @@
         private Label label15;
         private PictureBox pictureBox3;
         private Label label49;
-        private TextBox d_InstallButtom_textBox;
+        private TextBox d_InstallBottom_textBox;
         private TextBox d_InstallSide_textBox;
         private TextBox d_InstallTop_textBox;
         private TextBox dUinst_textBox;
@@ -1940,5 +1937,6 @@
         private TextBox DoorL_textBox;
         private TextBox GlassName_textBox;
         private Button GlassDB_button;
+        private TextBox Psi_InstallBottom_textBox;
     }
 }

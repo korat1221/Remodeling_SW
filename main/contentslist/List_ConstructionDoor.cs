@@ -16,10 +16,9 @@ namespace main.contentslist
         static String currentID = "";
         static String inEditing = "Add";
 
-        String WallNum;
+        String DoorNum;
         double CountDB;
         int SelectRow;
-        //DataTable WallList = new DataTable();
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
 
         public List_ConstructionDoor()
@@ -29,7 +28,7 @@ namespace main.contentslist
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외부출입문'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            Program.DB.initTable(DB.type.ProjDB, "ConstructionWall");
+            Program.DB.initTable(DB.type.ProjDB, "ConstructionDoor");
             Create_Table();
         }
 
@@ -42,16 +41,16 @@ namespace main.contentslist
 
         private void Add_button_Click(object sender, EventArgs e)
         {
-            WallNum = Program.UTIL.CreateNum("ConstructionWall", "번호", "DR");
+            DoorNum = Program.UTIL.CreateNum("ConstructionDoor", "번호", "DR");
 
-            Program.getMenuForm().ResetForm(3);
+            Program.getMenuForm().ResetForm(7);
 
-            Load_form(WallNum, "Add");
+            Load_form(DoorNum, "Add");
         }
 
         public static bool OnLoadProc(Form form)
         {
-            ConstructionWall f = (ConstructionWall)form;
+            ConstructionDoor f = (ConstructionDoor)form;
 
             if (inEditing == "Edit")
             {
@@ -88,7 +87,7 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A1", "번호");
             dataGridView1.Columns.Add("A2", "명칭");
             dataGridView1.Columns.Add("A3", "Type");
-            dataGridView1.Columns.Add("A4", "유효열관류율.[W/m²·K]");
+            dataGridView1.Columns.Add("A4", "문유효열관류율.[W/m²·K]");
             dataGridView1.Columns.Add("A5", "흡수율.[-]");
             dataGridView1.Columns.Add("A6", "면적.[m²]");
             dataGridView1.Columns[0].Width = 40;
@@ -115,10 +114,9 @@ namespace main.contentslist
         }
         public void load_List()
         {
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭,Type,유효열관류율,흡수율", "");
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,명칭,Type,문유효열관류율,흡수율,문면적", "");
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
             String Blank = "";
-            // WallList.Rows.Clear();
             dataGridView1.Rows.Clear();
             for (int n = 0; n < List.Length; n++)
             {
@@ -129,11 +127,10 @@ namespace main.contentslist
                 dataGridView1.Rows[nRow].Cells[3].Value = List[n][2];
                 dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][3]));
                 dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][4]));
-                dataGridView1.Rows[nRow].Cells[6].Value = null;
-                // WallList.Rows.Add(List[n][0], List[n][1], List[n][2], String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])));
+                dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][5]));
                 mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":7,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             }
-            //dataGridView1.DataSource = WallList;
+
             CountDB = List.Length;
             Program.UTIL.resetMainTree(1, 5, mainMenu.ToArray(), "51"); // 예시 코드: 메인 메뉴 동적 할당
         }
@@ -146,7 +143,7 @@ namespace main.contentslist
                 if (k > -1)
                 {
                     String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                    Program.DB.deleteValue(DB.type.ProjDB, "ConstructionWall", "번호 ='" + Delete_Num + "'");
+                    Program.DB.deleteValue(DB.type.ProjDB, "ConstructionDoor", "번호 ='" + Delete_Num + "'");
                     load_List();
 
                 }
@@ -167,15 +164,15 @@ namespace main.contentslist
 
         private void Copy_button_Click(object sender, EventArgs e)
         {
-            WallNum = Program.UTIL.CreateNum("ConstructionWall", "번호", "DR");
+            DoorNum = Program.UTIL.CreateNum("ConstructionDoor", "번호", "DR");
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
                 String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
 
-                Program.DB.CopyValue(DB.type.ProjDB, "ConstructionWall", "번호 ='" + Copy_Num + "'", WallNum);
-                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionWall" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + WallNum + "'");
-                Load_form(WallNum, "Copy");
+                Program.DB.CopyValue(DB.type.ProjDB, "ConstructionDoor", "번호 ='" + Copy_Num + "'", DoorNum);
+                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionDoor" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + DoorNum + "'");
+                Load_form(DoorNum, "Copy");
 
             }
         }

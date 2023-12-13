@@ -343,6 +343,7 @@ namespace main.contents
             {
                 case "커튼월창":
                 case "창호":
+                case "외부출입문":
                     return true;
             }
             return false;
@@ -369,7 +370,7 @@ namespace main.contents
                     Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭", "");
                     break;
                 case "외부출입문":
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭", ""); //출입문으로 나중에 바꿔야함 
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,명칭", ""); //출입문으로 나중에 바꿔야함 
                     break;
             }
 
@@ -509,7 +510,7 @@ namespace main.contents
                                 Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호", "명칭 = '" + ConsType + "'");
                                 break;
                             case "외부출입문":
-                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호", "명칭 = '" + ConsType + "'"); ; //출입문으로 나중에 바꿔야함 
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호", "명칭 = '" + ConsType + "'"); ; //출입문으로 나중에 바꿔야함 
                                 break;
 
                                 
@@ -730,7 +731,7 @@ namespace main.contents
                     DataGridViewCell cell = row.Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
                     DataGridViewComboBoxCell cell2 = row.Cells[10] as DataGridViewComboBoxCell;
 
-                    if (cell.Value.ToString() != "커튼월창" && cell.Value.ToString() != "창호")
+                    if (cell.Value.ToString() != "커튼월창" && cell.Value.ToString() != "창호" && cell.Value.ToString() != "외부출입문")
                     {
                         DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
                         TypeLabel.Value = "";
