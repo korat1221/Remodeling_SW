@@ -177,13 +177,13 @@ namespace main.contents.Result
                 for (int mth = 0; mth < 12; mth++)
                 {
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qh_f", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
-                    chart1.Add(Math.Round(Double.Parse(Result[0][0]), 3));
+                    chart1.Add(Math.Round(Double.Parse(Result[0][0]), 3) + 0);
                     __data[16].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][0]) }); //난방 에너지소요량 
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qh_outg", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
-                    chart2.Add(Math.Round(Double.Parse(Result[0][0]), 3));
+                    chart2.Add(Math.Round(Double.Parse(Result[0][0]), 3) + 0);
                     __data[17].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][0]) }); //난방 에너지공급량 
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qhb_mth_sum", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
-                    chart3.Add(Math.Round(Double.Parse(Result[0][0]), 3));
+                    chart3.Add(Math.Round(Double.Parse(Result[0][0]), 3) + 0);
                     __data[18].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][0]) }); //에너지요구량 
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Wh_ce, Wh_d, Wh_s, Wh_g", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
                     double Wh_tot = Convert.ToDouble(Result[0][0]) + Convert.ToDouble(Result[0][1]) + Convert.ToDouble(Result[0][2]) + Convert.ToDouble(Result[0][3]);
@@ -203,20 +203,20 @@ namespace main.contents.Result
                     __data[28].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][3]) }); //생산 온도  
 
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qh_ce, dtheta_ce1, dtheta_ce2, Wh_ce", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
-                    chart4.Add(Math.Round(Double.Parse(Result[0][0]), 3));
+                    chart4.Add(Math.Round(Double.Parse(Result[0][0]), 3) + 0);
                     __data[29].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][0]) }); //공급 열손실
                     __data[30].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][1]) }); //공급 온도편차1
                     __data[31].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][2]) }); //공급 온도편차2
                     __data[32].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][3]) }); //공급 열손실
 
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qh_d, Psi_pipe, Wh_d", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
-                    chart5.Add(Math.Round(Double.Parse(Result[0][0]), 3));
+                    chart5.Add(Math.Round(Double.Parse(Result[0][0]), 3) + 0);
                     __data[33].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][0]) }); //분배 열손실
                     __data[34].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][1]) }); //배관 열관류율
                     __data[35].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][2]) }); //분배 보조에너지
 
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qh_s, Qs_po_day, Wh_s", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
-                    chart6.Add(Math.Round(Double.Parse(Result[0][0]), 3));
+                    chart6.Add(Math.Round(Double.Parse(Result[0][0]), 3) + 0);
                     __data[39].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][0]) }); //저장 열손실
                     __data[40].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][1]) }); //일일축열열손실
                     __data[41].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][2]) }); //저장 보조에너지
