@@ -63,8 +63,14 @@ namespace main.contents.Result
 
             List<object>[] __data = new List<object>[700];
 
-            int i = -1, n;
+            List<string> chart_data1 = new List<string>();
+            List<string> chart_data2 = new List<string>();
+            List<string> chart_data3 = new List<string>();
+            List<string> chart_data4 = new List<string>();
+            List<string> chart_data5 = new List<string>();
+            List<string> chart_data6 = new List<string>();
 
+            int i = -1, n;
 
             while (++i < 700)
             {
@@ -75,6 +81,13 @@ namespace main.contents.Result
 
             while (++i < HeatingValue.Length)
             {
+                List<object> chart1 = new List<object>();
+                List<object> chart2 = new List<object>();
+                List<object> chart3 = new List<object>();
+                List<object> chart4 = new List<object>();
+                List<object> chart5 = new List<object>();
+                List<object> chart6 = new List<object>();
+
                 if (HeatingValue[i][1] != null) //존 나누기 
                 {
                     if (HeatingValue[i][1].Contains("+"))
@@ -164,10 +177,13 @@ namespace main.contents.Result
                 for (int mth = 0; mth < 12; mth++)
                 {
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qh_f", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
+                    chart1.Add(Math.Round(Double.Parse(Result[0][0]), 3));
                     __data[16].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][0]) }); //난방 에너지소요량 
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qh_outg", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
+                    chart2.Add(Math.Round(Double.Parse(Result[0][0]), 3));
                     __data[17].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][0]) }); //난방 에너지공급량 
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qhb_mth_sum", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
+                    chart3.Add(Math.Round(Double.Parse(Result[0][0]), 3));
                     __data[18].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][0]) }); //에너지요구량 
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Wh_ce, Wh_d, Wh_s, Wh_g", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
                     double Wh_tot = Convert.ToDouble(Result[0][0]) + Convert.ToDouble(Result[0][1]) + Convert.ToDouble(Result[0][2]) + Convert.ToDouble(Result[0][3]);
@@ -187,17 +203,20 @@ namespace main.contents.Result
                     __data[28].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][3]) }); //생산 온도  
 
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qh_ce, dtheta_ce1, dtheta_ce2, Wh_ce", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
+                    chart4.Add(Math.Round(Double.Parse(Result[0][0]), 3));
                     __data[29].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][0]) }); //공급 열손실
                     __data[30].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][1]) }); //공급 온도편차1
                     __data[31].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][2]) }); //공급 온도편차2
                     __data[32].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][3]) }); //공급 열손실
 
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qh_d, Psi_pipe, Wh_d", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
+                    chart5.Add(Math.Round(Double.Parse(Result[0][0]), 3));
                     __data[33].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][0]) }); //분배 열손실
                     __data[34].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][1]) }); //배관 열관류율
                     __data[35].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][2]) }); //분배 보조에너지
 
                     Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qh_s, Qs_po_day, Wh_s", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
+                    chart6.Add(Math.Round(Double.Parse(Result[0][0]), 3));
                     __data[39].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][0]) }); //저장 열손실
                     __data[40].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][1]) }); //일일축열열손실
                     __data[41].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Result[0][2]) }); //저장 보조에너지
@@ -288,6 +307,13 @@ namespace main.contents.Result
                 Result = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qh_max_sum", "번호 = '" + HeatingValue[i][0] + "'");
                 __data[60].Add(new { idx = i, val = Program.UTIL.asFixed((Convert.ToDouble(Result[0][0]) / 1000).ToString()) }); //부하
                 __data[70].Add(new { idx = i, val = Program.UTIL.asFixed((Convert.ToDouble(Result[0][0]) / tot[0] / 1000).ToString()) }); //부하 바닥면적당      
+
+                chart_data1.Add(System.Text.Json.JsonSerializer.Serialize(chart1.ToArray()));
+                chart_data2.Add(System.Text.Json.JsonSerializer.Serialize(chart2.ToArray()));
+                chart_data3.Add(System.Text.Json.JsonSerializer.Serialize(chart3.ToArray()));
+                chart_data4.Add(System.Text.Json.JsonSerializer.Serialize(chart4.ToArray()));
+                chart_data5.Add(System.Text.Json.JsonSerializer.Serialize(chart5.ToArray()));
+                chart_data6.Add(System.Text.Json.JsonSerializer.Serialize(chart6.ToArray()));
             }
 
 
@@ -384,14 +410,27 @@ namespace main.contents.Result
 
             s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
             s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
+            System.Text.Json.JsonSerializer.Serialize(__data[16].ToArray());
 
-            runScript("init(" + s + "," + s2 + ")");
+            string s3 = "", s4;
 
+            i = -1;
 
+            while(++i < chart_data1.Count)
+            {
+                if (s3 != "") s3 += ",";
+
+                s4 = "{data:[{type:\"line\",label:\"난방 에너지 소요량\",data:" + chart_data1[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false}," +
+                "{type:\"line\",label:\"난방 에너지 공급량\",data:" + chart_data2[i] + ",borderColor:\"#FF00FF\",backgroundColor:\"#FF00FF\",dash:false}," +
+                "{type:\"line\",label:\"난방 에너지 요구량\",data:" + chart_data3[i] + ",borderColor:\"#000000\",backgroundColor:\"#000000\",dash:false}," +
+                "{type:\"line\",label:\"난방 공급 열손실\",data:" + chart_data4[i] + ",borderColor:\"#00FF00\",backgroundColor:\"#00FF00\",dash:false}," +
+                "{type:\"line\",label:\"난방 분배 열손실\",data:" + chart_data5[i] + ",borderColor:\"#FF0000\",backgroundColor:\"#FF0000\",dash:false}," +
+                "{type:\"line\",label:\"난방 저장 열손실\",data:" + chart_data6[i] + ",borderColor:\"#0000FF\",backgroundColor:\"#0000FF\",dash:false}," +
+                "],max:5000,step:100,legend:true}";
+                s3 += s4;
+            }
+            runScript("init(" + s + "," + s2 + "," + "[" + s3 + "])");
         }
-
-
-
 
         private void button1_Click(object sender, EventArgs e)
         {

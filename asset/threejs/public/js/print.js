@@ -29,6 +29,14 @@ window.addEventListener("message", async (event) => {
             .html(el.val);
         }
       }
+
+      const ifrms = document.querySelectorAll('.ifrm-chart1');
+
+      i = -1;
+      while(++i < ifrms.length) {
+        o.chart[i].chart = true;
+        ifrms[i].contentWindow.postMessage(o.chart[i], "*");
+      }
     }, 100);
   }
 });
