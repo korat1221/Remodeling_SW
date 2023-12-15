@@ -95,6 +95,7 @@ namespace main.contents
             Shade_comboBox.Items.Add("없음");
             Shade_comboBox.Items.Add("외부_베네치안");
 
+           
         }
 
 
@@ -344,11 +345,13 @@ namespace main.contents
                     R3_textBox.Text = Reneweff.ToString();
                 }
             }
-            if (RenewType_textBox.Text != null)
-            { Load_RenewType_image(RenewName); }
+            if (RenewType_textBox.Text == null || Renew_checkBox.Checked == false)
+            { 
+                Main_pictureBox2.Visible = false;
+            }
             else
             {
-                Main_pictureBox2.Visible = false;
+                Load_RenewType_image(RenewName);
             }
 
         }
@@ -1115,6 +1118,7 @@ namespace main.contents
             L8_textBox.Text= null;
             RenewDi_comboBox.Text = null;
             Slope_comboBox.Text = null;    
+            
         }
 
 
@@ -1279,7 +1283,7 @@ namespace main.contents
 
                 Pn = Convert.ToDouble(Load[0][11]);
 
-                if (RenewType_textBox.Text != null)
+                if (RenewType_textBox.Text != null && Renew_checkBox.Checked == true)
                 { Load_RenewType_image(RenewName); }
                 else
                 {

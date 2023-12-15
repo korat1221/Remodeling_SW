@@ -378,7 +378,7 @@ namespace main
             //존 문 정보 가져오기<<나중에 문으로 바꿔야 함 
             try
             {
-                String[][] ZoneD = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionDoor AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "'");
+                String[][] ZoneD = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.문유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionDoor AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "'");
                 //string[][] ZoneD = Program.DB.getValue(DB.type.ProjDB, "ZoneDoor", "Area,Ueff,α,DirectInDirect", "ZoneNum='" + ZoneNum + "'");
                 int i = -1;
                 while (++i < ZoneD.Length)
@@ -705,6 +705,7 @@ namespace main
                             zoneInWall_HT[0, i] = 0;
                             zoneInWall_HT[1, i] = 0;
                         }
+                       
                     }
 
 
@@ -723,9 +724,9 @@ namespace main
 
                             for (int mth = 0; mth < 12; mth++)
                             {
-                                if (검토유형[0][0] == "기존")
+                                if (검토유형[0][0] == "1")
                                 {
-                                    theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + zoneInwall.SideZone() + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "' and 검토유형 ='" + 검토유형[0][0]+"'");
+                                    theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + zoneInwall.SideZone() + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "' and 프로젝트유형 ='" + 검토유형[0][0]+"'");
                                 }
                                 else
                                 {
@@ -762,6 +763,9 @@ namespace main
                     { QT_u_sink_Cmax += (zoneInWall_HT[1, i] * (theta_i_c_max_d - (theta_i_c_max_d - 0.5 * (theta_i_c_max_d - theta_e_max)))); }
                     else { QT_u_source_Cmax += (zoneInWall_HT[1, i] * ((theta_i_c_max_d - 0.5 * (theta_i_c_max_d - theta_e_max)) - theta_i_c_max_d)); }
 
+                    Zone_HT_Inwall += zoneInWall_HT[0, i];
+
+                    Zone_HT_tot = Zone_HT_tot + Zone_HT_Inwall; 
                 }
             }
 
@@ -832,8 +836,8 @@ namespace main
 
                             for (int mth = 0; mth < 12; mth++)
                             {
-                                if (검토유형[0][0] == "기존")
-                                { theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + zoneslab.SideZone() + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "' AND 검토유형 ='"+검토유형+"'"); }
+                                if (검토유형[0][0] == "1")
+                                { theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + zoneslab.SideZone() + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "' AND 프로젝트유형 ='"+검토유형+"'"); }
                                 else
                                 { theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_Alt_Result", "비냉난방존온도", "번호 = '" + zoneslab.SideZone() + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "' AND 검토유형 ='" + 검토유형 + "'"); }
 
@@ -866,7 +870,9 @@ namespace main
                     if (theta_i_c_max_d > (theta_i_c_max_d - 0.5 * (theta_i_c_max_d - theta_e_max)))
                     { QT_u_sink_Cmax += (zoneSlab_HT[1, i] * (theta_i_c_max_d - (theta_i_c_max_d - 0.5 * (theta_i_c_max_d - theta_e_max)))); }
                     else { QT_u_source_Cmax += zoneSlab_HT[1, i] * ((theta_i_c_max_d - 0.5 * (theta_i_c_max_d - theta_e_max)) - theta_i_c_max_d); }
-
+                    
+                    Zone_HT_Slab += zoneSlab_HT[0, i];
+                    Zone_HT_tot = Zone_HT_tot + Zone_HT_Slab;
                 }
             }
         }

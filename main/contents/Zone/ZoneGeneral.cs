@@ -370,7 +370,7 @@ namespace main.contents
         }
         private void BuildingUse_textBox_TextChanged(object sender, EventArgs e)
         {
-         
+
         }
         //주간이용일수 선택 시 연간이용일수 계산
         private void WeekUseDay_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -444,21 +444,39 @@ namespace main.contents
         }
         private void Calc_Time()
         {
-            TimeSpan ts;
-            if (StartTime_comboBox.SelectedItem != null && EndTime_comboBox.SelectedItem != null)
+            try
             {
-                ts = DateTime.Parse(EndTime_comboBox.SelectedItem.ToString()) - DateTime.Parse(StartTime_comboBox.SelectedItem.ToString());
-                if (Double.Parse(ts.Hours.ToString()) >= 0)
-                { UseTime = Double.Parse(ts.Hours.ToString()); }
-                else
-                { UseTime = Double.Parse(ts.Hours.ToString()) + 24; }
+                TimeSpan ts;
+                if (StartTime_comboBox.SelectedItem != null && EndTime_comboBox.SelectedItem != null)
+                {
+                    if (StartTime_comboBox.SelectedItem.ToString() == EndTime_comboBox.SelectedItem.ToString())
+                    {
+                        UseTime = 24;
+                        HCTime = 24;
+                        AHUTime = 24;
+                        UseTime_textBox.Text = UseTime.ToString();
+                        HCTime_textBox.Text = HCTime.ToString();
+                        PersonIHG_Cal(PersonIHG, UseTime);
+                    }
+                    else
+                    {
+                        ts = DateTime.Parse(EndTime_comboBox.SelectedItem.ToString()) - DateTime.Parse(StartTime_comboBox.SelectedItem.ToString());
+                        if (Double.Parse(ts.Hours.ToString()) >= 0)
+                        { UseTime = Double.Parse(ts.Hours.ToString()); }
+                        else
+                        { UseTime = Double.Parse(ts.Hours.ToString()) + 24; }
 
-                HCTime = UseTime + 1;
-                AHUTime = UseTime + 1;
-                UseTime_textBox.Text = UseTime.ToString();
-                HCTime_textBox.Text = HCTime.ToString();
-                PersonIHG_Cal(PersonIHG, UseTime);
+                        HCTime = UseTime + 1;
+                        AHUTime = UseTime + 1;
+                        UseTime_textBox.Text = UseTime.ToString();
+                        HCTime_textBox.Text = HCTime.ToString();
+                        PersonIHG_Cal(PersonIHG, UseTime);
+                    }
+
+                }
             }
+            catch { }
+
         }
 
         private void PersonNum_textBox_TextChanged(object sender, EventArgs e)
@@ -522,9 +540,14 @@ namespace main.contents
 
         private void OccupancyDensity_Cal(double PersonNum, double Area)
         {
-            if (PersonNum != 0 && String.IsNullOrEmpty(NetArea_textBox.Text) == false)
+            if (PersonNum !=0 && String.IsNullOrEmpty(NetArea_textBox.Text) == false)
             {
                 OccupancyDensity = Area / PersonNum;
+                OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
+            }
+            else if(PersonNum == 0)
+            {
+                OccupancyDensity = 0;
                 OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
             }
 
@@ -686,7 +709,10 @@ namespace main.contents
             RoomControl_comboBox.SelectedIndex = 0;
             StartTime_comboBox.SelectedItem = null;
             EndTime_comboBox.SelectedItem = null;
-            WeekUseDay_comboBox.SelectedIndex = 3;
+            Usage_comboBox.SelectedItem = null;
+            WeekUseDay_comboBox.SelectedItem = null;
+
+            //WeekUseDay_comboBox.SelectedIndex = 3;
             EquipIHG_comboBox.SelectedIndex = 0;
 
             CeilingHeight_textBox.Text = "";
@@ -725,6 +751,7 @@ namespace main.contents
             Floor_textBox.Text = "";
             InWall_textBox.Text = "";
             Door_textBox.Text = "";
+            OccupancyDensity_textBox.Text = "";
 
         }
 
@@ -779,10 +806,11 @@ namespace main.contents
                 η2 = Convert.ToDouble(Value[0][6]);
                 η2_textBox.Text = string.Format("{0:F1}", η2 * 100);
 
-
-
+                Usage_comboBox.SelectedItem = Usage;
                 DataRowView? item = Usage_comboBox.SelectedItem as DataRowView;
-                Usage_comboBox.SelectedItem = Value[0][7];
+                //Usage = Value[0][7];
+                
+
                 if (item != null)
                 {
                     Usage = item.Row.ItemArray[0].ToString();
@@ -801,7 +829,7 @@ namespace main.contents
                 EndTime_comboBox.SelectedItem = EndTime;
 
                 WeekUseDay = Convert.ToDouble(Value[0][11]);
-                WeekUseDay_comboBox.SelectedItem = WeekUseDay;
+                WeekUseDay_comboBox.SelectedItem = "주 "+WeekUseDay.ToString()+".0 일 근무";
 
                 PersonNum = Convert.ToDouble(Value[0][12]);
                 PersonNum_textBox.Text = PersonNum.ToString();
@@ -890,7 +918,24 @@ namespace main.contents
                 {
                     string[][] res = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 이름, 값, 아이디 FROM 인덱스 WHERE 부모아이디=" + id);
 
-                    Program.UTIL.FillComboBox_Category(Usage_comboBox, res, "1");
+                   
+                    //Usage = Value[0][7];
+                    String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "용도프로필", "존번호 = '" + ZoneNum + "'");
+
+                    if(Value.Length >0)
+                    { 
+                        for (int i = 0; i < res.Length; i++)
+                        {
+                            if (Value[0][0] == res[i][0])
+                            {
+                                Program.UTIL.FillComboBox_Category(Usage_comboBox, res, (i + 1).ToString());
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Program.UTIL.FillComboBox_Category(Usage_comboBox, res,  (1).ToString());
+                    }
                 }
             }
             catch { }
@@ -1047,5 +1092,6 @@ namespace main.contents
 
         }
 
+       
     }
 }
