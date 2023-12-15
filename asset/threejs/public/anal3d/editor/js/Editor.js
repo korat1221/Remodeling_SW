@@ -1798,9 +1798,28 @@ Editor.prototype = {
 				sql += "INSERT INTO ThermalBridge_3D (ID,열교항목,열교길이) VALUES (" + el + ",'" + _bridges[el] + "','" + this.bridges[el].dist + "');";
 			});
 
-			window.chrome.webview.postMessage(sql + "@@@" + JSON.stringify({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"rotation":this.rotation,"tree":tree,"tree2":tree,"perfect":this.perfect}));	   
-//			parent.postMessage({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"tree":this.getTreeInfo(1),"tree2":this.getTreeInfo(0)},'*');
+			this.uploadObjInfo({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"rotation":this.rotation,"tree":tree,"tree2":tree,"perfect":this.perfect}, sql);
 		}
+	},
+
+	uploadObjInfo: function (o, sql) {
+		let param = JSON.stringify(o);
+
+		fetch("/upload", {
+			method: "POST",
+			headers: {
+				"Content-Type": "*/*",
+			},
+			body: "pid=" + this.pid + "&json=" + param,
+			json: true
+		})
+		.then((res) => {
+			return res.json(); //Promise 반환
+		})
+		.then((json) => {
+			window.chrome.webview.postMessage((sql ? sql : "") + "@@@perfect:" + this.perfect);
+			console.log(json); // 서버에서 주는 json데이터가 출력 됨
+		});
 	},
 
 	getTreeInfo: function () {

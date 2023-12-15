@@ -212,7 +212,7 @@ namespace main
                 }
             }
         }
-        public void setObjInfo(string data)
+        public void setObjInfo(string pid)
         {
             foreach (Form openForm in Application.OpenForms)
             {
@@ -220,7 +220,7 @@ namespace main
                 {
                     MainContents f = (MainContents)(((FormMain)openForm).splitContainer1.Panel1.Controls[0]);
 
-                    f.runScript("setObjInfo(" + data + ")");
+                    f.runScript("setObjInfo('" + pid + "')");
                     return;
                 }
             }
@@ -275,7 +275,7 @@ namespace main
 
                     if (File.Exists(path2 + "\\" + p))
                     {
-                        f.runScript("open3DModel('/models/" + ProjectList.CurProjID + "/" + p + "')");
+                        f.runScript("open3DModel('/models/" + ProjectList.CurProjID + "/" + p + "','" + ProjectList.CurProjID + "')");
                     }
                     return;
                 }
@@ -319,20 +319,6 @@ namespace main
 
             File.Delete(path2 + "\\" + fname);
             File.WriteAllText(path2 + "\\" + fname, data);
-        }
-
-        public string read3DModel()
-        {
-            string fname = "model.json";
-            string path2 = Program.gPath + "threejs\\public\\models\\" + ProjectList.CurProjID;
-
-            DirectoryInfo di = new DirectoryInfo(path2);  //Create Directoryinfo value by sDirPath  
-
-            if (di.Exists == true && File.Exists(path2 + "\\" + fname))   //If New Folder not exits  
-            {
-                return File.ReadAllText(path2 + "\\" + fname);
-            }
-            return "";
         }
 
         public string asFixed(string s)

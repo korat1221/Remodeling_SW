@@ -428,7 +428,7 @@ namespace main
                     {
                         if (formParam.formID == 8)
                         {
-                            Program.UTIL.setObjInfo(Program.UTIL.read3DModel());
+                            Program.UTIL.setObjInfo(ProjectList.CurProjID);
 
                             DoLoadForm(8, OnLoadProc);
                         }

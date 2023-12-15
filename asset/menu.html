@@ -45,10 +45,20 @@
     let gDefaultSelect = ["0", "3", "8", "12", "16", "26"];
     let first = true;
 
-    function setObjInfo(o) {
-        gTreeData[2][1].children = o.tree[0].children;
-        gTreeData[2][2].children = o.tree[1].children;
-        load(2, true);
+    function setObjInfo(pid) {
+        $.ajax({
+            url: "http://localhost:3000/models/" + pid + "/model.json",
+            type: 'GET',
+            dataType : 'json',
+            async: true,
+            success: function (o) {
+                gTreeData[2][1].children = o.tree[0].children;
+                gTreeData[2][2].children = o.tree[1].children;
+                load(2, true);
+            },
+            error: function () {
+            }
+        });
     }
     
     function resetMainTree(id, subid, tree, select_id) {
