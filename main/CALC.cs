@@ -323,6 +323,8 @@ namespace main
             }
             catch { }
 
+            Program.DB.deleteTable(DB.type.ProjDB, "HeatingSystem_Result");
+            Program.DB.initTable(DB.type.ProjDB, "HeatingSystem_Result");
             while (++i < HeatingNum.Length)
             {
 
@@ -352,6 +354,7 @@ namespace main
                 Heating1.Calc_Q_Air_HP();
                 Heating1.nan();
 
+                
                 for (int mth = 0; mth <= 11; mth++)
                 {
                   
@@ -393,6 +396,8 @@ namespace main
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             int i = -1;
             String MTH;
+            Program.DB.deleteTable(DB.type.ProjDB, "DHWSystem_Result");
+            Program.DB.initTable(DB.type.ProjDB, "DHWSystem_Result");
             while (++i < DHWNum.Length)
             {
                 Cal_DHW DHW1 = new Cal_DHW(DHWNum[i][0]);
@@ -409,6 +414,8 @@ namespace main
                 DHW1.Calc_Qh_gen_Boiler();
                 DHW1.Calc_Solar();
                 DHW1.nan();
+
+               
                 for (int mth = 0; mth <= 11; mth++)
                 {
 
@@ -437,6 +444,8 @@ namespace main
             final1.Calc_Qbase_gas();
             final1.Calc_Error();
             String MTH;
+            Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result");
+            Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result");
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
             for (int mth = 0; mth <= 11; mth++)

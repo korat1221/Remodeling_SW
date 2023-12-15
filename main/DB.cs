@@ -56,7 +56,7 @@ namespace main
         {
             //프로젝트유형 기존:1, 리트로핏:2, 리모델링:3, 신규:4
             //Building 
-            {"BuildingGeneral", "CREATE TABLE IF NOT EXISTS BuildingGeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트명 VARCHAR (32),프로젝트유형 VARCHAR (32),프로젝트유형번호 VARCHAR (32),사업성능목표 VARCHAR (32),건물진단실시 VARCHAR (32),건물대상 VARCHAR (32),건물용도 VARCHAR (32),건물명 VARCHAR (32),주소 VARCHAR (32),지역인덱스 VARCHAR (32),지역 VARCHAR (32),지역구분 VARCHAR (32),외벽구조유형 VARCHAR (32),지붕구조유형 VARCHAR (32),준공연도 VARCHAR (32),준공월 VARCHAR (32),준공시기 VARCHAR (32),법규시기 VARCHAR (32),연면적 VARCHAR (32),건축면적 VARCHAR (32),지상층수 VARCHAR (32),지하층수 VARCHAR (32),작성자 VARCHAR (32),작성자주소 VARCHAR (32),작성자회사 VARCHAR (32),작성연도 VARCHAR (32),작성월 VARCHAR (32),작성시기 VARCHAR (32))"},
+            {"BuildingGeneral", "CREATE TABLE IF NOT EXISTS BuildingGeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트명 VARCHAR (32),프로젝트유형 VARCHAR (32),프로젝트유형번호 VARCHAR (32),기존프로젝트 VARCHAR (32),사업성능목표 VARCHAR (32),건물진단실시 VARCHAR (32),건물대상 VARCHAR (32),건물용도 VARCHAR (32),건물명 VARCHAR (32),주소 VARCHAR (32),지역인덱스 VARCHAR (32),지역 VARCHAR (32),지역구분 VARCHAR (32),외벽구조유형 VARCHAR (32),지붕구조유형 VARCHAR (32),준공연도 VARCHAR (32),준공월 VARCHAR (32),준공시기 VARCHAR (32),법규시기 VARCHAR (32),연면적 VARCHAR (32),건축면적 VARCHAR (32),지상층수 VARCHAR (32),지하층수 VARCHAR (32),작성자 VARCHAR (32),작성자주소 VARCHAR (32),작성자회사 VARCHAR (32),작성연도 VARCHAR (32),작성월 VARCHAR (32),작성시기 VARCHAR (32))"},
             {"BuildingEnergyUse", "CREATE TABLE IF NOT EXISTS BuildingEnergyUse (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트유형 VARCHAR (32),연료 VARCHAR (32),연도 VARCHAR (32),월 VARCHAR (32),단위 VARCHAR (32),에너지사용량 VARCHAR (32),사용시작일 VARCHAR (32),사용종료일 VARCHAR (32))"},
             //Construction 
             {"ConstructionBlind", "CREATE TABLE IF NOT EXISTS ConstructionBlind (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),Type VARCHAR (32),제품번호 VARCHAR (32),제품명 VARCHAR (32),종류 VARCHAR (32),설치 VARCHAR (32),투과수준 VARCHAR (32),색깔 VARCHAR (32),외부반사율 VARCHAR (32),내부반사율 VARCHAR (32),투과율 VARCHAR (32),흡수율 VARCHAR (32),제어방식1 VARCHAR (32),제어방식2 VARCHAR (32))"},
@@ -125,8 +125,8 @@ namespace main
             {"Zone_Envelope_Result", "CREATE TABLE IF NOT EXISTS Zone_Envelope_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),외피번호 VARCHAR (32),존번호 VARCHAR (32),구조체번호 VARCHAR (32),외피유형 VARCHAR (32),커튼월유형 VARCHAR (32),직접간접 VARCHAR (32),난방_냉방 VARCHAR (32),비이용일_이용일 VARCHAR (32),월 VARCHAR (32),HT VARCHAR (32),HT_TB VARCHAR (32),QTsink VARCHAR (32),QTsource VARCHAR (32),QT_TB_sink VARCHAR (32),QT_TB_source VARCHAR (32),QTsink_tot VARCHAR (32),QTsource_tot VARCHAR (32),QSsink VARCHAR (32),QSsource VARCHAR (32))"},
             {"Zone_Alt_Result", "CREATE TABLE IF NOT EXISTS Zone_Alt_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,검토유형 VARCHAR (32),번호 VARCHAR (32), 이름 VARCHAR (32), 난방_냉방 VARCHAR (32), 비이용일_이용일 VARCHAR (32), 월 VARCHAR (32),Qb_day VARCHAR (32),Qb_mth VARCHAR (32),Qb_a VARCHAR (32), Q_max VARCHAR (32), t_max VARCHAR (32), 비냉난방존온도 VARCHAR (32))"},
             {"Zone_HCneed_Result", "CREATE TABLE IF NOT EXISTS Zone_HCneed_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),번호 VARCHAR (32), 이름 VARCHAR (32), 난방_냉방 VARCHAR (32), 비이용일_이용일 VARCHAR (32), 월 VARCHAR (32), HT_tot VARCHAR (32), HT_InWall VARCHAR (32),HT_Slab VARCHAR (32),HT_Wall VARCHAR (32), HT_Roof VARCHAR (32), HT_Floor VARCHAR (32), HT_GWall VARCHAR (32), HT_Door VARCHAR (32), HT_Win VARCHAR (32), HT_CW VARCHAR (32), HT_Di_Wall VARCHAR (32), HT_Indi_Wall VARCHAR (32), HT_Di_Roof VARCHAR (32), HT_Indi_Roof VARCHAR (32), HT_Di_Win VARCHAR (32), HT_Indi_Win VARCHAR (32), HT_Di_Door VARCHAR (32), HT_Indi_Door VARCHAR (32), HT_TB_tot VARCHAR (32), HT_TB_Wall VARCHAR (32), HT_TB_Roof VARCHAR (32), HT_TB_Floor VARCHAR (32), HT_TB_Gwall VARCHAR (32), HT_TB_Win VARCHAR (32), HT_TB_Door VARCHAR (32), HT_TB_CW VARCHAR (32), nmech VARCHAR (32), nz VARCHAR (32), ninf VARCHAR (32), nwin VARCHAR (32),  HV_tot VARCHAR (32), HV_inf VARCHAR (32), HV_win VARCHAR (32), HV_z VARCHAR (32), HV_mech VARCHAR (32), H_tot VARCHAR (32), tao VARCHAR (32), dwe_mth VARCHAR (32), dwd_mth VARCHAR (32), theta_i VARCHAR (32), theta_e VARCHAR (32), QTsink_tot VARCHAR (32), QT_u_sink VARCHAR (32), QTsink_Wall VARCHAR (32), QTsink_Roof VARCHAR (32), QTsink_Floor VARCHAR (32), QTsink_GWall VARCHAR (32), QTsink_Door VARCHAR (32), QTsink_Win VARCHAR (32), QTsink_CW VARCHAR (32), QTsource_tot VARCHAR (32), QT_u_source VARCHAR (32), QTsource_Wall VARCHAR (32), QTsource_Roof VARCHAR (32), QTsource_Floor VARCHAR (32), QTsource_GWall VARCHAR (32), QTsource_Door VARCHAR (32), QTsource_Win VARCHAR (32), QTsource_CW VARCHAR (32), QSopsink_tot VARCHAR (32), QSopsource_tot VARCHAR (32), QStr_tot VARCHAR (32), QSopsink_Wall VARCHAR (32), QSopsink_Roof VARCHAR (32), QSopsink_Door VARCHAR (32), QSopsink_CW_p VARCHAR (32), QSopsource_Wall VARCHAR (32), QSopsource_Roof VARCHAR (32), QSopsource_Door VARCHAR (32), QSopsource_CW_p VARCHAR (32), QStr_Win VARCHAR (32), QStr_CW VARCHAR (32), QVsink_tot VARCHAR (32), QV_inf_sink VARCHAR (32), QV_win_sink VARCHAR (32), QV_z_sink VARCHAR (32), QV_mech_sink VARCHAR (32), QVsource_tot VARCHAR (32), QV_inf_source VARCHAR (32), QV_win_source VARCHAR (32), QV_z_source VARCHAR (32), QV_mech_source VARCHAR (32), Q_DHU_win VARCHAR (32), Q_DHU_mech VARCHAR (32), Q_DHU_tot VARCHAR (32), QI_tot VARCHAR (32), QI_L VARCHAR (32), QI_P VARCHAR (32), QI_fac VARCHAR (32), QI_Humidity VARCHAR (32), Qsink VARCHAR (32), Qsource VARCHAR (32), gamma VARCHAR (32), a VARCHAR (32), eta VARCHAR (32), dQc_b VARCHAR (32), dQc_sink VARCHAR (32),Qb_day VARCHAR (32),Qb_mth VARCHAR (32),Qb_a VARCHAR (32), Q_max VARCHAR (32), t_max VARCHAR (32), 비냉난방존온도 VARCHAR (32))"},
-            {"HeatingSystem_Result", "CREATE TABLE IF NOT EXISTS HeatingSystem_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32), 번호 VARCHAR (32), 월 VARCHAR (32), Qhb_mth_sum VARCHAR (32),  Qh_max_sum VARCHAR (32), Qh_a_sum VARCHAR (32), th_op_day_avg VARCHAR (32),  theta_i_h_set_avg VARCHAR (32), th_avg VARCHAR (32), dop_mth_avg VARCHAR (32),thrL VARCHAR (32),thrL_day VARCHAR (32),dhrB VARCHAR (32),fLNA VARCHAR (32),fLwe VARCHAR (32),beta_h_ce VARCHAR (32),beta_h_d VARCHAR (32),beta_h_s VARCHAR (32),beta_h_gen VARCHAR (32),theta_av_ce VARCHAR (32),theta_av_d VARCHAR (32),theta_av_s VARCHAR (32),theta_av_gen VARCHAR (32),dtheta_ce VARCHAR (32),dtheta_d VARCHAR (32),dtheta_s VARCHAR (32),dtheta_gen VARCHAR (32),dtheta_ce1 VARCHAR (32),dtheta_ce2 VARCHAR (32),Psi_pipe VARCHAR (32),L VARCHAR (32),Qs_po_day VARCHAR (32),Vs VARCHAR (32),Qh_gen_day VARCHAR (32),Pgen_Pn VARCHAR (32),Pgen_Pint VARCHAR (32),Pgen_P0 VARCHAR (32),eta_gen_Pn VARCHAR (32),eta_gen_Pint VARCHAR (32),fpint_Air VARCHAR (32),Qh_outg_sng-7 VARCHAR (32),Qh_outg_sng2 VARCHAR (32),Qh_outg_sng7 VARCHAR (32),COP-7 VARCHAR (32),COP2 VARCHAR (32),COP7 VARCHAR (32),Qh_ce VARCHAR (32),Qh_d VARCHAR (32),Qh_s VARCHAR (32),Qh_gen VARCHAR (32),Qh_outg VARCHAR (32),Qh_f VARCHAR (32),Wh_ce VARCHAR (32),Wh_d VARCHAR (32),Wh_s VARCHAR (32),Wh_g VARCHAR (32),연료 VARCHAR (32))"},
-            {"DHWSystem_Result", "CREATE TABLE IF NOT EXISTS DHWSystem_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),번호 VARCHAR (32),월 VARCHAR (32),Qwb_mth_sum VARCHAR (32),theta_ih_avg VARCHAR (32),Qw_a_sum VARCHAR (32),th_op_day_avg VARCHAR (32),theta_i_h_set_avg VARCHAR (32),dop_mth_avg VARCHAR (32),Qw_d VARCHAR (32),Qw_s VARCHAR (32),Qw_gen VARCHAR (32),Qw_outg VARCHAR (32),Qw_f VARCHAR (32),Ww_d VARCHAR (32),Ww_s VARCHAR (32),Ww_g VARCHAR (32),Qw_gen_day VARCHAR (32),Qw_gen_p0_day VARCHAR (32),eta_pn_w VARCHAR (32))"},
+            {"HeatingSystem_Result", "CREATE TABLE IF NOT EXISTS HeatingSystem_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32), 번호 VARCHAR (32), 월 VARCHAR (32), Qhb_mth_sum VARCHAR (32),  Qh_max_sum VARCHAR (32), Qh_a_sum VARCHAR (32), th_op_day_avg VARCHAR (32),  theta_i_h_set_avg VARCHAR (32), th_avg VARCHAR (32), dop_mth_avg VARCHAR (32),thrL VARCHAR (32),thrL_day VARCHAR (32),dhrB VARCHAR (32),fLNA VARCHAR (32),fLwe VARCHAR (32),beta_h_ce VARCHAR (32),beta_h_d VARCHAR (32),beta_h_s VARCHAR (32),beta_h_gen VARCHAR (32),theta_av_ce VARCHAR (32),theta_av_d VARCHAR (32),theta_av_s VARCHAR (32),theta_av_gen VARCHAR (32),dtheta_ce VARCHAR (32),dtheta_d VARCHAR (32),dtheta_s VARCHAR (32),dtheta_gen VARCHAR (32),dtheta_ce1 VARCHAR (32),dtheta_ce2 VARCHAR (32),Psi_pipe VARCHAR (32),L VARCHAR (32),Qs_po_day VARCHAR (32),Vs VARCHAR (32),Qh_gen_day VARCHAR (32),Pgen_Pn VARCHAR (32),Pgen_Pint VARCHAR (32),Pgen_P0 VARCHAR (32),eta_gen_Pn VARCHAR (32),eta_gen_Pint VARCHAR (32),fpint_Air VARCHAR (32),Qh_outg_sngminus7 VARCHAR (32),Qh_outg_sng2 VARCHAR (32),Qh_outg_sng7 VARCHAR (32),COPminus7 VARCHAR (32),COP2 VARCHAR (32),COP7 VARCHAR (32),Qh_ce VARCHAR (32),Qh_d VARCHAR (32),Qh_s VARCHAR (32),Qh_gen VARCHAR (32),Qh_outg VARCHAR (32),Qh_f VARCHAR (32),Wh_ce VARCHAR (32),Wh_d VARCHAR (32),Wh_s VARCHAR (32),Wh_g VARCHAR (32),연료 VARCHAR (32))"},
+            {"DHWSystem_Result", "CREATE TABLE IF NOT EXISTS DHWSystem_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),번호 VARCHAR (32),월 VARCHAR (32),Qwb_mth_sum VARCHAR (32),theta_ih_avg VARCHAR (32),Qw_a_sum VARCHAR (32),th_op_day_avg VARCHAR (32),theta_i_h_set_avg VARCHAR (32),dop_mth_avg VARCHAR (32),Qw_d VARCHAR (32),Qw_s VARCHAR (32),Qw_gen VARCHAR (32),Qw_outg VARCHAR (32),Qw_f VARCHAR (32),Ww_d VARCHAR (32),Ww_s VARCHAR (32),Ww_g VARCHAR (32),Qw_gen_day VARCHAR (32),Qw_gen_p0_day VARCHAR (32),eta_pn_w VARCHAR (32),연료 VARCHAR (32))"},
             {"FinalEnergy_Result", "CREATE TABLE IF NOT EXISTS FinalEnergy_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),번호 VARCHAR (32),월 VARCHAR (32),연료 VARCHAR (32),난방 VARCHAR (32),냉방 VARCHAR (32),급탕 VARCHAR (32),조명 VARCHAR (32),공조 VARCHAR (32),기저에너지 VARCHAR (32),총에너지소요량 VARCHAR (32))"}
         };
 
@@ -596,6 +596,43 @@ namespace main
                         objects.Add(rec);
                     }
                 }
+            }
+            return objects.ToArray();
+        }
+        public string[][] querySQL(string projName, string query)
+        {
+            List<string[]> objects = new List<string[]>();
+            SQLiteConnection db = new SQLiteConnection(@"Data Source=projects\\" + projName + ".sqlite");
+
+            db.Open();
+
+            if (db.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = new SQLiteCommand();
+
+                if (query != "")
+                {
+                    cmd.Connection = db;
+                    cmd.CommandText = query;
+
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        string json = string.Empty;
+
+                        while (reader.Read())
+                        {
+                            string[] rec = new string[reader.FieldCount];
+
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                rec[i] = reader[i].ToString();
+                            }
+                            objects.Add(rec);
+                        }
+                    }
+                }
+
+                db.Close();
             }
             return objects.ToArray();
         }

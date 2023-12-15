@@ -49,6 +49,8 @@
             label13 = new Label();
             label14 = new Label();
             panel2 = new Panel();
+            OldProject_label = new Label();
+            OldProject_comboBox = new ComboBox();
             ProjectType_textBox = new TextBox();
             ProjectName_textBox = new TextBox();
             textBox1 = new TextBox();
@@ -339,6 +341,8 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(OldProject_label);
+            panel2.Controls.Add(OldProject_comboBox);
             panel2.Controls.Add(ProjectType_textBox);
             panel2.Controls.Add(ProjectName_textBox);
             panel2.Controls.Add(textBox1);
@@ -353,6 +357,26 @@
             panel2.Size = new Size(489, 158);
             panel2.TabIndex = 99;
             panel2.Paint += panel2_Paint;
+            // 
+            // OldProject_label
+            // 
+            OldProject_label.AutoSize = true;
+            OldProject_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            OldProject_label.Location = new Point(249, 57);
+            OldProject_label.Name = "OldProject_label";
+            OldProject_label.Size = new Size(83, 15);
+            OldProject_label.TabIndex = 137;
+            OldProject_label.Text = "기존 프로젝트";
+            // 
+            // OldProject_comboBox
+            // 
+            OldProject_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            OldProject_comboBox.FormattingEnabled = true;
+            OldProject_comboBox.Location = new Point(333, 51);
+            OldProject_comboBox.Name = "OldProject_comboBox";
+            OldProject_comboBox.Size = new Size(120, 24);
+            OldProject_comboBox.TabIndex = 136;
+            OldProject_comboBox.SelectedIndexChanged += OldProject_comboBox_SelectedIndexChanged;
             // 
             // ProjectType_textBox
             // 
@@ -1067,5 +1091,7 @@
         private Label label8;
         private Label label9;
         private Label label26;
+        private Label OldProject_label;
+        private ComboBox OldProject_comboBox;
     }
 }

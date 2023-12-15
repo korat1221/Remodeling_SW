@@ -32,6 +32,7 @@ namespace main.contents
         String ReviewerName, ReviewerLocation, ReviewerCompany, ReviewYear, ReviewMonth;
         double ReviewDate;
         double[] law = new double[11];
+        string OldProject;
 
         public General()
         {
@@ -40,7 +41,8 @@ namespace main.contents
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             //프로젝트명
-            ProjectName = "화곡 119 안전센터 검토";
+            string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT title FROM projects WHERE current='1'");
+            ProjectName = res[0][0];
             if (ProjectName != null) { ProjectName_textBox.Text = ProjectName.ToString(); }
             else { }
 
@@ -63,7 +65,7 @@ namespace main.contents
             }
             if (ProjectType != null) { ProjectType_textBox.Text = ProjectType.ToString(); }
             else { }
-
+            Load_OldProject();
 
             //사업성능목표 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Target_comboBox, "건물", "사업 성능 목표", "1");
@@ -135,6 +137,54 @@ namespace main.contents
 
         }
 
+        private void Load_OldProject()
+        {
+            if (ProjectType != "기존" && ProjectType != "신규")
+            {
+                OldProject_comboBox.Visible = true;
+                OldProject_label.Visible = true;
+
+                string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT pnum FROM projects WHERE type='1' AND title ='" + ProjectName + "'");
+
+
+
+                DataTable sources = new DataTable();
+                sources.Columns.Add("Text");
+                sources.Columns.Add("Value");
+                sources.Columns.Add("ID");
+                int i = -1;
+                while (++i < res.Length)
+                {
+                    DataRow dr = sources.NewRow();
+                    dr["Text"] = res[i][0];
+                    sources.Rows.Add(dr);
+                }
+
+                OldProject_comboBox.DataSource = sources.DefaultView;
+                OldProject_comboBox.DisplayMember = "Text";
+                for (i = 0; i < OldProject_comboBox.Items.Count; i++)
+                {
+                    var arr = ((DataRowView)OldProject_comboBox.Items[i]).Row.ItemArray;
+                    if (arr.Length > 1)
+                    {
+                        OldProject_comboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                OldProject_comboBox.Visible = false;
+                OldProject_label.Visible = false;
+            }
+        }
+        private void OldProject_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (OldProject_comboBox.SelectedItem != null)
+            {
+                OldProject = OldProject_comboBox.SelectedItem.ToString();
+            }
+        }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
@@ -423,8 +473,8 @@ namespace main.contents
 
         private void Save()
         {
-            string ProjectTypeNum =null;
-            switch(ProjectType)
+            string ProjectTypeNum = null;
+            switch (ProjectType)
             {
                 case "기존":
                     ProjectTypeNum = "1";
@@ -441,14 +491,14 @@ namespace main.contents
             }
 
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
-            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트명,프로젝트유형,프로젝트유형번호,사업성능목표,건물진단실시," +
+            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트명,프로젝트유형,프로젝트유형번호,기존프로젝트,사업성능목표,건물진단실시," +
                 "건물대상,건물용도,건물명,주소,지역인덱스,지역,지역구분," +
                 "외벽구조유형,지붕구조유형,준공연도,준공월," +
                 "준공시기,법규시기," +
                 "연면적,건축면적," +
                 "지상층수,지하층수," +
                 "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기",
-            "'" + 번호[0][0] + "','" + ProjectName + "','" + ProjectType + "','" + ProjectTypeNum + "','" + Target + "','" + Diagnosis + "','" +
+            "'" + 번호[0][0] + "','" + ProjectName + "','" + ProjectType + "','" + ProjectTypeNum + "','" + OldProject + "','" + Target + "','" + Diagnosis + "','" +
             BuildingCategory + "','" + BuildingUse + "','" + BuildingName + "','" + BuildingLocation + "','" + Climate_comboBox.SelectedItem.ToString() + "','" + Climate + "','" + BylawClimate + "','" +
             WallType + "','" + RoofType + "','" + Year + "','" + Month + "','" +
             ConstrucitonDate.ToString() + "','" + BylawDate.ToString() + "','" +
@@ -527,7 +577,7 @@ namespace main.contents
                 "준공시기,법규시기," +
                 "연면적,건축면적," +
                 "지상층수,지하층수," +
-                "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기", "");
+                "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기,기존프로젝트", "");
 
                 ProjectName = Value1[0][1];
                 ProjectName_textBox.Text = ProjectName.ToString();
@@ -617,6 +667,10 @@ namespace main.contents
 
                 ReviewDate = Convert.ToDouble(Value[0][26]);
                 Calc_ReviewDate();
+                
+                Load_OldProject();
+                OldProject = Value[0][27];
+                OldProject_comboBox.SelectedItem = OldProject;
             }
             catch { }
 
@@ -626,5 +680,6 @@ namespace main.contents
         {
         }
 
+       
     }
 }
