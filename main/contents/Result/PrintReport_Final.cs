@@ -422,23 +422,16 @@ namespace main.contents.Result
                     __data[40].Add(new { idx = i, val = (Qbase_a / Area).ToString("0.0") });
                     __data[41].Add(new { idx = i, val = (Qtot_a / Area).ToString("0.0") });
 
-                    double Saving_mth_avg = 0;
+                    double SavingPercent_mth_avg = 0; double Saving_mth_avg = 0;
                     for (int mth = 0; mth < 12; mth++)
                     { //전기소요량 월별 절감량 
-                        string[][] Final1 = Program.DB.querySQL(res[0][0], "SELECT 난방,냉방,급탕,조명,공조,기저에너지 FROM FinalEnergy_Result where 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
-                        string[][] Final2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
-                        __data[42].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed((Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final2[0][0])).ToString()) });
-                        __data[43].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed((Convert.ToDouble(Final1[0][1]) - Convert.ToDouble(Final2[0][1])).ToString()) });
-                        __data[44].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed((Convert.ToDouble(Final1[0][2]) - Convert.ToDouble(Final2[0][2])).ToString()) });
-                        __data[45].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed((Convert.ToDouble(Final1[0][3]) - Convert.ToDouble(Final2[0][3])).ToString()) });
-                        __data[46].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed((Convert.ToDouble(Final1[0][4]) - Convert.ToDouble(Final2[0][4])).ToString()) });
-                        __data[47].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed((Convert.ToDouble(Final1[0][5]) - Convert.ToDouble(Final2[0][5])).ToString()) });
-                        __data[48].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed((Qtot2_mth[mth] - Qtot_mth[mth]).ToString()) });
-                        Saving_mth_avg += (Qtot2_mth[mth] - Qtot_mth[mth]) / Qtot2_mth[mth] * 100;
+                        Saving_mth_avg += (Qtot2_mth[mth] - Qtot_mth[mth]);
+                        SavingPercent_mth_avg += (Qtot2_mth[mth] - Qtot_mth[mth]) / Qtot2_mth[mth] * 100;
                     }
-                    Saving_mth_avg = Saving_mth_avg / 12;
-                    __data[49].Add(new { idx = i, val = (((Qh_a2 - Qh_a) / Qh_a2) * 100).ToString("0.0") + "%" });
-                    __data[50].Add(new { idx = i, val = Saving_mth_avg.ToString("0.0") + "%" });
+                    Saving_mth_avg = Saving_mth_avg / 12; 
+                    SavingPercent_mth_avg = SavingPercent_mth_avg / 12;
+                    __data[43].Add(new { idx = i, val = (((Qh_a2 - Qh_a) / Qh_a2) * 100).ToString("0.0") + "%" });
+                    __data[44].Add(new { idx = i, val = SavingPercent_mth_avg.ToString("0.0") + "%" }); 
 
                     ///////////////////////////////////////////////////////////
                     data.Add(new { cname = "qhf_mth_old", data = __data[0] });
