@@ -118,40 +118,44 @@ namespace main.contents.Result
 
                 string[][] Value1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "연료='전기'");
                 int yearnum = 0;
-                if (Convert.ToDouble(Value1[0][0]) > 1)
+                if (Value1.Length > 0)
                 {
-                    string[][] Elec1, Elec2;
-                    for (int mth = 0; mth < 11; mth++)
+                    if (Convert.ToDouble(Value1[0][0]) > 1)
                     {
-                        Elec1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' AND 연료='전기'");
-                        Elec2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 2).ToString() + "월' AND 연료='전기'");
-                        for (int k = 0; k < Elec1.Length; k++) //연도별
+                        string[][] Elec1, Elec2;
+                        for (int mth = 0; mth < 11; mth++)
                         {
-                            Quse_elec_mth[k, mth] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value1[0][0]) / 30 + Convert.ToDouble(Elec2[k][0]) * (30 - Convert.ToDouble(Value1[0][0])) / 30);
+                            Elec1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' AND 연료='전기'");
+                            Elec2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 2).ToString() + "월' AND 연료='전기'");
+                            for (int k = 0; k < Elec1.Length; k++) //연도별
+                            {
+                                Quse_elec_mth[k, mth] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value1[0][0]) / 30 + Convert.ToDouble(Elec2[k][0]) * (30 - Convert.ToDouble(Value1[0][0])) / 30);
+                            }
+                            yearnum = Elec1.Length;
                         }
-                        yearnum = Elec1.Length;
-                    }
 
-                    Elec1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (12).ToString() + "월' AND 연료='전기'");
-                    Elec2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (1).ToString() + "월' AND 연료='전기'");
-                    for (int k = 0; k < Elec1.Length; i++) //연도별
-                    {
-                        Quse_elec_mth[k, 12] += (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value1[0][0]) / 30 + Convert.ToDouble(Elec2[k][0]) * (30 - Convert.ToDouble(Value1[0][0])) / 30);
-                    }
-
-                }
-                else
-                {
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-                        string[][] Elec = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' AND 연료='전기'");
-                        for (int k = 0; k < Elec.Length; k++) //연도별
+                        Elec1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (12).ToString() + "월' AND 연료='전기'");
+                        Elec2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (1).ToString() + "월' AND 연료='전기'");
+                        for (int k = 0; k < Elec1.Length; i++) //연도별
                         {
-                            Quse_elec_mth[k, mth] += Convert.ToDouble(Elec[k][0]);
+                            Quse_elec_mth[k, 12] += (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value1[0][0]) / 30 + Convert.ToDouble(Elec2[k][0]) * (30 - Convert.ToDouble(Value1[0][0])) / 30);
                         }
-                        yearnum = Elec.Length;
+
+                    }
+                    else
+                    {
+                        for (int mth = 0; mth < 12; mth++)
+                        {
+                            string[][] Elec = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' AND 연료='전기'");
+                            for (int k = 0; k < Elec.Length; k++) //연도별
+                            {
+                                Quse_elec_mth[k, mth] += Convert.ToDouble(Elec[k][0]);
+                            }
+                            yearnum = Elec.Length;
+                        }
                     }
                 }
+                
 
                 for (int mth = 0; mth < 12; mth++)
                 {

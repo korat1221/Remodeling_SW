@@ -787,10 +787,11 @@ namespace main
             {
                 CE ce = (CE)ce_Type1[k];
 
-                try
+                for (int mth = 1; mth < 13; mth++)
                 {
-                    for (int mth = 1; mth < 13; mth++)
-                    {
+                    try
+                     {
+                  
                         string[][] ceValue = Program.DB.querySQL(DB.type.ProjDB, "select a.요구량" + mth + "월, b.theta_i FROM Heating_ce_Form AS a INNER JOIN Zone_HCneed_Result AS b ON a.존번호 = b.번호 where a.공급설비 = '" + ce.Num() + "' and 번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
                         //string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i, t_max", "번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
                         Qh_ce[mth - 1] += Math.Max(Convert.ToDouble(ceValue[0][0]) * ce.theta_ce() / (Convert.ToDouble(ceValue[0][1]) - theta_e[mth - 1]), 0);
@@ -798,16 +799,25 @@ namespace main
                         {
                             Qh_ce[mth - 1] = 0;
                         }
-
+                    
+                      }
+                    catch { Qh_ce[mth - 1] = 0; }
+                    try
+                    {
                         string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "소비전력", "번호 = '" + ce.ceNum() + "'");
-                        Wh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value2[0][0]) * thrL[mth - 1], 0);
-                        if (double.IsNaN(Wh_ce[mth - 1]))
+                        if (Value2.Length > 0)
                         {
-                            Wh_ce[mth - 1] = 0;
+                            Wh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value2[0][0]) * thrL[mth - 1], 0);
+                            if (double.IsNaN(Wh_ce[mth - 1]))
+                            {
+                                Wh_ce[mth - 1] = 0;
+                            }
                         }
                     }
+                    catch { Wh_ce[mth - 1] = 0; }
                 }
-                catch { }
+                
+
 
             }
             for (int k = 0; k < ce_Type2.Count; k++)
@@ -825,12 +835,14 @@ namespace main
                         {
                             Qh_ce[mth - 1] = 0;
                         }
-
                         string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "소비전력", "번호 = '" + ce.ceNum() + "'");
-                        Wh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value2[0][0]) * thrL[mth], 0);
-                        if (double.IsNaN(Wh_ce[mth - 1]))
-                        {
-                            Wh_ce[mth - 1] = 0;
+                        if (Value2.Length > 0)
+                        {                           
+                            Wh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value2[0][0]) * thrL[mth], 0);
+                            if (double.IsNaN(Wh_ce[mth - 1]))
+                            {
+                                Wh_ce[mth - 1] = 0;
+                            }
                         }
                     }
                 }

@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -416,18 +418,77 @@ namespace main.contents.Result
 
             i = -1;
 
-            while(++i < chart_data1.Count)
+            double Max_outg = 0; double Max_f = 0, max = 0; 
+            string[][] AA; double[] Value1 = new double[12], Value2 = new double[12];
+
+            while (++i < HeatingValue.Length)
             {
+                Max_f = 0;
+                Max_outg = 0;
+
+                Debug.Print("start");
+
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    AA = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "Qh_f,Qh_outg", "번호 = '" + HeatingValue[i][0] + "' AND 월 ='" + (mth + 1).ToString() + "월'");
+                    Value1[mth] = Convert.ToDouble(AA[0][0]);
+                    Value2[mth] = Convert.ToDouble(AA[0][1]);
+
+                }
+
+                bool done = false;
+            for (int mth = 0; mth < 12; mth++)
+            {
+                if (Max_f < Value1[mth])
+                {
+                    Max_f = Value1[mth];
+                }
+                else
+                {
+                    Max_f = Max_f;
+                }
+
+                    done = true;
+            }
+            for (int mth = 0; mth < 12; mth++)
+            {
+                if (Max_outg < Value2[mth])
+                {
+                    Max_outg = Value2[mth];
+                }
+                else
+                {
+                    Max_outg = Max_outg;
+                }
+                    done = true;
+                }
+
+            if (!done)
+                {
+                    Debug.Print("END");
+                }
+
+                if (Max_f > Max_outg)
+                {
+                    max = Convert.ToInt32(Max_f);
+                }
+                else
+                {
+                    max = Convert.ToInt32(Max_outg);
+                }
+            
+            
                 if (s3 != "") s3 += ",";
 
                 s4 = "{data:[{type:\"line\",label:\"난방 에너지 소요량\",data:" + chart_data1[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false}," +
                 "{type:\"line\",label:\"난방 에너지 공급량\",data:" + chart_data2[i] + ",borderColor:\"#FF00FF\",backgroundColor:\"#FF00FF\",dash:false}," +
                 "{type:\"line\",label:\"난방 에너지 요구량\",data:" + chart_data3[i] + ",borderColor:\"#000000\",backgroundColor:\"#000000\",dash:false}," +
-                "{type:\"line\",label:\"난방 공급 열손실\",data:" + chart_data4[i] + ",borderColor:\"#00FF00\",backgroundColor:\"#00FF00\",dash:false}," +
-                "{type:\"line\",label:\"난방 분배 열손실\",data:" + chart_data5[i] + ",borderColor:\"#FF0000\",backgroundColor:\"#FF0000\",dash:false}," +
-                "{type:\"line\",label:\"난방 저장 열손실\",data:" + chart_data6[i] + ",borderColor:\"#0000FF\",backgroundColor:\"#0000FF\",dash:false}," +
-                "],max:5000,step:100,legend:true}";
+             //   "{type:\"line\",label:\"난방 공급 열손실\",data:" + chart_data4[i] + ",borderColor:\"#00FF00\",backgroundColor:\"#00FF00\",dash:false}," +
+            //    "{type:\"line\",label:\"난방 분배 열손실\",data:" + chart_data5[i] + ",borderColor:\"#FF0000\",backgroundColor:\"#FF0000\",dash:false}," +
+             //   "{type:\"line\",label:\"난방 저장 열손실\",data:" + chart_data6[i] + ",borderColor:\"#0000FF\",backgroundColor:\"#0000FF\",dash:false}," +
+                "],max:"+ (Math.Round(max / 1000) * 1000).ToString() + ",step:100,legend:true}";
                 s3 += s4;
+                
             }
             runScript("init(" + s + "," + s2 + "," + "[" + s3 + "])");
         }
