@@ -391,7 +391,7 @@ namespace main
 
             selID = args.TryGetWebMessageAsString();
 
-            if (tick - tick_old > 1000 || selID != selID_old)
+            if (selID != selID_old)
             {
                 if (Deserialize(selID))
                 {
@@ -418,6 +418,11 @@ namespace main
                     else if (formParam.formID >= 0 && formParam.formID < 100)
                     {
                         DoLoadForm(formParam.formID, OnLoadProc);
+                    }
+
+                    if (selID == "{\"formID\":37,\"ID\":\"Result_0\"}")
+                    {
+                        selID = "37";
                     }
                 }
                 else
@@ -535,12 +540,12 @@ namespace main
 
                     f.LoadData("");
                 }
-                else if (i == 37)
-                {
-                    PrintReport_HCneed f = (PrintReport_HCneed)forms[i];
-
-                    f.LoadData("");
-                }
+//                else if (i == 37)
+ //               {
+ //                   PrintReport_HCneed f = (PrintReport_HCneed)forms[i];
+ //
+   //                 f.LoadData("");
+     //           }
                 else if (i == 38)
                 {
                     List_CoolingSystem f = (List_CoolingSystem)forms[i];
