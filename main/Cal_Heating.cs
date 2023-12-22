@@ -79,7 +79,7 @@ namespace main
                 Qhb_mth = new double[Value_ce.Length, 12];
                 theta_ih = new double[Value_ce.Length, 12];
                 th = new double[Value_ce.Length, 12];
-                Qh_max = new double[Value.Length];
+                Qh_max = new double[SelectZone_split.Count];
                 Qh_a = new double[Value_ce.Length];
                 dop_mth = new double[Value_ce.Length, 12];
                 th_op_day = new double[Value_ce.Length];
@@ -104,9 +104,9 @@ namespace main
                     }
                     ZoneCount = ZoneCount + 1;
                 }
-                for (int k = 0; k < Value.Length; k++)
+                for (int k = 0; k < SelectZone_split.Count; k++)
                 {
-                    Zone zone = Program.CALC.getZone(Value[k][1].ToString());
+                    Zone zone = Program.CALC.getZone(SelectZone_split[k].ToString());
                     Qh_max[k] = zone.Q_max[0];//최대부하 
                     Qh_max_sum += Qh_max[k];
                 }
