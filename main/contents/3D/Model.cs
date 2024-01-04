@@ -22,13 +22,23 @@ using main.contents.Building;
 using main.subcontents.ConstructionWindow;
 using main.contents;
 using System.Diagnostics;
+using Microsoft.Win32;
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
 
 namespace main.contents
 {
     public partial class Model : Form
     {
-        bool scriptable = false;
 
+
+        bool scriptable = false;
+        static Excel.Application excelApp = null;
+        static Excel.Workbook workBook = null;
+        static Excel.Worksheet workSheet_Zone = null;
+        static Excel.Worksheet workSheet_Envelope = null;
+        static Excel.Worksheet workSheet_TB = null;
         public enum FormID
         {
             ZoneInfo = 0,
@@ -198,43 +208,114 @@ namespace main.contents
         {
             Import_3DInfo();
         }
-        void Import_3DInfo()
+        private void Import_3DInfo()
         {
+            string file = "";
+            DataRow row;
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = ".csv files (*.csv)|*.csv";
+            openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
             openFileDialog.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+            Program.DB.deleteTable(DB.type.CalcDB, "ZoneGeneral_3D");
+            Program.DB.deleteTable(DB.type.CalcDB, "ZoneEnvelope_3D");
+            Program.DB.deleteTable(DB.type.CalcDB, "ThermalBridge_3D");
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Program.DB.deleteTable(DB.type.CalcDB, "ZoneEnvelope_3D");
-
+                file = openFileDialog.FileName;
                 try
                 {
-                    using (StreamReader sr = new StreamReader(openFileDialog.FileName))
+                    excelApp = new Excel.Application();
+                    workBook = excelApp.Workbooks.Open(file);
+
+                    //존정보 불러오기 
+                    workSheet_Zone = workBook.Sheets[1];
+                    Excel.Range excelRange_Zone = workSheet_Zone.UsedRange;
+                    string[] Value_Zone = new string[excelRange_Zone.Columns.Count];
+                    for (int i = 2; i <= excelRange_Zone.Rows.Count; i++)
                     {
-                        int n = 0;
-                        while (!sr.EndOfStream)
+                        for (int j = 1; j <= excelRange_Zone.Columns.Count; j++)
                         {
-                            string[] token = sr.ReadLine().Split(',');
-                            if (n == 0)
-                            {
-                            }
-                            else
-                            {
-                                Program.DB.setValue(DB.type.CalcDB, "ZoneEnvelope_3D", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이",
-                                "'" + token[0] + "','" + token[1] + "','" + token[2] + "','" + token[3] + "','"
-                                + token[4] + "','" + token[5] + "','" + token[6] + "','" + token[7] + "','" + token[8] + "','"
-                                + token[9] + "','" + token[10] + "','" + token[11] + "','" + token[12] + "','" + token[13] + "','"
-                                + token[14] + "','" + token[15] + "'", "번호");
-                            }
-                            n++;
+                            if (excelRange_Zone.Cells[i, j] != null && excelRange_Zone.Cells[i, j].Value2 != null)
+                            { Value_Zone[j - 1] = Convert.ToString((excelRange_Zone.Cells[i, j].Value2)); }
+                            else { Value_Zone[j - 1] = ""; }
+
                         }
+                        Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_3D", "존번호,층,바닥면적",
+                          "'" + Value_Zone[0] + "','" + Value_Zone[1] + "','" +  Value_Zone[2] + "'", "존번호");
                     }
+
+                    //외피정보 불러오기 
+                    workSheet_Envelope = workBook.Sheets[2];
+                    Excel.Range excelRange_Envelope = workSheet_Envelope.UsedRange;
+                    string[] Value_Envelope = new string[excelRange_Envelope.Columns.Count];
+                    for (int i = 2; i <= excelRange_Envelope.Rows.Count; i++)
+                    {
+                        for (int j = 1; j <= excelRange_Envelope.Columns.Count; j++)
+                        {
+                            if (excelRange_Envelope.Cells[i, j] != null && excelRange_Envelope.Cells[i, j].Value2 != null)
+                            { Value_Envelope[j - 1] = Convert.ToString((excelRange_Envelope.Cells[i, j].Value2)); }
+                            else { Value_Envelope[j - 1] = ""; }
+
+                        }
+                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이",
+                          "'" + Value_Envelope[0] + "','" + Value_Envelope[1] + "','" + Value_Envelope[2] + "','" + Value_Envelope[3] + "','"
+                          + Value_Envelope[4] + "','" + Value_Envelope[5] + "','" + Value_Envelope[6] + "','" + Value_Envelope[7] + "','" + Value_Envelope[8] + "','"
+                          + Value_Envelope[9] + "','" + Value_Envelope[10] + "','" + Value_Envelope[11] + "','" + Value_Envelope[12] + "','" + Value_Envelope[13] + "','"
+                          + Value_Envelope[14] + "','" + Value_Envelope[15] + "'", "번호");
+                    }
+
+                    //열교정보 불러오기 
+                    workSheet_TB = workBook.Sheets[3];
+                    Excel.Range excelRange_TB = workSheet_TB.UsedRange;
+                    string[] Value_TB = new string[excelRange_TB.Columns.Count];
+                    for (int i = 2; i <= excelRange_TB.Rows.Count; i++)
+                    {
+                        for (int j = 1; j <= excelRange_TB.Columns.Count; j++)
+                        {
+                            if (excelRange_TB.Cells[i, j] != null && excelRange_TB.Cells[i, j].Value2 != null)
+                            { Value_TB[j - 1] = Convert.ToString((excelRange_TB.Cells[i, j].Value2)); }
+                            else { Value_TB[j - 1] = ""; }
+
+                        }
+                        Program.DB.setValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,열교항목,열교길이",
+                          "'" + Value_TB[0] + "','" + Value_TB[1] + "','" + Value_TB[2] + "'", "번호");
+                    }
+
+
+                    MessageBox.Show("3D 정보 엑셀을 Import 하였습니다.");
+                    workBook.Close(true);
+                    excelApp.Quit();
+
                 }
-                catch
+                finally
                 {
-                    MessageBox.Show("파일의 형식이 올바르지않습니다. 데이터를 확인해주세요.");
+                    ReleaseObject(workSheet_Zone); //객체 해제 메소드
+                    ReleaseObject(workSheet_Envelope); //객체 해제 메소드
+                    ReleaseObject(workSheet_TB); //객체 해제 메소드
+                    ReleaseObject(workBook); //객체 해제 메소드
+                    ReleaseObject(excelApp); //객체 해제 메소드}
                 }
+            }
+
+        }
+        static void ReleaseObject(object obj)// 액셀 객체 해제 메소드 
+        {
+            try
+            {
+                if (obj != null)
+                {
+                    Marshal.ReleaseComObject(obj); // 액셀 객체 해제
+                    obj = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                throw ex;
+            }
+            finally
+            {
+                GC.Collect(); // 가비지 수집
             }
         }
     }
