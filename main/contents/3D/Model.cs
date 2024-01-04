@@ -100,7 +100,7 @@ namespace main.contents
                             MessageBox.Show("치수 정밀도가 훼손된 모델입니다. 치수 정밀도 훼손 원인은 모델 생성 작업시 모델 회전 작업이 포함된 경우입니다.", "인식이 불완전하게 되었습니다.", MessageBoxButtons.OK);
                         }
 
-//                        Program.UTIL.write3DModel(json);
+                        //                        Program.UTIL.write3DModel(json);
                         Program.DB.executeSQL(DB.type.ProjDB, s.Substring(0, n));
                         //             Program.UTIL.reloadWebCtrl();
 
@@ -157,7 +157,7 @@ namespace main.contents
                 if (form.Name == "sub3dZoneInfo")
                 {
                     sub3dZoneInfo f = (sub3dZoneInfo)form;
-                    
+
                     f.resetSID();
                     return;
                 }
@@ -190,6 +190,50 @@ namespace main.contents
 
                     runScript("updateObjInfo(" + s + ")");
                     return;
+                }
+            }
+        }
+
+        private void Import_button_Click(object sender, EventArgs e)
+        {
+            Import_3DInfo();
+        }
+        void Import_3DInfo()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = ".csv files (*.csv)|*.csv";
+            openFileDialog.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Program.DB.deleteTable(DB.type.CalcDB, "ZoneEnvelope_3D");
+
+                try
+                {
+                    using (StreamReader sr = new StreamReader(openFileDialog.FileName))
+                    {
+                        int n = 0;
+                        while (!sr.EndOfStream)
+                        {
+                            string[] token = sr.ReadLine().Split(',');
+                            if (n == 0)
+                            {
+                            }
+                            else
+                            {
+                                Program.DB.setValue(DB.type.CalcDB, "ZoneEnvelope_3D", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이",
+                                "'" + token[0] + "','" + token[1] + "','" + token[2] + "','" + token[3] + "','"
+                                + token[4] + "','" + token[5] + "','" + token[6] + "','" + token[7] + "','" + token[8] + "','"
+                                + token[9] + "','" + token[10] + "','" + token[11] + "','" + token[12] + "','" + token[13] + "','"
+                                + token[14] + "','" + token[15] + "'", "번호");
+                            }
+                            n++;
+                        }
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("파일의 형식이 올바르지않습니다. 데이터를 확인해주세요.");
                 }
             }
         }

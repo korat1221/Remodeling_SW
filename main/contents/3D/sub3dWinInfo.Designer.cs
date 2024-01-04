@@ -564,7 +564,7 @@
             T2_textBox.Enabled = false;
             T2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             T2_textBox.ForeColor = SystemColors.ControlDark;
-            T2_textBox.Location = new Point(721, 105);
+            T2_textBox.Location = new Point(731, 57);
             T2_textBox.Name = "T2_textBox";
             T2_textBox.Size = new Size(60, 15);
             T2_textBox.TabIndex = 122;
@@ -577,7 +577,7 @@
             T1_textBox.Enabled = false;
             T1_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             T1_textBox.ForeColor = SystemColors.ControlDark;
-            T1_textBox.Location = new Point(651, 91);
+            T1_textBox.Location = new Point(663, 51);
             T1_textBox.Name = "T1_textBox";
             T1_textBox.Size = new Size(60, 15);
             T1_textBox.TabIndex = 121;
@@ -590,7 +590,7 @@
             S2_textBox.Enabled = false;
             S2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             S2_textBox.ForeColor = SystemColors.ControlDark;
-            S2_textBox.Location = new Point(683, 217);
+            S2_textBox.Location = new Point(696, 177);
             S2_textBox.Name = "S2_textBox";
             S2_textBox.Size = new Size(60, 15);
             S2_textBox.TabIndex = 120;
@@ -603,7 +603,7 @@
             S1_textBox.Enabled = false;
             S1_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             S1_textBox.ForeColor = SystemColors.ControlDark;
-            S1_textBox.Location = new Point(603, 192);
+            S1_textBox.Location = new Point(615, 152);
             S1_textBox.Name = "S1_textBox";
             S1_textBox.Size = new Size(60, 15);
             S1_textBox.TabIndex = 119;
@@ -616,7 +616,7 @@
             L1_textBox.Enabled = false;
             L1_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             L1_textBox.ForeColor = SystemColors.ControlDark;
-            L1_textBox.Location = new Point(381, 217);
+            L1_textBox.Location = new Point(393, 177);
             L1_textBox.Name = "L1_textBox";
             L1_textBox.Size = new Size(60, 15);
             L1_textBox.TabIndex = 118;
@@ -629,7 +629,7 @@
             L2_textBox.Enabled = false;
             L2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             L2_textBox.ForeColor = SystemColors.ControlDark;
-            L2_textBox.Location = new Point(269, 187);
+            L2_textBox.Location = new Point(286, 156);
             L2_textBox.Name = "L2_textBox";
             L2_textBox.Size = new Size(60, 15);
             L2_textBox.TabIndex = 117;
@@ -642,7 +642,7 @@
             R2_textBox.Enabled = false;
             R2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             R2_textBox.ForeColor = SystemColors.ControlDark;
-            R2_textBox.Location = new Point(125, 187);
+            R2_textBox.Location = new Point(137, 156);
             R2_textBox.Name = "R2_textBox";
             R2_textBox.Size = new Size(60, 15);
             R2_textBox.TabIndex = 116;
@@ -652,7 +652,7 @@
             // 
             T1_label.AutoSize = true;
             T1_label.ForeColor = SystemColors.ControlDark;
-            T1_label.Location = new Point(652, 73);
+            T1_label.Location = new Point(664, 33);
             T1_label.Name = "T1_label";
             T1_label.Size = new Size(59, 15);
             T1_label.TabIndex = 114;
@@ -662,7 +662,7 @@
             // 
             S1_label.AutoSize = true;
             S1_label.ForeColor = SystemColors.ControlDark;
-            S1_label.Location = new Point(603, 174);
+            S1_label.Location = new Point(615, 134);
             S1_label.Name = "S1_label";
             S1_label.Size = new Size(71, 15);
             S1_label.TabIndex = 112;
@@ -672,7 +672,7 @@
             // 
             L1_label.AutoSize = true;
             L1_label.ForeColor = SystemColors.ControlDark;
-            L1_label.Location = new Point(382, 199);
+            L1_label.Location = new Point(394, 159);
             L1_label.Name = "L1_label";
             L1_label.Size = new Size(59, 15);
             L1_label.TabIndex = 111;
@@ -685,7 +685,7 @@
             R1_textBox.Enabled = false;
             R1_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             R1_textBox.ForeColor = SystemColors.ControlDark;
-            R1_textBox.Location = new Point(14, 217);
+            R1_textBox.Location = new Point(26, 177);
             R1_textBox.Name = "R1_textBox";
             R1_textBox.Size = new Size(60, 15);
             R1_textBox.TabIndex = 108;
@@ -695,7 +695,7 @@
             // 
             R1_label.AutoSize = true;
             R1_label.ForeColor = SystemColors.ControlDark;
-            R1_label.Location = new Point(14, 199);
+            R1_label.Location = new Point(26, 159);
             R1_label.Name = "R1_label";
             R1_label.Size = new Size(59, 15);
             R1_label.TabIndex = 107;
@@ -704,7 +704,7 @@
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.Location = new Point(8, 46);
+            pictureBox1.Location = new Point(20, 6);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(440, 240);
             pictureBox1.TabIndex = 105;
@@ -713,7 +713,7 @@
             // pictureBox2
             // 
             pictureBox2.BackColor = Color.Transparent;
-            pictureBox2.Location = new Point(480, 44);
+            pictureBox2.Location = new Point(492, 4);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(438, 240);
             pictureBox2.TabIndex = 106;
@@ -725,9 +725,9 @@
             webView22.CreationProperties = null;
             webView22.DefaultBackgroundColor = Color.White;
             webView22.Dock = DockStyle.Bottom;
-            webView22.Location = new Point(3, 365);
+            webView22.Location = new Point(3, 252);
             webView22.Name = "webView22";
-            webView22.Size = new Size(939, 53);
+            webView22.Size = new Size(939, 166);
             webView22.TabIndex = 0;
             webView22.ZoomFactor = 1D;
             // 

@@ -81,6 +81,10 @@ namespace main.contents.Result
 
             List<object>[] __data = new List<object>[700];
 
+            List<string> chart_data1 = new List<string>();
+            List<string> chart_data2 = new List<string>();
+            List<string> chart_data3 = new List<string>();
+            List<string> chart_data4 = new List<string>();
             int i = -1, n;
 
 
@@ -93,6 +97,10 @@ namespace main.contents.Result
 
             while (++i < 번호.Length)
             {
+                List<object> chart1 = new List<object>();
+                List<object> chart2 = new List<object>();
+                List<object> chart3 = new List<object>();
+                List<object> chart4 = new List<object>();
                 try
                 {
                     string[][] 연도 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "BuildingEnergyUse", "연도", "연료 = '전기'");
@@ -138,7 +146,7 @@ namespace main.contents.Result
                         Elec2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (1).ToString() + "월' AND 연료='전기'");
                         for (int k = 0; k < Elec1.Length; i++) //연도별
                         {
-                            Quse_elec_mth[k, 12] += (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value1[0][0]) / 30 + Convert.ToDouble(Elec2[k][0]) * (30 - Convert.ToDouble(Value1[0][0])) / 30);
+                            Quse_elec_mth[k, 12] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value1[0][0]) / 30 + Convert.ToDouble(Elec2[k][0]) * (30 - Convert.ToDouble(Value1[0][0])) / 30);
                         }
 
                     }
@@ -149,7 +157,7 @@ namespace main.contents.Result
                             string[][] Elec = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' AND 연료='전기'");
                             for (int k = 0; k < Elec.Length; k++) //연도별
                             {
-                                Quse_elec_mth[k, mth] += Convert.ToDouble(Elec[k][0]);
+                                Quse_elec_mth[k, mth] = Convert.ToDouble(Elec[k][0]);
                             }
                             yearnum = Elec.Length;
                         }

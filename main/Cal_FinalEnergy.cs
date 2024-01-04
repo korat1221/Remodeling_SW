@@ -28,7 +28,7 @@ namespace main
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result","연료,Qh_f,Wh_ce, Wh_d,Wh_s,Wh_g", "월='" + (mth + 1).ToString() + "'");
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result","연료,Qh_f,Wh_ce,Wh_d,Wh_s,Wh_g", "월='" + (mth + 1).ToString() + "월'");
                     for (int i = 0; i < Value.Length; i++) //시스템별 
                     {
                         if (Value[i][0].ToString() == "전기")
@@ -50,7 +50,7 @@ namespace main
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Result", "연료,Qw_f,Ww_ce, Ww_d,Ww_s,Ww_g", "월='" + (mth + 1).ToString() + "'");
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Result", "연료,Qw_f,Ww_ce, Ww_d,Ww_s,Ww_g", "월='" + (mth + 1).ToString() + "월'");
                     for (int i = 0; i < Value.Length; i++) //시스템별
                     {
                         if (Value[i][0].ToString() == "전기")
@@ -171,7 +171,7 @@ namespace main
             catch { }
 
 
-
+            /*
             ///샘플
             Qhf_elec[0] = 1149;
             Qhf_elec[1] = 833;
@@ -238,6 +238,7 @@ namespace main
             Quse_elec_mth[9] = 2480;
             Quse_elec_mth[10] = 2205;
             Quse_elec_mth[11] = 2325;
+            */
             ///////////////////////////
             
 

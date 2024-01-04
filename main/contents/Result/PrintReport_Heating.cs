@@ -483,10 +483,7 @@ namespace main.contents.Result
                 s4 = "{data:[{type:\"line\",label:\"난방 에너지 소요량\",data:" + chart_data1[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false}," +
                 "{type:\"line\",label:\"난방 에너지 공급량\",data:" + chart_data2[i] + ",borderColor:\"#FF00FF\",backgroundColor:\"#FF00FF\",dash:false}," +
                 "{type:\"line\",label:\"난방 에너지 요구량\",data:" + chart_data3[i] + ",borderColor:\"#000000\",backgroundColor:\"#000000\",dash:false}," +
-             //   "{type:\"line\",label:\"난방 공급 열손실\",data:" + chart_data4[i] + ",borderColor:\"#00FF00\",backgroundColor:\"#00FF00\",dash:false}," +
-            //    "{type:\"line\",label:\"난방 분배 열손실\",data:" + chart_data5[i] + ",borderColor:\"#FF0000\",backgroundColor:\"#FF0000\",dash:false}," +
-             //   "{type:\"line\",label:\"난방 저장 열손실\",data:" + chart_data6[i] + ",borderColor:\"#0000FF\",backgroundColor:\"#0000FF\",dash:false}," +
-                "],max:"+ (Math.Round(max / 1000) * 1000).ToString() + ",step:100,legend:true}";
+                "],max:"+ (Math.Round(max / 1000) * 1000+500).ToString() + ",step:100,legend:true}";
                 s3 += s4;
                 
             }

@@ -16,7 +16,8 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 namespace main.contents
 {
     public partial class sub3dZoneInfo : Form
-    { String ConsType, ConsNum;
+    {
+        String ConsType, ConsNum;
         string sid = "";
         public void resetSID()
         {
@@ -433,7 +434,7 @@ namespace main.contents
         public string Save()
         {
 
-            string num, num0, id, Type, CWType, ret = "", tcode, RoofWin = "",Blind ="";
+            string num, num0, id, Type, CWType, ret = "", tcode, RoofWin = "", Blind = "";
             int i = -1;
             while (++i < dataGridView1.RowCount)
             {
@@ -513,7 +514,7 @@ namespace main.contents
                                 Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호", "명칭 = '" + ConsType + "'"); ; //출입문으로 나중에 바꿔야함 
                                 break;
 
-                                
+
                         }
                         if (Value.Length > 0)
                         {
@@ -578,14 +579,14 @@ namespace main.contents
 
                             double Glass_Ex, Glass_In;
 
-                                string[][] glass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "외부반사율,내부반사율", "제품명 ='" + CWValue[0][0] + "'");
-                                if (glass.Length == 0)
-                                {
-                                    glass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "외부반사율,내부반사율", "제품명 ='" + CWValue[0][0] + "'");
-                                }
+                            string[][] glass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "외부반사율,내부반사율", "제품명 ='" + CWValue[0][0] + "'");
+                            if (glass.Length == 0)
+                            {
+                                glass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "외부반사율,내부반사율", "제품명 ='" + CWValue[0][0] + "'");
+                            }
 
-                                Glass_Ex = Convert.ToDouble(glass[0][0]);
-                                Glass_In = Convert.ToDouble(glass[0][1]);
+                            Glass_Ex = Convert.ToDouble(glass[0][0]);
+                            Glass_In = Convert.ToDouble(glass[0][1]);
 
                             double Tao_on = Calc_Blind_Tao(Convert.ToDouble(CWValue[0][2]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Glass_Ex, Glass_In, BlindValue[0][0]);
                             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
@@ -604,7 +605,7 @@ namespace main.contents
         }
         private double Calc_Blind_SHGC(double SHGC, double Ex, double Trans, double Alpha, double Ug, string Install)
         {
-            double SHGC_on =0;
+            double SHGC_on = 0;
             switch (Install)
             {
                 case "외부측":
@@ -623,7 +624,7 @@ namespace main.contents
         }
         private double Calc_Blind_Tao(double Tao, double Ex, double Trans, double Glass_Ex, double Glass_In, string Install)
         {
-            double Tao_on =0;
+            double Tao_on = 0;
             switch (Install)
             {
                 case "외부측":
@@ -750,10 +751,10 @@ namespace main.contents
 
                         DataGridViewComboBoxCell BlindCombo = new DataGridViewComboBoxCell();
                         string[][] BlindValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "번호");
-                        for(int i = 0; i < BlindValue.Length; i++) { BlindCombo.Items.Add(BlindValue[i][0].ToString()); }
+                        for (int i = 0; i < BlindValue.Length; i++) { BlindCombo.Items.Add(BlindValue[i][0].ToString()); }
 
                         row.Cells[12] = BlindCombo;
-                        BlindCombo.ReadOnly = false; 
+                        BlindCombo.ReadOnly = false;
 
                     }
                 }

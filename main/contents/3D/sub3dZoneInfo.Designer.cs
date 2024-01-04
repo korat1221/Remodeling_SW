@@ -38,12 +38,12 @@
             tabPage1 = new TabPage();
             dataGridView2 = new DataGridView();
             tabPage2 = new TabPage();
+            button2 = new Button();
             button1 = new Button();
             comboBox3 = new CheckedComboBox();
             comboBox2 = new CheckedComboBox();
             comboBox1 = new CheckedComboBox();
             dataGridView1 = new DataGridView();
-            button2 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
@@ -146,6 +146,17 @@
             tabPage2.TabIndex = 1;
             tabPage2.Text = "존 외피 정보";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(389, 25);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 102;
+            button2.Text = "주향변경";
+            button2.UseVisualStyleBackColor = true;
+            button2.Visible = false;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
@@ -256,17 +267,6 @@
             dataGridView1.CurrentCellDirtyStateChanged += dataGridView1_CurrentCellDirtyStateChanged;
             dataGridView1.DataError += onDataError;
             dataGridView1.SortCompare += dataGridView1_SortCompare;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(389, 25);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 102;
-            button2.Text = "주향변경";
-            button2.UseVisualStyleBackColor = true;
-            button2.Visible = false;
-            button2.Click += button2_Click;
             // 
             // sub3dZoneInfo
             // 

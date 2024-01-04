@@ -27,13 +27,15 @@ namespace main
         public ArrayList zoneCW = new ArrayList();
         public ArrayList zoneInWall = new ArrayList();
         public ArrayList zoneSlab = new ArrayList();
-        public double Zone_HT_tot, Zone_HT_Wall, Zone_HT_Roof, Zone_HT_Floor, Zone_HT_GWall, Zone_HT_Door, Zone_HT_Win, Zone_HT_CW, Zone_HT_Inwall, Zone_HT_Slab;
+        public double[,,] Zone_HT_tot = new double [2,2,12];
+        public double Zone_HT_Wall, Zone_HT_Roof, Zone_HT_Floor, Zone_HT_GWall, Zone_HT_Door, Zone_HT_Win, Zone_HT_CW;
+        public double[,,]Zone_HT_Inwall = new double[2,2,12], Zone_HT_Slab = new double [2,2,12];
         public double Zone_HT_Di_Wall, Zone_HT_Indi_Wall, Zone_HT_Di_Roof, Zone_HT_Indi_Roof, Zone_HT_Di_Win, Zone_HT_Indi_Win, Zone_HT_Di_Door, Zone_HT_Indi_Door;
         public double Zone_HT_TB_tot, Zone_HT_TB_Wall, Zone_HT_TB_Roof, Zone_HT_TB_Floor, Zone_HT_TB_GWall, Zone_HT_TB_Win, Zone_HT_TB_Door, Zone_HT_TB_CW;
         public double[] nmech = new double[2]; public double[] nz = new double[2]; public double[] ninf = new double[2]; public double[] nwin = new double[2];//[비이용일/이용일] = [we/wd]=[0/1]
         public double[] Zone_HV_tot = new double[2], Zone_HV_inf = new double[2], Zone_HV_win = new double[2], Zone_HV_z = new double[2], Zone_HV_mech = new double[2]; public double HV_tot_max; //[비이용일/이용일] = [we/wd]=[0/1]
-        public double[] Zone_H_tot = new double[2]; //[비이용일/이용일] = [we/wd]=[0/1]
-        public double[] tao = new double[2]; double tao_max; //[비이용일/이용일] = [we/wd]=[0/1]
+        public double[,,] Zone_H_tot = new double[2,2,12]; //[비이용일/이용일] = [we/wd]=[0/1]
+        public double[,,] tao = new double[2,2,12]; double tao_max; //[비이용일/이용일] = [we/wd]=[0/1]
         public double[] theta_e = new double[12], dwe_mth = new double[12], dwd_mth = new double[12];
         public double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         public double[,,] theta_i = new double[2, 2, 12];
@@ -295,13 +297,31 @@ namespace main
                     double U = 1 / R;
                     InWall Inwall = new InWall(ZoneInW[i][0], ZoneInW[i][1], Convert.ToDouble(ZoneInW[i][2]), U);
                     zoneInWall.Add(Inwall);
+
+                    string 난방냉방, 비이;
+                    double thetaiset; 
+                    for (int hc = 0; hc < 2; hc++)
+                    {
+                        if (hc == 0) { 난방냉방 = "난방";  thetaiset = theta_i_h_set; }else { 난방냉방 = "냉방"; thetaiset = theta_i_c_set; }
+                        for(int wewd =0; wewd < 2; wewd++)
+                        {
+                            if (wewd == 0) { 비이 = "비이용일"; } else { 비이 = "이용일"; }
+                            for (int mth =0; mth < 12; mth++)
+                            {
+                                string[][] theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + ZoneInW[i][1] + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "'and 월 ='"+(mth+1)+"월'");
+                                if (Math.Abs(Convert.ToDouble(theta_u[0][0])) > thetaiset + 4)
+                                { Zone_HT_Inwall[hc, wewd, mth] += U * Convert.ToDouble(ZoneInW[i][2]); }
+                                else { }
+                                Zone_HT_tot[hc,wewd,mth] = Zone_HT_Inwall[hc,wewd,mth];
+                            }
+                        }
+                    }
                     
-                    Zone_HT_Inwall += U * Convert.ToDouble(ZoneInW[i][2]);
                 }
             }
             catch { }
 
-            Zone_HT_tot = Zone_HT_Inwall;
+            
         }
         public void LoadData_SL()
         { //존 층간바닥 정보 가져오기
@@ -317,12 +337,28 @@ namespace main
                     Slab slab = new Slab(ZoneSL[i][0], ZoneSL[i][1], Convert.ToDouble(ZoneSL[i][2]), U);
                     zoneSlab.Add(slab);
 
-                    Zone_HT_Slab += U * Convert.ToDouble(ZoneSL[i][2]);
+                    string 난방냉방, 비이;
+                    double thetaiset;
+                    for (int hc = 0; hc < 2; hc++)
+                    {
+                        if (hc == 0) { 난방냉방 = "난방"; thetaiset = theta_i_h_set; } else { 난방냉방 = "냉방"; thetaiset = theta_i_c_set; }
+                        for (int wewd = 0; wewd < 2; wewd++)
+                        {
+                            if (wewd == 0) { 비이 = "비이용일"; } else { 비이 = "이용일"; }
+                            for (int mth = 0; mth < 12; mth++)
+                            {
+                                string[][] theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + ZoneSL[i][1] + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "'");
+                                if (Math.Abs(Convert.ToDouble(theta_u[0][0])) > thetaiset + 4)
+                                { Zone_HT_Slab[hc, wewd, mth] += U * Convert.ToDouble(ZoneSL[i][2]); }
+                                else { }
+                                Zone_HT_tot[hc, wewd, mth] = Zone_HT_tot[hc, wewd, mth] + Zone_HT_Slab[hc, wewd, mth];
+                            }
+                        }
+                    }
                 }
             }
             catch { }
 
-            Zone_HT_tot = Zone_HT_tot + Zone_HT_Slab;
         }
         public void LoadData_Wall()
         {//존 외벽 정보 가져오기
@@ -681,7 +717,17 @@ namespace main
             //접합부열교 
 
             Zone_HT_TB_tot = Zone_HT_TB_Wall + Zone_HT_TB_Roof + Zone_HT_TB_Floor + Zone_HT_TB_GWall + Zone_HT_TB_Win + Zone_HT_TB_Door + Zone_HT_TB_CW;
-            Zone_HT_tot = Zone_HT_tot + Zone_HT_TB_tot + Zone_HT_Wall + Zone_HT_Roof + Zone_HT_Floor + Zone_HT_GWall + Zone_HT_Win + Zone_HT_Door + Zone_HT_CW;
+            for(int hc  = 0; hc < 2; hc++)
+            {
+                for(int wewd =0; wewd < 2; wewd++)
+                {
+                    for(int mth =0; mth < 12; mth++)
+                    {
+                        Zone_HT_tot[hc, wewd, mth] = Zone_HT_tot[hc,wewd,mth] + Zone_HT_TB_tot + Zone_HT_Wall + Zone_HT_Roof + Zone_HT_Floor + Zone_HT_GWall + Zone_HT_Win + Zone_HT_Door + Zone_HT_CW;
+                    }
+                }
+            }
+           
         }
 
         public void ZoneHV()  //환기 HV계산
@@ -716,24 +762,41 @@ namespace main
 
         public void Zonetao()//시간상수 계산
         {
-            Zone_H_tot[0] = Zone_HT_tot + Zone_HV_tot[0];
-            Zone_H_tot[1] = Zone_HT_tot + Zone_HV_tot[1];
-            theta_iCalc calc = new theta_iCalc();
-            tao[0] = calc.tao_Calc(Cwirk_A * zoneArea, Zone_H_tot[0]);
-            tao[1] = calc.tao_Calc(Cwirk_A * zoneArea, Zone_H_tot[1]);
-            tao_max= calc.tao_Calc(Cwirk_A * zoneArea, (Zone_HT_tot + HV_tot_max));
+            for(int hc =0; hc < 2; hc ++)
+            {
+                for(int wewd =0; wewd < 2; wewd ++)
+                {
+                    for(int mth  =0; mth < 2; mth ++)
+                    {
+                        Zone_H_tot[hc,wewd,mth] = Zone_HT_tot[hc,wewd,mth] + Zone_HV_tot[0];
+                        theta_iCalc calc = new theta_iCalc();
+                        tao[hc,wewd,mth] = calc.tao_Calc(Cwirk_A * zoneArea, Zone_H_tot[hc,wewd,mth]);
+                        tao_max = calc.tao_Calc(Cwirk_A * zoneArea, (Zone_HT_tot[hc,wewd,mth] + HV_tot_max));
+                    }
+                }
+            }
         }
 
         public void Zonethetai()//실내기준온도 계산
         {
             theta_iCalc calc = new theta_iCalc();
-            for (int mth = 0; mth < 12; mth++)
+            for (int hc = 0; hc < 2; hc++)
             {
-                //[hc, wewd, mth]	
-                theta_i[0, 0, mth] = calc.theta_ihwe_Calc(tao[0], Mode_we, theta_e[mth], theta_i_h_set, dtheta_i_NA);
-                theta_i[0, 1, mth] = calc.theta_ihwd_Calc(tao[1], Mode_night, (24 - th_op_d), theta_e[mth], theta_i_h_set, dtheta_i_NA);
-                theta_i[1, 0, mth] = calc.theta_ic_Calc(theta_i_c_set);
-                theta_i[1, 1, mth] = calc.theta_ic_Calc(theta_i_c_set);
+                for (int wewd = 0; wewd < 2; wewd++)
+                {
+                    for (int mth = 0; mth < 12; mth++)
+                    {
+                        //[hc, wewd, mth]	
+                        theta_i[0, 0, mth] = calc.theta_ihwe_Calc(tao[hc,wewd,mth], Mode_we, theta_e[mth], theta_i_h_set, dtheta_i_NA);
+                        theta_i[0, 1, mth] = calc.theta_ihwd_Calc(tao[hc,wewd,mth], Mode_night, (24 - th_op_d), theta_e[mth], theta_i_h_set, dtheta_i_NA);
+                        theta_i[1, 0, mth] = calc.theta_ic_Calc(theta_i_c_set);
+                        theta_i[1, 1, mth] = calc.theta_ic_Calc(theta_i_c_set);
+
+                        theta_u[hc, wewd, mth] = theta_i[wewd, hc, mth] - 0.8 * (theta_i[0, 0, mth] - theta_e[mth]);
+
+
+                    }
+                }
             }
 
         }
@@ -807,7 +870,7 @@ namespace main
 
                             for (int mth = 0; mth < 12; mth++)
                             {
-                                    theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + zoneInwall.SideZone() + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "' and 프로젝트유형 ='" + 검토유형[0][0]+"'");
+                                    theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + zoneInwall.SideZone() + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "' and 월 ='" + (mth+1)+"월'");
                                 
                                 if (theta_u.Length > 0 && theta_u[0][0] != "")
                                 {
@@ -910,7 +973,7 @@ namespace main
 
                             for (int mth = 0; mth < 12; mth++)
                             {
-                                theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + zoneslab.SideZone() + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "' AND 프로젝트유형 ='"+검토유형+"'"); 
+                                theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + zoneslab.SideZone() + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "' AND 월 ='"+(mth+1)+"월'"); 
                                
 
                                 if (theta_u.Length > 0 && theta_u[0][0] != "")
@@ -2387,7 +2450,7 @@ namespace main
                 }
                 else { gamma[0, 0, mth] = gamma[0, 0, mth]; }
 
-                a[0, 0, mth] = 1 + tao[0] / 16;
+                a[0, 0, mth] = 1 + tao[0,0,mth] / 16;
                 if (double.IsNaN(a[0, 0, mth]) || a[0, 0, mth] < 0)
                 {
                     a[0, 0, mth] = 0;
@@ -2433,7 +2496,7 @@ namespace main
                         {
                             gamma[hc, wewd, mth] = Qsource[hc, wewd, mth] / Qsink[hc, wewd, mth];
                         }
-                        a[hc, wewd, mth] = 1 + tao[wewd] / 16;
+                        a[hc, wewd, mth] = 1 + tao[hc,wewd,mth] / 16;
                         eta[0, wewd, mth] = eta_calc.eta_h_Calc(gamma[0, wewd, mth], a[0, wewd, mth]);
                         eta[1, wewd, mth] = eta_calc.eta_c_Calc(gamma[1, wewd, mth], a[1, wewd, mth]);
                     }
