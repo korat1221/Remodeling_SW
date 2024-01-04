@@ -95,6 +95,7 @@ namespace main.subcontents.CoolingSystem
         }
         private void Save_button_Click(object sender, EventArgs e)
         {
+           
             foreach (DataGridViewRow row in AirCon_dataGridView.Rows)
             {
                 if (Convert.ToBoolean(row.Cells["check"].Value))

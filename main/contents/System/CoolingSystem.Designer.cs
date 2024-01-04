@@ -122,6 +122,7 @@
             label7 = new Label();
             ImagePanel = new Panel();
             panel4 = new Panel();
+            Pump_pictureBox = new PictureBox();
             ce3_pictureBox = new PictureBox();
             ce2_pictureBox = new PictureBox();
             ce1_pictureBox = new PictureBox();
@@ -173,6 +174,7 @@
             label34 = new Label();
             InstallTotal_textBox = new TextBox();
             label35 = new Label();
+            button1 = new Button();
             panel2.SuspendLayout();
             tabControl1.SuspendLayout();
             Generator_tabpage.SuspendLayout();
@@ -195,6 +197,7 @@
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).BeginInit();
             ImagePanel.SuspendLayout();
             panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Pump_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ce3_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ce2_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ce1_pictureBox).BeginInit();
@@ -417,7 +420,7 @@
             AirCon_Remove_button.TabIndex = 155;
             AirCon_Remove_button.Text = "-";
             AirCon_Remove_button.UseVisualStyleBackColor = false;
-            AirCon_Remove_button.Click += delete_button_Click;
+            AirCon_Remove_button.Click += AirCon_Remove_button_Click;
             // 
             // AirCon_dataGridView
             // 
@@ -1325,6 +1328,7 @@
             // panel4
             // 
             panel4.BackgroundImageLayout = ImageLayout.None;
+            panel4.Controls.Add(Pump_pictureBox);
             panel4.Controls.Add(ce3_pictureBox);
             panel4.Controls.Add(ce2_pictureBox);
             panel4.Controls.Add(ce1_pictureBox);
@@ -1338,6 +1342,15 @@
             panel4.Size = new Size(663, 260);
             panel4.TabIndex = 4;
             panel4.Paint += panel4_Paint;
+            // 
+            // Pump_pictureBox
+            // 
+            Pump_pictureBox.Location = new Point(191, 87);
+            Pump_pictureBox.Name = "Pump_pictureBox";
+            Pump_pictureBox.Size = new Size(36, 50);
+            Pump_pictureBox.TabIndex = 161;
+            Pump_pictureBox.TabStop = false;
+            Pump_pictureBox.Visible = false;
             // 
             // ce3_pictureBox
             // 
@@ -1462,6 +1475,7 @@
             Save_button.TabIndex = 20;
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
+            Save_button.Click += Save_button_Click;
             // 
             // CoolingSystemNameText
             // 
@@ -1552,7 +1566,6 @@
             radioButton3.TabStop = true;
             radioButton3.UseVisualStyleBackColor = true;
             radioButton3.CheckedChanged += Zone_button_Click;
-            radioButton3.Click += radioButton3_Click;
             // 
             // label10
             // 
@@ -1583,7 +1596,6 @@
             radioButton2.TabIndex = 141;
             radioButton2.TabStop = true;
             radioButton2.UseVisualStyleBackColor = true;
-            radioButton2.Click += radioButton2_Click;
             // 
             // radioButton1
             // 
@@ -1595,7 +1607,6 @@
             radioButton1.TabIndex = 140;
             radioButton1.TabStop = true;
             radioButton1.UseVisualStyleBackColor = true;
-            radioButton1.Click += radioButton1_Click;
             // 
             // label9
             // 
@@ -1911,12 +1922,23 @@
             label35.TabIndex = 154;
             label35.Text = "설치대수:";
             // 
+            // button1
+            // 
+            button1.Location = new Point(1038, 602);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 157;
+            button1.Text = "계산";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // CoolingSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(button1);
             Controls.Add(label34);
             Controls.Add(InstallTotal_textBox);
             Controls.Add(label35);
@@ -1961,6 +1983,7 @@
             ImagePanel.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Pump_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)ce3_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)ce2_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)ce1_pictureBox).EndInit();
@@ -2102,5 +2125,7 @@
         private Label label19;
         private CustomComboBox ce3Type_comboBox;
         private Label G_label;
+        private PictureBox Pump_pictureBox;
+        private Button button1;
     }
 }
