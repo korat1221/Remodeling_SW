@@ -29,7 +29,7 @@ namespace main.contentslist
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '냉방시스템'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            Program.DB.initTable(DB.type.ProjDB, "CoolingSystem");
+            Program.DB.initTable(DB.type.ProjDB, "CoolingSystem_Form");
             Create_Table();
         }
 
@@ -42,7 +42,7 @@ namespace main.contentslist
 
         private void Add_button_Click(object sender, EventArgs e)
         {
-            Num = Program.UTIL.CreateNum("CoolingSystem", "번호", "CS");
+            Num = Program.UTIL.CreateNum("CoolingSystem_Form", "번호", "CS");
 
             Program.getMenuForm().ResetForm(20);
 
@@ -85,26 +85,31 @@ namespace main.contentslist
         public void Create_Table()
         {
             dataGridView1.Columns.Clear();
-            dataGridView1.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             dataGridView1.Columns.Add(checkBoxColumn);
             List.Columns.Add("번호", typeof(string));
             List.Columns.Add("명칭", typeof(string));
+            List.Columns.Add("냉방설비", typeof(string));
+            List.Columns.Add("냉방출력[kW]", typeof(string));
+            List.Columns.Add("냉방성능[kW/kW]", typeof(string));
             dataGridView1.DataSource = List;
+
+
+            dataGridView1.Columns[0].Width = 80;
         }
 
         public void load_List()
         {
             try
             {
-                string[][] List = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem", "번호,명칭", "");
+                string[][] List = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Form", "번호,명칭,냉방설비,냉방출력,냉방성능", "");
                 List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
                 String Blank = "";
                 this.List.Rows.Clear();
                 for (int n = 0; n < List.Length; n++)
                 {
-                    this.List.Rows.Add(List[n][0], List[n][1]);
+                    this.List.Rows.Add(List[n][0], List[n][1], List[n][2], List[n][3], List[n][4]);
                     mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":20\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                 }
                 dataGridView1.DataSource = this.List;
@@ -148,7 +153,7 @@ namespace main.contentslist
                 if (k > -1)
                 {
                     String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                    Program.DB.deleteValue(DB.type.ProjDB, "CoolingSystem", "번호 ='" + Delete_Num + "'");
+                    Program.DB.deleteValue(DB.type.ProjDB, "CoolingSystem_Form", "번호 ='" + Delete_Num + "'");
                     load_List();
 
                 }
@@ -166,19 +171,16 @@ namespace main.contentslist
             }
         }
 
-
-
-
         private void Copy_button_Click(object sender, EventArgs e)
         {
-            Num = Program.UTIL.CreateNum("CoolingSystem", "번호", "CS");
+            Num = Program.UTIL.CreateNum("CoolingSystem_Form", "번호", "CS");
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
                 String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
 
-                Program.DB.CopyValue(DB.type.ProjDB, "CoolingSystem", "번호 ='" + Copy_Num + "'", Num);
-                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  CoolingSystem" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
+                Program.DB.CopyValue(DB.type.ProjDB, "CoolingSystem_Form", "번호 ='" + Copy_Num + "'", Num);
+                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  CoolingSystem_Form" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
                 Load_form(Num, "Copy");
 
             }
