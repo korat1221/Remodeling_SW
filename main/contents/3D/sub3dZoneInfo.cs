@@ -61,7 +61,7 @@ namespace main.contents
             dataGridView1.Columns[0].Width = 30;
             dataGridView1.Columns[1].Width = 100;
             dataGridView1.Columns[2].Width = 100;
-            dataGridView1.Columns[3].Width = 100;
+            dataGridView1.Columns[3].Width = 200;
             dataGridView1.Columns[4].Width = 100;
             dataGridView1.Columns[5].Width = 100;
             dataGridView1.Columns[6].Width = 100;
@@ -87,7 +87,7 @@ namespace main.contents
             dataGridView2.Columns.Add(checkBoxColumn);
 
             dataGridView2.Columns.Add("B1", "존 번호");
-            dataGridView2.Columns.Add("B2", "바닥면적");
+            dataGridView2.Columns.Add("B2", "존 이름");
 
             dataGridView2.Columns[0].Width = 30;
             dataGridView2.Columns[1].Width = 100;
@@ -180,10 +180,31 @@ namespace main.contents
         {
             if (row % 2 == 1)
             {
-                cell.Style.BackColor = Color.FromArgb(251, 251, 251);
-                return true;
+                if(column ==2 && cell.Value =="")
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 243);
+                    return true;
+                }
+                else
+                {
+                    cell.Style.BackColor = SystemColors.InactiveBorder;
+                    return true;
+                }
+               
             }
-            else return false;
+            else
+            {
+                if (column == 2 && cell.Value == "")
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 243);
+                    return true;
+                }
+                else
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    return true;
+                }
+            }
         }
 
         private String _fixed(string v)
@@ -223,11 +244,11 @@ namespace main.contents
 
             {
                 int i = -1;
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "존번호,바닥면적,주향,주광너비,주광깊이,상인방높이");
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "존번호,존이름");
 
                 while (++i < rec.Length)
                 {
-                    dataGridView2.Rows.Add(null, rec[i][0], _fixed(rec[i][1]));
+                    dataGridView2.Rows.Add(null, rec[i][0], rec[i][1]);
                     //  dataGridView2.Rows.Add(null, rec[i][0], _fixed(rec[i][1]), rec[i][2], _fixed(rec[i][3]), _fixed(rec[i][4]), _fixed(rec[i][5]));
                 }
             }
@@ -436,6 +457,15 @@ namespace main.contents
 
             string num, num0, id, Type, CWType, ret = "", tcode, RoofWin = "", Blind = "";
             int i = -1;
+            while (++i < dataGridView2.RowCount)
+            {
+                if (dataGridView1.Rows[i].Cells[2].Value != null)
+                {
+                    Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_3D", "존번호,존이름", "'" + dataGridView2.Rows[i].Cells[1].Value.ToString()  + "','" + dataGridView2.Rows[i].Cells[2].Value.ToString() + "'", "존번호");
+                }
+                else { MessageBox.Show(dataGridView2.Rows[i].Cells[1].Value.ToString() + "의 이름을 입력하세요."); }
+            }
+            i = -1;
             while (++i < dataGridView1.RowCount)
             {
                 if (dataGridView1.Rows[i].Cells[4].Value != null)
@@ -546,19 +576,14 @@ namespace main.contents
                         if (SubLoad.Length > 0)
                         {
                             String[][] MainLoad = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "유리종류,태양열취득률,빛투과율,유리열관류율", "번호 = '" + SubLoad[0][0] + "'");
-
-                            double SHGC_on = Calc_Blind_SHGC(Convert.ToDouble(MainLoad[0][1]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Convert.ToDouble(BlindValue[0][3]), Convert.ToDouble(MainLoad[0][3]), BlindValue[0][0]);
+                            double SHGC_on;
+                            if (BlindValue.Length > 0)
+                            { SHGC_on = Calc_Blind_SHGC(Convert.ToDouble(MainLoad[0][1]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Convert.ToDouble(BlindValue[0][3]), Convert.ToDouble(MainLoad[0][3]), BlindValue[0][0]); }
+                            else { SHGC_on = Convert.ToDouble(MainLoad[0][1]); }
 
                             double Glass_Ex, Glass_In;
-                            if (MainLoad[0][0].Contains("+"))
+                            if (MainLoad[0][0].Contains("/"))
                             {
-                                string[][] glass = Program.DB.getValue(DB.type.ProjDB, "User_DoubleGlass", "외부반사율,내부반사율", "제품명 ='" + MainLoad[0][0] + "'");
-                                Glass_Ex = Convert.ToDouble(glass[0][0]);
-                                Glass_In = Convert.ToDouble(glass[0][1]);
-                            }
-                            else
-                            {
-
                                 string[][] glass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "외부반사율,내부반사율", "제품명 ='" + MainLoad[0][0] + "'");
                                 if (glass.Length == 0)
                                 {
@@ -567,15 +592,29 @@ namespace main.contents
 
                                 Glass_Ex = Convert.ToDouble(glass[0][0]);
                                 Glass_In = Convert.ToDouble(glass[0][1]);
+                               
                             }
-                            double Tao_on = Calc_Blind_Tao(Convert.ToDouble(MainLoad[0][2]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Glass_Ex, Glass_In, BlindValue[0][0]);
+                            else
+                            {
+                                string[][] glass = Program.DB.getValue(DB.type.ProjDB, "User_DoubleGlass", "외부반사율,내부반사율", "제품명 ='" + MainLoad[0][0] + "'");
+                                Glass_Ex = Convert.ToDouble(glass[0][0]);
+                                Glass_In = Convert.ToDouble(glass[0][1]);
+
+                            }
+                            double Tao_on;
+                            if (BlindValue.Length > 0)
+                            { Tao_on = Calc_Blind_Tao(Convert.ToDouble(MainLoad[0][2]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Glass_Ex, Glass_In, BlindValue[0][0]); }
+                            else { Tao_on = Convert.ToDouble(MainLoad[0][2]); }
                             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
                             Program.DB.setValue(DB.type.ProjDB, "Blind_3D", "아이디,번호,프로젝트유형,차양번호,차양포함태양열취득률,차양포함빛투과율", "'" + id + "','" + num + "','" + 프로젝트유형[0][0] + "','" + Blind + "','" + SHGC_on.ToString() + "','" + Tao_on.ToString() + "'", "아이디");
                         }
                         String[][] CWValue = Program.DB.querySQL(DB.type.ProjDB, "select a.고정유리종류,a.태양열취득률,a.빛투과율,a.고정유리열관류율 FROM ConstructionCW AS a INNER JOIN ZoneEnvelope_3D AS b ON b.구조체번호 = a.번호 where b.아이디 = '" + id + "' AND b.외피유형 = '커튼월창'");
                         if (CWValue.Length > 0)
                         {
-                            double SHGC_on = Calc_Blind_SHGC(Convert.ToDouble(CWValue[0][1]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Convert.ToDouble(BlindValue[0][3]), Convert.ToDouble(CWValue[0][3]), BlindValue[0][0]);
+                            double SHGC_on;
+                            if (BlindValue.Length > 0)
+                            { SHGC_on = Calc_Blind_SHGC(Convert.ToDouble(CWValue[0][1]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Convert.ToDouble(BlindValue[0][3]), Convert.ToDouble(CWValue[0][3]), BlindValue[0][0]); }
+                            else { SHGC_on = Convert.ToDouble(CWValue[0][1]); }
 
                             double Glass_Ex, Glass_In;
 
@@ -588,7 +627,10 @@ namespace main.contents
                             Glass_Ex = Convert.ToDouble(glass[0][0]);
                             Glass_In = Convert.ToDouble(glass[0][1]);
 
-                            double Tao_on = Calc_Blind_Tao(Convert.ToDouble(CWValue[0][2]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Glass_Ex, Glass_In, BlindValue[0][0]);
+                            double Tao_on;
+                            if (BlindValue.Length > 0)
+                            { Tao_on = Calc_Blind_Tao(Convert.ToDouble(CWValue[0][2]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Glass_Ex, Glass_In, BlindValue[0][0]); }
+                            else { Tao_on = Convert.ToDouble(CWValue[0][2]); }
                             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
                             Program.DB.setValue(DB.type.ProjDB, "Blind_3D", "아이디,번호,프로젝트유형,차양번호,차양포함태양열취득률,차양포함빛투과율", "'" + id + "','" + num + "','" + 프로젝트유형[0][0] + "','" + Blind + "','" + SHGC_on.ToString() + "','" + Tao_on.ToString() + "'", "아이디");
                         }

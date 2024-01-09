@@ -40,8 +40,6 @@ namespace main.contents
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
             Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "상위메뉴아이콘_on2", "상위메뉴명 = '결과 정보'");
-            Simulation_pictureBox.Load(Program.gPath + Image[0][0]);
-            Simulation_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
 
             Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필이미지", "이미지", "대분류 = '메인'");
@@ -88,13 +86,6 @@ namespace main.contents
             }
         }
 
-        private void ZoneName_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if (ZoneName_textBox.Text != null)
-            {
-                ZoneName = ZoneName_textBox.Text.ToString();
-            }
-        }
         //실 제어방식  
         private void RoomControl_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -540,12 +531,12 @@ namespace main.contents
 
         private void OccupancyDensity_Cal(double PersonNum, double Area)
         {
-            if (PersonNum !=0 && String.IsNullOrEmpty(NetArea_textBox.Text) == false)
+            if (PersonNum != 0 && String.IsNullOrEmpty(NetArea_textBox.Text) == false)
             {
                 OccupancyDensity = Area / PersonNum;
                 OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
             }
-            else if(PersonNum == 0)
+            else if (PersonNum == 0)
             {
                 OccupancyDensity = 0;
                 OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
@@ -809,7 +800,7 @@ namespace main.contents
                 Usage_comboBox.SelectedItem = Usage;
                 DataRowView? item = Usage_comboBox.SelectedItem as DataRowView;
                 //Usage = Value[0][7];
-                
+
 
                 if (item != null)
                 {
@@ -829,7 +820,7 @@ namespace main.contents
                 EndTime_comboBox.SelectedItem = EndTime;
 
                 WeekUseDay = Convert.ToDouble(Value[0][11]);
-                WeekUseDay_comboBox.SelectedItem = "주 "+WeekUseDay.ToString()+".0 일 근무";
+                WeekUseDay_comboBox.SelectedItem = "주 " + WeekUseDay.ToString() + ".0 일 근무";
 
                 PersonNum = Convert.ToDouble(Value[0][12]);
                 PersonNum_textBox.Text = PersonNum.ToString();
@@ -918,12 +909,12 @@ namespace main.contents
                 {
                     string[][] res = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 이름, 값, 아이디 FROM 인덱스 WHERE 부모아이디=" + id);
 
-                   
+
                     //Usage = Value[0][7];
                     String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "용도프로필", "존번호 = '" + ZoneNum + "'");
 
-                    if(Value.Length >0)
-                    { 
+                    if (Value.Length > 0)
+                    {
                         for (int i = 0; i < res.Length; i++)
                         {
                             if (Value[0][0] == res[i][0])
@@ -934,7 +925,7 @@ namespace main.contents
                     }
                     else
                     {
-                        Program.UTIL.FillComboBox_Category(Usage_comboBox, res,  (1).ToString());
+                        Program.UTIL.FillComboBox_Category(Usage_comboBox, res, (1).ToString());
                     }
                 }
             }
@@ -946,7 +937,7 @@ namespace main.contents
             try
             {//3D 외피정보
                 String[][] 층 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "존 = '" + ZoneNum + "'");
-                String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,지면접합유형,바닥면적,주광너비,주광깊이", "존번호 = '" + ZoneNum + "'");
+                String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,지면접합유형,바닥면적,존이름", "존번호 = '" + ZoneNum + "'");
 
                 Layer = 층[0][0];
                 Layer_textBox.Text = Layer;
@@ -954,7 +945,8 @@ namespace main.contents
                 Ground = General_3D[0][1];
                 Load_GroundImage();
 
-
+                ZoneName = General_3D[0][3];
+                ZoneName_textBox.Text = ZoneName;
                 /////////////////////////////// //순바닥면적계산/////////////////////////////////////////////////////
 
                 String[][] Wall = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체번호", "존 = '" + ZoneNum + "' And 외피유형 = '외벽'");
@@ -1092,6 +1084,6 @@ namespace main.contents
 
         }
 
-       
+
     }
 }

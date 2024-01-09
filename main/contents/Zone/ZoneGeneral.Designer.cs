@@ -161,9 +161,6 @@ namespace main.contents
             Ground_pictureBox = new PictureBox();
             RoomControl_pictureBox = new PictureBox();
             Main_pictureBox = new PictureBox();
-            label12 = new System.Windows.Forms.Label();
-            Simulation_pictureBox = new PictureBox();
-            Simulation_button = new System.Windows.Forms.Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
@@ -173,7 +170,6 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)Ground_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RoomControl_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Simulation_pictureBox).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -251,14 +247,13 @@ namespace main.contents
             // ZoneName_textBox
             // 
             ZoneName_textBox.BackColor = SystemColors.Window;
-            ZoneName_textBox.BorderStyle = BorderStyle.FixedSingle;
+            ZoneName_textBox.BorderStyle = BorderStyle.None;
             ZoneName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ZoneName_textBox.Location = new Point(153, 50);
+            ZoneName_textBox.Location = new Point(153, 55);
             ZoneName_textBox.Name = "ZoneName_textBox";
-            ZoneName_textBox.Size = new Size(120, 22);
+            ZoneName_textBox.Size = new Size(120, 15);
             ZoneName_textBox.TabIndex = 99;
             ZoneName_textBox.TextAlign = HorizontalAlignment.Center;
-            ZoneName_textBox.TextChanged += ZoneName_textBox_TextChanged;
             // 
             // Layer_textBox
             // 
@@ -1603,38 +1598,6 @@ namespace main.contents
             Main_pictureBox.TabIndex = 115;
             Main_pictureBox.TabStop = false;
             // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Location = new Point(0, 0);
-            label12.Name = "label12";
-            label12.Size = new Size(46, 15);
-            label12.TabIndex = 20;
-            label12.Text = "label12";
-            // 
-            // Simulation_pictureBox
-            // 
-            Simulation_pictureBox.BackColor = Color.OldLace;
-            Simulation_pictureBox.Location = new Point(1020, 33);
-            Simulation_pictureBox.Name = "Simulation_pictureBox";
-            Simulation_pictureBox.Size = new Size(42, 35);
-            Simulation_pictureBox.TabIndex = 21;
-            Simulation_pictureBox.TabStop = false;
-            // 
-            // Simulation_button
-            // 
-            Simulation_button.BackColor = Color.OldLace;
-            Simulation_button.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            Simulation_button.ForeColor = SystemColors.ControlDarkDark;
-            Simulation_button.Location = new Point(1008, 30);
-            Simulation_button.Name = "Simulation_button";
-            Simulation_button.Size = new Size(167, 41);
-            Simulation_button.TabIndex = 22;
-            Simulation_button.Text = "Zone Simulation  ";
-            Simulation_button.TextAlign = ContentAlignment.MiddleRight;
-            Simulation_button.UseVisualStyleBackColor = false;
-            Simulation_button.Click += button2_Click;
-            // 
             // ZoneGeneral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1642,9 +1605,6 @@ namespace main.contents
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 918);
-            Controls.Add(Simulation_pictureBox);
-            Controls.Add(Simulation_button);
-            Controls.Add(label12);
             Controls.Add(panel2);
             Controls.Add(GeneralPanel);
             Controls.Add(AdditionalPanel);
@@ -1664,9 +1624,7 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)Ground_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)RoomControl_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Simulation_pictureBox).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -1802,8 +1760,5 @@ namespace main.contents
         private PictureBox HC_pictureBox;
         private PictureBox AHU_pictureBox;
         private System.Windows.Forms.TextBox SA_Volume_textBox;
-        private System.Windows.Forms.Label label12;
-        private PictureBox Simulation_pictureBox;
-        private System.Windows.Forms.Button Simulation_button;
     }
 }

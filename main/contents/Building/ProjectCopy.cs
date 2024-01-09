@@ -50,6 +50,7 @@ namespace main.contents
             if (Building_checkBox.Checked)
             {
                 tables.Add("BuildingGeneral");
+                tables.Add("BuildingEnergyUse");
             }
             if (Construction_checkBox.Checked)
             {

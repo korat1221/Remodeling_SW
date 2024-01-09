@@ -32,6 +32,7 @@
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             splitContainer1 = new SplitContainer();
             Import_button = new Button();
+            Export_button = new Button();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -82,13 +83,25 @@
             // 
             Import_button.BackColor = SystemColors.ButtonHighlight;
             Import_button.ForeColor = Color.Black;
-            Import_button.Location = new Point(1018, 23);
+            Import_button.Location = new Point(1075, 22);
             Import_button.Name = "Import_button";
             Import_button.Size = new Size(88, 25);
             Import_button.TabIndex = 97;
             Import_button.Text = "Import";
             Import_button.UseVisualStyleBackColor = true;
             Import_button.Click += Import_button_Click;
+            // 
+            // Export_button
+            // 
+            Export_button.BackColor = SystemColors.ButtonHighlight;
+            Export_button.ForeColor = Color.Black;
+            Export_button.Location = new Point(977, 22);
+            Export_button.Name = "Export_button";
+            Export_button.Size = new Size(88, 25);
+            Export_button.TabIndex = 98;
+            Export_button.Text = "Export";
+            Export_button.UseVisualStyleBackColor = true;
+            Export_button.Click += Export_button_Click;
             // 
             // Model
             // 
@@ -97,6 +110,7 @@
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(Export_button);
             Controls.Add(Import_button);
             Controls.Add(splitContainer1);
             Controls.Add(Save_button);
@@ -115,5 +129,6 @@
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
         private SplitContainer splitContainer1;
         private Button Import_button;
+        private Button Export_button;
     }
 }

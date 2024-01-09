@@ -115,7 +115,10 @@ namespace main.contentslist
             string[] List_F = new string [List.Length];
 
             for (int n = 0; n < List.Length; n++)
-            { List_arr[n] =Convert.ToInt32( List[n][0].Substring(0, List[n][0].IndexOf('F'))); }
+            {
+                if (List[n][0] != null && List[n][0] != "")
+                { List_arr[n] = Convert.ToInt32(List[n][0].Substring(0, List[n][0].IndexOf('F'))); }
+            }
 
             for (int i = 0; i < List_arr.Length - 1; i++)   //i = 0 to N - 1
             {
