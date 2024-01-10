@@ -24,8 +24,9 @@ namespace main.contents
             {
                 sid = main.MainContents.selID;
 
+                String key = sid.IndexOf("F_Zone") > 0 ? "번호" : "아이디";
                 String ID = main.MainContents.selID.Replace("board-", "");
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체,번호", "아이디 = '" + ID + "'");
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체,번호", key + " = '" + ID + "'");
 
                 if (rec.Length > 0)
                 {

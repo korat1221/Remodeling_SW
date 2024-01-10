@@ -67,8 +67,9 @@ namespace main.contents
             {
                 sid = main.MainContents.selID;
 
+                String key = sid.IndexOf("F_Zone") > 0 ? "번호" : "아이디";
                 String ID = main.MainContents.selID.Replace("board-", "");
-                string[][] value1 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호,면적,번호", "아이디 = '" + ID + "'");
+                string[][] value1 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호,면적,번호", key + " = '" + ID + "'");
 
                 if (value1.Length > 0)
                 {

@@ -113,7 +113,9 @@ class MainTree {
             "plugins" : [ "types" ]
         }).on('changed.jstree', function (e, data) {
             if (!that.loading && that.onSelect && data.selected.length > 0) {
-                that.onSelect(data.instance.get_node(data.selected[0]).id);
+                let id = data.instance.get_node(data.selected[0]).id;
+                if (id.indexOf('detail-') >= 0) id = data.instance.get_node(data.selected[0]).text;
+                that.onSelect(id);
             }
         }).on('loaded.jstree', function() {
             if (sel_id) {

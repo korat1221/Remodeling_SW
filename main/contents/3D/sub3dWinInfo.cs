@@ -56,6 +56,7 @@ namespace main.contents
 
                 string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");   //지역, 프로젝트 조건?
 
+                String key = sid.IndexOf("F_Zone") > 0 ? "번호" : "아이디";
                 String ID = main.MainContents.selID.Replace("board-", "");
 
                 ID = ID.Replace("_win1", "");
@@ -64,7 +65,7 @@ namespace main.contents
                 ID = ID.Replace("_win4", "");
                 ID = ID.Replace("_win5", "");
 
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,구조체번호,면적,창호너비,창호높이", "아이디 = '" + ID + "'");
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,구조체번호,면적,창호너비,창호높이", key + " = '" + ID + "'");
 
                 if (rec.Length > 0)
                 {

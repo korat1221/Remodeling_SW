@@ -1818,7 +1818,7 @@ Editor.prototype = {
 		})
 		.then((json) => {
 			window.chrome.webview.postMessage((sql ? sql : "") + "@@@perfect:" + this.perfect);
-			console.log(json); // 서버에서 주는 json데이터가 출력 됨
+		//	console.log(json); // 서버에서 주는 json데이터가 출력 됨
 		});
 	},
 

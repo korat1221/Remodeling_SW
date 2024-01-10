@@ -508,11 +508,23 @@ namespace main.contents
                         }
                        
                     }
-
-
-                    MessageBox.Show("3D 정보 엑셀을 Import 하였습니다.");
+                    Program.DB.saveProject();
                     workBook.Close(true);
                     excelApp.Quit();
+
+                    runScript("regenTree(" + System.Text.Json.JsonSerializer.Serialize(Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "존번호")) + "," + System.Text.Json.JsonSerializer.Serialize(Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,존,외피유형,커튼월부위")) + ")");
+
+                    MessageBox.Show("3D 정보 엑셀을 Import 하였습니다.");
+
+                    var timer = new System.Windows.Forms.Timer();
+                    timer.Interval = 1500;
+                    timer.Tick += (o, a) =>
+                    {
+                        timer.Stop();
+                        MainContents.selID_old = "";
+                        Program.UTIL.loadMainMenu(2);
+                    };
+                    timer.Start();
 
                 }
                 finally
