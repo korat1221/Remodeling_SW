@@ -394,6 +394,7 @@ namespace main
                 //Zone_ISh_vA = shade.Calc_ISh_vA(γSh_vA);
                 ////Console.WriteLine("주변건물 음영 계수 : " + Zone_ISh_Ish + "  " + "상부 음영 계수 : " + Zone_ISh_hA + "  " + "측면 음영 계수 : " + Zone_ISh_hA);
 
+                String[][] WinID = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + WinNum + "'");
 
                 //주변*상부*측면 음영계수 [월별상이]
                 try
@@ -402,7 +403,7 @@ namespace main
                     {
                         for (int i = 0; i < 12; i++)
                         {
-                            string[][] Shade = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", " 번호 = '" + WinNum + "' and 월 = '" + (i + 1) + "월'");
+                            string[][] Shade = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", " 번호 = '" + WinID[0][0] + "' and 월 = '" + (i + 1) + "월'");
                             Zone_Ish[i] = Convert.ToDouble(Shade[0][0]);
                         }
                     }

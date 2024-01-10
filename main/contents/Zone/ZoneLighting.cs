@@ -567,6 +567,7 @@ namespace main.contents
         // 주창 정보 들어오기 
         private void WindowInfo2()
         {
+            Calc_AD();
             try
             {
                 //차양명칭 및 투과율 가져오기 
@@ -689,6 +690,7 @@ namespace main.contents
                 direction_textBox.Visible = true;
                 Aca_textBox.Visible = true;
                 Acam2_label.Visible = true;
+                type_pictureBox.Visible = true;
             }
 
             else
@@ -702,6 +704,7 @@ namespace main.contents
                 direction_textBox.Visible = false;
                 Aca_textBox.Visible = false;
                 Acam2_label.Visible = false;
+                type_pictureBox.Visible = false;
             }
         }
 
@@ -1352,7 +1355,7 @@ namespace main.contents
             Calc_Fo();
             Calc_Fc();
             Pci_Value();
-            Calc_AD();
+            //Calc_AD();
         }
 
         private void Check_MainDirection()
