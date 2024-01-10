@@ -118,7 +118,7 @@ namespace main.contents
                         Program.DB.executeSQL(DB.type.ProjDB, s.Substring(0, n));
                         //             Program.UTIL.reloadWebCtrl();
 
-                        string[][] Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "외피유형 = '창호'");
+                        string[][] Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "외피유형 = '창호' or 외피유형 = '커튼월창'");
                         if (Win.Length > 0)
                         {
                             for (int k = 0; k < Win.Length; k++)
