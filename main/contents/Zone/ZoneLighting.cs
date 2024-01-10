@@ -746,7 +746,7 @@ namespace main.contents
                 R3_textBox.Visible = false;
                 Load_RenewType_image(false);
             }
-           
+
         }
 
 
@@ -754,9 +754,9 @@ namespace main.contents
         {
             //집광 채광 종류가 null이 아닐 경우 그림에 들어가도록
             string[][] Image;
-            if(check == true)
+            if (check == true)
             {
-                Image= Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_집광채광이미지", "이미지", "집광채광 ='광덕트'");
+                Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_집광채광이미지", "이미지", "집광채광 ='광덕트'");
             }
             else
             {

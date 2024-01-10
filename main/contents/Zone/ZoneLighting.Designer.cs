@@ -121,6 +121,7 @@ namespace main.contents
             R1_label = new Label();
             R1_textBox = new TextBox();
             panel4 = new Panel();
+            Main_pictureBox3 = new PictureBox();
             Main_pictureBox2 = new PictureBox();
             Main_pictureBox = new PictureBox();
             bbd_label = new Label();
@@ -139,7 +140,6 @@ namespace main.contents
             label14 = new Label();
             label10 = new Label();
             Save_button = new Button();
-            Main_pictureBox3 = new PictureBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
@@ -151,9 +151,9 @@ namespace main.contents
             주창정보.SuspendLayout();
             집광채광정보.SuspendLayout();
             panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Main_pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Main_pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -724,8 +724,8 @@ namespace main.contents
             // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(조명정보);
             tabControl1.Controls.Add(주창정보);
+            tabControl1.Controls.Add(조명정보);
             tabControl1.Controls.Add(집광채광정보);
             tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
@@ -1307,6 +1307,14 @@ namespace main.contents
             panel4.TabIndex = 104;
             panel4.Paint += panel4_Paint;
             // 
+            // Main_pictureBox3
+            // 
+            Main_pictureBox3.Location = new Point(7, 4);
+            Main_pictureBox3.Name = "Main_pictureBox3";
+            Main_pictureBox3.Size = new Size(473, 239);
+            Main_pictureBox3.TabIndex = 2;
+            Main_pictureBox3.TabStop = false;
+            // 
             // Main_pictureBox2
             // 
             Main_pictureBox2.Location = new Point(8, 5);
@@ -1510,14 +1518,6 @@ namespace main.contents
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
             // 
-            // Main_pictureBox3
-            // 
-            Main_pictureBox3.Location = new Point(7, 4);
-            Main_pictureBox3.Name = "Main_pictureBox3";
-            Main_pictureBox3.Size = new Size(473, 239);
-            Main_pictureBox3.TabIndex = 2;
-            Main_pictureBox3.TabStop = false;
-            // 
             // ZoneLighting
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1572,9 +1572,9 @@ namespace main.contents
             집광채광정보.ResumeLayout(false);
             집광채광정보.PerformLayout();
             panel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)Main_pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Main_pictureBox3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
