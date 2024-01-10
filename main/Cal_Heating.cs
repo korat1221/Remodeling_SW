@@ -807,7 +807,8 @@ namespace main
                         string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "소비전력", "번호 = '" + ce.ceNum() + "'");
                         if (Value2.Length > 0)
                         {
-                            Wh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value2[0][0]) * thrL[mth - 1], 0);
+                            // Wh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value2[0][0]) * thrL[mth - 1], 0);
+                            Wh_ce[mth - 1] += 0;
                             if (double.IsNaN(Wh_ce[mth - 1]))
                             {
                                 Wh_ce[mth - 1] = 0;
@@ -837,8 +838,9 @@ namespace main
                         }
                         string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "소비전력", "번호 = '" + ce.ceNum() + "'");
                         if (Value2.Length > 0)
-                        {                           
-                            Wh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value2[0][0]) * thrL[mth], 0);
+                        {
+                            // Wh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value2[0][0]) * thrL[mth], 0);
+                            Wh_ce[mth - 1] += 0;
                             if (double.IsNaN(Wh_ce[mth - 1]))
                             {
                                 Wh_ce[mth - 1] = 0;

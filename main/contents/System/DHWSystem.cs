@@ -1556,7 +1556,7 @@ namespace main.contents
 
         public static bool OnLoadListProc(Form form)
         {
-            List_HeatingSystem f = (List_HeatingSystem)form;
+            List_DHWSystem f = (List_DHWSystem)form;
             f.load_List();
             return true;
         }

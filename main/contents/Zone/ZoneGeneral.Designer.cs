@@ -1415,7 +1415,6 @@ namespace main.contents
             AdditionalPanel.Controls.Add(label67);
             AdditionalPanel.Controls.Add(label66);
             AdditionalPanel.Controls.Add(EquipIHG_image_textBox);
-            AdditionalPanel.Controls.Add(Save_button);
             AdditionalPanel.Controls.Add(DHWneed_image_textBox);
             AdditionalPanel.Controls.Add(Door_textBox);
             AdditionalPanel.Controls.Add(InWall_textBox);
@@ -1545,7 +1544,7 @@ namespace main.contents
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(827, 392);
+            Save_button.Location = new Point(1009, 716);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 88;
@@ -1608,6 +1607,7 @@ namespace main.contents
             Controls.Add(panel2);
             Controls.Add(GeneralPanel);
             Controls.Add(AdditionalPanel);
+            Controls.Add(Save_button);
             FormBorderStyle = FormBorderStyle.None;
             Name = "ZoneGeneral";
             Text = "Form3";

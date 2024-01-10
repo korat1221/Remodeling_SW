@@ -43,7 +43,7 @@ function drawChart2(arr, max, step = 500, legend = false) {
                 borderColor: el.borderColor,//'#91D050',
                 backgroundColor: el.backgroundColor,//'#91D050',
                 pointStyle: 'circle',
-                pointRadius: 5,
+                pointRadius: 3,
                 borderDash: el.dash ? [10, 10] : [0, 0],
             });
         }
@@ -119,7 +119,7 @@ function drawChart(arr) {
                 borderColor: el.borderColor,//'#91D050',
                 backgroundColor: el.backgroundColor,//'#91D050',
                 pointStyle: 'circle',
-                pointRadius: 5,
+                pointRadius: 3,
                 borderDash: [10, 10],
             });
         }
@@ -130,7 +130,7 @@ function drawChart(arr) {
             borderColor: 'rgba(0,0,0,0)',
             backgroundColor: 'rgba(0,0,0,0)',
             pointStyle: 'circle',
-            pointRadius: 5,
+            pointRadius: 3,
             borderDash: [10, 10],
         });
 
@@ -222,7 +222,7 @@ function drawChart3(arr) {
                 pointStyle: 'circle',
                 min:el.min,
                 max:el.max,
-                pointRadius: 5,
+                pointRadius: 3,
                 borderDash: [10, 10],
                 yAxisID: (i==0 ? 'y' : 'y1'),
             });

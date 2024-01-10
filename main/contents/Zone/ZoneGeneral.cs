@@ -667,6 +667,7 @@ namespace main.contents
 
         private void save()
         {
+            Save_Image();
             //존일반정보 폼에 해당하는 정보만 저장 
             //건물정보, 3D정보는 저장 안함
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
@@ -686,7 +687,20 @@ namespace main.contents
             this.Hide();
             Program.getMenuForm().DoLoadForm(33, OnLoadListProc);
         }
+        private void Save_Image()
+        {
+            MemoryStream ms = new MemoryStream();
+            string ImageName = "/threejs/public/img/"+ZoneNum+".png";
+            Bitmap bmp = new Bitmap(AdditionalPanel.Width, AdditionalPanel.Height);
+            AdditionalPanel.DrawToBitmap(bmp, new System.Drawing.Rectangle(0, 0, AdditionalPanel.Width, AdditionalPanel.Height));
+           // bmp.Save(ms ,System.Drawing.Imaging.ImageFormat.Png); //you could ave in BPM, PNG  etc format.
+            bmp.Save(Program.gPath + ImageName, System.Drawing.Imaging.ImageFormat.Png); //you could ave in BPM, PNG  etc format.
+            byte[] Pic_arr = new byte[ms.Length];
+            ms.Position = 0;
+            ms.Read(Pic_arr, 0, Pic_arr.Length);
+            ms.Close();
 
+        }
         private void reset()
         {
             ZoneName_textBox.Text = "";
