@@ -359,6 +359,23 @@ namespace main.contents
             }
             return false;
         }
+        private string getWallTypePostfix(string type)
+        {
+            switch (type)
+            {
+                case "창호":
+                    return "_win1";
+                case "유리부분":
+                    return "_win2";
+                case "패널부분":
+                    return "_win3";
+                case "출입문부분":
+                    return "_win4";
+                case "외부출입문":
+                    return "_win5";
+            }
+            return "";
+        }
         private bool isWinCW(string type)
         {
             switch (type)
@@ -440,11 +457,11 @@ namespace main.contents
             {
                 if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
-                    string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호", "번호='" + dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString() + "'");
+                    string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,커튼월부위", "번호='" + dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString() + "'");
 
                     if (rec.Length > 0)
                     {
-                        Program.UTIL.sendMessage("board-" + rec[0][0]);
+                        Program.UTIL.sendMessage("board-" + rec[0][0] + getWallTypePostfix(rec[0][2]));
                     }
                 }
 
