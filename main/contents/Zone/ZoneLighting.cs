@@ -403,7 +403,7 @@ namespace main.contents
                 list.Add(Fo3);
             }
 
-            double max = list.Max();
+            double min = list.Min();
 
             //double[] Fo_list = { Fo1, Fo2, Fo3 };
             //double max = Fo1;
@@ -414,7 +414,7 @@ namespace main.contents
             //        max = Fo_list[i];
             //    }
             //}
-            Fo = max;
+            Fo = min;
         }
 
         public void Calc_Fc()
