@@ -273,7 +273,7 @@ namespace main.contents.Result
 
                     __data[39].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(((Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth] * 100).ToString()) }); //오차율
                     Error_mth_avg_전기 += Math.Abs((Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth] * 100);
-                    전기오차율chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(((Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth]).ToString())), 3) + 0);  /// >>> 백분율 단위로 표시 필요 
+                    전기오차율chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Math.Abs(((Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth])).ToString())), 3) + 0);  /// >>> 백분율 단위로 표시 필요 
 
                     Qh_a_전기 += Convert.ToDouble(Final[0][0]);
                     Qc_a_전기 += Convert.ToDouble(Final[0][1]);
