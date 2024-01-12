@@ -26,6 +26,8 @@ namespace main
 
             _calculations["난방시스템 계산"] = new Func<bool>(HeatingSystemCalc);
 
+            _calculations["냉방시스템 계산"] = new Func<bool>(CoolingSystemCalc);
+
             _calculations["급탕시스템 계산"] = new Func<bool>(DHWSystemCalc);
 
             _calculations["연료별 에너지소요량 계산"] = new Func<bool>(FinalEnergyCalc);
@@ -407,7 +409,33 @@ namespace main
             }
             return true;
         }
+        private static bool CoolingSystemCalc()
+        {
+            string[][] CoolingNum = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Form", "번호");
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
+            int i = -1;
+            String MTH;
+            Program.DB.deleteTable(DB.type.ProjDB, "CoolingSystem_Result");
+            Program.DB.initTable(DB.type.ProjDB, "CoolingSystem_Result");
+            while (++i < CoolingNum.Length)
+            {
+                Cal_Cooling cc1 = new Cal_Cooling(CoolingNum[i][0]); 
+                
+                for (int mth = 0; mth <= 11; mth++)
+                {
+                    //        public double[] QC_ce = new double[12], QC_d = new double[12], QC_s = new double[12], QC_out = new double[12], QC_f = new double[12];
+                    MTH = (mth + 1).ToString() + "월";
+                    Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                             "월," +
+                             "QC_ce,QC_d,QC_s,QC_out,QC_f,연료",
+                             "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + CoolingNum[i][0] + "','" + MTH + "','" +                           
+                             cc1.QC_ce[mth] + "','" + cc1.QC_d[mth] + "','" + cc1.QC_s[mth] + "','" + cc1.QC_out[mth] + "','" + cc1.QC_f[mth] + "','" + cc1.Carrier
+                              + "'", "번호,월"); ;
+                }
+            }
+            return true;
 
+        }
         private static bool DHWSystemCalc()
         {
             string[][] DHWNum = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호");

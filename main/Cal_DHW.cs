@@ -115,6 +115,7 @@ namespace main
                         theta_ih_avg[mth] += (theta_ih[n, mth] * Qwb_a[n]);
                         dop_mth_avg[mth] += (dop_mth[n, mth] * Qwb_a[n]);
                     }
+                
                     theta_ih_avg[mth] = theta_ih_avg[mth] / Qw_a_sum;
                     dop_mth_avg[mth] = dop_mth_avg[mth] / Qw_a_sum;
                 }
@@ -533,8 +534,8 @@ namespace main
                     Carrier = Value[0][2];
                     String Type = Value[0][3];
                     double Power = Convert.ToDouble(Value[0][4]);
-                    double eta_Pn = Convert.ToDouble(Value[0][5]) / 100;
-                    double eta_Pint = Convert.ToDouble(Value[0][6]) / 100;
+                    double eta_Pn = Convert.ToDouble(Value[0][5]) / 100  *0.95;
+                    double eta_Pint = Convert.ToDouble(Value[0][6]) / 100 * 0.95;
                     double W = Convert.ToDouble(Value[0][7]);
                     double W_0 = Convert.ToDouble(Value[0][8]);
                     double count = Convert.ToDouble(BoilerNum_split[n]);
@@ -567,9 +568,9 @@ namespace main
                         
                         eta_pn_w[mth] = eta_Pn + K * (50-55);
                         qp0_theta = Math.Max(qP0_70 * (50 - theta_ih_avg[mth]) / 50, 0);
-                        Qw_gen_day[mth] = (fHN_HI - eta_pn_w[mth]) / eta_pn_w[mth] * Qw_outg[mth] / (24 * dop_mth_avg[mth]);
-                        Qw_gen_p0_day[mth] = qp0_theta / eta_pn_w[mth]*(th_op_day_avg - tw_Pn_day[mth])*fHN_HI;
                         tw_Pn_day[mth] = Qw_outg[mth] / (Power * dop_mth_avg[mth]);
+                        Qw_gen_day[mth] = (fHN_HI - eta_pn_w[mth]) / eta_pn_w[mth] * Qw_outg[mth] / (tw_Pn_day[mth] * dop_mth_avg[mth]);
+                        Qw_gen_p0_day[mth] = qp0_theta / eta_pn_w[mth]*(th_op_day_avg - tw_Pn_day[mth])*fHN_HI;
                         Qw_gen[mth] = Qw_gen_day[mth] * tw_Pn_day[mth] * dop_mth_avg[mth];
                         Qw_f[mth] = Qw_outg[mth] + Qw_gen[mth];
                     }

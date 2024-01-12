@@ -50,16 +50,16 @@ namespace main
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Result", "연료,Qw_f,Ww_ce, Ww_d,Ww_s,Ww_g", "월='" + (mth + 1).ToString() + "월'");
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Result", "연료,Qw_f,Ww_d,Ww_s,Ww_g", "월='" + (mth + 1).ToString() + "월'");
                     for (int i = 0; i < Value.Length; i++) //시스템별
                     {
                         if (Value[i][0].ToString() == "전기")
                         {
-                            Qwf_elec[mth] += (Convert.ToDouble(Value[i][1]) + Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]) + Convert.ToDouble(Value[i][4]) + Convert.ToDouble(Value[i][5]));
+                            Qwf_elec[mth] += (Convert.ToDouble(Value[i][1]) + Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]) + Convert.ToDouble(Value[i][4]));
                         }
                         else
                         {
-                            Qwf_elec[mth] += (Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]) + Convert.ToDouble(Value[i][4]) + Convert.ToDouble(Value[i][5]));
+                            Qwf_elec[mth] += (Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]) + Convert.ToDouble(Value[i][4]));
                             Qwf_gas[mth] += Convert.ToDouble(Value[i][1]);
                         }
                     }
@@ -72,19 +72,36 @@ namespace main
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    String[][] Value = Program.DB.querySQL(DB.type.ProjDB, "select a.순바닥면적, b.Final_W FROM ZoneGenerl_Form AS a INNER JOIN Zone_LightResult AS b ON a.존번호 = b.번호 where b.월 = '" + (mth + 1).ToString() + "'");
-                    for (int i = 0; i < Value.Length; i++) //존별 
+                    String[][] Value = Program.DB.querySQL(DB.type.ProjDB, "select Sum(Final_kWh) From Zone_LightResult where 월 = '" + (mth + 1).ToString() + "월'");
+
+                   Qlf_elec[mth] += Convert.ToDouble(Value[0][0]);
+                }
+
+            }
+            catch { }
+
+            try
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Result", "연료,QC_ce,QC_d,QC_s,QC_out,QC_f", "월='" + (mth + 1).ToString() + "월'");
+                    for (int i = 0; i < Value.Length; i++) //시스템별
                     {
-                            Qlf_elec[mth] += (Convert.ToDouble(Value[i][0]) * Convert.ToDouble(Value[i][1]));
-                       
+                        if (Value[i][0].ToString() == "전기")
+                        {
+                            Qcf_elec[mth] += Convert.ToDouble(Value[i][5]); //나중에 보조설비 에너지 합산 해야함 
+                        }
+                        else
+                        {
+                            Qcf_elec[mth] += 0; //나중에 보조설비 에너지 합산 해야함 
+                            Qcf_gas[mth] += 0; 
+                        }
                     }
                 }
 
             }
             catch { }
 
-
-          
 
             try //에너지사용량
             {

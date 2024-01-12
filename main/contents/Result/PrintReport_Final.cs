@@ -86,8 +86,8 @@ namespace main.contents.Result
             List<string> chart_data3 = new List<string>();
             List<string> chart_data4 = new List<string>();
             int i = -1, n;
-
-
+            double[,] Quse_elec_mth = new double[4, 12]; double[] Quse_elec_a = new double[4];
+            string[] year = new string[3];
             while (++i < 700)
             {
                 __data[i] = new List<object>();
@@ -106,16 +106,19 @@ namespace main.contents.Result
                     string[][] 연도 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "BuildingEnergyUse", "연도", "연료 = '전기'");
                     __data[0].Add(new { idx = i, val = 연도[0][0] + "년 전기 에너지사용량" }); //연도 표기 
                     __data[3].Add(new { idx = i, val = 연도[0][0] + "년 전기 에너지사용량" }); //연도 표기 
+                    year[0] = 연도[0][0]; 
 
                     __data[1].Add(new { idx = i, val = 연도[1][0] + "년 전기 에너지사용량" }); //연도 표기 
                     __data[4].Add(new { idx = i, val = 연도[1][0] + "년 전기 에너지사용량" }); //연도 표기 
+                    year[1] = 연도[1][0];
 
                     __data[2].Add(new { idx = i, val = 연도[2][0] + "년 전기 에너지사용량" }); //연도 표기 
                     __data[5].Add(new { idx = i, val = 연도[2][0] + "년 전기 에너지사용량" }); //연도 표기 
+                    year[2] = 연도[2][0];
                 }
                 catch { }
 
-                double[,] Quse_elec_mth = new double[4, 12]; double[] Quse_elec_a = new double[4];
+               
 
                 double Area = 0;
                 string[][] A = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "냉난방유무 <> '비냉난방'");
@@ -124,11 +127,11 @@ namespace main.contents.Result
                     Area += Convert.ToDouble(A[a][0]);
                 }
 
-                string[][] Value1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "연료='전기'");
+                string[][] Value_사용시작일 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "연료='전기'");
                 int yearnum = 0;
-                if (Value1.Length > 0)
+                if (Value_사용시작일.Length > 0)
                 {
-                    if (Convert.ToDouble(Value1[0][0]) > 1)
+                    if (Convert.ToDouble(Value_사용시작일[0][0]) > 1)
                     {
                         string[][] Elec1, Elec2;
                         for (int mth = 0; mth < 11; mth++)
@@ -137,7 +140,7 @@ namespace main.contents.Result
                             Elec2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 2).ToString() + "월' AND 연료='전기'");
                             for (int k = 0; k < Elec1.Length; k++) //연도별
                             {
-                                Quse_elec_mth[k, mth] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value1[0][0]) / 30 + Convert.ToDouble(Elec2[k][0]) * (30 - Convert.ToDouble(Value1[0][0])) / 30);
+                                Quse_elec_mth[k, mth] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value_사용시작일[0][0]) / 30 + Convert.ToDouble(Elec2[k][0]) * (30 - Convert.ToDouble(Value_사용시작일[0][0])) / 30);
                             }
                             yearnum = Elec1.Length;
                         }
@@ -146,7 +149,7 @@ namespace main.contents.Result
                         Elec2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (1).ToString() + "월' AND 연료='전기'");
                         for (int k = 0; k < Elec1.Length; i++) //연도별
                         {
-                            Quse_elec_mth[k, 12] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value1[0][0]) / 30 + Convert.ToDouble(Elec2[k][0]) * (30 - Convert.ToDouble(Value1[0][0])) / 30);
+                            Quse_elec_mth[k, 12] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value_사용시작일[0][0]) / 30 + Convert.ToDouble(Elec2[k][0]) * (30 - Convert.ToDouble(Value_사용시작일[0][0])) / 30);
                         }
 
                     }
@@ -163,7 +166,7 @@ namespace main.contents.Result
                         }
                     }
                 }
-                
+
 
                 for (int mth = 0; mth < 12; mth++)
                 {
@@ -194,6 +197,12 @@ namespace main.contents.Result
                     __data[11].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Quse_elec_mth[1, mth].ToString()) });
                     __data[12].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Quse_elec_mth[2, mth].ToString()) });
                     __data[13].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Quse_elec_mth[3, mth].ToString()) });
+
+
+                    chart1.Add(Math.Round(Double.Parse(Quse_elec_mth[0, mth].ToString()), 3) + 0);
+                    chart2.Add(Math.Round(Double.Parse(Quse_elec_mth[1, mth].ToString()), 3) + 0);
+                    chart3.Add(Math.Round(Double.Parse(Quse_elec_mth[2, mth].ToString()), 3) + 0);
+                    chart4.Add(Math.Round(Double.Parse(Quse_elec_mth[3, mth].ToString()), 3) + 0);
                 }
                 double Qh_a = 0, Qc_a = 0, Qw_a = 0, Ql_a = 0, Qv_a = 0, Qbase_a = 0, Qtot_a = 0;
                 double[] Qtot_mth = new double[12];
@@ -245,7 +254,10 @@ namespace main.contents.Result
 
                 double Error_a = (Quse_elec_a[3] - Qtot_a) / Quse_elec_a[3] * 100;
                 __data[41].Add(new { idx = i, val = Error_a.ToString("0.0") + "%" });
-
+                chart_data1.Add(System.Text.Json.JsonSerializer.Serialize(chart1.ToArray()));
+                chart_data2.Add(System.Text.Json.JsonSerializer.Serialize(chart2.ToArray()));
+                chart_data3.Add(System.Text.Json.JsonSerializer.Serialize(chart3.ToArray()));
+                chart_data4.Add(System.Text.Json.JsonSerializer.Serialize(chart4.ToArray()));
 
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "yeartitle1", data = __data[0] });
@@ -306,8 +318,51 @@ namespace main.contents.Result
 
             s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
             s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
+            System.Text.Json.JsonSerializer.Serialize(__data[10].ToArray());
 
-            runScript("init(" + s + "," + s2 + ")");
+            string s3 = "", s4;
+
+            i = -1;
+
+            double[] max = new double[4]; double max_graph =0; 
+            string[][] AA; double[] Value1 = new double[12], Value2 = new double[12];
+
+
+            for (int k = 0; k < 4; k++)
+            {
+                for (int mth = 0; mth < 11; mth++)
+                {
+                    if (max[k] < Quse_elec_mth[k, mth])
+                    {
+                        max[k] = Quse_elec_mth[k, mth ];
+                    }
+                }
+            }
+            for (int k = 0; k < 4; k++)
+            {
+                if (max_graph < max[k])
+                {
+                    max_graph = max[k];
+                }
+            }
+
+            Debug.Print("start");
+
+                
+
+                if (s3 != "") s3 += ",";
+
+                s4 = "{data:[{type:\"line\",label:\""+year[0]+"\",data:" + chart_data1[0] + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:false}," +
+                "{type:\"line\",label:\""+ year[1]+"\",data:" + chart_data2[0] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
+                "{type:\"line\",label:\""+year[2]+"\",data:" + chart_data3[0] + ",borderColor:\"#4472C4\",backgroundColor:\"#4472C4\",dash:false}," +
+                "{type:\"line\",label:\"평균\",data:" + chart_data4[0] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false}," +
+                "],max:" + (Math.Round(max_graph / 1000) * 1000 + 500).ToString() + ",step:100,legend:true}";
+                s3 += s4;
+
+            
+           runScript("init(" + s + "," + s2 + "," + "[" + s3 + "])");
+
+             //runScript("init(" + s + "," + s2 + ")");
         }
 
         private void Saving_Report()
@@ -500,6 +555,14 @@ namespace main.contents.Result
 
             s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
             s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
+            System.Text.Json.JsonSerializer.Serialize(__data[16].ToArray());
+
+            string s3 = "", s4;
+
+            i = -1;
+
+            double Max_outg = 0; double Max_f = 0, max = 0;
+            string[][] AA; double[] Value1 = new double[12], Value2 = new double[12];
 
             runScript("init(" + s + "," + s2 + ")");
 

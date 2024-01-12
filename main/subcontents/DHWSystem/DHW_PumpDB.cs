@@ -64,7 +64,7 @@ namespace main.subcontents.DHWSystem
             //Pump_table.Columns.Add("양정" + Environment.NewLine + "[m]", typeof(string));
 
 
-            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "종류 ='급탕펌프'");
+            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "종류 ='급탕펌프' or 종류 = '온수순환펌프'");
             for (int n = 0; n < User_Value.Length; n++)
             {
                 string A효율 = "", B효율 = "", 유량 = "", 동력 = "", 양정 = "";

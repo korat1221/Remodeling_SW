@@ -491,7 +491,7 @@ namespace main.contents
                     }
                     else if (ZoneE[n][1] == "창호")
                     {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접", "번호='" + ZoneE[n][5] + "'");
                     }
                     else if (ZoneE[n][1] == "외부출입문")
                     {

@@ -101,7 +101,7 @@ namespace main
             Program.CALC.run(new string[] {
                 "존 계산"
             });
-            MessageBox.Show("계산되엇습니다.");
+            MessageBox.Show("계산되었습니다.");
         }
 
         private void FinalEnergy_Sim_Click(object sender, EventArgs e)
@@ -114,12 +114,15 @@ namespace main
                 "난방시스템 계산"
             });
             Program.CALC.run(new string[] {
+                "냉방시스템 계산"
+            });
+            Program.CALC.run(new string[] {
                 "급탕시스템 계산"
             });
             Program.CALC.run(new string[] {
             "연료별 에너지소요량 계산"
             });
-            MessageBox.Show("계산되엇습니다.");
+            MessageBox.Show("계산되었습니다.");
         }
     }
 }

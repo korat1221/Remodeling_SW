@@ -18,7 +18,7 @@ namespace main
         string CoolingNum, CoolingName, InstallType, CGType, CSource, CompType, ArtType, ArtNumber, Cout; // A 및 숫자에 대한 지정값 Cout : 직팽식, 냉수
         string Control_f, Econo_f, Fuel_f;
         int Number_f, ZoneNumber_f, AhuNumber_f; //설비개수, 존개수
-
+        public string Carrier = "전기"; ///연료 설비별로 찾아오도록 수정 해야함 
 
         //설비정보
         double Power_f, EER_f, Pctrl_f;
@@ -62,7 +62,7 @@ namespace main
         string LoadSupply; //공냉식
         string Refriger; double PartLoad; //흡수식
         double CoolingWInput, CoolingWOutput; //지열히트펌프
-
+        
 
         //존정보관련
         string SelectedZone, MultiZone;
@@ -143,6 +143,7 @@ namespace main
                 for(int i = 0; i < OutdoorTemperature.Length; i++) 
                 {
                     OutdoorTemperature[i] = Convert.ToDouble(OutdoorClimate[i][0]);
+
                     HumidityTemperature[i] = humidityhemperature(Convert.ToDouble(OutdoorClimate[i][0]), Convert.ToDouble(OutdoorClimate[i][1]));
                 }
             }
@@ -360,7 +361,16 @@ namespace main
         #endregion
         public void Cal_CS()
         {
-            string[][] v1 = Program.DB.getValue(DB.type.BaseDB_Cooling, "실외온도보정", "req_in, req_out, cond, evad", "냉방설비= '" + CGType + "' And 구분 = '" + Cout + "'");
+            string[][] v1;
+            if (CGType == "공냉식냉동기")
+            {
+                 v1 = Program.DB.getValue(DB.type.BaseDB_Cooling, "실외온도보정", "req_in, req_out, cond, evad", "냉방설비= '" + CGType + "' And 구분 = '" + Cout + "'");
+            }
+            else
+            {
+                v1 = Program.DB.getValue(DB.type.BaseDB_Cooling, "실외온도보정", "req_in, req_out, cond, evad", "냉방설비= '" + CGType + "'");
+            }
+               
             ThetaC_gen_hr_req_in = Convert.ToDouble(v1[0][0]);
             ThetaC_gen_req_out = Convert.ToDouble(v1[0][1]);
             Theta_cond = Convert.ToDouble(v1[0][2]);
@@ -377,14 +387,17 @@ namespace main
                     {
                         Theta_IC[i] = theta_z[i];
                     }
-                    Theta_IC[i] = theta_ahu[i];
+                    else
+                    {
+                        Theta_IC[i] = theta_ahu[i];
+                    }                    
                 }
                 else
                 {
-                    Theta_IC[i] = QC_nd_z[i] * theta_z[i] + QC_nd_ahu[i] * theta_ahu[i] / (theta_z[i] * theta_ahu[i]);
-                    feer_corr[i] = ((273 + Theta_IC[i] -Theta_cond) / ((273 + OutdoorTemperature[i] + Theta_Around + Theta_cond)-(273 + Theta_IC[i]-Theta_evad))) / 
-                                   ((ThetaC_gen_hr_req_in - Theta_evad) / ((ThetaC_gen_req_out - Theta_cond)-(ThetaC_gen_hr_req_in-Theta_evad))); 
+                    Theta_IC[i] = QC_nd_z[i] * theta_z[i] + QC_nd_ahu[i] * theta_ahu[i] / (theta_z[i] * theta_ahu[i]);                   
                 }
+                feer_corr[i] = ((273 + Theta_IC[i] - Theta_cond) / ((273 + OutdoorTemperature[i] + Theta_Around + Theta_cond) - (273 + Theta_IC[i] - Theta_evad))) /
+                                  ((ThetaC_gen_hr_req_in - Theta_evad) / ((ThetaC_gen_req_out - Theta_cond) - (ThetaC_gen_hr_req_in - Theta_evad)));
 
                 EER_c[i] = EER_f * feer_corr[i];
                 SEER_c[i] = EER_c[i] * fC_PL_z[i] * fC_mult; //공조기를 추가해야함
@@ -398,6 +411,11 @@ namespace main
                 
                 }
                 else QC_f[i] = QC_out[i] / SEER_c[i]; //공조기를 추가해야함
+                if(double.IsNaN(QC_f[i]))
+                {
+                    QC_f[i] = 0;
+                }
+                else { }
 
             }
 

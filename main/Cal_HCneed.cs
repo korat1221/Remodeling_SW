@@ -218,7 +218,7 @@ namespace main
                         }
                         else if (ZoneE[n][1] == "창호")
                         {
-                            Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접", "번호='" + ZoneE[n][5] + "'");
                         }
                         else if (ZoneE[n][1] == "외부출입문")
                         {
@@ -309,9 +309,12 @@ namespace main
                             for (int mth =0; mth < 12; mth++)
                             {
                                 string[][] theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + ZoneInW[i][1] + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "'and 월 ='"+(mth+1)+"월'");
-                                if (Math.Abs(Convert.ToDouble(theta_u[0][0])) > thetaiset + 4)
-                                { Zone_HT_Inwall[hc, wewd, mth] += U * Convert.ToDouble(ZoneInW[i][2]); }
-                                else { }
+                                if(theta_u.Length>0)
+                                {
+                                    if (Math.Abs(Convert.ToDouble(theta_u[0][0])) > thetaiset + 4)
+                                    { Zone_HT_Inwall[hc, wewd, mth] += U * Convert.ToDouble(ZoneInW[i][2]); }
+                                    else { }
+                                }
                                 Zone_HT_tot[hc,wewd,mth] = Zone_HT_Inwall[hc,wewd,mth];
                             }
                         }
@@ -348,9 +351,12 @@ namespace main
                             for (int mth = 0; mth < 12; mth++)
                             {
                                 string[][] theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + ZoneSL[i][1] + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "'");
-                                if (Math.Abs(Convert.ToDouble(theta_u[0][0])) > thetaiset + 4)
-                                { Zone_HT_Slab[hc, wewd, mth] += U * Convert.ToDouble(ZoneSL[i][2]); }
-                                else { }
+                                if(theta_u.Length >0)
+                                {
+                                    if (Math.Abs(Convert.ToDouble(theta_u[0][0])) > thetaiset + 4)
+                                    { Zone_HT_Slab[hc, wewd, mth] += U * Convert.ToDouble(ZoneSL[i][2]); }
+                                    else { }
+                                }                                
                                 Zone_HT_tot[hc, wewd, mth] = Zone_HT_tot[hc, wewd, mth] + Zone_HT_Slab[hc, wewd, mth];
                             }
                         }
@@ -2232,9 +2238,9 @@ namespace main
                         QI_Humidity[mth] = twd_d * H_summer * Peope_Num * 2260 / 3600;
                         try
                         {
-                            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Zone_LightResult", "Final_W", "번호 = '" + ZoneNum + "' AND 월 ='"+(mth+1).ToString()+"월'");
+                            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Zone_LightResult", "Final_kWh", "번호 = '" + ZoneNum + "' AND 월 ='"+(mth+1).ToString()+"월'");
                             if(wewd == 0) { QI_L[hc, wewd, mth] = 0; }
-                            else { QI_L[hc, wewd, mth] = Convert.ToDouble(Value[0][0])/ dwd_mth[mth]; }
+                            else { QI_L[hc, wewd, mth] = Convert.ToDouble(Value[0][0])* 1000/ dwd_mth[mth]; }
                         }
                         catch { }
                        

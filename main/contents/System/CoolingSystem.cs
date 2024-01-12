@@ -2109,7 +2109,7 @@ namespace main.contents
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Cal_Cooling cc1 = new Cal_Cooling(Num);
+           
         }
     }
 
