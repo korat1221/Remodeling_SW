@@ -198,10 +198,11 @@ namespace main.contents
                 if (UDoorMethod == "법규")
                 {
                     Rule_UD();
+                    UD_Glass();
                 }
             }
 
-            g_textBox.Text = string.Empty;
+            //g_textBox.Text = string.Empty;
         }
 
         private void Act_UDoorMethod()
@@ -317,6 +318,21 @@ namespace main.contents
             Rule_UD();
         }
 
+        private void Doorsize()
+        {
+            if (UDoorMethod == "법규")
+            {
+                //출입문문가로
+                DoorL = 900;
+                DoorL_textBox.Text = DoorL.ToString();
+                DoorL2_textBox.Text = DoorL.ToString();
+                //출입문세로
+                DoorH = 2100;
+                DoorH_textBox.Text = DoorH.ToString();
+                DoorH2_textBox.Text = DoorH.ToString();
+            }
+            else;
+        }
 
         private void DoorDB_button_Click(object sender, EventArgs e)
         {
@@ -338,17 +354,11 @@ namespace main.contents
                     DBName = doordb.Select_Door[2];
                     DBName2 = doordb.Select_Door[3];
 
-                    //출입문문가로
-                    DoorL = Convert.ToDouble(doordb.Select_Door[11]);
-                    DoorL_textBox.Text = DoorL.ToString();
-                    DoorL2_textBox.Text = DoorL.ToString();
-                    //출입문세로
-                    DoorH = Convert.ToDouble(doordb.Select_Door[12]);
-                    DoorH_textBox.Text = DoorH.ToString();
-                    DoorH2_textBox.Text = DoorH.ToString();
-                    //출입문열관류율
-                    DoorUD = Convert.ToDouble(doordb.Select_Door[13]);
-                    g_textBox.Text = DoorUD.ToString();
+                    Doorsize();
+                        //출입문열관류율
+                        DoorUD = Convert.ToDouble(doordb.Select_Door[13]);
+                        g_textBox.Text = DoorUD.ToString();
+                   
                     //문짝문틀정보
                     Material = doordb.Select_Door[7];
                     Material_textBox.Text = Material;
@@ -367,6 +377,18 @@ namespace main.contents
                     DoorDB = doordb.Select_Door[2];
                     DoorDB_textBox.Text = DoorDB.ToString();
 
+                    if (DoorDB_textBox.Text != null)
+                    {
+                        //출입문문가로
+                        DoorL = Convert.ToDouble(doordb.Select_Door[11]);
+                        DoorL_textBox.Text = DoorL.ToString();
+                        DoorL2_textBox.Text = DoorL.ToString();
+                        //출입문세로
+                        DoorH = Convert.ToDouble(doordb.Select_Door[12]);
+                        DoorH_textBox.Text = DoorH.ToString();
+                        DoorH2_textBox.Text = DoorH.ToString();
+                    }
+                    else;
                 }
             }
             else
@@ -385,14 +407,18 @@ namespace main.contents
 
 
 
-                    //출입문문가로
-                    DoorL = Convert.ToDouble(doordb.Select_Door[11]);
-                    DoorL_textBox.Text = DoorL.ToString();
-                    DoorL2_textBox.Text = DoorL.ToString();
-                    //출입문세로
-                    DoorH = Convert.ToDouble(doordb.Select_Door[12]);
-                    DoorH_textBox.Text = DoorH.ToString();
-                    DoorH2_textBox.Text = DoorH.ToString();
+                    ////출입문문가로
+                    //DoorL = Convert.ToDouble(doordb.Select_Door[11]);
+                    //DoorL_textBox.Text = DoorL.ToString();
+                    //DoorL2_textBox.Text = DoorL.ToString();
+                    ////출입문세로
+                    //DoorH = Convert.ToDouble(doordb.Select_Door[12]);
+                    //DoorH_textBox.Text = DoorH.ToString();
+                    //DoorH2_textBox.Text = DoorH.ToString();
+                    Doorsize();
+
+
+
                     //출입문열관류율
                     DoorUD = Convert.ToDouble(doordb.Select_Door[13]);
                     g_textBox.Text = DoorUD.ToString();
@@ -413,6 +439,18 @@ namespace main.contents
                     //제품명
                     DoorDB = doordb.Select_Door[2];
                     DoorDB_textBox.Text = DoorDB.ToString();
+                    if (DoorDB_textBox.Text != null)
+                    {
+                        //출입문문가로
+                        DoorL = Convert.ToDouble(doordb.Select_Door[11]);
+                        DoorL_textBox.Text = DoorL.ToString();
+                        DoorL2_textBox.Text = DoorL.ToString();
+                        //출입문세로
+                        DoorH = Convert.ToDouble(doordb.Select_Door[12]);
+                        DoorH_textBox.Text = DoorH.ToString();
+                        DoorH2_textBox.Text = DoorH.ToString();
+                    }
+                    else;
 
                 }
             }
@@ -520,7 +558,7 @@ namespace main.contents
         {
             //DoorInstall doorinstall_form   = new DoorInstall(InstallType, installlocation);
             //DialogResult result = doorinstall_form.ShowDialog();
-
+            Doorsize(); ;
             if (UDoorMethod == "계산")
             {
                 if (InstallType == null)
@@ -592,6 +630,7 @@ namespace main.contents
             UDinstall_Glass();
             Load_DoorType_image4();
             Load_DoorType_image5();
+          
         }
 
 
@@ -671,11 +710,21 @@ namespace main.contents
         //유리 포함 문 열관류율 
         public void UD_Glass()
         {
-            if (g_textBox.Text != null && DoorArea_textBox.Text != null && GlassArea_textBox.Text != null && GlassU_textBox.Text != null)
+            if (UDoorMethod == "법규")
             {
-                DoorUDGlass = (DoorUD * ((DoorArea / 1000000) - (GlassArea / 1000000)) + Ug * (GlassArea / 1000000) + DoorOver * (2 * DoorH / 1000 + DoorL / 1000) + DoorBottom * DoorL / 1000) / (DoorArea / 1000000);
+                DoorUDGlass = Convert.ToDouble(g_textBox.Text);
                 DoorU_textBox.Text = String.Format("{0:F3}", DoorUDGlass);
             }
+            else
+            {
+                if (g_textBox.Text != null && DoorArea_textBox.Text != null && GlassArea_textBox.Text != null && GlassU_textBox.Text != null)
+                {
+                    DoorUDGlass = (DoorUD * ((DoorArea / 1000000) - (GlassArea / 1000000)) + Ug * (GlassArea / 1000000) + DoorOver * (2 * DoorH / 1000 + DoorL / 1000) + DoorBottom * DoorL / 1000) / (DoorArea / 1000000);
+                    DoorU_textBox.Text = String.Format("{0:F3}", DoorUDGlass);
+                }
+                else;
+            }
+            
         }
 
 
@@ -688,7 +737,6 @@ namespace main.contents
                 UD_textBox.Text = String.Format("{0:F3}", DoorUDinsGlass);
             }
         }
-
 
 
         private void glass_checkBox_CheckedChanged(object sender, EventArgs e)

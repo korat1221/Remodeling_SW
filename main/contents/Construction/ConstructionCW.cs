@@ -185,7 +185,6 @@ namespace main.contents
                     break;
                 }
             }
-
         }
 
         private void OldCW_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -193,13 +192,11 @@ namespace main.contents
             DataRowView? item = OldCW_comboBox.SelectedItem as DataRowView;
             if (item != null)
             {
-                OldCW = OldCW_comboBox.SelectedItem.ToString();
+                OldCW = item.Row.ItemArray[0].ToString();
                 Calc_Ucw();
                 Calc_dUinst();
             }
         }
-
-
 
         private void Load_CWType_image(String Type)
         {
@@ -797,7 +794,6 @@ namespace main.contents
             }
             Calc_Ucw();
             Calc_dUinst();
-
         }
 
 
@@ -971,7 +967,6 @@ namespace main.contents
                         CWnstall_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     }
                 }
-
             }
             Calc_dUinst();
 

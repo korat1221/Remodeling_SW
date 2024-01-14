@@ -476,7 +476,8 @@ namespace main.subcontents
             // 
             // UserDBSpacer_comboBox
             // 
-            UserDBSpacer_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDBSpacer_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            UserDBSpacer_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDBSpacer_comboBox.FormattingEnabled = true;
             UserDBSpacer_comboBox.Location = new Point(469, 176);
             UserDBSpacer_comboBox.Name = "UserDBSpacer_comboBox";
@@ -554,7 +555,8 @@ namespace main.subcontents
             // 
             // UserDB_FrameType_comboBox
             // 
-            UserDB_FrameType_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDB_FrameType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            UserDB_FrameType_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDB_FrameType_comboBox.FormattingEnabled = true;
             UserDB_FrameType_comboBox.Location = new Point(469, 59);
             UserDB_FrameType_comboBox.Name = "UserDB_FrameType_comboBox";
@@ -563,7 +565,8 @@ namespace main.subcontents
             // 
             // UserDB_FrameShape_comboBox
             // 
-            UserDB_FrameShape_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDB_FrameShape_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            UserDB_FrameShape_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDB_FrameShape_comboBox.FormattingEnabled = true;
             UserDB_FrameShape_comboBox.Location = new Point(693, 59);
             UserDB_FrameShape_comboBox.Name = "UserDB_FrameShape_comboBox";
@@ -573,7 +576,8 @@ namespace main.subcontents
             // 
             // UserDB_FrameMaterial_comboBox
             // 
-            UserDB_FrameMaterial_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDB_FrameMaterial_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            UserDB_FrameMaterial_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDB_FrameMaterial_comboBox.FormattingEnabled = true;
             UserDB_FrameMaterial_comboBox.Location = new Point(917, 59);
             UserDB_FrameMaterial_comboBox.Name = "UserDB_FrameMaterial_comboBox";
@@ -583,7 +587,8 @@ namespace main.subcontents
             // 
             // UserDBGlass_comboBox
             // 
-            UserDBGlass_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDBGlass_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            UserDBGlass_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDBGlass_comboBox.FormattingEnabled = true;
             UserDBGlass_comboBox.Location = new Point(469, 137);
             UserDBGlass_comboBox.Name = "UserDBGlass_comboBox";
@@ -743,7 +748,7 @@ namespace main.subcontents
             Import_button.BackColor = SystemColors.ControlLight;
             Import_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Import_button.FlatStyle = FlatStyle.System;
-            Import_button.Font = new Font("나눔고딕", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            Import_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
             Import_button.Location = new Point(22, 4);
             Import_button.Margin = new Padding(0);
             Import_button.Name = "Import_button";

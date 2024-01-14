@@ -139,19 +139,21 @@ namespace main.contents
 
         private void Load_OldProject()
         {
+            string[][] res;
             if (ProjectType != "기존" && ProjectType != "신규")
             {
                 OldProject_comboBox.Visible = true;
                 OldProject_label.Visible = true;
-
-                string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT pnum FROM projects WHERE type='1' AND title ='" + ProjectName + "'");
-
-
-
+                res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT pnum FROM projects WHERE type='1' AND title ='" + ProjectName + "'");
+            }
+            else
+            {
+                OldProject_comboBox.Visible = false;
+                OldProject_label.Visible = false;
+                res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT pnum FROM projects ");
+            }
                 DataTable sources = new DataTable();
                 sources.Columns.Add("Text");
-                sources.Columns.Add("Value");
-                sources.Columns.Add("ID");
                 int i = -1;
                 while (++i < res.Length)
                 {
@@ -171,19 +173,17 @@ namespace main.contents
                         break;
                     }
                 }
-            }
-            else
-            {
-                OldProject_comboBox.Visible = false;
-                OldProject_label.Visible = false;
-            }
+            
         }
         private void OldProject_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (OldProject_comboBox.SelectedItem != null)
+            DataRowView? item = OldProject_comboBox.SelectedItem as DataRowView;
+            if (item != null)
             {
-                OldProject = OldProject_comboBox.SelectedItem.ToString();
+                OldProject = item.Row.ItemArray[0].ToString();
             }
+            else { }
+            
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {

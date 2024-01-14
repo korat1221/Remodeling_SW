@@ -105,7 +105,7 @@ namespace main.subcontents
                     {
                         Frame_dataGridView.Rows[nRow].Cells[k + 1].Value = User_WinFrame[n][k];
                     }
-                   // table_WindowFrame.Rows.Add(User_WinFrame[n][0], User_WinFrame[n][1], User_WinFrame[n][2], User_WinFrame[n][3], User_WinFrame[n][4], User_WinFrame[n][5], String.Format("{0:F2}", Convert.ToDouble(User_WinFrame[n][6])), String.Format("{0:F2}", Convert.ToDouble(User_WinFrame[n][7])), String.Format("{0:F2}", Convert.ToDouble(User_WinFrame[n][8])), String.Format("{0:F2}", Convert.ToDouble(User_WinFrame[n][9])), String.Format("{0:F2}", Convert.ToDouble(User_WinFrame[n][10])), String.Format("{0:F2}", Convert.ToDouble(User_WinFrame[n][11])));
+                    // table_WindowFrame.Rows.Add(User_WinFrame[n][0], User_WinFrame[n][1], User_WinFrame[n][2], User_WinFrame[n][3], User_WinFrame[n][4], User_WinFrame[n][5], String.Format("{0:F2}", Convert.ToDouble(User_WinFrame[n][6])), String.Format("{0:F2}", Convert.ToDouble(User_WinFrame[n][7])), String.Format("{0:F2}", Convert.ToDouble(User_WinFrame[n][8])), String.Format("{0:F2}", Convert.ToDouble(User_WinFrame[n][9])), String.Format("{0:F2}", Convert.ToDouble(User_WinFrame[n][10])), String.Format("{0:F2}", Convert.ToDouble(User_WinFrame[n][11])));
                 }
             }
             catch { }
@@ -120,7 +120,7 @@ namespace main.subcontents
                 {
                     Frame_dataGridView.Rows[nRow].Cells[k + 1].Value = WinFrame[n][k];
                 }
-               // table_WindowFrame.Rows.Add(WinFrame[n][0], WinFrame[n][1], WinFrame[n][2], WinFrame[n][3], WinFrame[n][4], WinFrame[n][5], WinFrame[n][6], WinFrame[n][7], WinFrame[n][8], WinFrame[n][9], WinFrame[n][10], WinFrame[n][11]);
+                // table_WindowFrame.Rows.Add(WinFrame[n][0], WinFrame[n][1], WinFrame[n][2], WinFrame[n][3], WinFrame[n][4], WinFrame[n][5], WinFrame[n][6], WinFrame[n][7], WinFrame[n][8], WinFrame[n][9], WinFrame[n][10], WinFrame[n][11]);
             }
             //Frame_dataGridView.DataSource = table_WindowFrame;
             Count_FrameDB = WinFrame.Length;
@@ -137,7 +137,7 @@ namespace main.subcontents
                 return true;
             }
             else return false;
-            
+
         }
         private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -348,7 +348,7 @@ namespace main.subcontents
             }
             if (UserDB_Uw > 0 && UserDB_Ug > 0 && UserDB_Ag > 0 && UserDB_PsiOpen > 0)
             {
-                UserDB_Uf = (UserDB_Uw * 4 - UserDB_Ug * UserDB_Ag - UserDB_PsiOpen * UserDB_Lopen - UserDB_PsiFix * UserDB_Lfix) / UserDB_Af;      
+                UserDB_Uf = (UserDB_Uw * 4 - UserDB_Ug * UserDB_Ag - UserDB_PsiOpen * UserDB_Lopen - UserDB_PsiFix * UserDB_Lfix) / UserDB_Af;
             }
 
             if (UserDB_Uf > 0.5)
@@ -383,7 +383,7 @@ namespace main.subcontents
             {
                 string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
                 Program.DB.setValue(DB.type.ProjDB, "User_WindowFrame", "번호,프로젝트유형,DB유형,제품명,제조사,프레임종류,프레임재료,개폐부프레임열관류율,고정부프레임열관류율,중간바프레임열관류율,개폐부프레임두께,고정부프레임두께,중간바프레임두께,시험성적서이미지",
-                    "'" + UserNum + "','" + 프로젝트유형[0][0] +"','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + FrameType + "','" + UserDB_FrameMaterial + "','" + UserDB_Uf.ToString() + "','" + UserDB_Uf.ToString() + "','" + UserDB_Uf.ToString() + "','" + UserDB_FramedA.ToString() + "','" + UserDB_FramedB.ToString() + "','" + UserDB_FramedC.ToString() + "','" + UserDB_Image + "'", "번호");
+                    "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + FrameType + "','" + UserDB_FrameMaterial + "','" + UserDB_Uf.ToString() + "','" + UserDB_Uf.ToString() + "','" + UserDB_Uf.ToString() + "','" + UserDB_FramedA.ToString() + "','" + UserDB_FramedB.ToString() + "','" + UserDB_FramedC.ToString() + "','" + UserDB_Image + "'", "번호");
                 load_table_FrameDB();
             }
             else
@@ -421,7 +421,7 @@ namespace main.subcontents
             if (e.RowIndex >= 0)
             {
                 Frame_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                SelectRow = e.RowIndex;               
+                SelectRow = e.RowIndex;
             }
         }
         private void Save_button_Click(object sender, EventArgs e)

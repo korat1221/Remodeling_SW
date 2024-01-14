@@ -332,6 +332,8 @@ namespace main.contents.Construction
                 Load_FloorType_image(Type, Base);
 
                 Uvalue_comboBox.SelectedIndex = 0;
+
+                Dilndi();
             }
         }
 
