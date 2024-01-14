@@ -24,11 +24,11 @@
 window.addEventListener("message", async (event) => {
   let o = event.data;
   if (o.chart) {
-    drawChart2(o.data, o.max, o.step, o.legend);
+    drawChart2(o.data, o.max, o.step, o.legend, o.stacked);
   }
 });
 
-function drawChart2(arr, max, step = 500, legend = false) {
+function drawChart2(arr, max, step = 500, legend = false, stacked = false) {
     if (arr) {
         let datasets = [], i = -1;
 
@@ -42,9 +42,12 @@ function drawChart2(arr, max, step = 500, legend = false) {
                 data: el.data, 
                 borderColor: el.borderColor,//'#91D050',
                 backgroundColor: el.backgroundColor,//'#91D050',
+                barPercentage: el.barPercentage,
+                yAxisID: el.yAxisID,
                 pointStyle: 'circle',
                 pointRadius: 3,
                 borderDash: el.dash ? [10, 10] : [0, 0],
+                tension: el.tension ? el.tension : 0,
             });
         }
 
@@ -58,7 +61,26 @@ function drawChart2(arr, max, step = 500, legend = false) {
             showTooltips: false,
             options: {
                 animation: {
-                    duration: 0
+                    duration: 0,
+                    onComplete : function(){
+                        var ctx = this.ctx;
+                        ctx.fillStyle = "#aaa";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "bottom";
+
+                        let i = -1;
+
+                        while(++i < this._metasets.length) {
+                            let el = this._metasets[i];
+
+                            if (el.yAxisID === 'y1') {
+                                el.data.forEach(function (el2, idx) {
+                                    let val = (el._dataset.data[idx] * 100);
+                                    ctx.fillText(val.toFixed(1) + '%', el2.x, el2.y);
+                                });
+                            }
+                        }
+                    }
                 },
                 responsive: false,
                 scales: {
@@ -70,6 +92,7 @@ function drawChart2(arr, max, step = 500, legend = false) {
                         title: {
                         display: false,
                         },
+                        stacked:stacked ? true : false,
                     },
                     y: {
                         display: true,
@@ -87,7 +110,22 @@ function drawChart2(arr, max, step = 500, legend = false) {
                             callback: function(value, index, ticks) {
                                 return value;
                             }
-                        }
+                        },
+                        stacked:stacked ? true : false,
+                    },
+                    'y1': {
+                        display: false,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:1,
+                        ticks: {
+                            stepSize: 0.1,
+                        },
                     }
                 },
                 plugins: {

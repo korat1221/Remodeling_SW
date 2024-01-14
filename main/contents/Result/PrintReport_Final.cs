@@ -124,7 +124,9 @@ namespace main.contents.Result
                 __data[i] = new List<object>();
             }
 
-           
+
+            string charts = "";
+
             i = -1;
             while (++i < 번호.Length)
             {
@@ -627,7 +629,7 @@ namespace main.contents.Result
             s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
             System.Text.Json.JsonSerializer.Serialize(__data[10].ToArray());
 
-            string s3 = "", s4;
+            string s4;
             i = -1;
             double[] max_elec = new double[4]; double max_graph_elec =0;
             double[] max_gas = new double[4]; double max_graph_gas = 0;
@@ -652,17 +654,33 @@ namespace main.contents.Result
 
             Debug.Print("start");
 
-                if (s3 != "") s3 += ",";
+            i = -1;
+            while (++i < 번호.Length)
+            {
+                if (charts != "") charts += ",";
 
-                s4 = "{data:[{type:\"line\",label:\""+year_elec[0]+"\",data:" + chart_전기사용량1[0] + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:false}," +
-                "{type:\"line\",label:\""+ year_elec[1]+"\",data:" + chart_전기사용량2[0] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
-                "{type:\"line\",label:\""+year_elec[2]+"\",data:" + chart_전기사용량3[0] + ",borderColor:\"#4472C4\",backgroundColor:\"#4472C4\",dash:false}," +
-                "{type:\"line\",label:\"평균\",data:" + chart_전기사용량4[0] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false}," +
+                charts += "{data:[{type:\"line\",label:\"" + year_elec[0] + "\",data:" + chart_전기사용량1[i] + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:false, tension: 0.4}," +
+                "{type:\"line\",label:\"" + year_elec[1] + "\",data:" + chart_전기사용량2[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false, tension: 0.4}," +
+                "{type:\"line\",label:\"" + year_elec[2] + "\",data:" + chart_전기사용량3[i] + ",borderColor:\"#4472C4\",backgroundColor:\"#4472C4\",dash:false, tension: 0.4}," +
+                "{type:\"line\",label:\"평균\",data:" + chart_전기사용량4[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
                 "],max:" + (Math.Round(max_graph_elec / 1000) * 1000 + 500).ToString() + ",step:100,legend:true}";
-                s3 += s4;
 
-            
-           runScript("init(" + s + "," + s2 + "," + "[" + s3 + "])");
+                charts += ",{data:[" +
+                "{type:\"bar\",barPercentage:0.4,label:\"기저 전기 에너지 소요량 [kWh]\",data:" + chart_기저전기소요량[i] + ",borderColor:\"#BFBFBF\",backgroundColor:\"#BFBFBF\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"급탕 전기 에너지 소요량 [kWh]\",data:" + chart_급탕전기소요량[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"공조 전기 에너지 소요량 [kWh]\",data:" + chart_공조전기소요량[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"조명 전기 에너지 소요량 [kWh]\",data:" + chart_조명전기소요량[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"난방 전기 에너지 소요량 [kWh]\",data:" + chart_난방전기소요량[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"냉방 전기 에너지 소요량 [kWh]\",data:" + chart_냉방전기소요량[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
+                "],max:" + (Math.Round(max_graph_elec / 1000) * 1000 + 500).ToString() + ",step:100,legend:true,stacked:true}";
+
+                charts += ",{data:[{type:\"line\",yAxisID: 'y',label:\"전기 에너지 사용량 [kWh]\",data:" + chart_전기사용량[i] + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:false, tension: 0.4}," +
+                "{type:\"line\",yAxisID: 'y',label:\"전기 에너지 소요량 [kWh]\",data:" + chart_전기소요량[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
+                "{type:\"bar\",yAxisID: 'y1',barPercentage:0.4,label:\"오차율 [%]\",data:" + chart_전기오차율[i] + ",borderColor:\"#A5A5A5\",backgroundColor:\"#A5A5A5\",dash:false}," +
+                "],max:" + (Math.Round(max_graph_elec / 1000) * 1000 + 500).ToString() + ",step:100,legend:true}";
+            }
+
+            runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
         }
 
         private void Saving_Report()
@@ -675,46 +693,6 @@ namespace main.contents.Result
             List<object> data = new List<object>();
 
             List<object>[] __data = new List<object>[700];
-
-            List<string> chart_전_난방_전기 = new List<string>();
-            List<string> chart_전_냉방_전기 = new List<string>();
-            List<string> chart_전_급탕_전기 = new List<string>();
-            List<string> chart_전_조명_전기 = new List<string>();
-            List<string> chart_전_공조_전기 = new List<string>();
-            List<string> chart_전_기저_전기 = new List<string>();
-            List<string> chart_전_총_전기 = new List<string>();
-
-            List<string> chart_후_난방_전기 = new List<string>();
-            List<string> chart_후_냉방_전기 = new List<string>();
-            List<string> chart_후_급탕_전기 = new List<string>();
-            List<string> chart_후_조명_전기 = new List<string>();
-            List<string> chart_후_공조_전기 = new List<string>();
-            List<string> chart_후_기저_전기 = new List<string>();
-            List<string> chart_후_총_전기 = new List<string>();
-
-            List<string> chart_전_전기 = new List<string>();
-            List<string> chart_후_전기 = new List<string>();
-            List<string> chart_절감률_전기 = new List<string>();
-
-            List<string> chart_전_난방_가스 = new List<string>();
-            List<string> chart_전_냉방_가스 = new List<string>();
-            List<string> chart_전_급탕_가스 = new List<string>();
-            List<string> chart_전_조명_가스 = new List<string>();
-            List<string> chart_전_공조_가스 = new List<string>();
-            List<string> chart_전_기저_가스 = new List<string>();
-            List<string> chart_전_총_가스 = new List<string>();
-
-            List<string> chart_후_난방_가스 = new List<string>();
-            List<string> chart_후_냉방_가스 = new List<string>();
-            List<string> chart_후_급탕_가스 = new List<string>();
-            List<string> chart_후_조명_가스 = new List<string>();
-            List<string> chart_후_공조_가스 = new List<string>();
-            List<string> chart_후_기저_가스 = new List<string>();
-            List<string> chart_후_총_가스 = new List<string>();
-
-            List<string> chart_전_가스 = new List<string>();
-            List<string> chart_후_가스 = new List<string>();
-            List<string> chart_절감률_가스 = new List<string>();
 
             int i = -1, n;
             while (++i < 700)
