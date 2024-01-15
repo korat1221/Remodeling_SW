@@ -694,6 +694,46 @@ namespace main.contents.Result
 
             List<object>[] __data = new List<object>[700];
 
+            List<string> chart_전_난방_전기 = new List<string>();
+            List<string> chart_전_냉방_전기 = new List<string>();
+            List<string> chart_전_급탕_전기 = new List<string>();
+            List<string> chart_전_조명_전기 = new List<string>();
+            List<string> chart_전_공조_전기 = new List<string>();
+            List<string> chart_전_기저_전기 = new List<string>();
+            List<string> chart_전_총_전기 = new List<string>();
+
+            List<string> chart_후_난방_전기 = new List<string>();
+            List<string> chart_후_냉방_전기 = new List<string>();
+            List<string> chart_후_급탕_전기 = new List<string>();
+            List<string> chart_후_조명_전기 = new List<string>();
+            List<string> chart_후_공조_전기 = new List<string>();
+            List<string> chart_후_기저_전기 = new List<string>();
+            List<string> chart_후_총_전기 = new List<string>();
+
+            List<string> chart_전_전기 = new List<string>();
+            List<string> chart_후_전기 = new List<string>();
+            List<string> chart_절감률_전기 = new List<string>();
+
+            List<string> chart_전_난방_가스 = new List<string>();
+            List<string> chart_전_냉방_가스 = new List<string>();
+            List<string> chart_전_급탕_가스 = new List<string>();
+            List<string> chart_전_조명_가스 = new List<string>();
+            List<string> chart_전_공조_가스 = new List<string>();
+            List<string> chart_전_기저_가스 = new List<string>();
+            List<string> chart_전_총_가스 = new List<string>();
+
+            List<string> chart_후_난방_가스 = new List<string>();
+            List<string> chart_후_냉방_가스 = new List<string>();
+            List<string> chart_후_급탕_가스 = new List<string>();
+            List<string> chart_후_조명_가스 = new List<string>();
+            List<string> chart_후_공조_가스 = new List<string>();
+            List<string> chart_후_기저_가스 = new List<string>();
+            List<string> chart_후_총_가스 = new List<string>();
+
+            List<string> chart_전_가스 = new List<string>();
+            List<string> chart_후_가스 = new List<string>();
+            List<string> chart_절감률_가스 = new List<string>();
+
             int i = -1, n;
             while (++i < 700)
             {
@@ -743,9 +783,17 @@ namespace main.contents.Result
                         __data[3].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Final[0][3]) }); //월별 조명 
                         __data[4].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Final[0][4]) }); //월별 공조
                         __data[5].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Final[0][5]) }); //월별 기저 
-
                         Qtot2_mth_전기[mth] = Convert.ToDouble(Final[0][0]) + Convert.ToDouble(Final[0][1]) + Convert.ToDouble(Final[0][2]) + Convert.ToDouble(Final[0][3]) + Convert.ToDouble(Final[0][4]) + Convert.ToDouble(Final[0][5]);
                         __data[6].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Qtot2_mth_전기[mth].ToString()) }); //월별 전기 에너지소요량 
+
+                        전_난방_전기Chart.Add(Math.Round(Double.Parse(Final[0][0]), 3) + 0);
+                        전_냉방_전기Chart.Add(Math.Round(Double.Parse(Final[0][1]), 3) + 0);
+                        전_급탕_전기Chart.Add(Math.Round(Double.Parse(Final[0][2]), 3) + 0);
+                        전_조명_전기Chart.Add(Math.Round(Double.Parse(Final[0][3]), 3) + 0);
+                        전_공조_전기Chart.Add(Math.Round(Double.Parse(Final[0][4]), 3) + 0);
+                        전_기저_전기Chart.Add(Math.Round(Double.Parse(Final[0][5]), 3) + 0);
+                        전_총_전기Chart.Add(Math.Round(Double.Parse(Qtot2_mth_전기[mth].ToString()), 3) + 0);
+                        전_전기Chart.Add(Math.Round(Double.Parse(Qtot2_mth_전기[mth].ToString()), 3) + 0);
 
                         Qh_a2_전기 += Convert.ToDouble(Final[0][0]);
                         Qc_a2_전기 += Convert.ToDouble(Final[0][1]);
@@ -790,10 +838,17 @@ namespace main.contents.Result
                         __data[24].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Final[0][3]) }); //월별 조명 
                         __data[25].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Final[0][4]) }); //월별 공조
                         __data[26].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Final[0][5]) }); //월별 기저 
-
                         Qtot_mth_전기[mth] = Convert.ToDouble(Final[0][0]) + Convert.ToDouble(Final[0][1]) + Convert.ToDouble(Final[0][2]) + Convert.ToDouble(Final[0][3]) + Convert.ToDouble(Final[0][4]) + Convert.ToDouble(Final[0][5]);
                         __data[27].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Qtot_mth_전기[mth].ToString()) }); //월별 전기 에너지소요량 
 
+                        후_난방_전기Chart.Add(Math.Round(Double.Parse(Final[0][0]), 3) + 0);
+                        후_냉방_전기Chart.Add(Math.Round(Double.Parse(Final[0][1]), 3) + 0);
+                        후_급탕_전기Chart.Add(Math.Round(Double.Parse(Final[0][2]), 3) + 0);
+                        후_조명_전기Chart.Add(Math.Round(Double.Parse(Final[0][3]), 3) + 0);
+                        후_공조_전기Chart.Add(Math.Round(Double.Parse(Final[0][4]), 3) + 0);
+                        후_기저_전기Chart.Add(Math.Round(Double.Parse(Final[0][5]), 3) + 0);
+                        후_총_전기Chart.Add(Math.Round(Double.Parse(Qtot_mth_전기[mth].ToString()), 3) + 0);
+                        후_전기Chart.Add(Math.Round(Double.Parse(Qtot_mth_전기[mth].ToString()), 3) + 0);
 
                         Qh_a_전기 += Convert.ToDouble(Final[0][0]);
                         Qc_a_전기 += Convert.ToDouble(Final[0][1]);
@@ -833,16 +888,17 @@ namespace main.contents.Result
                         Saving_mth_avg_전기 += (Qtot2_mth_전기[mth] - Qtot_mth_전기[mth]);
                         SavingPercent_mth_avg_전기 += (Qtot2_mth_전기[mth] - Qtot_mth_전기[mth]) / Qtot2_mth_전기[mth] * 100;
                     }
-                    Saving_mth_avg_전기 = Saving_mth_avg_전기 / 12; 
+                    Saving_mth_avg_전기 = Saving_mth_avg_전기 / 12;
                     SavingPercent_mth_avg_전기 = SavingPercent_mth_avg_전기 / 12;
 
-                    __data[42].Add(new { idx = i, val = (Saving_a_전기).ToString("0.0")}); //연간 절감량
+                    __data[42].Add(new { idx = i, val = (Saving_a_전기).ToString("0.0") }); //연간 절감량
                     __data[43].Add(new { idx = i, val = Saving_mth_avg_전기.ToString("0.0") + "%" }); //월평균 절감량
                     __data[44].Add(new { idx = i, val = (((Qh_a2_전기 - Qh_a_전기) / Qh_a2_전기) * 100).ToString("0.0") + "%" }); //연간 절감율
                     __data[45].Add(new { idx = i, val = SavingPercent_mth_avg_전기.ToString("0.0") + "%" }); //월평균 절감율 
                     for (int mth = 0; mth < 12; mth++)
                     {
                         __data[46].Add(new { idx = i * 12 + mth, val = ((Qtot2_mth_전기[mth] - Qtot_mth_전기[mth])).ToString("0.0") }); //월별 절감량 
+                        절감률_전기Chart.Add(Math.Round(Double.Parse((Math.Abs(Qtot2_mth_전기[mth] - Qtot_mth_전기[mth]) / Qtot2_mth_전기[mth]).ToString()), 3) + 0);
                     }
 
                     ///////////////////////////////////////////////////////////
@@ -934,9 +990,18 @@ namespace main.contents.Result
                         __data[3].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Final[0][3]) }); //월별 조명 
                         __data[4].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Final[0][4]) }); //월별 공조
                         __data[5].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Final[0][5]) }); //월별 기저 
-
                         Qtot2_mth_가스[mth] = Convert.ToDouble(Final[0][0]) + Convert.ToDouble(Final[0][1]) + Convert.ToDouble(Final[0][2]) + Convert.ToDouble(Final[0][3]) + Convert.ToDouble(Final[0][4]) + Convert.ToDouble(Final[0][5]);
                         __data[6].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Qtot2_mth_가스[mth].ToString()) }); //월별 가스 에너지소요량 
+
+                        전_난방_가스Chart.Add(Math.Round(Double.Parse(Final[0][0]), 3) + 0);
+                        전_냉방_가스Chart.Add(Math.Round(Double.Parse(Final[0][1]), 3) + 0);
+                        전_급탕_가스Chart.Add(Math.Round(Double.Parse(Final[0][2]), 3) + 0);
+                        전_조명_가스Chart.Add(Math.Round(Double.Parse(Final[0][3]), 3) + 0);
+                        전_공조_가스Chart.Add(Math.Round(Double.Parse(Final[0][4]), 3) + 0);
+                        전_기저_가스Chart.Add(Math.Round(Double.Parse(Final[0][5]), 3) + 0);
+                        전_총_가스Chart.Add(Math.Round(Double.Parse(Qtot2_mth_가스[mth].ToString()), 3) + 0);
+                        전_가스Chart.Add(Math.Round(Double.Parse(Qtot2_mth_가스[mth].ToString()), 3) + 0);
+
 
                         Qh_a2_가스 += Convert.ToDouble(Final[0][0]);
                         Qc_a2_가스 += Convert.ToDouble(Final[0][1]);
@@ -981,10 +1046,17 @@ namespace main.contents.Result
                         __data[24].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Final[0][3]) }); //월별 조명 
                         __data[25].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Final[0][4]) }); //월별 공조
                         __data[26].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Final[0][5]) }); //월별 기저 
-
                         Qtot_mth_가스[mth] = Convert.ToDouble(Final[0][0]) + Convert.ToDouble(Final[0][1]) + Convert.ToDouble(Final[0][2]) + Convert.ToDouble(Final[0][3]) + Convert.ToDouble(Final[0][4]) + Convert.ToDouble(Final[0][5]);
                         __data[27].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Qtot_mth_가스[mth].ToString()) }); //월별 가스 에너지소요량 
 
+                        후_난방_가스Chart.Add(Math.Round(Double.Parse(Final[0][0]), 3) + 0);
+                        후_냉방_가스Chart.Add(Math.Round(Double.Parse(Final[0][1]), 3) + 0);
+                        후_급탕_가스Chart.Add(Math.Round(Double.Parse(Final[0][2]), 3) + 0);
+                        후_조명_가스Chart.Add(Math.Round(Double.Parse(Final[0][3]), 3) + 0);
+                        후_공조_가스Chart.Add(Math.Round(Double.Parse(Final[0][4]), 3) + 0);
+                        후_기저_가스Chart.Add(Math.Round(Double.Parse(Final[0][5]), 3) + 0);
+                        후_총_가스Chart.Add(Math.Round(Double.Parse(Qtot2_mth_가스[mth].ToString()), 3) + 0);
+                        후_가스Chart.Add(Math.Round(Double.Parse(Qtot2_mth_가스[mth].ToString()), 3) + 0);
 
                         Qh_a_가스 += Convert.ToDouble(Final[0][0]);
                         Qc_a_가스 += Convert.ToDouble(Final[0][1]);
@@ -1034,62 +1106,63 @@ namespace main.contents.Result
                     for (int mth = 0; mth < 12; mth++)
                     {
                         __data[46].Add(new { idx = i * 12 + mth, val = ((Qtot2_mth_가스[mth] - Qtot_mth_가스[mth])).ToString("0.0") }); //월별 절감량 
+                        절감률_가스Chart.Add(Math.Round(Double.Parse((Math.Abs(Qtot2_mth_가스[mth] - Qtot_mth_가스[mth]) / Qtot2_mth_가스[mth]).ToString()), 3) + 0);
                     }
 
                     ///////////////////////////////////////////////////////////
-                    data.Add(new { cname = "qhf_mth_old", data = __data[0] });
-                    data.Add(new { cname = "qcf_mth_old", data = __data[1] });
-                    data.Add(new { cname = "qwf_mth_old", data = __data[2] });
-                    data.Add(new { cname = "qlf_mth_old", data = __data[3] });
-                    data.Add(new { cname = "qvf_mth_old", data = __data[4] });
-                    data.Add(new { cname = "qbasef_mth_old", data = __data[5] });
-                    data.Add(new { cname = "qf_tot_mth_old", data = __data[6] });
+                    data.Add(new { cname = "qhf_mth_old_gas", data = __data[50] });
+                    data.Add(new { cname = "qcf_mth_old_gas", data = __data[51] });
+                    data.Add(new { cname = "qwf_mth_old_gas", data = __data[52] });
+                    data.Add(new { cname = "qlf_mth_old_gas", data = __data[53] });
+                    data.Add(new { cname = "qvf_mth_old_gas", data = __data[54] });
+                    data.Add(new { cname = "qbasef_mth_old_gas", data = __data[55] });
+                    data.Add(new { cname = "qf_tot_mth_old_gas", data = __data[56] });
 
-                    data.Add(new { cname = "qhf_a_old", data = __data[7] });
-                    data.Add(new { cname = "qcf_a_old", data = __data[8] });
-                    data.Add(new { cname = "qwf_a_old", data = __data[9] });
-                    data.Add(new { cname = "qlf_a_old", data = __data[10] });
-                    data.Add(new { cname = "qvf_a_old", data = __data[11] });
-                    data.Add(new { cname = "qbasef_a_old", data = __data[12] });
-                    data.Add(new { cname = "qf_tot_a_old", data = __data[13] });
+                    data.Add(new { cname = "qhf_a_old_gas", data = __data[57] });
+                    data.Add(new { cname = "qcf_a_old_gas", data = __data[58] });
+                    data.Add(new { cname = "qwf_a_old_gas", data = __data[59] });
+                    data.Add(new { cname = "qlf_a_old_gas", data = __data[60] });
+                    data.Add(new { cname = "qvf_a_old_gas", data = __data[61] });
+                    data.Add(new { cname = "qbasef_a_old_gas", data = __data[62] });
+                    data.Add(new { cname = "qf_tot_a_old_gas", data = __data[63] });
 
-                    data.Add(new { cname = "qhf_a_area_old", data = __data[14] });
-                    data.Add(new { cname = "qcf_a_area_old", data = __data[15] });
-                    data.Add(new { cname = "qwf_a_area_old", data = __data[16] });
-                    data.Add(new { cname = "qlf_a_area_old", data = __data[17] });
-                    data.Add(new { cname = "qvf_a_area_old", data = __data[18] });
-                    data.Add(new { cname = "qbasef_a_area_old", data = __data[19] });
-                    data.Add(new { cname = "qf_tot_a_area_old", data = __data[20] });
+                    data.Add(new { cname = "qhf_a_area_old_gas", data = __data[64] });
+                    data.Add(new { cname = "qcf_a_area_old_gas", data = __data[65] });
+                    data.Add(new { cname = "qwf_a_area_old_gas", data = __data[66] });
+                    data.Add(new { cname = "qlf_a_area_old_gas", data = __data[67] });
+                    data.Add(new { cname = "qvf_a_area_old_gas", data = __data[68] });
+                    data.Add(new { cname = "qbasef_a_area_old_gas", data = __data[69] });
+                    data.Add(new { cname = "qf_tot_a_area_old_gas", data = __data[70] });
 
-                    data.Add(new { cname = "qhf_mth_new", data = __data[21] });
-                    data.Add(new { cname = "qcf_mth_new", data = __data[22] });
-                    data.Add(new { cname = "qwf_mth_new", data = __data[23] });
-                    data.Add(new { cname = "qlf_mth_new", data = __data[24] });
-                    data.Add(new { cname = "qvf_mth_new", data = __data[25] });
-                    data.Add(new { cname = "qbasef_mth_new", data = __data[26] });
-                    data.Add(new { cname = "qf_tot_mth_new", data = __data[27] });
+                    data.Add(new { cname = "qhf_mth_new_gas", data = __data[71] });
+                    data.Add(new { cname = "qcf_mth_new_gas", data = __data[72] });
+                    data.Add(new { cname = "qwf_mth_new_gas", data = __data[73] });
+                    data.Add(new { cname = "qlf_mth_new_gas", data = __data[74] });
+                    data.Add(new { cname = "qvf_mth_new_gas", data = __data[75] });
+                    data.Add(new { cname = "qbasef_mth_new_gas", data = __data[76] });
+                    data.Add(new { cname = "qf_tot_mth_new_gas", data = __data[77] });
 
-                    data.Add(new { cname = "qhf_a_new", data = __data[28] });
-                    data.Add(new { cname = "qcf_a_new", data = __data[29] });
-                    data.Add(new { cname = "qwf_a_new", data = __data[30] });
-                    data.Add(new { cname = "qlf_a_new", data = __data[31] });
-                    data.Add(new { cname = "qvf_a_new", data = __data[32] });
-                    data.Add(new { cname = "qbasef_a_new", data = __data[33] });
-                    data.Add(new { cname = "qf_tot_a_new", data = __data[34] });
+                    data.Add(new { cname = "qhf_a_new_gas", data = __data[78] });
+                    data.Add(new { cname = "qcf_a_new_gas", data = __data[79] });
+                    data.Add(new { cname = "qwf_a_new_gas", data = __data[80] });
+                    data.Add(new { cname = "qlf_a_new_gas", data = __data[81] });
+                    data.Add(new { cname = "qvf_a_new_gas", data = __data[82] });
+                    data.Add(new { cname = "qbasef_a_new_gas", data = __data[83] });
+                    data.Add(new { cname = "qf_tot_a_new_gas", data = __data[84] });
 
-                    data.Add(new { cname = "qhf_a_area_new", data = __data[35] });
-                    data.Add(new { cname = "qcf_a_area_new", data = __data[36] });
-                    data.Add(new { cname = "qwf_a_area_new", data = __data[37] });
-                    data.Add(new { cname = "qlf_a_area_new", data = __data[38] });
-                    data.Add(new { cname = "qvf_a_area_new", data = __data[39] });
-                    data.Add(new { cname = "qbasef_a_area_new", data = __data[40] });
-                    data.Add(new { cname = "qf_tot_a_area_new", data = __data[41] });
+                    data.Add(new { cname = "qhf_a_area_new_gas", data = __data[85] });
+                    data.Add(new { cname = "qcf_a_area_new_gas", data = __data[86] });
+                    data.Add(new { cname = "qwf_a_area_new_gas", data = __data[87] });
+                    data.Add(new { cname = "qlf_a_area_new_gas", data = __data[88] });
+                    data.Add(new { cname = "qvf_a_area_new_gas", data = __data[89] });
+                    data.Add(new { cname = "qbasef_a_area_new_gas", data = __data[90] });
+                    data.Add(new { cname = "qf_tot_a_area_new_gas", data = __data[91] });
 
-                    data.Add(new { cname = "Saving_a", data = __data[42] });
-                    data.Add(new { cname = "Saving_mth_avg", data = __data[43] });
-                    data.Add(new { cname = "SavingPercent_a", data = __data[44] });
-                    data.Add(new { cname = "SavingPercent_mth_avg", data = __data[45] });
-                    data.Add(new { cname = "Saving_mth", data = __data[46] });
+                    data.Add(new { cname = "Saving_a_gas", data = __data[92] });
+                    data.Add(new { cname = "Saving_mth_avg_gas", data = __data[93] });
+                    data.Add(new { cname = "SavingPercent_a_gas", data = __data[94] });
+                    data.Add(new { cname = "SavingPercent_mth_avg_gas", data = __data[95] });
+                    data.Add(new { cname = "Saving_mth_gas", data = __data[96] });
                     #endregion
                 }
             }
@@ -1109,7 +1182,7 @@ namespace main.contents.Result
 
             runScript("init(" + s + "," + s2 + ")");
 
-           
+
         }
         private void button1_Click(object sender, EventArgs e)
         {

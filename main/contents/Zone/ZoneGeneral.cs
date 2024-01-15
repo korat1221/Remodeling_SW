@@ -571,12 +571,10 @@ namespace main.contents
 
         private void PersonIHG_Cal(double PersonIHG, double UseTime)
         {
-            if (PersonIHG != 0 && UseTime != 0)
-            {
+          
                 PersonIHG_1day = PersonIHG * UseTime;
                 PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day);
                 PersonIHG_image_textBox.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m²·d";
-            }
         }
 
         //기기밀도수준 및 용도프로필 선택에 따라 기기발열 계산 
