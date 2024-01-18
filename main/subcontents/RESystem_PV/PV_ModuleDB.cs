@@ -89,7 +89,17 @@ namespace main.subcontents.RESystem_PV
                 string[][] User_PVModule = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,Kpk,가로길이,세로길이,정격출력", "");
                 for (int n = 0; n < User_PVModule.Length; n++)
                 {
-                    //table_PVModule.Rows.Add(User_PVModule[n][0], User_PVModule[n][1], User_PVModule[n][2], User_PVModule[n][3], User_PVModule[n][4], User_PVModule[n][5], User_PVModule[n][6], User_PVModule[n][7], User_PVModule[n][8], User_PVModule[n][9]);
+                    PVModule_dataGridView.Rows.Add();
+                    PVModule_dataGridView.Rows[n].Cells[1].Value = User_PVModule [n][0];
+                    PVModule_dataGridView.Rows[n].Cells[2].Value = User_PVModule[n][1];
+                    PVModule_dataGridView.Rows[n].Cells[3].Value = User_PVModule[n][2];
+                    PVModule_dataGridView.Rows[n].Cells[4].Value = User_PVModule[n][3];
+                    PVModule_dataGridView.Rows[n].Cells[5].Value = User_PVModule[n][4];
+                    PVModule_dataGridView.Rows[n].Cells[6].Value = User_PVModule[n][5];
+                    PVModule_dataGridView.Rows[n].Cells[7].Value = User_PVModule[n][6];
+                    PVModule_dataGridView.Rows[n].Cells[8].Value = User_PVModule[n][7];
+                    PVModule_dataGridView.Rows[n].Cells[9].Value = User_PVModule[n][8];
+                    PVModule_dataGridView.Rows[n].Cells[10].Value = User_PVModule[n][9];
                 }
             }
             catch { }
@@ -249,9 +259,9 @@ namespace main.subcontents.RESystem_PV
             Select_PVModule[4] = row.Cells[5].Value.ToString(); //제작년도
             Select_PVModule[5] = row.Cells[6].Value.ToString(); //CELLTYPE
             Select_PVModule[6] = row.Cells[7].Value.ToString(); //Kpk
-            //Select_PVModule[7] = row.Cells[8].Value.ToString(); //가로길이
-            //Select_PVModule[8] = row.Cells[9].Value.ToString(); //세로길이
-            //Select_PVModule[9] = row.Cells[10].Value.ToString(); //정격출력
+            Select_PVModule[7] = row.Cells[8].Value.ToString(); //가로길이
+            Select_PVModule[8] = row.Cells[9].Value.ToString(); //세로길이
+            Select_PVModule[9] = row.Cells[10].Value.ToString(); //정격출력
 
             this.DialogResult = DialogResult.OK;
             this.Close();

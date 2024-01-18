@@ -1,15 +1,4 @@
-﻿using main.subcontents.ConstructionCW;
-using main.subcontents.RESystem_PV;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using main.subcontents.RESystem_PV;
 
 namespace main.contents
 {
@@ -23,7 +12,7 @@ namespace main.contents
         #region Main Form Variable
 
         //설치정보
-        double PVwidthnum, PVheightnum; //가로, 세로 개수
+        double width_n, height_n; //가로, 세로 개수
         double PVcapacity_Kw; // 설치용량
         double PVArea_m2; //총면적
         string Orientation, Slope; //방위, 경사
@@ -36,18 +25,18 @@ namespace main.contents
         #region DB Variable
 
         //PVModuleDB
-        string PVModuleNumber, PVModuleName, PVmanu_year, PVcelltype;
+        string PVModuleNumber, PVModule, PVmanu_year, PVcelltype;
         double PVKpk_kW_m2, PVwidth_m, PVheight_m, PVPn_W, PVnumber;
         //index
         public double PVmanuyearfa;
 
         //PVInverterDB
-        string PVInverterNumber, PVInvertername;
-        double PVInverterηEU;
+        string PVInverterNumber, Inverter;
+        double InverterEfficiency;
 
         //PVBatteryDB
-        String PVBatteryNumber, PVbatteryname, PVbatterytype;
-        double PVV_V, PVAH_Ah, PVCnenn_kW;
+        String PVBatteryNumber, Battery, PVbatterytype;
+        double PVV_V, PVAH_Ah, Batterycapacity;
 
         #endregion / DB Variable
 
@@ -56,7 +45,7 @@ namespace main.contents
         //[일반 정보 변수]
         //화면
         string ReEnergyNumber, PVname, RenewableEnergySourceType;
-        string PVtype, PVsystem, PVbipvtype;
+        string VentilationType, PVsystem;
 
         //계산
         public double PVfperf;
@@ -73,7 +62,6 @@ namespace main.contents
 
         //[매칭계수 정보 변수]
         //database
-        // public double[] PVEPusel_kWh = new double[12];
         public double[] PVEPusel_kWh = { 11303, 10060, 8361, 6905, 5697, 6601, 7208, 7659, 7015, 5833, 7655, 10053 }; //
         public double PVEPusel_kWh_a;
 
@@ -148,36 +136,33 @@ namespace main.contents
             #region combobox
 
             //자동으로 콤보박스 불러오기
-            PVsystem_Combobox.Items.Add("계통연계형");
-            PVsystem_Combobox.Items.Add("독립형");
 
-            PVtype_Combobox.Items.Add("고정식");
-            PVtype_Combobox.Items.Add("추적식");
-            PVtype_Combobox.Items.Add("BIPV");
+            PVsystem_combobox.Items.Clear();
+            PVsystem_combobox.Items.Add("계통연계형");
+            PVsystem_combobox.Items.Add("독립형");
 
-            BIPVType_Combobox.Items.Add("외벽");
-            BIPVType_Combobox.Items.Add("지붕");
-            BIPVType_Combobox.Items.Add("창호");
-            BIPVType_Combobox.Items.Add("커튼월창");
-            BIPVType_Combobox.Items.Add("루버형");
-            BIPVType_Combobox.Items.Add("블라인드형");
+            slope_comboBox.Items.Clear();
+            slope_comboBox.Items.Add("0˚");
+            slope_comboBox.Items.Add("30˚");
+            slope_comboBox.Items.Add("45˚");
+            slope_comboBox.Items.Add("60˚");
+            slope_comboBox.Items.Add("90˚");
 
-            slope.Items.Add("0˚");
-            slope.Items.Add("30˚");
-            slope.Items.Add("45˚");
-            slope.Items.Add("60˚");
-            slope.Items.Add("90˚");
+            orientation_comboBox.Items.Clear();
+            orientation_comboBox.Items.Add("수평");
+            orientation_comboBox.Items.Add("남");
+            orientation_comboBox.Items.Add("남동");
+            orientation_comboBox.Items.Add("남서");
+            orientation_comboBox.Items.Add("동");
+            orientation_comboBox.Items.Add("서");
+            orientation_comboBox.Items.Add("북서");
+            orientation_comboBox.Items.Add("북동");
+            orientation_comboBox.Items.Add("북");
 
-            orientation.Items.Add("수평");
-            orientation.Items.Add("남");
-            orientation.Items.Add("남동");
-            orientation.Items.Add("남서");
-            orientation.Items.Add("동");
-            orientation.Items.Add("서");
-            orientation.Items.Add("북서");
-            orientation.Items.Add("북동");
-            orientation.Items.Add("북");
-
+            VentilationType_comboBox.Items.Clear();
+            VentilationType_comboBox.Items.Add("통기 없음");
+            VentilationType_comboBox.Items.Add("미세 통기 있음");
+            VentilationType_comboBox.Items.Add("강한 통기 있음");
             #endregion / combobox
 
         }
@@ -188,9 +173,6 @@ namespace main.contents
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
 
-            //RESystem = new RESystem();
-
-            //a = RESystem.PVInverterηEU;
         }
 
         private void AdditionalPanel_Paint(object sender, PaintEventArgs e)
@@ -205,86 +187,47 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
 
-        private void panel3_Paint(object sender, PaintEventArgs e)
+        private void PVsystem_combobox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-            Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
-        }
-
-        private void system_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            PVsystem = PVsystem_Combobox.SelectedItem.ToString();
+            if (PVsystem_combobox.SelectedItem != null)
+            {
+                PVsystem = PVsystem_combobox.SelectedItem.ToString();
+            }
 
             if (PVsystem == "계통연계형")
             {
-                batteryimage.Visible = false;
-                Battery.Visible = false;
-                Batteryname.Visible = false;
+                Battery_label.Visible = false;
+                Battery_textBox.Visible = false;
                 BatteryDB_button.Visible = false;
                 Batterycapacity_n.Visible = false;
-                Batterycapacity.Visible = false;
+                Batterycapacity_textBox.Visible = false;
                 Batterycapacity_s.Visible = false;
 
-                PVgrid.Visible = true;
-                pvgrid_s.Visible = true;
-                matchingfactor.Visible = true;
-                matchingfacor_n.Visible = true;
+
             }
             if (PVsystem == "독립형")
             {
-                batteryimage.Visible = true;
-                Battery.Visible = true;
-                Batteryname.Visible = true;
+                Battery_label.Visible = true;
+                Battery_textBox.Visible = true;
                 BatteryDB_button.Visible = true;
                 Batterycapacity_n.Visible = true;
-                Batterycapacity.Visible = true;
+                Batterycapacity_textBox.Visible = true;
                 Batterycapacity_s.Visible = true;
 
-                PVgrid.Visible = false;
-                pvgrid_s.Visible = false;
-                matchingfactor.Visible = false;
-                matchingfacor_n.Visible = false;
             }
         }
 
-        private void Type_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            PVtype = PVtype_Combobox.SelectedItem.ToString();
-
-            if (PVtype != null)
-            {
-                if (PVtype != "BIPV")
-                {
-                    BIPV.Visible = false;
-                    BIPVType_Combobox.Visible = false;
-                }
-                else
-                {
-                    BIPV.Visible = true;
-                    BIPVType_Combobox.Visible = true;
-                }
-            }
-            Load_PVTypeimage();
-
-        }
-
-        private void obsheight_TextChanged(object sender, EventArgs e)
+        private void PVHshobst_m_textBox_TextChanged(object sender, EventArgs e)
         {
             int result;
 
-            if (int.TryParse(obsheight.Text, out result) == true)
+            if (int.TryParse(PVHshobst_m_textBox.Text, out result) == true)
             {
-                PVHshobst_m = Convert.ToDouble(obsheight.Text);
+                PVHshobst_m = Convert.ToDouble(PVHshobst_m_textBox.Text);
 
-                if (obsheight != null)
+                if (PVHshobst_m_textBox != null)
                 {
-                    obsheight_j.Text = obsheight.Text.ToString();
+                    PVHshobst_m_imge_textBox.Text = PVHshobst_m_textBox.Text.ToString();
                 }
             }
             else
@@ -296,17 +239,17 @@ namespace main.contents
 
         }
 
-        private void distance_TextChanged(object sender, EventArgs e)
+        private void PVLshobst_m_textBox_TextChanged(object sender, EventArgs e)
         {
             int result;
 
-            if (int.TryParse(distance.Text, out result) == true)
+            if (int.TryParse(PVLshobst_m_textBox.Text, out result) == true)
             {
-                PVLshobst_m = Convert.ToDouble(distance.Text);
+                PVLshobst_m = Convert.ToDouble(PVLshobst_m_textBox.Text);
 
-                if (distance != null)
+                if (PVLshobst_m_textBox != null)
                 {
-                    distance_j.Text = distance.Text.ToString();
+                    PVLshobst_m_image_textBox.Text = PVLshobst_m_textBox.Text.ToString();
                 }
             }
             else
@@ -318,55 +261,26 @@ namespace main.contents
 
         }
 
-        private void Load_PVTypeimage()
+        private void PVModule_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (PVtype_Combobox.SelectedItem == "고정식" || PVtype_Combobox.SelectedItem == "추적식")
+            if (PVModule_textBox.Text == null || PVModule_textBox.Text != "단결정(Single Cry. Si.)" || PVModule_textBox.Text != "다결정(Poly Cry. Si.)" || PVModule_textBox.Text != "비결정질 Si 박막" || PVModule_textBox.Text != "그외 Si 박막" || PVModule_textBox.Text != "CIGS 박막" || PVModule_textBox.Text != "CdTe 박막")
             {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광타입별이미지", "이미지", "대분류 = '" + "고정식" + "'AND 종류 = '" + "60˚" + "'");
-                PVTypeBox.Load(Program.gPath + Image[0][0]);
-
-                if (slope.SelectedItem != null)
-                {
-                    string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광타입별이미지", "이미지", "대분류 = '" + "고정식" + "'AND 종류 = '" + slope.SelectedItem + "'");
-                    PVTypeBox.Load(Program.gPath + Image1[0][0]);
-                }
+                install_label.Text = "설치 개수";
+                width_label.Visible = true;
+                height_label.Visible = true;
+                height_label2.Visible = true;
+                width_label2.Text = "EA";
+                height_n_textBox.Visible = true;
             }
 
-            if (PVtype_Combobox.SelectedItem == "BIPV")
+            if (PVModule_textBox.Text == "단결정(Single Cry. Si.)" || PVModule_textBox.Text == "다결정(Poly Cry. Si.)" || PVModule_textBox.Text == "비결정질 Si 박막" || PVModule_textBox.Text == "그외 Si 박막" || PVModule_textBox.Text == "CIGS 박막" || PVModule_textBox.Text == "CdTe 박막")
             {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광타입별이미지", "이미지", "대분류 = '" + "BIPV" + "'AND 종류 = '" + "외벽" + "'");
-                PVTypeBox.Load(Program.gPath + Image[0][0]);
-
-                if (BIPVType_Combobox.SelectedItem != null)
-                {
-                    string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광타입별이미지", "이미지", "대분류 = '" + "BIPV" + "'AND 종류 = '" + BIPVType_Combobox.SelectedItem + "'");
-                    PVTypeBox.Load(Program.gPath + Image1[0][0]);
-                }
-            }
-        }
-
-        private void PVModuleType_TextChanged(object sender, EventArgs e)
-        {
-            if (PVModuleType.Text == null || PVModuleType.Text != "단결정(Single Cry. Si.)" || PVModuleType.Text != "다결정(Poly Cry. Si.)" || PVModuleType.Text != "비결정질 Si 박막" || PVModuleType.Text != "그외 Si 박막" || PVModuleType.Text != "CIGS 박막" || PVModuleType.Text != "CdTe 박막")
-            {
-                install.Text = "설치 개수";
-                width.Visible = true;
-
-                height.Text = "세로";
-                height.ForeColor = SystemColors.ControlText;
-
-                height_n.Visible = true;
-            }
-
-            if (PVModuleType.Text == "단결정(Single Cry. Si.)" || PVModuleType.Text == "다결정(Poly Cry. Si.)" || PVModuleType.Text == "비결정질 Si 박막" || PVModuleType.Text == "그외 Si 박막" || PVModuleType.Text == "CIGS 박막" || PVModuleType.Text == "CdTe 박막")
-            {
-                install.Text = "설치 용량";
-                width.Visible = false;
-
-                height.Text = "kW";
-                height.ForeColor = SystemColors.ControlDark;
-
-                height_n.Visible = false;
+                install_label.Text = "설치 용량";
+                width_label.Visible = false;
+                height_label.Visible = false;
+                height_label2.Visible = false;
+                width_label2.Text = "kW";
+                height_n_textBox.Visible = false;
             }
         }
 
@@ -378,10 +292,10 @@ namespace main.contents
             if (result == DialogResult.OK)
             {
                 PVModuleNumber = PV_ModuleDB_form.Select_PVModule[0];
-                PVModuleName = PV_ModuleDB_form.Select_PVModule[2];
+                PVModule = PV_ModuleDB_form.Select_PVModule[2];
                 PVmanu_year = PV_ModuleDB_form.Select_PVModule[4];
                 PVcelltype = PV_ModuleDB_form.Select_PVModule[5];
-                if (PVModuleName == "단결정(Single Cry. Si.)" || PVModuleName == "다결정(Poly Cry. Si.)" || PVModuleName == "비결정질 Si 박막" || PVModuleName == "그외 Si 박막" || PVModuleName == "CIGS 박막" || PVModuleName == "CdTe 박막")
+                if (PVModule == "단결정(Single Cry. Si.)" || PVModule == "다결정(Poly Cry. Si.)" || PVModule == "비결정질 Si 박막" || PVModule == "그외 Si 박막" || PVModule == "CIGS 박막" || PVModule == "CdTe 박막")
                 {
                     PVKpk_kW_m2 = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[6]);
                 }
@@ -394,24 +308,33 @@ namespace main.contents
                 }
             }
 
-            PVModuleType.Text = PVModuleName;
-            PVEfficiency.Text = string.Format("{0:F2}", PVKpk_kW_m2 * 100);
-
+            PVModule_textBox.Text = PVModule;
+            Create_PV_Table();
             PV_MainForm_Calculation_TotalArea();// 전체면적 계산
             PV_MainForm_Calculation_TotalCapacity(); //설치용량 계산
 
         }
 
-        private void BIPVType_SelectedIndexChanged(object sender, EventArgs e)
+        public void Create_PV_Table()
         {
-            PVbipvtype = BIPVType_Combobox.SelectedItem.ToString();
-            Load_PVTypeimage();
+            new StackedHeaderDecorator(PV_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            PV_dataGridView.Columns.Clear();
+            PV_dataGridView.Columns.Add("A0", "번호");
+            PV_dataGridView.Columns.Add("A1", "DB유형");
+            PV_dataGridView.Columns.Add("A2", "제품명");
+            PV_dataGridView.Columns.Add("A3", "제조사");
+            PV_dataGridView.Columns.Add("A4", "제작년도");
+            PV_dataGridView.Columns.Add("A5", "Cell Type");
+            PV_dataGridView.Columns.Add("A6", "모듈.가로길이.[m]");
+            PV_dataGridView.Columns.Add("A7", "모듈.세로길이.[m]");
+            PV_dataGridView.Columns.Add("A8", "모듈.정격출력.[W]");
+            PV_dataGridView.Columns.Add("A9", "Kpk");
+            PV_dataGridView.Columns[0].Width = 40;
         }
 
-        private void slope_SelectedIndexChanged(object sender, EventArgs e)
+        private void slope_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Slope = slope.SelectedItem.ToString();
-            Load_PVTypeimage();
+            Slope = slope_comboBox.SelectedItem.ToString();
             PVIs_W_m2_getvalue();
         }
 
@@ -423,12 +346,12 @@ namespace main.contents
             if (result == DialogResult.OK)
             {
                 PVInverterNumber = PV_InverterDB_form.Select_PVInverter[0];
-                PVInvertername = PV_InverterDB_form.Select_PVInverter[2];
-                PVInverterηEU = Convert.ToDouble(PV_InverterDB_form.Select_PVInverter[4]);
+                Inverter = PV_InverterDB_form.Select_PVInverter[2];
+                InverterEfficiency = Convert.ToDouble(PV_InverterDB_form.Select_PVInverter[4]);
             }
 
-            Inverter.Text = PVInvertername;
-            InverterEfficiency.Text = string.Format("{0:F2}", PVInverterηEU);
+            Inverter_textBox.Text = Inverter;
+            InverterEfficiency_textBox.Text = string.Format("{0:F2}", InverterEfficiency);
         }
 
         private void BatteryDB_button_Click(object sender, EventArgs e)
@@ -439,29 +362,29 @@ namespace main.contents
             if (result == DialogResult.OK)
             {
                 PVBatteryNumber = PV_BatteryDB_form.Select_PVBattery[0];
-                PVbatteryname = PV_BatteryDB_form.Select_PVBattery[2];
+                Battery = PV_BatteryDB_form.Select_PVBattery[2];
                 PVV_V = Convert.ToDouble(PV_BatteryDB_form.Select_PVBattery[4]);
                 PVAH_Ah = Convert.ToDouble(PV_BatteryDB_form.Select_PVBattery[5]);
                 PVbatterytype = PV_BatteryDB_form.Select_PVBattery[6];
             }
 
-            Batteryname.Text = PVbatteryname;
-            PVCnenn_kW = Convert.ToDouble(PVV_V) * Convert.ToDouble(PVAH_Ah) / 1000;
-            if (PVCnenn_kW == 0)
+            Battery_textBox.Text = Battery;
+            Batterycapacity = Convert.ToDouble(PVV_V) * Convert.ToDouble(PVAH_Ah) / 1000;
+            if (Batterycapacity == 0)
             { }
             else
             {
-                Batterycapacity.Text = string.Format("{0:F2}", PVCnenn_kW);
+                Batterycapacity_textBox.Text = string.Format("{0:F2}", Batterycapacity);
             }
         }
 
-        private void width_n_TextChanged_1(object sender, EventArgs e)
+        private void width_n_textBox_TextChanged(object sender, EventArgs e)
         {
             int result;
 
-            if (int.TryParse(width_n.Text, out result) == true)
+            if (int.TryParse(width_n_textBox.Text, out result) == true)
             {
-                PVwidthnum = Convert.ToDouble(width_n.Text);
+                width_n = Convert.ToDouble(width_n_textBox.Text);
                 PV_MainForm_Calculation_TotalArea(); //총면적 계산
                 PV_MainForm_Calculation_TotalCapacity(); //설치용량 계산
             }
@@ -473,57 +396,57 @@ namespace main.contents
 
         private void PV_MainForm_Calculation_TotalArea()
         {
-            if (PVModuleType.Text == "단결정(Single Cry. Si.)" || PVModuleType.Text == "다결정(Poly Cry. Si.)" || PVModuleType.Text == "비결정질 Si 박막" || PVModuleType.Text == "그외 Si 박막" || PVModuleType.Text == "CIGS 박막" || PVModuleType.Text == "CdTe 박막")
+            if (PVModule_textBox.Text == "단결정(Single Cry. Si.)" || PVModule_textBox.Text == "다결정(Poly Cry. Si.)" || PVModule_textBox.Text == "비결정질 Si 박막" || PVModule_textBox.Text == "그외 Si 박막" || PVModule_textBox.Text == "CIGS 박막" || PVModule_textBox.Text == "CdTe 박막")
             {
-                if (width_n.Text != "")
+                if (width_n_textBox.Text != "")
                 {
-                    PVcapacity_Kw = Convert.ToDouble(width_n.Text);
+                    PVcapacity_Kw = Convert.ToDouble(width_n_textBox.Text);
                     PVArea_m2 = PVcapacity_Kw / PVKpk_kW_m2;
                 }
             }
             else
             {
-                if (width_n.Text != "" && height_n.Text != "")
+                if (width_n_textBox.Text != "" && height_n_textBox.Text != "")
                 {
-                    PVArea_m2 = PVwidth_m * PVheight_m * PVwidthnum * PVheightnum;
+                    PVArea_m2 = PVwidth_m * PVheight_m * width_n * height_n;
                 }
             }
 
-            if (width_n.Text != "" || height_n.Text != "")
+            if (width_n_textBox.Text != "" || height_n_textBox.Text != "")
             {
-                textBox13.Text = string.Format("{0:F2}", PVArea_m2);//총 면적 넣기
+                PVArea_m2_textBox.Text = string.Format("{0:F2}", PVArea_m2);//총 면적 넣기
             }
-            else { textBox13.Text = ""; }
+            else { PVArea_m2_textBox.Text = ""; }
 
         }
 
         private void PV_MainForm_Calculation_TotalCapacity()
         {
-            if (PVModuleType.Text == "단결정(Single Cry. Si.)" || PVModuleType.Text == "다결정(Poly Cry. Si.)" || PVModuleType.Text == "비결정질 Si 박막" || PVModuleType.Text == "그외 Si 박막" || PVModuleType.Text == "CIGS 박막" || PVModuleType.Text == "CdTe 박막")
+            if (PVModule_textBox.Text == "단결정(Single Cry. Si.)" || PVModule_textBox.Text == "다결정(Poly Cry. Si.)" || PVModule_textBox.Text == "비결정질 Si 박막" || PVModule_textBox.Text == "그외 Si 박막" || PVModule_textBox.Text == "CIGS 박막" || PVModule_textBox.Text == "CdTe 박막")
             {
-                if (width_n.Text != "")
+                if (width_n_textBox.Text != "")
                 {
-                    allcapacity.Text = string.Format("{0:F2}", PVwidthnum);
+                    allcapacity_textBox.Text = string.Format("{0:F2}", width_n);
                 }
                 else { }
             }
             else
             {
-                if (width_n.Text != "" && height_n.Text != "")
+                if (width_n_textBox.Text != "" && height_n_textBox.Text != "")
                 {
-                    allcapacity.Text = string.Format("{0:F2}", PVwidthnum * PVheightnum * PVPn_W / 1000);
+                    allcapacity_textBox.Text = string.Format("{0:F2}", width_n * height_n * PVPn_W / 1000);
                 }
                 else { }
             }
         }
 
-        private void height_n_TextChanged_1(object sender, EventArgs e)
+        private void height_n_textBox_TextChanged(object sender, EventArgs e)
         {
             int result;
 
-            if (int.TryParse(height_n.Text, out result) == true)
+            if (int.TryParse(height_n_textBox.Text, out result) == true)
             {
-                PVheightnum = Convert.ToDouble(height_n.Text);
+                height_n = Convert.ToDouble(height_n_textBox.Text);
                 PV_MainForm_Calculation_TotalArea(); //총면적 계산
                 PV_MainForm_Calculation_TotalCapacity(); //설치용량 계산
             }
@@ -533,13 +456,20 @@ namespace main.contents
             }
         }
 
-        private void orientation_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void orientation_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Orientation = orientation.SelectedItem.ToString();
+            Orientation = orientation_comboBox.SelectedItem.ToString();
 
             PVIs_W_m2_getvalue();
         }
 
+
+
+        private void VentilationType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (VentilationType_comboBox.SelectedItem != null)
+                VentilationType = VentilationType_comboBox.SelectedItem.ToString();
+        }
         private void panel2_Paint_1(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
@@ -563,7 +493,7 @@ namespace main.contents
 
         public void PVShading_getvalue()
         {
-            if (distance.Text != null && obsheight.Text != null)
+            if (PVLshobst_m_textBox.Text != null && PVHshobst_m_textBox.Text != null)
             {
                 //직달일사량불러오기
                 string[][] token1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_직달일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + Orientation + "' AND  각도 = '" + Slope + "'");
@@ -582,28 +512,6 @@ namespace main.contents
             else { }
         }
 
-        //태양광 계산 파트
-        public void PVcaculation()
-        {
-            calculation_PVhshobst_m();
-            calculation_PVhshobstwid_m();
-            calculation_Ishdirtotpvt_W();
-            calculation_PVFshobstpvt();
-            calculation_Esolm_kWh();
-            calculation_Ppk_kW();
-            calculation_Eelpvoutm_kWh();
-            //calculation_PVEelpvoutm_kWh_m2();
-            calculation_PVEelpvouta_kWh();
-            calculation_PVefficiency();
-            calculation_PVγQ();
-            calculation_PVCeff();
-            calculation_PVCQ();
-            calculation_PVfmatch();
-            calculation_PVEprelusedEPus_kWh();
-            calculation_PVfBatt_kWh();
-            calculation_PVQfnutzPVi_kWh();
-            calculation_PVEexpelgrid_kWh();
-        }
 
         #region Calculation
 
@@ -612,9 +520,9 @@ namespace main.contents
         //수직음영길이
         public void calculation_PVhshobst_m()
         {
-            PVLPVlen_m = PVheight_m * PVheightnum;
+            PVLPVlen_m = PVheight_m * height_n;
 
-            if (PVModuleName == "단결정(Single Cry. Si.)" || PVModuleName == "다결정(Poly Cry. Si.)" || PVModuleName == "비결정질 Si 박막" || PVModuleName == "그외 Si 박막" || PVModuleName == "CIGS 박막" || PVModuleName == "CdTe 박막")
+            if (PVModule == "단결정(Single Cry. Si.)" || PVModule == "다결정(Poly Cry. Si.)" || PVModule == "비결정질 Si 박막" || PVModule == "그외 Si 박막" || PVModule == "CIGS 박막" || PVModule == "CdTe 박막")
             {
                 PVLPVlen_m = Math.Sqrt(PVArea_m2);
             }
@@ -685,25 +593,22 @@ namespace main.contents
         //태양광 시스템에 의해 생성된 전기 에너지
         public void calculation_Eelpvoutm_kWh()
         {
-            if (PVtype == "고정식" || PVtype == "추적식")
+            if (VentilationType == "통기 없음")
+            {
+                PVfperf = 0.76;
+            }
+            else if (VentilationType == "미세 통기 있음")
+            {
+                PVfperf = 0.80;
+            }
+            else
             {
                 PVfperf = 0.82;
-            }
-            else if (PVtype == "BIPV")
-            {
-                if (PVbipvtype == "외벽" || PVbipvtype == "지붕" || PVbipvtype == "창호" || PVbipvtype == "커튼월창")
-                {
-                    PVfperf = 0.80;
-                }
-                else if (PVbipvtype == "루버형" || PVbipvtype == "블라인드형")
-                {
-                    PVfperf = 0.82;
-                }
             }
 
             for (int i = 0; i < 12; i++)
             {
-                PVEelpvoutm_kWh[i] = use.Re_PV_Eelpvoutm_kWh(PVEsolm_kWh_m2[i], PVPpk_kW, PVfperf, PVInverterηEU, PVIref_kW_m2);
+                PVEelpvoutm_kWh[i] = use.Re_PV_Eelpvoutm_kWh(PVEsolm_kWh_m2[i], PVPpk_kW, PVfperf, InverterEfficiency, PVIref_kW_m2);
                 PVEelpvoutm_kWh_m2[i] = PVEelpvoutm_kWh[i] / PVArea_m2;
             }
         }
@@ -770,9 +675,9 @@ namespace main.contents
                     PVηDoD = 0.48;
                 }
 
-                PVCnenn_kW = PVV_V * PVAH_Ah / 1000;
+                Batterycapacity = PVV_V * PVAH_Ah / 1000;
 
-                PVCeff = use.Re_PV_Ceff_kWh(PVCnenn_kW, PVηDoD);
+                PVCeff = use.Re_PV_Ceff_kWh(Batterycapacity, PVηDoD);
             }
         }
 
@@ -852,249 +757,32 @@ namespace main.contents
 
             #region Calculation
 
-            if (BIPVType_Combobox.Visible != false && Batteryname.Visible != false && height_n.Visible != false) //1
-            {
-                if (PVbipvtype != "" && Batteryname.Text != "" && height_n.Text != "" && PVtype != "" && PVsystem != "" && PVModuleType.Text != "" && Inverter.Text != "" && width_n.Text != "" && Orientation != "" && Slope != "" && distance.Text != "" && obsheight.Text != "")
-                {
-                    calculation_PVhshobst_m();
-                    calculation_PVhshobstwid_m();
-                    calculation_Ishdirtotpvt_W();
-                    calculation_PVFshobstpvt();
-                    calculation_Esolm_kWh();
-                    calculation_Ppk_kW();
-                    calculation_Eelpvoutm_kWh();
-                    //calculation_PVEelpvoutm_kWh_m2();
-                    calculation_PVEelpvouta_kWh();
-                    calculation_PVefficiency();
-                    calculation_PVγQ();
-                    calculation_PVCeff();
-                    calculation_PVCQ();
-                    calculation_PVfBatt_kWh();
-                    calculation_PVfmatch();
-                    calculation_PVEprelusedEPus_kWh();
-                    calculation_PVQfnutzPVi_kWh();
-                    calculation_PVEexpelgrid_kWh();
-                }
-                else
-                {
-                    MessageBox.Show("모든 입력값을 입력하세요.");
-                }
-            }
-            else if (Batteryname.Visible == false && BIPVType_Combobox.Visible != false && height_n.Visible != false) //2
-            {
-                if (PVtype != "" && PVsystem != "" && PVbipvtype != "" && PVModuleType.Text != "" && Inverter.Text != "" && width_n.Text != "" && height_n.Text != "" && Orientation != "" && Slope != "" && distance.Text != "" && obsheight.Text != "")
-                {
-                    calculation_PVhshobst_m();
-                    calculation_PVhshobstwid_m();
-                    calculation_Ishdirtotpvt_W();
-                    calculation_PVFshobstpvt();
-                    calculation_Esolm_kWh();
-                    calculation_Ppk_kW();
-                    calculation_Eelpvoutm_kWh();
-                    //calculation_PVEelpvoutm_kWh_m2();
-                    calculation_PVEelpvouta_kWh();
-                    calculation_PVefficiency();
-                    calculation_PVγQ();
-                    calculation_PVCeff();
-                    calculation_PVCQ();
-                    calculation_PVfmatch();
-                    calculation_PVEprelusedEPus_kWh();
-                    calculation_PVfBatt_kWh();
-                    calculation_PVQfnutzPVi_kWh();
-                    calculation_PVEexpelgrid_kWh();
-                }
-                else
-                {
-                    MessageBox.Show("모든 입력값을 입력하세요.");
-                }
-            }
-            else if (Batteryname.Visible != false && BIPVType_Combobox.Visible == false && height_n.Visible != false) //3
-            {
-                if (PVtype != "" && PVsystem != "" && PVModuleType.Text != "" && Inverter.Text != "" && Batteryname.Text != "" && width_n.Text != "" && height_n.Text != "" && Orientation != "" && Slope != "" && distance.Text != "" && obsheight.Text != "")
-                {
-                    calculation_PVhshobst_m();
-                    calculation_PVhshobstwid_m();
-                    calculation_Ishdirtotpvt_W();
-                    calculation_PVFshobstpvt();
-                    calculation_Esolm_kWh();
-                    calculation_Ppk_kW();
-                    calculation_Eelpvoutm_kWh();
-                    //calculation_PVEelpvoutm_kWh_m2();
-                    calculation_PVEelpvouta_kWh();
-                    calculation_PVefficiency();
-                    calculation_PVγQ();
-                    calculation_PVCeff();
-                    calculation_PVCQ();
-                    calculation_PVfmatch();
-                    calculation_PVEprelusedEPus_kWh();
-                    calculation_PVfBatt_kWh();
-                    calculation_PVQfnutzPVi_kWh();
-                    calculation_PVEexpelgrid_kWh();
-                }
-                else
-                {
-                    MessageBox.Show("모든 입력값을 입력하세요.");
-                }
-            }
-            else if (Batteryname.Visible != false && BIPVType_Combobox.Visible != false && height_n.Visible == false) //4
-            {
-                if (PVtype != "" && PVsystem != "" && PVbipvtype != "" && PVModuleType.Text != "" && Inverter.Text != "" && Batteryname.Text != "" && width_n.Text != "" && Orientation != "" && Slope != "" && distance.Text != "" && obsheight.Text != "")
-                {
-                    calculation_PVhshobst_m();
-                    calculation_PVhshobstwid_m();
-                    calculation_Ishdirtotpvt_W();
-                    calculation_PVFshobstpvt();
-                    calculation_Esolm_kWh();
-                    calculation_Ppk_kW();
-                    calculation_Eelpvoutm_kWh();
-                    //calculation_PVEelpvoutm_kWh_m2();
-                    calculation_PVEelpvouta_kWh();
-                    calculation_PVefficiency();
-                    calculation_PVγQ();
-                    calculation_PVCeff();
-                    calculation_PVCQ();
-                    calculation_PVfBatt_kWh();
-                    calculation_PVfmatch();
-                    calculation_PVEprelusedEPus_kWh();
-                    calculation_PVQfnutzPVi_kWh();
-                    calculation_PVEexpelgrid_kWh();
-                }
-                else
-                {
-                    MessageBox.Show("모든 입력값을 입력하세요.");
-                }
-            }
-            if (Batteryname.Visible == false && BIPVType_Combobox.Visible == false && height_n.Visible != false) //5
-            {
-                if (PVtype != "" && PVsystem != "" && PVModuleType.Text != "" && Inverter.Text != "" && width_n.Text != "" && height_n.Text != "" && Orientation != "" && Slope != "" && distance.Text != "" && obsheight.Text != "")
-                {
-                    calculation_PVhshobst_m();
-                    calculation_PVhshobstwid_m();
-                    calculation_Ishdirtotpvt_W();
-                    calculation_PVFshobstpvt();
-                    calculation_Esolm_kWh();
-                    calculation_Ppk_kW();
-                    calculation_Eelpvoutm_kWh();
-                    //calculation_PVEelpvoutm_kWh_m2();
-                    calculation_PVEelpvouta_kWh();
-                    calculation_PVefficiency();
-                    calculation_PVγQ();
-                    calculation_PVCeff();
-                    calculation_PVCQ();
-                    calculation_PVfBatt_kWh();
-                    calculation_PVfmatch();
-                    calculation_PVEprelusedEPus_kWh();
-                    calculation_PVQfnutzPVi_kWh();
-                    calculation_PVEexpelgrid_kWh();
-                }
-                else
-                {
-                    MessageBox.Show("모든 입력값을 입력하세요.");
-                }
-            }
-            if (Batteryname.Visible == false && BIPVType_Combobox.Visible != false && height_n.Visible == false) //6
-            {
-                if (PVtype != "" && PVsystem != "" && PVbipvtype != "" && PVModuleType.Text != "" && Inverter.Text != "" && width_n.Text != "" && Orientation != "" && Slope != "" && distance.Text != "" && obsheight.Text != "")
-                {
-                    calculation_PVhshobst_m();
-                    calculation_PVhshobstwid_m();
-                    calculation_Ishdirtotpvt_W();
-                    calculation_PVFshobstpvt();
-                    calculation_Esolm_kWh();
-                    calculation_Ppk_kW();
-                    calculation_Eelpvoutm_kWh();
-                    //calculation_PVEelpvoutm_kWh_m2();
-                    calculation_PVEelpvouta_kWh();
-                    calculation_PVefficiency();
-                    calculation_PVγQ();
-                    calculation_PVCeff();
-                    calculation_PVCQ();
-                    calculation_PVfBatt_kWh();
-                    calculation_PVfmatch();
-                    calculation_PVEprelusedEPus_kWh();
-                    calculation_PVQfnutzPVi_kWh();
-                    calculation_PVEexpelgrid_kWh();
-                }
-                else
-                {
-                    MessageBox.Show("모든 입력값을 입력하세요.");
-                }
-            }
-            if (Batteryname.Visible != false && BIPVType_Combobox.Visible == false && height_n.Visible == false) //7
-            {
-                if (PVtype != "" && PVsystem != "" && PVModuleType.Text != "" && Inverter.Text != "" && Batteryname.Text != "" && width_n.Text != "" && Orientation != "" && Slope != "" && distance.Text != "" && obsheight.Text != "")
-                {
-                    calculation_PVhshobst_m();
-                    calculation_PVhshobstwid_m();
-                    calculation_Ishdirtotpvt_W();
-                    calculation_PVFshobstpvt();
-                    calculation_Esolm_kWh();
-                    calculation_Ppk_kW();
-                    calculation_Eelpvoutm_kWh();
-                    //calculation_PVEelpvoutm_kWh_m2();
-                    calculation_PVEelpvouta_kWh();
-                    calculation_PVefficiency();
-                    calculation_PVγQ();
-                    calculation_PVCeff();
-                    calculation_PVCQ();
-                    calculation_PVfBatt_kWh();
-                    calculation_PVfmatch();
-                    calculation_PVEprelusedEPus_kWh();
-                    calculation_PVQfnutzPVi_kWh();
-                    calculation_PVEexpelgrid_kWh();
-                }
-                else
-                {
-                    MessageBox.Show("모든 입력값을 입력하세요.");
-                }
-            }
-            if (Batteryname.Visible == false && BIPVType_Combobox.Visible == false && height_n.Visible == false) //1
-            {
-                if (PVtype != "" && PVsystem != "" && PVModuleType.Text != "" && Inverter.Text != "" && width_n.Text != "" && Orientation != "" && Slope != "" && distance.Text != "" && obsheight.Text != "")
-                {
-                    calculation_PVhshobst_m();
-                    calculation_PVhshobstwid_m();
-                    calculation_Ishdirtotpvt_W();
-                    calculation_PVFshobstpvt();
-                    calculation_Esolm_kWh();
-                    calculation_Ppk_kW();
-                    calculation_Eelpvoutm_kWh();
-                    //calculation_PVEelpvoutm_kWh_m2();
-                    calculation_PVEelpvouta_kWh();
-                    calculation_PVefficiency();
-                    calculation_PVγQ();
-                    calculation_PVCeff();
-                    calculation_PVCQ();
-                    calculation_PVfBatt_kWh();
-                    calculation_PVfmatch();
-                    calculation_PVEprelusedEPus_kWh();
-                    calculation_PVQfnutzPVi_kWh();
-                    calculation_PVEexpelgrid_kWh();
-                }
-                else
-                {
-                    MessageBox.Show("모든 입력값을 입력하세요.");
-                }
-            }
+            calculation_PVhshobst_m();
+            calculation_PVhshobstwid_m();
+            calculation_Ishdirtotpvt_W();
+            calculation_PVFshobstpvt();
+            calculation_Esolm_kWh();
+            calculation_Ppk_kW();
+            calculation_Eelpvoutm_kWh();
+            //calculation_PVEelpvoutm_kWh_m2();
+            calculation_PVEelpvouta_kWh();
+            calculation_PVefficiency();
+            calculation_PVγQ();
+            calculation_PVCeff();
+            calculation_PVCQ();
+            calculation_PVfBatt_kWh();
+            calculation_PVfmatch();
+            calculation_PVEprelusedEPus_kWh();
+            calculation_PVQfnutzPVi_kWh();
+            calculation_PVEexpelgrid_kWh();
+
 
             #endregion / Calculation
 
             #region Form 
 
-            PVproduction.Text = string.Format("{0:F2}", PVEelpvouta_kWh_a);
-            averagecpacity.Text = string.Format("{0:F2}", PVefficiency * 100);
+            averagecpacity_textBox.Text = string.Format("{0:F2}", PVefficiency * 100);
 
-            if (PVsystem == "독립형")
-            {
-                PVusing.Text = string.Format("{0:F2}", PVQfnutzPVi_kWh_a);
-
-            }
-            else if (PVsystem == "계통연계형")
-            {
-                PVusing.Text = string.Format("{0:F2}", PVEprelusedEPus_kWh_a);
-                PVgrid.Text = string.Format("{0:F2}", PVEexpelgrid_kWh_a);
-                matchingfacor_n.Text = string.Format("{0:F2}", PVfmatch);
-            }
 
             #endregion /Form
         }
@@ -1113,10 +801,6 @@ namespace main.contents
             PVEelpvouta_kWh_a = 0;
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 
     #endregion / Calculation
