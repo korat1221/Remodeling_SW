@@ -1496,6 +1496,10 @@ namespace main
                         FC[mth] = Math.Round((Qh_outg_sng[0, mth] + Qh_outg_sng[1, mth] + Qh_outg_sng[2, mth]) / (Pi_max[0] * th_op_sng[0, mth] + Pi_max[1] * th_op_sng[1, mth] + Pi_max[2] * th_op_sng[2, mth]), 1);
                         if (double.IsNaN(FC[mth]))
                         { FC[mth] = 0.1; }
+                        else if(Qh_outg_sng[1, mth] == 0)
+                        {
+                            FC[mth] = 0.1;
+                        }
                         string[][] Valuef = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프부하계수", "값", "구분 ='" + AirHPSupply_split[0] + "' AND FC ='" + FC[mth] + "'");
                         fpint[mth] = Convert.ToDouble(Valuef[0][0]);
                     }
