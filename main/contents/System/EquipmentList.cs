@@ -2703,18 +2703,20 @@ namespace main.contents
             ce_dataGridView.Columns.Add("A2", "명칭");
             ce_dataGridView.Columns.Add("A3", "난방/냉방");
             ce_dataGridView.Columns.Add("A4", "종류");
-            ce_dataGridView.Columns.Add("A5", "용량.[kW]");
-            ce_dataGridView.Columns.Add("A6", "소비전력.[kW]");
-            ce_dataGridView.Columns.Add("A7", "온도제어방식");
-            ce_dataGridView.Columns.Add("A8", "대수.[EA]");
+            ce_dataGridView.Columns.Add("A5", "냉방.용량.[kW]");
+            ce_dataGridView.Columns.Add("A6", "냉방.소비전력.[kW]");
+            ce_dataGridView.Columns.Add("A7", "난방.용량.[kW]");
+            ce_dataGridView.Columns.Add("A8", "난방.소비전력.[kW]");
+            ce_dataGridView.Columns.Add("A9", "온도제어방식");
+            ce_dataGridView.Columns.Add("A10", "대수.[EA]");
             ce_dataGridView.Columns[0].Width = 40;
             ce_dataGridView.Columns[1].Width = 50;
-            ce_dataGridView.Columns[7].Width = 150;
+            ce_dataGridView.Columns[9].Width = 150;
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
             설치유형Combo.HeaderText = "설치";
             설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
             ce_dataGridView.Columns.Add(설치유형Combo);
-            ce_dataGridView.Columns[9].Width = 100;
+            ce_dataGridView.Columns[11].Width = 100;
         }
 
         private Boolean ce_datagridviewDesign(DataGridViewCell cell, int column, int row)
@@ -2755,7 +2757,7 @@ namespace main.contents
             온도제어방식comboBox.Items.Add("실별 온도제어");
             온도제어방식comboBox.Items.Add("on-off 자동온도제어");
             온도제어방식comboBox.Items.Add("재실기준 자동온도제어");
-            ce_dataGridView.Rows[nRow].Cells[7] = 온도제어방식comboBox;
+            ce_dataGridView.Rows[nRow].Cells[9] = 온도제어방식comboBox;
 
         }
 
@@ -2858,17 +2860,17 @@ namespace main.contents
 
             for (int k = 0; k < ce_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[9];
-                for (int i = 1; i < 10; i++)
+                String[] Value = new String[11];
+                for (int i = 1; i < 12; i++)
                 {
                     if (ce_dataGridView.Rows[k].Cells[i].Value != null)
                     { Value[i - 1] = ce_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_ce", "번호,프로젝트유형,명칭,난방냉방,종류,용량,소비전력,온도제어방식,대수,신규기존",
+                Program.DB.setValue(DB.type.ProjDB, "User_ce", "번호,프로젝트유형,명칭,난방냉방,종류,용량_냉방,소비전력_냉방,용량_난방,소비전력_난방,온도제어방식,대수,신규기존",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','"
-                 + Value[8]
+                 + Value[8] + "','" + Value[9] + "','" + Value[10]
                  + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
@@ -2877,7 +2879,7 @@ namespace main.contents
         {
             try
             {
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_ce", "번호,명칭,난방냉방,종류,용량,소비전력,온도제어방식,대수,신규기존", "");
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_ce", "번호,명칭,난방냉방,종류,용량_냉방,소비전력_냉방,용량_난방,소비전력_난방,온도제어방식,대수,신규기존", "");
                 for (int n = 0; n < Value.Length; n++)
                 {
                     ce_dataGridView.Rows.Add();
@@ -2898,9 +2900,9 @@ namespace main.contents
                     온도제어방식comboBox.Items.Add("실별 온도제어");
                     온도제어방식comboBox.Items.Add("on-off 자동온도제어");
                     온도제어방식comboBox.Items.Add("재실기준 자동온도제어");
-                    ce_dataGridView.Rows[nRow].Cells[7] = 온도제어방식comboBox;
+                    ce_dataGridView.Rows[nRow].Cells[9] = 온도제어방식comboBox;
 
-                    for (int k = 0; k < 9; k++)
+                    for (int k = 0; k < 11; k++)
                     { ce_dataGridView.Rows[nRow].Cells[k + 1].Value = Value[n][k]; }
                 }
             }

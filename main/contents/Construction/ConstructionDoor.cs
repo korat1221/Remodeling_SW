@@ -182,9 +182,16 @@ namespace main.contents
             DataRowView? item = OldDoor_comboBox.SelectedItem as DataRowView;
             if (item != null)
             {
-                OldDoor = OldDoor_comboBox.SelectedItem.ToString();
-                //Calc_Ucw();  // 여기 왜 들어가야하는지 나중에 봐보기 
-                //Calc_dUinst(); // 여기 왜 들어가야하는지 나중에 봐보기 
+                OldDoor = item.Row.ItemArray[0].ToString();
+                //계산 datagridview 부분에 선택한 기존 출입문 열관류율 들어오도록 하는거  
+                //Constructionwall 참고하기 
+                //string[][] OldWall_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "열관류율", "명칭 = '" + OldDoor + "'");
+                //try
+                //{
+                //    OldDoor_R = 1 / Convert.ToDouble(OldWall_U[0][0]);
+                //}
+                //catch { }
+                //Add_OldDoor();
             }
         }
 

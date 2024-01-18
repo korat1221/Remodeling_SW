@@ -29,7 +29,7 @@ namespace main.subcontents.EquipmentList
         {
             if (L_textBox.Text != null)
             {
-                L = Convert.ToDouble(L_textBox.Text);
+               L = Convert.ToDouble(L_textBox.Text);
                 Calc();
             }
         }

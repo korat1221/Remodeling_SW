@@ -476,7 +476,7 @@ namespace main.contents
             int i = -1;
             while (++i < dataGridView2.RowCount)
             {
-                if (dataGridView1.Rows[i].Cells[2].Value != null)
+                if (dataGridView2.Rows[i].Cells[2].Value != null)
                 {
                     Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_3D", "존번호,존이름", "'" + dataGridView2.Rows[i].Cells[1].Value.ToString()  + "','" + dataGridView2.Rows[i].Cells[2].Value.ToString() + "'", "존번호");
                 }

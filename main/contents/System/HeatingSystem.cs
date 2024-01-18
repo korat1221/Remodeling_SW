@@ -2276,7 +2276,7 @@ namespace main.contents
                     ce_dataGridView.Rows[nRow].Cells[2].Value = Value[n][1];//종류
                     int index = Value[n][2].IndexOf("_");
                     String substring = Value[n][2].Substring(0, index);
-                    string[][] 일람표정보 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "번호,명칭,용량,소비전력", "번호 = '" + substring + "'");
+                    string[][] 일람표정보 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "번호,명칭,용량_난방,소비전력_난방", "번호 = '" + substring + "'");
                     ce_dataGridView.Rows[nRow].Cells[3].Value = 일람표정보[0][1]; //일람표명칭
                     ce_dataGridView.Rows[nRow].Cells[4].Value = 일람표정보[0][2]; //용량
                     ce_dataGridView.Rows[nRow].Cells[5].Value = 일람표정보[0][3];//소비전력

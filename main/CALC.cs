@@ -313,7 +313,7 @@ namespace main
                    
                     for (int a = 0; a < ce.Length; a++)
                     {
-                        string[][] ce2 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "용량", "번호='" + ce[a][0].Substring(0, 4) + "'");
+                        string[][] ce2 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "용량_난방", "번호='" + ce[a][0].Substring(0, 4) + "'");
                         if (ce[a][1]!= "복사난방")
                         { 
                             가동비율[a] = Convert.ToDouble(ce[a][2]) * Convert.ToDouble(ce2[0][0]);

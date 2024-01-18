@@ -665,15 +665,15 @@ namespace main.contents
 
         private void save()
         {
-            Save_Image();
+            //Save_Image();
             //존일반정보 폼에 해당하는 정보만 저장 
             //건물정보, 3D정보는 저장 안함
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-            Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형,존이름,실제어방식,냉난방유무,환기유무,환기방식,온도교환효율,전열교환효율," +
+            Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형,존이름,실제어방식,냉난방유무,환기유무,환기방식,온도교환효율_냉방,전열교환효율_냉방,온도교환효율_난방,전열교환효율_난방," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
                 "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적",
-            "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','" + ZoneName + "','" + RoomControl + "','" + HCType + "','" + Ventilation_checkBox.Checked.ToString() + "','" + AHUType + "','" + η.ToString() + "','" + η2.ToString() + "','"
+            "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','" + ZoneName + "','" + RoomControl + "','" + HCType + "','" + Ventilation_checkBox.Checked.ToString() + "','" + AHUType + "','" + η.ToString() + "','" + η2.ToString() + "','" + η.ToString() + "','" + η2.ToString() + "','"
             + Usage + "','" + CeilingHeight.ToString() + "','" + StartTime + "','" + EndTime + "','" + WeekUseDay.ToString() + "','" + PersonNum_textBox.Text + "','" + EquipIHG_index + "','"
             + DHWneed.ToString() + "','" + HCTime.ToString() + "','" + UseTime.ToString() + "','" + AHUTime.ToString() + "','" + AnnualUseDay.ToString() + "','"
             + OccupancyDensity.ToString() + "','" + OccupancyDensity_index + "','" + PersonIHG_1day.ToString() + "','" + PersonIHG.ToString() + "','" + EquipIHG_1day.ToString() + "','" + EquipIHG.ToString() + "','"
@@ -685,20 +685,20 @@ namespace main.contents
             this.Hide();
             Program.getMenuForm().DoLoadForm(33, OnLoadListProc);
         }
-        private void Save_Image()
-        {
-            MemoryStream ms = new MemoryStream();
-            string ImageName = "/threejs/public/img/"+ZoneNum+".png";
-            Bitmap bmp = new Bitmap(AdditionalPanel.Width, AdditionalPanel.Height);
-            AdditionalPanel.DrawToBitmap(bmp, new System.Drawing.Rectangle(0, 0, AdditionalPanel.Width, AdditionalPanel.Height));
-           // bmp.Save(ms ,System.Drawing.Imaging.ImageFormat.Png); //you could ave in BPM, PNG  etc format.
-            bmp.Save(Program.gPath + ImageName, System.Drawing.Imaging.ImageFormat.Png); //you could ave in BPM, PNG  etc format.
-            byte[] Pic_arr = new byte[ms.Length];
-            ms.Position = 0;
-            ms.Read(Pic_arr, 0, Pic_arr.Length);
-            ms.Close();
+        //private void Save_Image()
+        //{
+        //    MemoryStream ms = new MemoryStream();
+        //    string ImageName = "/threejs/public/img/"+ZoneNum+".png";
+        //    Bitmap bmp = new Bitmap(AdditionalPanel.Width, AdditionalPanel.Height);
+        //    AdditionalPanel.DrawToBitmap(bmp, new System.Drawing.Rectangle(0, 0, AdditionalPanel.Width, AdditionalPanel.Height));
+        //   // bmp.Save(ms ,System.Drawing.Imaging.ImageFormat.Png); //you could ave in BPM, PNG  etc format.
+        //    bmp.Save(Program.gPath + ImageName, System.Drawing.Imaging.ImageFormat.Png); //you could ave in BPM, PNG  etc format.
+        //    byte[] Pic_arr = new byte[ms.Length];
+        //    ms.Position = 0;
+        //    ms.Read(Pic_arr, 0, Pic_arr.Length);
+        //    ms.Close();
 
-        }
+        //}
         private void reset()
         {
             ZoneName_textBox.Text = "";
@@ -765,7 +765,7 @@ namespace main.contents
 
             try
             {//존일반정보 폼에서 저장된 정보 불러오기 
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,실제어방식,냉난방유무,환기유무,환기방식,온도교환효율,전열교환효율," +
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,실제어방식,냉난방유무,환기유무,환기방식,온도교환효율_냉방,전열교환효율_냉방,온도교환효율_난방,전열교환효율_난방," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
                 "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적", "존번호 = '" + ZoneNum + "'");
@@ -819,65 +819,65 @@ namespace main.contents
                     Usage = item.Row.ItemArray[0].ToString();
                 }
 
-                NetArea = Convert.ToDouble(Value[0][29]);
+                NetArea = Convert.ToDouble(Value[0][31]);
                 NetArea_textBox.Text = NetArea.ToString();
 
-                CeilingHeight = Convert.ToDouble(Value[0][8]);
+                CeilingHeight = Convert.ToDouble(Value[0][10]);
                 CeilingHeight_textBox.Text = CeilingHeight.ToString();
 
-                StartTime = Value[0][9];
+                StartTime = Value[0][11];
                 StartTime_comboBox.SelectedItem = StartTime;
 
-                EndTime = Value[0][10];
+                EndTime = Value[0][12];
                 EndTime_comboBox.SelectedItem = EndTime;
 
-                WeekUseDay = Convert.ToDouble(Value[0][11]);
+                WeekUseDay = Convert.ToDouble(Value[0][13]);
                 WeekUseDay_comboBox.SelectedItem = "주 " + WeekUseDay.ToString() + ".0 일 근무";
 
-                PersonNum = Convert.ToDouble(Value[0][12]);
+                PersonNum = Convert.ToDouble(Value[0][14]);
                 PersonNum_textBox.Text = PersonNum.ToString();
 
-                EquipIHG_index = Value[0][13];
+                EquipIHG_index = Value[0][15];
                 EquipIHG_comboBox.SelectedItem = EquipIHG_index;
 
-                DHWneed = Convert.ToDouble(Value[0][14]);
+                DHWneed = Convert.ToDouble(Value[0][16]);
                 DHWneed_textBox.Text = string.Format("{0:F1}", (DHWneed));
                 DHWneed_image_textBox.Text = string.Format("{0:F1}", (DHWneed)) + "kWh/d";
 
-                HCTime = Convert.ToDouble(Value[0][15]);
+                HCTime = Convert.ToDouble(Value[0][17]);
                 HCTime_textBox.Text = HCTime.ToString();
 
-                UseTime = Convert.ToDouble(Value[0][16]);
+                UseTime = Convert.ToDouble(Value[0][18]);
                 UseTime_textBox.Text = UseTime.ToString();
 
-                AHUTime = Convert.ToDouble(Value[0][17]);
+                AHUTime = Convert.ToDouble(Value[0][19]);
 
-                AnnualUseDay = Convert.ToDouble(Value[0][18]);
+                AnnualUseDay = Convert.ToDouble(Value[0][20]);
                 AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
 
-                OccupancyDensity = Convert.ToDouble(Value[0][19]);
+                OccupancyDensity = Convert.ToDouble(Value[0][21]);
                 OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
-                OccupancyDensity_index = Value[0][20];
+                OccupancyDensity_index = Value[0][22];
                 OccupancyDensity_index_textBox.Text = OccupancyDensity_index;
 
-                PersonIHG_1day = Convert.ToDouble(Value[0][21]);
-                PersonIHG = Convert.ToDouble(Value[0][22]);
+                PersonIHG_1day = Convert.ToDouble(Value[0][23]);
+                PersonIHG = Convert.ToDouble(Value[0][24]);
                 PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day);
                 PersonIHG_image_textBox.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m²·d";
 
-                EquipIHG_1day = Convert.ToDouble(Value[0][23]);
-                EquipIHG = Convert.ToDouble(Value[0][24]);
+                EquipIHG_1day = Convert.ToDouble(Value[0][25]);
+                EquipIHG = Convert.ToDouble(Value[0][26]);
                 EquipIHG_textBox.Text = string.Format("{0:F1}", EquipIHG_1day);
                 EquipIHG_image_textBox.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m²·d";
 
-                NetVolume = Convert.ToDouble(Value[0][25]);
+                NetVolume = Convert.ToDouble(Value[0][27]);
                 NetVolume_textBox.Text = String.Format("{0:F1}", NetVolume);
 
-                VentilationRate = Convert.ToDouble(Value[0][26]);
+                VentilationRate = Convert.ToDouble(Value[0][28]);
                 VentilationRate_textBox.Text = String.Format("{0:F1}", VentilationRate);
 
-                Volume_wd = Convert.ToDouble(Value[0][27]);
-                Volume_we = Convert.ToDouble(Value[0][28]);
+                Volume_wd = Convert.ToDouble(Value[0][29]);
+                Volume_we = Convert.ToDouble(Value[0][30]);
                 Volume_wd_textBox.Text = String.Format("{0:F1}", Volume_wd);
                 SA_Volume_textBox.Text = String.Format("{0:F1}", Volume_wd) + "m³/h";
                 RA_Volume_textBox.Text = String.Format("{0:F1}", Volume_we) + "m³/h";

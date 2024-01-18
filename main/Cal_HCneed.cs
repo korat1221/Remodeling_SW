@@ -249,7 +249,7 @@ namespace main
         {//존 환기정보 가져오기 
             try
             {
-                string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "환기유무,환기방식,비이용일환기량,이용일환기량,온도교환효율,전열교환효율", "존번호='" + ZoneNum + "'");
+                string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "환기유무,환기방식,비이용일환기량,이용일환기량,온도교환효율_냉방,전열교환효율_냉방", "존번호='" + ZoneNum + "'");
                 if (Convert.ToBoolean(ZoneG[0][0]))
                 {
                     if (ZoneG[0][1] == "열회수환기")
