@@ -344,11 +344,12 @@ namespace main.contents
             else if (MainSystem == "흡수식온수기")
             {
                 Load_ASForm();
-            }else if(MainSystem =="지역난방")
+            }
+            else if (MainSystem == "지역난방")
             {
                 Load_DHForm();
             }
-            
+
         }
 
         private void Sub1UserList_button_Click(object sender, EventArgs e)
@@ -1343,7 +1344,7 @@ namespace main.contents
 
 
 
-
+                HP_dataGridView.Rows.Clear();
                 if (HeatSource == "지하수 히트펌프")
                 {
                     for (int k = 0; k < SelectGWHP_split.Count; k++)
@@ -1822,6 +1823,13 @@ namespace main.contents
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
             }
         }
+        private void PipeIns_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if(PipeIns_textBox.Text != null)
+            {
+                PipeIns = PipeIns_textBox.Text; 
+            }
+        }
         private void PumpUse_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (PumpUse_comboBox.SelectedItem != null)
@@ -2257,14 +2265,14 @@ namespace main.contents
                         설치위치comboBox.Items.Add("천장");
                         ce_dataGridView.Rows[nRow].Cells[7] = 설치위치comboBox;
                     }
-                    String[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "냉난방시간", "존번호='" + Value[n][0] +"'");
+                    String[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "냉난방시간", "존번호='" + Value[n][0] + "'");
                     DataGridViewComboBoxCell 가동시간comboBox = new DataGridViewComboBoxCell();
-                   
-                    for(int h =0; h < Convert.ToInt16(Value2[0][0])+1; h++)
+
+                    for (int h = 0; h < Convert.ToInt16(Value2[0][0]) + 1; h++)
                     {
                         가동시간comboBox.Items.Add(h.ToString());
                     }
-                        
+
                     ce_dataGridView.Rows[nRow].Cells[8] = 가동시간comboBox;
                     if (Value[n][3] == null || Value[n][3] == "")
                     { ce_dataGridView.Rows[nRow].Cells[8].Value = Value2[0][0]; }
@@ -2316,7 +2324,7 @@ namespace main.contents
                 존번호 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(0, index - 1);
                 공급설비 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(index, ce_dataGridView.Rows[n].Cells[1].Value.ToString().Length - index);
                 Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,프로젝트유형,난방시스템,공급설비종류,공급설비,설치위치,가동시간"
-                , "'" + 존번호 + "','" + 프로젝트유형[0][0] + "','" + Num + "','" + ce_dataGridView.Rows[n].Cells[2].Value+ "','" +
+                , "'" + 존번호 + "','" + 프로젝트유형[0][0] + "','" + Num + "','" + ce_dataGridView.Rows[n].Cells[2].Value + "','" +
                     공급설비 + "','" + ce_dataGridView.Rows[n].Cells[7].Value + "','" + ce_dataGridView.Rows[n].Cells[8].Value + "'", "");
             }
         }
@@ -2651,8 +2659,8 @@ namespace main.contents
                 PumpUse_comboBox.SelectedItem = Value[0][0];
                 PumpUse = Value[0][0];
                 if (PumpUse == "펌프 있음")
-                { 
-                    Pump_dataGridView.Visible = true; 
+                {
+                    Pump_dataGridView.Visible = true;
                     PumpMethod_comboBox.SelectedItem = Value[0][1];
                     PumpMethod = Value[0][1];
 
@@ -2772,7 +2780,7 @@ namespace main.contents
 
                 StoragePumpUse = Value[0][1];
                 StoragePump_comboBox.SelectedItem = StoragePumpUse;
-                if(StoragePumpUse == "축열펌프 없음")
+                if (StoragePumpUse == "축열펌프 없음")
                 {
                     StoragePump_dataGridView.Visible = false;
                 }
@@ -2787,7 +2795,7 @@ namespace main.contents
                     }
                     Load_StoragePump(StoragePump);
                 }
-              
+
 
                 if (Value[0][3] != null && Value[0][3] != "")
                 {
@@ -2828,5 +2836,7 @@ namespace main.contents
         }
 
         #endregion
+
+      
     }
 }

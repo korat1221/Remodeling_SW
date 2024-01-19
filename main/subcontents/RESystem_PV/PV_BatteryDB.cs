@@ -18,11 +18,13 @@ namespace main.subcontents.RESystem_PV
         public String[] Select_PVBattery = new string[7];
         String UserNum, UserDB_Name, UserDB_Manufacture, UserDB_type;
         double UserDB_V, UserDB_Ah;
+        DataGridViewCheckBoxColumn PVBattery_checkBoxColumn = new DataGridViewCheckBoxColumn();
 
 
         public PV_BatteryDB()
         {
             InitializeComponent();
+            Create_PVBattery_Table();
             load_table_PVbatteryeDB();
 
             //type combobox
@@ -34,52 +36,50 @@ namespace main.subcontents.RESystem_PV
             UserNum = Program.UTIL.CreateNum("User_PVBattery", "번호", "UVT_0");
             UserNum_textBox.Text = UserNum;
         }
+        private void Create_PVBattery_Table()
+        {
+            new StackedHeaderDecorator(PVBattery_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            PVBattery_dataGridView.Columns.Clear();
+            PVBattery_checkBoxColumn.HeaderText = "선택";
+            PVBattery_checkBoxColumn.Name = "check";
+            PVBattery_dataGridView.Columns.Add(PVBattery_checkBoxColumn);
+            PVBattery_dataGridView.Columns.Add("A1", "번호");
+            PVBattery_dataGridView.Columns.Add("A2", "DB유형");
+            PVBattery_dataGridView.Columns.Add("A3", "제품명");
+            PVBattery_dataGridView.Columns.Add("A4", "제조사");
+            PVBattery_dataGridView.Columns.Add("A5", "전력");
+            PVBattery_dataGridView.Columns.Add("A6", "암페어시");
+            PVBattery_dataGridView.Columns.Add("A7", "배터리타입");
+            PVBattery_dataGridView.Columns[0].Width = 40;
+        }
 
         void load_table_PVbatteryeDB()
         {
-            //데이터 그리드뷰 만들기
-            DataTable table_PVBattery = new DataTable();
-            DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
-            PVBattery_dataGridView.Columns.Clear();
-            checkBoxColumn.HeaderText = "선택";
-            checkBoxColumn.Name = "check";
-            PVBattery_dataGridView.Columns.Add(checkBoxColumn);
-            table_PVBattery.Columns.Add("번호", typeof(string));
-            table_PVBattery.Columns.Add("DB유형", typeof(string));
-            table_PVBattery.Columns.Add("제품명", typeof(string));
-            table_PVBattery.Columns.Add("제조사", typeof(string));
-            table_PVBattery.Columns.Add("전력" + Environment.NewLine + "V", typeof(string));
-            table_PVBattery.Columns.Add("암페어시" + Environment.NewLine + "Ah", typeof(string));
-            table_PVBattery.Columns.Add("배터리타입", typeof(string));
-
+            PVBattery_dataGridView.Rows.Clear();
             //사용자 DB 추가
             try
             {
                 string[][] User_PVBattery = Program.DB.getValue(DB.type.ProjDB, "User_PVBattery", "번호,DB유형,제품명,제조사,전력,암페어시,배터리타입", "");
                 for (int n = 0; n < User_PVBattery.Length; n++)
                 {
-                    table_PVBattery.Rows.Add(User_PVBattery[n][0], User_PVBattery[n][1], User_PVBattery[n][2], User_PVBattery[n][3], User_PVBattery[n][4], User_PVBattery[n][5], User_PVBattery[n][6]);
-                }
+                   
+                        int nRow = PVBattery_dataGridView.Rows.Add();
+                        PVBattery_dataGridView.Rows[nRow].Cells[1].Value = User_PVBattery[n][0];
+                        PVBattery_dataGridView.Rows[nRow].Cells[2].Value = User_PVBattery[n][1];
+                        PVBattery_dataGridView.Rows[nRow].Cells[3].Value = User_PVBattery[n][2];
+                        PVBattery_dataGridView.Rows[nRow].Cells[4].Value = User_PVBattery[n][3];
+                        PVBattery_dataGridView.Rows[nRow].Cells[5].Value = User_PVBattery[n][4];
+                        PVBattery_dataGridView.Rows[nRow].Cells[6].Value = User_PVBattery[n][5];
+                        PVBattery_dataGridView.Rows[nRow].Cells[7].Value = User_PVBattery[n][6];
 
-                PVBattery_dataGridView.DataSource = table_PVBattery;
+                  
+                }
                 Count_PVBatteryDB = User_PVBattery.Length;
             }
             catch { }
-
-            ////표준 DB 불러오기
-            //string[][] PVBattery = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광배터리DB", "번호,DB유형,제품명,제조사,전력,암페어시,배터리타입", "");
-
-            //for (int n = 0; n < PVBattery.Length; n++)
-            //{
-            //    table_PVBattery.Rows.Add(PVBattery[n][0], PVBattery[n][1], PVBattery[n][2], PVBattery[n][3], String.Format("{0:F2}", Convert.ToDouble(PVBattery[n][4])), String.Format("{0:F2}", Convert.ToDouble(PVBattery[n][5])), PVBattery[n][6]);
-            //}
         }
 
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
+ 
         private void PVBattery_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)

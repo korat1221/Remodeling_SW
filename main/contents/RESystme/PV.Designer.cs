@@ -949,6 +949,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(977, 142);
             panel2.TabIndex = 139;
+            panel2.Paint += panel2_Paint;
             // 
             // PV_dataGridView
             // 

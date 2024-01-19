@@ -893,10 +893,25 @@ namespace main
                     L2 = Convert.ToDouble(Value[0][0]);
                 }
                 L = L1 + L2;
+
+                double[] theta_i = new double[12];               
+
                 for (int mth = 0; mth < 12; mth++)
                 {
+                    if (SystemLoacation == "단열외피 외부")
+                    {
+                        theta_i[mth] = theta_u[mth];
+                    }
+                    else if (SystemLoacation == "외기")
+                    {
+                        theta_i[mth] = theta_e[mth];
+                    }
+                    else
+                    {
+                        theta_i[mth] = theta_ih_avg[mth];
+                    }
 
-                    Qh_d[mth] = Math.Max(Psi_pipe * L * (theta_av_d[mth] - theta_ih_avg[mth]) * thrL[mth] / 1000, 0);
+                    Qh_d[mth] = Math.Max(Psi_pipe * L * (theta_av_d[mth] - theta_i[mth]) * thrL[mth] / 1000, 0);
                     if (double.IsNaN(Qh_d[mth])) { Qh_d[mth] = 0; }
                 }
             }

@@ -520,7 +520,7 @@ namespace main.contents.Result
 
                     __data[89].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(((Qtot_mth_가스[mth] - Quse_gas_mth[3, mth]) / Quse_gas_mth[3, mth] * 100).ToString("0.0")) }); //오차율
                     Error_mth_avg_가스 += Math.Abs((Qtot_mth_가스[mth] - Quse_gas_mth[3, mth]) / Quse_gas_mth[3, mth] * 100);
-                    가스오차율chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(((Qtot_mth_가스[mth] - Quse_gas_mth[3, mth]) / Quse_gas_mth[3, mth]).ToString())), 3) + 0);  /// >>> 백분율 단위로 표시 필요 
+                    가스오차율chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Math.Abs((Qtot_mth_가스[mth] - Quse_gas_mth[3, mth]) / Quse_gas_mth[3, mth]).ToString())), 3) + 0);  /// >>> 백분율 단위로 표시 필요 
 
                     Qh_a_가스 += Convert.ToDouble(Final[0][0]);
                     Qc_a_가스 += Convert.ToDouble(Final[0][1]);
@@ -934,8 +934,8 @@ namespace main.contents.Result
                     SavingPercent_mth_avg_전기 = SavingPercent_mth_avg_전기 / 12;
 
                     __data[42].Add(new { idx = i, val = (Saving_a_전기).ToString("0.0") }); //연간 절감량
-                    __data[43].Add(new { idx = i, val = Saving_mth_avg_전기.ToString("0.0") + "%" }); //월평균 절감량
-                    __data[44].Add(new { idx = i, val = (((Qh_a2_전기 - Qh_a_전기) / Qh_a2_전기) * 100).ToString("0.0") + "%" }); //연간 절감율
+                    __data[43].Add(new { idx = i, val = Saving_mth_avg_전기.ToString("0.0") }); //월평균 절감량
+                    __data[44].Add(new { idx = i, val = ((Saving_a_전기 / Qtot_a2_전기) * 100).ToString("0.0") + "%" }); //연간 절감율
                     __data[45].Add(new { idx = i, val = SavingPercent_mth_avg_전기.ToString("0.0") + "%" }); //월평균 절감율 
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -1161,8 +1161,8 @@ namespace main.contents.Result
                     SavingPercent_mth_avg_가스 = SavingPercent_mth_avg_가스 / 12;
 
                     __data[92].Add(new { idx = i, val = (Saving_a_가스).ToString("0.0") }); //연간 절감량
-                    __data[93].Add(new { idx = i, val = Saving_mth_avg_가스.ToString("0.0") + "%" }); //월평균 절감량
-                    __data[94].Add(new { idx = i, val = (((Qh_a2_가스 - Qh_a_가스) / Qh_a2_가스) * 100).ToString("0.0") + "%" }); //연간 절감율
+                    __data[93].Add(new { idx = i, val = Saving_mth_avg_가스.ToString("0.0") }); //월평균 절감량
+                    __data[94].Add(new { idx = i, val = ((Saving_a_가스 / Qtot_a2_가스) * 100).ToString("0.0") + "%" }); //연간 절감율
                     __data[95].Add(new { idx = i, val = SavingPercent_mth_avg_가스.ToString("0.0") + "%" }); //월평균 절감율 
                     for (int mth = 0; mth < 12; mth++)
                     {

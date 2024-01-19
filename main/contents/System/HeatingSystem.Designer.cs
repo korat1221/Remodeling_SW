@@ -37,6 +37,9 @@
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
@@ -49,9 +52,6 @@
             DataGridViewCellStyle dataGridViewCellStyle22 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle23 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle24 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             label15 = new Label();
             OldSystem_textBox = new TextBox();
@@ -80,6 +80,7 @@
             AS_tabPage = new TabPage();
             AS_dataGridView = new DataGridView();
             DH_tabPage = new TabPage();
+            DH_dataGridView = new DataGridView();
             Solar_tabPage = new TabPage();
             Solar_dataGridView = new DataGridView();
             label9 = new Label();
@@ -168,7 +169,6 @@
             SyspictureBox = new PictureBox();
             panel1 = new Panel();
             SourcepictureBox = new PictureBox();
-            DH_dataGridView = new DataGridView();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -182,6 +182,7 @@
             AS_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)AS_dataGridView).BeginInit();
             DH_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)DH_dataGridView).BeginInit();
             Solar_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Solar_dataGridView).BeginInit();
             Qhs_tabPage.SuspendLayout();
@@ -203,7 +204,6 @@
             ((System.ComponentModel.ISupportInitialize)SyspictureBox).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)SourcepictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)DH_dataGridView).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -667,6 +667,48 @@
             DH_tabPage.TabIndex = 4;
             DH_tabPage.Text = "지역난방";
             DH_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // DH_dataGridView
+            // 
+            DH_dataGridView.AllowUserToAddRows = false;
+            DH_dataGridView.AllowUserToDeleteRows = false;
+            DH_dataGridView.AllowUserToResizeColumns = false;
+            DH_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            DH_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            DH_dataGridView.BackgroundColor = Color.White;
+            DH_dataGridView.BorderStyle = BorderStyle.None;
+            DH_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            DH_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle10.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle10.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            DH_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            DH_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DH_dataGridView.Location = new Point(6, 7);
+            DH_dataGridView.Name = "DH_dataGridView";
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = SystemColors.Control;
+            dataGridViewCellStyle11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
+            DH_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            DH_dataGridView.RowHeadersVisible = false;
+            DH_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle12.ForeColor = Color.Black;
+            dataGridViewCellStyle12.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle12.SelectionForeColor = Color.Black;
+            DH_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            DH_dataGridView.RowTemplate.Height = 25;
+            DH_dataGridView.Size = new Size(943, 113);
+            DH_dataGridView.TabIndex = 24;
             // 
             // Solar_tabPage
             // 
@@ -1294,6 +1336,7 @@
             PipeIns_textBox.Size = new Size(120, 15);
             PipeIns_textBox.TabIndex = 188;
             PipeIns_textBox.TextAlign = HorizontalAlignment.Center;
+            PipeIns_textBox.TextChanged += PipeIns_textBox_TextChanged;
             // 
             // PipeIns_button
             // 
@@ -1837,48 +1880,6 @@
             SourcepictureBox.TabIndex = 2;
             SourcepictureBox.TabStop = false;
             // 
-            // DH_dataGridView
-            // 
-            DH_dataGridView.AllowUserToAddRows = false;
-            DH_dataGridView.AllowUserToDeleteRows = false;
-            DH_dataGridView.AllowUserToResizeColumns = false;
-            DH_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            DH_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            DH_dataGridView.BackgroundColor = Color.White;
-            DH_dataGridView.BorderStyle = BorderStyle.None;
-            DH_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            DH_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
-            DH_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
-            DH_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DH_dataGridView.Location = new Point(6, 7);
-            DH_dataGridView.Name = "DH_dataGridView";
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = SystemColors.Control;
-            dataGridViewCellStyle11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
-            DH_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
-            DH_dataGridView.RowHeadersVisible = false;
-            DH_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle12.ForeColor = Color.Black;
-            dataGridViewCellStyle12.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle12.SelectionForeColor = Color.Black;
-            DH_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
-            DH_dataGridView.RowTemplate.Height = 25;
-            DH_dataGridView.Size = new Size(943, 113);
-            DH_dataGridView.TabIndex = 24;
-            // 
             // HeatingSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1910,6 +1911,7 @@
             AS_tabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)AS_dataGridView).EndInit();
             DH_tabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)DH_dataGridView).EndInit();
             Solar_tabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Solar_dataGridView).EndInit();
             Qhs_tabPage.ResumeLayout(false);
@@ -1935,7 +1937,6 @@
             ((System.ComponentModel.ISupportInitialize)SyspictureBox).EndInit();
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)SourcepictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)DH_dataGridView).EndInit();
             ResumeLayout(false);
         }
 

@@ -217,7 +217,6 @@
             label8.Size = new Size(22, 15);
             label8.TabIndex = 111;
             label8.Text = "Ah";
-            label8.Click += label8_Click;
             // 
             // label6
             // 

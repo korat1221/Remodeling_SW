@@ -174,7 +174,12 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
 
         }
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+            Panel p = (Panel)sender;
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
 
+        }
         private void AdditionalPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
@@ -310,12 +315,13 @@ namespace main.contents
 
             PVModule_textBox.Text = PVModule;
             Create_PV_Table();
+            Load_PV_Table();
             PV_MainForm_Calculation_TotalArea();// 전체면적 계산
             PV_MainForm_Calculation_TotalCapacity(); //설치용량 계산
 
         }
 
-        public void Create_PV_Table()
+        private void Create_PV_Table()
         {
             new StackedHeaderDecorator(PV_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
             PV_dataGridView.Columns.Clear();
@@ -329,7 +335,30 @@ namespace main.contents
             PV_dataGridView.Columns.Add("A7", "모듈.세로길이.[m]");
             PV_dataGridView.Columns.Add("A8", "모듈.정격출력.[W]");
             PV_dataGridView.Columns.Add("A9", "Kpk");
-            PV_dataGridView.Columns[0].Width = 40;
+            PV_dataGridView.Columns[0].Width = 100;
+        }
+
+        private void Load_PV_Table()
+        {
+            PV_dataGridView.Rows.Clear();
+            try
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk,신규기존", "번호 = '" + PVModuleNumber + "'");
+
+                int nRow = PV_dataGridView.Rows.Add();
+                PV_dataGridView.Rows[nRow].Cells[0].Value = User_Value[0][0];
+                PV_dataGridView.Rows[nRow].Cells[1].Value = User_Value[0][1];
+                PV_dataGridView.Rows[nRow].Cells[2].Value = User_Value[0][2];
+                PV_dataGridView.Rows[nRow].Cells[3].Value = User_Value[0][3];
+                PV_dataGridView.Rows[nRow].Cells[4].Value = User_Value[0][4];
+                PV_dataGridView.Rows[nRow].Cells[5].Value = User_Value[0][5];
+                PV_dataGridView.Rows[nRow].Cells[6].Value = User_Value[0][6];
+                PV_dataGridView.Rows[nRow].Cells[7].Value = User_Value[0][7];
+                PV_dataGridView.Rows[nRow].Cells[8].Value = User_Value[0][8];
+                PV_dataGridView.Rows[nRow].Cells[9].Value = User_Value[0][9];
+
+            }
+            catch { }
         }
 
         private void slope_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -801,6 +830,7 @@ namespace main.contents
             PVEelpvouta_kWh_a = 0;
         }
 
+     
     }
 
     #endregion / Calculation
