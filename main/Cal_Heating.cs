@@ -92,7 +92,7 @@ namespace main
                     {
                         for (int mth = 0; mth < 12; mth++)
                         {
-                            string[][] Qhb_ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "요구량" + (mth + 1).ToString() + "월", "공급설비 = '" + Value_ce[n][0] + "'");
+                            string[][] Qhb_ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "요구량" + (mth + 1).ToString() + "월", "공급설비 = '" + Value_ce[n][0] + "' And 존번호 ='" + Value_ce[n][1]+"'");
                             Qhb_mth[n, mth] = Convert.ToDouble(Qhb_ce[0][0]);
                             theta_ih[n, mth] = zone.theta_i[1, 0, mth]; //이용일 난방
                             th[n, mth] = zone.t_max[0, mth]; // 난방 시간 
@@ -101,8 +101,7 @@ namespace main
                             th_op_day[n] = zone.th_op_d;
                             theta_i_h_set[n] = zone.theta_i_h_set;
                         }
-                    }
-                    ZoneCount = ZoneCount + 1;
+                    }                 
                 }
                 for (int k = 0; k < SelectZone_split.Count; k++)
                 {
@@ -110,7 +109,7 @@ namespace main
                     Qh_max[k] = zone.Q_max[0];//최대부하 
                     Qh_max_sum += Qh_max[k];
                 }
-                for (int n = 0; n < ZoneCount; n++)
+                for (int n = 0; n < Value_ce.Length; n++)
                 {
 
                     Qh_a_sum += Qh_a[n];
@@ -124,7 +123,7 @@ namespace main
 
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    for (int n = 0; n < ZoneCount; n++)
+                    for (int n = 0; n < Value_ce.Length; n++)
                     {
                         Qhb_mth_sum[mth] += Qhb_mth[n, mth];
 
@@ -1098,8 +1097,15 @@ namespace main
                     Carrier = Value[0][2];
                     String Type = Value[0][3];
                     double Power = Convert.ToDouble(Value[0][4]);
-                    double eta_Pn = Convert.ToDouble(Value[0][5]) / 100;
-                    double eta_Pint = Convert.ToDouble(Value[0][6]) / 100;
+                    string[][] 기존신규 = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "프로젝트유형", "번호 = '" + HeatingNum+ "'");
+                    double eta_Pn = Convert.ToDouble(Value[0][5]) / 100 ;
+                    double eta_Pint = Convert.ToDouble(Value[0][6]) / 100 ;
+                    if (기존신규[0][0] =="1")
+                    {
+                        eta_Pn = eta_Pn * 0.95;
+                        eta_Pint = eta_Pint * 0.95;
+                    }
+                   
                     double W = Convert.ToDouble(Value[0][7]);
                     double W_0 = Convert.ToDouble(Value[0][8]);
                     double count = Convert.ToDouble(BoilerNum_split[n]);

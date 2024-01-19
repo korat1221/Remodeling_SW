@@ -190,57 +190,57 @@ namespace main
 
 
             {////////////////////////기밀테스트 임시 나중에 지워야 함
-                //try
-                //{
-                //    double q50 = 10994 / 682.87;
-                //    String[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,커튼월부위,면적,구조체,구조체번호,층", "존='" + ZoneNum + "'");
+                try
+                {
+                    double q50 = 10994 / 682.87;
+                    String[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,커튼월부위,면적,구조체,구조체번호,층", "존='" + ZoneNum + "'");
 
-                //    double AreaDirect_total = 0;
-                //    string[][] Value;
-                //    for (int n = 0; n < ZoneE.Length; n++)
-                //    {
+                    double AreaDirect_total = 0;
+                    string[][] Value;
+                    for (int n = 0; n < ZoneE.Length; n++)
+                    {
 
-                //        if (ZoneE[n][1] == "커튼월창")
-                //        {
-                //            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                //        }
-                //        else if (ZoneE[n][1] == "외벽")
-                //        {
-                //            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                //        }
-                //        else if (ZoneE[n][1] == "지붕")
-                //        {
-                //            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                //        }
-                //        else if (ZoneE[n][1] == "최하층바닥")
-                //        {
-                //            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                //        }
-                //        else if (ZoneE[n][1] == "창호")
-                //        {
-                //            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                //        }
-                //        else if (ZoneE[n][1] == "외부출입문")
-                //        {
-                //            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "직접간접", "명칭='" + ZoneE[n][5] + "'");
-                //        }
-                //        else
-                //        {
-                //            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                //        }
+                        if (ZoneE[n][1] == "커튼월창")
+                        {
+                            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                        }
+                        else if (ZoneE[n][1] == "외벽")
+                        {
+                            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                        }
+                        else if (ZoneE[n][1] == "지붕")
+                        {
+                            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                        }
+                        else if (ZoneE[n][1] == "최하층바닥")
+                        {
+                            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                        }
+                        else if (ZoneE[n][1] == "창호")
+                        {
+                            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                        }
+                        else if (ZoneE[n][1] == "외부출입문")
+                        {
+                            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "직접간접", "명칭='" + ZoneE[n][5] + "'");
+                        }
+                        else
+                        {
+                            Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                        }
 
-                //        if (Value.Length > 0)
-                //        {
-                //            if (Value[0][0] == "직접외기")
-                //            {
-                //                AreaDirect_total += Convert.ToDouble(ZoneE[n][3]);
-                //            }
-                //        }
+                        if (Value.Length > 0)
+                        {
+                            if (Value[0][0] == "직접외기")
+                            {
+                                AreaDirect_total += Convert.ToDouble(ZoneE[n][3]);
+                            }
+                        }
 
-                //    }
-                //    n50 = AreaDirect_total * q50 / (zoneArea * 2.5);
-                //}
-                //catch { }
+                    }
+                    n50 = AreaDirect_total * q50 / (zoneArea * 2.5);
+                }
+                catch { }
 
             }
         }

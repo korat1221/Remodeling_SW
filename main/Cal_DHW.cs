@@ -83,7 +83,7 @@ namespace main
                         {
                             string[][] Qwb_day = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "일일급탕요구량", "존번호 = '" + SelectZone_split[n].ToString() + "'");
 
-                            Qwb_mth[n, mth] = Convert.ToDouble(Qwb_day[0][0])* dop_a[n]* dmth[mth]/365;
+                            Qwb_mth[n, mth] = Convert.ToDouble(Qwb_day[0][0])* dop_a[n]* dmth[mth]/365 * (-0.02 * theta_e[mth] +1.25);
                             theta_ih[n, mth] = zone.theta_i[1, 0, mth]; //이용일 난방
                             Qwb_a[n] += Qwb_mth[n, mth]; //연간 요구량
                             th_op_day[n] = zone.th_op_d;
