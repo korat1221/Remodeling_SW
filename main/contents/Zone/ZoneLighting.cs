@@ -346,18 +346,22 @@ namespace main.contents
                 }
                 else
                 {
-                    if (LightType.Contains("LED"))
-                    {
-                        N = (Em * A) / (U_LightFi * UFF * 0.67 * 1.1);
-                        Pn = U_LightPi * N;
-                        Pj = Pn / A;
-                    }
-                    else
-                    {
-                        N = (Em * A) / (U_LightFi * UFF * 0.67);
-                        Pn = U_LightPi * N;
-                        Pj = Pn / A;
-                    }
+                    //if (LightType.Contains("LED"))
+                    //{
+                    //    N = (Em * A) / (U_LightFi * UFF * 0.67 * 1.1);
+                    //    Pn = U_LightPi * N;
+                    //    Pj = Pn / A;
+                    //}
+                    //else
+                    //{
+                    //    N = (Em * A) / (U_LightFi * UFF * 0.67);
+                    //    Pn = U_LightPi * N;
+                    //    Pj = Pn / A;
+                    //}
+
+                    N = Em / (U_LightFi / A);
+                    Pn = U_LightPi * N;
+                    Pj = Pn / A;
                 }
                 Pj_textbox.Text = string.Format("{0:F2}", Pj);
             }
