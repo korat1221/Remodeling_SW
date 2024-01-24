@@ -213,6 +213,10 @@ namespace main.contents
         private void Pci_textBox_TextChanged(object sender, EventArgs e)
         {
             Pci_textBox.ForeColor = Color.Gray;
+            //Pci_Value();
+           
+            if (Pci_textBox.Text != null) { try { Pci = Convert.ToDouble(Pci_textBox.Text); } catch { } }
+            else { }
         }
 
 
@@ -343,6 +347,7 @@ namespace main.contents
                 {
                     Pj = Em * KA * LightFL * (0.8 / 0.67) * Pj_lx;
                     Pn = Pj * A;
+                    N = 0;
                 }
                 else
                 {
@@ -375,7 +380,6 @@ namespace main.contents
         public void Pci_Value()
         {
             Pci_textBox.Text = Pci.ToString();
-
             if (control == "일반제어")
             {
                 Pci = 0;
@@ -388,7 +392,7 @@ namespace main.contents
                 }
                 else if (control == "스마트제어" && dbform != "표준")
                 {
-                    Pci_textBox.Text = string.Empty;
+                    Pci_textBox.Text = "";
                 }
             }
 
@@ -976,12 +980,12 @@ namespace main.contents
         {
             Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,너비,길이,순바닥면적,상인방높이,작업면높이,공간계수,기준조도," +
                 "조명방식,제어방식,디밍유형,조명밀도,조명예상전력,대기전력,재실계수,조도제어계수," +
-                "조명번호, 등기구명칭, 램프유형, 컨버터_안정기, 광효율, 조명계수," +
+                "조명번호, 등기구명칭, 램프유형, 컨버터_안정기, 광효율, 조명계수,조명개수," +
                 "집광채광체크",
                 "'" + Num_textBox.Text + "','" + Wr + "','" + Lr + "','" + A + "','" + hLi + "','" + hTa + "','" + K + "','" + Em + "','" +
                 Method + "','" + control + "','" + dimming + "','" + Pj.ToString() + "','" + Pn.ToString() + "','" +
                 Pci.ToString() + "','" + Fo.ToString() + "','" + Fc.ToString() + "','" +
-                LightNumber + "','" + LightType + "','" + LightType2 + "','" + LightConverter + "','" + lm_W + "','" + LightFL.ToString() + "','" +
+                LightNumber + "','" + LightType + "','" + LightType2 + "','" + LightConverter + "','" + lm_W + "','" + LightFL.ToString() + "','" + N.ToString() + "','" +
                 Renew_checkBox.Checked.ToString()
                 + "'", "번호");
 
@@ -1917,7 +1921,6 @@ namespace main.contents
             WindowInfo();
             side_active();
         }
-
 
     }
 

@@ -22,7 +22,8 @@ namespace main
 
         //public double[] ddaytime = new double[12];   //존 낮시간 csv 변수 
         //public double[] nnighttime = new double[12];  //존 밤시간 csv 변수
-        public double Pj, Pn, Fo, Fc, lm_W, wsp; //존 인공조명 csv 변수
+        public double Pj, Pn, Fo, Fc, lm_W, wsp,N; //존 인공조명 csv 변수
+        public double[] Calc_wsp = new double[12]; //최종 대기전력
 
         public string facade_di, glass1, facade_shade, facade_dimming; //파사드정보1 csv 변수
         public double Zone_f_Aca, Zone_f_a, Zone_f_b, Zone_f_AD, f_τD65_SNA, K1, K2, K3;
@@ -52,6 +53,7 @@ namespace main
         public double[] ext = new double[12];   //외부조도 csv 변수
 
         public double[] Zone_useofdays = new double[12], Zone_daytime = new double[12], Zone_nighttime = new double[12];
+        public double useofdays; //Zone_useofdays 누적
         public double Zone_K, Zone_nearK;
         public double Zone_ITr, Zone_IRD; //facade_general ITr Calc 객체 변수 
         public double Zone_Wi, Zone_Ish_In_At, Zone_Ish_GDF; //facade_shade 객체 변수   
@@ -159,7 +161,7 @@ namespace main
         {
             try
             {
-                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "조명밀도,조명예상전력,재실계수,조도제어계수,광효율,대기전력", "번호='" + ZoneNum + "'");
+                string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "조명밀도,조명예상전력,재실계수,조도제어계수,광효율,대기전력,조명개수", "번호='" + ZoneNum + "'");
                 int kk = -1;
                 while (++kk < ValueA.Length)
                 {
@@ -169,6 +171,7 @@ namespace main
                     Fc = Convert.ToDouble(ValueA[kk][3]);
                     lm_W = Convert.ToDouble(ValueA[kk][4]);
                     wsp = Convert.ToDouble(ValueA[kk][5]);
+                    N = Convert.ToDouble(ValueA[kk][6]);
                 }
             }
             catch { }
@@ -919,11 +922,21 @@ namespace main
         {
             Final_kW final_w = new Final_kW();
 
+            for (int i = 0; i < 12; i++)
+            {
+                useofdays += Zone_useofdays[i];
+            }
+            for (int i = 0; i < 12; i++)
+            {
+                Calc_wsp[i] = ((wsp * N) /1000 / A )*(Zone_useofdays[i] / useofdays);
+            }
+            //Pci = (Convert.ToDouble(Pci_textBox.Text) * N)/1000/A;
+
             if (Sub == "True")
             {
                 for (int i = 0; i < 12; i++)
                 {
-                    Zone_Final_kWh[i] = Math.Round(final_w.Calc_W_re_yes(Fc, Zone_Sunlight_PjSC[i], Pj, Fo, Zone_daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], Zone_nighttime[i], wsp, A),3);
+                    Zone_Final_kWh[i] = Math.Round(final_w.Calc_W_re_yes(Fc, Zone_Sunlight_PjSC[i], Pj, Fo, Zone_daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], Zone_nighttime[i], Calc_wsp[i], A),3);
                     //MessageBox.Show((i + 1) + "월 조명에너지 소요량 : " + " " + Zone_Final_W[i]);
                 }
             }
@@ -932,7 +945,7 @@ namespace main
             {
                 for (int i = 0; i < 12; i++)
                 {
-                    Zone_Final_kWh[i] = Math.Round(final_w.Calc_W_re_no(Fc, Pj, Fo, Zone_daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], Zone_nighttime[i], wsp, A),3);
+                    Zone_Final_kWh[i] = Math.Round(final_w.Calc_W_re_no(Fc, Pj, Fo, Zone_daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], Zone_nighttime[i], Calc_wsp[i], A),3);
                     //MessageBox.Show((i + 1) + "월 조명에너지 소요량 : " + " " + Zone_Final_W[i]);
                 }
             }

@@ -38,6 +38,7 @@ namespace main.contents
             FloorName_label = new Label();
             panel2 = new Panel();
             Pci_textBox = new TextBox();
+            label15 = new Label();
             label4 = new Label();
             LightType_textBox = new TextBox();
             LightDB_button = new Button();
@@ -77,21 +78,6 @@ namespace main.contents
             Slope_comboBox = new CustomComboBox();
             type_pictureBox = new PictureBox();
             tabControl1 = new CustomTabControl();
-            조명정보 = new TabPage();
-            L8_textBox = new TextBox();
-            L6_textBox = new TextBox();
-            L5_textBox = new TextBox();
-            L4_textBox = new TextBox();
-            L2_textBox = new TextBox();
-            L8_label = new Label();
-            L6_label = new Label();
-            L5_label = new Label();
-            label6 = new Label();
-            label5 = new Label();
-            L4_label = new Label();
-            L1_label = new Label();
-            L1_textBox = new TextBox();
-            L2_label = new Label();
             주창정보 = new TabPage();
             Blind3_textBox = new TextBox();
             Shade5_label = new Label();
@@ -111,6 +97,21 @@ namespace main.contents
             Shade2_label = new Label();
             shade1_label = new Label();
             Window1_textBox = new TextBox();
+            조명정보 = new TabPage();
+            L8_textBox = new TextBox();
+            L6_textBox = new TextBox();
+            L5_textBox = new TextBox();
+            L4_textBox = new TextBox();
+            L2_textBox = new TextBox();
+            L8_label = new Label();
+            L6_label = new Label();
+            L5_label = new Label();
+            label6 = new Label();
+            label5 = new Label();
+            L4_label = new Label();
+            L1_label = new Label();
+            L1_textBox = new TextBox();
+            L2_label = new Label();
             집광채광정보 = new TabPage();
             label9 = new Label();
             label8 = new Label();
@@ -147,8 +148,8 @@ namespace main.contents
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)type_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
-            조명정보.SuspendLayout();
             주창정보.SuspendLayout();
+            조명정보.SuspendLayout();
             집광채광정보.SuspendLayout();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox3).BeginInit();
@@ -240,6 +241,7 @@ namespace main.contents
             // 
             panel2.BackColor = Color.White;
             panel2.Controls.Add(Pci_textBox);
+            panel2.Controls.Add(label15);
             panel2.Controls.Add(label4);
             panel2.Controls.Add(LightType_textBox);
             panel2.Controls.Add(LightDB_button);
@@ -268,13 +270,23 @@ namespace main.contents
             Pci_textBox.BorderStyle = BorderStyle.FixedSingle;
             Pci_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Pci_textBox.ForeColor = SystemColors.ControlText;
-            Pci_textBox.Location = new Point(714, 99);
+            Pci_textBox.Location = new Point(717, 99);
             Pci_textBox.Name = "Pci_textBox";
             Pci_textBox.Size = new Size(120, 22);
-            Pci_textBox.TabIndex = 141;
+            Pci_textBox.TabIndex = 215;
             Pci_textBox.TextAlign = HorizontalAlignment.Center;
-            Pci_textBox.Visible = false;
             Pci_textBox.TextChanged += Pci_textBox_TextChanged;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label15.Location = new Point(850, 101);
+            label15.Name = "label15";
+            label15.Size = new Size(20, 16);
+            label15.TabIndex = 214;
+            label15.Text = "W";
+            label15.Visible = false;
             // 
             // label4
             // 
@@ -543,9 +555,9 @@ namespace main.contents
             Acam2_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Acam2_label.Location = new Point(332, 72);
             Acam2_label.Name = "Acam2_label";
-            Acam2_label.Size = new Size(25, 16);
+            Acam2_label.Size = new Size(22, 16);
             Acam2_label.TabIndex = 125;
-            Acam2_label.Text = "m2";
+            Acam2_label.Text = "㎡";
             Acam2_label.Visible = false;
             // 
             // facadeButton
@@ -749,6 +761,254 @@ namespace main.contents
             tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.TabIndex = 102;
             // 
+            // 주창정보
+            // 
+            주창정보.Controls.Add(Blind3_textBox);
+            주창정보.Controls.Add(Shade5_label);
+            주창정보.Controls.Add(Blind_textBox);
+            주창정보.Controls.Add(Window_Tao_label);
+            주창정보.Controls.Add(Window_Tao_textBox);
+            주창정보.Controls.Add(Window_glass_label);
+            주창정보.Controls.Add(Window_glass_textBox);
+            주창정보.Controls.Add(label7);
+            주창정보.Controls.Add(Blind2_textBox);
+            주창정보.Controls.Add(Shade4_label);
+            주창정보.Controls.Add(Shade3_label);
+            주창정보.Controls.Add(WindowA_textBox);
+            주창정보.Controls.Add(label3);
+            주창정보.Controls.Add(label2);
+            주창정보.Controls.Add(Shade7_label);
+            주창정보.Controls.Add(Shade2_label);
+            주창정보.Controls.Add(shade1_label);
+            주창정보.Controls.Add(Window1_textBox);
+            주창정보.Location = new Point(4, 25);
+            주창정보.Name = "주창정보";
+            주창정보.Size = new Size(480, 243);
+            주창정보.TabIndex = 2;
+            주창정보.Text = "주창 정보";
+            주창정보.UseVisualStyleBackColor = true;
+            // 
+            // Blind3_textBox
+            // 
+            Blind3_textBox.BackColor = Color.White;
+            Blind3_textBox.BorderStyle = BorderStyle.None;
+            Blind3_textBox.Enabled = false;
+            Blind3_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Blind3_textBox.ForeColor = SystemColors.ControlDark;
+            Blind3_textBox.Location = new Point(303, 187);
+            Blind3_textBox.Name = "Blind3_textBox";
+            Blind3_textBox.Size = new Size(120, 15);
+            Blind3_textBox.TabIndex = 163;
+            Blind3_textBox.TextAlign = HorizontalAlignment.Center;
+            Blind3_textBox.Visible = false;
+            // 
+            // Shade5_label
+            // 
+            Shade5_label.AutoSize = true;
+            Shade5_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Shade5_label.Location = new Point(63, 188);
+            Shade5_label.Name = "Shade5_label";
+            Shade5_label.Size = new Size(51, 16);
+            Shade5_label.TabIndex = 162;
+            Shade5_label.Text = "제어방식";
+            Shade5_label.Visible = false;
+            // 
+            // Blind_textBox
+            // 
+            Blind_textBox.BackColor = Color.White;
+            Blind_textBox.BorderStyle = BorderStyle.None;
+            Blind_textBox.Enabled = false;
+            Blind_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Blind_textBox.ForeColor = SystemColors.ControlDark;
+            Blind_textBox.Location = new Point(303, 166);
+            Blind_textBox.Name = "Blind_textBox";
+            Blind_textBox.Size = new Size(120, 15);
+            Blind_textBox.TabIndex = 161;
+            Blind_textBox.TextAlign = HorizontalAlignment.Center;
+            Blind_textBox.Visible = false;
+            // 
+            // Window_Tao_label
+            // 
+            Window_Tao_label.AutoSize = true;
+            Window_Tao_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Window_Tao_label.Location = new Point(108, 112);
+            Window_Tao_label.Name = "Window_Tao_label";
+            Window_Tao_label.Size = new Size(51, 16);
+            Window_Tao_label.TabIndex = 160;
+            Window_Tao_label.Text = "빛투과율";
+            Window_Tao_label.Visible = false;
+            // 
+            // Window_Tao_textBox
+            // 
+            Window_Tao_textBox.BackColor = Color.White;
+            Window_Tao_textBox.BorderStyle = BorderStyle.None;
+            Window_Tao_textBox.Enabled = false;
+            Window_Tao_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Window_Tao_textBox.ForeColor = SystemColors.ControlDark;
+            Window_Tao_textBox.Location = new Point(299, 113);
+            Window_Tao_textBox.Name = "Window_Tao_textBox";
+            Window_Tao_textBox.Size = new Size(120, 15);
+            Window_Tao_textBox.TabIndex = 159;
+            Window_Tao_textBox.TextAlign = HorizontalAlignment.Center;
+            Window_Tao_textBox.Visible = false;
+            // 
+            // Window_glass_label
+            // 
+            Window_glass_label.AutoSize = true;
+            Window_glass_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Window_glass_label.Location = new Point(108, 91);
+            Window_glass_label.Name = "Window_glass_label";
+            Window_glass_label.Size = new Size(51, 16);
+            Window_glass_label.TabIndex = 158;
+            Window_glass_label.Text = "유리종류";
+            Window_glass_label.Visible = false;
+            // 
+            // Window_glass_textBox
+            // 
+            Window_glass_textBox.BackColor = Color.White;
+            Window_glass_textBox.BorderStyle = BorderStyle.None;
+            Window_glass_textBox.Enabled = false;
+            Window_glass_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Window_glass_textBox.ForeColor = SystemColors.ControlDark;
+            Window_glass_textBox.Location = new Point(299, 92);
+            Window_glass_textBox.Name = "Window_glass_textBox";
+            Window_glass_textBox.Size = new Size(120, 15);
+            Window_glass_textBox.TabIndex = 157;
+            Window_glass_textBox.TextAlign = HorizontalAlignment.Center;
+            Window_glass_textBox.Visible = false;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Location = new Point(394, 62);
+            label7.Name = "label7";
+            label7.Size = new Size(22, 16);
+            label7.TabIndex = 156;
+            label7.Text = "㎡";
+            label7.Visible = false;
+            // 
+            // Blind2_textBox
+            // 
+            Blind2_textBox.BackColor = Color.White;
+            Blind2_textBox.BorderStyle = BorderStyle.None;
+            Blind2_textBox.Enabled = false;
+            Blind2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Blind2_textBox.ForeColor = SystemColors.ControlDark;
+            Blind2_textBox.Location = new Point(303, 209);
+            Blind2_textBox.Name = "Blind2_textBox";
+            Blind2_textBox.Size = new Size(120, 15);
+            Blind2_textBox.TabIndex = 154;
+            Blind2_textBox.TextAlign = HorizontalAlignment.Center;
+            Blind2_textBox.Visible = false;
+            // 
+            // Shade4_label
+            // 
+            Shade4_label.AutoSize = true;
+            Shade4_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Shade4_label.Location = new Point(63, 209);
+            Shade4_label.Name = "Shade4_label";
+            Shade4_label.Size = new Size(94, 16);
+            Shade4_label.TabIndex = 153;
+            Shade4_label.Text = "차양 on 빛투과율";
+            Shade4_label.Visible = false;
+            // 
+            // Shade3_label
+            // 
+            Shade3_label.AutoSize = true;
+            Shade3_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Shade3_label.Location = new Point(63, 166);
+            Shade3_label.Name = "Shade3_label";
+            Shade3_label.Size = new Size(29, 16);
+            Shade3_label.TabIndex = 152;
+            Shade3_label.Text = "종류";
+            Shade3_label.Visible = false;
+            // 
+            // WindowA_textBox
+            // 
+            WindowA_textBox.BackColor = Color.White;
+            WindowA_textBox.BorderStyle = BorderStyle.None;
+            WindowA_textBox.Enabled = false;
+            WindowA_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            WindowA_textBox.ForeColor = SystemColors.ControlDark;
+            WindowA_textBox.Location = new Point(303, 62);
+            WindowA_textBox.Name = "WindowA_textBox";
+            WindowA_textBox.Size = new Size(120, 15);
+            WindowA_textBox.TabIndex = 151;
+            WindowA_textBox.TextAlign = HorizontalAlignment.Center;
+            WindowA_textBox.Visible = false;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.ForeColor = SystemColors.ActiveCaptionText;
+            label3.Location = new Point(55, 145);
+            label3.Name = "label3";
+            label3.Size = new Size(59, 15);
+            label3.TabIndex = 148;
+            label3.Text = "차양 정보";
+            label3.Visible = false;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.ForeColor = SystemColors.ActiveCaptionText;
+            label2.Location = new Point(55, 17);
+            label2.Name = "label2";
+            label2.Size = new Size(59, 15);
+            label2.TabIndex = 147;
+            label2.Text = "일반 정보";
+            label2.Visible = false;
+            // 
+            // Shade7_label
+            // 
+            Shade7_label.AutoSize = true;
+            Shade7_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Shade7_label.Location = new Point(108, 62);
+            Shade7_label.Name = "Shade7_label";
+            Shade7_label.Size = new Size(65, 16);
+            Shade7_label.TabIndex = 146;
+            Shade7_label.Text = "창호 면적합";
+            Shade7_label.Visible = false;
+            // 
+            // Shade2_label
+            // 
+            Shade2_label.AutoSize = true;
+            Shade2_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Shade2_label.Location = new Point(63, 91);
+            Shade2_label.Name = "Shade2_label";
+            Shade2_label.Size = new Size(29, 16);
+            Shade2_label.TabIndex = 143;
+            Shade2_label.Text = "주창";
+            Shade2_label.Visible = false;
+            // 
+            // shade1_label
+            // 
+            shade1_label.AutoSize = true;
+            shade1_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            shade1_label.Location = new Point(63, 41);
+            shade1_label.Name = "shade1_label";
+            shade1_label.Size = new Size(29, 16);
+            shade1_label.TabIndex = 141;
+            shade1_label.Text = "주향";
+            shade1_label.Visible = false;
+            // 
+            // Window1_textBox
+            // 
+            Window1_textBox.BackColor = Color.White;
+            Window1_textBox.BorderStyle = BorderStyle.None;
+            Window1_textBox.Enabled = false;
+            Window1_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Window1_textBox.ForeColor = SystemColors.ControlDark;
+            Window1_textBox.Location = new Point(303, 41);
+            Window1_textBox.Name = "Window1_textBox";
+            Window1_textBox.Size = new Size(120, 15);
+            Window1_textBox.TabIndex = 140;
+            Window1_textBox.TextAlign = HorizontalAlignment.Center;
+            Window1_textBox.Visible = false;
+            // 
             // 조명정보
             // 
             조명정보.Controls.Add(L8_textBox);
@@ -933,254 +1193,6 @@ namespace main.contents
             L2_label.TabIndex = 137;
             L2_label.Text = "램프 유형";
             // 
-            // 주창정보
-            // 
-            주창정보.Controls.Add(Blind3_textBox);
-            주창정보.Controls.Add(Shade5_label);
-            주창정보.Controls.Add(Blind_textBox);
-            주창정보.Controls.Add(Window_Tao_label);
-            주창정보.Controls.Add(Window_Tao_textBox);
-            주창정보.Controls.Add(Window_glass_label);
-            주창정보.Controls.Add(Window_glass_textBox);
-            주창정보.Controls.Add(label7);
-            주창정보.Controls.Add(Blind2_textBox);
-            주창정보.Controls.Add(Shade4_label);
-            주창정보.Controls.Add(Shade3_label);
-            주창정보.Controls.Add(WindowA_textBox);
-            주창정보.Controls.Add(label3);
-            주창정보.Controls.Add(label2);
-            주창정보.Controls.Add(Shade7_label);
-            주창정보.Controls.Add(Shade2_label);
-            주창정보.Controls.Add(shade1_label);
-            주창정보.Controls.Add(Window1_textBox);
-            주창정보.Location = new Point(4, 25);
-            주창정보.Name = "주창정보";
-            주창정보.Size = new Size(480, 243);
-            주창정보.TabIndex = 2;
-            주창정보.Text = "주창 정보";
-            주창정보.UseVisualStyleBackColor = true;
-            // 
-            // Blind3_textBox
-            // 
-            Blind3_textBox.BackColor = Color.White;
-            Blind3_textBox.BorderStyle = BorderStyle.None;
-            Blind3_textBox.Enabled = false;
-            Blind3_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Blind3_textBox.ForeColor = SystemColors.ControlDark;
-            Blind3_textBox.Location = new Point(303, 187);
-            Blind3_textBox.Name = "Blind3_textBox";
-            Blind3_textBox.Size = new Size(120, 15);
-            Blind3_textBox.TabIndex = 163;
-            Blind3_textBox.TextAlign = HorizontalAlignment.Center;
-            Blind3_textBox.Visible = false;
-            // 
-            // Shade5_label
-            // 
-            Shade5_label.AutoSize = true;
-            Shade5_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Shade5_label.Location = new Point(63, 188);
-            Shade5_label.Name = "Shade5_label";
-            Shade5_label.Size = new Size(51, 16);
-            Shade5_label.TabIndex = 162;
-            Shade5_label.Text = "제어방식";
-            Shade5_label.Visible = false;
-            // 
-            // Blind_textBox
-            // 
-            Blind_textBox.BackColor = Color.White;
-            Blind_textBox.BorderStyle = BorderStyle.None;
-            Blind_textBox.Enabled = false;
-            Blind_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Blind_textBox.ForeColor = SystemColors.ControlDark;
-            Blind_textBox.Location = new Point(303, 166);
-            Blind_textBox.Name = "Blind_textBox";
-            Blind_textBox.Size = new Size(120, 15);
-            Blind_textBox.TabIndex = 161;
-            Blind_textBox.TextAlign = HorizontalAlignment.Center;
-            Blind_textBox.Visible = false;
-            // 
-            // Window_Tao_label
-            // 
-            Window_Tao_label.AutoSize = true;
-            Window_Tao_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Window_Tao_label.Location = new Point(108, 112);
-            Window_Tao_label.Name = "Window_Tao_label";
-            Window_Tao_label.Size = new Size(51, 16);
-            Window_Tao_label.TabIndex = 160;
-            Window_Tao_label.Text = "빛투과율";
-            Window_Tao_label.Visible = false;
-            // 
-            // Window_Tao_textBox
-            // 
-            Window_Tao_textBox.BackColor = Color.White;
-            Window_Tao_textBox.BorderStyle = BorderStyle.None;
-            Window_Tao_textBox.Enabled = false;
-            Window_Tao_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Window_Tao_textBox.ForeColor = SystemColors.ControlDark;
-            Window_Tao_textBox.Location = new Point(299, 113);
-            Window_Tao_textBox.Name = "Window_Tao_textBox";
-            Window_Tao_textBox.Size = new Size(120, 15);
-            Window_Tao_textBox.TabIndex = 159;
-            Window_Tao_textBox.TextAlign = HorizontalAlignment.Center;
-            Window_Tao_textBox.Visible = false;
-            // 
-            // Window_glass_label
-            // 
-            Window_glass_label.AutoSize = true;
-            Window_glass_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Window_glass_label.Location = new Point(108, 91);
-            Window_glass_label.Name = "Window_glass_label";
-            Window_glass_label.Size = new Size(51, 16);
-            Window_glass_label.TabIndex = 158;
-            Window_glass_label.Text = "유리종류";
-            Window_glass_label.Visible = false;
-            // 
-            // Window_glass_textBox
-            // 
-            Window_glass_textBox.BackColor = Color.White;
-            Window_glass_textBox.BorderStyle = BorderStyle.None;
-            Window_glass_textBox.Enabled = false;
-            Window_glass_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Window_glass_textBox.ForeColor = SystemColors.ControlDark;
-            Window_glass_textBox.Location = new Point(299, 92);
-            Window_glass_textBox.Name = "Window_glass_textBox";
-            Window_glass_textBox.Size = new Size(120, 15);
-            Window_glass_textBox.TabIndex = 157;
-            Window_glass_textBox.TextAlign = HorizontalAlignment.Center;
-            Window_glass_textBox.Visible = false;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label7.Location = new Point(394, 62);
-            label7.Name = "label7";
-            label7.Size = new Size(25, 16);
-            label7.TabIndex = 156;
-            label7.Text = "m2";
-            label7.Visible = false;
-            // 
-            // Blind2_textBox
-            // 
-            Blind2_textBox.BackColor = Color.White;
-            Blind2_textBox.BorderStyle = BorderStyle.None;
-            Blind2_textBox.Enabled = false;
-            Blind2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Blind2_textBox.ForeColor = SystemColors.ControlDark;
-            Blind2_textBox.Location = new Point(303, 209);
-            Blind2_textBox.Name = "Blind2_textBox";
-            Blind2_textBox.Size = new Size(120, 15);
-            Blind2_textBox.TabIndex = 154;
-            Blind2_textBox.TextAlign = HorizontalAlignment.Center;
-            Blind2_textBox.Visible = false;
-            // 
-            // Shade4_label
-            // 
-            Shade4_label.AutoSize = true;
-            Shade4_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Shade4_label.Location = new Point(63, 209);
-            Shade4_label.Name = "Shade4_label";
-            Shade4_label.Size = new Size(94, 16);
-            Shade4_label.TabIndex = 153;
-            Shade4_label.Text = "차양 on 빛투과율";
-            Shade4_label.Visible = false;
-            // 
-            // Shade3_label
-            // 
-            Shade3_label.AutoSize = true;
-            Shade3_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Shade3_label.Location = new Point(63, 166);
-            Shade3_label.Name = "Shade3_label";
-            Shade3_label.Size = new Size(29, 16);
-            Shade3_label.TabIndex = 152;
-            Shade3_label.Text = "종류";
-            Shade3_label.Visible = false;
-            // 
-            // WindowA_textBox
-            // 
-            WindowA_textBox.BackColor = Color.White;
-            WindowA_textBox.BorderStyle = BorderStyle.None;
-            WindowA_textBox.Enabled = false;
-            WindowA_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            WindowA_textBox.ForeColor = SystemColors.ControlDark;
-            WindowA_textBox.Location = new Point(303, 62);
-            WindowA_textBox.Name = "WindowA_textBox";
-            WindowA_textBox.Size = new Size(120, 15);
-            WindowA_textBox.TabIndex = 151;
-            WindowA_textBox.TextAlign = HorizontalAlignment.Center;
-            WindowA_textBox.Visible = false;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.ForeColor = SystemColors.ActiveCaptionText;
-            label3.Location = new Point(55, 145);
-            label3.Name = "label3";
-            label3.Size = new Size(59, 15);
-            label3.TabIndex = 148;
-            label3.Text = "차양 정보";
-            label3.Visible = false;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.ForeColor = SystemColors.ActiveCaptionText;
-            label2.Location = new Point(55, 17);
-            label2.Name = "label2";
-            label2.Size = new Size(59, 15);
-            label2.TabIndex = 147;
-            label2.Text = "일반 정보";
-            label2.Visible = false;
-            // 
-            // Shade7_label
-            // 
-            Shade7_label.AutoSize = true;
-            Shade7_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Shade7_label.Location = new Point(108, 62);
-            Shade7_label.Name = "Shade7_label";
-            Shade7_label.Size = new Size(65, 16);
-            Shade7_label.TabIndex = 146;
-            Shade7_label.Text = "창호 면적합";
-            Shade7_label.Visible = false;
-            // 
-            // Shade2_label
-            // 
-            Shade2_label.AutoSize = true;
-            Shade2_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Shade2_label.Location = new Point(63, 91);
-            Shade2_label.Name = "Shade2_label";
-            Shade2_label.Size = new Size(29, 16);
-            Shade2_label.TabIndex = 143;
-            Shade2_label.Text = "주창";
-            Shade2_label.Visible = false;
-            // 
-            // shade1_label
-            // 
-            shade1_label.AutoSize = true;
-            shade1_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            shade1_label.Location = new Point(63, 41);
-            shade1_label.Name = "shade1_label";
-            shade1_label.Size = new Size(29, 16);
-            shade1_label.TabIndex = 141;
-            shade1_label.Text = "주향";
-            shade1_label.Visible = false;
-            // 
-            // Window1_textBox
-            // 
-            Window1_textBox.BackColor = Color.White;
-            Window1_textBox.BorderStyle = BorderStyle.None;
-            Window1_textBox.Enabled = false;
-            Window1_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Window1_textBox.ForeColor = SystemColors.ControlDark;
-            Window1_textBox.Location = new Point(303, 41);
-            Window1_textBox.Name = "Window1_textBox";
-            Window1_textBox.Size = new Size(120, 15);
-            Window1_textBox.TabIndex = 140;
-            Window1_textBox.TextAlign = HorizontalAlignment.Center;
-            Window1_textBox.Visible = false;
-            // 
             // 집광채광정보
             // 
             집광채광정보.Controls.Add(label9);
@@ -1253,9 +1265,9 @@ namespace main.contents
             R2_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             R2_label.Location = new Point(63, 69);
             R2_label.Name = "R2_label";
-            R2_label.Size = new Size(94, 16);
+            R2_label.Size = new Size(91, 16);
             R2_label.TabIndex = 146;
-            R2_label.Text = "산광부 면적 [m2]";
+            R2_label.Text = "산광부 면적 [㎡]";
             R2_label.Visible = false;
             // 
             // R2_textBox
@@ -1457,9 +1469,9 @@ namespace main.contents
             label11.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label11.Location = new Point(1163, 306);
             label11.Name = "label11";
-            label11.Size = new Size(25, 16);
+            label11.Size = new Size(22, 16);
             label11.TabIndex = 210;
-            label11.Text = "m2";
+            label11.Text = "㎡";
             label11.Visible = false;
             // 
             // label12
@@ -1468,9 +1480,9 @@ namespace main.contents
             label12.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label12.Location = new Point(1163, 386);
             label12.Name = "label12";
-            label12.Size = new Size(25, 16);
+            label12.Size = new Size(22, 16);
             label12.TabIndex = 211;
-            label12.Text = "m2";
+            label12.Text = "㎡";
             label12.Visible = false;
             // 
             // label13
@@ -1501,9 +1513,9 @@ namespace main.contents
             label10.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label10.Location = new Point(1163, 274);
             label10.Name = "label10";
-            label10.Size = new Size(25, 16);
+            label10.Size = new Size(22, 16);
             label10.TabIndex = 214;
-            label10.Text = "m2";
+            label10.Text = "㎡";
             label10.Visible = false;
             // 
             // Save_button
@@ -1565,10 +1577,10 @@ namespace main.contents
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)type_pictureBox).EndInit();
             tabControl1.ResumeLayout(false);
-            조명정보.ResumeLayout(false);
-            조명정보.PerformLayout();
             주창정보.ResumeLayout(false);
             주창정보.PerformLayout();
+            조명정보.ResumeLayout(false);
+            조명정보.PerformLayout();
             집광채광정보.ResumeLayout(false);
             집광채광정보.PerformLayout();
             panel4.ResumeLayout(false);
@@ -1672,7 +1684,6 @@ namespace main.contents
         private RadioButton facadeButton;
         private RadioButton roofButton;
         private Label label4;
-        private TextBox Pci_textBox;
         private TabPage 조명정보;
         private TextBox L8_textBox;
         private TextBox L6_textBox;
@@ -1694,5 +1705,7 @@ namespace main.contents
         private PictureBox Main_pictureBox;
         private PictureBox Main_pictureBox2;
         private PictureBox Main_pictureBox3;
+        private Label label15;
+        private TextBox Pci_textBox;
     }
 }
