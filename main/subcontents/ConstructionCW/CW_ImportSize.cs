@@ -97,34 +97,20 @@ namespace main.subcontents
             Size_dataGridView.Columns.Add("A11", "출입문.프레임면적.[m²]");
             Size_dataGridView.Columns.Add("A12", "출입문.유리면적.[m²]");
             Size_dataGridView.Columns.Add("A13", "출입문.둘레길이.[m]");
-            //table_CWSize.Columns.Add("명칭", typeof(string));
-            //table_CWSize.Columns.Add("면적" + Environment.NewLine + "[m²]", typeof(string));
-            //table_CWSize.Columns.Add("너비" + Environment.NewLine + "[m]", typeof(string));
-            //table_CWSize.Columns.Add("높이" + Environment.NewLine + "[m]", typeof(string));
-            //table_CWSize.Columns.Add("고정창\r\n유리면적", typeof(string));
-            //table_CWSize.Columns.Add("개폐창\r\n유리면적" + Environment.NewLine + "[m²]", typeof(string));
-            //table_CWSize.Columns.Add("고정창유리\r\n둘레길이" + Environment.NewLine + "[m]", typeof(string));
-            //table_CWSize.Columns.Add("개폐창유리\r\n둘레길이" + Environment.NewLine + "[m]", typeof(string));
-            //table_CWSize.Columns.Add("패널면적" + Environment.NewLine + "[m²]", typeof(string));
-            //table_CWSize.Columns.Add("패널\r\n둘레길이" + Environment.NewLine + "[m]", typeof(string));
-            //table_CWSize.Columns.Add("M/T\r\n프레임면적" + Environment.NewLine + "[m²]", typeof(string));
-            //table_CWSize.Columns.Add("개폐\r\n프레임면적" + Environment.NewLine + "[m²]", typeof(string));
-            //table_CWSize.Columns.Add("출입문\r\n프레임면적" + Environment.NewLine + "[m²]", typeof(string));
-            //table_CWSize.Columns.Add("출입문\r\n유리면적" + Environment.NewLine + "[m²]", typeof(string));
-            //table_CWSize.Columns.Add("출입문유리\r\n둘레길이" + Environment.NewLine + "[m]", typeof(string));
+        
             string[][] CWSize = Program.DB.getValue(DB.type.CalcDB, "Import_CWSize", "명칭,커튼월면적,너비,높이,고정창유리면적,개폐창유리면적,고정창유리둘레길이,개폐창유리둘레길이,패널면적,패널둘레길이,M_T프레임면적,개폐창프레임면적,출입문프레임면적,출입문유리면적,출입문유리둘레길이");
-
-            for (int n = 0; n < CWSize.Length; n++)
+            if(CWSize.Length > 0)
             {
-                Size_dataGridView.Rows.Add();
-                int nRow = Size_dataGridView.Rows.Count - 1;
-                for (int k = 0; k < 15; k++)
+                for (int n = 0; n < CWSize.Length; n++)
                 {
-                    Size_dataGridView.Rows[nRow].Cells[k + 1].Value = CWSize[n][k];
+                    Size_dataGridView.Rows.Add();
+                    int nRow = Size_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 15; k++)
+                    {
+                        Size_dataGridView.Rows[nRow].Cells[k + 1].Value = CWSize[n][k];
+                    }
                 }
-                //table_CWSize.Rows.Add(CWSize[n][0], CWSize[n][1], CWSize[n][2], CWSize[n][3], CWSize[n][4], CWSize[n][5], CWSize[n][6], CWSize[n][7], CWSize[n][8], CWSize[n][9], CWSize[n][10], CWSize[n][11], CWSize[n][12], CWSize[n][13], CWSize[n][14]);
             }
-            //Size_dataGridView.DataSource = table_CWSize;
             Count_SizeInfo = CWSize.Length;
         }
 

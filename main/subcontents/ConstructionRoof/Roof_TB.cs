@@ -116,65 +116,59 @@ namespace main.subcontents.ConstructionRoof
             TB_dataGridView.Columns.Add("A6", "열교유형");
             TB_dataGridView.Columns.Add("A7", "수직간격.[mm]");
             TB_dataGridView.Columns.Add("A8", "수평간격.[mm]");
-            //table_TB.Columns.Add("번호", typeof(string));
-            //table_TB.Columns.Add("DB유형", typeof(string));
-            //table_TB.Columns.Add("제품명", typeof(string));
-            //table_TB.Columns.Add("제조사", typeof(string));
-            //table_TB.Columns.Add("구조유형", typeof(string));
-            //table_TB.Columns.Add("열교유형", typeof(string));
-            //table_TB.Columns.Add("수직간격" + Environment.NewLine + "[mm]", typeof(string));
-            //table_TB.Columns.Add("수평간격" + Environment.NewLine + "[mm]", typeof(string));
+           
 
             if (LinearPoint == "점형")
             {
                 TB_dataGridView.Columns.Add("A9", "점형열관류율.(단열재 두께 =" + string.Format("{0:F0}", d_Ins) + "mm).[W/K]");
-                //table_TB.Columns.Add("점형\r\n열관류율" + Environment.NewLine + "d =" + string.Format("{0:F0}", d_Ins) + "mm", typeof(string));
                 string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕점형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
-                for (int n = 0; n < TB.Length; n++)
+                if(TB.Length > 0)
                 {
-                    double row_A = Convert.ToDouble(TB[n][8]);
-                    double row_B = Convert.ToDouble(TB[n][9]);
-                    double row_C = Convert.ToDouble(TB[n][10]);
-                    double row_Kai = (row_A * Math.Pow(d_Ins, 2) + row_B * d_Ins + row_C) / 1000;
-
-                    TB_dataGridView.Rows.Add();
-                    int nRow = TB_dataGridView.Rows.Count - 1;
-                    for (int k = 0; k < 8; k++)
+                    for (int n = 0; n < TB.Length; n++)
                     {
-                        TB_dataGridView.Rows[nRow].Cells[k + 1].Value = TB[n][k];
+                        double row_A = Convert.ToDouble(TB[n][8]);
+                        double row_B = Convert.ToDouble(TB[n][9]);
+                        double row_C = Convert.ToDouble(TB[n][10]);
+                        double row_Kai = (row_A * Math.Pow(d_Ins, 2) + row_B * d_Ins + row_C) / 1000;
+
+                        TB_dataGridView.Rows.Add();
+                        int nRow = TB_dataGridView.Rows.Count - 1;
+                        for (int k = 0; k < 8; k++)
+                        {
+                            TB_dataGridView.Rows[nRow].Cells[k + 1].Value = TB[n][k];
+                        }
+                        TB_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F3}", row_Kai);
+                        Count_DB = TB.Length;
                     }
-                    TB_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F3}", row_Kai);
-                    // table_TB.Rows.Add(TB[n][0], TB[n][1], TB[n][2], TB[n][3], TB[n][4], TB[n][5], TB[n][6], TB[n][7], string.Format("{0:F3}", row_Kai));
-                    Count_DB = TB.Length;
                 }
             }
             else
             {
                 TB_dataGridView.Columns.Add("A9", "선형열관류율.(단열재 두께 =" + string.Format("{0:F0}", d_Ins) + "mm).[W/mK]");
-                //table_TB.Columns.Add("선형\r\n열관류율" + Environment.NewLine + "d =" + string.Format("{0:F0}", d_Ins) + "mm", typeof(string));
                 string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕선형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
-                for (int n = 0; n < TB.Length; n++)
+                if(TB.Length > 0)
                 {
-                    double row_A = Convert.ToDouble(TB[n][8]);
-                    double row_B = Convert.ToDouble(TB[n][9]);
-                    double row_C = Convert.ToDouble(TB[n][10]);
-                    double row_Psi = (row_A * Math.Pow(d_Ins, 2) + row_B * d_Ins + row_C) / 1000;
-
-                    TB_dataGridView.Rows.Add();
-                    int nRow = TB_dataGridView.Rows.Count - 1;
-                    for (int k = 0; k < 8; k++)
+                    for (int n = 0; n < TB.Length; n++)
                     {
-                        TB_dataGridView.Rows[nRow].Cells[k + 1].Value = TB[n][k];
+                        double row_A = Convert.ToDouble(TB[n][8]);
+                        double row_B = Convert.ToDouble(TB[n][9]);
+                        double row_C = Convert.ToDouble(TB[n][10]);
+                        double row_Psi = (row_A * Math.Pow(d_Ins, 2) + row_B * d_Ins + row_C) / 1000;
+
+                        TB_dataGridView.Rows.Add();
+                        int nRow = TB_dataGridView.Rows.Count - 1;
+                        for (int k = 0; k < 8; k++)
+                        {
+                            TB_dataGridView.Rows[nRow].Cells[k + 1].Value = TB[n][k];
+                        }
+                        TB_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F3}", row_Psi);
+                        Count_DB = TB.Length;
                     }
-                    TB_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F3}", row_Psi);
-                    //table_TB.Rows.Add(TB[n][0], TB[n][1], TB[n][2], TB[n][3], TB[n][4], TB[n][5], TB[n][6], TB[n][7], string.Format("{0:F3}", row_Psi));
-                    Count_DB = TB.Length;
-                }
+                }                
             }
             TB_dataGridView.Columns[3].Width = 100;
             TB_dataGridView.Columns[6].Width = 100;
             TB_dataGridView.Columns[9].Width = 130;
-            // TB_dataGridView.DataSource = table_TB;
         }
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
@@ -194,38 +188,45 @@ namespace main.subcontents.ConstructionRoof
             if (LinearPoint == "점형")
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕점형열교이미지", "이미지열교구조유형", "열교유형 = '" + TB_Type + "'");
-                pictureBox1.Load(Program.gPath + Image[0][0]);
-                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                if(Image.Length >  0)
+                {
+                    pictureBox1.Load(Program.gPath + Image[0][0]);
+                    pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                }                
             }
             else
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕선형열교이미지", "이미지열교구조유형", "열교유형 = '" + TB_Type + "'");
-                pictureBox1.Load(Program.gPath + Image[0][0]);
-                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                if(Image.Length > 0)
+                {
+                    pictureBox1.Load(Program.gPath + Image[0][0]);
+                    pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                }    
 
             }
         }
 
         private void Load_Image2()
         {
-
-            try
+            if (LinearPoint == "점형")
             {
-                if (LinearPoint == "점형")
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕점형열교이미지", "이미지고정유형", "제품명 = '" + TBName + "' And 열교유형 = '" + TB_Type + "'");
+                if (Image.Length > 0)
                 {
-                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕점형열교이미지", "이미지고정유형", "제품명 = '" + TBName + "' And 열교유형 = '" + TB_Type + "'");
                     pictureBox2.Load(Program.gPath + Image[0][0]);
                     pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-                }
-                else
-                {
-                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕선형열교이미지", "이미지고정유형", "제품명 = '" + TBName + "'  And 열교유형 = '" + TB_Type + "'");
-                    pictureBox2.Load(Program.gPath + Image[0][0]);
-                    pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-
                 }
             }
-            catch { }
+            else
+            {
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕선형열교이미지", "이미지고정유형", "제품명 = '" + TBName + "'  And 열교유형 = '" + TB_Type + "'");
+                if (Image.Length > 0)
+                {
+                    pictureBox2.Load(Program.gPath + Image[0][0]);
+                    pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+
+            }
         }
 
         //데이터그리드뷰 체크박스 선택 시
@@ -243,25 +244,31 @@ namespace main.subcontents.ConstructionRoof
                 if (LinearPoint == "점형")
                 {
                     string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교", "번호,A,B,C", "번호 ='" + row.Cells[1].Value.ToString() + "'");
-                    for (int n = 0; n < TB.Length; n++)
+                    if(TB.Length > 0)
                     {
-                        A = Convert.ToDouble(TB[n][1]);
-                        B = Convert.ToDouble(TB[n][2]);
-                        C = Convert.ToDouble(TB[n][3]);
-                        Kai = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
-                        Count_DB = TB.Length;
+                        for (int n = 0; n < TB.Length; n++)
+                        {
+                            A = Convert.ToDouble(TB[n][1]);
+                            B = Convert.ToDouble(TB[n][2]);
+                            C = Convert.ToDouble(TB[n][3]);
+                            Kai = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
+                            Count_DB = TB.Length;
+                        }
                     }
                 }
                 else
                 {
                     string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교", "번호, A, B, C", "번호 = '" + row.Cells[1].Value.ToString() + "'");
-                    for (int n = 0; n < TB.Length; n++)
+                    if(TB.Length > 0)
                     {
-                        A = Convert.ToDouble(TB[n][1]);
-                        B = Convert.ToDouble(TB[n][2]);
-                        C = Convert.ToDouble(TB[n][3]);
-                        Psi = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
-                        Count_DB = TB.Length;
+                        for (int n = 0; n < TB.Length; n++)
+                        {
+                            A = Convert.ToDouble(TB[n][1]);
+                            B = Convert.ToDouble(TB[n][2]);
+                            C = Convert.ToDouble(TB[n][3]);
+                            Psi = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
+                            Count_DB = TB.Length;
+                        }
                     }
                 }
             }

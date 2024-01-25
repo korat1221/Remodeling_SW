@@ -27,9 +27,11 @@ namespace main.subcontents.HeatingSystem
             //heatingSystem = system;
             load_table_DB();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외부출입문'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-
+            if(Image.Length > 0 )
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
         }
 
         void load_table_DB()
@@ -52,18 +54,21 @@ namespace main.subcontents.HeatingSystem
             Door_dataGridView.Columns[0].Width = 50;
 
             string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "외부출입문", "번호,제품명,제조사,문짝종류,문짝내부,문틀내부,문틀상부열관류율,문틀하부열관류율", "");
-            for (int n = 0; n < Value.Length; n++)
+            if(Value.Length > 0)
             {
-             
-                int nRow = Door_dataGridView.Rows.Add();
-                Door_dataGridView.Rows[nRow].Cells[1].Value = Value[n][0];
-                Door_dataGridView.Rows[nRow].Cells[2].Value = Value[n][1];
-                Door_dataGridView.Rows[nRow].Cells[3].Value = Value[n][2];
-                Door_dataGridView.Rows[nRow].Cells[4].Value = Value[n][3];
-                Door_dataGridView.Rows[nRow].Cells[5].Value = Value[n][4];
-                Door_dataGridView.Rows[nRow].Cells[6].Value = Value[n][5];
-                Door_dataGridView.Rows[nRow].Cells[7].Value = Value[n][6];
-                Door_dataGridView.Rows[nRow].Cells[8].Value = Value[n][7];
+                for (int n = 0; n < Value.Length; n++)
+                {
+
+                    int nRow = Door_dataGridView.Rows.Add();
+                    Door_dataGridView.Rows[nRow].Cells[1].Value = Value[n][0];
+                    Door_dataGridView.Rows[nRow].Cells[2].Value = Value[n][1];
+                    Door_dataGridView.Rows[nRow].Cells[3].Value = Value[n][2];
+                    Door_dataGridView.Rows[nRow].Cells[4].Value = Value[n][3];
+                    Door_dataGridView.Rows[nRow].Cells[5].Value = Value[n][4];
+                    Door_dataGridView.Rows[nRow].Cells[6].Value = Value[n][5];
+                    Door_dataGridView.Rows[nRow].Cells[7].Value = Value[n][6];
+                    Door_dataGridView.Rows[nRow].Cells[8].Value = Value[n][7];
+                }
             }
         }
 

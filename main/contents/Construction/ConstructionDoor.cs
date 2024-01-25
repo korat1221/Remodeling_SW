@@ -39,9 +39,12 @@ namespace main.contents
         {
             InitializeComponent();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외부출입문'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-
+            if(Image.Length > 0 )
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+           
             //직접간접 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi_comboBox, "출입문", "실외조건", "1");
             //설치위치 콤보박스
@@ -151,30 +154,33 @@ namespace main.contents
                 Table = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "명칭", def_value);
             }
 
-            int i = -1;
-            DataTable sources = new DataTable();
-            sources.Columns.Add("Text");
-            sources.Columns.Add("Value");
-            sources.Columns.Add("ID");
-
-            while (++i < Table.Length)
+            if(Table.Length > 0)
             {
-                DataRow dr = sources.NewRow();
-                dr["Text"] = Table[i][0];
-                sources.Rows.Add(dr);
-            }
+                int i = -1;
+                DataTable sources = new DataTable();
+                sources.Columns.Add("Text");
+                sources.Columns.Add("Value");
+                sources.Columns.Add("ID");
 
-            OldDoor_comboBox.DataSource = sources.DefaultView;
-            OldDoor_comboBox.DisplayMember = "Text";
-            for (i = 0; i < OldDoor_comboBox.Items.Count; i++)
-            {
-                var arr = ((DataRowView)OldDoor_comboBox.Items[i]).Row.ItemArray;
-                if (arr.Length > 1 && arr[1].ToString() == def_value)
+                while (++i < Table.Length)
                 {
-                    OldDoor_comboBox.SelectedIndex = i;
-                    break;
+                    DataRow dr = sources.NewRow();
+                    dr["Text"] = Table[i][0];
+                    sources.Rows.Add(dr);
                 }
-            }
+
+                OldDoor_comboBox.DataSource = sources.DefaultView;
+                OldDoor_comboBox.DisplayMember = "Text";
+                for (i = 0; i < OldDoor_comboBox.Items.Count; i++)
+                {
+                    var arr = ((DataRowView)OldDoor_comboBox.Items[i]).Row.ItemArray;
+                    if (arr.Length > 1 && arr[1].ToString() == def_value)
+                    {
+                        OldDoor_comboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }            
         }
 
         private void OldDoor_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -182,16 +188,7 @@ namespace main.contents
             DataRowView? item = OldDoor_comboBox.SelectedItem as DataRowView;
             if (item != null)
             {
-                OldDoor = item.Row.ItemArray[0].ToString();
-                //계산 datagridview 부분에 선택한 기존 출입문 열관류율 들어오도록 하는거  
-                //Constructionwall 참고하기 
-                //string[][] OldWall_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "열관류율", "명칭 = '" + OldDoor + "'");
-                //try
-                //{
-                //    OldDoor_R = 1 / Convert.ToDouble(OldWall_U[0][0]);
-                //}
-                //catch { }
-                //Add_OldDoor();
+                OldDoor = item.Row.ItemArray[0].ToString();              
             }
         }
 
@@ -526,8 +523,11 @@ namespace main.contents
                 DoorColor = DoorColor_comboBox.SelectedItem.ToString();
 
                 String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + DoorColor + "'");
-                αd = Convert.ToDouble(value[0][0]);
-                abs_textBox.Text = String.Format("{0:F1}", αd);
+                if(value.Length > 0)
+                {
+                    αd = Convert.ToDouble(value[0][0]);
+                    abs_textBox.Text = String.Format("{0:F1}", αd);
+                }                
             }
         }
 
@@ -645,9 +645,12 @@ namespace main.contents
         private void Load_DoorType_image(String Type)
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문유형이미지", "이미지", "유형 = '" + Type + "'");
-            DoorType_pictureBox.Visible = true;
-            DoorType_pictureBox.Load(Program.gPath + Image[0][0]);
-            DoorType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if(Image.Length > 0)
+            {
+                DoorType_pictureBox.Visible = true;
+                DoorType_pictureBox.Load(Program.gPath + Image[0][0]);
+                DoorType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
         }
 
         //치수정보 그림 
@@ -663,9 +666,12 @@ namespace main.contents
         private void Load_DoorType_image3()
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문이미지", "출입문유형", "문짝종류 = '" + Material + "' AND 문짝내부 = '" + DoorIn + "' AND 문틀내부 = '" + FrameIn + "'");
-            pictureBox2.Visible = true;
-            pictureBox2.Load(Program.gPath + Image[0][0]);
-            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            if( Image.Length > 0) 
+            {
+                pictureBox2.Visible = true;
+                pictureBox2.Load(Program.gPath + Image[0][0]);
+                pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            }           
         }
 
         //설치열교정보 그림
@@ -673,18 +679,24 @@ namespace main.contents
         private void Load_DoorType_image4()
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문설치열교이미지", "열교유형이미지", "구분1 = '" + Install1 + "' AND 구분2 = '" + Install2 + "'");
-            pictureBox3.Visible = true;
-            pictureBox3.Load(Program.gPath + Image[0][0]);
-            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+            if( Image.Length > 0)
+            {
+                pictureBox3.Visible = true;
+                pictureBox3.Load(Program.gPath + Image[0][0]);
+                pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+            }
         }
 
         //하부
         private void Load_DoorType_image5()
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문설치열교이미지", "하부열교유형이미지", "구분1 = '" + Install1 + "' AND 구분2 = '" + Install2 + "'");
-            pictureBox4.Visible = true;
-            pictureBox4.Load(Program.gPath + Image[0][0]);
-            pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
+            if(Image.Length > 0)
+            {
+                pictureBox4.Visible = true;
+                pictureBox4.Load(Program.gPath + Image[0][0]);
+                pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
+            }            
         }
 
 
@@ -697,19 +709,23 @@ namespace main.contents
             if (UDoorMethod == "법규")
             {
                 String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
-                String[][] Uvalue;
-                if (Type == "기존 출입문")
+                if(Date.Length > 0)
                 {
-                    Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '문' And 시기 = '" + Date[0][0] + "' AND  지역 ='" + Date[0][1] + "'  AND  직접간접 =  '" + DiIndi + "'");
-                }
-                else
-                {
-                    Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '문' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
-                }
-                UD = Convert.ToDouble(Uvalue[0][0]);
-                g_textBox.Text = String.Format("{0:F3}", UD);
-
-                // MessageBox.Show("[(" + Uvalue[0][2] + " 시행)" + Uvalue[0][1] + "] " + Uvalue[0][3] + " 열관류율 적용");
+                    String[][] Uvalue;
+                    if (Type == "기존 출입문")
+                    {
+                        Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '문' And 시기 = '" + Date[0][0] + "' AND  지역 ='" + Date[0][1] + "'  AND  직접간접 =  '" + DiIndi + "'");
+                    }
+                    else
+                    {
+                        Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '문' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
+                    }
+                    if(Uvalue.Length > 0)
+                    {
+                        UD = Convert.ToDouble(Uvalue[0][0]);
+                        g_textBox.Text = String.Format("{0:F3}", UD);
+                    }                    
+                }                
             }
         }
 
@@ -811,8 +827,7 @@ namespace main.contents
                 InstallType = Install_comboBox.SelectedItem.ToString();
 
                 //설치 유형 다시 선택했을 경우 
-                try
-                {
+               
                     if (check_InstallType != null)
                     {
                         if (InstallType != check_InstallType)
@@ -821,9 +836,7 @@ namespace main.contents
                             Install2 = "";
                             Install_textBox.Text = "";
                         }
-                    }
-                }
-                catch { }
+                    }              
             }
         }
 
@@ -1005,8 +1018,7 @@ namespace main.contents
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             reset();
-            try
-            {
+           
                 DoorNum_textBox.Text = ID;
                 DoorNum = ID;
 
@@ -1015,8 +1027,8 @@ namespace main.contents
                       "설치유형,설치유형2,상부측면설치길이,하부설치길이,상부선형열관류율,측면부선형열관류율,하부선형열관류율,상부설치길이,측면설치길이,하부설치길이2,열교가산치," +
                       "문유효열관류율"
                       , "번호 = '" + ID + "'");
-
-
+            if(Load.Length > 0)
+            {
                 Name_textBox.Text = Load[0][1];
                 Type = Load[0][2];
                 switch (Type)
@@ -1104,18 +1116,13 @@ namespace main.contents
                 Load_DoorType_image4();
                 Load_DoorType_image5();
 
-
-            }
-            catch { }
-
-
+            }            
             if (glass_check == true)
             {
-                try
-                {
-                    String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "유리가로,유리세로,유리종류,유리면적,유리열관류율,문열관류율"
+                    Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "유리가로,유리세로,유리종류,유리면적,유리열관류율,문열관류율"
                   , "번호 = '" + ID + "'");
-
+                if(Load.Length > 0)
+                {
                     GlassL = Convert.ToDouble(Load[0][0]);
                     GlassL_textBox.Text = GlassL.ToString();
                     GlassH = Convert.ToDouble(Load[0][1]);
@@ -1131,10 +1138,7 @@ namespace main.contents
                     DoorUDGlass = Convert.ToDouble(Load[0][5]);
                     DoorU_textBox.Text = String.Format("{0:F3}", DoorUDGlass);
                 }
-                catch { }
             }
-
-
         }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화

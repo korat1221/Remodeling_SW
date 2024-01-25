@@ -38,33 +38,43 @@ namespace main.contents
         {
             InitializeComponent();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '일반정보'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if (Image.Length > 0)
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
             //프로젝트명
             string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT title FROM projects WHERE current='1'");
-            ProjectName = res[0][0];
-            if (ProjectName != null) { ProjectName_textBox.Text = ProjectName.ToString(); }
-            else { }
+            if (res.Length > 0)
+            {
+                ProjectName = res[0][0];
+                if (ProjectName != null) { ProjectName_textBox.Text = ProjectName.ToString(); }
+                else { }
+            }
+            
 
             //프로젝트유형
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select type from projects where current = '1'");
-            switch (번호[0][0])
+            if(번호.Length > 0)
             {
-                case "1":
-                    ProjectType = "기존";
-                    break;
-                case "2":
-                    ProjectType = "리트로핏";
-                    break;
-                case "3":
-                    ProjectType = "리모델링";
-                    break;
-                case "4":
-                    ProjectType = "신규";
-                    break;
-            }
-            if (ProjectType != null) { ProjectType_textBox.Text = ProjectType.ToString(); }
-            else { }
+                switch (번호[0][0])
+                {
+                    case "1":
+                        ProjectType = "기존";
+                        break;
+                    case "2":
+                        ProjectType = "리트로핏";
+                        break;
+                    case "3":
+                        ProjectType = "리모델링";
+                        break;
+                    case "4":
+                        ProjectType = "신규";
+                        break;
+                }
+                if (ProjectType != null) { ProjectType_textBox.Text = ProjectType.ToString(); }
+                else { }
+            }           
             Load_OldProject();
 
             //사업성능목표 콤보박스
@@ -78,9 +88,12 @@ namespace main.contents
             //기후데이터 콤보박스
             string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "인덱스", "이름", "종류 = '2'");
             Climate_comboBox.Items.Clear();
-            for (int i = 0; i < Value.Length; i++)
+            if (Value.Length > 0)
             {
-                Climate_comboBox.Items.Add(Value[i][0]);
+                for (int i = 0; i < Value.Length; i++)
+                {
+                    Climate_comboBox.Items.Add(Value[i][0]);
+                }
             }
             Climate_comboBox.SelectedIndex = 2;
             //외벽 구조유형 콤보박스
@@ -264,9 +277,12 @@ namespace main.contents
             if (Climate_comboBox.SelectedItem != null)
             {
                 string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후인덱스", "지역명,지역구분", "지역인덱스 = '" + Climate_comboBox.SelectedItem.ToString() + "'");
-                Climate = Value[0][0];
-                BylawClimate = Value[0][1];
-                ByRawClimate_textBox.Text = BylawClimate;
+                if (Value.Length > 0)
+                {
+                    Climate = Value[0][0];
+                    BylawClimate = Value[0][1];
+                    ByRawClimate_textBox.Text = BylawClimate;
+                }
             }
         }
 
@@ -320,10 +336,12 @@ namespace main.contents
                     ConstrucitonDate = Convert.ToDouble((Year + "." + Month));
                 }
                 string[][] Value = Program.DB.getValue_SameCheck(DB.type.BaseDB_HCneed, "법규열관류율", "시기", "");
-
-                for (int i = 0; i < Value.Length; i++)
+                if (Value.Length > 0)
                 {
-                    law[i] = Convert.ToDouble(Value[i][0]);
+                    for (int i = 0; i < Value.Length; i++)
+                    {
+                        law[i] = Convert.ToDouble(Value[i][0]);
+                    }
                 }
 
                 Array.Sort(law);
@@ -371,13 +389,13 @@ namespace main.contents
         }
         private void GrossArea_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (GrossArea_textBox.Text != null) { try { GrossArea = Convert.ToDouble(GrossArea_textBox.Text); } catch { } }
+            if (GrossArea_textBox.Text != null) { GrossArea = Convert.ToDouble(GrossArea_textBox.Text); }
             else { }
         }
 
         private void BuildingArea_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (BuildingArea_textBox.Text != null) { try { BuildingArea = Convert.ToDouble(BuildingArea_textBox.Text); } catch { } }
+            if (BuildingArea_textBox.Text != null) {  BuildingArea = Convert.ToDouble(BuildingArea_textBox.Text); }
             else { }
         }
         private void AboveGround_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -568,8 +586,7 @@ namespace main.contents
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             reset();
-            try
-            {
+           
                 string[][] Value1 = Program.DB.querySQL(DB.type.ProjListDB, "Select type, title from projects where current = '1'");
                 String[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,프로젝트유형,사업성능목표,건물진단실시," +
                 "건물대상,건물용도,건물명,주소,지역인덱스,지역,지역구분," +
@@ -578,101 +595,105 @@ namespace main.contents
                 "연면적,건축면적," +
                 "지상층수,지하층수," +
                 "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기,기존프로젝트", "");
-
-                ProjectName = Value1[0][1];
-                ProjectName_textBox.Text = ProjectName.ToString();
-
-                switch (Value1[0][0])
+                if (Value1.Length > 0)
                 {
-                    case "1":
-                        ProjectType = "기존";
-                        break;
-                    case "2":
-                        ProjectType = "리트로핏";
-                        break;
-                    case "3":
-                        ProjectType = "리모델링";
-                        break;
-                    case "4":
-                        ProjectType = "신규";
-                        break;
+                    ProjectName = Value1[0][1];
+                    ProjectName_textBox.Text = ProjectName.ToString();
+
+                    switch (Value1[0][0])
+                    {
+                        case "1":
+                            ProjectType = "기존";
+                            break;
+                        case "2":
+                            ProjectType = "리트로핏";
+                            break;
+                        case "3":
+                            ProjectType = "리모델링";
+                            break;
+                        case "4":
+                            ProjectType = "신규";
+                            break;
+
+                    }
+                    ProjectType_textBox.Text = ProjectType.ToString();
 
                 }
-                ProjectType_textBox.Text = ProjectType.ToString();
+                if (Value.Length > 0)
+                {
+                    Target = Value[0][2];
+                    Target_comboBox.SelectedItem = Target;
 
-                Target = Value[0][2];
-                Target_comboBox.SelectedItem = Target;
+                    Diagnosis = Value[0][3];
+                    Diagnosis_comboBox.SelectedItem = Diagnosis;
 
-                Diagnosis = Value[0][3];
-                Diagnosis_comboBox.SelectedItem = Diagnosis;
+                    BuildingCategory = Value[0][4];
+                    BuildingUse_comboBox.SelectedItem = BuildingCategory;
 
-                BuildingCategory = Value[0][4];
-                BuildingUse_comboBox.SelectedItem = BuildingCategory;
+                    BuildingUse = Value[0][5];
+                    BuildingUse_comboBox.SelectedItem = BuildingUse;
 
-                BuildingUse = Value[0][5];
-                BuildingUse_comboBox.SelectedItem = BuildingUse;
+                    BuildingName = Value[0][6];
+                    BuildingName_textBox.Text = BuildingName;
 
-                BuildingName = Value[0][6];
-                BuildingName_textBox.Text = BuildingName;
+                    BuildingLocation = Value[0][7];
+                    BuildingLocation_textBox.Text = BuildingLocation;
 
-                BuildingLocation = Value[0][7];
-                BuildingLocation_textBox.Text = BuildingLocation;
+                    Climate_comboBox.SelectedItem = Value[0][8];
+                    Climate = Value[0][9];
+                    BylawClimate = Value[0][10];
+                    ByRawClimate_textBox.Text = BylawClimate;
 
-                Climate_comboBox.SelectedItem = Value[0][8];
-                Climate = Value[0][9];
-                BylawClimate = Value[0][10];
-                ByRawClimate_textBox.Text = BylawClimate;
+                    WallType = Value[0][11];
+                    WallType_comboBox.SelectedItem = WallType;
 
-                WallType = Value[0][11];
-                WallType_comboBox.SelectedItem = WallType;
+                    RoofType = Value[0][12];
+                    RoofType_comboBox.SelectedItem = RoofType;
 
-                RoofType = Value[0][12];
-                RoofType_comboBox.SelectedItem = RoofType;
+                    Year = Value[0][13];
+                    Year_comboBox.SelectedItem = Year;
 
-                Year = Value[0][13];
-                Year_comboBox.SelectedItem = Year;
+                    Month = Value[0][14];
+                    Month_comboBox.SelectedItem = Month;
 
-                Month = Value[0][14];
-                Month_comboBox.SelectedItem = Month;
-
-                ConstrucitonDate = Convert.ToDouble(Value[0][15]);
-                Calc_LawDate();
+                    ConstrucitonDate = Convert.ToDouble(Value[0][15]);
+                    Calc_LawDate();
 
 
-                GrossArea = Convert.ToDouble(Value[0][17]);
-                GrossArea_textBox.Text = GrossArea.ToString();
-                BuildingArea = Convert.ToDouble(Value[0][18]);
-                BuildingArea_textBox.Text = BuildingArea.ToString();
+                    GrossArea = Convert.ToDouble(Value[0][17]);
+                    GrossArea_textBox.Text = GrossArea.ToString();
+                    BuildingArea = Convert.ToDouble(Value[0][18]);
+                    BuildingArea_textBox.Text = BuildingArea.ToString();
 
-                AboveGround = Value[0][19];
-                AboveGround_comboBox.SelectedItem = AboveGround;
+                    AboveGround = Value[0][19];
+                    AboveGround_comboBox.SelectedItem = AboveGround;
 
-                UnderGround = Value[0][20];
-                UnderGround_comboBox.SelectedItem = UnderGround;
+                    UnderGround = Value[0][20];
+                    UnderGround_comboBox.SelectedItem = UnderGround;
 
-                ReviewerName = Value[0][21];
-                ReviewerName_textBox.Text = ReviewerName;
+                    ReviewerName = Value[0][21];
+                    ReviewerName_textBox.Text = ReviewerName;
 
-                ReviewerLocation = Value[0][22];
-                ReviewerLocation_textBox.Text = ReviewerLocation;
+                    ReviewerLocation = Value[0][22];
+                    ReviewerLocation_textBox.Text = ReviewerLocation;
 
-                ReviewerCompany = Value[0][23];
-                ReviewerCompany_textBox.Text = ReviewerCompany;
+                    ReviewerCompany = Value[0][23];
+                    ReviewerCompany_textBox.Text = ReviewerCompany;
 
-                ReviewYear = Value[0][24];
-                ReviewYear_comboBox.SelectedItem = ReviewYear;
+                    ReviewYear = Value[0][24];
+                    ReviewYear_comboBox.SelectedItem = ReviewYear;
 
-                ReviewMonth = Value[0][25];
-                ReviewMonth_comboBox.SelectedItem = ReviewMonth;
+                    ReviewMonth = Value[0][25];
+                    ReviewMonth_comboBox.SelectedItem = ReviewMonth;
 
-                ReviewDate = Convert.ToDouble(Value[0][26]);
-                Calc_ReviewDate();
-                
-                Load_OldProject();
-                OldProject = Value[0][27];
-                OldProject_comboBox.SelectedItem = OldProject;
-            }
-            catch { }
+                    ReviewDate = Convert.ToDouble(Value[0][26]);
+                    Calc_ReviewDate();
+
+                    Load_OldProject();
+                    OldProject = Value[0][27];
+                    OldProject_comboBox.SelectedItem = OldProject;
+                }
+           
 
         }
 

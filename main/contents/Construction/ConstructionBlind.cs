@@ -125,28 +125,31 @@ namespace main.contents
                 Table = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "명칭", def_value);
             }
 
-            int i = -1;
-            DataTable sources = new DataTable();
-            sources.Columns.Add("Text");
-            sources.Columns.Add("Value");
-            sources.Columns.Add("ID");
-
-            while (++i < Table.Length)
+            if(Table.Length>0)
             {
-                DataRow dr = sources.NewRow();
-                dr["Text"] = Table[i][0];
-                sources.Rows.Add(dr);
-            }
+                int i = -1;
+                DataTable sources = new DataTable();
+                sources.Columns.Add("Text");
+                sources.Columns.Add("Value");
+                sources.Columns.Add("ID");
 
-            OldBlind_comboBox.DataSource = sources.DefaultView;
-            OldBlind_comboBox.DisplayMember = "Text";
-            for (i = 0; i < OldBlind_comboBox.Items.Count; i++)
-            {
-                var arr = ((DataRowView)OldBlind_comboBox.Items[i]).Row.ItemArray;
-                if (arr.Length > 1 && arr[1].ToString() == def_value)
+                while (++i < Table.Length)
                 {
-                    OldBlind_comboBox.SelectedIndex = i;
-                    break;
+                    DataRow dr = sources.NewRow();
+                    dr["Text"] = Table[i][0];
+                    sources.Rows.Add(dr);
+                }
+
+                OldBlind_comboBox.DataSource = sources.DefaultView;
+                OldBlind_comboBox.DisplayMember = "Text";
+                for (i = 0; i < OldBlind_comboBox.Items.Count; i++)
+                {
+                    var arr = ((DataRowView)OldBlind_comboBox.Items[i]).Row.ItemArray;
+                    if (arr.Length > 1 && arr[1].ToString() == def_value)
+                    {
+                        OldBlind_comboBox.SelectedIndex = i;
+                        break;
+                    }
                 }
             }
 
@@ -194,17 +197,22 @@ namespace main.contents
 
         private void Load_Image()
         {
-            try
-            {
+          
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "차양이미지", "이미지", "제품종류 = '" + BlindType + "'  AND 설치유형 ='제품'");
-                pictureBox3.Load(Program.gPath + Image[0][0]);
-                pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+                if(Image.Length > 0)
+                {
+                    pictureBox3.Load(Program.gPath + Image[0][0]);
+                    pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                
 
                 Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "차양이미지", "이미지", "제품종류 = '" + BlindType + "'  AND 설치유형 ='" + BlindInstall + "'");
-                pictureBox4.Load(Program.gPath + Image[0][0]);
-                pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
-            }
-            catch { }
+                if (Image.Length > 0)
+                {
+                    pictureBox4.Load(Program.gPath + Image[0][0]);
+                    pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+          
         }
         private void ControlType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -242,31 +250,39 @@ namespace main.contents
 
         private void LoadGraph()
         {
-            try
-            {
                 string s = "", s2 = "";
                 string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
                 string[][] res1;
                 for (int mth = 1; mth < 12; mth++)
                 {
                     res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='남' And 기간 = '" + mth.ToString() + "월'");
-                    s += Convert.ToDouble(res1[0][0]) * 100 + ",";
+                    if(res1.Length > 0)
+                    {
+                        s += Convert.ToDouble(res1[0][0]) * 100 + ",";
+                    }                    
                 }
                 res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='남' And 기간 = '" + 12.ToString() + "월'");
-                s += Convert.ToDouble(res1[0][0]) * 100;
+                if (res1.Length > 0)
+                {
+                    s += Convert.ToDouble(res1[0][0]) * 100;
+                }
 
 
 
                 string[][] res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT AVG(일사량) FROM 기후데이터_전일사량 WHERE 지역명 = '" + Location[0][0] + "' AND 기간 LIKE '%월' GROUP BY 기간 ORDER BY 기간*1 ASC");
-
-                for (int k = 0; k < res2.Length; k++)
+                if(res2.Length > 0) 
                 {
-                    s2 += Convert.ToDouble(res2[k][0]) + ",";
+                    for (int k = 0; k < res2.Length; k++)
+                    {
+                        if (res2.Length > 0)
+                        {
+                            s2 += Convert.ToDouble(res2[k][0]) + ",";
+                        }
+                    }
                 }
 
                 runScript("drawChart3([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150}])");
-            }
-            catch { }
+          
         }
         public static bool OnLoadListProc(Form form)
         {
@@ -329,43 +345,41 @@ namespace main.contents
         {
             reset();
 
-            try
-            {
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "번호,프로젝트유형,명칭,제품번호,제품명,종류,설치,투과수준,색깔,외부반사율,내부반사율,투과율,흡수율,제어방식1,제어방식2", "번호 ='" + ID + "'");
 
+                if(Value.Length >0)
+                {
+                    Num_textBox.Text = ID;
+                    Num = ID;
 
-                Num_textBox.Text = ID;
-                Num = ID;
+                    Name_textBox.Text = Value[0][2];
+                    Type_textBox.Text = null;
 
-                Name_textBox.Text = Value[0][2];
-                Type_textBox.Text = null;
+                    BlindDBNum = Value[0][3];
+                    BlindName_textBox.Text = Value[0][4];
+                    BlindName = Value[0][4];
+                    BlindType_textBox.Text = Value[0][5];
+                    BlindType = Value[0][5];
+                    BlindInstall_textBox.Text = Value[0][6];
+                    BlindInstall = Value[0][6];
+                    BlindTrans_textBox.Text = Value[0][7];
+                    BlindTrans = Value[0][7];
+                    BlindColor_textBox.Text = Value[0][8];
+                    BlindColor = Value[0][8];
+                    ControlType_comboBox.SelectedItem = Value[0][13];
+                    ControlType = Value[0][13];
 
-                BlindDBNum = Value[0][3];
-                BlindName_textBox.Text = Value[0][4];
-                BlindName = Value[0][4];
-                BlindType_textBox.Text = Value[0][5];
-                BlindType = Value[0][5];
-                BlindInstall_textBox.Text = Value[0][6];
-                BlindInstall = Value[0][6];
-                BlindTrans_textBox.Text = Value[0][7];
-                BlindTrans = Value[0][7];
-                BlindColor_textBox.Text = Value[0][8];
-                BlindColor = Value[0][8];
-                ControlType_comboBox.SelectedItem = Value[0][13];
-                ControlType = Value[0][13];
-
-                BlindEx_textBox.Text = Value[0][9];
-                BlindEx = Convert.ToDouble(Value[0][9]);
-                BlindIn_textBox.Text = Value[0][10];
-                BlindIn = Convert.ToDouble(Value[0][10]);
-                BlindSHGC_textBox.Text = Value[0][11];
-                BlindSHGC = Convert.ToDouble(Value[0][11]);
-                BlindAlpha_textBox.Text = Value[0][12];
-                BlindAlpha = Convert.ToDouble(Value[0][12]);
-
-
-            }
-            catch { }
+                    BlindEx_textBox.Text = Value[0][9];
+                    BlindEx = Convert.ToDouble(Value[0][9]);
+                    BlindIn_textBox.Text = Value[0][10];
+                    BlindIn = Convert.ToDouble(Value[0][10]);
+                    BlindSHGC_textBox.Text = Value[0][11];
+                    BlindSHGC = Convert.ToDouble(Value[0][11]);
+                    BlindAlpha_textBox.Text = Value[0][12];
+                    BlindAlpha = Convert.ToDouble(Value[0][12]);
+                }
+                
+         
         }
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {

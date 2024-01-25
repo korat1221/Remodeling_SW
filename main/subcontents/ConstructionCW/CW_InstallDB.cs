@@ -89,19 +89,10 @@ namespace main.subcontents.ConstructionCW
             Install_dataGridView.Columns.Add("A7", "설치선형열관류율.상부.Ψg,top.[W/m·K]");
             Install_dataGridView.Columns.Add("A8", "설치선형열관류율.측면.Ψg,side.[W/m·K]");
             Install_dataGridView.Columns.Add("A9", "설치선형열관류율.하부.Ψg,buttom.[W/m·K]");
-            //table_CWInstall.Columns.Add("번호", typeof(string));
-            //table_CWInstall.Columns.Add("DB유형", typeof(string));
-            //table_CWInstall.Columns.Add("제품명", typeof(string));
-            //table_CWInstall.Columns.Add("구분1", typeof(string));
-            //table_CWInstall.Columns.Add("구분2", typeof(string));
-            //table_CWInstall.Columns.Add("구분3", typeof(string));
-            //table_CWInstall.Columns.Add("상부설치\r\n선형열관류율" + Environment.NewLine + "Ψg,fix\r\n[W/m·K]", typeof(string));
-            //table_CWInstall.Columns.Add("측면설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
-            //table_CWInstall.Columns.Add("하부설치\r\n선형열관류율" + Environment.NewLine + "Ψg,t\r\n[W/m·K]", typeof(string));
 
-            try
+            string[][] User_CWInstall = Program.DB.getValue(DB.type.ProjDB, "User_CWInstall", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
+            if (User_CWInstall.Length > 0)
             {
-                string[][] User_CWInstall = Program.DB.getValue(DB.type.ProjDB, "User_CWInstall", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
                 for (int n = 0; n < User_CWInstall.Length; n++)
                 {
                     Install_dataGridView.Rows.Add();
@@ -110,11 +101,9 @@ namespace main.subcontents.ConstructionCW
                     {
                         Install_dataGridView.Rows[nRow].Cells[k + 1].Value = User_CWInstall[n][k];
                     }
-                    //table_CWInstall.Rows.Add(User_CWInstall[n][0], User_CWInstall[n][1], User_CWInstall[n][2], User_CWInstall[n][3], User_CWInstall[n][4], User_CWInstall[n][5], User_CWInstall[n][6], User_CWInstall[n][7], User_CWInstall[n][8]);
+
                 }
             }
-            catch { }
-
             if (InstallType != null && FrameType != null)
             {
                 CWInstall = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'AND 구분2 = '" + FrameType + "'");
@@ -123,19 +112,20 @@ namespace main.subcontents.ConstructionCW
             {
                 CWInstall = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
             }
-
-            for (int n = 0; n < CWInstall.Length; n++)
+            if(CWInstall.Length > 0)
             {
-                Install_dataGridView.Rows.Add();
-                int nRow = Install_dataGridView.Rows.Count - 1;
-                for (int k = 0; k < 9; k++)
+                for (int n = 0; n < CWInstall.Length; n++)
                 {
-                    Install_dataGridView.Rows[nRow].Cells[k + 1].Value = CWInstall[n][k];
+                    Install_dataGridView.Rows.Add();
+                    int nRow = Install_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 9; k++)
+                    {
+                        Install_dataGridView.Rows[nRow].Cells[k + 1].Value = CWInstall[n][k];
+                    }
+
                 }
-                //table_CWInstall.Rows.Add(CWInstall[n][0], CWInstall[n][1], CWInstall[n][2], CWInstall[n][3], CWInstall[n][4], CWInstall[n][5], CWInstall[n][6], CWInstall[n][7], CWInstall[n][8]);
             }
-            //Install_dataGridView.DataSource = table_CWInstall;
-            Count_InstallDB = CWInstall.Length;
+          Count_InstallDB = CWInstall.Length;
         }
 
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)

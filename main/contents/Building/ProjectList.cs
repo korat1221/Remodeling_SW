@@ -111,21 +111,25 @@ namespace main.contents
             dataGridView1.Rows.Clear();
 
             string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type FROM projects WHERE type='" + ProjectType + "'OR type = '" + ProjectType2 + "'");
-            for (int n = 0; n < res.Length; n++)
+            if(res.Length > 0)
             {
-                dataGridView1.Rows.Add();
-                int nRow = dataGridView1.Rows.Count - 1;
-
-                for (int k = 0; k < 4; k++)
+                for (int n = 0; n < res.Length; n++)
                 {
-                    dataGridView1.Rows[nRow].Cells[k + 1].Value = (k == 3) ? types[res[n][k]] : res[n][k];
+                    dataGridView1.Rows.Add();
+                    int nRow = dataGridView1.Rows.Count - 1;
+
+                    for (int k = 0; k < 4; k++)
+                    {
+                        dataGridView1.Rows[nRow].Cells[k + 1].Value = (k == 3) ? types[res[n][k]] : res[n][k];
+                    }
+
+                    DataGridViewCheckBoxCell cell = dataGridView1.Rows[nRow].Cells[0] as DataGridViewCheckBoxCell;
+
+                    cell.Value = !!(res[n][1] == CurProjID);
                 }
-
-                DataGridViewCheckBoxCell cell = dataGridView1.Rows[nRow].Cells[0] as DataGridViewCheckBoxCell;
-
-                cell.Value = !!(res[n][1] == CurProjID);
+                drawing = false;
             }
-            drawing = false;
+            
         }
         static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
         {
@@ -178,17 +182,20 @@ namespace main.contents
                     db.Open();
 
                     string[][] res = Program.DB.querySQL(db, "SELECT name FROM sqlite_master WHERE type IN('table', 'view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN('table', 'view') ORDER BY 1");
-                    for (int n = 0; n < res.Length; n++)
+                    if(res.Length > 0)
                     {
-                        string table = res[n][0];
-
-                        if (projectcopy.tables.Find(p => p == table) == null)
+                        for (int n = 0; n < res.Length; n++)
                         {
-                            Program.DB.executeSQL(db, "DROP TABLE " + table);
+                            string table = res[n][0];
+
+                            if (projectcopy.tables.Find(p => p == table) == null)
+                            {
+                                Program.DB.executeSQL(db, "DROP TABLE " + table);
+                            }
                         }
+                        db.Close();
                     }
 
-                    db.Close();
 
                     if (projectcopy.model_copy)
                     {

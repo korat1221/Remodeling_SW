@@ -63,20 +63,24 @@ namespace main.contents
             dataGridView1.Rows.Clear();
 
             string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type FROM projects");
-            for (int n = 0; n < res.Length; n++)
+            if(res.Length > 0)
             {
-                dataGridView1.Rows.Add();
-                int nRow = dataGridView1.Rows.Count - 1;
-
-                for (int k = 0; k < 4; k++)
+                for (int n = 0; n < res.Length; n++)
                 {
-                    dataGridView1.Rows[nRow].Cells[k + 1].Value = (k == 3) ? types[res[n][k]] : res[n][k];
+                    dataGridView1.Rows.Add();
+                    int nRow = dataGridView1.Rows.Count - 1;
+
+                    for (int k = 0; k < 4; k++)
+                    {
+                        dataGridView1.Rows[nRow].Cells[k + 1].Value = (k == 3) ? types[res[n][k]] : res[n][k];
+                    }
+
+                    DataGridViewCheckBoxCell cell = dataGridView1.Rows[nRow].Cells[0] as DataGridViewCheckBoxCell;
+
+                    cell.Value = !!(res[n][1] == ProjectList.CurProjID);
                 }
-
-                DataGridViewCheckBoxCell cell = dataGridView1.Rows[nRow].Cells[0] as DataGridViewCheckBoxCell;
-
-                cell.Value = !!(res[n][1] == ProjectList.CurProjID);
             }
+           
         }
         private void Copy_button_Click(object sender, EventArgs e)
         {

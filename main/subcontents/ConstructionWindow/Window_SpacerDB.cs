@@ -68,36 +68,39 @@ namespace main.subcontents
             Spacer_dataGridView.Columns[9].Width = 80;
             Spacer_dataGridView.Columns[10].Width = 100;
             Spacer_dataGridView.Columns[11].Width = 100;
-            try
+           
+            string[][] User_WinSpacer = Program.DB.getValue(DB.type.ProjDB, "User_WindowSpacer", "번호,DB유형,제품명,제조사,구분1,구분2,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + FrameMaterial + "'");
+            if(User_WinSpacer.Length > 0)
             {
-                string[][] User_WinSpacer = Program.DB.getValue(DB.type.ProjDB, "User_WindowSpacer", "번호,DB유형,제품명,제조사,구분1,구분2,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + FrameMaterial + "'");
                 for (int n = 0; n < User_WinSpacer.Length; n++)
                 {
                     Spacer_dataGridView.Rows.Add();
                     int nRow = Spacer_dataGridView.Rows.Count - 1;
-                    for(int k = 0; k < 11 ; k++)
+                    for (int k = 0; k < 11; k++)
                     {
-                        Spacer_dataGridView.Rows[nRow].Cells[k+1].Value = User_WinSpacer[n][k];
-                    }
-                    //table_WindowSpacer.Rows.Add(User_WinSpacer[n][0], User_WinSpacer[n][1], User_WinSpacer[n][2], User_WinSpacer[n][3], User_WinSpacer[n][4], User_WinSpacer[n][5], User_WinSpacer[n][6], User_WinSpacer[n][7], User_WinSpacer[n][8], User_WinSpacer[n][9], User_WinSpacer[n][10]);
+                        Spacer_dataGridView.Rows[nRow].Cells[k + 1].Value = User_WinSpacer[n][k];
+                    }                   
                 }
             }
-            catch { }
+                
+         
 
             string[][] WinSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호간봉", "번호,DB유형,제품명,구분1,구분2,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + FrameMaterial + "'");
-            for (int n = 0; n < WinSpacer.Length; n++)
+            if(WinSpacer.Length > 0) 
             {
-                Spacer_dataGridView.Rows.Add();
-                int nRow = Spacer_dataGridView.Rows.Count - 1;
-                Spacer_dataGridView.Rows[nRow].Cells[1].Value = WinSpacer[n][0];
-                Spacer_dataGridView.Rows[nRow].Cells[2].Value = WinSpacer[n][1];
-                Spacer_dataGridView.Rows[nRow].Cells[3].Value = WinSpacer[n][2];
-                Spacer_dataGridView.Rows[nRow].Cells[4].Value = "IPAZEB";
-                for (int k = 3; k < 10; k++)
+                for (int n = 0; n < WinSpacer.Length; n++)
                 {
-                    Spacer_dataGridView.Rows[nRow].Cells[k + 2].Value = WinSpacer[n][k];
+                    Spacer_dataGridView.Rows.Add();
+                    int nRow = Spacer_dataGridView.Rows.Count - 1;
+                    Spacer_dataGridView.Rows[nRow].Cells[1].Value = WinSpacer[n][0];
+                    Spacer_dataGridView.Rows[nRow].Cells[2].Value = WinSpacer[n][1];
+                    Spacer_dataGridView.Rows[nRow].Cells[3].Value = WinSpacer[n][2];
+                    Spacer_dataGridView.Rows[nRow].Cells[4].Value = "IPAZEB";
+                    for (int k = 3; k < 10; k++)
+                    {
+                        Spacer_dataGridView.Rows[nRow].Cells[k + 2].Value = WinSpacer[n][k];
+                    }                   
                 }
-                //table_WindowSpacer.Rows.Add(WinSpacer[n][0], WinSpacer[n][1], WinSpacer[n][2], "IPAZEB", WinSpacer[n][3], WinSpacer[n][4], WinSpacer[n][5], WinSpacer[n][6], WinSpacer[n][7], WinSpacer[n][8], WinSpacer[n][9]);
             }
             Count_FrameDB = WinSpacer.Length;
         }

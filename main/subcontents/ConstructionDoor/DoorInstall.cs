@@ -34,8 +34,6 @@ namespace main.subcontents.ConstructionDoor
 
             //그림로드
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외부출입문'");
-            //Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            //Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
             //구분1콤보박스
             UserDBType1_comboBox.Items.Add("내단열");
@@ -49,7 +47,6 @@ namespace main.subcontents.ConstructionDoor
             UserDBType2_comboBox.Items.Add("외부측");
             UserDBType2_comboBox.Items.Add("내부측");
             UserDBType2_comboBox.SelectedItem = installlocation;
-            //UserDBType2_comboBox.Enabled = false;
 
             UserNum = Program.UTIL.CreateNum("User_DoorInstall", "번호", "UDIS_0");
             UserNum_textBox.Text = UserNum;
@@ -97,10 +94,9 @@ namespace main.subcontents.ConstructionDoor
             Install_dataGridView.Columns.Add("A7", "설치선형열관류율.하부.Ψg,buttom.[W/m·K]");
             Install_dataGridView.Columns[0].Width = 50;
 
-
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_DoorInstall", "번호,DB유형,제품명,구분1,구분2,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
+            if(Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_DoorInstall", "번호,DB유형,제품명,구분1,구분2,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
                 for (int n = 0; n < Value.Length; n++)
                 {
                     Install_dataGridView.Rows.Add();
@@ -111,10 +107,7 @@ namespace main.subcontents.ConstructionDoor
                     }
                 }
             }
-            catch { }
-
-
-
+           
             if (InstallType != null && InstallLocation != null)
             {
                 doorInstall = Program.DB.getValue(DB.type.BaseDB_HCneed, "외부출입문설치열교", "번호,제품명,구분1,구분2,상부설치,측면설치,하부설치", "구분1 = '" + InstallType + "'AND 구분2 = '" + InstallLocation + "'");
@@ -123,22 +116,20 @@ namespace main.subcontents.ConstructionDoor
             {
                 doorInstall = Program.DB.getValue(DB.type.BaseDB_HCneed, "외부출입문설치열교", "번호,제품명,구분1,구분2,상부설치,측면설치,하부설치", "구분1 = '" + InstallType + "'");
             }
-
-            for (int n = 0; n < doorInstall.Length; n++)
+            if(doorInstall.Length > 0)
             {
-                Install_dataGridView.Rows.Add();
-                int nRow = Install_dataGridView.Rows.Count - 1;
-                for (int k = 0; k < 7; k++)
+                for (int n = 0; n < doorInstall.Length; n++)
                 {
-                    Install_dataGridView.Rows[nRow].Cells[k + 1].Value = doorInstall[n][k];
+                    Install_dataGridView.Rows.Add();
+                    int nRow = Install_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 7; k++)
+                    {
+                        Install_dataGridView.Rows[nRow].Cells[k + 1].Value = doorInstall[n][k];
+                    }
                 }
-            }
+            }            
             Count_InstallDB = doorInstall.Length;
         }
-
-
-        //string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "외부출입문설치열교", "번호,제품명,구분1,구분2,상부설치,측면설치,하부설치", "");
-        //for (int n = 0; n < Value.Length; n++)
 
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {

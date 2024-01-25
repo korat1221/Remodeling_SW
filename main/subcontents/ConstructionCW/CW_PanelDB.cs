@@ -29,20 +29,22 @@ namespace main.subcontents.ConstructionCW
             UserNum_textBox.Text = UserNum;
 
             string[][] Type2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "종류2", "구분 = '단열재'");
-            List.Add(Type2[0][0]);
-            for (int n = 1; n < Type2.Length; n++)
+            if(Type2.Length > 0 )
             {
-                if (Type2[n - 1][0] != Type2[n][0])
+                List.Add(Type2[0][0]);
+                for (int n = 1; n < Type2.Length; n++)
                 {
-                    List.Add(Type2[n][0]);
+                    if (Type2[n - 1][0] != Type2[n][0])
+                    {
+                        List.Add(Type2[n][0]);
+                    }
                 }
+                string[] Array = List.ToArray();
+                UserDB_Type1_comboBox.Items.Clear();
+                UserDB_Type1_comboBox.Items.AddRange(Array);
+                UserDB_Type1_comboBox.SelectedIndex = 0;
+                load_table_PanelDB();
             }
-            string[] Array = List.ToArray();
-            UserDB_Type1_comboBox.Items.Clear();
-            UserDB_Type1_comboBox.Items.AddRange(Array);
-            UserDB_Type1_comboBox.SelectedIndex = 0;
-
-            load_table_PanelDB();
         }
         void load_table_PanelDB()
         {
@@ -64,21 +66,10 @@ namespace main.subcontents.ConstructionCW
             Panel_dataGridView.Columns.Add("A9", "투습저항계수.dry");
             Panel_dataGridView.Columns.Add("A10", "투습저항계수.wet");
             Panel_dataGridView.Columns.Add("A11", "비고");
-            //table_CWPanel.Columns.Add("번호", typeof(string));
-            //table_CWPanel.Columns.Add("DB유형", typeof(string));
-            //table_CWPanel.Columns.Add("재료명", typeof(string));
-            //table_CWPanel.Columns.Add("종류1", typeof(string));
-            //table_CWPanel.Columns.Add("종류2", typeof(string));
-            //table_CWPanel.Columns.Add("열전도율" + Environment.NewLine + "λ\r\n[W/m·K]", typeof(string));
-            //table_CWPanel.Columns.Add("밀도" + Environment.NewLine + "ρ\r\n[kg/m³]", typeof(string));
-            //table_CWPanel.Columns.Add("비열" + Environment.NewLine + "с\r\n[kJ/kg·K]", typeof(string));
-            //table_CWPanel.Columns.Add("투습저항계수" + Environment.NewLine + "dry", typeof(string));
-            //table_CWPanel.Columns.Add("투습저항계수" + Environment.NewLine + "wet", typeof(string));
-            //table_CWPanel.Columns.Add("비고", typeof(string));
 
-            try
+            string[][] User_CWPanel = Program.DB.getValue(DB.type.ProjDB, "User_Material", "번호,DB유형,재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '단열재'");
+            if(User_CWPanel.Length>0)
             {
-                string[][] User_CWPanel = Program.DB.getValue(DB.type.ProjDB, "User_Material", "번호,DB유형,재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '단열재'");
                 for (int n = 0; n < User_CWPanel.Length; n++)
                 {
                     Panel_dataGridView.Rows.Add();
@@ -86,37 +77,36 @@ namespace main.subcontents.ConstructionCW
                     for (int k = 0; k < 11; k++)
                     {
                         Panel_dataGridView.Rows[nRow].Cells[k + 1].Value = User_CWPanel[n][k];
-                    }
-                   // table_CWPanel.Rows.Add(User_CWPanel[n][0], User_CWPanel[n][1], User_CWPanel[n][2], User_CWPanel[n][3], User_CWPanel[n][4], User_CWPanel[n][5], User_CWPanel[n][6], User_CWPanel[n][7], User_CWPanel[n][8], User_CWPanel[n][9], User_CWPanel[n][10]);
+                    }                   
                 }
             }
-            catch { }
-
+               
             string[][] CWPanel = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '단열재'");
             String dbnum;
-            for (int n = 0; n < CWPanel.Length; n++)
+            if(CWPanel.Length>0)
             {
-                if (n + 1 < 10)
+                for (int n = 0; n < CWPanel.Length; n++)
                 {
-                    dbnum = "M_00" + (n + 1).ToString();
-                }
-                else
-                {
-                    dbnum = "M_0" + (n + 1).ToString();
-                }
+                    if (n + 1 < 10)
+                    {
+                        dbnum = "M_00" + (n + 1).ToString();
+                    }
+                    else
+                    {
+                        dbnum = "M_0" + (n + 1).ToString();
+                    }
 
-                Panel_dataGridView.Rows.Add();
-                int nRow = Panel_dataGridView.Rows.Count - 1;
-                Panel_dataGridView.Rows[nRow].Cells[1].Value = dbnum;
-                Panel_dataGridView.Rows[nRow].Cells[2].Value = "표준";
-                for (int k = 0; k < 9; k++)
-                {
-                    Panel_dataGridView.Rows[nRow].Cells[k + 3].Value = CWPanel[n][k];
+                    Panel_dataGridView.Rows.Add();
+                    int nRow = Panel_dataGridView.Rows.Count - 1;
+                    Panel_dataGridView.Rows[nRow].Cells[1].Value = dbnum;
+                    Panel_dataGridView.Rows[nRow].Cells[2].Value = "표준";
+                    for (int k = 0; k < 9; k++)
+                    {
+                        Panel_dataGridView.Rows[nRow].Cells[k + 3].Value = CWPanel[n][k];
+                    }
                 }
-                //table_CWPanel.Rows.Add(dbnum, "표준", CWPanel[n][0], CWPanel[n][1], CWPanel[n][2], CWPanel[n][3], CWPanel[n][4], CWPanel[n][5], CWPanel[n][6], CWPanel[n][7], CWPanel[n][8]);
             }
-            //Panel_dataGridView.DataSource = table_CWPanel;
-            Count_FrameDB = CWPanel.Length;
+          Count_FrameDB = CWPanel.Length;
         }
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {

@@ -49,16 +49,10 @@ namespace main.subcontents.ConstructionCW
             Door_dataGridView.Columns.Add("A5", "구분");
             Door_dataGridView.Columns.Add("A6", "프레임.열관류율.Uf,d\r\n[W/m²·K]");
             Door_dataGridView.Columns.Add("A7", "프레임.두께.dd\r\n[m]");
-            //table_CWDoor.Columns.Add("번호", typeof(string));
-            //table_CWDoor.Columns.Add("DB유형", typeof(string));
-            //table_CWDoor.Columns.Add("제품명", typeof(string));
-            //table_CWDoor.Columns.Add("제조사", typeof(string));
-            //table_CWDoor.Columns.Add("구분", typeof(string));
-            //table_CWDoor.Columns.Add("프레임\r\n열관류율" + Environment.NewLine + "Uf,d\r\n[W/m²·K]", typeof(string));
-            //table_CWDoor.Columns.Add("프레임\r\n두께" + Environment.NewLine + "dd\n[m]", typeof(string));
-            try
-            {
+         
                 string[][] User_CWDoorFrame = Program.DB.getValue(DB.type.ProjDB, "User_CWDoorFrame", "번호,DB유형,제품명,제조사,구분,프레임열관류율,프레임두께", "");
+            if(User_CWDoorFrame.Length > 0 )
+            {
                 for (int n = 0; n < User_CWDoorFrame.Length; n++)
                 {
                     Door_dataGridView.Rows.Add();
@@ -67,26 +61,24 @@ namespace main.subcontents.ConstructionCW
                     {
                         Door_dataGridView.Rows[nRow].Cells[k + 1].Value = User_CWDoorFrame[n][k];
                     }
-                    // table_CWDoor.Rows.Add(User_CWDoorFrame[n][0], User_CWDoorFrame[n][1], User_CWDoorFrame[n][2], User_CWDoorFrame[n][3], User_CWDoorFrame[n][4], User_CWDoorFrame[n][5], User_CWDoorFrame[n][6]);
+                }
+            }               
+            string[][] CWDoorFrame = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월도어프레임", "번호,DB유형,제품명,제조사,프레임열관류율,프레임두께", "");
+            if(CWDoorFrame.Length > 0 )
+            {
+                for (int n = 0; n < CWDoorFrame.Length; n++)
+                {
+                    Door_dataGridView.Rows.Add();
+                    int nRow = Door_dataGridView.Rows.Count - 1;
+                    Door_dataGridView.Rows[nRow].Cells[1].Value = CWDoorFrame[n][0];
+                    Door_dataGridView.Rows[nRow].Cells[2].Value = CWDoorFrame[n][1];
+                    Door_dataGridView.Rows[nRow].Cells[3].Value = CWDoorFrame[n][2];
+                    Door_dataGridView.Rows[nRow].Cells[4].Value = CWDoorFrame[n][3];
+                    Door_dataGridView.Rows[nRow].Cells[5].Value = CWDoorFrame[n][2];
+                    Door_dataGridView.Rows[nRow].Cells[6].Value = CWDoorFrame[n][4];
+                    Door_dataGridView.Rows[nRow].Cells[7].Value = CWDoorFrame[n][5];
                 }
             }
-            catch { }
-
-            string[][] CWDoorFrame = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월도어프레임", "번호,DB유형,제품명,제조사,프레임열관류율,프레임두께", "");
-            for (int n = 0; n < CWDoorFrame.Length; n++)
-            {
-                Door_dataGridView.Rows.Add();
-                int nRow = Door_dataGridView.Rows.Count - 1;
-                Door_dataGridView.Rows[nRow].Cells[1].Value = CWDoorFrame[n][0];
-                Door_dataGridView.Rows[nRow].Cells[2].Value = CWDoorFrame[n][1];
-                Door_dataGridView.Rows[nRow].Cells[3].Value = CWDoorFrame[n][2];
-                Door_dataGridView.Rows[nRow].Cells[4].Value = CWDoorFrame[n][3];
-                Door_dataGridView.Rows[nRow].Cells[5].Value = CWDoorFrame[n][2];
-                Door_dataGridView.Rows[nRow].Cells[6].Value = CWDoorFrame[n][4];
-                Door_dataGridView.Rows[nRow].Cells[7].Value = CWDoorFrame[n][5];
-                // table_CWDoor.Rows.Add(CWDoorFrame[n][0], CWDoorFrame[n][1], CWDoorFrame[n][2], CWDoorFrame[n][3], CWDoorFrame[n][2], CWDoorFrame[n][4], CWDoorFrame[n][5]);
-            }
-            //Door_dataGridView.DataSource = table_CWDoor;
             Count_FrameDB = CWDoorFrame.Length;
         }
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
