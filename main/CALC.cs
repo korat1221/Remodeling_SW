@@ -32,6 +32,8 @@ namespace main
 
             _calculations["연료별 에너지소요량 계산"] = new Func<bool>(FinalEnergyCalc);
 
+            _calculations["신재생시스템 계산"] = new Func<bool>(RESystemCalc);
+
             _calculations["법규 대안검토 계산"] =new Func<bool>(AltCalc);
         }
 
@@ -431,6 +433,7 @@ namespace main
                              "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + CoolingNum[i][0] + "','" + MTH + "','" +                           
                              cc1.QC_ce[mth] + "','" + cc1.QC_d[mth] + "','" + cc1.QC_s[mth] + "','" + cc1.QC_out[mth] + "','" + cc1.QC_f[mth] + "','" + cc1.Carrier
                               + "'", "번호,월"); ;
+                   
                 }
             }
             return true;
@@ -516,6 +519,35 @@ namespace main
                     + "'", "번호,월,연료"); ;
             }
             return true; 
+        }
+
+        private bool RESystemCalc()
+        {
+            string[][] PVNum = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "번호");
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
+            int i = -1;
+            String MTH;
+            while (++i < PVNum.Length)
+            {
+                Cal_RESystem PV = new Cal_RESystem(PVNum[i][0]);
+                PV.Load_PVdata();
+                PV.Cal_Qf_elec();
+                PV.Cal_Battery();
+                PV.Cal_fmatch();
+                PV.Cal_Qf_pv();
+
+                for (int mth = 0; mth <= 11; mth++)
+                {
+                    MTH = (mth + 1).ToString() + "월";
+                    Program.DB.setValue(DB.type.ProjDB, "PV_Result", "프로젝트번호,프로젝트유형,번호," +
+                             "월," +
+                             "매칭계수,배터리손실,계통연계형사용량,독립형사용량,최종사용량",
+                             "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PVNum[i][0] + "','" + MTH + "','" +
+                             PV.fmatch[mth] + "','" + PV.Qbatt_loss[mth] + "','" + PV.Qf_nutz_linked[mth] + "','" + PV.Qf_nutz_nonlinked[mth] + "','" + PV.Qf_nutz_PV[mth]
+                              + "'", "번호,월"); ;
+                }
+            }
+            return true;
         }
         private static bool AltCalc()
         {

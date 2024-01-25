@@ -19,7 +19,7 @@ namespace main.contentslist
 
         double CountDB;
         int SelectRow;
-       // DataTable ListTable = new DataTable();
+        // DataTable ListTable = new DataTable();
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
 
         public List_RESystem()
@@ -39,32 +39,11 @@ namespace main.contentslist
 
         public static bool OnLoadProc(Form form)
         {
-            List_Zone f = (List_Zone)form;
-
-            if (inEditing == "Edit")
-            {
-                f.LoadData(currentID);
-
-            }
-            else if (inEditing == "Copy")
-            {
-                f.LoadData(currentID);
-            }
-            else
-            {
-                f.ResetForm(currentID);
-            }
+            
 
             return true;
         }
-
-        private void Load_form(String ID, String editing)
-        {
-            currentID = ID;
-            inEditing = editing;
-            Program.getMenuForm().DoLoadForm(21, OnLoadProc);
-        }
-
+              
 
         public void Create_Table()
         {
@@ -100,41 +79,31 @@ namespace main.contentslist
         }
         public void load_List()
         {
+            List<object> mainMenu = new List<object>();
             List<object> subMenu = new List<object>();
+            List<object> subsubMenu = new List<object>();
 
-            subMenu.Add(new { text = "태양광시스템", id = "{\\\"formID\\\":21,\\\"ID\\\":\\\"SOLAR_1\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            subMenu.Add(new { text = "연료전지", id = "{\\\"formID\\\":22,\\\"ID\\\":\\\"SOLAR_2\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            subMenu.Add(new { text = "풍력시스템", id = "{\\\"formID\\\":23,\\\"ID\\\":\\\"SOLAR_3\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            subMenu.Add(new { text = "공급의무비율", id = "{\\\"formID\\\":24,\\\"ID\\\":\\\"SOLAR_4\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            subMenu.Add(new { text = "에너지자립률", id = "{\\\"formID\\\":25,\\\"ID\\\":\\\"SOLAR_5\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-
-           Program.UTIL.resetMainTree(4, 5, subMenu.ToArray(), "43"); // 예시 코드: 메인 메뉴 동적 할당
-        }
-
-
-        private void Remove_button_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void dataGridView1_DoubleClick(object sender, EventArgs e)
-        {
-            int k = dataGridView1.CurrentCell.RowIndex;
-            if (k > -1)
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "번호,명칭", "");
+            for (int n = 0; n < Value.Length; n++)
             {
-                    Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
+                subsubMenu.Add(new { text = Value[n][0] + "." + Value[n][1], id = "{\\\"formID\\\":21,\\\"ID\\\":\\\"" + Value[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당  
             }
 
+            subMenu.Add(new { text = "태양광시스템", id = "{\\\"formID\\\":53,\\\"ID\\\":\\\"SOLAR_1\\\"}", children = subsubMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
+            subMenu.Add(new { text = "연료전지", id = "{\\\"formID\\\":54,\\\"ID\\\":\\\"SOLAR_2\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            subMenu.Add(new { text = "풍력시스템", id = "{\\\"formID\\\":55,\\\"ID\\\":\\\"SOLAR_3\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            subMenu.Add(new { text = "공급의무비율", id = "{\\\"formID\\\":24,\\\"ID\\\":\\\"SOLAR_4\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            subMenu.Add(new { text = "에너지자립률", id = "{\\\"formID\\\":25,\\\"ID\\\":\\\"SOLAR_5\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            mainMenu.Add(new { text ="신재생시스템", id = "{\\\"formID\\\":53,\\\"ID\\\":\\\"" + "신재생시스템" + "\\\"}", children = subMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
+            Program.UTIL.resetMainTree(4, 5, subMenu.ToArray(), "43"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
-        private void Copy_button_Click(object sender, EventArgs e)
-        {
-        }
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
         }
-       
+
 
     }
 }

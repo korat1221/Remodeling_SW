@@ -71,6 +71,9 @@ namespace main
             List_ConstructionBlind,
             List_ConstructionDoor,
             PrintReport_Final,
+            List_PV,
+            List_FuelCell,
+            List_WindPower,
             None
 
         }
@@ -88,7 +91,8 @@ namespace main
             new Intro(), new ProjectList(), new OpenProject(), new List_RESystem(),
             new PrintReport_Lighting(),new PrintReport_Heating(),new PrintReport_Cooling(),new PrintReport_DHWSystem(),new PrintReport_AHUSystem(),
             new List_DHWSystem(),new List_ConstructionBlind(),new List_ConstructionDoor(),
-            new PrintReport_Final()}; //나중에 PV를 냉방리스트로 바꿔야함 
+            new PrintReport_Final(), 
+            new List_PV(),new List_FuelCell(),new List_WindPower()}; 
         bool scriptable = false;
         public class FormParam
         {
@@ -220,6 +224,24 @@ namespace main
             else if (formParam.formID == 20)
             {
                 CoolingSystem f = (CoolingSystem)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 21)
+            {
+                PV f = (PV)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 22)
+            {
+                FuelCell f = (FuelCell)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 23)
+            {
+                WindPower f = (WindPower)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -364,6 +386,24 @@ namespace main
             else if (formParam.formID == 52)
             {
                 PrintReport_Final f = (PrintReport_Final)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 53)
+            {
+                List_PV f = (List_PV)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 54)
+            {
+                List_FuelCell f = (List_FuelCell)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 55)
+            {
+                List_WindPower f = (List_WindPower)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -540,12 +580,6 @@ namespace main
 
                     f.LoadData("");
                 }
-//                else if (i == 37)
- //               {
- //                   PrintReport_HCneed f = (PrintReport_HCneed)forms[i];
- //
-   //                 f.LoadData("");
-     //           }
                 else if (i == 38)
                 {
                     List_CoolingSystem f = (List_CoolingSystem)forms[i];
@@ -582,11 +616,28 @@ namespace main
 
                     f.LoadData("");
                 }
+                else if (i == 53)
+                {
+                    List_PV f = (List_PV)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 54)
+                {
+                    List_FuelCell f = (List_FuelCell)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 55)
+                {
+                    List_WindPower f = (List_WindPower)forms[i];
+
+                    f.LoadData("");
+                }
             }
         }
         public void DoLoadFormDirect(int idx)
         {
-            //        Program.UTIL.unselectAll();
             formParam.formID = idx;
             DoLoadForm(idx, OnLoadProc);
         }
@@ -780,6 +831,48 @@ namespace main
                     {
                         openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
                         forms[idx] = new CoolingSystem();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+            else if (idx == 21)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new PV();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+            else if (idx == 22)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new FuelCell();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+            else if (idx == 23)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new WindPower();
                         forms[idx].TopLevel = false;
                         openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
                         return;

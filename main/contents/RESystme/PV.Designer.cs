@@ -31,8 +31,8 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PV));
             PVModule_textBox = new TextBox();
-            PVsystem_combobox = new ComboBox();
             GeneralPanel = new Panel();
             label1 = new Label();
             Num_textBox = new TextBox();
@@ -49,6 +49,7 @@
             radioButton1 = new RadioButton();
             계통유형 = new Label();
             panel1 = new Panel();
+            PVsystem_combobox = new CustomComboBox();
             label4 = new Label();
             BatteryDB_button = new Button();
             InverterDB_button = new Button();
@@ -64,7 +65,9 @@
             PVModuleDB_button = new Button();
             label6 = new Label();
             AdditionalPanel = new Panel();
-            VentilationType_comboBox = new ComboBox();
+            VentilationType_comboBox = new CustomComboBox();
+            slope_comboBox = new CustomComboBox();
+            orientation_comboBox = new CustomComboBox();
             label23 = new Label();
             height_label2 = new Label();
             width_label2 = new Label();
@@ -77,8 +80,6 @@
             height_n_textBox = new TextBox();
             width_label = new Label();
             height_label = new Label();
-            orientation_comboBox = new ComboBox();
-            slope_comboBox = new ComboBox();
             label21 = new Label();
             label20 = new Label();
             PVHshobst_m_textBox = new TextBox();
@@ -95,7 +96,6 @@
             label13 = new Label();
             Previous_button = new Button();
             Save_button = new Button();
-            Caculation_Button = new Button();
             label12 = new Label();
             averagecpacity_textBox = new TextBox();
             label29 = new Label();
@@ -105,6 +105,12 @@
             panel2 = new Panel();
             PV_dataGridView = new DataGridView();
             label36 = new Label();
+            panel3 = new Panel();
+            label3 = new Label();
+            pictureBox3 = new PictureBox();
+            pictureBox4 = new PictureBox();
+            label22 = new Label();
+            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox1.SuspendLayout();
@@ -113,6 +119,10 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PV_dataGridView).BeginInit();
+            panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
             // PVModule_textBox
@@ -126,16 +136,6 @@
             PVModule_textBox.Size = new Size(120, 15);
             PVModule_textBox.TabIndex = 94;
             PVModule_textBox.TextAlign = HorizontalAlignment.Center;
-            PVModule_textBox.TextChanged += PVModule_textBox_TextChanged;
-            // 
-            // PVsystem_combobox
-            // 
-            PVsystem_combobox.FormattingEnabled = true;
-            PVsystem_combobox.Location = new Point(203, 8);
-            PVsystem_combobox.Name = "PVsystem_combobox";
-            PVsystem_combobox.Size = new Size(121, 23);
-            PVsystem_combobox.TabIndex = 0;
-            PVsystem_combobox.SelectedIndexChanged += PVsystem_combobox_SelectedIndexChanged;
             // 
             // GeneralPanel
             // 
@@ -184,6 +184,8 @@
             Name_textBox.Name = "Name_textBox";
             Name_textBox.Size = new Size(120, 23);
             Name_textBox.TabIndex = 131;
+            Name_textBox.TextAlign = HorizontalAlignment.Center;
+            Name_textBox.TextChanged += Name_textBox_TextChanged;
             // 
             // label8
             // 
@@ -298,10 +300,10 @@
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(PVsystem_combobox);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(BatteryDB_button);
             panel1.Controls.Add(InverterDB_button);
-            panel1.Controls.Add(PVsystem_combobox);
             panel1.Controls.Add(Batterycapacity_s);
             panel1.Controls.Add(Batterycapacity_textBox);
             panel1.Controls.Add(계통유형);
@@ -317,6 +319,17 @@
             panel1.Size = new Size(977, 113);
             panel1.TabIndex = 19;
             panel1.Paint += panel1_Paint;
+            // 
+            // PVsystem_combobox
+            // 
+            PVsystem_combobox.DrawMode = DrawMode.OwnerDrawFixed;
+            PVsystem_combobox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PVsystem_combobox.FormattingEnabled = true;
+            PVsystem_combobox.Location = new Point(206, 8);
+            PVsystem_combobox.Name = "PVsystem_combobox";
+            PVsystem_combobox.Size = new Size(120, 23);
+            PVsystem_combobox.TabIndex = 130;
+            PVsystem_combobox.SelectedIndexChanged += PVsystem_combobox_SelectedIndexChanged;
             // 
             // label4
             // 
@@ -497,6 +510,8 @@
             // 
             AdditionalPanel.BackColor = Color.White;
             AdditionalPanel.Controls.Add(VentilationType_comboBox);
+            AdditionalPanel.Controls.Add(slope_comboBox);
+            AdditionalPanel.Controls.Add(orientation_comboBox);
             AdditionalPanel.Controls.Add(label23);
             AdditionalPanel.Controls.Add(height_label2);
             AdditionalPanel.Controls.Add(width_label2);
@@ -509,8 +524,6 @@
             AdditionalPanel.Controls.Add(height_n_textBox);
             AdditionalPanel.Controls.Add(width_label);
             AdditionalPanel.Controls.Add(height_label);
-            AdditionalPanel.Controls.Add(orientation_comboBox);
-            AdditionalPanel.Controls.Add(slope_comboBox);
             AdditionalPanel.Controls.Add(label21);
             AdditionalPanel.Controls.Add(label20);
             AdditionalPanel.Controls.Add(PVHshobst_m_textBox);
@@ -531,12 +544,36 @@
             // 
             // VentilationType_comboBox
             // 
+            VentilationType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            VentilationType_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             VentilationType_comboBox.FormattingEnabled = true;
             VentilationType_comboBox.Location = new Point(203, 177);
             VentilationType_comboBox.Name = "VentilationType_comboBox";
-            VentilationType_comboBox.Size = new Size(121, 23);
-            VentilationType_comboBox.TabIndex = 130;
+            VentilationType_comboBox.Size = new Size(120, 23);
+            VentilationType_comboBox.TabIndex = 134;
             VentilationType_comboBox.SelectedIndexChanged += VentilationType_comboBox_SelectedIndexChanged;
+            // 
+            // slope_comboBox
+            // 
+            slope_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            slope_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            slope_comboBox.FormattingEnabled = true;
+            slope_comboBox.Location = new Point(460, 90);
+            slope_comboBox.Name = "slope_comboBox";
+            slope_comboBox.Size = new Size(120, 23);
+            slope_comboBox.TabIndex = 133;
+            slope_comboBox.SelectedIndexChanged += slope_comboBox_SelectedIndexChanged;
+            // 
+            // orientation_comboBox
+            // 
+            orientation_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            orientation_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            orientation_comboBox.FormattingEnabled = true;
+            orientation_comboBox.Location = new Point(203, 90);
+            orientation_comboBox.Name = "orientation_comboBox";
+            orientation_comboBox.Size = new Size(120, 23);
+            orientation_comboBox.TabIndex = 132;
+            orientation_comboBox.SelectedIndexChanged += orientation_comboBox_SelectedIndexChanged;
             // 
             // label23
             // 
@@ -664,29 +701,11 @@
             height_label.AutoSize = true;
             height_label.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             height_label.ForeColor = SystemColors.ControlText;
-            height_label.Location = new Point(417, 11);
+            height_label.Location = new Point(414, 11);
             height_label.Name = "height_label";
             height_label.Size = new Size(31, 15);
             height_label.TabIndex = 117;
             height_label.Text = "세로";
-            // 
-            // orientation_comboBox
-            // 
-            orientation_comboBox.FormattingEnabled = true;
-            orientation_comboBox.Location = new Point(203, 90);
-            orientation_comboBox.Name = "orientation_comboBox";
-            orientation_comboBox.Size = new Size(121, 23);
-            orientation_comboBox.TabIndex = 116;
-            orientation_comboBox.SelectedIndexChanged += orientation_comboBox_SelectedIndexChanged;
-            // 
-            // slope_comboBox
-            // 
-            slope_comboBox.FormattingEnabled = true;
-            slope_comboBox.Location = new Point(461, 90);
-            slope_comboBox.Name = "slope_comboBox";
-            slope_comboBox.Size = new Size(121, 23);
-            slope_comboBox.TabIndex = 95;
-            slope_comboBox.SelectedIndexChanged += slope_comboBox_SelectedIndexChanged;
             // 
             // label21
             // 
@@ -771,11 +790,11 @@
             // 
             label18.AutoSize = true;
             label18.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label18.Location = new Point(418, 94);
+            label18.Location = new Point(415, 94);
             label18.Name = "label18";
-            label18.Size = new Size(31, 15);
+            label18.Size = new Size(43, 15);
             label18.TabIndex = 111;
-            label18.Text = "경사";
+            label18.Text = "기울기";
             // 
             // install_label
             // 
@@ -844,33 +863,25 @@
             // 
             Previous_button.BackColor = SystemColors.ButtonHighlight;
             Previous_button.ForeColor = Color.Black;
-            Previous_button.Location = new Point(1006, 704);
+            Previous_button.Location = new Point(995, 818);
             Previous_button.Name = "Previous_button";
             Previous_button.Size = new Size(88, 25);
             Previous_button.TabIndex = 99;
             Previous_button.Text = "<<PREVIOUS";
             Previous_button.UseVisualStyleBackColor = true;
+            Previous_button.Click += Previous_button_Click;
             // 
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1100, 704);
+            Save_button.Location = new Point(1089, 818);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 98;
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
-            // 
-            // Caculation_Button
-            // 
-            Caculation_Button.Location = new Point(1006, 652);
-            Caculation_Button.Name = "Caculation_Button";
-            Caculation_Button.Size = new Size(75, 23);
-            Caculation_Button.TabIndex = 125;
-            Caculation_Button.Text = "계산";
-            Caculation_Button.UseVisualStyleBackColor = true;
-            Caculation_Button.Click += Caculation_Button_Click;
+            Save_button.Click += Save_button_Click;
             // 
             // label12
             // 
@@ -1003,16 +1014,77 @@
             label36.TabIndex = 140;
             label36.Text = "태양광 모듈";
             // 
+            // panel3
+            // 
+            panel3.BackColor = Color.White;
+            panel3.Controls.Add(label3);
+            panel3.Controls.Add(pictureBox3);
+            panel3.Controls.Add(pictureBox4);
+            panel3.Controls.Add(label22);
+            panel3.Controls.Add(webView21);
+            panel3.Location = new Point(12, 656);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(977, 187);
+            panel3.TabIndex = 141;
+            panel3.Paint += panel3_Paint;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(19, 64);
+            label3.Name = "label3";
+            label3.Size = new Size(120, 15);
+            label3.TabIndex = 158;
+            label3.Text = "일사량(kWh/m²·mth)";
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.Location = new Point(143, 57);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(28, 26);
+            pictureBox3.TabIndex = 157;
+            pictureBox3.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
+            pictureBox4.Location = new Point(120, 32);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(51, 19);
+            pictureBox4.TabIndex = 156;
+            pictureBox4.TabStop = false;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Location = new Point(19, 32);
+            label22.Name = "label22";
+            label22.Size = new Size(67, 15);
+            label22.TabIndex = 155;
+            label22.Text = "전기생산량";
+            // 
+            // webView21
+            // 
+            webView21.AllowExternalDrop = true;
+            webView21.CreationProperties = null;
+            webView21.DefaultBackgroundColor = Color.White;
+            webView21.Location = new Point(177, 7);
+            webView21.Name = "webView21";
+            webView21.Size = new Size(781, 177);
+            webView21.TabIndex = 154;
+            webView21.ZoomFactor = 1D;
+            // 
             // PV
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
-            ClientSize = new Size(1200, 730);
+            ClientSize = new Size(1200, 896);
+            Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(label36);
             Controls.Add(label12);
-            Controls.Add(Caculation_Button);
             Controls.Add(averagecpacity_textBox);
             Controls.Add(label29);
             Controls.Add(label28);
@@ -1041,6 +1113,11 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)PV_dataGridView).EndInit();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1051,7 +1128,6 @@
         private Panel AdditionalPanel;
         private PictureBox pictureBox1;
         private Label 계통유형;
-        private ComboBox PVsystem_combobox;
         private Panel panel1;
         private Label label5;
         private Label label6;
@@ -1071,8 +1147,6 @@
         private Label label13;
         private Label width_label;
         private Label height_label;
-        private ComboBox orientation_comboBox;
-        private ComboBox slope_comboBox;
         private Label label21;
         private Label label20;
         private TextBox PVHshobst_m_textBox;
@@ -1101,7 +1175,6 @@
         private TextBox allcapacity_textBox;
         private Label label27;
         private Label label12;
-        private Button Caculation_Button;
         private Label height_label2;
         private Label width_label2;
         private Panel panel2;
@@ -1119,7 +1192,16 @@
         private Label label1;
         private TextBox Num_textBox;
         private TextBox Name_textBox;
-        private ComboBox VentilationType_comboBox;
         private Label label23;
+        private Panel panel3;
+        private Label label3;
+        private PictureBox pictureBox3;
+        private PictureBox pictureBox4;
+        private Label label22;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+        private CustomComboBox PVsystem_combobox;
+        private CustomComboBox VentilationType_comboBox;
+        private CustomComboBox slope_comboBox;
+        private CustomComboBox orientation_comboBox;
     }
 }

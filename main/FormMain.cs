@@ -121,6 +121,9 @@ namespace main
             });
             Program.CALC.run(new string[] {
             "연료별 에너지소요량 계산"
+            }); 
+            Program.CALC.run(new string[] {
+            "신재생시스템 계산"
             });
             MessageBox.Show("계산되었습니다.");
         }

@@ -931,7 +931,7 @@ namespace main.contents
             }
             if (PV_dataGridView.Rows[row].Cells[2].Value != null && PV_dataGridView.Rows[row].Cells[2].Value.ToString() == "기본")
             {
-                if (column == 7 || column == 8 || column == 9)
+                if (column == 9)
                 {
                     cell.Style.BackColor = Color.FromArgb(255, 255, 255);
                     cell.Style.ForeColor = Color.Black;
@@ -1053,6 +1053,11 @@ namespace main.contents
                         if (PV_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && PV_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && PV_dataGridView.Rows[e.RowIndex].Cells[9].Value != null)
                         { PV_dataGridView.Rows[e.RowIndex].Cells[10].Value = string.Format("{0:F2}", Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString()) / Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()) / 1000); }
                         // UserDB_Kpk = UserDB_output / (UserDB_height * UserDB_width) / 1000;
+                    }
+                    if (e.ColumnIndex == 7 || e.ColumnIndex == 8 || e.ColumnIndex == 10)
+                    {
+                        if (PV_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && PV_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && PV_dataGridView.Rows[e.RowIndex].Cells[10].Value != null)
+                        { PV_dataGridView.Rows[e.RowIndex].Cells[9].Value = string.Format("{0:F2}", Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) * Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) * Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()) *1000); }                       
                     }
 
                 }

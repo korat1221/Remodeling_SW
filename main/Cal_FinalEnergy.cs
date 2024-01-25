@@ -13,6 +13,7 @@ namespace main
         public double[] Qwf_gas = new double[12], Qwf_elec = new double[12];
         public double[] Qlf_elec = new double[12];
         public double[] Qvf_gas = new double[12], Qvf_elec = new double[12]; //공조
+        public double[] Qreg_elec = new double[12];//신재생
         public double[] Qbase_gas = new double[12], Qbase_elec = new double[12];
         public double[] Qf_gas_tot1 = new double[12], Qf_elec_tot1 = new double[12];
         public double[] Qf_gas_tot_mth = new double[12], Qf_elec_tot_mth = new double[12];
@@ -79,7 +80,18 @@ namespace main
 
             }
             catch { }
+            //신재생
+            try
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                   string[][] Value = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "전기생산량", "월 ='" + (mth + 1).ToString() + "월'");
 
+                    Qreg_elec[mth]+= Convert.ToDouble(Value[0][0]);
+                }
+
+            }
+            catch { }
             try
             {
                 for (int mth = 0; mth < 12; mth++)
@@ -187,78 +199,6 @@ namespace main
             }
             catch { }
 
-
-            /*
-            ///샘플
-            Qhf_elec[0] = 1149;
-            Qhf_elec[1] = 833;
-            Qhf_elec[2] = 703;
-            Qhf_elec[3] = 482;
-            Qhf_elec[4] = 88;
-            Qhf_elec[5] = 0;
-            Qhf_elec[6] = 0;
-            Qhf_elec[7] = 0;
-            Qhf_elec[8] = 0;
-            Qhf_elec[9] = 400;
-            Qhf_elec[10] = 593;
-            Qhf_elec[11] = 960;
-
-            Qcf_elec[0] = 0;
-            Qcf_elec[1] = 0;
-            Qcf_elec[2] = 0;
-            Qcf_elec[3] = 0;
-            Qcf_elec[4] = 743;
-            Qcf_elec[5] = 2024;
-            Qcf_elec[6] = 3377;
-            Qcf_elec[7] = 3045;
-            Qcf_elec[8] = 1198;
-            Qcf_elec[9] = 0;
-            Qcf_elec[10] = 0;
-            Qcf_elec[11] = 0;
-
-            Qwf_elec[0] = 63;
-            Qwf_elec[1] = 57;
-            Qwf_elec[2] = 63;
-            Qwf_elec[3] = 61;
-            Qwf_elec[4] = 63;
-            Qwf_elec[5] = 61;
-            Qwf_elec[6] = 63;
-            Qwf_elec[7] = 63;
-            Qwf_elec[8] = 61;
-            Qwf_elec[9] = 63;
-            Qwf_elec[10] = 61;
-            Qwf_elec[11] = 63;
-
-            Qlf_elec[0] = 847;
-            Qlf_elec[1] = 772;
-            Qlf_elec[2] = 860;
-            Qlf_elec[3] = 836;
-            Qlf_elec[4] = 868;
-            Qlf_elec[5] = 844;
-            Qlf_elec[6] = 871;
-            Qlf_elec[7] = 867;
-            Qlf_elec[8] = 831;
-            Qlf_elec[9] = 851;
-            Qlf_elec[10] = 814;
-            Qlf_elec[11] = 839;
-
-
-            Quse_elec_mth[0] = 2610;
-            Quse_elec_mth[1] = 2495;
-            Quse_elec_mth[2] = 2425;
-            Quse_elec_mth[3] = 2232;
-            Quse_elec_mth[4] = 2144;
-            Quse_elec_mth[5] = 2708;
-            Quse_elec_mth[6] = 3718;
-            Quse_elec_mth[7] = 4043;
-            Quse_elec_mth[8] = 3185;
-            Quse_elec_mth[9] = 2480;
-            Quse_elec_mth[10] = 2205;
-            Quse_elec_mth[11] = 2325;
-            */
-            ///////////////////////////
-            
-
             for (int mth = 0; mth < 12; mth++)
             {
                 Qf_elec_tot1[mth] = Qhf_elec[mth] + Qcf_elec[mth] + Qwf_elec[mth] + Qlf_elec[mth] + Qvf_elec[mth];
@@ -277,7 +217,7 @@ namespace main
                 double[] Error_elec = new double[12];
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    Error_elec[mth] = Quse_elec_mth[mth] - Qf_elec_tot1[mth];
+                    Error_elec[mth] = Quse_elec_mth[mth] - Qf_elec_tot1[mth] + Qreg_elec[mth];
                     x[mth] = Qhf_elec[mth]; y[mth] = Error_elec[mth];
                 }
 

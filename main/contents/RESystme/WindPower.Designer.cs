@@ -29,15 +29,14 @@
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
-            textBox2 = new TextBox();
-            label3 = new Label();
-            label1 = new Label();
-            textBox1 = new TextBox();
             panel2 = new Panel();
-            AdditionalPanel = new Panel();
-            pictureBox1 = new PictureBox();
             FCDB_button = new Button();
             label6 = new Label();
+            AdditionalPanel = new Panel();
+            label1 = new Label();
+            Num_textBox = new TextBox();
+            Name_textBox = new TextBox();
+            pictureBox1 = new PictureBox();
             GeneralPanel.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -46,56 +45,15 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(pictureBox1);
-            GeneralPanel.Controls.Add(textBox2);
-            GeneralPanel.Controls.Add(label3);
             GeneralPanel.Controls.Add(label1);
-            GeneralPanel.Controls.Add(textBox1);
+            GeneralPanel.Controls.Add(Num_textBox);
+            GeneralPanel.Controls.Add(Name_textBox);
+            GeneralPanel.Controls.Add(pictureBox1);
             GeneralPanel.Location = new Point(12, 12);
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(977, 101);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
-            // 
-            // textBox2
-            // 
-            textBox2.BackColor = SystemColors.Window;
-            textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox2.Location = new Point(155, 52);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(120, 22);
-            textBox2.TabIndex = 89;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(74, 56);
-            label3.Name = "label3";
-            label3.Size = new Size(31, 15);
-            label3.TabIndex = 3;
-            label3.Text = "풍력";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(102, 19);
-            label1.Name = "label1";
-            label1.Size = new Size(19, 15);
-            label1.TabIndex = 1;
-            label1.Text = "층";
-            // 
-            // textBox1
-            // 
-            textBox1.BackColor = SystemColors.Window;
-            textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.Location = new Point(155, 16);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(120, 22);
-            textBox1.TabIndex = 88;
             // 
             // panel2
             // 
@@ -107,24 +65,6 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(977, 149);
             panel2.TabIndex = 18;
-            // 
-            // AdditionalPanel
-            // 
-            AdditionalPanel.BackColor = Color.White;
-            AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
-            AdditionalPanel.Location = new Point(12, 303);
-            AdditionalPanel.Name = "AdditionalPanel";
-            AdditionalPanel.Size = new Size(977, 390);
-            AdditionalPanel.TabIndex = 18;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(19, 36);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(40, 35);
-            pictureBox1.TabIndex = 92;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
             // 
             // FCDB_button
             // 
@@ -149,6 +89,53 @@
             label6.Size = new Size(31, 15);
             label6.TabIndex = 103;
             label6.Text = "풍력";
+            // 
+            // AdditionalPanel
+            // 
+            AdditionalPanel.BackColor = Color.White;
+            AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
+            AdditionalPanel.Location = new Point(12, 303);
+            AdditionalPanel.Name = "AdditionalPanel";
+            AdditionalPanel.Size = new Size(977, 390);
+            AdditionalPanel.TabIndex = 18;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(137, 46);
+            label1.Name = "label1";
+            label1.Size = new Size(31, 15);
+            label1.TabIndex = 137;
+            label1.Text = "명칭";
+            // 
+            // Num_textBox
+            // 
+            Num_textBox.BackColor = Color.White;
+            Num_textBox.BorderStyle = BorderStyle.None;
+            Num_textBox.Enabled = false;
+            Num_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Num_textBox.ForeColor = SystemColors.ControlText;
+            Num_textBox.Location = new Point(75, 46);
+            Num_textBox.Name = "Num_textBox";
+            Num_textBox.Size = new Size(56, 15);
+            Num_textBox.TabIndex = 136;
+            Num_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Name_textBox
+            // 
+            Name_textBox.BorderStyle = BorderStyle.FixedSingle;
+            Name_textBox.Location = new Point(174, 43);
+            Name_textBox.Name = "Name_textBox";
+            Name_textBox.Size = new Size(120, 23);
+            Name_textBox.TabIndex = 135;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(19, 29);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(50, 50);
+            pictureBox1.TabIndex = 134;
+            pictureBox1.TabStop = false;
             // 
             // WindPower
             // 
@@ -176,12 +163,11 @@
         private Panel GeneralPanel;
         private Panel panel2;
         private Panel AdditionalPanel;
-        private Label label1;
-        private TextBox textBox1;
-        private Label label3;
-        private TextBox textBox2;
-        private PictureBox pictureBox1;
         private Button FCDB_button;
         private Label label6;
+        private Label label1;
+        private TextBox Num_textBox;
+        private TextBox Name_textBox;
+        private PictureBox pictureBox1;
     }
 }

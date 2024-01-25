@@ -56,6 +56,15 @@
     <Compile Update="contentslist\List_DHWSystem.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="contentslist\List_FuelCell.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contentslist\List_WindPower.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contentslist\List_PV.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="contentslist\List_RESystem.cs">
       <SubType>Form</SubType>
     </Compile>

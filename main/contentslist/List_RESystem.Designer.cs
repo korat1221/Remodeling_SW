@@ -32,9 +32,6 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
-            Copy_button = new Button();
-            Remove_button = new Button();
-            Add_button = new Button();
             dataGridView1 = new DataGridView();
             Icon_pictureBox = new PictureBox();
             GeneralPanel.SuspendLayout();
@@ -45,9 +42,6 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(Copy_button);
-            GeneralPanel.Controls.Add(Remove_button);
-            GeneralPanel.Controls.Add(Add_button);
             GeneralPanel.Controls.Add(dataGridView1);
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Location = new Point(12, 12);
@@ -55,50 +49,6 @@
             GeneralPanel.Size = new Size(977, 661);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
-            // 
-            // Copy_button
-            // 
-            Copy_button.BackColor = SystemColors.ControlLight;
-            Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            Copy_button.FlatStyle = FlatStyle.System;
-            Copy_button.Font = new Font("나눔고딕", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            Copy_button.Location = new Point(901, 52);
-            Copy_button.Margin = new Padding(0);
-            Copy_button.Name = "Copy_button";
-            Copy_button.Size = new Size(47, 23);
-            Copy_button.TabIndex = 91;
-            Copy_button.Text = "Copy";
-            Copy_button.UseVisualStyleBackColor = false;
-            Copy_button.Click += Copy_button_Click;
-            // 
-            // Remove_button
-            // 
-            Remove_button.BackColor = SystemColors.ControlLight;
-            Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            Remove_button.FlatStyle = FlatStyle.System;
-            Remove_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Remove_button.Location = new Point(868, 52);
-            Remove_button.Margin = new Padding(0);
-            Remove_button.Name = "Remove_button";
-            Remove_button.Size = new Size(23, 23);
-            Remove_button.TabIndex = 90;
-            Remove_button.Text = "-";
-            Remove_button.UseVisualStyleBackColor = false;
-            Remove_button.Click += Remove_button_Click;
-            // 
-            // Add_button
-            // 
-            Add_button.BackColor = SystemColors.ControlLight;
-            Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            Add_button.FlatStyle = FlatStyle.System;
-            Add_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Add_button.Location = new Point(835, 52);
-            Add_button.Margin = new Padding(0);
-            Add_button.Name = "Add_button";
-            Add_button.Size = new Size(23, 23);
-            Add_button.TabIndex = 89;
-            Add_button.Text = "+";
-            Add_button.UseVisualStyleBackColor = false;
             // 
             // dataGridView1
             // 
@@ -141,7 +91,6 @@
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(954, 575);
             dataGridView1.TabIndex = 19;
-            dataGridView1.DoubleClick += dataGridView1_DoubleClick;
             // 
             // Icon_pictureBox
             // 
@@ -173,8 +122,5 @@
         private Panel GeneralPanel;
         private PictureBox Icon_pictureBox;
         private DataGridView dataGridView1;
-        private Button Remove_button;
-        private Button Add_button;
-        private Button Copy_button;
     }
 }

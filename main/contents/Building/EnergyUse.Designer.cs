@@ -62,6 +62,10 @@
             Gas_m3_dataGridView = new DataGridView();
             Save_button = new Button();
             Elec_tabPage = new TabPage();
+            textBox8 = new TextBox();
+            textBox7 = new TextBox();
+            textBox6 = new TextBox();
+            textBox5 = new TextBox();
             webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
             pictureBox2 = new PictureBox();
             checkBox8 = new CheckBox();
@@ -77,10 +81,6 @@
             Elec_Add_button = new Button();
             Elec_dataGridView = new DataGridView();
             Gas_Save_button = new CustomTabControl();
-            textBox8 = new TextBox();
-            textBox7 = new TextBox();
-            textBox6 = new TextBox();
-            textBox5 = new TextBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -119,16 +119,16 @@
             webView21.AllowExternalDrop = true;
             webView21.CreationProperties = null;
             webView21.DefaultBackgroundColor = Color.White;
-            webView21.Location = new Point(205, 331);
+            webView21.Location = new Point(205, 321);
             webView21.Name = "webView21";
-            webView21.Size = new Size(743, 318);
+            webView21.Size = new Size(743, 200);
             webView21.TabIndex = 0;
             webView21.ZoomFactor = 1D;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(118, 490);
+            pictureBox1.Location = new Point(124, 404);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(75, 115);
             pictureBox1.TabIndex = 19;
@@ -139,7 +139,7 @@
             checkBox1.AutoSize = true;
             checkBox1.Checked = true;
             checkBox1.CheckState = CheckState.Checked;
-            checkBox1.Location = new Point(95, 490);
+            checkBox1.Location = new Point(101, 404);
             checkBox1.Name = "checkBox1";
             checkBox1.RightToLeft = RightToLeft.Yes;
             checkBox1.Size = new Size(15, 14);
@@ -152,7 +152,7 @@
             checkBox2.AutoSize = true;
             checkBox2.Checked = true;
             checkBox2.CheckState = CheckState.Checked;
-            checkBox2.Location = new Point(95, 517);
+            checkBox2.Location = new Point(101, 431);
             checkBox2.Name = "checkBox2";
             checkBox2.RightToLeft = RightToLeft.Yes;
             checkBox2.Size = new Size(15, 14);
@@ -165,7 +165,7 @@
             checkBox4.AutoSize = true;
             checkBox4.Checked = true;
             checkBox4.CheckState = CheckState.Checked;
-            checkBox4.Location = new Point(95, 571);
+            checkBox4.Location = new Point(101, 485);
             checkBox4.Name = "checkBox4";
             checkBox4.RightToLeft = RightToLeft.Yes;
             checkBox4.Size = new Size(15, 14);
@@ -178,7 +178,7 @@
             checkBox3.AutoSize = true;
             checkBox3.Checked = true;
             checkBox3.CheckState = CheckState.Checked;
-            checkBox3.Location = new Point(95, 544);
+            checkBox3.Location = new Point(101, 458);
             checkBox3.Name = "checkBox3";
             checkBox3.RightToLeft = RightToLeft.Yes;
             checkBox3.Size = new Size(15, 14);
@@ -210,7 +210,7 @@
             Gas_tabPage.Location = new Point(4, 25);
             Gas_tabPage.Name = "Gas_tabPage";
             Gas_tabPage.Padding = new Padding(3);
-            Gas_tabPage.Size = new Size(969, 657);
+            Gas_tabPage.Size = new Size(969, 527);
             Gas_tabPage.TabIndex = 6;
             Gas_tabPage.Text = "가스사용량";
             Gas_tabPage.UseVisualStyleBackColor = true;
@@ -222,7 +222,7 @@
             textBox4.Enabled = false;
             textBox4.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             textBox4.ForeColor = SystemColors.ControlDark;
-            textBox4.Location = new Point(6, 571);
+            textBox4.Location = new Point(12, 485);
             textBox4.Name = "textBox4";
             textBox4.ReadOnly = true;
             textBox4.Size = new Size(86, 15);
@@ -236,7 +236,7 @@
             textBox3.Enabled = false;
             textBox3.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             textBox3.ForeColor = SystemColors.ControlDark;
-            textBox3.Location = new Point(6, 544);
+            textBox3.Location = new Point(12, 458);
             textBox3.Name = "textBox3";
             textBox3.ReadOnly = true;
             textBox3.Size = new Size(86, 15);
@@ -250,7 +250,7 @@
             textBox2.Enabled = false;
             textBox2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             textBox2.ForeColor = SystemColors.ControlDark;
-            textBox2.Location = new Point(6, 517);
+            textBox2.Location = new Point(12, 431);
             textBox2.Name = "textBox2";
             textBox2.ReadOnly = true;
             textBox2.Size = new Size(86, 15);
@@ -264,7 +264,7 @@
             textBox1.Enabled = false;
             textBox1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             textBox1.ForeColor = SystemColors.ControlDark;
-            textBox1.Location = new Point(6, 490);
+            textBox1.Location = new Point(12, 404);
             textBox1.Name = "textBox1";
             textBox1.ReadOnly = true;
             textBox1.Size = new Size(86, 15);
@@ -441,7 +441,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1014, 780);
+            Save_button.Location = new Point(1015, 650);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 117;
@@ -473,9 +473,65 @@
             Elec_tabPage.Location = new Point(4, 25);
             Elec_tabPage.Name = "Elec_tabPage";
             Elec_tabPage.Padding = new Padding(3);
-            Elec_tabPage.Size = new Size(969, 657);
+            Elec_tabPage.Size = new Size(969, 527);
             Elec_tabPage.TabIndex = 2;
             Elec_tabPage.Text = "전기사용량";
+            // 
+            // textBox8
+            // 
+            textBox8.BackColor = Color.White;
+            textBox8.BorderStyle = BorderStyle.None;
+            textBox8.Enabled = false;
+            textBox8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox8.ForeColor = SystemColors.ControlDark;
+            textBox8.Location = new Point(10, 473);
+            textBox8.Name = "textBox8";
+            textBox8.ReadOnly = true;
+            textBox8.Size = new Size(86, 15);
+            textBox8.TabIndex = 139;
+            textBox8.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBox7
+            // 
+            textBox7.BackColor = Color.White;
+            textBox7.BorderStyle = BorderStyle.None;
+            textBox7.Enabled = false;
+            textBox7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox7.ForeColor = SystemColors.ControlDark;
+            textBox7.Location = new Point(10, 446);
+            textBox7.Name = "textBox7";
+            textBox7.ReadOnly = true;
+            textBox7.Size = new Size(86, 15);
+            textBox7.TabIndex = 138;
+            textBox7.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBox6
+            // 
+            textBox6.BackColor = Color.White;
+            textBox6.BorderStyle = BorderStyle.None;
+            textBox6.Enabled = false;
+            textBox6.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox6.ForeColor = SystemColors.ControlDark;
+            textBox6.Location = new Point(10, 419);
+            textBox6.Name = "textBox6";
+            textBox6.ReadOnly = true;
+            textBox6.Size = new Size(86, 15);
+            textBox6.TabIndex = 137;
+            textBox6.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBox5
+            // 
+            textBox5.BackColor = Color.White;
+            textBox5.BorderStyle = BorderStyle.None;
+            textBox5.Enabled = false;
+            textBox5.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox5.ForeColor = SystemColors.ControlDark;
+            textBox5.Location = new Point(10, 392);
+            textBox5.Name = "textBox5";
+            textBox5.ReadOnly = true;
+            textBox5.Size = new Size(86, 15);
+            textBox5.TabIndex = 136;
+            textBox5.TextAlign = HorizontalAlignment.Center;
             // 
             // webView22
             // 
@@ -484,14 +540,14 @@
             webView22.DefaultBackgroundColor = Color.White;
             webView22.Location = new Point(206, 320);
             webView22.Name = "webView22";
-            webView22.Size = new Size(743, 318);
+            webView22.Size = new Size(743, 199);
             webView22.TabIndex = 127;
             webView22.ZoomFactor = 1D;
             // 
             // pictureBox2
             // 
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(119, 479);
+            pictureBox2.Location = new Point(125, 394);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(75, 115);
             pictureBox2.TabIndex = 128;
@@ -502,7 +558,7 @@
             checkBox8.AutoSize = true;
             checkBox8.Checked = true;
             checkBox8.CheckState = CheckState.Checked;
-            checkBox8.Location = new Point(96, 560);
+            checkBox8.Location = new Point(102, 475);
             checkBox8.Name = "checkBox8";
             checkBox8.RightToLeft = RightToLeft.Yes;
             checkBox8.Size = new Size(15, 14);
@@ -515,7 +571,7 @@
             checkBox6.AutoSize = true;
             checkBox6.Checked = true;
             checkBox6.CheckState = CheckState.Checked;
-            checkBox6.Location = new Point(96, 506);
+            checkBox6.Location = new Point(102, 421);
             checkBox6.Name = "checkBox6";
             checkBox6.RightToLeft = RightToLeft.Yes;
             checkBox6.Size = new Size(15, 14);
@@ -528,7 +584,7 @@
             checkBox7.AutoSize = true;
             checkBox7.Checked = true;
             checkBox7.CheckState = CheckState.Checked;
-            checkBox7.Location = new Point(96, 533);
+            checkBox7.Location = new Point(102, 448);
             checkBox7.Name = "checkBox7";
             checkBox7.RightToLeft = RightToLeft.Yes;
             checkBox7.Size = new Size(15, 14);
@@ -541,7 +597,7 @@
             checkBox5.AutoSize = true;
             checkBox5.Checked = true;
             checkBox5.CheckState = CheckState.Checked;
-            checkBox5.Location = new Point(96, 479);
+            checkBox5.Location = new Point(102, 394);
             checkBox5.Name = "checkBox5";
             checkBox5.RightToLeft = RightToLeft.Yes;
             checkBox5.Size = new Size(15, 14);
@@ -695,65 +751,9 @@
             Gas_Save_button.Location = new Point(12, 119);
             Gas_Save_button.Name = "Gas_Save_button";
             Gas_Save_button.SelectedIndex = 0;
-            Gas_Save_button.Size = new Size(977, 686);
+            Gas_Save_button.Size = new Size(977, 556);
             Gas_Save_button.SizeMode = TabSizeMode.Fixed;
             Gas_Save_button.TabIndex = 146;
-            // 
-            // textBox8
-            // 
-            textBox8.BackColor = Color.White;
-            textBox8.BorderStyle = BorderStyle.None;
-            textBox8.Enabled = false;
-            textBox8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox8.ForeColor = SystemColors.ControlDark;
-            textBox8.Location = new Point(4, 558);
-            textBox8.Name = "textBox8";
-            textBox8.ReadOnly = true;
-            textBox8.Size = new Size(86, 15);
-            textBox8.TabIndex = 139;
-            textBox8.TextAlign = HorizontalAlignment.Center;
-            // 
-            // textBox7
-            // 
-            textBox7.BackColor = Color.White;
-            textBox7.BorderStyle = BorderStyle.None;
-            textBox7.Enabled = false;
-            textBox7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox7.ForeColor = SystemColors.ControlDark;
-            textBox7.Location = new Point(4, 531);
-            textBox7.Name = "textBox7";
-            textBox7.ReadOnly = true;
-            textBox7.Size = new Size(86, 15);
-            textBox7.TabIndex = 138;
-            textBox7.TextAlign = HorizontalAlignment.Center;
-            // 
-            // textBox6
-            // 
-            textBox6.BackColor = Color.White;
-            textBox6.BorderStyle = BorderStyle.None;
-            textBox6.Enabled = false;
-            textBox6.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox6.ForeColor = SystemColors.ControlDark;
-            textBox6.Location = new Point(4, 504);
-            textBox6.Name = "textBox6";
-            textBox6.ReadOnly = true;
-            textBox6.Size = new Size(86, 15);
-            textBox6.TabIndex = 137;
-            textBox6.TextAlign = HorizontalAlignment.Center;
-            // 
-            // textBox5
-            // 
-            textBox5.BackColor = Color.White;
-            textBox5.BorderStyle = BorderStyle.None;
-            textBox5.Enabled = false;
-            textBox5.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox5.ForeColor = SystemColors.ControlDark;
-            textBox5.Location = new Point(4, 477);
-            textBox5.Name = "textBox5";
-            textBox5.ReadOnly = true;
-            textBox5.Size = new Size(86, 15);
-            textBox5.TabIndex = 136;
-            textBox5.TextAlign = HorizontalAlignment.Center;
             // 
             // EnergyUse
             // 

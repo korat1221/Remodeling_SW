@@ -1,4 +1,7 @@
-﻿using main.subcontents.RESystem_PV;
+﻿using main.contentslist;
+using main.subcontents.RESystem_PV;
+using Microsoft.Web.WebView2.Core;
+using System;
 
 namespace main.contents
 {
@@ -10,14 +13,16 @@ namespace main.contents
         //double a;
 
         #region Main Form Variable
-
+        bool scriptable = false;
         //설치정보
+        String Num, Name;
+        string VentilationType, PVsystem;
         double width_n, height_n; //가로, 세로 개수
         double PVcapacity_Kw; // 설치용량
         double PVArea_m2; //총면적
         string Orientation, Slope; //방위, 경사
         double PVLshobst_m, PVHshobst_m; //지형물까지의 거리, 지형물의 높이
-
+        string[][] 프로젝트유형;
         //태양광 계통도
 
         #endregion //Main Form Variable
@@ -25,27 +30,22 @@ namespace main.contents
         #region DB Variable
 
         //PVModuleDB
-        string PVModuleNumber, PVModule, PVmanu_year, PVcelltype;
-        double PVKpk_kW_m2, PVwidth_m, PVheight_m, PVPn_W, PVnumber;
+        string PVModuleNumber, PVModule, PVmanu_year;
+        double PVKpk_kW_m2, PVwidth_m, PVheight_m, PVPn_W;
         //index
         public double PVmanuyearfa;
 
-        //PVInverterDB
+        //PVInverterDB 
         string PVInverterNumber, Inverter;
         double InverterEfficiency;
 
         //PVBatteryDB
-        String PVBatteryNumber, Battery, PVbatterytype;
+        String PVBatteryNumber, Battery;
         double PVV_V, PVAH_Ah, Batterycapacity;
 
         #endregion / DB Variable
 
         #region Input Variable
-
-        //[일반 정보 변수]
-        //화면
-        string ReEnergyNumber, PVname, RenewableEnergySourceType;
-        string VentilationType, PVsystem;
 
         //계산
         public double PVfperf;
@@ -56,18 +56,6 @@ namespace main.contents
         public double[] PVdmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         public double PVIref_kW_m2 = 1;
 
-        //[배터리 정보 변수]
-        //index
-        public double PVηDoD, PVtDIS, PVηBatt;
-
-        //[매칭계수 정보 변수]
-        //database
-        public double[] PVEPusel_kWh = { 11303, 10060, 8361, 6905, 5697, 6601, 7208, 7659, 7015, 5833, 7655, 10053 }; //
-        public double PVEPusel_kWh_a;
-
-        //index
-        public double PVκ = 1;
-        public double PVn = 1;
 
         //음영계수
         public double PVLPVwid_m, PVLPVlen_m;
@@ -92,28 +80,13 @@ namespace main.contents
         public double PVEelpvouta_kWh_a; //연간
         public double PVefficiency; //평균효율
 
-        //배터리
-        public double PVγQ, PVCeff, PVCQ;
-
-        //계통연계
-        public double[] PVEprelusedEPus_kWh = new double[12];//월별
-        public double PVEprelusedEPus_kWh_a;//연간
-        public double PVfmatch, PVx;
-
-        //독립형
-        public double[] PVQfnutzPVi_kWh = new double[12]; //월별
-        public double PVQfnutzPVi_kWh_a; //연간
-        public double PVfBatt, PVQbattlossa_kWh;
-
-        //그리드이동 전기에너지
-        public double[] PVEexpelgrid_kWh = new double[12]; //월별
-        public double PVEexpelgrid_kWh_a; //연간
 
         //음영감소계수
         public double[] PVFshobstpvt = new double[12];
         public double[] PVhshobst_m = new double[12];
         public double[] PVhshobstwid_m = new double[12];
         public double[] Ishdirtotpvt_W = new double[12];
+        double Esolm, Ppk, Eelpvoutm, Fshobstpvt, hshobst, hshobstwid, Ishdir;
 
         #endregion / Calculation Variable
 
@@ -122,6 +95,8 @@ namespace main.contents
         public PV()
         {
             InitializeComponent();
+            InitializeAsync();
+            webView21.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);
 
             #region getvalue
 
@@ -131,12 +106,14 @@ namespace main.contents
             pictureBox1.Load(Program.gPath + Image[0][0]);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
+            프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             #endregion / getvalue
 
             #region combobox
 
             //자동으로 콤보박스 불러오기
 
+            Create_PV_Table();
             PVsystem_combobox.Items.Clear();
             PVsystem_combobox.Items.Add("계통연계형");
             PVsystem_combobox.Items.Add("독립형");
@@ -166,8 +143,22 @@ namespace main.contents
             #endregion / combobox
 
         }
-
-
+        async void InitializeAsync()
+        {
+            await webView21.EnsureCoreWebView2Async(null);
+            webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
+        }
+        void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            scriptable = true;
+        }
+        public void runScript(string script)
+        {
+            if (scriptable)
+            {
+                webView21.CoreWebView2.ExecuteScriptAsync(script);
+            }
+        }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
@@ -192,6 +183,18 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
 
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+            Panel p = (Panel)sender;
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+        }
+        private void Name_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (Name_textBox.Text != null)
+            {
+                Name = Name_textBox.Text.ToString();
+            }
+        }
         private void PVsystem_combobox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (PVsystem_combobox.SelectedItem != null)
@@ -225,15 +228,13 @@ namespace main.contents
         private void PVHshobst_m_textBox_TextChanged(object sender, EventArgs e)
         {
             int result;
-
-            if (int.TryParse(PVHshobst_m_textBox.Text, out result) == true)
+            if (PVHshobst_m_textBox == null || PVHshobst_m_textBox.Text == "")
+            {
+            }
+            else if (int.TryParse(PVHshobst_m_textBox.Text, out result) == true)
             {
                 PVHshobst_m = Convert.ToDouble(PVHshobst_m_textBox.Text);
-
-                if (PVHshobst_m_textBox != null)
-                {
-                    PVHshobst_m_imge_textBox.Text = PVHshobst_m_textBox.Text.ToString();
-                }
+                PVHshobst_m_imge_textBox.Text = PVHshobst_m_textBox.Text.ToString();
             }
             else
             {
@@ -247,15 +248,11 @@ namespace main.contents
         private void PVLshobst_m_textBox_TextChanged(object sender, EventArgs e)
         {
             int result;
-
-            if (int.TryParse(PVLshobst_m_textBox.Text, out result) == true)
+            if (PVLshobst_m_textBox.Text == null || PVLshobst_m_textBox.Text == "") { }
+            else if (int.TryParse(PVLshobst_m_textBox.Text, out result) == true)
             {
                 PVLshobst_m = Convert.ToDouble(PVLshobst_m_textBox.Text);
-
-                if (PVLshobst_m_textBox != null)
-                {
-                    PVLshobst_m_image_textBox.Text = PVLshobst_m_textBox.Text.ToString();
-                }
+                PVLshobst_m_image_textBox.Text = PVLshobst_m_textBox.Text.ToString();
             }
             else
             {
@@ -264,29 +261,6 @@ namespace main.contents
 
             PVShading_getvalue();
 
-        }
-
-        private void PVModule_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if (PVModule_textBox.Text == null || PVModule_textBox.Text != "단결정(Single Cry. Si.)" || PVModule_textBox.Text != "다결정(Poly Cry. Si.)" || PVModule_textBox.Text != "비결정질 Si 박막" || PVModule_textBox.Text != "그외 Si 박막" || PVModule_textBox.Text != "CIGS 박막" || PVModule_textBox.Text != "CdTe 박막")
-            {
-                install_label.Text = "설치 개수";
-                width_label.Visible = true;
-                height_label.Visible = true;
-                height_label2.Visible = true;
-                width_label2.Text = "EA";
-                height_n_textBox.Visible = true;
-            }
-
-            if (PVModule_textBox.Text == "단결정(Single Cry. Si.)" || PVModule_textBox.Text == "다결정(Poly Cry. Si.)" || PVModule_textBox.Text == "비결정질 Si 박막" || PVModule_textBox.Text == "그외 Si 박막" || PVModule_textBox.Text == "CIGS 박막" || PVModule_textBox.Text == "CdTe 박막")
-            {
-                install_label.Text = "설치 용량";
-                width_label.Visible = false;
-                height_label.Visible = false;
-                height_label2.Visible = false;
-                width_label2.Text = "kW";
-                height_n_textBox.Visible = false;
-            }
         }
 
         private void PVDB_button_Click(object sender, EventArgs e)
@@ -299,24 +273,24 @@ namespace main.contents
                 PVModuleNumber = PV_ModuleDB_form.Select_PVModule[0];
                 PVModule = PV_ModuleDB_form.Select_PVModule[2];
                 PVmanu_year = PV_ModuleDB_form.Select_PVModule[4];
-                PVcelltype = PV_ModuleDB_form.Select_PVModule[5];
-                if (PVModule == "단결정(Single Cry. Si.)" || PVModule == "다결정(Poly Cry. Si.)" || PVModule == "비결정질 Si 박막" || PVModule == "그외 Si 박막" || PVModule == "CIGS 박막" || PVModule == "CdTe 박막")
+
+                PVKpk_kW_m2 = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[6]);
+                PVwidth_m = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[7]);
+                PVheight_m = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[8]);
+                PVPn_W = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[9]);
+
+                if (PVmanu_year == "25년 이내")
                 {
-                    PVKpk_kW_m2 = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[6]);
+                    PVmanuyearfa = 1;
                 }
-                else
+                if (PVmanu_year == "25년 이상")
                 {
-                    PVKpk_kW_m2 = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[6]);
-                    PVwidth_m = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[7]);
-                    PVheight_m = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[8]);
-                    PVPn_W = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[9]);
+                    PVmanuyearfa = 0.9;
                 }
             }
 
             PVModule_textBox.Text = PVModule;
-            Create_PV_Table();
             Load_PV_Table();
-            PV_MainForm_Calculation_TotalArea();// 전체면적 계산
             PV_MainForm_Calculation_TotalCapacity(); //설치용량 계산
 
         }
@@ -363,8 +337,11 @@ namespace main.contents
 
         private void slope_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Slope = slope_comboBox.SelectedItem.ToString();
-            PVIs_W_m2_getvalue();
+            if (slope_comboBox.SelectedItem != null)
+            {
+                Slope = slope_comboBox.SelectedItem.ToString();
+                PVIs_W_m2_getvalue();
+            }
         }
 
         private void InverterDB_button_Click(object sender, EventArgs e)
@@ -394,10 +371,13 @@ namespace main.contents
                 Battery = PV_BatteryDB_form.Select_PVBattery[2];
                 PVV_V = Convert.ToDouble(PV_BatteryDB_form.Select_PVBattery[4]);
                 PVAH_Ah = Convert.ToDouble(PV_BatteryDB_form.Select_PVBattery[5]);
-                PVbatterytype = PV_BatteryDB_form.Select_PVBattery[6];
             }
 
             Battery_textBox.Text = Battery;
+            Calc_Battery_Capacity();
+        }
+        private void Calc_Battery_Capacity()
+        {
             Batterycapacity = Convert.ToDouble(PVV_V) * Convert.ToDouble(PVAH_Ah) / 1000;
             if (Batterycapacity == 0)
             { }
@@ -407,15 +387,18 @@ namespace main.contents
             }
         }
 
+
+
         private void width_n_textBox_TextChanged(object sender, EventArgs e)
         {
             int result;
-
-            if (int.TryParse(width_n_textBox.Text, out result) == true)
+            if (width_n_textBox.Text == null || width_n_textBox.Text == "") { }
+            else if (int.TryParse(width_n_textBox.Text, out result) == true)
             {
                 width_n = Convert.ToDouble(width_n_textBox.Text);
                 PV_MainForm_Calculation_TotalArea(); //총면적 계산
                 PV_MainForm_Calculation_TotalCapacity(); //설치용량 계산
+                PVLPVwid_m = PVArea_m2 / PVLPVlen_m;
             }
             else
             {
@@ -425,24 +408,10 @@ namespace main.contents
 
         private void PV_MainForm_Calculation_TotalArea()
         {
-            if (PVModule_textBox.Text == "단결정(Single Cry. Si.)" || PVModule_textBox.Text == "다결정(Poly Cry. Si.)" || PVModule_textBox.Text == "비결정질 Si 박막" || PVModule_textBox.Text == "그외 Si 박막" || PVModule_textBox.Text == "CIGS 박막" || PVModule_textBox.Text == "CdTe 박막")
+            if (width_n_textBox.Text != "" && height_n_textBox.Text != "")
             {
-                if (width_n_textBox.Text != "")
-                {
-                    PVcapacity_Kw = Convert.ToDouble(width_n_textBox.Text);
-                    PVArea_m2 = PVcapacity_Kw / PVKpk_kW_m2;
-                }
-            }
-            else
-            {
-                if (width_n_textBox.Text != "" && height_n_textBox.Text != "")
-                {
-                    PVArea_m2 = PVwidth_m * PVheight_m * width_n * height_n;
-                }
-            }
 
-            if (width_n_textBox.Text != "" || height_n_textBox.Text != "")
-            {
+                PVArea_m2 = PVwidth_m * PVheight_m * width_n * height_n;
                 PVArea_m2_textBox.Text = string.Format("{0:F2}", PVArea_m2);//총 면적 넣기
             }
             else { PVArea_m2_textBox.Text = ""; }
@@ -451,31 +420,25 @@ namespace main.contents
 
         private void PV_MainForm_Calculation_TotalCapacity()
         {
-            if (PVModule_textBox.Text == "단결정(Single Cry. Si.)" || PVModule_textBox.Text == "다결정(Poly Cry. Si.)" || PVModule_textBox.Text == "비결정질 Si 박막" || PVModule_textBox.Text == "그외 Si 박막" || PVModule_textBox.Text == "CIGS 박막" || PVModule_textBox.Text == "CdTe 박막")
+
+            if (width_n_textBox.Text != "" && height_n_textBox.Text != "")
             {
-                if (width_n_textBox.Text != "")
-                {
-                    allcapacity_textBox.Text = string.Format("{0:F2}", width_n);
-                }
-                else { }
+                PVcapacity_Kw = width_n * height_n * PVPn_W / 1000;
+                allcapacity_textBox.Text = string.Format("{0:F2}", width_n * height_n * PVPn_W / 1000);
             }
-            else
-            {
-                if (width_n_textBox.Text != "" && height_n_textBox.Text != "")
-                {
-                    allcapacity_textBox.Text = string.Format("{0:F2}", width_n * height_n * PVPn_W / 1000);
-                }
-                else { }
-            }
+            else { }
         }
 
         private void height_n_textBox_TextChanged(object sender, EventArgs e)
         {
             int result;
 
-            if (int.TryParse(height_n_textBox.Text, out result) == true)
+            if (height_n_textBox.Text == null || height_n_textBox.Text == "") { }
+            else if (int.TryParse(height_n_textBox.Text, out result) == true)
             {
                 height_n = Convert.ToDouble(height_n_textBox.Text);
+                PVLPVlen_m = PVheight_m * height_n;
+                PVLPVwid_m = PVArea_m2 / PVLPVlen_m;
                 PV_MainForm_Calculation_TotalArea(); //총면적 계산
                 PV_MainForm_Calculation_TotalCapacity(); //설치용량 계산
             }
@@ -487,24 +450,31 @@ namespace main.contents
 
         private void orientation_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Orientation = orientation_comboBox.SelectedItem.ToString();
+            if (orientation_comboBox.SelectedItem != null)
+            {
+                Orientation = orientation_comboBox.SelectedItem.ToString();
+            }
 
             PVIs_W_m2_getvalue();
         }
 
-
-
         private void VentilationType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (VentilationType_comboBox.SelectedItem != null)
-                VentilationType = VentilationType_comboBox.SelectedItem.ToString();
+            { VentilationType = VentilationType_comboBox.SelectedItem.ToString(); }
+            if (VentilationType == "통기 없음")
+            {
+                PVfperf = 0.76;
+            }
+            else if (VentilationType == "미세 통기 있음")
+            {
+                PVfperf = 0.80;
+            }
+            else
+            {
+                PVfperf = 0.82;
+            }
         }
-        private void panel2_Paint_1(object sender, PaintEventArgs e)
-        {
-            Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
-        }
-
         //getvalue
         public void PVIs_W_m2_getvalue()
         {
@@ -531,486 +501,370 @@ namespace main.contents
                 //태양고도각 불러오기
                 string[][] token3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + Orientation + "' AND  각도 = '" + Slope + "'");
 
-                for (int i = 0; i < 12; i++)
+                if (token1.Length > 0)
                 {
-                    PVIdirtot_W_m2[i] = Convert.ToDouble(token1[i][0]);
-                    PVIdiftot_W_m2[i] = Convert.ToDouble(token2[i][0]);
-                    PVαsol[i] = Convert.ToDouble(token3[i][0]);
+                    for (int i = 0; i < 12; i++)
+                    {
+                        PVIdirtot_W_m2[i] = Convert.ToDouble(token1[i][0]);
+                        PVIdiftot_W_m2[i] = Convert.ToDouble(token2[i][0]);
+                        PVαsol[i] = Convert.ToDouble(token3[i][0]);
+                    }
                 }
             }
             else { }
         }
 
-
         #region Calculation
-
-        Re_FC_Energy_kWh use = new Re_FC_Energy_kWh();
-
         //수직음영길이
-        public void calculation_PVhshobst_m()
+        public double Re_PV_hshobst_m(double LPVlen, double Hshobst, double Lshobst, double asol)
         {
-            PVLPVlen_m = PVheight_m * height_n;
-
-            if (PVModule == "단결정(Single Cry. Si.)" || PVModule == "다결정(Poly Cry. Si.)" || PVModule == "비결정질 Si 박막" || PVModule == "그외 Si 박막" || PVModule == "CIGS 박막" || PVModule == "CdTe 박막")
-            {
-                PVLPVlen_m = Math.Sqrt(PVArea_m2);
-            }
-
-            PVLPVwid_m = PVArea_m2 / PVLPVlen_m;
-
-            for (int i = 0; i < 12; i++)
-            {
-                PVhshobst_m[i] = use.Re_PV_hshobst_m(PVLPVlen_m, PVHshobst_m, PVLshobst_m, PVαsol[i]);
-            }
+            hshobst = Math.Min(LPVlen, Math.Max(0, Hshobst - Lshobst * Math.Tan(asol * Math.PI / 180.0)));
+            return hshobst;
         }
-
         //수평음영길이
-        public void calculation_PVhshobstwid_m()
+        public double Re_PV_hshobstwid_m(double hshobst, double asol)
         {
-            for (int i = 0; i < 12; i++)
-            {
-                PVhshobstwid_m[i] = use.Re_PV_hshobstwid_m(PVhshobst_m[i], PVαsol[i]);
-            }
+            hshobstwid = hshobst / Math.Tan(asol * Math.PI / 180.0);
+            return hshobstwid;
         }
-
-        //직달일사 음영적용
-        public void calculation_Ishdirtotpvt_W()
+        //직달일사 음영 적용
+        public double Re_PV_Ishdir_m(double area, double LPVlen, double hshobst, string β, double hshobstwid, double LPVwid, double Idir)
         {
-            for (int i = 0; i < 12; i++)
+            double β1;
+            β = β.Substring(0, 2);
+            β1 = Convert.ToDouble(β);
+            Ishdir = (area - Math.Min(LPVlen, Math.Sqrt(Math.Pow((hshobst / ((Math.Tan(β1 * Math.PI / 180.0) + hshobst / hshobstwid))), 2) + Math.Pow((Math.Tan(β1 * Math.PI / 180.0) * (hshobst / (Math.Tan(β1 * Math.PI / 180.0) + hshobst / hshobstwid))), 2))) * LPVwid) * Idir;
+            if (hshobst == 0)
             {
-                Ishdirtotpvt_W[i] = use.Re_PV_Ishdir_m(PVArea_m2, PVLPVlen_m, PVhshobst_m[i], Slope, PVhshobstwid_m[i], PVLPVwid_m, PVIdirtot_W_m2[i]);
+                Ishdir = (area - Math.Min(LPVlen, 0) * LPVwid) * Idir;
             }
-
+            return Ishdir;
         }
-
         //음영계수
-        public void calculation_PVFshobstpvt()
+        public double Re_PV_Fshobstpvt_(double Idir, double Idif, double Ishdir, double area)
         {
-
-            for (int i = 0; i < 12; i++)
-            {
-                PVFshobstpvt[i] = use.Re_PV_Fshobstpvt_(PVIdirtot_W_m2[i], PVIdiftot_W_m2[i], Ishdirtotpvt_W[i], PVArea_m2);
-            }
-
+            Fshobstpvt = (Ishdir + Idif * area) / (Idir * area + Idif * area);
+            return Fshobstpvt;
         }
-
-        //태양광 모듈에 들어오는 전일사량
-        public void calculation_Esolm_kWh()
-        {
-
-            for (int i = 0; i < 12; i++)
-            {
-                PVEsolm_kWh_m2[i] = use.Re_PV_Esolm_kWh(PVIs_W_m2[i], PVdmth[i], PVFshobstpvt[i]);
-            }
-
-        }
-
-        //표준-테스트-조건에서 최대성능 
-        public void calculation_Ppk_kW()
-        {
-            if (PVmanu_year == "25년 이내")
-            {
-                PVmanuyearfa = 1;
-            }
-            if (PVmanu_year == "25년 이상")
-            {
-                PVmanuyearfa = 0.9;
-            }
-            PVPpk_kW = use.Re_PV_Ppk_kW(PVKpk_kW_m2, PVArea_m2, PVmanuyearfa);
-        }
-
-        //태양광 시스템에 의해 생성된 전기 에너지
-        public void calculation_Eelpvoutm_kWh()
-        {
-            if (VentilationType == "통기 없음")
-            {
-                PVfperf = 0.76;
-            }
-            else if (VentilationType == "미세 통기 있음")
-            {
-                PVfperf = 0.80;
-            }
-            else
-            {
-                PVfperf = 0.82;
-            }
-
-            for (int i = 0; i < 12; i++)
-            {
-                PVEelpvoutm_kWh[i] = use.Re_PV_Eelpvoutm_kWh(PVEsolm_kWh_m2[i], PVPpk_kW, PVfperf, InverterEfficiency, PVIref_kW_m2);
-                PVEelpvoutm_kWh_m2[i] = PVEelpvoutm_kWh[i] / PVArea_m2;
-            }
-        }
-
-        ////태양광 시스템에 의해 생성된 전기 에너지(단위당)
-        //public void calculation_PVEelpvoutm_kWh_m2()
-        //{
-        //   for (int i = 0; i < 12; i++)
-        //    {
-        //        PVEelpvoutm_kWh_m2[i] = PVEelpvoutm_kWh[i] / PVArea_m2;
-        //    }
-        //}
-
-        //태양광 시스템에 의해 생성된 전기 에너지 연간 전기 에너지
-        public void calculation_PVEelpvouta_kWh()
-        {
-            for (int i = 0; i < 12; i++)
-            {
-                PVEelpvouta_kWh_a += PVEelpvoutm_kWh[i];
-            }
-        }
-
-        //평균효율
-        public void calculation_PVefficiency()
-        {
-            double PVEelpvoutm_kWhaver = PVEelpvoutm_kWh.Average();
-            double PVEsolm_kWh_m2aver = PVEsolm_kWh_m2.Average();
-
-            PVefficiency = PVEelpvoutm_kWhaver / PVEsolm_kWh_m2aver / PVArea_m2;
-
-        }
-
-        //발전기 규격에 대한 지수
-        public void calculation_PVγQ()
-        {
-            if (PVsystem == "독립형")
-            {
-                for (int i = 0; i < 12; i++)
-                {
-                    PVEPusel_kWh_a += PVEPusel_kWh[i];
-                }
-
-                PVγQ = use.Re_PV_γQ_kW_MWh_a(PVPpk_kW, PVEPusel_kWh_a);
-            }
-
-        }
-
-        //배터리 용량
-        public void calculation_PVCeff()
-        {
-
-            if (PVsystem == "독립형")
-            {
-                if (PVbatterytype == "리튬 및 리튬 결합")
-                {
-                    PVηDoD = 0.83;
-                }
-                if (PVbatterytype == "니켈-철")
-                {
-                    PVηDoD = 0.7;
-                }
-                if (PVbatterytype == "납 및 납젤")
-                {
-                    PVηDoD = 0.48;
-                }
-
-                Batterycapacity = PVV_V * PVAH_Ah / 1000;
-
-                PVCeff = use.Re_PV_Ceff_kWh(Batterycapacity, PVηDoD);
-            }
-        }
-
-        //배터리 규격에 대한 지표
-        public void calculation_PVCQ()
-        {
-            if (PVsystem == "독립형")
-            {
-                PVCQ = use.Re_PV_CQ_kWh(PVCeff, PVEPusel_kWh_a);
-            }
-        }
-
-        //소요량에 대한 생산량의 비
-        public void calculation_PVfmatch()
-        {
-            for (int i = 0; i < 12; i++)
-            {
-                PVEPusel_kWh_a += PVEPusel_kWh[i];
-            }
-
-            PVx = use.Re_PV_x_kWh(PVEelpvouta_kWh_a, PVEPusel_kWh_a);
-            PVfmatch = use.Re_PV_fmatch_kWh(PVx, PVn, PVκ);
-        }
-
-        //'계통연계시 이용된 월별 에너지량
-        public void calculation_PVEprelusedEPus_kWh()
-        {
-            for (int i = 0; i < 12; i++)
-            {
-                PVEprelusedEPus_kWh[i] = use.Re_PV_EprelusedEPus_kWh(PVfmatch, PVEelpvoutm_kWh[i]);
-                PVEprelusedEPus_kWh_a += PVEprelusedEPus_kWh[i];
-            }
-        }
-
-        //배터리에 대한 수정계수
-        public void calculation_PVfBatt_kWh()
-        {
-            if (PVsystem == "독립형")
-            {
-                PVfBatt = use.Re_PV_fBatt_kWh(PVγQ, PVCQ);
-            }
-        }
-
-        //독립형시 이용된 월별 에너지량
-        public void calculation_PVQfnutzPVi_kWh()
-        {
-            if (PVsystem == "독립형")
-            {
-                for (int i = 0; i < 12; i++)
-                {
-                    PVQfnutzPVi_kWh[i] = Math.Min(use.Re_PV_QfnutzPVi_kWh(PVfBatt, PVEprelusedEPus_kWh[i]), PVEelpvoutm_kWh[i]);
-                    PVQfnutzPVi_kWh_a += PVQfnutzPVi_kWh[i];
-                }
-            }
-        }
-
-        //계통연계시 그리드로 이동하는 에너지량
-        public void calculation_PVEexpelgrid_kWh()
-        {
-            if (PVsystem == "계통연계형")
-            {
-                for (int i = 0; i < 12; i++)
-                {
-                    PVEexpelgrid_kWh[i] = PVEelpvoutm_kWh[i] - PVEprelusedEPus_kWh[i];
-                    PVEexpelgrid_kWh_a += PVEexpelgrid_kWh[i];
-                }
-            }
-        }
-
-        private void Caculation_Button_Click(object sender, EventArgs e)
-        {
-            #region Reset
-
-            Calculation_Reset();
-
-            #endregion / Reset
-
-            #region Calculation
-
-            calculation_PVhshobst_m();
-            calculation_PVhshobstwid_m();
-            calculation_Ishdirtotpvt_W();
-            calculation_PVFshobstpvt();
-            calculation_Esolm_kWh();
-            calculation_Ppk_kW();
-            calculation_Eelpvoutm_kWh();
-            //calculation_PVEelpvoutm_kWh_m2();
-            calculation_PVEelpvouta_kWh();
-            calculation_PVefficiency();
-            calculation_PVγQ();
-            calculation_PVCeff();
-            calculation_PVCQ();
-            calculation_PVfBatt_kWh();
-            calculation_PVfmatch();
-            calculation_PVEprelusedEPus_kWh();
-            calculation_PVQfnutzPVi_kWh();
-            calculation_PVEexpelgrid_kWh();
-
-
-            #endregion / Calculation
-
-            #region Form 
-
-            averagecpacity_textBox.Text = string.Format("{0:F2}", PVefficiency * 100);
-
-
-            #endregion /Form
-        }
-
-        private void Calculation_Reset()
-        {
-            Array.Clear(PVEprelusedEPus_kWh, 0, 12);
-            Array.Clear(PVQfnutzPVi_kWh, 0, 12);
-            Array.Clear(PVEexpelgrid_kWh, 0, 12);
-            Array.Clear(PVEelpvoutm_kWh, 0, 12);
-
-            PVEPusel_kWh_a = 0;
-            PVEprelusedEPus_kWh_a = 0;
-            PVQfnutzPVi_kWh_a = 0;
-            PVEexpelgrid_kWh_a = 0;
-            PVEelpvouta_kWh_a = 0;
-        }
-
-     
-    }
-
-    #endregion / Calculation
-
-    #region method
-
-    public class Re_FC_Energy_kWh
-    {
-        double Esolm, Ppk, Eelpvoutm, γQ, Ceff, CQ, fBatt, EprelusedEPus, fmatch, x, QfnutzPVi, Fshobstpvt, hshobst, hshobstwid, Ishdir;
-
-
         //일사량
         public double Re_PV_Esolm_kWh(double Ls, double dmth, double Fshobstpvt)
         {
             Esolm = Ls * dmth * 24 / 1000 * Fshobstpvt;
-
             return Esolm;
         }
-
         //최대 성능
         public double Re_PV_Ppk_kW(double Kpk, double A, double manu_year_fa)
         {
-
             Ppk = Kpk * A * manu_year_fa;
-
             return Ppk;
-
         }
 
         //태양광을 통해 생성된 전기 에너지
         public double Re_PV_Eelpvoutm_kWh(double Esolm, double Ppk, double Fperf, double ηEU, double Iref)
         {
-
             Eelpvoutm = Esolm * Ppk * Fperf * (ηEU / 100) / Iref;
-
             return Eelpvoutm;
-
         }
 
-        //발전기 규격에 대한 지수
-        public double Re_PV_γQ_kW_MWh_a(double Ppk, double Qelges)
+        #endregion / Calculation
+
+        private void Save()
         {
 
-            γQ = Ppk / Qelges * 1000;
+            #region Calculation
 
-            return γQ;
-
-        }
-
-        //배터리 용량
-        public double Re_PV_Ceff_kWh(double Cnenm, double ηDoD)
-        {
-            Ceff = Cnenm * ηDoD;
-
-            return Ceff;
-
-        }
-
-        //배터리 규격에 대한 지표
-        public double Re_PV_CQ_kWh(double Ceff, double Qelgesa)
-        {
-
-            CQ = (Ceff / Qelgesa) * 1000;
-
-            return CQ;
-
-        }
-
-        //배터리에 대한 수정계수
-        public double Re_PV_fBatt_kWh(double γQ, double CQ)
-        {
-
-            fBatt = Math.Max(1, (0.2 * Math.Log(γQ) + 1.85) * Math.Pow(CQ, 0.1 * Math.Log(γQ) + 0.25));
-
-            return fBatt;
-
-        }
-
-        //계통연계시 이용된 월별 에너지량
-        public double Re_PV_EprelusedEPus_kWh(double fmatch, double Eprel)
-        {
-
-            EprelusedEPus = fmatch * Eprel;
-
-            return EprelusedEPus;
-
-        }
-
-        //매칭계수
-        public double Re_PV_fmatch_kWh(double x, double n, double k)
-        {
-
-            fmatch = (Math.Pow(x, n) + 1 / Math.Pow(x, n) - k) / (Math.Pow(x, n) + 1 / Math.Pow(x, n));
-
-            return fmatch;
-
-        }
-
-        //소요량에 대한 생산량의 비
-        public double Re_PV_x_kWh(double Eprel, double EPusel)
-        {
-
-            x = Eprel / EPusel;
-
-            return x;
-
-        }
-
-        //독립형시 이용된 월별 에너지량
-        public double Re_PV_QfnutzPVi_kWh(double fBatt, double QfnutzPVoBa)
-        {
-
-            QfnutzPVi = fBatt * QfnutzPVoBa;
-
-            return QfnutzPVi;
-
-        }
-
-        //음영계수
-        public double Re_PV_Fshobstpvt_(double Idir, double Idif, double Ishdir, double area)
-        {
-
-            Fshobstpvt = (Ishdir + Idif * area) / (Idir * area + Idif * area);
-
-            return Fshobstpvt;
-
-        }
-
-        //수직음영길이
-        public double Re_PV_hshobst_m(double LPVlen, double Hshobst, double Lshobst, double asol)
-        {
-
-            hshobst = Math.Min(LPVlen, Math.Max(0, Hshobst - Lshobst * Math.Tan(asol * Math.PI / 180.0)));
-
-            return hshobst;
-
-        }
-
-        //수평음영길이
-        public double Re_PV_hshobstwid_m(double hshobst, double asol)
-        {
-
-            hshobstwid = hshobst / Math.Tan(asol * Math.PI / 180.0);
-
-            return hshobstwid;
-
-        }
-
-        //직달일사 음영 적용
-        public double Re_PV_Ishdir_m(double area, double LPVlen, double hshobst, string β, double hshobstwid, double LPVwid, double Idir)
-        {
-            double β1;
-
-            β = β.Substring(0, 2);
-            β1 = Convert.ToDouble(β);
-
-            Ishdir = (area - Math.Min(LPVlen, Math.Sqrt(Math.Pow((hshobst / ((Math.Tan(β1 * Math.PI / 180.0) + hshobst / hshobstwid))), 2) + Math.Pow((Math.Tan(β1 * Math.PI / 180.0) * (hshobst / (Math.Tan(β1 * Math.PI / 180.0) + hshobst / hshobstwid))), 2))) * LPVwid) * Idir;
-
-            if (hshobst == 0)
+            for (int mth = 0; mth < 12; mth++)
             {
-                Ishdir = (area - Math.Min(LPVlen, 0) * LPVwid) * Idir;
+                //수직음영길이
+                PVhshobst_m[mth] = Re_PV_hshobst_m(PVLPVlen_m, PVHshobst_m, PVLshobst_m, PVαsol[mth]);
+                //수평음영길이
+                PVhshobstwid_m[mth] = Re_PV_hshobstwid_m(PVhshobst_m[mth], PVαsol[mth]);
+                //직달일사 음영적용
+                Ishdirtotpvt_W[mth] = Re_PV_Ishdir_m(PVArea_m2, PVLPVlen_m, PVhshobst_m[mth], Slope, PVhshobstwid_m[mth], PVLPVwid_m, PVIdirtot_W_m2[mth]);
+                //음영계수
+                PVFshobstpvt[mth] = Re_PV_Fshobstpvt_(PVIdirtot_W_m2[mth], PVIdiftot_W_m2[mth], Ishdirtotpvt_W[mth], PVArea_m2);
+                //태양광 모듈에 들어오는 전일사량
+                PVEsolm_kWh_m2[mth] = Re_PV_Esolm_kWh(PVIs_W_m2[mth], PVdmth[mth], PVFshobstpvt[mth]);
+                //표준-테스트-조건에서 최대성능 
+                PVPpk_kW = Re_PV_Ppk_kW(PVKpk_kW_m2, PVArea_m2, PVmanuyearfa);
+                //태양광 시스템에 의해 생성된 전기 에너지
+                PVEelpvoutm_kWh[mth] = Re_PV_Eelpvoutm_kWh(PVEsolm_kWh_m2[mth], PVPpk_kW, PVfperf, InverterEfficiency, PVIref_kW_m2);
+                PVEelpvoutm_kWh_m2[mth] = PVEelpvoutm_kWh[mth] / PVArea_m2;
+                //태양광 시스템에 의해 생성된 전기 에너지 연간 전기 에너지
+                PVEelpvouta_kWh_a += PVEelpvoutm_kWh[mth];
+                //평균효율
+                double PVEelpvoutm_kWhaver = PVEelpvoutm_kWh.Average();
+                double PVEsolm_kWh_m2aver = PVEsolm_kWh_m2.Average();
+                PVefficiency = PVEelpvoutm_kWhaver / PVEsolm_kWh_m2aver / PVArea_m2;
+                averagecpacity_textBox.Text = string.Format("{0:F2}", PVefficiency * 100);
+                #endregion / Calculation
             }
 
-            return Ishdir;
+
+            Program.DB.setValue(DB.type.ProjDB, "PV_Form", "번호,프로젝트유형,명칭", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + Name + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "PV_Form", "번호,모듈번호,인버터번호,인버터명칭,인버터효율,배터리번호,배터리용량", "'" + Num_textBox.Text + "','" + PVModuleNumber + "','" + PVInverterNumber + "','" + Inverter + "','" + InverterEfficiency.ToString() + "','" + PVBatteryNumber + "','" + Batterycapacity + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "PV_Form", "번호,통풍유무,계통유형,가로개수,세로개수,용량,면적,방위,기울기,지형물거리,지형물높이", "'" + Num_textBox.Text + "','" + VentilationType + "','" + PVsystem + "','" + width_n + "','" + height_n + "','" + PVcapacity_Kw + "','" + PVArea_m2 + "','" + Orientation + "','" + Slope + "','" + PVLshobst_m + "','" + PVHshobst_m + "'", "번호");
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Program.DB.setValue(DB.type.ProjDB, "PV_Result", "번호,월," +
+                    "수직음영길이,수평음영길이,직달일사음영적용,음영계수," +
+                    "태양광전일사량,최대성능,평균효율,전기생산량",
+                    "'" + Num_textBox.Text + "','" + (mth + 1).ToString() + "월','" +
+                    PVhshobst_m[mth] + "','" + PVhshobstwid_m[mth] + "','" + Ishdirtotpvt_W[mth] + "','" + PVFshobstpvt[mth] + "','" +
+                   PVEsolm_kWh_m2[mth] + "','" + PVPpk_kW + "','" + PVefficiency + "','" + PVEelpvoutm_kWh[mth] + "'", "번호,월");
+
+            }
         }
+        private void LoadGraph(String Orientation, String Slope)
+        {
+            try
+            {
+                string s = "", s2 = "";
+                string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
+                string[][] res1;
+                string[][] res2;
+                for (int mth = 0; mth < 11; mth++)
+                {
+                    s += PVEelpvoutm_kWh[mth] + ",";
+                    res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Orientation + "' And 각도='" + Slope + "'And 기간 ='" + (mth + 1) + "월'");
+                    s2 += Convert.ToDouble(res2[0][0]) + ",";
+                }
+
+                s += PVEelpvoutm_kWh[11];
+                res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Orientation + "' And 각도='" + Slope + "'And 기간 ='" + (12) + "월'");
+                s2 += Convert.ToDouble(res2[0][0]);
+
+
+                runScript("drawChart3([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:" + (PVEelpvoutm_kWh.Max() + 500).ToString() + "},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:300}])");
+            }
+            catch { }
+        }
+        private void Reset()
+        {
+            Name_textBox.Text = null;
+            Name = null;
+
+            VentilationType_comboBox.SelectedItem = null;
+            VentilationType = null;
+
+            PVsystem_combobox.SelectedItem = null;
+            PVsystem = null;
+
+            width_n_textBox.Text = null;
+            width_n = 0;
+
+            height_n_textBox.Text = null;
+            height_n = 0; //가로, 세로 개수
+
+            allcapacity_textBox.Text = null;
+            PVcapacity_Kw = 0; // 설치용량
+
+            PVArea_m2_textBox.Text = null;
+            PVArea_m2 = 0; //총면적
+
+            orientation_comboBox.SelectedItem = null;
+            Orientation = null;
+
+            slope_comboBox.SelectedItem = null;
+            Slope = null; //방위, 경사
+
+            PVLshobst_m_textBox.Text = null;
+            PVLshobst_m = 0;
+
+            PVHshobst_m_textBox.Text = null;
+            PVHshobst_m = 0; //지형물까지의 거리, 지형물의 높이
+
+            PVModule_textBox.Text = null;
+            PVModuleNumber = null;
+            PVModule = null;
+            PVmanu_year = null;
+            PVKpk_kW_m2 = 0;
+            PVwidth_m = 0;
+            PVheight_m = 0;
+            PVPn_W = 0;
+            PVmanuyearfa = 0;
+
+            Inverter_textBox.Text = null;
+            PVInverterNumber = null;
+            Inverter = null;
+            InverterEfficiency = 0;
+
+            Battery_textBox.Text = null;
+            PVBatteryNumber = null;
+            Battery = null;
+            PVV_V = 0;
+            PVAH_Ah = 0;
+            Batterycapacity = 0;
+
+            PVfperf = 0;
+
+            Array.Clear(PVIs_W_m2, 0, 12);
+            PVIref_kW_m2 = 1;
+
+            PVLPVwid_m = 0;
+            PVLPVlen_m = 0;
+            Array.Clear(PVIdirtot_W_m2, 0, 12);
+            Array.Clear(PVIdiftot_W_m2, 0, 12);
+            Array.Clear(PVαsol, 0, 12);
+
+            //일사량_kWh/(m2.month)
+            Array.Clear(PVEsolm_kWh_m2, 0, 12);
+
+            //최대출력
+            PVPpk_kW = 0;
+
+            //생성된 전기에너지
+            Array.Clear(PVEelpvoutm_kWh, 0, 12);  //월별
+            Array.Clear(PVEelpvoutm_kWh_m2, 0, 12); //단위당
+            PVEelpvouta_kWh_a = 0; //연간
+            PVefficiency = 0; //평균효율
+                              //음영감소계수
+            Array.Clear(PVFshobstpvt, 0, 12);
+            Array.Clear(PVhshobst_m, 0, 12);
+            Array.Clear(PVhshobstwid_m, 0, 12);
+            Array.Clear(Ishdirtotpvt_W, 0, 12);
+            Esolm = 0; Ppk = 0; Eelpvoutm = 0; Fshobstpvt = 0; hshobst = 0; hshobstwid = 0; Ishdir = 0;
+        }
+
+        private void Save_button_Click(object sender, EventArgs e)
+        {
+            Save();
+            LoadGraph(Orientation, Slope);
+            MessageBox.Show("저장 되었습니다.");
+        }
+        public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
+        {
+            Reset();
+
+            Num_textBox.Text = ID;
+            Num = ID;
+
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "명칭", "번호='" + Num + "'");
+            if (Value.Length > 0)
+            {
+                Name_textBox.Text = Value[0][0];
+                Name = Value[0][0];
+            }
+
+            Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "모듈번호,인버터번호,인버터명칭,인버터효율,배터리번호,배터리용량", "번호='" + Num + "'");
+            if (Value.Length > 0)
+            {
+                PVModuleNumber = Value[0][0];
+                Load_PV_Table();
+                string[][] module = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "제품명,제작년도,가로길이,세로길이,정격출력,Kpk", "번호 = '" + PVModuleNumber + "'");
+                if (module.Length > 0)
+                {
+                    PVModule_textBox.Text = module[0][0];
+                    PVModule = module[0][0];
+                    PVmanu_year = module[0][1];
+                    PVwidth_m = Convert.ToDouble(module[0][2]);
+                    PVheight_m = Convert.ToDouble(module[0][3]);
+                    PVPn_W = Convert.ToDouble(module[0][4]);
+                    PVKpk_kW_m2 = Convert.ToDouble(module[0][5]);
+
+                    if (PVmanu_year == "25년 이내")
+                    {
+                        PVmanuyearfa = 1;
+                    }
+                    if (PVmanu_year == "25년 이상")
+                    {
+                        PVmanuyearfa = 0.9;
+                    }
+                }
+
+                PVInverterNumber = Value[0][1];
+                Inverter = Value[0][2];
+                Inverter_textBox.Text = Inverter;
+                InverterEfficiency = Convert.ToDouble(Value[0][3]);
+                InverterEfficiency_textBox.Text = string.Format("{0:F2}", InverterEfficiency);
+
+                PVBatteryNumber = Value[0][4];
+                Batterycapacity = Convert.ToDouble(Value[0][5]);
+                Batterycapacity_textBox.Text = string.Format("{0:F2}", Batterycapacity);
+                string[][] battery = Program.DB.getValue(DB.type.ProjDB, "User_PVBattery", "제품명,전력,암페어시,배터리타입", "번호 ='" + PVBatteryNumber + "'");
+                if (battery.Length > 0)
+                {
+                    Battery_textBox.Text = battery[0][0];
+                    Battery = battery[0][0];
+                    PVV_V = Convert.ToDouble(battery[0][1]);
+                    PVAH_Ah = Convert.ToDouble(battery[0][2]);
+                }
+            }
+
+            Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "통풍유무,계통유형,가로개수,세로개수,용량,면적,방위,기울기,지형물거리,지형물높이", "번호='" + Num + "'");
+            if (Value.Length > 0)
+            {
+                VentilationType_comboBox.SelectedItem = Value[0][0];
+                VentilationType = Value[0][0];
+
+                PVsystem_combobox.SelectedItem = Value[0][1];
+                PVsystem = Value[0][1];
+
+                width_n_textBox.Text = Value[0][2];
+                width_n = Convert.ToDouble(Value[0][2]);
+
+                height_n_textBox.Text = Value[0][3];
+                height_n = Convert.ToDouble(Value[0][3]);
+
+                allcapacity_textBox.Text = Value[0][4];
+                PVcapacity_Kw = Convert.ToDouble(Value[0][4]);
+
+                PVArea_m2_textBox.Text = Value[0][5];
+                PVArea_m2 = Convert.ToDouble(Value[0][5]);
+
+                orientation_comboBox.SelectedItem = Value[0][6];
+                Orientation = Value[0][6];
+
+                slope_comboBox.SelectedItem = Value[0][7];
+                Slope = Value[0][7];
+
+                PVLshobst_m_textBox.Text = Value[0][8];
+                PVLshobst_m = Convert.ToDouble(Value[0][8]);
+
+                PVHshobst_m_textBox.Text = Value[0][9];
+                PVHshobst_m = Convert.ToDouble(Value[0][9]);
+            }
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Value = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "수직음영길이,수평음영길이,직달일사음영적용,음영계수,태양광전일사량,최대성능,평균효율,전기생산량", "번호='" + Num + "' And 월 ='" + (mth + 1).ToString() + "월'");
+                if (Value.Length > 0)
+                {
+                    PVhshobst_m[mth] = Convert.ToDouble(Value[0][0]);
+                    PVhshobstwid_m[mth] = Convert.ToDouble(Value[0][1]);
+                    Ishdirtotpvt_W[mth] = Convert.ToDouble(Value[0][2]);
+                    PVFshobstpvt[mth] = Convert.ToDouble(Value[0][3]);
+                    PVEsolm_kWh_m2[mth] = Convert.ToDouble(Value[0][4]);
+                    PVPpk_kW = Convert.ToDouble(Value[0][5]);
+                    PVefficiency = Convert.ToDouble(Value[0][6]);
+                    PVEelpvoutm_kWh[mth] = Convert.ToDouble(Value[0][7]);
+                }
+            }
+
+            averagecpacity_textBox.Text = string.Format("{0:F2}", PVefficiency * 100);
+            LoadGraph(Orientation, Slope);
+        }
+        public static bool OnLoadListProc(Form form)
+        {
+            List_PV f = (List_PV)form;
+            f.load_List();
+            return true;
+        }
+        public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
+        {
+            Num_textBox.Text = ID;
+            Num = ID;
+        }
+
+        private void Previous_button_Click(object sender, EventArgs e)
+        {
+            if ((MessageBox.Show("이전 화면으로 이동하시겠습니까?", "이전 화면 이동", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            {
+                this.DialogResult = DialogResult.OK;
+                this.Hide();
+                Program.getMenuForm().DoLoadForm(53, OnLoadListProc);
+            }
+        }
+
     }
-
-    #endregion / method
-
-    //<0821. 다음 할일>
-    //1. 태양광, 인버터, 배터리 DB 화면 만들기
-    //1-1. 태양광 모듈 DB 화면 만들기(8월 31일 완료)
-    //1-2. 인버터 DB 화면 만들기(9월 1일 완료)
-    //1-3. 배터리 DB 화면 만들기(9월 1일 완료)
-
-    //2. DB 화면과 PV 전체 화면과 연결(9월 5일 완료)
-
-    //3. 계산식과 연결(9월 15일 완료)
-
-    //4. 추가적인 진행은 List 이후에 진행
-    //ex) save, reset, getvalue 등
-
 }

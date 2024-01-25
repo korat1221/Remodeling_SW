@@ -766,7 +766,7 @@
             Blind_tabPage.Location = new Point(4, 25);
             Blind_tabPage.Name = "Blind_tabPage";
             Blind_tabPage.Padding = new Padding(3);
-            Blind_tabPage.Size = new Size(945, 421);
+            Blind_tabPage.Size = new Size(945, 565);
             Blind_tabPage.TabIndex = 2;
             Blind_tabPage.Text = "차양 정보";
             Blind_tabPage.UseVisualStyleBackColor = true;

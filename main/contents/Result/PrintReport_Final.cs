@@ -249,7 +249,8 @@ namespace main.contents.Result
                     전기사용량chart4.Add(Math.Round(Double.Parse(Quse_elec_mth[3, mth].ToString()), 3) + 0);
                     전기사용량chart.Add(Math.Round(Double.Parse(Quse_elec_mth[3, mth].ToString()), 3) + 0);
                 }
-                double Qh_a_전기 = 0, Qc_a_전기 = 0, Qw_a_전기 = 0, Ql_a_전기 = 0, Qv_a_전기 = 0, Qbase_a_전기 = 0, Qtot_a_전기 = 0;
+                double Qh_a_전기 = 0, Qc_a_전기 = 0, Qw_a_전기 = 0, Ql_a_전기 = 0, Qv_a_전기 = 0, Qbase_a_전기 = 0, Qreg_a_전기 =0, Qtot_a_전기 = 0;
+                double[] Qreg_mth = new double[12];
                 double[] Qtot_mth_전기 = new double[12];
                 double Error_mth_avg_전기 = 0;
                 for (int mth = 0; mth < 12; mth++)
@@ -268,8 +269,16 @@ namespace main.contents.Result
                     공조전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Final[0][4])), 3) + 0);
                     기저전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Final[0][5])), 3) + 0);
 
-
-                    Qtot_mth_전기[mth] = Convert.ToDouble(Final[0][0]) + Convert.ToDouble(Final[0][1]) + Convert.ToDouble(Final[0][2]) + Convert.ToDouble(Final[0][3]) + Convert.ToDouble(Final[0][4]) + Convert.ToDouble(Final[0][5]);
+                    string[][] PV = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "최종사용량", "월 ='" + (mth + 1).ToString() + "월'");
+                    if(PV.Length > 0)
+                    {
+                        for(int a = 0; a < PV.Length;  a++)
+                        {
+                            Qreg_mth[mth] += Convert.ToDouble(PV[a][0]);
+                        }
+                    }
+                    __data[101].Add(new { idx = i * 12 + mth, val = Qreg_mth[mth].ToString("0.0") }); //월별 신재생 
+                    Qtot_mth_전기[mth] = Convert.ToDouble(Final[0][0]) + Convert.ToDouble(Final[0][1]) + Convert.ToDouble(Final[0][2]) + Convert.ToDouble(Final[0][3]) + Convert.ToDouble(Final[0][4]) + Convert.ToDouble(Final[0][5]) - Qreg_mth[mth];
                     __data[20].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Qtot_mth_전기[mth].ToString()) }); //월별 전기 에너지소요량 
                     총전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Qtot_mth_전기[mth].ToString())), 3) + 0);
                     전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Qtot_mth_전기[mth].ToString())), 3) + 0);
@@ -284,9 +293,9 @@ namespace main.contents.Result
                     Ql_a_전기 += Convert.ToDouble(Final[0][3]);
                     Qv_a_전기 += Convert.ToDouble(Final[0][4]);
                     Qbase_a_전기 += Convert.ToDouble(Final[0][5]);
-
+                    Qreg_a_전기 += Qreg_mth[mth];
                 }
-                Qtot_a_전기 = Qh_a_전기 + Qc_a_전기 + Qw_a_전기 + Ql_a_전기 + Qv_a_전기 + Qbase_a_전기;
+                Qtot_a_전기 = Qh_a_전기 + Qc_a_전기 + Qw_a_전기 + Ql_a_전기 + Qv_a_전기 + Qbase_a_전기 - Qreg_a_전기;
 
                 __data[21].Add(new { idx = i, val = Qh_a_전기.ToString("0.0") });
                 __data[22].Add(new { idx = i, val = Qc_a_전기.ToString("0.0") });
@@ -295,6 +304,7 @@ namespace main.contents.Result
                 __data[25].Add(new { idx = i, val = Qv_a_전기.ToString("0.0") });
                 __data[26].Add(new { idx = i, val = Qbase_a_전기.ToString("0.0") });
                 __data[27].Add(new { idx = i, val = Qtot_a_전기.ToString("0.0") });
+                __data[102].Add(new { idx = i, val = Qreg_a_전기.ToString("0.0") });
 
 
                 __data[32].Add(new { idx = i, val = (Qh_a_전기 / Area).ToString("0.0") });
@@ -304,6 +314,7 @@ namespace main.contents.Result
                 __data[36].Add(new { idx = i, val = (Qv_a_전기 / Area).ToString("0.0") });
                 __data[37].Add(new { idx = i, val = (Qbase_a_전기 / Area).ToString("0.0") });
                 __data[38].Add(new { idx = i, val = (Qtot_a_전기 / Area).ToString("0.0") });
+                __data[103].Add(new { idx = i, val = (Qreg_a_전기 / Area).ToString("0.0") });
 
                 Error_mth_avg_전기 = Error_mth_avg_전기 / 12;
                 __data[40].Add(new { idx = i, val = Error_mth_avg_전기.ToString("0.0") + "%" });
@@ -378,6 +389,10 @@ namespace main.contents.Result
                 data.Add(new { cname = "error_mth", data = __data[39] });
                 data.Add(new { cname = "error_mth_avg", data = __data[40] });
                 data.Add(new { cname = "error_a", data = __data[41] });
+
+                data.Add(new { cname = "qreg_mth", data = __data[101] }); ;
+                data.Add(new { cname = "qreg_a", data = __data[102] });
+                data.Add(new { cname = "qreg_a_area", data = __data[103] });
                 #endregion
 
                 #region 가스
@@ -813,19 +828,33 @@ namespace main.contents.Result
                     List<object> 후_전기Chart = new List<object>();
                     List<object> 절감률_전기Chart = new List<object>();
 
-                    double Qh_a2_전기 = 0, Qc_a2_전기 = 0, Qw_a2_전기 = 0, Ql_a2_전기 = 0, Qv_a2_전기 = 0, Qbase_a2_전기 = 0, Qtot_a2_전기 = 0;
+                    double Qh_a2_전기 = 0, Qc_a2_전기 = 0, Qw_a2_전기 = 0, Ql_a2_전기 = 0, Qv_a2_전기 = 0, Qbase_a2_전기 = 0, Qreg_a2_전기 =0, Qtot_a2_전기 = 0;
+                    double[] Qreg2 = new double[12]; double[] Qreg1 = new double[12];
                     for (int mth = 0; mth < 12; mth++)
                     { //리모델링전 전기 소요량 
                         string[][] Final = Program.DB.querySQL(res[0][0], "SELECT 난방,냉방,급탕,조명,공조,기저에너지 FROM FinalEnergy_Result where 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
 
+                       
 
                         __data[0].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][0]).ToString("0.0") }); //월별 난방 
                         __data[1].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][1]).ToString("0.0") }); // 월별 냉방 
                         __data[2].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][2]).ToString("0.0") }); //월별 급탕 
                         __data[3].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][3]).ToString("0.0") }); //월별 조명 
                         __data[4].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][4]).ToString("0.0") }); //월별 공조
-                        __data[5].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][5]).ToString("0.0") }); //월별 기저 
-                        Qtot2_mth_전기[mth] = Convert.ToDouble(Final[0][0]) + Convert.ToDouble(Final[0][1]) + Convert.ToDouble(Final[0][2]) + Convert.ToDouble(Final[0][3]) + Convert.ToDouble(Final[0][4]) + Convert.ToDouble(Final[0][5]);
+                        __data[5].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][5]).ToString("0.0") }); //월별 기저
+                                                                                                                        //
+                        string[][] PV = Program.DB.querySQL(res[0][0], "SELECT 최종사용량 FROM PV_Result where 월 = '" + (mth + 1).ToString() + "월'");
+                        if(PV.Length > 0 )
+                        {
+                            for(int a= 0; a<PV.Length; a++)
+                            {
+                                if (PV[a][0] == "")
+                                { Qreg2[mth] += 0; }
+                                else { Qreg2[mth] += Convert.ToDouble(PV[a][0]); }
+                            }
+                        }
+                        __data[100].Add(new { idx = i * 12 + mth, val = Qreg2[mth].ToString("0.0") }); //월별 신재생 생산량 
+                        Qtot2_mth_전기[mth] = Convert.ToDouble(Final[0][0]) + Convert.ToDouble(Final[0][1]) + Convert.ToDouble(Final[0][2]) + Convert.ToDouble(Final[0][3]) + Convert.ToDouble(Final[0][4]) + Convert.ToDouble(Final[0][5]) - Qreg2[mth];
                         __data[6].Add(new { idx = i * 12 + mth, val = Qtot2_mth_전기[mth].ToString("0.0") }); //월별 전기 에너지소요량 
 
                         전_난방_전기Chart.Add(Math.Round(Double.Parse(Final[0][0]), 3) + 0);
@@ -843,14 +872,16 @@ namespace main.contents.Result
                         Ql_a2_전기 += Convert.ToDouble(Final[0][3]);
                         Qv_a2_전기 += Convert.ToDouble(Final[0][4]);
                         Qbase_a2_전기 += Convert.ToDouble(Final[0][5]);
+                        Qreg_a2_전기 += Qreg2[mth];
                     }
-                    Qtot_a2_전기 = Qh_a2_전기 + Qc_a2_전기 + Qw_a2_전기 + Ql_a2_전기 + Qv_a2_전기 + Qbase_a2_전기;
+                    Qtot_a2_전기 = Qh_a2_전기 + Qc_a2_전기 + Qw_a2_전기 + Ql_a2_전기 + Qv_a2_전기 + Qbase_a2_전기 - Qreg_a2_전기;
                     __data[7].Add(new { idx = i, val = Qh_a2_전기.ToString("0.0") });
                     __data[8].Add(new { idx = i, val = Qc_a2_전기.ToString("0.0") });
                     __data[9].Add(new { idx = i, val = Qw_a2_전기.ToString("0.0") });
                     __data[10].Add(new { idx = i, val = Ql_a2_전기.ToString("0.0") });
                     __data[11].Add(new { idx = i, val = Qv_a2_전기.ToString("0.0") });
                     __data[12].Add(new { idx = i, val = Qbase_a2_전기.ToString("0.0") });
+                    __data[101].Add(new { idx = i, val = Qreg_a2_전기.ToString("0.0") });
                     __data[13].Add(new { idx = i, val = Qtot_a2_전기.ToString("0.0") });
 
                     double Area2_전기 = 0;
@@ -866,10 +897,11 @@ namespace main.contents.Result
                     __data[17].Add(new { idx = i, val = (Ql_a2_전기 / Area2_전기).ToString("0.0") });
                     __data[18].Add(new { idx = i, val = (Qv_a2_전기 / Area2_전기).ToString("0.0") });
                     __data[19].Add(new { idx = i, val = (Qbase_a2_전기 / Area2_전기).ToString("0.0") });
+                    __data[102].Add(new { idx = i, val = (Qreg_a2_전기 / Area2_전기).ToString("0.0") });
                     __data[20].Add(new { idx = i, val = (Qtot_a2_전기 / Area2_전기).ToString("0.0") });
 
 
-                    double Qh_a_전기 = 0, Qc_a_전기 = 0, Qw_a_전기 = 0, Ql_a_전기 = 0, Qv_a_전기 = 0, Qbase_a_전기 = 0, Qtot_a_전기 = 0;
+                    double Qh_a_전기 = 0, Qc_a_전기 = 0, Qw_a_전기 = 0, Ql_a_전기 = 0, Qv_a_전기 = 0, Qbase_a_전기 = 0, Qreg_a_전기 =0, Qtot_a_전기 = 0;
                     for (int mth = 0; mth < 12; mth++)
                     { //리모델링후 전기 소요량 
                         string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
@@ -880,7 +912,24 @@ namespace main.contents.Result
                         __data[24].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][3]).ToString("0.0") }); //월별 조명 
                         __data[25].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][4]).ToString("0.0") }); //월별 공조
                         __data[26].Add(new { idx = i * 12 + mth, val =Convert.ToDouble(Final2[0][5]).ToString("0.0") }); //월별 기저 >>>리모델링 전 값 가져옴 
-                        Qtot_mth_전기[mth] = Convert.ToDouble(Final[0][0]) + Convert.ToDouble(Final[0][1]) + Convert.ToDouble(Final[0][2]) + Convert.ToDouble(Final[0][3]) + Convert.ToDouble(Final[0][4]) + Convert.ToDouble(Final2[0][5]);
+
+                        string[][] PV = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "최종사용량", "월 ='" + (mth + 1).ToString() + "월'");
+                        if (PV.Length > 0)
+                        {
+                            for (int a = 0; a < PV.Length; a++)
+                            {
+                                if(PV[a][0] =="")
+                                {
+                                    Qreg1[mth] += 0; 
+                                }
+                                else
+                                {
+                                    Qreg1[mth] += Convert.ToDouble(PV[a][0]);
+                                }
+                            }
+                        }
+                        __data[103].Add(new { idx = i * 12 + mth, val = Qreg1[mth].ToString("0.0") }); //월별 신재생 생산량 
+                        Qtot_mth_전기[mth] = Convert.ToDouble(Final[0][0]) + Convert.ToDouble(Final[0][1]) + Convert.ToDouble(Final[0][2]) + Convert.ToDouble(Final[0][3]) + Convert.ToDouble(Final[0][4]) + Convert.ToDouble(Final2[0][5]) - Qreg1[mth];
                         __data[27].Add(new { idx = i * 12 + mth, val = Qtot_mth_전기[mth].ToString("0.0") }); //월별 전기 에너지소요량 
 
                         후_난방_전기Chart.Add(Math.Round(Double.Parse(Final[0][0]), 3) + 0);
@@ -898,14 +947,16 @@ namespace main.contents.Result
                         Ql_a_전기 += Convert.ToDouble(Final[0][3]);
                         Qv_a_전기 += Convert.ToDouble(Final[0][4]);
                         Qbase_a_전기 += Convert.ToDouble(Final2[0][5]); //리모델링전 값 가져옴 
+                        Qreg_a_전기 += Qreg1[mth];
                     }
-                    Qtot_a_전기 = Qh_a_전기 + Qc_a_전기 + Qw_a_전기 + Ql_a_전기 + Qv_a_전기 + Qbase_a_전기;
+                    Qtot_a_전기 = Qh_a_전기 + Qc_a_전기 + Qw_a_전기 + Ql_a_전기 + Qv_a_전기 + Qbase_a_전기 - Qreg_a_전기;
                     __data[28].Add(new { idx = i, val = Qh_a_전기.ToString("0.0") });
                     __data[29].Add(new { idx = i, val = Qc_a_전기.ToString("0.0") });
                     __data[30].Add(new { idx = i, val = Qw_a_전기.ToString("0.0") });
                     __data[31].Add(new { idx = i, val = Ql_a_전기.ToString("0.0") });
                     __data[32].Add(new { idx = i, val = Qv_a_전기.ToString("0.0") });
                     __data[33].Add(new { idx = i, val = Qbase_a_전기.ToString("0.0") });
+                    __data[104].Add(new { idx = i, val = Qreg_a_전기.ToString("0.0") });
                     __data[34].Add(new { idx = i, val = Qtot_a_전기.ToString("0.0") });
 
                     double Area_전기 = 0;
@@ -921,6 +972,7 @@ namespace main.contents.Result
                     __data[38].Add(new { idx = i, val = (Ql_a_전기 / Area_전기).ToString("0.0") });
                     __data[39].Add(new { idx = i, val = (Qv_a_전기 / Area_전기).ToString("0.0") });
                     __data[40].Add(new { idx = i, val = (Qbase_a_전기 / Area_전기).ToString("0.0") });
+                    __data[105].Add(new { idx = i, val = (Qreg_a_전기 / Area_전기).ToString("0.0") });
                     __data[41].Add(new { idx = i, val = (Qtot_a_전기 / Area_전기).ToString("0.0") });
 
                     double SavingPercent_mth_avg_전기 = 0; double Saving_mth_avg_전기 = 0; double Saving_a_전기 = 0;
@@ -1017,6 +1069,13 @@ namespace main.contents.Result
                     data.Add(new { cname = "SavingPercent_a", data = __data[44] });
                     data.Add(new { cname = "SavingPercent_mth_avg", data = __data[45] });
                     data.Add(new { cname = "Saving_mth", data = __data[46] });
+
+                    data.Add(new { cname = "qreg_mth_old", data = __data[100] });
+                    data.Add(new { cname = "qreg_a_old", data = __data[101] });
+                    data.Add(new { cname = "qreg_a_area_old", data = __data[102] });
+                    data.Add(new { cname = "qreg_mth_new", data = __data[103] });
+                    data.Add(new { cname = "qreg_a_new", data = __data[104] });
+                    data.Add(new { cname = "qreg_a_area_new", data = __data[105] });
                     #endregion
 
                     #region 가스
@@ -1282,21 +1341,21 @@ namespace main.contents.Result
                 if (charts != "") charts += ",";
 
                 charts += "{data:[" +
-                "{type:\"bar\",barPercentage:0.4,label:\"기저 전기 에너지 소요량 [kWh]\",data:" + chart_전_기저_전기[i] + ",borderColor:\"#BFBFBF\",backgroundColor:\"#BFBFBF\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"급탕 전기 에너지 소요량 [kWh]\",data:" + chart_전_급탕_전기[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"공조 전기 에너지 소요량 [kWh]\",data:" + chart_전_공조_전기[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"조명 전기 에너지 소요량 [kWh]\",data:" + chart_전_조명_전기[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"난방 전기 에너지 소요량 [kWh]\",data:" + chart_전_난방_전기[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"냉방 전기 에너지 소요량 [kWh]\",data:" + chart_전_냉방_전기[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"기저 에너지 소요량 [kWh]\",data:" + chart_전_기저_전기[i] + ",borderColor:\"#BFBFBF\",backgroundColor:\"#BFBFBF\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"급탕 에너지 소요량 [kWh]\",data:" + chart_전_급탕_전기[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"공조 에너지 소요량 [kWh]\",data:" + chart_전_공조_전기[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"조명 에너지 소요량 [kWh]\",data:" + chart_전_조명_전기[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"난방 에너지 소요량 [kWh]\",data:" + chart_전_난방_전기[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"냉방 에너지 소요량 [kWh]\",data:" + chart_전_냉방_전기[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
                 "],max:" + (Math.Round(max_graph_elec / 1000) * 1000 + 500).ToString() + ",step:100,legend:true,stacked:true}";
 
                 charts += ",{data:[" +
-                "{type:\"bar\",barPercentage:0.4,label:\"기저 전기 에너지 소요량 [kWh]\",data:" + chart_후_기저_전기[i] + ",borderColor:\"#BFBFBF\",backgroundColor:\"#BFBFBF\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"급탕 전기 에너지 소요량 [kWh]\",data:" + chart_후_급탕_전기[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"공조 전기 에너지 소요량 [kWh]\",data:" + chart_후_공조_전기[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"조명 전기 에너지 소요량 [kWh]\",data:" + chart_후_조명_전기[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"난방 전기 에너지 소요량 [kWh]\",data:" + chart_후_난방_전기[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"냉방 전기 에너지 소요량 [kWh]\",data:" + chart_후_냉방_전기[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"기저 에너지 소요량 [kWh]\",data:" + chart_후_기저_전기[i] + ",borderColor:\"#BFBFBF\",backgroundColor:\"#BFBFBF\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"급탕 에너지 소요량 [kWh]\",data:" + chart_후_급탕_전기[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"공조 에너지 소요량 [kWh]\",data:" + chart_후_공조_전기[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"조명 에너지 소요량 [kWh]\",data:" + chart_후_조명_전기[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"난방 에너지 소요량 [kWh]\",data:" + chart_후_난방_전기[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"냉방 에너지 소요량 [kWh]\",data:" + chart_후_냉방_전기[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
                 "],max:" + (Math.Round(max_graph_elec / 1000) * 1000 + 500).ToString() + ",step:100,legend:true,stacked:true}";
 
                 charts += ",{data:[{type:\"line\",yAxisID: 'y',label:\"리모델링 전 소요량 [kWh]\",data:" + chart_전_전기[i] + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:false, tension: 0.4}," +
@@ -1305,21 +1364,21 @@ namespace main.contents.Result
                 "],max:" + (Math.Round(max_graph_elec / 1000) * 1000 + 500).ToString() + ",step:100,legend:true}";
 
                 charts += ",{data:[" +
-               "{type:\"bar\",barPercentage:0.4,label:\"기저 가스 에너지 소요량 [kWh]\",data:" + chart_전_기저_가스[i] + ",borderColor:\"#BFBFBF\",backgroundColor:\"#BFBFBF\",dash:false}," +
-               "{type:\"bar\",barPercentage:0.4,label:\"급탕 가스 에너지 소요량 [kWh]\",data:" + chart_전_급탕_가스[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
-               "{type:\"bar\",barPercentage:0.4,label:\"공조 가스 에너지 소요량 [kWh]\",data:" + chart_전_공조_가스[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
-               "{type:\"bar\",barPercentage:0.4,label:\"조명 가스 에너지 소요량 [kWh]\",data:" + chart_전_조명_가스[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
-               "{type:\"bar\",barPercentage:0.4,label:\"난방 가스 에너지 소요량 [kWh]\",data:" + chart_전_난방_가스[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
-               "{type:\"bar\",barPercentage:0.4,label:\"냉방 가스 에너지 소요량 [kWh]\",data:" + chart_전_냉방_가스[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
+               "{type:\"bar\",barPercentage:0.4,label:\"기저 에너지 소요량 [kWh]\",data:" + chart_전_기저_가스[i] + ",borderColor:\"#BFBFBF\",backgroundColor:\"#BFBFBF\",dash:false}," +
+               "{type:\"bar\",barPercentage:0.4,label:\"급탕 에너지 소요량 [kWh]\",data:" + chart_전_급탕_가스[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
+               "{type:\"bar\",barPercentage:0.4,label:\"공조 에너지 소요량 [kWh]\",data:" + chart_전_공조_가스[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
+               "{type:\"bar\",barPercentage:0.4,label:\"조명 에너지 소요량 [kWh]\",data:" + chart_전_조명_가스[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
+               "{type:\"bar\",barPercentage:0.4,label:\"난방 에너지 소요량 [kWh]\",data:" + chart_전_난방_가스[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
+               "{type:\"bar\",barPercentage:0.4,label:\"냉방 에너지 소요량 [kWh]\",data:" + chart_전_냉방_가스[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
                "],max:" + (Math.Round(max_graph_gas / 1000) * 1000 + 500).ToString() + ",step:100,legend:true,stacked:true}";
 
                 charts += ",{data:[" +
-                "{type:\"bar\",barPercentage:0.4,label:\"기저 가스 에너지 소요량 [kWh]\",data:" + chart_후_기저_가스[i] + ",borderColor:\"#BFBFBF\",backgroundColor:\"#BFBFBF\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"급탕 가스 에너지 소요량 [kWh]\",data:" + chart_후_급탕_가스[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"공조 가스 에너지 소요량 [kWh]\",data:" + chart_후_공조_가스[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"조명 가스 에너지 소요량 [kWh]\",data:" + chart_후_조명_가스[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"난방 가스 에너지 소요량 [kWh]\",data:" + chart_후_난방_가스[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"냉방 가스 에너지 소요량 [kWh]\",data:" + chart_후_냉방_가스[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"기저 에너지 소요량 [kWh]\",data:" + chart_후_기저_가스[i] + ",borderColor:\"#BFBFBF\",backgroundColor:\"#BFBFBF\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"급탕 에너지 소요량 [kWh]\",data:" + chart_후_급탕_가스[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"공조 에너지 소요량 [kWh]\",data:" + chart_후_공조_가스[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"조명 에너지 소요량 [kWh]\",data:" + chart_후_조명_가스[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"난방 에너지 소요량 [kWh]\",data:" + chart_후_난방_가스[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"냉방 에너지 소요량 [kWh]\",data:" + chart_후_냉방_가스[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
                 "],max:" + (Math.Round(max_graph_gas / 1000) * 1000 + 500).ToString() + ",step:100,legend:true,stacked:true}";
 
                 charts += ",{data:[{type:\"line\",yAxisID: 'y',label:\"리모델링 전 소요량 [kWh]\",data:" + chart_전_가스[i] + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:false, tension: 0.4}," +

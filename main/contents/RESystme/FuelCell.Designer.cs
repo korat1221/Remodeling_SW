@@ -29,86 +29,37 @@
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
-            pictureBox1 = new PictureBox();
-            PVtype_Combobox = new ComboBox();
-            PVname_texbox = new TextBox();
-            label3 = new Label();
-            label1 = new Label();
             panel2 = new Panel();
             FCDB_button = new Button();
             Batteryname = new TextBox();
             label6 = new Label();
             Inverter = new TextBox();
+            label7 = new Label();
             PVModuleType = new TextBox();
+            Battery = new Label();
             AdditionalPanel = new Panel();
             label5 = new Label();
-            Battery = new Label();
-            label7 = new Label();
+            label1 = new Label();
+            Num_textBox = new TextBox();
+            Name_textBox = new TextBox();
+            pictureBox1 = new PictureBox();
             GeneralPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(pictureBox1);
-            GeneralPanel.Controls.Add(PVtype_Combobox);
-            GeneralPanel.Controls.Add(PVname_texbox);
-            GeneralPanel.Controls.Add(label3);
             GeneralPanel.Controls.Add(label1);
+            GeneralPanel.Controls.Add(Num_textBox);
+            GeneralPanel.Controls.Add(Name_textBox);
+            GeneralPanel.Controls.Add(pictureBox1);
             GeneralPanel.Location = new Point(12, 12);
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(977, 67);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(18, 16);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(40, 35);
-            pictureBox1.TabIndex = 91;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
-            // 
-            // PVtype_Combobox
-            // 
-            PVtype_Combobox.FormattingEnabled = true;
-            PVtype_Combobox.Location = new Point(205, 37);
-            PVtype_Combobox.Name = "PVtype_Combobox";
-            PVtype_Combobox.Size = new Size(121, 23);
-            PVtype_Combobox.TabIndex = 98;
-            // 
-            // PVname_texbox
-            // 
-            PVname_texbox.BackColor = SystemColors.Window;
-            PVname_texbox.BorderStyle = BorderStyle.None;
-            PVname_texbox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            PVname_texbox.Location = new Point(205, 8);
-            PVname_texbox.Name = "PVname_texbox";
-            PVname_texbox.Size = new Size(120, 15);
-            PVname_texbox.TabIndex = 97;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.Location = new Point(126, 40);
-            label3.Name = "label3";
-            label3.Size = new Size(35, 15);
-            label3.TabIndex = 96;
-            label3.Text = "Type";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(126, 11);
-            label1.Name = "label1";
-            label1.Size = new Size(31, 15);
-            label1.TabIndex = 95;
-            label1.Text = "명칭";
             // 
             // panel2
             // 
@@ -176,6 +127,16 @@
             Inverter.TabIndex = 104;
             Inverter.TextAlign = HorizontalAlignment.Center;
             // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Location = new Point(16, 36);
+            label7.Name = "label7";
+            label7.Size = new Size(43, 15);
+            label7.TabIndex = 102;
+            label7.Text = "인버터";
+            // 
             // PVModuleType
             // 
             PVModuleType.BackColor = SystemColors.Window;
@@ -187,6 +148,17 @@
             PVModuleType.Size = new Size(120, 15);
             PVModuleType.TabIndex = 100;
             PVModuleType.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Battery
+            // 
+            Battery.AutoSize = true;
+            Battery.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Battery.Location = new Point(16, 65);
+            Battery.Name = "Battery";
+            Battery.Size = new Size(43, 15);
+            Battery.TabIndex = 103;
+            Battery.Text = "배터리";
+            Battery.Visible = false;
             // 
             // AdditionalPanel
             // 
@@ -207,26 +179,43 @@
             label5.TabIndex = 95;
             label5.Text = "구성요소정보";
             // 
-            // Battery
+            // label1
             // 
-            Battery.AutoSize = true;
-            Battery.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Battery.Location = new Point(16, 65);
-            Battery.Name = "Battery";
-            Battery.Size = new Size(43, 15);
-            Battery.TabIndex = 103;
-            Battery.Text = "배터리";
-            Battery.Visible = false;
+            label1.AutoSize = true;
+            label1.Location = new Point(127, 26);
+            label1.Name = "label1";
+            label1.Size = new Size(31, 15);
+            label1.TabIndex = 137;
+            label1.Text = "명칭";
             // 
-            // label7
+            // Num_textBox
             // 
-            label7.AutoSize = true;
-            label7.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label7.Location = new Point(16, 36);
-            label7.Name = "label7";
-            label7.Size = new Size(43, 15);
-            label7.TabIndex = 102;
-            label7.Text = "인버터";
+            Num_textBox.BackColor = Color.White;
+            Num_textBox.BorderStyle = BorderStyle.None;
+            Num_textBox.Enabled = false;
+            Num_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Num_textBox.ForeColor = SystemColors.ControlText;
+            Num_textBox.Location = new Point(65, 26);
+            Num_textBox.Name = "Num_textBox";
+            Num_textBox.Size = new Size(56, 15);
+            Num_textBox.TabIndex = 136;
+            Num_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Name_textBox
+            // 
+            Name_textBox.BorderStyle = BorderStyle.FixedSingle;
+            Name_textBox.Location = new Point(164, 23);
+            Name_textBox.Name = "Name_textBox";
+            Name_textBox.Size = new Size(120, 23);
+            Name_textBox.TabIndex = 135;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(9, 9);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(50, 50);
+            pictureBox1.TabIndex = 134;
+            pictureBox1.TabStop = false;
             // 
             // FuelCell
             // 
@@ -244,9 +233,9 @@
             Load += FuelCell_Load;
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -256,11 +245,6 @@
         private Panel GeneralPanel;
         private Panel panel2;
         private Panel AdditionalPanel;
-        private ComboBox PVtype_Combobox;
-        private TextBox PVname_texbox;
-        private Label label3;
-        private Label label1;
-        private PictureBox pictureBox1;
         private Label label5;
         private TextBox Batteryname;
         private Label label6;
@@ -269,5 +253,9 @@
         private Button FCDB_button;
         private Label label7;
         private Label Battery;
+        private Label label1;
+        private TextBox Num_textBox;
+        private TextBox Name_textBox;
+        private PictureBox pictureBox1;
     }
 }

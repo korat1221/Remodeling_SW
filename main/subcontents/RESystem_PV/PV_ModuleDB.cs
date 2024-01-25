@@ -82,15 +82,14 @@ namespace main.subcontents.RESystem_PV
                     PVModule_dataGridView.Rows[n].Cells[7].Value = PVModule[n][6];                  
                 }
             }
-
-            //사용자 DB 추가
-            try
+            else
             {
+                //사용자 DB 추가
                 string[][] User_PVModule = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,Kpk,가로길이,세로길이,정격출력", "");
                 for (int n = 0; n < User_PVModule.Length; n++)
                 {
                     PVModule_dataGridView.Rows.Add();
-                    PVModule_dataGridView.Rows[n].Cells[1].Value = User_PVModule [n][0];
+                    PVModule_dataGridView.Rows[n].Cells[1].Value = User_PVModule[n][0];
                     PVModule_dataGridView.Rows[n].Cells[2].Value = User_PVModule[n][1];
                     PVModule_dataGridView.Rows[n].Cells[3].Value = User_PVModule[n][2];
                     PVModule_dataGridView.Rows[n].Cells[4].Value = User_PVModule[n][3];
@@ -101,8 +100,12 @@ namespace main.subcontents.RESystem_PV
                     PVModule_dataGridView.Rows[n].Cells[9].Value = User_PVModule[n][8];
                     PVModule_dataGridView.Rows[n].Cells[10].Value = User_PVModule[n][9];
                 }
+
             }
-            catch { }
+
+
+           
+            
         }
 
         private void Door_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -252,6 +255,7 @@ namespace main.subcontents.RESystem_PV
         {
             // 번호,DB유형,제품명,제조사,제작년도,CELLTYPE,Kpk,가로길이,세로길이,정격출력
             DataGridViewRow row = PVModule_dataGridView.Rows[SelectRow];
+            
             Select_PVModule[0] = row.Cells[1].Value.ToString(); //번호
             Select_PVModule[1] = row.Cells[2].Value.ToString(); //DB유형
             Select_PVModule[2] = row.Cells[3].Value.ToString(); //제품명
@@ -259,9 +263,13 @@ namespace main.subcontents.RESystem_PV
             Select_PVModule[4] = row.Cells[5].Value.ToString(); //제작년도
             Select_PVModule[5] = row.Cells[6].Value.ToString(); //CELLTYPE
             Select_PVModule[6] = row.Cells[7].Value.ToString(); //Kpk
-            Select_PVModule[7] = row.Cells[8].Value.ToString(); //가로길이
-            Select_PVModule[8] = row.Cells[9].Value.ToString(); //세로길이
-            Select_PVModule[9] = row.Cells[10].Value.ToString(); //정격출력
+
+            if (DefaultUse != "기본DB 적용")
+            {
+                Select_PVModule[7] = row.Cells[8].Value.ToString(); //가로길이
+                Select_PVModule[8] = row.Cells[9].Value.ToString(); //세로길이
+                Select_PVModule[9] = row.Cells[10].Value.ToString(); //정격출력
+            }
 
             this.DialogResult = DialogResult.OK;
             this.Close();
