@@ -27,8 +27,11 @@ namespace main.contentslist
             InitializeComponent();
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '급탕시스템'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if(Image.Length > 0 )
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }            
             Program.DB.initTable(DB.type.ProjDB, "DHWSystem_Form");
             Create_Table();
         }
@@ -96,16 +99,19 @@ namespace main.contentslist
 
         public void load_List()
         {
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호,명칭,주요설비", "");
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            String Blank = "";
-            this.List.Rows.Clear();
-            for (int n = 0; n < List.Length; n++)
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호,명칭,주요설비", "");
+            if (List.Length > 0)
             {
-                this.List.Rows.Add(List[n][0], List[n][1], List[n][2]);
-                mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":18,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                String Blank = "";
+                this.List.Rows.Clear();
+                for (int n = 0; n < List.Length; n++)
+                {
+                    this.List.Rows.Add(List[n][0], List[n][1], List[n][2]);
+                    mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":18,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                }
+                dataGridView1.DataSource = this.List;
             }
-            dataGridView1.DataSource = this.List;
             CountDB = List.Length;
             Program.UTIL.resetMainTree(4,2, mainMenu.ToArray(), "49"); // 예시 코드: 메인 메뉴 동적 할당
         }

@@ -120,33 +120,33 @@ namespace main.contentslist
             String Blank = "";
             //ListTable.Rows.Clear();
             dataGridView1.Rows.Clear();
-            for (int n = 0; n < List.Length; n++)
+            if (List.Length > 0)
             {
+                for (int n = 0; n < List.Length; n++)
+                {
                     Value = Program.DB.querySQL(DB.type.ProjDB, "select a.존번호, a.존이름, a.용도프로필, a.순바닥면적, a.천장고 FROM ZoneGeneral_Form AS a INNER JOIN ZoneEnvelope_3D AS b ON a.존번호 = b.존 where b.층 = '" + Num + "' AND b.존 = '" + List[n][0] + "'");
-                if(Value.Length > 0)
-                {
-                    dataGridView1.Rows.Add();
-                    int nRow = dataGridView1.Rows.Count - 1;
-                    dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
-                    dataGridView1.Rows[nRow].Cells[2].Value = Value[0][1];
-                    dataGridView1.Rows[nRow].Cells[3].Value = Value[0][2];
-                    dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F1}", Convert.ToDouble(Value[0][3]));
-                    dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F1}", Convert.ToDouble(Value[0][4]));
-                    // ListTable.Rows.Add(List[n][0],  Value[0][1], Value[0][2], String.Format("{0:F1}", Convert.ToDouble(Value[0][3])), String.Format("{0:F1}", Convert.ToDouble(Value[0][4])));
+                    if (Value.Length > 0)
+                    {
+                        dataGridView1.Rows.Add();
+                        int nRow = dataGridView1.Rows.Count - 1;
+                        dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
+                        dataGridView1.Rows[nRow].Cells[2].Value = Value[0][1];
+                        dataGridView1.Rows[nRow].Cells[3].Value = Value[0][2];
+                        dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F1}", Convert.ToDouble(Value[0][3]));
+                        dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F1}", Convert.ToDouble(Value[0][4]));                     
+                    }
+                    else
+                    {
+                        dataGridView1.Rows.Add();
+                        int nRow = dataGridView1.Rows.Count - 1;
+                        dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
+                        dataGridView1.Rows[nRow].Cells[2].Value = null;
+                        dataGridView1.Rows[nRow].Cells[3].Value = null;
+                        dataGridView1.Rows[nRow].Cells[4].Value = null;
+                        dataGridView1.Rows[nRow].Cells[5].Value = null;
+                    }
                 }
-                else
-                {
-                    dataGridView1.Rows.Add();
-                    int nRow = dataGridView1.Rows.Count - 1;
-                    dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
-                    dataGridView1.Rows[nRow].Cells[2].Value = null;
-                    dataGridView1.Rows[nRow].Cells[3].Value = null;
-                    dataGridView1.Rows[nRow].Cells[4].Value = null;
-                    dataGridView1.Rows[nRow].Cells[5].Value = null;
-                    //ListTable.Rows.Add(List[n][0], null, null, null, null);
-                }
-            }    
-           // dataGridView1.DataSource = ListTable;
+            }
             CountDB = List.Length;
         }
 

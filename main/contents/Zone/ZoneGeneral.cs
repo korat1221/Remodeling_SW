@@ -36,16 +36,22 @@ namespace main.contents
         {
             InitializeComponent();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '존 일반정보'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if (Image.Length > 0)
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
 
             Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "상위메뉴아이콘_on2", "상위메뉴명 = '결과 정보'");
 
 
             Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필이미지", "이미지", "대분류 = '메인'");
-            Main_pictureBox.Load(Program.gPath + Image[0][0]);
-            Main_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            Main_pictureBox.Controls.Add(RoomControl_pictureBox);
+            if (Image.Length > 0)
+            {
+                Main_pictureBox.Load(Program.gPath + Image[0][0]);
+                Main_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                Main_pictureBox.Controls.Add(RoomControl_pictureBox);
+            }
 
 
             //존 환기방식 콤보박스
@@ -102,11 +108,14 @@ namespace main.contents
             try
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필이미지", "이미지", "대분류 = '제어' AND 소분류 = '" + RoomControl + "'");
-                RoomControl_pictureBox.Load(Program.gPath + Image[0][0]);
-                RoomControl_pictureBox.Visible = true;
-                RoomControl_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                RoomControl_pictureBox.BackColor = Color.Transparent;
-                RoomControl_pictureBox.Location = new Point(0, 0);
+                if (Image.Length > 0)
+                {
+                    RoomControl_pictureBox.Load(Program.gPath + Image[0][0]);
+                    RoomControl_pictureBox.Visible = true;
+                    RoomControl_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    RoomControl_pictureBox.BackColor = Color.Transparent;
+                    RoomControl_pictureBox.Location = new Point(0, 0);
+                }
             }
             catch { }
 
@@ -119,11 +128,14 @@ namespace main.contents
             try
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필이미지", "이미지", "대분류 = '지면접합' AND 소분류 = '" + Ground + "'");
-                Ground_pictureBox.Load(Program.gPath + Image[0][0]);
-                Ground_pictureBox.Visible = true;
-                Ground_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                Ground_pictureBox.BackColor = Color.Transparent;
-                Ground_pictureBox.Location = new Point(0, 0);
+                if (Image.Length > 0)
+                {
+                    Ground_pictureBox.Load(Program.gPath + Image[0][0]);
+                    Ground_pictureBox.Visible = true;
+                    Ground_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    Ground_pictureBox.BackColor = Color.Transparent;
+                    Ground_pictureBox.Location = new Point(0, 0);
+                }
             }
             catch { }
             Ground_pictureBox.Controls.Add(HC_pictureBox);
@@ -186,11 +198,14 @@ namespace main.contents
                 try
                 {
                     string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필이미지", "이미지", "대분류 = '냉난방유무' AND 소분류 = '" + HCType + "'");
-                    HC_pictureBox.Load(Program.gPath + Image[0][0]);
-                    HC_pictureBox.Visible = true;
-                    HC_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                    HC_pictureBox.BackColor = Color.Transparent;
-                    HC_pictureBox.Location = new Point(0, 0);
+                    if (Image.Length > 0)
+                    {
+                        HC_pictureBox.Load(Program.gPath + Image[0][0]);
+                        HC_pictureBox.Visible = true;
+                        HC_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                        HC_pictureBox.BackColor = Color.Transparent;
+                        HC_pictureBox.Location = new Point(0, 0);
+                    }
                 }
                 catch { }
                 HC_pictureBox.Controls.Add(AHU_pictureBox);
@@ -261,11 +276,14 @@ namespace main.contents
                 {
                     AHUType = AHU_comboBox.SelectedItem.ToString();
                     string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필이미지", "이미지", "대분류 = '환기유무' AND 소분류 = '" + AHUType + "'");
-                    AHU_pictureBox.Load(Program.gPath + Image[0][0]);
-                    AHU_pictureBox.Visible = true;
-                    AHU_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                    AHU_pictureBox.BackColor = Color.Transparent;
-                    AHU_pictureBox.Location = new Point(0, 0);
+                    if (Image.Length > 0)
+                    {
+                        AHU_pictureBox.Load(Program.gPath + Image[0][0]);
+                        AHU_pictureBox.Visible = true;
+                        AHU_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                        AHU_pictureBox.BackColor = Color.Transparent;
+                        AHU_pictureBox.Location = new Point(0, 0);
+                    }
                 }
                 if (Ventilation_checkBox.Checked)
                 {
@@ -369,9 +387,12 @@ namespace main.contents
             if (WeekUseDay_comboBox.SelectedItem != null)
             {
                 string[][] res = Program.DB.getValue(DB.type.BaseDB_HCneed, "주간이용일수", "일수", "이용일수" + " = '" + WeekUseDay_comboBox.SelectedItem.ToString() + "' ");
-                WeekUseDay = Convert.ToDouble(res[0][0].ToString());
-                AnnualUseDay = Convert.ToDouble(Program.UTIL.GetValue2_BySelectComboBox(WeekUseDay_comboBox, "이용일수", "주간일수", "월='연간'", "이용일수"));
-                AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
+                if (res.Length > 0)
+                {
+                    WeekUseDay = Convert.ToDouble(res[0][0].ToString());
+                    AnnualUseDay = Convert.ToDouble(Program.UTIL.GetValue2_BySelectComboBox(WeekUseDay_comboBox, "이용일수", "주간일수", "월='연간'", "이용일수"));
+                    AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
+                }
             }
         }
 
@@ -769,118 +790,120 @@ namespace main.contents
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
                 "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적", "존번호 = '" + ZoneNum + "'");
-
-                ZoneName = Value[0][0];
-                ZoneName_textBox.Text = ZoneName;
-
-                RoomControl = Value[0][1];
-                RoomControl_comboBox.SelectedItem = RoomControl;
-
-                HCType = Value[0][2];
-                if (HCType == "비냉난방")
+                if (Value.Length > 0)
                 {
-                    Heating_checkBox.Checked = false;
-                    Cooling_checkBox.Checked = false;
+                    ZoneName = Value[0][0];
+                    ZoneName_textBox.Text = ZoneName;
+
+                    RoomControl = Value[0][1];
+                    RoomControl_comboBox.SelectedItem = RoomControl;
+
+                    HCType = Value[0][2];
+                    if (HCType == "비냉난방")
+                    {
+                        Heating_checkBox.Checked = false;
+                        Cooling_checkBox.Checked = false;
+                    }
+                    else if (HCType == "난방")
+                    {
+                        Heating_checkBox.Checked = true;
+                        Cooling_checkBox.Checked = false;
+                    }
+                    else if (HCType == "냉방")
+                    {
+                        Heating_checkBox.Checked = false;
+                        Cooling_checkBox.Checked = false;
+                    }
+                    else
+                    {
+                        Heating_checkBox.Checked = true;
+                        Cooling_checkBox.Checked = true;
+                    }
+                    Check_HC();
+                    Ventilation_checkBox.Checked = Convert.ToBoolean(Value[0][3]);
+                    AHUType = Value[0][4];
+                    AHU_comboBox.SelectedItem = AHUType;
+                    Check_AHU();
+                    Load_AHUImage();
+
+                    η = Convert.ToDouble(Value[0][5]);
+                    η_textBox.Text = string.Format("{0:F1}", η * 100);
+                    η2 = Convert.ToDouble(Value[0][6]);
+                    η2_textBox.Text = string.Format("{0:F1}", η2 * 100);
+
+                    Usage_comboBox.SelectedItem = Usage;
+                    DataRowView? item = Usage_comboBox.SelectedItem as DataRowView;
+                    //Usage = Value[0][7];
+
+
+                    if (item != null)
+                    {
+                        Usage = item.Row.ItemArray[0].ToString();
+                    }
+
+                    NetArea = Convert.ToDouble(Value[0][31]);
+                    NetArea_textBox.Text = NetArea.ToString();
+
+                    CeilingHeight = Convert.ToDouble(Value[0][10]);
+                    CeilingHeight_textBox.Text = CeilingHeight.ToString();
+
+                    StartTime = Value[0][11];
+                    StartTime_comboBox.SelectedItem = StartTime;
+
+                    EndTime = Value[0][12];
+                    EndTime_comboBox.SelectedItem = EndTime;
+
+                    WeekUseDay = Convert.ToDouble(Value[0][13]);
+                    WeekUseDay_comboBox.SelectedItem = "주 " + WeekUseDay.ToString() + ".0 일 근무";
+
+                    PersonNum = Convert.ToDouble(Value[0][14]);
+                    PersonNum_textBox.Text = PersonNum.ToString();
+
+                    EquipIHG_index = Value[0][15];
+                    EquipIHG_comboBox.SelectedItem = EquipIHG_index;
+
+                    DHWneed = Convert.ToDouble(Value[0][16]);
+                    DHWneed_textBox.Text = string.Format("{0:F1}", (DHWneed));
+                    DHWneed_image_textBox.Text = string.Format("{0:F1}", (DHWneed)) + "kWh/d";
+
+                    HCTime = Convert.ToDouble(Value[0][17]);
+                    HCTime_textBox.Text = HCTime.ToString();
+
+                    UseTime = Convert.ToDouble(Value[0][18]);
+                    UseTime_textBox.Text = UseTime.ToString();
+
+                    AHUTime = Convert.ToDouble(Value[0][19]);
+
+                    AnnualUseDay = Convert.ToDouble(Value[0][20]);
+                    AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
+
+                    OccupancyDensity = Convert.ToDouble(Value[0][21]);
+                    OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
+                    OccupancyDensity_index = Value[0][22];
+                    OccupancyDensity_index_textBox.Text = OccupancyDensity_index;
+
+                    PersonIHG_1day = Convert.ToDouble(Value[0][23]);
+                    PersonIHG = Convert.ToDouble(Value[0][24]);
+                    PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day);
+                    PersonIHG_image_textBox.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m²·d";
+
+                    EquipIHG_1day = Convert.ToDouble(Value[0][25]);
+                    EquipIHG = Convert.ToDouble(Value[0][26]);
+                    EquipIHG_textBox.Text = string.Format("{0:F1}", EquipIHG_1day);
+                    EquipIHG_image_textBox.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m²·d";
+
+                    NetVolume = Convert.ToDouble(Value[0][27]);
+                    NetVolume_textBox.Text = String.Format("{0:F1}", NetVolume);
+
+                    VentilationRate = Convert.ToDouble(Value[0][28]);
+                    VentilationRate_textBox.Text = String.Format("{0:F1}", VentilationRate);
+
+                    Volume_wd = Convert.ToDouble(Value[0][29]);
+                    Volume_we = Convert.ToDouble(Value[0][30]);
+                    Volume_wd_textBox.Text = String.Format("{0:F1}", Volume_wd);
+                    SA_Volume_textBox.Text = String.Format("{0:F1}", Volume_wd) + "m³/h";
+                    RA_Volume_textBox.Text = String.Format("{0:F1}", Volume_we) + "m³/h";
                 }
-                else if (HCType == "난방")
-                {
-                    Heating_checkBox.Checked = true;
-                    Cooling_checkBox.Checked = false;
-                }
-                else if (HCType == "냉방")
-                {
-                    Heating_checkBox.Checked = false;
-                    Cooling_checkBox.Checked = false;
-                }
-                else
-                {
-                    Heating_checkBox.Checked = true;
-                    Cooling_checkBox.Checked = true;
-                }
-                Check_HC();
-                Ventilation_checkBox.Checked = Convert.ToBoolean(Value[0][3]);
-                AHUType = Value[0][4];
-                AHU_comboBox.SelectedItem = AHUType;
-                Check_AHU();
-                Load_AHUImage();
-
-                η = Convert.ToDouble(Value[0][5]);
-                η_textBox.Text = string.Format("{0:F1}", η * 100);
-                η2 = Convert.ToDouble(Value[0][6]);
-                η2_textBox.Text = string.Format("{0:F1}", η2 * 100);
-
-                Usage_comboBox.SelectedItem = Usage;
-                DataRowView? item = Usage_comboBox.SelectedItem as DataRowView;
-                //Usage = Value[0][7];
-
-
-                if (item != null)
-                {
-                    Usage = item.Row.ItemArray[0].ToString();
-                }
-
-                NetArea = Convert.ToDouble(Value[0][31]);
-                NetArea_textBox.Text = NetArea.ToString();
-
-                CeilingHeight = Convert.ToDouble(Value[0][10]);
-                CeilingHeight_textBox.Text = CeilingHeight.ToString();
-
-                StartTime = Value[0][11];
-                StartTime_comboBox.SelectedItem = StartTime;
-
-                EndTime = Value[0][12];
-                EndTime_comboBox.SelectedItem = EndTime;
-
-                WeekUseDay = Convert.ToDouble(Value[0][13]);
-                WeekUseDay_comboBox.SelectedItem = "주 " + WeekUseDay.ToString() + ".0 일 근무";
-
-                PersonNum = Convert.ToDouble(Value[0][14]);
-                PersonNum_textBox.Text = PersonNum.ToString();
-
-                EquipIHG_index = Value[0][15];
-                EquipIHG_comboBox.SelectedItem = EquipIHG_index;
-
-                DHWneed = Convert.ToDouble(Value[0][16]);
-                DHWneed_textBox.Text = string.Format("{0:F1}", (DHWneed));
-                DHWneed_image_textBox.Text = string.Format("{0:F1}", (DHWneed)) + "kWh/d";
-
-                HCTime = Convert.ToDouble(Value[0][17]);
-                HCTime_textBox.Text = HCTime.ToString();
-
-                UseTime = Convert.ToDouble(Value[0][18]);
-                UseTime_textBox.Text = UseTime.ToString();
-
-                AHUTime = Convert.ToDouble(Value[0][19]);
-
-                AnnualUseDay = Convert.ToDouble(Value[0][20]);
-                AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
-
-                OccupancyDensity = Convert.ToDouble(Value[0][21]);
-                OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
-                OccupancyDensity_index = Value[0][22];
-                OccupancyDensity_index_textBox.Text = OccupancyDensity_index;
-
-                PersonIHG_1day = Convert.ToDouble(Value[0][23]);
-                PersonIHG = Convert.ToDouble(Value[0][24]);
-                PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day);
-                PersonIHG_image_textBox.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m²·d";
-
-                EquipIHG_1day = Convert.ToDouble(Value[0][25]);
-                EquipIHG = Convert.ToDouble(Value[0][26]);
-                EquipIHG_textBox.Text = string.Format("{0:F1}", EquipIHG_1day);
-                EquipIHG_image_textBox.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m²·d";
-
-                NetVolume = Convert.ToDouble(Value[0][27]);
-                NetVolume_textBox.Text = String.Format("{0:F1}", NetVolume);
-
-                VentilationRate = Convert.ToDouble(Value[0][28]);
-                VentilationRate_textBox.Text = String.Format("{0:F1}", VentilationRate);
-
-                Volume_wd = Convert.ToDouble(Value[0][29]);
-                Volume_we = Convert.ToDouble(Value[0][30]);
-                Volume_wd_textBox.Text = String.Format("{0:F1}", Volume_wd);
-                SA_Volume_textBox.Text = String.Format("{0:F1}", Volume_wd) + "m³/h";
-                RA_Volume_textBox.Text = String.Format("{0:F1}", Volume_we) + "m³/h";
             }
             catch { }
         }
@@ -908,14 +931,15 @@ namespace main.contents
             try
             { //건물대상,용도
                 String[][] BuildingValue = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "건물대상,건물용도", "");
-
-                BuildingCategory = BuildingValue[0][0];
-
-                BuildingUse = BuildingValue[0][1];
-
+                if (BuildingValue.Length > 0)
+                {
+                    BuildingCategory = BuildingValue[0][0];
+                    BuildingUse = BuildingValue[0][1];
+                }
+                string id="";
                 String[][] Index = Program.DB.getValue(DB.type.BaseDB_HCneed, "인덱스", "아이디", "이름 = '" + BuildingUse + "'");
-
-                string id = Index[0][0].ToString();
+                if (Index.Length > 0)
+                { id = Index[0][0].ToString(); }
 
                 if (id != "")
                 {
@@ -949,79 +973,86 @@ namespace main.contents
             try
             {//3D 외피정보
                 String[][] 층 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "존 = '" + ZoneNum + "'");
-                String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,지면접합유형,바닥면적,존이름", "존번호 = '" + ZoneNum + "'");
+                String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "층,지면접합유형,바닥면적,존이름", "존번호 = '" + ZoneNum + "'");
+                if (층.Length > 0)
+                {
+                    Layer = 층[0][0];
+                    Layer_textBox.Text = Layer;
+                }
+                if (General_3D.Length > 0)
+                {
+                    Ground = General_3D[0][1];
+                    Load_GroundImage();
 
-                Layer = 층[0][0];
-                Layer_textBox.Text = Layer;
-
-                Ground = General_3D[0][1];
-                Load_GroundImage();
-
-                ZoneName = General_3D[0][3];
-                ZoneName_textBox.Text = ZoneName;
+                    ZoneName = General_3D[0][3];
+                    ZoneName_textBox.Text = ZoneName;
+                }
                 /////////////////////////////// //순바닥면적계산/////////////////////////////////////////////////////
 
                 String[][] Wall = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체번호", "존 = '" + ZoneNum + "' And 외피유형 = '외벽'");
                 double Area_WallInWall = 0;
-                if (Wall[0][1] == "" || Wall[0][1] == null)
+                if (Wall.Length > 0)
                 {
-                    MessageBox.Show("3D 모델 화면에서 외피 구조체종류부터 입력해주세요.");
-                }
-                for (int j = 0; j < Wall.Length; j++)
-                {
-                    double Wall_d, Wall_A;
-                    String[][] Wall_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall",
-                     "U적용방법, 두께합계,단열재두께,구조유형,열관류율," +
-                     "재료1종류,재료1두께," +
-                     "재료2종류,재료2두께," +
-                     "재료3종류,재료3두께," +
-                     "재료4종류,재료4두께," +
-                     "재료5종류,재료5두께," +
-                     "재료6종류,재료6두께," +
-                     "재료7종류,재료7두께," +
-                     "재료8종류,재료8두께," +
-                     "재료9종류,재료9두께," +
-                     "재료10종류,재료10두께", "번호 = '" + Wall[j][1] + "'");
-
-                    if (Wall_Value[0][3] == "콘크리트조")
+                    if (Wall[0][1] == "" || Wall[0][1] == null)
                     {
-                        if (Wall_Value[0][0] == "계산")
+                        MessageBox.Show("3D 모델 화면에서 외피 구조체종류부터 입력해주세요.");
+                    }
+                    for (int j = 0; j < Wall.Length; j++)
+                    {
+                        double Wall_d, Wall_A;
+                        String[][] Wall_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall",
+                         "U적용방법, 두께합계,단열재두께,구조유형,열관류율," +
+                         "재료1종류,재료1두께," +
+                         "재료2종류,재료2두께," +
+                         "재료3종류,재료3두께," +
+                         "재료4종류,재료4두께," +
+                         "재료5종류,재료5두께," +
+                         "재료6종류,재료6두께," +
+                         "재료7종류,재료7두께," +
+                         "재료8종류,재료8두께," +
+                         "재료9종류,재료9두께," +
+                         "재료10종류,재료10두께", "번호 = '" + Wall[j][1] + "'");
+
+                        if (Wall_Value[0][3] == "콘크리트조")
                         {
-                            Wall_d = 0;
-
-                            for (int k = 0; k < 10; k++)
+                            if (Wall_Value[0][0] == "계산")
                             {
-                                if (Wall_Value[0][2 * k + 5] != "")
-                                {
-                                    String[][] Material = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분", "재료명 = '" + Wall_Value[0][2 * k + 5] + "'");
+                                Wall_d = 0;
 
-                                    if (Material[0][0] != "콘크리트")
+                                for (int k = 0; k < 10; k++)
+                                {
+                                    if (Wall_Value[0][2 * k + 5] != "")
                                     {
-                                        Wall_d += Convert.ToDouble(Wall_Value[0][2 * k + 6]) / 1000;
+                                        String[][] Material = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분", "재료명 = '" + Wall_Value[0][2 * k + 5] + "'");
+
+                                        if (Material[0][0] != "콘크리트")
+                                        {
+                                            Wall_d += Convert.ToDouble(Wall_Value[0][2 * k + 6]) / 1000;
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
                                     }
                                     else
                                     {
                                         break;
                                     }
                                 }
-                                else
-                                {
-                                    break;
-                                }
+                            }
+                            else
+                            {
+                                Wall_d = 0.075 + Convert.ToDouble(Wall_Value[0][2]) / 1000; //내단열로 가정함
                             }
                         }
                         else
                         {
-                            Wall_d = 0.075 + Convert.ToDouble(Wall_Value[0][2]) / 1000; //내단열로 가정함
+                            Wall_d = 0.015 + Convert.ToDouble(Wall[j][2]) / 2;
                         }
-                    }
-                    else
-                    {
-                        Wall_d = 0.015 + Convert.ToDouble(Wall[j][2]) / 2;
-                    }
 
-                    Wall_A = Wall_d * Convert.ToDouble(Wall[j][0]);
-                    Area_WallInWall += Wall_A;
+                        Wall_A = Wall_d * Convert.ToDouble(Wall[j][0]);
+                        Area_WallInWall += Wall_A;
+                    }
                 }
 
                 String[][] InWall = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' And 외피유형 = '내벽'");

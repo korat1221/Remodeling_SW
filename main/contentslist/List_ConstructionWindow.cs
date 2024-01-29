@@ -25,8 +25,11 @@ namespace main.contentslist
         {
             InitializeComponent();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '창호'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if(Image.Length > 0 )
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }            
             Program.DB.initTable(DB.type.ProjDB, "SubWindow");
             Program.DB.initTable(DB.type.ProjDB, "ConstructionWindow");
             Create_Table();
@@ -150,51 +153,47 @@ namespace main.contentslist
 
         public void load_List()
         {
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,태양열취득률,빛투과율,유리종류", "");
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            String Blank = "";
-            // WindowList.Rows.Clear();
-            dataGridView1.Rows.Clear();
-            for (int n = 0; n < List.Length; n++)
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,태양열취득률,빛투과율,유리종류", "");
+            if (List.Length > 0)
             {
-                dataGridView1.Rows.Add();
-                int nRow = dataGridView1.Rows.Count - 1;
-                dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
-                dataGridView1.Rows[nRow].Cells[2].Value = Blank;
-                dataGridView1.Rows[nRow].Cells[3].Value = List[n][1];
-                dataGridView1.Rows[nRow].Cells[4].Value = List[n][2];
-                dataGridView1.Rows[nRow].Cells[5].Value = Blank;
-                dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][3]));
-                dataGridView1.Rows[nRow].Cells[7].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][4]));
-                dataGridView1.Rows[nRow].Cells[8].Value = Blank;
-                dataGridView1.Rows[nRow].Cells[9].Value = List[n][5];
-
-                //WindowList.Rows.Add(List[n][0], Blank, List[n][1], List[n][2], Blank, String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])), Blank, List[n][5]);
-
-                string[][] SubList = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭,창호유효열관류율,창호면적", "상위창호번호 = '" + List[n][0] + "'");
-
-                List<object> subMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-
-                for (int k = 0; k < SubList.Length; k++)
+                String Blank = "";
+                dataGridView1.Rows.Clear();
+                for (int n = 0; n < List.Length; n++)
                 {
                     dataGridView1.Rows.Add();
-                    int nRow2 = dataGridView1.Rows.Count - 1;
-                    dataGridView1.Rows[nRow2].Cells[1].Value = Blank;
-                    dataGridView1.Rows[nRow2].Cells[2].Value = SubList[k][0];
-                    dataGridView1.Rows[nRow2].Cells[3].Value = SubList[k][1];
-                    dataGridView1.Rows[nRow2].Cells[4].Value = List[n][2];
-                    dataGridView1.Rows[nRow2].Cells[5].Value = String.Format("{0:F2}", Convert.ToDouble(SubList[k][2]));
-                    dataGridView1.Rows[nRow2].Cells[6].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][3]));
-                    dataGridView1.Rows[nRow2].Cells[7].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][4]));
-                    dataGridView1.Rows[nRow2].Cells[8].Value = String.Format("{0:F2}", Convert.ToDouble(SubList[k][3]));
-                    dataGridView1.Rows[nRow2].Cells[9].Value = List[n][5];
+                    int nRow = dataGridView1.Rows.Count - 1;
+                    dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
+                    dataGridView1.Rows[nRow].Cells[2].Value = Blank;
+                    dataGridView1.Rows[nRow].Cells[3].Value = List[n][1];
+                    dataGridView1.Rows[nRow].Cells[4].Value = List[n][2];
+                    dataGridView1.Rows[nRow].Cells[5].Value = Blank;
+                    dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][3]));
+                    dataGridView1.Rows[nRow].Cells[7].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][4]));
+                    dataGridView1.Rows[nRow].Cells[8].Value = Blank;
+                    dataGridView1.Rows[nRow].Cells[9].Value = List[n][5];
+                    string[][] SubList = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭,창호유효열관류율,창호면적", "상위창호번호 = '" + List[n][0] + "'");
 
-                   // WindowList.Rows.Add(Blank, SubList[k][0], SubList[k][1], List[n][2], String.Format("{0:F2}", Convert.ToDouble(SubList[k][2])), String.Format("{0:F2}", Convert.ToDouble(List[n][3])), String.Format("{0:F2}", Convert.ToDouble(List[n][4])), String.Format("{0:F2}", Convert.ToDouble(SubList[k][3])), List[n][5]);
-                    subMenu.Add(new { text = SubList[k][0], id = "{\\\"formID\\\":31,\\\"ID\\\":\\\"" + SubList[k][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                    List<object> subMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
+
+                    for (int k = 0; k < SubList.Length; k++)
+                    {
+                        dataGridView1.Rows.Add();
+                        int nRow2 = dataGridView1.Rows.Count - 1;
+                        dataGridView1.Rows[nRow2].Cells[1].Value = Blank;
+                        dataGridView1.Rows[nRow2].Cells[2].Value = SubList[k][0];
+                        dataGridView1.Rows[nRow2].Cells[3].Value = SubList[k][1];
+                        dataGridView1.Rows[nRow2].Cells[4].Value = List[n][2];
+                        dataGridView1.Rows[nRow2].Cells[5].Value = String.Format("{0:F2}", Convert.ToDouble(SubList[k][2]));
+                        dataGridView1.Rows[nRow2].Cells[6].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][3]));
+                        dataGridView1.Rows[nRow2].Cells[7].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][4]));
+                        dataGridView1.Rows[nRow2].Cells[8].Value = String.Format("{0:F2}", Convert.ToDouble(SubList[k][3]));
+                        dataGridView1.Rows[nRow2].Cells[9].Value = List[n][5];
+                        subMenu.Add(new { text = SubList[k][0], id = "{\\\"formID\\\":31,\\\"ID\\\":\\\"" + SubList[k][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                    }
+                    mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":6,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}", children = subMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
                 }
-                mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":6,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}", children = subMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
             }
-            //dataGridView1.DataSource = WindowList;
             CountDB = List.Length;
             Program.UTIL.resetMainTree(1, 4, mainMenu.ToArray(), "29"); // 예시 코드: 메인 메뉴 동적 할당
         }
@@ -267,7 +266,7 @@ namespace main.contentslist
         {
 
             String[][] Sub = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭", "상위창호번호 = '" + Copy_WinNum + "'");
-            if (Sub.Length > -1)
+            if (Sub.Length > 0)
             {
                 for (int n = 0; n < Sub.Length; n++)
                 {

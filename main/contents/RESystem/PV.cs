@@ -103,8 +103,12 @@ namespace main.contents
             지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '태양광시스템'");
-            pictureBox1.Load(Program.gPath + Image[0][0]);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            if(Image.Length > 0)
+            {
+                pictureBox1.Load(Program.gPath + Image[0][0]);
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            
 
             프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             #endregion / getvalue
@@ -315,10 +319,10 @@ namespace main.contents
         private void Load_PV_Table()
         {
             PV_dataGridView.Rows.Clear();
-            try
-            {
+        
                 string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk,신규기존", "번호 = '" + PVModuleNumber + "'");
-
+            if(User_Value.Length >0)
+            {
                 int nRow = PV_dataGridView.Rows.Add();
                 PV_dataGridView.Rows[nRow].Cells[0].Value = User_Value[0][0];
                 PV_dataGridView.Rows[nRow].Cells[1].Value = User_Value[0][1];
@@ -330,9 +334,7 @@ namespace main.contents
                 PV_dataGridView.Rows[nRow].Cells[7].Value = User_Value[0][7];
                 PV_dataGridView.Rows[nRow].Cells[8].Value = User_Value[0][8];
                 PV_dataGridView.Rows[nRow].Cells[9].Value = User_Value[0][9];
-
             }
-            catch { }
         }
 
         private void slope_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -480,11 +482,14 @@ namespace main.contents
         {
             if (Orientation != null && Slope != null)
             {
-                //전일사량불러오기
-                string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + Orientation + "' AND  각도 = '" + Slope + "'");
-                for (int i = 0; i < 12; i++)
+                for (int mth = 0; mth < 12; mth++)
                 {
-                    PVIs_W_m2[i] = Convert.ToDouble(token[i][0]);
+                    //전일사량불러오기
+                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + Orientation + "' AND  각도 = '" + Slope + "' and 기간 ='"+(mth+1).ToString()+"월'");
+                    if(token.Length > 0)
+                    {
+                        PVIs_W_m2[mth] = Convert.ToDouble(token[0][0]);
+                    }
                 }
             }
             else { }
@@ -494,20 +499,20 @@ namespace main.contents
         {
             if (PVLshobst_m_textBox.Text != null && PVHshobst_m_textBox.Text != null)
             {
-                //직달일사량불러오기
-                string[][] token1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_직달일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + Orientation + "' AND  각도 = '" + Slope + "'");
-                //확산일사량불러오기
-                string[][] token2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_산란일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + Orientation + "' AND  각도 = '" + Slope + "'");
-                //태양고도각 불러오기
-                string[][] token3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + Orientation + "' AND  각도 = '" + Slope + "'");
-
-                if (token1.Length > 0)
+                for (int mth = 0; mth < 12; mth++)
                 {
-                    for (int i = 0; i < 12; i++)
+                    //직달일사량불러오기
+                    string[][] token1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_직달일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + Orientation + "' AND  각도 = '" + Slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
+                    //확산일사량불러오기
+                    string[][] token2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_산란일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + Orientation + "' AND  각도 = '" + Slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
+                    //태양고도각 불러오기
+                    string[][] token3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + Orientation + "' AND  각도 = '" + Slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
+
+                    if (token1.Length > 0)
                     {
-                        PVIdirtot_W_m2[i] = Convert.ToDouble(token1[i][0]);
-                        PVIdiftot_W_m2[i] = Convert.ToDouble(token2[i][0]);
-                        PVαsol[i] = Convert.ToDouble(token3[i][0]);
+                        PVIdirtot_W_m2[mth] = Convert.ToDouble(token1[0][0]);
+                        PVIdiftot_W_m2[mth] = Convert.ToDouble(token2[0][0]);
+                        PVαsol[mth] = Convert.ToDouble(token3[0][0]);
                     }
                 }
             }
@@ -627,13 +632,14 @@ namespace main.contents
                 {
                     s += PVEelpvoutm_kWh[mth] + ",";
                     res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Orientation + "' And 각도='" + Slope + "'And 기간 ='" + (mth + 1) + "월'");
-                    s2 += Convert.ToDouble(res2[0][0]) + ",";
+                    if (res2.Length > 0)
+                    { s2 += Convert.ToDouble(res2[0][0]) + ","; }
                 }
 
                 s += PVEelpvoutm_kWh[11];
                 res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Orientation + "' And 각도='" + Slope + "'And 기간 ='" + (12) + "월'");
-                s2 += Convert.ToDouble(res2[0][0]);
-
+                if (res2.Length > 0)
+                { s2 += Convert.ToDouble(res2[0][0]); }
 
                 runScript("drawChart3([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:" + (PVEelpvoutm_kWh.Max() + 500).ToString() + "},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:300}])");
             }

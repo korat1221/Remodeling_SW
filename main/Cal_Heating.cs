@@ -10,7 +10,7 @@ namespace main
         String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System;
         String SelectBoiler_nonsplit, BoilerNum_nonsplit;
         String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit;
-        String[,] SelectHP_nonsplit = new String[3, 1], HPNum_nonsplit = new String[3, 1], HPSupply_nonsplit = new String[3, 1], HPControl_nonsplit = new String[3, 1]; //외기/지열/지하수 순 
+        String[] SelectHP_nonsplit = new String[3], HPNum_nonsplit = new String[3], HPSupply_nonsplit = new String[3], HPControl_nonsplit = new String[3]; //외기/지열/지하수 순 
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Count, Pump2Count;
         String ce1Type, ce2Type; int ce_SelectRow;
         public ArrayList ce_Type1 = new ArrayList(); public ArrayList ce_Type2 = new ArrayList(); public ArrayList Pump = new ArrayList();
@@ -341,17 +341,17 @@ namespace main
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "외기히트펌프번호,외기히트펌프공급방식,외기히트펌프제어방식,외기히트펌프대수", "번호 = '" + HeatingNum + "'");
 
                 String HeatSource = "외기";
-                SelectHP_nonsplit[0, 0] = Value[0][0];
-                Split_HP(SelectHP_nonsplit[0, 0], HeatSource);
+                SelectHP_nonsplit[0] = Value[0][0];
+                Split_HP(SelectHP_nonsplit[0], HeatSource);
 
-                HPSupply_nonsplit[0, 0] = Value[0][1];
-                Split_HPSupply(HPSupply_nonsplit[0, 0], HeatSource);
+                HPSupply_nonsplit[0] = Value[0][1];
+                Split_HPSupply(HPSupply_nonsplit[0], HeatSource);
 
-                HPControl_nonsplit[0, 0] = Value[0][2];
-                Split_HPControl(HPControl_nonsplit[0, 0], HeatSource);
+                HPControl_nonsplit[0] = Value[0][2];
+                Split_HPControl(HPControl_nonsplit[0], HeatSource);
 
-                HPNum_nonsplit[0, 0] = Value[0][3];
-                Split_HPNum(HPNum_nonsplit[0, 0], HeatSource);
+                HPNum_nonsplit[0] = Value[0][3];
+                Split_HPNum(HPNum_nonsplit[0], HeatSource);
 
             }
             catch { }
@@ -365,17 +365,17 @@ namespace main
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "지열히트펌프번호,지열히트펌프공급방식,지열히트펌프제어방식,지열히트펌프대수", "번호 = '" + HeatingNum + "'");
 
                 String HeatSource = "지열";
-                SelectHP_nonsplit[1, 0] = Value[0][0];
-                Split_HP(SelectHP_nonsplit[1, 0], HeatSource);
+                SelectHP_nonsplit[1] = Value[0][0];
+                Split_HP(SelectHP_nonsplit[1], HeatSource);
 
-                HPSupply_nonsplit[1, 0] = Value[0][1];
-                Split_HPSupply(HPSupply_nonsplit[1, 0], HeatSource);
+                HPSupply_nonsplit[1] = Value[0][1];
+                Split_HPSupply(HPSupply_nonsplit[1], HeatSource);
 
-                HPControl_nonsplit[1, 0] = Value[0][2];
-                Split_HPControl(HPControl_nonsplit[1, 0], HeatSource);
+                HPControl_nonsplit[1] = Value[0][2];
+                Split_HPControl(HPControl_nonsplit[1], HeatSource);
 
-                HPNum_nonsplit[1, 0] = Value[0][3];
-                Split_HPNum(HPNum_nonsplit[1, 0], HeatSource);
+                HPNum_nonsplit[1] = Value[0][3];
+                Split_HPNum(HPNum_nonsplit[1], HeatSource);
 
             }
             catch { }
@@ -389,17 +389,17 @@ namespace main
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "지하수히트펌프번호,지하수히트펌프공급방식,지하수히트펌프제어방식,지하수히트펌프대수", "번호 = '" + HeatingNum + "'");
 
                 String HeatSource = "지하수";
-                SelectHP_nonsplit[2, 0] = Value[0][0];
-                Split_HP(SelectHP_nonsplit[2, 0], HeatSource);
+                SelectHP_nonsplit[2] = Value[0][0];
+                Split_HP(SelectHP_nonsplit[2], HeatSource);
 
-                HPSupply_nonsplit[2, 0] = Value[0][1];
-                Split_HPSupply(HPSupply_nonsplit[2, 0], HeatSource);
+                HPSupply_nonsplit[2] = Value[0][1];
+                Split_HPSupply(HPSupply_nonsplit[2], HeatSource);
 
-                HPControl_nonsplit[2, 0] = Value[0][2];
-                Split_HPControl(HPControl_nonsplit[2, 0], HeatSource);
+                HPControl_nonsplit[2] = Value[0][2];
+                Split_HPControl(HPControl_nonsplit[2], HeatSource);
 
-                HPNum_nonsplit[2, 0] = Value[0][3];
-                Split_HPNum(HPNum_nonsplit[2, 0], HeatSource);
+                HPNum_nonsplit[2] = Value[0][3];
+                Split_HPNum(HPNum_nonsplit[2], HeatSource);
 
             }
             catch { }

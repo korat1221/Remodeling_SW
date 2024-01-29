@@ -79,19 +79,19 @@
     <Compile Update="contents\Result\ReportRemodeling.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\RESystme\EIndependenceRate.cs">
+    <Compile Update="contents\RESystem\EIndependenceRate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\RESystme\FuelCell.cs">
+    <Compile Update="contents\RESystem\FuelCell.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\RESystme\PV.cs">
+    <Compile Update="contents\RESystem\PV.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\RESystme\SupplyRatio.cs">
+    <Compile Update="contents\RESystem\SupplyRatio.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\RESystme\WindPower.cs">
+    <Compile Update="contents\RESystem\WindPower.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="contents\System\AHUSystem.cs">

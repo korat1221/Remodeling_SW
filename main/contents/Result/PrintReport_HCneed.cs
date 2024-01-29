@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace main.contents.Result
 {
@@ -87,387 +88,521 @@ namespace main.contents.Result
 
             i = -1;
 
-            try
-            {
-
-          
             while (++i < ZoneG.Length)
             {
                 string[][] value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "번호,이름,난방_냉방,비이용일_이용일,월,HT_tot,HT_InWall,HT_Slab,HT_Wall,HT_Roof,HT_Floor,HT_GWall,HT_Door,HT_Win,HT_CW,HT_Di_Wall,HT_Indi_Wall,HT_Di_Roof,HT_Indi_Roof,HT_Di_Win,HT_Indi_Win,HT_Di_Door,	HT_Indi_Door,HT_TB_tot,HT_TB_Wall,HT_TB_Roof,HT_TB_Floor,HT_TB_Gwall,HT_TB_Win,HT_TB_Door,HT_TB_CW,nmech	,nz,ninf,nwin,HV_tot,HV_inf,HV_win,HV_z,HV_mech,H_tot,tao,dwe_mth,dwd_mth,theta_i,theta_e,QTsink_tot,QT_u_sink,QTsink_Wall,QTsink_Roof,QTsink_Floor,QTsink_GWall,QTsink_Door,QTsink_Win,QTsink_CW,QTsource_tot,QT_u_source,QTsource_Wall,QTsource_Roof,QTsource_Floor,QTsource_GWall,QTsource_Door,QTsource_Win,QTsource_CW,QSopsink_tot,QSopsource_tot,QStr_tot,QSopsink_Wall,QSopsink_Roof,QSopsink_Door,QSopsink_CW_p,QSopsource_Wall,QSopsource_Roof,QSopsource_Door,QSopsource_CW_p,QStr_Win,QStr_CW,QVsink_tot,QV_inf_sink,QV_win_sink,QV_z_sink,QV_mech_sink,QVsource_tot,QV_inf_source,QV_win_source,QV_z_source,QV_mech_source,Q_DHU_win,Q_DHU_mech,Q_DHU_tot,QI_tot,QI_L,QI_P,QI_fac,QI_Humidity,Qsink,Qsource,gamma,a,eta,dQc_b,dQc_sink,Qb_day,Qb_mth,Qb_a,Q_max,t_max,비냉난방존온도", "번호 ='" + ZoneG[i][0] + "'");
-                string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "Zone_LightResult", "번호,ITr,IRD,ISh_Ish,ISh_hA,Ish_vA,Ish_In_At,Wi,Ish_GDF,Ish,f_τeff_SNA,f_D,f_nearD,f_DCA,f_dclass,f_nearEm_SNA,f_fd_sna,f_fd_sa,f_nearEm_DC,f_fd_c,f_FDS,f_FD,as_bs,hs_bs,hg_hw,normal_ηR,saw_ηR,r_DSNA,r_DSA,r_dclass,r_nearEm_FDS,r_fd_sna,r_fd_sa,r_nearEm_DC,r_fd_c,r_FDS,r_FD,Sunlight_SCW,Sunlight_PjSC,Final_W", "번호 ='" + ZoneG[i][0] + "'");
-                string[][] envelope = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,면적", "외피유형='" + "외벽" + "' AND 존 ='" + ZoneG[i][0] + "'");
-                string[][] envelope2 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,면적", "외피유형='" + "커튼월창" + "' AND 존 ='" + ZoneG[i][0] + "'");
-                string[][] envelope3 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,면적", "외피유형='" + "지붕" + "' AND 존 ='" + ZoneG[i][0] + "'");
-                string[][] envelope4 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,면적", "외피유형='" + "창호" + "' AND 존 ='" + ZoneG[i][0] + "'");
-                string[][] envelope5 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,면적", "외피유형='" + "최하층바닥" + "' AND 존 ='" + ZoneG[i][0] + "'");
-                string[][] envelope_1 = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT", "직접간접= '직접외기' and 난방_냉방='난방' and 월='1월' and 비이용일_이용일 = '이용일' and 존번호='" + ZoneG[i][0] + "'");
-                string[][] envelope_2 = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT", "직접간접= '간접외기' and 난방_냉방='난방' and 월='1월' and 비이용일_이용일 = '이용일' and 존번호='" + ZoneG[i][0] + "'");
-                string[][] envelope_3 = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT", "직접간접= '지면위' and 난방_냉방='난방' and 월='1월' and 비이용일_이용일 = '이용일' and 존번호='" + ZoneG[i][0] + "'");
+                    items.Add("print9.html"); // 예시 코드: 메인 메뉴 동적 할당
 
-                items.Add("print9.html"); // 예시 코드: 메인 메뉴 동적 할당
+                    __data[0].Add(new { idx = i, val = ZoneG[i][8] });
+                    __data[1].Add(new { idx = i, val = Program.UTIL.asFixed(ZoneG[i][27]) });
+                    __data[2].Add(new { idx = i, val = Program.UTIL.asFixed(ZoneG[i][9]) }); // 
+                    __data[3].Add(new { idx = i, val = ZoneG[i][1] });
+                    __data[4].Add(new { idx = i, val = ZoneG[i][0] });
+                    __data[5].Add(new { idx = i, val = Program.UTIL.asFixed(ZoneG[i][43]) }); //축열용량
+                    __data[6].Add(new { idx = i, val = ZoneG[i][10] }); //층고 --> 천장고로 변경
+                    __data[7].Add(new { idx = i, val = ZoneG[i][9] }); //창면적율 계산 필요
+                    __data[13].Add(new { idx = i, val = ZoneG[i][46] });
+                    __data[80].Add(new { idx = i, val = ZoneG[i][46] });
 
-                __data[0].Add(new { idx = i, val = ZoneG[i][8] });
-                __data[1].Add(new { idx = i, val = Program.UTIL.asFixed(ZoneG[i][27]) });
-                __data[2].Add(new { idx = i, val = Program.UTIL.asFixed(ZoneG[i][9]) }); // 
-                __data[3].Add(new { idx = i, val = ZoneG[i][1] });
-                __data[4].Add(new { idx = i, val = ZoneG[i][0] });
-                __data[5].Add(new { idx = i, val = Program.UTIL.asFixed(ZoneG[i][43]) }); //축열용량
-                __data[6].Add(new { idx = i, val = ZoneG[i][10] }); //층고 --> 천장고로 변경
-                __data[7].Add(new { idx = i, val = ZoneG[i][9] }); //창면적율 계산 필요
-                __data[13].Add(new { idx = i, val = ZoneG[i][46] });
-                __data[80].Add(new { idx = i, val = ZoneG[i][46] });
-
-                //W -> kW 
-                double annualhneed = 0;
-                double annualcneed = 0;
-
-                double hneed = Convert.ToDouble(value[12][104]);
-                annualhneed = hneed / 1000;
-                __data[14].Add(new { idx = i, val = Program.UTIL.asFixed(annualhneed.ToString()) }); // 연간 난방 에너지 요구량
-
-                double cneed = Convert.ToDouble(value[36][104]);
-                annualcneed = cneed / 1000;
-
-                __data[15].Add(new { idx = i, val = Program.UTIL.asFixed(annualcneed.ToString()) }); // 연간 냉방 에너지 요구량
-                //data 16, 17, 18 //
-                //
-                __data[19].Add(new { idx = i, val = Program.UTIL.asFixed(value[12][105]) }); // 난방부하
-                __data[20].Add(new { idx = i, val = Program.UTIL.asFixed(value[36][105]) }); // 냉방부하
-
-
-
-                __data[69].Add(new { idx = i, val = Program.UTIL.asFixed(value[0][33]) }); //침기횟수
-                __data[70].Add(new { idx = i, val = Program.UTIL.asFixed(value[0][34]) }); //환기횟수
-                __data[71].Add(new { idx = i, val = Program.UTIL.asFixed(value[0][31]) }); //기계환기횟수
-
-                __data[72].Add(new { idx = i, val = Program.UTIL.asFixed(value[0][36]) }); //침기 열전달계수
-                __data[73].Add(new { idx = i, val = Program.UTIL.asFixed(value[0][37]) }); //자연환기 열전달계수
-                __data[74].Add(new { idx = i, val = Program.UTIL.asFixed(value[0][39]) }); //기계환기 열전달계수
-
-                ///data 75 부터 면적당 연간난방에너지요구량 // /
-                double hneedarea = 0;
-                double cneedarea = 0;
-
-                double hloadarea = 0;
-                double cloadarea = 0;
-                double sinkarea = 0;
-                double sourcearea = 0;
-
-                double area = Convert.ToDouble(ZoneG[i][9]);
-                double vol = Convert.ToDouble(ZoneG[i][26]);
-
-                double hload = Convert.ToDouble(value[12][105]);
-                double cload = Convert.ToDouble(value[36][105]);
-                //double sink = Convert.ToDouble(value[12][95]);
-                //double source = Convert.ToDouble(value[12][96]);
-
-                hneedarea = hneed / area;
-                hneedarea = hneedarea / 1000;
-                cneedarea = cneed / area;
-                cneedarea = cneedarea / 1000;
-
-                hloadarea = hload / area;
-                cloadarea = cload / area;
-                //sinkarea = sink / area;
-                //sourcearea = source / area;
-
-                __data[76].Add(new { idx = i, val = Program.UTIL.asFixed(hneedarea.ToString()) });
-                __data[77].Add(new { idx = i, val = Program.UTIL.asFixed(cneedarea.ToString()) });
-                __data[78].Add(new { idx = i, val = Program.UTIL.asFixed(hloadarea.ToString()) });
-                __data[79].Add(new { idx = i, val = Program.UTIL.asFixed(cloadarea.ToString()) });
-                __data[86].Add(new { idx = i, val = Program.UTIL.asFixed(sinkarea.ToString()) });
-                __data[87].Add(new { idx = i, val = Program.UTIL.asFixed(sourcearea.ToString()) });
-
-                double htdtotal = 0;
-                double htutotal = 0;
-                double htstotal = 0;
-                double httotal = 0;
-
-                for (int a = 0; a < envelope_1.Length; a++)
-                {
-
-                    double wall = Convert.ToDouble(envelope_1[a][0]);
-                    htdtotal += wall;
-
-                }
-                for (int a = 0; a < envelope_2.Length; a++)
-                {
-
-                    double wall2 = Convert.ToDouble(envelope_2[a][0]);
-                    htutotal += wall2;
-                }
-                for (int a = 0; a < envelope_3.Length; a++)
-                {
-
-                    double wall3 = Convert.ToDouble(envelope_3[a][0]);
-                    htstotal += wall3;
-                }
-
-                httotal = htdtotal + htutotal + htstotal;
-
-                __data[8].Add(new { idx = i, val = Program.UTIL.asFixed(htdtotal.ToString()) });
-                __data[9].Add(new { idx = i, val = Program.UTIL.asFixed(htutotal.ToString()) });
-                __data[10].Add(new { idx = i, val = Program.UTIL.asFixed(htstotal.ToString()) });
-                __data[88].Add(new { idx = i, val = Program.UTIL.asFixed(httotal.ToString()) });
-
-                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "번호", "번호 ='" + ZoneG[i][0] + "'");
-                if (ZoneG[i][0] == value[0][0])
-                {
-                    n = -1;
-                    double qsourcetot = 0;
-                    double qsourcedwd = 0;
-                    double qsourcedwe = 0;
-                    double qsinktot = 0;
-                    double qsinkdwd = 0;
-                    double qsinkdwe = 0;
-                    double qsourcearea = 0;
-                    double qsinkarea = 0;
-
-
-
-
-                    while (++n < 12)
-
+                    double area = Convert.ToDouble(ZoneG[i][9]);
+                    double vol = Convert.ToDouble(ZoneG[i][26]);
+                    if (value.Length > 0)
                     {
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qsource", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        double qsource1 = Convert.ToDouble(value[0][0]);
-                        qsourcedwd += qsource1;
-                    }
-                    n = -1;
-                    while (++n < 12)
+                        //W -> kW 
+                        double annualhneed = 0;
+                        double annualcneed = 0;
 
+                        double hneed = Convert.ToDouble(value[12][104]);
+                        annualhneed = hneed / 1000;
+                        __data[14].Add(new { idx = i, val = Program.UTIL.asFixed(annualhneed.ToString()) }); // 연간 난방 에너지 요구량
+                        double cneed = Convert.ToDouble(value[36][104]);
+                        annualcneed = cneed / 1000;
+                        __data[15].Add(new { idx = i, val = Program.UTIL.asFixed(annualcneed.ToString()) }); // 연간 냉방 에너지 요구량
+                        __data[19].Add(new { idx = i, val = Program.UTIL.asFixed(value[12][105]) }); // 난방부하
+                        __data[20].Add(new { idx = i, val = Program.UTIL.asFixed(value[36][105]) }); // 냉방부하
+                        __data[69].Add(new { idx = i, val = Program.UTIL.asFixed(value[0][33]) }); //침기횟수
+                        __data[70].Add(new { idx = i, val = Program.UTIL.asFixed(value[0][34]) }); //환기횟수
+                        __data[71].Add(new { idx = i, val = Program.UTIL.asFixed(value[0][31]) }); //기계환기횟수
+                        __data[72].Add(new { idx = i, val = Program.UTIL.asFixed(value[0][36]) }); //침기 열전달계수
+                        __data[73].Add(new { idx = i, val = Program.UTIL.asFixed(value[0][37]) }); //자연환기 열전달계수
+                        __data[74].Add(new { idx = i, val = Program.UTIL.asFixed(value[0][39]) }); //기계환기 열전달계수
+
+                        ///data 75 부터 면적당 연간난방에너지요구량 // /
+                        double hneedarea = 0;
+                        double cneedarea = 0;
+
+                        double hloadarea = 0;
+                        double cloadarea = 0;
+                        double sinkarea = 0;
+                        double sourcearea = 0;
+                        double hload = Convert.ToDouble(value[12][105]);
+                        double cload = Convert.ToDouble(value[36][105]);
+                        hneedarea = hneed / area;
+                        hneedarea = hneedarea / 1000;
+                        cneedarea = cneed / area;
+                        cneedarea = cneedarea / 1000;
+
+                        hloadarea = hload / area;
+                        cloadarea = cload / area;
+                        //sinkarea = sink / area;
+                        //sourcearea = source / area;
+
+                        __data[76].Add(new { idx = i, val = Program.UTIL.asFixed(hneedarea.ToString()) });
+                        __data[77].Add(new { idx = i, val = Program.UTIL.asFixed(cneedarea.ToString()) });
+                        __data[78].Add(new { idx = i, val = Program.UTIL.asFixed(hloadarea.ToString()) });
+                        __data[79].Add(new { idx = i, val = Program.UTIL.asFixed(cloadarea.ToString()) });
+                        __data[86].Add(new { idx = i, val = Program.UTIL.asFixed(sinkarea.ToString()) });
+                        __data[87].Add(new { idx = i, val = Program.UTIL.asFixed(sourcearea.ToString()) });
+                    }
+                    double htdtotal = 0;
+                    double htutotal = 0;
+                    double htstotal = 0;
+                    double httotal = 0;
+
+                    string[][] envelope_1 = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT", "직접간접= '직접외기' and 난방_냉방='난방' and 월='1월' and 비이용일_이용일 = '이용일' and 존번호='" + ZoneG[i][0] + "'");
+                    string[][] envelope_2 = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT", "직접간접= '간접외기' and 난방_냉방='난방' and 월='1월' and 비이용일_이용일 = '이용일' and 존번호='" + ZoneG[i][0] + "'");
+                    string[][] envelope_3 = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT", "직접간접= '지면위' and 난방_냉방='난방' and 월='1월' and 비이용일_이용일 = '이용일' and 존번호='" + ZoneG[i][0] + "'");
+                    if (envelope_1.Length > 0)
                     {
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qsource", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        double qsource2 = Convert.ToDouble(value[0][0]);
-                        qsourcedwe += qsource2;
+                        for (int a = 0; a < envelope_1.Length; a++)
+                        {
+
+                            double wall = Convert.ToDouble(envelope_1[a][0]);
+                            htdtotal += wall;
+                        }
                     }
-
-                    qsourcetot = qsourcedwd + qsourcedwe;
-                    qsourcetot = qsourcetot / 1000;
-                    qsourcearea = qsourcetot / area;
-
-                    __data[100].Add(new { idx = i, val = Program.UTIL.asFixed(qsourcetot.ToString()) }); // 열획득량
-                    __data[101].Add(new { idx = i, val = Program.UTIL.asFixed(qsourcearea.ToString()) }); //면적당 열획득량
-                    ///연간획득량 완료 ///
-                    n = -1;
-                    while (++n < 12)
+                    if (envelope_2.Length > 0)
                     {
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qsink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        double qsink1 = Convert.ToDouble(value[0][0]);
-                        qsinkdwd += qsink1;
+                        for (int a = 0; a < envelope_2.Length; a++)
+                        {
+
+                            double wall2 = Convert.ToDouble(envelope_2[a][0]);
+                            htutotal += wall2;
+                        }
                     }
-                    n = -1;
-                    while (++n < 12)
+                    if (envelope_3.Length > 0)
                     {
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qsink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        double qsink2 = Convert.ToDouble(value[0][0]);
-                        qsinkdwe += qsink2;
+                        for (int a = 0; a < envelope_3.Length; a++)
+                        {
+
+                            double wall3 = Convert.ToDouble(envelope_3[a][0]);
+                            htstotal += wall3;
+                        }
                     }
-                    qsinktot = qsinkdwd + qsinkdwe;
-                    qsinktot = qsinktot / 1000;
-                    qsinkarea = qsinktot / area;
+                    httotal = htdtotal + htutotal + htstotal;
 
-                    __data[102].Add(new { idx = i, val = Program.UTIL.asFixed(qsinktot.ToString()) }); // 열손실량
-                    __data[103].Add(new { idx = i, val = Program.UTIL.asFixed(qsinkarea.ToString()) }); //면적당 열손실량
+                    __data[8].Add(new { idx = i, val = Program.UTIL.asFixed(htdtotal.ToString()) });
+                    __data[9].Add(new { idx = i, val = Program.UTIL.asFixed(htutotal.ToString()) });
+                    __data[10].Add(new { idx = i, val = Program.UTIL.asFixed(htstotal.ToString()) });
+                    __data[88].Add(new { idx = i, val = Program.UTIL.asFixed(httotal.ToString()) });
 
-                }
-                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "번호", "번호 ='" + ZoneG[i][0] + "'");
-                if (ZoneG[i][0] == value[0][0])
-                {
-                    n = -1;
-                    double ventamount = 0;
-                    double infamount = 0;
-                    double mechamount = 0;
-
-                    double losswin = 0;
-                    double lossmech = 0;
-                    double lossinf = 0;
-
-                    double losswin2 = 0;
-                    double lossmech2 = 0;
-                    double lossinf2 = 0;
-
-                    n = -1;
-                    while (++n < ZoneG.Length)
+                    value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "번호", "번호 ='" + ZoneG[i][0] + "'");
+                    if (value.Length > 0)
                     {
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "nwin", "번호 ='" + ZoneG[i][0] + "'");
-                        double nwin = Convert.ToDouble(value[0][0]);
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "ninf", "번호 ='" + ZoneG[i][0] + "'");
-                        double ninf = Convert.ToDouble(value[0][0]);
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "nmech", "번호 ='" + ZoneG[i][0] + "'");
-                        double nmech = Convert.ToDouble(value[0][0]);
+                        if (ZoneG[i][0] == value[0][0])
+                        {
+                            n = -1;
+                            double qsourcetot = 0;
+                            double qsourcedwd = 0;
+                            double qsourcedwe = 0;
+                            double qsinktot = 0;
+                            double qsinkdwd = 0;
+                            double qsinkdwe = 0;
+                            double qsourcearea = 0;
+                            double qsinkarea = 0;
 
-                        ventamount = nwin * vol;
-                        infamount = ninf * vol;
-                        mechamount = nmech * vol;
+                            while (++n < 12)
+                            {
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qsource", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    double qsource1 = Convert.ToDouble(value[0][0]);
+                                    qsourcedwd += qsource1;
+                                }
+                            }
+                            n = -1;
+                            while (++n < 12)
+                            {
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qsource", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    double qsource2 = Convert.ToDouble(value[0][0]);
+                                    qsourcedwe += qsource2;
+                                }
+                            }
+
+                            qsourcetot = qsourcedwd + qsourcedwe;
+                            qsourcetot = qsourcetot / 1000;
+                            qsourcearea = qsourcetot / area;
+
+                            __data[100].Add(new { idx = i, val = Program.UTIL.asFixed(qsourcetot.ToString()) }); // 열획득량
+                            __data[101].Add(new { idx = i, val = Program.UTIL.asFixed(qsourcearea.ToString()) }); //면적당 열획득량
+                            ///연간획득량 완료 ///
+                            n = -1;
+                            while (++n < 12)
+                            {
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qsink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    double qsink1 = Convert.ToDouble(value[0][0]);
+                                    qsinkdwd += qsink1;
+                                }
+                            }
+                            n = -1;
+                            while (++n < 12)
+                            {
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qsink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    double qsink2 = Convert.ToDouble(value[0][0]);
+                                    qsinkdwe += qsink2;
+                                }
+                            }
+                            qsinktot = qsinkdwd + qsinkdwe;
+                            qsinktot = qsinktot / 1000;
+                            qsinkarea = qsinktot / area;
+
+                            __data[102].Add(new { idx = i, val = Program.UTIL.asFixed(qsinktot.ToString()) }); // 열손실량
+                            __data[103].Add(new { idx = i, val = Program.UTIL.asFixed(qsinkarea.ToString()) }); //면적당 열손실량
+
+                            n = -1;
+                            double ventamount = 0;
+                            double infamount = 0;
+                            double mechamount = 0;
+
+                            double losswin = 0;
+                            double lossmech = 0;
+                            double lossinf = 0;
+
+                            double losswin2 = 0;
+                            double lossmech2 = 0;
+                            double lossinf2 = 0;
+
+                            n = -1;
+                            while (++n < ZoneG.Length)
+                            {
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "nwin", "번호 ='" + ZoneG[i][0] + "'");
+                                if (value.Length > 0)
+                                {
+                                    double nwin = Convert.ToDouble(value[0][0]);
+                                    ventamount = nwin * vol;
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "ninf", "번호 ='" + ZoneG[i][0] + "'");
+                                if (value.Length > 0)
+                                {
+                                    double ninf = Convert.ToDouble(value[0][0]);
+                                    infamount = ninf * vol;
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "nmech", "번호 ='" + ZoneG[i][0] + "'");
+                                if (value.Length > 0)
+                                {
+                                    double nmech = Convert.ToDouble(value[0][0]);
+                                    mechamount = nmech * vol;
+                                }
+                            }
+                            __data[11].Add(new { idx = i, val = Program.UTIL.asFixed(ventamount.ToString()) });
+                            __data[81].Add(new { idx = i, val = Program.UTIL.asFixed(infamount.ToString()) });
+                            __data[82].Add(new { idx = i, val = Program.UTIL.asFixed(mechamount.ToString()) });
+
+                            n = -1;
+                            while (++n < 12)
+                            {
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QV_win_sink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    double losswinmth = Convert.ToDouble(value[0][0]);
+                                    losswin += losswinmth;
+                                    losswin2 = losswin / 1000;
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QV_inf_sink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    double lossinfmth = Convert.ToDouble(value[0][0]);
+                                    lossinf += lossinfmth;
+                                    lossinf2 = lossinf / 1000;
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QV_mech_sink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    double lossmechmth = Convert.ToDouble(value[0][0]);
+                                    lossmech += lossmechmth;
+                                    lossmech2 = lossmech / 1000;
+                                }
+                            }
+                            __data[83].Add(new { idx = i, val = Program.UTIL.asFixed(losswin2.ToString()) });
+                            __data[84].Add(new { idx = i, val = Program.UTIL.asFixed(lossinf2.ToString()) });
+                            __data[85].Add(new { idx = i, val = Program.UTIL.asFixed(lossmech2.ToString()) });
+
+                            n = -1;
+
+                            while (++n < 12)
+                            {
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "dwd_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[23].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 이용일
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[50].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 난방요구량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "dQc_b", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[51].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 대차축열량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[52].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 관류열손실량
+                                }
+
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QVsink_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[53].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 환기열손실량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QI_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[55].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 내부발열량
+                                }
+                            }
+
+                            n = -1;
+
+                            while (++n < 12)
+                            {
+                                String[][] value_난방요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value_난방요구량.Length > 0)
+                                {
+                                    string 면작당난방요구 = (Convert.ToDouble(value_난방요구량[0][0]) / area).ToString();
+                                    __data[90].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(면작당난방요구) }); // 일사열획득량 (QSTR + SSOPSOURCE TOTAL) 
+                                }
+                                ///
+                                String[][] value_냉방요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                if (value_냉방요구량.Length > 0)
+                                {
+                                    string 면적당냉방요구 = (Convert.ToDouble(value_냉방요구량[0][0]) / area).ToString();
+                                    __data[91].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(면적당냉방요구) }); // 일사열획득량 (QSTR + SSOPSOURCE TOTAL) 
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[24].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 난방요구량
+                                }
+
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "theta_i", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[25].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 실내온도
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "theta_e", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[26].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 실외온도
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "eta", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[27].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 이용계수
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[28].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류 열손실량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_Wall", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[29].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류(벽체) 열손실량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_Win", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[30].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류(창호) 열손실량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_CW", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[31].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류(커튼월) 열손실량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_Roof", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[32].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류(지붕) 열손실량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_Door", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[33].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류(출입문) 열손실량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_Floor", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[34].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류(바닥) 열손실량 
+                                }
+                                ///////data 35  --->  열교 해당 data
+                                ///
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QVsink_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[36].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 환기 열손실량 
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QV_inf_sink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[37].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 침기 열손실량 
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QV_mech_sink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[38].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 기계환기 열손실량 
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QV_win_sink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[39].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 환기 (자연환기)열손실량 
+                                }
+
+
+                                ///
+                                String[][] value_투명2 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QStr_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                string[][] value_불투명2 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QSopsource_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value_투명2.Length > 0 && value_불투명2.Length > 0)
+                                {
+                                    string 일사열획득난방 = (Convert.ToDouble(value_투명2[0][0]) + Convert.ToDouble(value_불투명2[0][0])).ToString();
+                                    __data[40].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(일사열획득난방) }); // 일사열획득량 (QSTR + SSOPSOURCE TOTAL) 
+                                }
+                                ///
+                                ///
+                                String[][] value_투명3 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QStr_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                string[][] value_불투명3 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QSopsource_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value_투명3.Length > 0 && value_불투명3.Length > 0)
+                                {
+                                    string 일사열획득난방비용일 = (Convert.ToDouble(value_투명2[0][0]) + Convert.ToDouble(value_불투명2[0][0])).ToString();
+                                    __data[54].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(일사열획득난방비용일) }); // 일사열획득량 (QSTR + SSOPSOURCE TOTAL) 
+                                }
+                                ///
+
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QStr_Win", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if(value.Length >0)
+                                {
+                                    __data[41].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 일사(창호)열획득량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QStr_CW", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[42].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 일사(커튼월창)열획득량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QSopsink_Wall", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[43].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 일사(외벽)열획득량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QSopsink_Roof", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[44].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 일사(지붕)열획득량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QSopsink_Door", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[45].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 일사(지붕)열획득량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QI_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[46].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 내부발열량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QI_L", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[47].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 내부발열량(조명)
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QI_P", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[48].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 내부발열량(인체)
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QI_fac", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[49].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 내부발열량(기계)
+                                }
+
+
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[57].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 이용일 냉방요구량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_DHU_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[58].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 제습요구량
+                                }
+
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "theta_i", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[59].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 냉방기준온도
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsource_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[60].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류열획득량
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QVsource_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[61].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 환기열획득량
+                                }
+                                ///
+                                String[][] value_투명 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QStr_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                string[][] value_불투명 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QSopsource_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                if (value_투명.Length > 0 && value_불투명.Length >0)
+                                {
+                                    string 합계 = (Convert.ToDouble(value_투명[0][0]) + Convert.ToDouble(value_불투명[0][0])).ToString();
+                                    __data[62].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(합계) }); // 일사열획득량 (QSTR + SSOPSOURCE TOTAL) 
+                                }                                
+                                ///
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                if(value.Length >0)
+                                {
+                                    __data[63].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 냉방요구량
+                                }                               
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "theta_i", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[64].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 냉방기준온도
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[65].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 최대난방부하
+                                }
+
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "t_max", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[66].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 난방시간
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[67].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 최대난방부하
+                                }
+                                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "t_max", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
+                                if (value.Length > 0)
+                                {
+                                    __data[68].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 난방시간
+                                }
+                            }
+                        }
                     }
-                    __data[11].Add(new { idx = i, val = Program.UTIL.asFixed(ventamount.ToString()) });
-                    __data[81].Add(new { idx = i, val = Program.UTIL.asFixed(infamount.ToString()) });
-                    __data[82].Add(new { idx = i, val = Program.UTIL.asFixed(mechamount.ToString()) });
-
-                    n = -1;
-                    while (++n < 12)
-                    {
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QV_win_sink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        double losswinmth = Convert.ToDouble(value[0][0]);
-                        losswin += losswinmth;
-                        losswin2 = losswin / 1000;
-
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QV_inf_sink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        double lossinfmth = Convert.ToDouble(value[0][0]);
-                        lossinf += lossinfmth;
-                        lossinf2 = lossinf / 1000;
-
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QV_mech_sink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        double lossmechmth = Convert.ToDouble(value[0][0]);
-                        lossmech += lossmechmth;
-                        lossmech2 = lossmech / 1000;
-                    }
-                    __data[83].Add(new { idx = i, val = Program.UTIL.asFixed(losswin2.ToString()) });
-                    __data[84].Add(new { idx = i, val = Program.UTIL.asFixed(lossinf2.ToString()) });
-                    __data[85].Add(new { idx = i, val = Program.UTIL.asFixed(lossmech2.ToString()) });
-
-                }
-
-                value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "번호", "번호 ='" + ZoneG[i][0] + "'");
-
-                if (ZoneG[i][0] == value[0][0])
-                {
-                    n = -1;
-
-                    while (++n < 12)
-                    {
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "dwd_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[23].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 이용일
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[50].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 난방요구량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "dQc_b", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[51].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 대차축열량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[52].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 관류열손실량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QVsink_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[53].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 환기열손실량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QI_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[55].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 내부발열량
-
-                    }
-
-                    n = -1;
-
-                    while (++n < 12)
-                    {
-
-                        String[][] value_난방요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        string 면작당난방요구 = (Convert.ToDouble(value_난방요구량[0][0]) / area).ToString();
-                        __data[90].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(면작당난방요구) }); // 일사열획득량 (QSTR + SSOPSOURCE TOTAL) 
-                        ///
-                        String[][] value_냉방요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        string 면적당냉방요구 = (Convert.ToDouble(value_냉방요구량[0][0]) / area).ToString();
-                        __data[91].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(면적당냉방요구) }); // 일사열획득량 (QSTR + SSOPSOURCE TOTAL) 
-
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[24].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 난방요구량
-
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "theta_i", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[25].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 실내온도
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "theta_e", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[26].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 실외온도
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "eta", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[27].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 이용계수
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[28].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류 열손실량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_Wall", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[29].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류(벽체) 열손실량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_Win", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[30].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류(창호) 열손실량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_CW", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[31].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류(커튼월) 열손실량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_Roof", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[32].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류(지붕) 열손실량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_Door", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[33].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류(출입문) 열손실량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsink_Floor", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[34].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류(바닥) 열손실량 
-                        ///////data 35  --->  열교 해당 data
-                        ///
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QVsink_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[36].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 환기 열손실량 
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QV_inf_sink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[37].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 침기 열손실량 
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QV_mech_sink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[38].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 기계환기 열손실량 
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QV_win_sink", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[39].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 환기 (자연환기)열손실량 
-
-
-                        ///
-                        String[][] value_투명2 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QStr_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        string[][] value_불투명2 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QSopsource_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        string 일사열획득난방 = (Convert.ToDouble(value_투명2[0][0]) + Convert.ToDouble(value_불투명2[0][0])).ToString();
-                        __data[40].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(일사열획득난방) }); // 일사열획득량 (QSTR + SSOPSOURCE TOTAL) 
-                        ///
-
-                        ///
-                        String[][] value_투명3 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QStr_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        string[][] value_불투명3 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QSopsource_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        string 일사열획득난방비용일 = (Convert.ToDouble(value_투명2[0][0]) + Convert.ToDouble(value_불투명2[0][0])).ToString();
-                        __data[54].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(일사열획득난방비용일) }); // 일사열획득량 (QSTR + SSOPSOURCE TOTAL) 
-                        ///
-
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QStr_Win", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[41].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 일사(창호)열획득량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QStr_CW", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[42].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 일사(커튼월창)열획득량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QSopsink_Wall", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[43].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 일사(외벽)열획득량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QSopsink_Roof", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[44].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 일사(지붕)열획득량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QSopsink_Door", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[45].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 일사(지붕)열획득량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QI_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[46].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 내부발열량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QI_L", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[47].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 내부발열량(조명)
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QI_P", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[48].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 내부발열량(인체)
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QI_fac", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[49].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 내부발열량(기계)
-
-
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        __data[57].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 이용일 냉방요구량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_DHU_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        __data[58].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 제습요구량
-
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "theta_i", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        __data[59].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 냉방기준온도
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QTsource_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        __data[60].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 관류열획득량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QVsource_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        __data[61].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 환기열획득량
-                        ///
-                        String[][] value_투명 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QStr_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        string[][] value_불투명 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "QSopsource_tot", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        string 합계 = (Convert.ToDouble(value_투명[0][0]) + Convert.ToDouble(value_불투명[0][0])).ToString();
-                        __data[62].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(합계) }); // 일사열획득량 (QSTR + SSOPSOURCE TOTAL) 
-                        ///
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        __data[63].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 냉방요구량
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "theta_i", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '비이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        __data[64].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 비이용일 냉방기준온도
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[65].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 최대난방부하
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "t_max", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        __data[66].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 난방시간
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        __data[67].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 최대난방부하
-                        value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "t_max", "번호 ='" + ZoneG[i][0] + "' AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='냉방' AND 월 = '" + (n + 1) + "월'");
-                        __data[68].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value[0][0]) }); // 난방시간
-
-
-                    }
-                }
-            }
+             }
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -537,78 +672,30 @@ namespace main.contents.Result
 
             while (++i < ZoneG.Length)
             {
-                
-                string[][] value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "번호,이름,난방_냉방,비이용일_이용일,월,HT_tot,HT_InWall,HT_Slab,HT_Wall,HT_Roof,HT_Floor,HT_GWall,HT_Door,HT_Win,HT_CW,HT_Di_Wall,HT_Indi_Wall,HT_Di_Roof,HT_Indi_Roof,HT_Di_Win,HT_Indi_Win,HT_Di_Door,	HT_Indi_Door,HT_TB_tot,HT_TB_Wall,HT_TB_Roof,HT_TB_Floor,HT_TB_Gwall,HT_TB_Win,HT_TB_Door,HT_TB_CW,nmech	,nz,ninf,nwin,HV_tot,HV_inf,HV_win,HV_z,HV_mech,H_tot,tao,dwe_mth,dwd_mth,theta_i,theta_e,QTsink_tot,QT_u_sink,QTsink_Wall,QTsink_Roof,QTsink_Floor,QTsink_GWall,QTsink_Door,QTsink_Win,QTsink_CW,QTsource_tot,QT_u_source,QTsource_Wall,QTsource_Roof,QTsource_Floor,QTsource_GWall,QTsource_Door,QTsource_Win,QTsource_CW,QSopsink_tot,QSopsource_tot,QStr_tot,QSopsink_Wall,QSopsink_Roof,QSopsink_Door,QSopsink_CW_p,QSopsource_Wall,QSopsource_Roof,QSopsource_Door,QSopsource_CW_p,QStr_Win,QStr_CW,QVsink_tot,QV_inf_sink,QV_win_sink,QV_z_sink,QV_mech_sink,QVsource_tot,QV_inf_source,QV_win_source,QV_z_source,QV_mech_source,Q_DHU_win,Q_DHU_mech,Q_DHU_tot,QI_tot,QI_L,QI_P,QI_fac,QI_Humidity,Qsink,Qsource,gamma,a,eta,dQc_b,dQc_sink,Qb_day,Qb_mth,Qb_a,Q_max,t_max,비냉난방존온도", "번호 ='" + ZoneG[i][0] + "'");
-                string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "Zone_LightResult", "번호,ITr,IRD,ISh_Ish,ISh_hA,Ish_vA,Ish_In_At,Wi,Ish_GDF,Ish,f_τeff_SNA,f_D,f_nearD,f_DCA,f_dclass,f_nearEm_SNA,f_fd_sna,f_fd_sa,f_nearEm_DC,f_fd_c,f_FDS,f_FD,as_bs,hs_bs,hg_hw,normal_ηR,saw_ηR,r_DSNA,r_DSA,r_dclass,r_nearEm_FDS,r_fd_sna,r_fd_sa,r_nearEm_DC,r_fd_c,r_FDS,r_FD,Sunlight_SCW,Sunlight_PjSC,Final_W", "번호 ='" + ZoneG[i][0] + "'");
+
+
+              //  string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "Zone_LightResult", "번호,ITr,IRD,ISh_Ish,ISh_hA,Ish_vA,Ish_In_At,Wi,Ish_GDF,Ish,f_τeff_SNA,f_D,f_nearD,f_DCA,f_dclass,f_nearEm_SNA,f_fd_sna,f_fd_sa,f_nearEm_DC,f_fd_c,f_FDS,f_FD,as_bs,hs_bs,hg_hw,normal_ηR,saw_ηR,r_DSNA,r_DSA,r_dclass,r_nearEm_FDS,r_fd_sna,r_fd_sa,r_nearEm_DC,r_fd_c,r_FDS,r_FD,Sunlight_SCW,Sunlight_PjSC,Final_W", "번호 ='" + ZoneG[i][0] + "'");
                 string[][] envelope = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,면적", "외피유형='" + "외벽" + "' AND 존 ='" + ZoneG[i][0] + "'");
                 string[][] envelope2 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,면적", "외피유형='" + "커튼월창" + "' AND 존 ='" + ZoneG[i][0] + "'");
                 string[][] envelope3 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,면적", "외피유형='" + "지붕" + "' AND 존 ='" + ZoneG[i][0] + "'");
                 string[][] envelope4 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,면적", "외피유형='" + "창호" + "' AND 존 ='" + ZoneG[i][0] + "'");
                 string[][] envelope5 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,면적", "외피유형='" + "최하층바닥" + "' AND 존 ='" + ZoneG[i][0] + "'");
-                //string[][] envelope6 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,면적", "외피유형='" + "출입문" + "' AND 존 ='" + ZoneG[i][0] + "'");
-
                 string[][] envelope_1 = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT", "직접간접= '직접외기' and 난방_냉방='난방' and 월='1월' and 비이용일_이용일 = '이용일' and 존번호='" + ZoneG[i][0] + "'");
                 string[][] envelope_2 = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT", "직접간접= '간접외기' and 난방_냉방='난방' and 월='1월' and 비이용일_이용일 = '이용일' and 존번호='" + ZoneG[i][0] + "'");
                 string[][] envelope_3 = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT", "직접간접= '지면위' and 난방_냉방='난방' and 월='1월' and 비이용일_이용일 = '이용일' and 존번호='" + ZoneG[i][0] + "'");
-                if (ZoneG[i][0] == value[12][0])
+
+                double sum = 0;
+                double kkk;
+                for (int k = 0; k < 12; k++)
                 {
-                    n = -1;
-
-                    while (++n < 12)
-                    { }
-
-                    double sum = 0;
-                    double kkk;
-                    for (int k = 0; k < 12; k++)
+                    string[][] value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + ZoneG[i][0] + "' AND 난방_냉방 ='난방' AND 비이용일_이용일 ='이용일' AND 월='" + (k + 1).ToString() + "월'");
+                    if (value.Length > 0)
                     {
-                        kkk = Convert.ToDouble(value[12 + k][92]);//theta (이용일 난방요구량_합산)
+                        kkk = Convert.ToDouble(value[0][0]);//theta (이용일 난방요구량_합산)
                         sum += kkk;//theta (이용일 난방요구량_합산)
-
                     }
-
-                    _data78.Add(new { idx = i, val = sum });
-
-                    //MessageBox.Show(sum.ToString());
-
                 }
-                else;
-
-                //조명 요구량 
-                //if (ZoneG[i][0] == value2[12 * i][0])
-                //{
-                //    n = -1;
-
-                //    while (++n < 12)
-                //    {
-                //        __data[569].Add(new { idx = i * 12 + n, val = Program.UTIL.asFixed(value2[i * 12 + n][39]) });
-                //    }
-
-                //    double sum = 0;
-                //    double kkkk;
-                //    double lneedarea = 0;
-                //    for (int k = 0; k < 12; k++)
-                //    {
-                //        kkkk = Convert.ToDouble(value2[12 * i + k][39]);//Finfal_W (조명에너지 요구량 합산)
-                //        sum += kkkk;// Finfal_W (조명에너지 요구량 합산)
-                //                    //MessageBox.Show(sum.ToString());
-
-                //        double area = Convert.ToDouble(ZoneG[i][9]);
-                //        lneedarea = sum / area;
-
-                //    }
-                //    //string result;
-                //    //result = string.Format("{0:0.#0}", sum);
-                //    //_data589.Add(new { idx = i, val = result });
-
-
-                //    __data[589].Add(new { idx = i, val = Program.UTIL.asFixed(sum.ToString()) });
-                //    __data[590].Add(new { idx = i, val = Program.UTIL.asFixed(lneedarea.ToString()) });
-                //    //MessageBox.Show(sum.ToString());
-
-                //}
-                //else;
-
-                int kk = -1;
+                _data78.Add(new { idx = i, val = sum });
                 double totalwall = 0;
                 double totalcw = 0;
                 double totalroof = 0;
@@ -617,46 +704,60 @@ namespace main.contents.Result
                 double winwallrate = 0;
 
                 envelope = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "존 ='" + ZoneG[i][0] + "' AND 외피유형 = '외벽'");
-                while (++kk < envelope.Length)
+                int kk = -1;
+                if (envelope.Length > 0)
                 {
-                    double wall = Convert.ToDouble(envelope[kk][0]);
-                    totalwall += wall;
+                    while (++kk < envelope.Length)
+                    {
+                        double wall = Convert.ToDouble(envelope[kk][0]);
+                        totalwall += wall;
+                    }
                 }
-                kk = -1;
+
                 envelope2 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "존 ='" + ZoneG[i][0] + "' AND 외피유형 = '커튼월'");
-                while (++kk < envelope2.Length)
+                if (envelope2.Length > 0)
                 {
-                    double cw = Convert.ToDouble(envelope2[kk][0]);
-                    totalcw += cw;
+                    kk = -1;
+                    while (++kk < envelope2.Length)
+                    {
+                        double cw = Convert.ToDouble(envelope2[kk][0]);
+                        totalcw += cw;
+                    }
                 }
-                kk = -1;
 
                 envelope3 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "존 ='" + ZoneG[i][0] + "' AND 외피유형 = '지붕'");
-                while (++kk < envelope3.Length)
+                if (envelope3.Length > 0)
                 {
-                    double roof = Convert.ToDouble(envelope3[kk][0]);
-                    totalroof += roof;
-                }
-                kk = -1;
-
+                    kk = -1;
+                    while (++kk < envelope3.Length)
+                    {
+                        double roof = Convert.ToDouble(envelope3[kk][0]);
+                        totalroof += roof;
+                    }
+                }                
+               
                 envelope4 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "존 ='" + ZoneG[i][0] + "' AND 외피유형 = '창호'");
-                while (++kk < envelope4.Length)
+                if(envelope4.Length >0)
                 {
-                    double win = Convert.ToDouble(envelope4[kk][0]);
-                    totalwin += win;
-                }
-                kk = -1;
-
+                    kk = -1;
+                    while (++kk < envelope4.Length)
+                    {
+                        double win = Convert.ToDouble(envelope4[kk][0]);
+                        totalwin += win;
+                    }
+                }             
+  
                 envelope5 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "존 ='" + ZoneG[i][0] + "' AND 외피유형 = '최하층바닥'");
-                while (++kk < envelope5.Length)
+                if(envelope5.Length > 0)
                 {
-                    double floor = Convert.ToDouble(envelope5[kk][0]);
-                    totalfloor += floor;
+                    kk = -1;
+                    while (++kk < envelope5.Length)
+                    {
+                        double floor = Convert.ToDouble(envelope5[kk][0]);
+                        totalfloor += floor;
+                    }
                 }
-
                 winwallrate = (totalwin / totalwall) * 100;
-
-
                 _data590.Add(new { idx = i, val = Program.UTIL.asFixed(totalwall.ToString()) }); //벽체 면적
                 _data591.Add(new { idx = i, val = Program.UTIL.asFixed(totalcw.ToString()) });  //커튼월 면적
                 _data592.Add(new { idx = i, val = Program.UTIL.asFixed(totalroof.ToString()) }); //지붕 면적
@@ -665,153 +766,92 @@ namespace main.contents.Result
                 _data596.Add(new { idx = i, val = Program.UTIL.asFixed(winwallrate.ToString()) });  //바닥 면적  
                 //열관류율(벽체) 계산 파트
                 kk = -1;
-                double ht = 0;
-                double htarea = 0;
-                double httb = 0;
-                String[][] uenvelope = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "외피번호,존번호,구조체번호,외피유형,커튼월유형,직접간접,난방_냉방,비이용일_이용일,월,HT,HT_TB,QTsink,QTsource,QT_TB_sink,QT_TB_source,QTsink_tot,QTsource_tot,QSsink,QSsource", "존번호='" + ZoneG[i][0] + "'");
-                uenvelope = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT", "존번호 ='" + ZoneG[i][0] + "' AND 외피유형 = '외벽'AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + "1월'");
-                n = -1;
-                while (++n < uenvelope.Length)
+                String[][] uenvelope  = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT, HT_TB, QTsink", "존번호 ='" + ZoneG[i][0] + "' AND 외피유형 = '외벽'AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + "1월'");
+                if(uenvelope.Length > 0)
                 {
-                    double ht1 = Convert.ToDouble(uenvelope[n][0]);
-                    ht += ht1;
+                    n = -1;
+                    double ht = 0;
+                    double htarea = 0;
+                    double httb = 0;
+                    double qt = 0;
+                    double num = 0;
+                    while (++n < uenvelope.Length)
+                    {
+                        ht += Convert.ToDouble(uenvelope[n][0]);
+                        httb += Convert.ToDouble(uenvelope[n][1]);
+                        qt += Convert.ToDouble(uenvelope[n][2]);
+                    }
+                    num =uenvelope.Length;
                     htarea = ht / totalwall;
-                }
-                double num = Convert.ToDouble(uenvelope.Length);
-
-
-                ht = ht / num;
-                htarea = htarea / num;
-                _data605.Add(new { idx = i, val = Program.UTIL.asFixed(ht.ToString()) });
-                _data595.Add(new { idx = i, val = Program.UTIL.asFixed(htarea.ToString()) });
-
-                n = -1;
-
-                while (++n < uenvelope.Length)
-                {
-                    uenvelope = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT_TB", "존번호 ='" + ZoneG[i][0] + "' AND 외피유형 = '외벽'AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + "1월'");
-                    double httb1 = Convert.ToDouble(uenvelope[n][0]);
-                    httb += httb1;
-                }
-                httb = httb / totalwall;
-                httb = httb / num;
-                _data606.Add(new { idx = i, val = Program.UTIL.asFixed(httb.ToString()) });
-
-                n = -1;
-                double qt = 0;
-                while (++n < 12)
-                {
-                    uenvelope = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "QTsink", "존번호 ='" + ZoneG[i][0] + "' AND 외피유형 = '외벽'AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                    double qt1 = Convert.ToDouble(uenvelope[0][0]);
-                    qt += qt1;
                     qt = qt / 1000;
+                    ht = ht / num;
+                    htarea = htarea / num;
+                    _data605.Add(new { idx = i, val = Program.UTIL.asFixed(ht.ToString()) });
+                    _data595.Add(new { idx = i, val = Program.UTIL.asFixed(htarea.ToString()) });
+                    httb = httb / totalwall;
+                    httb = httb / num;
+                    _data606.Add(new { idx = i, val = Program.UTIL.asFixed(httb.ToString()) });
+                    _data607.Add(new { idx = i, val = Program.UTIL.asFixed(qt.ToString()) });
                 }
-                _data607.Add(new { idx = i, val = Program.UTIL.asFixed(qt.ToString()) });
 
                 //열관류율(지붕) 계산 파트
                 double htr = 0;
                 double htrarea = 0;
-
-                uenvelope = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT", "존번호 ='" + ZoneG[i][0] + "' AND 외피유형 = '지붕'AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + "1월'");
+                double httbrf = 0;
+                double qtroof = 0;
+                double numrf = 0;
+                uenvelope = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT, HT_TB, QTsink", "존번호 ='" + ZoneG[i][0] + "' AND 외피유형 = '지붕'AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + "1월'");
                 n = -1;
                 if (uenvelope.Length > 0)
                 {
                     while (++n < uenvelope.Length)
                     {
-                        double htr1 = Convert.ToDouble(uenvelope[n][0]);
-                        htr += htr1;
-                        htrarea = htr / totalroof;
+                        htr += Convert.ToDouble(uenvelope[n][0]);
+                        httbrf += Convert.ToDouble(uenvelope[n][1]);
+                        qtroof += Convert.ToDouble(uenvelope[n][2]);
                     }
-                    double numrf = Convert.ToDouble(uenvelope.Length);
+                    numrf = uenvelope.Length;
+                    htrarea = htr / totalroof;
+                    httbrf = httbrf / totalroof;
+                    qtroof = qtroof / 1000;
                     htr = htr / numrf;
                     htrarea = htrarea / numrf;
+                    httbrf = httbrf / numrf;
                     _data611.Add(new { idx = i, val = Program.UTIL.asFixed(htr.ToString()) });
                     _data612.Add(new { idx = i, val = Program.UTIL.asFixed(htrarea.ToString()) });
-
+                    _data613.Add(new { idx = i, val = Program.UTIL.asFixed(httbrf.ToString()) });
+                    _data614.Add(new { idx = i, val = Program.UTIL.asFixed(qtroof.ToString()) });
                 }
-                else
-                {
-
-                };
                 n = -1;
-                double httbrf = 0;
-
-                uenvelope = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT_TB", "존번호 ='" + ZoneG[i][0] + "' AND 외피유형 = '지붕'AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + "1월'");
-                while (++n < uenvelope.Length)
-                {
-                    double httb1 = Convert.ToDouble(uenvelope[n][0]);
-                    httbrf += httb1;
-                    httbrf = httbrf / totalroof;
-                    double numrf = Convert.ToDouble(uenvelope.Length);
-                    httbrf = httbrf / numrf;
-                }
-                _data613.Add(new { idx = i, val = Program.UTIL.asFixed(httbrf.ToString()) });
-
-                double qtroof = 0;
-                n = -1;
-                while (++n < uenvelope.Length)
-                {
-                    uenvelope = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "QTsink", "존번호 ='" + ZoneG[i][0] + "' AND 외피유형 = '지붕'AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                    double qt1 = Convert.ToDouble(uenvelope[0][0]);
-                    qtroof += qt1;
-                    qtroof = qtroof / 1000;
-                }
-                _data614.Add(new { idx = i, val = Program.UTIL.asFixed(qtroof.ToString()) });
-
                 //열관류율(바닥) 계산 파트 
                 double htf = 0;
                 double htfarea = 0;
-
-                uenvelope = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT", "존번호 ='" + ZoneG[i][0] + "' AND 외피유형 = '최하층바닥'AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + "1월'");
+                double httbf = 0;
+                double qtfloor = 0;
+                double numf2 = 0;
+                uenvelope = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT,HT_TB, QTsink", "존번호 ='" + ZoneG[i][0] + "' AND 외피유형 = '최하층바닥'AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + "1월'");
                 n = -1;
                 if (uenvelope.Length > 0)
                 {
                     while (++n < uenvelope.Length)
                     {
-                        double htf1 = Convert.ToDouble(uenvelope[n][0]);
-                        htf += htf1;
-                        htfarea = htf / totalfloor;
+                        htf += Convert.ToDouble(uenvelope[n][0]);
+                        httbf += Convert.ToDouble(uenvelope[n][1]);
+                        qtfloor += Convert.ToDouble(uenvelope[n][2]);
                     }
-                    double numf2 = Convert.ToDouble(uenvelope.Length);
+                    numf2 = uenvelope.Length;
+                    htfarea = htf / totalfloor;
+                    httbf = httbf / totalfloor;
+                    httbf = httbf / numf2;
                     htf = htf / numf2;
                     htfarea = htfarea / numf2;
+                    qtfloor = qtfloor / 1000;
                     _data615.Add(new { idx = i, val = Program.UTIL.asFixed(htf.ToString()) });
                     _data616.Add(new { idx = i, val = Program.UTIL.asFixed(htfarea.ToString()) });
-                }
-                else
-                {
-
-                }
-
-                uenvelope = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "HT_TB", "존번호 ='" + ZoneG[i][0] + "' AND 외피유형 = '최하층바닥'AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + "1월'");
-                n = -1;
-                double httbf = 0;
-                if (uenvelope.Length > 0)
-                {
-
-                    while (++n < uenvelope.Length)
-                    {
-                        double httb1 = Convert.ToDouble(uenvelope[0][0]);
-                        httbf += httb1;
-                        httbf = httbf / totalfloor;
-                        double numtb = Convert.ToDouble(uenvelope.Length);
-                        httbf = httbf / numtb;
-                    }
                     _data617.Add(new { idx = i, val = Program.UTIL.asFixed(httbf.ToString()) });
+                    _data618.Add(new { idx = i, val = Program.UTIL.asFixed(qtfloor.ToString()) });
                 }
-                else
-                {
-                }
-                double qtfloor = 0;
-                n = -1;
-                while (++n < uenvelope.Length)
-                {
-                    uenvelope = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "QTsink", "존번호 ='" + ZoneG[i][0] + "' AND 외피유형 = '최하층바닥'AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                    double qtfloor1 = Convert.ToDouble(uenvelope[0][0]);
-                    qtfloor += qtfloor1;
-                    qtfloor = qtfloor / 1000;
-                }
-                _data618.Add(new { idx = i, val = Program.UTIL.asFixed(qtfloor.ToString()) });
+
 
                 //열관류율(창호) 계산 파트
                 double htw = 0;
@@ -823,7 +863,7 @@ namespace main.contents.Result
                     while (++n < uenvelope.Length)
                     {
                         double htr1 = Convert.ToDouble(uenvelope[n][0]);
-                        htw += htr1;
+                        htw += Convert.ToDouble(uenvelope[n][0]);
                         htwarea = htw / totalwin;
                         double numw = Convert.ToDouble(uenvelope.Length);
 
@@ -910,7 +950,7 @@ namespace main.contents.Result
                     while (++n < uenvelope.Length)
                     {
                         uenvelope = Program.DB.getValue(DB.type.ProjDB, "Zone_Envelope_Result", "QTsink", "존번호 ='" + ZoneG[i][0] + "' AND 외피유형 = '커튼월'AND 비이용일_이용일 = '이용일' AND 난방_냉방 ='난방' AND 월 = '" + (n + 1) + "월'");
-                        double qt1 = Convert.ToDouble(uenvelope[0][0]);
+                        double qt1 = Convert.ToDouble(uenvelope[n][0]);
                         qtcw += qt1;
                         qtcw = qtcw / 1000;
                     }
@@ -1062,22 +1102,11 @@ namespace main.contents.Result
             data.Add(new { cname = "cls-solar-wallarea", data = _data590 });
             data.Add(new { cname = "cls-solar-roofarea", data = _data592 });
 
-
-            //data.Add(new { cname = "cls-solar-doorarea", data =  });
-
-
-
-
             s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
             s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
 
             runScript("init(" + s + "," + s2 + ")");
-
-            }
-            catch { }
         }
-
-
 
         private void button1_Click(object sender, EventArgs e)
         {

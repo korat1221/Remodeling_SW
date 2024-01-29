@@ -27,8 +27,11 @@ namespace main.contentslist
             InitializeComponent();
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '차양정보'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if (Image.Length > 0)
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
             Program.DB.initTable(DB.type.ProjDB, "ConstructionBlind");
             Create_Table();
         }
@@ -123,19 +126,22 @@ namespace main.contentslist
             String Blank = "";
             // WallList.Rows.Clear();
             dataGridView1.Rows.Clear();
-            for (int n = 0; n < List.Length; n++)
+            if(List.Length > 0)
             {
-                dataGridView1.Rows.Add();
-                int nRow = dataGridView1.Rows.Count - 1;
-                dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
-                dataGridView1.Rows[nRow].Cells[2].Value = List[n][1];
-                dataGridView1.Rows[nRow].Cells[3].Value = List[n][2];
-                dataGridView1.Rows[nRow].Cells[4].Value = List[n][3];
-                dataGridView1.Rows[nRow].Cells[5].Value = List[n][4];
-                dataGridView1.Rows[nRow].Cells[6].Value = List[n][5];
-                dataGridView1.Rows[nRow].Cells[7].Value = List[n][6];
-                dataGridView1.Rows[nRow].Cells[8].Value = null;
-                mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":10,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                for (int n = 0; n < List.Length; n++)
+                {
+                    dataGridView1.Rows.Add();
+                    int nRow = dataGridView1.Rows.Count - 1;
+                    dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
+                    dataGridView1.Rows[nRow].Cells[2].Value = List[n][1];
+                    dataGridView1.Rows[nRow].Cells[3].Value = List[n][2];
+                    dataGridView1.Rows[nRow].Cells[4].Value = List[n][3];
+                    dataGridView1.Rows[nRow].Cells[5].Value = List[n][4];
+                    dataGridView1.Rows[nRow].Cells[6].Value = List[n][5];
+                    dataGridView1.Rows[nRow].Cells[7].Value = List[n][6];
+                    dataGridView1.Rows[nRow].Cells[8].Value = null;
+                    mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":10,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                }
             }
             //dataGridView1.DataSource = WallList;
             CountDB = List.Length;

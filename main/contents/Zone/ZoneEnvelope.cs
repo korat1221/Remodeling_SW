@@ -41,37 +41,52 @@ namespace main.contents
 
             InitializeComponent();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '존 외피정보'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if (Image.Length > 0)
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
 
             //축열관련 콤보박스 만들기
             //천장
             string[][] SQL_index_Celing = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "축열유형", "구조체 = '천장'");
             int i = -1;
-            while (++i < SQL_index_Celing.Length)
+            if (SQL_index_Celing.Length > 0)
             {
-                CeilingCwirk_comboBox.Items.Add(SQL_index_Celing[i][0]);
+                while (++i < SQL_index_Celing.Length)
+                {
+                    CeilingCwirk_comboBox.Items.Add(SQL_index_Celing[i][0]);
+                }
             }
             //외벽
             string[][] SQL_index_Wall = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "축열유형", "구조체 = '외벽'");
             i = -1;
-            while (++i < SQL_index_Wall.Length)
+            if (SQL_index_Wall.Length > 0)
             {
-                WallCwirk_comboBox.Items.Add(SQL_index_Wall[i][0]);
+                while (++i < SQL_index_Wall.Length)
+                {
+                    WallCwirk_comboBox.Items.Add(SQL_index_Wall[i][0]);
+                }
             }
             //내벽
             string[][] SQL_index_InWall = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "축열유형", "구조체 = '간벽'");
             i = -1;
-            while (++i < SQL_index_InWall.Length)
+            if (SQL_index_InWall.Length > 0)
             {
-                InWallCwirk_comboBox.Items.Add(SQL_index_InWall[i][0]);
+                while (++i < SQL_index_InWall.Length)
+                {
+                    InWallCwirk_comboBox.Items.Add(SQL_index_InWall[i][0]);
+                }
             }
             //바닥
             string[][] SQL_index_Slab = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "축열유형", "구조체 = '바닥'");
             i = -1;
-            while (++i < SQL_index_Slab.Length)
+            if (SQL_index_Slab.Length > 0)
             {
-                SlabCwirk_comboBox.Items.Add(SQL_index_Slab[i][0]);
+                while (++i < SQL_index_Slab.Length)
+                {
+                    SlabCwirk_comboBox.Items.Add(SQL_index_Slab[i][0]);
+                }
             }
             //기밀관련 콤보박스 만들기
             InfiltrationType_comboBox.Items.Clear();
@@ -94,10 +109,13 @@ namespace main.contents
 
                 double CwirkA;
                 string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "Cwirk", "구조체='천장' AND 축열유형='" + CeilingCwirk_comboBox.SelectedItem.ToString() + "'");
-                Ceiling_index = CeilingCwirk_comboBox.SelectedItem.ToString();
-                CwirkA = Convert.ToDouble(CwirkDB[0][0]);
-                Cwirk_Ceiling = Calc_Cwirk_Construction(Area_Ceiling, CwirkA);
-                Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+                if (CwirkDB.Length > 0)
+                {
+                    Ceiling_index = CeilingCwirk_comboBox.SelectedItem.ToString();
+                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    Cwirk_Ceiling = Calc_Cwirk_Construction(Area_Ceiling, CwirkA);
+                    Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+                }
             }
         }
 
@@ -107,10 +125,13 @@ namespace main.contents
             {
                 double CwirkA;
                 string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "Cwirk", "구조체='외벽' AND 축열유형='" + WallCwirk_comboBox.SelectedItem.ToString() + "'");
-                Wall_index = WallCwirk_comboBox.SelectedItem.ToString();
-                CwirkA = Convert.ToDouble(CwirkDB[0][0]);
-                Cwirk_Wall = Calc_Cwirk_Construction(Area_Wall, CwirkA);
-                Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+                if (CwirkDB.Length > 0)
+                {
+                    Wall_index = WallCwirk_comboBox.SelectedItem.ToString();
+                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    Cwirk_Wall = Calc_Cwirk_Construction(Area_Wall, CwirkA);
+                    Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+                }
             }
         }
 
@@ -120,10 +141,13 @@ namespace main.contents
             {
                 double CwirkA;
                 string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "Cwirk", "구조체='간벽' AND 축열유형='" + InWallCwirk_comboBox.SelectedItem.ToString() + "'");
-                InWall_index = InWallCwirk_comboBox.SelectedItem.ToString();
-                CwirkA = Convert.ToDouble(CwirkDB[0][0]);
-                Cwirk_InWall = Calc_Cwirk_Construction(Area_InWall, CwirkA);
-                Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+                if (CwirkDB.Length > 0)
+                {
+                    InWall_index = InWallCwirk_comboBox.SelectedItem.ToString();
+                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    Cwirk_InWall = Calc_Cwirk_Construction(Area_InWall, CwirkA);
+                    Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+                }
             }
         }
 
@@ -133,10 +157,13 @@ namespace main.contents
             {
                 double CwirkA;
                 string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "Cwirk", "구조체='바닥' AND 축열유형='" + SlabCwirk_comboBox.SelectedItem.ToString() + "'");
-                Slab_index = SlabCwirk_comboBox.SelectedItem.ToString();
-                CwirkA = Convert.ToDouble(CwirkDB[0][0]);
-                Cwirk_Slab = Calc_Cwirk_Construction(Area_Slab, CwirkA);
-                Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+                if (CwirkDB.Length > 0)
+                {
+                    Slab_index = SlabCwirk_comboBox.SelectedItem.ToString();
+                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    Cwirk_Slab = Calc_Cwirk_Construction(Area_Slab, CwirkA);
+                    Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+                }
             }
         }
 
@@ -192,38 +219,38 @@ namespace main.contents
                 if (ZoneE[i][1] == "커튼월창")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "커튼월창유효열관류율", "번호='" + ZoneE[i][5] + "'");
-                    if (Value.Length != 0)
+                    if (Value.Length > 0)
                     { Construction_UeffSum[0] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
 
                 }
                 else if (ZoneE[i][1] == "외벽")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "번호='" + ZoneE[i][5] + "'");
-                    if (Value.Length != 0)
+                    if (Value.Length > 0)
                     { Construction_UeffSum[1] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
                 }
                 else if (ZoneE[i][1] == "지붕")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "유효열관류율", "번호='" + ZoneE[i][5] + "'");
-                    if (Value.Length != 0)
+                    if (Value.Length > 0)
                     { Construction_UeffSum[2] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
                 }
                 else if (ZoneE[i][1] == "최하층바닥")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "유효열관류율", "번호='" + ZoneE[i][5] + "'");
-                    if (Value.Length != 0)
+                    if (Value.Length > 0)
                     { Construction_UeffSum[3] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
                 }
                 else if (ZoneE[i][1] == "창호")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "창호유효열관류율", "번호='" + ZoneE[i][5] + "'");
-                    if (Value.Length != 0)
+                    if (Value.Length > 0)
                     { Construction_UeffSum[4] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
                 }
                 else if (ZoneE[i][1] == "외부출입문")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "번호='" + ZoneE[i][5] + "'");
-                    if (Value.Length != 0)
+                    if (Value.Length > 0)
                     { Construction_UeffSum[5] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
                 }
                 else { }
@@ -299,10 +326,9 @@ namespace main.contents
             string[][] Value;
 
             string[][] ZoneE_Select = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,면적,방위,기울기,구조체,구조체번호", "존='" + ZoneNum + "' AND 외피유형='" + 선택구조체 + "'");
-
-            for (int n = 0; n < ZoneE_Select.Length; n++)
+            if (ZoneE_Select.Length > 0)
             {
-                try
+                for (int n = 0; n < ZoneE_Select.Length; n++)
                 {
                     if (ZoneE_Select[n][1] == "커튼월창")
                     {
@@ -346,8 +372,11 @@ namespace main.contents
                         else if (선택구조체 == "창호")
                         {
                             string[][] gValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "태양열취득률", "번호='" + Value[0][1] + "'");
-                            String g = string.Format("{0:F2}", Convert.ToDouble(gValue[0][0]));
-                            table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE_Select[n][1], ZoneE_Select[n][5], 면적, ZoneE_Select[n][3], ZoneE_Select[n][4], Ueff, g);
+                            if (gValue.Length > 0)
+                            {
+                                String g = string.Format("{0:F2}", Convert.ToDouble(gValue[0][0]));
+                                table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE_Select[n][1], ZoneE_Select[n][5], 면적, ZoneE_Select[n][3], ZoneE_Select[n][4], Ueff, g);
+                            }
                         }
                         else if (선택구조체 == "외벽" || 선택구조체 == "지붕" || 선택구조체 == "외부출입문")
                         {
@@ -360,8 +389,8 @@ namespace main.contents
                         }
                     }
                     else { table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE_Select[n][1], ZoneE_Select[n][5], string.Format("{0:F2}", Convert.ToDouble(ZoneE_Select[n][2])), ZoneE_Select[n][3], ZoneE_Select[n][4], "", ""); }
+
                 }
-                catch { }
             }
             dataGridView2.DataSource = table_ZoneEnvelopeSelect;
         }
@@ -457,9 +486,12 @@ namespace main.contents
         }
         double Calc_q50(string 해당존유형)
         {
-            double q50;
+            double q50 =0;
             string[][] InfiltrationDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "기밀", "q50", "존유형='" + 해당존유형 + "' AND 기밀적용유형='" + InfiltrationType_comboBox.SelectedItem.ToString() + "'");
-            q50 = Convert.ToDouble(InfiltrationDB[0][0]);
+            if (InfiltrationDB.Length > 0)
+            {
+                q50 = Convert.ToDouble(InfiltrationDB[0][0]);
+            }
             return q50;
         }
         double Calc_n50(double q50)
@@ -469,9 +501,9 @@ namespace main.contents
 
             string[][] Value;
             //존의 외피들의 각 구조체테이블에서 직접인지 간접인지 판정해서, 직접이면 면적 합산 
-            for (int n = 0; n < ZoneE.Length; n++)
-            {
-                try
+            if(ZoneE.Length > 0) {
+
+                for (int n = 0; n < ZoneE.Length; n++)
                 {
                     if (ZoneE[n][1] == "커튼월창")
                     {
@@ -501,13 +533,15 @@ namespace main.contents
                     {
                         Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "명칭='" + ZoneE[n][5] + "'");
                     }
-
-                    if (Value[0][0] == "직접외기")
+                    if (Value.Length > 0)
                     {
-                        AreaDirect_total += Convert.ToDouble(ZoneE[n][3]);
+                        if (Value[0][0] == "직접외기")
+                        {
+                            AreaDirect_total += Convert.ToDouble(ZoneE[n][3]);
+
+                        }
                     }
                 }
-                catch { }
 
             }
 
@@ -623,16 +657,15 @@ namespace main.contents
         {
             reset();
             Load_OtherFormData();
-            try
-            {
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form",
+            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form",
                 "천장축열선택,외벽축열선택,내벽축열선택,바닥축열선택," +
                 "천장축열,외벽축열,내벽축열,바닥축열," +
                 "천장면적,외벽면적,내벽면적,바닥면적," +
                 "존축열성능," +
                 "존기밀타입,기밀적용유형," +
                 "q50,n50", "존번호 = '" + ZoneNum + "'");
-
+            if (Value.Length > 0)
+            {
                 Ceiling_index = Value[0][0];
                 CeilingCwirk_comboBox.SelectedItem = Ceiling_index;
                 Wall_index = Value[0][1];
@@ -662,9 +695,7 @@ namespace main.contents
                 InfiltrationType_comboBox.SelectedItem = Value[0][14];
                 q50_textBox.Text = string.Format("{0:F1}", Convert.ToDouble(Value[0][15]));
                 n50_textBox.Text = string.Format("{0:F1}", Convert.ToDouble(Value[0][16]));
-
             }
-            catch { }
 
         }
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
@@ -694,10 +725,12 @@ namespace main.contents
             {
                 //존이름 불러오기
                 String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름, 순바닥면적", "존번호 = '" + ZoneNum + "'");
-
-                ZoneName = Value[0][0];
-                ZoneName_textBox.Text = ZoneName;
-                NetArea = Convert.ToDouble(Value[0][1]);
+                if (Value.Length > 0)
+                {
+                    ZoneName = Value[0][0];
+                    ZoneName_textBox.Text = ZoneName;
+                    NetArea = Convert.ToDouble(Value[0][1]);
+                }
             }
             catch
             {
@@ -708,9 +741,12 @@ namespace main.contents
             {
                 //존외피정보 불러오기
                 ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,커튼월부위,면적,구조체,구조체번호,층", "존='" + ZoneNum + "'");
-                Layer = ZoneE[0][6];
-                Layer_textBox.Text = Layer;
-                load_table_ZoneEnvelopeInfo(ZoneNum);
+                if (ZoneE.Length > 0)
+                {
+                    Layer = ZoneE[0][6];
+                    Layer_textBox.Text = Layer;
+                    load_table_ZoneEnvelopeInfo(ZoneNum);
+                }
             }
             catch { }
 
