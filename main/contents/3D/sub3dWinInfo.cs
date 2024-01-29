@@ -1,4 +1,5 @@
 ﻿using main.subcontents.ConstructionRoof;
+using Microsoft.Office.Interop.Excel;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
@@ -24,8 +25,8 @@ namespace main.contents
         {
             InitializeComponent();
             InitializeAsync();
-            webView21.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);
-            webView22.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);
+            webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
+            webView22.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
         }
         async void InitializeAsync()
         {
@@ -302,8 +303,8 @@ namespace main.contents
                 res1 = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", "번호= '" + Num + "' And 월 = '" + 12.ToString() + "월'");
                 s += Convert.ToDouble(res1[0][0]) * 100;
                 string s2 = "[" + s + "]";
-                s3 += "{type:\"line\",data:" + s2 + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:true,step:10,max:100},";
-                webView22.CoreWebView2.ExecuteScriptAsync("drawChart2([" + s3 + "]," + 100.ToString() + ")");
+                s3 += "{type:\"line\",label:\"음영계수\",data:" + s2 + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:true,tension: 0.4},";
+                webView22.CoreWebView2.ExecuteScriptAsync("drawChart2([" + s3 + "],100, 10, true)");
             }
             catch { }
         }

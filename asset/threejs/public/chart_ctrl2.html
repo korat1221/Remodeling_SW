@@ -132,6 +132,10 @@ function drawChart2(arr, max, step = 500, legend = false, stacked = false) {
                     legend: {
                         display: legend,
                         position:"left",
+                        labels: {
+                            usePointStyle: true,
+                            boxHeight: 6
+                        }  
                     },
                     title: {
                         display: false,
