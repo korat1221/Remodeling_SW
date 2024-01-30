@@ -65,8 +65,11 @@ namespace main.contents
 
             //조명 이미지 로드 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '존 조명정보'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if (Image.Length > 0)
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
 
             //  Load_OtherFormData();
 
@@ -215,7 +218,7 @@ namespace main.contents
             Pci_textBox.ForeColor = Color.Gray;
             //Pci_Value();
            
-            if (Pci_textBox.Text != null) { try { Pci = Convert.ToDouble(Pci_textBox.Text); } catch { } }
+            if (Pci_textBox.Text != null && Pci_textBox.Text != "") { Pci = Convert.ToDouble(Pci_textBox.Text); }
             else { }
         }
 
@@ -323,21 +326,22 @@ namespace main.contents
 
 
                 String[][] value = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_럭스당조명밀도", "값,UFF", "조명방식='" + Method + "' AND K = '" + K + "'");
-                Pj_lx = Convert.ToDouble(value[0][0]);
-                UFF = Convert.ToDouble(value[0][1]);
+                if (value.Length > 0)
+                {
+                    Pj_lx = Convert.ToDouble(value[0][0]);
+                    UFF = Convert.ToDouble(value[0][1]);
+                }
             }
             catch { }
         }
 
         public void Match_Foc()
         {
-            try
+            String[][] value = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_조명제어", "Foc", "제어종류 = '" + control + "'");
+            if (value.Length > 0)
             {
-                String[][] value = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_조명제어", "Foc", "제어종류 = '" + control + "'");
                 Foc = Convert.ToDouble(value[0][0]);
             }
-            catch { }
-            //Calc_Fo();
         }
         public void Calc_Pj()
         {
@@ -576,11 +580,11 @@ namespace main.contents
         private void WindowInfo2()
         {
             Calc_AD();
-            try
+            //차양명칭 및 투과율 가져오기 
+            //String[][] Blind = Program.DB.querySQL(DB.type.ProjDB, "select a.차양적용 From ZoneEnvelope_3D AS a INNER JOIN ZoneLighting_form AS b ON a.존 = b.번호 where a.존 = '" + ZoneNum + "' AND a.번호 =  b.주창아이디");
+            String[][] Blind = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "차양적용", "번호='" + MainType_ID + "'");
+            if (Blind.Length > 0)
             {
-                //차양명칭 및 투과율 가져오기 
-                //String[][] Blind = Program.DB.querySQL(DB.type.ProjDB, "select a.차양적용 From ZoneEnvelope_3D AS a INNER JOIN ZoneLighting_form AS b ON a.존 = b.번호 where a.존 = '" + ZoneNum + "' AND a.번호 =  b.주창아이디");
-                String[][] Blind = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "차양적용", "번호='" + MainType_ID + "'");
                 String[][] Blind2 = null;
                 if (Blind[0][0] == "")
                 {
@@ -592,43 +596,44 @@ namespace main.contents
                 else
                 {
                     Blind2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "명칭,투과율,제어방식1", "번호='" + Blind[0][0] + "'");
-                    Blind_textBox.Text = Blind2[0][0];
-                    Blind2_textBox.Text = Blind2[0][1];
-                    Blind3_textBox.Text = Blind2[0][2];
-                    ShadeType = Blind3_textBox.Text;
+                    if (Blind2.Length > 0)
+                    {
+                        Blind_textBox.Text = Blind2[0][0];
+                        Blind2_textBox.Text = Blind2[0][1];
+                        Blind3_textBox.Text = Blind2[0][2];
+                        ShadeType = Blind3_textBox.Text;
+                    }
                 }
+            }
 
-                if (NaturalType == "파사드")
-                {
-                    Window1_textBox.Text = facade_di;
-                    WindowA_textBox.Text = string.Format("{0:F2}", Zone_f_Aca);
-                    Window_glass_textBox.Text = Main_glass;
-                    Window_Tao_textBox.Text = string.Format("{0:F3}", f_τD65_SNA);
-                    bbd_textBox.Text = string.Format("{0:F2}", bd);
-                    aad_textBox.Text = string.Format("{0:F2}", ad);
-                    AD_textBox.Text = string.Format("{0:F2}", AD);
-                    NA_textBox.Text = string.Format("{0:F2}", unAD);
-
-                }
-                else if (NaturalType == "천창")
-                {
-                    Window1_textBox.Text = roof_di;
-                    WindowA_textBox.Text = string.Format("{0:F2}", r_Aca);
-                    Window_glass_textBox.Text = Main_glass;
-                    Window_Tao_textBox.Text = string.Format("{0:F3}", r_τD65_SNA);
-                    bbd_textBox.Text = bd.ToString();
-                    aad_textBox.Text = ad.ToString();
-                    AD_textBox.Text = AD.ToString();
-                    NA_textBox.Text = unAD.ToString();
-                    bbd_textBox.Text = string.Format("{0:F2}", bd);
-                    aad_textBox.Text = string.Format("{0:F2}", ad);
-                    AD_textBox.Text = string.Format("{0:F2}", AD);
-                    NA_textBox.Text = string.Format("{0:F2}", unAD);
-                }
-                else;
+            if (NaturalType == "파사드")
+            {
+                Window1_textBox.Text = facade_di;
+                WindowA_textBox.Text = string.Format("{0:F2}", Zone_f_Aca);
+                Window_glass_textBox.Text = Main_glass;
+                Window_Tao_textBox.Text = string.Format("{0:F3}", f_τD65_SNA);
+                bbd_textBox.Text = string.Format("{0:F2}", bd);
+                aad_textBox.Text = string.Format("{0:F2}", ad);
+                AD_textBox.Text = string.Format("{0:F2}", AD);
+                NA_textBox.Text = string.Format("{0:F2}", unAD);
 
             }
-            catch { }
+            else if (NaturalType == "천창")
+            {
+                Window1_textBox.Text = roof_di;
+                WindowA_textBox.Text = string.Format("{0:F2}", r_Aca);
+                Window_glass_textBox.Text = Main_glass;
+                Window_Tao_textBox.Text = string.Format("{0:F3}", r_τD65_SNA);
+                bbd_textBox.Text = bd.ToString();
+                aad_textBox.Text = ad.ToString();
+                AD_textBox.Text = AD.ToString();
+                NA_textBox.Text = unAD.ToString();
+                bbd_textBox.Text = string.Format("{0:F2}", bd);
+                aad_textBox.Text = string.Format("{0:F2}", ad);
+                AD_textBox.Text = string.Format("{0:F2}", AD);
+                NA_textBox.Text = string.Format("{0:F2}", unAD);
+            }
+            else;
 
         }
 
@@ -637,18 +642,24 @@ namespace main.contents
             if (facadeButton.Checked == false && roofButton.Checked == false)
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광대분류이미지", "이미지", "자연채광대분류 = '" + "해당없음" + "'");
-                Main_pictureBox.Visible = true;
-                Main_pictureBox.Location = new Point(0, 0);
-                Main_pictureBox.Load(Program.gPath + Image[0][0]);
-                Main_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                if (Image.Length > 0)
+                {
+                    Main_pictureBox.Visible = true;
+                    Main_pictureBox.Location = new Point(0, 0);
+                    Main_pictureBox.Load(Program.gPath + Image[0][0]);
+                    Main_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
             }
             else
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광대분류이미지", "이미지", "자연채광대분류 = '" + Type + "'");
-                Main_pictureBox.Visible = true;
-                Main_pictureBox.Location = new Point(0, 0);
-                Main_pictureBox.Load(Program.gPath + Image[0][0]);
-                Main_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                if (Image.Length > 0)
+                {
+                    Main_pictureBox.Visible = true;
+                    Main_pictureBox.Location = new Point(0, 0);
+                    Main_pictureBox.Load(Program.gPath + Image[0][0]);
+                    Main_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
             }
 
         }
@@ -773,12 +784,15 @@ namespace main.contents
             {
                 Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_집광채광이미지", "이미지", "집광채광 ='없음'");
             }
-            Main_pictureBox3.Visible = true;
-            Main_pictureBox3.Load(Program.gPath + Image[0][0]);
-            Main_pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-            Main_pictureBox3.Location = new Point(0, 0);
-            Main_pictureBox3.BackColor = Color.Transparent;
-            Main_pictureBox3.Parent = Main_pictureBox2;
+            if (Image.Length > 0)
+            {
+                Main_pictureBox3.Visible = true;
+                Main_pictureBox3.Load(Program.gPath + Image[0][0]);
+                Main_pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+                Main_pictureBox3.Location = new Point(0, 0);
+                Main_pictureBox3.BackColor = Color.Transparent;
+                Main_pictureBox3.Parent = Main_pictureBox2;
+            }
         }
 
         public void NaturalType_case1()
@@ -1119,171 +1133,166 @@ namespace main.contents
             Load_OtherFormData();
 
 
-            try
+            Num_textBox.Text = ID;
+
+            String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,조명방식,제어방식,디밍유형,조명밀도,대기전력,재실계수,조도제어계수",
+            "번호 = '" + ZoneNum + "'");
+            if (Load.Length > 0)
             {
-                Num_textBox.Text = ID;
+                Num_textBox.Text = Load[0][0];
 
-                String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,조명방식,제어방식,디밍유형,조명밀도,대기전력,재실계수,조도제어계수",
-                "번호 = '" + ZoneNum + "'");
-                if (Load.Length > 0)
+                Method = Load[0][1];
+                LightMethod_comboBox.SelectedItem = Method;
+
+                control = Load[0][2];
+                ControlType_comboBox.SelectedItem = control;
+
+                dimming = Load[0][3];
+                DimmingType_comboBox.SelectedItem = dimming;
+
+                Pj = Convert.ToDouble(Load[0][4]);
+                Pj_textbox.Text = string.Format("{0:F2}", Pj);
+
+                Pci_textBox.Text = Load[0][5];
+
+                Fo = Convert.ToDouble(Load[0][6]);
+
+                Fc = Convert.ToDouble(Load[0][7]);
+                fc_textBox.Text = string.Format("{0:F2}", Fc * Fo);
+
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "주이용일", "존번호='" + ZoneNum + "'");
+                dayofuse = Convert.ToDouble(Value[0][0]);
+            }
+
+            Load_NaturalType_image(NaturalType);
+            Load_Shade_image(ShadeType);
+
+            Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "자연채광유형,주향,주창면적합,서브유형,이중외피유리,아트리움유리,파사드유리빛투과율,파사드너비,파사드길이,파사드높이,천창유리각,천창수평측면각,천창장변부길이,천창단변부길이,천창수평상부높이,차양",
+            "번호 = '" + ZoneNum + "'");
+            if (Load.Length > 0)
+            {
+                NaturalType = Load[0][0];
+                if (facadeButton.Checked == true || roofButton.Checked == true)
                 {
-                    Num_textBox.Text = Load[0][0];
-
-                    Method = Load[0][1];
-                    LightMethod_comboBox.SelectedItem = Method;
-
-                    control = Load[0][2];
-                    ControlType_comboBox.SelectedItem = control;
-
-                    dimming = Load[0][3];
-                    DimmingType_comboBox.SelectedItem = dimming;
-
-                    Pj = Convert.ToDouble(Load[0][4]);
-                    Pj_textbox.Text = string.Format("{0:F2}", Pj);
-
-                    Pci_textBox.Text = Load[0][5];
-
-                    Fo = Convert.ToDouble(Load[0][6]);
-
-                    Fc = Convert.ToDouble(Load[0][7]);
-                    fc_textBox.Text = string.Format("{0:F2}", Fc * Fo);
-
-                    String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "주이용일", "존번호='" + ZoneNum + "'");
-                    dayofuse = Convert.ToDouble(Value[0][0]);
-                }
-
-                Load_NaturalType_image(NaturalType);
-                Load_Shade_image(ShadeType);
-
-                Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "자연채광유형,주향,주창면적합,서브유형,이중외피유리,아트리움유리,파사드유리빛투과율,파사드너비,파사드길이,파사드높이,천창유리각,천창수평측면각,천창장변부길이,천창단변부길이,천창수평상부높이,차양",
-                "번호 = '" + ZoneNum + "'");
-                if (Load.Length > 0)
-                {
-                    NaturalType = Load[0][0];
-                    if (facadeButton.Checked == true || roofButton.Checked == true)
+                    if (NaturalType == "파사드")
                     {
-                        if (NaturalType == "파사드")
-                        {
-                            facade_di = Load[0][1];
-                            Zone_f_Aca = Convert.ToDouble(Load[0][2]);
-                            facade = Load[0][3];
-                            doubleskinglass = Load[0][4];
-                            atriumglass = Load[0][5];
-                            zoneGlassLight = Convert.ToDouble(Load[0][6]);
-                            facadeW = Convert.ToDouble(Load[0][7]);
-                            facadeL = Convert.ToDouble(Load[0][8]);
-                            facadeH = Convert.ToDouble(Load[0][9]);
-                        }
-                        else if (NaturalType == "천창")
-                        {
-                            roof_di = Load[0][1];
-                            r_Aca = Convert.ToDouble(Load[0][2]);
-                            roof = Load[0][3];
-                            zoneRoofAngle1 = Convert.ToDouble(Load[0][10]);
-                            zoneRoofAngle2 = Convert.ToDouble(Load[0][11]);
-                            zoneRoofLenght1 = Convert.ToDouble(Load[0][12]);
-                            zoneRoofLenght2 = Convert.ToDouble(Load[0][13]);
-                            zoneRoofLenght3 = Convert.ToDouble(Load[0][14]);
-                        }
-                        else { }
-
-                        ShadeType = Load[0][15];
-
-                        if (facade != null)
-                        {
-                            facadeButton.Checked = true;
-                        }
-                        else
-                        {
-                            roofButton.Checked = true;
-                        }
+                        facade_di = Load[0][1];
+                        Zone_f_Aca = Convert.ToDouble(Load[0][2]);
+                        facade = Load[0][3];
+                        doubleskinglass = Load[0][4];
+                        atriumglass = Load[0][5];
+                        zoneGlassLight = Convert.ToDouble(Load[0][6]);
+                        facadeW = Convert.ToDouble(Load[0][7]);
+                        facadeL = Convert.ToDouble(Load[0][8]);
+                        facadeH = Convert.ToDouble(Load[0][9]);
                     }
-                }
-
-                Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "집광채광번호,집광채광명칭,집광채광종류,집광채광효율,집광채광면적,표준길이1,표준길이2,사용자길이1,사용자길이2,사용자면적,집광채광체크,집광채광향,집광채광각도",
-                "번호 = '" + ZoneNum + "'");
-                if (Load.Length > 0)
-                {
-                    Renew_checkBox.Checked = Convert.ToBoolean(Load[0][10]);
-                    if (Renew_checkBox.Checked)
+                    else if (NaturalType == "천창")
                     {
-                        RenewNum = Load[0][0];
-                        RenewName = Load[0][1];
-                        RenewName2 = Load[0][2];
-                        Reneweff = Convert.ToDouble(Load[0][3]);
-                        RenewA = Load[0][4];
-                        RenewType_textBox.Text = RenewName;
-                        R1_textBox.Text = RenewName2;
-                        R2_textBox.Text = RenewA;
-                        R3_textBox.Text = Reneweff.ToString();
-                        if (RenewNum.Contains("DL"))
-                        {
-                            D_RenewLenght1 = Load[0][5];
-                            D_RenewLenght2 = Load[0][6];
-                            D_RenewA = Load[0][4];
-                            R1_textBox.Text = RenewName2;
-                            R2_textBox.Text = D_RenewA;
-                            R3_textBox.Text = Reneweff.ToString();
-                        }
-
-                        else
-                        {
-                            U_RenewLenght1 = Convert.ToDouble(Load[0][7]);
-                            U_RenewLenght2 = Convert.ToDouble(Load[0][8]);
-                            U_RenewA = Convert.ToDouble(Load[0][9]);
-                            R1_textBox.Text = RenewName2;
-                            R2_textBox.Text = U_RenewA.ToString();
-                            R3_textBox.Text = Reneweff.ToString();
-                        }
-                        RenewDi_comboBox.Text = Load[0][11];
-                        Slope_comboBox.Text = Load[0][12];
+                        roof_di = Load[0][1];
+                        r_Aca = Convert.ToDouble(Load[0][2]);
+                        roof = Load[0][3];
+                        zoneRoofAngle1 = Convert.ToDouble(Load[0][10]);
+                        zoneRoofAngle2 = Convert.ToDouble(Load[0][11]);
+                        zoneRoofLenght1 = Convert.ToDouble(Load[0][12]);
+                        zoneRoofLenght2 = Convert.ToDouble(Load[0][13]);
+                        zoneRoofLenght3 = Convert.ToDouble(Load[0][14]);
                     }
+                    else { }
 
-                }
+                    ShadeType = Load[0][15];
 
-                Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "조명번호, 등기구명칭, 램프유형, 컨버터_안정기, 광속, 소비전력, 조명계수, 표준광속, 표준소비전력,사용자광속, 사용자소비전력,조명예상전력",
-                "번호 = '" + ZoneNum + "'");
-                if (Load.Length > 0)
-                {
-                    LightNumber = Load[0][0];
-                    LightType = Load[0][1];
-                    LightType_textBox.Text = LightType;
-                    L1_textBox.Text = LightType;
-                    LightType2 = Load[0][2];
-                    L2_textBox.Text = LightType2;
-                    LightConverter = Load[0][3];
-                    L4_textBox.Text = LightConverter;
-                    LightFi = Load[0][4];
-                    LightW = Load[0][5];
-                    LightFL = Convert.ToDouble(Load[0][6]);
-                    L8_textBox.Text = LightFL.ToString();
-                    FL_textBox.Text = string.Format("{0:F2}", LightFL);
-
-                    if (LightNumber.Contains("LP"))
+                    if (facade != null)
                     {
-                        L5_textBox.Text = Load[0][7];
-                        L6_textBox.Text = Load[0][8];
+                        facadeButton.Checked = true;
                     }
                     else
                     {
-                        L5_textBox.Text = Load[0][9];
-                        L6_textBox.Text = Load[0][10];
+                        roofButton.Checked = true;
+                    }
+                }
+            }
+
+            Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "집광채광번호,집광채광명칭,집광채광종류,집광채광효율,집광채광면적,표준길이1,표준길이2,사용자길이1,사용자길이2,사용자면적,집광채광체크,집광채광향,집광채광각도",
+            "번호 = '" + ZoneNum + "'");
+            if (Load.Length > 0)
+            {
+                Renew_checkBox.Checked = Convert.ToBoolean(Load[0][10]);
+                if (Renew_checkBox.Checked)
+                {
+                    RenewNum = Load[0][0];
+                    RenewName = Load[0][1];
+                    RenewName2 = Load[0][2];
+                    Reneweff = Convert.ToDouble(Load[0][3]);
+                    RenewA = Load[0][4];
+                    RenewType_textBox.Text = RenewName;
+                    R1_textBox.Text = RenewName2;
+                    R2_textBox.Text = RenewA;
+                    R3_textBox.Text = Reneweff.ToString();
+                    if (RenewNum.Contains("DL"))
+                    {
+                        D_RenewLenght1 = Load[0][5];
+                        D_RenewLenght2 = Load[0][6];
+                        D_RenewA = Load[0][4];
+                        R1_textBox.Text = RenewName2;
+                        R2_textBox.Text = D_RenewA;
+                        R3_textBox.Text = Reneweff.ToString();
                     }
 
-                    Pn = Convert.ToDouble(Load[0][11]);
+                    else
+                    {
+                        U_RenewLenght1 = Convert.ToDouble(Load[0][7]);
+                        U_RenewLenght2 = Convert.ToDouble(Load[0][8]);
+                        U_RenewA = Convert.ToDouble(Load[0][9]);
+                        R1_textBox.Text = RenewName2;
+                        R2_textBox.Text = U_RenewA.ToString();
+                        R3_textBox.Text = Reneweff.ToString();
+                    }
+                    RenewDi_comboBox.Text = Load[0][11];
+                    Slope_comboBox.Text = Load[0][12];
                 }
 
-                Load_AD2_image();
             }
-            catch { }
 
-            try
+            Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "조명번호, 등기구명칭, 램프유형, 컨버터_안정기, 광속, 소비전력, 조명계수, 표준광속, 표준소비전력,사용자광속, 사용자소비전력,조명예상전력",
+            "번호 = '" + ZoneNum + "'");
+            if (Load.Length > 0)
             {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '존 조명정보'");
+                LightNumber = Load[0][0];
+                LightType = Load[0][1];
+                LightType_textBox.Text = LightType;
+                L1_textBox.Text = LightType;
+                LightType2 = Load[0][2];
+                L2_textBox.Text = LightType2;
+                LightConverter = Load[0][3];
+                L4_textBox.Text = LightConverter;
+                LightFi = Load[0][4];
+                LightW = Load[0][5];
+                LightFL = Convert.ToDouble(Load[0][6]);
+                L8_textBox.Text = LightFL.ToString();
+                FL_textBox.Text = string.Format("{0:F2}", LightFL);
+
+                if (LightNumber.Contains("LP"))
+                {
+                    L5_textBox.Text = Load[0][7];
+                    L6_textBox.Text = Load[0][8];
+                }
+                else
+                {
+                    L5_textBox.Text = Load[0][9];
+                    L6_textBox.Text = Load[0][10];
+                }
+
+                Pn = Convert.ToDouble(Load[0][11]);
+            }
+
+            Load_AD2_image();
+
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '존 조명정보'");
+            if (Image.Length > 0)
+            {
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-            catch { }
 
         }
 
@@ -1303,11 +1312,10 @@ namespace main.contents
 
         private void Load_OtherFormData()
         {
-            try
+            //존이름 불러오기
+            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,천장고,용도프로필,순바닥면적", "존번호 = '" + ZoneNum + "'");
+            if (Value.Length > 0)
             {
-                //존이름 불러오기
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,천장고,용도프로필,순바닥면적", "존번호 = '" + ZoneNum + "'");
-
                 ZoneName = Value[0][0];
                 ZoneName_textBox.Text = ZoneName;
                 hR = Convert.ToDouble(Value[0][1]);
@@ -1315,55 +1323,43 @@ namespace main.contents
                 Usage = Value[0][2];
                 A = Convert.ToDouble(Value[0][3]); //순바닥면적
                 A_textBox.Text = string.Format("{0:F2}", A);
-
-                //K = 1.25; //////////////////////추후 계산 식으로 변경해야함
-
-            }
-            catch { }
-            try
-            {
                 //층정보 불러오기
                 String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,상인방높이", "존번호 = '" + ZoneNum + "'");
 
                 Layer = General_3D[0][0] + "F";
                 Layer_textBox.Text = Layer;
                 hLi = Convert.ToDouble(General_3D[0][1]);
-            }
-            catch { }
-            //Zonelight profile 가져오기 
-            try
-            {
+                //Zonelight profile 가져오기 
                 string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "조도,이용영역계수,조명이용시부재율,작업면높이", "용도명 = '" + Usage + "'");
                 Em = Convert.ToDouble(ValueA[0][0]);
                 KA = Convert.ToDouble(ValueA[0][1]);
                 FA = Convert.ToDouble(ValueA[0][2]);
                 hTa = Convert.ToDouble(ValueA[0][3]);
-            }
-            catch { }
 
 
-            Check_MainDirection();
-            if (NaturalType == "파사드")
-            {
-                Calc_Facade_Data();
+                Check_MainDirection();
+                if (NaturalType == "파사드")
+                {
+                    Calc_Facade_Data();
+                }
+                else if (NaturalType == "천창")
+                {
+                    Calc_Roof_Data();
+                }
+                else
+                {
+                    Calc_None_Data();
+                }
+                WindowInfo2();
+                CheckNaturalType();
+                LightInfo();
+                Match_Pjlx();
+                Calc_Pj();
+                Calc_Fo();
+                Calc_Fc();
+                Pci_Value();
+                //Calc_AD();
             }
-            else if (NaturalType == "천창")
-            {
-                Calc_Roof_Data();
-            }
-            else
-            {
-                Calc_None_Data();
-            }
-            WindowInfo2();
-            CheckNaturalType();
-            LightInfo();
-            Match_Pjlx();
-            Calc_Pj();
-            Calc_Fo();
-            Calc_Fc();
-            Pci_Value();
-            //Calc_AD();
         }
 
         private void Check_MainDirection()
@@ -1376,28 +1372,33 @@ namespace main.contents
             double[] AreaSum_CW = new double[9]; //향별 커튼월 면적합계
             double[] AreaSum_Total = new double[9]; //향별 창호과 커튼월 면적합계
             String[] Direction = { "수평", "남", "남동", "남서", "동", "서", "북서", "북동", "북" };
-            for (int k = 0; k < TotalEnvelope_Win.Length; k++)
+            if (TotalEnvelope_Win.Length > 0)
             {
-                if (TotalEnvelope_Win[k][3] != "천창있음")
+                for (int k = 0; k < TotalEnvelope_Win.Length; k++)
                 {
-
-                    for (int j = 0; j < Direction.Length; j++)
+                    if (TotalEnvelope_Win[k][3] != "천창있음")
                     {
-                        if (TotalEnvelope_Win[k][2] == Direction[j])
-                            AreaSum_Win[j] += Convert.ToDouble(TotalEnvelope_Win[k][1]);
 
+                        for (int j = 0; j < Direction.Length; j++)
+                        {
+                            if (TotalEnvelope_Win[k][2] == Direction[j])
+                                AreaSum_Win[j] += Convert.ToDouble(TotalEnvelope_Win[k][1]);
+
+                        }
                     }
                 }
             }
-
-            for (int k = 0; k < TotalEnvelope_CW.Length; k++)
+            if (TotalEnvelope_CW.Length > 0)
             {
-                if (TotalEnvelope_CW[k][3] != "천창있음")
+                for (int k = 0; k < TotalEnvelope_CW.Length; k++)
                 {
-                    for (int j = 0; j < Direction.Length; j++)
+                    if (TotalEnvelope_CW[k][3] != "천창있음")
                     {
-                        if (TotalEnvelope_CW[k][2] == Direction[j])
-                            AreaSum_CW[j] += Convert.ToDouble(TotalEnvelope_CW[k][1]);
+                        for (int j = 0; j < Direction.Length; j++)
+                        {
+                            if (TotalEnvelope_CW[k][2] == Direction[j])
+                                AreaSum_CW[j] += Convert.ToDouble(TotalEnvelope_CW[k][1]);
+                        }
                     }
                 }
             }
@@ -1424,22 +1425,26 @@ namespace main.contents
             double[] AreaSum_Total2 = new double[9]; //향별 창호과 커튼월 면적합계
 
             String[] Direction2 = { "수평", "남", "남동", "남서", "동", "서", "북서", "북동", "북" };
-
-            for (int j = 0; j < Direction2.Length; j++)
+            if (TotalEnvelope_Win2.Length > 0)
             {
-                for (int k = 0; k < TotalEnvelope_Win2.Length; k++)
+                for (int j = 0; j < Direction2.Length; j++)
                 {
-                    if (TotalEnvelope_Win2[k][2] == Direction2[j])
-                        AreaSum_Win2[j] += Convert.ToDouble(TotalEnvelope_Win2[k][1]);
+                    for (int k = 0; k < TotalEnvelope_Win2.Length; k++)
+                    {
+                        if (TotalEnvelope_Win2[k][2] == Direction2[j])
+                            AreaSum_Win2[j] += Convert.ToDouble(TotalEnvelope_Win2[k][1]);
+                    }
                 }
             }
-
-            for (int j = 0; j < Direction2.Length; j++)
+            if (TotalEnvelope_CW2.Length > 0)
             {
-                for (int k = 0; k < TotalEnvelope_CW2.Length; k++)
+                for (int j = 0; j < Direction2.Length; j++)
                 {
-                    if (TotalEnvelope_CW2[k][2] == Direction2[j])
-                        AreaSum_CW2[j] += Convert.ToDouble(TotalEnvelope_CW2[k][1]);
+                    for (int k = 0; k < TotalEnvelope_CW2.Length; k++)
+                    {
+                        if (TotalEnvelope_CW2[k][2] == Direction2[j])
+                            AreaSum_CW2[j] += Convert.ToDouble(TotalEnvelope_CW2[k][1]);
+                    }
                 }
             }
             for (int j = 0; j < Direction2.Length; j++)
@@ -1463,14 +1468,16 @@ namespace main.contents
             String[][] Envelope_Wall = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,벽체길이,방위", "존 = '" + ZoneNum + "' And 외피유형 = '외벽'");
             double[] WallLength = new double[9]; // 향별 외벽 벽체길이
             String[] Direction3 = { "수평", "남", "남동", "남서", "동", "서", "북서", "북동", "북" };
-
-            for (int j = 0; j < Direction3.Length; j++)
+            if (Envelope_Wall.Length > 0)
             {
-                for (int k = 0; k < Envelope_Wall.Length; k++)
+                for (int j = 0; j < Direction3.Length; j++)
                 {
-                    if (WallLength[j] == WallLength.Max())
+                    for (int k = 0; k < Envelope_Wall.Length; k++)
                     {
-                        none_di = Envelope_Wall[k][2];
+                        if (WallLength[j] == WallLength.Max())
+                        {
+                            none_di = Envelope_Wall[k][2];
+                        }
                     }
                 }
             }
@@ -1503,52 +1510,53 @@ namespace main.contents
         private void Calc_Facade_Data()
         {
             //facade1 가져오기 
-            try
+            ////////////////////////////////////////////////////////주향 기준 실너비(그 향의 벽체길이) 깊이 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            String[][] Wall_Length = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '외벽'");
+            if (Wall_Length.Length > 0)
             {
-                ////////////////////////////////////////////////////////주향 기준 실너비(그 향의 벽체길이) 깊이 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                String[][] Wall_Length = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '외벽'");
-
                 Wr = 0;
                 for (int j = 0; j < Wall_Length.Length; j++)
                 {
                     Wr += Convert.ToDouble(Wall_Length[j][0]);
                 }
                 Lr = A / Wr;
+            }
 
 
-                ////////////////////////////////////////////////////////주 향의 창호 커튼월 높이, 너비 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                // String[][] MEnvelope_Wina = Program.DB.querySQL(DB.type.ProjDB, " select b.창호높이,b.창호면적 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체 = b.명칭");
+            ////////////////////////////////////////////////////////주 향의 창호 커튼월 높이, 너비 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // String[][] MEnvelope_Wina = Program.DB.querySQL(DB.type.ProjDB, " select b.창호높이,b.창호면적 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체 = b.명칭");
 
 
-                //주향 창호 및 커튼월 정보 불러오기
-                // String[][] MEnvelope_Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '창호' And 천창유무 <> '천창있음'");
+            //주향 창호 및 커튼월 정보 불러오기
+            // String[][] MEnvelope_Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '창호' And 천창유무 <> '천창있음'");
 
-                String[][] MEnvelope_Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 천창유무,구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '창호'");
-                //  String[][] MEnvelope_CW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '커튼월창' And 커튼월부위 = '유리부분' And 천창유무 <> '천창있음'");
-                String[][] MEnvelope_CW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 천창유무,구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '커튼월창' And 커튼월부위 = '유리부분'");
+            String[][] MEnvelope_Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 천창유무,구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '창호'");
+            //  String[][] MEnvelope_CW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '커튼월창' And 커튼월부위 = '유리부분' And 천창유무 <> '천창있음'");
+            String[][] MEnvelope_CW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 천창유무,구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '커튼월창' And 커튼월부위 = '유리부분'");
 
-                ////////////////////////////////////////////////////////주향 창호 OR 커튼월 유형 및 빛 투과율 찾기 (세가지 케이스)////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //창호 구조체 타입 찾기 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
-                String[][] Win_Type = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호,번호", "존 = '" + ZoneNum + "' And 방위 = '" + facade_di + "' And 외피유형 = '창호'");
-                //커튼월창 구조체 타입 찾기 
-                String[][] CW_Type = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호,번호", "존 = '" + ZoneNum + "' And 방위 = '" + facade_di + "' And 외피유형 = '커튼월창'");
+            ////////////////////////////////////////////////////////주향 창호 OR 커튼월 유형 및 빛 투과율 찾기 (세가지 케이스)////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //창호 구조체 타입 찾기 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
+            String[][] Win_Type = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호,번호", "존 = '" + ZoneNum + "' And 방위 = '" + facade_di + "' And 외피유형 = '창호'");
+            //커튼월창 구조체 타입 찾기 
+            String[][] CW_Type = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호,번호", "존 = '" + ZoneNum + "' And 방위 = '" + facade_di + "' And 외피유형 = '커튼월창'");
 
-                double AreaSum_Wins = 0;
-                double[] AreaSum_ConstructionWin = new double[Win_Type.Length];
-                double MaxSum_Win;
-                int index;
-                String MainType_SubWin;
-                String[][] MainType_Win;
-                String[][] MainType_Win_Value;
+            double AreaSum_Wins = 0;
+            double[] AreaSum_ConstructionWin = new double[Win_Type.Length];
+            double MaxSum_Win;
+            int index;
+            String MainType_SubWin;
+            String[][] MainType_Win;
+            String[][] MainType_Win_Value;
 
-                double MaxSum_CW;
-                String[][] MainType_CW_Value;
-                String MainType_CW;
+            double MaxSum_CW;
+            String[][] MainType_CW_Value;
+            String MainType_CW;
 
-                if (CW_Type.Length == 0)
+            if (CW_Type.Length == 0)
+            {
+                //창호 구조체 타입별로 면적 합계 구하기
+                if(MEnvelope_Win.Length >0 && Win_Type.Length >0) 
                 {
-                    //창호 구조체 타입별로 면적 합계 구하기
-
                     for (int j = 0; j < MEnvelope_Win.Length; j++)
                     {
                         if (MEnvelope_Win[j][2] != "천창있음")
@@ -1562,33 +1570,41 @@ namespace main.contents
                             }
                         }
                     }
-                    MaxSum_Win = AreaSum_ConstructionWin.Max(); //창호 구조체 타입별로 면적 합계 중 가장 큰 값
-                    index = 0;
-                    for (int k = 0; k < Win_Type.Length; k++)
-                    {
-                        if (AreaSum_ConstructionWin[k] == AreaSum_ConstructionWin.Max())
-                        { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
-                    }
+                }
+                MaxSum_Win = AreaSum_ConstructionWin.Max(); //창호 구조체 타입별로 면적 합계 중 가장 큰 값
+                index = 0;
+                for (int k = 0; k < Win_Type.Length; k++)
+                {
+                    if (AreaSum_ConstructionWin[k] == AreaSum_ConstructionWin.Max())
+                    { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
+                }
 
 
-                    MainType_SubWin = Win_Type[index][1]; // 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
-                    MainType_ID = Win_Type[index][2];/////////////////////////// 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 ID
+                MainType_SubWin = Win_Type[index][1]; // 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
+                MainType_ID = Win_Type[index][2];/////////////////////////// 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 ID
 
-                    //찾은 SubWindow정보에서 MainWindow 찾기 
-                    MainType_Win = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "상위창호번호,유리면적비", "번호 = '" + MainType_SubWin + "'");
-
+                //찾은 SubWindow정보에서 MainWindow 찾기 
+                MainType_Win = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "상위창호번호,유리면적비", "번호 = '" + MainType_SubWin + "'");
+                if (MainType_Win.Length > 0)
+                {
                     //찾은 주 창호 유형의 빛투과율 찾기 
                     MainType_Win_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "빛투과율, 유리종류", "번호 = '" + MainType_Win[0][0].ToString() + "'");
-
                     Main_WinCW = MainType_Win[0][0];
                     K1 = Convert.ToDouble(MainType_Win[0][1]);
-                    f_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
-                    Main_glass = MainType_Win_Value[0][1];
+                    if (MainType_Win_Value.Length > 0)
+                    {
+                        f_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
+                        Main_glass = MainType_Win_Value[0][1];
+                    }
+                }
+
                 }
                 else if (Win_Type.Length == 0)
+            {
+                //커튼월창 구조체 타입별로 면적 합계 구하기
+                double[] AreaSum_ConstructionCW = new double[CW_Type.Length];
+                if (MEnvelope_CW.Length > 0 && CW_Type.Length >0)
                 {
-                    //커튼월창 구조체 타입별로 면적 합계 구하기
-                    double[] AreaSum_ConstructionCW = new double[CW_Type.Length];
                     for (int j = 0; j < MEnvelope_CW.Length; j++)
                     {
                         if (MEnvelope_CW[j][2] != "천창있음")
@@ -1600,28 +1616,36 @@ namespace main.contents
                             }
                         }
                     }
-
-                    MaxSum_CW = AreaSum_ConstructionCW.Max(); //커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값
-                    index = 0;
-                    for (int k = 0; k < CW_Type.Length; k++)
-                    {
-                        if (AreaSum_ConstructionCW[k] == AreaSum_ConstructionCW.Max())
-                        { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
-                    }
-
-                    MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호, 유리부분유리면적비", "번호 = '" + CW_Type[index][1] + "'");
-                    MainType_CW = MainType_CW_Value[0][2].ToString(); // 커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형  
-                    MainType_ID = CW_Type[index][2];
-
-                    Main_WinCW = CW_Type[index][0];
-                    f_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
-                    Main_glass = MainType_CW_Value[0][1];
-                    K1 = Convert.ToDouble(MainType_CW_Value[0][3]);
-
                 }
-                else
+
+                MaxSum_CW = AreaSum_ConstructionCW.Max(); //커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값
+                index = 0;
+                for (int k = 0; k < CW_Type.Length; k++)
                 {
-                    //창호 구조체 타입별로 면적 합계 구하기
+                    if (AreaSum_ConstructionCW[k] == AreaSum_ConstructionCW.Max())
+                    { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
+                }
+                if (CW_Type.Length > 0)
+                {
+                    MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호, 유리부분유리면적비", "번호 = '" + CW_Type[index][1] + "'");
+                    if (MainType_CW_Value.Length > 0)
+                    {
+                        MainType_CW = MainType_CW_Value[0][2].ToString(); // 커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형  
+                        MainType_ID = CW_Type[index][2];
+
+                        Main_WinCW = CW_Type[index][0];
+                        f_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
+                        Main_glass = MainType_CW_Value[0][1];
+                        K1 = Convert.ToDouble(MainType_CW_Value[0][3]);
+                    }
+                }
+
+            }
+            else
+            {
+                //창호 구조체 타입별로 면적 합계 구하기
+                if (MEnvelope_Win.Length > 0)
+                {
                     for (int j = 0; j < MEnvelope_Win.Length; j++)
                     {
                         if (MEnvelope_Win[j][2] != "천창있음")
@@ -1633,32 +1657,250 @@ namespace main.contents
                             }
                         }
                     }
-                    MaxSum_Win = AreaSum_ConstructionWin.Max(); //창호 구조체 타입별로 면적 합계 중 가장 큰 값
-                    index = 0;
-                    for (int k = 0; k < Win_Type.Length; k++)
+                }
+                MaxSum_Win = AreaSum_ConstructionWin.Max(); //창호 구조체 타입별로 면적 합계 중 가장 큰 값
+                index = 0;
+                for (int k = 0; k < Win_Type.Length; k++)
+                {
+                    if (AreaSum_ConstructionWin[k] == AreaSum_ConstructionWin.Max())
+                    { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
+                }
+
+
+                MainType_SubWin = Win_Type[index][1]; // 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
+                MainType_ID = Win_Type[index][2];/////////////////////////// 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 ID
+
+
+                //찾은 SubWindow정보에서 MainWindow 찾기 
+                MainType_Win = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "상위창호번호, 유리면적비", "번호 = '" + MainType_SubWin + "'");
+
+
+                //찾은 주 창호 유형의 빛투과율 찾기 
+                if (MainType_Win.Length > 0)
+                {
+                    MainType_Win_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "빛투과율, 유리종류", "번호 = '" + MainType_Win[0][0].ToString() + "'");
+                    if (MainType_Win_Value.Length > 0)
                     {
-                        if (AreaSum_ConstructionWin[k] == AreaSum_ConstructionWin.Max())
-                        { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
+                        //커튼월창 구조체 타입별로 면적 합계 구하기
+                        double[] AreaSum_ConstructionCW = new double[CW_Type.Length];
+                        for (int j = 0; j < MEnvelope_CW.Length; j++)
+                        {
+                            if (MEnvelope_CW[j][2] != "천창있음")
+                            {
+                                for (int k = 0; k < CW_Type.Length; k++)
+                                {
+                                    if (MEnvelope_CW[j][3] == CW_Type[k][1])
+                                    { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
+                                }
+                            }
+                        }
+
+                        MaxSum_CW = AreaSum_ConstructionCW.Max(); //커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값
+                        index = 0;
+                        for (int k = 0; k < CW_Type.Length; k++)
+                        {
+                            if (AreaSum_ConstructionCW[k] == AreaSum_ConstructionCW.Max())
+                            { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
+                        }
+                        if(CW_Type.Length > 0) 
+                        {
+                            MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호, 유리부분유리면적비", "번호 = '" + CW_Type[index][1] + "'");
+                            if (MainType_CW_Value.Length > 0)
+                            {
+                                MainType_CW = MainType_CW_Value[0][2].ToString(); // 커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형  
+                                MainType_ID = CW_Type[index][2];
+
+                                Main_WinCW = CW_Type[index][0];
+                                f_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
+                                Main_glass = MainType_CW_Value[0][1];
+
+
+                                //창호랑 커튼월 다 구해놓고 둘 중 큰거 판별 
+                                if (MaxSum_CW > MaxSum_Win)
+                                {
+                                    Main_WinCW = CW_Type[index][0];
+                                    MainType_ID = CW_Type[index][2];
+                                    f_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
+                                    Main_glass = MainType_CW_Value[0][1];
+                                    K1 = Convert.ToDouble(MainType_CW_Value[0][3]);
+                                }
+                                else
+                                {
+                                    Main_WinCW = MainType_Win[0][0];
+                                    MainType_ID = Win_Type[index][2];
+                                    f_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
+                                    Main_glass = MainType_Win_Value[0][1];
+                                    K1 = Convert.ToDouble(MainType_Win[0][1]);
+                                }
+                            }
+                        }
                     }
+                }
+            }
+        }
+
+        private void Calc_Roof_Data()
+        {
+            //rooflight1 가져오기 
+            ////////////////////////////////////////////////////////주향 기준 실너비(그 향의 벽체길이) 깊이 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            String[][] Wall_Length = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' AND 방위 = '" + roof_di + "' And 외피유형 = '외벽'");
+
+            Wr = 0;
+            if (Wall_Length.Length > 0)
+            {
+                for (int j = 0; j < Wall_Length.Length; j++)
+                {
+                    Wr += Convert.ToDouble(Wall_Length[j][0]);
+                }
+            }
+
+            Lr = A / Wr;
 
 
+            ////////////////////////////////////////////////////////주 향의 창호 커튼월 높이, 너비 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // String[][] MEnvelope_Wina = Program.DB.querySQL(DB.type.ProjDB, " select b.창호높이,b.창호면적 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체 = b.명칭");
+
+
+            //주향 창호 및 커튼월 정보 불러오기
+            String[][] MEnvelope_Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + roof_di + "' And 외피유형 = '창호' And 천창유무 = '천창있음'");
+            String[][] MEnvelope_CW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + roof_di + "' And 외피유형 = '커튼월창' And 커튼월부위 = '유리부분' And 천창유무 = '천창있음'");
+
+            ////////////////////////////////////////////////////////주향 창호 OR 커튼월 유형 및 빛 투과율 찾기 (세가지 케이스)////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //창호 구조체 타입 찾기 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
+            String[][] Win_Type = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호,번호", "존 = '" + ZoneNum + "' And 방위 = '" + roof_di + "' And 외피유형 = '창호' And 천창유무 = '천창있음'");
+            //커튼월창 구조체 타입 찾기 
+            String[][] CW_Type = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호,번호", "존 = '" + ZoneNum + "' And 방위 = '" + roof_di + "' And 외피유형 = '커튼월창' And 천창유무 = '천창있음'");
+
+            double AreaSum_Wins = 0;
+            double[] AreaSum_ConstructionWin = new double[Win_Type.Length];
+            double MaxSum_Win;
+            int index;
+            String MainType_SubWin;
+            String MainType_ID;
+            String[][] MainType_Win;
+
+            String[][] MainType_Win_Value;
+
+            double MaxSum_CW;
+            String[][] MainType_CW_Value;
+            String MainType_CW;
+
+
+            if (CW_Type.Length == 0)
+            {
+                //창호 구조체 타입별로 면적 합계 구하기
+
+                for (int j = 0; j < MEnvelope_Win.Length; j++)
+                {
+                    if (Win_Type.Length > 0 && MEnvelope_Win.Length > 0)
+                    {
+                        for (int k = 0; k < Win_Type.Length; k++)
+                        {
+                            if (MEnvelope_Win[j][3] == Win_Type[k][0])
+                            { AreaSum_ConstructionWin[k] += Convert.ToDouble(MEnvelope_Win[j][1]); }
+                        }
+                    }
+                }
+                MaxSum_Win = AreaSum_ConstructionWin.Max(); //창호 구조체 타입별로 면적 합계 중 가장 큰 값
+                index = 0;
+                for (int k = 0; k < Win_Type.Length; k++)
+                {
+                    if (AreaSum_ConstructionWin[k] == AreaSum_ConstructionWin.Max())
+                    { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
+                }
+
+                MainType_SubWin = Win_Type[index][1]; // 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
+                MainType_ID = Win_Type[index][2];/////////////////////////// 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 ID
+
+                //찾은 SubWindow정보에서 MainWindow 찾기 
+                MainType_Win = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "상위창호번호, 유리면적비", "번호 = '" + MainType_SubWin + "'");
+
+                //찾은 주 창호 유형의 빛투과율 찾기 
+                MainType_Win_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "빛투과율, 유리종류", "번호 = '" + MainType_Win[0][0].ToString() + "'");
+
+                if (MainType_Win.Length > 0 && MainType_Win_Value.Length > 0)
+                {
+                    Main_WinCW = MainType_Win[0][0];
+                    r_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
+                    Main_glass = MainType_Win_Value[0][1];
+                    Kobl_1 = Convert.ToDouble(MainType_Win[0][1]);
+                }
+            }
+            else if (Win_Type.Length == 0)
+            {
+                //커튼월창 구조체 타입별로 면적 합계 구하기
+                double[] AreaSum_ConstructionCW = new double[CW_Type.Length];
+                if (MEnvelope_CW.Length > 0 && CW_Type.Length > 0)
+                {
+                    for (int j = 0; j < MEnvelope_CW.Length; j++)
+                    {
+                        for (int k = 0; k < CW_Type.Length; k++)
+                        {
+                            if (MEnvelope_CW[j][3] == CW_Type[k][1])
+                            { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
+                        }
+                    }
+                }
+
+                MaxSum_CW = AreaSum_ConstructionCW.Max(); //커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값
+                index = 0;
+                for (int k = 0; k < CW_Type.Length; k++)
+                {
+                    if (AreaSum_ConstructionCW[k] == AreaSum_ConstructionCW.Max())
+                    { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
+                }
+                if (CW_Type.Length > 0)
+                {
+                    MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호, 유리부분유리면적비", "번호 = '" + CW_Type[index][1] + "'");
+                    if (MainType_CW_Value.Length > 0)
+                    {
+                        MainType_CW = MainType_CW_Value[0][2].ToString(); // 커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형  
+                        MainType_ID = CW_Type[index][2];
+
+                        Main_WinCW = CW_Type[index][0];
+                        r_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
+                        Main_glass = MainType_CW_Value[0][1];
+                        Kobl_1 = Convert.ToDouble(MainType_CW_Value[0][3]);
+                    }
+                }
+            }
+            else
+            {
+                //창호 구조체 타입별로 면적 합계 구하기
+                if (MEnvelope_Win.Length > 0)
+                {
+                    for (int j = 0; j < MEnvelope_Win.Length; j++)
+                    {
+                        for (int k = 0; k < Win_Type.Length; k++)
+                        {
+                            if (MEnvelope_Win[j][3] == Win_Type[k][0])
+                            { AreaSum_ConstructionWin[k] += Convert.ToDouble(MEnvelope_Win[j][1]); }
+                        }
+                    }
+                }
+                MaxSum_Win = AreaSum_ConstructionWin.Max(); //창호 구조체 타입별로 면적 합계 중 가장 큰 값
+                index = 0;
+                for (int k = 0; k < Win_Type.Length; k++)
+                {
+                    if (AreaSum_ConstructionWin[k] == AreaSum_ConstructionWin.Max())
+                    { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
+                }
+
+                if (Win_Type.Length > 0)
+                {
                     MainType_SubWin = Win_Type[index][1]; // 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
                     MainType_ID = Win_Type[index][2];/////////////////////////// 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 ID
 
-
                     //찾은 SubWindow정보에서 MainWindow 찾기 
                     MainType_Win = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "상위창호번호, 유리면적비", "번호 = '" + MainType_SubWin + "'");
-
-
-                    //찾은 주 창호 유형의 빛투과율 찾기 
-                    MainType_Win_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "빛투과율, 유리종류", "번호 = '" + MainType_Win[0][0].ToString() + "'");
-
-
-                    //커튼월창 구조체 타입별로 면적 합계 구하기
-                    double[] AreaSum_ConstructionCW = new double[CW_Type.Length];
-                    for (int j = 0; j < MEnvelope_CW.Length; j++)
+                    if (MainType_Win.Length > 0)
                     {
-                        if (MEnvelope_CW[j][2] != "천창있음")
+                        //찾은 주 창호 유형의 빛투과율 찾기 
+                        MainType_Win_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "빛투과율, 유리종류", "번호 = '" + MainType_Win[0][0].ToString() + "'");
+
+                        //커튼월창 구조체 타입별로 면적 합계 구하기
+                        double[] AreaSum_ConstructionCW = new double[CW_Type.Length];
+                        for (int j = 0; j < MEnvelope_CW.Length; j++)
                         {
                             for (int k = 0; k < CW_Type.Length; k++)
                             {
@@ -1666,237 +1908,55 @@ namespace main.contents
                                 { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
                             }
                         }
-                    }
 
-                    MaxSum_CW = AreaSum_ConstructionCW.Max(); //커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값
-                    index = 0;
-                    for (int k = 0; k < CW_Type.Length; k++)
-                    {
-                        if (AreaSum_ConstructionCW[k] == AreaSum_ConstructionCW.Max())
-                        { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
-                    }
+                        MaxSum_CW = AreaSum_ConstructionCW.Max(); //커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값
+                        index = 0;
+                        for (int k = 0; k < CW_Type.Length; k++)
+                        {
+                            if (AreaSum_ConstructionCW[k] == AreaSum_ConstructionCW.Max())
+                            { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
+                        }
+                        if (CW_Type.Length > 0)
+                        {
+                            MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호, 유리부분유리면적비", "번호 = '" + CW_Type[index][1] + "'");
+                            if (MainType_CW_Value.Length > 0)
+                            {
+                                MainType_CW = MainType_CW_Value[0][2].ToString(); // 커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형  
+                                MainType_ID = CW_Type[index][2];
 
-                    MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호, 유리부분유리면적비", "번호 = '" + CW_Type[index][1] + "'");
-                    MainType_CW = MainType_CW_Value[0][2].ToString(); // 커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형  
-                    MainType_ID = CW_Type[index][2];
+                                Main_WinCW = CW_Type[index][0];
 
-                    Main_WinCW = CW_Type[index][0];
-                    f_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
-                    Main_glass = MainType_CW_Value[0][1];
+                                r_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
+                                Main_glass = MainType_CW_Value[0][1];
 
+                                if (MaxSum_CW > MaxSum_Win)
+                                {
+                                    Main_WinCW = CW_Type[index][0];
+                                    MainType_ID = CW_Type[index][2];
+                                    r_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
+                                    Main_glass = MainType_CW_Value[0][1];
+                                    Kobl_1 = Convert.ToDouble(MainType_CW_Value[0][3]);
 
-                    //창호랑 커튼월 다 구해놓고 둘 중 큰거 판별 
-                    if (MaxSum_CW > MaxSum_Win)
-                    {
-                        Main_WinCW = CW_Type[index][0];
-                        MainType_ID = CW_Type[index][2];
-                        f_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
-                        Main_glass = MainType_CW_Value[0][1];
-                        K1 = Convert.ToDouble(MainType_CW_Value[0][3]);
-                    }
-                    else
-                    {
-                        Main_WinCW = MainType_Win[0][0];
-                        MainType_ID = Win_Type[index][2];
-                        f_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
-                        Main_glass = MainType_Win_Value[0][1];
-                        K1 = Convert.ToDouble(MainType_Win[0][1]);
+                                }
+                                else
+                                {
+                                    if (MainType_Win.Length > 0)
+                                    {
+                                        Main_WinCW = MainType_Win[0][0];
+                                        MainType_ID = Win_Type[index][2];
+                                        if (MainType_Win_Value.Length > 0)
+                                        {
+                                            r_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
+                                            Main_glass = MainType_Win_Value[0][1];
+                                            Kobl_1 = Convert.ToDouble(MainType_Win[0][1]);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
-
-            catch { }
-        }
-
-        private void Calc_Roof_Data()
-        {
-            //rooflight1 가져오기 
-            try
-            {
-                ////////////////////////////////////////////////////////주향 기준 실너비(그 향의 벽체길이) 깊이 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                String[][] Wall_Length = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' AND 방위 = '" + roof_di + "' And 외피유형 = '외벽'");
-
-                Wr = 0;
-                for (int j = 0; j < Wall_Length.Length; j++)
-                {
-                    Wr += Convert.ToDouble(Wall_Length[j][0]);
-                }
-
-                Lr = A / Wr;
-
-
-                ////////////////////////////////////////////////////////주 향의 창호 커튼월 높이, 너비 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                // String[][] MEnvelope_Wina = Program.DB.querySQL(DB.type.ProjDB, " select b.창호높이,b.창호면적 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체 = b.명칭");
-
-
-                //주향 창호 및 커튼월 정보 불러오기
-                String[][] MEnvelope_Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + roof_di + "' And 외피유형 = '창호' And 천창유무 = '천창있음'");
-                String[][] MEnvelope_CW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호, 면적, 구조체,구조체번호", "존 = '" + ZoneNum + "' AND 방위 = '" + roof_di + "' And 외피유형 = '커튼월창' And 커튼월부위 = '유리부분' And 천창유무 = '천창있음'");
-
-                ////////////////////////////////////////////////////////주향 창호 OR 커튼월 유형 및 빛 투과율 찾기 (세가지 케이스)////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //창호 구조체 타입 찾기 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
-                String[][] Win_Type = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호,번호", "존 = '" + ZoneNum + "' And 방위 = '" + roof_di + "' And 외피유형 = '창호' And 천창유무 = '천창있음'");
-                //커튼월창 구조체 타입 찾기 
-                String[][] CW_Type = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체,구조체번호,번호", "존 = '" + ZoneNum + "' And 방위 = '" + roof_di + "' And 외피유형 = '커튼월창' And 천창유무 = '천창있음'");
-
-                double AreaSum_Wins = 0;
-                double[] AreaSum_ConstructionWin = new double[Win_Type.Length];
-                double MaxSum_Win;
-                int index;
-                String MainType_SubWin;
-                String MainType_ID;
-                String[][] MainType_Win;
-
-                String[][] MainType_Win_Value;
-
-                double MaxSum_CW;
-                String[][] MainType_CW_Value;
-                String MainType_CW;
-
-
-                if (CW_Type.Length == 0)
-                {
-                    //창호 구조체 타입별로 면적 합계 구하기
-
-                    for (int j = 0; j < MEnvelope_Win.Length; j++)
-                    {
-                        for (int k = 0; k < Win_Type.Length; k++)
-                        {
-                            if (MEnvelope_Win[j][3] == Win_Type[k][0])
-                            { AreaSum_ConstructionWin[k] += Convert.ToDouble(MEnvelope_Win[j][1]); }
-                        }
-                    }
-                    MaxSum_Win = AreaSum_ConstructionWin.Max(); //창호 구조체 타입별로 면적 합계 중 가장 큰 값
-                    index = 0;
-                    for (int k = 0; k < Win_Type.Length; k++)
-                    {
-                        if (AreaSum_ConstructionWin[k] == AreaSum_ConstructionWin.Max())
-                        { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
-                    }
-
-                    MainType_SubWin = Win_Type[index][1]; // 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
-                    MainType_ID = Win_Type[index][2];/////////////////////////// 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 ID
-
-                    //찾은 SubWindow정보에서 MainWindow 찾기 
-                    MainType_Win = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "상위창호번호, 유리면적비", "번호 = '" + MainType_SubWin + "'");
-
-                    //찾은 주 창호 유형의 빛투과율 찾기 
-                    MainType_Win_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "빛투과율, 유리종류", "번호 = '" + MainType_Win[0][0].ToString() + "'");
-
-
-                    Main_WinCW = MainType_Win[0][0];
-                    r_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
-                    Main_glass = MainType_Win_Value[0][1];
-                    Kobl_1 = Convert.ToDouble(MainType_Win[0][1]);
-                }
-                else if (Win_Type.Length == 0)
-                {
-                    //커튼월창 구조체 타입별로 면적 합계 구하기
-                    double[] AreaSum_ConstructionCW = new double[CW_Type.Length];
-                    for (int j = 0; j < MEnvelope_CW.Length; j++)
-                    {
-                        for (int k = 0; k < CW_Type.Length; k++)
-                        {
-                            if (MEnvelope_CW[j][3] == CW_Type[k][1])
-                            { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
-                        }
-                    }
-
-                    MaxSum_CW = AreaSum_ConstructionCW.Max(); //커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값
-                    index = 0;
-                    for (int k = 0; k < CW_Type.Length; k++)
-                    {
-                        if (AreaSum_ConstructionCW[k] == AreaSum_ConstructionCW.Max())
-                        { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
-                    }
-
-                    MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호, 유리부분유리면적비", "번호 = '" + CW_Type[index][1] + "'");
-                    MainType_CW = MainType_CW_Value[0][2].ToString(); // 커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형  
-                    MainType_ID = CW_Type[index][2];
-
-                    Main_WinCW = CW_Type[index][0];
-                    r_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
-                    Main_glass = MainType_CW_Value[0][1];
-                    Kobl_1 = Convert.ToDouble(MainType_CW_Value[0][3]);
-                }
-                else
-                {
-                    //창호 구조체 타입별로 면적 합계 구하기
-                    for (int j = 0; j < MEnvelope_Win.Length; j++)
-                    {
-                        for (int k = 0; k < Win_Type.Length; k++)
-                        {
-                            if (MEnvelope_Win[j][3] == Win_Type[k][0])
-                            { AreaSum_ConstructionWin[k] += Convert.ToDouble(MEnvelope_Win[j][1]); }
-                        }
-                    }
-                    MaxSum_Win = AreaSum_ConstructionWin.Max(); //창호 구조체 타입별로 면적 합계 중 가장 큰 값
-                    index = 0;
-                    for (int k = 0; k < Win_Type.Length; k++)
-                    {
-                        if (AreaSum_ConstructionWin[k] == AreaSum_ConstructionWin.Max())
-                        { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
-                    }
-
-
-                    MainType_SubWin = Win_Type[index][1]; // 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
-                    MainType_ID = Win_Type[index][2];/////////////////////////// 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 ID
-
-
-                    //찾은 SubWindow정보에서 MainWindow 찾기 
-                    MainType_Win = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "상위창호번호, 유리면적비", "번호 = '" + MainType_SubWin + "'");
-
-                    //찾은 주 창호 유형의 빛투과율 찾기 
-                    MainType_Win_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "빛투과율, 유리종류", "번호 = '" + MainType_Win[0][0].ToString() + "'");
-
-                    //커튼월창 구조체 타입별로 면적 합계 구하기
-                    double[] AreaSum_ConstructionCW = new double[CW_Type.Length];
-                    for (int j = 0; j < MEnvelope_CW.Length; j++)
-                    {
-                        for (int k = 0; k < CW_Type.Length; k++)
-                        {
-                            if (MEnvelope_CW[j][3] == CW_Type[k][1])
-                            { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
-                        }
-                    }
-
-                    MaxSum_CW = AreaSum_ConstructionCW.Max(); //커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값
-                    index = 0;
-                    for (int k = 0; k < CW_Type.Length; k++)
-                    {
-                        if (AreaSum_ConstructionCW[k] == AreaSum_ConstructionCW.Max())
-                        { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
-                    }
-
-                    MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호, 유리부분유리면적비", "번호 = '" + CW_Type[index][1] + "'");
-                    MainType_CW = MainType_CW_Value[0][2].ToString(); // 커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형  
-                    MainType_ID = CW_Type[index][2];
-
-                    Main_WinCW = CW_Type[index][0];
-
-                    r_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
-                    Main_glass = MainType_CW_Value[0][1];
-
-                    if (MaxSum_CW > MaxSum_Win)
-                    {
-                        Main_WinCW = CW_Type[index][0];
-                        MainType_ID = CW_Type[index][2];
-                        r_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
-                        Main_glass = MainType_CW_Value[0][1];
-                        Kobl_1 = Convert.ToDouble(MainType_CW_Value[0][3]);
-
-                    }
-                    else
-                    {
-                        Main_WinCW = MainType_Win[0][0];
-                        MainType_ID = Win_Type[index][2];
-                        r_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
-                        Main_glass = MainType_Win_Value[0][1];
-                        Kobl_1 = Convert.ToDouble(MainType_Win[0][1]);
-                    }
-                }
-            }
-            catch { }
         }
 
         private void Calc_None_Data()
@@ -1904,13 +1964,15 @@ namespace main.contents
             ////////////////////////////////////////////////////////주향 기준 실너비(그 향의 벽체길이) 깊이 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             String[][] Wall_Length = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' AND 방위 = '" + none_di + "' And 외피유형 = '외벽'");
 
-
-            Wr = 0;
-            for (int j = 0; j < Wall_Length.Length; j++)
+            if (Wall_Length.Length > 0)
             {
-                Wr += Convert.ToDouble(Wall_Length[j][0]);
+                Wr = 0;
+                for (int j = 0; j < Wall_Length.Length; j++)
+                {
+                    Wr += Convert.ToDouble(Wall_Length[j][0]);
+                }
+                Lr = A / Wr;
             }
-            Lr = A / Wr;
 
         }
 

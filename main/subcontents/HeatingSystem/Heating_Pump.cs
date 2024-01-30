@@ -27,9 +27,11 @@ namespace main.subcontents.HeatingSystem
             //heatingSystem = system;
             load_table_DB();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-
+            if (Image.Length > 0)
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
             if (Pump != null)
             {
                 this.SelectPump = Pump;
@@ -65,41 +67,44 @@ namespace main.subcontents.HeatingSystem
 
 
             string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "종류 ='온수순환펌프' OR 종류 = '냉온수순환펌프'");
-            for (int n = 0; n < User_Value.Length; n++)
+            if (User_Value.Length > 0)
             {
-                string A효율 = "", B효율 = "", 유량 = "", 동력 = "", 양정 = "";
-                if (User_Value[n][3] != null && User_Value[n][3] != "")
+                for (int n = 0; n < User_Value.Length; n++)
                 {
-                    A효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][3]));
-                }
-                if (User_Value[n][4] != null && User_Value[n][4] != "")
-                {
-                    B효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
-                }
-                if (User_Value[n][5] != null && User_Value[n][5] != "")
-                {
-                    유량 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][5]));
-                }
-                if (User_Value[n][6] != null && User_Value[n][6] != "")
-                {
-                    동력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][6]));
-                }
-                if (User_Value[n][7] != null && User_Value[n][7] != "")
-                {
-                    양정 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][7]));
-                }
+                    string A효율 = "", B효율 = "", 유량 = "", 동력 = "", 양정 = "";
+                    if (User_Value[n][3] != null && User_Value[n][3] != "")
+                    {
+                        A효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][3]));
+                    }
+                    if (User_Value[n][4] != null && User_Value[n][4] != "")
+                    {
+                        B효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
+                    }
+                    if (User_Value[n][5] != null && User_Value[n][5] != "")
+                    {
+                        유량 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][5]));
+                    }
+                    if (User_Value[n][6] != null && User_Value[n][6] != "")
+                    {
+                        동력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][6]));
+                    }
+                    if (User_Value[n][7] != null && User_Value[n][7] != "")
+                    {
+                        양정 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][7]));
+                    }
 
-                Pump_dataGridView.Rows.Add();
-                int nRow2 = Pump_dataGridView.Rows.Count - 1;
-                Pump_dataGridView.Rows[nRow2].Cells[1].Value = User_Value[n][0];
-                Pump_dataGridView.Rows[nRow2].Cells[2].Value = User_Value[n][1];
-                Pump_dataGridView.Rows[nRow2].Cells[3].Value = User_Value[n][2];
-                Pump_dataGridView.Rows[nRow2].Cells[4].Value = A효율;
-                Pump_dataGridView.Rows[nRow2].Cells[5].Value = B효율;
-                Pump_dataGridView.Rows[nRow2].Cells[6].Value = 유량;
-                Pump_dataGridView.Rows[nRow2].Cells[7].Value = 동력;
-                Pump_dataGridView.Rows[nRow2].Cells[8].Value = 양정;
-                // Pump_table.Rows.Add(User_Value[n][0], User_Value[n][1], User_Value[n][2], A효율, B효율, 유량, 동력, 양정);
+                    Pump_dataGridView.Rows.Add();
+                    int nRow2 = Pump_dataGridView.Rows.Count - 1;
+                    Pump_dataGridView.Rows[nRow2].Cells[1].Value = User_Value[n][0];
+                    Pump_dataGridView.Rows[nRow2].Cells[2].Value = User_Value[n][1];
+                    Pump_dataGridView.Rows[nRow2].Cells[3].Value = User_Value[n][2];
+                    Pump_dataGridView.Rows[nRow2].Cells[4].Value = A효율;
+                    Pump_dataGridView.Rows[nRow2].Cells[5].Value = B효율;
+                    Pump_dataGridView.Rows[nRow2].Cells[6].Value = 유량;
+                    Pump_dataGridView.Rows[nRow2].Cells[7].Value = 동력;
+                    Pump_dataGridView.Rows[nRow2].Cells[8].Value = 양정;
+                    // Pump_table.Rows.Add(User_Value[n][0], User_Value[n][1], User_Value[n][2], A효율, B효율, 유량, 동력, 양정);
+                }
             }
             //Pump_dataGridView.DataSource = Pump_table;
         }
@@ -141,17 +146,13 @@ namespace main.subcontents.HeatingSystem
         }
         private void Load_SaveValue()
         {
-            try
+            for (int n = 0; n < Pump_dataGridView.Rows.Count; n++)
             {
-                for (int n = 0; n < Pump_dataGridView.Rows.Count; n++)
+                if (Pump_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectPump.ToString())
                 {
-                    if (Pump_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectPump.ToString())
-                    {
-                        Pump_dataGridView.Rows[n].Cells[0].Value = true;
-                    }
+                    Pump_dataGridView.Rows[n].Cells[0].Value = true;
                 }
             }
-            catch { }
         }
     }
 }

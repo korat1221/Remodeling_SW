@@ -33,8 +33,11 @@ namespace main.subcontents.HeatingSystem
             this.HC = HC;
             load_table_DB();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if (Image.Length > 0)
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
             if (SelectAS_nonsplit != null)
             {
                 Load_SaveValue(SelectAS_nonsplit);
@@ -90,12 +93,15 @@ namespace main.subcontents.HeatingSystem
                 AS_dataGridView.Columns.Add("A16", "비고");
 
                 string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Heating, "흡수식냉온수기", "번호,통합성능,비고", "");
-                for (int n = 0; n < DefaultDB_Value.Length; n++)
+                if (DefaultDB_Value.Length > 0)
                 {
-                    int nRow = AS_dataGridView.Rows.Add();
-                    AS_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[n][0];
-                    AS_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[n][1];
-                    AS_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[n][2];
+                    for (int n = 0; n < DefaultDB_Value.Length; n++)
+                    {
+                        int nRow = AS_dataGridView.Rows.Add();
+                        AS_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[n][0];
+                        AS_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[n][1];
+                        AS_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[n][2];
+                    }
                 }
             }
             else
@@ -103,19 +109,22 @@ namespace main.subcontents.HeatingSystem
                 if (HC == "난방")
                 {
                     string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호,연료,난방용량,난방성능,온수입구온도,온수출구온도,대기전력,통합성능", "난방냉방 ='냉난방'");
-                    for (int n = 0; n < User_Value.Length; n++)
+                    if (User_Value.Length > 0)
                     {
+                        for (int n = 0; n < User_Value.Length; n++)
+                        {
 
-                        AS_dataGridView.Rows.Add();
-                        int nRow = AS_dataGridView.Rows.Count - 1;
-                        AS_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
-                        AS_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
-                        AS_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
-                        AS_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-                        AS_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
-                        AS_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
-                        AS_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
-                        AS_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                            AS_dataGridView.Rows.Add();
+                            int nRow = AS_dataGridView.Rows.Count - 1;
+                            AS_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                            AS_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                            AS_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                            AS_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                            AS_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                            AS_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
+                            AS_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
+                            AS_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                        }
                     }
                 }
             }
@@ -188,27 +197,22 @@ namespace main.subcontents.HeatingSystem
         private void Load_SaveValue(String SelectABS_nonsplit)
         {
             reset();
-            try
+            string[] token = SelectABS_nonsplit.Split('+');
+            SelectAS_split.Clear();
+            foreach (var item in token)
             {
-                string[] token = SelectABS_nonsplit.Split('+');
-                SelectAS_split.Clear();
-                foreach (var item in token)
+                SelectAS_split.Add(item.ToString());
+            }
+            for (int k = 0; k < SelectAS_split.Count; k++)
+            {
+                for (int n = 0; n < AS_dataGridView.Rows.Count; n++)
                 {
-                    SelectAS_split.Add(item.ToString());
-                }
-                for (int k = 0; k < SelectAS_split.Count; k++)
-                {
-                    for (int n = 0; n < AS_dataGridView.Rows.Count; n++)
+                    if (AS_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectAS_split[k].ToString())
                     {
-                        if (AS_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectAS_split[k].ToString())
-                        {
-                            AS_dataGridView.Rows[n].Cells[0].Value = true;
-                        }
+                        AS_dataGridView.Rows[n].Cells[0].Value = true;
                     }
                 }
-
             }
-            catch { }
         }
     }
 }

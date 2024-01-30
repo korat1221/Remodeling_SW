@@ -45,23 +45,24 @@ namespace main.subcontents.RESystem_PV
             table_PVInverter.Columns.Add("EURO효율" + Environment.NewLine + "%", typeof(string));
 
             //사용자 DB 추가
-            try
+            string[][] User_PVInverter = Program.DB.getValue(DB.type.ProjDB, "User_PVInverter", "번호,DB유형,제품명,제조사,EURO효율", "");
+            if (User_PVInverter.Length > 0)
             {
-                string[][] User_PVInverter = Program.DB.getValue(DB.type.ProjDB, "User_PVInverter", "번호,DB유형,제품명,제조사,EURO효율", "");
                 for (int n = 0; n < User_PVInverter.Length; n++)
                 {
                     table_PVInverter.Rows.Add(User_PVInverter[n][0], User_PVInverter[n][1], User_PVInverter[n][2], User_PVInverter[n][3], User_PVInverter[n][4]);
                 }
             }
-            catch { }
 
 
             //표준 DB 불러오기
             string[][] PVInverter = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광인버터DB", "번호,DB유형,제품명,제조사,EURO효율", "");
-
-            for (int n = 0; n < PVInverter.Length; n++)
+            if (PVInverter.Length > 0)
             {
-                table_PVInverter.Rows.Add(PVInverter[n][0], PVInverter[n][1], PVInverter[n][2], PVInverter[n][3], String.Format("{0:F2}", Convert.ToDouble(PVInverter[n][4])));
+                for (int n = 0; n < PVInverter.Length; n++)
+                {
+                    table_PVInverter.Rows.Add(PVInverter[n][0], PVInverter[n][1], PVInverter[n][2], PVInverter[n][3], String.Format("{0:F2}", Convert.ToDouble(PVInverter[n][4])));
+                }
             }
 
             PVInverter_dataGridView.DataSource = table_PVInverter;

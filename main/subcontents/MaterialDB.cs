@@ -97,29 +97,31 @@ namespace main.subcontents
                 table.Rows.Add("M_000", "표준", "공기층",null,null,"0");
             }
             else { table.Rows.Clear(); }
-            try
+            string[][] User_DB = Program.DB.getValue(DB.type.ProjDB, "User_Material", "번호,DB유형,재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '" + MaterialType + "'");
+            if (User_DB.Length > 0)
             {
-                string[][] User_DB = Program.DB.getValue(DB.type.ProjDB, "User_Material", "번호,DB유형,재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '" + MaterialType + "'");
                 for (int n = 0; n < User_DB.Length; n++)
                 {
                     table.Rows.Add(User_DB[n][0], User_DB[n][1], User_DB[n][2], User_DB[n][3], User_DB[n][4], User_DB[n][5], User_DB[n][6], User_DB[n][7], User_DB[n][8], User_DB[n][9], User_DB[n][10]);
                 }
             }
-            catch { }
 
             string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '" + MaterialType + "'");
             String dbnum;
-            for (int n = 0; n < Value.Length; n++)
+            if(Value.Length > 0)
             {
-                if (n + 1 < 10)
+                for (int n = 0; n < Value.Length; n++)
                 {
-                    dbnum = "M_00" + (n + 1).ToString();
+                    if (n + 1 < 10)
+                    {
+                        dbnum = "M_00" + (n + 1).ToString();
+                    }
+                    else
+                    {
+                        dbnum = "M_0" + (n + 1).ToString();
+                    }
+                    table.Rows.Add(dbnum, "표준", Value[n][0], Value[n][1], Value[n][2], Value[n][3], Value[n][4], Value[n][5], Value[n][6], Value[n][7], Value[n][8]);
                 }
-                else
-                {
-                    dbnum = "M_0" + (n + 1).ToString();
-                }
-                table.Rows.Add(dbnum, "표준", Value[n][0], Value[n][1], Value[n][2], Value[n][3], Value[n][4], Value[n][5], Value[n][6], Value[n][7], Value[n][8]);
             }
             dataGridView.DataSource = table;
             Count_FrameDB = Value.Length;

@@ -93,8 +93,11 @@ namespace main.subcontents.ZoneLighting
         private void Load_rooftype_image(String Type2)
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광중분류이미지2", "이미지", "자연채광중분류 = '" + Type2 + "'");
-            Middle2_pictureBox.Load(Program.gPath + Image[0][0]);
-            Middle2_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if (Image.Length > 0)
+            {
+                Middle2_pictureBox.Load(Program.gPath + Image[0][0]);
+                Middle2_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
 
         }
 
@@ -145,12 +148,10 @@ namespace main.subcontents.ZoneLighting
 
         private void LoadData(String ZoneNum)
         {
-            try
-            {
-
-                String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting", "천창,천창유리각,천창수평측면각,천창장변부길이,천창단변부길이,천창수평상부높이",
+            String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting", "천창,천창유리각,천창수평측면각,천창장변부길이,천창단변부길이,천창수평상부높이",
                 "번호 = '" + ZoneNum + "'");
-
+            if (Load.Length > 0)
+            {
                 rooftype = Load[0][0];
                 NaturalLight2_comboBox.SelectedItem = rooftype;
 
@@ -171,7 +172,6 @@ namespace main.subcontents.ZoneLighting
 
                 Load_rooftype_image(rooftype);
             }
-            catch { }
         }
 
 

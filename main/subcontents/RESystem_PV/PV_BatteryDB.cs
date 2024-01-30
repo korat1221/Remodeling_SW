@@ -57,26 +57,24 @@ namespace main.subcontents.RESystem_PV
         {
             PVBattery_dataGridView.Rows.Clear();
             //사용자 DB 추가
-            try
+            string[][] User_PVBattery = Program.DB.getValue(DB.type.ProjDB, "User_PVBattery", "번호,DB유형,제품명,제조사,전력,암페어시,배터리타입", "");
+            if (User_PVBattery.Length > 0)
             {
-                string[][] User_PVBattery = Program.DB.getValue(DB.type.ProjDB, "User_PVBattery", "번호,DB유형,제품명,제조사,전력,암페어시,배터리타입", "");
                 for (int n = 0; n < User_PVBattery.Length; n++)
                 {
-                   
-                        int nRow = PVBattery_dataGridView.Rows.Add();
-                        PVBattery_dataGridView.Rows[nRow].Cells[1].Value = User_PVBattery[n][0];
-                        PVBattery_dataGridView.Rows[nRow].Cells[2].Value = User_PVBattery[n][1];
-                        PVBattery_dataGridView.Rows[nRow].Cells[3].Value = User_PVBattery[n][2];
-                        PVBattery_dataGridView.Rows[nRow].Cells[4].Value = User_PVBattery[n][3];
-                        PVBattery_dataGridView.Rows[nRow].Cells[5].Value = User_PVBattery[n][4];
-                        PVBattery_dataGridView.Rows[nRow].Cells[6].Value = User_PVBattery[n][5];
-                        PVBattery_dataGridView.Rows[nRow].Cells[7].Value = User_PVBattery[n][6];
 
-                  
+                    int nRow = PVBattery_dataGridView.Rows.Add();
+                    PVBattery_dataGridView.Rows[nRow].Cells[1].Value = User_PVBattery[n][0];
+                    PVBattery_dataGridView.Rows[nRow].Cells[2].Value = User_PVBattery[n][1];
+                    PVBattery_dataGridView.Rows[nRow].Cells[3].Value = User_PVBattery[n][2];
+                    PVBattery_dataGridView.Rows[nRow].Cells[4].Value = User_PVBattery[n][3];
+                    PVBattery_dataGridView.Rows[nRow].Cells[5].Value = User_PVBattery[n][4];
+                    PVBattery_dataGridView.Rows[nRow].Cells[6].Value = User_PVBattery[n][5];
+                    PVBattery_dataGridView.Rows[nRow].Cells[7].Value = User_PVBattery[n][6];
+
                 }
-                Count_PVBatteryDB = User_PVBattery.Length;
             }
-            catch { }
+            Count_PVBatteryDB = User_PVBattery.Length;
         }
 
  

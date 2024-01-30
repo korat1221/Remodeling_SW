@@ -76,9 +76,9 @@ namespace main.subcontents.ZoneLighting
 
 
             //집광채광 사용자 DB 추가 
-            try
+            string[][] User_Renew = Program.DB.getValue(DB.type.ProjDB, "User_Renew", "번호,DB유형,집광채광명칭,집광채광종류,제조사,집광채광효율,산광부가로길이,산광부세로길이,산광부면적", "");
+            if (User_Renew.Length > 0)
             {
-                string[][] User_Renew = Program.DB.getValue(DB.type.ProjDB, "User_Renew", "번호,DB유형,집광채광명칭,집광채광종류,제조사,집광채광효율,산광부가로길이,산광부세로길이,산광부면적", "");
                 for (int n = 0; n < User_Renew.Length; n++)
                 {
                     Renew_dataGridView.Rows.Add();
@@ -90,19 +90,20 @@ namespace main.subcontents.ZoneLighting
                     // table_Renew.Rows.Add(User_Renew[n][0], User_Renew[n][1], User_Renew[n][2], User_Renew[n][3], User_Renew[n][4], User_Renew[n][5], User_Renew[n][6], User_Renew[n][7], User_Renew[n][8]);
                 }
             }
-            catch { }
             //표준DB
             string[][] Renew = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_집광채광DB", "번호,DB유형,집광채광명칭,집광채광종류,제조사,집광채광효율,산광부가로길이,산광부세로길이,산광부면적", "");
-
-            for (int n = 0; n < Renew.Length; n++)
+            if (Renew.Length > 0)
             {
-                Renew_dataGridView.Rows.Add();
-                int nRow = Renew_dataGridView.Rows.Count - 1;
-                for (int k = 0; k < 9; k++)
+                for (int n = 0; n < Renew.Length; n++)
                 {
-                    Renew_dataGridView.Rows[nRow].Cells[k + 1].Value = Renew[n][k];
+                    Renew_dataGridView.Rows.Add();
+                    int nRow = Renew_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 9; k++)
+                    {
+                        Renew_dataGridView.Rows[nRow].Cells[k + 1].Value = Renew[n][k];
+                    }
+                    //table_Renew.Rows.Add(Renew[n][0], Renew[n][1], Renew[n][2], Renew[n][3], Renew[n][4], Renew[n][5], Renew[n][6], Renew[n][7], Renew[n][8]);
                 }
-                //table_Renew.Rows.Add(Renew[n][0], Renew[n][1], Renew[n][2], Renew[n][3], Renew[n][4], Renew[n][5], Renew[n][6], Renew[n][7], Renew[n][8]);
             }
             //Renew_dataGridView.DataSource = table_Renew;
             Count_RenewDB = Renew.Length;

@@ -31,8 +31,11 @@ namespace main.subcontents.HeatingSystem
             this.DefaultUse = DefaultUse;
             load_table_DB();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if (Image.Length > 0)
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
             if (SelectDH_nonsplit != null)
             {
                 Load_SaveValue(SelectDH_nonsplit);
@@ -71,33 +74,39 @@ namespace main.subcontents.HeatingSystem
             if (DefaultUse == "기본DB 적용")
                 {
                     string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Heating, "지역난방", "번호,용도,공급온도1차,환수온도1차,공급온도2차,환수온도2차", "");
-                    for (int n = 0; n < DefaultDB_Value.Length; n++)
+                    if (DefaultDB_Value.Length > 0)
                     {
-                        int nRow = DH_dataGridView.Rows.Add();
-                        DH_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[n][0];                    
-                        DH_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[n][1];
-                        DH_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[n][2];
-                        DH_dataGridView.Rows[nRow].Cells[4].Value = DefaultDB_Value[n][3];
-                        DH_dataGridView.Rows[nRow].Cells[5].Value = DefaultDB_Value[n][4];
-                        DH_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[n][5];
-                     }
+                        for (int n = 0; n < DefaultDB_Value.Length; n++)
+                        {
+                            int nRow = DH_dataGridView.Rows.Add();
+                            DH_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[n][0];
+                            DH_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[n][1];
+                            DH_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[n][2];
+                            DH_dataGridView.Rows[nRow].Cells[4].Value = DefaultDB_Value[n][3];
+                            DH_dataGridView.Rows[nRow].Cells[5].Value = DefaultDB_Value[n][4];
+                            DH_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[n][5];
+                        }
+                    }
                 }
                 else
                 {
                     string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_DH", "번호,명칭,용도,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차", "용도 ='난방용(복사난방)' OR 용도 ='난방용(공조난방)'");
-                    for (int n = 0; n < User_Value.Length; n++)
+                    if (User_Value.Length > 0)
                     {
+                        for (int n = 0; n < User_Value.Length; n++)
+                        {
 
-                        DH_dataGridView.Rows.Add();
-                        int nRow = DH_dataGridView.Rows.Count - 1;
-                        DH_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
-                        DH_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
-                        DH_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
-                        DH_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-                        DH_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
-                        DH_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
-                        DH_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
-                        DH_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                            DH_dataGridView.Rows.Add();
+                            int nRow = DH_dataGridView.Rows.Count - 1;
+                            DH_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                            DH_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                            DH_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                            DH_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                            DH_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                            DH_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
+                            DH_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
+                            DH_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                        }
                     }
                 }
                 // DH_dataGridView.DataSource = DH_table;
@@ -169,28 +178,23 @@ namespace main.subcontents.HeatingSystem
             private void Load_SaveValue(String SelectDH_nonsplit)
             {
                 reset();
-                try
-                {
-                    string[] token = SelectDH_nonsplit.Split('+');
-                    SelectDH_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SelectDH_split.Add(item.ToString());
-                    }
-                    for (int k = 0; k < SelectDH_split.Count; k++)
-                    {
-                        for (int n = 0; n < DH_dataGridView.Rows.Count; n++)
-                        {
-                            if (DH_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectDH_split[k].ToString())
-                            {
-                                DH_dataGridView.Rows[n].Cells[0].Value = true;
-                            }
-                        }
-                    }
-
-                }
-                catch { }
+            string[] token = SelectDH_nonsplit.Split('+');
+            SelectDH_split.Clear();
+            foreach (var item in token)
+            {
+                SelectDH_split.Add(item.ToString());
             }
+            for (int k = 0; k < SelectDH_split.Count; k++)
+            {
+                for (int n = 0; n < DH_dataGridView.Rows.Count; n++)
+                {
+                    if (DH_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectDH_split[k].ToString())
+                    {
+                        DH_dataGridView.Rows[n].Cells[0].Value = true;
+                    }
+                }
+            }
+        }
         
     }
 }

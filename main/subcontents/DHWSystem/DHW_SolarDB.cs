@@ -31,8 +31,11 @@ namespace main.subcontents.DHWSystem
             this.DefaultUse = DefaultUse;
             load_table_DB();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if (Image.Length > 0)
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
             if (SelectSolar_nonsplit != null)
             {
                 Load_SaveValue(SelectSolar_nonsplit);
@@ -66,36 +69,41 @@ namespace main.subcontents.DHWSystem
             if (DefaultUse == "기본DB 적용")
             {
                 string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Heating, "태양열시스템", "번호,제품명,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "");
-                for (int n = 0; n < DefaultDB_Value.Length; n++)
+                if(DefaultDB_Value.Length > 0)
                 {
-                    Solar_dataGridView.Rows.Add();
-                    int nRow = Solar_dataGridView.Rows.Count - 1;
-                    Solar_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[n][0];
-                    Solar_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[n][1];
-                    Solar_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[n][2];
-                    Solar_dataGridView.Rows[nRow].Cells[4].Value = DefaultDB_Value[n][3];
-                    Solar_dataGridView.Rows[nRow].Cells[5].Value = DefaultDB_Value[n][4];
-                    Solar_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[n][5];
-                    Solar_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[n][6];
-                   
+                    for (int n = 0; n < DefaultDB_Value.Length; n++)
+                    {
+                        Solar_dataGridView.Rows.Add();
+                        int nRow = Solar_dataGridView.Rows.Count - 1;
+                        Solar_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[n][0];
+                        Solar_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[n][1];
+                        Solar_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[n][2];
+                        Solar_dataGridView.Rows[nRow].Cells[4].Value = DefaultDB_Value[n][3];
+                        Solar_dataGridView.Rows[nRow].Cells[5].Value = DefaultDB_Value[n][4];
+                        Solar_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[n][5];
+                        Solar_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[n][6];
+                    }
                 }
             }
             else
             {
                 string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "번호,명칭,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "난방급탕 ='급탕' OR 난방급탕 = '난방+급탕'");
-                for (int n = 0; n < User_Value.Length; n++)
+                if (User_Value.Length > 0)
                 {
-                   
-                    Solar_dataGridView.Rows.Add();
-                    int nRow = Solar_dataGridView.Rows.Count - 1;
-                    Solar_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
-                    Solar_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
-                    Solar_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
-                    Solar_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-                    Solar_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
-                    Solar_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
-                    Solar_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
-                    Solar_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                    for (int n = 0; n < User_Value.Length; n++)
+                    {
+
+                        Solar_dataGridView.Rows.Add();
+                        int nRow = Solar_dataGridView.Rows.Count - 1;
+                        Solar_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                        Solar_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                        Solar_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                        Solar_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                        Solar_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                        Solar_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
+                        Solar_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
+                        Solar_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                    }
                 }
             }
         }
@@ -166,27 +174,22 @@ namespace main.subcontents.DHWSystem
         private void Load_SaveValue(String SelectSolar_nonsplit)
         {
             reset();
-            try
+            string[] token = SelectSolar_nonsplit.Split('+');
+            SelectSolar_split.Clear();
+            foreach (var item in token)
             {
-                string[] token = SelectSolar_nonsplit.Split('+');
-                SelectSolar_split.Clear();
-                foreach (var item in token)
+                SelectSolar_split.Add(item.ToString());
+            }
+            for (int k = 0; k < SelectSolar_split.Count; k++)
+            {
+                for (int n = 0; n < Solar_dataGridView.Rows.Count; n++)
                 {
-                    SelectSolar_split.Add(item.ToString());
-                }
-                for (int k = 0; k < SelectSolar_split.Count; k++)
-                {
-                    for (int n = 0; n < Solar_dataGridView.Rows.Count; n++)
+                    if (Solar_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectSolar_split[k].ToString())
                     {
-                        if (Solar_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectSolar_split[k].ToString())
-                        {
-                            Solar_dataGridView.Rows[n].Cells[0].Value = true;
-                        }
+                        Solar_dataGridView.Rows[n].Cells[0].Value = true;
                     }
                 }
-
             }
-            catch { }
         }
     }
 }

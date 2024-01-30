@@ -46,17 +46,19 @@ namespace main.subcontents.ZoneLighting
 
             GlassList.Clear();
             //유리 콤보박스
-            try
+            string[][] User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,제품명", "");
+            if (User_WinGlass.Length > 0)
             {
-                string[][] User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,제품명", "");
                 for (int n = 0; n < User_WinGlass.Length; n++)
                 { GlassList.Add(User_WinGlass[n][1]); }
             }
-            catch { }
             string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,제품명", "");
-            for (int n = 0; n < WinGlass.Length; n++)
+            if (WinGlass.Length > 0)
             {
-                GlassList.Add(WinGlass[n][1]);
+                for (int n = 0; n < WinGlass.Length; n++)
+                {
+                    GlassList.Add(WinGlass[n][1]);
+                }
             }
             string[] GlassArray = GlassList.ToArray();
             glass1_comboBox.Items.Clear();
@@ -166,8 +168,11 @@ namespace main.subcontents.ZoneLighting
         private void Load_facadetype_image(String Type)
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광중분류이미지", "이미지", "자연채광중분류 = '" + Type + "'");
-            Middle_pictureBox.Load(Program.gPath + Image[0][0]);
-            Middle_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if (Image.Length > 0)
+            {
+                Middle_pictureBox.Load(Program.gPath + Image[0][0]);
+                Middle_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
 
         }
 
@@ -193,14 +198,14 @@ namespace main.subcontents.ZoneLighting
         {
             doubleskinglasstype = glass1_comboBox.SelectedItem.ToString();
             atriumglasstype = glass1_comboBox.SelectedItem.ToString();
-            try
+            string[][] User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,제품명,빛투과율", "제품명 ='" + glass1_comboBox.SelectedItem.ToString() + "'");
+            if (User_WinGlass.Length > 0)
             {
-                string[][] User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,제품명,빛투과율", "제품명 ='" + glass1_comboBox.SelectedItem.ToString() + "'");
                 Tao = Convert.ToDouble(User_WinGlass[0][2]);
             }
-            catch
+            string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,제품명,빛투과율", "제품명 ='" + glass1_comboBox.SelectedItem.ToString() + "'");
+            if (WinGlass.Length > 0)
             {
-                string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,제품명,빛투과율", "제품명 ='" + glass1_comboBox.SelectedItem.ToString() + "'");
                 Tao = Convert.ToDouble(WinGlass[0][2]);
             }
             Tao_textBox.Text = string.Format("{0:F3}", Tao);
@@ -254,12 +259,10 @@ namespace main.subcontents.ZoneLighting
 
         private void LoadData(String ZoneNum)
         {
-            try
-            {
-
-                String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting", "파사드,이중외피유리,아트리움유리,파사드유리빛투과율,파사드너비,파사드길이,파사드높이",
+            String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting", "파사드,이중외피유리,아트리움유리,파사드유리빛투과율,파사드너비,파사드길이,파사드높이",
                 "번호 = '" + ZoneNum + "'");
-
+            if (Load.Length > 0)
+            {
                 facadetype = Load[0][0];
                 NaturalLight_comboBox.SelectedItem = facadetype;
 
@@ -279,7 +282,6 @@ namespace main.subcontents.ZoneLighting
 
                 Load_facadetype_image(facadetype);
             }
-            catch { }
         }
 
     }

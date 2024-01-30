@@ -31,10 +31,12 @@ namespace main.subcontents.HeatingSystem
             this.HC = HC;
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            if (Image.Length > 0)
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
             create_table(DefaultUse, HeatSource, HC);
-
 
 
             if (SelectHP_nonsplit != null)
@@ -101,34 +103,40 @@ namespace main.subcontents.HeatingSystem
             if (DefaultUse == "기본DB 적용")
             {
                 string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프", "등급,정격COP,한랭지COP", "연료='" + Carrier + "'");
-                for (int n = 0; n < DefaultDB_Value.Length; n++)
+                if (DefaultDB_Value.Length > 0)
                 {
-                    HP_dataGridView.Rows.Add();
-                    int nRow = HP_dataGridView.Rows.Count - 1;
-                    HP_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[n][0];
-                    HP_dataGridView.Rows[nRow].Cells[2].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[n][1]));
-                    HP_dataGridView.Rows[nRow].Cells[3].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[n][2]));
+                    for (int n = 0; n < DefaultDB_Value.Length; n++)
+                    {
+                        HP_dataGridView.Rows.Add();
+                        int nRow = HP_dataGridView.Rows.Count - 1;
+                        HP_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[n][0];
+                        HP_dataGridView.Rows[nRow].Cells[2].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[n][1]));
+                        HP_dataGridView.Rows[nRow].Cells[3].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[n][2]));
+                    }
                 }
             }
             else
             {
                 string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "번호,명칭,연료,공급유형,수직수평,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력", "");
-                for (int n = 0; n < User_Value.Length; n++)
+                if (User_Value.Length > 0)
                 {
+                    for (int n = 0; n < User_Value.Length; n++)
+                    {
 
-                    HP_dataGridView.Rows.Add();
-                    int nRow = HP_dataGridView.Rows.Count - 1;
-                    HP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
-                    HP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
-                    HP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
-                    HP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-                    HP_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
-                    HP_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][5]));
-                    HP_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][6]));
-                    HP_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][7]));
-                    HP_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][8]));
-                    HP_dataGridView.Rows[nRow].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][9]));
-                    HP_dataGridView.Rows[nRow].Cells[11].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][10]));
+                        HP_dataGridView.Rows.Add();
+                        int nRow = HP_dataGridView.Rows.Count - 1;
+                        HP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                        HP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                        HP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                        HP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                        HP_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                        HP_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][5]));
+                        HP_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][6]));
+                        HP_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][7]));
+                        HP_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][8]));
+                        HP_dataGridView.Rows[nRow].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][9]));
+                        HP_dataGridView.Rows[nRow].Cells[11].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][10]));
+                    }
                 }
 
             }
@@ -201,27 +209,22 @@ namespace main.subcontents.HeatingSystem
         private void Load_SaveValue(String SelectHP_nonsplit)
         {
             reset();
-            try
+            string[] token = SelectHP_nonsplit.Split('+');
+            SelectHP_split.Clear();
+            foreach (var item in token)
             {
-                string[] token = SelectHP_nonsplit.Split('+');
-                SelectHP_split.Clear();
-                foreach (var item in token)
+                SelectHP_split.Add(item.ToString());
+            }
+            for (int k = 0; k < SelectHP_split.Count; k++)
+            {
+                for (int n = 0; n < HP_dataGridView.Rows.Count; n++)
                 {
-                    SelectHP_split.Add(item.ToString());
-                }
-                for (int k = 0; k < SelectHP_split.Count; k++)
-                {
-                    for (int n = 0; n < HP_dataGridView.Rows.Count; n++)
+                    if (HP_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectHP_split[k].ToString())
                     {
-                        if (HP_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectHP_split[k].ToString())
-                        {
-                            HP_dataGridView.Rows[n].Cells[0].Value = true;
-                        }
+                        HP_dataGridView.Rows[n].Cells[0].Value = true;
                     }
                 }
-
             }
-            catch { }
         }
 
     }

@@ -69,36 +69,42 @@ namespace main.subcontents.RESystem_PV
 
             if (DefaultUse == "기본DB 적용")
             {
-                string[][] PVModule = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광모듈DB", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,Kpk", "");                
-                for (int n = 0; n < PVModule.Length; n++)
+                string[][] PVModule = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광모듈DB", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,Kpk", "");
+                if (PVModule.Length > 0)
                 {
-                    PVModule_dataGridView.Rows.Add();
-                    PVModule_dataGridView.Rows[n].Cells[1].Value = PVModule[n][0];
-                    PVModule_dataGridView.Rows[n].Cells[2].Value = PVModule[n][1];
-                    PVModule_dataGridView.Rows[n].Cells[3].Value = PVModule[n][2];
-                    PVModule_dataGridView.Rows[n].Cells[4].Value = PVModule[n][3];
-                    PVModule_dataGridView.Rows[n].Cells[5].Value = PVModule[n][4];
-                    PVModule_dataGridView.Rows[n].Cells[6].Value = PVModule[n][5];
-                    PVModule_dataGridView.Rows[n].Cells[7].Value = PVModule[n][6];                  
+                    for (int n = 0; n < PVModule.Length; n++)
+                    {
+                        PVModule_dataGridView.Rows.Add();
+                        PVModule_dataGridView.Rows[n].Cells[1].Value = PVModule[n][0];
+                        PVModule_dataGridView.Rows[n].Cells[2].Value = PVModule[n][1];
+                        PVModule_dataGridView.Rows[n].Cells[3].Value = PVModule[n][2];
+                        PVModule_dataGridView.Rows[n].Cells[4].Value = PVModule[n][3];
+                        PVModule_dataGridView.Rows[n].Cells[5].Value = PVModule[n][4];
+                        PVModule_dataGridView.Rows[n].Cells[6].Value = PVModule[n][5];
+                        PVModule_dataGridView.Rows[n].Cells[7].Value = PVModule[n][6];
+                    }
                 }
             }
             else
             {
                 //사용자 DB 추가
                 string[][] User_PVModule = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,Kpk,가로길이,세로길이,정격출력", "");
-                for (int n = 0; n < User_PVModule.Length; n++)
+                if (User_PVModule.Length > 0)
                 {
-                    PVModule_dataGridView.Rows.Add();
-                    PVModule_dataGridView.Rows[n].Cells[1].Value = User_PVModule[n][0];
-                    PVModule_dataGridView.Rows[n].Cells[2].Value = User_PVModule[n][1];
-                    PVModule_dataGridView.Rows[n].Cells[3].Value = User_PVModule[n][2];
-                    PVModule_dataGridView.Rows[n].Cells[4].Value = User_PVModule[n][3];
-                    PVModule_dataGridView.Rows[n].Cells[5].Value = User_PVModule[n][4];
-                    PVModule_dataGridView.Rows[n].Cells[6].Value = User_PVModule[n][5];
-                    PVModule_dataGridView.Rows[n].Cells[7].Value = User_PVModule[n][6];
-                    PVModule_dataGridView.Rows[n].Cells[8].Value = User_PVModule[n][7];
-                    PVModule_dataGridView.Rows[n].Cells[9].Value = User_PVModule[n][8];
-                    PVModule_dataGridView.Rows[n].Cells[10].Value = User_PVModule[n][9];
+                    for (int n = 0; n < User_PVModule.Length; n++)
+                    {
+                        PVModule_dataGridView.Rows.Add();
+                        PVModule_dataGridView.Rows[n].Cells[1].Value = User_PVModule[n][0];
+                        PVModule_dataGridView.Rows[n].Cells[2].Value = User_PVModule[n][1];
+                        PVModule_dataGridView.Rows[n].Cells[3].Value = User_PVModule[n][2];
+                        PVModule_dataGridView.Rows[n].Cells[4].Value = User_PVModule[n][3];
+                        PVModule_dataGridView.Rows[n].Cells[5].Value = User_PVModule[n][4];
+                        PVModule_dataGridView.Rows[n].Cells[6].Value = User_PVModule[n][5];
+                        PVModule_dataGridView.Rows[n].Cells[7].Value = User_PVModule[n][6];
+                        PVModule_dataGridView.Rows[n].Cells[8].Value = User_PVModule[n][7];
+                        PVModule_dataGridView.Rows[n].Cells[9].Value = User_PVModule[n][8];
+                        PVModule_dataGridView.Rows[n].Cells[10].Value = User_PVModule[n][9];
+                    }
                 }
 
             }

@@ -47,18 +47,17 @@ namespace main
         public Cal_Heating(String HeatingNum)
         {
             this.HeatingNum = HeatingNum;
-            try
+            지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
+            외기온도 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "기간,온도", "지역명 ='" + 지역[0][0] + "'");
+            int i = -1;
+            if (외기온도.Length > 0)
             {
-                지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
-                외기온도 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "기간,온도", "지역명 ='" + 지역[0][0] + "'");
-                int i = -1;
                 while (++i < 12)
                 {
                     theta_e[i] = Convert.ToDouble(외기온도[i][1]);
                     theta_u[i] = theta_ih_avg[i] - 0.8 * (theta_ih_avg[i] - theta_e[i]);
                 }
             }
-            catch { }
 
         }
 
@@ -67,15 +66,17 @@ namespace main
             double[,] Qhb_mth; double[,] theta_ih; double[,] th; double[,] dop_mth; double[] th_op_day; double[] Qh_max; double[] Qh_a; double[] theta_i_h_set;
 
             //존 정보 불러오기
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "명칭,존", "번호 = '" + HeatingNum + "'");
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "명칭,존", "번호 = '" + HeatingNum + "'");
                 HeatingName = Value[0][0];
                 SelectZone_nonsplit = Value[0][1];
                 Split_Zone(SelectZone_nonsplit);
+            }
 
-
-                string[][] Value_ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "공급설비,존번호", "난방시스템 = '" + HeatingNum + "'");
+            string[][] Value_ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "공급설비,존번호", "난방시스템 = '" + HeatingNum + "'");
+            if (Value_ce.Length > 0)
+            {
                 Qhb_mth = new double[Value_ce.Length, 12];
                 theta_ih = new double[Value_ce.Length, 12];
                 th = new double[Value_ce.Length, 12];
@@ -92,8 +93,11 @@ namespace main
                     {
                         for (int mth = 0; mth < 12; mth++)
                         {
-                            string[][] Qhb_ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "요구량" + (mth + 1).ToString() + "월", "공급설비 = '" + Value_ce[n][0] + "' And 존번호 ='" + Value_ce[n][1]+"'");
-                            Qhb_mth[n, mth] = Convert.ToDouble(Qhb_ce[0][0]);
+                            string[][] Qhb_ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "요구량" + (mth + 1).ToString() + "월", "공급설비 = '" + Value_ce[n][0] + "' And 존번호 ='" + Value_ce[n][1] + "'");
+                            if (Qhb_ce.Length > 0)
+                            {
+                                Qhb_mth[n, mth] = Convert.ToDouble(Qhb_ce[0][0]);
+                            }
                             theta_ih[n, mth] = zone.theta_i[1, 0, mth]; //이용일 난방
                             th[n, mth] = zone.t_max[0, mth]; // 난방 시간 
                             Qh_a[n] = zone.Qb_a[0]; //연간 난방요구량
@@ -101,7 +105,7 @@ namespace main
                             th_op_day[n] = zone.th_op_d;
                             theta_i_h_set[n] = zone.theta_i_h_set;
                         }
-                    }                 
+                    }
                 }
                 for (int k = 0; k < SelectZone_split.Count; k++)
                 {
@@ -136,26 +140,25 @@ namespace main
                     th_avg[mth] = th_avg[mth] / Qh_a_sum;
                     dop_mth_avg[mth] = dop_mth_avg[mth] / Qh_a_sum;
                 }
-
-
             }
-            catch { }
         }
 
         //난방설비 일반정보 불러오기 
         public void Load_HeatingGeneral()
         {
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "번호 = '" + HeatingNum + "'");
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "번호 = '" + HeatingNum + "'");
-
                 SystemLoacation = Value[0][0];
                 SLRL = Value[0][1];
                 if (SLRL != null && SLRL != "")
                 {
                     string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환수온도", "공급온도,환수온도", "공급환수온도 = '" + SLRL + "'");
-                    SL = Convert.ToDouble(Value2[0][0]);
-                    RL = Convert.ToDouble(Value2[0][1]);
+                    if (Value2.Length > 0)
+                    {
+                        SL = Convert.ToDouble(Value2[0][0]);
+                        RL = Convert.ToDouble(Value2[0][1]);
+                    }
                 }
 
                 Complex = Value[0][2];
@@ -163,29 +166,26 @@ namespace main
                 Sub1System = Value[0][4];
                 Sub2System = Value[0][5];
             }
-            catch { }
         }
 
         //보일러 정보 불러오기
         public void Load_Boiler()
         {
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "보일러종류,보일러대수", "번호 = '" + HeatingNum + "'");
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "보일러종류,보일러대수", "번호 = '" + HeatingNum + "'");
                 SelectBoiler_nonsplit = Value[0][0];
                 Split_Boiler(SelectBoiler_nonsplit);
 
                 BoilerNum_nonsplit = Value[0][1];
                 Split_BoilerNum(BoilerNum_nonsplit);
             }
-            catch { }
-
         }
         public void Load_Solar()
         {
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "태양열번호,모듈개수,모듈방위,모듈기울기", "번호 = '" + HeatingNum + "'");
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "태양열번호,모듈개수,모듈방위,모듈기울기", "번호 = '" + HeatingNum + "'");
                 SelectSolar_nonsplit = Value[0][0];
                 Split_Solar(SelectSolar_nonsplit);
 
@@ -198,7 +198,6 @@ namespace main
                 SolarDegree_nonsplit = Value[0][3];
                 Split_SolarDegree(SolarDegree_nonsplit);
             }
-            catch { }
         }
         private void Split_Solar(String nonSplit)
         {
@@ -270,12 +269,9 @@ namespace main
         }
         public void Load_PumpData()
         {
-
-
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "번호 = '" + HeatingNum + "'");
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "번호 = '" + HeatingNum + "'");
-
                 PumpUse = Value[0][0];
                 PumpMethod = Value[0][1];
 
@@ -288,27 +284,23 @@ namespace main
                 Pump1Count = Convert.ToInt16(Value[0][8]);
                 Pump2Count = Convert.ToInt16(Value[0][9]);
             }
-            catch { }
-
         }
 
         public void Load_ceData()
         {
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "공급설비1종류,공급설비2종류", "번호 = '" + HeatingNum + "'");
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "공급설비1종류,공급설비2종류", "번호 = '" + HeatingNum + "'");
                 ce1Type = Value[0][0];
                 ce2Type = Value[0][1];
             }
-            catch { }
-
         }
 
         public void Load_StorageData()
         {
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "축열유무,축열펌프유무,축열펌프,축열용량", "번호 = '" + HeatingNum + "'");
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "축열유무,축열펌프유무,축열펌프,축열용량", "번호 = '" + HeatingNum + "'");
                 StorageUse = Value[0][0];
                 StoragePumpUse = Value[0][1];
                 StoragePump = Value[0][2];
@@ -317,29 +309,25 @@ namespace main
                     Vs = Convert.ToDouble(Value[0][3]);
                 }
             }
-            catch { }
-
         }
 
         public void Load_PipeData()
         {
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재", "번호 = '" + HeatingNum + "'");
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재", "번호 = '" + HeatingNum + "'");
                 PipeD = Convert.ToDouble(Value[0][0]);
                 PipeInsD = Convert.ToDouble(Value[0][1]);
                 PipeIns_Ramda = Convert.ToDouble(Value[0][2]);
                 PipeIns = Value[0][3];
             }
-            catch { }
         }
         //외기 히트펌프 정보 불러오기 
         public void Load_AirHP()
         {
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "외기히트펌프번호,외기히트펌프공급방식,외기히트펌프제어방식,외기히트펌프대수", "번호 = '" + HeatingNum + "'");
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "외기히트펌프번호,외기히트펌프공급방식,외기히트펌프제어방식,외기히트펌프대수", "번호 = '" + HeatingNum + "'");
-
                 String HeatSource = "외기";
                 SelectHP_nonsplit[0] = Value[0][0];
                 Split_HP(SelectHP_nonsplit[0], HeatSource);
@@ -352,18 +340,15 @@ namespace main
 
                 HPNum_nonsplit[0] = Value[0][3];
                 Split_HPNum(HPNum_nonsplit[0], HeatSource);
-
             }
-            catch { }
         }
 
         //지열 히트펌프 정보 불러오기 
         public void Load_GroundHP()
         {
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "지열히트펌프번호,지열히트펌프공급방식,지열히트펌프제어방식,지열히트펌프대수", "번호 = '" + HeatingNum + "'");
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "지열히트펌프번호,지열히트펌프공급방식,지열히트펌프제어방식,지열히트펌프대수", "번호 = '" + HeatingNum + "'");
-
                 String HeatSource = "지열";
                 SelectHP_nonsplit[1] = Value[0][0];
                 Split_HP(SelectHP_nonsplit[1], HeatSource);
@@ -376,18 +361,15 @@ namespace main
 
                 HPNum_nonsplit[1] = Value[0][3];
                 Split_HPNum(HPNum_nonsplit[1], HeatSource);
-
             }
-            catch { }
         }
 
         //지하수 히트펌프 정보 불러오기 
         public void Load_GWHP()
         {
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "지하수히트펌프번호,지하수히트펌프공급방식,지하수히트펌프제어방식,지하수히트펌프대수", "번호 = '" + HeatingNum + "'");
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "지하수히트펌프번호,지하수히트펌프공급방식,지하수히트펌프제어방식,지하수히트펌프대수", "번호 = '" + HeatingNum + "'");
-
                 String HeatSource = "지하수";
                 SelectHP_nonsplit[2] = Value[0][0];
                 Split_HP(SelectHP_nonsplit[2], HeatSource);
@@ -400,9 +382,7 @@ namespace main
 
                 HPNum_nonsplit[2] = Value[0][3];
                 Split_HPNum(HPNum_nonsplit[2], HeatSource);
-
             }
-            catch { }
         }
 
 
@@ -583,14 +563,11 @@ namespace main
                     {
                         SelectBoiler_split.Add(item.ToString());
                     }
-
-                    string[][] BoilerName = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "명칭", "번호 = '" + SelectBoiler_split[0].ToString() + "'");
                 }
                 else
                 {
                     SelectBoiler_split.Clear();
-                    SelectBoiler_split.Add(nonSplit);
-                    string[][] BoilerName = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "명칭", "번호 = '" + SelectBoiler_split[0].ToString() + "'");
+                    SelectBoiler_split.Add(nonSplit);                 
                 }
             }
         }
@@ -667,8 +644,8 @@ namespace main
 
         private double Calc_theta_ce(String ceType, String SLRL, String 설치위치, String 제어방식)
         {
-            double dtheta_str1 = 0.0, dtheta_str2 = 0.0, dtheta_ctr, dtheta_im_ctr, dtheta_roomaut, dtheta_hydr = 0.4, theta_dash_str = 0.0;
-            double dtheta_emb1, dtheta_emb2, dtheta_im_emt, dtheta_rad;
+            double dtheta_str1 = 0.0, dtheta_str2 = 0.0, dtheta_ctr = 0.0, dtheta_im_ctr = 0.0, dtheta_roomaut = 0.0, dtheta_hydr = 0.4, theta_dash_str = 0.0;
+            double dtheta_emb1 = 0.0, dtheta_emb2 = 0.0, dtheta_im_emt = 0.0, dtheta_rad = 0.0;
             double theta_ce;
             if (ceType == "방열기" || ceType == "실내기")
             {
@@ -676,10 +653,12 @@ namespace main
                 dtheta_emb1 = 0; dtheta_emb2 = 0; dtheta_im_emt = -0.3; dtheta_rad = 0; dtheta_im_ctr = 0;
 
                 string[][] Value_str1 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + SLRL + "' And 온도변수 = 'dtheta_str1'");
-                dtheta_str1 = Convert.ToDouble(Value_str1[0][0]);
+                if (Value_str1.Length > 0)
+                { dtheta_str1 = Convert.ToDouble(Value_str1[0][0]); }
 
                 string[][] Value_str2 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + 설치위치 + "'And 온도변수 = 'dtheta_str2'");
-                dtheta_str2 = Convert.ToDouble(Value_str2[0][0]);
+                if (Value_str2.Length > 0)
+                { dtheta_str2 = Convert.ToDouble(Value_str2[0][0]); }
             }
             else if (ceType == "팬코일유닛")
             {
@@ -688,17 +667,20 @@ namespace main
                 dtheta_str1 = 0.0;
 
                 string[][] Value_str2 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + 설치위치 + "'And 온도변수 = 'dtheta_str2'");
-                dtheta_str2 = Convert.ToDouble(Value_str2[0][0]);
+                if (Value_str2.Length > 0)
+                { dtheta_str2 = Convert.ToDouble(Value_str2[0][0]); }
             }
             else if (ceType == "복사난방")
             {
                 dtheta_im_emt = -0.2; dtheta_rad = 0; dtheta_im_ctr = 0;
 
                 string[][] Value_str1 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + 설치위치 + "'And 온도변수 = 'dtheta_str1'");
-                dtheta_str1 = Convert.ToDouble(Value_str1[0][0]);
+                if (Value_str1.Length > 0)
+                { dtheta_str1 = Convert.ToDouble(Value_str1[0][0]); }
                 dtheta_str2 = 0.0;
                 string[][] Value_emb1 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + 설치위치 + "'And 온도변수 = 'dtheta_emb1'");
-                dtheta_emb1 = Convert.ToDouble(Value_emb1[0][0]);
+                if (Value_emb1.Length > 0)
+                { dtheta_emb1 = Convert.ToDouble(Value_emb1[0][0]); }
                 dtheta_emb2 = 0.0;
             }
             else
@@ -706,15 +688,18 @@ namespace main
                 dtheta_emb1 = 0; dtheta_emb2 = 0; dtheta_im_emt = -0.3; dtheta_rad = 0; dtheta_im_ctr = 0;
 
                 string[][] Value = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '파워팬유닛' AND 구분 ='" + 제어방식 + "'And 온도변수 = 'theta_dash_str'");
-                theta_dash_str = 10 * Convert.ToDouble(Value[0][0]) / (16 * (0.5 * 4 - 1.1));
+                if (Value.Length > 0)
+                { theta_dash_str = 10 * Convert.ToDouble(Value[0][0]) / (16 * (0.5 * 4 - 1.1)); }
 
             }
 
             string[][] Value_ctr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "구분 ='" + 제어방식 + "'And 온도변수 = 'dtheta_ctr'");
-            dtheta_ctr = Convert.ToDouble(Value_ctr[0][0]);
+            if (Value_ctr.Length > 0)
+            { dtheta_ctr = Convert.ToDouble(Value_ctr[0][0]); }
 
             string[][] Value_roomaut = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "구분 ='" + 제어방식 + "'And 온도변수 = 'dtheta_roomaut'");
-            dtheta_roomaut = Convert.ToDouble(Value_roomaut[0][0]);
+            if (Value_roomaut.Length > 0)
+            { dtheta_roomaut = Convert.ToDouble(Value_roomaut[0][0]); }
 
 
             if (ceType == "방열기" || ceType == "실내기" || ceType == "팬코일유닛")
@@ -735,10 +720,10 @@ namespace main
 
         public void Calc_Qce()
         {
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,공급설비,설치위치", "난방시스템 = '" + HeatingNum + "' And 공급설비종류 = '" + ce1Type + "'");
+            ce_Type1.Clear();
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,공급설비,설치위치", "난방시스템 = '" + HeatingNum + "' And 공급설비종류 = '" + ce1Type + "'");
-                ce_Type1.Clear();
                 for (int n = 0; n < Value.Length; n++)
                 {
                     String Num, ce_ZoneNum, ceSystemNum, ceType, Location, Control;
@@ -756,12 +741,11 @@ namespace main
                     ce_Type1.Add(ce);
                 }
             }
-            catch { }
 
-            try
+            Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,공급설비,설치위치", "난방시스템 = '" + HeatingNum + "' And 공급설비종류 = '" + ce2Type + "'");
+            ce_Type2.Clear();
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,공급설비,설치위치", "난방시스템 = '" + HeatingNum + "' And 공급설비종류 = '" + ce2Type + "'");
-                ce_Type2.Clear();
                 for (int n = 0; n < Value.Length; n++)
                 {
                     String Num, ce_ZoneNum, ceSystemNum, ceType, Location, Control;
@@ -779,7 +763,6 @@ namespace main
                     ce_Type2.Add(ce);
                 }
             }
-            catch { }
 
 
             for (int k = 0; k < ce_Type1.Count; k++)
@@ -788,33 +771,26 @@ namespace main
 
                 for (int mth = 1; mth < 13; mth++)
                 {
-                    try
-                     {
-                  
-                        string[][] ceValue = Program.DB.querySQL(DB.type.ProjDB, "select a.요구량" + mth + "월, b.theta_i FROM Heating_ce_Form AS a INNER JOIN Zone_HCneed_Result AS b ON a.존번호 = b.번호 where a.공급설비 = '" + ce.Num() + "' and 번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
-                        //string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i, t_max", "번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
+                    string[][] ceValue = Program.DB.querySQL(DB.type.ProjDB, "select a.요구량" + mth + "월, b.theta_i FROM Heating_ce_Form AS a INNER JOIN Zone_HCneed_Result AS b ON a.존번호 = b.번호 where a.공급설비 = '" + ce.Num() + "' and 번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
+                    //string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i, t_max", "번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
+                    if (ceValue.Length > 0)
+                    {
                         Qh_ce[mth - 1] += Math.Max(Convert.ToDouble(ceValue[0][0]) * ce.theta_ce() / (Convert.ToDouble(ceValue[0][1]) - theta_e[mth - 1]), 0);
                         if (double.IsNaN(Qh_ce[mth - 1]))
                         {
                             Qh_ce[mth - 1] = 0;
                         }
-                    
-                      }
-                    catch { Qh_ce[mth - 1] = 0; }
-                    try
+                    }
+                    string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "소비전력_난방", "번호 = '" + ce.ceNum() + "'");
+                    if (Value2.Length > 0)
                     {
-                        string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "소비전력_난방", "번호 = '" + ce.ceNum() + "'");
-                        if (Value2.Length > 0)
+                        // Wh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value2[0][0]) * thrL[mth - 1], 0);
+                        Wh_ce[mth - 1] += 0;
+                        if (double.IsNaN(Wh_ce[mth - 1]))
                         {
-                            // Wh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value2[0][0]) * thrL[mth - 1], 0);
-                            Wh_ce[mth - 1] += 0;
-                            if (double.IsNaN(Wh_ce[mth - 1]))
-                            {
-                                Wh_ce[mth - 1] = 0;
-                            }
+                            Wh_ce[mth - 1] = 0;
                         }
                     }
-                    catch { Wh_ce[mth - 1] = 0; }
                 }
                 
 
@@ -824,30 +800,29 @@ namespace main
             {
                 CE ce = (CE)ce_Type2[k];
 
-                try
+                for (int mth = 1; mth < 13; mth++)
                 {
-                    for (int mth = 1; mth < 13; mth++)
+                    string[][] ceValue = Program.DB.querySQL(DB.type.ProjDB, "select a.요구량" + mth + "월, b.theta_i FROM Heating_ce_Form AS a INNER JOIN Zone_HCneed_Result AS b ON a.존번호 = b.번호 where a.공급설비 = '" + ce.Num() + "' and 번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
+                    // string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i", "번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
+                    if (ceValue.Length > 0)
                     {
-                        string[][] ceValue = Program.DB.querySQL(DB.type.ProjDB, "select a.요구량" + mth + "월, b.theta_i FROM Heating_ce_Form AS a INNER JOIN Zone_HCneed_Result AS b ON a.존번호 = b.번호 where a.공급설비 = '" + ce.Num() + "' and 번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
-                        // string[][] Value = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,theta_i", "번호 = '" + ce.ZoneNum() + "' And 난방_냉방 = '난방' and 비이용일_이용일 ='이용일' and 월 ='" + mth + "월'");
                         Qh_ce[mth - 1] += Math.Max(Convert.ToDouble(ceValue[0][0]) * ce.theta_ce() / (Convert.ToDouble(ceValue[0][1]) - theta_e[mth - 1]), 0);
                         if (double.IsNaN(Wh_ce[mth - 1]))
                         {
                             Qh_ce[mth - 1] = 0;
                         }
-                        string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "소비전력_난방", "번호 = '" + ce.ceNum() + "'");
-                        if (Value2.Length > 0)
+                    }
+                    string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "소비전력_난방", "번호 = '" + ce.ceNum() + "'");
+                    if (Value2.Length > 0)
+                    {
+                        // Wh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value2[0][0]) * thrL[mth], 0);
+                        Wh_ce[mth - 1] += 0;
+                        if (double.IsNaN(Wh_ce[mth - 1]))
                         {
-                            // Wh_ce[mth - 1] += Math.Max(Convert.ToDouble(Value2[0][0]) * thrL[mth], 0);
-                            Wh_ce[mth - 1] += 0;
-                            if (double.IsNaN(Wh_ce[mth - 1]))
-                            {
-                                Wh_ce[mth - 1] = 0;
-                            }
+                            Wh_ce[mth - 1] = 0;
                         }
                     }
                 }
-                catch { }
             }
         }
 
@@ -917,13 +892,11 @@ namespace main
             }
             //펌프
             {
-
-
-                try
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "A효율,B효율,유량,동력,양정,대수", "번호 = '" + Pump1 + "'");
+                string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "A효율,B효율,유량,동력,양정,대수", "번호 = '" + Pump2 + "'");
+                Pump.Clear();
+                if (Value.Length > 0)
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "A효율,B효율,유량,동력,양정,대수", "번호 = '" + Pump1 + "'");
-                    string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "A효율,B효율,유량,동력,양정,대수", "번호 = '" + Pump2 + "'");
-                    Pump.Clear();
                     for (int n = 0; n < Value.Length; n++)
                     {
                         String Num_pump; double A_pump; double B_pump; double V_pump; double Power_pump; double H_pump; double count_pump;
@@ -972,56 +945,58 @@ namespace main
                             Wh_d[mth] = Wh_hydr[mth] * e_hydr[mth];
                         }
                     }
-                    for (int n = 0; n < Value2.Length; n++)
+                    if (Value2.Length > 0)
                     {
-                        String Num_pump; double A_pump; double B_pump; double V_pump; double Power_pump; double H_pump; double count_pump;
-                        double Cp1, Cp2, Ppump, fhydr = 1, dPz, f_dpm;
-                        double[] Vz = new double[12], P_hydr = new double[12], fe = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
-                        double theta;
-                        Num_pump = Pump1;
-                        A_pump = Convert.ToDouble(Value2[0][0]);
-                        B_pump = Convert.ToDouble(Value2[0][1]);
-                        V_pump = Convert.ToDouble(Value2[0][2]);
-                        Power_pump = Convert.ToDouble(Value2[0][3]);
-                        H_pump = Convert.ToDouble(Value2[0][4]);
-                        count_pump = Convert.ToDouble(Value2[0][5]);
-                        Pump pump1 = new Pump(Num_pump, A_pump, B_pump, V_pump, Power_pump, H_pump, Pump1Count, Pump1Valve, Pump1Control); ;
-                        Pump.Add(pump1);
-                        string[][] Value_Control = Program.DB.getValue(DB.type.BaseDB_Heating, "펌프제어", "Cp1,Cp2", "펌프제어 = '" + Pump1Control + "'");
-                        Cp1 = Convert.ToDouble(Value_Control[0][0]);
-                        Cp2 = Convert.ToDouble(Value_Control[0][1]);
-                        if (Pump1Valve == "있음")
+                        for (int n = 0; n < Value2.Length; n++)
                         {
-                            fhydr = 1;
-                        }
-                        else
-                        {
-                            fhydr = 1.25;
-                        }
-                        if (Pump1 == null || Pump1 == "")
-                        {
-                            f_dpm = 1;
-                        }
-                        else
-                        {
-                            f_dpm = 0.45;
-                        }
-                        dPz = H_pump * 1000 * 9.81;
-                        for (int mth = 0; mth < 12; mth++)
-                        {
-                            if (Value2.Length > 0)
-                            { Vz[mth] = Qh_max_sum / 1000 * Convert.ToDouble(Value2[0][3]) * Pump2Count / (Convert.ToDouble(Value[0][3]) * Pump1Count + Convert.ToDouble(Value2[0][3]) * Pump2Count) * 3.6 / (dtheta_d[mth] * 4.18); } //2개일 경우 펌프 파워별로 나눠서 분담한 것으로 계산 
+                            String Num_pump; double A_pump; double B_pump; double V_pump; double Power_pump; double H_pump; double count_pump;
+                            double Cp1, Cp2, Ppump, fhydr = 1, dPz, f_dpm;
+                            double[] Vz = new double[12], P_hydr = new double[12], fe = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
+                            double theta;
+                            Num_pump = Pump1;
+                            A_pump = Convert.ToDouble(Value2[0][0]);
+                            B_pump = Convert.ToDouble(Value2[0][1]);
+                            V_pump = Convert.ToDouble(Value2[0][2]);
+                            Power_pump = Convert.ToDouble(Value2[0][3]);
+                            H_pump = Convert.ToDouble(Value2[0][4]);
+                            count_pump = Convert.ToDouble(Value2[0][5]);
+                            Pump pump1 = new Pump(Num_pump, A_pump, B_pump, V_pump, Power_pump, H_pump, Pump1Count, Pump1Valve, Pump1Control); ;
+                            Pump.Add(pump1);
+                            string[][] Value_Control = Program.DB.getValue(DB.type.BaseDB_Heating, "펌프제어", "Cp1,Cp2", "펌프제어 = '" + Pump1Control + "'");
+                            Cp1 = Convert.ToDouble(Value_Control[0][0]);
+                            Cp2 = Convert.ToDouble(Value_Control[0][1]);
+                            if (Pump1Valve == "있음")
+                            {
+                                fhydr = 1;
+                            }
                             else
-                            { Vz[mth] = Qh_max_sum / 1000 * 3.6 / (dtheta_d[mth] * 4.18); } //2개일 경우 펌프 파워별로 나눠서 분담한 것으로 계산 
-                            P_hydr[mth] = dPz * Vz[mth] / 3600;
-                            fe[mth] = (1.25 + 200 / P_hydr[mth]) * 2;
-                            e_hydr[mth] = fe[mth] * (Cp1 + Cp2 / beta_h_d[mth]) * 0.25 / 0.25;
-                            Wh_hydr[mth] = P_hydr[mth] / 1000 * beta_h_d[mth] * th_avg[mth] * f_dpm * 1;
-                            Wh_d[mth] += Wh_hydr[mth] * e_hydr[mth] + Wh_d[mth];
+                            {
+                                fhydr = 1.25;
+                            }
+                            if (Pump1 == null || Pump1 == "")
+                            {
+                                f_dpm = 1;
+                            }
+                            else
+                            {
+                                f_dpm = 0.45;
+                            }
+                            dPz = H_pump * 1000 * 9.81;
+                            for (int mth = 0; mth < 12; mth++)
+                            {
+                                if (Value2.Length > 0)
+                                { Vz[mth] = Qh_max_sum / 1000 * Convert.ToDouble(Value2[0][3]) * Pump2Count / (Convert.ToDouble(Value[0][3]) * Pump1Count + Convert.ToDouble(Value2[0][3]) * Pump2Count) * 3.6 / (dtheta_d[mth] * 4.18); } //2개일 경우 펌프 파워별로 나눠서 분담한 것으로 계산 
+                                else
+                                { Vz[mth] = Qh_max_sum / 1000 * 3.6 / (dtheta_d[mth] * 4.18); } //2개일 경우 펌프 파워별로 나눠서 분담한 것으로 계산 
+                                P_hydr[mth] = dPz * Vz[mth] / 3600;
+                                fe[mth] = (1.25 + 200 / P_hydr[mth]) * 2;
+                                e_hydr[mth] = fe[mth] * (Cp1 + Cp2 / beta_h_d[mth]) * 0.25 / 0.25;
+                                Wh_hydr[mth] = P_hydr[mth] / 1000 * beta_h_d[mth] * th_avg[mth] * f_dpm * 1;
+                                Wh_d[mth] += Wh_hydr[mth] * e_hydr[mth] + Wh_d[mth];
+                            }
                         }
                     }
                 }
-                catch { }
 
             }
         }
@@ -1069,9 +1044,9 @@ namespace main
                 if (double.IsNaN(Qh_s[mth])) { Qh_s[mth] = 0; }
             }
 
-            try
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "동력", "번호 = '" + StoragePump + "'");
+            if (Value.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "동력", "번호 = '" + StoragePump + "'");
                 for (int mth = 0; mth < 12; mth++)
                 {
                     double tPu = beta_h_s[mth] * 24 * dhrB[mth];
@@ -1079,7 +1054,6 @@ namespace main
                     if (double.IsNaN(Wh_s[mth])) { Wh_s[mth] = 0; }
                 }
             }
-            catch { }
         }
         public void Calc_beta_gen()
         {
@@ -1104,23 +1078,23 @@ namespace main
         {
             for (int n = 0; n < SelectBoiler_split.Count; n++)
             {
-                try
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "번호,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력", "번호 = '" + SelectBoiler_split[n] + "'");
+                if (Value.Length > 0)
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "번호,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력", "번호 = '" + SelectBoiler_split[n] + "'");
                     String Num = Value[0][0];
                     String Combi = Value[0][1];
                     Carrier = Value[0][2];
                     String Type = Value[0][3];
                     double Power = Convert.ToDouble(Value[0][4]);
-                    string[][] 기존신규 = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "프로젝트유형", "번호 = '" + HeatingNum+ "'");
-                    double eta_Pn = Convert.ToDouble(Value[0][5]) / 100 ;
-                    double eta_Pint = Convert.ToDouble(Value[0][6]) / 100 ;
-                    if (기존신규[0][0] =="1")
+                    string[][] 기존신규 = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "프로젝트유형", "번호 = '" + HeatingNum + "'");
+                    double eta_Pn = Convert.ToDouble(Value[0][5]) / 100;
+                    double eta_Pint = Convert.ToDouble(Value[0][6]) / 100;
+                    if (기존신규[0][0] == "1")
                     {
                         eta_Pn = eta_Pn * 0.95;
                         eta_Pint = eta_Pint * 0.95;
                     }
-                   
+
                     double W = Convert.ToDouble(Value[0][7]);
                     double W_0 = Convert.ToDouble(Value[0][8]);
                     double count = Convert.ToDouble(BoilerNum_split[n]);
@@ -1185,10 +1159,7 @@ namespace main
                         Wh_g_i[mth] = Ph_gen_aux[mth] * (thrL[mth] - tw_Pn_day * dop_mth_avg[mth]) + W_0 / 1000 * (24 * dmth[mth] - thrL[mth]);
                         Wh_g[mth] += Wh_g_i[mth];
                     }
-
                 }
-                catch { }
-
             }
         }
         public void Calc_Solar()
@@ -1201,34 +1172,37 @@ namespace main
             for (int k = 0; k < SelectSolar_split.Count; k++)
             {
                 Solarvalue = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "번호,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "번호 ='" + SelectSolar_split[k] + "'");
-                Solar solar = new Solar(Solarvalue[0][0], Convert.ToDouble(Solarvalue[0][1]), Convert.ToDouble(Solarvalue[0][2]), Convert.ToDouble(Solarvalue[0][3]), Convert.ToDouble(Solarvalue[0][4]), Convert.ToDouble(Solarvalue[0][5]), Convert.ToDouble(Solarvalue[0][6]), Convert.ToDouble(SolarNum_split[k]), SolarDirection_split[k].ToString(), SolarDegree_split[k].ToString());
-
-                for (int mth = 0; mth < 12; mth++)
+                if (Solarvalue.Length > 0)
                 {
-                    string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'방향='" + SolarDirection_split[k] + "' and 각도 ='" + SolarDegree_split[k] + "' and 기간 ='" + mth + 1 + "월'");
-                    qsol_HN_d = Convert.ToDouble(value[0][0]);
-                    qsol_HN_mth[mth] = qsol_HN_d * dmth[mth] * 24 / 1000;
+                    Solar solar = new Solar(Solarvalue[0][0], Convert.ToDouble(Solarvalue[0][1]), Convert.ToDouble(Solarvalue[0][2]), Convert.ToDouble(Solarvalue[0][3]), Convert.ToDouble(Solarvalue[0][4]), Convert.ToDouble(Solarvalue[0][5]), Convert.ToDouble(Solarvalue[0][6]), Convert.ToDouble(SolarNum_split[k]), SolarDirection_split[k].ToString(), SolarDegree_split[k].ToString());
 
-                    string[][] value2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select Max(일사량) from 기후데이터_전일사량 where 지역명 = '" + 지역[0][0] + "'방향 = '" + SolarDirection_split[k] + "' and 각도 = '" + SolarDegree_split[k] + "'");
-
-                    Ac = Qh_max_sum * 2 * 1.03 * 1.03 / Convert.ToDouble(value2[0][0]) / 24 * 1000;
-                    if (solar.M_Area() * solar.M_Count() / Ac < 1)
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        dtheta_korr = Math.Min(-20 + 20 * solar.M_Area() * solar.M_Count() / Ac, 0);
-                    }
-                    else
-                    {
-                        dtheta_korr = Math.Min(-14 + 14 * solar.M_Area() * solar.M_Count() / Ac, 0);
-                    }
-                    value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_태양열", "온도차", "지역명 ='" + 지역[0][0] + "'방위='" + SolarDirection_split[k] + "' and 기간 ='" + mth + 1 + "월'");
-                    eta[mth] = solar.eta() * solar._50() - solar.K1() * Convert.ToDouble(value[0][0]) / qsol_HN_d - solar.K2() * Convert.ToDouble(value[0][0]) * Convert.ToDouble(value[0][0]) / qsol_HN_d;
-                    qsol_mth[mth] = eta[mth] * qsol_HN_mth[mth];
-                    Qsol_mth[mth] = qsol_mth[mth] * solar.M_Area() * solar.M_Count() / 1.03 / 1.03;
+                        string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'방향='" + SolarDirection_split[k] + "' and 각도 ='" + SolarDegree_split[k] + "' and 기간 ='" + mth + 1 + "월'");
+                        qsol_HN_d = Convert.ToDouble(value[0][0]);
+                        qsol_HN_mth[mth] = qsol_HN_d * dmth[mth] * 24 / 1000;
 
-                    Qw_sol[mth] = Math.Min(Qsol_mth[mth], Qh_outg[mth] * 2) * Qh_outg[mth] / (Qh_outg[mth] + Qh_outg[mth]);
-                    Qh_sol[mth] = Math.Min(Qsol_mth[mth], Qh_outg[mth] * 2) * Qh_outg[mth] / (Qh_outg[mth] + Qh_outg[mth]);
+                        string[][] value2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select Max(일사량) from 기후데이터_전일사량 where 지역명 = '" + 지역[0][0] + "'방향 = '" + SolarDirection_split[k] + "' and 각도 = '" + SolarDegree_split[k] + "'");
 
-                    Ww_gen[mth] = 0.025 * Qw_sol[mth];
+                        Ac = Qh_max_sum * 2 * 1.03 * 1.03 / Convert.ToDouble(value2[0][0]) / 24 * 1000;
+                        if (solar.M_Area() * solar.M_Count() / Ac < 1)
+                        {
+                            dtheta_korr = Math.Min(-20 + 20 * solar.M_Area() * solar.M_Count() / Ac, 0);
+                        }
+                        else
+                        {
+                            dtheta_korr = Math.Min(-14 + 14 * solar.M_Area() * solar.M_Count() / Ac, 0);
+                        }
+                        value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_태양열", "온도차", "지역명 ='" + 지역[0][0] + "'방위='" + SolarDirection_split[k] + "' and 기간 ='" + mth + 1 + "월'");
+                        eta[mth] = solar.eta() * solar._50() - solar.K1() * Convert.ToDouble(value[0][0]) / qsol_HN_d - solar.K2() * Convert.ToDouble(value[0][0]) * Convert.ToDouble(value[0][0]) / qsol_HN_d;
+                        qsol_mth[mth] = eta[mth] * qsol_HN_mth[mth];
+                        Qsol_mth[mth] = qsol_mth[mth] * solar.M_Area() * solar.M_Count() / 1.03 / 1.03;
+
+                        Qw_sol[mth] = Math.Min(Qsol_mth[mth], Qh_outg[mth] * 2) * Qh_outg[mth] / (Qh_outg[mth] + Qh_outg[mth]);
+                        Qh_sol[mth] = Math.Min(Qsol_mth[mth], Qh_outg[mth] * 2) * Qh_outg[mth] / (Qh_outg[mth] + Qh_outg[mth]);
+
+                        Ww_gen[mth] = 0.025 * Qw_sol[mth];
+                    }
                 }
             }
 
@@ -1255,8 +1229,7 @@ namespace main
                 double[] 직팽인버터_비율_Pi = { 0.81, 0.96, 1 };//-7,2,7,
                 double[] 직팽없음_비율_Pi = { 0.81, 0.96, 1 };//-7,2,7,
                 double[] COP_standard = new double[4];
-
-                try
+                if(airHP.Length>0)
                 {
                     Num = airHP[0][0];
                     Carrier = airHP[0][1];
@@ -1309,58 +1282,58 @@ namespace main
                         W_2 = Pi_2 / COP_2;
                     }
                 }
-                catch { }
 
 
 
                 double[,] kbuh = new double[4, 12], DH = new double[3, 12], Wi = new double[3, 12], H = new double[5, 12], Wtime = new double[3, 12];
                 double[] fLg = new double[12];
-                try
+                for (int mth = 1; mth <= 12; mth++)
                 {
-                    for (int mth = 1; mth <= 12; mth++)
+                    for (int k = 1; k <= 4; k++)
                     {
-                        for (int k = 1; k <= 4; k++)
-                        {
-                            string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_하이브리드", "빈도", "지역명 ='" + 지역[0][0] + "' and 유형 ='선택운전' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
-                            kbuh[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]);
+                        string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_하이브리드", "빈도", "지역명 ='" + 지역[0][0] + "' and 유형 ='선택운전' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
+                        if (Value.Length > 0)
+                        { kbuh[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]); }
 
-                        }
-                    }
-                    for (int mth = 1; mth <= 12; mth++)
-                    {
-                        for (int k = 1; k <= 3; k++)
-                        {
-                            string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_일반", "빈도", "지역명 ='" + 지역[0][0] + "' and 단위 ='[Kh]' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
-                            DH[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]);
-                        }
-
-                        Wi[0, mth - 1] = Math.Max(DH[0, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]), 0);
-                        Wi[1, mth - 1] = Math.Max(DH[1, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]), 0); 
-                        Wi[2, mth - 1] = Math.Max(DH[2, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]) ,0);
-                       
-                    }
-
-                    for (int mth = 1; mth <= 12; mth++)
-                    {
-                        for (int k = 1; k <= 4; k++)
-                        {
-                            string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_일반", "빈도", "지역명 ='" + 지역[0][0] + "' and 단위 ='[h]' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
-                            H[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]);
-                        }
-
-                        Wtime[0, mth - 1] = H[0, mth - 1] / (H[0, mth - 1] + H[1, mth - 1] + H[2, mth - 1] + H[3, mth - 1] + H[4, mth - 1]);
-                        Wtime[1, mth - 1] = H[1, mth - 1] / (H[0, mth - 1] + H[1, mth - 1] + H[2, mth - 1] + H[3, mth - 1] + H[4, mth - 1]);
-                        Wtime[2, mth - 1] = H[2, mth - 1] / (H[0, mth - 1] + H[1, mth - 1] + H[2, mth - 1] + H[3, mth - 1] + H[4, mth - 1]);
-
-                        if (SupplyType == "직팽식")
-                        { fLg[mth - 1] = 1; }
-                        else
-                        {
-                            fLg[mth - 1] = Math.Min(1, 1 - (Math.Max(theta_av_gen[mth], 60) - 60) / dtheta_gen[mth]);
-                        }
                     }
                 }
-                catch { }
+                for (int mth = 1; mth <= 12; mth++)
+                {
+                    for (int k = 1; k <= 3; k++)
+                    {
+                        string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_일반", "빈도", "지역명 ='" + 지역[0][0] + "' and 단위 ='[Kh]' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
+                        if (Value.Length > 0)
+                        { DH[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]); }
+                    }
+
+                    Wi[0, mth - 1] = Math.Max(DH[0, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]), 0);
+                    Wi[1, mth - 1] = Math.Max(DH[1, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]), 0);
+                    Wi[2, mth - 1] = Math.Max(DH[2, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]), 0);
+
+                }
+
+                for (int mth = 1; mth <= 12; mth++)
+                {
+                    for (int k = 1; k <= 4; k++)
+                    {
+                        string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_일반", "빈도", "지역명 ='" + 지역[0][0] + "' and 단위 ='[h]' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
+                        if (Value.Length > 0)
+                        {
+                            H[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]);
+                        }
+                    }
+
+                    Wtime[0, mth - 1] = H[0, mth - 1] / (H[0, mth - 1] + H[1, mth - 1] + H[2, mth - 1] + H[3, mth - 1] + H[4, mth - 1]);
+                    Wtime[1, mth - 1] = H[1, mth - 1] / (H[0, mth - 1] + H[1, mth - 1] + H[2, mth - 1] + H[3, mth - 1] + H[4, mth - 1]);
+                    Wtime[2, mth - 1] = H[2, mth - 1] / (H[0, mth - 1] + H[1, mth - 1] + H[2, mth - 1] + H[3, mth - 1] + H[4, mth - 1]);
+
+                    if (SupplyType == "직팽식")
+                    { fLg[mth - 1] = 1; }
+                    else
+                    {
+                        fLg[mth - 1] = Math.Min(1, 1 - (Math.Max(theta_av_gen[mth], 60) - 60) / dtheta_gen[mth]);
+                    }
+                }
 
                 double[,] Qh_outgi = new double[3, 12];
 
@@ -1522,7 +1495,8 @@ namespace main
                             FC[mth] = 0.1;
                         }
                         string[][] Valuef = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프부하계수", "값", "구분 ='" + AirHPSupply_split[0] + "' AND FC ='" + FC[mth] + "'");
-                        fpint[mth] = Convert.ToDouble(Valuef[0][0]);
+                        if (Valuef.Length >0)
+                        { fpint[mth] = Convert.ToDouble(Valuef[0][0]); }
                     }
                     else
                     {
@@ -1539,7 +1513,8 @@ namespace main
                         {
                             Valuef = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프부하계수", "값", "구분 ='방열기' AND FC ='" + FC[mth] + "'");
                         }
-                        fpint[mth] = Convert.ToDouble(Valuef[0][0]);
+                        if (Valuef.Length > 0)
+                        { fpint[mth] = Convert.ToDouble(Valuef[0][0]); }
                     }
 
                     for (int k = 0; k < 3; k++)

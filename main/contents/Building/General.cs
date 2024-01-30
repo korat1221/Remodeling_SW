@@ -389,13 +389,13 @@ namespace main.contents
         }
         private void GrossArea_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (GrossArea_textBox.Text != null) { GrossArea = Convert.ToDouble(GrossArea_textBox.Text); }
+            if (GrossArea_textBox.Text != null && GrossArea_textBox.Text !="") { GrossArea = Convert.ToDouble(GrossArea_textBox.Text); }
             else { }
         }
 
         private void BuildingArea_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (BuildingArea_textBox.Text != null) {  BuildingArea = Convert.ToDouble(BuildingArea_textBox.Text); }
+            if (BuildingArea_textBox.Text != null && BuildingArea_textBox.Text !="") {  BuildingArea = Convert.ToDouble(BuildingArea_textBox.Text); }
             else { }
         }
         private void AboveGround_comboBox_SelectedIndexChanged(object sender, EventArgs e)

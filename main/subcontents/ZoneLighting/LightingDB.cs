@@ -72,23 +72,11 @@ namespace main.subcontents.ZoneLighting
             Light_dataGridView.Columns.Add("A8", "소비전력.Pi.[W]");
             Light_dataGridView.Columns.Add("A9", "광효율.ηLB.[lm/W]");
             Light_dataGridView.Columns.Add("A10", "조명계수.FL.[-]");
-            //table_Light.Columns.Add("번호", typeof(string));
-            //table_Light.Columns.Add("DB유형", typeof(string));
-            //table_Light.Columns.Add("등기구명칭", typeof(string));
-            //table_Light.Columns.Add("램프유형", typeof(string));
-            //table_Light.Columns.Add("제조사", typeof(string));
-            //table_Light.Columns.Add("안정기/컨버터", typeof(string));
-            //table_Light.Columns.Add("광속" + Environment.NewLine + "Fi[lm]", typeof(string));
-            //table_Light.Columns.Add("소비전력" + Environment.NewLine + "Pi[W]", typeof(string));
-            //table_Light.Columns.Add("광효율" + Environment.NewLine + "ηLB[lm/W]", typeof(string));
-            //table_Light.Columns.Add("조명계수" + Environment.NewLine + "FL[-]", typeof(string));
-
-
 
             //조명 사용자 DB 추가
-            try
+            string[][] User_Lighting = Program.DB.getValue(DB.type.ProjDB, "User_Lighting", "번호,DB유형,등기구명칭,램프유형,제조사,안정기_컨버터,광속,소비전력,광효율,조명계수", "");
+            if (User_Lighting.Length > 0)
             {
-                string[][] User_Lighting = Program.DB.getValue(DB.type.ProjDB, "User_Lighting", "번호,DB유형,등기구명칭,램프유형,제조사,안정기_컨버터,광속,소비전력,광효율,조명계수", "");
                 for (int n = 0; n < User_Lighting.Length; n++)
                 {
                     Light_dataGridView.Rows.Add();
@@ -97,24 +85,25 @@ namespace main.subcontents.ZoneLighting
                     {
                         Light_dataGridView.Rows[nRow].Cells[k + 1].Value = User_Lighting[n][k];
                     }
-                    //table_Light.Rows.Add(User_Lighting[n][0], User_Lighting[n][1], User_Lighting[n][2], User_Lighting[n][3], User_Lighting[n][4], User_Lighting[n][5], User_Lighting[n][6], User_Lighting[n][7], User_Lighting[n][8], User_Lighting[n][9]);
+                   
                 }
             }
-            catch { }
             //표준 DB
             string[][] Light = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_DB", "번호,DB유형,등기구명칭,램프유형,제조사,안정기_컨버터,광속,소비전력,광효율,조명계수", "");
-
-            for (int n = 0; n <Light.Length; n++)
+            if (Light.Length > 0)
             {
-                Light_dataGridView.Rows.Add();
-                int nRow = Light_dataGridView.Rows.Count - 1;
-                for (int k = 0; k < 8; k++)
+                for (int n = 0; n < Light.Length; n++)
                 {
-                    Light_dataGridView.Rows[nRow].Cells[k + 1].Value = Light[n][k];
+                    Light_dataGridView.Rows.Add();
+                    int nRow = Light_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 8; k++)
+                    {
+                        Light_dataGridView.Rows[nRow].Cells[k + 1].Value = Light[n][k];
+                    }
+                    Light_dataGridView.Rows[nRow].Cells[9].Value = Light[n][8];
+                    Light_dataGridView.Rows[nRow].Cells[10].Value = Light[n][9];
+                    //table_Light.Rows.Add(Light[n][0],Light[n][1],Light[n][2],Light[n][3],Light[n][4],Light[n][5], Light[n][6], Light[n][7], String.Format("{0:F2}", Convert.ToDouble(Light[n][8])), String.Format("{0:F2}", Convert.ToDouble(Light[n][9])));
                 }
-                Light_dataGridView.Rows[nRow].Cells[9].Value = Light[n][8];
-                Light_dataGridView.Rows[nRow].Cells[10].Value = Light[n][9];
-                //table_Light.Rows.Add(Light[n][0],Light[n][1],Light[n][2],Light[n][3],Light[n][4],Light[n][5], Light[n][6], Light[n][7], String.Format("{0:F2}", Convert.ToDouble(Light[n][8])), String.Format("{0:F2}", Convert.ToDouble(Light[n][9])));
             }
             //Light_dataGridView.DataSource = table_Light;
             Count_LightDB = Light.Length;

@@ -30,9 +30,11 @@ namespace main.subcontents.HeatingSystem
             visible_Carrier_ComboBox(DefaultUse);
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
-            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
-            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-
+            if (Image.Length > 0)
+            {
+                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
             
             
             HC_comboBox.Items.Clear();
@@ -150,47 +152,49 @@ namespace main.subcontents.HeatingSystem
             HP_dataGridView.Rows.Clear();
             if (DefaultUse == "기본DB 적용")
             {
-                if(Carrier =="전기")
+                if (Carrier == "전기")
                 {
                     string[][] CV = Program.DB.getValue(DB.type.BaseDB_Cooling, "AirCon", "번호,명칭,냉방표준성능,대기관련구분,대기전력,열원", "열원='" + Carrier + "'");
-                    
-                    for (int i = 0; i < CV.Length; i++)
+                    if (CV.Length > 0)
                     {
-                        string test = CV[i][1].ToString().Substring(0,3);
-                        CV[i][0] = test;
-                    }
-
-                    for (int k = 1; k < 6; k++)
-                    {
-                        string Level = k + "등급";
-                        
-                        for (int h = 0; h < CV.Length; h++)
+                        for (int i = 0; i < CV.Length; i++)
                         {
-                            if(Level == CV[h][0].ToString())
+                            string test = CV[i][1].ToString().Substring(0, 3);
+                            CV[i][0] = test;
+                        }
+
+                        for (int k = 1; k < 6; k++)
+                        {
+                            string Level = k + "등급";
+
+                            for (int h = 0; h < CV.Length; h++)
                             {
-                                if (HC == "냉난방")
+                                if (Level == CV[h][0].ToString())
                                 {
-                                    string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프", "정격COP,한랭지COP", "등급='" + Level + "' And 연료='" + Carrier + "'");
-                                    int nRow = HP_dataGridView.Rows.Add();
-                                    HP_dataGridView.Rows[nRow].Cells[1].Value = CV[h][0].ToString();
-                                    HP_dataGridView.Rows[nRow].Cells[2].Value = CV[h][1].ToString();
-                                    HP_dataGridView.Rows[nRow].Cells[3].Value = CV[h][2].ToString();
-                                    HP_dataGridView.Rows[nRow].Cells[4].Value = DefaultDB_Value[0][0].ToString();
-                                    HP_dataGridView.Rows[nRow].Cells[5].Value = DefaultDB_Value[0][1].ToString(); 
-                                    HP_dataGridView.Rows[nRow].Cells[6].Value = CV[h][3].ToString();
-                                    HP_dataGridView.Rows[nRow].Cells[7].Value = CV[h][4].ToString();
-                                    HP_dataGridView.Rows[nRow].Cells[8].Value = CV[h][5].ToString();
+                                    if (HC == "냉난방")
+                                    {
+                                        string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프", "정격COP,한랭지COP", "등급='" + Level + "' And 연료='" + Carrier + "'");
+                                        int nRow = HP_dataGridView.Rows.Add();
+                                        HP_dataGridView.Rows[nRow].Cells[1].Value = CV[h][0].ToString();
+                                        HP_dataGridView.Rows[nRow].Cells[2].Value = CV[h][1].ToString();
+                                        HP_dataGridView.Rows[nRow].Cells[3].Value = CV[h][2].ToString();
+                                        HP_dataGridView.Rows[nRow].Cells[4].Value = DefaultDB_Value[0][0].ToString();
+                                        HP_dataGridView.Rows[nRow].Cells[5].Value = DefaultDB_Value[0][1].ToString();
+                                        HP_dataGridView.Rows[nRow].Cells[6].Value = CV[h][3].ToString();
+                                        HP_dataGridView.Rows[nRow].Cells[7].Value = CV[h][4].ToString();
+                                        HP_dataGridView.Rows[nRow].Cells[8].Value = CV[h][5].ToString();
+                                    }
+                                    else
+                                    {
+                                        int nRow = HP_dataGridView.Rows.Add();
+                                        HP_dataGridView.Rows[nRow].Cells[1].Value = CV[h][0].ToString();
+                                        HP_dataGridView.Rows[nRow].Cells[2].Value = CV[h][1].ToString();
+                                        HP_dataGridView.Rows[nRow].Cells[3].Value = CV[h][2].ToString();
+                                        HP_dataGridView.Rows[nRow].Cells[4].Value = CV[h][3].ToString();
+                                        HP_dataGridView.Rows[nRow].Cells[5].Value = CV[h][4].ToString();
+                                        HP_dataGridView.Rows[nRow].Cells[6].Value = CV[h][5].ToString();
+                                    }
                                 }
-                                else
-                                {
-                                    int nRow = HP_dataGridView.Rows.Add();
-                                    HP_dataGridView.Rows[nRow].Cells[1].Value = CV[h][0].ToString();
-                                    HP_dataGridView.Rows[nRow].Cells[2].Value = CV[h][1].ToString();
-                                    HP_dataGridView.Rows[nRow].Cells[3].Value = CV[h][2].ToString();
-                                    HP_dataGridView.Rows[nRow].Cells[4].Value = CV[h][3].ToString();
-                                    HP_dataGridView.Rows[nRow].Cells[5].Value = CV[h][4].ToString();
-                                    HP_dataGridView.Rows[nRow].Cells[6].Value = CV[h][5].ToString();
-                                }           
                             }
                         }
                     }
@@ -198,31 +202,33 @@ namespace main.subcontents.HeatingSystem
                 else //가스일경우
                 {
                     string[][] CV = Program.DB.getValue(DB.type.BaseDB_Cooling, "AirCon", "번호,명칭,냉방표준성능,대기관련구분,대기전력,열원", "열원='" + Carrier + "'");
-
-                    for (int h = 0; h < CV.Length; h++)
+                    if (CV.Length > 0)
                     {
-                        if (HC == "냉난방")
+                        for (int h = 0; h < CV.Length; h++)
                         {
-                            string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프", "정격COP,한랭지COP", "연료='" + Carrier + "'");
-                            int nRow = HP_dataGridView.Rows.Add();
-                            HP_dataGridView.Rows[nRow].Cells[1].Value = "고효율";
-                            HP_dataGridView.Rows[nRow].Cells[2].Value = CV[h][1].ToString();
-                            HP_dataGridView.Rows[nRow].Cells[3].Value = CV[h][2].ToString();
-                            HP_dataGridView.Rows[nRow].Cells[4].Value = DefaultDB_Value[0][0].ToString();
-                            HP_dataGridView.Rows[nRow].Cells[5].Value = DefaultDB_Value[0][1].ToString();
-                            HP_dataGridView.Rows[nRow].Cells[6].Value = CV[h][3].ToString();
-                            HP_dataGridView.Rows[nRow].Cells[7].Value = CV[h][4].ToString();
-                            HP_dataGridView.Rows[nRow].Cells[8].Value = CV[h][5].ToString();
-                        }
-                        else
-                        {
-                            int nRow = HP_dataGridView.Rows.Add();
-                            HP_dataGridView.Rows[nRow].Cells[1].Value = "고효율";
-                            HP_dataGridView.Rows[nRow].Cells[2].Value = CV[h][1].ToString();
-                            HP_dataGridView.Rows[nRow].Cells[3].Value = CV[h][2].ToString();
-                            HP_dataGridView.Rows[nRow].Cells[4].Value = CV[h][3].ToString();
-                            HP_dataGridView.Rows[nRow].Cells[5].Value = CV[h][4].ToString();
-                            HP_dataGridView.Rows[nRow].Cells[6].Value = CV[h][5].ToString();
+                            if (HC == "냉난방")
+                            {
+                                string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프", "정격COP,한랭지COP", "연료='" + Carrier + "'");
+                                int nRow = HP_dataGridView.Rows.Add();
+                                HP_dataGridView.Rows[nRow].Cells[1].Value = "고효율";
+                                HP_dataGridView.Rows[nRow].Cells[2].Value = CV[h][1].ToString();
+                                HP_dataGridView.Rows[nRow].Cells[3].Value = CV[h][2].ToString();
+                                HP_dataGridView.Rows[nRow].Cells[4].Value = DefaultDB_Value[0][0].ToString();
+                                HP_dataGridView.Rows[nRow].Cells[5].Value = DefaultDB_Value[0][1].ToString();
+                                HP_dataGridView.Rows[nRow].Cells[6].Value = CV[h][3].ToString();
+                                HP_dataGridView.Rows[nRow].Cells[7].Value = CV[h][4].ToString();
+                                HP_dataGridView.Rows[nRow].Cells[8].Value = CV[h][5].ToString();
+                            }
+                            else
+                            {
+                                int nRow = HP_dataGridView.Rows.Add();
+                                HP_dataGridView.Rows[nRow].Cells[1].Value = "고효율";
+                                HP_dataGridView.Rows[nRow].Cells[2].Value = CV[h][1].ToString();
+                                HP_dataGridView.Rows[nRow].Cells[3].Value = CV[h][2].ToString();
+                                HP_dataGridView.Rows[nRow].Cells[4].Value = CV[h][3].ToString();
+                                HP_dataGridView.Rows[nRow].Cells[5].Value = CV[h][4].ToString();
+                                HP_dataGridView.Rows[nRow].Cells[6].Value = CV[h][5].ToString();
+                            }
                         }
                     }
                 }
@@ -230,21 +236,24 @@ namespace main.subcontents.HeatingSystem
             else
             {
                 string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "번호,명칭,연료,공급유형,난방정격용량,난방정격COP,난방정격소비전력,한랭지용량,한랭지COP,한랭지소비전력", "난방냉방 = '냉난방'");
-                for (int n = 0; n < User_Value.Length; n++)
+                if (User_Value.Length > 0)
                 {
+                    for (int n = 0; n < User_Value.Length; n++)
+                    {
 
-                    HP_dataGridView.Rows.Add();
-                    int nRow = HP_dataGridView.Rows.Count - 1;
-                    HP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
-                    HP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
-                    HP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
-                    HP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-                    HP_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
-                    HP_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][5]));
-                    HP_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][6]));
-                    HP_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][7]));
-                    HP_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][8]));
-                    HP_dataGridView.Rows[nRow].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][9]));
+                        HP_dataGridView.Rows.Add();
+                        int nRow = HP_dataGridView.Rows.Count - 1;
+                        HP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                        HP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                        HP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                        HP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                        HP_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
+                        HP_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][5]));
+                        HP_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][6]));
+                        HP_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][7]));
+                        HP_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][8]));
+                        HP_dataGridView.Rows[nRow].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][9]));
+                    }
                 }
 
 
@@ -318,27 +327,22 @@ namespace main.subcontents.HeatingSystem
         private void Load_SaveValue(String SelectHP_nonsplit)
         {
             reset();
-            try
+            string[] token = SelectHP_nonsplit.Split('+');
+            SelectHP_split.Clear();
+            foreach (var item in token)
             {
-                string[] token = SelectHP_nonsplit.Split('+');
-                SelectHP_split.Clear();
-                foreach (var item in token)
+                SelectHP_split.Add(item.ToString());
+            }
+            for (int k = 0; k < SelectHP_split.Count; k++)
+            {
+                for (int n = 0; n < HP_dataGridView.Rows.Count; n++)
                 {
-                    SelectHP_split.Add(item.ToString());
-                }
-                for (int k = 0; k < SelectHP_split.Count; k++)
-                {
-                    for (int n = 0; n < HP_dataGridView.Rows.Count; n++)
+                    if (HP_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectHP_split[k].ToString())
                     {
-                        if (HP_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectHP_split[k].ToString())
-                        {
-                            HP_dataGridView.Rows[n].Cells[0].Value = true;
-                        }
+                        HP_dataGridView.Rows[n].Cells[0].Value = true;
                     }
                 }
-
             }
-            catch { }
         }
 
     }
