@@ -179,6 +179,10 @@ namespace main.contents.Building
         {
             if (Gas_SelectColumn > 1)
             { Gas_kWh_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(Gas_m3_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value.ToString()) * 43.1 * 0.277778); }
+            else
+            {
+                Gas_kWh_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(Gas_m3_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value.ToString()));
+            }
         }
 
         private void Gas_updateGraph()
@@ -454,6 +458,7 @@ namespace main.contents.Building
                           + "'", "연료,연도,월,단위");
                 }
             }
+            MessageBox.Show("저장 되었습니다.");
         }
 
 

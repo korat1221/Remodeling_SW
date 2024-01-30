@@ -1024,7 +1024,7 @@ namespace main.contents.Result
                     Saving_mth_avg_전기 = Saving_mth_avg_전기 / 12;
                     SavingPercent_mth_avg_전기 = SavingPercent_mth_avg_전기 / 12;
 
-                    __data[42].Add(new { idx = i, val = (Saving_a_전기).ToString("0.0") }); //연간 절감량
+                    __data[42].Add(new { idx = i, val = (Saving_a_전기).ToString("0.0") + " kWh/a" }); //연간 절감량
                     __data[43].Add(new { idx = i, val = Saving_mth_avg_전기.ToString("0.0") }); //월평균 절감량
                     __data[44].Add(new { idx = i, val = ((Saving_a_전기 / Qtot_a2_전기) * 100).ToString("0.0") + "%" }); //연간 절감율
                     __data[45].Add(new { idx = i, val = SavingPercent_mth_avg_전기.ToString("0.0") + "%" }); //월평균 절감율 
@@ -1268,7 +1268,7 @@ namespace main.contents.Result
                     Saving_mth_avg_가스 = Saving_mth_avg_가스 / 12;
                     SavingPercent_mth_avg_가스 = SavingPercent_mth_avg_가스 / 12;
 
-                    __data[92].Add(new { idx = i, val = (Saving_a_가스).ToString("0.0") }); //연간 절감량
+                    __data[92].Add(new { idx = i, val = (Saving_a_가스).ToString("0.0")+ " kWh/a" }); //연간 절감량
                     __data[93].Add(new { idx = i, val = Saving_mth_avg_가스.ToString("0.0") }); //월평균 절감량
                     __data[94].Add(new { idx = i, val = ((Saving_a_가스 / Qtot_a2_가스) * 100).ToString("0.0") + "%" }); //연간 절감율
                     __data[95].Add(new { idx = i, val = SavingPercent_mth_avg_가스.ToString("0.0") + "%" }); //월평균 절감율 
@@ -1346,7 +1346,7 @@ namespace main.contents.Result
                     data.Add(new { cname = "qbasef_a_area_new_gas", data = __data[90] });
                     data.Add(new { cname = "qf_tot_a_area_new_gas", data = __data[91] });
 
-                    data.Add(new { cname = "Saving_a_gas", data = __data[92] });
+                    data.Add(new { cname = "Saving_a_gas", data = __data[92]+ " kWh/a" });
                     data.Add(new { cname = "Saving_mth_avg_gas", data = __data[93] });
                     data.Add(new { cname = "SavingPercent_a_gas", data = __data[94] });
                     data.Add(new { cname = "SavingPercent_mth_avg_gas", data = __data[95] });
