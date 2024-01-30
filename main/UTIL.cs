@@ -9,6 +9,7 @@ namespace main
     internal class UTIL
     {
         public bool fromCode = false;
+        public bool ffCode = false;
         public void trim(string[] arr)
         {
             int i = -1;

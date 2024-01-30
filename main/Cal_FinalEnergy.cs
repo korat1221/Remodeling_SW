@@ -84,7 +84,7 @@ namespace main
             }
             for (int mth = 0; mth < 12; mth++)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Result", "연료,QC_ce,QC_d,QC_s,QC_out,QC_f", "월='" + (mth + 1).ToString() + "월'");
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Result", "Fuel,QC_ce,QC_d,QC_s,QC_out,QC_f", "월='" + (mth + 1).ToString() + "월'");
                 if (Value.Length > 0)
                 {
                     for (int i = 0; i < Value.Length; i++) //시스템별

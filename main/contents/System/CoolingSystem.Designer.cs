@@ -122,6 +122,7 @@
             label7 = new Label();
             ImagePanel = new Panel();
             panel4 = new Panel();
+            eva = new PictureBox();
             Pump_pictureBox = new PictureBox();
             ce3_pictureBox = new PictureBox();
             ce2_pictureBox = new PictureBox();
@@ -174,7 +175,6 @@
             label34 = new Label();
             InstallTotal_textBox = new TextBox();
             label35 = new Label();
-            button1 = new Button();
             panel2.SuspendLayout();
             tabControl1.SuspendLayout();
             Generator_tabpage.SuspendLayout();
@@ -197,6 +197,7 @@
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).BeginInit();
             ImagePanel.SuspendLayout();
             panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)eva).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pump_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ce3_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ce2_pictureBox).BeginInit();
@@ -1328,6 +1329,7 @@
             // panel4
             // 
             panel4.BackgroundImageLayout = ImageLayout.None;
+            panel4.Controls.Add(eva);
             panel4.Controls.Add(Pump_pictureBox);
             panel4.Controls.Add(ce3_pictureBox);
             panel4.Controls.Add(ce2_pictureBox);
@@ -1342,6 +1344,15 @@
             panel4.Size = new Size(663, 260);
             panel4.TabIndex = 4;
             panel4.Paint += panel4_Paint;
+            // 
+            // eva
+            // 
+            eva.Location = new Point(54, 65);
+            eva.Name = "eva";
+            eva.Size = new Size(46, 35);
+            eva.TabIndex = 162;
+            eva.TabStop = false;
+            eva.Visible = false;
             // 
             // Pump_pictureBox
             // 
@@ -1922,23 +1933,12 @@
             label35.TabIndex = 154;
             label35.Text = "설치대수:";
             // 
-            // button1
-            // 
-            button1.Location = new Point(1038, 602);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 157;
-            button1.Text = "계산";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
-            // 
             // CoolingSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(button1);
             Controls.Add(label34);
             Controls.Add(InstallTotal_textBox);
             Controls.Add(label35);
@@ -1983,6 +1983,7 @@
             ImagePanel.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)eva).EndInit();
             ((System.ComponentModel.ISupportInitialize)Pump_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)ce3_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)ce2_pictureBox).EndInit();
@@ -2126,6 +2127,6 @@
         private CustomComboBox ce3Type_comboBox;
         private Label G_label;
         private PictureBox Pump_pictureBox;
-        private Button button1;
+        private PictureBox eva;
     }
 }

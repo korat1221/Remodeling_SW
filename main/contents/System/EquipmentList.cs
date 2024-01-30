@@ -2928,37 +2928,38 @@ namespace main.contents
 
         private void DefaultAirCooler_Add_button_Click(object sender, EventArgs e)
         {
-            Cooling_AirCooler AirCooler = new Cooling_AirCooler();
-            DialogResult result = AirCooler.ShowDialog();
+            ArrayList SelectHP = new ArrayList();
+            int nRow = AirCooler_dataGridView.Rows.Add();
+            Load_AirCooler_Num();
+            AirCooler_dataGridView.Rows[nRow].Cells[2].Value = "기본";
+
+            AirHP_DB air_db = new AirHP_DB("기본DB 적용", null);
+            DialogResult result = air_db.ShowDialog();
             if (result == DialogResult.OK)
             {
-                if (AirCooler.SelectAirCooler != null)
+                try
                 {
-                    foreach (string SAC in AirCooler.SelectAirCooler)
+                    if (air_db.SelectHP.Contains("등급"))
                     {
-                        string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Cooling, "AirCon", "번호,냉방표준성능,대기전력,열원",
-                            "번호='" + SAC + "'");
-                        if (DefaultDB_Value.Length > 0)
+
+                        string[] token = air_db.SelectHP.Split("등급");
+                        SelectHP.Clear();
+                        foreach (var item in token)
                         {
-                            int nRow = AirCooler_dataGridView.Rows.Add();
-                            Load_AirCooler_Num();
-                            AirCooler_dataGridView.Rows[nRow].Cells[2].Value = "기본";
-                            AirCooler_dataGridView.Rows[nRow].Cells[3].Value = null;
-                            AirCooler_dataGridView.Rows[nRow].Cells[4].Value = null;
-                            AirCooler_dataGridView.Rows[nRow].Cells[5].Value = null;
-                            AirCooler_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[0][1];
-                            AirCooler_dataGridView.Rows[nRow].Cells[7].Value = null;
-                            AirCooler_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[0][3];
-                            AirCooler_dataGridView.Rows[nRow].Cells[9].Value = DefaultDB_Value[0][2];
-                            AirCooler_dataGridView.Rows[nRow].Cells[10].Value = null;
-                            AirCooler_dataGridView.Rows[nRow].Cells[11].Value = null;
-                            AirCooler_dataGridView.Rows[nRow].Cells[12].Value = null;
-                            AirCooler_dataGridView.Rows[nRow].Cells[13].Value = null;
-                            AirCooler_dataGridView.Rows[nRow].Cells[14].Value = null;
-                            AirCooler_dataGridView.Rows[nRow].Cells[15].Value = null;
+                            SelectHP.Add(item.ToString());
                         }
+                        string[][] CoolingValue = Program.DB.getValue(DB.type.BaseDB_Cooling, "AirCon", "냉방표준성능,대기전력", "명칭='" + SelectHP[0].ToString() + "등급<4kW' and 열원='" + air_db.Carrier + "'");
+
+                        AirCooler_dataGridView.Rows[nRow].Cells[8].Value = air_db.Carrier;
+                        if (CoolingValue.Length > 0)
+                        {
+                            AirCooler_dataGridView.Rows[nRow].Cells[6].Value = CoolingValue[0][0];
+                            AirCooler_dataGridView.Rows[nRow].Cells[9].Value = CoolingValue[0][1];
+                        }
+
                     }
                 }
+                catch { }
             }
         }
 

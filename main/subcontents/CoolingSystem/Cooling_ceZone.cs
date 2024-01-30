@@ -188,7 +188,7 @@ namespace main.subcontents.CoolingSystem
             String[][] Size = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form", "존번호", "냉방시스템 = '" + SystemNum + "' And 공급설비종류 = '" + ceType + "'");
             if (Size.Length > 0)
             {
-                Program.DB.deleteValue(DB.type.ProjDB, "Heating_ce_Form", "냉방시스템 = '" + SystemNum + "' And 공급설비종류 = '" + ceType + "'");
+                Program.DB.deleteValue(DB.type.ProjDB, "Cooling_ce_Form", "냉방시스템 = '" + SystemNum + "' And 공급설비종류 = '" + ceType + "'");
             }
 
             int sum = 1;
