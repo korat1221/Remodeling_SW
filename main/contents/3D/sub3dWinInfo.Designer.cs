@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(sub3dWINInfo));
             tabControl1 = new CustomTabControl();
             tabPage1 = new TabPage();
             label12 = new Label();
@@ -93,10 +92,6 @@
             Ug_off_textBox = new TextBox();
             label29 = new Label();
             BlindControl_textBox = new TextBox();
-            label21 = new Label();
-            pictureBox3 = new PictureBox();
-            pictureBox4 = new PictureBox();
-            label22 = new Label();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             BlindColor_textBox = new TextBox();
             label17 = new Label();
@@ -118,8 +113,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView22).BeginInit();
             Blind_tabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
@@ -747,10 +740,6 @@
             Blind_tabPage.Controls.Add(Ug_off_textBox);
             Blind_tabPage.Controls.Add(label29);
             Blind_tabPage.Controls.Add(BlindControl_textBox);
-            Blind_tabPage.Controls.Add(label21);
-            Blind_tabPage.Controls.Add(pictureBox3);
-            Blind_tabPage.Controls.Add(pictureBox4);
-            Blind_tabPage.Controls.Add(label22);
             Blind_tabPage.Controls.Add(webView21);
             Blind_tabPage.Controls.Add(BlindColor_textBox);
             Blind_tabPage.Controls.Add(label17);
@@ -939,50 +928,14 @@
             BlindControl_textBox.TabIndex = 154;
             BlindControl_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label21
-            // 
-            label21.AutoSize = true;
-            label21.Location = new Point(6, 286);
-            label21.Name = "label21";
-            label21.Size = new Size(120, 15);
-            label21.TabIndex = 153;
-            label21.Text = "일사량(kWh/m²·mth)";
-            // 
-            // pictureBox3
-            // 
-            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(130, 279);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(28, 26);
-            pictureBox3.TabIndex = 152;
-            pictureBox3.TabStop = false;
-            // 
-            // pictureBox4
-            // 
-            pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
-            pictureBox4.Location = new Point(107, 254);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(51, 19);
-            pictureBox4.TabIndex = 151;
-            pictureBox4.TabStop = false;
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Location = new Point(6, 254);
-            label22.Name = "label22";
-            label22.Size = new Size(67, 15);
-            label22.TabIndex = 150;
-            label22.Text = "차양가동율";
-            // 
             // webView21
             // 
             webView21.AllowExternalDrop = true;
             webView21.CreationProperties = null;
             webView21.DefaultBackgroundColor = Color.White;
-            webView21.Location = new Point(164, 229);
+            webView21.Location = new Point(0, 229);
             webView21.Name = "webView21";
-            webView21.Size = new Size(781, 192);
+            webView21.Size = new Size(945, 192);
             webView21.TabIndex = 149;
             webView21.ZoomFactor = 1D;
             // 
@@ -1139,8 +1092,6 @@
             ((System.ComponentModel.ISupportInitialize)webView22).EndInit();
             Blind_tabPage.ResumeLayout(false);
             Blind_tabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
         }
@@ -1219,10 +1170,6 @@
         private TextBox Ug_off_textBox;
         private Label label29;
         private TextBox BlindControl_textBox;
-        private Label label21;
-        private PictureBox pictureBox3;
-        private PictureBox pictureBox4;
-        private Label label22;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
         private TextBox BlindColor_textBox;
         private Label label17;

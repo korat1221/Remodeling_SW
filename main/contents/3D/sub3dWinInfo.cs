@@ -221,10 +221,6 @@ namespace main.contents
                         label18.Visible = true;
                         label17.Visible = true;
                         label25.Visible = true;
-                        label22.Visible = true;
-                        label21.Visible = true;
-                        pictureBox4.Visible = true;
-                        pictureBox3.Visible = true;
 
                         BlindName_textBox.Text = BlindValue[0][0];
                         BlindType_textBox.Text = BlindValue[0][1];
@@ -250,10 +246,6 @@ namespace main.contents
                         label18.Visible = false;
                         label17.Visible = false;
                         label25.Visible = false;
-                        label22.Visible = false;
-                        label21.Visible = false;
-                        pictureBox4.Visible = false;
-                        pictureBox3.Visible = false;
                     }
 
                 }
@@ -283,7 +275,7 @@ namespace main.contents
                 res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Direction + "' And 각도='" + Slope + "˚'And 기간 ='" + (12) + "월'");
                 s2 += Convert.ToDouble(res2[0][0]);
 
-                runScript("drawChart3([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150}])");
+                runScript("drawChart4([{type:\"line\",label:\"차양가동율\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100,tension: 0.4},{type:\"bar\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150,barPercentage:0.7}])");
 
             }
             catch { }
