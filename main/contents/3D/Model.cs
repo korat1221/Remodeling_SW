@@ -124,6 +124,7 @@ namespace main.contents
                             for (int k = 0; k < Win.Length; k++)
                             {
                                 ZoneShade zoneshade = new ZoneShade(Win[k][0]);
+                                //ZoneShade zoneshade = new ZoneShade("3F_Zone015_WIN_3");
                                 //zoneshade.Calc_방위각();
                                 //MessageBox.Show(zoneshade.태양우측방위각[1].ToString());
                                 zoneshade.Calc_방위각();

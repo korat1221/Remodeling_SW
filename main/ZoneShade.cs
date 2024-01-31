@@ -46,7 +46,7 @@ namespace main
             {
 
                 //string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,외피유형", "아이디 = '" + "S6_N_WIN_1" + "'");   //창호 혹은 커튼월 가로 세로 나와야함 (임시로 가로길이, 세로길이라고함)
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,외피유형", "번호 = '" + ID + "'");   //창호 혹은 커튼월 가로 세로 나와야함 (임시로 가로길이, 세로길이라고함)
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,외피유형,창호너비,창호높이", "번호 = '" + ID + "'");  
                 
                 우측돌출부각도 = Convert.ToDouble(rec[0][1]);
                 좌측돌출부각도 = Convert.ToDouble(rec[0][2]);
@@ -58,8 +58,8 @@ namespace main
                 주변지형물높이 = Convert.ToDouble(rec[0][8]);
                 방위 = rec[0][10];
                 경사 = Convert.ToDouble(rec[0][11]);
-                창호가로길이 = 1;
-                창호세로길이 = 2;
+                창호가로길이 = Convert.ToDouble(rec[0][13]);
+                창호세로길이 = Convert.ToDouble(rec[0][14]);
                 //rec[0][12] = 창호가로길이.ToString();
                 //rec[0][13] = 창호세로길이.ToString();
 
@@ -84,7 +84,7 @@ namespace main
                 for (int i = 0; i < 12; i++)
                 {
                     //string[][] aa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명= '" + ValueA[0][0] + "' AND 방향 = '" + rec[0][10] + "' AND 각도 ='" + rec[0][11] + "˚" + "' AND 기간 ='" + (i + 1).ToString() + "월" + "'");
-                    string[][] aa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명= '" + ValueA[0][0] + "' AND 방향 = '" + "남" + "' AND 각도 ='" + "90" + "˚" + "' AND 기간 ='" + (i + 1).ToString() + "월" + "'");
+                    string[][] aa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명= '" + ValueA[0][0] + "' AND 방향 = '" + rec[0][10] + "' AND 각도 ='" + rec[0][11] + "˚" + "' AND 기간 ='" + (i + 1).ToString() + "월" + "'");
                     태양고도각[i] = Convert.ToDouble(aa[0][0]);
                     //MessageBox.Show(태양고도각[i].ToString());
 
@@ -229,7 +229,7 @@ namespace main
             for (int i = 0; i < 12; i++)
             {
                 수평음영길이[i] = Fsh_obs.수평(창호가로길이, 좌측돌출부음영길이[i], 우측돌출부음영길이[i]);
-                수직음영길이[i] = Fsh_obs.수직(창호세로길이, 지형물로인한음영길이[i], 지형물로인한음영길이[i]);
+                수직음영길이[i] = Fsh_obs.수직(창호세로길이, 지형물로인한음영길이[i], 상부돌출부음영길이[i]);
                 직달일사감소[i] = Fsh_obs.직달일사(수직음영길이[i], 수평음영길이[i], 창호세로길이, 창호가로길이);
                 최종음영계수[i] = Fsh_obs.음영(직달일사감소[i], 설치면직달[i], 설치면산란[i]);
             }
