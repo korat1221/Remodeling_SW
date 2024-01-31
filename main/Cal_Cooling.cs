@@ -128,7 +128,7 @@ namespace main
             CoolingName = value[0][0]; //명칭
             CGType = value[0][1]; //냉방설비
             Power_f = Convert.ToDouble(value[0][2]); //냉방출력
-            EER_f = Convert.ToDouble(value[0][3]); //냉방성능
+            EER_f = Convert.ToDouble(value[0][3]) * 0.7; //국내 냉방성능 시험은 EN 규정보다 높게 평가 됨
             Pctrl_f = Convert.ToDouble(value[0][4]); //대기전력
             Number_f = Convert.ToInt32(value[0][5]); //설치대수
             Carrier = value[0][6]; //연료
@@ -182,8 +182,11 @@ namespace main
                     Humidity[i] = Convert.ToDouble(OutdoorClimate[i][1]);
                     WetTemperature[i] = -5.809 + 0.058 * Ref*100 + 0.697 * OutdoorTemperature[i] + 0.003 * Ref * OutdoorTemperature[i]*100;
                     mth[i] = OutdoorClimate[i][2];
-
                 }
+
+                string[][] v = Program.DB.getValue(DB.type.BaseDB_Cooling, "냉동기설치위치", "상승온도차", "위치 = '"+ CSource +"'");
+                Theta_Around = Convert.ToDouble(v[0][0]);
+
             }
             catch { }
 
@@ -369,54 +372,65 @@ namespace main
                 }
                 else fC_mult = 1;
 
-                double BetaRate = 0.05;
+                //double BetaRate = 0.05;
+                
 
                 for (int i = 0; i < 12; i++) //냉방존 검토
                 {
+                    double B3 = 12;
+                    double OutT = OutdoorTemperature[i] + Theta_Around;
+                    
                     for (int h = 0; h < 10; h++)
                     {
-                        if (BC_z[i] < 0.05)
+                        if (OutT <= 12)
                         {
-                            fC_PL_z[i] = 1;
+                            fC_PL_z[i] = Convert.ToDouble(value[0][0]);
                             break;
                         }
-                        else if (BC_z[i] < BetaRate)
+                        else if (OutT <= B3)
                         {
                             fC_PL_z[i] = Convert.ToDouble(value[0][h]);
                             break;
                         }
+                        else if(OutT >= 31.8)
+                        {
+                            fC_PL_z[i] = Convert.ToDouble(value[0][9]);
+                            break;
+                        }
                         else
                         {
-                            BetaRate = BetaRate + 0.1;
+                            B3 = B3 + 2.2;
                         }
                     }
                 }
 
-                for (int i = 0; i < 12; i++) //공조기 검토
-                {
-                    for (int h = 0; h < 10; h++)
-                    {
-                        if (BC_ahu[i] < 0.05)
-                        {
-                            fC_PL_ahu[i] = 1;
-                            break;
-                        }
-                        else if (BC_ahu[i] < BetaRate)
-                        {
-                            fC_PL_ahu[i] = Convert.ToDouble(value[0][h]);
-                            break;
-                        }
-                        else
-                        {
-                            BetaRate = BetaRate + 0.1;
-                        }
-                    }
-                }
+                //for (int i = 0; i < 12; i++) //공조기 검토
+                //{
+                //    for (int h = 0; h < 10; h++)
+                //    {
+                //        if (BC_ahu[i] < 0.05)
+                //        {
+                //            fC_PL_ahu[i] = 1;
+                //            break;
+                //        }
+                //        else if (BC_ahu[i] < BetaRate)
+                //        {
+                //            fC_PL_ahu[i] = Convert.ToDouble(value[0][h]);
+                //            break;
+                //        }
+                //        else
+                //        {
+                //            BetaRate = BetaRate + 0.1;
+                //        }
+                //    }
+                //}
                 
             }
-            else
+            else //그외의 경우(공냉식,수냉식등)
             {
                 string[][] v2 = Program.DB.getValue(DB.type.BaseDB_Cooling, "부분부하계수", "P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,종류,번호,fC_M", " 설비유형= '" + CGType + "' And 제어유형 = '" + Control_f + "' And 공급유형 = '" + CompType + "'");
+                
+                
                 if (Number_f >= 2)
                 {
                     fC_mult = Convert.ToDouble(v2[0][12]);
@@ -447,7 +461,9 @@ namespace main
                             B2 = B2 + 0.1;
                         }
                     }
+
                 }
+                   
 
                 for (int i = 0; i < 12; i++) //공조기 검토
                 {
@@ -468,7 +484,9 @@ namespace main
                             B2 = B2 + 0.1;
                         }
                     }
+                    
                 }
+               
             }
 
         }
@@ -601,7 +619,7 @@ namespace main
                         else
                         {
                             double son1 = 273 + Theta_IC[i] - Theta_evad;
-                            double son2 = 273 + OutdoorTemperature[i] + Theta_Around + Theta_cond - (273 + Theta_IC[i] - Theta_evad);
+                            double son2 = 273 + OutdoorTemperature[i] + Theta_Around - Theta_cond - (273 + Theta_IC[i] - Theta_evad);
 
                             double mutter1 = ThetaC_gen_hr_req_in - Theta_evad;
                             double mutter2 = (ThetaC_gen_req_out + Theta_cond) - (ThetaC_gen_hr_req_in - Theta_evad);
