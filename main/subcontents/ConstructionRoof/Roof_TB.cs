@@ -66,7 +66,7 @@ namespace main.subcontents.ConstructionRoof
             {
                 TB_Type_comboBox.Items.Clear();
                 TB_Type_comboBox.Items.Add("트러스(점형)");
-                TB_Type_comboBox.Items.Add("트러스(점형)");
+                TB_Type_comboBox.Items.Add("트러스(선형)");
             }
             if (RoofType == "내부덧댐")
             {

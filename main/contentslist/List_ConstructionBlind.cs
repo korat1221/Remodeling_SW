@@ -126,7 +126,7 @@ namespace main.contentslist
             String Blank = "";
             // WallList.Rows.Clear();
             dataGridView1.Rows.Clear();
-            if(List.Length > 0)
+            if (List.Length > 0)
             {
                 for (int n = 0; n < List.Length; n++)
                 {

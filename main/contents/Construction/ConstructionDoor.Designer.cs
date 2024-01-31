@@ -64,7 +64,7 @@
             label22 = new Label();
             label27 = new Label();
             label86 = new Label();
-            DoorU_textBox = new TextBox();
+            UD2_textBox = new TextBox();
             label87 = new Label();
             GlassU_textBox = new TextBox();
             label84 = new Label();
@@ -89,7 +89,7 @@
             DoorDB_button = new Button();
             αp_label = new Label();
             GlassArea_label = new Label();
-            g_textBox = new TextBox();
+            UD1_textBox = new TextBox();
             Ug_unit_label = new Label();
             abs_textBox = new TextBox();
             UCW_g_label = new Label();
@@ -437,7 +437,7 @@
             panel2.Controls.Add(label22);
             panel2.Controls.Add(label27);
             panel2.Controls.Add(label86);
-            panel2.Controls.Add(DoorU_textBox);
+            panel2.Controls.Add(UD2_textBox);
             panel2.Controls.Add(label87);
             panel2.Controls.Add(GlassU_textBox);
             panel2.Controls.Add(label84);
@@ -462,7 +462,7 @@
             panel2.Controls.Add(DoorDB_button);
             panel2.Controls.Add(αp_label);
             panel2.Controls.Add(GlassArea_label);
-            panel2.Controls.Add(g_textBox);
+            panel2.Controls.Add(UD1_textBox);
             panel2.Controls.Add(Ug_unit_label);
             panel2.Controls.Add(abs_textBox);
             panel2.Controls.Add(UCW_g_label);
@@ -625,18 +625,18 @@
             label86.TabIndex = 168;
             label86.Text = "W/m²·K";
             // 
-            // DoorU_textBox
+            // UD2_textBox
             // 
-            DoorU_textBox.BackColor = Color.White;
-            DoorU_textBox.BorderStyle = BorderStyle.None;
-            DoorU_textBox.Enabled = false;
-            DoorU_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            DoorU_textBox.ForeColor = SystemColors.ControlDark;
-            DoorU_textBox.Location = new Point(708, 219);
-            DoorU_textBox.Name = "DoorU_textBox";
-            DoorU_textBox.Size = new Size(116, 15);
-            DoorU_textBox.TabIndex = 167;
-            DoorU_textBox.TextAlign = HorizontalAlignment.Center;
+            UD2_textBox.BackColor = Color.White;
+            UD2_textBox.BorderStyle = BorderStyle.None;
+            UD2_textBox.Enabled = false;
+            UD2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UD2_textBox.ForeColor = SystemColors.ControlDark;
+            UD2_textBox.Location = new Point(708, 219);
+            UD2_textBox.Name = "UD2_textBox";
+            UD2_textBox.Size = new Size(116, 15);
+            UD2_textBox.TabIndex = 167;
+            UD2_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label87
             // 
@@ -925,18 +925,18 @@
             GlassArea_label.Text = "[Ag] 유리면적";
             GlassArea_label.Visible = false;
             // 
-            // g_textBox
+            // UD1_textBox
             // 
-            g_textBox.BackColor = Color.White;
-            g_textBox.BorderStyle = BorderStyle.None;
-            g_textBox.Enabled = false;
-            g_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            g_textBox.ForeColor = SystemColors.ControlDark;
-            g_textBox.Location = new Point(708, 85);
-            g_textBox.Name = "g_textBox";
-            g_textBox.Size = new Size(116, 15);
-            g_textBox.TabIndex = 69;
-            g_textBox.TextAlign = HorizontalAlignment.Center;
+            UD1_textBox.BackColor = Color.White;
+            UD1_textBox.BorderStyle = BorderStyle.None;
+            UD1_textBox.Enabled = false;
+            UD1_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UD1_textBox.ForeColor = SystemColors.ControlDark;
+            UD1_textBox.Location = new Point(708, 85);
+            UD1_textBox.Name = "UD1_textBox";
+            UD1_textBox.Size = new Size(116, 15);
+            UD1_textBox.TabIndex = 69;
+            UD1_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // Ug_unit_label
             // 
@@ -1820,7 +1820,7 @@
         private Button DoorDB_button;
         private Label αp_label;
         private Label GlassArea_label;
-        private TextBox g_textBox;
+        private TextBox UD1_textBox;
         private Label Ug_unit_label;
         private TextBox abs_textBox;
         private Label UCW_g_label;
@@ -1858,7 +1858,7 @@
         private Label label89;
         private TextBox GlassShgc_textBox;
         private Label label86;
-        private TextBox DoorU_textBox;
+        private TextBox UD2_textBox;
         private Label label87;
         private TextBox GlassU_textBox;
         private Label label84;

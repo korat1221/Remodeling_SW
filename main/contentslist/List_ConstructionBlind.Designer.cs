@@ -66,7 +66,7 @@
             label4.Name = "label4";
             label4.Size = new Size(31, 15);
             label4.TabIndex = 97;
-            label4.Text = "외벽";
+            label4.Text = "차양";
             // 
             // Copy_button
             // 

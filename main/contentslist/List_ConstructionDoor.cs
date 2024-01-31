@@ -118,11 +118,11 @@ namespace main.contentslist
         public void load_List()
         {
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
+            dataGridView1.Rows.Clear();
             string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,명칭,Type,문유효열관류율,흡수율,문면적", "");
             if (List.Length > 0)
             {
                 String Blank = "";
-                dataGridView1.Rows.Clear();
                 for (int n = 0; n < List.Length; n++)
                 {
                     dataGridView1.Rows.Add();

@@ -16,11 +16,11 @@ namespace main.subcontents
 {
     public partial class DoorDB : Form
     {
-        DataGridViewCheckBoxColumn Boiler_checkBoxColumn = new DataGridViewCheckBoxColumn();
+        DataGridViewCheckBoxColumn Door_checkBoxColumn = new DataGridViewCheckBoxColumn();
         double 열전도율, R, d, U, Width, Height, 열저항, d2 ; //d2 = 열저항 계산시 두께 
         double yi;
         int nRow;
-        public String[] Select_Door = new String[15];
+        public String[] Select_Door = new String[14];
         double[] x = { 0, 5, 7, 10, 15, 25, 50, 100, 300 }; //두께
         double[] y = { 0, 0.11, 0.13, 0.15, 0.17, 0.18, 0.18, 0.18, 0.18 }; //벽체 열저항
 
@@ -48,7 +48,7 @@ namespace main.subcontents
 
             }
 
-           LoadData(DoorNum);
+          // LoadData(DoorNum);
 
         }
 
@@ -71,9 +71,10 @@ namespace main.subcontents
         {
             new StackedHeaderDecorator(Door_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, Design_dataGridView);
             Door_dataGridView.Columns.Clear();
-            Boiler_checkBoxColumn.HeaderText = "선택";
-            Boiler_checkBoxColumn.Name = "check";
-            Door_dataGridView.Columns.Add(Boiler_checkBoxColumn);
+            Door_dataGridView.Rows.Clear();
+            Door_checkBoxColumn.HeaderText = "선택";
+            Door_checkBoxColumn.Name = "check";
+            Door_dataGridView.Columns.Add(Door_checkBoxColumn);
 
             Door_dataGridView.Columns.Add("A1", "번호");
             Door_dataGridView.Columns.Add("A2", "DB.유형");
@@ -362,14 +363,16 @@ namespace main.subcontents
 
         private void Calc_U(int nRow)
         {
-          
+
             //문짝내부가 단열재인 경우
-           if (Door_dataGridView.Rows[nRow].Cells[11].Value != "-")       
-                U = (1 / (R + 0.17)); 
+            if (Door_dataGridView.Rows[nRow].Cells[11].Value.ToString() != "-")
+            {
+                U = (1 / (R + 0.17));
+            }
             else
             {
-                if (Door_dataGridView.Rows[nRow].Cells[9].Value == "목재문")
-                { 
+                if (Door_dataGridView.Rows[nRow].Cells[9].Value.ToString() == "목재문")
+                {
                     //목재문일 경우 두께 -10 
                     d2 = d - 10;
 
@@ -420,20 +423,18 @@ namespace main.subcontents
             {
                 Door_dataGridView.Rows[nRow].Cells[1].Value = Load[0][0];
                 Door_dataGridView.Rows[nRow].Cells[2].Value = Load[0][1];
-                Door_dataGridView.Rows[nRow].Cells[3].Value = Load[0][2];
-                Door_dataGridView.Rows[nRow].Cells[4].Value = Load[0][3];
-                Door_dataGridView.Rows[nRow].Cells[5].Value = Load[0][4];
-                Door_dataGridView.Rows[nRow].Cells[6].Value = Load[0][5];
-                Door_dataGridView.Rows[nRow].Cells[7].Value = Load[0][6];
-                Door_dataGridView.Rows[nRow].Cells[8].Value = Load[0][7];
-                Door_dataGridView.Rows[nRow].Cells[9].Value = Load[0][8];
-                Door_dataGridView.Rows[nRow].Cells[10].Value = Load[0][9];
-                Door_dataGridView.Rows[nRow].Cells[11].Value = Load[0][10];
-                Door_dataGridView.Rows[nRow].Cells[12].Value = Load[0][11];
-                Door_dataGridView.Rows[nRow].Cells[13].Value = Load[0][12];
-                Door_dataGridView.Rows[nRow].Cells[14].Value = Load[0][13];
-                Door_dataGridView.Rows[nRow].Cells[15].Value = Load[0][14];
-                Door_dataGridView.Rows[nRow].Cells[16].Value = Load[0][15];
+                Door_dataGridView.Rows[nRow].Cells[4].Value = Load[0][2];
+                Door_dataGridView.Rows[nRow].Cells[5].Value = Load[0][3];
+                Door_dataGridView.Rows[nRow].Cells[6].Value = Load[0][4];
+                Door_dataGridView.Rows[nRow].Cells[7].Value = Load[0][5];
+                Door_dataGridView.Rows[nRow].Cells[8].Value = Load[0][6];
+                Door_dataGridView.Rows[nRow].Cells[9].Value = Load[0][7];
+                Door_dataGridView.Rows[nRow].Cells[10].Value = Load[0][8];
+                Door_dataGridView.Rows[nRow].Cells[11].Value = Load[0][9];
+                Door_dataGridView.Rows[nRow].Cells[13].Value = Load[0][10];
+                Door_dataGridView.Rows[nRow].Cells[14].Value = Load[0][11];
+                Door_dataGridView.Rows[nRow].Cells[15].Value = Load[0][12];
+                Door_dataGridView.Rows[nRow].Cells[16].Value = Load[0][13]; //로드 이상
             }
                 
         }

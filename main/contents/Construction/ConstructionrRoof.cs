@@ -78,6 +78,18 @@ namespace main.contents
         }
         private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {
+            if (Ucalc_dataGridView.Rows[row].Cells[2].Value != null && Ucalc_dataGridView.Rows[row].Cells[2].Value.ToString() == "기존지붕")
+            {
+                if (column == 4)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
             if (column == 6)
             {
                 cell.Style.BackColor = Color.FromArgb(255, 255, 255);
@@ -612,7 +624,11 @@ namespace main.contents
             int nRow = Ucalc_dataGridView.Rows.Add();
             Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존지붕";
             Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldRoof;
-           // Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "두께합계", "명칭 ='" + OldRoof + "'");
+            if (value.Length > 0)
+            {
+                Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Convert.ToDouble(value[0][0]).ToString("0");
+            }
             Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldRoof_R);
             Load_Material_Num();
 
@@ -753,14 +769,14 @@ namespace main.contents
                 if(RsiValue.Length > 0)
                 {
                     Rsi = Convert.ToDouble(RsiValue[0][0]);
-                    Rsi_textBox.Text = string.Format("{0:F2}", Rsi);
+                    Rsi_textBox.Text = string.Format("{0:F3}", Rsi);
                 }
 
                 String[][] RseValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "표면열전달저항", "저항값", "구조체 ='지붕' And 유형 = '" + DiIndi + "' AND 기준 = '" + ISO_KS + "'");
                 if (RseValue.Length > 0)
                 {
                     Rse = Convert.ToDouble(RseValue[0][0]);
-                    Rse_textBox.Text = string.Format("{0:F2}", Rse);
+                    Rse_textBox.Text = string.Format("{0:F3}", Rse);
                 }
             }
         }
@@ -854,7 +870,7 @@ namespace main.contents
                 while (++i < count)
                 {
                     var cate = Ucalc_dataGridView.Rows[i - 1].Cells[2].Value != null ? Ucalc_dataGridView.Rows[i - 1].Cells[2].Value.ToString() : "---";
-                    var color = Ucalc_dataGridView.Rows[i - 1].Cells[7].Value != null ? Ucalc_dataGridView.Rows[i - 1].Cells[7].Value.ToString() : "FFFFFF";
+                    var color = Ucalc_dataGridView.Rows[i - 1].Cells[7].Value != null ? Ucalc_dataGridView.Rows[i - 1].Cells[7].Value.ToString() : "6e6e6e";
                     s += "{\"cate\":\"" + cate + "\",\"bgcolor\":\"" + color + "\",\"width\": " + Material_d[i - 1] + ",\"temper\":  " + Material_T[i] + "},";
                 }
 
@@ -1154,19 +1170,27 @@ namespace main.contents
 
                     DiIndi = Load[0][5];
                     DiIndi_comboBox.SelectedItem = DiIndi;
+                    DiIndi2_comboBox.SelectedItem = DiIndi;
 
-                    StructureType = Load[0][6];
+                StructureType = Load[0][6];
                     check_StructureType = Load[0][6];
                     StructureType_comboBox.SelectedItem = StructureType;
 
                     TBType = Load[0][7];
                     TBType_textBox.Text = TBType;
 
-                    TBName = Load[0][8];
+                    TBName = Load[0][8]; 
+                if (TBName == "")
+                {
+                    TBName_textBox.Text = "열교없음";
+                }
+                else
+                {
                     TBName_textBox.Text = TBName;
                     TBName2_textBox.Text = TBName;
+                }
 
-                    Color_Envelope = Load[0][9];
+                Color_Envelope = Load[0][9];
                     Color_comboBox.SelectedItem = Color_Envelope;
 
                     ISO_KS = Load[0][10];
@@ -1205,9 +1229,9 @@ namespace main.contents
                     PerArea = Convert.ToDouble(Load[0][16]);
 
                     Rse = Convert.ToDouble(Load[0][17]);
-                    Rse_textBox.Text = string.Format("{0:F2}", Rse);
+                    Rse_textBox.Text = string.Format("{0:F3}", Rse);
                     Rsi = Convert.ToDouble(Load[0][18]);
-                    Rsi_textBox.Text = string.Format("{0:F2}", Rsi);
+                    Rsi_textBox.Text = string.Format("{0:F3}", Rsi);
 
                     dtot = Convert.ToDouble(Load[0][19]);
                     Rtot = Convert.ToDouble(Load[0][20]);
@@ -1224,23 +1248,6 @@ namespace main.contents
 
                     Uvalue = Convert.ToDouble(Load[0][43]);
                     U_textBox.Text = string.Format("{0:F3}", Uvalue);
-
-                    dU = Convert.ToDouble(Load[0][44]);
-                    dU_textBox.Text = string.Format("{0:F3}", dU);
-
-                    if (PerArea != 0)
-                    {
-                        PerArea_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][16]));
-                    }
-                    if (PerArea_textBox.Text != "" && PerArea != 0)
-                    {
-                        PsiKai_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][15]));
-                        dU2_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][44]));
-                    }
-
-                    Ueff = Convert.ToDouble(Load[0][45]);
-                    Ueff_textBox.Text = string.Format("{0:F3}", Ueff);
-                    Ueff2_textBox.Text = string.Format("{0:F3}", Ueff);
 
                     Ucalc_dataGridView.Rows.Clear();
                     for (int i = 0; i < 10; i++)
@@ -1271,7 +1278,7 @@ namespace main.contents
                                     Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldRoof;
                                     //  Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
                                     Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldRoof_R);
-                                    Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "FFFFFF";
+                                    Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "6e6e6e";
                                 }
                             }
                             else 
@@ -1291,7 +1298,24 @@ namespace main.contents
 
                     Load_Material_Num();
 
-                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '지붕'");
+                dU = Convert.ToDouble(Load[0][44]);
+                dU_textBox.Text = string.Format("{0:F3}", dU);
+
+                if (PerArea != 0)
+                {
+                    PerArea_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][16]));
+                }
+                if (PerArea_textBox.Text != "" && PerArea != 0)
+                {
+                    PsiKai_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][15]));
+                    dU2_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][44]));
+                }
+
+                Ueff = Convert.ToDouble(Load[0][45]);
+                Ueff_textBox.Text = string.Format("{0:F3}", Ueff);
+                Ueff2_textBox.Text = string.Format("{0:F3}", Ueff);
+
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '지붕'");
                     if(Image.Length > 0)
                     {
                         Icon_pictureBox.Load(Program.gPath + Image[0][0]);

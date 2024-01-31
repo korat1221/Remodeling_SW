@@ -152,23 +152,30 @@ namespace main.subcontents
 
         private void Calc_DoubleGlass()
         {
-            if (Select1_Glass.Length >0 && Select2_Glass.Length >0)
+            try
             {
-                UserDB_SingleDoubleTriple = Select1_Glass[0][4] + "+" + Select2_Glass[0][4];
-                UserDB_ArAir = Select1_Glass[0][5] + "+" + Select2_Glass[0][5];
-                UserDB_LE_CL_V = Select1_Glass[0][6] + "+" + Select2_Glass[0][6];
-                UserDB_Ug = 1 / ((1 / Convert.ToDouble(Select1_Glass[0][7])) - 0.04 + 0.189 - 0.13 + (1 / Convert.ToDouble(Select2_Glass[0][7])));
-                String[][] f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + UserDB_LE_CL_V + "' AND 보정유형 = '태양열취득률'");
-                String[][] f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + UserDB_LE_CL_V + "' AND 보정유형 = '빛투과율'");
-                if(f_shgc.Length > 0)
+                if (Select1_Glass != null&& Select1_Glass.Length > 0)
                 {
-                    UserDB_g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Select1_Glass[0][8]) * Convert.ToDouble(Select2_Glass[0][8]);
+                    if (Select2_Glass != null&& Select2_Glass.Length > 0)
+                    {
+                        UserDB_SingleDoubleTriple = Select1_Glass[0][4] + "+" + Select2_Glass[0][4];
+                        UserDB_ArAir = Select1_Glass[0][5] + "+" + Select2_Glass[0][5];
+                        UserDB_LE_CL_V = Select1_Glass[0][6] + "+" + Select2_Glass[0][6];
+                        UserDB_Ug = 1 / ((1 / Convert.ToDouble(Select1_Glass[0][7])) - 0.04 + 0.189 - 0.13 + (1 / Convert.ToDouble(Select2_Glass[0][7])));
+                        String[][] f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + UserDB_LE_CL_V + "' AND 보정유형 = '태양열취득률'");
+                        String[][] f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + UserDB_LE_CL_V + "' AND 보정유형 = '빛투과율'");
+                        if (f_shgc.Length > 0)
+                        {
+                            UserDB_g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Select1_Glass[0][8]) * Convert.ToDouble(Select2_Glass[0][8]);
+                        }
+                        if (f_τ.Length > 0)
+                        { UserDB_Tao = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Select1_Glass[0][9]) * Convert.ToDouble(Select2_Glass[0][9]); }
+                        UserDB_RExternal = Convert.ToDouble(Select1_Glass[0][10]);
+                        UserDB_RInternal = Convert.ToDouble(Select2_Glass[0][11]);
+                    }
                 }
-                if (f_τ.Length > 0)
-                { UserDB_Tao = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Select1_Glass[0][9]) * Convert.ToDouble(Select2_Glass[0][9]); }
-                UserDB_RExternal = Convert.ToDouble(Select1_Glass[0][10]);
-                UserDB_RInternal = Convert.ToDouble(Select2_Glass[0][11]);
             }
+            catch { }
         }
 
         private void AddUserDB_button_Click(object sender, EventArgs e)

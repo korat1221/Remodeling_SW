@@ -72,6 +72,18 @@ namespace main.contents.Construction
 
         private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {
+            if (Ucalc_dataGridView.Rows[row].Cells[2].Value != null && Ucalc_dataGridView.Rows[row].Cells[2].Value.ToString() == "기존바닥")
+            {
+                if (column == 4)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
             if (column == 6)
             {
                 cell.Style.BackColor = Color.FromArgb(255, 255, 255);
@@ -478,11 +490,6 @@ namespace main.contents.Construction
                 MessageBox.Show("내부 덧댐일 경우 열교 평가는 하지 않습니다.");
                 TBName_textBox.Text = "열교없음";
             }
-            else if (Type == "기존바닥")
-            {
-                MessageBox.Show("기존 바닥일 경우 열교 평가는 하지 않습니다.");
-                TBName_textBox.Text = "열교없음";
-            }
             else
             {
                 if (UMethod == "계산" && Rtot == 0)
@@ -631,8 +638,12 @@ namespace main.contents.Construction
 
             int nRow = Ucalc_dataGridView.Rows.Add();
             Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존바닥";
-            Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldFloor;
-        //    Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
+            Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldFloor; 
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "두께합계", "명칭 ='" + OldFloor + "'");
+            if (value.Length > 0)
+            {
+                Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Convert.ToDouble(value[0][0]).ToString("0");
+            }
             Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldFloor_R);
             Load_Material_Num();
 
@@ -785,13 +796,13 @@ namespace main.contents.Construction
                 if (RsiValue.Length > 0)
                 {
                     Rsi = Convert.ToDouble(RsiValue[0][0]);
-                    Rsi_textBox.Text = string.Format("{0:F2}", Rsi);
+                    Rsi_textBox.Text = string.Format("{0:F3}", Rsi);
                 }
                     String[][] RseValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "표면열전달저항", "저항값", "구조체 ='바닥' And 유형 = '" + DiIndi + "' AND 기준 = '" + ISO_KS + "'");
                 if (RseValue.Length > 0)
                 {
                     Rse = Convert.ToDouble(RseValue[0][0]);
-                    Rse_textBox.Text = string.Format("{0:F2}", Rse);
+                    Rse_textBox.Text = string.Format("{0:F3}", Rse);
                 }
             }
 
@@ -884,7 +895,7 @@ namespace main.contents.Construction
                 while (++i < count)
                 {
                     var cate = Ucalc_dataGridView.Rows[-i + count -1].Cells[2].Value != null ? Ucalc_dataGridView.Rows[-i + count - 1].Cells[2].Value.ToString() : "---";
-                    var color = Ucalc_dataGridView.Rows[-i + count - 1].Cells[7].Value != null ? Ucalc_dataGridView.Rows[-i + count - 1].Cells[7].Value.ToString() : "FFFFFF";
+                    var color = Ucalc_dataGridView.Rows[-i + count - 1].Cells[7].Value != null ? Ucalc_dataGridView.Rows[-i + count - 1].Cells[7].Value.ToString() : "6e6e6e";
                     s += "{\"cate\":\"" + cate + "\",\"bgcolor\":\"" + color + "\",\"width\": " + Material_d[-i + count - 1] + ",\"temper\":  " + Material_T[-i + count -1] + "},";
                 }
 
@@ -1179,7 +1190,7 @@ namespace main.contents.Construction
                 }
 
                 Base = Load[0][4];
-                Base_comboBox.SelectedItem = base.ToString();
+                Base_comboBox.SelectedItem = Base.ToString();
 
                 UMethod = Load[0][5];
                 Uvalue_comboBox.SelectedItem = UMethod;
@@ -1197,8 +1208,15 @@ namespace main.contents.Construction
                 TBType_textBox.Text = TBType;
 
                 TBName = Load[0][9];
-                TBName_textBox.Text = TBName;
-                TBName2_textBox.Text = TBName;
+                if (TBName == "")
+                {
+                    TBName_textBox.Text = "열교없음";
+                }
+                else
+                {
+                    TBName_textBox.Text = TBName;
+                    TBName2_textBox.Text = TBName;
+                }
 
 
                 ISO_KS = Load[0][10];
@@ -1236,9 +1254,9 @@ namespace main.contents.Construction
                 PerArea = Convert.ToDouble(Load[0][16]);
 
                 Rse = Convert.ToDouble(Load[0][17]);
-                Rse_textBox.Text = string.Format("{0:F2}", Rse);
+                Rse_textBox.Text = string.Format("{0:F3}", Rse);
                 Rsi = Convert.ToDouble(Load[0][18]);
-                Rsi_textBox.Text = string.Format("{0:F2}", Rsi);
+                Rsi_textBox.Text = string.Format("{0:F3}", Rsi);
 
                 dtot = Convert.ToDouble(Load[0][19]);
                 Rtot = Convert.ToDouble(Load[0][20]);
@@ -1251,22 +1269,7 @@ namespace main.contents.Construction
                 Uvalue = Convert.ToDouble(Load[0][42]);
                 U_textBox.Text = string.Format("{0:F3}", Uvalue);
 
-                dU = Convert.ToDouble(Load[0][43]);
-                dU_textBox.Text = string.Format("{0:F3}", dU);
-
-                if (PerArea != 0)
-                {
-                    PerArea_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][16]));
-                }
-                if (PerArea_textBox.Text != "" && PerArea != 0)
-                {
-                    PsiKai_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][15]));
-                    dU2_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][43]));
-                }
-
-                Ueff = Convert.ToDouble(Load[0][44]);
-                Ueff_textBox.Text = string.Format("{0:F3}", Ueff);
-                Ueff2_textBox.Text = string.Format("{0:F3}", Ueff);
+                
 
                 Ucalc_dataGridView.Rows.Clear();
                 for (int i = 0; i < 10; i++)
@@ -1296,7 +1299,7 @@ namespace main.contents.Construction
                                 Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존바닥";
                                 Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldFloor;
                                 Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldFloor_R);
-                                Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "FFFFFF";
+                                Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "6e6e6e";
                         }
                         else 
                         {
@@ -1314,6 +1317,23 @@ namespace main.contents.Construction
                 }
 
                 Load_Material_Num();
+
+                dU = Convert.ToDouble(Load[0][43]);
+                dU_textBox.Text = string.Format("{0:F3}", dU);
+
+                if (PerArea != 0)
+                {
+                    PerArea_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][16]));
+                }
+                if (PerArea_textBox.Text != "" && PerArea != 0)
+                {
+                    PsiKai_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][15]));
+                    dU2_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][43]));
+                }
+
+                Ueff = Convert.ToDouble(Load[0][44]);
+                Ueff_textBox.Text = string.Format("{0:F3}", Ueff);
+                Ueff2_textBox.Text = string.Format("{0:F3}", Ueff);
 
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '최하층바닥'");
                 if(Image.Length > 0)

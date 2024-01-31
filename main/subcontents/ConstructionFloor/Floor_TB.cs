@@ -30,18 +30,22 @@ namespace main.subcontents.ConstructionFloor
             this.FloorType = FloorType;
             WallType_textBox.Text = FloorType;
             this.StructureType = StructureType;
+            if(StructureType=="기존바닥")
+            {
+                this.StructureType = "콘크리트조";
+            }
             this.d_Ins = dins;
             StructureType_textBox.Text = StructureType;
             TB_Type_comboBox.Items.Clear();
 
 
             //구분 콤보박스
-            if (FloorType == "신규" || FloorType == "철거 후 신규")
+            if (FloorType == "신규" || FloorType == "철거 후 신규" || FloorType == "기존바닥")
             {
                 TB_Type_comboBox.Items.Clear();
                 TB_Type_comboBox.Items.Add("외단열");
             }
-            else if (FloorType == "외부덧댐")
+            else if (FloorType == "외부덧댐" )
             {
                 TB_Type_comboBox.Items.Clear();
                 TB_Type_comboBox.Items.Add("외부덧댐형");
