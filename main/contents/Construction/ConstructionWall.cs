@@ -980,7 +980,7 @@ namespace main.contents
                 while (++i < count)
                 {
                     var cate = Ucalc_dataGridView.Rows[i - 1].Cells[2].Value != null ? Ucalc_dataGridView.Rows[i - 1].Cells[2].Value.ToString() : "---";
-                    var color = Ucalc_dataGridView.Rows[i - 1].Cells[7].Value != null ? Ucalc_dataGridView.Rows[i - 1].Cells[7].Value.ToString() : "6e6e6e";
+                    var color = Ucalc_dataGridView.Rows[i - 1].Cells[7].Value != null ? Ucalc_dataGridView.Rows[i - 1].Cells[7].Value.ToString() : "FFFFFF";
                     s += "{\"cate\":\"" + cate + "\",\"bgcolor\":\"" + color + "\",\"width\": " + Material_d[i - 1] + ",\"temper\":  " + Material_T[i] + "},";
                 }
 

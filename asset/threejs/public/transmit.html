@@ -126,17 +126,37 @@
             "콘크리트":"repeat url('/struct/세로/콘크리트.png')",
             "타일":"repeat url('/struct/세로/타일.png')",
             "패널":"repeat url('/struct/세로/패널.png')",
+            "기존외벽":"#6e6e6e",
+            "덧댐커튼월":"#99CCFF",
           }
           return categories[gubun] ? categories[gubun] : "#fff";
         }
       }
 
+      function getColor(gubun) {
+        if (type === "roof" || type === "floor") {
+          let categories = {
+          };
+          return categories[gubun] ? categories[gubun] : "#fff";
+        } else {
+          let categories = {
+            "기존외벽":"#6e6e6e",
+            "덧댐커튼월":"#99CCFF",
+          }
+          return categories[gubun];
+        }
+      }
+
       function drawWall(arr) {
-        var tot = 0, n = 0, m;
+        var tot = 0, n = 0, m, clr;
         var lines = [];
 
         arr.forEach((el, idx) => {          
           el.image = getImage(el.cate);
+          clr = getColor(el.cate);
+          if (clr) {
+            el.bgcolor = clr;
+          }
           tot += el.width;
         });
 

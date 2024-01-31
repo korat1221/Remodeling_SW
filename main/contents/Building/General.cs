@@ -686,12 +686,7 @@ namespace main.contents
 
                 Load_OldProject();
                 OldProject = Value[0][27];
-                DataRowView? item = OldProject_comboBox.SelectedItem as DataRowView;
-                if (item != null)
-                {
-                    item.Row.ItemArray[0] = OldProject;
-                }
-                else { }
+                OldProject_comboBox.SelectedIndex  = OldProject_comboBox.FindStringExact(Value[0][27]);
 
             }
         }
