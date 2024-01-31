@@ -370,7 +370,14 @@ namespace main.contents
                     DoorIn = doordb.Select_Door[8];
                     DoorIn_textBox.Text = DoorIn;
                     DoorInsul = doordb.Select_Door[9]; // 단열재종류
-                    DoorThk = Convert.ToDouble(doordb.Select_Door[10]); // 문짝두께
+                    if (DBType == "기본")
+                    {
+                        DoorThk = Convert.ToDouble(doordb.Select_Door[10]); // 문짝두께
+                    }
+                    else
+                    {
+                        DoorThk = 0;
+                    }
                     //문틀상하부
                     DoorOver = Convert.ToDouble(doordb.Select_Door[5]);
                     over_textBox.Text = DoorOver.ToString();
@@ -421,7 +428,14 @@ namespace main.contents
                     DoorIn = doordb.Select_Door[8];
                     DoorIn_textBox.Text = DoorIn;
                     DoorInsul = doordb.Select_Door[9]; // 단열재종류
-                    DoorThk = Convert.ToDouble(doordb.Select_Door[10]); // 문짝두께
+                    if (DBType == "기본")
+                    {
+                        DoorThk = Convert.ToDouble(doordb.Select_Door[10]); // 문짝두께
+                    }
+                    else
+                    {
+                        DoorThk = 0;
+                    }
                     //문틀상하부
                     DoorOver = Convert.ToDouble(doordb.Select_Door[5]);
                     over_textBox.Text = DoorOver.ToString();
