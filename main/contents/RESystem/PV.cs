@@ -96,19 +96,19 @@ namespace main.contents
         {
             InitializeComponent();
             InitializeAsync();
-            webView21.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);
+            webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
 
             #region getvalue
 
             지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '태양광시스템'");
-            if(Image.Length > 0)
+            if (Image.Length > 0)
             {
                 pictureBox1.Load(Program.gPath + Image[0][0]);
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
-            
+
 
             프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             #endregion / getvalue
@@ -319,9 +319,9 @@ namespace main.contents
         private void Load_PV_Table()
         {
             PV_dataGridView.Rows.Clear();
-        
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk,신규기존", "번호 = '" + PVModuleNumber + "'");
-            if(User_Value.Length >0)
+
+            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk,신규기존", "번호 = '" + PVModuleNumber + "'");
+            if (User_Value.Length > 0)
             {
                 int nRow = PV_dataGridView.Rows.Add();
                 PV_dataGridView.Rows[nRow].Cells[0].Value = User_Value[0][0];
@@ -485,8 +485,8 @@ namespace main.contents
                 for (int mth = 0; mth < 12; mth++)
                 {
                     //전일사량불러오기
-                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + Orientation + "' AND  각도 = '" + Slope + "' and 기간 ='"+(mth+1).ToString()+"월'");
-                    if(token.Length > 0)
+                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "' AND 방향 ='" + Orientation + "' AND  각도 = '" + Slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
+                    if (token.Length > 0)
                     {
                         PVIs_W_m2[mth] = Convert.ToDouble(token[0][0]);
                     }
@@ -641,7 +641,7 @@ namespace main.contents
                 if (res2.Length > 0)
                 { s2 += Convert.ToDouble(res2[0][0]); }
 
-                runScript("drawChart3([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:" + (PVEelpvoutm_kWh.Max() + 500).ToString() + "},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:300}])");
+                runScript("drawChart4([{type:\"line\",label:\"전기생산량\",data:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:150},{type:\"bar\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:300,barPercentage:0.7}])");
             }
             catch { }
         }

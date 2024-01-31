@@ -44,8 +44,8 @@ namespace main.contents.Building
 
             Create_ElecUse_Table();
             Create_GasUse_Table();
-            webView21.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);
-            webView22.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);
+            webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
+            webView22.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
         }
         async void InitializeAsync()
         {
@@ -200,7 +200,7 @@ namespace main.contents.Building
                 }
                 s3 += Gas_kWh_dataGridView.Rows[0].Cells[13].Value;
                 string s2 = "[" + s3 + "]";
-                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:true},";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:true,tension: 0.4},";
 
             }
 
@@ -215,7 +215,7 @@ namespace main.contents.Building
                 }
                 s3 += Gas_kWh_dataGridView.Rows[1].Cells[13].Value;
                 string s2 = "[" + s3 + "]";
-                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:true},";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:true,tension: 0.4},";
 
             }
 
@@ -231,7 +231,7 @@ namespace main.contents.Building
                 }
                 s3 += Gas_kWh_dataGridView.Rows[2].Cells[13].Value;
                 string s2 = "[" + s3 + "]";
-                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#4472C4\",backgroundColor:\"#4472C4\",dash:true},";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#4472C4\",backgroundColor:\"#4472C4\",dash:true,tension: 0.4},";
 
             }
 
@@ -258,7 +258,7 @@ namespace main.contents.Building
                 }
                 s3 += average[11].ToString();
                 string s2 = "[" + s3 + "]";
-                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false},";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false,tension: 0.4},";
 
             }
 
@@ -303,7 +303,7 @@ namespace main.contents.Building
                 }
                 s3 += Elec_dataGridView.Rows[0].Cells[13].Value;
                 string s2 = "[" + s3 + "]";
-                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:true},";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:true,tension: 0.4},";
 
             }
 
@@ -318,7 +318,7 @@ namespace main.contents.Building
                 }
                 s3 += Elec_dataGridView.Rows[1].Cells[13].Value;
                 string s2 = "[" + s3 + "]";
-                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:true},";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:true,tension: 0.4},";
 
             }
 
@@ -333,7 +333,7 @@ namespace main.contents.Building
                 }
                 s3 += Elec_dataGridView.Rows[2].Cells[13].Value;
                 string s2 = "[" + s3 + "]";
-                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#4472C4\",backgroundColor:\"#4472C4\",dash:true},";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#4472C4\",backgroundColor:\"#4472C4\",dash:true,tension: 0.4},";
 
             }
 
@@ -359,7 +359,7 @@ namespace main.contents.Building
                 }
                 s3 += average[11].ToString();
                 string s2 = "[" + s3 + "]";
-                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false},";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false,tension: 0.4},";
 
             }
 

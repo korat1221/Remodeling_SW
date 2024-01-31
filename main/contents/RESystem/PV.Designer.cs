@@ -31,7 +31,6 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PV));
             PVModule_textBox = new TextBox();
             GeneralPanel = new Panel();
             label1 = new Label();
@@ -106,10 +105,6 @@
             PV_dataGridView = new DataGridView();
             label36 = new Label();
             panel3 = new Panel();
-            label3 = new Label();
-            pictureBox3 = new PictureBox();
-            pictureBox4 = new PictureBox();
-            label22 = new Label();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -120,8 +115,6 @@
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PV_dataGridView).BeginInit();
             panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
@@ -133,7 +126,7 @@
             PVModule_textBox.Location = new Point(206, 14);
             PVModule_textBox.Name = "PVModule_textBox";
             PVModule_textBox.ReadOnly = true;
-            PVModule_textBox.Size = new Size(120, 15);
+            PVModule_textBox.Size = new Size(120, 17);
             PVModule_textBox.TabIndex = 94;
             PVModule_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -394,7 +387,7 @@
             Batterycapacity_textBox.Location = new Point(755, 84);
             Batterycapacity_textBox.Name = "Batterycapacity_textBox";
             Batterycapacity_textBox.ReadOnly = true;
-            Batterycapacity_textBox.Size = new Size(120, 15);
+            Batterycapacity_textBox.Size = new Size(120, 17);
             Batterycapacity_textBox.TabIndex = 105;
             Batterycapacity_textBox.TextAlign = HorizontalAlignment.Center;
             Batterycapacity_textBox.Visible = false;
@@ -408,7 +401,7 @@
             InverterEfficiency_textBox.Location = new Point(755, 50);
             InverterEfficiency_textBox.Name = "InverterEfficiency_textBox";
             InverterEfficiency_textBox.ReadOnly = true;
-            InverterEfficiency_textBox.Size = new Size(120, 15);
+            InverterEfficiency_textBox.Size = new Size(120, 17);
             InverterEfficiency_textBox.TabIndex = 104;
             InverterEfficiency_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -443,7 +436,7 @@
             Battery_textBox.Location = new Point(203, 84);
             Battery_textBox.Name = "Battery_textBox";
             Battery_textBox.ReadOnly = true;
-            Battery_textBox.Size = new Size(120, 15);
+            Battery_textBox.Size = new Size(120, 17);
             Battery_textBox.TabIndex = 99;
             Battery_textBox.TextAlign = HorizontalAlignment.Center;
             Battery_textBox.Visible = false;
@@ -456,7 +449,7 @@
             Inverter_textBox.Location = new Point(203, 50);
             Inverter_textBox.Name = "Inverter_textBox";
             Inverter_textBox.ReadOnly = true;
-            Inverter_textBox.Size = new Size(120, 15);
+            Inverter_textBox.Size = new Size(120, 17);
             Inverter_textBox.TabIndex = 98;
             Inverter_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -637,7 +630,7 @@
             PVLshobst_m_image_textBox.ForeColor = SystemColors.ScrollBar;
             PVLshobst_m_image_textBox.Location = new Point(755, 142);
             PVLshobst_m_image_textBox.Name = "PVLshobst_m_image_textBox";
-            PVLshobst_m_image_textBox.Size = new Size(62, 15);
+            PVLshobst_m_image_textBox.Size = new Size(62, 17);
             PVLshobst_m_image_textBox.TabIndex = 125;
             PVLshobst_m_image_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -660,7 +653,7 @@
             PVHshobst_m_imge_textBox.ForeColor = SystemColors.ScrollBar;
             PVHshobst_m_imge_textBox.Location = new Point(723, 78);
             PVHshobst_m_imge_textBox.Name = "PVHshobst_m_imge_textBox";
-            PVHshobst_m_imge_textBox.Size = new Size(62, 15);
+            PVHshobst_m_imge_textBox.Size = new Size(62, 17);
             PVHshobst_m_imge_textBox.TabIndex = 123;
             PVHshobst_m_imge_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -681,7 +674,7 @@
             height_n_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             height_n_textBox.Location = new Point(460, 7);
             height_n_textBox.Name = "height_n_textBox";
-            height_n_textBox.Size = new Size(120, 22);
+            height_n_textBox.Size = new Size(120, 24);
             height_n_textBox.TabIndex = 119;
             height_n_textBox.TextAlign = HorizontalAlignment.Center;
             height_n_textBox.TextChanged += height_n_textBox_TextChanged;
@@ -737,7 +730,7 @@
             PVHshobst_m_textBox.ForeColor = SystemColors.WindowText;
             PVHshobst_m_textBox.Location = new Point(460, 136);
             PVHshobst_m_textBox.Name = "PVHshobst_m_textBox";
-            PVHshobst_m_textBox.Size = new Size(120, 22);
+            PVHshobst_m_textBox.Size = new Size(120, 24);
             PVHshobst_m_textBox.TabIndex = 114;
             PVHshobst_m_textBox.TextAlign = HorizontalAlignment.Center;
             PVHshobst_m_textBox.TextChanged += PVHshobst_m_textBox_TextChanged;
@@ -749,7 +742,7 @@
             PVLshobst_m_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PVLshobst_m_textBox.Location = new Point(203, 136);
             PVLshobst_m_textBox.Name = "PVLshobst_m_textBox";
-            PVLshobst_m_textBox.Size = new Size(120, 22);
+            PVLshobst_m_textBox.Size = new Size(120, 24);
             PVLshobst_m_textBox.TabIndex = 111;
             PVLshobst_m_textBox.TextAlign = HorizontalAlignment.Center;
             PVLshobst_m_textBox.TextChanged += PVLshobst_m_textBox_TextChanged;
@@ -772,7 +765,7 @@
             PVArea_m2_textBox.ForeColor = SystemColors.ScrollBar;
             PVArea_m2_textBox.Location = new Point(203, 52);
             PVArea_m2_textBox.Name = "PVArea_m2_textBox";
-            PVArea_m2_textBox.Size = new Size(120, 15);
+            PVArea_m2_textBox.Size = new Size(120, 17);
             PVArea_m2_textBox.TabIndex = 109;
             PVArea_m2_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -824,7 +817,7 @@
             width_n_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             width_n_textBox.Location = new Point(203, 7);
             width_n_textBox.Name = "width_n_textBox";
-            width_n_textBox.Size = new Size(120, 22);
+            width_n_textBox.Size = new Size(120, 24);
             width_n_textBox.TabIndex = 109;
             width_n_textBox.TextAlign = HorizontalAlignment.Center;
             width_n_textBox.TextChanged += width_n_textBox_TextChanged;
@@ -845,7 +838,7 @@
             label5.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label5.Location = new Point(12, 278);
             label5.Name = "label5";
-            label5.Size = new Size(79, 15);
+            label5.Size = new Size(85, 15);
             label5.TabIndex = 94;
             label5.Text = "구성요소정보";
             // 
@@ -855,7 +848,7 @@
             label13.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label13.Location = new Point(12, 412);
             label13.Name = "label13";
-            label13.Size = new Size(55, 15);
+            label13.Size = new Size(59, 15);
             label13.TabIndex = 95;
             label13.Text = "설치정보";
             // 
@@ -902,7 +895,7 @@
             averagecpacity_textBox.ForeColor = SystemColors.ScrollBar;
             averagecpacity_textBox.Location = new Point(1071, 59);
             averagecpacity_textBox.Name = "averagecpacity_textBox";
-            averagecpacity_textBox.Size = new Size(60, 15);
+            averagecpacity_textBox.Size = new Size(60, 17);
             averagecpacity_textBox.TabIndex = 129;
             averagecpacity_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -935,7 +928,7 @@
             allcapacity_textBox.ForeColor = SystemColors.ScrollBar;
             allcapacity_textBox.Location = new Point(1071, 28);
             allcapacity_textBox.Name = "allcapacity_textBox";
-            allcapacity_textBox.Size = new Size(60, 15);
+            allcapacity_textBox.Size = new Size(60, 17);
             allcapacity_textBox.TabIndex = 127;
             allcapacity_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -1010,17 +1003,13 @@
             label36.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label36.Location = new Point(12, 116);
             label36.Name = "label36";
-            label36.Size = new Size(71, 15);
+            label36.Size = new Size(77, 15);
             label36.TabIndex = 140;
             label36.Text = "태양광 모듈";
             // 
             // panel3
             // 
             panel3.BackColor = Color.White;
-            panel3.Controls.Add(label3);
-            panel3.Controls.Add(pictureBox3);
-            panel3.Controls.Add(pictureBox4);
-            panel3.Controls.Add(label22);
             panel3.Controls.Add(webView21);
             panel3.Location = new Point(12, 656);
             panel3.Name = "panel3";
@@ -1028,50 +1017,14 @@
             panel3.TabIndex = 141;
             panel3.Paint += panel3_Paint;
             // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(19, 64);
-            label3.Name = "label3";
-            label3.Size = new Size(120, 15);
-            label3.TabIndex = 158;
-            label3.Text = "일사량(kWh/m²·mth)";
-            // 
-            // pictureBox3
-            // 
-            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(143, 57);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(28, 26);
-            pictureBox3.TabIndex = 157;
-            pictureBox3.TabStop = false;
-            // 
-            // pictureBox4
-            // 
-            pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
-            pictureBox4.Location = new Point(120, 32);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(51, 19);
-            pictureBox4.TabIndex = 156;
-            pictureBox4.TabStop = false;
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Location = new Point(19, 32);
-            label22.Name = "label22";
-            label22.Size = new Size(67, 15);
-            label22.TabIndex = 155;
-            label22.Text = "전기생산량";
-            // 
             // webView21
             // 
             webView21.AllowExternalDrop = true;
             webView21.CreationProperties = null;
             webView21.DefaultBackgroundColor = Color.White;
-            webView21.Location = new Point(177, 7);
+            webView21.Location = new Point(18, 7);
             webView21.Name = "webView21";
-            webView21.Size = new Size(781, 177);
+            webView21.Size = new Size(940, 177);
             webView21.TabIndex = 154;
             webView21.ZoomFactor = 1D;
             // 
@@ -1114,9 +1067,6 @@
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)PV_dataGridView).EndInit();
             panel3.ResumeLayout(false);
-            panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -1194,10 +1144,6 @@
         private TextBox Name_textBox;
         private Label label23;
         private Panel panel3;
-        private Label label3;
-        private PictureBox pictureBox3;
-        private PictureBox pictureBox4;
-        private Label label22;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
         private CustomComboBox PVsystem_combobox;
         private CustomComboBox VentilationType_comboBox;

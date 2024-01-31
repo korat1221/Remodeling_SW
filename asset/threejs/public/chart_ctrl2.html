@@ -18,6 +18,7 @@
     </style>
 </head>
 <body>
+    <!-- <div style="width:32px;height:32px"></div> -->
     <div id="cont" style="width:100%;height:100%"></div>
 <script type="text/javascript">//<![CDATA[
 
@@ -380,6 +381,7 @@ function drawChart3(arr) {
 function drawChart4(arr) {
     if (arr) {
         let datasets = [], i = -1;
+        let bar_max = 200, line_max = 100;
 
         while(++i < arr.length) {
             let el = arr[i];
@@ -400,6 +402,13 @@ function drawChart4(arr) {
                 yAxisID: (i==0 ? 'y' : 'y1'),
                 tension: el.tension ? el.tension : 0,
             });
+
+            if (el.type === 'bar' && el.max) {
+                bar_max = el.max;
+            }
+            if (el.type === 'line' && el.max) {
+                line_max = el.max;
+            }
         }
 
         document.getElementById("cont").innerHTML = '<canvas id="myChart" style="width: 100%;height: 100%;"></canvas>';
@@ -457,7 +466,7 @@ function drawChart4(arr) {
                             borderColor:'rgba(0,0,0,0)',
                         },
                         min:0,
-                        max:100,
+                        max:line_max,
                         position:'left',
                         ticks: {
                             stepSize: 20,
@@ -476,7 +485,7 @@ function drawChart4(arr) {
                             borderColor:'rgba(0,0,0,0)',
                         },
                         min:0,
-                        max:200,
+                        max:bar_max,
                         position:'right',
                         ticks: {
                             stepSize: 40,
