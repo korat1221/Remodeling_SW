@@ -141,16 +141,22 @@ namespace main.subcontents
             {
                 CoolingZone_dataGridView.Rows[nRow].Cells[0].Value = false;
             }
-
-            CoolingZone_dataGridView.Rows[nRow].Cells[1].Value = _ZoneGet0[0][0].ToString(); //존번호
-            CoolingZone_dataGridView.Rows[nRow].Cells[2].Value = _ZoneGet0[0][1].ToString(); //존이름   
-            CoolingZone_dataGridView.Rows[nRow].Cells[3].Value = _cznum;      //시스템번호
-            CoolingZone_dataGridView.Rows[nRow].Cells[4].Value = _czname;     //시스템이름
-            CoolingZone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet1[0][0])); //순바닥면적
-            CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet1[0][1])); //연이용일수
-            CoolingZone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet0[0][2])); //연간냉방에너지요구량
-            CoolingZone_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet0[0][3]) / 1000); //최대냉방부하
-            CoolingZone_dataGridView.Rows[nRow].Cells[9].Value = _czmul;
+            if (_ZoneGet0.Length > 0)
+            {
+                if (_ZoneGet1.Length > 0)
+                {
+                    CoolingZone_dataGridView.Rows[nRow].Cells[1].Value = _ZoneGet0[0][0].ToString(); //존번호
+                    CoolingZone_dataGridView.Rows[nRow].Cells[1].Value = _ZoneGet0[0][0].ToString(); //존번호
+                    CoolingZone_dataGridView.Rows[nRow].Cells[2].Value = _ZoneGet0[0][1].ToString(); //존이름   
+                    CoolingZone_dataGridView.Rows[nRow].Cells[3].Value = _cznum;      //시스템번호
+                    CoolingZone_dataGridView.Rows[nRow].Cells[4].Value = _czname;     //시스템이름
+                    CoolingZone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet1[0][0])); //순바닥면적
+                    CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet1[0][1])); //연이용일수
+                    CoolingZone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet0[0][2])); //연간냉방에너지요구량
+                    CoolingZone_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet0[0][3]) / 1000); //최대냉방부하
+                    CoolingZone_dataGridView.Rows[nRow].Cells[9].Value = _czmul;
+                }
+            }
 
         }
 

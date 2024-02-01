@@ -646,6 +646,12 @@ namespace main.contents.Construction
             }
             Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldFloor_R);
             Load_Material_Num();
+            Array.Clear(Material, 0, 10);
+            Array.Clear(Material_d, 0, 10);
+            Array.Clear(Material_λ, 0, 10);
+            Array.Clear(Material_R, 0, 10);
+            Array.Clear(Material_T, 0, 12);
+            Calc_U();
 
         }
 
@@ -695,6 +701,13 @@ namespace main.contents.Construction
             Ucalc_dataGridView.Rows.Remove(Ucalc_dataGridView.Rows[SelectRow]);
             Load_Material_Num();
             Calc_dins();
+            Calc_U();
+            Array.Clear(Material, 0, 10);
+            Array.Clear(Material_d, 0, 10);
+            Array.Clear(Material_λ, 0, 10);
+            Array.Clear(Material_R, 0, 10);
+            Array.Clear(Material_T, 0, 12);
+            Calc_U();
         }
 
         private void MaterialUP_button_Click(object sender, EventArgs e)
@@ -718,6 +731,7 @@ namespace main.contents.Construction
             Ucalc_dataGridView.Rows[iCurrentRow + 1].Selected = true;
             Ucalc_dataGridView.CurrentCell = Ucalc_dataGridView[Ucalc_dataGridView.CurrentCell.ColumnIndex, iCurrentRow + 1];
             Load_Material_Num();
+
         }
         private void Load_Material_Num()
         {
@@ -859,7 +873,7 @@ namespace main.contents.Construction
             {
                 dtot = 0;
                 Rtot = 0;
-
+              
                 for (int k = 0; k < Ucalc_dataGridView.RowCount; k++)
                 {
                     if (Ucalc_dataGridView.Rows[k].Cells[3].Value != null)
@@ -1133,6 +1147,7 @@ namespace main.contents.Construction
             TBName = null;
             ISO_KS = null;
             LinearPoint = null;
+
         }
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
@@ -1298,7 +1313,12 @@ namespace main.contents.Construction
                                 OldFloor_R = 1 / Convert.ToDouble(OldFloor_U[0][0]);
                                 Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존바닥";
                                 Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldFloor;
-                                Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldFloor_R);
+                            string[][] value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "두께합계", "명칭 ='" + OldFloor + "'");
+                            if (value.Length > 0)
+                            {
+                                Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Convert.ToDouble(value[0][0]).ToString("0");
+                            }
+                            Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldFloor_R);
                                 Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "6e6e6e";
                         }
                         else 

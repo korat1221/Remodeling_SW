@@ -1024,10 +1024,16 @@ namespace main.contents.Result
                     Saving_mth_avg_전기 = Saving_mth_avg_전기 / 12;
                     SavingPercent_mth_avg_전기 = SavingPercent_mth_avg_전기 / 12;
 
+                  
                     __data[42].Add(new { idx = i, val = (Saving_a_전기).ToString("0.0") + " kWh/a" }); //연간 절감량
                     __data[43].Add(new { idx = i, val = Saving_mth_avg_전기.ToString("0.0") }); //월평균 절감량
                     __data[44].Add(new { idx = i, val = ((Saving_a_전기 / Qtot_a2_전기) * 100).ToString("0.0") + "%" }); //연간 절감율
                     __data[45].Add(new { idx = i, val = SavingPercent_mth_avg_전기.ToString("0.0") + "%" }); //월평균 절감율 
+
+                    double saing_tCO2 = Saving_a_전기 * 0.4747 / 1000000 * 1000;
+                    double saing_TOE = Saving_a_전기 * 0.00023;
+                    __data[106].Add(new { idx = i, val = (saing_tCO2).ToString("0.0") + " tCO2" }); //온실가스
+                    __data[107].Add(new { idx = i, val = (saing_TOE).ToString("0.0") + " TOE" }); //온실가스
                     for (int mth = 0; mth < 12; mth++)
                     {
                         __data[46].Add(new { idx = i * 12 + mth, val = ((Qtot2_mth_전기[mth] - Qtot_mth_전기[mth])).ToString("0.0") }); //월별 절감량 
@@ -1266,12 +1272,17 @@ namespace main.contents.Result
                         SavingPercent_mth_avg_가스 += (Qtot2_mth_가스[mth] - Qtot_mth_가스[mth]) / Qtot2_mth_가스[mth] * 100;
                     }
                     Saving_mth_avg_가스 = Saving_mth_avg_가스 / 12;
-                    SavingPercent_mth_avg_가스 = SavingPercent_mth_avg_가스 / 12;
+                    SavingPercent_mth_avg_가스 = SavingPercent_mth_avg_가스 / 12;                   
 
                     __data[92].Add(new { idx = i, val = (Saving_a_가스).ToString("0.0")+ " kWh/a" }); //연간 절감량
                     __data[93].Add(new { idx = i, val = Saving_mth_avg_가스.ToString("0.0") }); //월평균 절감량
                     __data[94].Add(new { idx = i, val = ((Saving_a_가스 / Qtot_a2_가스) * 100).ToString("0.0") + "%" }); //연간 절감율
                     __data[95].Add(new { idx = i, val = SavingPercent_mth_avg_가스.ToString("0.0") + "%" }); //월평균 절감율 
+
+                    double saing_tCO2_가스 = Saving_a_가스 / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double saing_TOE_가스 = Saving_a_가스 / 43.1 / 0.277778 * 0.00103;
+                    __data[108].Add(new { idx = i, val = (saing_tCO2_가스).ToString("0.0") + " tCO2" }); //온실가스
+                    __data[109].Add(new { idx = i, val = (saing_TOE_가스).ToString("0.0") + " TOE" }); //온실가스
                     for (int mth = 0; mth < 12; mth++)
                     {
                         __data[96].Add(new { idx = i * 12 + mth, val = ((Qtot2_mth_가스[mth] - Qtot_mth_가스[mth])).ToString("0.0") }); //월별 절감량 
@@ -1346,11 +1357,19 @@ namespace main.contents.Result
                     data.Add(new { cname = "qbasef_a_area_new_gas", data = __data[90] });
                     data.Add(new { cname = "qf_tot_a_area_new_gas", data = __data[91] });
 
-                    data.Add(new { cname = "Saving_a_gas", data = __data[92]+ " kWh/a" });
+                    data.Add(new { cname = "Saving_a_gas", data = __data[92] });
                     data.Add(new { cname = "Saving_mth_avg_gas", data = __data[93] });
                     data.Add(new { cname = "SavingPercent_a_gas", data = __data[94] });
                     data.Add(new { cname = "SavingPercent_mth_avg_gas", data = __data[95] });
                     data.Add(new { cname = "Saving_mth_gas", data = __data[96] });
+
+                    data.Add(new { cname = "Saving_tCO2", data = __data[106] });
+                    data.Add(new { cname = "Savin_TOE", data = __data[107] });
+                    data.Add(new { cname = "Saving_tCO2_가스", data = __data[108] });
+                    data.Add(new { cname = "Saving_TOE_가스", data = __data[109] });
+
+
+
                     #endregion
                 }
             }

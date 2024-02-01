@@ -2043,6 +2043,7 @@ namespace main.contents
 
         private void Create_ce_Table()
         {
+            ce_dataGridView.Columns.Clear();
             DataGridViewCheckBoxColumn ce_checkBoxColumn = new DataGridViewCheckBoxColumn();
             new StackedHeaderDecorator(ce_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, ce_datagridviewDesign);
             ce_checkBoxColumn.HeaderText = "선택";

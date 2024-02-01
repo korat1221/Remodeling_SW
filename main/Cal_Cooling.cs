@@ -231,8 +231,8 @@ namespace main
                 {
                     foreach (zonemake value in ZoneNameList)
                     {
-                        sum_dwd[i] += value.dwd[i]* QC_nd_z[i];
-                        sum_theta[i] += value.θi_c[i] * QC_nd_z[i];
+                        sum_dwd[i] += value.dwd[i] * value.QC_nd_zt_j[i];
+                        sum_theta[i] += value.θi_c[i] * value.QC_nd_zt_j[i];
                     }
                     dwd_z[i] = sum_dwd[i] / QC_nd_z[i];
                     theta_z[i] = sum_theta[i] / QC_nd_z[i];
@@ -619,7 +619,7 @@ namespace main
                         else
                         {
                             double son1 = 273 + Theta_IC[i] - Theta_evad;
-                            double son2 = 273 + OutdoorTemperature[i] + Theta_Around - Theta_cond - (273 + Theta_IC[i] - Theta_evad);
+                            double son2 = 273 + OutdoorTemperature[i] + Theta_Around + Theta_cond - (273 + Theta_IC[i] - Theta_evad);
 
                             double mutter1 = ThetaC_gen_hr_req_in - Theta_evad;
                             double mutter2 = (ThetaC_gen_req_out + Theta_cond) - (ThetaC_gen_hr_req_in - Theta_evad);

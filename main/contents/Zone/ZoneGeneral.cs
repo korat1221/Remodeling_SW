@@ -985,14 +985,16 @@ namespace main.contents
                                     if (Wall_Value[0][2 * k + 5] != "")
                                     {
                                         String[][] Material = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분", "재료명 = '" + Wall_Value[0][2 * k + 5] + "'");
-
-                                        if (Material[0][0] != "콘크리트")
+                                        if (Material.Length > 0)
                                         {
-                                            Wall_d += Convert.ToDouble(Wall_Value[0][2 * k + 6]) / 1000;
-                                        }
-                                        else
-                                        {
-                                            break;
+                                            if (Material[0][0] != "콘크리트")
+                                            {
+                                                Wall_d += Convert.ToDouble(Wall_Value[0][2 * k + 6]) / 1000;
+                                            }
+                                            else
+                                            {
+                                                break;
+                                            }
                                         }
                                     }
                                     else

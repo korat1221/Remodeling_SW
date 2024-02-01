@@ -712,7 +712,12 @@ namespace main.contents
             }           
             Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldWall_R);
             Load_Material_Num();
-
+            Array.Clear(Material, 0, 10);
+            Array.Clear(Material_d, 0, 10);
+            Array.Clear(Material_λ, 0, 10);
+            Array.Clear(Material_R, 0, 10);
+            Array.Clear(Material_T, 0, 12);
+            Calc_U();
         }
 
         private void Add_CW()
@@ -732,6 +737,12 @@ namespace main.contents
             Ucalc_dataGridView.Rows[nRow].Cells[5].Value = 150;
             Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", CW_R);
             Load_Material_Num();
+            Array.Clear(Material, 0, 10);
+            Array.Clear(Material_d, 0, 10);
+            Array.Clear(Material_λ, 0, 10);
+            Array.Clear(Material_R, 0, 10);
+            Array.Clear(Material_T, 0, 12);
+            Calc_U();
 
         }
 
@@ -780,6 +791,12 @@ namespace main.contents
             Ucalc_dataGridView.Rows.Remove(Ucalc_dataGridView.Rows[SelectRow]);
             Load_Material_Num();
             Calc_dins();
+            Array.Clear(Material, 0, 10);
+            Array.Clear(Material_d, 0, 10);
+            Array.Clear(Material_λ, 0, 10);
+            Array.Clear(Material_R, 0, 10);
+            Array.Clear(Material_T, 0, 12);
+            Calc_U();
         }
 
         private void MaterialUP_button_Click(object sender, EventArgs e)
@@ -943,8 +960,7 @@ namespace main.contents
             if (Ucalc_dataGridView.RowCount > 0)
             {
                 dtot = 0;
-                Rtot = 0;
-
+                Rtot = 0;               
                 for (int k = 0; k < Ucalc_dataGridView.RowCount; k++)
                 {
                     if (Ucalc_dataGridView.Rows[k].Cells[3].Value != null)
@@ -1398,6 +1414,7 @@ namespace main.contents
                                     CW_R = 1 / Convert.ToDouble(CW_U[0][0]);
                                     Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "덧댐커튼월";
                                     Ucalc_dataGridView.Rows[nRow].Cells[3].Value = CWName;
+                                    Ucalc_dataGridView.Rows[nRow].Cells[5].Value = 150;
                                     Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", CW_R);
                                     Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "97C0D6";
                                 }
@@ -1407,6 +1424,11 @@ namespace main.contents
                                 OldWall_R = 1 / Convert.ToDouble(OldWall_U[0][0]);
                                 Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존외벽";
                                 Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldWall;
+                                string[][] value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "두께합계", "명칭 ='" + OldWall + "'");
+                                if (value.Length > 0)
+                                {
+                                    Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Convert.ToDouble(value[0][0]).ToString("0");
+                                }
                                 Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldWall_R);
                                 Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "6e6e6e";
                             }
