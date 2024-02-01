@@ -237,15 +237,6 @@ Spacing.prototype = {
 			return null;
 		};
 		
-		let _sortFloor = (a,b) => {
-			let fl_a = this.editor.wall[a[0].cardi][a[0].id];
-			let fl_b = this.editor.wall[b[0].cardi][b[0].id];
-			let height = Math.abs(fl_a.bbox[0][1]) - Math.abs(fl_b.bbox[0][1]);
-
-			if (height !== 0) return height;
-			else return fl_b.area - fl_a.area;
-		};
-
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -297,7 +288,13 @@ Spacing.prototype = {
 
 		while(_mergeSpaces());
 
-		this.editor.spaces.sort((a,b) => { return _sortFloor(a,b);});
+		this.editor.spaces.sort((a,b) => { 
+			let fl_a = this.editor.wall[a[0].cardi][a[0].id];
+			let fl_b = this.editor.wall[b[0].cardi][b[0].id];
+			let Y = parseInt(Math.abs(fl_a.bbox[0][1])) - parseInt(Math.abs(fl_b.bbox[0][1]));
+
+			return Y !== 0 ? Y : fl_b.area - fl_a.area;
+		});
 
 		let sid;
 

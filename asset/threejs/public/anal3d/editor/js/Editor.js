@@ -1727,7 +1727,6 @@ Editor.prototype = {
 				let win = _getMainWin(space);
 				let wall_length = 0;
 				let depth = 0;
-				let area = 0;
 				let height = 0;
 				let cardi = "";
 				let zid = "";
@@ -1742,31 +1741,20 @@ Editor.prototype = {
 					}
 				}			
 				
-				let k = -1;
-
-				while(++k < space.length) {
-					let el = space[k];
-		
-					if  (el.cardi === 'DOWN') {
-						area += this.wall[el.cardi][el.id].area;
-					}
-		
-				}
-	
 				let floor = this.wall[space[0].cardi][space[0].id];
 
 				if (floor) {
 
 					zid = floor.zid;
 //					zid = floor.floor + "F_Zone" + ((floor.sid ? floor.sid : "") + "").padStart(3, '0')
-					depth = wall_length != 0 ? area / wall_length : 0;
+					depth = wall_length != 0 ? floor.area / wall_length : 0;
 					if (win) {
 						height = (win.box[0][1] > win.box[1][1] ? win.box[0][1] : win.box[1][1]) - floor.bbox[0][1];
 					}
 				}
 
 				if (floor.floor) {
-					sql += "INSERT INTO ZoneGeneral_3D (존번호,층,지면접합유형,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES ('" + zid + "','" + floor.floor + "','" + (floor.type == 'FLOOR' ? '지면위' : '층간슬라브')+ "','" + area + "','" + (cardi != "" ? cardinal[cardi] : "") + "','" + wall_length + "','" + depth + "','" + height + "');";
+					sql += "INSERT INTO ZoneGeneral_3D (존번호,층,지면접합유형,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES ('" + zid + "','" + floor.floor + "','" + (floor.type == 'FLOOR' ? '지면위' : '층간슬라브')+ "','" + floor.area + "','" + (cardi != "" ? cardinal[cardi] : "") + "','" + wall_length + "','" + depth + "','" + height + "');";
 				}
 			}
 												
@@ -1795,7 +1783,7 @@ Editor.prototype = {
 			};
 
 			Object.keys(this.bridges).forEach(el => {
-				sql += "INSERT INTO ThermalBridge_3D (ID,열교항목,열교길이) VALUES (" + el + ",'" + _bridges[el] + "','" + this.bridges[el].dist + "');";
+				sql += "INSERT INTO ThermalBridge_3D (ID,프로젝트유형,열교항목,열교길이) VALUES (" + el + ",'__PROJ_TYPE__','" + _bridges[el] + "','" + this.bridges[el].dist + "');";
 			});
 
 			this.uploadObjInfo({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"rotation":this.rotation,"tree":tree,"tree2":tree,"perfect":this.perfect}, sql);
@@ -2379,7 +2367,6 @@ Editor.prototype = {
 		if (this.debug.use && this.debug.line) {
 			i = -1;
 			let n = 0.05;
-			console.log('edges');
 			while(++i < this.edges.length) {
 				let line = JSON.parse(JSON.stringify(this.edges[i].line));
 		//		console.log(this.edges[i].walls);
@@ -2650,10 +2637,6 @@ Editor.prototype = {
 
 		this.history.redo();
 
-	},
-
-	calcShadows: function () {
-		this._shadows.calcShadows();
 	},
 
 	getLineIndex: function (line) {
