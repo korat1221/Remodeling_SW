@@ -454,7 +454,7 @@
 				if ((n = msg.indexOf("bridge-")) >= 0) {
 					editor.drawBridges(msg.substr(n + 7));
 				}
-				else if ((n = msg.indexOf("board-")) >= 0) {
+				else if ((n = msg.indexOf("board-")) >= 0 || (n = msg.indexOf("space-")) >= 0) {
 					editor.drawSpacePoints(msg);
 				}
 			}
