@@ -91,6 +91,8 @@ namespace main.contentslist
             List.Columns.Add("번호", typeof(string));
             List.Columns.Add("명칭", typeof(string));
             List.Columns.Add("주요설비", typeof(string));
+            List.Columns.Add("출력 [kW]", typeof(string));
+            List.Columns.Add("성능", typeof(string));
             dataGridView1.DataSource = List;
 
 
@@ -100,14 +102,22 @@ namespace main.contentslist
         public void load_List()
         {
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호,명칭,주요설비", "");
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호,명칭,주요설비,보일러종류", "");
             if (List.Length > 0)
             {
                 String Blank = "";
                 this.List.Rows.Clear();
+                string[][] SystemValue;
                 for (int n = 0; n < List.Length; n++)
                 {
-                    this.List.Rows.Add(List[n][0], List[n][1], List[n][2]);
+                    if (List[n][2] == "보일러")
+                    {
+                        SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + List[n][3] + "'");
+                        if (SystemValue.Length > 0)
+                        {
+                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], Convert.ToDouble(SystemValue[0][0]).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %");
+                        }
+                    }
                     mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":18,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                 }
                 dataGridView1.DataSource = this.List;

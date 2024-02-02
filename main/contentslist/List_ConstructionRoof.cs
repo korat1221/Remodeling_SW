@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -140,7 +141,16 @@ namespace main.contentslist
                     dataGridView1.Rows[nRow].Cells[3].Value = List[n][2];
                     dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][3]));
                     dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][4]));
-                    dataGridView1.Rows[nRow].Cells[6].Value = null;
+                    string[][] Area = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "구조체번호='" + List[n][0] + "'");
+                    double A = 0;
+                    if (Area.Length > 0)
+                    {
+                        for (int a = 0; a < Area.Length; a++)
+                        {
+                            A += Convert.ToDouble(Area[a][0]);
+                        }
+                        dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F2}", A);
+                    }
                     mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":4,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                 }
             }

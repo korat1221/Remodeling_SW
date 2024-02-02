@@ -96,8 +96,9 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A4", "유효열관류율.[W/m²·K]");
             dataGridView1.Columns.Add("A5", "태양열취득률.[-]");
             dataGridView1.Columns.Add("A6", "빛투과율.[-]");
-            dataGridView1.Columns.Add("A7", "면적.[m²]");
-            dataGridView1.Columns.Add("A8", "유리종류");
+            dataGridView1.Columns.Add("A7", "유리종류");
+            dataGridView1.Columns.Add("A8", "면적.[m²]");
+            dataGridView1.Columns.Add("A9", "개수.[EA]");
             dataGridView1.Columns[0].Width = 40;
             //CWList.Columns.Add("번호", typeof(string));
             //CWList.Columns.Add("명칭", typeof(string));
@@ -148,8 +149,13 @@ namespace main.contentslist
                     dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][3]));
                     dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][4]));
                     dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][5]));
-                    dataGridView1.Rows[nRow].Cells[7].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][6]));
-                    dataGridView1.Rows[nRow].Cells[8].Value = List[n][7];
+                    dataGridView1.Rows[nRow].Cells[7].Value = List[n][7];
+                    dataGridView1.Rows[nRow].Cells[8].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][6]));
+                    string[][] Area = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "구조체번호='" + List[n][0] + "'");
+                    if (Area.Length > 0)
+                    {
+                        dataGridView1.Rows[nRow].Cells[9].Value = Area.Length;
+                    }
                     mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":2,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                 }
             }

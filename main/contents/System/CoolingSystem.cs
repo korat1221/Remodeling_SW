@@ -2452,7 +2452,7 @@ namespace main.contents
                         Pump_dataGridView.Rows[0].Cells[9].Value = Pump1Valve;
                         Pump_dataGridView.Rows[0].Cells[10].Value = Pump1Control;
                         Pump_dataGridView.Rows[0].Cells[11].Value = Pump1Num;
-                    }
+                    } 
                     else if (Pump_dataGridView.Rows.Count > 1)
                     {
                         Pump_dataGridView.Rows[0].Cells[9].Value = Pump1Valve;
