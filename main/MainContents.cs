@@ -74,6 +74,7 @@ namespace main
             List_PV,
             List_FuelCell,
             List_WindPower,
+            PrintReport_Main,
             None
 
         }
@@ -92,7 +93,8 @@ namespace main
             new PrintReport_Lighting(),new PrintReport_Heating(),new PrintReport_Cooling(),new PrintReport_DHWSystem(),new PrintReport_AHUSystem(),
             new List_DHWSystem(),new List_ConstructionBlind(),new List_ConstructionDoor(),
             new PrintReport_Final(), 
-            new List_PV(),new List_FuelCell(),new List_WindPower()}; 
+            new List_PV(),new List_FuelCell(),new List_WindPower(),
+            new PrintReport_Main() }; 
         bool scriptable = false;
         public class FormParam
         {
@@ -407,6 +409,12 @@ namespace main
 
                 f.LoadData(formParam.ID);
             }
+            else if (formParam.formID == 56)
+            {
+                PrintReport_Main f = (PrintReport_Main)form;
+
+                f.LoadData(formParam.ID);
+            }
             return true;
         }
 
@@ -680,6 +688,26 @@ namespace main
             {
                 webView21.CoreWebView2.ExecuteScriptAsync(script);
             }
+        }
+        public void resetAll()
+        {
+            forms = new Form[] { new General(), new EnergyUse(),
+            new ConstructionCW(), new ConstructionWall(), new ConstructionRoof(), new ConstructionFloor(), new ConstructionWindow(), new ConstructionDoor(),
+            new Model(), new Shade(), new ConstructionBlind(), new ThermalBridge(),
+            new ZoneGeneral(), new ZoneEnvelope(), new ZoneLighting(), new ZoneSystem(),
+            new EquipmentList(),new AHUSystem(), new DHWSystem(), new HeatingSystem(), new CoolingSystem(),
+            new PV(), new FuelCell(), new WindPower(), new SupplyRatio(), new EIndependenceRate(),
+            new ReportExisting(), new ReportRemodeling(),
+            new FormDebug(),
+            new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow(),
+            new List_Floor(), new List_Zone(),
+            new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor(), new PrintReport_HCneed(),new List_CoolingSystem(), new List_HeatingSystem(),
+            new Intro(), new ProjectList(), new OpenProject(), new List_RESystem(),
+            new PrintReport_Lighting(),new PrintReport_Heating(),new PrintReport_Cooling(),new PrintReport_DHWSystem(),new PrintReport_AHUSystem(),
+            new List_DHWSystem(),new List_ConstructionBlind(),new List_ConstructionDoor(),
+            new PrintReport_Final(),
+            new List_PV(),new List_FuelCell(),new List_WindPower(),
+            new PrintReport_Main() };
         }
         public void ResetForm(int idx)
         {

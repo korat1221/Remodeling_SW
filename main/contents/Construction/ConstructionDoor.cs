@@ -914,20 +914,32 @@ namespace main.contents
 
         private void Save()
         {
-            //치수 입력 안하면 저장 안되도록 메세지 박스 
+            #region 법규
+            String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
+            double 법규U=0; 
+            if (Date.Length > 0)
+            {
+                String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '문' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
+                
+                if (Uvalue.Length > 0)
+                {
+                    법규U = Convert.ToDouble(Uvalue[0][0]);
+                }
+            }
+            #endregion
 
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             Program.DB.setValue(DB.type.ProjDB, "ConstructionDoor", "번호,프로젝트유형,명칭,Type,기존출입문,UD적용방법,직접간접,문짝제품,출입문재질,문틀내부,문짝내부유형,문짝색,흡수율,문짝단열재종류," +
                       "문짝두께,문짝열관류율,문틀상부측면열관류율,문틀하부열관류율,문면적,문높이,문길이,유리적용유무," +
                       "설치유형,설치유형2,상부측면설치길이,하부설치길이,상부선형열관류율,측면부선형열관류율,하부선형열관류율,상부설치길이,측면설치길이,하부설치길이2,열교가산치," +
-                      "문유효열관류율,Door유형,제품명,제조사",
+                      "문유효열관류율,Door유형,제품명,제조사," +
+                      "법규열관류율",
                     "'" + DoorNum_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + DoorName + "','" + Type + "','" + OldDoor + "','" + UDoorMethod + "','" + DiIndi + "','" + DoorDB + "','" + Material + "','" + FrameIn + "','" + DoorIn + "','" + DoorColor + "','" + αd.ToString() + "','" + DoorInsul + "','" +
                     DoorThk.ToString() + "','" + DoorUD.ToString() + "','" + DoorOver.ToString() + "','" + DoorBottom.ToString() + "','" + DoorArea_textBox.Text + "','" + DoorH.ToString() + "','" + DoorL.ToString() + "','" + glass_check.ToString() + "','" +
                     InstallType + "','" + Install2 + "','" + OverL.ToString() + "','" + UnderL.ToString() + "','" + Psi_InstallTop.ToString() + "','" + Psi_InstallSide.ToString() + "','" + Psi_InstallBottom.ToString() + "','" + d_InstallTop_textBox.Text + "','" + d_InstallSide_textBox.Text + "','" + d_InstallBottom_textBox.Text + "','" + dUinst_textBox.Text + "','" +
-                    DoorUDinsGlass.ToString() + "','" + DBType + "','" + DBName + "','" + DBName2
+                    DoorUDinsGlass.ToString() + "','" + DBType + "','" + DBName + "','" + DBName2 + "','" +
+                    법규U.ToString()
                     + "'", "번호");
-
-
 
             //유리 있을 경우 
             if (glass_checkBox.Checked)

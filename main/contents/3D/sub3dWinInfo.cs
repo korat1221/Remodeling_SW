@@ -66,7 +66,12 @@ namespace main.contents
                 ID = ID.Replace("_win5", "");
 
                 String[][] RES = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호", "아이디 = '" + ID + "'");
-                string 번호 = RES[0][0];
+                string 번호=null;
+                if (RES.Length > 0)
+                {
+                    번호 = RES[0][0];
+                }
+               
 
                 string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,구조체번호,면적,창호너비,창호높이", "번호 = '" + 번호 + "'");
 

@@ -1019,6 +1019,28 @@ namespace main.contents.Construction
                 Calc_Ueff();
             }
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            #region 법규
+            String DiIndi_;
+
+            if (DiIndi == "직접외기" || DiIndi == "간접외기")
+            {
+                DiIndi_ = DiIndi;
+            }
+            else
+            {
+                DiIndi_ = "간접외기";
+            }
+            double 법규U = 0;
+            String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
+            if (Date.Length > 0)
+            {
+                String[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '바닥' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi_ + "'");
+                if (Value.Length > 0)
+                {
+                    법규U = Convert.ToDouble(Value[0][0]);
+                }
+            }
+            #endregion
             Program.DB.setValue(DB.type.ProjDB, "ConstructionFloor", "번호,프로젝트유형,명칭,Type,기존바닥,기초설치,U적용방법,직접간접,구조유형,열교유형,열교종류,표면열전달저항기준,선형점형," +
                 "A,B,C,PsiKai,단위면적당적용," +
                 "Rse,Rsi,두께합계,열저항합계,단열재두께," +
@@ -1032,7 +1054,8 @@ namespace main.contents.Construction
                 "재료8종류,재료8두께," +
                 "재료9종류,재료9두께," +
                 "재료10종류,재료10두께," +
-                "열관류율,열교가산치,유효열관류율",
+                "열관류율,열교가산치,유효열관류율," +
+                "법규열관류율",
                 "'" + FloorNum_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + FloorName + "','" + Type + "','" + OldFloor + "','" + Base + "','" + UMethod + "','" + DiIndi + "','" + StructureType + "','" + TBType + "','" + TBName + "','" + ISO_KS + "','" + LinearPoint + "','" +
                 A.ToString() + "','" + B.ToString() + "','" + C.ToString() + "','" + PsiKai.ToString() + "','" + PerArea.ToString() + "','" +
                 Rse.ToString() + "','" + Rsi.ToString() + "','" + dtot.ToString() + "','" + Rtot.ToString() + "','" + dins.ToString() + "','" +
@@ -1046,8 +1069,10 @@ namespace main.contents.Construction
                 Material[7] + "','" + Material_d[7].ToString() + "','" +
                 Material[8] + "','" + Material_d[8].ToString() + "','" +
                 Material[9] + "','" + Material_d[9].ToString() + "','" +
-                Uvalue.ToString() + "','" + dU.ToString() + "','" + Ueff.ToString()
+                Uvalue.ToString() + "','" + dU.ToString() + "','" + Ueff.ToString() + "','" +
+                법규U.ToString()
                  + "'", "번호");
+
             this.DialogResult = DialogResult.OK;
             this.Hide();
             Program.getMenuForm().DoLoadForm(36, OnLoadListProc);

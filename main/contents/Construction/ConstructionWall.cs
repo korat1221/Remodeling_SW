@@ -881,8 +881,7 @@ namespace main.contents
                         Uvalue = Convert.ToDouble(Value[0][0]);
                         U_textBox.Text = string.Format("{0:F3}", Uvalue);
                         dins = (1 / Uvalue) * 0.04 * 1000;
-                        Calc_dU();
-                        // MessageBox.Show("[(" + Value[0][2] + " 시행)" + Value[0][1] + "] " + Value[0][3] + " 열관류율 적용");
+                        Calc_dU();                        
                     }
                     else
                     {
@@ -1100,6 +1099,27 @@ namespace main.contents
                 Calc_Ueff();
             }
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            #region 법규
+            String DiIndi_;
+            double 법규U =0;
+            String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
+            if (DiIndi == "직접외기" || DiIndi == "간접외기")
+            {
+                DiIndi_ = DiIndi;
+            }
+            else
+            {
+                DiIndi_ = "간접외기";
+            }
+            if (Date.Length > 0)
+            {
+                String[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '외벽' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi_ + "'");
+                if (Value.Length > 0)
+                {
+                    법규U = Convert.ToDouble(Value[0][0]);
+                }
+            }
+            #endregion
             Program.DB.setValue(DB.type.ProjDB, "ConstructionWall", "번호,프로젝트유형,명칭,Type,기존외벽,덧댐커튼월,U적용방법,직접간접,구조유형,열교유형,열교종류,외장재색,표면열전달저항기준,선형점형," +
                 "A,B,C,PsiKai,단위면적당적용," +
                 "Rse,Rsi,두께합계,열저항합계,단열재두께," +
@@ -1113,7 +1133,8 @@ namespace main.contents
                 "재료8종류,재료8두께," +
                 "재료9종류,재료9두께," +
                 "재료10종류,재료10두께," +
-                "흡수율,열관류율,열교가산치,유효열관류율",
+                "흡수율,열관류율,열교가산치,유효열관류율," +
+                "법규열관류율",
                 "'" + WallNum_textBox.Text + "','" + 프로젝트유형[0][0] +"','" + WallName + "','" + Type + "','" + OldWall + "','" + CWName + "','" + UMethod + "','" + DiIndi + "','" + StructureType + "','" + TBType + "','" + TBName + "','" + Color_Envelope + "','" + ISO_KS + "','" + LinearPoint + "','" +
                 A.ToString() + "','" + B.ToString() + "','" + C.ToString() + "','" + PsiKai.ToString() + "','" + PerArea.ToString() + "','" +
                 Rse.ToString() + "','" + Rsi.ToString() + "','" + dtot.ToString() + "','" + Rtot.ToString() + "','" + dins.ToString() + "','" +
@@ -1127,8 +1148,10 @@ namespace main.contents
                 Material[7] + "','" + Material_d[7].ToString() + "','" +
                 Material[8] + "','" + Material_d[8].ToString() + "','" +
                 Material[9] + "','" + Material_d[9].ToString() + "','" +
-                α.ToString() + "','" + Uvalue.ToString() + "','" + dU.ToString() + "','" + Ueff.ToString()
+                α.ToString() + "','" + Uvalue.ToString() + "','" + dU.ToString() + "','" + Ueff.ToString() + "','" +
+                법규U.ToString()
                  + "'", "번호");
+
             this.DialogResult = DialogResult.OK;
             this.Hide();
             Program.getMenuForm().DoLoadForm(34, OnLoadListProc);
@@ -1472,6 +1495,7 @@ namespace main.contents
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 Load_WallType_image(Type);
                 Load_TB_Image();
+               
             }
         }
 

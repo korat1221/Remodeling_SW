@@ -1065,7 +1065,6 @@ namespace main.contents
                     UCW_g_textBox.Text = String.Format("{0:F3}", Ucw_g);
                 }
                
-               // MessageBox.Show("[(" + Uvalue[0][2] + " 시행)" + Uvalue[0][1] + "] " + Uvalue[0][3] + " 열관류율 적용");
             }
         }
 
@@ -1327,16 +1326,34 @@ namespace main.contents
         private void Save()
         {
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            #region 법규
+            double 법규Ucw_g=0, 법규Ucw_p=0, 법규Ucw_d = 0; 
+            String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
+            String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");            
+            if (Uvalue.Length > 0)
+            {
+                법규Ucw_g = Convert.ToDouble(Uvalue[0][0]);
+                법규Ucw_d = Convert.ToDouble(Uvalue[0][0]);
+            }
+            Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '외벽' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
+            if (Uvalue.Length > 0)
+            {
+                법규Ucw_p = Convert.ToDouble(Uvalue[0][0]);
+            }
+            #endregion
+
             Program.DB.setValue(DB.type.ProjDB, "ConstructionCW", "번호,프로젝트유형,명칭,Type,기존커튼월,Ucw적용방법,직접간접,프레임유형,프레임종류,고정유리종류,개폐유리종류,간봉종류,설치유형,설치종류,LE_CL_V,패널적용유무,출입문적용유무," +
                       "고정유리열관류율,개폐유리열관류율,태양열취득률,빛투과율,고정유리선형열관류율,개폐유리선형열관류율,고정프레임열관류율,개폐프레임열관류율,고정프레임두께,개폐프레임두께," +
                       "상부설치열관류율,측면설치열관류율,하부설치열관류율," +
                       "사이즈명칭,커튼월면적,너비,높이,고정창유리면적,개폐창유리면적,고정창유리둘레길이,개폐창유리둘레길이,M_T프레임면적,개폐창프레임면적," +
-                      "커튼월창열관류율,유리부분열관류율,설치열교가산치,커튼월창유효열관류율,유리부분유효열관류율,유리부분유리면적비",
+                      "커튼월창열관류율,유리부분열관류율,설치열교가산치,커튼월창유효열관류율,유리부분유효열관류율,유리부분유리면적비," +
+                      "법규유리부분열관류율",
                     "'" + CWNum_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + CWName + "','" + Type + "','" + OldCW + "','" + UcwMethod + "','" + DiIndi + "','" + FrameType + "','" + FrameName + "','" + FixGlassName + "','" + OpenGlassName + "','" + SpacerName + "','" + InstallType + "','" + InstallName + "','" + LE_CL_V + "','" + Panel_check.ToString() + "','" + Door_check.ToString() + "','" +
                     Ug_Fix.ToString() + "','" + Ug_Open.ToString() + "','" + g.ToString() + "','" + τ.ToString() + "','" + Psi_g_fix.ToString() + "','" + Psi_g_open.ToString() + "','" + Uf_mt.ToString() + "','" + Uf_open.ToString() + "','" + df_mt.ToString() + "','" + df_open.ToString() + "','" +
                     Psi_InstallTop.ToString() + "','" + Psi_InstallSide.ToString() + "','" + Psi_InstallButtom.ToString() + "','" +
                     SizeName + "','" + Area.ToString() + "','" + Width.ToString() + "','" + Height.ToString() + "','" + Ag_fix.ToString() + "','" + Ag_open.ToString() + "','" + Lg_fix.ToString() + "','" + Lg_open.ToString() + "','" + Af_mt.ToString() + "','" + Af_open.ToString() + "','" +
-                    Ucw.ToString() + "','" + Ucw_g.ToString() + "','" + dUinst.ToString() + "','" + Ucw_inst.ToString() + "','" + Ucw_g_inst.ToString() + "','" + Ff_g.ToString()
+                    Ucw.ToString() + "','" + Ucw_g.ToString() + "','" + dUinst.ToString() + "','" + Ucw_inst.ToString() + "','" + Ucw_g_inst.ToString() + "','" + Ff_g.ToString() + "','" +
+                    법규Ucw_g.ToString()
                     + "'", "번호");
 
             if (Panel_checkBox.Checked)
@@ -1345,12 +1362,14 @@ namespace main.contents
                           "패널종류,패널유리종류,LE_CL_V_Panel," +
                           "패널열관류율,패널유리열관류율,패널열전도율,패널흡수율,패널선형열관류율,패널두께," +
                           "패널면적,패널둘레길이," +
-                          "패널부분열관류율,패널부분유효열관류율",
+                          "패널부분열관류율,패널부분유효열관류율," +
+                          "법규패널부분열관류율",
                         "'" + CWNum_textBox.Text + "','" +
                         PanelName + "','" + PanelGlassName + "','" + LE_CL_V_Panel + "','" +
                         Up.ToString() + "','" + Ug_panel.ToString() + "','" + Conductivity_p.ToString() + "','" + αp.ToString() + "','" + Psi_p.ToString() + "','" + dPanel.ToString() + "','" +
                         Ap.ToString() + "','" + Lp.ToString() + "','" +
-                        Ucw_p.ToString() + "','" + Ucw_p_inst.ToString()
+                        Ucw_p.ToString() + "','" + Ucw_p_inst.ToString() + "','" +
+                        법규Ucw_p.ToString()
                         + "'", "번호");
             }
             if (Door_checkBox.Checked)
@@ -1359,12 +1378,14 @@ namespace main.contents
                        "출입문프레임유형,출입문프레임종류,출입문유리종류,출입문간봉종류,LE_CL_V_Door," +
                        "출입문유리열관류율,출입문태양열취득률,출입문빛투과율,출입문유리선형열관류율,출입문프레임두께,출입문프레임열관류율," +
                        "출입문프레임면적,출입문유리면적,출입문유리둘레길이," +
-                       "출입문부분열관류율,출입문부분유효열관류율,출입문부분유리면적비",
+                       "출입문부분열관류율,출입문부분유효열관류율,출입문부분유리면적비," +
+                       "법규출입문부분열관류율",
                         "'" + CWNum_textBox.Text + "','" +
                      DoorFrame + "','" + DoorFrame + "','" + DoorGlassName + "','" + DoorSpacer + "','" + LE_CL_V_Door + "','" +
                      Ug_Door.ToString() + "','" + gd.ToString() + "','" + τd.ToString() + "','" + Psi_g_Door.ToString() + "','" + df_door.ToString() + "','" + Uf_door.ToString() + "','" +
                      Af_d.ToString() + "','" + Ag_d.ToString() + "','" + Lg_d.ToString() + "','" +
-                     Ucw_d.ToString() + "','" + Ucw_d_inst.ToString() + "','" + Ff_d.ToString()
+                     Ucw_d.ToString() + "','" + Ucw_d_inst.ToString() + "','" + Ff_d.ToString() + "','" +
+                     법규Ucw_d.ToString()
                      + "'", "번호");
             }
             this.DialogResult = DialogResult.OK;

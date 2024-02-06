@@ -52,24 +52,11 @@ namespace main.contents.Result
                 webView21.CoreWebView2.ExecuteScriptAsync(script);
             }
         }
-        public void load_List()
-        {
-            List<object> subMenu = new List<object>();
-
-            subMenu.Add(new { text = "냉난방요구량", id = "{\\\"formID\\\":37,\\\"ID\\\":\\\"Result_0\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            subMenu.Add(new { text = "조명소요량", id = "{\\\"formID\\\":44,\\\"ID\\\":\\\"Result_1\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            subMenu.Add(new { text = "난방소요량", id = "{\\\"formID\\\":45,\\\"ID\\\":\\\"Result_2\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            subMenu.Add(new { text = "냉방소요량", id = "{\\\"formID\\\":46,\\\"ID\\\":\\\"Result_3\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            subMenu.Add(new { text = "급탕소요량", id = "{\\\"formID\\\":47,\\\"ID\\\":\\\"Result_4\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            subMenu.Add(new { text = "공조소요량", id = "{\\\"formID\\\":48,\\\"ID\\\":\\\"Result_5\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            subMenu.Add(new { text = "연료별소요량", id = "{\\\"formID\\\":52,\\\"ID\\\":\\\"Result_6\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-
-            Program.UTIL.resetMainTree(5, 2, subMenu.ToArray(), "37"); // 예시 코드: 메인 메뉴 동적 할당
-        }
+       
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
-            load_List();
+            
             string s, s2;
             string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,실제어방식,냉난방유무,환기유무,환기방식,온도교환효율_냉방,전열교환효율_냉방,용도프로필,순바닥면적, 천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준,일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열,순체적,환기횟수,이용일환기량,비이용일환기량,천장축열선택,외벽축열선택,내벽축열선택,바닥축열선택,천장축열,외벽축열,내벽축열,바닥축열,천장면적,외벽면적,내벽면적,바닥면적,존축열성능,존기밀타입,기밀적용유형,q50,n50");
 
