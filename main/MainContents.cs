@@ -691,23 +691,92 @@ namespace main
         }
         public void resetAll()
         {
-            forms = new Form[] { new General(), new EnergyUse(),
-            new ConstructionCW(), new ConstructionWall(), new ConstructionRoof(), new ConstructionFloor(), new ConstructionWindow(), new ConstructionDoor(),
-            new Model(), new Shade(), new ConstructionBlind(), new ThermalBridge(),
-            new ZoneGeneral(), new ZoneEnvelope(), new ZoneLighting(), new ZoneSystem(),
-            new EquipmentList(),new AHUSystem(), new DHWSystem(), new HeatingSystem(), new CoolingSystem(),
-            new PV(), new FuelCell(), new WindPower(), new SupplyRatio(), new EIndependenceRate(),
-            new ReportExisting(), new ReportRemodeling(),
-            new FormDebug(),
-            new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow(),
-            new List_Floor(), new List_Zone(),
-            new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor(), new PrintReport_HCneed(),new List_CoolingSystem(), new List_HeatingSystem(),
-            new Intro(), new ProjectList(), new OpenProject(), new List_RESystem(),
-            new PrintReport_Lighting(),new PrintReport_Heating(),new PrintReport_Cooling(),new PrintReport_DHWSystem(),new PrintReport_AHUSystem(),
-            new List_DHWSystem(),new List_ConstructionBlind(),new List_ConstructionDoor(),
-            new PrintReport_Final(),
-            new List_PV(),new List_FuelCell(),new List_WindPower(),
-            new PrintReport_Main() };
+            foreach (FormMain openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "FormMain")
+                {
+                    int i = -1;
+                    while (++i < forms.Length)
+                    {
+                        if (i != 41)
+                        {
+                            openForm.splitContainer1.Panel2.Controls.Remove(forms[i]);
+                        }
+                    }
+
+                    forms[0] = new General();
+                    forms[1] = new EnergyUse();
+                    forms[2] = new ConstructionCW();
+                    forms[3] = new ConstructionWall();
+                    forms[4] = new ConstructionRoof();
+                    forms[5] = new ConstructionFloor();
+                    forms[6] = new ConstructionWindow();
+                    forms[7] = new ConstructionDoor();
+                    forms[8] = new Model();
+                    forms[9] = new Shade();
+                    forms[10] = new ConstructionBlind();
+                    forms[11] = new ThermalBridge();
+                    forms[12] = new ZoneGeneral();
+                    forms[13] = new ZoneEnvelope();
+                    forms[14] = new ZoneLighting();
+                    forms[15] = new ZoneSystem();
+                    forms[16] = new EquipmentList();
+                    forms[17] = new AHUSystem();
+                    forms[18] = new DHWSystem();
+                    forms[19] = new HeatingSystem();
+                    forms[20] = new CoolingSystem();
+                    forms[21] = new PV();
+                    forms[22] = new FuelCell();
+                    forms[23] = new WindPower();
+                    forms[24] = new SupplyRatio();
+                    forms[25] = new EIndependenceRate();
+                    forms[26] = new ReportExisting();
+                    forms[27] = new ReportRemodeling();
+                    forms[28] = new FormDebug();
+                    forms[29] = new List_ConstructionWindow();
+                    forms[30] = new List_ConstructionCW();
+                    forms[31] = new SubWindow();
+                    forms[32] = new List_Floor();
+                    forms[33] = new List_Zone();
+                    forms[34] = new List_ConstructionWall();
+                    forms[35] = new List_ConstructionRoof();
+                    forms[36] = new List_ConstructionFloor();
+                    forms[37] = new PrintReport_HCneed();
+                    forms[38] = new List_CoolingSystem();
+                    forms[39] = new List_HeatingSystem();
+                    forms[40] = new Intro();
+                    //forms[41] = new ProjectList();
+                    forms[42] = new OpenProject();
+                    forms[43] = new List_RESystem();
+                    forms[44] = new PrintReport_Lighting();
+                    forms[45] = new PrintReport_Heating();
+                    forms[46] = new PrintReport_Cooling();
+                    forms[47] = new PrintReport_DHWSystem();
+                    forms[48] = new PrintReport_AHUSystem();
+                    forms[49] = new List_DHWSystem();
+                    forms[50] = new List_ConstructionBlind();
+                    forms[51] = new List_ConstructionDoor();
+                    forms[52] = new PrintReport_Final();
+                    forms[53] = new List_PV();
+                    forms[54] = new List_FuelCell();
+                    forms[55] = new List_WindPower();
+                    forms[56] = new PrintReport_Main();
+
+                    i = -1;
+                    while (++i < forms.Length)
+                    {
+                        if (i != 41)
+                        {
+                            forms[i].TopLevel = false;
+                            openForm.splitContainer1.Panel2.Controls.Add(forms[i]);
+                        }
+                    }
+
+                    webView21.Reload();
+
+                    return;
+                }
+            }
         }
         public void ResetForm(int idx)
         {

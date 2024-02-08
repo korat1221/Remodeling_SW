@@ -403,7 +403,7 @@ namespace main.contents
 
                 Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
                 Program.DB.initTables(DB.type.ProjDB);
-                Program.getMenuForm().ResetForm(8);
+                Program.getMenuForm().resetAll();
                 Program.getMenuForm().DoLoadFormDirect(0);
             }
         }
