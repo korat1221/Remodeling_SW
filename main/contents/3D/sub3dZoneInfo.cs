@@ -19,6 +19,8 @@ namespace main.contents
     {
         String ConsType, ConsNum;
         string sid = "";
+        Dictionary<string, string> ids = new Dictionary<string, string>();
+
         public void resetSID()
         {
             sid = "";
@@ -244,11 +246,14 @@ namespace main.contents
 
             {
                 int i = -1;
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "존번호,존이름");
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "ID,존번호,존이름");
+
+                ids.Clear();
 
                 while (++i < rec.Length)
                 {
-                    dataGridView2.Rows.Add(null, rec[i][0], rec[i][1]);
+                    ids[rec[i][1]] = rec[i][0];
+                    dataGridView2.Rows.Add(null, rec[i][1], rec[i][2]);
                     //  dataGridView2.Rows.Add(null, rec[i][0], _fixed(rec[i][1]), rec[i][2], _fixed(rec[i][3]), _fixed(rec[i][4]), _fixed(rec[i][5]));
                 }
             }
@@ -719,14 +724,7 @@ namespace main.contents
             if (dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
                 string ID = dataGridView2.Rows[e.RowIndex].Cells[1].Value.ToString();
-                int n = ID.IndexOf("_Zone");
-                if (n > 0)
-                {
-                    ID = ID.Substring(n + 5);
-
-                    n = Int32.Parse(ID);
-                    Program.UTIL.sendMessage("space-" + n);
-                }
+                Program.UTIL.sendMessage("space-" + ids[ID]);
             }
             if (e.RowIndex >= 0)
             {

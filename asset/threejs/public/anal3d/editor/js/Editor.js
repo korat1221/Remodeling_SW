@@ -1717,7 +1717,7 @@ Editor.prototype = {
             let tcode = {"WALL":"WL","INWALL":"IW","ROOF":"RF","FLOOR":"FL","GWALL":"GW","WIN":"WN","CWALL":"CW","DOOR":"DR"};
             let cardinal = {"N":"북","S":"남","E":"동","W":"서","NE":"북동","NW":"북서","SE":"남동","SW":"남서","UP":"수평","DOWN":"수평","UP_N":"북쪽위","UP_S":"남쪽위","UP_E":"동쪽위","UP_W":"서쪽위","UP_NE":"북동쪽위","UP_NW":"북서쪽위","UP_SE":"남동쪽위","UP_SW":"남서쪽위"};
 
-			let sql = "", i = -1;
+			let sql = "", i = -1, n = 1;
 			let tree = this.getTreeInfo();
 
 			sql += "DELETE FROM ZoneGeneral_3D;DELETE FROM ZoneEnvelope_3D;DELETE FROM ZoneEnvelope_3D;DELETE FROM ThermalBridge_3D;";
@@ -1745,8 +1745,8 @@ Editor.prototype = {
 
 				if (floor) {
 
-					zid = floor.zid;
-//					zid = floor.floor + "F_Zone" + ((floor.sid ? floor.sid : "") + "").padStart(3, '0')
+//					zid = floor.zid;
+					zid = floor.floor + "F_Zone" + (n + "").padStart(3, '0')
 					depth = wall_length != 0 ? floor.area / wall_length : 0;
 					if (win) {
 						height = (win.box[0][1] > win.box[1][1] ? win.box[0][1] : win.box[1][1]) - floor.bbox[0][1];
@@ -1754,7 +1754,8 @@ Editor.prototype = {
 				}
 
 				if (floor.floor) {
-					sql += "INSERT INTO ZoneGeneral_3D (존번호,층,지면접합유형,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES ('" + zid + "','" + floor.floor + "','" + (floor.type == 'FLOOR' ? '지면위' : '층간슬라브')+ "','" + floor.area + "','" + (cardi != "" ? cardinal[cardi] : "") + "','" + wall_length + "','" + depth + "','" + height + "');";
+					sql += "INSERT INTO ZoneGeneral_3D (ID,존번호,층,지면접합유형,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES (" + i + ",'" + zid + "','" + floor.floor + "','" + (floor.type == 'FLOOR' ? '지면위' : '층간슬라브')+ "','" + floor.area + "','" + (cardi != "" ? cardinal[cardi] : "") + "','" + wall_length + "','" + depth + "','" + height + "');";
+					n++;
 				}
 			}
 												
