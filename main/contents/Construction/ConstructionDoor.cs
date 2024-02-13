@@ -859,7 +859,7 @@ namespace main.contents
             {
                 this.DialogResult = DialogResult.OK;
                 this.Hide();
-                Program.getMenuForm().DoLoadForm(30, OnLoadListProc);
+                Program.getMenuForm().DoLoadForm(51, OnLoadListProc);
             }
         }
 
@@ -1074,7 +1074,7 @@ namespace main.contents
                         break; ;
                 }
                 OldDoor = Load[0][3];
-                OldDoor_comboBox.SelectedItem = OldDoor;
+                OldDoor_comboBox.SelectedIndex = OldDoor_comboBox.FindStringExact(OldDoor); 
                 UDoorMethod = Load[0][4];
                 Udoor_comboBox.SelectedItem = UDoorMethod;
                 DiIndi = Load[0][5];

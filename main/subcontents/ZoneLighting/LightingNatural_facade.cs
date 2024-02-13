@@ -259,7 +259,7 @@ namespace main.subcontents.ZoneLighting
 
         private void LoadData(String ZoneNum)
         {
-            String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting", "파사드,이중외피유리,아트리움유리,파사드유리빛투과율,파사드너비,파사드길이,파사드높이",
+            String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "자연채광유형,이중외피유리,아트리움유리,파사드유리빛투과율,파사드너비,파사드길이,파사드높이,서브유형",
                 "번호 = '" + ZoneNum + "'");
             if (Load.Length > 0)
             {

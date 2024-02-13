@@ -132,6 +132,9 @@ namespace main.contents
                         Ucalc_dataGridView.Rows[nRow1].Cells[5].Value = string.Format("{0:F2}", Rsi);
 
 
+                        OldWall = Load[0][3];
+                        CWName = Load[0][4];
+
                         for (int i = 0; i < 10; i++)
                         {
                             if (Material[i] != "")
@@ -167,7 +170,11 @@ namespace main.contents
                                         OldWall_R = 1 / Convert.ToDouble(OldWall_U[0][0]);
                                         Ucalc_dataGridView.Rows[nRow].Cells[1].Value = "기존외벽";
                                         Ucalc_dataGridView.Rows[nRow].Cells[2].Value = OldWall;
-                                        // Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
+                                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "두께합계", "명칭 ='" + OldWall + "'");
+                                        if (value.Length > 0)
+                                        {
+                                            Ucalc_dataGridView.Rows[nRow].Cells[4].Value = Convert.ToDouble(value[0][0]).ToString("0");
+                                        }
                                         Ucalc_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", OldWall_R);
                                     }
                                     catch { }
@@ -179,7 +186,7 @@ namespace main.contents
                                             CW_R = 1 / Convert.ToDouble(CW_U[0][0]);
                                             Ucalc_dataGridView.Rows[nRow].Cells[1].Value = "덧댐커튼월";
                                             Ucalc_dataGridView.Rows[nRow].Cells[2].Value = CWName;
-                                            //     Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
+                                            Ucalc_dataGridView.Rows[nRow].Cells[4].Value = 150;
                                             Ucalc_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", CW_R);
                                         }
                                         catch { }
@@ -263,11 +270,35 @@ namespace main.contents
         }
         private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {
-            //if (column == 0 ||column ==  1 || column == 3|| column == 4)
-            //{
-            //    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
-            //    return true;
-            //}
+            if (Ucalc_dataGridView.Rows[row].Cells[1].Value != null && Ucalc_dataGridView.Rows[row].Cells[1].Value.ToString() == "기존외벽")
+            {
+                if (column == 3)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+            if (Ucalc_dataGridView.Rows[row].Cells[1].Value != null && Ucalc_dataGridView.Rows[row].Cells[1].Value.ToString() == "덧댐커튼월")
+            {
+                if (column == 3)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+            if (column == 5)
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                return true;
+            }
             if (row == 0 || row == Ucalc_dataGridView.RowCount - 2 || row == Ucalc_dataGridView.RowCount - 1)
             {
                 cell.Style.BackColor = SystemColors.Control;

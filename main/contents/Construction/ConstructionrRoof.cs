@@ -1186,14 +1186,9 @@ namespace main.contents
                             break; ;
                     }
                     OldRoof = Load[0][3];
-                    DataRowView? item = OldRoof_comboBox.SelectedItem as DataRowView;
-                    OldRoof_comboBox.SelectedItem = Load[0][3];
-                    if (item != null)
-                    {
-                        OldRoof = item.Row.ItemArray[0].ToString();
-                    }
+                    OldRoof_comboBox.SelectedIndex = OldRoof_comboBox.FindStringExact(OldRoof);
 
-                    UMethod = Load[0][4];
+                UMethod = Load[0][4];
                     Uvalue_comboBox.SelectedItem = UMethod;
 
                     DiIndi = Load[0][5];

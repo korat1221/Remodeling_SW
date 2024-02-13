@@ -366,9 +366,10 @@ namespace main.contents
                     //    N = (Em * A) / (U_LightFi * UFF * 0.67);
                     //    Pn = U_LightPi * N;
                     //    Pj = Pn / A;
-                    //}
-
+                    //}                    
                     N = Em / (U_LightFi / A);
+                    if(double.IsNaN(N))
+                    { N = 0; }
                     Pn = U_LightPi * N;
                     Pj = Pn / A;
                 }

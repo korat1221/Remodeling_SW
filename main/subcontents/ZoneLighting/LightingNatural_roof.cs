@@ -148,7 +148,7 @@ namespace main.subcontents.ZoneLighting
 
         private void LoadData(String ZoneNum)
         {
-            String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting", "천창,천창유리각,천창수평측면각,천창장변부길이,천창단변부길이,천창수평상부높이",
+            String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "자연채광유형,천창유리각,천창수평측면각,천창장변부길이,천창단변부길이,천창수평상부높이,서브유형",
                 "번호 = '" + ZoneNum + "'");
             if (Load.Length > 0)
             {

@@ -19,7 +19,7 @@ namespace main.contents
         double[] Material_d = new double[10];
         double[] Material_λ = new double[10];
         double[] Material_R = new double[10];
-        double OldRoof_R, OldRoof;
+        double OldRoof_R; string OldRoof;
         double Rsi, Rse, Rtot, Area, UW;
         string sid = "";
 
@@ -30,21 +30,18 @@ namespace main.contents
         }
         private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {
-            //if (column == 0 || column == 1 || column == 3 || column == 4)
-            //{
-            //    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
-            //    return true;
-            //}
-            //int kk = 1;
-            //while (++kk < Ucalc_dataGridView.RowCount)
-            //{
-            //    if (row == kk || row == kk -3)
-            //    {
-            //        cell.Style.BackColor = Color.FromArgb(255, 255, 255);
-            //        return true;
-            //    }
-            //}
-
+            if (Ucalc_dataGridView.Rows[row].Cells[1].Value != null && Ucalc_dataGridView.Rows[row].Cells[1].Value.ToString() == "기존지붕")
+            {
+                if (column == 3)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
             if (row == 0 || row == Ucalc_dataGridView.RowCount - 2 || row == Ucalc_dataGridView.RowCount - 1)
             {
                 cell.Style.BackColor = SystemColors.Control;
@@ -143,6 +140,7 @@ namespace main.contents
                         //Rse_textBox.Text = string.Format("{0:F2}", Rse);
                         Rtot = Convert.ToDouble(Load[0][20]);
                         //Material_Rtot_textBox.Text = String.Format("{0:F2}", Rtot);
+                        OldRoof = Load[0][3];
 
                         int nRow1 = Ucalc_dataGridView.Rows.Add();
                         //Ucalc_dataGridView.Rows[nRow1].Cells[1].Value = "실내";
@@ -184,7 +182,11 @@ namespace main.contents
                                         OldRoof_R = 1 / Convert.ToDouble(OldRoof_U[0][0]);
                                         Ucalc_dataGridView.Rows[nRow].Cells[1].Value = "기존지붕";
                                         Ucalc_dataGridView.Rows[nRow].Cells[2].Value = OldRoof;
-                                        //  Ucalc_dataGridView.Rows[nRow].Cells[5].Style.BackColor = SystemColors.Window;
+                                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "두께합계", "명칭 ='" + OldRoof + "'");
+                                        if (value.Length > 0)
+                                        {
+                                            Ucalc_dataGridView.Rows[nRow].Cells[4].Value = Convert.ToDouble(value[0][0]).ToString("0");
+                                        }
                                         Ucalc_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", OldRoof_R);
                                     }
                                     catch { }

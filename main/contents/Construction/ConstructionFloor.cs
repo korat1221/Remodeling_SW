@@ -1222,12 +1222,8 @@ namespace main.contents.Construction
                         break; ;
                 }
                 OldFloor = Load[0][3];
-                DataRowView? item = OldFloor_comboBox.SelectedItem as DataRowView;
-                OldFloor_comboBox.SelectedItem = Load[0][3];
-                if (item != null)
-                {
-                    OldFloor = item.Row.ItemArray[0].ToString();
-                }
+                OldFloor_comboBox.SelectedIndex = OldFloor_comboBox.FindStringExact(OldFloor);
+             
 
                 Base = Load[0][4];
                 Base_comboBox.SelectedItem = Base.ToString();

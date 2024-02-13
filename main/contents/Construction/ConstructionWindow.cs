@@ -1150,7 +1150,7 @@ namespace main.contents
                             break;
                     }
                     OldWindow = Load[0][3];
-                    AdditionalWindow_comboBox.SelectedItem = OldWindow;
+                    AdditionalWindow_comboBox.SelectedIndex = AdditionalWindow_comboBox.FindStringExact(OldWindow);
 
                     UwMethod = Load[0][4];
                     Uw_comboBox.SelectedItem = UwMethod;

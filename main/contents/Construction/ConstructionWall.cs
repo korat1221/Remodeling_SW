@@ -1307,20 +1307,10 @@ namespace main.contents
                         break; ;
                 }
                 OldWall = Load[0][3];
-                DataRowView? item = OldWall_comboBox.SelectedItem as DataRowView;
-                OldWall_comboBox.SelectedItem = Load[0][3];
-                if (item != null)
-                {
-                    OldWall = item.Row.ItemArray[0].ToString();
-                }
+                OldWall_comboBox.SelectedIndex = OldWall_comboBox.FindStringExact(OldWall);
 
                 CWName = Load[0][4];
-                DataRowView? item2 = CW_comboBox.SelectedItem as DataRowView;
-                CW_comboBox.SelectedItem = Load[0][4];
-                if (item2 != null)
-                {
-                    CWName = item2.Row.ItemArray[0].ToString();
-                }
+                CW_comboBox.SelectedIndex = CW_comboBox.FindStringExact(CWName);
 
                 UMethod = Load[0][5];
                 Uvalue_comboBox.SelectedItem = UMethod;

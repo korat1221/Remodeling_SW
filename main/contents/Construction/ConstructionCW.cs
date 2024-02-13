@@ -1525,7 +1525,7 @@ namespace main.contents
                         break; ;
                 }
                 OldCW = Load[0][3];
-                OldCW_comboBox.SelectedItem = OldCW;
+                OldCW_comboBox.SelectedIndex = OldCW_comboBox.FindStringExact(OldCW); 
                 UcwMethod = Load[0][4];
                 Ucw_comboBox.SelectedItem = UcwMethod;
                 DiIndi = Load[0][5];
