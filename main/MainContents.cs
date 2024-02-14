@@ -698,7 +698,7 @@ namespace main
                     int i = -1;
                     while (++i < forms.Length)
                     {
-                        if (i != 41)
+                        if (i != 41 && i != 8)
                         {
                             openForm.splitContainer1.Panel2.Controls.Remove(forms[i]);
                         }
@@ -712,7 +712,7 @@ namespace main
                     forms[5] = new ConstructionFloor();
                     forms[6] = new ConstructionWindow();
                     forms[7] = new ConstructionDoor();
-                    forms[8] = new Model();
+//                    forms[8] = new Model();
                     forms[9] = new Shade();
                     forms[10] = new ConstructionBlind();
                     forms[11] = new ThermalBridge();
@@ -765,7 +765,7 @@ namespace main
                     i = -1;
                     while (++i < forms.Length)
                     {
-                        if (i != 41)
+                        if (i != 41 && i != 8)
                         {
                             forms[i].TopLevel = false;
                             openForm.splitContainer1.Panel2.Controls.Add(forms[i]);

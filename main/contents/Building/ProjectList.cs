@@ -405,6 +405,8 @@ namespace main.contents
                 Program.DB.initTables(DB.type.ProjDB);
                 Program.getMenuForm().resetAll();
                 Program.getMenuForm().DoLoadFormDirect(0);
+
+                Program.UTIL.ReloadModel();
             }
         }
 

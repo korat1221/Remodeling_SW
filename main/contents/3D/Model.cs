@@ -186,6 +186,14 @@ namespace main.contents
             runScript("load3DModel('" + ProjectList.CurProjID + "')");
 
         }
+        public void Reload()
+        {
+            if (scriptable)
+            {
+                webView21.CoreWebView2.Reload();
+                resetZoneDraw();
+            }
+        }
         public void runScript(string script)
         {
             if (scriptable)

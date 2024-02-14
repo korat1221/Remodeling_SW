@@ -283,6 +283,18 @@ namespace main
                 }
             }
         }
+        public void ReloadModel()
+        {
+            foreach (Form openForm in Application.OpenForms)
+            {
+                if (openForm.Name == "Model")
+                {
+                    Model f = (Model)openForm;
+                    f.Reload();
+                    return;
+                }
+            }
+        }
         public void modelScript(string scr)
         {
             foreach (Form openForm in Application.OpenForms)
