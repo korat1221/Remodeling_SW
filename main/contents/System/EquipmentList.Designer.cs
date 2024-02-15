@@ -43,6 +43,9 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
@@ -70,9 +73,9 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle40 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle41 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle42 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle43 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle44 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle45 = new DataGridViewCellStyle();
             PV_dataGridView = new DataGridView();
             GeneralPanel = new Panel();
             label4 = new System.Windows.Forms.Label();
@@ -106,6 +109,7 @@ namespace main.contents
             ABS_Remove_button = new Button();
             UserABS_Add_button = new Button();
             DH_tabPage = new TabPage();
+            DH_dataGridView = new DataGridView();
             label10 = new System.Windows.Forms.Label();
             label11 = new System.Windows.Forms.Label();
             DH_Save_button = new Button();
@@ -189,11 +193,17 @@ namespace main.contents
             UserPV_Add_button = new Button();
             customTabControl1 = new CustomTabControl();
             tabPage10 = new TabPage();
+            AHU_dataGridView = new DataGridView();
+            AHU_Save_button = new Button();
+            AHU_Copy_button = new Button();
+            AHU_Remove_button = new Button();
+            UserAHU_Add_button = new Button();
             tabPage9 = new TabPage();
             tabPage8 = new TabPage();
             tabPage7 = new TabPage();
             customTabControl2 = new CustomTabControl();
-            DH_dataGridView = new DataGridView();
+            Panel_checkBox = new CheckBox();
+            label27 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)PV_dataGridView).BeginInit();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -205,6 +215,7 @@ namespace main.contents
             AS_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ABS_dataGridView).BeginInit();
             DH_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)DH_dataGridView).BeginInit();
             AirCooler_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)AirCooler_dataGridView).BeginInit();
             WaterCooler_tabPage.SuspendLayout();
@@ -223,10 +234,11 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)Solar_dataGridView).BeginInit();
             tabPage1.SuspendLayout();
             customTabControl1.SuspendLayout();
+            tabPage10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)AHU_dataGridView).BeginInit();
             tabPage9.SuspendLayout();
             tabPage8.SuspendLayout();
             customTabControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)DH_dataGridView).BeginInit();
             SuspendLayout();
             // 
             // PV_dataGridView
@@ -811,6 +823,49 @@ namespace main.contents
             DH_tabPage.TabIndex = 4;
             DH_tabPage.Text = "지역난방";
             DH_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // DH_dataGridView
+            // 
+            DH_dataGridView.AllowUserToAddRows = false;
+            DH_dataGridView.AllowUserToDeleteRows = false;
+            DH_dataGridView.AllowUserToResizeColumns = false;
+            DH_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            DH_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            DH_dataGridView.BackgroundColor = SystemColors.Window;
+            DH_dataGridView.BorderStyle = BorderStyle.None;
+            DH_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            DH_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle13.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle13.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle13.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle13.WrapMode = DataGridViewTriState.True;
+            DH_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            DH_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DH_dataGridView.Location = new Point(19, 38);
+            DH_dataGridView.Name = "DH_dataGridView";
+            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = SystemColors.Control;
+            dataGridViewCellStyle14.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle14.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle14.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle14.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = DataGridViewTriState.True;
+            DH_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            DH_dataGridView.RowHeadersVisible = false;
+            DH_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle15.ForeColor = Color.Black;
+            dataGridViewCellStyle15.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle15.SelectionForeColor = Color.Black;
+            DH_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            DH_dataGridView.RowTemplate.Height = 25;
+            DH_dataGridView.Size = new Size(1105, 150);
+            DH_dataGridView.TabIndex = 131;
+            DH_dataGridView.CellContentClick += DH_dataGridView_CellContentClick;
             // 
             // label10
             // 
@@ -2231,6 +2286,13 @@ namespace main.contents
             // 
             // tabPage10
             // 
+            tabPage10.Controls.Add(Panel_checkBox);
+            tabPage10.Controls.Add(label27);
+            tabPage10.Controls.Add(AHU_dataGridView);
+            tabPage10.Controls.Add(AHU_Save_button);
+            tabPage10.Controls.Add(AHU_Copy_button);
+            tabPage10.Controls.Add(AHU_Remove_button);
+            tabPage10.Controls.Add(UserAHU_Add_button);
             tabPage10.Location = new Point(4, 25);
             tabPage10.Name = "tabPage10";
             tabPage10.Padding = new Padding(3);
@@ -2238,6 +2300,101 @@ namespace main.contents
             tabPage10.TabIndex = 4;
             tabPage10.Text = "공조기";
             tabPage10.UseVisualStyleBackColor = true;
+            // 
+            // AHU_dataGridView
+            // 
+            AHU_dataGridView.AllowUserToAddRows = false;
+            AHU_dataGridView.AllowUserToDeleteRows = false;
+            AHU_dataGridView.AllowUserToResizeColumns = false;
+            AHU_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            AHU_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            AHU_dataGridView.BackgroundColor = SystemColors.Window;
+            AHU_dataGridView.BorderStyle = BorderStyle.None;
+            AHU_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            AHU_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle43.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle43.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle43.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle43.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle43.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle43.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle43.WrapMode = DataGridViewTriState.True;
+            AHU_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle43;
+            AHU_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            AHU_dataGridView.Location = new Point(19, 36);
+            AHU_dataGridView.Name = "AHU_dataGridView";
+            dataGridViewCellStyle44.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle44.BackColor = SystemColors.Control;
+            dataGridViewCellStyle44.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle44.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle44.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle44.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle44.WrapMode = DataGridViewTriState.True;
+            AHU_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle44;
+            AHU_dataGridView.RowHeadersVisible = false;
+            AHU_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle45.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle45.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle45.ForeColor = Color.Black;
+            dataGridViewCellStyle45.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle45.SelectionForeColor = Color.Black;
+            AHU_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle45;
+            AHU_dataGridView.RowTemplate.Height = 25;
+            AHU_dataGridView.Size = new Size(1105, 150);
+            AHU_dataGridView.TabIndex = 117;
+            // 
+            // AHU_Save_button
+            // 
+            AHU_Save_button.BackColor = SystemColors.ButtonHighlight;
+            AHU_Save_button.ForeColor = Color.Black;
+            AHU_Save_button.Location = new Point(1036, 192);
+            AHU_Save_button.Name = "AHU_Save_button";
+            AHU_Save_button.Size = new Size(88, 25);
+            AHU_Save_button.TabIndex = 118;
+            AHU_Save_button.Text = "SAVE";
+            AHU_Save_button.UseVisualStyleBackColor = true;
+            // 
+            // AHU_Copy_button
+            // 
+            AHU_Copy_button.BackColor = SystemColors.ControlLight;
+            AHU_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            AHU_Copy_button.FlatStyle = FlatStyle.System;
+            AHU_Copy_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            AHU_Copy_button.Location = new Point(1077, 10);
+            AHU_Copy_button.Margin = new Padding(0);
+            AHU_Copy_button.Name = "AHU_Copy_button";
+            AHU_Copy_button.Size = new Size(47, 23);
+            AHU_Copy_button.TabIndex = 116;
+            AHU_Copy_button.Text = "Copy";
+            AHU_Copy_button.UseVisualStyleBackColor = false;
+            // 
+            // AHU_Remove_button
+            // 
+            AHU_Remove_button.BackColor = SystemColors.ControlLight;
+            AHU_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            AHU_Remove_button.FlatStyle = FlatStyle.System;
+            AHU_Remove_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            AHU_Remove_button.Location = new Point(1040, 10);
+            AHU_Remove_button.Margin = new Padding(0);
+            AHU_Remove_button.Name = "AHU_Remove_button";
+            AHU_Remove_button.Size = new Size(23, 23);
+            AHU_Remove_button.TabIndex = 115;
+            AHU_Remove_button.Text = "-";
+            AHU_Remove_button.UseVisualStyleBackColor = false;
+            // 
+            // UserAHU_Add_button
+            // 
+            UserAHU_Add_button.BackColor = SystemColors.ControlLight;
+            UserAHU_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            UserAHU_Add_button.FlatStyle = FlatStyle.System;
+            UserAHU_Add_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            UserAHU_Add_button.Location = new Point(1003, 10);
+            UserAHU_Add_button.Margin = new Padding(0);
+            UserAHU_Add_button.Name = "UserAHU_Add_button";
+            UserAHU_Add_button.Size = new Size(23, 23);
+            UserAHU_Add_button.TabIndex = 114;
+            UserAHU_Add_button.Text = "+";
+            UserAHU_Add_button.UseVisualStyleBackColor = false;
             // 
             // tabPage9
             // 
@@ -2307,48 +2464,26 @@ namespace main.contents
             customTabControl2.SizeMode = TabSizeMode.Fixed;
             customTabControl2.TabIndex = 147;
             // 
-            // DH_dataGridView
+            // Panel_checkBox
             // 
-            DH_dataGridView.AllowUserToAddRows = false;
-            DH_dataGridView.AllowUserToDeleteRows = false;
-            DH_dataGridView.AllowUserToResizeColumns = false;
-            DH_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            DH_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            DH_dataGridView.BackgroundColor = SystemColors.Window;
-            DH_dataGridView.BorderStyle = BorderStyle.None;
-            DH_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            DH_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle13.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle13.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle13.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle13.WrapMode = DataGridViewTriState.True;
-            DH_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
-            DH_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DH_dataGridView.Location = new Point(19, 38);
-            DH_dataGridView.Name = "DH_dataGridView";
-            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = SystemColors.Control;
-            dataGridViewCellStyle14.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle14.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle14.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle14.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = DataGridViewTriState.True;
-            DH_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
-            DH_dataGridView.RowHeadersVisible = false;
-            DH_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle15.ForeColor = Color.Black;
-            dataGridViewCellStyle15.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle15.SelectionForeColor = Color.Black;
-            DH_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
-            DH_dataGridView.RowTemplate.Height = 25;
-            DH_dataGridView.Size = new Size(1105, 150);
-            DH_dataGridView.TabIndex = 131;
-            DH_dataGridView.CellContentClick += DH_dataGridView_CellContentClick;
+            Panel_checkBox.AutoSize = true;
+            Panel_checkBox.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            Panel_checkBox.Location = new Point(63, 17);
+            Panel_checkBox.Name = "Panel_checkBox";
+            Panel_checkBox.Size = new Size(48, 17);
+            Panel_checkBox.TabIndex = 124;
+            Panel_checkBox.Text = "적용";
+            Panel_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label27.Location = new Point(20, 17);
+            label27.Name = "label27";
+            label27.Size = new Size(40, 16);
+            label27.TabIndex = 123;
+            label27.Text = "가습기";
             // 
             // EquipmentList
             // 
@@ -2380,6 +2515,7 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)ABS_dataGridView).EndInit();
             DH_tabPage.ResumeLayout(false);
             DH_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)DH_dataGridView).EndInit();
             AirCooler_tabPage.ResumeLayout(false);
             AirCooler_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)AirCooler_dataGridView).EndInit();
@@ -2403,10 +2539,12 @@ namespace main.contents
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
             customTabControl1.ResumeLayout(false);
+            tabPage10.ResumeLayout(false);
+            tabPage10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)AHU_dataGridView).EndInit();
             tabPage9.ResumeLayout(false);
             tabPage8.ResumeLayout(false);
             customTabControl2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)DH_dataGridView).EndInit();
             ResumeLayout(false);
         }
 
@@ -2536,5 +2674,12 @@ namespace main.contents
         private Button GroundHP_Save_button;
         private Button GWHP_Save_button;
         private DataGridView DH_dataGridView;
+        private DataGridView AHU_dataGridView;
+        private Button AHU_Save_button;
+        private Button AHU_Copy_button;
+        private Button AHU_Remove_button;
+        private Button UserAHU_Add_button;
+        private CheckBox Panel_checkBox;
+        private System.Windows.Forms.Label label27;
     }
 }
