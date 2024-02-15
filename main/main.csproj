@@ -101,6 +101,9 @@
     <Compile Update="contents\System\DHWSystem.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="contents\System\AHUSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\ConstructionBlind\BlindDB.cs">
       <SubType>Form</SubType>
     </Compile>
