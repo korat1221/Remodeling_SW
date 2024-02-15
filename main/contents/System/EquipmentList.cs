@@ -30,6 +30,7 @@ namespace main.contents
     {
         DataGridViewCheckBoxColumn Boiler_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn AHU_checkBoxColumn = new DataGridViewCheckBoxColumn();
+        DataGridViewCheckBoxColumn HRV_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn ABS_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn DH_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn PV_checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -41,7 +42,7 @@ namespace main.contents
         DataGridViewCheckBoxColumn GroundHP_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn Pump_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn ce_checkBoxColumn = new DataGridViewCheckBoxColumn();
-        int Boiler_SelectRow, HP_SelectRow, AirCooler_SelectRow, WaterCooler_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow, PV_SelectRow, ABS_SelectRow, DH_SelectRow, FC_SelectRow, WP_SelectRow, AHU_SelectRow;
+        int Boiler_SelectRow, HP_SelectRow, AirCooler_SelectRow, WaterCooler_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow, PV_SelectRow, ABS_SelectRow, DH_SelectRow, FC_SelectRow, WP_SelectRow, AHU_SelectRow , HRV_SelectRow;
         string[][] 프로젝트유형;
         //냉방추가
         DataGridViewCheckBoxColumn AirCooler_checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -63,6 +64,7 @@ namespace main.contents
             Program.DB.initTable(DB.type.ProjDB, "User_ce");
             Program.DB.initTable(DB.type.ProjDB, "User_ Solar");
             Program.DB.initTable(DB.type.ProjDB, "User_ AHU");
+            Program.DB.initTable(DB.type.ProjDB, "User_ HRV");
             // 냉방추가
             Program.DB.initTable(DB.type.ProjDB, "User_ AirCooler");
             Program.DB.initTable(DB.type.ProjDB, "User_ WaterCooler");
@@ -88,6 +90,7 @@ namespace main.contents
             Create_Pump_Table();
             Create_ce_Table();
             Create_AHU_Table();
+            Create_HRV_Table();
 
             //냉방추가
             Create_AirCooler_Table();
@@ -108,6 +111,7 @@ namespace main.contents
             Load_ABS();
             Load_DH();
             Load_AHU();
+            Load_HRV();
 
 
         }
@@ -3893,35 +3897,228 @@ namespace main.contents
             }
         }
         #endregion
+        ///////////////////////////////////////////////////열회수환기장치/////////////////////////////////////////////////////////////////
+        #region 16.열회수환기장치
+        public void Create_HRV_Table()
+        {
+            new StackedHeaderDecorator(HRV_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, HRV_dataGridView_RowHandle);
+            HRV_dataGridView.Columns.Clear();
+            HRV_checkBoxColumn.HeaderText = "선택";
+            HRV_checkBoxColumn.Name = "check";
+            HRV_dataGridView.Columns.Add(HRV_checkBoxColumn);
 
+            HRV_dataGridView.Columns.Add("A1", "번호");
+            HRV_dataGridView.Columns.Add("A2", "명칭");
+            HRV_dataGridView.Columns.Add("A3", "설치대수");
+
+            DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
+            설치유형Combo.HeaderText = "설치";
+            설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
+            HRV_dataGridView.Columns.Add(설치유형Combo);      
+
+            HRV_dataGridView.Columns.Add("A5", "열회수.유형");
+            HRV_dataGridView.Columns.Add("A6", "열회수.온도교환효율.냉방.[%]");
+            HRV_dataGridView.Columns.Add("A7", "열회수.온도교환효율.난방.[%]");
+            HRV_dataGridView.Columns.Add("A8", "열회수.유효전열교환효율.냉방.[%]");
+            HRV_dataGridView.Columns.Add("A9", "열회수.유효전열교환효율.난방.[%]");
+            HRV_dataGridView.Columns.Add("A10", "열회수.습도교환효율.냉방.[%]");
+            HRV_dataGridView.Columns.Add("A11", "열회수.습도교환효율.난방.[%]");
+            HRV_dataGridView.Columns.Add("A12", "팬.풍량.[CMH]");
+            HRV_dataGridView.Columns.Add("A13", "팬.정압.[Pa]");
+            HRV_dataGridView.Columns.Add("A14", "팬.모터제어");
+            HRV_dataGridView.Columns.Add("A15", "소비전력.[W]");
+            HRV_dataGridView.Columns[0].Width = 40;         
+        }
+        private bool HRV_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
+        {
+            if (column == 10)
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                return true;
+            }
+            if (column == 11)
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                return true;
+            }
+            else return false;
+        }
         private void UserHRV_Add_button_Click(global::System.Object sender, global::System.EventArgs e)
         {
+            int nRow = HRV_dataGridView.Rows.Add();
+            Load_HRV_Num();
 
+            DataGridViewComboBoxCell 열회수기유형Combo = new DataGridViewComboBoxCell();
+            열회수기유형Combo.Items.Add("없음");
+            열회수기유형Combo.Items.Add("판형");
+            열회수기유형Combo.Items.Add("일반회전형");
+            열회수기유형Combo.Items.Add("흡수식회전형");
+            열회수기유형Combo.Items.Add("흡착식회전형");
+            HRV_dataGridView.Rows[nRow].Cells[5] = 열회수기유형Combo;                 
+
+            DataGridViewComboBoxCell 팬모터제어Combo = new DataGridViewComboBoxCell();
+            팬모터제어Combo.Items.Add("on/off");
+            팬모터제어Combo.Items.Add("2단제어");
+            팬모터제어Combo.Items.Add("3단제어");
+            팬모터제어Combo.Items.Add("회전수제어");
+            HRV_dataGridView.Rows[nRow].Cells[14] = 팬모터제어Combo;
+        }
+        private void Load_HRV_Num()
+        {
+            for (int k = 0; k < HRV_dataGridView.RowCount; k++)
+            {
+                if (k + 1 < 10)
+                { HRV_dataGridView.Rows[k].Cells[1].Value = "HRV0" + (k + 1).ToString(); }
+                else { HRV_dataGridView.Rows[k].Cells[1].Value = "HRV" + (k + 1).ToString(); }
+            }
         }
 
         private void HRV_Remove_button_Click(global::System.Object sender, global::System.EventArgs e)
         {
-
+            HRV_dataGridView.Rows.Remove(HRV_dataGridView.Rows[HRV_SelectRow]);
+            Load_HRV_Num();
         }
 
         private void HRV_Copy_button_Click(global::System.Object sender, global::System.EventArgs e)
         {
+            int nRow = HRV_dataGridView.Rows.Add();
+            Load_HRV_Num();
 
+            DataGridViewComboBoxCell 열회수기유형Combo = new DataGridViewComboBoxCell();
+            열회수기유형Combo.Items.Add("없음");
+            열회수기유형Combo.Items.Add("판형");
+            열회수기유형Combo.Items.Add("일반회전형");
+            열회수기유형Combo.Items.Add("흡수식회전형");
+            열회수기유형Combo.Items.Add("흡착식회전형");
+            HRV_dataGridView.Rows[nRow].Cells[5] = 열회수기유형Combo;
+
+            DataGridViewComboBoxCell 팬모터제어Combo = new DataGridViewComboBoxCell();
+            팬모터제어Combo.Items.Add("on/off");
+            팬모터제어Combo.Items.Add("2단제어");
+            팬모터제어Combo.Items.Add("3단제어");
+            팬모터제어Combo.Items.Add("회전수제어");
+            HRV_dataGridView.Rows[nRow].Cells[14] = 팬모터제어Combo;
+
+            for (int k = 2; k < 16; k++)
+            {
+                if (HRV_dataGridView.Rows[HRV_SelectRow].Cells[k].Value != null)
+                {
+                    HRV_dataGridView.Rows[nRow].Cells[k].Value = HRV_dataGridView.Rows[HRV_SelectRow].Cells[k].Value;
+                }
+            }
+            if (HRV_dataGridView.Rows[HRV_SelectRow].Cells[2].Value != null)
+            {
+                HRV_dataGridView.Rows[nRow].Cells[2].Value = HRV_dataGridView.Rows[HRV_SelectRow].Cells[2].Value.ToString() + "_복사";
+            }
         }
 
         private void HRV_Save_button_Click(global::System.Object sender, global::System.EventArgs e)
         {
+            Program.DB.deleteValue(DB.type.ProjDB, "User_HRV", "");
 
+            for (int k = 0; k < HRV_dataGridView.RowCount; k++)
+            {
+                String[] Value = new String[15];
+                for (int i = 1; i < 16; i++)
+                {
+                    if (HRV_dataGridView.Rows[k].Cells[i].Value != null)
+                    { Value[i - 1] = HRV_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    else { Value[i - 1] = ""; }
+                }
+                Program.DB.setValue(DB.type.ProjDB, "User_HRV", "번호,프로젝트유형," +
+                    "명칭,설치대수,설치유형",
+                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
+                 + Value[1] + "','" + Value[2] + "','" + Value[3]
+                 + "'", "번호");
+                Program.DB.setValue(DB.type.ProjDB, "User_HRV", "번호," +
+                    "열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방",
+                "'" + Value[0] + "','"
+                 + Value[4] + "','" + Value[5] + "','" + Value[6] + "','"
+                 + Value[7] + "','" + Value[8] + "','" + Value[9] + "','"
+                 + Value[10]
+                 + "'", "번호");
+                Program.DB.setValue(DB.type.ProjDB, "User_HRV", "번호," +
+                   "팬풍량,팬정압,팬동력,모터제어",
+               "'" + Value[0] + "','"
+                + Value[11] + "','" + Value[12] + "','" + Value[13] + "','"
+                + Value[14] 
+                + "'", "번호");
+            }
+            MessageBox.Show("저장되었습니다.");
         }
 
         private void HRV_dataGridView_CellContentClick(global::System.Object sender, global::System.Windows.Forms.DataGridViewCellEventArgs e)
         {
-
+            if (e.RowIndex >= 0)
+            {
+                HRV_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                HRV_SelectRow = e.RowIndex;
+            }
         }
 
         private void HRV_dataGridView_CellValueChanged(global::System.Object sender, global::System.Windows.Forms.DataGridViewCellEventArgs e)
         {
-
+            double temp_eta, all_eta, Humidity_eta;
+            if (e.RowIndex >= 0)
+            {
+                if (e.ColumnIndex == 6 || e.ColumnIndex == 8)
+                {
+                    if (HRV_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && HRV_dataGridView.Rows[e.RowIndex].Cells[8].Value != null)
+                    {
+                        if (HRV_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "" && HRV_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "")
+                        {
+                            temp_eta = Convert.ToDouble(HRV_dataGridView.Rows[e.RowIndex].Cells[6].Value);
+                            all_eta = Convert.ToDouble(HRV_dataGridView.Rows[e.RowIndex].Cells[8].Value);
+                            Humidity_eta = Calc_HumidityEta_Cooling(temp_eta, all_eta);
+                            HRV_dataGridView.Rows[e.RowIndex].Cells[10].Value = Humidity_eta.ToString("0.0");
+                        }
+                    }
+                }
+                if (e.ColumnIndex == 7 || e.ColumnIndex == 9)
+                {
+                    if (HRV_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && HRV_dataGridView.Rows[e.RowIndex].Cells[9].Value != null)
+                    {
+                        if (HRV_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "" && HRV_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString() != "")
+                        {
+                            temp_eta = Convert.ToDouble(HRV_dataGridView.Rows[e.RowIndex].Cells[7].Value);
+                            all_eta = Convert.ToDouble(HRV_dataGridView.Rows[e.RowIndex].Cells[9].Value);
+                            Humidity_eta = Calc_HumidityEta_Heating(temp_eta, all_eta);
+                            HRV_dataGridView.Rows[e.RowIndex].Cells[11].Value = Humidity_eta.ToString("0.0");
+                        }
+                    }
+                }
+            }
         }
+
+        private void Load_HRV()
+        {
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "번호,명칭,설치대수,설치유형,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,팬풍량,팬정압,팬동력,모터제어", "");
+            if (Value.Length > 0)
+            {
+                for (int n = 0; n < Value.Length; n++)
+                {
+                    int nRow = HRV_dataGridView.Rows.Add();
+                    DataGridViewComboBoxCell 열회수기유형Combo = new DataGridViewComboBoxCell();
+                    열회수기유형Combo.Items.Add("없음");
+                    열회수기유형Combo.Items.Add("판형");
+                    열회수기유형Combo.Items.Add("일반회전형");
+                    열회수기유형Combo.Items.Add("흡수식회전형");
+                    열회수기유형Combo.Items.Add("흡착식회전형");
+                    HRV_dataGridView.Rows[nRow].Cells[5] = 열회수기유형Combo;
+
+                    DataGridViewComboBoxCell 팬모터제어Combo = new DataGridViewComboBoxCell();
+                    팬모터제어Combo.Items.Add("on/off");
+                    팬모터제어Combo.Items.Add("2단제어");
+                    팬모터제어Combo.Items.Add("3단제어");
+                    팬모터제어Combo.Items.Add("회전수제어");
+                    HRV_dataGridView.Rows[nRow].Cells[14] = 팬모터제어Combo;
+
+                    for (int i = 0; i < 15; i++)
+                    {HRV_dataGridView.Rows[nRow].Cells[i + 1].Value = Value[n][i]; }
+
+                }
+            }
+        }
+        #endregion
     }
 }
