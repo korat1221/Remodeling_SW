@@ -11,7 +11,7 @@ namespace main
         [DllImport("shell32.dll")]
         static extern bool SHGetSpecialFolderPath(IntPtr hwndOwner, [Out] StringBuilder lpszPath, int nFolder, bool fCreate);
 
-        public const string VIRTUAL_PATH_NAME = "EnergyCalc";
+        public const string VIRTUAL_PATH_NAME = "ZEROFIX";
 
         public static String? gPath;
         public static DB DB = new DB();

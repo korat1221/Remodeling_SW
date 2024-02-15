@@ -8,7 +8,7 @@
 #include <atlconv.h>
 #include "utf8.h"
 
-#define VIRTUAL_PATH_NAME			L"EnergyCalc"
+#define VIRTUAL_PATH_NAME			L"ZEROFIX"
 
 static void copy_files(const std::wstring src, const std::wstring pattern, const std::wstring obj)
 {
