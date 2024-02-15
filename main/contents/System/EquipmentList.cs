@@ -70,7 +70,7 @@ namespace main.contents
 
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
-            if(Image.Length >0)
+            if (Image.Length > 0)
             {
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -379,7 +379,7 @@ namespace main.contents
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_Boiler", "번호,프로젝트유형,DB유형,명칭,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력,대수,신규기존",
-                "'" + Value[0] + "','"+ 프로젝트유형[0][0] + "','"
+                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','"
                  + Value[12]
                  + "'", "번호");
@@ -399,7 +399,7 @@ namespace main.contents
                     int nRow = Boiler_dataGridView.Rows.Count - 1;
 
 
-                    if(User_Value[n][9] == "도면")
+                    if (User_Value[n][9] == "도면")
                     {
 
                         DataGridViewComboBoxCell 난방급탕Combo = new DataGridViewComboBoxCell();
@@ -659,7 +659,7 @@ namespace main.contents
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_ABS", "번호,프로젝트유형,DB유형,난방냉방,연료,냉방용량,냉방성능,난방용량,난방성능,냉수입구온도,냉수출구온도,온수입구온도,온수출구온도,대기전력,통합성능,대수,신규기존",
-                "'" + Value[0] + "','"+ 프로젝트유형[0][0] + "','"
+                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','"
                  + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','"
                  + Value[15]
@@ -3635,7 +3635,7 @@ namespace main.contents
             AHU_dataGridView.Columns[30].Width = 100;
         }
         private bool AHU_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
-        {            
+        {
             if (column == 11)
             {
                 cell.Style.BackColor = Color.FromArgb(255, 255, 255);
@@ -3733,11 +3733,11 @@ namespace main.contents
             }
             if (AHU_dataGridView.Rows[AHU_SelectRow].Cells[2].Value != null)
             {
-                AHU_dataGridView.Rows[nRow].Cells[2].Value =AHU_dataGridView.Rows[AHU_SelectRow].Cells[2].Value.ToString() + "_복사";
-            }        
+                AHU_dataGridView.Rows[nRow].Cells[2].Value = AHU_dataGridView.Rows[AHU_SelectRow].Cells[2].Value.ToString() + "_복사";
+            }
         }
 
-      
+
         private void Load_AHU_Num()
         {
             for (int k = 0; k < AHU_dataGridView.RowCount; k++)
@@ -3758,7 +3758,7 @@ namespace main.contents
         }
         private void AHU_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            double temp_eta, all_eta, Humidity_eta; 
+            double temp_eta, all_eta, Humidity_eta;
             if (e.RowIndex >= 0)
             {
                 if (e.ColumnIndex == 7 || e.ColumnIndex == 9)
@@ -3794,7 +3794,7 @@ namespace main.contents
         private double Calc_HumidityEta_Cooling(double temp_eta, double all_eta)
         {
             double 열교환후온도 = 22 - temp_eta / 100 * (22 - 2);
-            double 총엔탈피 = 38.786 - all_eta/ 100 * (38.786 - 10.209);
+            double 총엔탈피 = 38.786 - all_eta / 100 * (38.786 - 10.209);
             double 수증기엔탈피 = 총엔탈피 - 열교환후온도 * 1.006;
             double eta = (0.00648 - (수증기엔탈피 * 1.2) / (2500 + 1.86 * 열교환후온도)) / (0.00648 - 0.00322) * 100;
             return eta;
@@ -3815,7 +3815,7 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호,프로젝트유형," +
                     "명칭,설치대수,설치유형,공조방식",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','"  
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','"
                  + Value[4]
                  + "'", "번호");
                 Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호," +
@@ -3835,14 +3835,14 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호," +
                     "가습기유형,가습기습도수준,가습기용량",
                 "'" + Value[0] + "','"
-                 + Value[20] + "','" + Value[21] + "','" 
+                 + Value[20] + "','" + Value[21] + "','"
                  + Value[22]
                  + "'", "번호");
                 Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호," +
                    "급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어",
                "'" + Value[0] + "','"
                 + Value[23] + "','" + Value[24] + "','" + Value[25] + "','"
-                + Value[26] + "','" + Value[27] + "','" + Value[28] + "','" 
+                + Value[26] + "','" + Value[27] + "','" + Value[28] + "','"
                 + Value[29]
                 + "'", "번호");
             }
@@ -3892,7 +3892,36 @@ namespace main.contents
                 }
             }
         }
-            #endregion
+        #endregion
+
+        private void UserHRV_Add_button_Click(global::System.Object sender, global::System.EventArgs e)
+        {
 
         }
+
+        private void HRV_Remove_button_Click(global::System.Object sender, global::System.EventArgs e)
+        {
+
+        }
+
+        private void HRV_Copy_button_Click(global::System.Object sender, global::System.EventArgs e)
+        {
+
+        }
+
+        private void HRV_Save_button_Click(global::System.Object sender, global::System.EventArgs e)
+        {
+
+        }
+
+        private void HRV_dataGridView_CellContentClick(global::System.Object sender, global::System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void HRV_dataGridView_CellValueChanged(global::System.Object sender, global::System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+
+        }
+    }
 }
