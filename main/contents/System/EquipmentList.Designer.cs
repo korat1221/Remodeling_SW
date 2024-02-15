@@ -193,7 +193,6 @@ namespace main.contents
             UserPV_Add_button = new Button();
             customTabControl1 = new CustomTabControl();
             tabPage10 = new TabPage();
-            DHU_checkBox = new CheckBox();
             label27 = new System.Windows.Forms.Label();
             AHU_dataGridView = new DataGridView();
             AHU_Save_button = new Button();
@@ -2286,7 +2285,6 @@ namespace main.contents
             // 
             // tabPage10
             // 
-            tabPage10.Controls.Add(DHU_checkBox);
             tabPage10.Controls.Add(label27);
             tabPage10.Controls.Add(AHU_dataGridView);
             tabPage10.Controls.Add(AHU_Save_button);
@@ -2299,19 +2297,7 @@ namespace main.contents
             tabPage10.Size = new Size(1142, 226);
             tabPage10.TabIndex = 4;
             tabPage10.Text = "공조기";
-            tabPage10.UseVisualStyleBackColor = true;
-            // 
-            // Panel_checkBox
-            // 
-            DHU_checkBox.AutoSize = true;
-            DHU_checkBox.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            DHU_checkBox.Location = new Point(63, 17);
-            DHU_checkBox.Name = "Panel_checkBox";
-            DHU_checkBox.Size = new Size(48, 17);
-            DHU_checkBox.TabIndex = 124;
-            DHU_checkBox.Text = "적용";
-            DHU_checkBox.UseVisualStyleBackColor = true;
-            DHU_checkBox.CheckedChanged += DHU_checkBox_CheckedChanged;
+            tabPage10.UseVisualStyleBackColor = true;            
             // 
             // label27
             // 
@@ -2365,6 +2351,7 @@ namespace main.contents
             AHU_dataGridView.Size = new Size(1105, 150);
             AHU_dataGridView.TabIndex = 117;
             AHU_dataGridView.CellContentClick += AHU_dataGridView_CellContentClick;
+            AHU_dataGridView.CellValueChanged += AHU_dataGridView_CellValueChanged;
             // 
             // AHU_Save_button
             // 
@@ -2685,7 +2672,6 @@ namespace main.contents
         private Button AHU_Copy_button;
         private Button AHU_Remove_button;
         private Button UserAHU_Add_button;
-        private CheckBox DHU_checkBox;
         private System.Windows.Forms.Label label27;
     }
 }
