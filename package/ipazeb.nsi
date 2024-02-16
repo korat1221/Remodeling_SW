@@ -15,10 +15,10 @@
   OutFile "main.exe"
 
   ;Default installation folder
-  InstallDir "$LOCALAPPDATA\EnergyCalc"
+  InstallDir "$LOCALAPPDATA\ZEROFIX"
   
   ;Get installation folder from registry if available
-  InstallDirRegKey HKCU "Software\EnergyCalc" ""
+  InstallDirRegKey HKCU "Software\ZEROFIX" ""
 
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
@@ -42,7 +42,7 @@
 
   ;Remember the installer language
   !define MUI_LANGDLL_REGISTRY_ROOT "HKCU" 
-  !define MUI_LANGDLL_REGISTRY_KEY "Software\EnergyCalc" 
+  !define MUI_LANGDLL_REGISTRY_KEY "Software\ZEROFIX" 
   !define MUI_LANGDLL_REGISTRY_VALUENAME "Installer Language"
 
 ;--------------------------------
@@ -65,10 +65,10 @@
   !insertmacro MUI_LANGUAGE "English" ;first language is the default language
   !insertmacro MUI_LANGUAGE "Korean"
 
-  LangString Uninstall ${LANG_ENGLISH} "EnergyCalc Uninstall"
-  LangString Uninstall ${LANG_KOREAN} "에너지 계산 프로그램 제거"
-  LangString Title ${LANG_ENGLISH} "EnergyCalc"
-  LangString Title ${LANG_KOREAN} "에너지 계산"
+  LangString Uninstall ${LANG_ENGLISH} "ZEROFIX Uninstall"
+  LangString Uninstall ${LANG_KOREAN} "ZEROFIX 프로그램 제거"
+  LangString Title ${LANG_ENGLISH} "ZEROFIX"
+  LangString Title ${LANG_KOREAN} "ZEROFIX"
   LangString License ${LANG_ENGLISH} "license_en.txt"
   LangString License ${LANG_KOREAN} "license_ko.txt"
   LangString WebViewIns ${LANG_ENGLISH} "..."
@@ -107,19 +107,19 @@ Section "Dummy Section" SecDummy
   CreateShortCut "$DESKTOP\$(Title).lnk" "$INSTDIR\net6.0-windows\main.exe"
 
   ;Store installation folder
-  WriteRegStr HKCU "Software\EnergyCalc" "" $INSTDIR
+  WriteRegStr HKCU "Software\ZEROFIX" "" $INSTDIR
 
   ;Run on startup
-  ;WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "EnergyCalc" "$INSTDIR\net6.0-windows\main.exe"
+  ;WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "ZEROFIX" "$INSTDIR\net6.0-windows\main.exe"
 
   ; write uninstall strings
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EnergyCalc" "DisplayName" "$(Title)"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EnergyCalc" "UninstallString" '"$INSTDIR\Uninstall.exe"'
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EnergyCalc" "DisplayIcon" "$INSTDIR\Uninstall.exe,0"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EnergyCalc" "DisplayVersion" "1.0.0"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EnergyCalc" "URLInfoAbout" "http://www.ipazeb.org/"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EnergyCalc" "Publisher" "www.ipazeb.org"
-  WriteRegDWORD  HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EnergyCalc" "EstimatedSize" 174912
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ZEROFIX" "DisplayName" "$(Title)"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ZEROFIX" "UninstallString" '"$INSTDIR\Uninstall.exe"'
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ZEROFIX" "DisplayIcon" "$INSTDIR\Uninstall.exe,0"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ZEROFIX" "DisplayVersion" "1.0.0"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ZEROFIX" "URLInfoAbout" "http://www.ipazeb.org/"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ZEROFIX" "Publisher" "www.ipazeb.org"
+  WriteRegDWORD  HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ZEROFIX" "EstimatedSize" 174912
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -183,7 +183,7 @@ Function .onInit
 
 ;  !insertmacro MUI_LANGDLL_DISPLAY
 
-  StrCpy $INSTDIR "$PROGRAMFILES\EnergyCalc"
+  StrCpy $INSTDIR "$PROGRAMFILES\ZEROFIX"
 
 FunctionEnd
 ;--------------------------------
@@ -211,11 +211,11 @@ Section "Uninstall"
   !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
     
   RMDir /r "$SMPROGRAMS\$StartMenuFolder"
-  RMDir /r "$LOCALAPPDATA\EnergyCalc"
+  RMDir /r "$LOCALAPPDATA\ZEROFIX"
 
-  DeleteRegKey HKCU "Software\EnergyCalc"
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EnergyCalc"
-  DeleteRegValue HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "EnergyCalc"
+  DeleteRegKey HKCU "Software\ZEROFIX"
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ZEROFIX"
+  DeleteRegValue HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "ZEROFIX"
 
 SectionEnd
 

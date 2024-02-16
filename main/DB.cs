@@ -313,19 +313,27 @@ namespace main
 
             if (GetFileSize(projPath) <= 0)
             {
-         //      File.Copy("templ.sqlite", projPath, true);
-
+#if !DEBUG
                 projDB = new SQLiteConnection(@"Data Source=" + projPath);
                 projDB.SetPassword(PASSWORD);
                 projDB.Open();
                 projDB.Close();
                 projDB.Dispose();
+#else
+                File.Copy("templ.sqlite", projPath, true);
+#endif
+
             }
 
 #if INMEMORY_DB
             projDB = openDBInMemry(projPath);
 #else
-            projDB = new SQLiteConnection(@"Data Source=" + projPath + ";Password=abcd");
+#if !DEBUG
+
+            projDB = new SQLiteConnection(@"Data Source=" + projPath + ";Password=" + PASSWORD);
+#else
+            projDB = new SQLiteConnection(@"Data Source=" + projPath);
+#endif
             projDB.Open();
 #endif
 
