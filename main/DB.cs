@@ -1,16 +1,6 @@
 ﻿//#define INMEMORY_DB
-using System;
-using System.Buffers.Text;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity.Core.Objects;
 using System.Data.SQLite;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
 
 /* 
  * DB 사용법
@@ -52,6 +42,7 @@ namespace main
             ProjListDB
         }
 
+        private string PASSWORD = "abcd";
         private Dictionary<string, string> tables = new Dictionary<string, string>()
         {
             //프로젝트유형 기존:1, 리트로핏:2, 리모델링:3, 신규:4
@@ -163,6 +154,29 @@ namespace main
 #if INMEMORY_DB
             gProjFName = projPath;
 #endif
+            AppDomain.CurrentDomain.SetData(string.Format(
+                "462734ae-de3e-43e1-9eab-fb5282b94c59_{0}",
+                System.Diagnostics.Process.GetCurrentProcess().Id),
+                "IPAZEB <info@ipazeb.org>");
+
+            SQLiteCommand.Execute(
+                "PRAGMA activate_extensions='see-7bb07b8d471d642e';",
+                SQLiteExecuteType.NonQuery,
+                "Data Source=:memory:;");
+
+            SQLiteCommand.Execute( /* SELF-TEST */
+                "SELECT COUNT(*) FROM sqlite_schema;",
+                SQLiteExecuteType.Scalar,
+                "Data Source=:memory:;Password=1234;");
+
+            /*
+             * NOTE: Use only the file name here, which indicates
+             *       that an embedded assembly resource is being
+             *       used.
+             */
+            Environment.SetEnvironmentVariable(
+                "Override_SEE_Certificate", "SDS-SEE.exml");
+
 
             closeDB();
 
@@ -296,15 +310,22 @@ namespace main
             {
                 return false;
             }
+
             if (GetFileSize(projPath) <= 0)
             {
-                File.Copy("templ.sqlite", projPath, true);
+         //      File.Copy("templ.sqlite", projPath, true);
+
+                projDB = new SQLiteConnection(@"Data Source=" + projPath);
+                projDB.SetPassword(PASSWORD);
+                projDB.Open();
+                projDB.Close();
+                projDB.Dispose();
             }
 
 #if INMEMORY_DB
             projDB = openDBInMemry(projPath);
 #else
-            projDB = new SQLiteConnection(@"Data Source=" + projPath);
+            projDB = new SQLiteConnection(@"Data Source=" + projPath + ";Password=abcd");
             projDB.Open();
 #endif
 

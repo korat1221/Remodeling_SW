@@ -38,13 +38,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Harpy" Version="1.0.8503.24499" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1722.45" />
+    <PackageReference Include="SQLite.Encryption.Extension" Version="1.0.118.1" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.117" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CustomTabControl\CustomTabControl.csproj" />
   </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="SDS-SEE.exml">
+        <LogicalName>SDS-SEE.exml</LogicalName>
+      </EmbeddedResource>
+    </ItemGroup>
 
   <ItemGroup>
     <Compile Update="contentslist\List_ConstructionBlind.cs">
