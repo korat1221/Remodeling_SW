@@ -189,7 +189,12 @@ namespace main
 
                 baseDB_hcneed = openDBInMemry("basedb_hcneed.sqlite");
 #else
-                baseDB_hcneed = new SQLiteConnection(@"Data Source=basedb_hcneed.sqlite");
+#if !DEBUG
+                baseDB_hcneed = new SQLiteConnection(@"Data Source=baseDB_hcneed.sqlite;Password=" + PASSWORD);
+#else
+                baseDB_hcneed = new SQLiteConnection(@"Data Source=baseDB_hcneed.sqlite");
+#endif
+
                 baseDB_hcneed.Open();
 #endif
 
@@ -215,7 +220,12 @@ namespace main
 #if INMEMORY_DB
                 baseDB_lighting = openDBInMemry("basedb_lighting.sqlite");
 #else
+#if !DEBUG
+                baseDB_lighting = new SQLiteConnection(@"Data Source=basedb_lighting.sqlite;Password=" + PASSWORD);
+#else
                 baseDB_lighting = new SQLiteConnection(@"Data Source=basedb_lighting.sqlite");
+#endif
+
                 baseDB_lighting.Open();
 #endif
 
@@ -240,7 +250,12 @@ namespace main
 #if INMEMORY_DB
                 baseDB_heating = openDBInMemry("basedb_heating.sqlite");
 #else
+
+#if !DEBUG
+                baseDB_heating = new SQLiteConnection(@"Data Source=basedb_heating.sqlite;Password=" + PASSWORD);
+#else
                 baseDB_heating = new SQLiteConnection(@"Data Source=basedb_heating.sqlite");
+#endif
                 baseDB_heating.Open();
 #endif
 
@@ -265,7 +280,12 @@ namespace main
 #if INMEMORY_DB
                 baseDB_cooling = openDBInMemry("basedb_cooling.sqlite");
 #else
+#if !DEBUG
+
+                baseDB_cooling = new SQLiteConnection(@"Data Source=basedb_cooling.sqlite;Password=" + PASSWORD);
+#else
                 baseDB_cooling = new SQLiteConnection(@"Data Source=basedb_cooling.sqlite");
+#endif
                 baseDB_cooling.Open();
 #endif
 
@@ -291,7 +311,11 @@ namespace main
 #if INMEMORY_DB
                 baseDB_resystem = openDBInMemry("basedb_resystem.sqlite");
 #else
+#if !DEBUG
+                baseDB_resystem = new SQLiteConnection(@"Data Source=basedb_resystem.sqlite;Password=" + PASSWORD);
+#else
                 baseDB_resystem = new SQLiteConnection(@"Data Source=basedb_resystem.sqlite");
+#endif
                 baseDB_resystem.Open();
 #endif
 
