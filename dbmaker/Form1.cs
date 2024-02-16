@@ -12,6 +12,7 @@ using System.Data.SQLite;
 using System.Data.Entity;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Collections.ObjectModel;
+using System.Data.Common;
 
 namespace dbmaker
 {
@@ -19,6 +20,7 @@ namespace dbmaker
     {
         String gPath = "..\\..\\..\\asset\\";
         String DBName;
+        private string PASSWORD = "abcd";
         public Form1()
         {
             InitializeComponent();
@@ -216,5 +218,53 @@ namespace dbmaker
             }
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            AppDomain.CurrentDomain.SetData(string.Format(
+                "462734ae-de3e-43e1-9eab-fb5282b94c59_{0}",
+                System.Diagnostics.Process.GetCurrentProcess().Id),
+                "IPAZEB <info@ipazeb.org>");
+
+            SQLiteCommand.Execute(
+                "PRAGMA activate_extensions='see-7bb07b8d471d642e';",
+                SQLiteExecuteType.NonQuery,
+                "Data Source=:memory:;");
+
+            SQLiteCommand.Execute( /* SELF-TEST */
+                "SELECT COUNT(*) FROM sqlite_schema;",
+                SQLiteExecuteType.Scalar,
+                "Data Source=:memory:;Password=1234;");
+
+            /*
+             * NOTE: Use only the file name here, which indicates
+             *       that an embedded assembly resource is being
+             *       used.
+             */
+            Environment.SetEnvironmentVariable(
+                "Override_SEE_Certificate", "SDS-SEE.exml");
+
+            String str = System.Reflection.Assembly.GetEntryAssembly().Location;
+
+            Directory.SetCurrentDirectory(str.Substring(0, str.IndexOf("\\dbmaker") + 1) + "asset\\");
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=" + textBox1.Text.ToString() + ".sqlite;"))
+            {
+                conn.SetPassword(PASSWORD);
+                conn.Open();
+
+                using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = File.ReadAllText(textBox1.Text.ToString() + ".sql");
+                    int i = cmd.ExecuteNonQuery();
+                    if (i > 0)
+                    {
+                        MessageBox.Show("Data dumped successfully ...!!!");
+                    }
+                }
+
+                conn.Close();
+                conn.Dispose();
+            }
+        }
     }
 }
