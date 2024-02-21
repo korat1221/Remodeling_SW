@@ -88,7 +88,7 @@ namespace main.contents
                 Climate_comboBox.Items.Clear();
                 for (int i = 0; i < Value.Length; i++)
                 {
-                    Climate_comboBox.Items.Add(Value[i][0]);
+                    Climate_comboBox.Items.Add(Value[i][0]); 
                 }
                 Climate_comboBox.SelectedIndex = 2;
             }

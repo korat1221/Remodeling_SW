@@ -1,6 +1,0 @@
-Name,Area,Uvalue,Uinst,DirectInDirect,Direction,Ff,g,τ,gtot,τtot,degree
-창호1,4,1.5,0.15,Direction,동,0.7,0.65,0.53,0.65,0.53,90
-창호2,3,1.3,0.17,Indirection,서,0.7,0.75,0.63,0.75,0.63,60
-창호3,2,1.5,0.1,Direction,남,0.7,0.65,0.53,0.65,0.53,60
-창호4,1,1.3,0.3,Indirection,북,0.7,0.45,0.43,0.45,0.43,90
-창호5,1,1.3,0.3,Indirection,북,0.7,0.45,0.43,0.45,0.43,90

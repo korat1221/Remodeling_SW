@@ -1635,6 +1635,7 @@ namespace main.contents
             if (e.RowIndex >= 0)
             {
                 double 냉방용량 = 0, 냉방소비전력 = 0, 냉방COP = 0, 난방용량 = 0, 난방소비전력 = 0, 난방COP = 0, 한랭지용량 = 0, 한랭지소비전력 = 0, 한랭지COP = 0;
+
                 if (AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && Information.IsNumeric(AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()))
                 {
                     냉방용량 = Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString());
@@ -1647,6 +1648,7 @@ namespace main.contents
                 {
                     냉방소비전력 = Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString());
                 }
+                
                 if (AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && Information.IsNumeric(AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()))
                 {
                     난방용량 = Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString());
@@ -1659,6 +1661,7 @@ namespace main.contents
                 {
                     난방소비전력 = Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString());
                 }
+
                 if (AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null && Information.IsNumeric(AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()))
                 {
                     한랭지용량 = Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString());
@@ -1672,30 +1675,66 @@ namespace main.contents
                     한랭지소비전력 = Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString());
                 }
 
-                if (냉방용량 > 0 && 냉방COP > 0)
+                if (e.ColumnIndex == 7 )
+                {
+                    if (냉방소비전력 > 0)
+                    {
+                        냉방COP = 냉방용량 / 냉방소비전력;
+                    }
+                    else if(냉방COP > 0)
+                    {
+                        냉방소비전력 = 냉방용량 / 냉방COP;
+                    }
+                }
+                else if(e.ColumnIndex == 8)
                 {
                     냉방소비전력 = 냉방용량 / 냉방COP;
                 }
-                if (냉방용량 > 0 && 냉방소비전력 > 0)
+                else if (e.ColumnIndex == 9)
                 {
-                    냉방COP = 냉방용량 / 냉방소비전력;
+                     냉방COP = 냉방용량 / 냉방소비전력;
                 }
-                if (난방용량 > 0 && 난방COP > 0)
+
+                else if (e.ColumnIndex == 10)
+                {
+                    if (난방소비전력 > 0)
+                    {
+                        난방COP = 난방용량 / 난방소비전력;
+                    }
+                    else if (난방COP > 0)
+                    {
+                        난방소비전력 = 난방용량 / 난방COP;
+                    }
+                }
+                else if (e.ColumnIndex == 11)
                 {
                     난방소비전력 = 난방용량 / 난방COP;
                 }
-                if (난방용량 > 0 && 난방소비전력 > 0)
+                else if (e.ColumnIndex == 12)
                 {
                     난방COP = 난방용량 / 난방소비전력;
                 }
-                if (한랭지용량 > 0 && 한랭지COP > 0)
+
+                else if (e.ColumnIndex == 13)
+                {
+                    if (한랭지소비전력 > 0)
+                    {
+                        한랭지COP = 한랭지용량 / 한랭지소비전력;
+                    }
+                    else if (한랭지COP > 0)
+                    {
+                        한랭지소비전력 = 한랭지용량 / 한랭지COP;
+                    }
+                }
+                else if (e.ColumnIndex == 14)
                 {
                     한랭지소비전력 = 한랭지용량 / 한랭지COP;
                 }
-                if (한랭지용량 > 0 && 한랭지소비전력 > 0)
+                else if (e.ColumnIndex == 15)
                 {
-                    한랭지COP = 한랭지용량 / 한랭지소비전력;
+                     한랭지COP = 한랭지용량 / 한랭지소비전력;
                 }
+
 
                 if (냉방용량 > 0)
                 {
@@ -1711,6 +1750,9 @@ namespace main.contents
                         AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value = string.Format("{0:F1}", 난방용량);
                         AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value = string.Format("{0:F1}", 난방COP);
                         AirHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = string.Format("{0:F1}", 난방소비전력);
+                    }
+                    if(한랭지용량 > 0)
+                    { 
                         AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value = string.Format("{0:F1}", 한랭지용량);
                         AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value = string.Format("{0:F1}", 한랭지COP);
                         AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = string.Format("{0:F1}", 한랭지소비전력);

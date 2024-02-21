@@ -131,7 +131,7 @@ namespace main.contents
                 Ground_pictureBox.Location = new Point(0, 0);
             }
             Ground_pictureBox.Controls.Add(HC_pictureBox);
-        }
+        } 
         private void Heating_checkBox_CheckedChanged(object sender, EventArgs e)
         {
             Check_HC();

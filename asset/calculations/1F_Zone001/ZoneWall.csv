@@ -1,5 +1,0 @@
-Name,Area,Ueff,DirectInDirect,Direction,α,Degree
-외벽1,10,0.15,Direction,동,0.9,90
-외벽2,15,0.45,Direction,서,0.8,90
-외벽3,20,0.3,Indirection,남,0.7,90
-외벽4,25,2,Indirection,북,0.6,90
