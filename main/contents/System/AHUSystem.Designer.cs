@@ -35,6 +35,7 @@
             DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            Icon_pictureBox = new PictureBox();
             AHUoptions_button = new Button();
             AHU_CalcHeatingPower_Textbox = new TextBox();
             label28 = new Label();
@@ -64,33 +65,34 @@
             label13 = new Label();
             label14 = new Label();
             Num_textBox = new TextBox();
-            Icon_pictureBox = new PictureBox();
             tabControl1 = new CustomTabControl();
-            Qhg_tabPage = new TabPage();
+            HRV_tabPage = new TabPage();
             label2 = new Label();
             HRVInsulationThickness_comboBox = new CustomComboBox();
             HRV_dataGridView = new DataGridView();
-            label9 = new Label();
+            HRVLocation_label = new Label();
             HRVLocation_comboBox = new CustomComboBox();
             Sub1UserList_textBox = new TextBox();
             MainUserList_textBox = new TextBox();
-            MainUserList_Label = new Label();
+            HRVInsulationThickness_Label = new Label();
             HRVLeakageLevel_comboBox = new CustomComboBox();
-            label6 = new Label();
-            MainSystem_label = new Label();
+            HRVLeakageLevel_label = new Label();
+            HRVVolumeControl_label = new Label();
             HRVVolumeControl_comboBox = new CustomComboBox();
-            Qhs_tabPage = new TabPage();
+            AHU_tabPage = new TabPage();
             label18 = new Label();
             AHUInsulationThickness_comboBox = new CustomComboBox();
             AHU_dataGridView = new DataGridView();
-            label32 = new Label();
+            AHULocation_label = new Label();
             AHULocation_comboBox = new CustomComboBox();
-            label33 = new Label();
+            AHUInsulationThickness_label = new Label();
             AHULeakageLevel_comboBox = new CustomComboBox();
-            label34 = new Label();
-            label35 = new Label();
+            AHULeakageLevel_label = new Label();
+            AHUVolumeControl_label = new Label();
             AHUVolumeControl_comboBox = new CustomComboBox();
-            Qhd_tabPage = new TabPage();
+            Duct_tabPage = new TabPage();
+            DuctMaterial_comboBox = new CustomComboBox();
+            label45 = new Label();
             label40 = new Label();
             label41 = new Label();
             label20 = new Label();
@@ -99,30 +101,40 @@
             OASALength_textBox = new TextBox();
             EARALength_textBox = new TextBox();
             label11 = new Label();
-            label12 = new Label();
+            OASALength_label = new Label();
             label16 = new Label();
             label17 = new Label();
-            label19 = new Label();
-            Qhce_tabPage = new TabPage();
-            PrehControlOptions_comboBox = new CustomComboBox();
-            GroundDepth_textBox = new TextBox();
-            label42 = new Label();
-            CooltubeDiameter_textBox = new TextBox();
-            CooltubeThicknessh_textBox = new TextBox();
-            CooltubeLength_textBox = new TextBox();
-            label37 = new Label();
-            CooltubeMaterial_comboBox = new CustomComboBox();
-            label38 = new Label();
-            label39 = new Label();
-            label36 = new Label();
-            label5 = new Label();
-            label7 = new Label();
-            GroundOptions_comboBox = new CustomComboBox();
-            label10 = new Label();
-            label21 = new Label();
-            label22 = new Label();
+            EARAALength_label = new Label();
+            PrehPrec_tabPage = new TabPage();
             label4 = new Label();
             PrehPrecOptions_comboBox = new CustomComboBox();
+            CooltubeInfo_groupBox = new GroupBox();
+            label44 = new Label();
+            CooltubeDiameter_textBox = new TextBox();
+            label21 = new Label();
+            label10 = new Label();
+            CooltubeThicknessh_textBox = new TextBox();
+            label5 = new Label();
+            CooltubeLength_textBox = new TextBox();
+            label36 = new Label();
+            label37 = new Label();
+            label39 = new Label();
+            CooltubeMaterial_comboBox = new CustomComboBox();
+            label38 = new Label();
+            GroundInfo_groupBox = new GroupBox();
+            label43 = new Label();
+            GroundDepth_textBox = new TextBox();
+            GroundOptions_comboBox = new CustomComboBox();
+            label42 = new Label();
+            label22 = new Label();
+            label7 = new Label();
+            PrehInfo_groupBox = new GroupBox();
+            label46 = new Label();
+            PrehControlOptions_comboBox = new CustomComboBox();
+            textBox1 = new TextBox();
+            label47 = new Label();
+            label48 = new Label();
+            label49 = new Label();
             Previous_button = new Button();
             Save_button = new Button();
             ImagePanel = new Panel();
@@ -131,12 +143,15 @@
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
-            Qhg_tabPage.SuspendLayout();
+            HRV_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)HRV_dataGridView).BeginInit();
-            Qhs_tabPage.SuspendLayout();
+            AHU_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)AHU_dataGridView).BeginInit();
-            Qhd_tabPage.SuspendLayout();
-            Qhce_tabPage.SuspendLayout();
+            Duct_tabPage.SuspendLayout();
+            PrehPrec_tabPage.SuspendLayout();
+            CooltubeInfo_groupBox.SuspendLayout();
+            GroundInfo_groupBox.SuspendLayout();
+            PrehInfo_groupBox.SuspendLayout();
             ImagePanel.SuspendLayout();
             panel4.SuspendLayout();
             SuspendLayout();
@@ -149,6 +164,8 @@
             GeneralPanel.Controls.Add(AHU_CalcHeatingPower_Textbox);
             GeneralPanel.Controls.Add(label28);
             GeneralPanel.Controls.Add(label29);
+            GeneralPanel.Controls.Add(Zone_textBox);
+            GeneralPanel.Controls.Add(Zone_button);
             GeneralPanel.Controls.Add(AHU_CalcCoolingPower_Textbox);
             GeneralPanel.Controls.Add(label30);
             GeneralPanel.Controls.Add(label31);
@@ -161,8 +178,6 @@
             GeneralPanel.Controls.Add(label26);
             GeneralPanel.Controls.Add(label23);
             GeneralPanel.Controls.Add(AHUOptions_comboBox);
-            GeneralPanel.Controls.Add(Zone_button);
-            GeneralPanel.Controls.Add(Zone_textBox);
             GeneralPanel.Controls.Add(label1);
             GeneralPanel.Controls.Add(label3);
             GeneralPanel.Controls.Add(label15);
@@ -180,13 +195,21 @@
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
             // 
+            // Icon_pictureBox
+            // 
+            Icon_pictureBox.Location = new Point(18, 20);
+            Icon_pictureBox.Name = "Icon_pictureBox";
+            Icon_pictureBox.Size = new Size(51, 50);
+            Icon_pictureBox.TabIndex = 115;
+            Icon_pictureBox.TabStop = false;
+            // 
             // AHUoptions_button
             // 
             AHUoptions_button.BackColor = SystemColors.ControlLight;
             AHUoptions_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AHUoptions_button.FlatStyle = FlatStyle.System;
             AHUoptions_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            AHUoptions_button.Location = new Point(323, 69);
+            AHUoptions_button.Location = new Point(323, 45);
             AHUoptions_button.Margin = new Padding(0);
             AHUoptions_button.Name = "AHUoptions_button";
             AHUoptions_button.Size = new Size(23, 23);
@@ -355,10 +378,11 @@
             AHUOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             AHUOptions_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AHUOptions_comboBox.FormattingEnabled = true;
-            AHUOptions_comboBox.Location = new Point(195, 69);
+            AHUOptions_comboBox.Location = new Point(195, 45);
             AHUOptions_comboBox.Name = "AHUOptions_comboBox";
             AHUOptions_comboBox.Size = new Size(120, 23);
             AHUOptions_comboBox.TabIndex = 156;
+            AHUOptions_comboBox.SelectedIndexChanged += AHUOptions_comboBox_SelectedIndexChanged;
             // 
             // Zone_button
             // 
@@ -366,13 +390,14 @@
             Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Zone_button.FlatStyle = FlatStyle.System;
             Zone_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Zone_button.Location = new Point(323, 45);
+            Zone_button.Location = new Point(323, 69);
             Zone_button.Margin = new Padding(0);
             Zone_button.Name = "Zone_button";
             Zone_button.Size = new Size(23, 23);
             Zone_button.TabIndex = 157;
             Zone_button.Text = "+";
             Zone_button.UseVisualStyleBackColor = false;
+            Zone_button.Click += Zone_button_Click;
             // 
             // Zone_textBox
             // 
@@ -381,7 +406,7 @@
             Zone_textBox.Enabled = false;
             Zone_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Zone_textBox.ForeColor = SystemColors.ControlDark;
-            Zone_textBox.Location = new Point(195, 49);
+            Zone_textBox.Location = new Point(195, 73);
             Zone_textBox.Name = "Zone_textBox";
             Zone_textBox.Size = new Size(120, 15);
             Zone_textBox.TabIndex = 156;
@@ -393,9 +418,9 @@
             label1.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label1.Location = new Point(128, 72);
             label1.Name = "label1";
-            label1.Size = new Size(60, 17);
+            label1.Size = new Size(52, 17);
             label1.TabIndex = 155;
-            label1.Text = "기계환기";
+            label1.Text = "공급 존";
             // 
             // label3
             // 
@@ -403,9 +428,9 @@
             label3.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label3.Location = new Point(128, 48);
             label3.Name = "label3";
-            label3.Size = new Size(52, 17);
+            label3.Size = new Size(34, 17);
             label3.TabIndex = 153;
-            label3.Text = "공급 존";
+            label3.Text = "유형";
             // 
             // label15
             // 
@@ -435,7 +460,6 @@
             radioButton3.Name = "radioButton3";
             radioButton3.Size = new Size(14, 13);
             radioButton3.TabIndex = 150;
-            radioButton3.TabStop = true;
             radioButton3.UseVisualStyleBackColor = true;
             // 
             // label8
@@ -456,12 +480,12 @@
             radioButton2.Name = "radioButton2";
             radioButton2.Size = new Size(14, 13);
             radioButton2.TabIndex = 148;
-            radioButton2.TabStop = true;
             radioButton2.UseVisualStyleBackColor = true;
             // 
             // radioButton1
             // 
             radioButton1.AutoSize = true;
+            radioButton1.Checked = true;
             radioButton1.Enabled = false;
             radioButton1.Location = new Point(919, 17);
             radioButton1.Name = "radioButton1";
@@ -503,20 +527,12 @@
             Num_textBox.TabIndex = 114;
             Num_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Icon_pictureBox
-            // 
-            Icon_pictureBox.Location = new Point(18, 20);
-            Icon_pictureBox.Name = "Icon_pictureBox";
-            Icon_pictureBox.Size = new Size(51, 50);
-            Icon_pictureBox.TabIndex = 115;
-            Icon_pictureBox.TabStop = false;
-            // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(Qhg_tabPage);
-            tabControl1.Controls.Add(Qhs_tabPage);
-            tabControl1.Controls.Add(Qhd_tabPage);
-            tabControl1.Controls.Add(Qhce_tabPage);
+            tabControl1.Controls.Add(HRV_tabPage);
+            tabControl1.Controls.Add(AHU_tabPage);
+            tabControl1.Controls.Add(Duct_tabPage);
+            tabControl1.Controls.Add(PrehPrec_tabPage);
             tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
@@ -539,27 +555,27 @@
             tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.TabIndex = 97;
             // 
-            // Qhg_tabPage
+            // HRV_tabPage
             // 
-            Qhg_tabPage.BackColor = Color.White;
-            Qhg_tabPage.Controls.Add(label2);
-            Qhg_tabPage.Controls.Add(HRVInsulationThickness_comboBox);
-            Qhg_tabPage.Controls.Add(HRV_dataGridView);
-            Qhg_tabPage.Controls.Add(label9);
-            Qhg_tabPage.Controls.Add(HRVLocation_comboBox);
-            Qhg_tabPage.Controls.Add(Sub1UserList_textBox);
-            Qhg_tabPage.Controls.Add(MainUserList_textBox);
-            Qhg_tabPage.Controls.Add(MainUserList_Label);
-            Qhg_tabPage.Controls.Add(HRVLeakageLevel_comboBox);
-            Qhg_tabPage.Controls.Add(label6);
-            Qhg_tabPage.Controls.Add(MainSystem_label);
-            Qhg_tabPage.Controls.Add(HRVVolumeControl_comboBox);
-            Qhg_tabPage.Location = new Point(4, 25);
-            Qhg_tabPage.Name = "Qhg_tabPage";
-            Qhg_tabPage.Padding = new Padding(3);
-            Qhg_tabPage.Size = new Size(969, 285);
-            Qhg_tabPage.TabIndex = 0;
-            Qhg_tabPage.Text = "열회수기";
+            HRV_tabPage.BackColor = Color.White;
+            HRV_tabPage.Controls.Add(label2);
+            HRV_tabPage.Controls.Add(HRVInsulationThickness_comboBox);
+            HRV_tabPage.Controls.Add(HRV_dataGridView);
+            HRV_tabPage.Controls.Add(HRVLocation_label);
+            HRV_tabPage.Controls.Add(HRVLocation_comboBox);
+            HRV_tabPage.Controls.Add(Sub1UserList_textBox);
+            HRV_tabPage.Controls.Add(MainUserList_textBox);
+            HRV_tabPage.Controls.Add(HRVInsulationThickness_Label);
+            HRV_tabPage.Controls.Add(HRVLeakageLevel_comboBox);
+            HRV_tabPage.Controls.Add(HRVLeakageLevel_label);
+            HRV_tabPage.Controls.Add(HRVVolumeControl_label);
+            HRV_tabPage.Controls.Add(HRVVolumeControl_comboBox);
+            HRV_tabPage.Location = new Point(4, 25);
+            HRV_tabPage.Name = "HRV_tabPage";
+            HRV_tabPage.Padding = new Padding(3);
+            HRV_tabPage.Size = new Size(969, 285);
+            HRV_tabPage.TabIndex = 0;
+            HRV_tabPage.Text = "열회수기";
             // 
             // label2
             // 
@@ -625,15 +641,15 @@
             HRV_dataGridView.Size = new Size(943, 113);
             HRV_dataGridView.TabIndex = 22;
             // 
-            // label9
+            // HRVLocation_label
             // 
-            label9.AutoSize = true;
-            label9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label9.Location = new Point(36, 33);
-            label9.Name = "label9";
-            label9.Size = new Size(55, 15);
-            label9.TabIndex = 154;
-            label9.Text = "설치위치";
+            HRVLocation_label.AutoSize = true;
+            HRVLocation_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            HRVLocation_label.Location = new Point(36, 33);
+            HRVLocation_label.Name = "HRVLocation_label";
+            HRVLocation_label.Size = new Size(55, 15);
+            HRVLocation_label.TabIndex = 154;
+            HRVLocation_label.Text = "설치위치";
             // 
             // HRVLocation_comboBox
             // 
@@ -673,15 +689,15 @@
             MainUserList_textBox.TabIndex = 146;
             MainUserList_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // MainUserList_Label
+            // HRVInsulationThickness_Label
             // 
-            MainUserList_Label.AutoSize = true;
-            MainUserList_Label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            MainUserList_Label.Location = new Point(273, 65);
-            MainUserList_Label.Name = "MainUserList_Label";
-            MainUserList_Label.Size = new Size(55, 15);
-            MainUserList_Label.TabIndex = 144;
-            MainUserList_Label.Text = "단열두께";
+            HRVInsulationThickness_Label.AutoSize = true;
+            HRVInsulationThickness_Label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            HRVInsulationThickness_Label.Location = new Point(273, 65);
+            HRVInsulationThickness_Label.Name = "HRVInsulationThickness_Label";
+            HRVInsulationThickness_Label.Size = new Size(55, 15);
+            HRVInsulationThickness_Label.TabIndex = 144;
+            HRVInsulationThickness_Label.Text = "단열두께";
             // 
             // HRVLeakageLevel_comboBox
             // 
@@ -694,25 +710,25 @@
             HRVLeakageLevel_comboBox.TabIndex = 137;
             HRVLeakageLevel_comboBox.SelectedIndexChanged += HRVLeakageLevel_comboBox_SelectedIndexChanged;
             // 
-            // label6
+            // HRVLeakageLevel_label
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label6.Location = new Point(273, 33);
-            label6.Name = "label6";
-            label6.Size = new Size(55, 15);
-            label6.TabIndex = 134;
-            label6.Text = "누기등급";
+            HRVLeakageLevel_label.AutoSize = true;
+            HRVLeakageLevel_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            HRVLeakageLevel_label.Location = new Point(273, 33);
+            HRVLeakageLevel_label.Name = "HRVLeakageLevel_label";
+            HRVLeakageLevel_label.Size = new Size(55, 15);
+            HRVLeakageLevel_label.TabIndex = 134;
+            HRVLeakageLevel_label.Text = "누기등급";
             // 
-            // MainSystem_label
+            // HRVVolumeControl_label
             // 
-            MainSystem_label.AutoSize = true;
-            MainSystem_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            MainSystem_label.Location = new Point(36, 65);
-            MainSystem_label.Name = "MainSystem_label";
-            MainSystem_label.Size = new Size(55, 15);
-            MainSystem_label.TabIndex = 128;
-            MainSystem_label.Text = "풍량제어";
+            HRVVolumeControl_label.AutoSize = true;
+            HRVVolumeControl_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            HRVVolumeControl_label.Location = new Point(36, 65);
+            HRVVolumeControl_label.Name = "HRVVolumeControl_label";
+            HRVVolumeControl_label.Size = new Size(55, 15);
+            HRVVolumeControl_label.TabIndex = 128;
+            HRVVolumeControl_label.Text = "풍량제어";
             // 
             // HRVVolumeControl_comboBox
             // 
@@ -725,25 +741,25 @@
             HRVVolumeControl_comboBox.TabIndex = 127;
             HRVVolumeControl_comboBox.SelectedIndexChanged += HRVVolumeControl_comboBox_SelectedIndexChanged;
             // 
-            // Qhs_tabPage
+            // AHU_tabPage
             // 
-            Qhs_tabPage.BackColor = Color.White;
-            Qhs_tabPage.Controls.Add(label18);
-            Qhs_tabPage.Controls.Add(AHUInsulationThickness_comboBox);
-            Qhs_tabPage.Controls.Add(AHU_dataGridView);
-            Qhs_tabPage.Controls.Add(label32);
-            Qhs_tabPage.Controls.Add(AHULocation_comboBox);
-            Qhs_tabPage.Controls.Add(label33);
-            Qhs_tabPage.Controls.Add(AHULeakageLevel_comboBox);
-            Qhs_tabPage.Controls.Add(label34);
-            Qhs_tabPage.Controls.Add(label35);
-            Qhs_tabPage.Controls.Add(AHUVolumeControl_comboBox);
-            Qhs_tabPage.Location = new Point(4, 25);
-            Qhs_tabPage.Name = "Qhs_tabPage";
-            Qhs_tabPage.Padding = new Padding(3);
-            Qhs_tabPage.Size = new Size(969, 285);
-            Qhs_tabPage.TabIndex = 2;
-            Qhs_tabPage.Text = "공조기";
+            AHU_tabPage.BackColor = Color.White;
+            AHU_tabPage.Controls.Add(label18);
+            AHU_tabPage.Controls.Add(AHUInsulationThickness_comboBox);
+            AHU_tabPage.Controls.Add(AHU_dataGridView);
+            AHU_tabPage.Controls.Add(AHULocation_label);
+            AHU_tabPage.Controls.Add(AHULocation_comboBox);
+            AHU_tabPage.Controls.Add(AHUInsulationThickness_label);
+            AHU_tabPage.Controls.Add(AHULeakageLevel_comboBox);
+            AHU_tabPage.Controls.Add(AHULeakageLevel_label);
+            AHU_tabPage.Controls.Add(AHUVolumeControl_label);
+            AHU_tabPage.Controls.Add(AHUVolumeControl_comboBox);
+            AHU_tabPage.Location = new Point(4, 25);
+            AHU_tabPage.Name = "AHU_tabPage";
+            AHU_tabPage.Padding = new Padding(3);
+            AHU_tabPage.Size = new Size(969, 285);
+            AHU_tabPage.TabIndex = 2;
+            AHU_tabPage.Text = "공조기";
             // 
             // label18
             // 
@@ -765,6 +781,7 @@
             AHUInsulationThickness_comboBox.Name = "AHUInsulationThickness_comboBox";
             AHUInsulationThickness_comboBox.Size = new Size(120, 23);
             AHUInsulationThickness_comboBox.TabIndex = 189;
+            AHUInsulationThickness_comboBox.SelectedIndexChanged += AHUInsulationThickness_comboBox_SelectedIndexChanged;
             // 
             // AHU_dataGridView
             // 
@@ -808,15 +825,15 @@
             AHU_dataGridView.Size = new Size(943, 113);
             AHU_dataGridView.TabIndex = 181;
             // 
-            // label32
+            // AHULocation_label
             // 
-            label32.AutoSize = true;
-            label32.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label32.Location = new Point(36, 33);
-            label32.Name = "label32";
-            label32.Size = new Size(55, 15);
-            label32.TabIndex = 188;
-            label32.Text = "설치위치";
+            AHULocation_label.AutoSize = true;
+            AHULocation_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            AHULocation_label.Location = new Point(36, 33);
+            AHULocation_label.Name = "AHULocation_label";
+            AHULocation_label.Size = new Size(55, 15);
+            AHULocation_label.TabIndex = 188;
+            AHULocation_label.Text = "설치위치";
             // 
             // AHULocation_comboBox
             // 
@@ -827,16 +844,17 @@
             AHULocation_comboBox.Name = "AHULocation_comboBox";
             AHULocation_comboBox.Size = new Size(120, 23);
             AHULocation_comboBox.TabIndex = 187;
+            AHULocation_comboBox.SelectedIndexChanged += AHULocation_comboBox_SelectedIndexChanged;
             // 
-            // label33
+            // AHUInsulationThickness_label
             // 
-            label33.AutoSize = true;
-            label33.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label33.Location = new Point(273, 65);
-            label33.Name = "label33";
-            label33.Size = new Size(55, 15);
-            label33.TabIndex = 186;
-            label33.Text = "단열두께";
+            AHUInsulationThickness_label.AutoSize = true;
+            AHUInsulationThickness_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            AHUInsulationThickness_label.Location = new Point(273, 65);
+            AHUInsulationThickness_label.Name = "AHUInsulationThickness_label";
+            AHUInsulationThickness_label.Size = new Size(55, 15);
+            AHUInsulationThickness_label.TabIndex = 186;
+            AHUInsulationThickness_label.Text = "단열두께";
             // 
             // AHULeakageLevel_comboBox
             // 
@@ -847,26 +865,27 @@
             AHULeakageLevel_comboBox.Name = "AHULeakageLevel_comboBox";
             AHULeakageLevel_comboBox.Size = new Size(120, 23);
             AHULeakageLevel_comboBox.TabIndex = 185;
+            AHULeakageLevel_comboBox.SelectedIndexChanged += AHULeakageLevel_comboBox_SelectedIndexChanged;
             // 
-            // label34
+            // AHULeakageLevel_label
             // 
-            label34.AutoSize = true;
-            label34.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label34.Location = new Point(273, 33);
-            label34.Name = "label34";
-            label34.Size = new Size(55, 15);
-            label34.TabIndex = 184;
-            label34.Text = "누기등급";
+            AHULeakageLevel_label.AutoSize = true;
+            AHULeakageLevel_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            AHULeakageLevel_label.Location = new Point(273, 33);
+            AHULeakageLevel_label.Name = "AHULeakageLevel_label";
+            AHULeakageLevel_label.Size = new Size(55, 15);
+            AHULeakageLevel_label.TabIndex = 184;
+            AHULeakageLevel_label.Text = "누기등급";
             // 
-            // label35
+            // AHUVolumeControl_label
             // 
-            label35.AutoSize = true;
-            label35.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label35.Location = new Point(36, 65);
-            label35.Name = "label35";
-            label35.Size = new Size(55, 15);
-            label35.TabIndex = 183;
-            label35.Text = "풍량제어";
+            AHUVolumeControl_label.AutoSize = true;
+            AHUVolumeControl_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            AHUVolumeControl_label.Location = new Point(36, 65);
+            AHUVolumeControl_label.Name = "AHUVolumeControl_label";
+            AHUVolumeControl_label.Size = new Size(55, 15);
+            AHUVolumeControl_label.TabIndex = 183;
+            AHUVolumeControl_label.Text = "풍량제어";
             // 
             // AHUVolumeControl_comboBox
             // 
@@ -877,28 +896,51 @@
             AHUVolumeControl_comboBox.Name = "AHUVolumeControl_comboBox";
             AHUVolumeControl_comboBox.Size = new Size(120, 23);
             AHUVolumeControl_comboBox.TabIndex = 182;
+            AHUVolumeControl_comboBox.SelectedIndexChanged += AHUVolumeControl_comboBox_SelectedIndexChanged;
             // 
-            // Qhd_tabPage
+            // Duct_tabPage
             // 
-            Qhd_tabPage.Controls.Add(label40);
-            Qhd_tabPage.Controls.Add(label41);
-            Qhd_tabPage.Controls.Add(label20);
-            Qhd_tabPage.Controls.Add(DuctInsulationThickness_textBox);
-            Qhd_tabPage.Controls.Add(DuctDiameter_textBox);
-            Qhd_tabPage.Controls.Add(OASALength_textBox);
-            Qhd_tabPage.Controls.Add(EARALength_textBox);
-            Qhd_tabPage.Controls.Add(label11);
-            Qhd_tabPage.Controls.Add(label12);
-            Qhd_tabPage.Controls.Add(label16);
-            Qhd_tabPage.Controls.Add(label17);
-            Qhd_tabPage.Controls.Add(label19);
-            Qhd_tabPage.Location = new Point(4, 25);
-            Qhd_tabPage.Name = "Qhd_tabPage";
-            Qhd_tabPage.Padding = new Padding(3);
-            Qhd_tabPage.Size = new Size(969, 285);
-            Qhd_tabPage.TabIndex = 3;
-            Qhd_tabPage.Text = "덕트";
-            Qhd_tabPage.UseVisualStyleBackColor = true;
+            Duct_tabPage.Controls.Add(DuctMaterial_comboBox);
+            Duct_tabPage.Controls.Add(label45);
+            Duct_tabPage.Controls.Add(label40);
+            Duct_tabPage.Controls.Add(label41);
+            Duct_tabPage.Controls.Add(label20);
+            Duct_tabPage.Controls.Add(DuctInsulationThickness_textBox);
+            Duct_tabPage.Controls.Add(DuctDiameter_textBox);
+            Duct_tabPage.Controls.Add(OASALength_textBox);
+            Duct_tabPage.Controls.Add(EARALength_textBox);
+            Duct_tabPage.Controls.Add(label11);
+            Duct_tabPage.Controls.Add(OASALength_label);
+            Duct_tabPage.Controls.Add(label16);
+            Duct_tabPage.Controls.Add(label17);
+            Duct_tabPage.Controls.Add(EARAALength_label);
+            Duct_tabPage.Location = new Point(4, 25);
+            Duct_tabPage.Name = "Duct_tabPage";
+            Duct_tabPage.Padding = new Padding(3);
+            Duct_tabPage.Size = new Size(969, 285);
+            Duct_tabPage.TabIndex = 3;
+            Duct_tabPage.Text = "덕트";
+            Duct_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // DuctMaterial_comboBox
+            // 
+            DuctMaterial_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            DuctMaterial_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DuctMaterial_comboBox.FormattingEnabled = true;
+            DuctMaterial_comboBox.Location = new Point(396, 104);
+            DuctMaterial_comboBox.Name = "DuctMaterial_comboBox";
+            DuctMaterial_comboBox.Size = new Size(120, 23);
+            DuctMaterial_comboBox.TabIndex = 211;
+            // 
+            // label45
+            // 
+            label45.AutoSize = true;
+            label45.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label45.Location = new Point(337, 107);
+            label45.Name = "label45";
+            label45.Size = new Size(31, 15);
+            label45.TabIndex = 210;
+            label45.Text = "재질";
             // 
             // label40
             // 
@@ -916,7 +958,7 @@
             label41.AutoSize = true;
             label41.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label41.ForeColor = SystemColors.ControlText;
-            label41.Location = new Point(260, 78);
+            label41.Location = new Point(260, 70);
             label41.Name = "label41";
             label41.Size = new Size(18, 16);
             label41.TabIndex = 204;
@@ -938,10 +980,12 @@
             DuctInsulationThickness_textBox.BackColor = SystemColors.Window;
             DuctInsulationThickness_textBox.BorderStyle = BorderStyle.FixedSingle;
             DuctInsulationThickness_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            DuctInsulationThickness_textBox.Location = new Point(396, 75);
+            DuctInsulationThickness_textBox.Location = new Point(396, 67);
             DuctInsulationThickness_textBox.Name = "DuctInsulationThickness_textBox";
             DuctInsulationThickness_textBox.Size = new Size(120, 22);
             DuctInsulationThickness_textBox.TabIndex = 202;
+            DuctInsulationThickness_textBox.TextAlign = HorizontalAlignment.Center;
+            DuctInsulationThickness_textBox.TextChanged += DuctInsulationThickness_textBox_TextChanged;
             // 
             // DuctDiameter_textBox
             // 
@@ -952,6 +996,8 @@
             DuctDiameter_textBox.Name = "DuctDiameter_textBox";
             DuctDiameter_textBox.Size = new Size(120, 22);
             DuctDiameter_textBox.TabIndex = 201;
+            DuctDiameter_textBox.TextAlign = HorizontalAlignment.Center;
+            DuctDiameter_textBox.TextChanged += DuctDiameter_textBox_TextChanged;
             // 
             // OASALength_textBox
             // 
@@ -962,44 +1008,48 @@
             OASALength_textBox.Name = "OASALength_textBox";
             OASALength_textBox.Size = new Size(120, 22);
             OASALength_textBox.TabIndex = 200;
+            OASALength_textBox.TextAlign = HorizontalAlignment.Center;
+            OASALength_textBox.TextChanged += OASALength_textBox_TextChanged;
             // 
             // EARALength_textBox
             // 
             EARALength_textBox.BackColor = SystemColors.Window;
             EARALength_textBox.BorderStyle = BorderStyle.FixedSingle;
             EARALength_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            EARALength_textBox.Location = new Point(138, 75);
+            EARALength_textBox.Location = new Point(138, 67);
             EARALength_textBox.Name = "EARALength_textBox";
             EARALength_textBox.Size = new Size(120, 22);
             EARALength_textBox.TabIndex = 182;
+            EARALength_textBox.TextAlign = HorizontalAlignment.Center;
+            EARALength_textBox.TextChanged += EARALength_textBox_TextChanged;
             // 
             // label11
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label11.ForeColor = SystemColors.ControlText;
-            label11.Location = new Point(518, 78);
+            label11.Location = new Point(518, 70);
             label11.Name = "label11";
             label11.Size = new Size(29, 16);
             label11.TabIndex = 199;
             label11.Text = "mm";
             // 
-            // label12
+            // OASALength_label
             // 
-            label12.AutoSize = true;
-            label12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label12.Location = new Point(31, 29);
-            label12.Name = "label12";
-            label12.Size = new Size(101, 37);
-            label12.TabIndex = 197;
-            label12.Text = "외피라인까지의 \r\nSA덕트 길이";
-            label12.UseCompatibleTextRendering = true;
+            OASALength_label.AutoSize = true;
+            OASALength_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            OASALength_label.Location = new Point(31, 29);
+            OASALength_label.Name = "OASALength_label";
+            OASALength_label.Size = new Size(101, 37);
+            OASALength_label.TabIndex = 197;
+            OASALength_label.Text = "외피라인까지의 \r\nSA덕트 길이";
+            OASALength_label.UseCompatibleTextRendering = true;
             // 
             // label16
             // 
             label16.AutoSize = true;
             label16.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label16.Location = new Point(305, 75);
+            label16.Location = new Point(313, 67);
             label16.Name = "label16";
             label16.Size = new Size(55, 15);
             label16.TabIndex = 195;
@@ -1009,224 +1059,36 @@
             // 
             label17.AutoSize = true;
             label17.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label17.Location = new Point(305, 33);
+            label17.Location = new Point(313, 33);
             label17.Name = "label17";
             label17.Size = new Size(55, 15);
             label17.TabIndex = 194;
             label17.Text = "덕트관경";
             // 
-            // label19
+            // EARAALength_label
             // 
-            label19.AutoSize = true;
-            label19.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label19.Location = new Point(31, 75);
-            label19.Name = "label19";
-            label19.Size = new Size(95, 30);
-            label19.TabIndex = 193;
-            label19.Text = "외피라인까지의 \r\nRA덕트 길이\r\n";
+            EARAALength_label.AutoSize = true;
+            EARAALength_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            EARAALength_label.Location = new Point(31, 67);
+            EARAALength_label.Name = "EARAALength_label";
+            EARAALength_label.Size = new Size(95, 30);
+            EARAALength_label.TabIndex = 193;
+            EARAALength_label.Text = "외피라인까지의 \r\nRA덕트 길이\r\n";
             // 
-            // Qhce_tabPage
+            // PrehPrec_tabPage
             // 
-            Qhce_tabPage.Controls.Add(PrehControlOptions_comboBox);
-            Qhce_tabPage.Controls.Add(GroundDepth_textBox);
-            Qhce_tabPage.Controls.Add(label42);
-            Qhce_tabPage.Controls.Add(CooltubeDiameter_textBox);
-            Qhce_tabPage.Controls.Add(CooltubeThicknessh_textBox);
-            Qhce_tabPage.Controls.Add(CooltubeLength_textBox);
-            Qhce_tabPage.Controls.Add(label37);
-            Qhce_tabPage.Controls.Add(CooltubeMaterial_comboBox);
-            Qhce_tabPage.Controls.Add(label38);
-            Qhce_tabPage.Controls.Add(label39);
-            Qhce_tabPage.Controls.Add(label36);
-            Qhce_tabPage.Controls.Add(label5);
-            Qhce_tabPage.Controls.Add(label7);
-            Qhce_tabPage.Controls.Add(GroundOptions_comboBox);
-            Qhce_tabPage.Controls.Add(label10);
-            Qhce_tabPage.Controls.Add(label21);
-            Qhce_tabPage.Controls.Add(label22);
-            Qhce_tabPage.Controls.Add(label4);
-            Qhce_tabPage.Controls.Add(PrehPrecOptions_comboBox);
-            Qhce_tabPage.Location = new Point(4, 25);
-            Qhce_tabPage.Name = "Qhce_tabPage";
-            Qhce_tabPage.Padding = new Padding(3);
-            Qhce_tabPage.Size = new Size(969, 285);
-            Qhce_tabPage.TabIndex = 4;
-            Qhce_tabPage.Text = "예열/예냉";
-            Qhce_tabPage.UseVisualStyleBackColor = true;
-            // 
-            // PrehControlOptions_comboBox
-            // 
-            PrehControlOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            PrehControlOptions_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            PrehControlOptions_comboBox.FormattingEnabled = true;
-            PrehControlOptions_comboBox.Location = new Point(137, 181);
-            PrehControlOptions_comboBox.Name = "PrehControlOptions_comboBox";
-            PrehControlOptions_comboBox.Size = new Size(120, 23);
-            PrehControlOptions_comboBox.TabIndex = 216;
-            // 
-            // GroundDepth_textBox
-            // 
-            GroundDepth_textBox.BackColor = SystemColors.Window;
-            GroundDepth_textBox.BorderStyle = BorderStyle.FixedSingle;
-            GroundDepth_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            GroundDepth_textBox.Location = new Point(137, 113);
-            GroundDepth_textBox.Name = "GroundDepth_textBox";
-            GroundDepth_textBox.Size = new Size(120, 22);
-            GroundDepth_textBox.TabIndex = 215;
-            // 
-            // label42
-            // 
-            label42.AutoSize = true;
-            label42.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label42.ForeColor = SystemColors.ControlText;
-            label42.Location = new Point(259, 117);
-            label42.Name = "label42";
-            label42.Size = new Size(18, 16);
-            label42.TabIndex = 214;
-            label42.Text = "m";
-            // 
-            // CooltubeDiameter_textBox
-            // 
-            CooltubeDiameter_textBox.BackColor = SystemColors.Window;
-            CooltubeDiameter_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CooltubeDiameter_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            CooltubeDiameter_textBox.Location = new Point(397, 81);
-            CooltubeDiameter_textBox.Name = "CooltubeDiameter_textBox";
-            CooltubeDiameter_textBox.Size = new Size(120, 22);
-            CooltubeDiameter_textBox.TabIndex = 213;
-            // 
-            // CooltubeThicknessh_textBox
-            // 
-            CooltubeThicknessh_textBox.BackColor = SystemColors.Window;
-            CooltubeThicknessh_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CooltubeThicknessh_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            CooltubeThicknessh_textBox.Location = new Point(397, 113);
-            CooltubeThicknessh_textBox.Name = "CooltubeThicknessh_textBox";
-            CooltubeThicknessh_textBox.Size = new Size(120, 22);
-            CooltubeThicknessh_textBox.TabIndex = 212;
-            // 
-            // CooltubeLength_textBox
-            // 
-            CooltubeLength_textBox.BackColor = SystemColors.Window;
-            CooltubeLength_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CooltubeLength_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            CooltubeLength_textBox.Location = new Point(673, 81);
-            CooltubeLength_textBox.Name = "CooltubeLength_textBox";
-            CooltubeLength_textBox.Size = new Size(120, 22);
-            CooltubeLength_textBox.TabIndex = 211;
-            // 
-            // label37
-            // 
-            label37.AutoSize = true;
-            label37.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label37.ForeColor = SystemColors.ControlText;
-            label37.Location = new Point(795, 85);
-            label37.Name = "label37";
-            label37.Size = new Size(18, 16);
-            label37.TabIndex = 210;
-            label37.Text = "m";
-            // 
-            // CooltubeMaterial_comboBox
-            // 
-            CooltubeMaterial_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            CooltubeMaterial_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            CooltubeMaterial_comboBox.FormattingEnabled = true;
-            CooltubeMaterial_comboBox.Location = new Point(673, 113);
-            CooltubeMaterial_comboBox.Name = "CooltubeMaterial_comboBox";
-            CooltubeMaterial_comboBox.Size = new Size(120, 23);
-            CooltubeMaterial_comboBox.TabIndex = 209;
-            // 
-            // label38
-            // 
-            label38.AutoSize = true;
-            label38.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label38.Location = new Point(587, 118);
-            label38.Name = "label38";
-            label38.Size = new Size(67, 15);
-            label38.TabIndex = 208;
-            label38.Text = "쿭튜브재질";
-            // 
-            // label39
-            // 
-            label39.AutoSize = true;
-            label39.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label39.Location = new Point(587, 86);
-            label39.Name = "label39";
-            label39.Size = new Size(55, 15);
-            label39.TabIndex = 206;
-            label39.Text = "덕트길이";
-            // 
-            // label36
-            // 
-            label36.AutoSize = true;
-            label36.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label36.ForeColor = SystemColors.ControlText;
-            label36.Location = new Point(519, 85);
-            label36.Name = "label36";
-            label36.Size = new Size(29, 16);
-            label36.TabIndex = 205;
-            label36.Text = "mm";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.ForeColor = SystemColors.ControlText;
-            label5.Location = new Point(519, 116);
-            label5.Name = "label5";
-            label5.Size = new Size(29, 16);
-            label5.TabIndex = 204;
-            label5.Text = "mm";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label7.Location = new Point(62, 86);
-            label7.Name = "label7";
-            label7.Size = new Size(55, 15);
-            label7.TabIndex = 202;
-            label7.Text = "토양유형";
-            // 
-            // GroundOptions_comboBox
-            // 
-            GroundOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            GroundOptions_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            GroundOptions_comboBox.FormattingEnabled = true;
-            GroundOptions_comboBox.Location = new Point(137, 81);
-            GroundOptions_comboBox.Name = "GroundOptions_comboBox";
-            GroundOptions_comboBox.Size = new Size(120, 23);
-            GroundOptions_comboBox.TabIndex = 201;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label10.Location = new Point(311, 118);
-            label10.Name = "label10";
-            label10.Size = new Size(67, 15);
-            label10.TabIndex = 200;
-            label10.Text = "쿨튜브두께";
-            // 
-            // label21
-            // 
-            label21.AutoSize = true;
-            label21.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label21.Location = new Point(311, 86);
-            label21.Name = "label21";
-            label21.Size = new Size(67, 15);
-            label21.TabIndex = 198;
-            label21.Text = "쿨튜브관경";
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label22.Location = new Point(62, 118);
-            label22.Name = "label22";
-            label22.Size = new Size(55, 15);
-            label22.TabIndex = 197;
-            label22.Text = "지중깊이";
+            PrehPrec_tabPage.Controls.Add(label4);
+            PrehPrec_tabPage.Controls.Add(PrehPrecOptions_comboBox);
+            PrehPrec_tabPage.Controls.Add(CooltubeInfo_groupBox);
+            PrehPrec_tabPage.Controls.Add(GroundInfo_groupBox);
+            PrehPrec_tabPage.Controls.Add(PrehInfo_groupBox);
+            PrehPrec_tabPage.Location = new Point(4, 25);
+            PrehPrec_tabPage.Name = "PrehPrec_tabPage";
+            PrehPrec_tabPage.Padding = new Padding(3);
+            PrehPrec_tabPage.Size = new Size(969, 285);
+            PrehPrec_tabPage.TabIndex = 4;
+            PrehPrec_tabPage.Text = "예열/예냉";
+            PrehPrec_tabPage.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
@@ -1247,6 +1109,311 @@
             PrehPrecOptions_comboBox.Name = "PrehPrecOptions_comboBox";
             PrehPrecOptions_comboBox.Size = new Size(120, 23);
             PrehPrecOptions_comboBox.TabIndex = 194;
+            PrehPrecOptions_comboBox.SelectedIndexChanged += PrehPrecOptions_comboBox_SelectedIndexChanged;
+            // 
+            // CooltubeInfo_groupBox
+            // 
+            CooltubeInfo_groupBox.Controls.Add(label44);
+            CooltubeInfo_groupBox.Controls.Add(CooltubeDiameter_textBox);
+            CooltubeInfo_groupBox.Controls.Add(label21);
+            CooltubeInfo_groupBox.Controls.Add(label10);
+            CooltubeInfo_groupBox.Controls.Add(CooltubeThicknessh_textBox);
+            CooltubeInfo_groupBox.Controls.Add(label5);
+            CooltubeInfo_groupBox.Controls.Add(CooltubeLength_textBox);
+            CooltubeInfo_groupBox.Controls.Add(label36);
+            CooltubeInfo_groupBox.Controls.Add(label37);
+            CooltubeInfo_groupBox.Controls.Add(label39);
+            CooltubeInfo_groupBox.Controls.Add(CooltubeMaterial_comboBox);
+            CooltubeInfo_groupBox.Controls.Add(label38);
+            CooltubeInfo_groupBox.Location = new Point(390, 78);
+            CooltubeInfo_groupBox.Name = "CooltubeInfo_groupBox";
+            CooltubeInfo_groupBox.Size = new Size(501, 169);
+            CooltubeInfo_groupBox.TabIndex = 217;
+            CooltubeInfo_groupBox.TabStop = false;
+            CooltubeInfo_groupBox.Visible = false;
+            // 
+            // label44
+            // 
+            label44.AutoSize = true;
+            label44.BackColor = Color.White;
+            label44.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label44.Location = new Point(19, 0);
+            label44.Name = "label44";
+            label44.Size = new Size(67, 15);
+            label44.TabIndex = 220;
+            label44.Text = "쿨튜브정보";
+            // 
+            // CooltubeDiameter_textBox
+            // 
+            CooltubeDiameter_textBox.BackColor = SystemColors.Window;
+            CooltubeDiameter_textBox.BorderStyle = BorderStyle.FixedSingle;
+            CooltubeDiameter_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CooltubeDiameter_textBox.Location = new Point(95, 31);
+            CooltubeDiameter_textBox.Name = "CooltubeDiameter_textBox";
+            CooltubeDiameter_textBox.Size = new Size(120, 22);
+            CooltubeDiameter_textBox.TabIndex = 213;
+            CooltubeDiameter_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label21.Location = new Point(36, 34);
+            label21.Name = "label21";
+            label21.Size = new Size(31, 15);
+            label21.TabIndex = 198;
+            label21.Text = "관경";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label10.Location = new Point(36, 66);
+            label10.Name = "label10";
+            label10.Size = new Size(31, 15);
+            label10.TabIndex = 200;
+            label10.Text = "두께";
+            // 
+            // CooltubeThicknessh_textBox
+            // 
+            CooltubeThicknessh_textBox.BackColor = SystemColors.Window;
+            CooltubeThicknessh_textBox.BorderStyle = BorderStyle.FixedSingle;
+            CooltubeThicknessh_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CooltubeThicknessh_textBox.Location = new Point(95, 63);
+            CooltubeThicknessh_textBox.Name = "CooltubeThicknessh_textBox";
+            CooltubeThicknessh_textBox.Size = new Size(120, 22);
+            CooltubeThicknessh_textBox.TabIndex = 212;
+            CooltubeThicknessh_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.ForeColor = SystemColors.ControlText;
+            label5.Location = new Point(217, 66);
+            label5.Name = "label5";
+            label5.Size = new Size(29, 16);
+            label5.TabIndex = 204;
+            label5.Text = "mm";
+            // 
+            // CooltubeLength_textBox
+            // 
+            CooltubeLength_textBox.BackColor = SystemColors.Window;
+            CooltubeLength_textBox.BorderStyle = BorderStyle.FixedSingle;
+            CooltubeLength_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CooltubeLength_textBox.Location = new Point(95, 96);
+            CooltubeLength_textBox.Name = "CooltubeLength_textBox";
+            CooltubeLength_textBox.Size = new Size(120, 22);
+            CooltubeLength_textBox.TabIndex = 211;
+            CooltubeLength_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label36
+            // 
+            label36.AutoSize = true;
+            label36.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label36.ForeColor = SystemColors.ControlText;
+            label36.Location = new Point(217, 35);
+            label36.Name = "label36";
+            label36.Size = new Size(29, 16);
+            label36.TabIndex = 205;
+            label36.Text = "mm";
+            // 
+            // label37
+            // 
+            label37.AutoSize = true;
+            label37.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label37.ForeColor = SystemColors.ControlText;
+            label37.Location = new Point(217, 100);
+            label37.Name = "label37";
+            label37.Size = new Size(18, 16);
+            label37.TabIndex = 210;
+            label37.Text = "m";
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label39.Location = new Point(36, 99);
+            label39.Name = "label39";
+            label39.Size = new Size(31, 15);
+            label39.TabIndex = 206;
+            label39.Text = "길이";
+            // 
+            // CooltubeMaterial_comboBox
+            // 
+            CooltubeMaterial_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            CooltubeMaterial_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CooltubeMaterial_comboBox.FormattingEnabled = true;
+            CooltubeMaterial_comboBox.Location = new Point(95, 128);
+            CooltubeMaterial_comboBox.Name = "CooltubeMaterial_comboBox";
+            CooltubeMaterial_comboBox.Size = new Size(120, 23);
+            CooltubeMaterial_comboBox.TabIndex = 209;
+            // 
+            // label38
+            // 
+            label38.AutoSize = true;
+            label38.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label38.Location = new Point(36, 131);
+            label38.Name = "label38";
+            label38.Size = new Size(31, 15);
+            label38.TabIndex = 208;
+            label38.Text = "재질";
+            // 
+            // GroundInfo_groupBox
+            // 
+            GroundInfo_groupBox.Controls.Add(label43);
+            GroundInfo_groupBox.Controls.Add(GroundDepth_textBox);
+            GroundInfo_groupBox.Controls.Add(GroundOptions_comboBox);
+            GroundInfo_groupBox.Controls.Add(label42);
+            GroundInfo_groupBox.Controls.Add(label22);
+            GroundInfo_groupBox.Controls.Add(label7);
+            GroundInfo_groupBox.Location = new Point(35, 78);
+            GroundInfo_groupBox.Name = "GroundInfo_groupBox";
+            GroundInfo_groupBox.Size = new Size(285, 169);
+            GroundInfo_groupBox.TabIndex = 218;
+            GroundInfo_groupBox.TabStop = false;
+            GroundInfo_groupBox.Visible = false;
+            // 
+            // label43
+            // 
+            label43.AutoSize = true;
+            label43.BackColor = Color.White;
+            label43.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label43.Location = new Point(17, 0);
+            label43.Name = "label43";
+            label43.Size = new Size(55, 15);
+            label43.TabIndex = 219;
+            label43.Text = "지중정보";
+            // 
+            // GroundDepth_textBox
+            // 
+            GroundDepth_textBox.BackColor = SystemColors.Window;
+            GroundDepth_textBox.BorderStyle = BorderStyle.FixedSingle;
+            GroundDepth_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            GroundDepth_textBox.Location = new Point(102, 64);
+            GroundDepth_textBox.Name = "GroundDepth_textBox";
+            GroundDepth_textBox.Size = new Size(120, 22);
+            GroundDepth_textBox.TabIndex = 215;
+            GroundDepth_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // GroundOptions_comboBox
+            // 
+            GroundOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            GroundOptions_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            GroundOptions_comboBox.FormattingEnabled = true;
+            GroundOptions_comboBox.Location = new Point(102, 32);
+            GroundOptions_comboBox.Name = "GroundOptions_comboBox";
+            GroundOptions_comboBox.Size = new Size(120, 23);
+            GroundOptions_comboBox.TabIndex = 201;
+            // 
+            // label42
+            // 
+            label42.AutoSize = true;
+            label42.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label42.ForeColor = SystemColors.ControlText;
+            label42.Location = new Point(224, 68);
+            label42.Name = "label42";
+            label42.Size = new Size(18, 16);
+            label42.TabIndex = 214;
+            label42.Text = "m";
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label22.Location = new Point(27, 69);
+            label22.Name = "label22";
+            label22.Size = new Size(55, 15);
+            label22.TabIndex = 197;
+            label22.Text = "지중깊이";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Location = new Point(27, 37);
+            label7.Name = "label7";
+            label7.Size = new Size(55, 15);
+            label7.TabIndex = 202;
+            label7.Text = "토양유형";
+            // 
+            // PrehInfo_groupBox
+            // 
+            PrehInfo_groupBox.Controls.Add(label46);
+            PrehInfo_groupBox.Controls.Add(PrehControlOptions_comboBox);
+            PrehInfo_groupBox.Controls.Add(textBox1);
+            PrehInfo_groupBox.Controls.Add(label47);
+            PrehInfo_groupBox.Controls.Add(label48);
+            PrehInfo_groupBox.Controls.Add(label49);
+            PrehInfo_groupBox.Location = new Point(35, 78);
+            PrehInfo_groupBox.Name = "PrehInfo_groupBox";
+            PrehInfo_groupBox.Size = new Size(285, 169);
+            PrehInfo_groupBox.TabIndex = 219;
+            PrehInfo_groupBox.TabStop = false;
+            PrehInfo_groupBox.Visible = false;
+            // 
+            // label46
+            // 
+            label46.AutoSize = true;
+            label46.BackColor = Color.White;
+            label46.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label46.Location = new Point(17, 0);
+            label46.Name = "label46";
+            label46.Size = new Size(79, 15);
+            label46.TabIndex = 219;
+            label46.Text = "프리히터정보";
+            // 
+            // PrehControlOptions_comboBox
+            // 
+            PrehControlOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            PrehControlOptions_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PrehControlOptions_comboBox.FormattingEnabled = true;
+            PrehControlOptions_comboBox.Location = new Point(102, 33);
+            PrehControlOptions_comboBox.Name = "PrehControlOptions_comboBox";
+            PrehControlOptions_comboBox.Size = new Size(120, 23);
+            PrehControlOptions_comboBox.TabIndex = 216;
+            // 
+            // textBox1
+            // 
+            textBox1.BackColor = SystemColors.Window;
+            textBox1.BorderStyle = BorderStyle.FixedSingle;
+            textBox1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox1.Location = new Point(102, 64);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(120, 22);
+            textBox1.TabIndex = 215;
+            textBox1.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label47
+            // 
+            label47.AutoSize = true;
+            label47.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label47.ForeColor = SystemColors.ControlText;
+            label47.Location = new Point(224, 68);
+            label47.Name = "label47";
+            label47.Size = new Size(20, 16);
+            label47.TabIndex = 214;
+            label47.Text = "W";
+            // 
+            // label48
+            // 
+            label48.AutoSize = true;
+            label48.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label48.Location = new Point(27, 69);
+            label48.Name = "label48";
+            label48.Size = new Size(31, 15);
+            label48.TabIndex = 197;
+            label48.Text = "용량";
+            // 
+            // label49
+            // 
+            label49.AutoSize = true;
+            label49.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label49.Location = new Point(27, 37);
+            label49.Name = "label49";
+            label49.Size = new Size(55, 15);
+            label49.TabIndex = 202;
+            label49.Text = "제어유형";
             // 
             // Previous_button
             // 
@@ -1320,16 +1487,22 @@
             GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
             tabControl1.ResumeLayout(false);
-            Qhg_tabPage.ResumeLayout(false);
-            Qhg_tabPage.PerformLayout();
+            HRV_tabPage.ResumeLayout(false);
+            HRV_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)HRV_dataGridView).EndInit();
-            Qhs_tabPage.ResumeLayout(false);
-            Qhs_tabPage.PerformLayout();
+            AHU_tabPage.ResumeLayout(false);
+            AHU_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)AHU_dataGridView).EndInit();
-            Qhd_tabPage.ResumeLayout(false);
-            Qhd_tabPage.PerformLayout();
-            Qhce_tabPage.ResumeLayout(false);
-            Qhce_tabPage.PerformLayout();
+            Duct_tabPage.ResumeLayout(false);
+            Duct_tabPage.PerformLayout();
+            PrehPrec_tabPage.ResumeLayout(false);
+            PrehPrec_tabPage.PerformLayout();
+            CooltubeInfo_groupBox.ResumeLayout(false);
+            CooltubeInfo_groupBox.PerformLayout();
+            GroundInfo_groupBox.ResumeLayout(false);
+            GroundInfo_groupBox.PerformLayout();
+            PrehInfo_groupBox.ResumeLayout(false);
+            PrehInfo_groupBox.PerformLayout();
             ImagePanel.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
@@ -1342,19 +1515,19 @@
         private TextBox Num_textBox;
         private PictureBox Icon_pictureBox;
         private CustomTabControl tabControl1;
-        private TabPage Qhg_tabPage;
-        private TabPage Qhs_tabPage;
-        private TabPage Qhd_tabPage;
-        private TabPage Qhce_tabPage;
+        private TabPage HRV_tabPage;
+        private TabPage AHU_tabPage;
+        private TabPage Duct_tabPage;
+        private TabPage PrehPrec_tabPage;
         private CustomComboBox HRVLeakageLevel_comboBox;
-        private Label label6;
-        private Label MainSystem_label;
+        private Label HRVLeakageLevel_label;
+        private Label HRVVolumeControl_label;
         private CustomComboBox HRVVolumeControl_comboBox;
         private TextBox Sub2UserList_textBox;
         private TextBox Sub1UserList_textBox;
         private TextBox MainUserList_textBox;
-        private Label MainUserList_Label;
-        private Label label9;
+        private Label HRVInsulationThickness_Label;
+        private Label HRVLocation_label;
         private CustomComboBox HRVLocation_comboBox;
         private DataGridView HRV_dataGridView;
         private Button Previous_button;
@@ -1392,21 +1565,21 @@
         private Label label31;
         private CustomComboBox AHUInsulationThickness_comboBox;
         private DataGridView AHU_dataGridView;
-        private Label label32;
+        private Label AHULocation_label;
         private CustomComboBox AHULocation_comboBox;
-        private Label label33;
+        private Label AHUInsulationThickness_label;
         private CustomComboBox AHULeakageLevel_comboBox;
-        private Label label34;
-        private Label label35;
+        private Label AHULeakageLevel_label;
+        private Label AHUVolumeControl_label;
         private CustomComboBox AHUVolumeControl_comboBox;
         private Button AHUoptions_button;
         private Label label2;
         private Label label18;
         private Label label11;
-        private Label label12;
+        private Label OASALength_label;
         private Label label16;
         private Label label17;
-        private Label label19;
+        private Label EARAALength_label;
         private Label label20;
         public TextBox DuctInsulationThickness_textBox;
         public TextBox DuctDiameter_textBox;
@@ -1433,5 +1606,17 @@
         public TextBox CooltubeThicknessh_textBox;
         public TextBox CooltubeLength_textBox;
         private CustomComboBox PrehControlOptions_comboBox;
+        private GroupBox CooltubeInfo_groupBox;
+        private Label label44;
+        private CustomComboBox DuctMaterial_comboBox;
+        private Label label45;
+        private GroupBox GroundInfo_groupBox;
+        private Label label43;
+        private GroupBox PrehInfo_groupBox;
+        private Label label46;
+        public TextBox textBox1;
+        private Label label47;
+        private Label label48;
+        private Label label49;
     }
 }
