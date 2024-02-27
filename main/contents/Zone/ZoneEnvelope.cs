@@ -675,26 +675,57 @@ namespace main.contents
                 Slab_index = Value[0][3];
                 SlabCwirk_comboBox.SelectedItem = Slab_index;
 
+                if (Value[0][4] != "")
+                {
+                 Cwirk_Ceiling = Convert.ToDouble(Value[0][4]);
+                }
+                if (Value[0][5] != "")
+                {
+                    Cwirk_Wall = Convert.ToDouble(Value[0][5]);
+                }
+                if (Value[0][6] != "")
+                {
+                    Cwirk_InWall = Convert.ToDouble(Value[0][6]);
+                }
+                if (Value[0][7] != "")
+                {
+                    Cwirk_Slab = Convert.ToDouble(Value[0][7]);
+                }
+                if (Value[0][8] != "")
+                {
+                    Area_Ceiling = Convert.ToDouble(Value[0][8]);
+                }
+                if (Value[0][9] != "") 
+                {
+                    Area_Wall = Convert.ToDouble(Value[0][9]);
+                }
+                if (Value[0][10] != "")
+                {
+                    Area_InWall = Convert.ToDouble(Value[0][10]);
+                }
+                if (Value[0][11] != "")
+                {
+                    Area_Slab = Convert.ToDouble(Value[0][11]);
+                }
+                if (Value[0][12] != "")
+                {
+                    Cwirk_total = Convert.ToDouble(Value[0][12]);
+                }
 
-                Cwirk_Ceiling = Convert.ToDouble(Value[0][4]);
-                Cwirk_Wall = Convert.ToDouble(Value[0][5]);
-                Cwirk_InWall = Convert.ToDouble(Value[0][6]);
-                Cwirk_Slab = Convert.ToDouble(Value[0][7]);
-
-                Area_Ceiling = Convert.ToDouble(Value[0][8]);
-                Area_Wall = Convert.ToDouble(Value[0][9]);
-                Area_InWall = Convert.ToDouble(Value[0][10]);
-                Area_Slab = Convert.ToDouble(Value[0][11]);
-
-                Cwirk_total = Convert.ToDouble(Value[0][12]);
                 Cwirk_textBox.Text = string.Format("{0:F2}", Cwirk_total);
 
                 ZoneType = Value[0][13];
                 Check_radioButton(ZoneType);
 
                 InfiltrationType_comboBox.SelectedItem = Value[0][14];
-                q50_textBox.Text = string.Format("{0:F1}", Convert.ToDouble(Value[0][15]));
-                n50_textBox.Text = string.Format("{0:F1}", Convert.ToDouble(Value[0][16]));
+                if (Value[0][15] != "")
+                {
+                    q50_textBox.Text = string.Format("{0:F1}", Convert.ToDouble(Value[0][15]));
+                }
+                if (Value[0][16] != "")
+                {
+                    n50_textBox.Text = string.Format("{0:F1}", Convert.ToDouble(Value[0][16]));
+                }
             }
 
         }

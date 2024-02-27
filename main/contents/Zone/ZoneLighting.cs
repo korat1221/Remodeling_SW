@@ -1319,23 +1319,48 @@ namespace main.contents
             {
                 ZoneName = Value[0][0];
                 ZoneName_textBox.Text = ZoneName;
-                hR = Convert.ToDouble(Value[0][1]);
-                hm = hR;
+                if (Value[0][1] != "")
+                {
+                  hR = Convert.ToDouble(Value[0][1]);
+                  hm = hR;
+                }
+                
                 Usage = Value[0][2];
-                A = Convert.ToDouble(Value[0][3]); //순바닥면적
-                A_textBox.Text = string.Format("{0:F2}", A);
+                if (Value[0][3] != "")
+                {
+                    A = Convert.ToDouble(Value[0][3]); //순바닥면적
+                    A_textBox.Text = string.Format("{0:F2}", A);
+                }
+               
+               
                 //층정보 불러오기
                 String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,상인방높이", "존번호 = '" + ZoneNum + "'");
 
                 Layer = General_3D[0][0] + "F";
                 Layer_textBox.Text = Layer;
-                hLi = Convert.ToDouble(General_3D[0][1]);
+                if (General_3D[0][1] != "")
+                {
+                    hLi = Convert.ToDouble(General_3D[0][1]);
+                }
+               
                 //Zonelight profile 가져오기 
                 string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "조도,이용영역계수,조명이용시부재율,작업면높이", "용도명 = '" + Usage + "'");
-                Em = Convert.ToDouble(ValueA[0][0]);
-                KA = Convert.ToDouble(ValueA[0][1]);
-                FA = Convert.ToDouble(ValueA[0][2]);
-                hTa = Convert.ToDouble(ValueA[0][3]);
+                if (ValueA[0][0] != "")
+                {
+                    Em = Convert.ToDouble(ValueA[0][0]);
+                }
+                if (ValueA[0][1] != "")
+                {
+                    KA = Convert.ToDouble(ValueA[0][1]);
+                }
+                if (ValueA[0][2] != "")
+                {
+                    FA = Convert.ToDouble(ValueA[0][2]);
+                }
+                if (ValueA[0][3] != "")
+                {
+                    hTa = Convert.ToDouble(ValueA[0][3]);
+                }
 
 
                 Check_MainDirection();

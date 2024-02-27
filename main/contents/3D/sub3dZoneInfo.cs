@@ -41,7 +41,7 @@ namespace main.contents
         }
         private void create_datagridview1()
         {
-            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.AllCells, dataGridView1_RowHandle, true);
+            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.None, dataGridView1_RowHandle, true);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             dataGridView1.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -61,17 +61,18 @@ namespace main.contents
             dataGridView1.Columns.Add("A11", "천창유무");
             dataGridView1.Columns.Add("A12", "차양적용");
             dataGridView1.Columns[0].Width = 30;
-            dataGridView1.Columns[1].Width = 100;
-            dataGridView1.Columns[2].Width = 100;
-            dataGridView1.Columns[3].Width = 200;
-            dataGridView1.Columns[4].Width = 100;
-            dataGridView1.Columns[5].Width = 100;
-            dataGridView1.Columns[6].Width = 100;
-            dataGridView1.Columns[7].Width = 100;
-            dataGridView1.Columns[8].Width = 100;
-            dataGridView1.Columns[9].Width = 100;
+            dataGridView1.Columns[1].Width = 140;
+            dataGridView1.Columns[2].Width = 60;
+            dataGridView1.Columns[3].Width = 120;
+            dataGridView1.Columns[4].Width = 90;
+            dataGridView1.Columns[5].Width = 80;
+            dataGridView1.Columns[6].Width = 50;
+            dataGridView1.Columns[7].Width = 60;
+            dataGridView1.Columns[8].Width = 60;
+            dataGridView1.Columns[9].Width = 40;
             dataGridView1.Columns[10].Width = 100;
-            dataGridView1.Columns[11].Width = 100;
+            dataGridView1.Columns[11].Width = 50;
+            dataGridView1.Columns[12].Width = 50;
 
             fillFilterCombos();
 

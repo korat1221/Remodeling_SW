@@ -262,34 +262,35 @@ namespace main.contents
                 //Envelope
                 index = index + 1;
                 workSheet_Envelope = workBook.Sheets[index];
-                string[][] Data_Envelope = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이");
+                string[][] Data_Envelope = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이");
                 workSheet_Envelope.Cells[1, 1] = "번호";
-                workSheet_Envelope.Cells[1, 2] = "외피번호";
-                workSheet_Envelope.Cells[1, 3] = "층";
-                workSheet_Envelope.Cells[1, 4] = "존";
-                workSheet_Envelope.Cells[1, 5] = "외피유형";
-                workSheet_Envelope.Cells[1, 6] = "커튼월부위";
-                workSheet_Envelope.Cells[1, 7] = "면적";
-                workSheet_Envelope.Cells[1, 8] = "인접존";
-                workSheet_Envelope.Cells[1, 9] = "방위";
-                workSheet_Envelope.Cells[1, 10] = "기울기";
-                workSheet_Envelope.Cells[1, 11] = "우측면돌출각도";
-                workSheet_Envelope.Cells[1, 12] = "좌측면돌출각도";
-                workSheet_Envelope.Cells[1, 13] = "상부돌출각도";
-                workSheet_Envelope.Cells[1, 14] = "주변요소음영각도";
-                workSheet_Envelope.Cells[1, 15] = "우측면돌출길이";
-                workSheet_Envelope.Cells[1, 16] = "좌측면돌출길이";
-                workSheet_Envelope.Cells[1, 17] = "상부돌출길이";
-                workSheet_Envelope.Cells[1, 18] = "주변요소음영길이";
-                workSheet_Envelope.Cells[1, 19] = "벽체길이";
-                workSheet_Envelope.Cells[1, 20] = "창호너비";
-                workSheet_Envelope.Cells[1, 21] = "창호높이";
-                Excel.Range range_Envelope = workSheet_Envelope.Range["B2:U1001"];
+                workSheet_Envelope.Cells[1, 2] = "외피아이디";
+                workSheet_Envelope.Cells[1, 3] = "외피번호";
+                workSheet_Envelope.Cells[1, 4] = "층";
+                workSheet_Envelope.Cells[1, 5] = "존";
+                workSheet_Envelope.Cells[1, 6] = "외피유형";
+                workSheet_Envelope.Cells[1, 7] = "커튼월부위";
+                workSheet_Envelope.Cells[1, 8] = "면적";
+                workSheet_Envelope.Cells[1, 9] = "인접존";
+                workSheet_Envelope.Cells[1, 10] = "방위";
+                workSheet_Envelope.Cells[1, 11] = "기울기";
+                workSheet_Envelope.Cells[1, 12] = "우측면돌출각도";
+                workSheet_Envelope.Cells[1, 13] = "좌측면돌출각도";
+                workSheet_Envelope.Cells[1, 14] = "상부돌출각도";
+                workSheet_Envelope.Cells[1, 15] = "주변요소음영각도";
+                workSheet_Envelope.Cells[1, 16] = "우측면돌출길이";
+                workSheet_Envelope.Cells[1, 17] = "좌측면돌출길이";
+                workSheet_Envelope.Cells[1, 18] = "상부돌출길이";
+                workSheet_Envelope.Cells[1, 19] = "주변요소음영길이";
+                workSheet_Envelope.Cells[1, 20] = "벽체길이";
+                workSheet_Envelope.Cells[1, 21] = "창호너비";
+                workSheet_Envelope.Cells[1, 22] = "창호높이";
+                Excel.Range range_Envelope = workSheet_Envelope.Range["B2:W1001"];
                 range_Envelope.Value2 = "";//엑셀 포맵하기 
                 for (int i = 0; i < Data_Envelope.Length; i++)
                 {
                     // 셀에 데이터 입력
-                    for (int j = 0; j < 20; j++)
+                    for (int j = 0; j < 21; j++)
                     {
                         if (Data_Envelope[i][j] != null)
                         { workSheet_Envelope.Cells[2 + i, j + 2] = Data_Envelope[i][j]; }
@@ -392,6 +393,8 @@ namespace main.contents
         }
         private void Import_3DInfo()
         {
+           Program.DB.deleteValue(DB.type.ProjDB, "ZoneGeneral_3D", "");
+          Program.DB.deleteValue(DB.type.ProjDB, "ZoneEnvelope_3D", "");
             string file = "";
             DataRow row;
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -474,12 +477,12 @@ namespace main.contents
                         if (Value_Envelope[0] !=null && Value_Envelope[0] != "" )
                         {
 
-                            Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이",
+                            Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이",
                           "'" + Value_Envelope[0] + "','" + Value_Envelope[2] + "','" + Value_Envelope[3] + "','"
                           + Value_Envelope[4] + "','" + Value_Envelope[5] + "','" + Value_Envelope[6] + "','" + Value_Envelope[7] + "','" + Value_Envelope[8] + "','"
                           + Value_Envelope[9] + "','" + Value_Envelope[10] + "','" + Value_Envelope[11] + "','" + Value_Envelope[12] + "','" + Value_Envelope[13] + "','"
                           + Value_Envelope[14] + "','" + Value_Envelope[15] + "','" + Value_Envelope[16] + "','" + Value_Envelope[17] + "','"
-                          + Value_Envelope[18] + "','" + Value_Envelope[19] + "','" + Value_Envelope[20] + "'", "번호");
+                          + Value_Envelope[18] + "','" + Value_Envelope[19] + "','" + Value_Envelope[20] + "','" + Value_Envelope[21] + "'", "번호");
                         }
                     }
 

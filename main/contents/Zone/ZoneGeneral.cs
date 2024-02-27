@@ -917,13 +917,21 @@ namespace main.contents
 
                 if (Value.Length > 0)
                 {
-                    for (int i = 0; i < res.Length; i++)
+                    if (Value[0][0] != "")
                     {
-                        if (Value[0][0] == res[i][0])
+                        for (int i = 0; i < res.Length; i++)
                         {
-                            Program.UTIL.FillComboBox_Category(Usage_comboBox, res, (i + 1).ToString());
+                            if (Value[0][0] == res[i][0])
+                            {
+                                Program.UTIL.FillComboBox_Category(Usage_comboBox, res, (i + 1).ToString());
+                            }
                         }
                     }
+                    else
+                    {
+                        Program.UTIL.FillComboBox_Category(Usage_comboBox, res, (1).ToString());
+                    }
+
                 }
                 else
                 {

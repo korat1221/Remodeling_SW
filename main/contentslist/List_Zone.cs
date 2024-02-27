@@ -132,8 +132,11 @@ namespace main.contentslist
                         dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
                         dataGridView1.Rows[nRow].Cells[2].Value = Value[0][1];
                         dataGridView1.Rows[nRow].Cells[3].Value = Value[0][2];
-                        dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F1}", Convert.ToDouble(Value[0][3]));
-                        dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F1}", Convert.ToDouble(Value[0][4]));                     
+                        if (Value[0][3] != "" || Value[0][4] != "")
+                        {
+                         dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F1}", Convert.ToDouble(Value[0][3]));
+                         dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F1}", Convert.ToDouble(Value[0][4]));
+                        } 
                     }
                     else
                     {
