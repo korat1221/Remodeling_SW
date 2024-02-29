@@ -110,7 +110,7 @@
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "AHU_Zone";
-            Text = "HeatingZone";
+            Text = "AHUZone";
             ((System.ComponentModel.ISupportInitialize)Zone_dataGridView).EndInit();
             ResumeLayout(false);
         }

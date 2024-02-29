@@ -3969,7 +3969,7 @@ namespace main.contents
             HRV_dataGridView.Columns.Add("A13", "팬.정압.[Pa]");
             HRV_dataGridView.Columns.Add("A14", "팬.모터제어");
             HRV_dataGridView.Columns.Add("A15", "소비전력.[W]");
-            HRV_dataGridView.Columns[0].Width = 40;         
+            HRV_dataGridView.Columns[0].Width = 40;
         }
         private bool HRV_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {
@@ -4080,7 +4080,7 @@ namespace main.contents
                  + Value[10]
                  + "'", "번호");
                 Program.DB.setValue(DB.type.ProjDB, "User_HRV", "번호," +
-                   "팬풍량,팬정압,팬동력,모터제어",
+                   "팬풍량,팬정압,팬모터제어,소비전력",
                "'" + Value[0] + "','"
                 + Value[11] + "','" + Value[12] + "','" + Value[13] + "','"
                 + Value[14] 

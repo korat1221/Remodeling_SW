@@ -37,11 +37,11 @@ namespace main.subcontents.HeatingSystem
 
             load_table_DB();
             SystemNum = Num;
-            if(SelectZone_nonsplit != null)
-            { 
+            if (SelectZone_nonsplit != null)
+            {
                 Load_SaveValue(SelectZone_nonsplit);
             }
-            
+
 
         }
 
@@ -64,7 +64,7 @@ namespace main.subcontents.HeatingSystem
             Zone_dataGridView.Columns.Add("A7", "면적.[m²]");
             Zone_dataGridView.Columns.Add("A8", "공조시스템");
 
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적", "환기방식 = '"+ AHUOptions + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적", "환기방식 = '" + AHUOptions + "'");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
@@ -93,7 +93,7 @@ namespace main.subcontents.HeatingSystem
                     {
                         Zone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", Convert.ToDouble(요구량_난방[0][0]));
                     }
-                    
+
                     Count_DB = Value.Length;
                 }
             }
@@ -105,10 +105,10 @@ namespace main.subcontents.HeatingSystem
             if (AHUOptions == "공조기")
             { 공조 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "번호,존번호", "유형='공조기'"); }
             else { 공조 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "번호,존번호", "유형='열회수기'"); }
-            
-            if(공조.Length> 0)
+
+            if (공조.Length > 0)
             {
-                for(int k = 0; k < 공조.Length; k++)
+                for (int k = 0; k < 공조.Length; k++)
                 {
 
                     if (공조[k][1].Contains("+"))
@@ -172,7 +172,7 @@ namespace main.subcontents.HeatingSystem
         }
 
         private void Save_button_Click(object sender, EventArgs e)
-        {            
+        {
             SelectCheckBox();
             for (int k = 0; k < SelectRow.Count; k++)
             {
@@ -188,7 +188,7 @@ namespace main.subcontents.HeatingSystem
 
             this.DialogResult = DialogResult.OK;
             this.Close();
-          }
+        }
         private void reset()
         {
             SelectRow.Clear();
