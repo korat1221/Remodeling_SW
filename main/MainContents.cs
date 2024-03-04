@@ -5,6 +5,7 @@ using main.contents.Result;
 using main.contentslist;
 using main.subcontents.ConstructionWindow;
 using Microsoft.Web.WebView2.Core;
+using System.Timers;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using static main.contents.Model;
@@ -106,6 +107,7 @@ namespace main
         static public FormID currentForm = FormID.General;
         static public string selID_old = "";
         int tick_old = 0;
+        bool ticked = false;
 
         public MainContents()
         {
@@ -432,8 +434,32 @@ namespace main
                 return false;
             }
         }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            if (!ticked)
+            {
+                ticked = true;
 
-            void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
+                if (MessageBox.Show("모델을 다시 로드 할 경우, 입력 정보 전체 삭제됩니다. 계속하시겠습니까 ?", "YesOrNo", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                    {
+                        openFileDialog.Filter = "obj 파일 (*.obj)|*.obj";
+                        openFileDialog.FilterIndex = 2;
+                        openFileDialog.RestoreDirectory = true;
+
+                        if (openFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            //Get the path of specified file
+                            Program.UTIL.load3DModel(openFileDialog.FileName);
+                        }
+                    }
+                }
+            }
+        }
+
+        void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
             int tick = Environment.TickCount;
 
@@ -447,21 +473,10 @@ namespace main
                     {
                         DoLoadForm(8, OnLoadProc);
 
-                        if (MessageBox.Show("모델을 다시 로드 할 경우, 입력 정보 전체 삭제됩니다. 계속하시겠습니까 ?", "YesOrNo", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                        {
-                            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-                            {
-                                openFileDialog.Filter = "obj 파일 (*.obj)|*.obj";
-                                openFileDialog.FilterIndex = 2;
-                                openFileDialog.RestoreDirectory = true;
-
-                                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                                {
-                                    //Get the path of specified file
-                                    Program.UTIL.load3DModel(openFileDialog.FileName);
-                                }
-                            }
-                        }
+                        ticked = false;
+                        timer1.Interval = 200;
+                        timer1.Tick += new EventHandler(timer1_Tick);
+                        timer1.Enabled = true;
                     }
                     else if (formParam.formID >= 0 && formParam.formID < 100)
                     {

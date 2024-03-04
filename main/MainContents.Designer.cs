@@ -33,6 +33,7 @@
             imageList1 = new ImageList(components);
             pictureBox7 = new PictureBox();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            timer1 = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
@@ -98,5 +99,6 @@
         private ImageList imageList1;
         private PictureBox pictureBox7;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+        private System.Windows.Forms.Timer timer1;
     }
 }

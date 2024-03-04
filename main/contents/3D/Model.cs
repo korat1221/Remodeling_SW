@@ -32,6 +32,8 @@ using File = System.IO.File;
 using Microsoft.VisualBasic.Logging;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Security.Policy;
+using System.Timers;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace main.contents
 {
@@ -58,6 +60,7 @@ namespace main.contents
             SLInfo
         };
         Form[] forms = new Form[] { new sub3dZoneInfo(), new sub3dBridgeInfo(), new sub3dSpaceInfo(), new sub3dCWInfo(), new sub3dWLInfo(), new sub3dRFInfo(), new sub3dFRInfo(), new sub3dWINInfo(), new sub3dDRInfo(), new sub3dIWInfo(), new sub3dSLInfo() };
+        bool ticked = false;
 
         public Model()
         {
@@ -90,6 +93,16 @@ namespace main.contents
 
             forms[idx].Show();
         }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            if (!ticked)
+            {
+                ticked = true;
+
+                MessageBox.Show("치수 정밀도가 훼손된 모델입니다. 치수 정밀도 훼손 원인은 모델 생성 작업시 모델 회전 작업이 포함된 경우입니다.", "인식이 불완전하게 되었습니다.", MessageBoxButtons.OK);
+            }
+        }
 
         void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
@@ -111,7 +124,10 @@ namespace main.contents
 
                         if (json.IndexOf("perfect:false") >= 0)
                         {
-                            MessageBox.Show("치수 정밀도가 훼손된 모델입니다. 치수 정밀도 훼손 원인은 모델 생성 작업시 모델 회전 작업이 포함된 경우입니다.", "인식이 불완전하게 되었습니다.", MessageBoxButtons.OK);
+                            ticked = false;
+                            timer1.Interval = 200;
+                            timer1.Tick += new EventHandler(timer1_Tick);
+                            timer1.Enabled = true;
                         }
 
                         //                        Program.UTIL.write3DModel(json);

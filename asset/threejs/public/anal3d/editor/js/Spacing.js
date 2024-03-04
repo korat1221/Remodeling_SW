@@ -291,9 +291,10 @@ Spacing.prototype = {
 		this.editor.spaces.sort((a,b) => { 
 			let fl_a = this.editor.wall[a[0].cardi][a[0].id];
 			let fl_b = this.editor.wall[b[0].cardi][b[0].id];
-			let Y = parseInt(Math.abs(fl_a.bbox[0][1])) - parseInt(Math.abs(fl_b.bbox[0][1]));
+			let Y = Math.round(fl_a.bbox[0][1]) - Math.round(fl_b.bbox[0][1]);
 
-			return Y !== 0 ? Y : fl_b.area - fl_a.area;
+
+			return Y !== 0 ? Y : (fl_b.area - fl_a.area);
 		});
 
 		let sid;

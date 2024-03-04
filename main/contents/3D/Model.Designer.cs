@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             Save_button = new Button();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             splitContainer1 = new SplitContainer();
             Import_button = new Button();
             Export_button = new Button();
+            timer1 = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -130,5 +132,6 @@
         private SplitContainer splitContainer1;
         private Button Import_button;
         private Button Export_button;
+        private System.Windows.Forms.Timer timer1;
     }
 }
