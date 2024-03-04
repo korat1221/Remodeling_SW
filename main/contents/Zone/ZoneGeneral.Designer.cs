@@ -35,6 +35,7 @@ namespace main.contents
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
+            AHU_button = new System.Windows.Forms.Button();
             label65 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             Num_textBox = new System.Windows.Forms.TextBox();
@@ -42,12 +43,6 @@ namespace main.contents
             ZoneName_textBox = new System.Windows.Forms.TextBox();
             Layer_textBox = new System.Windows.Forms.TextBox();
             label1 = new System.Windows.Forms.Label();
-            η2_label2 = new System.Windows.Forms.Label();
-            η2_label = new System.Windows.Forms.Label();
-            η2_textBox = new System.Windows.Forms.TextBox();
-            η_label2 = new System.Windows.Forms.Label();
-            η_label = new System.Windows.Forms.Label();
-            η_textBox = new System.Windows.Forms.TextBox();
             label2 = new System.Windows.Forms.Label();
             AHU_label = new System.Windows.Forms.Label();
             AHU_comboBox = new CustomComboBox();
@@ -155,12 +150,12 @@ namespace main.contents
             label68 = new System.Windows.Forms.Label();
             label67 = new System.Windows.Forms.Label();
             label66 = new System.Windows.Forms.Label();
-            Save_button = new System.Windows.Forms.Button();
             AHU_pictureBox = new PictureBox();
             HC_pictureBox = new PictureBox();
             Ground_pictureBox = new PictureBox();
             RoomControl_pictureBox = new PictureBox();
             Main_pictureBox = new PictureBox();
+            Save_button = new System.Windows.Forms.Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
@@ -175,6 +170,7 @@ namespace main.contents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(AHU_button);
             GeneralPanel.Controls.Add(label65);
             GeneralPanel.Controls.Add(label3);
             GeneralPanel.Controls.Add(Num_textBox);
@@ -182,12 +178,6 @@ namespace main.contents
             GeneralPanel.Controls.Add(ZoneName_textBox);
             GeneralPanel.Controls.Add(Layer_textBox);
             GeneralPanel.Controls.Add(label1);
-            GeneralPanel.Controls.Add(η2_label2);
-            GeneralPanel.Controls.Add(η2_label);
-            GeneralPanel.Controls.Add(η2_textBox);
-            GeneralPanel.Controls.Add(η_label2);
-            GeneralPanel.Controls.Add(η_label);
-            GeneralPanel.Controls.Add(η_textBox);
             GeneralPanel.Controls.Add(label2);
             GeneralPanel.Controls.Add(AHU_label);
             GeneralPanel.Controls.Add(AHU_comboBox);
@@ -202,6 +192,21 @@ namespace main.contents
             GeneralPanel.Size = new Size(977, 101);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // AHU_button
+            // 
+            AHU_button.BackColor = SystemColors.ControlLight;
+            AHU_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            AHU_button.FlatStyle = FlatStyle.System;
+            AHU_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            AHU_button.Location = new Point(769, 50);
+            AHU_button.Margin = new Padding(0);
+            AHU_button.Name = "AHU_button";
+            AHU_button.Size = new Size(23, 23);
+            AHU_button.TabIndex = 182;
+            AHU_button.Text = "+";
+            AHU_button.UseVisualStyleBackColor = false;
+            AHU_button.Click += AHU_button_Click;
             // 
             // label65
             // 
@@ -277,68 +282,6 @@ namespace main.contents
             label1.Size = new Size(18, 16);
             label1.TabIndex = 1;
             label1.Text = "층";
-            // 
-            // η2_label2
-            // 
-            η2_label2.AutoSize = true;
-            η2_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            η2_label2.Location = new Point(953, 54);
-            η2_label2.Name = "η2_label2";
-            η2_label2.Size = new Size(19, 16);
-            η2_label2.TabIndex = 98;
-            η2_label2.Text = "%";
-            // 
-            // η2_label
-            // 
-            η2_label.AutoSize = true;
-            η2_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            η2_label.Location = new Point(885, 22);
-            η2_label.Name = "η2_label";
-            η2_label.Size = new Size(73, 16);
-            η2_label.TabIndex = 97;
-            η2_label.Text = "전열교환효율";
-            // 
-            // η2_textBox
-            // 
-            η2_textBox.BackColor = Color.White;
-            η2_textBox.BorderStyle = BorderStyle.FixedSingle;
-            η2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            η2_textBox.Location = new Point(895, 50);
-            η2_textBox.Name = "η2_textBox";
-            η2_textBox.Size = new Size(58, 22);
-            η2_textBox.TabIndex = 96;
-            η2_textBox.TextChanged += η2_textBox_TextChanged;
-            // 
-            // η_label2
-            // 
-            η_label2.AutoSize = true;
-            η_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            η_label2.Location = new Point(856, 54);
-            η_label2.Name = "η_label2";
-            η_label2.Size = new Size(19, 16);
-            η_label2.TabIndex = 95;
-            η_label2.Text = "%";
-            // 
-            // η_label
-            // 
-            η_label.AutoSize = true;
-            η_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            η_label.Location = new Point(785, 22);
-            η_label.Name = "η_label";
-            η_label.Size = new Size(73, 16);
-            η_label.TabIndex = 92;
-            η_label.Text = "온도교환효율";
-            // 
-            // η_textBox
-            // 
-            η_textBox.BackColor = Color.White;
-            η_textBox.BorderStyle = BorderStyle.FixedSingle;
-            η_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            η_textBox.Location = new Point(795, 50);
-            η_textBox.Name = "η_textBox";
-            η_textBox.Size = new Size(58, 22);
-            η_textBox.TabIndex = 91;
-            η_textBox.TextChanged += η_textBox_TextChanged;
             // 
             // label2
             // 
@@ -1540,18 +1483,6 @@ namespace main.contents
             label66.TabIndex = 107;
             label66.Text = "지붕";
             // 
-            // Save_button
-            // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1009, 716);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(135, 25);
-            Save_button.TabIndex = 88;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
-            // 
             // AHU_pictureBox
             // 
             AHU_pictureBox.Location = new Point(9, 16);
@@ -1597,6 +1528,18 @@ namespace main.contents
             Main_pictureBox.TabIndex = 115;
             Main_pictureBox.TabStop = false;
             // 
+            // Save_button
+            // 
+            Save_button.BackColor = SystemColors.ButtonHighlight;
+            Save_button.ForeColor = Color.Black;
+            Save_button.Location = new Point(1009, 716);
+            Save_button.Name = "Save_button";
+            Save_button.Size = new Size(135, 25);
+            Save_button.TabIndex = 88;
+            Save_button.Text = "SAVE";
+            Save_button.UseVisualStyleBackColor = true;
+            Save_button.Click += Save_button_Click;
+            // 
             // ZoneGeneral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1635,7 +1578,6 @@ namespace main.contents
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox Layer_textBox;
-        private System.Windows.Forms.TextBox η_textBox;
 
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
@@ -1689,11 +1631,6 @@ namespace main.contents
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox PersonNum_textBox;
         private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Label η2_label2;
-        private System.Windows.Forms.Label η2_label;
-        private System.Windows.Forms.TextBox η2_textBox;
-        private System.Windows.Forms.Label η_label2;
-        private System.Windows.Forms.Label η_label;
         private CustomComboBox RoomControl_comboBox;
         private System.Windows.Forms.Label label51;
         private System.Windows.Forms.TextBox textBox9;
@@ -1760,5 +1697,6 @@ namespace main.contents
         private PictureBox HC_pictureBox;
         private PictureBox AHU_pictureBox;
         private System.Windows.Forms.TextBox SA_Volume_textBox;
+        private System.Windows.Forms.Button AHU_button;
     }
 }

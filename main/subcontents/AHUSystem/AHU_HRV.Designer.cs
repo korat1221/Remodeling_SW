@@ -100,6 +100,7 @@
             HRV_dataGridView.RowTemplate.Height = 25;
             HRV_dataGridView.Size = new Size(800, 358);
             HRV_dataGridView.TabIndex = 22;
+            HRV_dataGridView.CellContentClick += HRV_dataGridView_CellContentClick;
             // 
             // Save_button
             // 

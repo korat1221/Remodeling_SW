@@ -32,7 +32,7 @@ namespace main.subcontents.HeatingSystem
             }
             else
             {
-                this.AHUOptions = "열회수환기_멀티존";
+                this.AHUOptions = "열회수기 멀티존";
             }
 
             load_table_DB();

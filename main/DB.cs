@@ -36,6 +36,7 @@ namespace main
             BaseDB_Lighting,
             BaseDB_Heating,
             BaseDB_Cooling,
+            BaseDB_AHU,
             BaseDB_RESystem,
             ProjDB,
             CalcDB,
@@ -100,7 +101,7 @@ namespace main
             {"User_Solar", "CREATE TABLE IF NOT EXISTS User_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),난방급탕 VARCHAR (32),모듈면적 VARCHAR (32),효율 VARCHAR (32),열손실계수1차 VARCHAR (32),열손실계수2차 VARCHAR (32),입사각50도 VARCHAR (32),유효열용량 VARCHAR (32),신규기존 VARCHAR (32))"},
             {"User_ABS", "CREATE TABLE IF NOT EXISTS User_ABS (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),난방냉방 VARCHAR (32),연료 VARCHAR (32),냉방용량 VARCHAR (32),냉방성능 VARCHAR (32),난방용량 VARCHAR (32),난방성능 VARCHAR (32),냉수입구온도 VARCHAR (32),냉수출구온도 VARCHAR (32),온수입구온도 VARCHAR (32),온수출구온도 VARCHAR (32),대기전력 VARCHAR (32),통합성능 VARCHAR (32),대수 VARCHAR (32),신규기존 VARCHAR (32))"},
             {"User_DH", "CREATE TABLE IF NOT EXISTS User_DH (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),용도 VARCHAR (32),용량 VARCHAR (32),공급온도1차 VARCHAR (32),환수온도1차 VARCHAR (32),공급온도2차 VARCHAR (32),환수온도2차 VARCHAR (32),대수 VARCHAR (32),신규기존 VARCHAR (32))"},
-            {"User_AHU", "CREATE TABLE IF NOT EXISTS User_AHU (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),설치대수 VARCHAR (32),설치유형 VARCHAR (32),공조방식 VARCHAR (32),열회수유형 VARCHAR (32),온도교환효율_냉방 VARCHAR (32),온도교환효율_난방 VARCHAR (32),전열교환효율_냉방 VARCHAR (32),전열교환효율_난방 VARCHAR (32),습도교환효율_냉방 VARCHAR (32),습도교환효율_난방 VARCHAR (32),냉각코일출력 VARCHAR (32),냉각코일_입구_건구온도 VARCHAR (32),냉각코일_입구_습구온도 VARCHAR (32),냉각코일_출구_건구온도 VARCHAR (32),냉각코일_출구_습구온도 VARCHAR (32),난방코일출력 VARCHAR (32),난방코일_입구온도 VARCHAR (32),난방코일_출구온도 VARCHAR (32),가습기유형 VARCHAR (32),가습기습도수준 VARCHAR (32),가습기용량 VARCHAR (32),급기풍량 VARCHAR (32),배기풍량 VARCHAR (32),급기정압 VARCHAR (32),배기정압 VARCHAR (32),급기팬동력 VARCHAR (32),배기팬동력 VARCHAR (32),모터제어 VARCHAR (32))"},
+            {"User_AHU", "CREATE TABLE IF NOT EXISTS User_AHU (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),설치대수 VARCHAR (32),설치유형 VARCHAR (32),공조방식 VARCHAR (32),열회수유형 VARCHAR (32),온도교환효율_냉방 VARCHAR (32),온도교환효율_난방 VARCHAR (32),전열교환효율_냉방 VARCHAR (32),전열교환효율_난방 VARCHAR (32),습도교환효율_냉방 VARCHAR (32),습도교환효율_난방 VARCHAR (32),냉각코일출력 VARCHAR (32),냉각코일_입구_건구온도 VARCHAR (32),냉각코일_입구_습구온도 VARCHAR (32),냉각코일_출구_건구온도 VARCHAR (32),냉각코일_출구_습구온도 VARCHAR (32),난방코일출력 VARCHAR (32),난방코일_입구온도 VARCHAR (32),난방코일_출구온도 VARCHAR (32),가습기유형 VARCHAR (32),가습기제어유형 VARCHAR (32),가습기습도수준 VARCHAR (32),가습기용량 VARCHAR (32),급기풍량 VARCHAR (32),배기풍량 VARCHAR (32),급기정압 VARCHAR (32),배기정압 VARCHAR (32),급기팬동력 VARCHAR (32),배기팬동력 VARCHAR (32),모터제어 VARCHAR (32))"},
             {"DHWSystem_Form", "CREATE TABLE IF NOT EXISTS DHWSystem_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),존 VARCHAR (32),설치위치 VARCHAR (32),공급환수온도 VARCHAR (32),복합설비유무 VARCHAR (32),주요설비 VARCHAR (32),보조설비1 VARCHAR (32),보조설비2 VARCHAR (32),보일러종류 VARCHAR (32),보일러대수 VARCHAR (32),태양열번호 VARCHAR (32),모듈개수 VARCHAR (32),모듈방위 VARCHAR (32),모듈기울기 VARCHAR (32),지역난방번호 VARCHAR (32),펌프유무 VARCHAR (32),펌프방식 VARCHAR (32),펌프1종류 VARCHAR (32),펌프2종류 VARCHAR (32),펌프1밸브 VARCHAR (32),펌프2밸브 VARCHAR (32),펌프1제어 VARCHAR (32),펌프2제어 VARCHAR (32),펌프1대수 VARCHAR (32),펌프2대수 VARCHAR (32),축열유무 VARCHAR (32),축열펌프유무 VARCHAR (32),축열펌프 VARCHAR (32),축열용량 VARCHAR (32),축열유형 VARCHAR (32),배관관경 VARCHAR (32),배관보온두께 VARCHAR (32),보온열전도율 VARCHAR (32),배관보온재 VARCHAR (32))"},
             {"User_HRV", "CREATE TABLE IF NOT EXISTS User_HRV (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),설치대수 VARCHAR (32),설치유형 VARCHAR (32),열회수유형 VARCHAR (32),온도교환효율_냉방 VARCHAR (32),온도교환효율_난방 VARCHAR (32),전열교환효율_냉방 VARCHAR (32),전열교환효율_난방 VARCHAR (32),습도교환효율_냉방 VARCHAR (32),습도교환효율_난방 VARCHAR (32),팬풍량 VARCHAR (32),팬정압 VARCHAR (32),팬동력 VARCHAR (32),모터제어 VARCHAR (32))"},
              //냉방설비 프로젝트유형 컬럼 추가해야 함             
@@ -127,7 +128,7 @@ namespace main
             {"FinalEnergy_Result", "CREATE TABLE IF NOT EXISTS FinalEnergy_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),번호 VARCHAR (32),월 VARCHAR (32),연료 VARCHAR (32),난방 VARCHAR (32),냉방 VARCHAR (32),급탕 VARCHAR (32),조명 VARCHAR (32),공조 VARCHAR (32),기저에너지 VARCHAR (32),총에너지소요량 VARCHAR (32))"}
         };
 
-        private SQLiteConnection? baseDB_hcneed, baseDB_lighting, baseDB_heating, baseDB_cooling, baseDB_resystem, projDB, calcDB, proj_listDB;
+        private SQLiteConnection? baseDB_hcneed, baseDB_lighting, baseDB_heating, baseDB_cooling, baseDB_ahu, baseDB_resystem, projDB, calcDB, proj_listDB;
 
 #if INMEMORY_DB
         private string gProjFName = "";
@@ -305,6 +306,36 @@ namespace main
                 return false;
             }
 
+            //공조기 baseDB
+            if (GetFileSize("basedb_ahu.sqlite") > 0)
+            {
+#if INMEMORY_DB
+                baseDB_ahu = openDBInMemry("basedb_ahu.sqlite");
+#else
+#if !DEBUG
+
+                baseDB_ahu = new SQLiteConnection(@"Data Source=basedb_ahu.sqlite;Password=" + PASSWORD);
+#else
+                baseDB_ahu = new SQLiteConnection(@"Data Source=basedb_ahu.sqlite");
+#endif
+                baseDB_ahu.Open();
+#endif
+
+                if (baseDB_ahu.State != ConnectionState.Open)
+                {
+                    return false;
+                }
+
+                cmd.Connection = baseDB_ahu;
+                cmd.CommandText = "PRAGMA synchronous=OFF";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "PRAGMA journal_mode=OFF";
+                cmd.ExecuteNonQuery();
+            }
+            else
+            {
+                return false;
+            }
             //신재생 baseDB
             if (GetFileSize("basedb_resystem.sqlite") > 0)
             {
@@ -375,6 +406,9 @@ namespace main
                 baseDB_cooling.Close();
                 baseDB_cooling.Dispose();
 
+                baseDB_ahu.Close();
+                baseDB_ahu.Dispose();
+
                 baseDB_resystem.Close();
                 baseDB_resystem.Dispose();
 
@@ -403,6 +437,8 @@ namespace main
                 baseDB_cooling.Close();
                 baseDB_cooling.Dispose();
 
+                baseDB_ahu.Close();
+                baseDB_ahu.Dispose();
 
                 baseDB_resystem.Close();
                 baseDB_resystem.Dispose();
@@ -450,6 +486,11 @@ namespace main
             {
                 baseDB_cooling.Close();
                 baseDB_cooling.Dispose();
+            }
+            if (baseDB_ahu != null)
+            {
+                baseDB_ahu.Close();
+                baseDB_ahu.Dispose();
             }
             if (baseDB_resystem != null)
             {
@@ -549,6 +590,12 @@ namespace main
                             cmd.ExecuteNonQuery();
                         }
                         break;
+                    case type.BaseDB_AHU:
+                        {
+                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_ahu);
+                            cmd.ExecuteNonQuery();
+                        }
+                        break;
                     case type.BaseDB_RESystem:
                         {
                             SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_resystem);
@@ -623,6 +670,9 @@ namespace main
                         break;
                     case type.BaseDB_Cooling:
                         cmd.Connection = baseDB_cooling;
+                        break;
+                    case type.BaseDB_AHU:
+                        cmd.Connection = baseDB_ahu;
                         break;
                     case type.BaseDB_RESystem:
                         cmd.Connection = baseDB_resystem;
@@ -973,6 +1023,9 @@ namespace main
                 case type.BaseDB_Cooling:
                     cmd.Connection = baseDB_cooling;
                     break;
+                case type.BaseDB_AHU:
+                    cmd.Connection = baseDB_ahu;
+                    break;
                 case type.BaseDB_RESystem:
                     cmd.Connection = baseDB_resystem;
                     break;
@@ -1031,6 +1084,9 @@ namespace main
                 case type.BaseDB_Cooling:
                     cmd.Connection = baseDB_cooling;
                     break;
+                case type.BaseDB_AHU:
+                    cmd.Connection = baseDB_ahu;
+                    break;
                 case type.BaseDB_RESystem:
                     cmd.Connection = baseDB_resystem;
                     break;
@@ -1088,6 +1144,9 @@ namespace main
                     break;
                 case type.BaseDB_Cooling:
                     cmd.Connection = baseDB_cooling;
+                    break;
+                case type.BaseDB_AHU:
+                    cmd.Connection = baseDB_ahu;
                     break;
                 case type.BaseDB_RESystem:
                     cmd.Connection = baseDB_resystem;

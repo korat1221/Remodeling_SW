@@ -30,21 +30,25 @@ namespace main.contents
 {
     public partial class AHUSystem : Form
     {
-        string 기존신규; 
-        String Num = "AHU01"; string Name; String SelectZone_nonsplit, SelectHRV_nonsplit, AHUOptions;
-        String HRVLocation, HRVVolumeControl, HRVLeakageLevel, HRVInsulationThickness;
-        String AHULocation, AHUVolumeControl, AHULeakageLevel, AHUInsulationThickness;
-        String PrehPrecOptions;
-        double OASALength, EARALength, DuctInsulationThickness, DuctDiameter;
+        string Type;
+        String Num = "AHU01"; string Name; String SelectZone_nonsplit, SelectSystem, AHUOptions;
+        String AHULocation, AHUVolumeControl, AHULeakageTestMethod, AHULeakageLevel1, AHULeakageLevel2;
+        double AHUInsulationThickness;
+        string DuctLeakageLevel;
+        double OALength, EALength;
+        double SALength, RALength, DuctInsulationThickness, DuctDiameter;
         ArrayList SelectZone_split = new ArrayList();
-        String PipeIns; double PipeIns_Ramda;
-
-        
+        String TABOptions, PipeIns; double PipeIns_Ramda;
+        string PrehPrecOptions, PrehControlOptions, GroundOptions, CooltubeMaterial;
+        double PrehPower, GroundDepth, CooltubeDiameter, CooltubeThickness, CooltubeLength;
+        double AnnualCoolingNeed, AnnualHeatingNeed;
+        double CoolingLoad, HeatingLoad;
+        double 계산된_냉방출력, 계산된_난방출력;
 
         string[][] 프로젝트유형;
         public AHUSystem()
         {
-            
+
             InitializeComponent();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '공조시스템'");
             if (Image.Length > 0)
@@ -65,20 +69,25 @@ namespace main.contents
             AHULocation_comboBox.Items.Add("단열외피 외부");
             AHULocation_comboBox.Items.Add("외기");
 
-            //공조기누기등급 콤보박스
-            AHULeakageLevel_comboBox.Items.Clear();
-            AHULeakageLevel_comboBox.Items.Add("A1/B1/C1");
-            AHULeakageLevel_comboBox.Items.Add("A2/B2/C2");
-            AHULeakageLevel_comboBox.Items.Add("A3/B3/C3");
+            //공조기누기시험방법 콤보박스
+            AHULeakageTestMethod_comboBox.Items.Clear();
+            AHULeakageTestMethod_comboBox.Items.Add("압력차 누기시험");
+            AHULeakageTestMethod_comboBox.Items.Add("챔버 내 가스추적시험");
+            AHULeakageTestMethod_comboBox.Items.Add("덕트 내 가스추적시험");
+            AHULeakageTestMethod_comboBox.Items.Add("시험 미실시");
 
             //공조기풍량제어 콤보박스
             AHUVolumeControl_comboBox.Items.Clear();
-            AHUVolumeControl_comboBox.Items.Add("수동 제어");
-            AHUVolumeControl_comboBox.Items.Add("시간 제어");
-            AHUVolumeControl_comboBox.Items.Add("실내공기질 중앙제어");
-            AHUVolumeControl_comboBox.Items.Add("사용유무 제어(조명, 열화상 활용)");
-            AHUVolumeControl_comboBox.Items.Add("재실자 수 제어");
+            AHUVolumeControl_comboBox.Items.Add("제어없음");
+            AHUVolumeControl_comboBox.Items.Add("시간제어");
+            AHUVolumeControl_comboBox.Items.Add("중앙제어");
             AHUVolumeControl_comboBox.Items.Add("실내공기질 개별제어");
+
+
+            //TAB 콤보박스
+            TABOptions_comboBox.Items.Clear();
+            TABOptions_comboBox.Items.Add("TAB미실시");
+            TABOptions_comboBox.Items.Add("TAB실시");
 
             //공조기단열두께 콤보박스
             AHUInsulationThickness_comboBox.Items.Clear();
@@ -111,7 +120,12 @@ namespace main.contents
             //프리히터제어 콤보박스
             PrehControlOptions_comboBox.Items.Clear();
             PrehControlOptions_comboBox.Items.Add("on/off제어");
-            PrehControlOptions_comboBox.Items.Add("온도자동제어");
+            PrehControlOptions_comboBox.Items.Add("인버터제어");
+
+            //덕트단열재 설정
+            PipeIns_Ramda = 0.035;
+            PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
+            PipeIns_textBox.Text = "일반 보온재";
 
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -120,40 +134,58 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
 
-        private void Name_textBox_TextChanged(object sender, EventArgs e)
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            if (Name_textBox.Text != null)
-            {
-                Name = Name_textBox.Text.ToString();
-            }
+            Type = "기존";
+            Check_DuctLeakageLevel();
         }
 
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            Type = "신규";
+            Check_DuctLeakageLevel();
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            Type = "철거 후 신규";
+            Check_DuctLeakageLevel();
+        }
         private void AHUOptions_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (AHUOptions_comboBox.SelectedItem != null)
             {
                 AHUOptions = AHUOptions_comboBox.SelectedItem.ToString();
-                ChangetabPageText(AHUOptions);
-                PipeIns_Ramda = 0.035;
-                PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
-                PipeIns_textBox.Text = "일반 보온재";
+                ChangeAHUOptions(AHUOptions);
             }
             else
             {
-                AHUOptions = null;
+                AHUOptions = "";
             }
         }
-
-        private void ChangetabPageText(String AHUOptions)
+        private void ChangeAHUOptions(String AHUOptions)
         {
             if (AHUOptions == "열회수기")
             {
                 AHU_tabPage.Text = "열회수기";
+                TABOptions_label.Visible = false;
+                TABOptions_comboBox.Visible = false;
+                TABOptions = "";
             }
             else if (AHUOptions == "공조기")
             {
                 AHU_tabPage.Text = "공조기";
+                TABOptions_label.Visible = true;
+                TABOptions_comboBox.Visible = true;
             }
+            else
+            {
+            }
+            SelectSystem = "";
+            HRV_dataGridView.Columns.Clear();
+            HRV_dataGridView.Rows.Clear();
+            Name_textBox.Text = "";
+            Name = "";
         }
 
         private void AHUoptions_button_Click(object sender, EventArgs e)
@@ -181,6 +213,7 @@ namespace main.contents
                 {
                     SelectZone_nonsplit = AHUzone.SelectZone;
                     Split_Zone(AHUzone.SelectZone);
+                    Cal_Qb();
                 }
             }
         }
@@ -211,22 +244,286 @@ namespace main.contents
             else { 내용 = ""; }
 
         }
+
+        private void Cal_Qb()
+        {
+            AnnualHeatingNeed = 0;
+            HeatingLoad = 0;
+            AnnualCoolingNeed = 0;
+            CoolingLoad = 0;
+            for (int i = 0; i < SelectZone_split.Count; i++)
+            {
+                string[][] 난방 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + SelectZone_split[i] + "' AND 난방_냉방 = '난방'");
+                if (난방.Length > 0)
+                {
+                    AnnualHeatingNeed += Convert.ToDouble(난방[0][0]);
+                    HeatingLoad += Convert.ToDouble(난방[0][1]);
+                }
+                string[][] 냉방 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + SelectZone_split[i] + "' AND 난방_냉방 = '냉방'");
+                if (냉방.Length > 0)
+                {
+                    AnnualCoolingNeed += Convert.ToDouble(냉방[0][0]);
+                    CoolingLoad += Convert.ToDouble(냉방[0][1]);
+                }
+            }
+            AnnualHeatingNeed_textBox.Text = AnnualHeatingNeed.ToString("0.0");
+            HeatingLoad_textBox.Text = HeatingLoad.ToString("0.0");
+            AnnualCoolingNeed_textBox.Text = AnnualCoolingNeed.ToString("0.0");
+            CoolingLoad_textBox.Text = CoolingLoad.ToString("0.0");
+        }
         #endregion
 
         /////////////////////////////////////////////////////열회수기 공조기//////////////////////////////////////////////////////////////
         #region 열회수기 공조기
 
-        private void Load_HRVForm()
-        {            
-            AHU_HRV AHU_HRV = new AHU_HRV(SelectHRV_nonsplit);
-            DialogResult result = AHU_HRV.ShowDialog();
-            if (result == DialogResult.OK)
+        private void AHULeakageTestMethod_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (AHULeakageTestMethod_comboBox.SelectedItem != null || AHULeakageTestMethod_comboBox.SelectedItem.ToString() == "")
             {
-                if (AHU_HRV.SelectHRV != null)
+                AHULeakageTestMethod = AHULeakageTestMethod_comboBox.SelectedItem.ToString();
+                Change_AHULeakageOptions(AHULeakageTestMethod);
+            }
+            else
+            {
+                AHULeakageTestMethod = "";
+                Change_AHULeakageOptions(AHULeakageTestMethod);
+            }
+        }
+
+
+        private void AHULeakageLevel_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (AHULeakageLevel_comboBox.SelectedItem != null || AHULeakageLevel_comboBox.SelectedItem.ToString() == "")
+            {
+                AHULeakageLevel1 = AHULeakageLevel_comboBox.SelectedItem.ToString();
+                Chaeck_AHULeakageLevel(AHULeakageLevel1);
+            }
+            else
+            {
+                AHULeakageLevel1 = "";
+                Chaeck_AHULeakageLevel(AHULeakageLevel1);
+            }
+        }
+        private void Change_AHULeakageOptions(string AHULeakageTestMethod)
+        {
+            //공조기누기시험방법 콤보박스
+            if (AHULeakageTestMethod == "압력차 누기시험")
+            {
+                AHULeakageLevel_label.Visible = true;
+                AHULeakageLevel_comboBox.Visible = true;
+                AHULeakageLevel_comboBox.Items.Clear();
+                AHULeakageLevel_comboBox.Items.Add("A1[누기율≤ 2%]");
+                AHULeakageLevel_comboBox.Items.Add("A2[누기율≤ 5%]");
+                AHULeakageLevel_comboBox.Items.Add("A3[누기율≤ 10%]");
+            }
+            else if (AHULeakageTestMethod == "챔버 내 가스추적시험")
+            {
+                AHULeakageLevel_label.Visible = true;
+                AHULeakageLevel_comboBox.Visible = true;
+                AHULeakageLevel_comboBox.Items.Clear();
+                AHULeakageLevel_comboBox.Items.Add("B1[SA 공기 내 가스비율≤ 1%]");
+                AHULeakageLevel_comboBox.Items.Add("B2[SA 공기 내 가스비율≤ 2%]");
+                AHULeakageLevel_comboBox.Items.Add("B3[SA 공기 내 가스비율≤ 6%]");
+
+            }
+            else if (AHULeakageTestMethod == "덕트 내 가스추적시험")
+            {
+                AHULeakageLevel_label.Visible = true;
+                AHULeakageLevel_comboBox.Visible = true;
+                AHULeakageLevel_comboBox.Items.Clear();
+                AHULeakageLevel_comboBox.Items.Add("C1[SA 공기 내 가스비율≤ 0.5%]");
+                AHULeakageLevel_comboBox.Items.Add("C2[SA 공기 내 가스비율≤ 2%]");
+                AHULeakageLevel_comboBox.Items.Add("C3[SA 공기 내 가스비율≤ 4%]");
+            }
+            else
+            {
+                AHULeakageLevel_label.Visible = false;
+                AHULeakageLevel_comboBox.Visible = false;
+                AHULeakageLevel1 = "";
+                AHULeakageLevel2 = "";
+            }
+        }
+        private void Chaeck_AHULeakageLevel(string AHULeakageLevel1)
+        {
+            if (AHULeakageLevel1 == "A1[누기율≤ 2%]" || AHULeakageLevel1 == "B1[SA 공기 내 가스비율≤ 1 %]" || AHULeakageLevel1 == "C1[SA 공기 내 가스비율≤ 0.5%]")
+            {
+                AHULeakageLevel2 = "A1/B1/C1";
+            }
+            else if (AHULeakageLevel1 == "A2[누기율≤ 5%]" || AHULeakageLevel1 == "B2[SA 공기 내 가스비율≤ 2%]" || AHULeakageLevel1 == "C2[SA 공기 내 가스비율≤ 2%]")
+            {
+                AHULeakageLevel2 = "A2/B2/C2";
+            }
+            else
+            {
+                AHULeakageLevel2 = "A3/B3/C3";
+            }
+        }
+
+        private void TABOptions_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (TABOptions_comboBox.SelectedItem != null)
+            {
+                TABOptions = TABOptions_comboBox.SelectedItem.ToString();
+                Check_DuctLeakageLevel();
+            }
+            else
+            {
+                TABOptions = "";
+                Check_DuctLeakageLevel();
+            }
+        }
+
+        private void Check_DuctLeakageLevel()
+        {
+            if (TABOptions == "TAB실시")
+            {
+                DuctLeakageLevel = "TAB실시";
+            }
+            else if (Type == "신규" || Type == "철거 후 신규")
+            {
+                DuctLeakageLevel = "신축건물";
+            }
+            else
+            {
+                DuctLeakageLevel = "기존건물";
+            }
+        }
+
+        private void Load_HRVForm()
+        {
+            if (AHUOptions == "열회수기")
+            {
+                AHU_HRV AHU_HRV = new AHU_HRV(AHUOptions, SelectSystem);
+                DialogResult result = AHU_HRV.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    SelectHRV_nonsplit = AHU_HRV.SelectHRV;
+                    if (AHU_HRV.SelectSystem != null)
+                    {
+                        SelectSystem = AHU_HRV.SelectSystem;
+                        load_Table_HRV(SelectSystem);
+                    }
                 }
             }
+            else
+            {
+                AHU_HRV AHU_HRV = new AHU_HRV(AHUOptions, SelectSystem);
+                DialogResult result = AHU_HRV.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    if (AHU_HRV.SelectSystem != null)
+                    {
+                        SelectSystem = AHU_HRV.SelectSystem;
+                        load_Table_AHU(SelectSystem);
+                    }
+                }
+            }
+        }
+        private void load_Table_AHU(string SelectAHU)
+        {
+
+            new StackedHeaderDecorator(HRV_dataGridView, DataGridViewAutoSizeColumnsMode.None);
+            DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
+            HRV_dataGridView.Columns.Clear();
+
+            HRV_dataGridView.Columns.Add("A0", "번호");
+            HRV_dataGridView.Columns.Add("A1", "명칭");
+            HRV_dataGridView.Columns.Add("A2", "공조방식");
+            HRV_dataGridView.Columns.Add("A3", "열회수.유형");
+            HRV_dataGridView.Columns.Add("A4", "열회수.온도교환효율.냉방.[%]");
+            HRV_dataGridView.Columns.Add("A5", "열회수.온도교환효율.난방.[%]");
+            HRV_dataGridView.Columns.Add("A6", "열회수.유효전열교환효율.냉방.[%]");
+            HRV_dataGridView.Columns.Add("A7", "열회수.유효전열교환효율.난방.[%]");
+            HRV_dataGridView.Columns.Add("A8", "열회수.습도교환효율.냉방.[%]");
+            HRV_dataGridView.Columns.Add("A9", "열회수.습도교환효율.난방.[%]");
+            HRV_dataGridView.Columns.Add("A10", "냉각코일.출력.[kW]");
+            HRV_dataGridView.Columns.Add("A11", "냉각코일.입구온도.[℃_DB]");
+            HRV_dataGridView.Columns.Add("A12", "냉각코일.입구온도.[℃_WB]");
+            HRV_dataGridView.Columns.Add("A13", "냉각코일.출구온도.[℃_DB]");
+            HRV_dataGridView.Columns.Add("A14", "냉각코일.출구온도.[℃_WB]");
+            HRV_dataGridView.Columns.Add("A15", "난방코일.출력.[kW]");
+            HRV_dataGridView.Columns.Add("A16", "난방코일.입구온도.[℃_DB]");
+            HRV_dataGridView.Columns.Add("A17", "난방코일.출구온도.[℃_DB]");
+            HRV_dataGridView.Columns.Add("A18", "가습기.유형");
+            HRV_dataGridView.Columns.Add("A19", "가습기.습도수준");
+            HRV_dataGridView.Columns.Add("A20", "가습기.용량.[kg/h]");
+            HRV_dataGridView.Columns.Add("A21", "송풍기.풍량.급기.[CMH]");
+            HRV_dataGridView.Columns.Add("A22", "송풍기.풍량.배기.[CMH]");
+            HRV_dataGridView.Columns.Add("A23", "송풍기.정압.급기.[Pa]");
+            HRV_dataGridView.Columns.Add("A24", "송풍기.정압.배기.[Pa]");
+            HRV_dataGridView.Columns.Add("A25", "송풍기.팬동력.급기.[kW]");
+            HRV_dataGridView.Columns.Add("A26", "송풍기.팬동력.배기.[kW]");
+            HRV_dataGridView.Columns.Add("A27", "송풍기.모터제어");
+            for (int i = 0; i < 28; i++)
+            { HRV_dataGridView.Columns[i].Width = 80; }
+
+
+
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "번호,명칭,공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어,설치유형", "번호='" + SelectAHU + "'");
+            if (Value.Length > 0)
+            {
+                Name_textBox.Text = Value[0][1];
+                Name = Value[0][1];
+                int nRow = HRV_dataGridView.Rows.Add();
+                for (int i = 0; i < 28; i++)
+                { HRV_dataGridView.Rows[nRow].Cells[i].Value = Value[0][i]; }
+
+                if (Value[0][28] == "기존") { radioButton1.Checked = true; radioButton2.Checked = false; radioButton3.Checked = false; }
+                else if (Value[0][28] == "신규") { radioButton1.Checked = false; radioButton2.Checked = true; radioButton3.Checked = false; }
+                else { radioButton1.Checked = false; radioButton2.Checked = false; radioButton3.Checked = true; }
+
+                Cal_Coil(Convert.ToDouble(Value[0][11]), Convert.ToDouble(Value[0][12]), Convert.ToDouble(Value[0][13]), Convert.ToDouble(Value[0][14]), Convert.ToDouble(Value[0][16]), Convert.ToDouble(Value[0][17]), Convert.ToDouble(Value[0][21]));
+            }
+        }
+        private void load_Table_HRV(string SelectHRV)
+        {
+
+            new StackedHeaderDecorator(HRV_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
+            HRV_dataGridView.Columns.Clear();
+
+            HRV_dataGridView.Columns.Add("A0", "번호");
+            HRV_dataGridView.Columns.Add("A1", "명칭");
+            HRV_dataGridView.Columns.Add("A2", "열회수.유형");
+            HRV_dataGridView.Columns.Add("A3", "열회수.온도교환효율.냉방.[%]");
+            HRV_dataGridView.Columns.Add("A4", "열회수.온도교환효율.난방.[%]");
+            HRV_dataGridView.Columns.Add("A5", "열회수.습도교환효율.냉방.[%]");
+            HRV_dataGridView.Columns.Add("A6", "열회수.습도교환효율.난방.[%]");
+            HRV_dataGridView.Columns.Add("A7", "팬.풍량.[CMH]");
+            HRV_dataGridView.Columns.Add("A8", "팬.정압.[Pa]");
+            HRV_dataGridView.Columns.Add("A9", "팬.모터제어");
+            HRV_dataGridView.Columns.Add("A10", "소비전력.[W]");
+
+
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "번호,명칭,열회수유형, 온도교환효율_냉방, 온도교환효율_난방, 습도교환효율_냉방, 습도교환효율_난방, 팬풍량, 팬정압, 모터제어, 팬동력,설치유형", "번호 ='" + SelectHRV + "'");
+            if (Value.Length > 0)
+            {
+                Name_textBox.Text = Value[0][1];
+                Name = Value[0][0];
+
+                HRV_dataGridView.Rows.Add();
+                int nRow = HRV_dataGridView.Rows.Count - 1;
+                for (int i = 0; i < 11; i++)
+                {
+                    HRV_dataGridView.Rows[nRow].Cells[i].Value = Value[0][i];
+                }
+                if (Value[0][11] == "기존") { radioButton1.Checked = true; radioButton2.Checked = false; radioButton3.Checked = false; }
+                else if (Value[0][11] == "신규") { radioButton1.Checked = false; radioButton2.Checked = true; radioButton3.Checked = false; }
+                else { radioButton1.Checked = false; radioButton2.Checked = false; radioButton3.Checked = true; }
+            }
+        }
+        public void Cal_Coil(double 냉각코일_입구_건구온도, double 냉각코일_입구_습구온도, double 냉각코일_출구_건구온도, double 냉각코일_출구_습구온도, double 난방코일_입구온도, double 난방코일_출구온도, double 급기풍량)
+        {
+            double 냉각코일_입구_상대습도 = (냉각코일_입구_습구온도 + 5.809 - 0.697 * 냉각코일_입구_건구온도) / ((0.058 + 0.003 * 냉각코일_입구_건구온도) * 100);
+            double 냉각코일_출구_상대습도 = (냉각코일_출구_습구온도 + 5.809 - 0.697 * 냉각코일_출구_건구온도) / ((0.058 + 0.003 * 냉각코일_출구_건구온도) * 100);
+
+            double 냉각코일_입구_절대습도 = 0.622 * (611.2 * Math.Pow(Math.E, 17.62 * 냉각코일_입구_건구온도 / (243.12 + 냉각코일_입구_건구온도))) * 냉각코일_입구_상대습도 / (101325 - (611.2 * Math.Pow(Math.E, 17.62 * 냉각코일_입구_건구온도 / (243.12 + 냉각코일_입구_건구온도))) * 냉각코일_입구_상대습도);
+            double 냉각코일_입구_엔탈피 = 1.006 * 냉각코일_입구_건구온도 + 냉각코일_입구_절대습도 * (2500 + 1.86 * 냉각코일_입구_건구온도);
+
+            double 냉각코일_출구_절대습도 = 0.622 * (611.2 * Math.Pow(Math.E, 17.62 * 냉각코일_출구_건구온도 / (243.12 + 냉각코일_출구_건구온도))) * 냉각코일_출구_상대습도 / (101325 - (611.2 * Math.Pow(Math.E, 17.62 * 냉각코일_출구_건구온도 / (243.12 + 냉각코일_출구_건구온도))) * 냉각코일_출구_상대습도);
+            double 냉각코일_출구_엔탈피 = 1.006 * 냉각코일_출구_건구온도 + 냉각코일_출구_절대습도 * (2500 + 1.86 * 냉각코일_출구_건구온도);
+
+            계산된_냉방출력 = (냉각코일_입구_엔탈피 - 냉각코일_출구_엔탈피) * 1.204 * 급기풍량 / 3600;
+            계산된_난방출력 = (난방코일_입구온도 - 난방코일_출구온도) * 0.34 * 급기풍량 / 3600;
         }
 
         private void AHULocation_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -235,7 +532,6 @@ namespace main.contents
             {
                 AHULocation = AHULocation_comboBox.SelectedItem.ToString();
                 Changetextbox1(AHULocation);
-                Changetextbox2(AHULocation);
             }
             else
             {
@@ -255,27 +551,17 @@ namespace main.contents
             }
         }
 
-        private void AHULeakageLevel_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (AHULeakageLevel_comboBox.SelectedItem != null)
-            {
-                AHULeakageLevel = AHULeakageLevel_comboBox.SelectedItem.ToString();
-            }
-            else
-            {
-                AHULeakageLevel = null;
-            }
-        }
+
 
         private void AHUInsulationThickness_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (AHUInsulationThickness_comboBox.SelectedItem != null)
             {
-                AHUInsulationThickness = AHUInsulationThickness_comboBox.SelectedItem.ToString();
+                AHUInsulationThickness = Convert.ToDouble(AHUInsulationThickness_comboBox.SelectedItem.ToString());
             }
             else
             {
-                AHUInsulationThickness = null;
+                AHUInsulationThickness = 0;
             }
         }
         #endregion
@@ -286,7 +572,16 @@ namespace main.contents
         {
             if (OASALength_textBox.Text != null && OASALength_textBox.Text != "")
             {
-                OASALength = Convert.ToDouble(OASALength_textBox.Text);
+                if (AHULocation != "단열외피 내부")
+                {
+                    SALength = Convert.ToDouble(OASALength_textBox.Text);
+                    OALength = 0;
+                }
+                else
+                {
+                    OALength = Convert.ToDouble(OASALength_textBox.Text);
+                    SALength = 0;
+                }
             }
         }
 
@@ -294,11 +589,16 @@ namespace main.contents
         {
             if (AHULocation != "단열외피 내부")
             {
-                OASALength_label.Text = "외피라인까지의 \r\nSA덕트 길이\r\n"; ;
+                DuctLength_label.Text = "공조기부터 외피라인까지";
+                OASALength_label.Text = "SA 덕트길이"; ;
+                EARALength_label.Text = "RA 덕트길이"; ;
+
             }
             else
             {
-                OASALength_label.Text = "OA덕트 길이";
+                DuctLength_label.Text = "";
+                OASALength_label.Text = "OA 덕트길이"; ;
+                EARALength_label.Text = "EA덕트 길이";
             }
         }
 
@@ -306,21 +606,19 @@ namespace main.contents
         {
             if (EARALength_textBox.Text != null && EARALength_textBox.Text != "")
             {
-                EARALength = Convert.ToDouble(EARALength_textBox.Text);
+                if (AHULocation != "단열외피 내부")
+                {
+                    RALength = Convert.ToDouble(EARALength_textBox.Text);
+                    EALength = 0;
+                }
+                else
+                {
+                    EALength = Convert.ToDouble(EARALength_textBox.Text);
+                    RALength = 0;
+                }
             }
         }
 
-        private void Changetextbox2(String AHULocation)
-        {
-            if (AHULocation != "단열외피 내부")
-            {
-                EARALength_label.Text = "외피라인까지의 \r\nRA덕트 길이\r\n"; ;
-            }
-            else
-            {
-                EARALength_label.Text = "EA덕트 길이";
-            }
-        }
 
         private void DuctInsulationThickness_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -388,6 +686,109 @@ namespace main.contents
                 CooltubeInfo_groupBox.Visible = false;
                 PrehInfo_groupBox.Visible = true;
             }
+            else
+            {
+                GroundInfo_groupBox.Visible = false;
+                CooltubeInfo_groupBox.Visible = false;
+                PrehInfo_groupBox.Visible = false;
+            }
+        }
+
+        private void PrehControlOptions_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (AHUOptions_comboBox.SelectedItem != null)
+            {
+                PrehControlOptions = PrehControlOptions_comboBox.SelectedItem.ToString();
+            }
+            else
+            {
+                PrehControlOptions = null;
+            }
+        }
+
+        private void PrehPower_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (PrehPower_textBox.Text != null && PrehPower_textBox.Text != "")
+            {
+                PrehPower = Convert.ToDouble(PrehPower_textBox.Text.ToString());
+            }
+            else
+            {
+                PrehPower = 0;
+            }
+        }
+
+        private void GroundOptions_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (GroundOptions_comboBox.SelectedItem != null)
+            {
+                GroundOptions = GroundOptions_comboBox.SelectedItem.ToString();
+            }
+            else
+            {
+                GroundOptions = null;
+            }
+        }
+
+        private void GroundDepth_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (GroundDepth_textBox.Text != null && GroundDepth_textBox.Text != "")
+            {
+                GroundDepth = Convert.ToDouble(GroundDepth_textBox.Text.ToString());
+            }
+            else
+            {
+                GroundDepth = 0;
+            }
+        }
+
+        private void CooltubeDiameter_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (CooltubeDiameter_textBox.Text != null && CooltubeDiameter_textBox.Text != "")
+            {
+                CooltubeDiameter = Convert.ToDouble(CooltubeDiameter_textBox.Text.ToString());
+            }
+            else
+            {
+                CooltubeDiameter = 0;
+            }
+
+        }
+
+        private void CooltubeThickness_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (CooltubeThickness_textBox.Text != null && CooltubeThickness_textBox.Text != "")
+            {
+                CooltubeThickness = Convert.ToDouble(CooltubeThickness_textBox.Text.ToString());
+            }
+            else
+            {
+                CooltubeThickness = 0;
+            }
+        }
+
+        private void CooltubeLength_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (CooltubeLength_textBox.Text != null && CooltubeLength_textBox.Text != "")
+            {
+                CooltubeLength = Convert.ToDouble(CooltubeLength_textBox.Text.ToString());
+            }
+            else
+            {
+                CooltubeLength = 0;
+            }
+        }
+
+        private void CooltubeMaterial_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CooltubeMaterial_comboBox.SelectedItem != null)
+            {
+                CooltubeMaterial = CooltubeMaterial_comboBox.SelectedItem.ToString();
+            }
+            else
+            {
+                CooltubeMaterial = null;
+            }
         }
         #endregion
 
@@ -399,18 +800,12 @@ namespace main.contents
         }
         private void Save()
         {
-            //string 기존신규;
-            //String Num = "AHU01"; string Name; String SelectZone_nonsplit, SelectHRV_nonsplit, AHUOptions;
-            //String HRVLocation, HRVVolumeControl, HRVLeakageLevel, HRVInsulationThickness;
-            //String AHULocation, AHUVolumeControl, AHULeakageLevel, AHUInsulationThickness;
-            //String PrehPrecOptions;
-            //double OASALength, EARALength, DuctInsulationThickness, DuctDiameter;
-            //ArrayList SelectZone_split = new ArrayList();
-            //String PipeIns; double PipeIns_Ramda;
-
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,프로젝트유형,명칭,존", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + Name + "','" + SelectZone_nonsplit + "'", "번호");
-
-
+            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형,시스템번호", "'" + Num_textBox.Text + "','" + AHUOptions + "','" + SelectSystem + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,설치위치,풍량제어,누기시험방법,누기등급1,누기등급2,공조기단열두께,TAB실시유무", "'" + Num_textBox.Text + "','" + AHULocation + "','" + AHUVolumeControl + "','" + AHULeakageTestMethod + "','" + AHULeakageLevel1 + "','" + AHULeakageLevel2 + "','" + AHUInsulationThickness.ToString() + "','" + TABOptions + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,OA덕트길이,EA덕트길이,SA덕트길이,RA덕트길이,덕트단열두께,덕트관경,덕트단열재,덕트단열재열전도율", "'" + Num_textBox.Text + "','" + OALength.ToString() + "','" + EALength.ToString() + "','" + SALength.ToString() + "','" + RALength.ToString() + "','" + DuctInsulationThickness.ToString() + "','" + DuctDiameter.ToString() + "','" + PipeIns + "','" + PipeIns_Ramda.ToString() + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,예열예냉유형,프리히터제어유형,프리히터용량", "'" + Num_textBox.Text + "','" + PrehPrecOptions + "','" + PrehControlOptions + "','" + PrehPower + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,토양유형,지중깊이,쿨튜브관경,쿨튜브두께,쿨튜브길이,쿨튜브재질", "'" + Num_textBox.Text + "','" + GroundOptions + "','" + GroundDepth.ToString() + "','" + CooltubeDiameter.ToString() + "','" + CooltubeThickness.ToString() + "','" + CooltubeLength.ToString() + "','" + CooltubeMaterial + "'", "번호");
             this.DialogResult = DialogResult.OK;
             this.Hide();
             //Program.getMenuForm().DoLoadForm(39, OnLoadListProc);
@@ -425,8 +820,8 @@ namespace main.contents
 
         private void reset()
         {
-          
-            기존신규 = null;
+
+            Type = null;
             AHULocation = null;
             AHULocation_comboBox.SelectedItem = null;
 
@@ -443,8 +838,9 @@ namespace main.contents
             Num_textBox.Text = ID;
             Num = ID;
 
-            AHULocation ="단열외피내";
+            AHULocation = "단열외피내";
             AHULocation_comboBox.SelectedItem = "단열외피내";
+
 
         }
 
@@ -461,24 +857,5 @@ namespace main.contents
 
 
 
-
-
-
-
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            기존신규 = "기존";
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            기존신규 = "신규";
-        }
-
-        private void radioButton3_CheckedChanged(object sender, EventArgs e)
-        {
-            기존신규 = "보수";
-        }
     }
 }
