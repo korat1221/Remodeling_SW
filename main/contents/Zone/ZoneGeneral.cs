@@ -31,7 +31,7 @@ namespace main.contents
         double OccupancyDensity, OccupancyDensity_Low, OccupancyDensity_Medium, OccupancyDensity_High;
         String OccupancyDensity_index, EquipIHG_index;
         String ZoneName, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
-        double η, η2;
+       // double η, η2;
         static string Layer;
         public ZoneGeneral()
         {
@@ -56,7 +56,13 @@ namespace main.contents
 
 
             //존 환기방식 콤보박스
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, AHU_comboBox, "존일반", "환기방식", "");
+            //Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, AHU_comboBox, "존일반", "환기방식", "");
+            AHU_comboBox.Items.Clear();
+            AHU_comboBox.Items.Add("배기환기(3종)");
+            AHU_comboBox.Items.Add("열회수기 멀티존");
+            AHU_comboBox.Items.Add("열회수기 단일존");
+            AHU_comboBox.Items.Add("공조기");
+
             //실 제어방식
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, RoomControl_comboBox, "존일반", "건물 자동화 온도조절", "1");
             //존 사용 시작/종료 콤보박스 
@@ -76,6 +82,11 @@ namespace main.contents
             Load_AHUImage();
         }
 
+
+        private void AHU_button_Click(object sender, EventArgs e)
+        {
+
+        }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -131,7 +142,7 @@ namespace main.contents
                 Ground_pictureBox.Location = new Point(0, 0);
             }
             Ground_pictureBox.Controls.Add(HC_pictureBox);
-        } 
+        }
         private void Heating_checkBox_CheckedChanged(object sender, EventArgs e)
         {
             Check_HC();
@@ -210,6 +221,8 @@ namespace main.contents
             {
                 AHUType = AHU_comboBox.SelectedItem.ToString();
                 Check_AHU();
+                if (AHU_comboBox.SelectedItem == "열회수기 단일존") { AHU_button.Visible = true; }
+                else { AHU_button.Visible = false; }
             }
         }
         private void Check_AHU()
@@ -220,19 +233,8 @@ namespace main.contents
                 AHU_label.Visible = true;
                 AHU_comboBox.Visible = true;
                 AHU_comboBox.Enabled = true;
-                η_label.Visible = true;
-                η_label2.Visible = true;
-                η_textBox.Visible = true;
-                η_label.Enabled = true;
-                η_label2.Enabled = true;
-                η_textBox.Enabled = true;
-                η2_label.Visible = true;
-                η2_label2.Visible = true;
-                η2_textBox.Visible = true;
-                η2_label.Enabled = true;
-                η2_label2.Enabled = true;
-                η2_textBox.Enabled = true;
-
+                if (AHU_comboBox.SelectedItem == "열회수기 단일존") { AHU_button.Visible = true; }
+                else { AHU_button.Visible = false; }
             }
             else
             {
@@ -241,18 +243,8 @@ namespace main.contents
                 AHU_comboBox.Visible = false;
                 AHU_comboBox.Enabled = false;
                 AHU_pictureBox.Visible = false;
-                η_label.Visible = false;
-                η_label2.Visible = false;
-                η_textBox.Visible = false;
-                η_label.Enabled = false;
-                η_label2.Enabled = false;
-                η_textBox.Enabled = false;
-                η2_label.Visible = false;
-                η2_label2.Visible = false;
-                η2_textBox.Visible = false;
-                η2_label.Enabled = false;
-                η2_label2.Enabled = false;
-                η2_textBox.Enabled = false;
+                if (AHU_comboBox.SelectedItem == "열회수기 단일존") { AHU_button.Visible = true; }
+                else { AHU_button.Visible = false; }
             }
         }
         private void Load_AHUImage()
@@ -278,81 +270,29 @@ namespace main.contents
                     SA_Volume_textBox.Visible = true;
                     RA_Volume_textBox.Visible = false;
 
-                    η_label.Visible = true;
-                    η_label2.Visible = true;
-                    η2_label.Visible = true;
-                    η2_label2.Visible = true;
-                    η2_textBox.Visible = true;
-                    η_textBox.Visible = true;
-                    η2_textBox.Visible = true;
                 }
                 else if (AHUType == "배기환기(3종)")
                 {
                     SA_Volume_textBox.Visible = false;
                     RA_Volume_textBox.Visible = true;
 
-                    η_label.Visible = false;
-                    η_label2.Visible = false;
-                    η2_label.Visible = false;
-                    η2_label2.Visible = false;
-                    η2_textBox.Visible = false;
-                    η_textBox.Visible = false;
-                    η2_textBox.Visible = false;
                 }
                 else
                 {
                     SA_Volume_textBox.Visible = false;
                     RA_Volume_textBox.Visible = false;
 
-                    η_label.Visible = false;
-                    η_label2.Visible = false;
-                    η2_label.Visible = false;
-                    η2_label2.Visible = false;
-                    η2_textBox.Visible = false;
-                    η_textBox.Visible = false;
-                    η2_textBox.Visible = false;
                 }
             }
             else
             {
                 SA_Volume_textBox.Visible = false;
                 RA_Volume_textBox.Visible = false;
-                η_label.Visible = false;
-                η_label2.Visible = false;
-                η2_label.Visible = false;
-                η2_label2.Visible = false;
-                η2_textBox.Visible = false;
-                η_textBox.Visible = false;
-                η2_textBox.Visible = false;
             }
 
         }
 
 
-        private void η_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if (η_textBox.Text != null&& η_textBox.Text != "")
-            {
-                if (Convert.ToDouble(η_textBox.Text) == 0)
-                { return; }
-                if (Convert.ToDouble(η_textBox.Text) < 1)
-                { MessageBox.Show("백분율 단위로 입력하세요."); }
-                else { η = Convert.ToDouble(η_textBox.Text) / 100; }
-            }
-        }
-
-        private void η2_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if (η2_textBox.Text != null && η2_textBox.Text !="")
-            {
-                if (Convert.ToDouble(η2_textBox.Text) == 0)
-                { return; }
-                if (Convert.ToDouble(η2_textBox.Text) < 1)
-                { MessageBox.Show("백분율 단위로 입력하세요."); }
-                else { η2 = Convert.ToDouble(η2_textBox.Text) / 100; }
-            }
-
-        }     
         //주간이용일수 선택 시 연간이용일수 계산
         private void WeekUseDay_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -560,10 +500,10 @@ namespace main.contents
 
         private void PersonIHG_Cal(double PersonIHG, double UseTime)
         {
-          
-                PersonIHG_1day = PersonIHG * UseTime;
-                PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day);
-                PersonIHG_image_textBox.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m²·d";
+
+            PersonIHG_1day = PersonIHG * UseTime;
+            PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day);
+            PersonIHG_image_textBox.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m²·d";
         }
 
         //기기밀도수준 및 용도프로필 선택에 따라 기기발열 계산 
@@ -621,8 +561,6 @@ namespace main.contents
                 {
                     MessageBox.Show("환기방식을 선택하세요.");
                 }
-                else if (η == 0 || η2 == 0)
-                { MessageBox.Show("온도교환효율과 전열교환효율을 선택하세요."); }
                 else
                 {
                     save();
@@ -658,11 +596,11 @@ namespace main.contents
             //존일반정보 폼에 해당하는 정보만 저장 
             //건물정보, 3D정보는 저장 안함
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-            Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형,존이름,실제어방식,냉난방유무,환기유무,환기방식,온도교환효율_냉방,전열교환효율_냉방,온도교환효율_난방,전열교환효율_난방," +
+            Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형,존이름,실제어방식,냉난방유무,환기유무,환기방식," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
                 "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적",
-            "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','" + ZoneName + "','" + RoomControl + "','" + HCType + "','" + Ventilation_checkBox.Checked.ToString() + "','" + AHUType + "','" + η.ToString() + "','" + η2.ToString() + "','" + η.ToString() + "','" + η2.ToString() + "','"
+            "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','" + ZoneName + "','" + RoomControl + "','" + HCType + "','" + Ventilation_checkBox.Checked.ToString() + "','" + AHUType + "','" 
             + Usage + "','" + CeilingHeight.ToString() + "','" + StartTime + "','" + EndTime + "','" + WeekUseDay.ToString() + "','" + PersonNum_textBox.Text + "','" + EquipIHG_index + "','"
             + DHWneed.ToString() + "','" + HCTime.ToString() + "','" + UseTime.ToString() + "','" + AHUTime.ToString() + "','" + AnnualUseDay.ToString() + "','"
             + OccupancyDensity.ToString() + "','" + OccupancyDensity_index + "','" + PersonIHG_1day.ToString() + "','" + PersonIHG.ToString() + "','" + EquipIHG_1day.ToString() + "','" + EquipIHG.ToString() + "','"
@@ -735,10 +673,6 @@ namespace main.contents
             UseTime_textBox.Text = "";
             VentilationRate_textBox.Text = "";
             Volume_wd_textBox.Text = "";
-            η2_textBox.Text = "";
-            η2 = 0;
-            η_textBox.Text = "";
-            η = 0;
             CW_textBox.Text = "";
             Wall_textBox.Text = "";
             Roof_textBox.Text = "";
@@ -755,7 +689,7 @@ namespace main.contents
             reset();
             Load_OtherFormData();
 
-            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,실제어방식,냉난방유무,환기유무,환기방식,온도교환효율_냉방,전열교환효율_냉방,온도교환효율_난방,전열교환효율_난방," +
+            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,실제어방식,냉난방유무,환기유무,환기방식,환기방식,환기방식,환기방식,환기방식," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
                 "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적", "존번호 = '" + ZoneNum + "'");
@@ -799,16 +733,18 @@ namespace main.contents
                 Check_AHU();
                 Load_AHUImage();
 
-                if (Value[0][5] != "")
-                {
-                    η = Convert.ToDouble(Value[0][5]);
-                    η_textBox.Text = string.Format("{0:F1}", η * 100);
-                }
-                if (Value[0][6] != "")
-                {
-                    η2 = Convert.ToDouble(Value[0][6]);
-                    η2_textBox.Text = string.Format("{0:F1}", η2 * 100);
-                }
+
+                //if (Value[0][5] != "")
+                //{
+                //    η = Convert.ToDouble(Value[0][5]);
+                //    η_textBox.Text = string.Format("{0:F1}", η * 100);
+                //}
+                //if (Value[0][6] != "")
+                //{
+                //    η2 = Convert.ToDouble(Value[0][6]);
+                //    η2_textBox.Text = string.Format("{0:F1}", η2 * 100);
+                //}
+
 
                 Usage_comboBox.SelectedItem = Usage;
                 DataRowView? item = Usage_comboBox.SelectedItem as DataRowView;
@@ -1067,7 +1003,8 @@ namespace main.contents
                         }
                         else
                         {
-                           // Wall_d = 0.015 + Convert.ToDouble(Wall[j][2]) / 2;
+
+                            // Wall_d = 0.015 + Convert.ToDouble(Wall[j][2]) / 2;
                             Wall_d = 0.015 + Convert.ToDouble(Wall_Value[0][2]) / 1000;
                         }
 
@@ -1096,45 +1033,45 @@ namespace main.contents
         private void GetValue_ZoneEnvelope()
         {
             //3D 외피정보
-                String[][] Envelope_3D = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "외피유형,면적", "존 = '" + ZoneNum + "'");
-                if (Envelope_3D.Length > 0)
+            String[][] Envelope_3D = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "외피유형,면적", "존 = '" + ZoneNum + "'");
+            if (Envelope_3D.Length > 0)
+            {
+                //외피별 면적 합계 계산
+                //"커튼월창", "외벽", "지붕", "최하층바닥", "창호", "외부출입문", "내벽", "층간바닥" 
+                int[] Construction_Count = new int[8]; double[] Construction_AreaSum = new double[8];
+                String[] ConstructionType = { "커튼월창", "외벽", "지붕", "최하층바닥", "창호", "외부출입문", "내벽", "층간바닥" };
+                int i = -1;
+                while (++i < Envelope_3D.Length)
                 {
-                    //외피별 면적 합계 계산
-                    //"커튼월창", "외벽", "지붕", "최하층바닥", "창호", "외부출입문", "내벽", "층간바닥" 
-                    int[] Construction_Count = new int[8]; double[] Construction_AreaSum = new double[8];
-                    String[] ConstructionType = { "커튼월창", "외벽", "지붕", "최하층바닥", "창호", "외부출입문", "내벽", "층간바닥" };
-                    int i = -1;
-                    while (++i < Envelope_3D.Length)
+                    for (int k = 0; k < ConstructionType.Length; k++)
                     {
-                        for (int k = 0; k < ConstructionType.Length; k++)
+                        if (Envelope_3D[i][0] == ConstructionType[k])
                         {
-                            if (Envelope_3D[i][0] == ConstructionType[k])
-                            {
-                                Construction_AreaSum[k] += Convert.ToDouble(Envelope_3D[i][1]);
-                            }
+                            Construction_AreaSum[k] += Convert.ToDouble(Envelope_3D[i][1]);
                         }
                     }
-                    if (Construction_AreaSum[0] != 0)
-                    { CW_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[0]) + "m²"; }
-
-                    if (Construction_AreaSum[1] != 0)
-                    { Wall_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[1]) + "m²"; }
-
-                    if (Construction_AreaSum[2] != 0)
-                    { Roof_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[2]) + "m²"; }
-
-                    if (Construction_AreaSum[3] != 0)
-                    { Floor_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[3]) + "m²"; }
-
-                    if (Construction_AreaSum[4] != 0)
-                    { Window_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[4]) + "m²"; }
-
-                    if (Construction_AreaSum[5] != 0)
-                    { Door_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[5]) + "m²"; }
-
-                    if (Construction_AreaSum[6] != 0)
-                    { InWall_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[6]) + "m²"; }
                 }
+                if (Construction_AreaSum[0] != 0)
+                { CW_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[0]) + "m²"; }
+
+                if (Construction_AreaSum[1] != 0)
+                { Wall_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[1]) + "m²"; }
+
+                if (Construction_AreaSum[2] != 0)
+                { Roof_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[2]) + "m²"; }
+
+                if (Construction_AreaSum[3] != 0)
+                { Floor_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[3]) + "m²"; }
+
+                if (Construction_AreaSum[4] != 0)
+                { Window_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[4]) + "m²"; }
+
+                if (Construction_AreaSum[5] != 0)
+                { Door_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[5]) + "m²"; }
+
+                if (Construction_AreaSum[6] != 0)
+                { InWall_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[6]) + "m²"; }
+            }
 
         }
 
@@ -1145,7 +1082,6 @@ namespace main.contents
             });
 
         }
-
 
     }
 }
