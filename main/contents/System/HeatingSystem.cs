@@ -2430,6 +2430,12 @@ namespace main.contents
         }
         private void Save()
         {
+            BoilerNum_nonsplit = "";
+            SolarNum_nonsplit = ""; SolarDirection_nonsplit = ""; SolarDegree_nonsplit = "";
+            ASNum_nonsplit = ""; SelectDH_nonsplit = "";
+            HPNum_nonsplit[0] = ""; HPNum_nonsplit[1] = ""; HPNum_nonsplit[2] = ""; 
+            HPSupply_nonsplit[0] = ""; HPSupply_nonsplit[1] = ""; HPSupply_nonsplit[2] = "";
+            HPControl_nonsplit[0] = ""; HPControl_nonsplit[1] = ""; HPControl_nonsplit[2] = ""; //외기/지열/지하수 순 
             NonSplit_BoilerNum();
             NonSplit_Solar();
             NonSplit_HP();
