@@ -116,13 +116,13 @@
             label16 = new Label();
             label17 = new Label();
             AHU_tabPage = new TabPage();
+            HRV_dataGridView = new DataGridView();
             TABOptions_label = new Label();
             TABOptions_comboBox = new CustomComboBox();
             AHULeakageLevel_comboBox = new CustomComboBox();
             AHULeakageLevel_label = new Label();
             label18 = new Label();
             AHUInsulationThickness_comboBox = new CustomComboBox();
-            HRV_dataGridView = new DataGridView();
             AHULocation_label = new Label();
             AHULocation_comboBox = new CustomComboBox();
             AHUInsulationThickness_label = new Label();
@@ -1145,13 +1145,13 @@
             // AHU_tabPage
             // 
             AHU_tabPage.BackColor = Color.White;
+            AHU_tabPage.Controls.Add(HRV_dataGridView);
             AHU_tabPage.Controls.Add(TABOptions_label);
             AHU_tabPage.Controls.Add(TABOptions_comboBox);
             AHU_tabPage.Controls.Add(AHULeakageLevel_comboBox);
             AHU_tabPage.Controls.Add(AHULeakageLevel_label);
             AHU_tabPage.Controls.Add(label18);
             AHU_tabPage.Controls.Add(AHUInsulationThickness_comboBox);
-            AHU_tabPage.Controls.Add(HRV_dataGridView);
             AHU_tabPage.Controls.Add(AHULocation_label);
             AHU_tabPage.Controls.Add(AHULocation_comboBox);
             AHU_tabPage.Controls.Add(AHUInsulationThickness_label);
@@ -1165,72 +1165,6 @@
             AHU_tabPage.Size = new Size(969, 285);
             AHU_tabPage.TabIndex = 2;
             AHU_tabPage.Text = "공조기";
-            // 
-            // TABOptions_label
-            // 
-            TABOptions_label.AutoSize = true;
-            TABOptions_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            TABOptions_label.Location = new Point(283, 60);
-            TABOptions_label.Name = "TABOptions_label";
-            TABOptions_label.Size = new Size(76, 15);
-            TABOptions_label.TabIndex = 225;
-            TABOptions_label.Text = "TAB실시유무";
-            TABOptions_label.Visible = false;
-            // 
-            // TABOptions_comboBox
-            // 
-            TABOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            TABOptions_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            TABOptions_comboBox.FormattingEnabled = true;
-            TABOptions_comboBox.Location = new Point(364, 56);
-            TABOptions_comboBox.Name = "TABOptions_comboBox";
-            TABOptions_comboBox.Size = new Size(120, 23);
-            TABOptions_comboBox.TabIndex = 224;
-            TABOptions_comboBox.Visible = false;
-            TABOptions_comboBox.SelectedIndexChanged += TABOptions_comboBox_SelectedIndexChanged;
-            // 
-            // AHULeakageLevel_comboBox
-            // 
-            AHULeakageLevel_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHULeakageLevel_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            AHULeakageLevel_comboBox.FormattingEnabled = true;
-            AHULeakageLevel_comboBox.Location = new Point(802, 22);
-            AHULeakageLevel_comboBox.Name = "AHULeakageLevel_comboBox";
-            AHULeakageLevel_comboBox.Size = new Size(120, 23);
-            AHULeakageLevel_comboBox.TabIndex = 194;
-            AHULeakageLevel_comboBox.SelectedIndexChanged += AHULeakageLevel_comboBox_SelectedIndexChanged;
-            // 
-            // AHULeakageLevel_label
-            // 
-            AHULeakageLevel_label.AutoSize = true;
-            AHULeakageLevel_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            AHULeakageLevel_label.Location = new Point(711, 26);
-            AHULeakageLevel_label.Name = "AHULeakageLevel_label";
-            AHULeakageLevel_label.Size = new Size(55, 15);
-            AHULeakageLevel_label.TabIndex = 193;
-            AHULeakageLevel_label.Text = "누기등급";
-            // 
-            // label18
-            // 
-            label18.AutoSize = true;
-            label18.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label18.ForeColor = SystemColors.ControlText;
-            label18.Location = new Point(247, 59);
-            label18.Name = "label18";
-            label18.Size = new Size(29, 16);
-            label18.TabIndex = 192;
-            label18.Text = "mm";
-            // 
-            // AHUInsulationThickness_comboBox
-            // 
-            AHUInsulationThickness_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHUInsulationThickness_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            AHUInsulationThickness_comboBox.FormattingEnabled = true;
-            AHUInsulationThickness_comboBox.Location = new Point(125, 56);
-            AHUInsulationThickness_comboBox.Name = "AHUInsulationThickness_comboBox";
-            AHUInsulationThickness_comboBox.Size = new Size(120, 23);
-            AHUInsulationThickness_comboBox.TabIndex = 189;
-            AHUInsulationThickness_comboBox.SelectedIndexChanged += AHUInsulationThickness_comboBox_SelectedIndexChanged;
             // 
             // HRV_dataGridView
             // 
@@ -1273,6 +1207,72 @@
             HRV_dataGridView.RowTemplate.Height = 25;
             HRV_dataGridView.Size = new Size(943, 113);
             HRV_dataGridView.TabIndex = 181;
+            // 
+            // TABOptions_label
+            // 
+            TABOptions_label.AutoSize = true;
+            TABOptions_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            TABOptions_label.Location = new Point(283, 60);
+            TABOptions_label.Name = "TABOptions_label";
+            TABOptions_label.Size = new Size(76, 15);
+            TABOptions_label.TabIndex = 225;
+            TABOptions_label.Text = "TAB실시유무";
+            TABOptions_label.Visible = false;
+            // 
+            // TABOptions_comboBox
+            // 
+            TABOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            TABOptions_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            TABOptions_comboBox.FormattingEnabled = true;
+            TABOptions_comboBox.Location = new Point(364, 56);
+            TABOptions_comboBox.Name = "TABOptions_comboBox";
+            TABOptions_comboBox.Size = new Size(120, 23);
+            TABOptions_comboBox.TabIndex = 224;
+            TABOptions_comboBox.Visible = false;
+            TABOptions_comboBox.SelectedIndexChanged += TABOptions_comboBox_SelectedIndexChanged;
+            // 
+            // AHULeakageLevel_comboBox
+            // 
+            AHULeakageLevel_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            AHULeakageLevel_comboBox.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            AHULeakageLevel_comboBox.FormattingEnabled = true;
+            AHULeakageLevel_comboBox.Location = new Point(792, 22);
+            AHULeakageLevel_comboBox.Name = "AHULeakageLevel_comboBox";
+            AHULeakageLevel_comboBox.Size = new Size(140, 21);
+            AHULeakageLevel_comboBox.TabIndex = 194;
+            AHULeakageLevel_comboBox.SelectedIndexChanged += AHULeakageLevel_comboBox_SelectedIndexChanged;
+            // 
+            // AHULeakageLevel_label
+            // 
+            AHULeakageLevel_label.AutoSize = true;
+            AHULeakageLevel_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            AHULeakageLevel_label.Location = new Point(711, 26);
+            AHULeakageLevel_label.Name = "AHULeakageLevel_label";
+            AHULeakageLevel_label.Size = new Size(55, 15);
+            AHULeakageLevel_label.TabIndex = 193;
+            AHULeakageLevel_label.Text = "누기등급";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label18.ForeColor = SystemColors.ControlText;
+            label18.Location = new Point(247, 59);
+            label18.Name = "label18";
+            label18.Size = new Size(29, 16);
+            label18.TabIndex = 192;
+            label18.Text = "mm";
+            // 
+            // AHUInsulationThickness_comboBox
+            // 
+            AHUInsulationThickness_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            AHUInsulationThickness_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AHUInsulationThickness_comboBox.FormattingEnabled = true;
+            AHUInsulationThickness_comboBox.Location = new Point(125, 56);
+            AHUInsulationThickness_comboBox.Name = "AHUInsulationThickness_comboBox";
+            AHUInsulationThickness_comboBox.Size = new Size(120, 23);
+            AHUInsulationThickness_comboBox.TabIndex = 189;
+            AHUInsulationThickness_comboBox.SelectedIndexChanged += AHUInsulationThickness_comboBox_SelectedIndexChanged;
             // 
             // AHULocation_label
             // 

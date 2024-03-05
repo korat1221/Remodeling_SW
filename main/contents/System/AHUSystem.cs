@@ -192,11 +192,11 @@ namespace main.contents
         {
             if (AHUOptions == "열회수기")
             {
-                Load_HRVForm();
+                Load_Systemform();
             }
             else if (AHUOptions == "공조기")
             {
-                Load_HRVForm();
+                Load_Systemform();
             }
         }
 
@@ -278,7 +278,7 @@ namespace main.contents
 
         private void AHULeakageTestMethod_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (AHULeakageTestMethod_comboBox.SelectedItem != null || AHULeakageTestMethod_comboBox.SelectedItem.ToString() == "")
+            if (AHULeakageTestMethod_comboBox.SelectedItem != null && AHULeakageTestMethod_comboBox.SelectedItem.ToString() != "")
             {
                 AHULeakageTestMethod = AHULeakageTestMethod_comboBox.SelectedItem.ToString();
                 Change_AHULeakageOptions(AHULeakageTestMethod);
@@ -293,7 +293,7 @@ namespace main.contents
 
         private void AHULeakageLevel_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (AHULeakageLevel_comboBox.SelectedItem != null || AHULeakageLevel_comboBox.SelectedItem.ToString() == "")
+            if (AHULeakageLevel_comboBox.SelectedItem != null && AHULeakageLevel_comboBox.SelectedItem.ToString() != "")
             {
                 AHULeakageLevel1 = AHULeakageLevel_comboBox.SelectedItem.ToString();
                 Chaeck_AHULeakageLevel(AHULeakageLevel1);
@@ -389,7 +389,7 @@ namespace main.contents
             }
         }
 
-        private void Load_HRVForm()
+        private void Load_Systemform()
         {
             if (AHUOptions == "열회수기")
             {
@@ -461,6 +461,8 @@ namespace main.contents
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "번호,명칭,공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어,설치유형", "번호='" + SelectAHU + "'");
             if (Value.Length > 0)
             {
+                Num_textBox.Text = Value[0][0];
+                Num = Value[0][0];
                 Name_textBox.Text = Value[0][1];
                 Name = Value[0][1];
                 int nRow = HRV_dataGridView.Rows.Add();
@@ -497,8 +499,10 @@ namespace main.contents
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "번호,명칭,열회수유형, 온도교환효율_냉방, 온도교환효율_난방, 습도교환효율_냉방, 습도교환효율_난방, 팬풍량, 팬정압, 모터제어, 팬동력,설치유형", "번호 ='" + SelectHRV + "'");
             if (Value.Length > 0)
             {
+                Num_textBox.Text = Value[0][0];
+                Num = Value[0][0];
                 Name_textBox.Text = Value[0][1];
-                Name = Value[0][0];
+                Name = Value[0][1];
 
                 HRV_dataGridView.Rows.Add();
                 int nRow = HRV_dataGridView.Rows.Count - 1;
@@ -531,7 +535,7 @@ namespace main.contents
             if (AHULocation_comboBox.SelectedItem != null)
             {
                 AHULocation = AHULocation_comboBox.SelectedItem.ToString();
-                Changetextbox1(AHULocation);
+                Change_DuctLabel(AHULocation);
             }
             else
             {
@@ -550,8 +554,6 @@ namespace main.contents
                 AHUVolumeControl = null;
             }
         }
-
-
 
         private void AHUInsulationThickness_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -585,7 +587,7 @@ namespace main.contents
             }
         }
 
-        private void Changetextbox1(String AHULocation)
+        private void Change_DuctLabel(String AHULocation)
         {
             if (AHULocation != "단열외피 내부")
             {
@@ -651,6 +653,7 @@ namespace main.contents
                 PipeIns_Ramda = 0.035;
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
                 PipeIns_textBox.Text = "일반 보온재";
+                PipeIns= "일반 보온재";
             }
         }
 
@@ -803,29 +806,72 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,프로젝트유형,명칭,존", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + Name + "','" + SelectZone_nonsplit + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형,시스템번호", "'" + Num_textBox.Text + "','" + AHUOptions + "','" + SelectSystem + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,설치위치,풍량제어,누기시험방법,누기등급1,누기등급2,공조기단열두께,TAB실시유무", "'" + Num_textBox.Text + "','" + AHULocation + "','" + AHUVolumeControl + "','" + AHULeakageTestMethod + "','" + AHULeakageLevel1 + "','" + AHULeakageLevel2 + "','" + AHUInsulationThickness.ToString() + "','" + TABOptions + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,OA덕트길이,EA덕트길이,SA덕트길이,RA덕트길이,덕트단열두께,덕트관경,덕트단열재,덕트단열재열전도율", "'" + Num_textBox.Text + "','" + OALength.ToString() + "','" + EALength.ToString() + "','" + SALength.ToString() + "','" + RALength.ToString() + "','" + DuctInsulationThickness.ToString() + "','" + DuctDiameter.ToString() + "','" + PipeIns + "','" + PipeIns_Ramda.ToString() + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,덕트누기수준,OA덕트길이,EA덕트길이,SA덕트길이,RA덕트길이,덕트단열두께,덕트관경,덕트단열재,덕트단열재열전도율", "'" + Num_textBox.Text + "','" + DuctLeakageLevel + "','" + OALength.ToString() + "','" + EALength.ToString() + "','" + SALength.ToString() + "','" + RALength.ToString() + "','" + DuctInsulationThickness.ToString() + "','" + DuctDiameter.ToString() + "','" + PipeIns + "','" + PipeIns_Ramda.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,예열예냉유형,프리히터제어유형,프리히터용량", "'" + Num_textBox.Text + "','" + PrehPrecOptions + "','" + PrehControlOptions + "','" + PrehPower + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,토양유형,지중깊이,쿨튜브관경,쿨튜브두께,쿨튜브길이,쿨튜브재질", "'" + Num_textBox.Text + "','" + GroundOptions + "','" + GroundDepth.ToString() + "','" + CooltubeDiameter.ToString() + "','" + CooltubeThickness.ToString() + "','" + CooltubeLength.ToString() + "','" + CooltubeMaterial + "'", "번호");
             this.DialogResult = DialogResult.OK;
             this.Hide();
-            //Program.getMenuForm().DoLoadForm(39, OnLoadListProc);
+            Program.getMenuForm().DoLoadForm(57, OnLoadListProc);
         }
 
         public static bool OnLoadListProc(Form form)
         {
-            //List_HeatingSystem f = (List_HeatingSystem)form;
-            //f.load_List();
+            List_AHUSystem f = (List_AHUSystem)form;
+            f.load_List();
             return true;
         }
 
         private void reset()
         {
-
             Type = null;
-            AHULocation = null;
+            Num = null; Name = null; SelectZone_nonsplit = null; SelectSystem = null; AHUOptions = null;
+            AHULocation = null; AHUVolumeControl = null; AHULeakageTestMethod = null; AHULeakageLevel1 = null; AHULeakageLevel2 = null;
+            AHUInsulationThickness = 0;
+            DuctLeakageLevel = null;
+            OALength = 0; EALength = 0;
+            SALength = 0; RALength = 0; DuctInsulationThickness = 0; DuctDiameter = 0;
+            SelectZone_split.Clear();
+            TABOptions = null; PipeIns = null; PipeIns_Ramda = 0;
+            PrehPrecOptions = null; PrehControlOptions = null; GroundOptions = null; CooltubeMaterial = null;
+            PrehPower = 0; GroundDepth = 0; CooltubeDiameter = 0; CooltubeThickness = 0; CooltubeLength = 0;
+            AnnualCoolingNeed = 0; AnnualHeatingNeed = 0;
+            CoolingLoad = 0; HeatingLoad = 0;
+            계산된_냉방출력 = 0; 계산된_난방출력 = 0;
+
+            Num_textBox.Text = null;
+            Name_textBox.Text = null;
+            Zone_textBox.Text = null;
+            AnnualCoolingNeed_textBox.Text = null;
+            AnnualHeatingNeed_textBox.Text = null;
+            CoolingLoad_textBox.Text = null;
+            HeatingLoad_textBox.Text = null;
+
+            AHUOptions_comboBox.SelectedItem = null;
             AHULocation_comboBox.SelectedItem = null;
+            AHULeakageTestMethod_comboBox.SelectedItem = null;
+            AHULeakageLevel_comboBox.SelectedItem = null;
+            AHUVolumeControl_comboBox.SelectedItem = null;
+            TABOptions_comboBox.SelectedItem = null;
+            AHUInsulationThickness_comboBox.SelectedItem = null;
+            PrehPrecOptions_comboBox.SelectedItem = null;
+            GroundOptions_comboBox.SelectedItem = null;
+            CooltubeMaterial_comboBox.SelectedItem = null;
+            PrehControlOptions_comboBox.SelectedItem = null;
 
+            OASALength_textBox.Text = null;
+            EARALength_textBox.Text = null;
+            DuctDiameter_textBox.Text = null;
+            DuctInsulationThickness_textBox.Text = null;
+            PipeIns_textBox.Text = null;
+            PipeIns_Ramda_textBox.Text = null;
+            PrehPower_textBox.Text = null;
+            GroundDepth_textBox.Text = null;
+            CooltubeDiameter_textBox.Text = null;
+            CooltubeThickness_textBox.Text = null;
+            CooltubeLength_textBox.Text = null;
 
+            HRV_dataGridView.Columns.Clear();
+            HRV_dataGridView.Rows.Clear();
         }
 
         #endregion
@@ -838,10 +884,137 @@ namespace main.contents
             Num_textBox.Text = ID;
             Num = ID;
 
-            AHULocation = "단열외피내";
-            AHULocation_comboBox.SelectedItem = "단열외피내";
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "명칭,유형,존", "번호 = '" + ID + "'");
+            if (Value.Length > 0)
+            {
+                Name_textBox.Text = Value[0][0];
+                Name = Value[0][0];
 
+                AHUOptions_comboBox.SelectedItem = Value[0][1];
+                AHUOptions = Value[0][1];
+                ChangeAHUOptions(AHUOptions);
+                if (AHUOptions == "공조기")
+                {
+                    load_Table_AHU(Num);
+                }
+                else
+                {
+                    load_Table_HRV(Num);
+                }
+                SelectZone_nonsplit = Value[0][2];
+                Split_Zone(SelectZone_nonsplit);
+                Cal_Qb();
+            }
 
+            Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "설치위치, 풍량제어, 누기시험방법, 누기등급1, 공조기단열두께, TAB실시유무", "번호 = '" + ID + "'");
+            if (Value.Length > 0)
+            {
+                AHULocation_comboBox.SelectedItem = Value[0][0];
+                AHULocation = Value[0][0];
+                Change_DuctLabel(AHULocation);
+
+                AHUVolumeControl_comboBox.SelectedItem = Value[0][1];
+                AHUVolumeControl = Value[0][1];
+
+                AHULeakageTestMethod_comboBox.SelectedItem = Value[0][2];
+                AHULeakageTestMethod = Value[0][2];
+                Change_AHULeakageOptions(AHULeakageTestMethod);
+
+                AHULeakageLevel_comboBox.SelectedItem = Value[0][3];
+                AHULeakageLevel1 = Value[0][3];
+                Chaeck_AHULeakageLevel(AHULeakageLevel1);
+
+                AHUInsulationThickness_comboBox.SelectedItem = Value[0][4];
+                AHUInsulationThickness = Convert.ToDouble(Value[0][4]);
+
+                TABOptions_comboBox.SelectedItem = Value[0][5];
+                TABOptions = Value[0][5];
+                Check_DuctLeakageLevel();
+
+            }
+
+            Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "OA덕트길이,EA덕트길이,SA덕트길이,RA덕트길이,덕트단열두께,덕트관경,덕트단열재,덕트단열재열전도율", "번호 = '" + ID + "'");
+            if (Value.Length > 0)
+            {
+
+                if (AHULocation == "단열외피 내부")
+                {
+                    OASALength_textBox.Text = Value[0][0];
+                    OALength = Convert.ToDouble(Value[0][0]);
+
+                    EARALength_textBox.Text = Value[0][1];
+                    EALength = Convert.ToDouble(Value[0][1]);
+                }
+                else
+                {
+                    OASALength_textBox.Text = Value[0][2];
+                    SALength = Convert.ToDouble(Value[0][2]);
+
+                    EARALength_textBox.Text = Value[0][3];
+                    RALength = Convert.ToDouble(Value[0][3]);
+                }
+
+                DuctInsulationThickness_textBox.Text = Value[0][4];
+                DuctInsulationThickness = Convert.ToDouble(Value[0][4]);
+
+                DuctDiameter_textBox.Text = Value[0][5];
+                DuctDiameter = Convert.ToDouble(Value[0][5]);
+
+                PipeIns_textBox.Text = Value[0][6];
+                PipeIns = Value[0][6];
+
+                PipeIns_Ramda_textBox.Text = Value[0][7];
+                PipeIns_Ramda = Convert.ToDouble(Value[0][7]);
+            }
+
+            Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "예열예냉유형", "번호 = '" + ID + "'");
+            if (Value.Length > 0)
+            {
+                PrehPrecOptions_comboBox.SelectedItem = Value[0][0];
+                PrehPrecOptions = Value[0][0];
+                ChangeVisble_PrehPrecOptions(PrehPrecOptions);
+            }
+
+            Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "프리히터제어유형,프리히터용량", "번호 = '" + ID + "'");
+            if (Value.Length > 0)
+            {
+                PrehControlOptions_comboBox.SelectedItem = Value[0][0];
+                PrehControlOptions = Value[0][0];
+
+                PrehPower_textBox.Text = Value[0][1];
+                PrehPower = Convert.ToDouble(Value[0][1]);
+            }
+            else
+            {
+                PrehInfo_groupBox.Visible = false;
+            }
+
+            Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "토양유형,지중깊이,쿨튜브관경,쿨튜브두께,쿨튜브길이,쿨튜브재질", "번호 = '" + ID + "'");
+            if (Value.Length > 0)
+            {
+                GroundOptions_comboBox.SelectedItem = Value[0][0];
+                GroundOptions = Value[0][0];
+
+                GroundDepth_textBox.Text = Value[0][1];
+                GroundDepth = Convert.ToDouble(Value[0][1]);
+
+                CooltubeDiameter_textBox.Text = Value[0][2];
+                CooltubeDiameter = Convert.ToDouble(Value[0][2]);
+
+                CooltubeThickness_textBox.Text = Value[0][3];
+                CooltubeThickness = Convert.ToDouble(Value[0][3]);
+
+                CooltubeLength_textBox.Text = Value[0][4];
+                CooltubeLength = Convert.ToDouble(Value[0][4]);
+
+                CooltubeMaterial_comboBox.SelectedItem = Value[0][5];
+                CooltubeMaterial = Value[0][5];
+            }
+            else
+            {
+                GroundInfo_groupBox.Visible = false;
+                CooltubeInfo_groupBox.Visible = false;
+            }
         }
 
         #endregion
@@ -854,8 +1027,6 @@ namespace main.contents
         }
 
         #endregion
-
-
 
     }
 }

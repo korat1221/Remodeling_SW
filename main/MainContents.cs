@@ -76,6 +76,7 @@ namespace main
             List_FuelCell,
             List_WindPower,
             PrintReport_Main,
+            List_AHUSystem,
             None
 
         }
@@ -95,7 +96,9 @@ namespace main
             new List_DHWSystem(),new List_ConstructionBlind(),new List_ConstructionDoor(),
             new PrintReport_Final(), 
             new List_PV(),new List_FuelCell(),new List_WindPower(),
-            new PrintReport_Main() }; 
+            new PrintReport_Main(),
+            new List_AHUSystem()
+        }; 
         bool scriptable = false;
         public class FormParam
         {
@@ -210,6 +213,12 @@ namespace main
             else if (formParam.formID == 10)
             {
                ConstructionBlind f = (ConstructionBlind)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 17)
+            {
+                AHUSystem f = (AHUSystem)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -414,6 +423,12 @@ namespace main
             else if (formParam.formID == 56)
             {
                 PrintReport_Main f = (PrintReport_Main)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 57)
+            {
+                List_AHUSystem f = (List_AHUSystem)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -657,6 +672,12 @@ namespace main
 
                     f.LoadData("");
                 }
+                else if (i == 57)
+                {
+                    List_AHUSystem f = (List_AHUSystem)forms[i];
+
+                    f.LoadData("");
+                }
             }
         }
         public void DoLoadFormDirect(int idx)
@@ -776,6 +797,7 @@ namespace main
                     forms[54] = new List_FuelCell();
                     forms[55] = new List_WindPower();
                     forms[56] = new PrintReport_Main();
+                    forms[57] = new List_AHUSystem();
 
                     i = -1;
                     while (++i < forms.Length)
@@ -901,6 +923,20 @@ namespace main
                     {
                         openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
                         forms[idx] = new ConstructionBlind();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+            else if (idx == 17)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new AHUSystem();
                         forms[idx].TopLevel = false;
                         openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
                         return;

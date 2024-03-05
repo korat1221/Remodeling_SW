@@ -73,6 +73,9 @@
     <Compile Update="contentslist\List_FuelCell.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="contentslist\List_AHUSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="contentslist\List_WindPower.cs">
       <SubType>Form</SubType>
     </Compile>
