@@ -244,7 +244,7 @@ namespace main
           
         public void LoadData_Ventil()
         {//존 환기정보 가져오기 
-            string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "환기유무,환기방식,비이용일환기량,이용일환기량,온도교환효율_냉방,전열교환효율_냉방", "존번호='" + ZoneNum + "'");
+            string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "환기유무,환기방식,비이용일환기량,이용일환기량", "존번호='" + ZoneNum + "'");
             if (ZoneG.Length > 0)
             {
                 if (Convert.ToBoolean(ZoneG[0][0]))
@@ -255,8 +255,8 @@ namespace main
                         Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
                         Vmech_SUP_wd = Convert.ToDouble(ZoneG[0][3]);
                         Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]);
-                        eta_V_mech = Convert.ToDouble(ZoneG[0][4]);
-                        eta_χV_mech = Convert.ToDouble(ZoneG[0][5]); //나중에 습도교환효율로 바꿔야함 
+                        //eta_V_mech = Convert.ToDouble(ZoneG[0][4]);
+                        //eta_χV_mech = Convert.ToDouble(ZoneG[0][5]); //나중에 습도교환효율로 바꿔야함 
                     }
                     else
                     {

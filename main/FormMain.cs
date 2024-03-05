@@ -109,7 +109,9 @@ namespace main
             Program.CALC.run(new string[] {
                 "존 계산"
             });
-
+            Program.CALC.run(new string[] {
+                "공조시스템 계산"
+            });
             Program.CALC.run(new string[] {
                 "난방시스템 계산"
             });

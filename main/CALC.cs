@@ -24,6 +24,8 @@ namespace main
 
             _calculations["존 계산"] = new Func<bool>(ZoneCalc);
 
+            _calculations["공조시스템 계산"] = new Func<bool>(AHUSystemCalc);
+
             _calculations["난방시스템 계산"] = new Func<bool>(HeatingSystemCalc);
 
             _calculations["냉방시스템 계산"] = new Func<bool>(CoolingSystemCalc);
@@ -291,7 +293,60 @@ namespace main
             }
             return true;
         }
+        private static bool AHUSystemCalc()
+        {
+            string[][] Num = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형");
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
+            String MTH;
+            if(Num.Length > 0)
+            {
+                int i = -1;
+                while (++i < Num.Length)
+                {
+                    if(Num[i][1] =="공조기")
+                    {
+                        Cal_AHU AHU1 = new Cal_AHU(Num[i][0]);
+                        AHU1.Load_ZoneData();
+                        AHU1.Load_AHUData();
+                        AHU1.Load_AHUGeneralData();
+                        AHU1.Load_DuctData();
+                        AHU1.Load_PrehPrecData();
+                        AHU1.Cal_SA_set();
+                        AHU1.Cal_CoolTube();
+                        AHU1.Cal_Preheating();
+                        AHU1.Cal_Duct();
+                        AHU1.Cal_DuctLoss_OA();
+                        AHU1.Cal_DuctLoss_RA();
+                        AHU1.Cal_HeatRecovery();
+                        AHU1.Cal_DuctLoss_EA();
+                        AHU1.Cal_RCA();
+                        AHU1.Cal_DuctLoss_SA();
+                        AHU1.Cal_Qvc_b();
+                    }
+                    else
+                    {
+                        Cal_AHU HRV1 = new Cal_AHU(Num[i][0]);
+                        HRV1.Load_ZoneData();
+                        HRV1.Load_AHUData();
+                        HRV1.Load_AHUGeneralData();
+                        HRV1.Load_DuctData();
+                        HRV1.Load_PrehPrecData();
+                        HRV1.Cal_CoolTube();
+                        HRV1.Cal_Preheating();
+                        HRV1.Cal_Duct();
+                        HRV1.Cal_DuctLoss_OA();
+                        HRV1.Cal_DuctLoss_RA();
+                        HRV1.Cal_HeatRecovery();
+                        HRV1.Cal_DuctLoss_EA();
+                        HRV1.Cal_RCA();
+                        HRV1.Cal_DuctLoss_SA();
+                    }
+                   
+                }
+            }
 
+          return true;
+        }
         private static bool HeatingSystemCalc()
         {
             string[][] HeatingNum = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호");
