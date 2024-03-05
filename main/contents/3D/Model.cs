@@ -120,18 +120,19 @@ namespace main.contents
 
                     if ((n = s.IndexOf("@@@")) >= 0)
                     {
-                        String json = s.Substring(n + 3);
-
-                        if (json.IndexOf("perfect:false") >= 0)
+                        if (s.IndexOf("perfect:false") >= 0)
                         {
                             ticked = false;
                             timer1.Interval = 200;
                             timer1.Tick += new EventHandler(timer1_Tick);
                             timer1.Enabled = true;
+                            s = s.Replace("perfect:false", "");
                         }
 
+                        s = s.Replace("@@@", "");
+                        s = s.Replace("__PROJ_TYPE__", ProjectList.ProjectType);
                         //                        Program.UTIL.write3DModel(json);
-                        Program.DB.executeSQL(DB.type.ProjDB, s.Substring(0, n));
+                        Program.DB.executeSQL(DB.type.ProjDB, s);
                         //             Program.UTIL.reloadWebCtrl();
 
                         string[][] Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호", "외피유형 = '창호' or 외피유형 = '커튼월창'");
