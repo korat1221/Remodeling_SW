@@ -1602,18 +1602,38 @@ Editor.prototype = {
 	},
 
 	drawBridges: function(kind) {
-		let i = -1;
-		let bridge = this.bridges[kind];
+		let _drawBridges = (knd) => {
+			let i = -1;
+			let bridge = this.bridges[kind];
+	
+			while(++i < this.drawing_line.length) {
+				this.drawing_line[i].mesh.material.opacity = 0;
+			}
+	
+			if (bridge) {
+				i = -1;
+				while(++i < bridge.items.length) {
+					let el = bridge.items[i];
+					this.drawLine2(el.line, 0xFF0000, 2);
+				}
+			}
+		};
 
-		while(++i < this.drawing_line.length) {
-			this.drawing_line[i].mesh.material.opacity = 0;
+		if (kind === '2') {
+			_drawBridges('11');
+			_drawBridges('12');
 		}
+		else if (kind === '1') {
+			_drawBridges('1');
+		}
+		else {
+			let n = parseInt(kind);
 
-		if (bridge) {
-			i = -1;
-			while(++i < bridge.items.length) {
-				let el = bridge.items[i];
-				this.drawLine2(el.line, 0xFF0000, 2);
+			if (n < 10) {
+				_drawBridges((n - 1) + "");
+			}
+			else {
+
 			}
 		}
 	},
@@ -1772,19 +1792,47 @@ Editor.prototype = {
 				"1":"평지붕+외벽[90]",
 				"2":"평지붕+내벽",
 				"3":"경사지붕",
-				"4":"경사지붕+벽",
-				"5":"경사지붕+경사벽",
-				"6":"슬라브+벽",
-				"7":"내벽+외벽",
-				"8":"외벽+외벽",
-				"9":"외벽+내벽+외벽",
-				"10":"---",
-				"11":"평지붕+벽[270]",
-				"12":"평지붕+벽[270]+내벽",
+				"4":"경사지붕+외벽[수평]",
+				"5":"경사지붕+외벽[경사]",
+				"6":"층간슬라브+외벽",
+				"7":"외벽+내벽",
+				"8":"외벽+외벽[90]",
+				"9":"외벽+외벽[270]",
+				"10":"바닥+외벽[90]",
+				"11":"바닥+외벽[270]",
+			};
+			let _codes = {
+				"1":"RTB1",
+				"2":"RTB3",
+				"3":"RTB4",
+				"4":"RTB5",
+				"5":"RTB6",
+				"6":"WTB1",
+				"7":"WTB2",
+				"8":"WTB3",
+				"9":"WTB4",
+				"10":"WTB5",
+				"11":"WTB6",
+			};
+			let _getDistance = (line) => {
+				let a = new THREE.Vector3(line[0][0], line[0][1], line[0][2]);
+				let b = new THREE.Vector3(line[1][0], line[1][1], line[1][2]);
+				return a.distanceTo(b);			
 			};
 
+			this.bridges['11'].items.forEach(el2 => {
+				sql += "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('RTB2','__PROJ_TYPE__','평지붕+외벽[270]','" + _getDistance(el2.line) + "');";
+			});
+			this.bridges['12'].items.forEach(el2 => {
+				sql += "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('RTB2','__PROJ_TYPE__','평지붕+외벽[270]','" + _getDistance(el2.line) + "');";
+			});
+
 			Object.keys(this.bridges).forEach(el => {
-				sql += "INSERT INTO ThermalBridge_3D (ID,프로젝트유형,열교항목,열교길이) VALUES (" + el + ",'__PROJ_TYPE__','" + _bridges[el] + "','" + this.bridges[el].dist + "');";
+				if (el !== '10' && el !== '11' && el !== '12') {
+					this.bridges[el].items.forEach(el2 => {
+						sql += "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('" + _codes[el] + "','__PROJ_TYPE__','" + _bridges[el] + "','" + _getDistance(el2.line) + "');";
+					});
+				}
 			});
 
 			this.uploadObjInfo({"wall":this.wall,"spaces":this.spaces,"boards":this.boards,"bridges":this.bridges,"shadows":this.shadows,"snum":this.snum,"wnum":this.wnum,"rotation":this.rotation,"tree":tree,"tree2":tree,"perfect":this.perfect}, sql);
@@ -1818,24 +1866,21 @@ Editor.prototype = {
 		var ret = [];
 		let _bridges = {
 			"1":"평지붕+외벽[90]",
-			"2":"평지붕+내벽",
-			"3":"경사지붕",
-			"4":"경사지붕+벽",
-			"5":"경사지붕+경사벽",
-			"6":"슬라브+벽",
-			"7":"내벽+외벽",
-			"8":"외벽+외벽",
-			"9":"외벽+내벽+외벽",
-			"10":"---",
-			"11":"평지붕+벽[270]",
-			"12":"평지붕+벽[270]+내벽",
+			"2":"평지붕+외벽[270]",
+			"3":"평지붕+내벽",
+			"4":"경사지붕",
+			"5":"경사지붕+외벽[수평]",
+			"6":"경사지붕+외벽[경사]",
+			"7":"층간슬라브+외벽",
+			"8":"외벽+내벽",
+			"9":"외벽+외벽[90]",
+			"10":"외벽+외벽[270]",
+			"11":"바닥+외벽[90]",
+			"12":"바닥+외벽[270]",
 		};
 
-
 		Object.keys(this.bridges).forEach(el => {
-			if (el != 10) {
-				ret.push({"type":"bridge","text":_bridges[el], "id":"bridge-" + el});
-			}
+			ret.push({"type":"bridge","text":_bridges[el], "id":"bridge-" + el});
 		});
 
 		return ret;
