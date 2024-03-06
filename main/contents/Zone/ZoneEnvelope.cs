@@ -34,7 +34,8 @@ namespace main.contents
         String Ceiling_index, Wall_index, InWall_index, Slab_index;
         double Cwirk_total;
         string[][] ZoneE;
-        double NetArea;
+        double NetArea, height;
+        double n50, q50;
 
         public ZoneEnvelope()
         {
@@ -172,10 +173,11 @@ namespace main.contents
         {
             if (InfiltrationType_comboBox.SelectedItem != null)
             {
-                double q = Calc_q50(ZoneType);
-                double n = Calc_n50(q);
-                q50_textBox.Text = string.Format("{0:F1}", q);
-                n50_textBox.Text = string.Format("{0:F1}", n);
+                q50 = Calc_q50(ZoneType);
+                n50 = Calc_n50(q50);
+                
+                q50_textBox.Text = string.Format("{0:F1}", q50);
+                n50_textBox.Text = string.Format("{0:F1}", n50);
             }
         }
 
@@ -249,7 +251,7 @@ namespace main.contents
                 }
                 else if (ZoneE[i][1] == "외부출입문")
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "번호='" + ZoneE[i][5] + "'");
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "문유효열관류율", "번호='" + ZoneE[i][5] + "'");
                     if (Value.Length > 0)
                     { Construction_UeffSum[5] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
                 }
@@ -352,7 +354,7 @@ namespace main.contents
                     }
                     else if (ZoneE_Select[n][1] == "외부출입문")
                     {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율,흡수율", "명칭='" + ZoneE_Select[n][5] + "'");
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "문유효열관류율,흡수율", "번호='" + ZoneE_Select[n][5] + "'");
                     }
                     else
                     {
@@ -527,7 +529,7 @@ namespace main.contents
                     }
                     else if (ZoneE[n][1] == "외부출입문")
                     {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "명칭='" + ZoneE[n][5] + "'");
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "직접간접", "번호='" + ZoneE[n][5] + "'");
                     }
                     else
                     {
@@ -546,7 +548,7 @@ namespace main.contents
             }
 
 
-            n50 = AreaDirect_total * q50 / (Area_Slab * 2.5); //원래 순체적으로 해야하는데 지금은 그냥 임의로 계산로 함  
+            n50 = AreaDirect_total * q50 / (NetArea * height); //원래 순체적으로 해야하는데 지금은 그냥 임의로 계산로 함  
 
             return n50;
 
@@ -608,7 +610,7 @@ namespace main.contents
             + Area_Ceiling.ToString() + "','" + Area_Wall.ToString() + "','" + Area_InWall.ToString() + "','" + Area_Slab.ToString() + "','"
             + Cwirk_total.ToString() + "','"
             + ZoneType + "','" + InfiltrationType_comboBox.SelectedItem.ToString() + "','"
-            + q50_textBox.Text.ToString() + "','" + n50_textBox.Text.ToString() + "'", "존번호");
+            + q50.ToString() + "','" + n50.ToString() + "'", "존번호");
 
             MessageBox.Show(ZoneNum + "[" + ZoneName + "] 정보를 저장하였습니다.");
             //this.DialogResult = DialogResult.OK;
@@ -720,10 +722,12 @@ namespace main.contents
                 InfiltrationType_comboBox.SelectedItem = Value[0][14];
                 if (Value[0][15] != "")
                 {
+                    q50 = Convert.ToDouble(Value[0][15]);
                     q50_textBox.Text = string.Format("{0:F1}", Convert.ToDouble(Value[0][15]));
                 }
                 if (Value[0][16] != "")
                 {
+                    n50 = Convert.ToDouble(Value[0][16]);
                     n50_textBox.Text = string.Format("{0:F1}", Convert.ToDouble(Value[0][16]));
                 }
             }
@@ -755,12 +759,13 @@ namespace main.contents
             try
             {
                 //존이름 불러오기
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름, 순바닥면적", "존번호 = '" + ZoneNum + "'");
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름, 순바닥면적,천장고", "존번호 = '" + ZoneNum + "'");
                 if (Value.Length > 0)
                 {
                     ZoneName = Value[0][0];
                     ZoneName_textBox.Text = ZoneName;
                     NetArea = Convert.ToDouble(Value[0][1]);
+                    height = Convert.ToDouble(Value[0][2]);
                 }
             }
             catch
