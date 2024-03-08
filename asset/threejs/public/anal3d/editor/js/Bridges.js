@@ -71,6 +71,17 @@ Bridges.prototype = {
 					o.data.push({type:'INWALL', dir:0, wall:false});
 					o.data.push({type:'INWALL', dir:2, wall:false});
 					break;
+				case 13:
+					o.map = [{dir:2, wall:false}];
+					o.data.push({type:'FLOOR', dir:2, wall:false});
+					o.excludes = ['INWALL','ROOF'];
+					break;
+				case 14:
+					o.map = [{dir:2, wall:false}];
+					o.data.push({type:'FLOOR', dir:2, wall:false});
+					o.data.push({type:'WALL', dir:0, wall:false});
+					o.excludes = ['ROOF'];
+					break;
 			}
 			return o;
 		};
@@ -101,7 +112,11 @@ Bridges.prototype = {
 					case 9:
 						ret = !((line[1][1] - line[0][1]) == 0);
 						break;
-					}
+					case 13:
+					case 14:
+						ret = !!(line[0][1] > 1);
+						break;
+				}
 			}
 
 			return ret;
@@ -154,7 +169,7 @@ Bridges.prototype = {
 			}
 			return centers;
 		};
-		let _validCriteria = (kind, criteria, out) => {
+		let _validCriteria = (kind, criteria, out, line) => {
 			if (criteria.map.length <= out.length) {
 				let i = -1;
 	
@@ -217,6 +232,29 @@ Bridges.prototype = {
 						}
 					}
 					break;
+				case 13:
+				case 14:
+					if (!centers['FLOOR']) {
+						return false;
+					}
+
+					i = -1;
+					while(++i < out.length) {
+						let el = out[i];
+						if (el.type == 'WALL') {
+							if (kind === 13) {
+								if (el.center[1] < line[0][1]) {
+									return false;
+								}
+							}
+							else if (kind === 14) {
+								if (el.center[1] > line[0][1]) {
+									return false;
+								}
+							}
+						}
+					}
+					break;
 				}
 
 				return true;
@@ -226,6 +264,11 @@ Bridges.prototype = {
 		let _getBridgeKind = (kind, edge, line) => {
 			let j = -1;
 			let cri = _getCriteria(kind), r, ret = [];
+
+			if (kind === 14) {
+				let i = 0;
+				i = i;
+			}
 
 			while(++j < edge.walls.length) {
 				let el = edge.walls[j];
@@ -240,11 +283,11 @@ Bridges.prototype = {
 				}
 			}
 
-//			if (kind == 9 && ret.length > 0) {
-//				console.log(ret);
-//			}
+			if (kind == 14 && ret.length > 0) {
+				console.log(ret);
+			}
 
-			return  _validCriteria(kind, cri, ret) ? {kind:kind, data:ret} : null;
+			return  _validCriteria(kind, cri, ret, line) ? {kind:kind, data:ret} : null;
 		};
 
 		let _findBridge = (kind, line) => {
@@ -272,7 +315,7 @@ Bridges.prototype = {
 		};
 
 		i = 0;
-		while(++i <= 12) {
+		while(++i <= 14) {
 			if (i != 10) {
 				_pushBridges(i);
 			}

@@ -1604,7 +1604,7 @@ Editor.prototype = {
 	drawBridges: function(kind) {
 		let _drawBridges = (knd) => {
 			let i = -1;
-			let bridge = this.bridges[kind];
+			let bridge = this.bridges[knd];
 	
 			while(++i < this.drawing_line.length) {
 				this.drawing_line[i].mesh.material.opacity = 0;
@@ -1629,11 +1629,14 @@ Editor.prototype = {
 		else {
 			let n = parseInt(kind);
 
-			if (n < 10) {
+			if (n <= 10) {
 				_drawBridges((n - 1) + "");
 			}
-			else {
-
+			else if (n === 11){
+				_drawBridges("13");
+			}
+			else if (n === 12) {
+				_drawBridges("14");
 			}
 		}
 	},
@@ -1827,8 +1830,15 @@ Editor.prototype = {
 				sql += "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('RTB2','__PROJ_TYPE__','평지붕+외벽[270]','" + _getDistance(el2.line) + "');";
 			});
 
+			this.bridges['13'].items.forEach(el2 => {
+				sql += "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('WTB5','__PROJ_TYPE__','바닥+외벽[90]','" + _getDistance(el2.line) + "');";
+			});
+			this.bridges['14'].items.forEach(el2 => {
+				sql += "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('WTB6','__PROJ_TYPE__','바닥+외벽[270]','" + _getDistance(el2.line) + "');";
+			});
+
 			Object.keys(this.bridges).forEach(el => {
-				if (el !== '10' && el !== '11' && el !== '12') {
+				if (parseInt(el) < 10) {
 					this.bridges[el].items.forEach(el2 => {
 						sql += "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('" + _codes[el] + "','__PROJ_TYPE__','" + _bridges[el] + "','" + _getDistance(el2.line) + "');";
 					});
