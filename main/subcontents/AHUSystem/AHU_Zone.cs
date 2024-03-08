@@ -42,7 +42,6 @@ namespace main.subcontents.HeatingSystem
                 Load_SaveValue(SelectZone_nonsplit);
             }
 
-
         }
 
         void load_table_DB()
@@ -97,14 +96,16 @@ namespace main.subcontents.HeatingSystem
                     Count_DB = Value.Length;
                 }
             }
+
+            SelectZone_Load();
         }
 
         private void SelectZone_Load()
         {
             string[][] 공조;
             if (AHUOptions == "공조기")
-            { 공조 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "번호,존번호", "유형='공조기'"); }
-            else { 공조 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "번호,존번호", "유형='열회수기'"); }
+            { 공조 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "번호,존", "유형='공조기'"); }
+            else { 공조 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "번호,존", "유형='열회수기'"); }
 
             if (공조.Length > 0)
             {

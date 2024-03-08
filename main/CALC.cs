@@ -297,7 +297,7 @@ namespace main
         {
             string[][] Num = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형");
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
-            String MTH;
+            String MTH, 난방냉방;
             if(Num.Length > 0)
             {
                 int i = -1;
@@ -307,11 +307,10 @@ namespace main
                     {
                         Cal_AHU AHU1 = new Cal_AHU(Num[i][0]);
                         AHU1.Load_ZoneData();
+                        AHU1.Load_GeneralData();
                         AHU1.Load_AHUData();
-                        AHU1.Load_AHUGeneralData();
                         AHU1.Load_DuctData();
                         AHU1.Load_PrehPrecData();
-                        AHU1.Cal_SA_set();
                         AHU1.Cal_CoolTube();
                         AHU1.Cal_Preheating();
                         AHU1.Cal_Duct();
@@ -319,27 +318,92 @@ namespace main
                         AHU1.Cal_DuctLoss_RA();
                         AHU1.Cal_HeatRecovery();
                         AHU1.Cal_DuctLoss_EA();
+                        AHU1.Cal_SA_set();
                         AHU1.Cal_RCA();
                         AHU1.Cal_DuctLoss_SA();
-                        AHU1.Cal_Qvc_b();
+                        AHU1.Cal_Qv_b();
+                        AHU1.Cal_HU();
+                        AHU1.Cal_W();
+                        Program.DB.deleteValue(DB.type.ProjDB, "AHUSystem_Result", "번호='"+ Num[i][0] +"'And 프로젝트번호 ='"+ 프로젝트유형[0][1] + "'");
+                        for (int hc = 0; hc <= 1; hc++)
+                        {
+                            for (int mth = 0; mth <= 11; mth++)
+                            {
+                          
+                                if (hc == 0) { 난방냉방 = "난방"; } else { 난방냉방 = "냉방"; }
+                                MTH = (mth + 1).ToString() + "월";
+                                Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                                         "난방_냉방,월," +
+                                         "공조요구량,가습요구량,급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지," +
+                                         "theta_vmech,Vvmech,Vvmech_leak," +
+                                         "theta_SA_prh,theta_OA_du,theta_RA_du,theta_SA_hr,theta_SA_rca,theta_SA_du,X_iset," +
+                                         "X_SA_prh,X_SA_hr,X_SA_rca," +
+                                         "Vmin_tot,Qb_mth_tot,Qmax_tot,theta_iset_avg,dvmech_avg,tvmech_avg,"+
+                                         "Q_gnd,Q_prh,Q_loss_OA_du,Q_loss_EA_du,Q_loss_SA_du,"+
+                                         "dtheta_prh,dtheta_du_OA,dtheta_du_RA,dtheta_hr,dtheta_rca,dtheta_du_EA,dtheta_du_SA,"+
+                                         "flea_du,flea_ahu,fins_ahu,theta_defrost,theta_sur_nc,Hduct_OA,Hduct_RA,Hduct_EA,Hduct_SA",
+                                         "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Num[i][0] + "','" +난방냉방 +"','" + MTH + "','" +
+                                         AHU1.Qv_b[hc,mth] + "','" + AHU1.Qhu_b[mth] + "','" + AHU1.Ev_gen_fan_SA[mth] + "','" + AHU1.Ev_gen_fan_EA[mth] + "','" + AHU1.W_HU_aux[mth] + "','" + AHU1.Wv_aux_preh[mth] + "','" +
+                                         AHU1.theta_vmech[hc, mth] + "','" + AHU1.Vvmech[hc,mth] + "','" + AHU1.Vvmech_leak[hc, mth] + "','" +
+                                         AHU1.theta_SA_prh[mth] + "','" + AHU1.theta_OA_du[hc,mth] + "','" + AHU1.theta_RA_du[hc,mth] + "','" + AHU1.theta_SA_hr[hc,mth] + "','" + AHU1.theta_SA_rca[hc,mth] + "','" + AHU1.theta_SA_du[hc, mth] + "','" + AHU1.X_iset[mth] + "','" +
+                                         AHU1.X_SA_prh[mth] + "','" + AHU1.X_SA_hr[mth] + "','" + AHU1.X_SA_rca[mth] + "','" +
+                                         AHU1.Vmin_tot + "','" + AHU1.Qb_mth_tot[hc,mth] + "','" + AHU1.Qmax_tot[hc] + "','" + AHU1.theta_iset_avg[hc] + "','" + AHU1.dvmechmth_avg[mth] + "','" + AHU1.tvmech_avg + "','" +
+                                         AHU1.Q_gnd[mth] + "','" + AHU1.Wpreh_k[mth] + "','" + AHU1.Q_loss_OA_du[hc,mth] + "','" + AHU1.Q_loss_EA_du[hc,mth] + "','" + AHU1.Q_loss_SA_du[hc, mth] + "','" +
+                                         AHU1.dtheta_prh[mth] + "','" + AHU1.dtheta_du_OA[hc,mth] + "','" + AHU1.dtheta_du_RA[hc,mth] + "','" + AHU1.dtheta_hr[hc,mth] + "','" + AHU1.dtheta_rca[hc,mth] + "','" + AHU1.dtheta_du_EA[hc, mth] + "','" + AHU1.dtheta_du_SA[hc, mth] + "','" +
+                                         AHU1.flea_du + "','" + AHU1.flea_ahu + "','" + AHU1.fins_ahu + "','" + AHU1.theta_defrost + "','" + AHU1.theta_sur_nc[hc,mth] + "','" + AHU1.Hduct_OA[mth] + "','" + AHU1.Hduct_RA[mth] + "','" + AHU1.Hduct_EA[mth] + "','" + AHU1.Hduct_SA[mth]
+                                          + "'", "번호,난방_냉방,월");
+                            }
+                        }
+
                     }
                     else
                     {
-                        Cal_AHU HRV1 = new Cal_AHU(Num[i][0]);
-                        HRV1.Load_ZoneData();
-                        HRV1.Load_AHUData();
-                        HRV1.Load_AHUGeneralData();
-                        HRV1.Load_DuctData();
-                        HRV1.Load_PrehPrecData();
-                        HRV1.Cal_CoolTube();
-                        HRV1.Cal_Preheating();
-                        HRV1.Cal_Duct();
-                        HRV1.Cal_DuctLoss_OA();
-                        HRV1.Cal_DuctLoss_RA();
-                        HRV1.Cal_HeatRecovery();
-                        HRV1.Cal_DuctLoss_EA();
-                        HRV1.Cal_RCA();
-                        HRV1.Cal_DuctLoss_SA();
+                        Cal_AHU AHU1 = new Cal_AHU(Num[i][0]);
+                        AHU1.Load_ZoneData();
+                        AHU1.Load_GeneralData();
+                        AHU1.Load_HRVData();
+                        AHU1.Load_DuctData();
+                        AHU1.Load_PrehPrecData();
+                        AHU1.Cal_CoolTube();
+                        AHU1.Cal_Preheating();
+                        AHU1.Cal_Duct();
+                        AHU1.Cal_DuctLoss_OA();
+                        AHU1.Cal_DuctLoss_RA();
+                        AHU1.Cal_HeatRecovery();
+                        AHU1.Cal_DuctLoss_EA();
+                        AHU1.Cal_SA_set();
+                        AHU1.Cal_RCA();
+                        AHU1.Cal_DuctLoss_SA();
+                        AHU1.Cal_W();
+                        for (int hc = 0; hc <= 1; hc++)
+                        {
+                            for (int mth = 0; mth <= 11; mth++)
+                            {
+
+                                if (hc == 0) { 난방냉방 = "난방"; } else { 난방냉방 = "냉방"; }
+                                MTH = (mth + 1).ToString() + "월";
+                                Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                                         "난방_냉방,월," +
+                                         "공조요구량,가습요구량,급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지," +
+                                         "theta_vmech,Vvmech,Vvmech_leak," +
+                                         "theta_SA_prh,theta_OA_du,theta_RA_du,theta_SA_hr,theta_SA_rca,theta_SA_du,X_iset," +
+                                         "X_SA_prh,X_SA_hr,X_SA_rca," +
+                                         "Vmin_tot,Qb_mth_tot,Qmax_tot,theta_iset_avg,dvmech_avg,tvmech_avg," +
+                                         "Q_gnd,Q_prh,Q_loss_OA_du,Q_loss_EA_du,Q_loss_SA_du," +
+                                         "dtheta_prh,dtheta_du_OA,dtheta_du_RA,dtheta_hr,dtheta_rca,dtheta_du_EA,dtheta_du_SA," +
+                                         "flea_du,flea_ahu,fins_ahu,theta_defrost,theta_sur_nc,Hduct_OA,Hduct_RA,Hduct_EA,Hduct_SA",
+                                         "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Num[i][0] + "','" + 난방냉방 + "','" + MTH + "','" +
+                                         AHU1.Qv_b[hc, mth] + "','" + AHU1.Qhu_b[mth] + "','" + AHU1.Ev_gen_fan_SA[mth] + "','" + AHU1.Ev_gen_fan_EA[mth] + "','" + AHU1.W_HU_aux[mth] + "','" + AHU1.Wv_aux_preh[mth] + "','" +
+                                         AHU1.theta_vmech[hc, mth] + "','" + AHU1.Vvmech[hc, mth] + "','" + AHU1.Vvmech_leak[hc, mth] + "','" +
+                                         AHU1.theta_SA_prh[mth] + "','" + AHU1.theta_OA_du[hc, mth] + "','" + AHU1.theta_RA_du[hc, mth] + "','" + AHU1.theta_SA_hr[hc, mth] + "','" + AHU1.theta_SA_rca[hc, mth] + "','" + AHU1.theta_SA_du[hc, mth] + "','" + AHU1.X_iset[mth] + "','" +
+                                         AHU1.X_SA_prh[mth] + "','" + AHU1.X_SA_hr[mth] + "','" + AHU1.X_SA_rca[mth] + "','" +
+                                         AHU1.Vmin_tot + "','" + AHU1.Qb_mth_tot[hc, mth] + "','" + AHU1.Qmax_tot[hc] + "','" + AHU1.theta_iset_avg[hc] + "','" + AHU1.dvmechmth_avg[mth] + "','" + AHU1.tvmech_avg + "','" +
+                                         AHU1.Q_gnd[mth] + "','" + AHU1.Wpreh_k[mth] + "','" + AHU1.Q_loss_OA_du[hc, mth] + "','" + AHU1.Q_loss_EA_du[hc, mth] + "','" + AHU1.Q_loss_SA_du[hc, mth] + "','" +
+                                         AHU1.dtheta_prh[mth] + "','" + AHU1.dtheta_du_OA[hc, mth] + "','" + AHU1.dtheta_du_RA[hc, mth] + "','" + AHU1.dtheta_hr[hc, mth] + "','" + AHU1.dtheta_rca[hc, mth] + "','" + AHU1.dtheta_du_EA[hc, mth] + "','" + AHU1.dtheta_du_SA[hc, mth] + "','" +
+                                         AHU1.flea_du + "','" + AHU1.flea_ahu + "','" + AHU1.fins_ahu + "','" + AHU1.theta_defrost + "','" + AHU1.theta_sur_nc[hc, mth] + "','" + AHU1.Hduct_OA[mth] + "','" + AHU1.Hduct_RA[mth] + "','" + AHU1.Hduct_EA[mth] + "','" + AHU1.Hduct_SA[mth]
+                                          + "'", "번호,난방_냉방,월");
+                            }
+                        }
                     }
                    
                 }

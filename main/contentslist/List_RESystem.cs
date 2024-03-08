@@ -97,7 +97,7 @@ namespace main.contentslist
             subMenu.Add(new { text = "공급의무비율", id = "{\\\"formID\\\":24,\\\"ID\\\":\\\"SOLAR_4\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             subMenu.Add(new { text = "에너지자립률", id = "{\\\"formID\\\":25,\\\"ID\\\":\\\"SOLAR_5\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             mainMenu.Add(new { text ="신재생시스템", id = "{\\\"formID\\\":53,\\\"ID\\\":\\\"" + "신재생시스템" + "\\\"}", children = subMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
-            Program.UTIL.resetMainTree(4, 5, subMenu.ToArray(), "43"); // 예시 코드: 메인 메뉴 동적 할당
+            Program.UTIL.resetMainTree(4, 4, subMenu.ToArray(), "43"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
 

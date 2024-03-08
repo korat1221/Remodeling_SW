@@ -114,7 +114,7 @@ namespace main.contentslist
                 }
                 dataGridView1.DataSource = this.List;
                 CountDB = List.Length;
-                Program.UTIL.resetMainTree(4, 4, mainMenu.ToArray(), "38"); // 예시 코드: 메인 메뉴 동적 할당
+                Program.UTIL.resetMainTree(4, 3, mainMenu.ToArray(), "38"); // 예시 코드: 메인 메뉴 동적 할당
             }
             catch { }
         }

@@ -51,14 +51,32 @@ namespace main.contents
             {
                 tables.Add("BuildingGeneral");
                 tables.Add("BuildingEnergyUse");
+                tables.Add("User_PVModule");
+                tables.Add("User_PVInverter");
+                tables.Add("User_PVBattery");
+                tables.Add("User_FC");
+                tables.Add("User_WP");
+                tables.Add("User_Boiler");
+                tables.Add("User_AirHP");
+                tables.Add("User_GroundHP");
+                tables.Add("User_GroundWHP");
+                tables.Add("User_Pump");
+                tables.Add("User_ce");
+                tables.Add("User_Solar");
+                tables.Add("User_ABS");
+                tables.Add("User_DH");
+                tables.Add("User_AHU");
+                tables.Add("User_HRV");
             }
             if (Construction_checkBox.Checked)
             {
-                tables.Add("ConstructionWall");
                 tables.Add("ConstructionCW");
-                tables.Add("ConstructionWindow");
-                tables.Add("ConstructionFloor");
+                tables.Add("ConstructionWall");
                 tables.Add("ConstructionRoof");
+                tables.Add("ConstructionFloor");
+                tables.Add("ConstructionWindow");
+                tables.Add("ConstructionDoor");
+                tables.Add("ConstructionBlind");
                 tables.Add("SubWindow");
                 tables.Add("Import_WindowSize");
                 tables.Add("Import_CWSize");
@@ -73,9 +91,7 @@ namespace main.contents
                 tables.Add("User_CWInstall");
                 tables.Add("User_Material");
                 tables.Add("User_Blind");
-                tables.Add("ConstructionBlind");
                 tables.Add("User_DoorInstall");
-                tables.Add("ConstructionDoor");
             }
             if (Model_checkBox.Checked)
             {
@@ -94,23 +110,12 @@ namespace main.contents
                 tables.Add("ZoneLighting_form");
             }
             if (System_checkBox.Checked)
-            {
-                tables.Add("User_PVModule");
-                tables.Add("User_PVInverter");
-                tables.Add("User_PVBattery");
-                tables.Add("User_FC");
-                tables.Add("User_WP");
+            {        
+                tables.Add("DHWSystem_Form");
                 tables.Add("HeatingSystem_Form");
                 tables.Add("Heating_ce_Form");
-                tables.Add("User_Boiler");
-                tables.Add("User_AirHP");
-                tables.Add("User_GroundHP");
-                tables.Add("User_GroundWHP");
-                tables.Add("User_Pump");
-                tables.Add("User_ce");
-                tables.Add("User_Solar");
-                tables.Add("User_ABS");
-                tables.Add("User_DH");
+                tables.Add("AHUSystem_Form");
+
                 tables.Add("Cooling_ce_Form");
                 tables.Add("CoolingZone");
                 tables.Add("User_CoolingSystem");
@@ -120,7 +125,9 @@ namespace main.contents
                 tables.Add("User_AbsorbCooler");
                 tables.Add("User_SoilCooler");
                 tables.Add("User_CoolerTop");
-                tables.Add("DHWSystem_Form");
+
+                tables.Add("PV_Form");
+                tables.Add("PV_Result");
             }
 
             this.DialogResult = DialogResult.OK;

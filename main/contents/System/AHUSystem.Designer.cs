@@ -409,14 +409,14 @@
             // Name_textBox
             // 
             Name_textBox.BackColor = SystemColors.Window;
-            Name_textBox.BorderStyle = BorderStyle.None;
+            Name_textBox.BorderStyle = BorderStyle.FixedSingle;
             Name_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Name_textBox.Location = new Point(195, 14);
+            Name_textBox.Location = new Point(195, 10);
             Name_textBox.Name = "Name_textBox";
-            Name_textBox.ReadOnly = true;
-            Name_textBox.Size = new Size(120, 15);
+            Name_textBox.Size = new Size(120, 22);
             Name_textBox.TabIndex = 152;
             Name_textBox.TextAlign = HorizontalAlignment.Center;
+            Name_textBox.TextChanged += Name_textBox_TextChanged;
             // 
             // radioButton3
             // 

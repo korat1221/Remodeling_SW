@@ -31,7 +31,7 @@ namespace main.contents
     public partial class AHUSystem : Form
     {
         string Type;
-        String Num = "AHU01"; string Name; String SelectZone_nonsplit, SelectSystem, AHUOptions;
+        String Num; string Name; String SelectZone_nonsplit, SelectSystem, AHUOptions;
         String AHULocation, AHUVolumeControl, AHULeakageTestMethod, AHULeakageLevel1, AHULeakageLevel2;
         double AHUInsulationThickness;
         string DuctLeakageLevel;
@@ -126,7 +126,7 @@ namespace main.contents
             PipeIns_Ramda = 0.035;
             PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
             PipeIns_textBox.Text = "일반 보온재";
-
+            PipeIns = "일반 보온재";
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -134,6 +134,13 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
 
+        private void Name_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if(Name_textBox.Text != null)
+            {
+                Name = Name_textBox.Text.ToString();
+            }
+        }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             Type = "기존";
@@ -184,8 +191,6 @@ namespace main.contents
             SelectSystem = "";
             HRV_dataGridView.Columns.Clear();
             HRV_dataGridView.Rows.Clear();
-            Name_textBox.Text = "";
-            Name = "";
         }
 
         private void AHUoptions_button_Click(object sender, EventArgs e)
@@ -461,10 +466,7 @@ namespace main.contents
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "번호,명칭,공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어,설치유형", "번호='" + SelectAHU + "'");
             if (Value.Length > 0)
             {
-                Num_textBox.Text = Value[0][0];
-                Num = Value[0][0];
-                Name_textBox.Text = Value[0][1];
-                Name = Value[0][1];
+
                 int nRow = HRV_dataGridView.Rows.Add();
                 for (int i = 0; i < 28; i++)
                 { HRV_dataGridView.Rows[nRow].Cells[i].Value = Value[0][i]; }
@@ -499,10 +501,6 @@ namespace main.contents
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "번호,명칭,열회수유형, 온도교환효율_냉방, 온도교환효율_난방, 습도교환효율_냉방, 습도교환효율_난방, 팬풍량, 팬정압, 모터제어, 팬동력,설치유형", "번호 ='" + SelectHRV + "'");
             if (Value.Length > 0)
             {
-                Num_textBox.Text = Value[0][0];
-                Num = Value[0][0];
-                Name_textBox.Text = Value[0][1];
-                Name = Value[0][1];
 
                 HRV_dataGridView.Rows.Add();
                 int nRow = HRV_dataGridView.Rows.Count - 1;
@@ -653,7 +651,7 @@ namespace main.contents
                 PipeIns_Ramda = 0.035;
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
                 PipeIns_textBox.Text = "일반 보온재";
-                PipeIns= "일반 보온재";
+                PipeIns = "일반 보온재";
             }
         }
 
@@ -884,7 +882,7 @@ namespace main.contents
             Num_textBox.Text = ID;
             Num = ID;
 
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "명칭,유형,존", "번호 = '" + ID + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "명칭,유형,존,시스템번호", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
                 Name_textBox.Text = Value[0][0];
@@ -893,17 +891,19 @@ namespace main.contents
                 AHUOptions_comboBox.SelectedItem = Value[0][1];
                 AHUOptions = Value[0][1];
                 ChangeAHUOptions(AHUOptions);
-                if (AHUOptions == "공조기")
-                {
-                    load_Table_AHU(Num);
-                }
-                else
-                {
-                    load_Table_HRV(Num);
-                }
                 SelectZone_nonsplit = Value[0][2];
                 Split_Zone(SelectZone_nonsplit);
                 Cal_Qb();
+
+                SelectSystem = Value[0][3];
+                if (AHUOptions == "공조기")
+                {
+                    load_Table_AHU(SelectSystem);
+                }
+                else
+                {
+                    load_Table_HRV(SelectSystem);
+                }
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "설치위치, 풍량제어, 누기시험방법, 누기등급1, 공조기단열두께, TAB실시유무", "번호 = '" + ID + "'");
