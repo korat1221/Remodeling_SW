@@ -30,7 +30,7 @@ namespace main
         double AHU_SA_Volume, AHU_EA_Volume, AHU_SA_Pressure, AHU_EA_Pressure, AHU_SA_FanPower, AHU_EA_FanPower, AHU_SA_FanEta, AHU_EA_FanEta;
         string AHU_MotorControl;
         //공조기일반정보
-        string SelectSystem, AHULocation, AHULeakageLevel, AHUVolumeControl, DuctLeakageLevel;
+        string AHULocation, AHULeakageLevel, AHUVolumeControl, DuctLeakageLevel;
         double AHUInsulationThickness;
         public double flea_du, flea_ahu, fins_ahu;
         //예열예냉
@@ -90,127 +90,107 @@ namespace main
                     }
                 }
             }
+            string[][] AHUValue = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "유형", "번호='" + AHUNum + "'");
+            if (AHUValue.Length > 0)
+            {
+                AHUOptions = AHUValue[0][0];
+            }
         }
         public void Load_ZoneData()
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "존,유형", "번호='" + AHUNum + "'");
-            if (Value.Length > 0)
+            SelectZone_split.Clear();
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + AHUNum + "'");
+            if (value.Length > 0)
             {
-                AHUOptions = Value[0][1];
-                if (AHUOptions == "공조기")
+                for (int k = 0; k < value.Length; k++)
                 {
-                    Split_Zone(Value[0][0]);
-                    for (int n = 0; n < SelectZone_split.Count; n++)
-                    {
-                        string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간", "존번호='" + SelectZone_split[n] + "'");
-                        if (ZoneValue.Length > 0)
-                        {
-                            Vmin_tot += Convert.ToDouble(ZoneValue[0][1]);
-                            ANF_tot += Convert.ToDouble(ZoneValue[0][2]);
-                            Zone zone = Program.CALC.getZone(SelectZone_split[n].ToString());
-                            Qh_a_tot += zone.Qb_a[0];
-                            Qc_a_tot += zone.Qb_a[1];
-                            Qmax_tot[0] += zone.Q_max[0];
-                            Qmax_tot[1] += zone.Q_max[1];
-                            tvmech_avg += Convert.ToDouble(ZoneValue[0][3]) * zone.Qb_a[1];
-                            for (int mth = 0; mth < 12; mth++)
-                            {
-                                Qb_mth_tot[0, mth] += zone.Qb_mth[0, 1, mth];
-                                Qb_mth_tot[1, mth] += zone.Qb_mth[1, 1, mth];
-                                dvmechmth_avg[mth] += zone.dwd_mth[mth] * zone.Qb_a[1];
-                            }
-
-
-                            string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,공조운전시부재율,공조냉방부분운전계수", "용도명='" + ZoneValue[0][0] + "'");
-                            if (Usage.Length > 0)
-                            {
-                                theta_iset_avg[0] += Convert.ToDouble(Usage[0][0]) * zone.Qb_a[0];
-                                theta_iset_avg[1] += Convert.ToDouble(Usage[0][1]) * zone.Qb_a[1];
-                            }
-
-                        }
-                    }
-
-                    theta_iset_avg[0] = theta_iset_avg[0] / Qh_a_tot;
-                    theta_iset_avg[1] = theta_iset_avg[1] / Qc_a_tot;
-                    tvmech_avg = tvmech_avg / Qc_a_tot;
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-                        dvmechmth_avg[mth] = dvmechmth_avg[mth] / Qc_a_tot;
-                    }
-                }
-                else
-                {
-                    Split_Zone(Value[0][0]);
-                    for (int n = 0; n < SelectZone_split.Count; n++)
-                    {
-                        string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간,주이용일", "존번호='" + SelectZone_split[n] + "'");
-                        if (ZoneValue.Length > 0)
-                        {
-                            Vmin_tot += Convert.ToDouble(ZoneValue[0][1]);
-                            ANF_tot += Convert.ToDouble(ZoneValue[0][2]);                           
-                            tvmech_avg += Convert.ToDouble(ZoneValue[0][3]);
-                            for (int mth = 0; mth < 12; mth++)
-                            {
-                                string[][] ValueK;
-                                if (ZoneValue[0][4] != "5.5")
-                                {
-                                    ValueK = Program.DB.getValue(DB.type.BaseDB_HCneed, "이용일수", "이용일수", "월='" + (mth + 1) + "월' AND 주간일수 ='주 " + ZoneValue[0][4] + ".0 일 근무'");
-                                }
-                                else { ValueK = Program.DB.getValue(DB.type.BaseDB_HCneed, "이용일수", "이용일수", "월='" + (mth + 1) + "월' AND 주간일수 ='주 5.5 일 근무'"); }
-                                if (ValueK.Length > 0)
-                                {
-                                    dvmechmth_avg[mth] += Convert.ToDouble(ValueK[0][0]);
-                                }
-                            }
-
-                            string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,공조운전시부재율,공조냉방부분운전계수", "용도명='" + ZoneValue[0][0] + "'");
-                            if (Usage.Length > 0)
-                            {
-                                theta_iset_avg[0] += Convert.ToDouble(Usage[0][0]);
-                                theta_iset_avg[1] += Convert.ToDouble(Usage[0][1]);
-                            }
-
-                        }
-                    }
-
-                    theta_iset_avg[0] = theta_iset_avg[0] / SelectZone_split.Count;
-                    theta_iset_avg[1] = theta_iset_avg[1] / SelectZone_split.Count;
-                    tvmech_avg = tvmech_avg / SelectZone_split.Count;
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-                        dvmechmth_avg[mth] = dvmechmth_avg[mth] / SelectZone_split.Count;
-                    }
+                    SelectZone_split.Add(value[k][0]);
                 }
             }
-        }
-        private void Split_Zone(String nonSplit)
-        {
-            String 내용;
-            if (nonSplit != null)
+
+            if (AHUOptions == "공조기")
             {
-                if (nonSplit.Contains("+"))
+                for (int n = 0; n < SelectZone_split.Count; n++)
                 {
-                    string[] token = nonSplit.Split('+');
-                    SelectZone_split.Clear();
-                    foreach (var item in token)
+                    string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간", "존번호='" + SelectZone_split[n] + "'");
+                    if (ZoneValue.Length > 0)
                     {
-                        SelectZone_split.Add(item.ToString());
+                        Vmin_tot += Convert.ToDouble(ZoneValue[0][1]);
+                        ANF_tot += Convert.ToDouble(ZoneValue[0][2]);
+                        Zone zone = Program.CALC.getZone(SelectZone_split[n].ToString());
+                        Qh_a_tot += zone.Qb_a[0];
+                        Qc_a_tot += zone.Qb_a[1];
+                        Qmax_tot[0] += zone.Q_max[0];
+                        Qmax_tot[1] += zone.Q_max[1];
+                        tvmech_avg += Convert.ToDouble(ZoneValue[0][3]) * zone.Qb_a[1];
+                        for (int mth = 0; mth < 12; mth++)
+                        {
+                            Qb_mth_tot[0, mth] += zone.Qb_mth[0, 1, mth];
+                            Qb_mth_tot[1, mth] += zone.Qb_mth[1, 1, mth];
+                            dvmechmth_avg[mth] += zone.dwd_mth[mth] * zone.Qb_a[1];
+                        }
+                        string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,공조운전시부재율,공조냉방부분운전계수", "용도명='" + ZoneValue[0][0] + "'");
+                        if (Usage.Length > 0)
+                        {
+                            theta_iset_avg[0] += Convert.ToDouble(Usage[0][0]) * zone.Qb_a[0];
+                            theta_iset_avg[1] += Convert.ToDouble(Usage[0][1]) * zone.Qb_a[1];
+                        }
                     }
-                    내용 = SelectZone_split[0].ToString() + " 외 " + (SelectZone_split.Count - 1).ToString() + "개";
                 }
-                else
+                theta_iset_avg[0] = theta_iset_avg[0] / Qh_a_tot;
+                theta_iset_avg[1] = theta_iset_avg[1] / Qc_a_tot;
+                tvmech_avg = tvmech_avg / Qc_a_tot;
+                for (int mth = 0; mth < 12; mth++)
                 {
-                    SelectZone_split.Clear();
-                    SelectZone_split.Add(nonSplit);
-                    내용 = SelectZone_split[0].ToString();
+                    dvmechmth_avg[mth] = dvmechmth_avg[mth] / Qc_a_tot;
                 }
             }
-            else { 내용 = ""; }
+            else
+            {
+                for (int n = 0; n < SelectZone_split.Count; n++)
+                {
+                    string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간,주이용일", "존번호='" + SelectZone_split[n] + "'");
+                    if (ZoneValue.Length > 0)
+                    {
+                        Vmin_tot += Convert.ToDouble(ZoneValue[0][1]);
+                        ANF_tot += Convert.ToDouble(ZoneValue[0][2]);
+                        tvmech_avg += Convert.ToDouble(ZoneValue[0][3]);
+                        for (int mth = 0; mth < 12; mth++)
+                        {
+                            string[][] ValueK;
+                            if (ZoneValue[0][4] != "5.5")
+                            {
+                                ValueK = Program.DB.getValue(DB.type.BaseDB_HCneed, "이용일수", "이용일수", "월='" + (mth + 1) + "월' AND 주간일수 ='주 " + ZoneValue[0][4] + ".0 일 근무'");
+                            }
+                            else { ValueK = Program.DB.getValue(DB.type.BaseDB_HCneed, "이용일수", "이용일수", "월='" + (mth + 1) + "월' AND 주간일수 ='주 5.5 일 근무'"); }
+                            if (ValueK.Length > 0)
+                            {
+                                dvmechmth_avg[mth] += Convert.ToDouble(ValueK[0][0]);
+                            }
+                        }
+
+                        string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,공조운전시부재율,공조냉방부분운전계수", "용도명='" + ZoneValue[0][0] + "'");
+                        if (Usage.Length > 0)
+                        {
+                            theta_iset_avg[0] += Convert.ToDouble(Usage[0][0]);
+                            theta_iset_avg[1] += Convert.ToDouble(Usage[0][1]);
+                        }
+
+                    }
+                }
+
+                theta_iset_avg[0] = theta_iset_avg[0] / SelectZone_split.Count;
+                theta_iset_avg[1] = theta_iset_avg[1] / SelectZone_split.Count;
+                tvmech_avg = tvmech_avg / SelectZone_split.Count;
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    dvmechmth_avg[mth] = dvmechmth_avg[mth] / SelectZone_split.Count;
+                }
+            }
         }
         public void Load_GeneralData()
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "유형,설치위치,누기등급2,풍량제어,공조기단열두께,덕트누기수준,시스템번호", "번호='" + AHUNum + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "유형,설치위치,누기등급2,풍량제어,공조기단열두께,덕트누기수준", "번호='" + AHUNum + "'");
             if (Value.Length > 0)
             {
                 
@@ -219,7 +199,6 @@ namespace main
                 AHUVolumeControl = Value[0][3];
                 AHUInsulationThickness = Convert.ToDouble(Value[0][4]);
                 DuctLeakageLevel = Value[0][5];
-                SelectSystem = Value[0][6];
 
                 if (AHULocation == "단열외피 내부") { Fx = 0.1; }
                 else if (AHULocation == "단열외피 외부") { Fx = 0.4; }
@@ -253,7 +232,7 @@ namespace main
         }
         public void Load_AHUData()
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어", "번호 = '" + SelectSystem + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어", "번호 = '" + AHUNum + "'");
             if (Value.Length > 0)
             {
                 AHU_Type = Value[0][0];
@@ -284,8 +263,8 @@ namespace main
                 AHU_EA_Pressure = Convert.ToDouble(Value[0][23]);
                 AHU_SA_FanPower = Convert.ToDouble(Value[0][24]);
                 AHU_EA_FanPower = Convert.ToDouble(Value[0][25]);
-                AHU_SA_FanEta = AHU_SA_Volume / 3600 * AHU_SA_Pressure / AHU_SA_FanPower / 1000;
-                AHU_EA_FanEta = AHU_EA_Volume / 3600 * AHU_EA_Pressure / AHU_EA_FanPower / 1000;
+                AHU_SA_FanEta = AHU_SA_Volume / 3600 * AHU_SA_Pressure / AHU_SA_FanPower /1000 ;
+                AHU_EA_FanEta = AHU_EA_Volume / 3600 * AHU_EA_Pressure / AHU_EA_FanPower /1000;
                 AHU_MotorControl = Value[0][26];
             }
             string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "열회수기유형='" + AHU_HRVType+ "' And 건물유형 ='비주거건물'");
@@ -309,7 +288,7 @@ namespace main
         }
         public void Load_HRVData()
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,팬풍량,팬동력,모터제어", "번호 = '" + SelectSystem + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,팬풍량,팬동력,모터제어", "번호 = '" + AHUNum + "'");
             if (Value.Length > 0)
             {
                 AHU_HRVType = Value[0][0];
@@ -330,6 +309,21 @@ namespace main
             string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "열회수기유형='" + AHU_HRVType + "' And 건물유형 ='비주거건물'");
             if (Value2.Length > 0)
             { theta_defrost = Convert.ToDouble(Value2[0][0]); }
+
+            Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "실내설정습도", "제습기준습도", "구분='습도고려안함'");
+            if (Value2.Length > 0)
+            { X_i_max = Convert.ToDouble(Value2[0][0]) / 1000; }
+            Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "실내설정습도", "가습기준습도", "구분='습도고려안함'");
+            if (Value2.Length > 0)
+            { X_i_min = Convert.ToDouble(Value2[0][0]) / 1000; }
+            for (int mth = 0; mth < 12; mth++)
+            {
+                if (X_i_min >= X_e[mth])
+                { X_iset[mth] = X_i_min; }
+                else if (X_i_max <= X_e[mth])
+                { X_iset[mth] = X_i_max; }
+                else { X_iset[mth] = X_e[mth]; }
+            }
         }
        
         public void Load_DuctData()
@@ -401,7 +395,7 @@ namespace main
             double 냉각코일_출구_엔탈피 = 1.006 * AHU_Cooling_out_drytemp + 냉각코일_출구_절대습도 * (2500 + 1.86 * AHU_Cooling_out_drytemp);
 
             double 계산된_냉방출력 = (냉각코일_입구_엔탈피 - 냉각코일_출구_엔탈피) * 1.204 * AHU_SA_Volume / 3600;
-            double 계산된_난방출력 = (AHU_Heating_in_temp - AHU_Heating_out_temp) * 0.34 * AHU_SA_Volume / 3600;
+            double 계산된_난방출력 = (AHU_Heating_out_temp - AHU_Heating_in_temp) * 0.34 * AHU_SA_Volume / 3600;
 
         }
 
@@ -454,7 +448,14 @@ namespace main
                     Q_gnd[mth] = 0.34 * Vmin_tot * dtheta_prh[mth] * tvmech_avg * dvmechmth_avg[mth] / 1000;
                 }
             }
-
+            else 
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    theta_SA_prh[mth] = theta_e[mth];
+                    X_SA_prh[mth] = X_e[mth];
+                }
+            }
         }
         public void Cal_Preheating()
         {
@@ -606,7 +607,7 @@ namespace main
                     dtheta_hr[hc, mth] = (AHU_eta_temp[hc]/100 - (flea_du - 1) - fins_ahu) * (theta_RA_du[hc, mth] - theta_OA_du[hc, mth]);
                     theta_SA_hr[hc, mth] = theta_OA_du[hc, mth] + dtheta_hr[hc, mth];
                     theta_EA_hr[hc, mth] = theta_RA_du[hc, mth] - dtheta_hr[hc, mth];
-                    X_SA_hr[mth] = X_SA_prh[mth] + (AHU_eta_humidity[0] - (flea_ahu - 1) - fins_ahu) * (X_iset[mth] - X_SA_prh[mth]);
+                    X_SA_hr[mth] = X_SA_prh[mth] + (AHU_eta_humidity[0]/100 - (flea_ahu - 1) - fins_ahu) * (X_iset[mth] - X_SA_prh[mth]);
                 }
             }            
         }
@@ -636,7 +637,6 @@ namespace main
                             Q_loss_EA_du[hc, mth] = Math.Max(0, 0.34 * Vmin_tot * dtheta_du_EA[hc, mth] * tvmech_avg * dvmechmth_avg[mth] / 1000);
                         }
                     }
-                    theta_RA_du[hc, mth] = (1 / flea_du * (theta_iset_avg[hc]) + (flea_du - 1) / flea_du * theta_sur_nc[0, mth]) + dtheta_du_RA[0, mth];
                 }
             }
         }
@@ -646,8 +646,8 @@ namespace main
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    theta_vmech[1, mth] = theta_iset_avg[1] - (AHU_Cooling_in_drytemp - AHU_Cooling_out_drytemp) * 0.34 * AHU_SA_Volume / 3600;
-                    theta_vmech[0, mth] = theta_iset_avg[0] + (AHU_Heating_in_temp - AHU_Heating_out_temp) * 0.34 * AHU_SA_Volume / 3600;
+                    theta_vmech[1, mth] = theta_iset_avg[1] - ((AHU_Cooling_in_drytemp - AHU_Cooling_out_drytemp) * 0.34 * AHU_SA_Volume / 1000) * 1000 / (0.34 * AHU_SA_Volume);
+                    theta_vmech[0, mth] = theta_iset_avg[0] + ((AHU_Heating_out_temp - AHU_Heating_in_temp) * 0.34 * AHU_SA_Volume / 1000)*1000/(0.34 * AHU_SA_Volume) ;
 
                 }
 
@@ -655,8 +655,8 @@ namespace main
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Vvmech[0, mth] = Math.Max(Vmin_tot, Qb_mth_tot[0, mth] * 1000 / (0.34 * (theta_vmech[0, mth] - theta_iset_avg[0]) * tvmech_avg * dvmechmth_avg[mth]));
-                        Vvmech[1, mth] = Math.Max(Vmin_tot, Qb_mth_tot[1, mth] * 1000 / (0.34 * (theta_iset_avg[1] - theta_vmech[1, mth]) * tvmech_avg * dvmechmth_avg[mth]));
+                        Vvmech[0, mth] = Math.Min(AHU_SA_Volume, Math.Max(Vmin_tot, Qb_mth_tot[0, mth] * 1000 / (0.34 * (theta_vmech[0, mth] - theta_iset_avg[0]) * tvmech_avg * dvmechmth_avg[mth])));
+                        Vvmech[1, mth] = Math.Min(AHU_SA_Volume, Math.Max(Vmin_tot, Qb_mth_tot[1, mth] * 1000 / (0.34 * (theta_iset_avg[1] - theta_vmech[1, mth]) * tvmech_avg * dvmechmth_avg[mth])));
                     }
 
                 }
@@ -664,10 +664,10 @@ namespace main
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Vvmech[0, mth] = Math.Max(Vmin_tot, Qmax_tot[0] * 1000 / (0.34 * (theta_vmech[0, mth] - theta_iset_avg[0])));
+                        Vvmech[0, mth] = Math.Min(AHU_SA_Volume, Math.Max(Vmin_tot, Qmax_tot[0] / (0.34 * (theta_vmech[0, mth] - theta_iset_avg[0]))));
                         theta_vmech[0, mth] = theta_iset_avg[0] + Qb_mth_tot[0, mth] / (0.34 * Vvmech_leak[0, mth] * tvmech_avg * dvmechmth_avg[mth] / 1000);
 
-                        Vvmech[1, mth] = Math.Max(Vmin_tot, Qmax_tot[1] * 1000 / (0.34 * (theta_iset_avg[1] - theta_vmech[1, mth])));
+                        Vvmech[1, mth] = Math.Min(AHU_SA_Volume, Math.Max(Vmin_tot, Qmax_tot[1] / (0.34 * (theta_iset_avg[1] - theta_vmech[1, mth]))));
                         theta_vmech[1, mth] = theta_iset_avg[1] - Qb_mth_tot[1, mth] / (0.34 * Vvmech_leak[1, mth] * tvmech_avg * dvmechmth_avg[mth] / 1000);
                     }
                 }
@@ -800,19 +800,19 @@ namespace main
                 {
                     if (Qb_mth_tot[1, mth] > Qb_mth_tot[0, mth])
                     {
-                        Ev_gen_fan_SA[mth] = tvmech_avg * dvmechmth_avg[mth] * Vvmech_leak[1, mth] * (AHU_SA_FanPower / AHU_SA_Volume + 2.78 * (10 ^ -7) * dp_defrost / AHU_SA_FanEta) * Math.Pow(fflow_ctrl, x);
-                        Ev_gen_fan_EA[mth] = tvmech_avg * dvmechmth_avg[mth] * Vvmech_leak[1, mth] * (AHU_EA_FanPower / AHU_EA_Volume + 2.78 * (10 ^ -7) * dp_defrost / AHU_EA_FanEta) * Math.Pow(fflow_ctrl, x);
+                        Ev_gen_fan_SA[mth] = tvmech_avg * dvmechmth_avg[mth] * Vvmech_leak[1, mth] * (AHU_SA_FanPower / AHU_SA_Volume + 2.78 * Math.Pow(10 , -7) * dp_defrost / AHU_SA_FanEta) * Math.Pow(fflow_ctrl, x);
+                        Ev_gen_fan_EA[mth] = tvmech_avg * dvmechmth_avg[mth] * Vvmech_leak[1, mth] * (AHU_EA_FanPower / AHU_EA_Volume + 2.78 * Math.Pow(10 , -7) * dp_defrost / AHU_EA_FanEta) * Math.Pow(fflow_ctrl, x);
                     }
                     else
                     {
-                        Ev_gen_fan_SA[mth] = tvmech_avg * dvmechmth_avg[mth] * Vvmech_leak[0, mth] * (AHU_SA_FanPower / AHU_SA_Volume + 2.78 * (10 ^ -7) * dp_defrost / AHU_SA_FanEta) * Math.Pow(fflow_ctrl, x);
-                        Ev_gen_fan_EA[mth] = tvmech_avg * dvmechmth_avg[mth] * Vvmech_leak[0, mth] * (AHU_EA_FanPower / AHU_EA_Volume + 2.78 * (10 ^ -7) * dp_defrost / AHU_EA_FanEta) * Math.Pow(fflow_ctrl, x);
+                        Ev_gen_fan_SA[mth] = tvmech_avg * dvmechmth_avg[mth] * Vvmech_leak[0, mth] * (AHU_SA_FanPower / AHU_SA_Volume + 2.78 * Math.Pow(10, -7) * dp_defrost / AHU_SA_FanEta) * Math.Pow(fflow_ctrl, x);
+                        Ev_gen_fan_EA[mth] = tvmech_avg * dvmechmth_avg[mth] * Vvmech_leak[0, mth] * (AHU_EA_FanPower / AHU_EA_Volume + 2.78 * Math.Pow(10, -7) * dp_defrost / AHU_EA_FanEta) * Math.Pow(fflow_ctrl, x);
                     }
                 }
                 else
                 {
-                    Ev_gen_fan_SA[mth] = tvmech_avg * dvmechmth_avg[mth] * Math.Max(Vvmech_leak[0, mth], Vvmech_leak[1, mth]) * (AHU_SA_FanPower / AHU_SA_Volume + 2.78 * (10 ^ -7) * dp_defrost / AHU_SA_FanEta) * Math.Pow(fflow_ctrl, x);
-                    Ev_gen_fan_EA[mth] = tvmech_avg * dvmechmth_avg[mth] * Math.Max(Vvmech_leak[0, mth], Vvmech_leak[1, mth]) * (AHU_EA_FanPower / AHU_EA_Volume + 2.78 * (10 ^ -7) * dp_defrost / AHU_EA_FanEta) * Math.Pow(fflow_ctrl, x);
+                    Ev_gen_fan_SA[mth] = tvmech_avg * dvmechmth_avg[mth] * Math.Max(Vvmech_leak[0, mth], Vvmech_leak[1, mth]) * (AHU_SA_FanPower / AHU_SA_Volume + 2.78 * Math.Pow(10, -7) * dp_defrost / AHU_SA_FanEta) * Math.Pow(fflow_ctrl, x);
+                    Ev_gen_fan_EA[mth] = tvmech_avg * dvmechmth_avg[mth] * Math.Max(Vvmech_leak[0, mth], Vvmech_leak[1, mth]) * (AHU_EA_FanPower / AHU_EA_Volume + 2.78 * Math.Pow(10, -7) * dp_defrost / AHU_EA_FanEta) * Math.Pow(fflow_ctrl, x);
                 }
                 
 

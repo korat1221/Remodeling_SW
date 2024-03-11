@@ -42,7 +42,6 @@
             label28 = new Label();
             label29 = new Label();
             Zone_textBox = new TextBox();
-            Zone_button = new Button();
             CoolingLoad_textBox = new TextBox();
             AnnualHeatingNeed_textBox = new TextBox();
             label25 = new Label();
@@ -158,7 +157,6 @@
             GeneralPanel.Controls.Add(label28);
             GeneralPanel.Controls.Add(label29);
             GeneralPanel.Controls.Add(Zone_textBox);
-            GeneralPanel.Controls.Add(Zone_button);
             GeneralPanel.Controls.Add(CoolingLoad_textBox);
             GeneralPanel.Controls.Add(AnnualHeatingNeed_textBox);
             GeneralPanel.Controls.Add(label25);
@@ -291,21 +289,6 @@
             Zone_textBox.TabIndex = 156;
             Zone_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Zone_button
-            // 
-            Zone_button.BackColor = SystemColors.ControlLight;
-            Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            Zone_button.FlatStyle = FlatStyle.System;
-            Zone_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Zone_button.Location = new Point(323, 68);
-            Zone_button.Margin = new Padding(0);
-            Zone_button.Name = "Zone_button";
-            Zone_button.Size = new Size(23, 23);
-            Zone_button.TabIndex = 157;
-            Zone_button.Text = "+";
-            Zone_button.UseVisualStyleBackColor = false;
-            Zone_button.Click += Zone_button_Click;
-            // 
             // CoolingLoad_textBox
             // 
             CoolingLoad_textBox.BackColor = Color.White;
@@ -409,14 +392,13 @@
             // Name_textBox
             // 
             Name_textBox.BackColor = SystemColors.Window;
-            Name_textBox.BorderStyle = BorderStyle.FixedSingle;
+            Name_textBox.BorderStyle = BorderStyle.None;
             Name_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Name_textBox.Location = new Point(195, 10);
+            Name_textBox.Location = new Point(195, 14);
             Name_textBox.Name = "Name_textBox";
-            Name_textBox.Size = new Size(120, 22);
+            Name_textBox.Size = new Size(120, 15);
             Name_textBox.TabIndex = 152;
             Name_textBox.TextAlign = HorizontalAlignment.Center;
-            Name_textBox.TextChanged += Name_textBox_TextChanged;
             // 
             // radioButton3
             // 
@@ -1434,7 +1416,6 @@
         private Label label15;
         public TextBox Name_textBox;
         private CustomComboBox AHUOptions_comboBox;
-        private Button Zone_button;
         private TextBox Zone_textBox;
         private TextBox AnnualCoolingNeed_textBox;
         private Label label24;

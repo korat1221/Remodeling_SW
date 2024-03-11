@@ -1,4 +1,5 @@
-﻿using main.contentslist;
+﻿using Eagle._Interfaces.Public;
+using main.contentslist;
 using main.subcontents.AHUSystem;
 using main.subcontents.ConstructionCW;
 using main.subcontents.DHWSystem;
@@ -31,7 +32,7 @@ namespace main.contents
     public partial class AHUSystem : Form
     {
         string Type;
-        String Num; string Name; String SelectZone_nonsplit, SelectSystem, AHUOptions;
+        String Num; string Name; String AHUOptions;
         String AHULocation, AHUVolumeControl, AHULeakageTestMethod, AHULeakageLevel1, AHULeakageLevel2;
         double AHUInsulationThickness;
         string DuctLeakageLevel;
@@ -134,13 +135,6 @@ namespace main.contents
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
 
-        private void Name_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if(Name_textBox.Text != null)
-            {
-                Name = Name_textBox.Text.ToString();
-            }
-        }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             Type = "기존";
@@ -162,6 +156,10 @@ namespace main.contents
         {
             if (AHUOptions_comboBox.SelectedItem != null)
             {
+                if(AHUOptions != AHUOptions_comboBox.SelectedItem.ToString())
+                { Clear_SelectSystem(); }
+                else { }
+
                 AHUOptions = AHUOptions_comboBox.SelectedItem.ToString();
                 ChangeAHUOptions(AHUOptions);
             }
@@ -169,6 +167,14 @@ namespace main.contents
             {
                 AHUOptions = "";
             }
+        }
+        private void Clear_SelectSystem()
+        {
+            Num = ""; Name = "";
+            Num_textBox.Text = "";
+            Name_textBox.Text = "";
+            HRV_dataGridView.Columns.Clear();
+            HRV_dataGridView.Rows.Clear();
         }
         private void ChangeAHUOptions(String AHUOptions)
         {
@@ -185,12 +191,7 @@ namespace main.contents
                 TABOptions_label.Visible = true;
                 TABOptions_comboBox.Visible = true;
             }
-            else
-            {
-            }
-            SelectSystem = "";
-            HRV_dataGridView.Columns.Clear();
-            HRV_dataGridView.Rows.Clear();
+            Load_Zone();
         }
 
         private void AHUoptions_button_Click(object sender, EventArgs e)
@@ -208,47 +209,24 @@ namespace main.contents
         ///////////////////////////////////////////////////////////존////////////////////////////////////////////////////////////////////
         #region 존
 
-        private void Zone_button_Click(object sender, EventArgs e)
+        private void Load_Zone()
         {
-            AHU_Zone AHUzone = new AHU_Zone(Num, SelectZone_nonsplit, AHUOptions);
-            DialogResult result = AHUzone.ShowDialog();
-            if (result == DialogResult.OK)
+            String 내용="";
+            SelectZone_split.Clear();
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "선택열회수기 = '"+ Num + "'");
+            if (value.Length > 0)
             {
-                if (AHUzone.SelectZone != null)
+                for (int k = 0; k < value.Length; k++)
                 {
-                    SelectZone_nonsplit = AHUzone.SelectZone;
-                    Split_Zone(AHUzone.SelectZone);
-                    Cal_Qb();
+                    SelectZone_split.Add(value[k][0]) ;
                 }
+                if(value.Length > 1) { 내용 = SelectZone_split[0].ToString() + " 외 " + (SelectZone_split.Count - 1).ToString() + "개"; }
+                else { 내용 = SelectZone_split[0].ToString(); }
             }
+            Zone_textBox.Text = 내용;
+            Cal_Qb();
         }
 
-        private void Split_Zone(String nonSplit)
-        {
-            String 내용;
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains("+"))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SelectZone_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SelectZone_split.Add(item.ToString());
-                    }
-                    내용 = SelectZone_split[0].ToString() + " 외 " + (SelectZone_split.Count - 1).ToString() + "개";
-                }
-                else
-                {
-                    SelectZone_split.Clear();
-                    SelectZone_split.Add(nonSplit);
-                    내용 = SelectZone_split[0].ToString();
-                }
-                Zone_textBox.Text = 내용;
-            }
-            else { 내용 = ""; }
-
-        }
 
         private void Cal_Qb()
         {
@@ -344,8 +322,7 @@ namespace main.contents
             {
                 AHULeakageLevel_label.Visible = false;
                 AHULeakageLevel_comboBox.Visible = false;
-                AHULeakageLevel1 = "";
-                AHULeakageLevel2 = "";
+                AHULeakageLevel2 = "A3/B3/C3";
             }
         }
         private void Chaeck_AHULeakageLevel(string AHULeakageLevel1)
@@ -398,27 +375,29 @@ namespace main.contents
         {
             if (AHUOptions == "열회수기")
             {
-                AHU_HRV AHU_HRV = new AHU_HRV(AHUOptions, SelectSystem);
+                AHU_HRV AHU_HRV = new AHU_HRV(AHUOptions, Num);
                 DialogResult result = AHU_HRV.ShowDialog();
                 if (result == DialogResult.OK)
                 {
                     if (AHU_HRV.SelectSystem != null)
                     {
-                        SelectSystem = AHU_HRV.SelectSystem;
-                        load_Table_HRV(SelectSystem);
+                        Num = AHU_HRV.SelectSystem;
+                        load_Table_HRV(Num);
+                        Load_Zone();
                     }
                 }
             }
             else
             {
-                AHU_HRV AHU_HRV = new AHU_HRV(AHUOptions, SelectSystem);
+                AHU_HRV AHU_HRV = new AHU_HRV(AHUOptions, Num);
                 DialogResult result = AHU_HRV.ShowDialog();
                 if (result == DialogResult.OK)
                 {
                     if (AHU_HRV.SelectSystem != null)
                     {
-                        SelectSystem = AHU_HRV.SelectSystem;
-                        load_Table_AHU(SelectSystem);
+                        Num = AHU_HRV.SelectSystem;
+                        load_Table_AHU(Num);
+                        Load_Zone();
                     }
                 }
             }
@@ -466,6 +445,9 @@ namespace main.contents
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "번호,명칭,공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어,설치유형", "번호='" + SelectAHU + "'");
             if (Value.Length > 0)
             {
+                Num_textBox.Text = SelectAHU;
+                Name = Value[0][1];
+                Name_textBox.Text = Name;
 
                 int nRow = HRV_dataGridView.Rows.Add();
                 for (int i = 0; i < 28; i++)
@@ -501,7 +483,9 @@ namespace main.contents
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "번호,명칭,열회수유형, 온도교환효율_냉방, 온도교환효율_난방, 습도교환효율_냉방, 습도교환효율_난방, 팬풍량, 팬정압, 모터제어, 팬동력,설치유형", "번호 ='" + SelectHRV + "'");
             if (Value.Length > 0)
             {
-
+                Num_textBox.Text = SelectHRV;
+                Name = Value[0][1];
+                Name_textBox.Text = Name;
                 HRV_dataGridView.Rows.Add();
                 int nRow = HRV_dataGridView.Rows.Count - 1;
                 for (int i = 0; i < 11; i++)
@@ -801,8 +785,8 @@ namespace main.contents
         }
         private void Save()
         {
-            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,프로젝트유형,명칭,존", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + Name + "','" + SelectZone_nonsplit + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형,시스템번호", "'" + Num_textBox.Text + "','" + AHUOptions + "','" + SelectSystem + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,프로젝트유형,명칭", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + Name  + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형", "'" + Num_textBox.Text + "','" + AHUOptions + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,설치위치,풍량제어,누기시험방법,누기등급1,누기등급2,공조기단열두께,TAB실시유무", "'" + Num_textBox.Text + "','" + AHULocation + "','" + AHUVolumeControl + "','" + AHULeakageTestMethod + "','" + AHULeakageLevel1 + "','" + AHULeakageLevel2 + "','" + AHUInsulationThickness.ToString() + "','" + TABOptions + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,덕트누기수준,OA덕트길이,EA덕트길이,SA덕트길이,RA덕트길이,덕트단열두께,덕트관경,덕트단열재,덕트단열재열전도율", "'" + Num_textBox.Text + "','" + DuctLeakageLevel + "','" + OALength.ToString() + "','" + EALength.ToString() + "','" + SALength.ToString() + "','" + RALength.ToString() + "','" + DuctInsulationThickness.ToString() + "','" + DuctDiameter.ToString() + "','" + PipeIns + "','" + PipeIns_Ramda.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,예열예냉유형,프리히터제어유형,프리히터용량", "'" + Num_textBox.Text + "','" + PrehPrecOptions + "','" + PrehControlOptions + "','" + PrehPower + "'", "번호");
@@ -822,7 +806,7 @@ namespace main.contents
         private void reset()
         {
             Type = null;
-            Num = null; Name = null; SelectZone_nonsplit = null; SelectSystem = null; AHUOptions = null;
+            Num = null; Name = null; Num = null; AHUOptions = null;
             AHULocation = null; AHUVolumeControl = null; AHULeakageTestMethod = null; AHULeakageLevel1 = null; AHULeakageLevel2 = null;
             AHUInsulationThickness = 0;
             DuctLeakageLevel = null;
@@ -882,27 +866,24 @@ namespace main.contents
             Num_textBox.Text = ID;
             Num = ID;
 
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "명칭,유형,존,시스템번호", "번호 = '" + ID + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "명칭,유형", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
                 Name_textBox.Text = Value[0][0];
                 Name = Value[0][0];
 
-                AHUOptions_comboBox.SelectedItem = Value[0][1];
                 AHUOptions = Value[0][1];
+                AHUOptions_comboBox.SelectedItem = Value[0][1];
                 ChangeAHUOptions(AHUOptions);
-                SelectZone_nonsplit = Value[0][2];
-                Split_Zone(SelectZone_nonsplit);
                 Cal_Qb();
 
-                SelectSystem = Value[0][3];
                 if (AHUOptions == "공조기")
                 {
-                    load_Table_AHU(SelectSystem);
+                    load_Table_AHU(Num);
                 }
                 else
                 {
-                    load_Table_HRV(SelectSystem);
+                    load_Table_HRV(Num);
                 }
             }
 

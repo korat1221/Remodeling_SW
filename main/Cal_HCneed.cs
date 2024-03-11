@@ -17,7 +17,9 @@ namespace main
         public double twd_d, th_op_d_we, th_op_d, dwd_a;
         public double zoneArea, zoneHeight;
         public double qI_p, qI_fac, Cwirk_A;
-        public double VA_we, VA_wd, n50, e, f, Vmech_SUP_we, Vmech_SUP_wd, Vmech_ETA_we, Vmech_ETA_wd, eta_V_mech, eta_χV_mech, xi_c_set, xi_h_set, H_winter, H_summer, Vmech_SUP_z, Vmech_ETA_z, ρacp_a;
+        public double VA_we, VA_wd, n50, e, f, Vmech_SUP_we, Vmech_SUP_wd, Vmech_ETA_we, Vmech_ETA_wd, xi_c_set, xi_h_set, H_winter, H_summer, Vmech_SUP_z, Vmech_ETA_z, ρacp_a;
+        public double[] eta_V_mech = new double[2], eta_χV_mech = new double[2];
+        public string SelectHRV;
         public ArrayList zoneWall = new ArrayList();
         public ArrayList zoneRoof = new ArrayList();
         public ArrayList zoneFloor = new ArrayList();
@@ -247,21 +249,43 @@ namespace main
           
         public void LoadData_Ventil()
         {//존 환기정보 가져오기 
-            string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "환기유무,환기방식,비이용일환기량,이용일환기량", "존번호='" + ZoneNum + "'");
+            string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "환기유무,환기방식,비이용일환기량,이용일환기량,선택열회수기", "존번호='" + ZoneNum + "'");
             if (ZoneG.Length > 0)
             {
                 if (Convert.ToBoolean(ZoneG[0][0]))
                 {
-                    if (ZoneG[0][1] == "열회수환기")
+                    if (ZoneG[0][1] == "열회수기 멀티존"|| ZoneG[0][1] == "열회수기 단일존" )
                     {
                         Vmech_SUP_we = Convert.ToDouble(ZoneG[0][2]);
                         Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
                         Vmech_SUP_wd = Convert.ToDouble(ZoneG[0][3]);
                         Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]);
-                        eta_V_mech = 0.69;
-                        eta_χV_mech = 0.404;
-                        //eta_V_mech = Convert.ToDouble(ZoneG[0][4]);
-                        //eta_χV_mech = Convert.ToDouble(ZoneG[0][5]); //나중에 습도교환효율로 바꿔야함 
+                        SelectHRV = ZoneG[0][4];
+                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "온도교환효율_난방,온도교환효율_냉방,습도교환효율_난방,습도교환효율_냉방", "번호='" + SelectHRV + "'");
+                        if(value.Length > 0)
+                        {
+                            eta_V_mech[0] = Convert.ToDouble(value[0][0]) / 100;
+                            eta_V_mech[1] = Convert.ToDouble(value[0][1]) / 100;
+                            eta_χV_mech[0] = Convert.ToDouble(value[0][2]) / 100;
+                            eta_χV_mech[1] = Convert.ToDouble(value[0][3]) / 100;
+                        }
+                       
+                    }
+                    else if(ZoneG[0][1] == "공조기")
+                    {
+                        Vmech_SUP_we = Convert.ToDouble(ZoneG[0][2]);
+                        Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
+                        Vmech_SUP_wd = Convert.ToDouble(ZoneG[0][3]);
+                        Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]);
+                        SelectHRV = ZoneG[0][4];
+                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "온도교환효율_난방,온도교환효율_냉방,습도교환효율_난방,습도교환효율_냉방", "번호='" + SelectHRV + "'");
+                        if (value.Length > 0)
+                        {
+                            eta_V_mech[0] = Convert.ToDouble(value[0][0]) / 100;
+                            eta_V_mech[1] = Convert.ToDouble(value[0][1]) / 100;
+                            eta_χV_mech[0] = Convert.ToDouble(value[0][2]) / 100;
+                            eta_χV_mech[1] = Convert.ToDouble(value[0][3]) / 100;
+                        }
                     }
                     else
                     {
@@ -2117,8 +2141,19 @@ namespace main
 
                     for (int mth = 0; mth <= 11; mth++)
                     {
-                        theta_v_mech[0, mth] = theta_e[mth] + eta_V_mech * (theta_i_h_set - theta_e[mth]);
-                        theta_v_mech[1, mth] = theta_e[mth] + eta_V_mech * (theta_i_c_set - theta_e[mth]);
+                        String[][] value = Program.DB.querySQL(DB.type.ProjDB, "select a.theta_SA_hr FROM AHUSystem_Result AS a INNER JOIN AHUSystem_Form AS b ON a.번호 = b.번호 where b.번호 = '" + SelectHRV + "' And  a.난방_냉방 = '난방' And a.월='"+(mth+1).ToString()+"월'");
+                        if (value.Length > 0)
+                        { 
+                            theta_v_mech[0, mth] = Convert.ToDouble(value[0][0]); 
+                        }
+                        else { theta_v_mech[0, mth] = theta_e[mth] + eta_V_mech[0] * (theta_i_h_set - theta_e[mth]); }
+
+                        value = Program.DB.querySQL(DB.type.ProjDB, "select a.theta_SA_hr FROM AHUSystem_Result AS a INNER JOIN AHUSystem_Form AS b ON a.번호 = b.번호 where b.번호 = '" + SelectHRV + "' And a.난방_냉방 = '냉방' And a.월='" + (mth + 1).ToString() + "월'");
+                        if (value.Length > 0)
+                        { 
+                            theta_v_mech[1, mth] = Convert.ToDouble(value[0][0]);
+                        }
+                        else { theta_v_mech[1, mth] = theta_e[mth] + eta_V_mech[1] * (theta_i_h_set - theta_e[mth]); }
 
                         QVCalc qvcalc = new QVCalc();
                         if (theta_i[hc, wewd, mth] >= theta_e[mth])
@@ -2151,7 +2186,7 @@ namespace main
             QV_inf_sink_max = Zone_HV_inf[1] * (theta_i_h_min - theta_e_min);
             QV_win_sink_max = Zone_HV_win[1] * (theta_i_h_min - theta_e_min);
             QV_z_sink_max = Zone_HV_z[1] * (theta_i_h_min - theta_i_h_min);
-            QV_mech_sink_max = Zone_HV_mech[1] * (theta_i_h_min - (theta_e_min + eta_V_mech * (theta_i_h_min - theta_e_min)));
+            QV_mech_sink_max = Zone_HV_mech[1] * (theta_i_h_min - (theta_e_min + eta_V_mech[1] * (theta_i_h_min - theta_e_min)));
             QVsink_tot_max = QV_inf_sink_max + QV_win_sink_max + QV_z_sink_max ; //기계환기 제외
 
             HVCalc hvcalc = new HVCalc();
@@ -2189,7 +2224,7 @@ namespace main
                     if (T_Value.Length > 0 && X_Value.Length > 0)
                     {
                         X_t[h - 1, mth - 1] = 611.2 * Math.Exp(17.62 * Convert.ToDouble(T_Value[0][0]) / (243.12 + Convert.ToDouble(T_Value[0][0]))) / 461.51 / (273.15 + Convert.ToDouble(T_Value[0][0])) / 1.2 * Convert.ToDouble(X_Value[0][0]);
-                        X_mech[h - 1, mth - 1] = X_t[h - 1, mth - 1] + eta_χV_mech * (xi_c_set - X_t[h - 1, mth - 1]);
+                        X_mech[h - 1, mth - 1] = X_t[h - 1, mth - 1] + eta_χV_mech[1]* (xi_c_set - X_t[h - 1, mth - 1]);
                     }
                 }
             }

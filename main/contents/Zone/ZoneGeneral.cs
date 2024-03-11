@@ -1,5 +1,6 @@
 ﻿using main.contentslist;
 using System;
+using main.subcontents.AHUSystem;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -31,7 +32,7 @@ namespace main.contents
         double OccupancyDensity, OccupancyDensity_Low, OccupancyDensity_Medium, OccupancyDensity_High;
         String OccupancyDensity_index, EquipIHG_index;
         String ZoneName, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
-       // double η, η2;
+        string SelectHRV; 
         static string Layer;
         public ZoneGeneral()
         {
@@ -59,8 +60,7 @@ namespace main.contents
             //Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, AHU_comboBox, "존일반", "환기방식", "");
             AHU_comboBox.Items.Clear();
             AHU_comboBox.Items.Add("배기환기(3종)");
-            AHU_comboBox.Items.Add("열회수기 멀티존");
-            AHU_comboBox.Items.Add("열회수기 단일존");
+            AHU_comboBox.Items.Add("열회수기");
             AHU_comboBox.Items.Add("공조기");
 
             //실 제어방식
@@ -83,10 +83,6 @@ namespace main.contents
         }
 
 
-        private void AHU_button_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -221,8 +217,6 @@ namespace main.contents
             {
                 AHUType = AHU_comboBox.SelectedItem.ToString();
                 Check_AHU();
-                if (AHU_comboBox.SelectedItem == "열회수기 단일존") { AHU_button.Visible = true; }
-                else { AHU_button.Visible = false; }
             }
         }
         private void Check_AHU()
@@ -233,8 +227,11 @@ namespace main.contents
                 AHU_label.Visible = true;
                 AHU_comboBox.Visible = true;
                 AHU_comboBox.Enabled = true;
-                if (AHU_comboBox.SelectedItem == "열회수기 단일존") { AHU_button.Visible = true; }
-                else { AHU_button.Visible = false; }
+                if(AHU_comboBox.SelectedItem == null) { AHU_button.Visible = false; AHU_textBox.Visible = false; AHU_label2.Visible = false; }
+                else if (AHU_comboBox.SelectedItem.ToString() != "배기환기(3종)") { AHU_button.Visible = true; AHU_textBox.Visible = true; AHU_label2.Visible = true; }
+                else { AHU_button.Visible = false; AHU_textBox.Visible = false; AHU_label2.Visible = false; }
+
+                if(AHUType == "공조기") { AHU_label2.Text = "공조기"; } else { AHU_label2.Text = "열회수기"; }
             }
             else
             {
@@ -243,8 +240,38 @@ namespace main.contents
                 AHU_comboBox.Visible = false;
                 AHU_comboBox.Enabled = false;
                 AHU_pictureBox.Visible = false;
-                if (AHU_comboBox.SelectedItem == "열회수기 단일존") { AHU_button.Visible = true; }
-                else { AHU_button.Visible = false; }
+                if (AHU_comboBox.SelectedItem == null) { AHU_button.Visible = false; AHU_textBox.Visible = false; AHU_label2.Visible = false; }
+                else if (AHU_comboBox.SelectedItem.ToString() != "배기환기(3종)") { AHU_button.Visible = true; AHU_textBox.Visible = true; AHU_label2.Visible = true; }
+                else { AHU_button.Visible = false; AHU_textBox.Visible = false; AHU_label2.Visible = false; }
+            }
+        }
+        private void AHU_button_Click(object sender, EventArgs e)
+        {
+            if (AHUType == "공조기")
+            {
+                AHU_HRV AHU_HRV = new AHU_HRV(AHUType, SelectHRV);
+                DialogResult result = AHU_HRV.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    if (AHU_HRV.SelectSystem != null)
+                    {
+                        SelectHRV = AHU_HRV.SelectSystem;
+                        if (SelectHRV != null) { AHU_textBox.Text = SelectHRV; }
+                    }
+                }
+            }
+            else
+            {
+                AHU_HRV AHU_HRV = new AHU_HRV(AHUType, SelectHRV);
+                DialogResult result = AHU_HRV.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    if (AHU_HRV.SelectSystem != null)
+                    {
+                        SelectHRV = AHU_HRV.SelectSystem;
+                        if (SelectHRV != null) { AHU_textBox.Text = SelectHRV; }
+                    }
+                }
             }
         }
         private void Load_AHUImage()
@@ -599,13 +626,13 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형,존이름,실제어방식,냉난방유무,환기유무,환기방식," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
-                "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적",
-            "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','" + ZoneName + "','" + RoomControl + "','" + HCType + "','" + Ventilation_checkBox.Checked.ToString() + "','" + AHUType + "','" 
+                "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적,선택열회수기",
+            "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','" + ZoneName + "','" + RoomControl + "','" + HCType + "','" + Ventilation_checkBox.Checked.ToString() + "','" + AHUType + "','"
             + Usage + "','" + CeilingHeight.ToString() + "','" + StartTime + "','" + EndTime + "','" + WeekUseDay.ToString() + "','" + PersonNum_textBox.Text + "','" + EquipIHG_index + "','"
             + DHWneed.ToString() + "','" + HCTime.ToString() + "','" + UseTime.ToString() + "','" + AHUTime.ToString() + "','" + AnnualUseDay.ToString() + "','"
             + OccupancyDensity.ToString() + "','" + OccupancyDensity_index + "','" + PersonIHG_1day.ToString() + "','" + PersonIHG.ToString() + "','" + EquipIHG_1day.ToString() + "','" + EquipIHG.ToString() + "','"
             + NetVolume.ToString() + "','" + VentilationRate.ToString() + "','" + Volume_wd.ToString() + "','" + Volume_we.ToString() + "','"
-            + NetArea.ToString() + "'", "존번호");
+            + NetArea.ToString() + "','" + SelectHRV +"'", "존번호");
 
             MessageBox.Show(ZoneNum + "[" + ZoneName + "] 정보를 저장하였습니다.");
             this.DialogResult = DialogResult.OK;
@@ -689,7 +716,7 @@ namespace main.contents
             reset();
             Load_OtherFormData();
 
-            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,실제어방식,냉난방유무,환기유무,환기방식,환기방식,환기방식,환기방식,환기방식," +
+            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,실제어방식,냉난방유무,환기유무,환기방식,선택열회수기,환기방식,환기방식,환기방식," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
                 "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적", "존번호 = '" + ZoneNum + "'");
@@ -733,23 +760,11 @@ namespace main.contents
                 Check_AHU();
                 Load_AHUImage();
 
-
-                //if (Value[0][5] != "")
-                //{
-                //    η = Convert.ToDouble(Value[0][5]);
-                //    η_textBox.Text = string.Format("{0:F1}", η * 100);
-                //}
-                //if (Value[0][6] != "")
-                //{
-                //    η2 = Convert.ToDouble(Value[0][6]);
-                //    η2_textBox.Text = string.Format("{0:F1}", η2 * 100);
-                //}
-
+                SelectHRV = Value[0][5];
+                AHU_textBox.Text = SelectHRV;
 
                 Usage_comboBox.SelectedItem = Usage;
                 DataRowView? item = Usage_comboBox.SelectedItem as DataRowView;
-                //Usage = Value[0][7];
-
 
                 if (item != null)
                 {

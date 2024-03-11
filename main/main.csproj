@@ -121,9 +121,6 @@
     <Compile Update="contents\System\AHUSystem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="subcontents\AHUSystem\AHU_Zone.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="subcontents\ConstructionBlind\BlindDB.cs">
       <SubType>Form</SubType>
     </Compile>

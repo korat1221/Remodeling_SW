@@ -43,11 +43,8 @@ namespace main.contentslist
 
         private void Add_button_Click(object sender, EventArgs e)
         {
-            Num = Program.UTIL.CreateNum("AHUSystem_Form", "번호", "VS");
-
             Program.getMenuForm().ResetForm(17);
-
-            Load_form(Num, "Add");
+            Load_form("", "Add");
         }
 
         public static bool OnLoadProc(Form form)
@@ -86,12 +83,11 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A1", "번호");
             dataGridView1.Columns.Add("A2", "명칭");
             dataGridView1.Columns.Add("A3", "유형");
-            dataGridView1.Columns.Add("A4", "시스템");
-            dataGridView1.Columns.Add("A5", "풍량.급기.[m3/h]");
-            dataGridView1.Columns.Add("A6", "온도교환효율.난방.[%]");
-            dataGridView1.Columns.Add("A7", "온도교환효율.냉방.[%]");
-            dataGridView1.Columns.Add("A8", "코일용량.냉방.[kW]");
-            dataGridView1.Columns.Add("A9", "코일용량.난방.[kW]");
+            dataGridView1.Columns.Add("A4", "풍량.급기.[m3/h]");
+            dataGridView1.Columns.Add("A5", "온도교환효율.난방.[%]");
+            dataGridView1.Columns.Add("A6", "온도교환효율.냉방.[%]");
+            dataGridView1.Columns.Add("A7", "코일용량.냉방.[kW]");
+            dataGridView1.Columns.Add("A8", "코일용량.난방.[kW]");
             dataGridView1.Columns[0].Width = 40;
             dataGridView1.Columns[1].Width = 50;
 
@@ -122,7 +118,7 @@ namespace main.contentslist
         {
 
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호,명칭,유형,시스템번호", "");
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호,명칭,유형", "");
             string[][] Value;
             if (List.Length > 0)
             {
@@ -137,28 +133,26 @@ namespace main.contentslist
 
                     if (List[n][2] == "공조기")
                     {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "급기풍량,온도교환효율_난방,온도교환효율_냉방,난방코일출력,냉각코일출력,명칭", "번호='" + List[n][3] + "'");
+                        Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "급기풍량,온도교환효율_난방,온도교환효율_냉방,난방코일출력,냉각코일출력,명칭", "번호='" + List[n][0] + "'");
                         if (Value.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = List[n][3] + "." + Value[0][5];
-                            dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][0]));
-                            dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][1]));
-                            dataGridView1.Rows[nRow].Cells[7].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][2]));
-                            dataGridView1.Rows[nRow].Cells[8].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][3]));
-                            dataGridView1.Rows[nRow].Cells[9].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][4]));
+                            dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][0]));
+                            dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][1]));
+                            dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][2]));
+                            dataGridView1.Rows[nRow].Cells[7].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][3]));
+                            dataGridView1.Rows[nRow].Cells[8].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][4]));
                         }
                     }
                     else
                     {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "팬풍량,온도교환효율_난방,온도교환효율_냉방,명칭", "번호='" + List[n][3] + "'");
+                        Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "팬풍량,온도교환효율_난방,온도교환효율_냉방,명칭", "번호='" + List[n][0] + "'");
                         if (Value.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = List[n][3] + "." + Value[0][3];
-                            dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][0]));
-                            dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][1]));
-                            dataGridView1.Rows[nRow].Cells[7].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][2]));
+                            dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][0]));
+                            dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][1]));
+                            dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][2]));
+                            dataGridView1.Rows[nRow].Cells[7].Value = "-";
                             dataGridView1.Rows[nRow].Cells[8].Value = "-";
-                            dataGridView1.Rows[nRow].Cells[9].Value = "-";
                         }
                     }
 

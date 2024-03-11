@@ -35,6 +35,8 @@ namespace main.contents
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
+            AHU_label2 = new System.Windows.Forms.Label();
+            AHU_textBox = new System.Windows.Forms.TextBox();
             AHU_button = new System.Windows.Forms.Button();
             label65 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
@@ -170,6 +172,8 @@ namespace main.contents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(AHU_label2);
+            GeneralPanel.Controls.Add(AHU_textBox);
             GeneralPanel.Controls.Add(AHU_button);
             GeneralPanel.Controls.Add(label65);
             GeneralPanel.Controls.Add(label3);
@@ -193,13 +197,36 @@ namespace main.contents
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
             // 
+            // AHU_label2
+            // 
+            AHU_label2.AutoSize = true;
+            AHU_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AHU_label2.Location = new Point(830, 22);
+            AHU_label2.Name = "AHU_label2";
+            AHU_label2.Size = new Size(51, 16);
+            AHU_label2.TabIndex = 185;
+            AHU_label2.Text = "열회수기";
+            // 
+            // AHU_textBox
+            // 
+            AHU_textBox.BackColor = Color.White;
+            AHU_textBox.BorderStyle = BorderStyle.None;
+            AHU_textBox.Enabled = false;
+            AHU_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AHU_textBox.ForeColor = SystemColors.ControlDark;
+            AHU_textBox.Location = new Point(795, 54);
+            AHU_textBox.Name = "AHU_textBox";
+            AHU_textBox.Size = new Size(120, 15);
+            AHU_textBox.TabIndex = 184;
+            AHU_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
             // AHU_button
             // 
             AHU_button.BackColor = SystemColors.ControlLight;
             AHU_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AHU_button.FlatStyle = FlatStyle.System;
             AHU_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            AHU_button.Location = new Point(769, 50);
+            AHU_button.Location = new Point(917, 50);
             AHU_button.Margin = new Padding(0);
             AHU_button.Name = "AHU_button";
             AHU_button.Size = new Size(23, 23);
@@ -1697,6 +1724,8 @@ namespace main.contents
         private PictureBox HC_pictureBox;
         private PictureBox AHU_pictureBox;
         private System.Windows.Forms.TextBox SA_Volume_textBox;
+        private System.Windows.Forms.Label AHU_label2;
+        private System.Windows.Forms.TextBox AHU_textBox;
         private System.Windows.Forms.Button AHU_button;
     }
 }
