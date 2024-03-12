@@ -62,8 +62,14 @@
             Previous_button = new Button();
             Save_button = new Button();
             ImagePanel = new Panel();
-            panel4 = new Panel();
+            VAVpictureBox = new PictureBox();
+            HumidifierpictureBox = new PictureBox();
+            PrehPrecpictureBox = new PictureBox();
+            CoilpictureBox = new PictureBox();
+            MainpictureBox = new PictureBox();
             ZoneS_label = new Label();
+            LocationpictureBox = new PictureBox();
+            panel4 = new Panel();
             PrehPrec_tabPage = new TabPage();
             label4 = new Label();
             PrehPrecOptions_comboBox = new CustomComboBox();
@@ -133,7 +139,12 @@
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             ImagePanel.SuspendLayout();
-            panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)VAVpictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HumidifierpictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PrehPrecpictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)CoilpictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)MainpictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LocationpictureBox).BeginInit();
             PrehPrec_tabPage.SuspendLayout();
             CooltubeInfo_groupBox.SuspendLayout();
             GroundInfo_groupBox.SuspendLayout();
@@ -505,21 +516,66 @@
             // 
             ImagePanel.BackColor = Color.White;
             ImagePanel.BorderStyle = BorderStyle.Fixed3D;
-            ImagePanel.Controls.Add(panel4);
+            ImagePanel.Controls.Add(VAVpictureBox);
+            ImagePanel.Controls.Add(HumidifierpictureBox);
+            ImagePanel.Controls.Add(PrehPrecpictureBox);
+            ImagePanel.Controls.Add(CoilpictureBox);
+            ImagePanel.Controls.Add(MainpictureBox);
+            ImagePanel.Controls.Add(ZoneS_label);
+            ImagePanel.Controls.Add(LocationpictureBox);
             ImagePanel.Location = new Point(16, 439);
             ImagePanel.Name = "ImagePanel";
-            ImagePanel.Size = new Size(977, 264);
+            ImagePanel.Size = new Size(970, 260);
             ImagePanel.TabIndex = 146;
             // 
-            // panel4
+            // VAVpictureBox
             // 
-            panel4.BackgroundImageLayout = ImageLayout.None;
-            panel4.Controls.Add(ZoneS_label);
-            panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(0, 0);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(973, 260);
-            panel4.TabIndex = 4;
+            VAVpictureBox.BackColor = Color.Transparent;
+            VAVpictureBox.Location = new Point(0, 0);
+            VAVpictureBox.Name = "VAVpictureBox";
+            VAVpictureBox.Size = new Size(967, 260);
+            VAVpictureBox.TabIndex = 161;
+            VAVpictureBox.TabStop = false;
+            VAVpictureBox.Visible = false;
+            // 
+            // HumidifierpictureBox
+            // 
+            HumidifierpictureBox.BackColor = Color.Transparent;
+            HumidifierpictureBox.Location = new Point(0, 0);
+            HumidifierpictureBox.Name = "HumidifierpictureBox";
+            HumidifierpictureBox.Size = new Size(967, 260);
+            HumidifierpictureBox.TabIndex = 160;
+            HumidifierpictureBox.TabStop = false;
+            HumidifierpictureBox.Visible = false;
+            // 
+            // PrehPrecpictureBox
+            // 
+            PrehPrecpictureBox.BackColor = Color.Transparent;
+            PrehPrecpictureBox.Location = new Point(0, 0);
+            PrehPrecpictureBox.Name = "PrehPrecpictureBox";
+            PrehPrecpictureBox.Size = new Size(967, 260);
+            PrehPrecpictureBox.TabIndex = 158;
+            PrehPrecpictureBox.TabStop = false;
+            PrehPrecpictureBox.Visible = false;
+            // 
+            // CoilpictureBox
+            // 
+            CoilpictureBox.BackColor = Color.Transparent;
+            CoilpictureBox.Location = new Point(0, 0);
+            CoilpictureBox.Name = "CoilpictureBox";
+            CoilpictureBox.Size = new Size(967, 260);
+            CoilpictureBox.TabIndex = 159;
+            CoilpictureBox.TabStop = false;
+            CoilpictureBox.Visible = false;
+            // 
+            // MainpictureBox
+            // 
+            MainpictureBox.BackColor = Color.Transparent;
+            MainpictureBox.Location = new Point(0, 0);
+            MainpictureBox.Name = "MainpictureBox";
+            MainpictureBox.Size = new Size(967, 260);
+            MainpictureBox.TabIndex = 156;
+            MainpictureBox.TabStop = false;
             // 
             // ZoneS_label
             // 
@@ -530,6 +586,22 @@
             ZoneS_label.Name = "ZoneS_label";
             ZoneS_label.Size = new Size(0, 15);
             ZoneS_label.TabIndex = 155;
+            // 
+            // LocationpictureBox
+            // 
+            LocationpictureBox.BackColor = Color.Transparent;
+            LocationpictureBox.Location = new Point(0, 0);
+            LocationpictureBox.Name = "LocationpictureBox";
+            LocationpictureBox.Size = new Size(967, 260);
+            LocationpictureBox.TabIndex = 157;
+            LocationpictureBox.TabStop = false;
+            // 
+            // panel4
+            // 
+            panel4.Location = new Point(0, 0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(200, 100);
+            panel4.TabIndex = 0;
             // 
             // PrehPrec_tabPage
             // 
@@ -1375,8 +1447,13 @@
             GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
             ImagePanel.ResumeLayout(false);
-            panel4.ResumeLayout(false);
-            panel4.PerformLayout();
+            ImagePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)VAVpictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HumidifierpictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PrehPrecpictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)CoilpictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)MainpictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LocationpictureBox).EndInit();
             PrehPrec_tabPage.ResumeLayout(false);
             PrehPrec_tabPage.PerformLayout();
             CooltubeInfo_groupBox.ResumeLayout(false);
@@ -1497,5 +1574,11 @@
         private CustomComboBox TABOptions_comboBox;
         private CustomComboBox AHULeakageLevel_comboBox;
         private Label AHULeakageLevel_label;
+        private PictureBox MainpictureBox;
+        private PictureBox PrehPrecpictureBox;
+        private PictureBox LocationpictureBox;
+        private PictureBox VAVpictureBox;
+        private PictureBox HumidifierpictureBox;
+        private PictureBox CoilpictureBox;
     }
 }

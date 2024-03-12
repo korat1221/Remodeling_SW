@@ -3871,7 +3871,7 @@ namespace main.contents
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호,프로젝트유형," +
-                    "명칭,설치대수,설치유형,공조방식",
+                    "명칭,설치유형,공조방식",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','"
                  + Value[3]
