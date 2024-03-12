@@ -254,7 +254,7 @@ namespace main
             {
                 if (Convert.ToBoolean(ZoneG[0][0]))
                 {
-                    if (ZoneG[0][1] == "열회수기 멀티존"|| ZoneG[0][1] == "열회수기 단일존" )
+                    if (ZoneG[0][1] == "열회수기" )
                     {
                         Vmech_SUP_we = Convert.ToDouble(ZoneG[0][2]);
                         Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
