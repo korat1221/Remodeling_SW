@@ -893,19 +893,20 @@ namespace main
                             for (int mth = 0; mth < 12; mth++)
                             {
                                     theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + zoneInwall.SideZone() + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "' and 월 ='" + (mth+1)+"월'");
-                                
+
                                 if (theta_u.Length > 0 && theta_u[0][0] != "")
                                 {
-                                    if (Convert.ToDouble(theta_u[0][0]) + 4 < theta_i[hc, wewd, mth])
+                                    if (theta_i[hc, wewd, mth] - Convert.ToDouble(theta_u[0][0]) > 4)
                                     {
                                         QT_u_sink_i[i, hc, wewd, mth] = qtcalc.Calc_sink(Convert.ToDouble(theta_u[0][0]), theta_i[hc, wewd, mth], zoneInWall_HT[hc, i]);
                                         QT_u_source_i[i, hc, wewd, mth] = 0;
                                     }
-                                    else
+                                    else if (Convert.ToDouble(theta_u[0][0]) - theta_i[hc, wewd, mth] > 4)
                                     {
                                         QT_u_source_i[i, hc, wewd, mth] = qtcalc.Calc_source(Convert.ToDouble(theta_u[0][0]), theta_i[hc, wewd, mth], zoneInWall_HT[hc, i]);
                                         QT_u_sink_i[i, hc, wewd, mth] = 0;
                                     }
+                                    else { }
                                 }
                                 else
                                 {
@@ -995,21 +996,22 @@ namespace main
 
                             for (int mth = 0; mth < 12; mth++)
                             {
-                                theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + zoneslab.SideZone() + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "' AND 월 ='"+(mth+1)+"월'"); 
-                               
+                                theta_u = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "비냉난방존온도", "번호 = '" + zoneslab.SideZone() + "' and 난방_냉방 = '" + 난방냉방 + "' and 비이용일_이용일 ='" + 비이 + "' AND 월 ='"+(mth+1)+"월'");
+
 
                                 if (theta_u.Length > 0 && theta_u[0][0] != "")
                                 {
-                                    if (Convert.ToDouble(theta_u[0][0]) + 4 < theta_i[hc, wewd, mth])
+                                    if (theta_i[hc, wewd, mth] - Convert.ToDouble(theta_u[0][0]) > 4)
                                     {
                                         QT_u_sink_i[i, hc, wewd, mth] = qtcalc.Calc_sink(Convert.ToDouble(theta_u[0][0]), theta_i[hc, wewd, mth], zoneSlab_HT[hc, i]);
                                         QT_u_source_i[i, hc, wewd, mth] = 0;
                                     }
-                                    else
+                                    else if (Convert.ToDouble(theta_u[0][0]) - theta_i[hc, wewd, mth] > 4)
                                     {
                                         QT_u_source_i[i, hc, wewd, mth] = qtcalc.Calc_source(Convert.ToDouble(theta_u[0][0]), theta_i[hc, wewd, mth], zoneSlab_HT[hc, i]);
                                         QT_u_sink_i[i, hc, wewd, mth] = 0;
                                     }
+                                    else { }
                                 }
                                 else
                                 {

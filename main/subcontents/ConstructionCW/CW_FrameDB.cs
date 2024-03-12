@@ -34,7 +34,11 @@ namespace main.subcontents.ConstructionCW
             UserDB_FrameType_comboBox.Text = this.FrameType;
             UserDB_FrameType_comboBox.Enabled = false;
             //프레임 형태 콤보박스 
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, UserDB_FrameShape_comboBox, "커튼월", "형태", "1");
+            // Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, UserDB_FrameShape_comboBox, "커튼월", "형태", "1");
+            UserDB_FrameShape_comboBox.Items.Add("기본형");
+            UserDB_FrameShape_comboBox.Items.Add("1단형");
+            UserDB_FrameShape_comboBox.Items.Add("3단형");
+            UserDB_FrameShape_comboBox.Items.Add("4단형");
             //유리 콤보박스
             string[][] User_Glass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,제품명", "");
             if (User_Glass.Length > 0)
@@ -285,6 +289,13 @@ namespace main.subcontents.ConstructionCW
                         UserDB_Lfix = (1 - (UserDB_FramedA + UserDB_FramedA * 0.5)) * 2 + (2 - 2 * UserDB_FramedA) * 2;
                         break;
                     }
+                case "1단형":
+                    {
+                        UserDB_Ag = (2 - UserDB_FramedA * 2) * (2 - UserDB_FramedA * 2);
+                        UserDB_Af = 4 - UserDB_Ag;
+                        UserDB_Lfix = (2 - UserDB_FramedA * 2) * 4;
+                        break;
+                    }
 
                 case "3단형":
                     {
@@ -306,9 +317,10 @@ namespace main.subcontents.ConstructionCW
             }
             if (UserDB_Ucw > 0 && UserDB_Ug > 0 && UserDB_Ag > 0 && UserDB_Psimt > 0)
             {
-                UserDB_Uf = (UserDB_Ucw * 4 - UserDB_Ug * UserDB_Ag - UserDB_Psimt * UserDB_Lfix - UserDB_PsiOpen * UserDB_Lopen) / UserDB_Af;
+                // UserDB_Uf = (UserDB_Ucw * 4 - UserDB_Ug * UserDB_Ag - UserDB_Psimt * UserDB_Lfix - UserDB_PsiOpen * UserDB_Lopen) / UserDB_Af;
+                UserDB_Uf = (UserDB_Ucw * 4 - UserDB_Ug * UserDB_Ag) / UserDB_Af;
             }
-            if (UserDB_Uf > 0.5)
+            if (UserDB_Uf > 1.2)
             {
                 UserDB_UfA_textBox.Text = String.Format("{0:F3}", UserDB_Uf);
                 UserDB_UfB_textBox.Text = String.Format("{0:F3}", UserDB_Uf);
@@ -325,7 +337,7 @@ namespace main.subcontents.ConstructionCW
 
         private void AddUserDB_button_Click(object sender, EventArgs e)
         {
-            if (UserDB_Uf < 0.5)
+            if (UserDB_Uf < 1.2)
             {
                 MessageBox.Show("유리를 다시 선택해주세요.");
                 UserDB_Uf = 0;

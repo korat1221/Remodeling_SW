@@ -38,7 +38,12 @@ namespace main.subcontents
             UserDB_FrameType_comboBox.Text = this.FrameType;
             UserDB_FrameType_comboBox.Enabled = false;
             //프레임 형태 콤보박스 
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, UserDB_FrameShape_comboBox, "창호", "형태", "1");
+           // Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, UserDB_FrameShape_comboBox, "창호", "형태", "1");
+           UserDB_FrameShape_comboBox.Items.Clear();
+            UserDB_FrameShape_comboBox.Items.Add("기본형");
+            UserDB_FrameShape_comboBox.Items.Add("1단형");
+            UserDB_FrameShape_comboBox.Items.Add("3단형");
+            UserDB_FrameShape_comboBox.Items.Add("4단형");
             //프레임 재질 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, UserDB_FrameMaterial_comboBox, "창호", "프레임재질", "1");
             //유리 콤보박스
@@ -320,6 +325,13 @@ namespace main.subcontents
                         UserDB_Lfix = 2 * (2 - 2 * UserDB_FramedB) + 2 * (2 * 0.5 - (UserDB_FramedB + UserDB_FramedC * 0.5));
                         break;
                     }
+                case "1단형":
+                    {
+                        UserDB_Ag = (2 - UserDB_FramedA * 2) * (2 - UserDB_FramedA * 2);
+                        UserDB_Af = 4 - UserDB_Ag;
+                        UserDB_Lfix = (2 - UserDB_FramedA * 2) * 4;
+                        break;
+                    }
 
                 case "3단형":
                     {
@@ -345,13 +357,15 @@ namespace main.subcontents
                         UserDB_Lfix = 4 * (2 - (0.5 + UserDB_FramedC + UserDB_FramedB)) + 2 * (0.5 - UserDB_FramedB) + 4 * (2 - (1 + UserDB_FramedC + UserDB_FramedB)) + 2 * (1 - UserDB_FramedB);
                         break;
                     }
+                
             }
             if (UserDB_Uw > 0 && UserDB_Ug > 0 && UserDB_Ag > 0 && UserDB_PsiOpen > 0)
             {
-                UserDB_Uf = (UserDB_Uw * 4 - UserDB_Ug * UserDB_Ag - UserDB_PsiOpen * UserDB_Lopen - UserDB_PsiFix * UserDB_Lfix) / UserDB_Af;
+               // UserDB_Uf = (UserDB_Uw * 4 - UserDB_Ug * UserDB_Ag - UserDB_PsiOpen * UserDB_Lopen - UserDB_PsiFix * UserDB_Lfix) / UserDB_Af;
+                UserDB_Uf = (UserDB_Uw * 4 - UserDB_Ug * UserDB_Ag ) / UserDB_Af;
             }
 
-            if (UserDB_Uf > 0.5)
+            if (UserDB_Uf > 0.65)
             {
                 UserDB_UfA_textBox.Text = String.Format("{0:F3}", UserDB_Uf);
                 UserDB_UfB_textBox.Text = String.Format("{0:F3}", UserDB_Uf);
@@ -368,7 +382,7 @@ namespace main.subcontents
 
         private void AddUserDB_button_Click(object sender, EventArgs e)
         {
-            if (UserDB_Uf < 0.5)
+            if (UserDB_Uf < 0.65)
             {
                 MessageBox.Show("유리를 다시 선택해주세요.");
                 UserDB_Uf = 0;
