@@ -8,11 +8,12 @@ namespace main
 {
     internal class Cal_FinalEnergy
     {
+        public string Carrier_h, Carrier_w, Carrier_c;
         public double[] Qhf_gas = new double[12], Qhf_elec = new double[12];
         public double[] Qcf_gas = new double[12], Qcf_elec = new double[12];
         public double[] Qwf_gas = new double[12], Qwf_elec = new double[12];
         public double[] Qlf_elec = new double[12];
-        public double[] Qvf_gas = new double[12], Qvf_elec = new double[12]; //공조
+        public double[] Qvf_elec = new double[12]; //공조
         public double[] Qreg_elec = new double[12];//신재생
         public double[] Qbase_gas = new double[12], Qbase_elec = new double[12];
         public double[] Qf_gas_tot1 = new double[12], Qf_elec_tot1 = new double[12];
@@ -38,6 +39,7 @@ namespace main
                         }
                         else
                         {
+                            Carrier_h = Value[i][0];
                             Qhf_elec[mth] += (Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]) + Convert.ToDouble(Value[i][4]) + Convert.ToDouble(Value[i][5]));
                             Qhf_gas[mth] += Convert.ToDouble(Value[i][1]);
                         }
@@ -58,6 +60,7 @@ namespace main
                         }
                         else
                         {
+                            Carrier_w = Value[i][0];
                             Qwf_elec[mth] += (Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]) + Convert.ToDouble(Value[i][4]));
                             Qwf_gas[mth] += Convert.ToDouble(Value[i][1]);
                         }
@@ -82,6 +85,7 @@ namespace main
                     Qreg_elec[mth] += Convert.ToDouble(Value[0][0]);
                 }
             }
+            //냉방
             for (int mth = 0; mth < 12; mth++)
             {
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Result", "Fuel,QC_ce,QC_d,QC_s,QC_out,QC_f", "월='" + (mth + 1).ToString() + "월'");
@@ -95,16 +99,29 @@ namespace main
                         }
                         else
                         {
+                            Carrier_c = Value[i][0];
                             Qcf_elec[mth] += 0; //나중에 보조설비 에너지 합산 해야함 
                             Qcf_gas[mth] += 0;
                         }
                     }
                 }
             }
+            //공조 
+            for (int mth = 0; mth < 12; mth++)
+            {
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지", "월='" + (mth + 1).ToString() + "월'");
+                if (Value.Length > 0)
+                {
+                    for (int i = 0; i < Value.Length; i++) //시스템별
+                    {
+                        Qvf_elec[mth] += (Convert.ToDouble(Value[i][0]) + Convert.ToDouble(Value[i][1]) + Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]));
+                    }
+                }
+            }
 
 
-           //에너지사용량
-           string[][] Value1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "연료='전기'");
+            //에너지사용량
+            string[][] Value1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "연료='전기'");
             string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "연료='가스'");
             if (Value1.Length > 0)
             {
@@ -207,7 +224,7 @@ namespace main
             for (int mth = 0; mth < 12; mth++)
             {
                 Qf_elec_tot1[mth] = Qhf_elec[mth] + Qcf_elec[mth] + Qwf_elec[mth] + Qlf_elec[mth] + Qvf_elec[mth];
-                Qf_gas_tot1[mth] = Qhf_gas[mth] + Qcf_gas[mth] + Qwf_gas[mth] + Qvf_gas[mth];
+                Qf_gas_tot1[mth] = Qhf_gas[mth] + Qcf_gas[mth] + Qwf_gas[mth];
             }
         }
 
@@ -242,7 +259,7 @@ namespace main
             {
                 Qbase_elec[mth] = alpha + beta * x[mth];
 
-                if (Qbase_elec[mth] < 0)
+                if (double.IsNaN(Qbase_elec[mth]) || Qbase_elec[mth] < 0)
                 {
                     Qbase_elec[mth] = 0;
                 }
@@ -288,7 +305,7 @@ namespace main
             {
                 Qbase_gas[mth] = alpha + beta * x[mth];
 
-                if (Qbase_gas[mth] < 0)
+                if (double.IsNaN(Qbase_gas[mth]) || Qbase_gas[mth] < 0)
                 {
                     Qbase_gas[mth] = 0;
                 }
@@ -304,8 +321,7 @@ namespace main
         }
 
         public void Calc_Error()
-        {
-            
+        { 
            for(int mth  =0; mth < 12;mth++)
             {
                 Error_elec_mth[mth] = Math.Abs(Quse_elec_mth[mth] - Qf_elec_tot_mth[mth]);

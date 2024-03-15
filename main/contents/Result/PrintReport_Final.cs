@@ -73,7 +73,7 @@ namespace main.contents.Result
 
         private void Error_Report()
         {
-            string s, s2;
+            string s, s2, Carrier="가스";
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
 
             List<object> items = new List<object>();
@@ -273,7 +273,7 @@ namespace main.contents.Result
                 double Error_mth_avg_전기 = 0;
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,연료", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
                     if(Final.Length > 0)
                     {
                         __data[14].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][0]).ToString("0.0") }); //월별 난방 
@@ -301,11 +301,12 @@ namespace main.contents.Result
                         __data[20].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Qtot_mth_전기[mth].ToString()) }); //월별 전기 에너지소요량 
                         총전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Qtot_mth_전기[mth].ToString())), 3) + 0);
                         전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Qtot_mth_전기[mth].ToString())), 3) + 0);
-
-                        __data[39].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(((Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth] * 100).ToString("0.0")) }); //오차율
-                        Error_mth_avg_전기 += Math.Abs((Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth] * 100);
-                        전기오차율chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Math.Abs(((Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth])).ToString())), 3) + 0);  /// >>> 백분율 단위로 표시 필요 
-
+                        if (Quse_elec_mth[3, mth] > 0)
+                        {
+                            __data[39].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(((Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth] * 100).ToString("0.0")) }); //오차율
+                            Error_mth_avg_전기 += Math.Abs((Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth] * 100); 
+                            전기오차율chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Math.Abs(((Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth])).ToString())), 3) + 0);  /// >>> 백분율 단위로 표시 필요 
+                        }
                         Qh_a_전기 += Convert.ToDouble(Final[0][0]);
                         Qc_a_전기 += Convert.ToDouble(Final[0][1]);
                         Qw_a_전기 += Convert.ToDouble(Final[0][2]);
@@ -338,8 +339,9 @@ namespace main.contents.Result
 
                 Error_mth_avg_전기 = Error_mth_avg_전기 / 12;
                 __data[40].Add(new { idx = i, val = Error_mth_avg_전기.ToString("0.0") + "%" });
-
-                double Error_a_전기 = (Quse_elec_a[3] - Qtot_a_전기) / Quse_elec_a[3] * 100;
+                double Error_a_전기=0;
+                if (Quse_elec_a[3] > 0)
+                { Error_a_전기 = (Quse_elec_a[3] - Qtot_a_전기) / Quse_elec_a[3] * 100; }
                 __data[41].Add(new { idx = i, val = Error_a_전기.ToString("0.0") + "%" });
                 chart_전기사용량1.Add(System.Text.Json.JsonSerializer.Serialize(전기사용량chart1.ToArray()));
                 chart_전기사용량2.Add(System.Text.Json.JsonSerializer.Serialize(전기사용량chart2.ToArray()));
@@ -435,7 +437,7 @@ namespace main.contents.Result
                 List<object> 가스오차율chart = new List<object>();
 
                
-                string[][] 연도2 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "BuildingEnergyUse", "연도", "연료 = '가스'");
+                string[][] 연도2 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "BuildingEnergyUse", "연도", "연료 != '전기'");
                 try
                 {
                     if (연도2.Length > 0)
@@ -454,7 +456,7 @@ namespace main.contents.Result
                     }
                 }
                 catch { }
-                string[][] Value_사용시작일_가스 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "연료='가스' AND 단위 ='kWh'");
+                string[][] Value_사용시작일_가스 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "연료!='전기' AND 단위 ='kWh'");
                 int yearnum_가스 = 0;
                 if (Value_사용시작일_가스.Length > 0)
                 {
@@ -463,8 +465,8 @@ namespace main.contents.Result
                         string[][] Gas1, Gas2;
                         for (int mth = 0; mth < 11; mth++)
                         {
-                            Gas1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' AND 연료='가스' AND 단위 ='kWh'");
-                            Gas2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 2).ToString() + "월' AND 연료='가스'AND 단위 ='kWh'");
+                            Gas1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' AND 연료!='전기' AND 단위 ='kWh'");
+                            Gas2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 2).ToString() + "월' AND 연료!='전기'AND 단위 ='kWh'");
                             if(Gas1.Length >0 && Gas2.Length >0)
                             {
                                 for (int k = 0; k < Gas1.Length; k++) //연도별
@@ -474,8 +476,8 @@ namespace main.contents.Result
                                 yearnum = Gas1.Length;
                             }                            
                         }
-                        Gas1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (12).ToString() + "월' AND 연료='가스'AND 단위 ='kWh'");
-                        Gas2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (1).ToString() + "월' AND 연료='가스'AND 단위 ='kWh'");
+                        Gas1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (12).ToString() + "월' AND 연료!='전기'AND 단위 ='kWh'");
+                        Gas2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (1).ToString() + "월' AND 연료!='전기'AND 단위 ='kWh'");
                         if (Gas1.Length > 0 && Gas2.Length > 0)
                         {
                             for (int k = 0; k < Gas1.Length; i++) //연도별
@@ -488,7 +490,7 @@ namespace main.contents.Result
                     {
                         for (int mth = 0; mth < 12; mth++)
                         {
-                            string[][] Gas = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' AND 연료='가스'AND 단위 ='kWh'");
+                            string[][] Gas = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' AND 연료!='전기'AND 단위 ='kWh'");
                             if(Gas.Length >0)
                             {
                                 for (int k = 0; k < Gas.Length; k++) //연도별
@@ -543,9 +545,10 @@ namespace main.contents.Result
                 double Error_mth_avg_가스 = 0;
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지", "연료='가스' and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,연료", "연료!='전기' and 월 ='" + (mth + 1).ToString() + "월'");
                     if(Final.Length > 0)
                     {
+                        Carrier = Final[0][6];
                         __data[64].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][0]).ToString("0.0") }); //월별 난방 
                         __data[65].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][1]).ToString("0.0") }); //월별 냉방 
                         __data[66].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][2]).ToString("0.0") }); //월별 급탕 
@@ -564,10 +567,12 @@ namespace main.contents.Result
                         __data[70].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Qtot_mth_가스[mth].ToString()) }); //월별 가스 에너지소요량 
                         총가스소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Qtot_mth_가스[mth].ToString())), 3) + 0);
                         가스소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Qtot_mth_가스[mth].ToString())), 3) + 0);
-
-                        __data[89].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(((Qtot_mth_가스[mth] - Quse_gas_mth[3, mth]) / Quse_gas_mth[3, mth] * 100).ToString("0.0")) }); //오차율
-                        Error_mth_avg_가스 += Math.Abs((Qtot_mth_가스[mth] - Quse_gas_mth[3, mth]) / Quse_gas_mth[3, mth] * 100);
-                        가스오차율chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Math.Abs((Qtot_mth_가스[mth] - Quse_gas_mth[3, mth]) / Quse_gas_mth[3, mth]).ToString())), 3) + 0);  /// >>> 백분율 단위로 표시 필요 
+                        if (Quse_gas_mth[3, mth] > 0)
+                        {
+                            __data[89].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(((Qtot_mth_가스[mth] - Quse_gas_mth[3, mth]) / Quse_gas_mth[3, mth] * 100).ToString("0.0")) }); //오차율
+                            Error_mth_avg_가스 += Math.Abs((Qtot_mth_가스[mth] - Quse_gas_mth[3, mth]) / Quse_gas_mth[3, mth] * 100);
+                            가스오차율chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Math.Abs((Qtot_mth_가스[mth] - Quse_gas_mth[3, mth]) / Quse_gas_mth[3, mth]).ToString())), 3) + 0);  /// >>> 백분율 단위로 표시 필요 
+                        }
 
                         Qh_a_가스 += Convert.ToDouble(Final[0][0]);
                         Qc_a_가스 += Convert.ToDouble(Final[0][1]);
@@ -598,9 +603,15 @@ namespace main.contents.Result
 
                 Error_mth_avg_가스 = Error_mth_avg_가스 / 12;
                 __data[90].Add(new { idx = i, val = Error_mth_avg_가스.ToString("0.0") + "%" });
-
-                double Error_a_가스 = (Quse_gas_a[3] - Qtot_a_가스) / Quse_gas_a[3] * 100;
+                double Error_a_가스=0;
+                if (Quse_gas_a[3] > 0)
+                { Error_a_가스 = (Quse_gas_a[3] - Qtot_a_가스) / Quse_gas_a[3] * 100; }
                 __data[91].Add(new { idx = i, val = Error_a_가스.ToString("0.0") + "%" });
+
+                __data[92].Add(new { idx = i, val = Carrier + " 에너지사용량 및 에너지소요량 오차율 검토보고서" });
+                __data[93].Add(new { idx = i, val = "대표 "+Carrier+" 에너지사용량" });
+                __data[94].Add(new { idx = i, val = Carrier+" 에너지소요량" });
+
                 chart_가스사용량1.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart1.ToArray()));
                 chart_가스사용량2.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart2.ToArray()));
                 chart_가스사용량3.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart3.ToArray()));
@@ -612,11 +623,11 @@ namespace main.contents.Result
                 chart_급탕가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(급탕가스소요량chart.ToArray()));
                 chart_조명가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(조명가스소요량chart.ToArray()));
                 chart_공조가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(공조가스소요량chart.ToArray()));
-           //     chart_기저가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(기저가스소요량chart.ToArray()));
+                chart_기저가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(기저가스소요량chart.ToArray()));
 
-                //chart_가스사용량.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart.ToArray()));
-                //chart_가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(가스소요량chart.ToArray()));
-                ////chart_가스오차율.Add(System.Text.Json.JsonSerializer.Serialize(가스오차율chart.ToArray()));
+                chart_가스사용량.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart.ToArray()));
+                chart_가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(가스소요량chart.ToArray()));
+                chart_가스오차율.Add(System.Text.Json.JsonSerializer.Serialize(가스오차율chart.ToArray()));
 
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "yeartitle1_gas", data = __data[50] });
@@ -669,14 +680,24 @@ namespace main.contents.Result
                 data.Add(new { cname = "error_mth_gas", data = __data[89] });
                 data.Add(new { cname = "error_mth_avg_gas", data = __data[90] });
                 data.Add(new { cname = "error_a_gas", data = __data[91] });
+                data.Add(new { cname = "carrier1", data = __data[92] });
+                data.Add(new { cname = "carrier2", data = __data[93] });
+                data.Add(new { cname = "carrier3", data = __data[94] });
+                data.Add(new { cname = "carrier4", data = __data[93] });
+                data.Add(new { cname = "carrier5", data = __data[94] });
                 #endregion
             }
-
-            items.Add("Error_Report.htm");
+            items.Add("Error_Report_Style.htm");
+            items.Add("Error_Report_Elec.htm");
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지", "연료!= '전기' and 월 ='" + (1).ToString() + "월'");
+            if (value.Length > 0)
+            {
+                if (Convert.ToDouble(value[0][0]) > 0 || Convert.ToDouble(value[0][1]) > 0 || Convert.ToDouble(value[0][2]) > 0 || Convert.ToDouble(value[0][5]) > 0)
+                { items.Add("Error_Report_Gas.htm"); }
+            }
             s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
             s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
             System.Text.Json.JsonSerializer.Serialize(__data[10].ToArray());
-
             string s4;
             i = -1;
             double[] max_elec = new double[4]; double max_graph_elec =0;
@@ -750,18 +771,18 @@ namespace main.contents.Result
                "{type:\"line\",label:\"평균\",data:" + chart_가스사용량4[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
                "],max:" + (Math.Round(max_graph_gas / 1000) * 1000 + 500).ToString() + ",step:100,legend:true}";
 
-                //charts += ",{data:[" +
-                //"{type:\"bar\",barPercentage:0.4,label:\"기저 가스 에너지 소요량 [kWh]\",data:" + chart_기저가스소요량[i] + ",borderColor:\"#BFBFBF\",backgroundColor:\"#BFBFBF\",dash:false}," +
-                //"{type:\"bar\",barPercentage:0.4,label:\"급탕 가스 에너지 소요량 [kWh]\",data:" + chart_급탕가스소요량[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
-                //"{type:\"bar\",barPercentage:0.4,label:\"공조 가스 에너지 소요량 [kWh]\",data:" + chart_공조가스소요량[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
-                //"{type:\"bar\",barPercentage:0.4,label:\"난방 가스 에너지 소요량 [kWh]\",data:" + chart_난방가스소요량[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
-                //"{type:\"bar\",barPercentage:0.4,label:\"냉방 가스 에너지 소요량 [kWh]\",data:" + chart_냉방가스소요량[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
-                //"],max:" + (Math.Round(max_graph_gas / 1000) * 1000 + 500).ToString() + ",step:100,legend:true,stacked:true}";
+                charts += ",{data:[" +
+                "{type:\"bar\",barPercentage:0.4,label:\"기저 가스 에너지 소요량 [kWh]\",data:" + chart_기저가스소요량[i] + ",borderColor:\"#BFBFBF\",backgroundColor:\"#BFBFBF\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"급탕 가스 에너지 소요량 [kWh]\",data:" + chart_급탕가스소요량[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"공조 가스 에너지 소요량 [kWh]\",data:" + chart_공조가스소요량[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"난방 가스 에너지 소요량 [kWh]\",data:" + chart_난방가스소요량[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"냉방 가스 에너지 소요량 [kWh]\",data:" + chart_냉방가스소요량[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
+                "],max:" + (Math.Round(max_graph_gas / 1000) * 1000 + 500).ToString() + ",step:100,legend:true,stacked:true}";
 
-                //charts += ",{data:[{type:\"line\",yAxisID: 'y',label:\"가스 에너지 사용량 [kWh]\",data:" + chart_가스사용량[i] + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:false, tension: 0.4}," +
-                //"{type:\"line\",yAxisID: 'y',label:\"가스 에너지 소요량 [kWh]\",data:" + chart_가스소요량[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
-                //"{type:\"bar\",yAxisID: 'y1',barPercentage:0.4,label:\"오차율 [%]\",data:" + chart_가스오차율[i] + ",borderColor:\"#A5A5A5\",backgroundColor:\"#A5A5A5\",dash:false}," +
-                //"],max:" + (Math.Round(max_graph_gas / 1000) * 1000 + 500).ToString() + ",step:100,legend:true}";
+                charts += ",{data:[{type:\"line\",yAxisID: 'y',label:\"가스 에너지 사용량 [kWh]\",data:" + chart_가스사용량[i] + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:false, tension: 0.4}," +
+                "{type:\"line\",yAxisID: 'y',label:\"가스 에너지 소요량 [kWh]\",data:" + chart_가스소요량[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
+                "{type:\"bar\",yAxisID: 'y1',barPercentage:0.4,label:\"오차율 [%]\",data:" + chart_가스오차율[i] + ",borderColor:\"#A5A5A5\",backgroundColor:\"#A5A5A5\",dash:false}," +
+                "],max:" + (Math.Round(max_graph_gas / 1000) * 1000 + 500).ToString() + ",step:100,legend:true}";
             }
 
             runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
@@ -769,7 +790,7 @@ namespace main.contents.Result
 
         private void Saving_Report()
         {
-            string s, s2;
+            string s, s2; string Carrier ="가스"; 
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
 
             List<object> items = new List<object>();
@@ -1146,10 +1167,11 @@ namespace main.contents.Result
                     double Qh_a2_가스 = 0, Qc_a2_가스 = 0, Qw_a2_가스 = 0, Ql_a2_가스 = 0, Qv_a2_가스 = 0, Qbase_a2_가스 = 0, Qtot_a2_가스 = 0;
                     for (int mth = 0; mth < 12; mth++)
                     { //리모델링전 가스 소요량 
-                        string[][] Final = Program.DB.querySQL(res[0][0], "SELECT 난방,냉방,급탕,조명,공조,기저에너지 FROM FinalEnergy_Result where 연료 = '가스' and 월 = '" + (mth + 1).ToString() + "월'");
+                        string[][] Final = Program.DB.querySQL(res[0][0], "SELECT 난방,냉방,급탕,조명,공조,기저에너지,연료 FROM FinalEnergy_Result where 연료 != '전기' and 월 = '" + (mth + 1).ToString() + "월'");
 
                         if(Final.Length >0)
                         {
+                            Carrier = Final[0][6];
                             __data[50].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][0]).ToString("0.0") }); //월별 난방 
                             __data[51].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][1]).ToString("0.0") }); //월별 냉방 
                             __data[52].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][2]).ToString("0.0") }); //월별 급탕 
@@ -1208,8 +1230,8 @@ namespace main.contents.Result
                     double Qh_a_가스 = 0, Qc_a_가스 = 0, Qw_a_가스 = 0, Ql_a_가스 = 0, Qv_a_가스 = 0, Qbase_a_가스 = 0, Qtot_a_가스 = 0;
                     for (int mth = 0; mth < 12; mth++)
                     { //리모델링후 가스 소요량 
-                        string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지", "연료='가스' and 월 ='" + (mth + 1).ToString() + "월'");
-                        string[][] Final2 = Program.DB.querySQL(res[0][0], "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 = '가스' and 월 = '" + (mth + 1).ToString() + "월'");
+                        string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지", "연료!='전기' and 월 ='" + (mth + 1).ToString() + "월'");
+                        string[][] Final2 = Program.DB.querySQL(res[0][0], "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 != '전기' and 월 = '" + (mth + 1).ToString() + "월'");
                         if(Final.Length >0 && Final2.Length >0)
                         {
                             __data[71].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][0]).ToString("0.0") }); //월별 난방 
@@ -1288,6 +1310,9 @@ namespace main.contents.Result
                         __data[96].Add(new { idx = i * 12 + mth, val = ((Qtot2_mth_가스[mth] - Qtot_mth_가스[mth])).ToString("0.0") }); //월별 절감량 
                         절감률_가스Chart.Add(Math.Round(Double.Parse((Math.Abs(Qtot2_mth_가스[mth] - Qtot_mth_가스[mth]) / Qtot2_mth_가스[mth]).ToString()), 3) + 0);
                     }
+                    __data[110].Add(new { idx = i, val = Carrier+ " 에너지소요량 절감량 검토보고서" });
+                    __data[111].Add(new { idx = i, val = Carrier + " 에너지소요량" });
+
                     chart_전_난방_가스.Add(System.Text.Json.JsonSerializer.Serialize(전_난방_가스Chart.ToArray()));
                     chart_전_냉방_가스.Add(System.Text.Json.JsonSerializer.Serialize(전_냉방_가스Chart.ToArray()));
                     chart_전_급탕_가스.Add(System.Text.Json.JsonSerializer.Serialize(전_급탕_가스Chart.ToArray()));
@@ -1357,16 +1382,21 @@ namespace main.contents.Result
                     data.Add(new { cname = "qbasef_a_area_new_gas", data = __data[90] });
                     data.Add(new { cname = "qf_tot_a_area_new_gas", data = __data[91] });
 
-                    data.Add(new { cname = "Saving_a_gas", data = __data[92] });
-                    data.Add(new { cname = "Saving_mth_avg_gas", data = __data[93] });
-                    data.Add(new { cname = "SavingPercent_a_gas", data = __data[94] });
-                    data.Add(new { cname = "SavingPercent_mth_avg_gas", data = __data[95] });
-                    data.Add(new { cname = "Saving_mth_gas", data = __data[96] });
+                    data.Add(new { cname = "saving_a_gas", data = __data[92] });
+                    data.Add(new { cname = "saving_mth_avg_gas", data = __data[93] });
+                    data.Add(new { cname = "savingPercent_a_gas", data = __data[94] });
+                    data.Add(new { cname = "savingPercent_mth_avg_gas", data = __data[95] });
+                    data.Add(new { cname = "saving_mth_gas", data = __data[96] });
 
-                    data.Add(new { cname = "Saving_tCO2", data = __data[106] });
-                    data.Add(new { cname = "Savin_TOE", data = __data[107] });
-                    data.Add(new { cname = "Saving_tCO2_가스", data = __data[108] });
-                    data.Add(new { cname = "Saving_TOE_가스", data = __data[109] });
+                    data.Add(new { cname = "saving_tCO2", data = __data[106] });
+                    data.Add(new { cname = "savin_toe", data = __data[107] });
+                    data.Add(new { cname = "saving_tCO2_gas", data = __data[108] });
+                    data.Add(new { cname = "saving_toe_gas", data = __data[109] });
+                    data.Add(new { cname = "carrier1", data = __data[110] });
+                    data.Add(new { cname = "carrier2", data = __data[111] });
+                    data.Add(new { cname = "carrier3", data = __data[111] });
+                    data.Add(new { cname = "carrier4", data = __data[111] });
+                    data.Add(new { cname = "carrier5", data = __data[111] });
 
 
 
@@ -1374,7 +1404,14 @@ namespace main.contents.Result
                 }
             }
 
-            items.Add("Saving_Report.htm");
+            items.Add("Saving_Report_Style.htm");
+            items.Add("Saving_Report_Elec.htm");
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지", "연료!= '전기' and 월 ='" + (1).ToString() + "월'");
+            if (value.Length > 0)
+            {
+                if (Convert.ToDouble(value[0][0]) > 0 || Convert.ToDouble(value[0][1]) > 0 || Convert.ToDouble(value[0][2]) > 0 || Convert.ToDouble(value[0][5]) > 0)
+                { items.Add("Saving_Report_Gas.htm"); }
+            }
 
             s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
             s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
@@ -1456,9 +1493,6 @@ namespace main.contents.Result
             }
 
             runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
-            //  runScript("init(" + s + "," + s2 + ")");
-
-
         }
         private void button1_Click(object sender, EventArgs e)
         {
