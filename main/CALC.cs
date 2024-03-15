@@ -36,7 +36,7 @@ namespace main
 
             _calculations["신재생시스템 계산"] = new Func<bool>(RESystemCalc);
 
-            _calculations["법규 대안검토 계산"] =new Func<bool>(AltCalc);
+            _calculations["법규 대안검토 계산"] = new Func<bool>(AltCalc);
         }
 
         private static bool ZoneCalc()
@@ -47,9 +47,9 @@ namespace main
             String[] zones_순번 = new String[zones.Length];// 계산 순서대로 존번호
             int N_비냉난방 = 0, N_난방 = 0, N_냉방 = 0, N_냉난방 = 0; //순번 카운팅 
             int T_비냉난방 = 0, T_난방 = 0, T_냉방 = 0, T_냉난방 = 0; //총계 카운팅 
-            if (zones.Length>0)
+            if (zones.Length > 0)
             {
-                for (int n =0; n < zones.Length; n++) //배열로 바꿈 : 존번호, 냉난방유무
+                for (int n = 0; n < zones.Length; n++) //배열로 바꿈 : 존번호, 냉난방유무
                 {
                     zones_arr[n, 0] = zones[n][0];
                     zones_arr[n, 1] = zones[n][1];
@@ -71,7 +71,7 @@ namespace main
                         T_냉방++;
                     }
 
-                    if (zones_arr[n,1] == "냉난방")
+                    if (zones_arr[n, 1] == "냉난방")
                     {
                         T_냉난방++;
                     }
@@ -79,14 +79,14 @@ namespace main
 
                 for (int n = 0; n < zones.Length; n++)
                 {
-                    if (zones_arr[n, 1]== "비냉난방")
+                    if (zones_arr[n, 1] == "비냉난방")
                     {
                         N_비냉난방++;
                         if (N_비냉난방 > 0)
                         { zones_순번[N_비냉난방 - 1] = zones_arr[n, 0]; }
                     }
                 }
-                N_난방 =N_비냉난방;
+                N_난방 = N_비냉난방;
                 for (int n = 0; n < zones.Length; n++)
                 {
                     if (zones_arr[n, 1] == "난방")
@@ -101,7 +101,7 @@ namespace main
 
                 N_냉방 = N_난방;
                 for (int n = 0; n < zones.Length; n++)
-                {                   
+                {
                     if (zones_arr[n, 1] == "냉방")
                     {
                         N_냉방++;
@@ -112,7 +112,7 @@ namespace main
 
                 N_냉난방 = N_냉방;
                 for (int n = 0; n < zones.Length; n++)
-                {                   
+                {
                     if (zones_arr[n, 1] == "냉난방")
                     {
                         N_냉난방++;
@@ -131,51 +131,50 @@ namespace main
             Program.DB.initTable(DB.type.ProjDB, "Zone_HCneed_Result");
             Program.DB.initTable(DB.type.ProjDB, "Zone_Envelope_Result");
             while (++i < zones.Length)
-             {
-                    String HC, WEWD, MTH;
-                    ZoneLight zonelight1 = new ZoneLight(zones_순번[i]);
-                    //ZoneLight zonelight1 = new ZoneLight("2F_Zone013");
-                    ZoneLights[zones_순번[i]] = zonelight1;
-                    zonelight1.LoadData_LightGeneral();
-                    zonelight1.LoadData_LightSystem();
-                    zonelight1.LoadData_NaturalLight();
-                    zonelight1.LoadData_Renew();
-                    zonelight1.Calc_time(zones_순번[i]);
-                    zonelight1.Calc_Facade_general();
-                    zonelight1.Calc_Facade_shade();
-                    zonelight1.Calc_Facade_FDS();
-                    zonelight1.Calc_Facade_FD();
-                    zonelight1.Calc_Roof_general();
-                    zonelight1.Calc_Roof_FDS();
-                    zonelight1.Calc_Roof_FD();
-                    zonelight1.Calc_Sunlight_SCW();
-                    zonelight1.Calc_Sunlight_Pj_SC();
-                    zonelight1.Calc_kWh();
+            {
+                String HC, WEWD, MTH;
+                ZoneLight zonelight1 = new ZoneLight(zones_순번[i]);
+                ZoneLights[zones_순번[i]] = zonelight1;
+                zonelight1.LoadData_LightGeneral();
+                zonelight1.LoadData_LightSystem();
+                zonelight1.LoadData_NaturalLight();
+                zonelight1.LoadData_Renew();
+                zonelight1.Calc_time(zones_순번[i]);
+                zonelight1.Calc_Facade_general();
+                zonelight1.Calc_Facade_shade();
+                zonelight1.Calc_Facade_FDS();
+                zonelight1.Calc_Facade_FD();
+                zonelight1.Calc_Roof_general();
+                zonelight1.Calc_Roof_FDS();
+                zonelight1.Calc_Roof_FD();
+                zonelight1.Calc_Sunlight_SCW();
+                zonelight1.Calc_Sunlight_Pj_SC();
+                zonelight1.Calc_kWh();
 
 
-                    //월별 조명
-                    for (int mth = 0; mth <= 11; mth++)
-                    {
-                        //zonename 가져와야할까? 
-                        MTH = (mth + 1).ToString() + "월";
+                //월별 조명
+                for (int mth = 0; mth <= 11; mth++)
+                {
+                    //zonename 가져와야할까? 
+                    MTH = (mth + 1).ToString() + "월";
 
-                        Program.DB.setValue(DB.type.ProjDB, "Zone_LightResult", "프로젝트번호,프로젝트유형,번호,월," +
-                            "ITr,IRD,ISh_Ish,Ish_In_At,Wi,Ish_GDF,Ish," +
-                            "f_τeff_SNA,f_D,f_nearD,f_DCA,f_dclass,f_nearEm_SNA,f_fd_sna,f_fd_sa,f_nearEm_DC,f_fd_c,f_FDS,f_FD," +
-                            "as_bs,hs_bs,hg_hw," +
-                            "normal_ηR,saw_ηR,r_DSNA,r_DSA,r_dclass," +
-                            "r_nearEm_FDS,r_fd_sna,r_fd_sa,r_nearEm_DC,r_fd_c,r_FDS,r_FD," +
-                            "Sunlight_SCW,Sunlight_PjSC,Final_kWh",
+                    Program.DB.setValue(DB.type.ProjDB, "Zone_LightResult", "프로젝트번호,프로젝트유형,번호,월," +
+                        "ITr,IRD,ISh_Ish,Ish_In_At,Wi,Ish_GDF,Ish," +
+                        "f_τeff_SNA,f_D,f_nearD,f_DCA,f_dclass,f_nearEm_SNA,f_fd_sna,f_fd_sa,f_nearEm_DC,f_fd_c,f_FDS,f_FD," +
+                        "as_bs,hs_bs,hg_hw," +
+                        "normal_ηR,saw_ηR,r_DSNA,r_DSA,r_dclass," +
+                        "r_nearEm_FDS,r_fd_sna,r_fd_sa,r_nearEm_DC,r_fd_c,r_FDS,r_FD," +
+                        "Sunlight_SCW,Sunlight_PjSC,Final_kWh",
 
-                        "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + zones_순번[i] + "','" + MTH + "','" +
-                         zonelight1.Zone_ITr.ToString() + "','" + zonelight1.Zone_IRD.ToString() + "','" + zonelight1.Zone_Ish[mth].ToString() + "','" + zonelight1.Zone_Ish_In_At.ToString() + "','" + zonelight1.Zone_Wi.ToString() + "','" + zonelight1.Zone_Ish_GDF.ToString() + "','" + zonelight1.Zone_Calc_Ish[mth].ToString() + "','" +
-                         zonelight1.Zone_τeff_SNA_j.ToString() + "','" + zonelight1.Zone_D[mth].ToString() + "','" + zonelight1.Zone_nearD[mth].ToString() + "','" + zonelight1.Zone_DCA[mth].ToString() + "','" + zonelight1.dclass[mth] + "','" + zonelight1.f_nearEm_SNA.ToString() + "','" + zonelight1.find_fd_sna[mth].ToString() + "','" + zonelight1.find_fd_sa[mth].ToString() + "','" + zonelight1.f_naerEm_DC.ToString() + "','" + zonelight1.find_fd_c[mth].ToString() + "','" + zonelight1.Zone_FDS[mth].ToString() + "','" + zonelight1.Zone_Facade_FD[mth].ToString() + "','" +
-                         zonelight1.Zone_as_bs.ToString() + "','" + zonelight1.Zone_hs_bs.ToString() + "','" + zonelight1.Zone_hg_hw.ToString() + "','" +
-                         zonelight1.find_normal_ηR.ToString() + "','" + zonelight1.find_saw_ηR.ToString() + "','" + zonelight1.Zone_Roof_DSNA.ToString() + "','" + zonelight1.Zone_Roof_DSA.ToString() + "','" + zonelight1.roof_dclass + "','" +
-                         zonelight1.r_nearEm_FDS.ToString() + "','" + zonelight1.find_roof_fd_sna.ToString() + "','" + zonelight1.find_roof_fd_sa.ToString() + "','" + zonelight1.r_nearEm_DC.ToString() + "','" + zonelight1.find_roof_fd_c.ToString() + "','" + zonelight1.Zone_Roof_FDS[mth].ToString() + "','" + zonelight1.Zone_Roof_FD[mth].ToString() + "','" +
-                         zonelight1.Zone_Sunlight_SCW[mth].ToString() + "','" + zonelight1.Zone_Sunlight_PjSC[mth].ToString() + "','" + zonelight1.Zone_Final_kWh[mth].ToString()
-                         + "'", "번호,월");
-                    }
+                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + zones_순번[i] + "','" + MTH + "','" +
+                     zonelight1.Zone_ITr.ToString() + "','" + zonelight1.Zone_IRD.ToString() + "','" + zonelight1.Zone_Ish[mth].ToString() + "','" + zonelight1.Zone_Ish_In_At.ToString() + "','" + zonelight1.Zone_Wi.ToString() + "','" + zonelight1.Zone_Ish_GDF.ToString() + "','" + zonelight1.Zone_Calc_Ish[mth].ToString() + "','" +
+                     zonelight1.Zone_τeff_SNA_j.ToString() + "','" + zonelight1.Zone_D[mth].ToString() + "','" + zonelight1.Zone_nearD[mth].ToString() + "','" + zonelight1.Zone_DCA[mth].ToString() + "','" + zonelight1.dclass[mth] + "','" + zonelight1.f_nearEm_SNA.ToString() + "','" + zonelight1.find_fd_sna[mth].ToString() + "','" + zonelight1.find_fd_sa[mth].ToString() + "','" + zonelight1.f_naerEm_DC.ToString() + "','" + zonelight1.find_fd_c[mth].ToString() + "','" + zonelight1.Zone_FDS[mth].ToString() + "','" + zonelight1.Zone_Facade_FD[mth].ToString() + "','" +
+                     zonelight1.Zone_as_bs.ToString() + "','" + zonelight1.Zone_hs_bs.ToString() + "','" + zonelight1.Zone_hg_hw.ToString() + "','" +
+                     zonelight1.find_normal_ηR.ToString() + "','" + zonelight1.find_saw_ηR.ToString() + "','" + zonelight1.Zone_Roof_DSNA.ToString() + "','" + zonelight1.Zone_Roof_DSA.ToString() + "','" + zonelight1.roof_dclass + "','" +
+                     zonelight1.r_nearEm_FDS.ToString() + "','" + zonelight1.find_roof_fd_sna.ToString() + "','" + zonelight1.find_roof_fd_sa.ToString() + "','" + zonelight1.r_nearEm_DC.ToString() + "','" + zonelight1.find_roof_fd_c.ToString() + "','" + zonelight1.Zone_Roof_FDS[mth].ToString() + "','" + zonelight1.Zone_Roof_FD[mth].ToString() + "','" +
+                     zonelight1.Zone_Sunlight_SCW[mth].ToString() + "','" + zonelight1.Zone_Sunlight_PjSC[mth].ToString() + "','" + zonelight1.Zone_Final_kWh[mth].ToString()
+                     + "'", "번호,월");
+                }
 
 
 
@@ -204,15 +203,16 @@ namespace main
                 zone1.ZoneQSop(zones_순번[i]);
                 zone1.ZoneQStr(zones_순번[i]);
                 zone1.ZoneQ_DHU();
+                zone1.ZoneQI_L();
                 zone1.ZoneQI();
                 zone1.Zone_Theta_U();
                 zone1.Zoneeta();
                 zone1.ZoneQb();
                 zone1.ZoneQmax();
                 //[난방/냉방,비이용일/이용일,mth] = [h/c,we/wd,mth]=[0/1,0/1,12]
-                for (int hc = 0; hc <= 1; hc++) 
+                for (int hc = 0; hc <= 1; hc++)
                 {
-                    if( hc == 0 )
+                    if (hc == 0)
                     {
                         HC = "난방";
                     }
@@ -261,12 +261,12 @@ namespace main
                                  "Qb_a,Q_max, t_max,비냉난방존온도",
                                   "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + zones_순번[i] + "','" + zone1.zoneName + "','" +
                                   HC + "','" + WEWD + "','" + MTH + "','" +
-                                  zone1.Zone_HT_tot[hc,wewd,mth].ToString() + "','"+zone1.Zone_HT_Inwall[hc, wewd, mth].ToString() + "','"+zone1.Zone_HT_Slab[hc, wewd, mth].ToString()+ "','" + zone1.Zone_HT_Wall.ToString()+ "','" + zone1.Zone_HT_Roof.ToString()+ "','" + zone1.Zone_HT_Floor.ToString()+ "','" + zone1.Zone_HT_GWall.ToString()+ "','" + zone1.Zone_HT_Door.ToString()+ "','" + zone1.Zone_HT_Win.ToString() + "','" +zone1.Zone_HT_CW.ToString() + "','" +
+                                  zone1.Zone_HT_tot[hc, wewd, mth].ToString() + "','" + zone1.Zone_HT_Inwall[hc, wewd, mth].ToString() + "','" + zone1.Zone_HT_Slab[hc, wewd, mth].ToString() + "','" + zone1.Zone_HT_Wall.ToString() + "','" + zone1.Zone_HT_Roof.ToString() + "','" + zone1.Zone_HT_Floor.ToString() + "','" + zone1.Zone_HT_GWall.ToString() + "','" + zone1.Zone_HT_Door.ToString() + "','" + zone1.Zone_HT_Win.ToString() + "','" + zone1.Zone_HT_CW.ToString() + "','" +
                                   zone1.Zone_HT_Di_Wall.ToString() + "','" + zone1.Zone_HT_Indi_Wall.ToString() + "','" + zone1.Zone_HT_Di_Roof.ToString() + "','" + zone1.Zone_HT_Indi_Roof.ToString() + "','" + zone1.Zone_HT_Di_Win.ToString() + "','" + zone1.Zone_HT_Indi_Win.ToString() + "','" + zone1.Zone_HT_Di_Door.ToString() + "','" + zone1.Zone_HT_Indi_Door.ToString() + "','" +
                                   zone1.Zone_HT_TB_tot.ToString() + "','" + zone1.Zone_HT_TB_Wall.ToString() + "','" + zone1.Zone_HT_TB_Roof.ToString() + "','" + zone1.Zone_HT_TB_Floor.ToString() + "','" + zone1.Zone_HT_TB_GWall.ToString() + "','" + zone1.Zone_HT_TB_Win.ToString() + "','" + zone1.Zone_HT_TB_Door.ToString() + "','" + zone1.Zone_HT_TB_CW.ToString() + "','" +
                                   zone1.nmech[wewd].ToString() + "','" + zone1.nz[wewd].ToString() + "','" + zone1.ninf[wewd].ToString() + "','" + zone1.nwin[wewd].ToString() + "','" +
                                   zone1.Zone_HV_tot[wewd].ToString() + "','" + zone1.Zone_HV_inf[wewd].ToString() + "','" + zone1.Zone_HV_win[wewd].ToString() + "','" + zone1.Zone_HV_z[wewd].ToString() + "','" + zone1.Zone_HV_mech[wewd].ToString() + "','" +
-                                  zone1.Zone_H_tot[hc,wewd,mth].ToString() + "','" + zone1.tao[hc,wewd,mth].ToString() + "','" + zone1.dwe_mth[mth].ToString() + "','" + zone1.dwd_mth[mth].ToString() + "','" + zone1.theta_i[hc,wewd,mth].ToString() + "','" + zone1.theta_e[mth].ToString() + "','" +
+                                  zone1.Zone_H_tot[hc, wewd, mth].ToString() + "','" + zone1.tao[hc, wewd, mth].ToString() + "','" + zone1.dwe_mth[mth].ToString() + "','" + zone1.dwd_mth[mth].ToString() + "','" + zone1.theta_i[hc, wewd, mth].ToString() + "','" + zone1.theta_e[mth].ToString() + "','" +
                                   zone1.QTsink_tot[hc, wewd, mth].ToString() + "','" + zone1.QT_u_sink[hc, wewd, mth].ToString() + "','" + zone1.QTsink_Wall[hc, wewd, mth].ToString() + "','" + zone1.QTsink_Roof[hc, wewd, mth].ToString() + "','" + zone1.QTsink_Floor[hc, wewd, mth].ToString() + "','" + zone1.QTsink_GWall[hc, wewd, mth].ToString() + "','" + zone1.QTsink_Door[hc, wewd, mth].ToString() + "','" + zone1.QTsink_Win[hc, wewd, mth].ToString() + "','" + zone1.QTsink_CW[hc, wewd, mth].ToString() + "','" +
                                   zone1.QTsource_tot[hc, wewd, mth].ToString() + "','" + zone1.QT_u_source[hc, wewd, mth].ToString() + "','" + zone1.QTsource_Wall[hc, wewd, mth].ToString() + "','" + zone1.QTsource_Roof[hc, wewd, mth].ToString() + "','" + zone1.QTsource_Floor[hc, wewd, mth].ToString() + "','" + zone1.QTsource_GWall[hc, wewd, mth].ToString() + "','" + zone1.QTsource_Door[hc, wewd, mth].ToString() + "','" + zone1.QTsource_Win[hc, wewd, mth].ToString() + "','" + zone1.QTsource_CW[hc, wewd, mth].ToString() + "','" +
                                   zone1.QSopsink_tot[hc, wewd, mth].ToString() + "','" + zone1.QSopsource_tot[hc, wewd, mth].ToString() + "','" + zone1.QStr_tot[hc, wewd, mth].ToString() + "','" +
@@ -275,20 +275,20 @@ namespace main
                                   zone1.QStr_Win[wewd, mth].ToString() + "','" + zone1.QStr_CW[wewd, mth].ToString() + "','" +
                                   zone1.QVsink_tot[hc, wewd, mth].ToString() + "','" + zone1.QV_inf_sink[hc, wewd, mth].ToString() + "','" + zone1.QV_win_sink[hc, wewd, mth].ToString() + "','" + zone1.QV_z_sink[hc, wewd, mth].ToString() + "','" + zone1.QV_mech_sink[hc, wewd, mth].ToString() + "','" +
                                   zone1.QVsource_tot[hc, wewd, mth].ToString() + "','" + zone1.QV_inf_source[hc, wewd, mth].ToString() + "','" + zone1.QV_win_source[hc, wewd, mth].ToString() + "','" + zone1.QV_z_source[hc, wewd, mth].ToString() + "','" + zone1.QV_mech_source[hc, wewd, mth].ToString() + "','" +
-                                  zone1.Q_DHU_win[wewd,mth].ToString() + "','" + zone1.Q_DHU_mech[mth].ToString() + "','" + zone1.Q_DHU_tot[wewd, mth].ToString() + "','" +
+                                  zone1.Q_DHU_win[wewd, mth].ToString() + "','" + zone1.Q_DHU_mech[mth].ToString() + "','" + zone1.Q_DHU_tot[wewd, mth].ToString() + "','" +
                                   zone1.QI_tot[hc, wewd, mth].ToString() + "','" + zone1.QI_L[hc, wewd, mth].ToString() + "','" +
                                   zone1.QI_P[wewd].ToString() + "','" + zone1.QI_fac[wewd].ToString() + "','" + zone1.QI_Humidity[mth].ToString() + "','" +
                                   zone1.Qsink[hc, wewd, mth].ToString() + "','" + zone1.Qsource[hc, wewd, mth].ToString() + "','" + zone1.gamma[hc, wewd, mth].ToString() + "','" + zone1.a[hc, wewd, mth].ToString() + "','" + zone1.eta[hc, wewd, mth].ToString() + "','" + zone1.dQc_b[hc, wewd, mth].ToString() + "','" + zone1.dQc_sink[hc, wewd, mth].ToString() + "','" +
-                                  zone1.Qb_day[hc,wewd,mth].ToString()+ "','" +
-                                  zone1.Qb_mth[hc,wewd,mth].ToString() + "','" +
-                                  zone1.Qb_a[hc].ToString() + "','" + zone1.Q_max[hc].ToString() + "','" + zone1.t_max[hc,mth].ToString() + "','" +
+                                  zone1.Qb_day[hc, wewd, mth].ToString() + "','" +
+                                  zone1.Qb_mth[hc, wewd, mth].ToString() + "','" +
+                                  zone1.Qb_a[hc].ToString() + "','" + zone1.Q_max[hc].ToString() + "','" + zone1.t_max[hc, mth].ToString() + "','" +
                                   zone1.Theta_U[hc, wewd, mth].ToString()
                                   + "'", "번호,난방_냉방,비이용일_이용일,월");
                         }
                     }
                 }
-                
-               
+
+
             }
             return true;
         }
@@ -364,15 +364,15 @@ namespace main
                             }
                         }
                     }
-                }                
-                Program.CALC.run(new string[] {  "존 계산" });
+                }
+                Program.CALC.run(new string[] { "존 계산" });
 
                 Program.DB.deleteTable(DB.type.ProjDB, "AHUSystem_Result");
                 Program.DB.initTable(DB.type.ProjDB, "AHUSystem_Result");
                 i = -1;
                 while (++i < Num.Length)
                 {
-                    if (Num[i][1] =="공조기")
+                    if (Num[i][1] == "공조기")
                     {
                         Cal_AHU AHU1 = new Cal_AHU(Num[i][0]);
                         AHU1.Load_ZoneData();
@@ -393,12 +393,12 @@ namespace main
                         AHU1.Cal_Qv_b();
                         AHU1.Cal_HU();
                         AHU1.Cal_W();
-                        Program.DB.deleteValue(DB.type.ProjDB, "AHUSystem_Result", "번호='"+ Num[i][0] +"'And 프로젝트번호 ='"+ 프로젝트유형[0][1] + "'");
+                        Program.DB.deleteValue(DB.type.ProjDB, "AHUSystem_Result", "번호='" + Num[i][0] + "'And 프로젝트번호 ='" + 프로젝트유형[0][1] + "'");
                         for (int hc = 0; hc <= 1; hc++)
                         {
                             for (int mth = 0; mth <= 11; mth++)
                             {
-                          
+
                                 if (hc == 0) { 난방냉방 = "난방"; } else { 난방냉방 = "냉방"; }
                                 MTH = (mth + 1).ToString() + "월";
                                 Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Result", "프로젝트번호,프로젝트유형,번호," +
@@ -407,19 +407,19 @@ namespace main
                                          "theta_vmech,Vvmech,Vvmech_leak," +
                                          "theta_SA_prh,theta_OA_du,theta_RA_du,theta_SA_hr,theta_SA_rca,theta_SA_du,X_iset," +
                                          "X_SA_prh,X_SA_hr,X_SA_rca," +
-                                         "Vmin_tot,Qb_mth_tot,Qmax_tot,theta_iset_avg,dvmech_avg,tvmech_avg,"+
-                                         "Q_gnd,Q_prh,Q_loss_OA_du,Q_loss_EA_du,Q_loss_SA_du,"+
-                                         "dtheta_prh,dtheta_du_OA,dtheta_du_RA,dtheta_hr,dtheta_rca,dtheta_du_EA,dtheta_du_SA,"+
+                                         "Vmin_tot,Qb_mth_tot,Qmax_tot,theta_iset_avg,dvmech_avg,tvmech_avg," +
+                                         "Q_gnd,Q_prh,Q_loss_OA_du,Q_loss_EA_du,Q_loss_SA_du," +
+                                         "dtheta_prh,dtheta_du_OA,dtheta_du_RA,dtheta_hr,dtheta_rca,dtheta_du_EA,dtheta_du_SA," +
                                          "flea_du,flea_ahu,fins_ahu,theta_defrost,theta_sur_nc,Hduct_OA,Hduct_RA,Hduct_EA,Hduct_SA",
-                                         "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Num[i][0] + "','" +난방냉방 +"','" + MTH + "','" +
-                                         AHU1.Qv_b[hc,mth] + "','" + AHU1.Qhu_b[mth] + "','" + AHU1.Ev_gen_fan_SA[mth] + "','" + AHU1.Ev_gen_fan_EA[mth] + "','" + AHU1.W_HU_aux[mth] + "','" + AHU1.Wv_aux_preh[mth] + "','" +
-                                         AHU1.theta_vmech[hc, mth] + "','" + AHU1.Vvmech[hc,mth] + "','" + AHU1.Vvmech_leak[hc, mth] + "','" +
-                                         AHU1.theta_SA_prh[mth] + "','" + AHU1.theta_OA_du[hc,mth] + "','" + AHU1.theta_RA_du[hc,mth] + "','" + AHU1.theta_SA_hr[hc,mth] + "','" + AHU1.theta_SA_rca[hc,mth] + "','" + AHU1.theta_SA_du[hc, mth] + "','" + AHU1.X_iset[mth] + "','" +
+                                         "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Num[i][0] + "','" + 난방냉방 + "','" + MTH + "','" +
+                                         AHU1.Qv_b[hc, mth] + "','" + AHU1.Qhu_b[mth] + "','" + AHU1.Ev_gen_fan_SA[mth] + "','" + AHU1.Ev_gen_fan_EA[mth] + "','" + AHU1.W_HU_aux[mth] + "','" + AHU1.Wv_aux_preh[mth] + "','" +
+                                         AHU1.theta_vmech[hc, mth] + "','" + AHU1.Vvmech[hc, mth] + "','" + AHU1.Vvmech_leak[hc, mth] + "','" +
+                                         AHU1.theta_SA_prh[mth] + "','" + AHU1.theta_OA_du[hc, mth] + "','" + AHU1.theta_RA_du[hc, mth] + "','" + AHU1.theta_SA_hr[hc, mth] + "','" + AHU1.theta_SA_rca[hc, mth] + "','" + AHU1.theta_SA_du[hc, mth] + "','" + AHU1.X_iset[mth] + "','" +
                                          AHU1.X_SA_prh[mth] + "','" + AHU1.X_SA_hr[mth] + "','" + AHU1.X_SA_rca[mth] + "','" +
-                                         AHU1.Vmin_tot + "','" + AHU1.Qb_mth_tot[hc,mth] + "','" + AHU1.Qmax_tot[hc] + "','" + AHU1.theta_iset_avg[hc] + "','" + AHU1.dvmechmth_avg[mth] + "','" + AHU1.tvmech_avg + "','" +
-                                         AHU1.Q_gnd[mth] + "','" + AHU1.Wpreh_k[mth] + "','" + AHU1.Q_loss_OA_du[hc,mth] + "','" + AHU1.Q_loss_EA_du[hc,mth] + "','" + AHU1.Q_loss_SA_du[hc, mth] + "','" +
-                                         AHU1.dtheta_prh[mth] + "','" + AHU1.dtheta_du_OA[hc,mth] + "','" + AHU1.dtheta_du_RA[hc,mth] + "','" + AHU1.dtheta_hr[hc,mth] + "','" + AHU1.dtheta_rca[hc,mth] + "','" + AHU1.dtheta_du_EA[hc, mth] + "','" + AHU1.dtheta_du_SA[hc, mth] + "','" +
-                                         AHU1.flea_du + "','" + AHU1.flea_ahu + "','" + AHU1.fins_ahu + "','" + AHU1.theta_defrost + "','" + AHU1.theta_sur_nc[hc,mth] + "','" + AHU1.Hduct_OA[mth] + "','" + AHU1.Hduct_RA[mth] + "','" + AHU1.Hduct_EA[mth] + "','" + AHU1.Hduct_SA[mth]
+                                         AHU1.Vmin_tot + "','" + AHU1.Qb_mth_tot[hc, mth] + "','" + AHU1.Qmax_tot[hc] + "','" + AHU1.theta_iset_avg[hc] + "','" + AHU1.dvmechmth_avg[mth] + "','" + AHU1.tvmech_avg + "','" +
+                                         AHU1.Q_gnd[mth] + "','" + AHU1.Wpreh_k[mth] + "','" + AHU1.Q_loss_OA_du[hc, mth] + "','" + AHU1.Q_loss_EA_du[hc, mth] + "','" + AHU1.Q_loss_SA_du[hc, mth] + "','" +
+                                         AHU1.dtheta_prh[mth] + "','" + AHU1.dtheta_du_OA[hc, mth] + "','" + AHU1.dtheta_du_RA[hc, mth] + "','" + AHU1.dtheta_hr[hc, mth] + "','" + AHU1.dtheta_rca[hc, mth] + "','" + AHU1.dtheta_du_EA[hc, mth] + "','" + AHU1.dtheta_du_SA[hc, mth] + "','" +
+                                         AHU1.flea_du + "','" + AHU1.flea_ahu + "','" + AHU1.fins_ahu + "','" + AHU1.theta_defrost + "','" + AHU1.theta_sur_nc[hc, mth] + "','" + AHU1.Hduct_OA[mth] + "','" + AHU1.Hduct_RA[mth] + "','" + AHU1.Hduct_EA[mth] + "','" + AHU1.Hduct_SA[mth]
                                           + "'", "번호,난방_냉방,월");
                             }
                         }
@@ -472,11 +472,11 @@ namespace main
                             }
                         }
                     }
-                   
+
                 }
             }
 
-          return true;
+            return true;
         }
         private static bool HeatingSystemCalc()
         {
@@ -491,26 +491,26 @@ namespace main
                 string[][] Zone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "냉난방유무 ='냉난방' OR 냉난방유무 = '난방'");
                 for (int n = 0; n < Zone.Length; n++)
                 {
-                    string[][] ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form","공급설비,공급설비종류,가동시간", "존번호 = '" + Zone[n][0] + "'");
+                    string[][] ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "공급설비,공급설비종류,가동시간", "존번호 = '" + Zone[n][0] + "'");
 
-                  
-                    
+
+
                     double[] 가동비율 = new double[ce.Length];
                     double 가동비율_tot = 0;
 
-                   
+
                     for (int a = 0; a < ce.Length; a++)
                     {
                         string[][] ce2 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "용량_난방", "번호='" + ce[a][0].Substring(0, 4) + "'");
-                        if (ce[a][1]!= "복사난방")
-                        { 
+                        if (ce[a][1] != "복사난방")
+                        {
                             가동비율[a] = Convert.ToDouble(ce[a][2]) * Convert.ToDouble(ce2[0][0]);
                             가동비율_tot += 가동비율[a];
                         }
                         else
                         {
                             string[][] Qmax = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "난방_냉방 ='난방' and 번호 ='" + Zone[n][0] + "'");
-                            가동비율[a] =  Convert.ToDouble(ce[a][2])* Convert.ToDouble(Qmax[0][0]) / 1000;
+                            가동비율[a] = Convert.ToDouble(ce[a][2]) * Convert.ToDouble(Qmax[0][0]) / 1000;
                             가동비율_tot += 가동비율[a];
                         }
                     }
@@ -525,7 +525,7 @@ namespace main
 
                             Program.DB.querySQL(DB.type.ProjDB, "UPDATE Heating_ce_Form SET " + "요구량" + mth.ToString() + "월 = '" + Qhb_mth.ToString() + "' where 존번호 = '" + Zone[n][0] + "' AND 공급설비 ='" + ce[a][0] + "'");
                         }
-                     
+
                     }
                 }
             }
@@ -545,9 +545,9 @@ namespace main
                 Heating1.Load_ceData();
                 Heating1.Load_StorageData();
                 Heating1.Load_PipeData();
-                Heating1.Load_AirHP(); 
+                Heating1.Load_AirHP();
                 Heating1.Load_GroundHP();
-                Heating1.Load_GWHP(); 
+                Heating1.Load_GWHP();
 
                 Heating1.Calc_thrL();
                 Heating1.Calc_beta_ce();
@@ -562,17 +562,17 @@ namespace main
                 Heating1.Calc_Q_Air_HP();
                 Heating1.nan();
 
-                
+
                 for (int mth = 0; mth <= 11; mth++)
                 {
-                  
+
                     MTH = (mth + 1).ToString() + "월";
                     Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                              "월," +
                              " Qhb_mth_sum, Qh_max_sum,Qh_a_sum,th_op_day_avg, theta_i_h_set_avg,th_avg,dop_mth_avg," +
                              "thrL,thrL_day,dhrB,fLNA,fLwe," +
                              "beta_h_ce,beta_h_d,beta_h_s,beta_h_gen," +
-                             "theta_av_ce,theta_av_d,theta_av_s,theta_av_gen,"+
+                             "theta_av_ce,theta_av_d,theta_av_s,theta_av_gen," +
                              "dtheta_ce,dtheta_d,dtheta_s,dtheta_gen," +
                              "dtheta_ce1,dtheta_ce2,Psi_pipe,L,Qs_po_day,Vs," +
                              "Qh_gen_day,Pgen_Pn,Pgen_Pint,Pgen_P0,eta_gen_Pn,eta_gen_Pint," +
@@ -584,13 +584,13 @@ namespace main
                               Heating1.thrL[mth] + "','" + Heating1.thrL_day[mth] + "','" + Heating1.dhrB[mth] + "','" + Heating1.fLNA[mth] + "','" + Heating1.fLwe[mth] + "','" +
                               Heating1.beta_h_ce[mth] + "','" + Heating1.beta_h_d[mth] + "','" + Heating1.beta_h_s[mth] + "','" + Heating1.beta_h_gen[mth] + "','" +
                               Heating1.theta_av_ce[mth] + "','" + Heating1.theta_av_d[mth] + "','" + Heating1.theta_av_s[mth] + "','" + Heating1.theta_av_gen[mth] + "','" +
-                              Heating1.dtheta_ce[mth] + "','" + Heating1.dtheta_d[mth] + "','" +Heating1.dtheta_s[mth] + "','" +Heating1.dtheta_gen[mth] + "','" +
+                              Heating1.dtheta_ce[mth] + "','" + Heating1.dtheta_d[mth] + "','" + Heating1.dtheta_s[mth] + "','" + Heating1.dtheta_gen[mth] + "','" +
                               Heating1.dtheta_ce1 + "','" + Heating1.dtheta_ce2 + "','" + Heating1.Psi_pipe + "','" + Heating1.L + "','" + Heating1.Qs_po_day + "','" + Heating1.Vs + "','" +
                               Heating1.Qh_gen_day[mth] + "','" + Heating1.Pgen_Pn[mth] + "','" + Heating1.Pgen_Pint[mth] + "','" + Heating1.Pgen_P0[mth] + "','" + Heating1.eta_gen_Pn[mth] + "','" + Heating1.eta_gen_Pint[mth] + "','" +
-                              Heating1.fpint[mth] + "','" + Heating1.Qh_outg_sng[0, mth] + "','" + Heating1.Qh_outg_sng[1, mth] + "','" + Heating1.Qh_outg_sng[2, mth] + "','" + Heating1.COPpint[0,mth] + "','" + Heating1.COPpint[1, mth] + "','" + Heating1.COPpint[2, mth] + "','" +
-                              Heating1.Qh_ce[mth] + "','" + Heating1.Qh_d[mth] + "','" +Heating1.Qh_s[mth] + "','" +Heating1.Qh_gen[mth] + "','" +Heating1.Qh_outg[mth] + "','" +Heating1.Qh_f[mth] + "','" +
-                              Heating1.Wh_ce[mth] + "','" +Heating1.Wh_d[mth] + "','" +Heating1.Wh_s[mth] + "','" +Heating1.Wh_g[mth] + "','" + Heating1.Carrier
-                              + "'", "번호,월");;
+                              Heating1.fpint[mth] + "','" + Heating1.Qh_outg_sng[0, mth] + "','" + Heating1.Qh_outg_sng[1, mth] + "','" + Heating1.Qh_outg_sng[2, mth] + "','" + Heating1.COPpint[0, mth] + "','" + Heating1.COPpint[1, mth] + "','" + Heating1.COPpint[2, mth] + "','" +
+                              Heating1.Qh_ce[mth] + "','" + Heating1.Qh_d[mth] + "','" + Heating1.Qh_s[mth] + "','" + Heating1.Qh_gen[mth] + "','" + Heating1.Qh_outg[mth] + "','" + Heating1.Qh_f[mth] + "','" +
+                              Heating1.Wh_ce[mth] + "','" + Heating1.Wh_d[mth] + "','" + Heating1.Wh_s[mth] + "','" + Heating1.Wh_g[mth] + "','" + Heating1.Carrier
+                              + "'", "번호,월"); ;
 
 
                 }
@@ -600,13 +600,13 @@ namespace main
         private static bool CoolingSystemCalc() //작성 필요함
         {
             string[][] CoolingNum = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Form", "번호");
-                     
+
             Program.DB.deleteTable(DB.type.ProjDB, "CoolingSystem_Result");
             Program.DB.initTable(DB.type.ProjDB, "CoolingSystem_Result");
-            
-            for(int i = 0; i< CoolingNum.Length; i++)
+
+            for (int i = 0; i < CoolingNum.Length; i++)
             {
-                Cal_Cooling cc1 = new Cal_Cooling(CoolingNum[i][0]); 
+                Cal_Cooling cc1 = new Cal_Cooling(CoolingNum[i][0]);
             }
             return true;
 
@@ -636,7 +636,7 @@ namespace main
                 DHW1.Calc_Solar();
                 DHW1.nan();
 
-               
+
                 for (int mth = 0; mth <= 11; mth++)
                 {
 
@@ -651,7 +651,7 @@ namespace main
                              DHW1.Qwb_mth_sum[mth] + "','" + DHW1.theta_ih_avg[mth] + "','" + DHW1.Qw_a_sum + "','" + DHW1.th_op_day_avg + "','" + DHW1.theta_i_h_set_avg + "','" + DHW1.dop_mth_avg[mth] + "','" +
                              DHW1.Qw_d[mth] + "','" + DHW1.Qw_s[mth] + "','" + DHW1.Qw_gen[mth] + "','" + DHW1.Qw_outg[mth] + "','" + DHW1.Qw_f[mth] + "','" +
                              DHW1.Ww_d[mth] + "','" + DHW1.Ww_s[mth] + "','" + DHW1.Ww_g[mth] + "','" +
-                             DHW1.Qw_gen_day[mth] + "','" + DHW1.Qw_gen_p0_day[mth] + "','" + DHW1.eta_pn_w[mth] + "','" +DHW1.Carrier
+                             DHW1.Qw_gen_day[mth] + "','" + DHW1.Qw_gen_p0_day[mth] + "','" + DHW1.eta_pn_w[mth] + "','" + DHW1.Carrier
                               + "'", "번호,월"); ;
                 }
             }
@@ -677,18 +677,24 @@ namespace main
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 번호[0][0] + "','" + MTH + "','" + "전기" + "','" +
                     final1.Qhf_elec[mth] + "','" + final1.Qcf_elec[mth] + "','" + final1.Qwf_elec[mth] + "','" + final1.Qlf_elec[mth] + "','" +
                     final1.Qvf_elec[mth] + "','" + final1.Qbase_elec[mth] + "','" + final1.Qf_elec_tot_mth[mth]
-                    +"'", "번호,월,연료"); ;
+                    + "'", "번호,월,연료"); ;
 
             }
-            for (int mth = 0; mth <= 11; mth++)
+            string Carrier = "";
+            if (final1.Carrier_h != ""&& final1.Carrier_h != null) { Carrier = final1.Carrier_h; } else if (final1.Carrier_w != "" && final1.Carrier_w != null) { Carrier = final1.Carrier_w; } else if (final1.Carrier_c != "" && final1.Carrier_c != null) { Carrier = final1.Carrier_c; }
+            if (Carrier == "LNG" || Carrier == "LPG") { Carrier = "가스"; }
+            if (Carrier != "")
             {
-                MTH = (mth + 1).ToString() + "월";             
-                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
-                    "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
-                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 번호[0][0] + "','" + MTH + "','" + "가스" + "','" +
-                    final1.Qhf_gas[mth] + "','" + final1.Qcf_gas[mth] + "','" + final1.Qwf_gas[mth] + "','" + "0" + "','" +
-                    final1.Qvf_gas[mth] + "','" + final1.Qbase_gas[mth] + "','" + final1.Qf_gas_tot_mth[mth]
-                    + "'", "번호,월,연료"); ;
+                for (int mth = 0; mth <= 11; mth++)
+                {
+                    MTH = (mth + 1).ToString() + "월";
+                    Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
+                        "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
+                        "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 번호[0][0] + "','" + MTH + "','" + Carrier + "','" +
+                        final1.Qhf_gas[mth] + "','" + final1.Qcf_gas[mth] + "','" + final1.Qwf_gas[mth] + "','" + "0" + "','" +
+                        "0"+ "','" + final1.Qbase_gas[mth] + "','" + final1.Qf_gas_tot_mth[mth]
+                        + "'", "번호,월,연료"); ;
+                }
             }
             return true; 
         }
@@ -723,12 +729,15 @@ namespace main
         }
         private static bool AltCalc()
         {
+            Program.DB.deleteTable(DB.type.ProjDB, "Zone_Alt_Result");
+            Program.DB.initTable(DB.type.ProjDB, "Zone_Alt_Result");
             Cal_Alt_Rule cal = new Cal_Alt_Rule();
             cal.Calc_Alt_Wall();
             cal.Calc_Alt_Roof();
             cal.Calc_Alt_Floor();
             cal.Calc_Alt_Win();
             cal.Calc_Alt_CW();
+            cal.Calc_Alt_Door();
             cal.Calc_Alt_All();
             MessageBox.Show("법규 기반 우선순위 계산되었습니다.");
             return true;
