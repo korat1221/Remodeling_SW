@@ -525,6 +525,7 @@ namespace main.contents
                     {
                         Sub_dUinst.Add(Calc_dUinst(Uw, Convert.ToDouble(Sub_Area[i]), Convert.ToDouble(Sub_Width[i]), Convert.ToDouble(Sub_Height[i])));
                         Sub_Uw_inst.Add(Uw + Convert.ToDouble(Sub_dUinst[i]));
+                        Sub_Uw[i] = Uw;
                     }
                     Sub_Uw[i] = Calc_Uw_AdditionalWindow(Sub_Uw[i]);
                     Program.DB.executeSQL(DB.type.ProjDB, "UPDATE SubWindow SET 창호열관류율  ='" + Sub_Uw[i] + "', 설치열교가산치 = '" + Sub_dUinst[i] + "', 창호유효열관류율 = '" + Sub_Uw_inst[i] + "',법규열관류율='"+ 법규U.ToString()+"' WHERE  번호 = '" + Size[i][0] + "'");
