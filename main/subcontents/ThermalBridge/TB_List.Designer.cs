@@ -1,6 +1,6 @@
 ﻿namespace main.contents
 {
-    partial class sub3dBridgeInfo
+    partial class TB_List
     {
         /// <summary>
         /// Required designer variable.
@@ -32,10 +32,9 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             panel1 = new Panel();
-            Save_button = new Button();
-            Check_checkBox = new CheckBox();
-            TB_comboBox = new CustomComboBox();
-            TB_button = new Button();
+            Uw2_unit_label = new Label();
+            length_textBox = new TextBox();
+            label1 = new Label();
             label4 = new Label();
             Icon_pictureBox = new PictureBox();
             dataGridView1 = new DataGridView();
@@ -47,10 +46,9 @@
             // panel1
             // 
             panel1.BackColor = Color.White;
-            panel1.Controls.Add(Save_button);
-            panel1.Controls.Add(Check_checkBox);
-            panel1.Controls.Add(TB_comboBox);
-            panel1.Controls.Add(TB_button);
+            panel1.Controls.Add(Uw2_unit_label);
+            panel1.Controls.Add(length_textBox);
+            panel1.Controls.Add(label1);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(Icon_pictureBox);
             panel1.Controls.Add(dataGridView1);
@@ -59,52 +57,39 @@
             panel1.Size = new Size(971, 730);
             panel1.TabIndex = 0;
             // 
-            // Save_button
+            // Uw2_unit_label
             // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(848, 419);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(88, 25);
-            Save_button.TabIndex = 124;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
+            Uw2_unit_label.AutoSize = true;
+            Uw2_unit_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Uw2_unit_label.ForeColor = SystemColors.ControlDark;
+            Uw2_unit_label.Location = new Point(224, 89);
+            Uw2_unit_label.Name = "Uw2_unit_label";
+            Uw2_unit_label.Size = new Size(18, 16);
+            Uw2_unit_label.TabIndex = 101;
+            Uw2_unit_label.Text = "m";
             // 
-            // Check_checkBox
+            // length_textBox
             // 
-            Check_checkBox.AutoSize = true;
-            Check_checkBox.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            Check_checkBox.Location = new Point(281, 60);
-            Check_checkBox.Name = "Check_checkBox";
-            Check_checkBox.Size = new Size(15, 14);
-            Check_checkBox.TabIndex = 123;
-            Check_checkBox.UseVisualStyleBackColor = true;
-            Check_checkBox.Visible = false;
-            Check_checkBox.CheckedChanged += Check_checkBox_CheckedChanged;
+            length_textBox.BackColor = Color.White;
+            length_textBox.BorderStyle = BorderStyle.None;
+            length_textBox.Enabled = false;
+            length_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            length_textBox.ForeColor = SystemColors.ControlDark;
+            length_textBox.Location = new Point(148, 89);
+            length_textBox.Name = "length_textBox";
+            length_textBox.Size = new Size(70, 15);
+            length_textBox.TabIndex = 102;
+            length_textBox.TextAlign = HorizontalAlignment.Right;
             // 
-            // TB_comboBox
+            // label1
             // 
-            TB_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            TB_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            TB_comboBox.FormattingEnabled = true;
-            TB_comboBox.Location = new Point(328, 60);
-            TB_comboBox.Name = "TB_comboBox";
-            TB_comboBox.Size = new Size(120, 23);
-            TB_comboBox.TabIndex = 122;
-            TB_comboBox.Visible = false;
-            TB_comboBox.SelectedIndexChanged += TB_comboBox_SelectedIndexChanged;
-            // 
-            // TB_button
-            // 
-            TB_button.Location = new Point(476, 60);
-            TB_button.Name = "TB_button";
-            TB_button.Size = new Size(75, 23);
-            TB_button.TabIndex = 104;
-            TB_button.Text = "입력";
-            TB_button.UseVisualStyleBackColor = true;
-            TB_button.Visible = false;
-            TB_button.Click += TB_button_Click;
+            label1.AutoSize = true;
+            label1.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Location = new Point(95, 89);
+            label1.Name = "label1";
+            label1.Size = new Size(47, 15);
+            label1.TabIndex = 100;
+            label1.Text = "총 길이";
             // 
             // label4
             // 
@@ -112,9 +97,9 @@
             label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label4.Location = new Point(95, 51);
             label4.Name = "label4";
-            label4.Size = new Size(55, 15);
+            label4.Size = new Size(40, 15);
             label4.TabIndex = 99;
-            label4.Text = "열교정보";
+            label4.Text = "RTB1.";
             // 
             // Icon_pictureBox
             // 
@@ -143,7 +128,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(34, 89);
+            dataGridView1.Location = new Point(34, 112);
             dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
@@ -162,19 +147,18 @@
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.RowTemplate.Height = 24;
-            dataGridView1.Size = new Size(902, 324);
+            dataGridView1.Size = new Size(902, 323);
             dataGridView1.TabIndex = 1;
-            dataGridView1.CellPainting += dataGridView1_CellPainting;
             // 
-            // sub3dBridgeInfo
+            // TB_List
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(972, 641);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "sub3dBridgeInfo";
-            Text = "sub3dBridgeInfo";
+            Name = "TB_List";
+            Text = "sub3dBridgeInfo_sub";
             VisibleChanged += onVisibleChanged;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -195,9 +179,8 @@
         private Label label4;
         private PictureBox Icon_pictureBox;
         private Button button2;
-        private Button TB_button;
-        private CustomComboBox TB_comboBox;
-        private CheckBox Check_checkBox;
-        private Button Save_button;
+        private Label label1;
+        private Label Uw2_unit_label;
+        private TextBox length_textBox;
     }
 }

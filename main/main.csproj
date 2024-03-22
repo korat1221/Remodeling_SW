@@ -85,6 +85,12 @@
     <Compile Update="contentslist\List_RESystem.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\ThermalBridge\TB_property.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\ThermalBridge\TB_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="contents\Building\OpenProject.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\ConstructionBlind\BlindDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\ThermalBridge\TB_DB.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\DHWSystem\DHW_PumpDB.cs">

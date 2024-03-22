@@ -59,7 +59,7 @@ namespace main.contents
             IWInfo,
             SLInfo
         };
-        Form[] forms = new Form[] { new sub3dZoneInfo(), new sub3dBridgeInfo(), new sub3dSpaceInfo(), new sub3dCWInfo(), new sub3dWLInfo(), new sub3dRFInfo(), new sub3dFRInfo(), new sub3dWINInfo(), new sub3dDRInfo(), new sub3dIWInfo(), new sub3dSLInfo() };
+        Form[] forms = new Form[] { new sub3dZoneInfo(), new sub3dBridgeInfo(), new sub3dSpaceInfo(), new sub3dCWInfo(), new sub3dWLInfo(), new sub3dRFInfo(), new sub3dFRInfo(), new sub3dWINInfo(), new sub3dDRInfo(), new sub3dIWInfo(), new sub3dSLInfo(), new TB_List(), new TB_property() };
         bool ticked = false;
 
         public Model()
@@ -128,12 +128,14 @@ namespace main.contents
                             timer1.Enabled = true;
                             s = s.Replace("perfect:false", "");
                         }
+                        if (s.IndexOf("perfect:true") >= 0)
+                        {
+                            s = s.Replace("perfect:true", "");
+                        }
 
                         s = s.Replace("@@@", "");
                         s = s.Replace("__PROJ_TYPE__", ProjectList.ProjectType);
-                        //                        Program.UTIL.write3DModel(json);
                         Program.DB.executeSQL(DB.type.ProjDB, s);
-                        //             Program.UTIL.reloadWebCtrl();
 
                         string[][] Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호", "외피유형 = '창호' or 외피유형 = '커튼월창'");
                         if (Win.Length > 0)
@@ -141,9 +143,6 @@ namespace main.contents
                             for (int k = 0; k < Win.Length; k++)
                             {
                                 ZoneShade zoneshade = new ZoneShade(Win[k][0]);
-                                //ZoneShade zoneshade = new ZoneShade("3F_Zone015_WIN_3");
-                                //zoneshade.Calc_방위각();
-                                //MessageBox.Show(zoneshade.태양우측방위각[1].ToString());
                                 zoneshade.Calc_방위각();
                                 zoneshade.Calc_지형물음영();
 
@@ -151,17 +150,6 @@ namespace main.contents
                                 zoneshade.Calc_좌측음영();
                                 zoneshade.Calc_우측음영();
                                 zoneshade.Calc_음영계수();
-
-                                //for (int i = 0; i < 12; i++)
-                                //{
-                                //    MessageBox.Show(zoneshade.상부돌출음영길이좌[i].ToString());
-                                //}
-
-                                //MessageBox.Show(zoneshade.지형물수평음영길이[1].ToString());
-                                //zoneshade.Calc_상부음영();
-                                //zoneshade.Calc_좌측음영();
-                                //zoneshade.Calc_우측음영();
-                                //zoneshade.Calc_음영계수();
                                 zoneshade.Save();
                             }
                         }
@@ -255,12 +243,12 @@ namespace main.contents
                 int index = 1;
                 workSheet_Zone = workBook.Sheets[index];
                 string[][] Data_Zone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "존번호,층,존이름");
-               
+
                 workSheet_Zone.Cells[1, 1] = "번호";
                 workSheet_Zone.Cells[1, 2] = "존번호";
                 workSheet_Zone.Cells[1, 3] = "층";
                 workSheet_Zone.Cells[1, 4] = "존이름";
-                Excel.Range range_Zone = workSheet_Zone.Range["B2:D501"]; 
+                Excel.Range range_Zone = workSheet_Zone.Range["B2:D501"];
                 range_Zone.Value2 = ""; //엑셀 포맵하기 
 
                 for (int i = 0; i < Data_Zone.Length; i++)
@@ -269,7 +257,8 @@ namespace main.contents
                     for (int j = 0; j < 3; j++)
                     {
                         if (Data_Zone[i][j] != null)
-                        { workSheet_Zone.Cells[2 + i, j + 2] = Data_Zone[i][j];                          
+                        {
+                            workSheet_Zone.Cells[2 + i, j + 2] = Data_Zone[i][j];
                         }
                         else { workSheet_Zone.Cells[2 + i, j + 2] = ""; break; }
                     }
@@ -401,17 +390,16 @@ namespace main.contents
                 excelApp.Quit();
                 MessageBox.Show("3D 정보가 Export 되었습니다.");
 
-            }        
+            }
         }
-       
         private void Import_button_Click(object sender, EventArgs e)
         {
             Import_3DInfo();
         }
         private void Import_3DInfo()
         {
-           Program.DB.deleteValue(DB.type.ProjDB, "ZoneGeneral_3D", "");
-          Program.DB.deleteValue(DB.type.ProjDB, "ZoneEnvelope_3D", "");
+            Program.DB.deleteValue(DB.type.ProjDB, "ZoneGeneral_3D", "");
+            Program.DB.deleteValue(DB.type.ProjDB, "ZoneEnvelope_3D", "");
             string file = "";
             DataRow row;
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -428,19 +416,19 @@ namespace main.contents
 
                     //존정보 불러오기 
                     workSheet_Zone = workBook.Sheets[1];
-                    int Row_Zone = 1,Column_Zone =1;
+                    int Row_Zone = 1, Column_Zone = 1;
                     for (int n = 1; n < workSheet_Zone.Rows.Count; n++)
                     {
                         if (workSheet_Zone.Cells[n, 1].Value == null || workSheet_Zone.Cells[n, 1].Value == "")
                         {
-                            Row_Zone= n-1; break;
+                            Row_Zone = n - 1; break;
                         }
                     }
                     for (int n = 1; n < workSheet_Zone.Columns.Count; n++)
                     {
                         if (workSheet_Zone.Cells[1, n].Value == null || workSheet_Zone.Cells[1, n].Value == "")
                         {
-                           Column_Zone = n - 1; break;
+                            Column_Zone = n - 1; break;
                         }
                     }
                     string[] Value_Zone = new string[Column_Zone];
@@ -453,15 +441,15 @@ namespace main.contents
                             else { Value_Zone[j - 1] = ""; }
 
                         }
-                        if(Value_Zone[0] != null & Value_Zone[0]!="")
+                        if (Value_Zone[0] != null & Value_Zone[0] != "")
                         {
                             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_3D", "존번호,층,존이름",
                           "'" + Value_Zone[0] + "','" + Value_Zone[2] + "','" + Value_Zone[3] + "'", "존번호");
 
                             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름",
-                         "'" + Value_Zone[0]  + "','" + Value_Zone[3] + "'", "존번호");
+                         "'" + Value_Zone[0] + "','" + Value_Zone[3] + "'", "존번호");
                         }
-                        
+
                     }
 
                     //외피정보 불러오기 
@@ -491,7 +479,7 @@ namespace main.contents
                             else { Value_Envelope[j - 1] = ""; }
 
                         }
-                        if (Value_Envelope[0] !=null && Value_Envelope[0] != "" )
+                        if (Value_Envelope[0] != null && Value_Envelope[0] != "")
                         {
 
                             Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이",
@@ -506,9 +494,9 @@ namespace main.contents
                     //열교정보 불러오기 
                     workSheet_TB = workBook.Sheets[3];
                     int Row_TB = 1, Column_TB = 1;
-                    for (int n =1; n < workSheet_TB.Rows.Count; n++)
-                    { 
-                        if (workSheet_TB.Cells[n,4].Value == null || workSheet_TB.Cells[n, 4].Value == "")
+                    for (int n = 1; n < workSheet_TB.Rows.Count; n++)
+                    {
+                        if (workSheet_TB.Cells[n, 4].Value == null || workSheet_TB.Cells[n, 4].Value == "")
                         {
                             Row_TB = n - 1; break;
                         }
@@ -530,12 +518,12 @@ namespace main.contents
                             else { Value_TB[j - 1] = ""; }
 
                         }
-                        if (Value_TB[0]!= null && Value_TB[0]!="")
+                        if (Value_TB[0] != null && Value_TB[0] != "")
                         {
                             Program.DB.setValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,열교항목,열교길이",
                          "'" + Value_TB[0] + "','" + Value_TB[3] + "','" + Value_TB[4] + "'", "번호");
                         }
-                       
+
                     }
                     Program.DB.saveProject();
                     workBook.Close(true);

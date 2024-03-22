@@ -1,7 +1,9 @@
-﻿using System;
+﻿using main.subcontents.HeatingSystem;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -9,75 +11,266 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static CustomComboBox;
 using static main.MainContents;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using main.subcontents.ThermalBridge;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace main.contents
 {
     public partial class sub3dBridgeInfo : Form
     {
         string sid = "";
+        string SelectTBType, checkTBType;
+        Boolean checkSame = true;
+        string TBNum;
         public sub3dBridgeInfo()
         {
             InitializeComponent();
+
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '열교정보'");
+            Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+            Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            create_datagridview1();
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
             if (main.MainContents.selID != sid)
             {
-                sid = main.MainContents.selID;
+                this.panel1.Show();
+                Load_TBDB();
+            }
+        }
+        private void create_datagridview1()
+        {
+            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.Fill, dataGridView1_RowHandle, true);
+            DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
+            dataGridView1.Columns.Clear();
+            checkBoxColumn.HeaderText = "선택";
+            checkBoxColumn.Name = "check";
+            dataGridView1.Columns.Add(checkBoxColumn);
 
-                if (main.MainContents.selID.IndexOf("bridge-") >= 0)
+            dataGridView1.Columns.Add("A1", "번호");
+            dataGridView1.Columns.Add("A2", "유형");
+            dataGridView1.Columns.Add("A3", "적용 열교");
+            dataGridView1.Columns.Add("A4", "열교 명칭");
+            dataGridView1.Columns.Add("A5", "선형 열관류율[W/mK]");
+            dataGridView1.Columns.Add("A6", "길이[m]");
+            dataGridView1.Columns[0].Width = 30;
+            dataGridView1.Columns[1].Width = 50;
+            dataGridView1.Columns[6].Width = 80;
+            fillFilterCombos();
+        }
+        private void Load_TBDB()
+        {
+            dataGridView1.Rows.Clear();
+
+            string[][] Value;
+            if (SelectTBType == null || SelectTBType == "" || SelectTBType == "ALL")
+            {
+                Value = Program.DB.getValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,열교항목,열교길이,선택열교");
+
+            }
+            else
+            {
+                Value = Program.DB.getValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,열교항목,열교길이,선택열교", "열교항목 ='" + SelectTBType + "'");
+            }
+
+            if(Value.Length > 0)
+            {
+                for (int i = 0; i < Value.Length; i++)
                 {
-                    Dictionary<string, string> bridges = new Dictionary<string, string>()
+                    int nRow = dataGridView1.Rows.Add();
+                    if (Check_checkBox.Checked == true)
+                    { dataGridView1.Rows[nRow].Cells[0].Value = true; }
+                    else { dataGridView1.Rows[nRow].Cells[0].Value = false; }
+                    dataGridView1.Rows[nRow].Cells[1].Value = Value[i][0]; ;
+                    dataGridView1.Rows[nRow].Cells[2].Value = Value[i][1]; ;
+                    dataGridView1.Rows[nRow].Cells[6].Value = Convert.ToDouble(Value[i][2]).ToString("0.0");
+                    dataGridView1.Rows[nRow].Cells[3].Value = Value[i][3]; ;
+                    if (Value[i][3] != null && Value[i][3] != "")
                     {
-                        {"RTB1", "평지붕+외벽[90]"},
-                        {"RTB2", "평지붕+외벽[270]"},
-                        {"RTB3", "평지붕+내벽"},
-                        {"RTB4", "경사지붕"},
-                        {"RTB5", "경사지붕+외벽[수평]"},
-                        {"RTB6", "경사지붕+외벽[경사]"},
-                        {"WTB1", "층간슬라브+외벽"},
-                        {"WTB2", "외벽+내벽"},
-                        {"WTB3", "외벽+외벽[90]"},
-                        {"WTB4", "외벽+외벽[270]"},
-                        {"WTB5", "바닥+외벽[90]"},
-                        {"WTB6", "바닥+외벽[270]"},
-                    };
+                        string[][] tb2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교", "번호,명칭,값", "번호 ='" + Value[i][3] + "'");
+                        if (tb2.Length > 0) { }
+                        else
+                        {
+                            tb2 = Program.DB.getValue(DB.type.ProjDB, "User_TB", "번호,명칭,값", "번호 ='" + Value[i][3] + "'");
+                        }
 
-                    int ID = Int32.Parse(main.MainContents.selID.Replace("bridge-", ""));
-                    string num = ID > 6 ? ("WTB" + (ID - 6)) : "RTB" + ID;
+                        if (tb2.Length > 0)
+                        {
+                            dataGridView1.Rows[i].Cells[3].Value = tb2[0][0]; ;
+                            dataGridView1.Rows[i].Cells[4].Value = tb2[0][1]; ;
+                            dataGridView1.Rows[i].Cells[5].Value = Convert.ToDouble(tb2[0][2]).ToString("0.000");
+                        }
+                    }
+                }
+            }
+            
 
-                    string[][] rec = Program.DB.querySQL(DB.type.ProjDB, "SELECT 열교항목,SUM(열교길이) FROM ThermalBridge_3D WHERE 번호='" + num + "' GROUP BY 번호");
+        }
 
-                    if (rec.Length > 0)
+        private void Check_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                dataGridView1.Rows[i].Cells[0].Value = Check_checkBox.Checked;
+            }
+        }
+        private void TB_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (TB_comboBox.SelectedItem != null)
+            {
+                SelectTBType = TB_comboBox.SelectedItem.ToString();
+                Load_TBDB();
+                Check_checkBox.Checked = true;
+            }
+        }
+        private void Checked_Value()
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (Convert.ToBoolean(dataGridView1.Rows[i].Cells[0].Value) == true)
+                {
+                    if (checkTBType == null)
                     {
-                        label72.Text = rec[0][0];
-                        textBox23.Text = (rec[0][1] == "0.00" ? "0" : Double.Parse(rec[0][1]).ToString("#.##"));
+                        checkTBType = dataGridView1.Rows[i].Cells[2].Value.ToString();
+                        checkSame = true;
+                    }
+                    else if (dataGridView1.Rows[i].Cells[2].Value.ToString() == checkTBType)
+                    {
+                        checkSame = true;
                     }
                     else
                     {
-                        label72.Text = bridges[num];
-                        textBox23.Text = "0";
+                        MessageBox.Show("같은 유형만 선택하세요.");
+                        checkSame = false;
+                    }
+                }
+            }
+
+        }
+        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex == 0)
+            {
+                int cellX = dataGridView1.Location.X + e.CellBounds.X;
+                int cellY = dataGridView1.Location.Y + e.CellBounds.Y;
+
+                if (e.ColumnIndex == 0)
+                {
+                    if (!Check_checkBox.Visible)
+                    {
+                        Check_checkBox.Location = new Point(cellX + 10, cellY + 5);
+                        Check_checkBox.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
+                        Check_checkBox.Show();
+                    }
+                }
+                if (e.ColumnIndex == 2)
+                {
+                    if (!TB_comboBox.Visible)
+                    {
+                        TB_comboBox.Location = new Point(cellX, cellY);
+                        TB_comboBox.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
+                        TB_comboBox.Show();
+                    }
+                }
+                else if (e.ColumnIndex == 3)
+                {
+                    if (!TB_button.Visible)
+                    {
+                        TB_button.Location = new Point(cellX, cellY - 1);
+                        TB_button.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
+                        TB_button.Show();
+                    }
+                }
+            }
+        }
+
+        private void fillFilterCombos()
+        {
+            int i = -1;
+            string[][] rec = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ThermalBridge_3D", "열교항목");
+
+            TB_comboBox.Items.Clear();
+
+            TB_comboBox.Items.Add("ALL");
+            while (++i < rec.Length)
+            {
+                TB_comboBox.Items.Add(rec[i][0]);
+            }
+        }
+        private bool dataGridView1_RowHandle(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                if (column == 1 || column == 2 || column == 3 || column == 4 || column == 5 || column == 6)
+                {
+                    cell.Style.BackColor = SystemColors.InactiveBorder;
+                    return true;
+                }
+                else return false;
+            }
+            else
+            {
+                if (column == 1 || column == 2 || column == 3 || column == 4 || column == 5 || column == 6)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    return true;
+                }
+                else return false;
+            }
+        }
+
+        private void TB_button_Click(object sender, EventArgs e)
+        {
+            Checked_Value();
+            if (checkSame)
+            {
+                if (checkTBType != null)
+                {
+                    subcontents.ThermalBridge.TB_DB tb = new subcontents.ThermalBridge.TB_DB(checkTBType);
+                    DialogResult result = tb.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        TBNum = tb.TBNum;
+
+                        string[][] tb2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교", "번호,명칭,값", "번호 ='" + TBNum + "'");
+                        if (tb2.Length == 0) { tb2 = Program.DB.getValue(DB.type.ProjDB, "User_TB", "번호,명칭,값", "번호 ='" + TBNum + "'"); }
+                       
+
+                        if (tb2.Length > 0)
+                        {
+                            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                            {
+                                if (Convert.ToBoolean(dataGridView1.Rows[i].Cells[0].Value) == true)
+                                {
+                                    dataGridView1.Rows[i].Cells[3].Value = tb2[0][0]; ;
+                                    dataGridView1.Rows[i].Cells[4].Value = tb2[0][1]; ;
+                                    dataGridView1.Rows[i].Cells[5].Value = Convert.ToDouble(tb2[0][2]).ToString("0.000");
+                                }
+                            }
+                        }
                     }
 
-                    this.panel1.Hide();
-                    this.panel2.Show();
+                    checkTBType = null;
                 }
                 else
                 {
-                    int i = -1;
-                    Label[] labels = new Label[11] { label1, label6, label9, label12, label15, label18, label21, label24, label36, label33, label30 };
-                    TextBox[] textboxes = new TextBox[11] { textBox1, textBox2, textBox3, textBox4, textBox5, textBox6, textBox7, textBox8, textBox12, textBox11, textBox10 };
-                    string[][] rec = Program.DB.querySQL(DB.type.ProjDB, "SELECT 열교항목,SUM(열교길이) FROM ThermalBridge_3D GROUP BY 번호");
-
-                    while (++i < rec.Length)
-                    {
-                        labels[i].Text = rec[i][0];
-                        textboxes[i].Text = (rec[i][1] == "0.00" ? "0" : Double.Parse(rec[i][1]).ToString("#.##"));
-                    }
-                    this.panel1.Show();
-                    this.panel2.Hide();
+                    MessageBox.Show("열교 값을 적용할 부위를 선택해주세요.");
                 }
             }
+        }
+        
+        private void Save_button_Click(object sender, EventArgs e)
+        {
+            for(int i =0; i < dataGridView1.Rows.Count; i++)
+            {
+                Program.DB.setValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,선택열교",
+                 "'" + dataGridView1.Rows[i].Cells[1].Value + "','" + dataGridView1.Rows[i].Cells[3].Value + "'",
+                 "번호");
+            }
+           
+            MessageBox.Show("저장되었습니다.");
         }
     }
 }

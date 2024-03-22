@@ -562,7 +562,11 @@ namespace main
                         }
                         else if (selID.IndexOf("bridge-") >= 0)
                         {
-                            formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"1\"}");
+                            formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"11\"}");
+                        }                        
+                        else if (selID.IndexOf("RTB") >= 0 || selID.IndexOf("WTB") >= 0)
+                        {
+                            formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"12\"}");
                         }
                         else
                         {

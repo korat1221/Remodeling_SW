@@ -33,8 +33,6 @@
             label3 = new Label();
             label1 = new Label();
             textBox1 = new TextBox();
-            panel2 = new Panel();
-            AdditionalPanel = new Panel();
             GeneralPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -91,36 +89,16 @@
             textBox1.Size = new Size(120, 22);
             textBox1.TabIndex = 88;
             // 
-            // panel2
-            // 
-            panel2.BackColor = Color.White;
-            panel2.BorderStyle = BorderStyle.Fixed3D;
-            panel2.Location = new Point(12, 136);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(977, 149);
-            panel2.TabIndex = 18;
-            // 
-            // AdditionalPanel
-            // 
-            AdditionalPanel.BackColor = Color.White;
-            AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
-            AdditionalPanel.Location = new Point(12, 303);
-            AdditionalPanel.Name = "AdditionalPanel";
-            AdditionalPanel.Size = new Size(977, 390);
-            AdditionalPanel.TabIndex = 18;
-            // 
-            // ThermalBridge
+            // sub3dBridgeInfo_sub
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(panel2);
             Controls.Add(GeneralPanel);
-            Controls.Add(AdditionalPanel);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "ThermalBridge";
+            Name = "sub3dBridgeInfo_sub";
             Text = "Form3";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
@@ -130,11 +108,9 @@
         #endregion
 
         private Panel GeneralPanel;
-        private Panel panel2;
-        private Panel AdditionalPanel;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox2;
+        private Label label1;
+        private TextBox textBox1;
+        private Label label3;
+        private TextBox textBox2;
     }
 }
