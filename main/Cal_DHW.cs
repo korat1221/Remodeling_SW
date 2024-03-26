@@ -4,9 +4,9 @@ using System.Security.Policy;
 
 namespace main
 {
-    internal class Cal_DHW
+    internal class DHW
     {
-        String DHWNum, DHWName; String SelectZone_nonsplit;
+        public String DHWNum, DHWName; String SelectZone_nonsplit;
         String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System;
         String SelectBoiler_nonsplit, BoilerNum_nonsplit;
         String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit;      
@@ -32,7 +32,7 @@ namespace main
 
 
         string[][] 지역, 외기온도;
-        public Cal_DHW(String Num)
+        public DHW(String Num)
         {
             this.DHWNum = Num;
             지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");

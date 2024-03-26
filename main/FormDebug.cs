@@ -73,22 +73,15 @@ namespace main
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Program.CALC.run(new string[] { "셈플: CSV 를 메모리DB에 로딩..." });
+     
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            Program.CALC.run(new string[] {
-                "존 계산"
-            });
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Program.CALC.run(new string[] {
-                "셈플: CSV 를 메모리DB에 로딩...",
-                "존 계산"
-            });
         }
 
         private void OnGormShown(object sender, EventArgs e)
@@ -97,18 +90,12 @@ namespace main
 
         private void button7_Click(object sender, EventArgs e)
         {
-            Program.CALC.run(new string[] {
-                "난방시스템 계산"
-            });
-
+         
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-
-            Program.CALC.run(new string[] {
-                "법규 대안검토 계산"
-            });
+            CALC.AltCalc();
         }
     }
 }

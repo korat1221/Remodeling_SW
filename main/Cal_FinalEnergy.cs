@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eagle._Components.Public;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace main
 {
-    internal class Cal_FinalEnergy
+    internal class Final
     {
         public string Carrier_h, Carrier_w, Carrier_c;
         public double[] Qhf_gas = new double[12], Qhf_elec = new double[12];
@@ -23,59 +24,71 @@ namespace main
         public double Quse_gas_a, Quse_elec_a;
         public double[] Error_gas_mth = new double[12], Error_elec_mth = new double[12];
         public double Error_gas_a, Error_elec_a;
-        public Cal_FinalEnergy()
+        public Final()
         {
-            //난방
-            for (int mth = 0; mth < 12; mth++)
+            #region 난방
+            string[][] HeatingNum = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호");
+            if(HeatingNum.Length >0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "연료,Qh_f,Wh_ce,Wh_d,Wh_s,Wh_g", "월='" + (mth + 1).ToString() + "월'");
-                if (Value.Length > 0)
+                int i = -1;
+                while (++i < HeatingNum.Length)
                 {
-                    for (int i = 0; i < Value.Length; i++) //시스템별 
+                    Heating Heating1 = Program.CALC.getHeating(HeatingNum[i][0]);
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        if (Value[i][0].ToString() == "전기")
+                        if (Heating1.Carrier == "전기")
                         {
-                            Qhf_elec[mth] += (Convert.ToDouble(Value[i][1]) + Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]) + Convert.ToDouble(Value[i][4]) + Convert.ToDouble(Value[i][5]));
+                            Qhf_elec[mth] += (Heating1.Qh_f[mth] + Heating1.Wh_ce[mth] + Heating1.Wh_d[mth] + Heating1.Wh_s[mth] + Heating1.Wh_g[mth]);
                         }
                         else
                         {
-                            Carrier_h = Value[i][0];
-                            Qhf_elec[mth] += (Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]) + Convert.ToDouble(Value[i][4]) + Convert.ToDouble(Value[i][5]));
-                            Qhf_gas[mth] += Convert.ToDouble(Value[i][1]);
+                            Carrier_h = Heating1.Carrier;
+                            Qhf_elec[mth] += (Heating1.Wh_ce[mth] + Heating1.Wh_d[mth] + Heating1.Wh_s[mth] + Heating1.Wh_g[mth]);
+                            Qhf_gas[mth] += Heating1.Qh_f[mth];
                         }
                     }
                 }
             }
-            //급탕 
-            for (int mth = 0; mth < 12; mth++)
+            #endregion 
+            #region 급탕
+            string[][] DHWNum = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호");
+            if (DHWNum.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Result", "연료,Qw_f,Ww_d,Ww_s,Ww_g", "월='" + (mth + 1).ToString() + "월'");
-                if (Value.Length > 0)
+                int i = -1;
+                while (++i < DHWNum.Length)
                 {
-                    for (int i = 0; i < Value.Length; i++) //시스템별
+                    DHW DHW1 = Program.CALC.getDHW(DHWNum[i][0]);
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        if (Value[i][0].ToString() == "전기")
+                        if (DHW1.Carrier == "전기")
                         {
-                            Qwf_elec[mth] += (Convert.ToDouble(Value[i][1]) + Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]) + Convert.ToDouble(Value[i][4]));
+                            Qwf_elec[mth] += (DHW1.Qw_f[mth] + DHW1.Ww_d[mth] + DHW1.Ww_s[mth] + DHW1.Ww_g[mth]);
                         }
                         else
                         {
-                            Carrier_w = Value[i][0];
-                            Qwf_elec[mth] += (Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]) + Convert.ToDouble(Value[i][4]));
-                            Qwf_gas[mth] += Convert.ToDouble(Value[i][1]);
+                            Carrier_w = DHW1.Carrier;
+                            Qwf_elec[mth] += (DHW1.Ww_d[mth] + DHW1.Ww_s[mth] + DHW1.Ww_g[mth]);
+                            Qwf_gas[mth] += DHW1.Qw_f[mth];
                         }
                     }
                 }
             }
-            //조명 
-            for (int mth = 0; mth < 12; mth++)
+            #endregion 
+            #region 조명
+            string[][] ZoneNum = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호");
+            if (ZoneNum.Length > 0)
             {
-                String[][] Value = Program.DB.querySQL(DB.type.ProjDB, "select Sum(Final_kWh) From Zone_LightResult where 월 = '" + (mth + 1).ToString() + "월'");
-                if (Value.Length > 0)
+                int i = -1;
+                while (++i < ZoneNum.Length)
                 {
-                    Qlf_elec[mth] += Convert.ToDouble(Value[0][0]);
+                    ZoneLight zoneLight1 = Program.CALC.getZoneLight(ZoneNum[i][0]);
+                    for (int mth = 0; mth < 12; mth++)
+                    {
+                        Qlf_elec[mth] += zoneLight1.Zone_Final_kWh[mth];
+                    }
                 }
             }
+            #endregion 
             //신재생
             for (int mth = 0; mth < 12; mth++)
             {
@@ -268,8 +281,15 @@ namespace main
                     Qbase_elec[mth] = Qbase_elec[mth];
                 }
             }
-
-            for (int mth = 0; mth < 12; mth++)
+            double Qbase_avg = Qbase_elec.Average();
+            if (Qbase_elec[0] < Qbase_elec[7])
+            {
+                for(int mth = 0;mth < 12; mth++)
+                {
+                    Qbase_elec[mth] = Qbase_avg;
+                }
+            }
+             for (int mth = 0; mth < 12; mth++)
             {
                 Qf_elec_tot_mth[mth] = Qf_elec_tot1[mth] + Qbase_elec[mth];
             }
@@ -312,6 +332,14 @@ namespace main
                 else
                 {
                     Qbase_gas[mth] = Qbase_gas[mth];
+                }
+            }
+            double Qbase_avg = Qbase_gas.Average();
+            if (Qbase_gas[0] < Qbase_gas[7])
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    Qbase_gas[mth] = Qbase_avg;
                 }
             }
             for (int mth = 0; mth < 12; mth++)

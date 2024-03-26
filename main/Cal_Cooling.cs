@@ -734,8 +734,8 @@ namespace main
             Anf = Convert.ToDouble(v1[0][0]);
             ZoneName = v1[0][1];
             tC_op = Convert.ToDouble(v1[0][2]);
-            QC_max = Convert.ToDouble(v2[7][0]);
-            Qb_a = Convert.ToDouble(v2[7][1]);
+            QC_max = Convert.ToDouble(v2[0][0]);
+            Qb_a = Convert.ToDouble(v2[0][1]);
 
             for (int i = 0; i < v2.Length; i++)
             {

@@ -98,36 +98,12 @@ namespace main
 
         private void EnergyNeed_Sim_Click(object sender, EventArgs e)
         {
-            Program.CALC.run(new string[] {
-                "존 계산"
-            });
-            MessageBox.Show("계산되었습니다.");
+            CALC.Run_Zone();
         }
 
         private void FinalEnergy_Sim_Click(object sender, EventArgs e)
         {
-            Program.CALC.run(new string[] {
-                "존 계산"
-            });
-            Program.CALC.run(new string[] {
-                "공조시스템 계산"
-            });
-            Program.CALC.run(new string[] {
-                "난방시스템 계산"
-            });
-            Program.CALC.run(new string[] {
-                "냉방시스템 계산"
-            });
-            Program.CALC.run(new string[] {
-                "급탕시스템 계산"
-            });
-            Program.CALC.run(new string[] {
-            "연료별 에너지소요량 계산"
-            }); 
-            Program.CALC.run(new string[] {
-            "신재생시스템 계산"
-            });
-            MessageBox.Show("계산 되었습니다.");
+            CALC.Run_All();           
         }
     }
 }

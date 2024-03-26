@@ -351,7 +351,12 @@ namespace main
                     endtime = Convert.ToDouble(Value[0][2]);
                     for (int i = 0; i < 12; i++)
                     {
-                        Zone_useofdays[i] = time.Calc_useofdays(dayofuse, monthday[i], weekdays[i]);
+                        string 주간일수;
+                        if(dayofuse == 5.5) { 주간일수 = "주 "+dayofuse+" 일 근무"; }
+                        else { 주간일수 = "주 " + dayofuse + ".0 일 근무"; }
+                        string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "이용일수", "이용일수", "월= '" + (i+1) + "월' and 주간일수 ='" + 주간일수 + "'");
+                        Zone_useofdays[i]  = Convert.ToDouble(value[0][0]);
+                        //Zone_useofdays[i] = time.Calc_useofdays(dayofuse, monthday[i], weekdays[i]);
                         Zone_daytime[i] = time.Calc_daytime(starttime, endtime, sunrise[i], sunset[i], Zone_useofdays[i], dayofuse);
                         Zone_nighttime[i] = time.Calc_nighttime(starttime, endtime, sunrise[i], sunset[i], Zone_useofdays[i], dayofuse);
                     }
@@ -1004,16 +1009,18 @@ namespace main
         //월별이용일수 
         public double Calc_useofdays(double dayofuse, double monthday, double weekdays)
         {
+            
             if (dayofuse == 7)
             {
                 useday = monthday;
             }
             else
             {
-                useday = monthday / weekdays;
+                useday = monthday / weekdays ;
             }
             return useday;
         }
+        
 
         //조명 사용 낮시간 (시간 저거 더블로 가져오는게 맞겠지?)
         public double Calc_daytime(double starttime, double endtime, double sunrisetime, double sunsettime, double dayofuse, double useday)

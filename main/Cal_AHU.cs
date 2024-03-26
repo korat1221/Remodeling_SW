@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace main
 {
-    internal class Cal_AHU
+    internal class AHU
     {
-        String AHUNum, AHUOptions;
+        public String AHUNum, AHUOptions;
         double[] theta_e = new double[12], RelativeHumidity = new double[12], X_e = new double[12];
         double[] theta_e_min = new double[12], theta_e_max = new double[12], theta_e_std = new double[12];
         double X_i_max, X_i_min;
@@ -70,7 +70,7 @@ namespace main
 
         public double[] Ev_gen_fan_SA = new double[12], Ev_gen_fan_EA = new double[12], fpl_HU = new double[12], W_HU_aux = new double[12], Wv_aux_preh = new double[12];
 
-        public Cal_AHU(String AHUNum)
+        public AHU(String AHUNum)
         {
             this.AHUNum = AHUNum;
             string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
