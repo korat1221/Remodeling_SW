@@ -1089,14 +1089,5 @@ namespace main.contents
             }
 
         }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Program.CALC.run(new string[] {
-                "존 계산"
-            });
-
-        }
-
     }
 }
