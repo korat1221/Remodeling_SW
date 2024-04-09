@@ -1,8 +1,10 @@
-﻿using main;
+﻿using Eagle._Components.Public;
+using main;
 using main.subcontents;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -17,63 +19,116 @@ namespace main
     {
         public static ArrayList zone = new ArrayList();
         public static ArrayList zonelight = new ArrayList();
+        
 
         public static void Run_Zone()
         {
-            Cal_Qb();
+            Program.DB.deleteTable(DB.type.ProjDB, "Zone_LightResult");
+            Program.DB.initTable(DB.type.ProjDB, "Zone_LightResult");
+
+            Program.DB.deleteTable(DB.type.ProjDB, "Zone_HCneed_Result");
+            Program.DB.initTable(DB.type.ProjDB, "Zone_HCneed_Result");
+
+            Program.DB.deleteTable(DB.type.ProjDB, "Zone_Envelope_Result");
+            Program.DB.initTable(DB.type.ProjDB, "Zone_Envelope_Result");
+            string[][] NowProjNum = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
+            Cal_Qb(NowProjNum[0][0]);
         }
         public static void Run_All()
         {
-            Cal_Qb();
-            Cal_Qahu();
-            Cal_Qfh();
-            CoolingSystemCalc();
-            Cal_Qfw();
-            Cal_Qf();
-            RESystemCalc();
-            MessageBox.Show("계산되었습니다.");
-        }
-        public static void Cal_Qb()
-        {
             Program.DB.deleteTable(DB.type.ProjDB, "Zone_LightResult");
             Program.DB.initTable(DB.type.ProjDB, "Zone_LightResult");
+
             Program.DB.deleteTable(DB.type.ProjDB, "Zone_HCneed_Result");
             Program.DB.initTable(DB.type.ProjDB, "Zone_HCneed_Result");
+
+            Program.DB.deleteTable(DB.type.ProjDB, "Zone_Envelope_Result");
             Program.DB.initTable(DB.type.ProjDB, "Zone_Envelope_Result");
+
+            Program.DB.deleteTable(DB.type.ProjDB, "AHUSystem_Result");
+            Program.DB.initTable(DB.type.ProjDB, "AHUSystem_Result");
+
+            Program.DB.deleteTable(DB.type.ProjDB, "DHWSystem_Result");
+            Program.DB.initTable(DB.type.ProjDB, "DHWSystem_Result");
+
+            Program.DB.deleteTable(DB.type.ProjDB, "HeatingSystem_Result");
+            Program.DB.initTable(DB.type.ProjDB, "HeatingSystem_Result");
+
+            Program.DB.deleteTable(DB.type.ProjDB, "CoolingSystem_Result");
+            Program.DB.initTable(DB.type.ProjDB, "CoolingSystem_Result");
+
+
+            Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result");
+            Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result");
+
+            Program.DB.deleteTable(DB.type.ProjDB, "PV_Result");
+            Program.DB.initTable(DB.type.ProjDB, "PV_Result");
+            string[][] NowProjNum = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
+
+
+            Cal_Qb(NowProjNum[0][0]);
+            Cal_Qahu(NowProjNum[0][0]);
+            Cal_Qfh(NowProjNum[0][0]);
+            CoolingSystemCalc();
+            Cal_Qfw();
+            Cal_Qf(NowProjNum[0][0]);
+            RESystemCalc();
+           // MessageBox.Show("계산되었습니다.");
+        }
+        public static void Cal_Qb(string ProjNum)
+        {
+            Cal_BlowDoor();
+            Cal_n50_tot();
             Zone_Arrange();
             for (int k = 0; k < zone.Count; k++)
             {
                 Zone zone1 = (Zone)zone[k];
                 ZoneLight zonelight1 = (ZoneLight)zonelight[k];
-                Zone_LoadData(zone1, zonelight1);
-                Zone_Calc(zone1, zonelight1);
+                Zone_LoadData(zone1, zonelight1, ProjNum);
+                Zone_Calc(zone1, zonelight1, ProjNum);
                 Zone_Save(zone1, zonelight1);
             }
         }
-        private static void Cal_Qahu()
+        private static void Cal_Qahu(string ProjNum)
         {
-            Program.DB.deleteTable(DB.type.ProjDB, "AHUSystem_Result");
-            Program.DB.initTable(DB.type.ProjDB, "AHUSystem_Result");
             string[][] Num = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형");
             if (Num.Length > 0)
             {
+                for (int k = 0; k < Num.Length; k++)
+                {
+                    CALC.AHUs[Num[k][0]] = null;
+                }
                 int i = -1;
                 while (++i < Num.Length)
                 {
-                    AHU Pre_AHU1 = new AHU(Num[i][0]);
-                    AHUs[Num[i][0]] = Pre_AHU1;
-                    AHUSystem_LaodData(Pre_AHU1);
-                    AHUSystem_PreCalc(Pre_AHU1);
+                    if (Num[i][1] == "공조기")
+                    {
+                        AHU Pre_AHU1 = new AHU(Num[i][0]);
+                        AHUs[Num[i][0]] = Pre_AHU1;
+                        AHUSystem_LaodData(Pre_AHU1, ProjNum);
+                        AHUSystem_PreCalc(Pre_AHU1);
+                    }
+                    else
+                    {
+                        AHU Pre_HRV1 = new AHU(Num[i][0]);
+                        AHUs[Num[i][0]] = Pre_HRV1;
+                        HRV_LaodData(Pre_HRV1, ProjNum);
+                        AHUSystem_PreCalc(Pre_HRV1);
+                    }
                 }
-                Cal_Qb();
+                Cal_Qb(ProjNum);
                 i = -1;
+                for (int k = 0; k < Num.Length; k++)
+                {
+                    CALC.AHUs[Num[k][0]] = null;
+                }
                 while (++i < Num.Length)
                 {
                     if (Num[i][1] == "공조기")
                     {
                         AHU Post_AHU1 = new AHU(Num[i][0]);
                         AHUs[Num[i][0]] = Post_AHU1;
-                        AHUSystem_LaodData(Post_AHU1);
+                        AHUSystem_LaodData(Post_AHU1, ProjNum);
                         AHUSystem_PostCalc(Post_AHU1);
                         AHUSystem_PostSave(Post_AHU1);
                     }
@@ -81,7 +136,7 @@ namespace main
                     {
                         AHU Post_HRV1 = new AHU(Num[i][0]);
                         AHUs[Num[i][0]] = Post_HRV1;
-                        AHUSystem_LaodData(Post_HRV1);
+                        HRV_LaodData(Post_HRV1, ProjNum);
                         HRV_PostCalc(Post_HRV1);
                         HRV_PostSave(Post_HRV1);
                     }
@@ -90,29 +145,36 @@ namespace main
             }
 
         }
-        private static void Cal_Qfh()
+        public static void Cal_Qfh(string ProjNum)
         {
-            Program.DB.deleteTable(DB.type.ProjDB, "HeatingSystem_Result");
-            Program.DB.initTable(DB.type.ProjDB, "HeatingSystem_Result");
             Heating_ce_zone_calc();
             string[][] HeatingNum = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호");
-            int i = -1;
-            while (++i < HeatingNum.Length)
+            if (HeatingNum.Length > 0)
             {
-                Heating Heating1 = new Heating(HeatingNum[i][0]);
-                Heatings[HeatingNum[i][0]] = Heating1;
-                Heating_LoadData(Heating1);
-                Heating_Calc(Heating1);
-                Heating_Save(Heating1);
+                for (int k = 0; k < HeatingNum.Length; k++)
+                {
+                    CALC.Heatings[HeatingNum[k][0]] = null;
+                }
+                int i = -1;
+                while (++i < HeatingNum.Length)
+                {
+                    Heating Heating1 = new Heating(HeatingNum[i][0]);
+                    Heatings[HeatingNum[i][0]] = Heating1;
+                    Heating_LoadData(Heating1, ProjNum);
+                    Heating_Calc(Heating1, ProjNum);
+                    Heating_Save(Heating1);
+                }
             }
         }
-        private static void Cal_Qfw()
+        public static void Cal_Qfw()
         {
-            Program.DB.deleteTable(DB.type.ProjDB, "DHWSystem_Result");
-            Program.DB.initTable(DB.type.ProjDB, "DHWSystem_Result");
             string[][] DHWNum = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호");
             if(DHWNum.Length > 0)
             {
+                for (int k = 0; k < DHWNum.Length; k++)
+                {
+                    CALC.DHWs[DHWNum[k][0]] = null;
+                }
                 int i = -1;
                 while(++i < DHWNum.Length)
                 {
@@ -124,16 +186,201 @@ namespace main
                 }
             }
         }
-        private static void Cal_Qf()
+        private static void Cal_Qf(string ProjNum)
         {
-            string[][] PNum = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
-            if (PNum.Length > 0)
+            Final final1 = new Final(ProjNum);
+            Final_Calc(final1);
+            Final_Save(final1);
+        }
+
+        #region 기밀
+        private static void Cal_BlowDoor()
+        {
+            double Area_tot = 0; //직접외기 외피면적
+            double Area_q50 = 0; // 면적 * q50 합산 
+            double[] q50_element = new double[5];
+            double CMH_tot = 0;
+            string[][] BValue = Program.DB.getValue(DB.type.ProjDB,"BuildingGeneral", "기밀측정여부,q50,q50Area","");
+            if (BValue.Length >0 )
             {
-                Final final1 = new Final();
-                CALC.Final_Calc(final1);
-                CALC.Final_Save(final1);
+                if (BValue[0][0]== "기밀 테스트 실시")
+                {
+                    //출입문5,외벽2,창호3,커튼월창3,지붕2 
+                    q50_element[0] = 5;
+                    q50_element[1] = 2;
+                    q50_element[2] = 3;
+                    q50_element[3] = 3;
+                    q50_element[4] = 2;
+
+                    string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,면적,구조체번호", "");
+                    if (ZoneE.Length > 0)
+                    {
+                        string[][] Value;
+                        for (int n = 0; n < ZoneE.Length; n++)
+                        {
+                            if (ZoneE[n][1] == "외부출입문")
+                            {
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "직접간접", "번호='" + ZoneE[n][3] + "'");
+                                if (Value.Length > 0)
+                                {
+                                    if (Value[0][0] == "직접외기")
+                                    {
+                                        Area_tot += Convert.ToDouble(ZoneE[n][2]);
+                                        Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[0];
+                                    }
+                                }
+                            }
+                            else if (ZoneE[n][1] == "외벽")
+                            {
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + ZoneE[n][3] + "'");
+                                if (Value.Length > 0)
+                                {
+                                    if (Value[0][0] == "직접외기")
+                                    {
+                                        Area_tot += Convert.ToDouble(ZoneE[n][2]);
+                                        Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[1];
+                                    }
+                                }
+                            }
+                            else if (ZoneE[n][1] == "창호")
+                            {
+                                Value = Program.DB.querySQL(DB.type.ProjDB, "select a.직접간접 FROM ConstructionWindow AS a INNER JOIN SubWindow AS b ON a.번호 = b.상위창호번호 where b.번호 = '" + ZoneE[n][3] + "'");
+                                if (Value.Length > 0)
+                                {
+                                    if (Value[0][0] == "직접외기")
+                                    {
+                                        Area_tot += Convert.ToDouble(ZoneE[n][2]);
+                                        Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[2];
+                                    }
+                                }
+                            }
+                            else if (ZoneE[n][1] == "커튼월창")
+                            {
+                                Area_tot += Convert.ToDouble(ZoneE[n][2]);
+                                Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[3];
+                            }
+                            else if (ZoneE[n][1] == "지붕")
+                            {
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "직접간접", "번호='" + ZoneE[n][3] + "'");
+                                if (Value.Length > 0)
+                                {
+                                    if (Value[0][0] == "직접외기")
+                                    {
+                                        Area_tot += Convert.ToDouble(ZoneE[n][2]);
+                                        Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[4];
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    CMH_tot = Convert.ToDouble(BValue[0][1]) * Convert.ToDouble(BValue[0][2]);
+                    q50_element[0] = q50_element[0] * CMH_tot / Area_q50;
+                    q50_element[1] = q50_element[1] * CMH_tot / Area_q50;
+                    q50_element[2] = q50_element[2] * CMH_tot / Area_q50;
+                    q50_element[3] = q50_element[3] * CMH_tot / Area_q50;
+                    q50_element[4] = q50_element[4] * CMH_tot / Area_q50;
+
+                    string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
+                    Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,출입문q50,창호q50,외벽q50,지붕q50",
+                         "'" + 번호[0][0] + "','" + q50_element[0] + "','" + q50_element[1] + "','" + q50_element[2] + "','" + q50_element[3] + "','" + q50_element[4]
+                   + "'", "프로젝트번호");
+                }
             }
         }
+        private static void Cal_n50_tot()
+        {
+            double n50_tot;
+            double CMH = 0;
+            double V_NF_tot =0; // 순체적합산
+            string[][] Value;
+            double Door_q50 = 0, Win_q50 = 0, CW_q50 = 0, Wall_q50 = 0, Roof_q50 = 0;
+
+
+            string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기밀측정여부,출입문q50,창호q50,외벽q50,지붕q50", "");
+            if (Value2.Length > 0)
+            {
+                Door_q50 = Convert.ToDouble(Value2[0][1]);
+                Win_q50 = Convert.ToDouble(Value2[0][2]);
+                Wall_q50 = Convert.ToDouble(Value2[0][3]);
+                Roof_q50 = Convert.ToDouble(Value2[0][4]);
+            }
+            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,커튼월부위,면적,구조체,구조체번호,층", "");
+            if (ZoneE.Length > 0)
+            {
+                for (int n = 0; n < ZoneE.Length; n++)
+                {
+                    if (ZoneE[n][1] == "커튼월창")
+                    {
+                        CMH += Convert.ToDouble(ZoneE[n][3]) * Win_q50;
+                    }
+                    else if (ZoneE[n][1] == "외벽")
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                        if (Value.Length > 0)
+                        {
+                            if (Value[0][0] == "직접외기")
+                            {
+                                CMH += Convert.ToDouble(ZoneE[n][3]) * Wall_q50;
+                            }
+                        }
+                    }
+                    else if (ZoneE[n][1] == "지붕")
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                        if (Value.Length > 0)
+                        {
+                            if (Value[0][0] == "직접외기")
+                            {
+                                CMH += Convert.ToDouble(ZoneE[n][3]) * Roof_q50;
+                            }
+                        }
+                    }
+                    else if (ZoneE[n][1] == "창호")
+                    {
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "select a.직접간접 FROM ConstructionWindow AS a INNER JOIN SubWindow AS b ON a.번호 = b.상위창호번호 where b.번호 = '" + ZoneE[n][5] + "'");
+                        if (Value.Length > 0)
+                        {
+                            if (Value[0][0] == "직접외기")
+                            {
+                                CMH += Convert.ToDouble(ZoneE[n][3]) * Win_q50;
+                            }
+                        }
+                    }
+                    else if (ZoneE[n][1] == "외부출입문")
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                        if (Value.Length > 0)
+                        {
+                            if (Value[0][0] == "직접외기")
+                            {
+                                CMH += Convert.ToDouble(ZoneE[n][3]) * Door_q50;
+                            }
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+
+            }
+            ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적,천장고", "");
+            if (ZoneE.Length > 0)
+            {
+              for(int i = 0; i < ZoneE.Length; i++)
+                {
+                    V_NF_tot += (Convert.ToDouble(ZoneE[i][0]) * Convert.ToDouble(ZoneE[i][1]));
+                }
+            }
+            n50_tot = CMH  / V_NF_tot;
+            string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
+            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,n50",
+                 "'" + 번호[0][0] + "','" + n50_tot.ToString()
+           + "'", "프로젝트번호");
+        }
+
+        #endregion
 
         #region 요구량
         public static void Zone_Arrange()
@@ -237,23 +484,57 @@ namespace main
             }
 
         }
-        public static void Zone_LoadData(Zone zone1, ZoneLight zonelight1)
+        public static void Zone_LoadData(Zone zone1, ZoneLight zonelight1, string ProjNum)
         {
             zonelight1.LoadData_LightGeneral();
             zonelight1.LoadData_LightSystem();
             zonelight1.LoadData_NaturalLight();
             zonelight1.LoadData_Renew();
             zone1.LoadData_ZoneGeneral();
-            zone1.LoadData_Ventil();
+            zone1.LoadData_q50(ProjNum);
+            zone1.LoadData_Ventil(ProjNum, zone1.ZoneNum);
             zone1.LoadData_InWall();
             zone1.LoadData_SL();
-            zone1.LoadData_Wall();
-            zone1.LoadData_Roof();
-            zone1.LoadData_Floor();
-            zone1.LoadData_GWall();
-            zone1.LoadData_Door();
-            zone1.LoadData_Win();
-            zone1.LoadData_CW();
+            zone1.LoadData_Wall(ProjNum, zone1.ZoneNum);
+            zone1.LoadData_Roof(ProjNum, zone1.ZoneNum);
+            zone1.LoadData_Floor(ProjNum, zone1.ZoneNum);
+            zone1.LoadData_GWall(ProjNum, zone1.ZoneNum);
+            zone1.LoadData_Door(ProjNum, zone1.ZoneNum);
+            zone1.LoadData_Win(ProjNum, zone1.ZoneNum);
+            zone1.LoadData_CW(ProjNum, zone1.ZoneNum);
+        }
+        public static void Zone_Calc(Zone zone1, ZoneLight zonelight1, string ProjNum)
+        {
+            zonelight1.Calc_time(zone1.ZoneNum);
+            zonelight1.Calc_Facade_general();
+            zonelight1.Calc_Facade_shade();
+            zonelight1.Calc_Facade_FDS();
+            zonelight1.Calc_Facade_FD();
+            zonelight1.Calc_Roof_general();
+            zonelight1.Calc_Roof_FDS();
+            zonelight1.Calc_Roof_FD();
+            zonelight1.Calc_Sunlight_SCW();
+            zonelight1.Calc_Sunlight_Pj_SC();
+            zonelight1.Calc_kWh();
+
+            zone1.ZoneHT();
+            zone1.Zone_n50();
+            zone1.ZoneHV();
+            zone1.Zonetao();
+            zone1.Zonethetai();
+            zone1.ZoneQT_u();
+            zone1.ZoneQT();
+            zone1.ZoneQV();
+            zone1.ZoneQSop();
+            zone1.ZoneQStr_Win(ProjNum);
+            zone1.ZoneQStr_CW(ProjNum);
+            zone1.ZoneQ_DHU();
+            zone1.ZoneQI_L();
+            zone1.ZoneQI();
+            zone1.Zone_Theta_U();
+            zone1.Zoneeta();
+            zone1.ZoneQb();
+            zone1.ZoneQmax();
         }
         private static void Zone_Save(Zone zone1, ZoneLight zonelight1)
         {
@@ -361,47 +642,24 @@ namespace main
             }
 
         }
-        public static void Zone_Calc(Zone zone1, ZoneLight zonelight1)
-        {
-            zonelight1.Calc_time(zone1.ZoneNum);
-            zonelight1.Calc_Facade_general();
-            zonelight1.Calc_Facade_shade();
-            zonelight1.Calc_Facade_FDS();
-            zonelight1.Calc_Facade_FD();
-            zonelight1.Calc_Roof_general();
-            zonelight1.Calc_Roof_FDS();
-            zonelight1.Calc_Roof_FD();
-            zonelight1.Calc_Sunlight_SCW();
-            zonelight1.Calc_Sunlight_Pj_SC();
-            zonelight1.Calc_kWh();
-
-            zone1.ZoneHT();
-            zone1.ZoneHV();
-            zone1.Zonetao();
-            zone1.Zonethetai();
-            zone1.ZoneQT_u();
-            zone1.ZoneQT();
-            zone1.ZoneQV();
-            zone1.ZoneQSop(zone1.ZoneNum);
-            zone1.ZoneQStr(zone1.ZoneNum);
-            zone1.ZoneQ_DHU();
-            zone1.ZoneQI_L();
-            zone1.ZoneQI();
-            zone1.Zone_Theta_U();
-            zone1.Zoneeta();
-            zone1.ZoneQb();
-            zone1.ZoneQmax();
-        }
         #endregion
 
         #region 공조
-        public static void AHUSystem_LaodData(AHU AHU1)
+        public static void AHUSystem_LaodData(AHU AHU1, string ProjNum)
         {
-            AHU1.Load_ZoneData();
-            AHU1.Load_GeneralData();
-            AHU1.Load_AHUData();
-            AHU1.Load_DuctData();
-            AHU1.Load_PrehPrecData();            
+            AHU1.Load_ZoneData(ProjNum);
+            AHU1.Load_GeneralData(ProjNum);
+            AHU1.Load_AHUData(ProjNum);
+            AHU1.Load_DuctData(ProjNum);
+            AHU1.Load_PrehPrecData(ProjNum);            
+        }
+        public static void HRV_LaodData(AHU HRV1, string ProjNum)
+        {
+            HRV1.Load_ZoneData(ProjNum);
+            HRV1.Load_GeneralData(ProjNum);
+            HRV1.Load_HRVData(ProjNum);
+            HRV1.Load_DuctData(ProjNum);
+            HRV1.Load_PrehPrecData(ProjNum);
         }
         public static void AHUSystem_PreCalc(AHU AHU1)
         {
@@ -511,6 +769,9 @@ namespace main
             }
 
         }
+        #endregion
+
+        #region 난방
         public static void Heating_ce_zone_calc()
         {
             string[][] HeatingNum = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호");
@@ -524,11 +785,11 @@ namespace main
                     for (int n = 0; n < Zone.Length; n++)
                     {
                         Zone zone = Program.CALC.getZone(Zone[n][0].ToString());
-                        string[][] ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "공급설비,공급설비종류,가동시간", "존번호 = '" + Zone[n][0] + "'");
+                        string[][] ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "공급설비,공급설비종류,가동시간,난방시스템", "존번호 = '" + Zone[n][0] + "'");
 
                         double[] 가동비율 = new double[ce.Length];
                         double 가동비율_tot = 0;
-
+                       
                         for (int a = 0; a < ce.Length; a++)
                         {
                             string[][] ce2 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "용량_난방", "번호='" + ce[a][0].Substring(0, 4) + "'");
@@ -553,43 +814,44 @@ namespace main
                             {
                                 Qhb_mth[mth] = zone.Qb_mth[0, 1, mth] * 가동비율[a] / 가동비율_tot;
                             }
-                            Zone_HeatingCE zone_heatingce = new Zone_HeatingCE(Zone[n][0], HeatingNum[i][0], ce[a][0], Qhb_mth);
-                            Zone_HeatingCEs[Zone[n][0] + "_" + HeatingNum[i][0] + "_" + ce[a][0]] = zone_heatingce;
+                            if(HeatingNum[i][0] == ce[a][3])
+                            {
+                                Zone_HeatingCE zone_heatingce = new Zone_HeatingCE(Zone[n][0], HeatingNum[i][0], ce[a][0], Qhb_mth);
+                                Zone_HeatingCEs[Zone[n][0] + "_" + HeatingNum[i][0] + "_" + ce[a][0]] = zone_heatingce;
+                            }                            
                         }
                     }
                 }
             }
         }
-        #endregion
-
-        #region 난방
-        public static void Heating_LoadData(Heating Heating1)
+        public static void Heating_LoadData(Heating Heating1, string ProjNum)
         {
-            Heating1.Load_Zonedata();
-            Heating1.Load_HeatingGeneral();
-            Heating1.Load_Boiler();
-            Heating1.Load_Solar();
-            Heating1.Load_PumpData();
-            Heating1.Load_ceData();
-            Heating1.Load_StorageData();
-            Heating1.Load_PipeData();
-            Heating1.Load_AirHP();
-            Heating1.Load_GroundHP();
-            Heating1.Load_GWHP();
+            Heating1.Load_Zonedata(ProjNum);
+            Heating1.Load_HeatingGeneral(ProjNum);
+            Heating1.Load_Boiler(ProjNum);
+            Heating1.Load_Solar(ProjNum);
+            Heating1.Load_PumpData(ProjNum);
+            Heating1.Load_ceData(ProjNum);
+            Heating1.Load_StorageData(ProjNum);
+            Heating1.Load_PipeData(ProjNum);
+            Heating1.Load_AirHP(ProjNum);
+            Heating1.Load_GroundHP(ProjNum);
+            Heating1.Load_GWHP(ProjNum);
+            Heating1.Load_ce(ProjNum);
         }
-        public static void Heating_Calc(Heating Heating1)
+        public static void Heating_Calc(Heating Heating1,string ProjNum)
         {
             Heating1.Calc_thrL();
             Heating1.Calc_beta_ce();
-            Heating1.Calc_Qce();
+            Heating1.Calc_Qce(ProjNum);
             Heating1.Calc_beta_d();
-            Heating1.Calc_Qd();
+            Heating1.Calc_Qd(ProjNum);
             Heating1.Calc_beta_s();
-            Heating1.Calc_Qh_s();
+            Heating1.Calc_Qh_s(ProjNum);
             Heating1.Calc_beta_gen();
-            Heating1.Calc_Qh_gen_Boiler();
-            Heating1.Calc_Solar();
-            Heating1.Calc_Q_Air_HP();
+            Heating1.Calc_Qh_gen_Boiler(ProjNum);
+            Heating1.Calc_Solar(ProjNum);
+            Heating1.Calc_Q_Air_HP(ProjNum);
             Heating1.nan();
         }
         private static void Heating_Save(Heating Heating1)
@@ -632,8 +894,7 @@ namespace main
         {
             string[][] CoolingNum = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Form", "번호");
 
-            Program.DB.deleteTable(DB.type.ProjDB, "CoolingSystem_Result");
-            Program.DB.initTable(DB.type.ProjDB, "CoolingSystem_Result");
+            
 
             for (int i = 0; i < CoolingNum.Length; i++)
             {
@@ -719,8 +980,14 @@ namespace main
                         }
                     }                    
                 }
-                
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    final1.Qf_elec_tot_mth[mth] = final1.Qf_elec_tot1[mth] + final1.Qbase_elec[mth];
+                    final1.Qf_gas_tot_mth[mth] = final1.Qf_gas_tot1[mth] + final1.Qbase_gas[mth];
+                }
+
             }
+            
             final1.Calc_Error();
         }
         private static void Final_Save(Final final1)
@@ -793,14 +1060,28 @@ namespace main
         public static bool AltCalc()
         {
             string[] RuleAlt = { "법규_외벽", "법규_지붕" , "법규_최하층바닥" , "법규_커튼월창" , "법규_창호" , "법규_외부출입문" , "법규_전체" };
-            Program.DB.deleteTable(DB.type.ProjDB, "Zone_Alt_Result");
-            Program.DB.initTable(DB.type.ProjDB, "Zone_Alt_Result");
+            string[] ElementAlt = { "조닝", "요소기술_기밀", "요소기술_열회수기", "요소기술_외벽", "요소기술_지붕", "요소기술_최하층바닥", "요소기술_창호", "요소기술_커튼월창", "요소기술_외부출입문", "요소기술_난방", "요소기술_공조"  };
+            Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result_Alt");
+            Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result_Alt");
             Cal_Alt cal = new Cal_Alt();
-            for(int  i = 0; i < RuleAlt.Length; i++)
+            //for(int  i = 0; i < RuleAlt.Length; i++)
+            //{
+            //    cal.Calc_Alt(RuleAlt[i]);
+            //}
+
+            string[][] Type = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호", "");
+            if (Type.Length > 0)
             {
-                cal.Calc_RuleAlt(RuleAlt[i]);
-            }            
-            MessageBox.Show("법규 기반 우선순위 계산되었습니다.");
+                if (Type[0][0] != "1")
+                {
+                    for (int i = 0; i < ElementAlt.Length; i++)
+                    {
+                        cal.Calc_Alt(ElementAlt[i]);
+                    }
+                }
+            }
+
+            MessageBox.Show("요소기술별 계산이 완료되었습니다.");
             return true;
         }
         /////////////////////////////////////////////////////////////////////////////////////

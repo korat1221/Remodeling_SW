@@ -41,7 +41,7 @@ namespace main
         double PrehPower;
         public double fdefrost_ctrl;
         //존정보
-        ArrayList SelectZone_split = new ArrayList();
+        public ArrayList SelectZone_split = new ArrayList();
         public double Vmin_tot, ANF_tot, Qc_a_tot, Qh_a_tot, tvmech_avg;
         public double[] dvmechmth_avg = new double[12];
         public double[,] Qb_mth_tot = new double[2, 12];
@@ -90,16 +90,17 @@ namespace main
                     }
                 }
             }
-            string[][] AHUValue = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "유형", "번호='" + AHUNum + "'");
+           
+        }
+        public void Load_ZoneData(string ProjNum)
+        {
+            string[][] AHUValue = Program.DB.getValue(ProjNum, "AHUSystem_form", "유형", "번호='" + AHUNum + "'");
             if (AHUValue.Length > 0)
             {
                 AHUOptions = AHUValue[0][0];
             }
-        }
-        public void Load_ZoneData()
-        {
             SelectZone_split.Clear();
-            string[][] value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + AHUNum + "'");
+            string[][] value = Program.DB.getValue(ProjNum, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + AHUNum + "'");
             if (value.Length > 0)
             {
                 for (int k = 0; k < value.Length; k++)
@@ -112,7 +113,7 @@ namespace main
             {
                 for (int n = 0; n < SelectZone_split.Count; n++)
                 {
-                    string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간", "존번호='" + SelectZone_split[n] + "'");
+                    string[][] ZoneValue = Program.DB.getValue(ProjNum, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간", "존번호='" + SelectZone_split[n] + "'");
                     if (ZoneValue.Length > 0)
                     {
                         Vmin_tot += Convert.ToDouble(ZoneValue[0][1]);
@@ -149,7 +150,7 @@ namespace main
             {
                 for (int n = 0; n < SelectZone_split.Count; n++)
                 {
-                    string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간,주이용일", "존번호='" + SelectZone_split[n] + "'");
+                    string[][] ZoneValue = Program.DB.getValue(ProjNum, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간,주이용일", "존번호='" + SelectZone_split[n] + "'");
                     if (ZoneValue.Length > 0)
                     {
                         Vmin_tot += Convert.ToDouble(ZoneValue[0][1]);
@@ -188,9 +189,9 @@ namespace main
                 }
             }
         }
-        public void Load_GeneralData()
+        public void Load_GeneralData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "유형,설치위치,누기등급2,풍량제어,공조기단열두께,덕트누기수준", "번호='" + AHUNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "AHUSystem_form", "유형,설치위치,누기등급2,풍량제어,공조기단열두께,덕트누기수준", "번호='" + AHUNum + "'");
             if (Value.Length > 0)
             {
                 
@@ -230,9 +231,9 @@ namespace main
 
 
         }
-        public void Load_AHUData()
+        public void Load_AHUData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어", "번호 = '" + AHUNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "User_AHU", "공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어", "번호 = '" + AHUNum + "'");
             if (Value.Length > 0)
             {
                 AHU_Type = Value[0][0];
@@ -286,9 +287,9 @@ namespace main
                 else { X_iset[mth] = X_e[mth]; }
             }
         }
-        public void Load_HRVData()
+        public void Load_HRVData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,팬풍량,팬동력,모터제어", "번호 = '" + AHUNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "User_HRV", "열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,팬풍량,팬동력,모터제어", "번호 = '" + AHUNum + "'");
             if (Value.Length > 0)
             {
                 AHU_HRVType = Value[0][0];
@@ -326,9 +327,9 @@ namespace main
             }
         }
        
-        public void Load_DuctData()
+        public void Load_DuctData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "OA덕트길이,EA덕트길이,SA덕트길이,RA덕트길이,덕트단열두께,덕트관경,덕트단열재,덕트단열재열전도율", "번호='" + AHUNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "AHUSystem_form", "OA덕트길이,EA덕트길이,SA덕트길이,RA덕트길이,덕트단열두께,덕트관경,덕트단열재,덕트단열재열전도율", "번호='" + AHUNum + "'");
             if (Value.Length > 0)
             {
                 if (Value[0][0]!= "")
@@ -352,9 +353,9 @@ namespace main
                 DuctInsulationConductivity = Convert.ToDouble(Value[0][7]);
             }
         }
-        public void Load_PrehPrecData()
+        public void Load_PrehPrecData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "예열예냉유형,프리히터제어유형,프리히터용량,토양유형,지중깊이,쿨튜브관경,쿨튜브두께,쿨튜브길이,쿨튜브재질", "번호='" + AHUNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "AHUSystem_form", "예열예냉유형,프리히터제어유형,프리히터용량,토양유형,지중깊이,쿨튜브관경,쿨튜브두께,쿨튜브길이,쿨튜브재질", "번호='" + AHUNum + "'");
             if(Value.Length > 0)
             {
                 PrehPrecOptions = Value[0][0];

@@ -48,7 +48,7 @@ namespace main
         {
             //프로젝트유형 기존:1, 리트로핏:2, 리모델링:3, 신규:4
             //Building 
-            {"BuildingGeneral", "CREATE TABLE IF NOT EXISTS BuildingGeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트명 VARCHAR (32),프로젝트유형 VARCHAR (32),프로젝트유형번호 VARCHAR (32),기존프로젝트 VARCHAR (32),사업성능목표 VARCHAR (32),건물진단실시 VARCHAR (32),건물대상 VARCHAR (32),건물용도 VARCHAR (32),건물명 VARCHAR (32),주소 VARCHAR (32),지역인덱스 VARCHAR (32),지역 VARCHAR (32),지역구분 VARCHAR (32),외벽구조유형 VARCHAR (32),지붕구조유형 VARCHAR (32),준공연도 VARCHAR (32),준공월 VARCHAR (32),준공시기 VARCHAR (32),법규시기 VARCHAR (32),연면적 VARCHAR (32),건축면적 VARCHAR (32),지상층수 VARCHAR (32),지하층수 VARCHAR (32),작성자 VARCHAR (32),작성자주소 VARCHAR (32),작성자회사 VARCHAR (32),작성연도 VARCHAR (32),작성월 VARCHAR (32),작성시기 VARCHAR (32))"},
+            {"BuildingGeneral", "CREATE TABLE IF NOT EXISTS BuildingGeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트명 VARCHAR (32),프로젝트유형 VARCHAR (32),프로젝트유형번호 VARCHAR (32),기존프로젝트 VARCHAR (32),사업성능목표 VARCHAR (32),건물진단실시 VARCHAR (32),건물대상 VARCHAR (32),건물용도 VARCHAR (32),건물명 VARCHAR (32),주소 VARCHAR (32),지역인덱스 VARCHAR (32),지역 VARCHAR (32),지역구분 VARCHAR (32),외벽구조유형 VARCHAR (32),지붕구조유형 VARCHAR (32),준공연도 VARCHAR (32),준공월 VARCHAR (32),준공시기 VARCHAR (32),법규시기 VARCHAR (32),연면적 VARCHAR (32),건축면적 VARCHAR (32),지상층수 VARCHAR (32),지하층수 VARCHAR (32),작성자 VARCHAR (32),작성자주소 VARCHAR (32),작성자회사 VARCHAR (32),작성연도 VARCHAR (32),작성월 VARCHAR (32),작성시기 VARCHAR (32),기밀측정여부 VARCHAR (32),q50 VARCHAR (32),q50Area VARCHAR (32),출입문기밀여부 VARCHAR (32),출입문q50 VARCHAR (32),창호기밀여부 VARCHAR (32),창호q50 VARCHAR (32),외벽기밀여부 VARCHAR (32),외벽q50 VARCHAR (32),지붕기밀여부 VARCHAR (32),지붕q50 VARCHAR (32),n50 VARCHAR (32))"},
             {"BuildingEnergyUse", "CREATE TABLE IF NOT EXISTS BuildingEnergyUse (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트유형 VARCHAR (32),연료 VARCHAR (32),연도 VARCHAR (32),월 VARCHAR (32),단위 VARCHAR (32),에너지사용량 VARCHAR (32),사용시작일 VARCHAR (32),사용종료일 VARCHAR (32))"},
             {"User_PVModule", "CREATE TABLE IF NOT EXISTS User_PVModule (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32), 프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),제품명 VARCHAR (32),제조사 VARCHAR (32),제작년도 VARCHAR (32),CELLTYPE VARCHAR (32),Kpk VARCHAR (32),가로길이 VARCHAR (32),세로길이 VARCHAR (32),정격출력 VARCHAR (32),신규기존 VARCHAR (32))"},
             {"User_PVInverter", "CREATE TABLE IF NOT EXISTS User_PVInverter (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32), 프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),제품명 VARCHAR (32),제조사 VARCHAR (32),EURO효율 VARCHAR (32))"},
@@ -100,7 +100,7 @@ namespace main
             //Zone
             {"User_Lighting", "CREATE TABLE IF NOT EXISTS User_Lighting (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),등기구명칭 VARCHAR (32),램프유형 VARCHAR (32),제조사 VARCHAR (32),안정기_컨버터 VARCHAR (32),광속 VARCHAR (32),소비전력 VARCHAR (32),광효율 VARCHAR (32),조명계수 VARCHAR (32))"},
             {"User_Renew", "CREATE TABLE IF NOT EXISTS User_Renew (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),집광채광명칭 VARCHAR (32),집광채광종류 VARCHAR (32),제조사 VARCHAR (32),집광채광효율 VARCHAR (32),산광부가로길이 VARCHAR (32),산광부세로길이 VARCHAR (32),산광부면적 VARCHAR (32))"},
-            {"ZoneGeneral_Form", "CREATE TABLE IF NOT EXISTS ZoneGeneral_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),프로젝트유형 VARCHAR (32),존이름 VARCHAR (32),실제어방식 VARCHAR (32),냉난방유무 VARCHAR (32),환기유무 VARCHAR (32),환기방식 VARCHAR (32),선택열회수기 VARCHAR (32),용도프로필 VARCHAR (32),순바닥면적 VARCHAR (32),천장고 VARCHAR (32),시작시간 VARCHAR (32),종료시간 VARCHAR (32),주이용일 VARCHAR (32),재실자수 VARCHAR (32),기기발열수준 VARCHAR (32),일일급탕요구량 VARCHAR (32),냉난방시간 VARCHAR (32),사용시간 VARCHAR (32),공조시간 VARCHAR (32),연이용일수 VARCHAR (32),재실밀도 VARCHAR (32),재실수준 VARCHAR (32),일일인체발열 VARCHAR (32),면적당인체발열 VARCHAR (32),일일기기발열 VARCHAR (32),면적당기기발열 VARCHAR (32),순체적 VARCHAR (32),환기횟수 VARCHAR (32),이용일환기량 VARCHAR (32),비이용일환기량  VARCHAR (32),천장축열선택 VARCHAR (32),외벽축열선택 VARCHAR (32),내벽축열선택 VARCHAR (32),바닥축열선택 VARCHAR (32),천장축열 VARCHAR (32),외벽축열 VARCHAR (32),내벽축열 VARCHAR (32),바닥축열 VARCHAR (32),천장면적 VARCHAR (32),외벽면적 VARCHAR (32),내벽면적 VARCHAR (32),바닥면적 VARCHAR (32),존축열성능 VARCHAR  VARCHAR (32),존기밀타입 VARCHAR (32),기밀적용유형 VARCHAR (32),q50 VARCHAR (32),n50 VARCHAR (32))"},
+            {"ZoneGeneral_Form", "CREATE TABLE IF NOT EXISTS ZoneGeneral_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),프로젝트유형 VARCHAR (32),존이름 VARCHAR (32),실제어방식 VARCHAR (32),냉난방유무 VARCHAR (32),환기유무 VARCHAR (32),환기방식 VARCHAR (32),선택열회수기 VARCHAR (32),용도프로필 VARCHAR (32),순바닥면적 VARCHAR (32),천장고 VARCHAR (32),시작시간 VARCHAR (32),종료시간 VARCHAR (32),주이용일 VARCHAR (32),재실자수 VARCHAR (32),기기발열수준 VARCHAR (32),일일급탕요구량 VARCHAR (32),냉난방시간 VARCHAR (32),사용시간 VARCHAR (32),공조시간 VARCHAR (32),연이용일수 VARCHAR (32),재실밀도 VARCHAR (32),재실수준 VARCHAR (32),일일인체발열 VARCHAR (32),면적당인체발열 VARCHAR (32),일일기기발열 VARCHAR (32),면적당기기발열 VARCHAR (32),순체적 VARCHAR (32),환기횟수 VARCHAR (32),이용일환기량 VARCHAR (32),비이용일환기량  VARCHAR (32),천장축열선택 VARCHAR (32),외벽축열선택 VARCHAR (32),내벽축열선택 VARCHAR (32),바닥축열선택 VARCHAR (32),천장축열 VARCHAR (32),외벽축열 VARCHAR (32),내벽축열 VARCHAR (32),바닥축열 VARCHAR (32),천장면적 VARCHAR (32),외벽면적 VARCHAR (32),내벽면적 VARCHAR (32),바닥면적 VARCHAR (32),존축열성능 VARCHAR  VARCHAR (32),존기밀타입 VARCHAR (32),기존존 VARCHAR (32))"},
             {"ZoneLighting_form", "CREATE TABLE IF NOT EXISTS ZoneLighting_form (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32),프로젝트유형 VARCHAR (32),너비 VARCHAR (32),길이 VARCHAR (32),순바닥면적 VARCHAR (32),상인방높이 VARCHAR (32),작업면높이 VARCHAR (32),공간계수 VARCHAR (32),기준조도 VARCHAR (32),조명방식 VARCHAR (32),제어방식 VARCHAR (32),디밍유형 VARCHAR (32),조명밀도 VARCHAR (32),조명예상전력 VARCHAR (32),대기전력 VARCHAR (32),재실계수 VARCHAR (32),조도제어계수 VARCHAR (32),조명번호 VARCHAR (32),등기구명칭 VARCHAR (32), 램프유형 VARCHAR (32), 컨버터_안정기 VARCHAR (32), 광속 VARCHAR (32), 소비전력 VARCHAR (32), 광효율 VARCHAR (32), 조명계수 VARCHAR (32),표준광속 VARCHAR (32), 표준소비전력 VARCHAR (32), 사용자광속 VARCHAR (32), 사용자소비전력 VARCHAR (32),자연채광유형 VARCHAR (32),주향 VARCHAR (32),주창면적합 VARCHAR (32),주창유리종류 VARCHAR (32),주창아이디 VARCHAR (32),차양 VARCHAR (32),주광길이 VARCHAR (32),주광깊이 VARCHAR (32),주광면적 VARCHAR (32),비주광면적 VARCHAR (32),서브유형 VARCHAR (32),주창유리빛투과율 VARCHAR (32),주창유리면적비 VARCHAR (32),이중외피유리 VARCHAR (32),아트리움유리 VARCHAR (32),파사드유리빛투과율 VARCHAR (32),파사드너비 VARCHAR (32),파사드길이 VARCHAR (32),파사드높이 VARCHAR (32),천창유리각 VARCHAR (32),천창수평측면각 VARCHAR (32),천창장변부길이 VARCHAR (32),천창단변부길이 VARCHAR (32),천창수평상부높이 VARCHAR (32),집광채광체크 VARCHAR (32),집광채광번호 VARCHAR (32),집광채광명칭 VARCHAR (32),집광채광종류 VARCHAR (32),집광채광향 VARCHAR (32),집광채광각도 VARCHAR (32),집광채광효율 VARCHAR (32),집광채광면적 VARCHAR (32),표준길이1 VARCHAR (32),표준길이2 VARCHAR (32),사용자길이1 VARCHAR (32),사용자길이2 VARCHAR (32),사용자면적 VARCHAR (32),조명개수 VARCHAR (32))"},
             //System           
             {"HeatingSystem_Form", "CREATE TABLE IF NOT EXISTS HeatingSystem_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),존 VARCHAR (32),설치위치 VARCHAR (32),공급환수온도 VARCHAR (32),복합설비유무 VARCHAR (32),주요설비 VARCHAR (32),보조설비1 VARCHAR (32),보조설비2 VARCHAR (32),보일러종류 VARCHAR (32),보일러대수 VARCHAR (32),태양열번호 VARCHAR (32),모듈개수 VARCHAR (32),모듈방위 VARCHAR (32),모듈기울기 VARCHAR (32),외기히트펌프번호 VARCHAR (32),외기히트펌프공급방식 VARCHAR (32),외기히트펌프제어방식 VARCHAR (32),외기히트펌프대수 VARCHAR (32),지열히트펌프번호 VARCHAR (32),지열히트펌프공급방식 VARCHAR (32),지열히트펌프제어방식 VARCHAR (32),지열히트펌프대수 VARCHAR (32),지하수히트펌프번호 VARCHAR (32),지하수히트펌프공급방식 VARCHAR (32),지하수히트펌프제어방식 VARCHAR (32),지하수히트펌프대수 VARCHAR (32),흡수식온수기번호 VARCHAR (32),흡수식온수기대수 VARCHAR (32),지역난방번호 VARCHAR (32),펌프유무 VARCHAR (32),펌프방식 VARCHAR (32),펌프1종류 VARCHAR (32),펌프2종류 VARCHAR (32),펌프1밸브 VARCHAR (32),펌프2밸브 VARCHAR (32),펌프1제어 VARCHAR (32),펌프2제어 VARCHAR (32),펌프1대수 VARCHAR (32),펌프2대수 VARCHAR (32),공급설비1종류 VARCHAR (32),공급설비2종류 VARCHAR (32),축열유무 VARCHAR (32),축열펌프유무 VARCHAR (32),축열펌프 VARCHAR (32),축열용량 VARCHAR (32),배관관경 VARCHAR (32),배관보온두께 VARCHAR (32),보온열전도율 VARCHAR (32),배관보온재 VARCHAR (32))"},
@@ -1070,66 +1070,46 @@ namespace main
             return objects.ToArray();
         }
 
-        public Double[][] getValueDouble(type dbType, string table, string columns, string conditions = "") //Double로 값 찾아오기 
+        public string[][] getValue(string projName, string table, string columns, string conditions = "")
         {
-            SQLiteCommand cmd = new SQLiteCommand();
-            List<Double[]> objects = new List<Double[]>();
+            List<string[]> objects = new List<string[]>();
+            SQLiteConnection db = new SQLiteConnection(@"Data Source=projects\\" + projName + ".sqlite");
 
-            switch (dbType)
-            {
-                case type.BaseDB_HCneed:
-                    cmd.Connection = baseDB_hcneed;
-                    break;
-                case type.BaseDB_Lighting:
-                    cmd.Connection = baseDB_lighting;
-                    break;
-                case type.BaseDB_Heating:
-                    cmd.Connection = baseDB_heating;
-                    break;
-                case type.BaseDB_Cooling:
-                    cmd.Connection = baseDB_cooling;
-                    break;
-                case type.BaseDB_AHU:
-                    cmd.Connection = baseDB_ahu;
-                    break;
-                case type.BaseDB_RESystem:
-                    cmd.Connection = baseDB_resystem;
-                    break;
-                case type.ProjDB:
-                    cmd.Connection = projDB;
-                    break;
-                case type.CalcDB:
-                    cmd.Connection = calcDB;
-                    break;
-            }
+            db.Open();
 
-            if (conditions != "")
+            if (db.State == ConnectionState.Open)
             {
-                cmd.CommandText = "SELECT " + columns + " FROM " + table + " WHERE " + conditions;
-            }
-            else
-            {
-                cmd.CommandText = "SELECT " + columns + " FROM " + table;
-            }
+                SQLiteCommand cmd = db.CreateCommand();
 
-            using (SQLiteDataReader reader = cmd.ExecuteReader())
-            {
-                string json = string.Empty;
-
-                while (reader.Read())
+                if (conditions != "")
                 {
-                    Double[] rec = new Double[reader.FieldCount];
-
-                    for (int i = 0; i < reader.FieldCount; i++)
-                    {
-                        rec[i] = Convert.ToDouble(reader[i].ToString());
-                    }
-                    objects.Add(rec);
+                    cmd.CommandText = "SELECT " + columns + " FROM " + table + " WHERE " + conditions;
                 }
+                else
+                {
+                    cmd.CommandText = "SELECT " + columns + " FROM " + table;
+                }
+
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    string json = string.Empty;
+
+                    while (reader.Read())
+                    {
+                        string[] rec = new string[reader.FieldCount];
+
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            rec[i] = reader[i].ToString();
+                        }
+                        objects.Add(rec);
+                    }
+                }
+
+                db.Close();
             }
             return objects.ToArray();
         }
-
         //중복 제거하고 값 가져오기
         public string[][] getValue_SameCheck(type dbType, string table, string columns, string conditions = "")
         {

@@ -24,10 +24,10 @@ namespace main
         public double Quse_gas_a, Quse_elec_a;
         public double[] Error_gas_mth = new double[12], Error_elec_mth = new double[12];
         public double Error_gas_a, Error_elec_a;
-        public Final()
+        public Final(string ProjNum)
         {
             #region 난방
-            string[][] HeatingNum = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호");
+            string[][] HeatingNum = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "번호");
             if(HeatingNum.Length >0)
             {
                 int i = -1;
