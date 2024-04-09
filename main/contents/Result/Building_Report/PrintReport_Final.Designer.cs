@@ -1,6 +1,6 @@
-﻿namespace main.contents.Result
+﻿namespace main.contents.Result.Building_Report
 {
-    partial class PrintReport_Main
+    partial class PrintReport_Final
     {
         /// <summary>
         /// Required designer variable.
@@ -46,15 +46,15 @@
             webView21.TabIndex = 1;
             webView21.ZoomFactor = 1D;
             // 
-            // PrintReport_Main
+            // PrintReport_Final
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1097, 1100);
             Controls.Add(webView21);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "PrintReport_Main";
-            Text = "PrintReport_Main";
+            Name = "PrintReport_Final";
+            Text = "PrintReport_Final";
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
         }

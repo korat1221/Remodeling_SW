@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace main.contents
 {
-    public partial class ReportExisting : Form
+    public partial class Algorithm_Report : Form
     {
-        public ReportExisting()
+        public Algorithm_Report()
         {
             InitializeComponent();
         }
@@ -21,5 +21,6 @@ namespace main.contents
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
+       
     }
 }

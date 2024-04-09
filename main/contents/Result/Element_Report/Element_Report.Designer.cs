@@ -1,6 +1,6 @@
 ﻿namespace main.contents
 {
-    partial class ReportRemodeling
+    partial class Element_Report
     {
         /// <summary>
         /// Required designer variable.
@@ -33,8 +33,6 @@
             label3 = new Label();
             label1 = new Label();
             textBox1 = new TextBox();
-            panel2 = new Panel();
-            AdditionalPanel = new Panel();
             GeneralPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -47,7 +45,7 @@
             GeneralPanel.Controls.Add(textBox1);
             GeneralPanel.Location = new Point(12, 12);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(977, 101);
+            GeneralPanel.Size = new Size(977, 683);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
             // 
@@ -69,7 +67,7 @@
             label3.Name = "label3";
             label3.Size = new Size(79, 15);
             label3.TabIndex = 3;
-            label3.Text = "계획건물결과";
+            label3.Text = "기존건물결과";
             // 
             // label1
             // 
@@ -91,36 +89,16 @@
             textBox1.Size = new Size(120, 22);
             textBox1.TabIndex = 88;
             // 
-            // panel2
-            // 
-            panel2.BackColor = Color.White;
-            panel2.BorderStyle = BorderStyle.Fixed3D;
-            panel2.Location = new Point(12, 136);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(977, 149);
-            panel2.TabIndex = 18;
-            // 
-            // AdditionalPanel
-            // 
-            AdditionalPanel.BackColor = Color.White;
-            AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
-            AdditionalPanel.Location = new Point(12, 303);
-            AdditionalPanel.Name = "AdditionalPanel";
-            AdditionalPanel.Size = new Size(977, 390);
-            AdditionalPanel.TabIndex = 18;
-            // 
-            // ReportRemodeling
+            // ReportExisting
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(panel2);
             Controls.Add(GeneralPanel);
-            Controls.Add(AdditionalPanel);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "ReportRemodeling";
+            Name = "ReportExisting";
             Text = "Form3";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
@@ -130,8 +108,6 @@
         #endregion
 
         private Panel GeneralPanel;
-        private Panel panel2;
-        private Panel AdditionalPanel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label3;

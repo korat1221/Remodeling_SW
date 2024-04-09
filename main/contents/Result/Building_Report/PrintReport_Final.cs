@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace main.contents.Result
+namespace main.contents.Result.Building_Report
 {
     public partial class PrintReport_Final : Form
     {

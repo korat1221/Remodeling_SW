@@ -15,12 +15,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace main.contents.Result
+namespace main.contents.Result.Building_Report
 {
-    public partial class PrintReport_Main : Form
+    public partial class Building_Report : Form
     {
         bool scriptable = false;
-        public PrintReport_Main()
+        public Building_Report()
         {
             InitializeComponent();
 
@@ -36,7 +36,7 @@ namespace main.contents.Result
         {
             try
             {
-                String s = args.TryGetWebMessageAsString();
+                string s = args.TryGetWebMessageAsString();
             }
             catch (Exception ex)
             {
@@ -56,23 +56,17 @@ namespace main.contents.Result
         }
         public void load_List()
         {
-            List<object> subMenu = new List<object>();
+            List<object> MainMenu = new List<object>();
 
-            subMenu.Add(new { text = "냉난방요구량", id = "{\\\"formID\\\":37,\\\"ID\\\":\\\"Result_0\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            //subMenu.Add(new { text = "조명소요량", id = "{\\\"formID\\\":44,\\\"ID\\\":\\\"Result_1\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            //subMenu.Add(new { text = "난방소요량", id = "{\\\"formID\\\":45,\\\"ID\\\":\\\"Result_2\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            //subMenu.Add(new { text = "냉방소요량", id = "{\\\"formID\\\":46,\\\"ID\\\":\\\"Result_3\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            //subMenu.Add(new { text = "급탕소요량", id = "{\\\"formID\\\":47,\\\"ID\\\":\\\"Result_4\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            //subMenu.Add(new { text = "공조소요량", id = "{\\\"formID\\\":48,\\\"ID\\\":\\\"Result_5\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            subMenu.Add(new { text = "연료별소요량", id = "{\\\"formID\\\":52,\\\"ID\\\":\\\"Result_6\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            MainMenu.Add(new { text = "연료별소요량", id = "{\\\"formID\\\":52,\\\"ID\\\":\\\"Result_6\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
 
-            Program.UTIL.resetMainTree(5, 2, subMenu.ToArray(), "56"); // 예시 코드: 메인 메뉴 동적 할당
+            Program.UTIL.resetMainTree(5, 0, MainMenu.ToArray(), "56"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
-        public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
+        public void LoadData(string ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
-            string[][] 프로젝트유형  = Program.DB.querySQL(DB.type.ProjListDB, "Select type from projects where current = '1'");
+            string[][] 프로젝트유형 = Program.DB.querySQL(DB.type.ProjListDB, "Select type from projects where current = '1'");
             if (프로젝트유형[0][0] == "1")
             {
                 Report_Before();
@@ -84,7 +78,7 @@ namespace main.contents.Result
         }
 
         private void Report_Before()
-        {            
+        {
             string s, s2;
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
 
@@ -98,7 +92,7 @@ namespace main.contents.Result
             List<string> chart_공조소요량 = new List<string>();
             List<string> chart_총소요량 = new List<string>();
             List<object>[] __data = new List<object>[700];
-            
+
             int i = -1, n;
             while (++i < 700)
             {
@@ -113,7 +107,7 @@ namespace main.contents.Result
             {
                 #region 건물정보
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,주소,지역,지역구분,준공시기,연면적,건축면적,지상층수,지하층수,작성자회사,작성자,작성시기");
-                if(Value.Length > 0)
+                if (Value.Length > 0)
                 {
                     __data[0].Add(new { idx = i, val = Value[0][0] }); //프로젝트명
                     __data[1].Add(new { idx = i, val = Value[0][1] }); //주소
@@ -127,7 +121,7 @@ namespace main.contents.Result
                     __data[9].Add(new { idx = i, val = Value[0][9] }); //작성자회사
                     __data[10].Add(new { idx = i, val = Value[0][10] }); //작성자
                     __data[11].Add(new { idx = i, val = Value[0][11] }); //작성시기
-                }               
+                }
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "projectName", data = __data[0] });
                 data.Add(new { cname = "buildinglocation", data = __data[1] });
@@ -144,16 +138,16 @@ namespace main.contents.Result
                 #endregion
 
                 #region 외벽정보
-                Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호","외피유형='외벽'");
-                if(Value.Length > 0)
+                Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "외피유형='외벽'");
+                if (Value.Length > 0)
                 {
                     __data[12].Add(new { idx = i, val = Value.Length }); //외벽 유형 개수
                 }
                 Value = Program.DB.querySQL(DB.type.ProjDB, "select a.면적,b.유효열관류율,b.법규열관류율 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호");
                 if (Value.Length > 0)
                 {
-                    double Total_Area=0, Uvalue =0, RuleValue=0;
-                    for(int k =0; k < Value.Length; k++)
+                    double Total_Area = 0, Uvalue = 0, RuleValue = 0;
+                    for (int k = 0; k < Value.Length; k++)
                     {
                         Total_Area += Convert.ToDouble(Value[k][0]);
                         Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
@@ -161,7 +155,7 @@ namespace main.contents.Result
                     }
                     Uvalue = Uvalue / Total_Area;
                     RuleValue = RuleValue / Total_Area;
-                    __data[13].Add(new { idx = i, val = Total_Area.ToString("0.0")}); //외벽 면적
+                    __data[13].Add(new { idx = i, val = Total_Area.ToString("0.0") }); //외벽 면적
                     __data[14].Add(new { idx = i, val = Uvalue.ToString("0.00") }); //외벽 유효 열관류율
                     __data[15].Add(new { idx = i, val = RuleValue.ToString("0.00") }); //외벽 법규 열관류율     
                     __data[47].Add(new { idx = i, val = (RuleValue / Uvalue * 100).ToString("0") + " 점" }); //외벽 법규 열관류율                     
@@ -272,7 +266,7 @@ namespace main.contents.Result
                 if (Value.Length > 0)
                 {
                     __data[28].Add(new { idx = i, val = Value.Length }); //창호 유형 개수
-                }               
+                }
                 double Total_Area_CW = 0, Uvalue_CW = 0, RuleValue_CW = 0;
                 Value = Program.DB.querySQL(DB.type.ProjDB, "select a.면적,b.유리부분유효열관류율,b.법규유리부분열관류율 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionCW AS b ON a.구조체번호 = b.번호 where a.커튼월부위 ='유리부분'");
                 for (int k = 0; k < Value.Length; k++)
@@ -310,8 +304,8 @@ namespace main.contents.Result
                 __data[30].Add(new { idx = i, val = Uvalue_CW.ToString("0.00") }); //커튼월창 유효 열관류율
                 __data[31].Add(new { idx = i, val = RuleValue_CW.ToString("0.00") }); //커튼월창 법규 열관류율 
                 __data[51].Add(new { idx = i, val = (RuleValue_CW / Uvalue_CW * 100).ToString("0") + " 점" }); //커튼월창 법규 열관류율     
-                 ////////////////////////////////////////////////////////////////////
-                data.Add(new { cname = "cw_count", data = __data[28] });   
+                                                                                                              ////////////////////////////////////////////////////////////////////
+                data.Add(new { cname = "cw_count", data = __data[28] });
                 data.Add(new { cname = "cw_area", data = __data[29] });
                 data.Add(new { cname = "cw_uvalue", data = __data[30] });
                 data.Add(new { cname = "cw_rulevalue", data = __data[31] });
@@ -350,13 +344,13 @@ namespace main.contents.Result
                 #endregion
 
                 #region 소요량
-                double[] 난방 = new double[12], 냉방 = new double[12], 급탕 = new double[12], 조명 = new double[12], 공조 = new double[12], 신재생 = new double[12], 총전기 = new double[12],총가스 = new double[12], 총소요량 = new double[12];
-                double 연간소요량=0, 연간전기=0, 연간가스 = 0;                
+                double[] 난방 = new double[12], 냉방 = new double[12], 급탕 = new double[12], 조명 = new double[12], 공조 = new double[12], 신재생 = new double[12], 총전기 = new double[12], 총가스 = new double[12], 총소요량 = new double[12];
+                double 연간소요량 = 0, 연간전기 = 0, 연간가스 = 0;
                 for (int mth = 0; mth < 12; mth++)
                 {
                     string[][] Final1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Final2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조", "연료='가스' and 월 ='" + (mth + 1).ToString() + "월'");
-                    if(Final1.Length >0)
+                    if (Final1.Length > 0)
                     {
                         난방[mth] = Convert.ToDouble(Final1[0][0]);
                         냉방[mth] = Convert.ToDouble(Final1[0][1]);
@@ -382,10 +376,10 @@ namespace main.contents.Result
                         공조[mth] = 공조[mth] + Convert.ToDouble(Final2[0][4]);
                         총가스[mth] = Convert.ToDouble(Final2[0][0]) + Convert.ToDouble(Final2[0][1]) + Convert.ToDouble(Final2[0][2]) + Convert.ToDouble(Final2[0][3]) + Convert.ToDouble(Final2[0][4]);
                     }
-                   
-                    총소요량[mth] = 총전기[mth] + 총가스[mth]; 
+
+                    총소요량[mth] = 총전기[mth] + 총가스[mth];
                 }
-                for(int mth = 0; mth <12; mth++)
+                for (int mth = 0; mth < 12; mth++)
                 {
                     연간전기 += 총전기[mth];
                     연간가스 += 총가스[mth];
@@ -397,7 +391,7 @@ namespace main.contents.Result
                     __data[40].Add(new { idx = i * 12 + mth, val = 공조[mth].ToString("0.0") });
                     __data[41].Add(new { idx = i * 12 + mth, val = 신재생[mth].ToString("0.0") });
                     __data[42].Add(new { idx = i * 12 + mth, val = 총소요량[mth].ToString("0.0") });
-                }               
+                }
                 double tCO2 = 연간전기 * 0.4747 / 1000000 * 1000 + 연간가스 / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
                 double TOE = 연간전기 * 0.00023 + 연간가스 / 43.1 / 0.277778 * 0.00103;
                 double Area = 0;
@@ -410,7 +404,7 @@ namespace main.contents.Result
                     }
                 }
                 __data[43].Add(new { idx = i, val = 연간소요량.ToString("0.0") });
-                __data[44].Add(new { idx = i, val = (연간소요량/Area).ToString("0.0") });
+                __data[44].Add(new { idx = i, val = (연간소요량 / Area).ToString("0.0") });
                 __data[45].Add(new { idx = i, val = tCO2.ToString("0.0") });
                 __data[46].Add(new { idx = i, val = TOE.ToString("0.0") });
                 ////////////////////////////////////////////////////////////////////
@@ -434,11 +428,11 @@ namespace main.contents.Result
                 List<object> 기저소요량chart = new List<object>();
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    난방소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(난방[mth].ToString())), 3) + 0);
-                    냉방소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(냉방[mth].ToString())), 3) + 0);
-                    급탕소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(급탕[mth].ToString())), 3) + 0);
-                    조명소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(조명[mth].ToString())), 3) + 0);
-                    공조소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(공조[mth].ToString())), 3) + 0);
+                    난방소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(난방[mth].ToString())), 3) + 0);
+                    냉방소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(냉방[mth].ToString())), 3) + 0);
+                    급탕소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(급탕[mth].ToString())), 3) + 0);
+                    조명소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(조명[mth].ToString())), 3) + 0);
+                    공조소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(공조[mth].ToString())), 3) + 0);
                 }
                 chart_난방소요량.Add(System.Text.Json.JsonSerializer.Serialize(난방소요량chart.ToArray()));
                 chart_냉방소요량.Add(System.Text.Json.JsonSerializer.Serialize(냉방소요량chart.ToArray()));
@@ -452,7 +446,7 @@ namespace main.contents.Result
                 s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
                 s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
                 System.Text.Json.JsonSerializer.Serialize(__data[10].ToArray());
-                double max =0;
+                double max = 0;
                 for (int mth = 0; mth < 12; mth++)
                 {
                     if (max < 총소요량[mth])
@@ -501,7 +495,7 @@ namespace main.contents.Result
             i = -1;
             while (++i < 번호.Length)
             {
-                if(res.Length > 0)
+                if (res.Length > 0)
                 {
                     #region 건물정보
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,주소,지역,지역구분,준공시기,연면적,건축면적,지상층수,지하층수,작성자회사,작성자,작성시기");
@@ -556,7 +550,7 @@ namespace main.contents.Result
                         RuleValue = RuleValue / Total_Area;
                         __data[13].Add(new { idx = i, val = Total_Area.ToString("0.0") }); //외벽 면적
                         __data[14].Add(new { idx = i, val = Uvalue.ToString("0.00") }); //외벽 유효 열관류율
-                        __data[15].Add(new { idx = i, val = (RuleValue/Uvalue*100).ToString("0")+" 점" }); //외벽 법규 열관류율                   
+                        __data[15].Add(new { idx = i, val = (RuleValue / Uvalue * 100).ToString("0") + " 점" }); //외벽 법규 열관류율                   
                     }
                     data.Add(new { cname = "wall_count_after", data = __data[12] });
                     data.Add(new { cname = "wall_area_after", data = __data[13] });
@@ -581,7 +575,7 @@ namespace main.contents.Result
                         Uvalue = Uvalue / Total_Area;
                         __data[17].Add(new { idx = i, val = Total_Area.ToString("0.0") }); //외벽 면적
                         __data[18].Add(new { idx = i, val = Uvalue.ToString("0.00") }); //외벽 유효 열관류율                  
-                    }                  
+                    }
                     data.Add(new { cname = "wall_count_before", data = __data[16] });
                     data.Add(new { cname = "wall_area_before", data = __data[17] });
                     data.Add(new { cname = "wall_uvalue_before", data = __data[18] });
@@ -984,7 +978,7 @@ namespace main.contents.Result
                     }
 
 
-                    double tCO2 = (연간전기_전 - 연간전기_후)* 0.4747 / 1000000 * 1000 + (연간가스_전 - 연간가스_후) / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double tCO2 = (연간전기_전 - 연간전기_후) * 0.4747 / 1000000 * 1000 + (연간가스_전 - 연간가스_후) / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
                     double TOE = (연간전기_전 - 연간전기_후) * 0.00023 + (연간가스_전 - 연간가스_후) / 43.1 / 0.277778 * 0.00103;
                     double Area = 0;
                     string[][] A = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "냉난방유무 <> '비냉난방'");
@@ -999,8 +993,8 @@ namespace main.contents.Result
                     __data[62].Add(new { idx = i, val = ((연간소요량_전 - 연간소요량_후) / Area).ToString("0.0") });
                     __data[63].Add(new { idx = i, val = tCO2.ToString("0.0") });
                     __data[64].Add(new { idx = i, val = TOE.ToString("0.0") });
-                    __data[65].Add(new { idx = i, val = ((연간소요량_전 - 연간소요량_후) / 연간소요량_전 *100).ToString("0")+" %" });
-                    
+                    __data[65].Add(new { idx = i, val = ((연간소요량_전 - 연간소요량_후) / 연간소요량_전 * 100).ToString("0") + " %" });
+
                     ////////////////////////////////////////////////////////////////////
                     data.Add(new { cname = "qh_mth", data = __data[54] });
                     data.Add(new { cname = "qc_mth", data = __data[55] });
@@ -1022,11 +1016,11 @@ namespace main.contents.Result
                     List<object> 기저소요량chart = new List<object>();
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        난방소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(난방_후[mth].ToString())), 3) + 0);
-                        냉방소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(냉방_후[mth].ToString())), 3) + 0);
-                        급탕소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(급탕_후[mth].ToString())), 3) + 0);
-                        조명소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(조명_후[mth].ToString())), 3) + 0);
-                        공조소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(공조_후[mth].ToString())), 3) + 0);
+                        난방소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(난방_후[mth].ToString())), 3) + 0);
+                        냉방소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(냉방_후[mth].ToString())), 3) + 0);
+                        급탕소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(급탕_후[mth].ToString())), 3) + 0);
+                        조명소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(조명_후[mth].ToString())), 3) + 0);
+                        공조소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(공조_후[mth].ToString())), 3) + 0);
                     }
                     chart_난방소요량.Add(System.Text.Json.JsonSerializer.Serialize(난방소요량chart.ToArray()));
                     chart_냉방소요량.Add(System.Text.Json.JsonSerializer.Serialize(냉방소요량chart.ToArray()));
