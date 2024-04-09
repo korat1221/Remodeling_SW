@@ -1,9 +1,11 @@
-﻿using main.subcontents.ConstructionBlind;
+﻿using Eagle._Components.Public;
+using main.subcontents.ConstructionBlind;
 using main.subcontents.ConstructionFloor;
 using System;
 using System.Collections;
 using System.Security.AccessControl;
 using System.Security.Policy;
+using static System.Windows.Forms.MonthCalendar;
 
 namespace main
 {
@@ -76,11 +78,11 @@ namespace main
         public double theta_i_c_max_d, theta_e_min, theta_e_max, X_e_max; String[,] Is_max = new String[9, 2]; //수평,남,남동,남서,동,서,북서,북동,북 
         public double[] Q_max = new double [2]; public double[,] t_max = new double[2,12];
         double[,,] theta_u = new double[2, 2, 12]; double Utb;
+        public double Door_q50 = 0, Win_q50 = 0, CW_q50 = 0, Wall_q50 = 0, Roof_q50 = 0;
 
         public Zone(String zoneNum)
         {
             this.ZoneNum = zoneNum;
-            검토유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
             string[][] OTemp = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "기간,온도", "지역명 ='" + Location[0][0] + "'");
             int i = -1;
@@ -94,8 +96,8 @@ namespace main
         }
 
         public void LoadData_ZoneGeneral()
-        {  //존 사용 정보 가져오기
-            string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "존이름,용도프로필,냉난방유무,재실자수,냉난방시간", "존번호='" + ZoneNum + "'");
+        {  //존 사용 정보 가져오기            
+            string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "존이름,용도프로필,냉난방유무,재실자수,냉난방시간", "존번호='" + ZoneNum + "'");            
             if (ZoneG.Length > 0)
             {
                 zoneName = ZoneG[0][0];
@@ -128,7 +130,7 @@ namespace main
             }
 
             //존 일반정보 가져오기
-            ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "사용시간,냉난방시간,연이용일수,순바닥면적,천장고, 면적당인체발열, 면적당기기발열, 존축열성능, 비이용일환기량,이용일환기량,n50,주이용일", "존번호='" + ZoneNum + "'");
+            ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "사용시간,냉난방시간,연이용일수,순바닥면적,천장고, 면적당인체발열, 면적당기기발열, 존축열성능, 비이용일환기량,이용일환기량,주이용일", "존번호='" + ZoneNum + "'");
             if (ZoneG.Length > 0)
             {
                 twd_d = Convert.ToDouble(ZoneG[0][0]);
@@ -142,9 +144,6 @@ namespace main
                 Cwirk_A = Convert.ToDouble(ZoneG[0][7]);
                 VA_we = Convert.ToDouble(ZoneG[0][8]) / zoneArea; //단위면적당 값 
                 VA_wd = Convert.ToDouble(ZoneG[0][9]) / zoneArea;//단위면적당 값 
-                n50 = Convert.ToDouble(ZoneG[0][10]);
-
-
 
                 e = 0.07;
                 f = 15;
@@ -152,9 +151,9 @@ namespace main
                 for (int mth = 0; mth < 12; mth++)
                 {
                     string[][] ValueK;
-                    if (ZoneG[0][11] != "5.5")
+                    if (ZoneG[0][10] != "5.5")
                     {
-                        ValueK = Program.DB.getValue(DB.type.BaseDB_HCneed, "이용일수", "이용일수", "월='" + (mth + 1) + "월' AND 주간일수 ='주 " + ZoneG[0][11] + ".0 일 근무'");
+                        ValueK = Program.DB.getValue(DB.type.BaseDB_HCneed, "이용일수", "이용일수", "월='" + (mth + 1) + "월' AND 주간일수 ='주 " + ZoneG[0][10] + ".0 일 근무'");
                     }
                     else { ValueK = Program.DB.getValue(DB.type.BaseDB_HCneed, "이용일수", "이용일수", "월='" + (mth + 1) + "월' AND 주간일수 ='주 5.5 일 근무'"); }
                     if (ValueK.Length > 0)
@@ -192,54 +191,6 @@ namespace main
                     if (기존신규[0][0] == "기존")
                     {
                         Utb = 0.15;
-                        #region 화곡동 기밀
-                        //double q50 = 10994 / 682.87;
-                        //String[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,커튼월부위,면적,구조체,구조체번호,층", "존='" + ZoneNum + "'");
-
-                        //double AreaDirect_total = 0;
-                        //for (int n = 0; n < ZoneE.Length; n++)
-                        //{
-
-                        //    if (ZoneE[n][1] == "커튼월창")
-                        //    {
-                        //        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                        //    }
-                        //    else if (ZoneE[n][1] == "외벽")
-                        //    {
-                        //        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                        //    }
-                        //    else if (ZoneE[n][1] == "지붕")
-                        //    {
-                        //        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                        //    }
-                        //    else if (ZoneE[n][1] == "최하층바닥")
-                        //    {
-                        //        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                        //    }
-                        //    else if (ZoneE[n][1] == "창호")
-                        //    {
-                        //        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                        //    }
-                        //    else if (ZoneE[n][1] == "외부출입문")
-                        //    {
-                        //        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "직접간접", "명칭='" + ZoneE[n][5] + "'");
-                        //    }
-                        //    else
-                        //    {
-                        //        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                        //    }
-
-                        //    if (Value.Length > 0)
-                        //    {
-                        //        if (Value[0][0] == "직접외기")
-                        //        {
-                        //            AreaDirect_total += Convert.ToDouble(ZoneE[n][3]);
-                        //        }
-                        //    }
-
-                        //}
-                        //n50 = AreaDirect_total * q50 / (zoneArea * 2.5);
-                        #endregion
                     }
                     else
                     {
@@ -248,10 +199,20 @@ namespace main
                 }
             }
         }
-          
-        public void LoadData_Ventil()
+        public void LoadData_q50(string ProjNum)
+        {
+            string[][] Value2 = Program.DB.getValue(ProjNum, "BuildingGeneral", "기밀측정여부,출입문q50,창호q50,외벽q50,지붕q50", "");
+            if (Value2.Length > 0)
+            {
+                Door_q50 = Convert.ToDouble(Value2[0][1]);
+                Win_q50 = Convert.ToDouble(Value2[0][2]);
+                Wall_q50 = Convert.ToDouble(Value2[0][3]);
+                Roof_q50 = Convert.ToDouble(Value2[0][4]);
+            }            
+        }
+        public void LoadData_Ventil(string ProjNum, string ZoneNum)
         {//존 환기정보 가져오기 
-            string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "환기유무,환기방식,비이용일환기량,이용일환기량,선택열회수기", "존번호='" + ZoneNum + "'");
+            string[][] ZoneG = Program.DB.getValue(ProjNum, "ZoneGeneral_form", "환기유무,환기방식,비이용일환기량,이용일환기량,선택열회수기", "존번호='" + ZoneNum + "'");
             if (ZoneG.Length > 0)
             {
                 if (Convert.ToBoolean(ZoneG[0][0]))
@@ -263,7 +224,7 @@ namespace main
                         Vmech_SUP_wd = Convert.ToDouble(ZoneG[0][3]);
                         Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]);
                         SelectHRV = ZoneG[0][4];
-                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "온도교환효율_난방,온도교환효율_냉방,습도교환효율_난방,습도교환효율_냉방", "번호='" + SelectHRV + "'");
+                        string[][] value = Program.DB.getValue(ProjNum, "User_HRV", "온도교환효율_난방,온도교환효율_냉방,습도교환효율_난방,습도교환효율_냉방", "번호='" + SelectHRV + "'");
                         if(value.Length > 0)
                         {
                             eta_V_mech[0] = Convert.ToDouble(value[0][0]) / 100;
@@ -280,7 +241,7 @@ namespace main
                         Vmech_SUP_wd = Convert.ToDouble(ZoneG[0][3]);
                         Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]);
                         SelectHRV = ZoneG[0][4];
-                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "온도교환효율_난방,온도교환효율_냉방,습도교환효율_난방,습도교환효율_냉방", "번호='" + SelectHRV + "'");
+                        string[][] value = Program.DB.getValue(ProjNum, "User_AHU", "온도교환효율_난방,온도교환효율_냉방,습도교환효율_난방,습도교환효율_냉방", "번호='" + SelectHRV + "'");
                         if (value.Length > 0)
                         {
                             eta_V_mech[0] = Convert.ToDouble(value[0][0]) / 100;
@@ -308,12 +269,10 @@ namespace main
                 Vmech_ETA_z = 0;
                 ρacp_a = 0.34;
             }
-
         }
         public void LoadData_InWall()
         {
             //존 내벽 정보 가져오기
-           
             String[][] ZoneInW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,인접존,면적", "존 = '" + ZoneNum + "' And  외피유형 = '내벽'");
             int i = -1;
             if (ZoneInW.Length > 0)
@@ -387,9 +346,9 @@ namespace main
                 }
             }
         }
-        public void LoadData_Wall()
-        {//존 외벽 정보 가져오기
-            String[][] ZoneW = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "' And  NOT b.직접간접 = '지면'");
+        public void LoadData_Wall(string ProjNum, string ZoneNum)
+        {//존 외벽 정보 가져오기           
+            String[][] ZoneW = Program.DB.querySQL(ProjNum, "select a.번호,a.면적,b.번호,b.유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "' And  NOT b.직접간접 = '지면'");
            
             int i = -1;
             if (ZoneW.Length > 0)
@@ -401,9 +360,9 @@ namespace main
                 }
             }
         }
-        public void LoadData_Roof()
+        public void LoadData_Roof(string ProjNum, string ZoneNum)
         { //존 지붕 정보 가져오기
-            String[][] ZoneR = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionRoof AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "'");
+            String[][] ZoneR = Program.DB.querySQL(ProjNum, "select a.번호,a.면적,b.번호,b.유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionRoof AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "'");
            
             if (ZoneR.Length > 0)
             {
@@ -415,9 +374,9 @@ namespace main
                 }
             }
         }
-        public void LoadData_Floor()
+        public void LoadData_Floor(string ProjNum, string ZoneNum)
         {     //존 바닥 정보 가져오기
-            String[][] ZoneF = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.유효열관류율,b.직접간접,b.기초설치 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionFloor AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "'");
+            String[][] ZoneF = Program.DB.querySQL(ProjNum, "select a.번호,a.면적,b.번호,b.유효열관류율,b.직접간접,b.기초설치 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionFloor AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "'");
             if (ZoneF.Length > 0)
             {
                 int i = -1;
@@ -468,9 +427,9 @@ namespace main
             }
 
         }
-        public void LoadData_GWall()
+        public void LoadData_GWall(string ProjNum, string ZoneNum)
         {   //존 지하벽 정보 가져오기
-            String[][] ZoneG = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.유효열관류율,b.직접간접 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "' And  b.직접간접 = '지면'");
+            String[][] ZoneG = Program.DB.querySQL(ProjNum, "select a.번호,a.면적,b.번호,b.유효열관류율,b.직접간접 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "' And  b.직접간접 = '지면'");
            
             if (ZoneG.Length > 0)
             {
@@ -493,9 +452,9 @@ namespace main
             }
 
         }
-        public void LoadData_Door()
+        public void LoadData_Door(string ProjNum, string ZoneNum)
         {
-            String[][] ZoneD = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.문유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionDoor AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "'");
+            String[][] ZoneD = Program.DB.querySQL(ProjNum, "select a.번호,a.면적,b.번호,b.문유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionDoor AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "'");
          
             if (ZoneD.Length > 0)
             {
@@ -507,18 +466,18 @@ namespace main
                 }
             }
         }
-        public void LoadData_Win()
+        public void LoadData_Win(string ProjNum, string ZoneNum)
         {
             //존 창문 정보 가져오기
-            String[][] ZoneWin = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.창호열관류율,b.설치열교가산치,b.창호유효열관류율,b.유리면적비,b.상위창호번호,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "'");
+            String[][] ZoneWin = Program.DB.querySQL(ProjNum, "select a.번호,a.면적,b.번호,b.창호열관류율,b.설치열교가산치,b.창호유효열관류율,b.유리면적비,b.상위창호번호,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체번호 = b.번호 where a.존 = '" + ZoneNum + "'");
             
             if (ZoneWin.Length > 0)
             {
                 int i = -1;
                 while (++i < ZoneWin.Length)
                 {
-                    String[][] ZoneWin_P = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접,태양열취득률,빛투과율", "번호='" + ZoneWin[i][7] + "'");
-                    string[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호='" + ZoneWin[i][0] + "'");
+                    String[][] ZoneWin_P = Program.DB.getValue(ProjNum, "ConstructionWindow", "직접간접,태양열취득률,빛투과율", "번호='" + ZoneWin[i][7] + "'");
+                    string[][] Blind = Program.DB.getValue(ProjNum, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호='" + ZoneWin[i][0] + "'");
                     if (ZoneWin_P.Length > 0)
                     {
                         if (Blind.Length > 0)
@@ -535,19 +494,19 @@ namespace main
                 }
             }
         }
-        public void LoadData_CW()
+        public void LoadData_CW(string ProjNum, string ZoneNum)
         {
             //존 커튼월 정보 가져오기
-            String[][] ZoneCW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,면적,커튼월부위,구조체번호,방위,기울기", "존 = '" + ZoneNum + "' AND 외피유형 = '커튼월창'");
+            String[][] ZoneCW = Program.DB.getValue(ProjNum, "ZoneEnvelope_3D", "번호,면적,커튼월부위,구조체번호,방위,기울기", "존 = '" + ZoneNum + "' AND 외피유형 = '커튼월창'");
             if (ZoneCW.Length > 0)
             {              
                 int i = -1;
                 while (++i < ZoneCW.Length)
                 { //유리부분면적,유리부분열관류율,유리부분유리면적비,태양열취득률,빛투과율, 패널부분 면적, 패널부분흡수율, 출입문부분면적, 출입문부분열관류율,출입문부분유리면적비, 출입문부분태양열취득률, 출입문부분빛투과율, 커튼월창면적, 설치열교가산치 
                     if (ZoneCW[i][2] == "유리부분")
-                    {
-                        String[][] CW_g = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "유리부분열관류율,유리부분유리면적비,태양열취득률,빛투과율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
-                        string[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호='" + ZoneCW[i][3] + "'");
+                    {                        
+                        String[][] CW_g = Program.DB.getValue(ProjNum, "ConstructionCW", "유리부분열관류율,유리부분유리면적비,태양열취득률,빛투과율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");                        
+                        string[][] Blind = Program.DB.getValue(ProjNum, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호='" + ZoneCW[i][3] + "'");
                         if (CW_g.Length > 0)
                         {
                             if (Blind.Length > 0)
@@ -566,7 +525,7 @@ namespace main
                     }
                     else if (ZoneCW[i][2] == "패널부분")
                     {
-                        String[][] CW_p = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "패널부분열관류율,패널흡수율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
+                        String[][] CW_p = Program.DB.getValue(ProjNum, "ConstructionCW", "패널부분열관류율,패널흡수율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
                         if (CW_p.Length > 0)
                         {
                             CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[0][0]), Convert.ToDouble(CW_p[0][1]), 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[0][2]), ZoneCW[i][4], ZoneCW[i][5], "패널부분");
@@ -575,7 +534,7 @@ namespace main
                     }
                     else
                     {
-                        String[][] CW_d = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "출입문부분열관류율,출입문부분유리면적비,출입문태양열취득률,출입문빛투과율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
+                        String[][] CW_d = Program.DB.getValue(ProjNum, "ConstructionCW", "출입문부분열관류율,출입문부분유리면적비,출입문태양열취득률,출입문빛투과율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
                         if (CW_d.Length > 0)
                         {
                             CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[0][0]), Convert.ToDouble(CW_d[0][1]), Convert.ToDouble(CW_d[0][2]), Convert.ToDouble(CW_d[0][3]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[0][4]), ZoneCW[i][4], ZoneCW[i][5], "출입문부분");
@@ -750,6 +709,89 @@ namespace main
            
         }
 
+        public void Zone_n50()
+        {
+            double q50_tot;
+            double CMH = 0;
+            double AreaDirect_tot = 0;
+            string[][] Value;
+
+            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,커튼월부위,면적,구조체,구조체번호,층", "존='" + ZoneNum + "'");
+            if (ZoneE.Length > 0)
+            {
+                for (int n = 0; n < ZoneE.Length; n++)
+                {
+                    if (ZoneE[n][1] == "커튼월창")
+                    {
+                        AreaDirect_tot += Convert.ToDouble(ZoneE[n][3]);
+                        CMH += Convert.ToDouble(ZoneE[n][3]) * Win_q50;
+                    }
+                    else if (ZoneE[n][1] == "외벽")
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                        if (Value.Length > 0)
+                        {
+                            if (Value[0][0] == "직접외기")
+                            {
+                                AreaDirect_tot += Convert.ToDouble(ZoneE[n][3]);
+                                CMH += Convert.ToDouble(ZoneE[n][3]) * Wall_q50;
+                            }
+                        }
+                    }
+                    else if (ZoneE[n][1] == "지붕")
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                        if (Value.Length > 0)
+                        {
+                            if (Value[0][0] == "직접외기")
+                            {
+                                AreaDirect_tot += Convert.ToDouble(ZoneE[n][3]);
+                                CMH += Convert.ToDouble(ZoneE[n][3]) * Roof_q50;
+                            }
+                        }
+                    }
+                    else if (ZoneE[n][1] == "창호")
+                    {
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "select a.직접간접 FROM ConstructionWindow AS a INNER JOIN SubWindow AS b ON a.번호 = b.상위창호번호 where b.번호 = '" + ZoneE[n][5] + "'");
+                        if (Value.Length > 0)
+                        {
+                            if (Value[0][0] == "직접외기")
+                            {
+                                AreaDirect_tot += Convert.ToDouble(ZoneE[n][3]);
+                                CMH += Convert.ToDouble(ZoneE[n][3]) * Win_q50;
+                            }
+                        }
+                    }
+                    else if (ZoneE[n][1] == "외부출입문")
+                    {
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "직접간접", "번호='" + ZoneE[n][5] + "'");
+                        if (Value.Length > 0)
+                        {
+                            if (Value[0][0] == "직접외기")
+                            {
+                                AreaDirect_tot += Convert.ToDouble(ZoneE[n][3]);
+                                CMH += Convert.ToDouble(ZoneE[n][3]) * Door_q50;
+                            }
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+
+            }
+            if (AreaDirect_tot == 0)
+            {
+                q50_tot = 0;
+                n50 = 0;
+            }
+            else
+            {
+                q50_tot = CMH / AreaDirect_tot;
+                n50 = CMH / (zoneArea * zoneHeight);
+            }
+        }
         public void ZoneHV()  //환기 HV계산
         {
             HVCalc hvcalc = new HVCalc();
@@ -1608,7 +1650,7 @@ namespace main
             QTsource_tot_Cmax = QTsource_TB_Cmax + QTsource_Wall_Cmax + QTsource_Roof_Cmax + QTsource_Door_Cmax + QTsource_Win_Cmax + QTsource_CW_Cmax + QTsource_Floor_Cmax + QTsource_GWall_Cmax + QT_u_source_Cmax;
         }
 
-        public void ZoneQSop(String zoneNum)// 불투명 일사 계산
+        public void ZoneQSop()// 불투명 일사 계산
         {
             //외벽 일사 계산
             double[,] zoneWalls_Is = new double[zoneWall.Count, 12];
@@ -1857,7 +1899,7 @@ namespace main
             }
         }
 
-        public void ZoneQStr(String zoneNum) //투명구조체 일사 계산
+        public void ZoneQStr_Win(string ProjNum) //창호 일사 계산
         {
             double[,] zoneWins_Is = new double[zoneWin.Count, 12];
             double[] zoneWins_Is_max = new double[zoneWin.Count];
@@ -1893,10 +1935,10 @@ namespace main
 
             while (++i < zoneWin.Count)
             {
-                Window zonewin = (Window)zoneWin[i];                          
+                Window zonewin = (Window)zoneWin[i];
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    string[][] Shade = Program.DB.querySQL(DB.type.ProjDB, "Select a.음영계수 From Shade_3D AS a INNER JOIN ZoneEnvelope_3D AS b on a.번호 = b.아이디 where b.번호= '" + zonewin.Num() + "' And 유형 ='최종음영' And 월 = '" + (mth + 1).ToString() + "월'");
+                    string[][] Shade = Program.DB.querySQL(ProjNum, "Select a.음영계수 From Shade_3D AS a INNER JOIN ZoneEnvelope_3D AS b on a.번호 = b.아이디 where b.번호= '" + zonewin.Num() + "' And 유형 ='최종음영' And 월 = '" + (mth + 1).ToString() + "월'");
                     if (Shade.Length > 0)
                     { zoneWins_Fs[i, mth] = Convert.ToDouble(Shade[0][0]); }
                     else
@@ -1913,7 +1955,7 @@ namespace main
             while (++i < zoneWin.Count)
             {
                 Window zonewin = (Window)zoneWin[i];
-                String[][] BlindValue = Program.DB.querySQL(DB.type.ProjDB, "select a.제어방식2 FROM ConstructionBlind AS a INNER JOIN Blind_3D AS b ON a.번호 = b.차양번호 where b.번호 = '" + zonewin.Num() + "'");
+                String[][] BlindValue = Program.DB.querySQL(ProjNum, "select a.제어방식2 FROM ConstructionBlind AS a INNER JOIN Blind_3D AS b ON a.번호 = b.차양번호 where b.번호 = '" + zonewin.Num() + "'");
 
                 if (BlindValue.Length > 0)
                 {
@@ -1958,7 +2000,7 @@ namespace main
 
                             }
 
-                          //  Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_Envelope_Result SET QSsink='" + 0.ToString() + "', QSsource ='" + zoneWins_Qs[i, wewd, mth].ToString() + "' where 외피번호 = '" + zonewin.Num() + "'AND 난방_냉방 ='" + HC + "'  AND 비이용일_이용일 ='" + WEWD + "' AND 월 ='" + (mth + 1).ToString() + "월'");
+                            //  Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_Envelope_Result SET QSsink='" + 0.ToString() + "', QSsource ='" + zoneWins_Qs[i, wewd, mth].ToString() + "' where 외피번호 = '" + zonewin.Num() + "'AND 난방_냉방 ='" + HC + "'  AND 비이용일_이용일 ='" + WEWD + "' AND 월 ='" + (mth + 1).ToString() + "월'");
                         }
                     }
                     for (int mth = 0; mth < 12; mth++)
@@ -1969,7 +2011,9 @@ namespace main
                     QStr_Win_max += zoneWins_Qs_max[i];
                 }
             }
-
+        }
+        public void ZoneQStr_CW(string ProjNum) //투명구조체 일사 계산
+        {
             double[,] zoneCWs_Is = new double[zoneCW.Count, 12];
             double[,] zoneCWs_Fs = new double[zoneCW.Count, 12];
             double[,] zoneCWs_a = new double[zoneCW.Count, 12];
@@ -1985,7 +2029,7 @@ namespace main
             double[] zoneCWs_d_Qs_max = new double[zoneCW.Count];
 
             //존의 커튼월별 일사정보 가져오기
-            i = -1;
+            int i = -1;
             while (++i < zoneCW.Count)
             {
                 CW zonecw = (CW)zoneCW[i];
@@ -2010,7 +2054,7 @@ namespace main
                     CW zonecw = (CW)zoneCW[i];
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        string[][] Shade = Program.DB.querySQL(DB.type.ProjDB, "Select a.음영계수 From Shade_3D AS a INNER JOIN ZoneEnvelope_3D AS b on a.번호 = b.아이디 where b.번호= '" + zonecw.Num() + "' And 유형 ='최종음영' And 월 = '" + (mth + 1).ToString() + "월'");
+                        string[][] Shade = Program.DB.querySQL(ProjNum, "Select a.음영계수 From Shade_3D AS a INNER JOIN ZoneEnvelope_3D AS b on a.번호 = b.아이디 where b.번호= '" + zonecw.Num() + "' And 유형 ='최종음영' And 월 = '" + (mth + 1).ToString() + "월'");
                         if (Shade.Length > 0)
                         { zoneCWs_Fs[i, mth] = Convert.ToDouble(Shade[0][0]); }
                         else
@@ -2027,7 +2071,7 @@ namespace main
                 while (++i < zoneCW.Count)
                 {
                     CW zonecw = (CW)zoneCW[i];
-                    String[][] BlindValue = Program.DB.querySQL(DB.type.ProjDB, "select a.제어방식2 FROM ConstructionBlind AS a INNER JOIN Blind_3D AS b ON a.번호 = b.차양번호 where b.번호 = '" + zonecw.Num() + "'");
+                    String[][] BlindValue = Program.DB.querySQL(ProjNum, "select a.제어방식2 FROM ConstructionBlind AS a INNER JOIN Blind_3D AS b ON a.번호 = b.차양번호 where b.번호 = '" + zonecw.Num() + "'");
                     if(BlindValue.Length > 0) 
                     {
                         for (int mth = 0; mth < 12; mth++)
