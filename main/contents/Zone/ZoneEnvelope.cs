@@ -35,7 +35,6 @@ namespace main.contents
         double Cwirk_total;
         string[][] ZoneE;
         double NetArea, height;
-        double n50, q50;
 
         public ZoneEnvelope()
         {
@@ -89,10 +88,6 @@ namespace main.contents
                     SlabCwirk_comboBox.Items.Add(SQL_index_Slab[i][0]);
                 }
             }
-            //기밀관련 콤보박스 만들기
-            InfiltrationType_comboBox.Items.Clear();
-            InfiltrationType_comboBox.Items.Add("표준값");
-            InfiltrationType_comboBox.Items.Add("기밀설계보고서");
         }
 
 
@@ -165,19 +160,6 @@ namespace main.contents
                     Cwirk_Slab = Calc_Cwirk_Construction(Area_Slab, CwirkA);
                     Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
                 }
-            }
-        }
-
-        //기밀적용유형 선택 시 
-        private void InfiltrationType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (InfiltrationType_comboBox.SelectedItem != null)
-            {
-                q50 = Calc_q50(ZoneType);
-                n50 = Calc_n50(q50);
-                
-                q50_textBox.Text = string.Format("{0:F1}", q50);
-                n50_textBox.Text = string.Format("{0:F1}", n50);
             }
         }
 
@@ -358,7 +340,7 @@ namespace main.contents
                     }
                     else
                     {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionzWall", "유효열관류율,흡수율", "명칭='" + ZoneE_Select[n][5] + "'");
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율,흡수율", "");
                     }
 
                     if (Value.Length > 0)
@@ -436,7 +418,7 @@ namespace main.contents
         {
             if (Ceiling_index != null && Wall_index != null && InWall_index != null && Slab_index != null && Ceiling_index != String.Empty && Wall_index != String.Empty && InWall_index != String.Empty && Slab_index != String.Empty)
             {
-                
+
                 Cwirk_total = (Cwirk_Celing + Cwirk_Wall + Cwirk_InWall + Cwirk_Slab) / NetArea;
                 if (Cwirk_total > 150)
                 {
@@ -459,7 +441,7 @@ namespace main.contents
             {
                 존유형 = "출입문존";
             }
-            else if ((Construction_Count[0] + Construction_Count[1] + Construction_Count[2] + Construction_Count[3] + Construction_Count[4] + Construction_Count[5]) > 0)
+            else if ((Construction_Count[0] + Construction_Count[1] + Construction_Count[2] + Construction_Count[4] + Construction_Count[5]) > 0)
             {
                 존유형 = "외부존";
             }
@@ -486,74 +468,7 @@ namespace main.contents
                 ExternalZone_radioButton.Checked = true;
             }
         }
-        double Calc_q50(string 해당존유형)
-        {
-            double q50 =0;
-            string[][] InfiltrationDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "기밀", "q50", "존유형='" + 해당존유형 + "' AND 기밀적용유형='" + InfiltrationType_comboBox.SelectedItem.ToString() + "'");
-            if (InfiltrationDB.Length > 0)
-            {
-                q50 = Convert.ToDouble(InfiltrationDB[0][0]);
-            }
-            return q50;
-        }
-        double Calc_n50(double q50)
-        {
-            double n50 = 0;
-            double AreaDirect_total = 0;
-
-            string[][] Value;
-            //존의 외피들의 각 구조체테이블에서 직접인지 간접인지 판정해서, 직접이면 면적 합산 
-            if(ZoneE.Length > 0) {
-
-                for (int n = 0; n < ZoneE.Length; n++)
-                {
-                    if (ZoneE[n][1] == "커튼월창")
-                    {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                    }
-                    else if (ZoneE[n][1] == "외벽")
-                    {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                    }
-                    else if (ZoneE[n][1] == "지붕")
-                    {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                    }
-                    else if (ZoneE[n][1] == "최하층바닥")
-                    {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                    }
-                    else if (ZoneE[n][1] == "창호")
-                    {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                    }
-                    else if (ZoneE[n][1] == "외부출입문")
-                    {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                    }
-                    else
-                    {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "명칭='" + ZoneE[n][5] + "'");
-                    }
-                    if (Value.Length > 0)
-                    {
-                        if (Value[0][0] == "직접외기")
-                        {
-                            AreaDirect_total += Convert.ToDouble(ZoneE[n][3]);
-
-                        }
-                    }
-                }
-
-            }
-
-
-            n50 = AreaDirect_total * q50 / (NetArea * height); //원래 순체적으로 해야하는데 지금은 그냥 임의로 계산로 함  
-
-            return n50;
-
-        }
-
+       
 
         private void Save_button_Click(object sender, EventArgs e)
         {
@@ -573,10 +488,6 @@ namespace main.contents
             {
                 MessageBox.Show("바닥 축열 특성을 선택해주세요.");
             }
-            else if (InfiltrationType_comboBox.SelectedItem == null)
-            {
-                MessageBox.Show("기밀 성능 적용 방식을 선택해주세요.");
-            }
             else
             {
                 Save();
@@ -584,15 +495,15 @@ namespace main.contents
         }
         public static bool OnLoadListProc(Form form)
         {
-        //    List_Zone f = (List_Zone)form;
-        //    f.load_List(Layer);
-          return true;
+            //    List_Zone f = (List_Zone)form;
+            //    f.load_List(Layer);
+            return true;
         }
         public static bool OnLoadProc(Form form)
         {
-        //    ZoneGeneral f = (ZoneGeneral)form;
-        //    f.LoadData(currentID);
-          return true;
+            //    ZoneGeneral f = (ZoneGeneral)form;
+            //    f.LoadData(currentID);
+            return true;
         }
         private void Save()
         {
@@ -602,15 +513,13 @@ namespace main.contents
                 "천장축열,외벽축열,내벽축열,바닥축열," +
                 "천장면적,외벽면적,내벽면적,바닥면적," +
                 "존축열성능," +
-                "존기밀타입,기밀적용유형," +
-                "q50,n50",
+                "존기밀타입",
             "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','"
             + Ceiling_index + "','" + Wall_index + "','" + InWall_index + "','" + Slab_index + "','"
             + Cwirk_Ceiling.ToString() + "','" + Cwirk_Wall.ToString() + "','" + Cwirk_InWall.ToString() + "','" + Cwirk_Slab.ToString() + "','"
             + Area_Ceiling.ToString() + "','" + Area_Wall.ToString() + "','" + Area_InWall.ToString() + "','" + Area_Slab.ToString() + "','"
             + Cwirk_total.ToString() + "','"
-            + ZoneType + "','" + InfiltrationType_comboBox.SelectedItem.ToString() + "','"
-            + q50.ToString() + "','" + n50.ToString() + "'", "존번호");
+            + ZoneType + "'", "존번호");
 
             MessageBox.Show(ZoneNum + "[" + ZoneName + "] 정보를 저장하였습니다.");
             //this.DialogResult = DialogResult.OK;
@@ -651,9 +560,6 @@ namespace main.contents
 
             ZoneType = null;
 
-            InfiltrationType_comboBox.SelectedItem = null;
-            q50_textBox.Text = "";
-            n50_textBox.Text = "";
         }
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
@@ -663,9 +569,7 @@ namespace main.contents
                 "천장축열선택,외벽축열선택,내벽축열선택,바닥축열선택," +
                 "천장축열,외벽축열,내벽축열,바닥축열," +
                 "천장면적,외벽면적,내벽면적,바닥면적," +
-                "존축열성능," +
-                "존기밀타입,기밀적용유형," +
-                "q50,n50", "존번호 = '" + ZoneNum + "'");
+                "존축열성능", "존번호 = '" + ZoneNum + "'");
             if (Value.Length > 0)
             {
                 Ceiling_index = Value[0][0];
@@ -679,7 +583,7 @@ namespace main.contents
 
                 if (Value[0][4] != "")
                 {
-                 Cwirk_Ceiling = Convert.ToDouble(Value[0][4]);
+                    Cwirk_Ceiling = Convert.ToDouble(Value[0][4]);
                 }
                 if (Value[0][5] != "")
                 {
@@ -697,7 +601,7 @@ namespace main.contents
                 {
                     Area_Ceiling = Convert.ToDouble(Value[0][8]);
                 }
-                if (Value[0][9] != "") 
+                if (Value[0][9] != "")
                 {
                     Area_Wall = Convert.ToDouble(Value[0][9]);
                 }
@@ -716,30 +620,9 @@ namespace main.contents
 
                 Cwirk_textBox.Text = string.Format("{0:F2}", Cwirk_total);
 
-                ZoneType = Value[0][13];
-                Check_radioButton(ZoneType);
-
-                InfiltrationType_comboBox.SelectedItem = Value[0][14];
-                if (Value[0][15] != "")
-                {
-                    q50 = Convert.ToDouble(Value[0][15]);
-                    q50_textBox.Text = string.Format("{0:F1}", Convert.ToDouble(Value[0][15]));
-                }
-                if (Value[0][16] != "")
-                {
-                    n50 = Convert.ToDouble(Value[0][16]);
-                    n50_textBox.Text = string.Format("{0:F1}", Convert.ToDouble(Value[0][16]));
-                }
             }
 
-        }
-        public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
-        {
-            //Num_textBox.Text = ID;
-            //ZoneNum = ID;
-            //Load_OtherFormData();
-
-        }
+        }     
         private void ZoneEnvelope_VisibleChanged(object sender, EventArgs e)
         {
             if (main.MainContents.currentForm == main.MainContents.FormID.ZoneEnvelope)
@@ -784,10 +667,8 @@ namespace main.contents
                     load_table_ZoneEnvelopeInfo(ZoneNum);
                 }
             }
-            catch { }
-
-
-
+            catch { }               
+           
         }
 
     }

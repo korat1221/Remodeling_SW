@@ -32,7 +32,6 @@
             label1 = new Label();
             Type_textBox = new TextBox();
             Icon_pictureBox = new PictureBox();
-            Previous_button = new Button();
             Save_button = new Button();
             label4 = new Label();
             label5 = new Label();
@@ -40,77 +39,100 @@
             BuildingLocation_textBox = new TextBox();
             BuildingName_textBox = new TextBox();
             ByRawClimate_textBox = new TextBox();
-            BuildingUse_comboBox = new ComboBox();
+            BuildingUse_comboBox = new CustomComboBox();
             label2 = new Label();
-            Climate_comboBox = new ComboBox();
+            Climate_comboBox = new CustomComboBox();
             label6 = new Label();
-            BuildingCategory_comboBox = new ComboBox();
+            BuildingCategory_comboBox = new CustomComboBox();
             label7 = new Label();
             label13 = new Label();
             label14 = new Label();
             panel2 = new Panel();
+            ProjectNum_textBox = new TextBox();
+            label11 = new Label();
             OldProject_label = new Label();
-            OldProject_comboBox = new ComboBox();
+            OldProject_comboBox = new CustomComboBox();
             ProjectType_textBox = new TextBox();
             ProjectName_textBox = new TextBox();
-            textBox1 = new TextBox();
-            Diagnosis_comboBox = new ComboBox();
-            label12 = new Label();
-            Target_comboBox = new ComboBox();
-            label15 = new Label();
             label16 = new Label();
             label17 = new Label();
             label3 = new Label();
             panel3 = new Panel();
-            Month_comboBox = new ComboBox();
-            Year_comboBox = new ComboBox();
+            label27 = new Label();
+            Month_comboBox = new CustomComboBox();
+            UnderGround_comboBox = new CustomComboBox();
+            Year_comboBox = new CustomComboBox();
+            AboveGround_comboBox = new CustomComboBox();
             BylawDate_textBox = new TextBox();
-            label11 = new Label();
-            RoofType_comboBox = new ComboBox();
+            label8 = new Label();
             label10 = new Label();
+            label9 = new Label();
             textBox2 = new TextBox();
+            label26 = new Label();
             label18 = new Label();
+            label24 = new Label();
             label19 = new Label();
-            WallType_comboBox = new ComboBox();
+            BuildingArea_textBox = new TextBox();
             label20 = new Label();
-            label21 = new Label();
-            label22 = new Label();
-            label30 = new Label();
+            label25 = new Label();
             GrossArea_textBox = new TextBox();
             label23 = new Label();
-            panel4 = new Panel();
-            label27 = new Label();
-            UnderGround_comboBox = new ComboBox();
-            AboveGround_comboBox = new ComboBox();
-            label8 = new Label();
-            label9 = new Label();
-            label26 = new Label();
-            label24 = new Label();
-            BuildingArea_textBox = new TextBox();
-            label25 = new Label();
+            label30 = new Label();
             label28 = new Label();
             panel5 = new Panel();
+            ReviewMonth_comboBox = new CustomComboBox();
             ReviewerName_textBox = new TextBox();
+            ReviewYear_comboBox = new CustomComboBox();
             ReviewerLocation_textBox = new TextBox();
-            textBox15 = new TextBox();
-            label34 = new Label();
-            label36 = new Label();
-            panel6 = new Panel();
-            ReviewMonth_comboBox = new ComboBox();
-            ReviewYear_comboBox = new ComboBox();
             ReviewerCompany_textBox = new TextBox();
             label29 = new Label();
+            textBox15 = new TextBox();
             label39 = new Label();
+            label34 = new Label();
             label31 = new Label();
+            label36 = new Label();
             label32 = new Label();
+            label33 = new Label();
+            panel7 = new Panel();
+            n50_textBox = new TextBox();
+            n50_label2 = new Label();
+            n50_label1 = new Label();
+            Roof_label = new Label();
+            Roof_groupBox = new GroupBox();
+            Roof_False_radioButton = new RadioButton();
+            Roof_True_radioButton = new RadioButton();
+            Wall_label = new Label();
+            Win_label = new Label();
+            Wall_groupBox = new GroupBox();
+            Wall_False_radioButton = new RadioButton();
+            Wall_True_radioButton = new RadioButton();
+            Win_groupBox = new GroupBox();
+            Win_False_radioButton = new RadioButton();
+            Win_True_radioButton = new RadioButton();
+            Door_label = new Label();
+            Door_groupBox = new GroupBox();
+            Door_False_radioButton = new RadioButton();
+            Door_True_radioButton = new RadioButton();
+            q50Area_label2 = new Label();
+            q50Area_textBox = new TextBox();
+            q50Area_label1 = new Label();
+            q50_textBox = new TextBox();
+            q50_label2 = new Label();
+            q50_label1 = new Label();
+            BlowDoorTest_comboBox = new CustomComboBox();
+            textBox3 = new TextBox();
+            label40 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
-            panel4.SuspendLayout();
             panel5.SuspendLayout();
-            panel6.SuspendLayout();
+            panel7.SuspendLayout();
+            Roof_groupBox.SuspendLayout();
+            Wall_groupBox.SuspendLayout();
+            Win_groupBox.SuspendLayout();
+            Door_groupBox.SuspendLayout();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -156,22 +178,11 @@
             Icon_pictureBox.TabIndex = 91;
             Icon_pictureBox.TabStop = false;
             // 
-            // Previous_button
-            // 
-            Previous_button.BackColor = SystemColors.ButtonHighlight;
-            Previous_button.ForeColor = Color.Black;
-            Previous_button.Location = new Point(986, 534);
-            Previous_button.Name = "Previous_button";
-            Previous_button.Size = new Size(88, 25);
-            Previous_button.TabIndex = 93;
-            Previous_button.Text = "<<PREVIOUS";
-            Previous_button.UseVisualStyleBackColor = true;
-            // 
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1080, 534);
+            Save_button.Location = new Point(1025, 615);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 92;
@@ -225,9 +236,9 @@
             BuildingLocation_textBox.BorderStyle = BorderStyle.FixedSingle;
             BuildingLocation_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BuildingLocation_textBox.ForeColor = SystemColors.ControlText;
-            BuildingLocation_textBox.Location = new Point(104, 84);
+            BuildingLocation_textBox.Location = new Point(94, 84);
             BuildingLocation_textBox.Name = "BuildingLocation_textBox";
-            BuildingLocation_textBox.Size = new Size(349, 22);
+            BuildingLocation_textBox.Size = new Size(320, 22);
             BuildingLocation_textBox.TabIndex = 129;
             BuildingLocation_textBox.TextAlign = HorizontalAlignment.Center;
             BuildingLocation_textBox.TextChanged += BuildingLocation_textBox_TextChanged;
@@ -238,9 +249,9 @@
             BuildingName_textBox.BorderStyle = BorderStyle.FixedSingle;
             BuildingName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BuildingName_textBox.ForeColor = SystemColors.ControlText;
-            BuildingName_textBox.Location = new Point(104, 52);
+            BuildingName_textBox.Location = new Point(94, 52);
             BuildingName_textBox.Name = "BuildingName_textBox";
-            BuildingName_textBox.Size = new Size(349, 22);
+            BuildingName_textBox.Size = new Size(320, 22);
             BuildingName_textBox.TabIndex = 128;
             BuildingName_textBox.TextAlign = HorizontalAlignment.Center;
             BuildingName_textBox.TextChanged += BuildingName_textBox_TextChanged;
@@ -260,11 +271,12 @@
             // 
             // BuildingUse_comboBox
             // 
+            BuildingUse_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             BuildingUse_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BuildingUse_comboBox.FormattingEnabled = true;
-            BuildingUse_comboBox.Location = new Point(333, 19);
+            BuildingUse_comboBox.Location = new Point(294, 19);
             BuildingUse_comboBox.Name = "BuildingUse_comboBox";
-            BuildingUse_comboBox.Size = new Size(120, 24);
+            BuildingUse_comboBox.Size = new Size(120, 23);
             BuildingUse_comboBox.TabIndex = 125;
             BuildingUse_comboBox.SelectedIndexChanged += BuildingUse_comboBox_SelectedIndexChanged;
             // 
@@ -272,7 +284,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(260, 23);
+            label2.Location = new Point(220, 23);
             label2.Name = "label2";
             label2.Size = new Size(59, 15);
             label2.TabIndex = 124;
@@ -280,11 +292,12 @@
             // 
             // Climate_comboBox
             // 
+            Climate_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Climate_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Climate_comboBox.FormattingEnabled = true;
-            Climate_comboBox.Location = new Point(104, 115);
+            Climate_comboBox.Location = new Point(94, 115);
             Climate_comboBox.Name = "Climate_comboBox";
-            Climate_comboBox.Size = new Size(120, 24);
+            Climate_comboBox.Size = new Size(120, 23);
             Climate_comboBox.TabIndex = 123;
             Climate_comboBox.SelectedIndexChanged += Climate_comboBox_SelectedIndexChanged;
             // 
@@ -300,11 +313,12 @@
             // 
             // BuildingCategory_comboBox
             // 
+            BuildingCategory_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             BuildingCategory_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BuildingCategory_comboBox.FormattingEnabled = true;
-            BuildingCategory_comboBox.Location = new Point(104, 19);
+            BuildingCategory_comboBox.Location = new Point(94, 19);
             BuildingCategory_comboBox.Name = "BuildingCategory_comboBox";
-            BuildingCategory_comboBox.Size = new Size(120, 24);
+            BuildingCategory_comboBox.Size = new Size(120, 23);
             BuildingCategory_comboBox.TabIndex = 121;
             BuildingCategory_comboBox.SelectedIndexChanged += BuildingCategory_comboBox_SelectedIndexChanged;
             // 
@@ -341,15 +355,12 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(ProjectNum_textBox);
+            panel2.Controls.Add(label11);
             panel2.Controls.Add(OldProject_label);
             panel2.Controls.Add(OldProject_comboBox);
             panel2.Controls.Add(ProjectType_textBox);
             panel2.Controls.Add(ProjectName_textBox);
-            panel2.Controls.Add(textBox1);
-            panel2.Controls.Add(Diagnosis_comboBox);
-            panel2.Controls.Add(label12);
-            panel2.Controls.Add(Target_comboBox);
-            panel2.Controls.Add(label15);
             panel2.Controls.Add(label16);
             panel2.Controls.Add(label17);
             panel2.Location = new Point(13, 109);
@@ -358,11 +369,35 @@
             panel2.TabIndex = 99;
             panel2.Paint += panel2_Paint;
             // 
+            // ProjectNum_textBox
+            // 
+            ProjectNum_textBox.BackColor = Color.White;
+            ProjectNum_textBox.BorderStyle = BorderStyle.None;
+            ProjectNum_textBox.Enabled = false;
+            ProjectNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ProjectNum_textBox.ForeColor = SystemColors.ControlDark;
+            ProjectNum_textBox.Location = new Point(108, 24);
+            ProjectNum_textBox.Name = "ProjectNum_textBox";
+            ProjectNum_textBox.Size = new Size(116, 15);
+            ProjectNum_textBox.TabIndex = 139;
+            ProjectNum_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label11.ForeColor = SystemColors.ControlDark;
+            label11.Location = new Point(21, 24);
+            label11.Name = "label11";
+            label11.Size = new Size(79, 15);
+            label11.TabIndex = 138;
+            label11.Text = "프로젝트번호";
+            // 
             // OldProject_label
             // 
             OldProject_label.AutoSize = true;
             OldProject_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            OldProject_label.Location = new Point(249, 57);
+            OldProject_label.Location = new Point(20, 119);
             OldProject_label.Name = "OldProject_label";
             OldProject_label.Size = new Size(83, 15);
             OldProject_label.TabIndex = 137;
@@ -370,11 +405,12 @@
             // 
             // OldProject_comboBox
             // 
+            OldProject_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             OldProject_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             OldProject_comboBox.FormattingEnabled = true;
-            OldProject_comboBox.Location = new Point(333, 51);
+            OldProject_comboBox.Location = new Point(108, 115);
             OldProject_comboBox.Name = "OldProject_comboBox";
-            OldProject_comboBox.Size = new Size(120, 24);
+            OldProject_comboBox.Size = new Size(120, 23);
             OldProject_comboBox.TabIndex = 136;
             OldProject_comboBox.SelectedIndexChanged += OldProject_comboBox_SelectedIndexChanged;
             // 
@@ -385,7 +421,7 @@
             ProjectType_textBox.Enabled = false;
             ProjectType_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             ProjectType_textBox.ForeColor = SystemColors.ControlDark;
-            ProjectType_textBox.Location = new Point(130, 56);
+            ProjectType_textBox.Location = new Point(108, 88);
             ProjectType_textBox.Name = "ProjectType_textBox";
             ProjectType_textBox.Size = new Size(116, 15);
             ProjectType_textBox.TabIndex = 135;
@@ -398,71 +434,18 @@
             ProjectName_textBox.Enabled = false;
             ProjectName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             ProjectName_textBox.ForeColor = SystemColors.ControlDark;
-            ProjectName_textBox.Location = new Point(130, 24);
+            ProjectName_textBox.Location = new Point(108, 56);
             ProjectName_textBox.Name = "ProjectName_textBox";
             ProjectName_textBox.Size = new Size(116, 15);
             ProjectName_textBox.TabIndex = 134;
             ProjectName_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // textBox1
-            // 
-            textBox1.BackColor = Color.White;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Enabled = false;
-            textBox1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.ForeColor = SystemColors.ControlDark;
-            textBox1.Location = new Point(335, 124);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(116, 15);
-            textBox1.TabIndex = 127;
-            textBox1.TextAlign = HorizontalAlignment.Center;
-            // 
-            // Diagnosis_comboBox
-            // 
-            Diagnosis_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Diagnosis_comboBox.FormattingEnabled = true;
-            Diagnosis_comboBox.Location = new Point(128, 115);
-            Diagnosis_comboBox.Name = "Diagnosis_comboBox";
-            Diagnosis_comboBox.Size = new Size(120, 24);
-            Diagnosis_comboBox.TabIndex = 123;
-            Diagnosis_comboBox.SelectedIndexChanged += Diagnosis_comboBox_SelectedIndexChanged;
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label12.Location = new Point(20, 120);
-            label12.Name = "label12";
-            label12.Size = new Size(87, 15);
-            label12.TabIndex = 122;
-            label12.Text = "건물 진단 실시";
-            // 
-            // Target_comboBox
-            // 
-            Target_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Target_comboBox.FormattingEnabled = true;
-            Target_comboBox.Location = new Point(128, 83);
-            Target_comboBox.Name = "Target_comboBox";
-            Target_comboBox.Size = new Size(120, 24);
-            Target_comboBox.TabIndex = 52;
-            Target_comboBox.SelectedIndexChanged += Target_comboBox_SelectedIndexChanged;
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label15.Location = new Point(20, 88);
-            label15.Name = "label15";
-            label15.Size = new Size(87, 15);
-            label15.TabIndex = 41;
-            label15.Text = "사업 성능 목표";
             // 
             // label16
             // 
             label16.AutoSize = true;
             label16.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label16.ForeColor = SystemColors.ControlDark;
-            label16.Location = new Point(20, 56);
+            label16.Location = new Point(20, 88);
             label16.Name = "label16";
             label16.Size = new Size(83, 15);
             label16.TabIndex = 39;
@@ -473,7 +456,7 @@
             label17.AutoSize = true;
             label17.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label17.ForeColor = SystemColors.ControlDark;
-            label17.Location = new Point(20, 24);
+            label17.Location = new Point(20, 56);
             label17.Name = "label17";
             label17.Size = new Size(67, 15);
             label17.TabIndex = 37;
@@ -492,44 +475,85 @@
             // panel3
             // 
             panel3.BackColor = Color.White;
+            panel3.Controls.Add(label27);
             panel3.Controls.Add(Month_comboBox);
+            panel3.Controls.Add(UnderGround_comboBox);
             panel3.Controls.Add(Year_comboBox);
+            panel3.Controls.Add(AboveGround_comboBox);
             panel3.Controls.Add(BylawDate_textBox);
-            panel3.Controls.Add(label11);
-            panel3.Controls.Add(RoofType_comboBox);
+            panel3.Controls.Add(label8);
             panel3.Controls.Add(label10);
+            panel3.Controls.Add(label9);
             panel3.Controls.Add(textBox2);
+            panel3.Controls.Add(label26);
             panel3.Controls.Add(label18);
+            panel3.Controls.Add(label24);
             panel3.Controls.Add(label19);
-            panel3.Controls.Add(WallType_comboBox);
+            panel3.Controls.Add(BuildingArea_textBox);
             panel3.Controls.Add(label20);
-            panel3.Controls.Add(label21);
-            panel3.Controls.Add(label22);
+            panel3.Controls.Add(label25);
+            panel3.Controls.Add(GrossArea_textBox);
+            panel3.Controls.Add(label23);
+            panel3.Controls.Add(label30);
             panel3.Location = new Point(13, 290);
             panel3.Name = "panel3";
-            panel3.Size = new Size(489, 118);
+            panel3.Size = new Size(976, 94);
             panel3.TabIndex = 101;
             panel3.Paint += panel3_Paint;
             // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label27.Location = new Point(726, 61);
+            label27.Name = "label27";
+            label27.Size = new Size(31, 15);
+            label27.TabIndex = 140;
+            label27.Text = "지하";
+            // 
             // Month_comboBox
             // 
+            Month_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Month_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Month_comboBox.FormattingEnabled = true;
-            Month_comboBox.Location = new Point(333, 48);
+            Month_comboBox.Location = new Point(308, 19);
             Month_comboBox.Name = "Month_comboBox";
-            Month_comboBox.Size = new Size(120, 24);
+            Month_comboBox.Size = new Size(120, 23);
             Month_comboBox.TabIndex = 134;
             Month_comboBox.SelectedIndexChanged += Month_comboBox_SelectedIndexChanged;
             // 
+            // UnderGround_comboBox
+            // 
+            UnderGround_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            UnderGround_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UnderGround_comboBox.FormattingEnabled = true;
+            UnderGround_comboBox.Location = new Point(782, 57);
+            UnderGround_comboBox.Name = "UnderGround_comboBox";
+            UnderGround_comboBox.Size = new Size(120, 23);
+            UnderGround_comboBox.TabIndex = 139;
+            UnderGround_comboBox.SelectedIndexChanged += UnderGround_comboBox_SelectedIndexChanged;
+            // 
             // Year_comboBox
             // 
+            Year_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Year_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Year_comboBox.FormattingEnabled = true;
-            Year_comboBox.Location = new Point(119, 48);
+            Year_comboBox.Location = new Point(108, 19);
             Year_comboBox.Name = "Year_comboBox";
-            Year_comboBox.Size = new Size(120, 24);
+            Year_comboBox.Size = new Size(120, 23);
             Year_comboBox.TabIndex = 122;
             Year_comboBox.SelectedIndexChanged += Year_comboBox_SelectedIndexChanged;
+            // 
+            // AboveGround_comboBox
+            // 
+            AboveGround_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            AboveGround_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AboveGround_comboBox.FormattingEnabled = true;
+            AboveGround_comboBox.Location = new Point(582, 57);
+            AboveGround_comboBox.Name = "AboveGround_comboBox";
+            AboveGround_comboBox.Size = new Size(120, 23);
+            AboveGround_comboBox.TabIndex = 137;
+            AboveGround_comboBox.SelectedIndexChanged += AboveGround_comboBox_SelectedIndexChanged;
             // 
             // BylawDate_textBox
             // 
@@ -538,42 +562,44 @@
             BylawDate_textBox.Enabled = false;
             BylawDate_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BylawDate_textBox.ForeColor = SystemColors.ControlDark;
-            BylawDate_textBox.Location = new Point(121, 85);
+            BylawDate_textBox.Location = new Point(108, 61);
             BylawDate_textBox.Name = "BylawDate_textBox";
             BylawDate_textBox.Size = new Size(116, 15);
             BylawDate_textBox.TabIndex = 133;
             BylawDate_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label11
+            // label8
             // 
-            label11.AutoSize = true;
-            label11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label11.Location = new Point(296, 24);
-            label11.Name = "label11";
-            label11.Size = new Size(31, 15);
-            label11.TabIndex = 132;
-            label11.Text = "지붕";
-            // 
-            // RoofType_comboBox
-            // 
-            RoofType_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            RoofType_comboBox.FormattingEnabled = true;
-            RoofType_comboBox.Location = new Point(333, 19);
-            RoofType_comboBox.Name = "RoofType_comboBox";
-            RoofType_comboBox.Size = new Size(120, 24);
-            RoofType_comboBox.TabIndex = 130;
-            RoofType_comboBox.SelectedIndexChanged += RoofType_comboBox_SelectedIndexChanged;
+            label8.AutoSize = true;
+            label8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.ForeColor = SystemColors.ControlText;
+            label8.Location = new Point(703, 60);
+            label8.Name = "label8";
+            label8.Size = new Size(18, 16);
+            label8.TabIndex = 138;
+            label8.Text = "층";
             // 
             // label10
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label10.ForeColor = SystemColors.ControlText;
-            label10.Location = new Point(245, 51);
+            label10.Location = new Point(232, 23);
             label10.Name = "label10";
             label10.Size = new Size(18, 16);
             label10.TabIndex = 128;
             label10.Text = "년";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label9.ForeColor = SystemColors.ControlText;
+            label9.Location = new Point(906, 60);
+            label9.Name = "label9";
+            label9.Size = new Size(18, 16);
+            label9.TabIndex = 136;
+            label9.Text = "층";
             // 
             // textBox2
             // 
@@ -588,77 +614,81 @@
             textBox2.TabIndex = 127;
             textBox2.TextAlign = HorizontalAlignment.Center;
             // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label26.Location = new Point(503, 61);
+            label26.Name = "label26";
+            label26.Size = new Size(31, 15);
+            label26.TabIndex = 135;
+            label26.Text = "지상";
+            // 
             // label18
             // 
             label18.AutoSize = true;
             label18.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label18.ForeColor = SystemColors.ControlText;
-            label18.Location = new Point(457, 52);
+            label18.Location = new Point(432, 23);
             label18.Name = "label18";
             label18.Size = new Size(18, 16);
             label18.TabIndex = 96;
             label18.Text = "월";
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label24.ForeColor = SystemColors.ControlText;
+            label24.Location = new Point(906, 22);
+            label24.Name = "label24";
+            label24.Size = new Size(22, 16);
+            label24.TabIndex = 132;
+            label24.Text = "m²";
             // 
             // label19
             // 
             label19.AutoSize = true;
             label19.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label19.ForeColor = SystemColors.ControlDark;
-            label19.Location = new Point(20, 85);
+            label19.Location = new Point(20, 61);
             label19.Name = "label19";
             label19.Size = new Size(79, 15);
             label19.TabIndex = 122;
             label19.Text = "법규기준연월";
             // 
-            // WallType_comboBox
+            // BuildingArea_textBox
             // 
-            WallType_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            WallType_comboBox.FormattingEnabled = true;
-            WallType_comboBox.Location = new Point(119, 19);
-            WallType_comboBox.Name = "WallType_comboBox";
-            WallType_comboBox.Size = new Size(120, 24);
-            WallType_comboBox.TabIndex = 121;
-            WallType_comboBox.SelectedIndexChanged += WallType_comboBox_SelectedIndexChanged;
+            BuildingArea_textBox.BackColor = Color.White;
+            BuildingArea_textBox.BorderStyle = BorderStyle.FixedSingle;
+            BuildingArea_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BuildingArea_textBox.ForeColor = SystemColors.ControlText;
+            BuildingArea_textBox.Location = new Point(782, 19);
+            BuildingArea_textBox.Name = "BuildingArea_textBox";
+            BuildingArea_textBox.Size = new Size(120, 22);
+            BuildingArea_textBox.TabIndex = 131;
+            BuildingArea_textBox.TextAlign = HorizontalAlignment.Center;
+            BuildingArea_textBox.TextChanged += BuildingArea_textBox_TextChanged;
             // 
             // label20
             // 
             label20.AutoSize = true;
             label20.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label20.Location = new Point(20, 53);
+            label20.Location = new Point(20, 24);
             label20.Name = "label20";
             label20.Size = new Size(55, 15);
             label20.TabIndex = 41;
             label20.Text = "준공연월";
             // 
-            // label21
+            // label25
             // 
-            label21.AutoSize = true;
-            label21.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label21.Location = new Point(81, 24);
-            label21.Name = "label21";
-            label21.Size = new Size(31, 15);
-            label21.TabIndex = 39;
-            label21.Text = "외벽";
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label22.Location = new Point(20, 24);
-            label22.Name = "label22";
-            label22.Size = new Size(55, 15);
-            label22.TabIndex = 37;
-            label22.Text = "구조유형";
-            // 
-            // label30
-            // 
-            label30.AutoSize = true;
-            label30.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label30.Location = new Point(20, 24);
-            label30.Name = "label30";
-            label30.Size = new Size(43, 15);
-            label30.TabIndex = 37;
-            label30.Text = "연면적";
+            label25.AutoSize = true;
+            label25.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label25.Location = new Point(725, 23);
+            label25.Name = "label25";
+            label25.Size = new Size(55, 15);
+            label25.TabIndex = 130;
+            label25.Text = "건축면적";
             // 
             // GrossArea_textBox
             // 
@@ -666,7 +696,7 @@
             GrossArea_textBox.BorderStyle = BorderStyle.FixedSingle;
             GrossArea_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             GrossArea_textBox.ForeColor = SystemColors.ControlText;
-            GrossArea_textBox.Location = new Point(105, 20);
+            GrossArea_textBox.Location = new Point(582, 19);
             GrossArea_textBox.Name = "GrossArea_textBox";
             GrossArea_textBox.Size = new Size(120, 22);
             GrossArea_textBox.TabIndex = 128;
@@ -678,134 +708,27 @@
             label23.AutoSize = true;
             label23.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label23.ForeColor = SystemColors.ControlText;
-            label23.Location = new Point(229, 23);
+            label23.Location = new Point(703, 22);
             label23.Name = "label23";
             label23.Size = new Size(22, 16);
             label23.TabIndex = 129;
             label23.Text = "m²";
             // 
-            // panel4
+            // label30
             // 
-            panel4.BackColor = Color.White;
-            panel4.Controls.Add(label27);
-            panel4.Controls.Add(UnderGround_comboBox);
-            panel4.Controls.Add(AboveGround_comboBox);
-            panel4.Controls.Add(label8);
-            panel4.Controls.Add(label9);
-            panel4.Controls.Add(label26);
-            panel4.Controls.Add(label24);
-            panel4.Controls.Add(BuildingArea_textBox);
-            panel4.Controls.Add(label25);
-            panel4.Controls.Add(label23);
-            panel4.Controls.Add(GrossArea_textBox);
-            panel4.Controls.Add(label30);
-            panel4.Location = new Point(500, 290);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(488, 118);
-            panel4.TabIndex = 103;
-            panel4.Paint += panel4_Paint;
-            // 
-            // label27
-            // 
-            label27.AutoSize = true;
-            label27.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label27.Location = new Point(274, 85);
-            label27.Name = "label27";
-            label27.Size = new Size(31, 15);
-            label27.TabIndex = 140;
-            label27.Text = "지하";
-            // 
-            // UnderGround_comboBox
-            // 
-            UnderGround_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            UnderGround_comboBox.FormattingEnabled = true;
-            UnderGround_comboBox.Location = new Point(319, 80);
-            UnderGround_comboBox.Name = "UnderGround_comboBox";
-            UnderGround_comboBox.Size = new Size(120, 24);
-            UnderGround_comboBox.TabIndex = 139;
-            UnderGround_comboBox.SelectedIndexChanged += UnderGround_comboBox_SelectedIndexChanged;
-            // 
-            // AboveGround_comboBox
-            // 
-            AboveGround_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            AboveGround_comboBox.FormattingEnabled = true;
-            AboveGround_comboBox.Location = new Point(105, 80);
-            AboveGround_comboBox.Name = "AboveGround_comboBox";
-            AboveGround_comboBox.Size = new Size(120, 24);
-            AboveGround_comboBox.TabIndex = 137;
-            AboveGround_comboBox.SelectedIndexChanged += AboveGround_comboBox_SelectedIndexChanged;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label8.ForeColor = SystemColors.ControlText;
-            label8.Location = new Point(231, 84);
-            label8.Name = "label8";
-            label8.Size = new Size(18, 16);
-            label8.TabIndex = 138;
-            label8.Text = "층";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label9.ForeColor = SystemColors.ControlText;
-            label9.Location = new Point(443, 84);
-            label9.Name = "label9";
-            label9.Size = new Size(18, 16);
-            label9.TabIndex = 136;
-            label9.Text = "층";
-            // 
-            // label26
-            // 
-            label26.AutoSize = true;
-            label26.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label26.Location = new Point(20, 85);
-            label26.Name = "label26";
-            label26.Size = new Size(31, 15);
-            label26.TabIndex = 135;
-            label26.Text = "지상";
-            // 
-            // label24
-            // 
-            label24.AutoSize = true;
-            label24.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label24.ForeColor = SystemColors.ControlText;
-            label24.Location = new Point(229, 52);
-            label24.Name = "label24";
-            label24.Size = new Size(22, 16);
-            label24.TabIndex = 132;
-            label24.Text = "m²";
-            // 
-            // BuildingArea_textBox
-            // 
-            BuildingArea_textBox.BackColor = Color.White;
-            BuildingArea_textBox.BorderStyle = BorderStyle.FixedSingle;
-            BuildingArea_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            BuildingArea_textBox.ForeColor = SystemColors.ControlText;
-            BuildingArea_textBox.Location = new Point(105, 49);
-            BuildingArea_textBox.Name = "BuildingArea_textBox";
-            BuildingArea_textBox.Size = new Size(120, 22);
-            BuildingArea_textBox.TabIndex = 131;
-            BuildingArea_textBox.TextAlign = HorizontalAlignment.Center;
-            BuildingArea_textBox.TextChanged += BuildingArea_textBox_TextChanged;
-            // 
-            // label25
-            // 
-            label25.AutoSize = true;
-            label25.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label25.Location = new Point(20, 53);
-            label25.Name = "label25";
-            label25.Size = new Size(55, 15);
-            label25.TabIndex = 130;
-            label25.Text = "건축면적";
+            label30.AutoSize = true;
+            label30.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label30.Location = new Point(503, 23);
+            label30.Name = "label30";
+            label30.Size = new Size(43, 15);
+            label30.TabIndex = 37;
+            label30.Text = "연면적";
             // 
             // label28
             // 
             label28.AutoSize = true;
             label28.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label28.Location = new Point(12, 412);
+            label28.Location = new Point(12, 531);
             label28.Name = "label28";
             label28.Size = new Size(71, 15);
             label28.TabIndex = 104;
@@ -814,16 +737,34 @@
             // panel5
             // 
             panel5.BackColor = Color.White;
+            panel5.Controls.Add(ReviewMonth_comboBox);
             panel5.Controls.Add(ReviewerName_textBox);
+            panel5.Controls.Add(ReviewYear_comboBox);
             panel5.Controls.Add(ReviewerLocation_textBox);
+            panel5.Controls.Add(ReviewerCompany_textBox);
+            panel5.Controls.Add(label29);
             panel5.Controls.Add(textBox15);
+            panel5.Controls.Add(label39);
             panel5.Controls.Add(label34);
+            panel5.Controls.Add(label31);
             panel5.Controls.Add(label36);
-            panel5.Location = new Point(13, 431);
+            panel5.Controls.Add(label32);
+            panel5.Location = new Point(13, 550);
             panel5.Name = "panel5";
-            panel5.Size = new Size(489, 90);
+            panel5.Size = new Size(976, 90);
             panel5.TabIndex = 105;
             panel5.Paint += panel5_Paint;
+            // 
+            // ReviewMonth_comboBox
+            // 
+            ReviewMonth_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            ReviewMonth_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ReviewMonth_comboBox.FormattingEnabled = true;
+            ReviewMonth_comboBox.Location = new Point(782, 49);
+            ReviewMonth_comboBox.Name = "ReviewMonth_comboBox";
+            ReviewMonth_comboBox.Size = new Size(120, 23);
+            ReviewMonth_comboBox.TabIndex = 135;
+            ReviewMonth_comboBox.SelectedIndexChanged += ReviewMonth_comboBox_SelectedIndexChanged;
             // 
             // ReviewerName_textBox
             // 
@@ -831,12 +772,23 @@
             ReviewerName_textBox.BorderStyle = BorderStyle.FixedSingle;
             ReviewerName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             ReviewerName_textBox.ForeColor = SystemColors.ControlText;
-            ReviewerName_textBox.Location = new Point(119, 20);
+            ReviewerName_textBox.Location = new Point(108, 20);
             ReviewerName_textBox.Name = "ReviewerName_textBox";
             ReviewerName_textBox.Size = new Size(120, 22);
             ReviewerName_textBox.TabIndex = 134;
             ReviewerName_textBox.TextAlign = HorizontalAlignment.Center;
             ReviewerName_textBox.TextChanged += ReviewerName_textBox_TextChanged;
+            // 
+            // ReviewYear_comboBox
+            // 
+            ReviewYear_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            ReviewYear_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ReviewYear_comboBox.FormattingEnabled = true;
+            ReviewYear_comboBox.Location = new Point(582, 49);
+            ReviewYear_comboBox.Name = "ReviewYear_comboBox";
+            ReviewYear_comboBox.Size = new Size(120, 23);
+            ReviewYear_comboBox.TabIndex = 123;
+            ReviewYear_comboBox.SelectedIndexChanged += ReviewYear_comboBox_SelectedIndexChanged;
             // 
             // ReviewerLocation_textBox
             // 
@@ -844,12 +796,36 @@
             ReviewerLocation_textBox.BorderStyle = BorderStyle.FixedSingle;
             ReviewerLocation_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             ReviewerLocation_textBox.ForeColor = SystemColors.ControlText;
-            ReviewerLocation_textBox.Location = new Point(119, 49);
+            ReviewerLocation_textBox.Location = new Point(108, 49);
             ReviewerLocation_textBox.Name = "ReviewerLocation_textBox";
-            ReviewerLocation_textBox.Size = new Size(334, 22);
+            ReviewerLocation_textBox.Size = new Size(320, 22);
             ReviewerLocation_textBox.TabIndex = 129;
             ReviewerLocation_textBox.TextAlign = HorizontalAlignment.Center;
             ReviewerLocation_textBox.TextChanged += ReviewerLocation_textBox_TextChanged;
+            // 
+            // ReviewerCompany_textBox
+            // 
+            ReviewerCompany_textBox.BackColor = Color.White;
+            ReviewerCompany_textBox.BorderStyle = BorderStyle.FixedSingle;
+            ReviewerCompany_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ReviewerCompany_textBox.ForeColor = SystemColors.ControlText;
+            ReviewerCompany_textBox.Location = new Point(582, 20);
+            ReviewerCompany_textBox.Name = "ReviewerCompany_textBox";
+            ReviewerCompany_textBox.Size = new Size(120, 22);
+            ReviewerCompany_textBox.TabIndex = 128;
+            ReviewerCompany_textBox.TextAlign = HorizontalAlignment.Center;
+            ReviewerCompany_textBox.TextChanged += ReviewerCompany_textBox_TextChanged;
+            // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label29.ForeColor = SystemColors.ControlText;
+            label29.Location = new Point(703, 52);
+            label29.Name = "label29";
+            label29.Size = new Size(18, 16);
+            label29.TabIndex = 134;
+            label29.Text = "년";
             // 
             // textBox15
             // 
@@ -864,6 +840,16 @@
             textBox15.TabIndex = 127;
             textBox15.TextAlign = HorizontalAlignment.Center;
             // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label39.Location = new Point(503, 24);
+            label39.Name = "label39";
+            label39.Size = new Size(31, 15);
+            label39.TabIndex = 37;
+            label39.Text = "소속";
+            // 
             // label34
             // 
             label34.AutoSize = true;
@@ -873,6 +859,17 @@
             label34.Size = new Size(31, 15);
             label34.TabIndex = 41;
             label34.Text = "주소";
+            // 
+            // label31
+            // 
+            label31.AutoSize = true;
+            label31.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label31.ForeColor = SystemColors.ControlText;
+            label31.Location = new Point(906, 52);
+            label31.Name = "label31";
+            label31.Size = new Size(18, 16);
+            label31.TabIndex = 133;
+            label31.Text = "월";
             // 
             // label36
             // 
@@ -884,96 +881,366 @@
             label36.TabIndex = 37;
             label36.Text = "작성자";
             // 
-            // panel6
-            // 
-            panel6.BackColor = Color.White;
-            panel6.Controls.Add(ReviewMonth_comboBox);
-            panel6.Controls.Add(ReviewYear_comboBox);
-            panel6.Controls.Add(ReviewerCompany_textBox);
-            panel6.Controls.Add(label29);
-            panel6.Controls.Add(label39);
-            panel6.Controls.Add(label31);
-            panel6.Controls.Add(label32);
-            panel6.Location = new Point(501, 431);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(488, 90);
-            panel6.TabIndex = 106;
-            panel6.Paint += panel6_Paint;
-            // 
-            // ReviewMonth_comboBox
-            // 
-            ReviewMonth_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ReviewMonth_comboBox.FormattingEnabled = true;
-            ReviewMonth_comboBox.Location = new Point(333, 48);
-            ReviewMonth_comboBox.Name = "ReviewMonth_comboBox";
-            ReviewMonth_comboBox.Size = new Size(120, 24);
-            ReviewMonth_comboBox.TabIndex = 135;
-            ReviewMonth_comboBox.SelectedIndexChanged += ReviewMonth_comboBox_SelectedIndexChanged;
-            // 
-            // ReviewYear_comboBox
-            // 
-            ReviewYear_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ReviewYear_comboBox.FormattingEnabled = true;
-            ReviewYear_comboBox.Location = new Point(105, 48);
-            ReviewYear_comboBox.Name = "ReviewYear_comboBox";
-            ReviewYear_comboBox.Size = new Size(120, 24);
-            ReviewYear_comboBox.TabIndex = 123;
-            ReviewYear_comboBox.SelectedIndexChanged += ReviewYear_comboBox_SelectedIndexChanged;
-            // 
-            // ReviewerCompany_textBox
-            // 
-            ReviewerCompany_textBox.BackColor = Color.White;
-            ReviewerCompany_textBox.BorderStyle = BorderStyle.FixedSingle;
-            ReviewerCompany_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ReviewerCompany_textBox.ForeColor = SystemColors.ControlText;
-            ReviewerCompany_textBox.Location = new Point(105, 20);
-            ReviewerCompany_textBox.Name = "ReviewerCompany_textBox";
-            ReviewerCompany_textBox.Size = new Size(120, 22);
-            ReviewerCompany_textBox.TabIndex = 128;
-            ReviewerCompany_textBox.TextAlign = HorizontalAlignment.Center;
-            ReviewerCompany_textBox.TextChanged += ReviewerCompany_textBox_TextChanged;
-            // 
-            // label29
-            // 
-            label29.AutoSize = true;
-            label29.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label29.ForeColor = SystemColors.ControlText;
-            label29.Location = new Point(231, 52);
-            label29.Name = "label29";
-            label29.Size = new Size(18, 16);
-            label29.TabIndex = 134;
-            label29.Text = "년";
-            // 
-            // label39
-            // 
-            label39.AutoSize = true;
-            label39.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label39.Location = new Point(20, 24);
-            label39.Name = "label39";
-            label39.Size = new Size(31, 15);
-            label39.TabIndex = 37;
-            label39.Text = "소속";
-            // 
-            // label31
-            // 
-            label31.AutoSize = true;
-            label31.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label31.ForeColor = SystemColors.ControlText;
-            label31.Location = new Point(459, 52);
-            label31.Name = "label31";
-            label31.Size = new Size(18, 16);
-            label31.TabIndex = 133;
-            label31.Text = "월";
-            // 
             // label32
             // 
             label32.AutoSize = true;
             label32.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label32.Location = new Point(20, 53);
+            label32.Location = new Point(503, 53);
             label32.Name = "label32";
             label32.Size = new Size(55, 15);
             label32.TabIndex = 132;
             label32.Text = "작성시기";
+            // 
+            // label33
+            // 
+            label33.AutoSize = true;
+            label33.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label33.Location = new Point(12, 389);
+            label33.Name = "label33";
+            label33.Size = new Size(59, 15);
+            label33.TabIndex = 107;
+            label33.Text = "기밀 정보";
+            // 
+            // panel7
+            // 
+            panel7.BackColor = Color.White;
+            panel7.Controls.Add(n50_textBox);
+            panel7.Controls.Add(n50_label2);
+            panel7.Controls.Add(n50_label1);
+            panel7.Controls.Add(Roof_label);
+            panel7.Controls.Add(Roof_groupBox);
+            panel7.Controls.Add(Wall_label);
+            panel7.Controls.Add(Win_label);
+            panel7.Controls.Add(Wall_groupBox);
+            panel7.Controls.Add(Win_groupBox);
+            panel7.Controls.Add(Door_label);
+            panel7.Controls.Add(Door_groupBox);
+            panel7.Controls.Add(q50Area_label2);
+            panel7.Controls.Add(q50Area_textBox);
+            panel7.Controls.Add(q50Area_label1);
+            panel7.Controls.Add(q50_textBox);
+            panel7.Controls.Add(q50_label2);
+            panel7.Controls.Add(q50_label1);
+            panel7.Controls.Add(BlowDoorTest_comboBox);
+            panel7.Controls.Add(textBox3);
+            panel7.Controls.Add(label40);
+            panel7.Location = new Point(13, 408);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(975, 120);
+            panel7.TabIndex = 108;
+            panel7.Paint += panel7_Paint;
+            // 
+            // n50_textBox
+            // 
+            n50_textBox.BackColor = Color.White;
+            n50_textBox.BorderStyle = BorderStyle.None;
+            n50_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            n50_textBox.ForeColor = SystemColors.ControlDarkDark;
+            n50_textBox.Location = new Point(782, 23);
+            n50_textBox.Name = "n50_textBox";
+            n50_textBox.Size = new Size(120, 15);
+            n50_textBox.TabIndex = 149;
+            n50_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // n50_label2
+            // 
+            n50_label2.AutoSize = true;
+            n50_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            n50_label2.ForeColor = SystemColors.ControlDarkDark;
+            n50_label2.Location = new Point(902, 22);
+            n50_label2.Name = "n50_label2";
+            n50_label2.Size = new Size(51, 16);
+            n50_label2.TabIndex = 150;
+            n50_label2.Text = "m³/h·m²";
+            // 
+            // n50_label1
+            // 
+            n50_label1.AutoSize = true;
+            n50_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            n50_label1.ForeColor = SystemColors.ControlDarkDark;
+            n50_label1.Location = new Point(725, 23);
+            n50_label1.Name = "n50_label1";
+            n50_label1.Size = new Size(28, 15);
+            n50_label1.TabIndex = 148;
+            n50_label1.Text = "n50";
+            // 
+            // Roof_label
+            // 
+            Roof_label.AutoSize = true;
+            Roof_label.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            Roof_label.Location = new Point(704, 65);
+            Roof_label.Name = "Roof_label";
+            Roof_label.Size = new Size(77, 13);
+            Roof_label.TabIndex = 147;
+            Roof_label.Text = "지붕 기밀시공";
+            // 
+            // Roof_groupBox
+            // 
+            Roof_groupBox.Controls.Add(Roof_False_radioButton);
+            Roof_groupBox.Controls.Add(Roof_True_radioButton);
+            Roof_groupBox.Location = new Point(782, 48);
+            Roof_groupBox.Name = "Roof_groupBox";
+            Roof_groupBox.Size = new Size(120, 69);
+            Roof_groupBox.TabIndex = 146;
+            Roof_groupBox.TabStop = false;
+            // 
+            // Roof_False_radioButton
+            // 
+            Roof_False_radioButton.AutoSize = true;
+            Roof_False_radioButton.Location = new Point(27, 44);
+            Roof_False_radioButton.Name = "Roof_False_radioButton";
+            Roof_False_radioButton.Size = new Size(61, 19);
+            Roof_False_radioButton.TabIndex = 1;
+            Roof_False_radioButton.TabStop = true;
+            Roof_False_radioButton.Text = "미시공";
+            Roof_False_radioButton.UseVisualStyleBackColor = true;
+            Roof_False_radioButton.CheckedChanged += Roof_False_radioButton_CheckedChanged;
+            // 
+            // Roof_True_radioButton
+            // 
+            Roof_True_radioButton.AutoSize = true;
+            Roof_True_radioButton.Location = new Point(27, 17);
+            Roof_True_radioButton.Name = "Roof_True_radioButton";
+            Roof_True_radioButton.Size = new Size(49, 19);
+            Roof_True_radioButton.TabIndex = 0;
+            Roof_True_radioButton.TabStop = true;
+            Roof_True_radioButton.Text = "시공";
+            Roof_True_radioButton.UseVisualStyleBackColor = true;
+            Roof_True_radioButton.CheckedChanged += Roof_True_radioButton_CheckedChanged;
+            // 
+            // Wall_label
+            // 
+            Wall_label.AutoSize = true;
+            Wall_label.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            Wall_label.Location = new Point(503, 65);
+            Wall_label.Name = "Wall_label";
+            Wall_label.Size = new Size(77, 13);
+            Wall_label.TabIndex = 145;
+            Wall_label.Text = "외벽 기밀시공";
+            // 
+            // Win_label
+            // 
+            Win_label.AutoSize = true;
+            Win_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            Win_label.Location = new Point(243, 65);
+            Win_label.Name = "Win_label";
+            Win_label.Size = new Size(59, 15);
+            Win_label.TabIndex = 143;
+            Win_label.Text = "창호 기밀";
+            // 
+            // Wall_groupBox
+            // 
+            Wall_groupBox.Controls.Add(Wall_False_radioButton);
+            Wall_groupBox.Controls.Add(Wall_True_radioButton);
+            Wall_groupBox.Location = new Point(582, 48);
+            Wall_groupBox.Name = "Wall_groupBox";
+            Wall_groupBox.Size = new Size(120, 69);
+            Wall_groupBox.TabIndex = 144;
+            Wall_groupBox.TabStop = false;
+            // 
+            // Wall_False_radioButton
+            // 
+            Wall_False_radioButton.AutoSize = true;
+            Wall_False_radioButton.Location = new Point(27, 44);
+            Wall_False_radioButton.Name = "Wall_False_radioButton";
+            Wall_False_radioButton.Size = new Size(61, 19);
+            Wall_False_radioButton.TabIndex = 1;
+            Wall_False_radioButton.TabStop = true;
+            Wall_False_radioButton.Text = "미시공";
+            Wall_False_radioButton.UseVisualStyleBackColor = true;
+            Wall_False_radioButton.CheckedChanged += Wall_False_radioButton_CheckedChanged;
+            // 
+            // Wall_True_radioButton
+            // 
+            Wall_True_radioButton.AutoSize = true;
+            Wall_True_radioButton.Location = new Point(27, 17);
+            Wall_True_radioButton.Name = "Wall_True_radioButton";
+            Wall_True_radioButton.Size = new Size(49, 19);
+            Wall_True_radioButton.TabIndex = 0;
+            Wall_True_radioButton.TabStop = true;
+            Wall_True_radioButton.Text = "시공";
+            Wall_True_radioButton.UseVisualStyleBackColor = true;
+            Wall_True_radioButton.CheckedChanged += Wall_True_radioButton_CheckedChanged;
+            // 
+            // Win_groupBox
+            // 
+            Win_groupBox.Controls.Add(Win_False_radioButton);
+            Win_groupBox.Controls.Add(Win_True_radioButton);
+            Win_groupBox.Location = new Point(308, 48);
+            Win_groupBox.Name = "Win_groupBox";
+            Win_groupBox.Size = new Size(120, 69);
+            Win_groupBox.TabIndex = 142;
+            Win_groupBox.TabStop = false;
+            // 
+            // Win_False_radioButton
+            // 
+            Win_False_radioButton.AutoSize = true;
+            Win_False_radioButton.Location = new Point(27, 44);
+            Win_False_radioButton.Name = "Win_False_radioButton";
+            Win_False_radioButton.Size = new Size(61, 19);
+            Win_False_radioButton.TabIndex = 1;
+            Win_False_radioButton.TabStop = true;
+            Win_False_radioButton.Text = "미시공";
+            Win_False_radioButton.UseVisualStyleBackColor = true;
+            Win_False_radioButton.CheckedChanged += Win_False_radioButton_CheckedChanged;
+            // 
+            // Win_True_radioButton
+            // 
+            Win_True_radioButton.AutoSize = true;
+            Win_True_radioButton.Location = new Point(27, 17);
+            Win_True_radioButton.Name = "Win_True_radioButton";
+            Win_True_radioButton.Size = new Size(49, 19);
+            Win_True_radioButton.TabIndex = 0;
+            Win_True_radioButton.TabStop = true;
+            Win_True_radioButton.Text = "시공";
+            Win_True_radioButton.UseVisualStyleBackColor = true;
+            Win_True_radioButton.CheckedChanged += Win_True_radioButton_CheckedChanged;
+            // 
+            // Door_label
+            // 
+            Door_label.AutoSize = true;
+            Door_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            Door_label.Location = new Point(21, 65);
+            Door_label.Name = "Door_label";
+            Door_label.Size = new Size(71, 15);
+            Door_label.TabIndex = 141;
+            Door_label.Text = "방풍 출입문";
+            // 
+            // Door_groupBox
+            // 
+            Door_groupBox.Controls.Add(Door_False_radioButton);
+            Door_groupBox.Controls.Add(Door_True_radioButton);
+            Door_groupBox.Location = new Point(108, 48);
+            Door_groupBox.Name = "Door_groupBox";
+            Door_groupBox.Size = new Size(120, 69);
+            Door_groupBox.TabIndex = 140;
+            Door_groupBox.TabStop = false;
+            // 
+            // Door_False_radioButton
+            // 
+            Door_False_radioButton.AutoSize = true;
+            Door_False_radioButton.Location = new Point(27, 44);
+            Door_False_radioButton.Name = "Door_False_radioButton";
+            Door_False_radioButton.Size = new Size(61, 19);
+            Door_False_radioButton.TabIndex = 1;
+            Door_False_radioButton.TabStop = true;
+            Door_False_radioButton.Text = "미시공";
+            Door_False_radioButton.UseVisualStyleBackColor = true;
+            Door_False_radioButton.CheckedChanged += Door_False_radioButton_CheckedChanged;
+            // 
+            // Door_True_radioButton
+            // 
+            Door_True_radioButton.AutoSize = true;
+            Door_True_radioButton.Location = new Point(27, 17);
+            Door_True_radioButton.Name = "Door_True_radioButton";
+            Door_True_radioButton.Size = new Size(49, 19);
+            Door_True_radioButton.TabIndex = 0;
+            Door_True_radioButton.TabStop = true;
+            Door_True_radioButton.Text = "시공";
+            Door_True_radioButton.UseVisualStyleBackColor = true;
+            Door_True_radioButton.CheckedChanged += Door_True_radioButton_CheckedChanged;
+            // 
+            // q50Area_label2
+            // 
+            q50Area_label2.AutoSize = true;
+            q50Area_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            q50Area_label2.ForeColor = SystemColors.ControlText;
+            q50Area_label2.Location = new Point(703, 22);
+            q50Area_label2.Name = "q50Area_label2";
+            q50Area_label2.Size = new Size(22, 16);
+            q50Area_label2.TabIndex = 138;
+            q50Area_label2.Text = "m²";
+            // 
+            // q50Area_textBox
+            // 
+            q50Area_textBox.BackColor = Color.White;
+            q50Area_textBox.BorderStyle = BorderStyle.FixedSingle;
+            q50Area_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            q50Area_textBox.ForeColor = SystemColors.ControlText;
+            q50Area_textBox.Location = new Point(582, 19);
+            q50Area_textBox.Name = "q50Area_textBox";
+            q50Area_textBox.Size = new Size(120, 22);
+            q50Area_textBox.TabIndex = 137;
+            q50Area_textBox.TextAlign = HorizontalAlignment.Center;
+            q50Area_textBox.TextChanged += q50Area_textBox_TextChanged;
+            // 
+            // q50Area_label1
+            // 
+            q50Area_label1.AutoSize = true;
+            q50Area_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            q50Area_label1.Location = new Point(503, 23);
+            q50Area_label1.Name = "q50Area_label1";
+            q50Area_label1.Size = new Size(55, 15);
+            q50Area_label1.TabIndex = 136;
+            q50Area_label1.Text = "외피면적";
+            // 
+            // q50_textBox
+            // 
+            q50_textBox.BackColor = Color.White;
+            q50_textBox.BorderStyle = BorderStyle.FixedSingle;
+            q50_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            q50_textBox.ForeColor = SystemColors.ControlText;
+            q50_textBox.Location = new Point(308, 19);
+            q50_textBox.Name = "q50_textBox";
+            q50_textBox.Size = new Size(120, 22);
+            q50_textBox.TabIndex = 134;
+            q50_textBox.TextAlign = HorizontalAlignment.Center;
+            q50_textBox.TextChanged += q50_textBox_TextChanged;
+            // 
+            // q50_label2
+            // 
+            q50_label2.AutoSize = true;
+            q50_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            q50_label2.ForeColor = SystemColors.ControlText;
+            q50_label2.Location = new Point(428, 22);
+            q50_label2.Name = "q50_label2";
+            q50_label2.Size = new Size(51, 16);
+            q50_label2.TabIndex = 135;
+            q50_label2.Text = "m³/h·m²";
+            // 
+            // q50_label1
+            // 
+            q50_label1.AutoSize = true;
+            q50_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            q50_label1.Location = new Point(274, 23);
+            q50_label1.Name = "q50_label1";
+            q50_label1.Size = new Size(28, 15);
+            q50_label1.TabIndex = 133;
+            q50_label1.Text = "q50";
+            // 
+            // BlowDoorTest_comboBox
+            // 
+            BlowDoorTest_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            BlowDoorTest_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlowDoorTest_comboBox.FormattingEnabled = true;
+            BlowDoorTest_comboBox.Location = new Point(108, 19);
+            BlowDoorTest_comboBox.Name = "BlowDoorTest_comboBox";
+            BlowDoorTest_comboBox.Size = new Size(120, 23);
+            BlowDoorTest_comboBox.TabIndex = 122;
+            BlowDoorTest_comboBox.SelectedIndexChanged += BlowDoorTest_comboBox_SelectedIndexChanged;
+            // 
+            // textBox3
+            // 
+            textBox3.BackColor = Color.White;
+            textBox3.BorderStyle = BorderStyle.None;
+            textBox3.Enabled = false;
+            textBox3.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox3.ForeColor = SystemColors.ControlDark;
+            textBox3.Location = new Point(335, 124);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(116, 15);
+            textBox3.TabIndex = 127;
+            textBox3.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            label40.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label40.Location = new Point(20, 24);
+            label40.Name = "label40";
+            label40.Size = new Size(79, 15);
+            label40.TabIndex = 41;
+            label40.Text = "기밀측정여부";
             // 
             // General
             // 
@@ -982,17 +1249,16 @@
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(panel6);
+            Controls.Add(label33);
+            Controls.Add(panel7);
             Controls.Add(label28);
             Controls.Add(panel5);
-            Controls.Add(panel4);
             Controls.Add(label3);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(label5);
             Controls.Add(panel1);
             Controls.Add(label4);
-            Controls.Add(Previous_button);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.None;
@@ -1007,12 +1273,18 @@
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            panel4.ResumeLayout(false);
-            panel4.PerformLayout();
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
-            panel6.ResumeLayout(false);
-            panel6.PerformLayout();
+            panel7.ResumeLayout(false);
+            panel7.PerformLayout();
+            Roof_groupBox.ResumeLayout(false);
+            Roof_groupBox.PerformLayout();
+            Wall_groupBox.ResumeLayout(false);
+            Wall_groupBox.PerformLayout();
+            Win_groupBox.ResumeLayout(false);
+            Win_groupBox.PerformLayout();
+            Door_groupBox.ResumeLayout(false);
+            Door_groupBox.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1029,19 +1301,14 @@
         private Label label1;
         private Label label5;
         private Panel panel1;
-        private ComboBox Climate_comboBox;
         private Label label6;
-        private ComboBox BuildingCategory_comboBox;
         private Label label7;
-        private ComboBox BuildingUse_comboBox;
         private Label label2;
         private TextBox ByRawClimate_textBox;
         private Panel panel2;
-        private TextBox textBox1;
         private ComboBox Diagnosis_comboBox;
-        private Label label12;
         private ComboBox Target_comboBox;
-        private Label label15;
+        private Label Win_label;
         private Label label16;
         private Label label17;
         private Label label3;
@@ -1055,14 +1322,13 @@
         private Label label19;
         private ComboBox WallType_comboBox;
         private Label label20;
-        private Label label21;
-        private Label label22;
+        private Label Wall_label;
+        private Label Roof_label;
         private TextBox BuildingLocation_textBox;
         private TextBox BuildingName_textBox;
         private Label label30;
         private TextBox GrossArea_textBox;
         private Label label23;
-        private Panel panel4;
         private Label label24;
         private TextBox BuildingArea_textBox;
         private Label label25;
@@ -1073,7 +1339,6 @@
         private TextBox textBox15;
         private Label label34;
         private Label label36;
-        private Panel panel6;
         private TextBox ReviewerCompany_textBox;
         private Label label29;
         private Label label39;
@@ -1081,17 +1346,48 @@
         private Label label32;
         private TextBox ProjectType_textBox;
         private TextBox ProjectName_textBox;
-        private ComboBox Month_comboBox;
-        private ComboBox Year_comboBox;
-        private ComboBox ReviewMonth_comboBox;
-        private ComboBox ReviewYear_comboBox;
         private Label label27;
-        private ComboBox UnderGround_comboBox;
-        private ComboBox AboveGround_comboBox;
         private Label label8;
         private Label label9;
         private Label label26;
         private Label OldProject_label;
-        private ComboBox OldProject_comboBox;
+        private TextBox ProjectNum_textBox;
+        private Label label33;
+        private Panel panel7;
+        private CustomComboBox BlowDoorTest_comboBox;
+        private TextBox textBox3;
+        private Label label40;
+        private CustomComboBox Climate_comboBox;
+        private CustomComboBox BuildingCategory_comboBox;
+        private CustomComboBox BuildingUse_comboBox;
+        private CustomComboBox Month_comboBox;
+        private CustomComboBox Year_comboBox;
+        private CustomComboBox ReviewMonth_comboBox;
+        private CustomComboBox ReviewYear_comboBox;
+        private CustomComboBox UnderGround_comboBox;
+        private CustomComboBox AboveGround_comboBox;
+        private CustomComboBox OldProject_comboBox;
+        private Label q50Area_label2;
+        private TextBox q50Area_textBox;
+        private Label q50Area_label1;
+        private TextBox q50_textBox;
+        private Label q50_label2;
+        private Label q50_label1;
+        private GroupBox Roof_groupBox;
+        private RadioButton Roof_False_radioButton;
+        private RadioButton Roof_True_radioButton;
+        private GroupBox Wall_groupBox;
+        private RadioButton Wall_False_radioButton;
+        private RadioButton Wall_True_radioButton;
+        private GroupBox Win_groupBox;
+        private RadioButton Win_False_radioButton;
+        private RadioButton Win_True_radioButton;
+        private Label Door_label;
+        private GroupBox Door_groupBox;
+        private RadioButton Door_False_radioButton;
+        private RadioButton Door_True_radioButton;
+        private TextBox n50_textBox;
+        private Label n50_label2;
+        private Label n50_label1;
     }
 }

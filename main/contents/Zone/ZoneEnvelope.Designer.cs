@@ -60,22 +60,14 @@ namespace main.contents
             Cwirk_textBox = new System.Windows.Forms.TextBox();
             SlabCwirk_comboBox = new CustomComboBox();
             label8 = new System.Windows.Forms.Label();
-            InWallCwirk_comboBox =new CustomComboBox();
+            InWallCwirk_comboBox = new CustomComboBox();
             label7 = new System.Windows.Forms.Label();
-            CeilingCwirk_comboBox =new CustomComboBox();
+            CeilingCwirk_comboBox = new CustomComboBox();
             label6 = new System.Windows.Forms.Label();
-            WallCwirk_comboBox =new CustomComboBox();
+            WallCwirk_comboBox = new CustomComboBox();
             label5 = new System.Windows.Forms.Label();
             label17 = new System.Windows.Forms.Label();
             panel1 = new Panel();
-            label15 = new System.Windows.Forms.Label();
-            label14 = new System.Windows.Forms.Label();
-            label13 = new System.Windows.Forms.Label();
-            n50_textBox = new System.Windows.Forms.TextBox();
-            label12 = new System.Windows.Forms.Label();
-            q50_textBox = new System.Windows.Forms.TextBox();
-            InfiltrationType_comboBox =new CustomComboBox();
-            label11 = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
             ExternalZone_radioButton = new System.Windows.Forms.RadioButton();
             DoorZone_radioButton = new System.Windows.Forms.RadioButton();
@@ -333,6 +325,7 @@ namespace main.contents
             // 
             // SlabCwirk_comboBox
             // 
+            SlabCwirk_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             SlabCwirk_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             SlabCwirk_comboBox.FormattingEnabled = true;
             SlabCwirk_comboBox.Location = new Point(153, 108);
@@ -353,6 +346,7 @@ namespace main.contents
             // 
             // InWallCwirk_comboBox
             // 
+            InWallCwirk_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             InWallCwirk_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             InWallCwirk_comboBox.FormattingEnabled = true;
             InWallCwirk_comboBox.Location = new Point(153, 79);
@@ -373,6 +367,7 @@ namespace main.contents
             // 
             // CeilingCwirk_comboBox
             // 
+            CeilingCwirk_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             CeilingCwirk_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             CeilingCwirk_comboBox.FormattingEnabled = true;
             CeilingCwirk_comboBox.Location = new Point(153, 21);
@@ -393,6 +388,7 @@ namespace main.contents
             // 
             // WallCwirk_comboBox
             // 
+            WallCwirk_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             WallCwirk_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             WallCwirk_comboBox.FormattingEnabled = true;
             WallCwirk_comboBox.Location = new Point(153, 50);
@@ -425,111 +421,23 @@ namespace main.contents
             // 
             panel1.BackColor = Color.White;
             panel1.BorderStyle = BorderStyle.Fixed3D;
-            panel1.Controls.Add(label15);
-            panel1.Controls.Add(label14);
-            panel1.Controls.Add(label13);
-            panel1.Controls.Add(n50_textBox);
-            panel1.Controls.Add(label12);
-            panel1.Controls.Add(q50_textBox);
-            panel1.Controls.Add(InfiltrationType_comboBox);
-            panel1.Controls.Add(label11);
             panel1.Controls.Add(groupBox1);
             panel1.Location = new Point(501, 546);
             panel1.Name = "panel1";
             panel1.Size = new Size(488, 147);
             panel1.TabIndex = 36;
             // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label15.Location = new Point(235, 83);
-            label15.Name = "label15";
-            label15.Size = new Size(31, 15);
-            label15.TabIndex = 107;
-            label15.Text = "n50";
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label14.Location = new Point(235, 54);
-            label14.Name = "label14";
-            label14.Size = new Size(31, 15);
-            label14.TabIndex = 106;
-            label14.Text = "q50";
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label13.Location = new Point(420, 83);
-            label13.Name = "label13";
-            label13.Size = new Size(28, 15);
-            label13.TabIndex = 105;
-            label13.Text = "1/h";
-            // 
-            // n50_textBox
-            // 
-            n50_textBox.BackColor = SystemColors.Window;
-            n50_textBox.BorderStyle = BorderStyle.FixedSingle;
-            n50_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            n50_textBox.Location = new Point(293, 79);
-            n50_textBox.Name = "n50_textBox";
-            n50_textBox.Size = new Size(120, 22);
-            n50_textBox.TabIndex = 104;
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label12.Location = new Point(420, 54);
-            label12.Name = "label12";
-            label12.Size = new Size(57, 15);
-            label12.TabIndex = 103;
-            label12.Text = "m3/m²h";
-            // 
-            // q50_textBox
-            // 
-            q50_textBox.BackColor = SystemColors.Window;
-            q50_textBox.BorderStyle = BorderStyle.FixedSingle;
-            q50_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            q50_textBox.Location = new Point(293, 50);
-            q50_textBox.Name = "q50_textBox";
-            q50_textBox.Size = new Size(120, 22);
-            q50_textBox.TabIndex = 102;
-            // 
-            // InfiltrationType_comboBox
-            // 
-            InfiltrationType_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            InfiltrationType_comboBox.FormattingEnabled = true;
-            InfiltrationType_comboBox.Location = new Point(293, 21);
-            InfiltrationType_comboBox.Name = "InfiltrationType_comboBox";
-            InfiltrationType_comboBox.Size = new Size(120, 23);
-            InfiltrationType_comboBox.TabIndex = 96;
-            InfiltrationType_comboBox.SelectedIndexChanged += InfiltrationType_comboBox_SelectedIndexChanged;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label11.Location = new Point(223, 25);
-            label11.Name = "label11";
-            label11.Size = new Size(55, 15);
-            label11.TabIndex = 95;
-            label11.Text = "설계적용";
-            // 
             // groupBox1
             // 
             groupBox1.Controls.Add(ExternalZone_radioButton);
             groupBox1.Controls.Add(DoorZone_radioButton);
             groupBox1.Controls.Add(InternalZone_radioButton);
-            groupBox1.Location = new Point(19, 31);
+            groupBox1.Location = new Point(34, 19);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(105, 100);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
-            groupBox1.Text = "groupBox1";
+            groupBox1.Text = "존 유형";
             // 
             // ExternalZone_radioButton
             // 
@@ -627,7 +535,6 @@ namespace main.contents
             AdditionalPanel.ResumeLayout(false);
             AdditionalPanel.PerformLayout();
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);
@@ -664,14 +571,6 @@ namespace main.contents
         private System.Windows.Forms.RadioButton ExternalZone_radioButton;
         private System.Windows.Forms.RadioButton DoorZone_radioButton;
         private System.Windows.Forms.RadioButton InternalZone_radioButton;
-        private CustomComboBox InfiltrationType_comboBox;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox n50_textBox;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox q50_textBox;
         private System.Windows.Forms.TextBox Num_textBox;
         private PictureBox Icon_pictureBox;
         private System.Windows.Forms.Button Save_button;
