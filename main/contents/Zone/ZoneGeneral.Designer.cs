@@ -35,6 +35,9 @@ namespace main.contents
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
+            PreZone_button = new System.Windows.Forms.Button();
+            PreZone_textBox = new System.Windows.Forms.TextBox();
+            PreZone_label = new System.Windows.Forms.Label();
             AHU_label2 = new System.Windows.Forms.Label();
             AHU_textBox = new System.Windows.Forms.TextBox();
             AHU_button = new System.Windows.Forms.Button();
@@ -45,7 +48,6 @@ namespace main.contents
             ZoneName_textBox = new System.Windows.Forms.TextBox();
             Layer_textBox = new System.Windows.Forms.TextBox();
             label1 = new System.Windows.Forms.Label();
-            label2 = new System.Windows.Forms.Label();
             AHU_label = new System.Windows.Forms.Label();
             AHU_comboBox = new CustomComboBox();
             Ventilation_checkBox = new System.Windows.Forms.CheckBox();
@@ -53,7 +55,6 @@ namespace main.contents
             Heating_checkBox = new System.Windows.Forms.CheckBox();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
-            RoomControl_comboBox = new CustomComboBox();
             panel2 = new Panel();
             label20 = new System.Windows.Forms.Label();
             PersonNum_textBox = new System.Windows.Forms.TextBox();
@@ -172,6 +173,9 @@ namespace main.contents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(PreZone_button);
+            GeneralPanel.Controls.Add(PreZone_textBox);
+            GeneralPanel.Controls.Add(PreZone_label);
             GeneralPanel.Controls.Add(AHU_label2);
             GeneralPanel.Controls.Add(AHU_textBox);
             GeneralPanel.Controls.Add(AHU_button);
@@ -182,7 +186,6 @@ namespace main.contents
             GeneralPanel.Controls.Add(ZoneName_textBox);
             GeneralPanel.Controls.Add(Layer_textBox);
             GeneralPanel.Controls.Add(label1);
-            GeneralPanel.Controls.Add(label2);
             GeneralPanel.Controls.Add(AHU_label);
             GeneralPanel.Controls.Add(AHU_comboBox);
             GeneralPanel.Controls.Add(Ventilation_checkBox);
@@ -190,12 +193,48 @@ namespace main.contents
             GeneralPanel.Controls.Add(Heating_checkBox);
             GeneralPanel.Controls.Add(label6);
             GeneralPanel.Controls.Add(label5);
-            GeneralPanel.Controls.Add(RoomControl_comboBox);
             GeneralPanel.Location = new Point(12, 12);
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(977, 101);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // PreZone_button
+            // 
+            PreZone_button.BackColor = SystemColors.ControlLight;
+            PreZone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            PreZone_button.FlatStyle = FlatStyle.System;
+            PreZone_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            PreZone_button.Location = new Point(402, 49);
+            PreZone_button.Margin = new Padding(0);
+            PreZone_button.Name = "PreZone_button";
+            PreZone_button.Size = new Size(23, 23);
+            PreZone_button.TabIndex = 188;
+            PreZone_button.Text = "+";
+            PreZone_button.UseVisualStyleBackColor = false;
+            PreZone_button.Click += PreZone_button_Click;
+            // 
+            // PreZone_textBox
+            // 
+            PreZone_textBox.BackColor = Color.White;
+            PreZone_textBox.BorderStyle = BorderStyle.None;
+            PreZone_textBox.Enabled = false;
+            PreZone_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PreZone_textBox.ForeColor = SystemColors.ControlDark;
+            PreZone_textBox.Location = new Point(279, 55);
+            PreZone_textBox.Name = "PreZone_textBox";
+            PreZone_textBox.Size = new Size(120, 15);
+            PreZone_textBox.TabIndex = 187;
+            PreZone_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // PreZone_label
+            // 
+            PreZone_label.AutoSize = true;
+            PreZone_label.Location = new Point(316, 37);
+            PreZone_label.Name = "PreZone_label";
+            PreZone_label.Size = new Size(47, 15);
+            PreZone_label.TabIndex = 186;
+            PreZone_label.Text = "기존 존";
             // 
             // AHU_label2
             // 
@@ -239,7 +278,7 @@ namespace main.contents
             // 
             label65.AutoSize = true;
             label65.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label65.Location = new Point(541, 22);
+            label65.Location = new Point(551, 22);
             label65.Name = "label65";
             label65.Size = new Size(29, 16);
             label65.TabIndex = 103;
@@ -310,16 +349,6 @@ namespace main.contents
             label1.TabIndex = 1;
             label1.Text = "층";
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(338, 22);
-            label2.Name = "label2";
-            label2.Size = new Size(65, 16);
-            label2.TabIndex = 89;
-            label2.Text = "실 제어방식";
-            // 
             // AHU_label
             // 
             AHU_label.AutoSize = true;
@@ -354,7 +383,7 @@ namespace main.contents
             // Cooling_checkBox
             // 
             Cooling_checkBox.AutoSize = true;
-            Cooling_checkBox.Location = new Point(549, 54);
+            Cooling_checkBox.Location = new Point(558, 54);
             Cooling_checkBox.Name = "Cooling_checkBox";
             Cooling_checkBox.Size = new Size(15, 14);
             Cooling_checkBox.TabIndex = 16;
@@ -364,7 +393,7 @@ namespace main.contents
             // Heating_checkBox
             // 
             Heating_checkBox.AutoSize = true;
-            Heating_checkBox.Location = new Point(495, 54);
+            Heating_checkBox.Location = new Point(513, 54);
             Heating_checkBox.Name = "Heating_checkBox";
             Heating_checkBox.Size = new Size(15, 14);
             Heating_checkBox.TabIndex = 15;
@@ -385,22 +414,11 @@ namespace main.contents
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.Location = new Point(487, 22);
+            label5.Location = new Point(506, 21);
             label5.Name = "label5";
             label5.Size = new Size(29, 16);
             label5.TabIndex = 13;
             label5.Text = "난방";
-            // 
-            // RoomControl_comboBox
-            // 
-            RoomControl_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            RoomControl_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            RoomControl_comboBox.FormattingEnabled = true;
-            RoomControl_comboBox.Location = new Point(344, 50);
-            RoomControl_comboBox.Name = "RoomControl_comboBox";
-            RoomControl_comboBox.Size = new Size(120, 23);
-            RoomControl_comboBox.TabIndex = 90;
-            RoomControl_comboBox.SelectedIndexChanged += RoomControl_comboBox_SelectedIndexChanged;
             // 
             // panel2
             // 
@@ -1603,7 +1621,6 @@ namespace main.contents
         private Panel panel2;
         private Panel AdditionalPanel;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox Layer_textBox;
 
         private System.Windows.Forms.Label label6;
@@ -1658,7 +1675,6 @@ namespace main.contents
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox PersonNum_textBox;
         private System.Windows.Forms.TextBox textBox4;
-        private CustomComboBox RoomControl_comboBox;
         private System.Windows.Forms.Label label51;
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.Label label52;
@@ -1727,5 +1743,8 @@ namespace main.contents
         private System.Windows.Forms.Label AHU_label2;
         private System.Windows.Forms.TextBox AHU_textBox;
         private System.Windows.Forms.Button AHU_button;
+        private System.Windows.Forms.Button PreZone_button;
+        private System.Windows.Forms.TextBox PreZone_textBox;
+        private System.Windows.Forms.Label PreZone_label;
     }
 }

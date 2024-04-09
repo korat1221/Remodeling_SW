@@ -1,6 +1,7 @@
 ﻿using main.contentslist;
 using System;
 using main.subcontents.AHUSystem;
+using main.subcontents.ZoneGeneral;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,13 +19,15 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.MonthCalendar;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using main.subcontents.HeatingSystem;
+using System.Collections;
 
 namespace main.contents
 {
     public partial class ZoneGeneral : Form
     {
-        String ZoneNum;
-        String RoomControl, Ground, HCType, AHUType;
+        String ZoneNum; String SelectPreZone_nonsplit; ArrayList SelectPreZone_split = new ArrayList();
+        String RoomControl = "일반", Ground, HCType, AHUType;
         double DHWneed_1p, DHWneed, UseTime, HCTime, AHUTime, PersonNum, Length, Depth, NetArea, CeilingHeight, NetVolume, VentilationRate, Volume_wd, Volume_we, AnnualUseDay, WeekUseDay;
         double PersonIHG_1day, PersonIHG, PersonIHG_Low, PersonIHG_Medium, PersonIHG_High; //PersonIHG 단위 : W/m2
         double EquipIHG_1day, EquipIHG, EquipIHG_Low, EquipIHG_Medium, EquipIHG_High, EquipIHG_Time; //EquipIHG 단위 : W/m2
@@ -32,7 +35,7 @@ namespace main.contents
         double OccupancyDensity, OccupancyDensity_Low, OccupancyDensity_Medium, OccupancyDensity_High;
         String OccupancyDensity_index, EquipIHG_index;
         String ZoneName, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
-        string SelectHRV; 
+        string SelectHRV;
         static string Layer;
         public ZoneGeneral()
         {
@@ -53,8 +56,9 @@ namespace main.contents
                 Main_pictureBox.Load(Program.gPath + Image[0][0]);
                 Main_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 Main_pictureBox.Controls.Add(RoomControl_pictureBox);
-            }
 
+                Load_RoomControlImage();
+            }
 
             //존 환기방식 콤보박스
             //Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, AHU_comboBox, "존일반", "환기방식", "");
@@ -63,8 +67,6 @@ namespace main.contents
             AHU_comboBox.Items.Add("열회수기");
             AHU_comboBox.Items.Add("공조기");
 
-            //실 제어방식
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, RoomControl_comboBox, "존일반", "건물 자동화 온도조절", "1");
             //존 사용 시작/종료 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, StartTime_comboBox, "존일반", "이용일 시작 및 종료시간", "");
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, EndTime_comboBox, "존일반", "이용일 시작 및 종료시간", "");
@@ -100,16 +102,6 @@ namespace main.contents
             }
         }
 
-        //실 제어방식  
-        private void RoomControl_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (RoomControl_comboBox.SelectedItem != null)
-            {
-                RoomControl = RoomControl_comboBox.SelectedItem.ToString();
-                Load_RoomControlImage();
-            }
-
-        }
         private void Load_RoomControlImage()
         {
 
@@ -206,6 +198,48 @@ namespace main.contents
                 HC_pictureBox.Controls.Add(AHU_pictureBox);
             }
         }
+
+        #region 기존 존 
+        private void PreZone_button_Click(object sender, EventArgs e)
+        {
+            PreZone prezone = new PreZone(ZoneNum, SelectPreZone_nonsplit, Layer);
+            DialogResult result = prezone.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                if (prezone.SelectZone != null)
+                {
+                    SelectPreZone_nonsplit = prezone.SelectZone;
+                    Split_Zone(prezone.SelectZone);
+                }
+            }
+        }
+        private void Split_Zone(String nonSplit)
+        {
+            String 내용;
+            if (nonSplit != null && nonSplit != "")
+            {
+                if (nonSplit.Contains("+"))
+                {
+                    string[] token = nonSplit.Split('+');
+                    SelectPreZone_split.Clear();
+                    foreach (var item in token)
+                    {
+                        SelectPreZone_split.Add(item.ToString());
+                    }
+                    내용 = SelectPreZone_split[0].ToString() + " 외 " + (SelectPreZone_split.Count - 1).ToString() + "개";
+                }
+                else
+                {
+                    SelectPreZone_split.Clear();
+                    SelectPreZone_split.Add(nonSplit);
+                    내용 = SelectPreZone_split[0].ToString();
+                }
+                PreZone_textBox.Text = 내용;
+            }
+            else { 내용 = ""; }
+
+        }
+        #endregion
         private void Ventilation_checkBox_CheckedChanged(object sender, EventArgs e)
         {
             Check_AHU();
@@ -227,11 +261,11 @@ namespace main.contents
                 AHU_label.Visible = true;
                 AHU_comboBox.Visible = true;
                 AHU_comboBox.Enabled = true;
-                if(AHU_comboBox.SelectedItem == null) { AHU_button.Visible = false; AHU_textBox.Visible = false; AHU_label2.Visible = false; }
+                if (AHU_comboBox.SelectedItem == null) { AHU_button.Visible = false; AHU_textBox.Visible = false; AHU_label2.Visible = false; }
                 else if (AHU_comboBox.SelectedItem.ToString() != "배기환기(3종)") { AHU_button.Visible = true; AHU_textBox.Visible = true; AHU_label2.Visible = true; }
                 else { AHU_button.Visible = false; AHU_textBox.Visible = false; AHU_label2.Visible = false; }
 
-                if(AHUType == "공조기") { AHU_label2.Text = "공조기"; } else { AHU_label2.Text = "열회수기"; }
+                if (AHUType == "공조기") { AHU_label2.Text = "공조기"; } else { AHU_label2.Text = "열회수기"; }
             }
             else
             {
@@ -626,13 +660,13 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형,존이름,실제어방식,냉난방유무,환기유무,환기방식," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
-                "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적,선택열회수기",
+                "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적,선택열회수기,기존존",
             "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','" + ZoneName + "','" + RoomControl + "','" + HCType + "','" + Ventilation_checkBox.Checked.ToString() + "','" + AHUType + "','"
             + Usage + "','" + CeilingHeight.ToString() + "','" + StartTime + "','" + EndTime + "','" + WeekUseDay.ToString() + "','" + PersonNum_textBox.Text + "','" + EquipIHG_index + "','"
             + DHWneed.ToString() + "','" + HCTime.ToString() + "','" + UseTime.ToString() + "','" + AHUTime.ToString() + "','" + AnnualUseDay.ToString() + "','"
             + OccupancyDensity.ToString() + "','" + OccupancyDensity_index + "','" + PersonIHG_1day.ToString() + "','" + PersonIHG.ToString() + "','" + EquipIHG_1day.ToString() + "','" + EquipIHG.ToString() + "','"
             + NetVolume.ToString() + "','" + VentilationRate.ToString() + "','" + Volume_wd.ToString() + "','" + Volume_we.ToString() + "','"
-            + NetArea.ToString() + "','" + SelectHRV +"'", "존번호");
+            + NetArea.ToString() + "','" + SelectHRV + "','" + SelectPreZone_nonsplit + "'", "존번호");
 
             MessageBox.Show(ZoneNum + "[" + ZoneName + "] 정보를 저장하였습니다.");
             this.DialogResult = DialogResult.OK;
@@ -664,7 +698,6 @@ namespace main.contents
             OccupancyDensity = 0; OccupancyDensity_Low = 0; OccupancyDensity_Medium = 0; OccupancyDensity_High = 0;
             AHU_comboBox.SelectedItem = null;
             AHUType = "";
-            RoomControl_comboBox.SelectedIndex = 0;
             StartTime_comboBox.SelectedItem = null;
             EndTime_comboBox.SelectedItem = null;
             Usage_comboBox.SelectedItem = null;
@@ -708,7 +741,8 @@ namespace main.contents
             InWall_textBox.Text = "";
             Door_textBox.Text = "";
             OccupancyDensity_textBox.Text = "";
-
+            PreZone_textBox.Text = "";
+            SelectPreZone_nonsplit = "";
         }
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
@@ -726,7 +760,6 @@ namespace main.contents
                 ZoneName_textBox.Text = ZoneName;
 
                 RoomControl = Value[0][1];
-                RoomControl_comboBox.SelectedItem = RoomControl;
 
                 HCType = Value[0][2];
                 if (HCType == "비냉난방")
@@ -873,6 +906,12 @@ namespace main.contents
                     RA_Volume_textBox.Text = String.Format("{0:F1}", Volume_we) + "m³/h";
                 }
             }
+            Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존", "존번호 = '" + ZoneNum + "'");
+            if (Value.Length > 0)
+            {
+                SelectPreZone_nonsplit = Value[0][0];
+                Split_Zone(SelectPreZone_nonsplit);
+            }
         }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
@@ -896,11 +935,23 @@ namespace main.contents
         private void Load_OtherFormData()
         {
             //건물대상,용도
-            String[][] BuildingValue = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "건물대상,건물용도", "");
+            String[][] BuildingValue = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "건물대상,건물용도,프로젝트유형", "");
             if (BuildingValue.Length > 0)
             {
                 BuildingCategory = BuildingValue[0][0];
                 BuildingUse = BuildingValue[0][1];
+                if (BuildingValue[0][2] == "기존")
+                {
+                    PreZone_label.Visible = false;
+                    PreZone_textBox.Visible = false;
+                    PreZone_button.Visible = false;
+                }
+                else
+                {
+                    PreZone_label.Visible = true;
+                    PreZone_textBox.Visible = true;
+                    PreZone_button.Visible = true;
+                }
             }
             string id = "";
             String[][] Index = Program.DB.getValue(DB.type.BaseDB_HCneed, "인덱스", "아이디", "이름 = '" + BuildingUse + "'");
@@ -1089,5 +1140,6 @@ namespace main.contents
             }
 
         }
+
     }
 }
