@@ -70,13 +70,13 @@
     <Compile Update="contents\Construction\ConstructionWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\PrintReport_Heating.cs">
+    <Compile Update="contents\Result\Algorithm_Report\PrintReport_Heating.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\ReportExisting.cs">
+    <Compile Update="contents\Result\Element_Report\Element_Report.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\ReportRemodeling.cs">
+    <Compile Update="contents\Result\Algorithm_Report\Algorithm_Report.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="contents\RESystem\EIndependenceRate.cs">

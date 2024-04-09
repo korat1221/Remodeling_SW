@@ -85,6 +85,9 @@
     <Compile Update="contentslist\List_RESystem.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\ZoneGeneral\PreZone.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\ThermalBridge\TB_property.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,25 +103,25 @@
     <Compile Update="contents\Building\Intro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\PrintReport_Main.cs">
+    <Compile Update="contents\Result\Building_Report\Building_Report.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\PrintReport_Final.cs">
+    <Compile Update="contents\Result\Building_Report\PrintReport_Final.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\PrintReport_Cooling.cs">
+    <Compile Update="contents\Result\Algorithm_Report\PrintReport_Cooling.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\PrintReport_DHWSystem.cs">
+    <Compile Update="contents\Result\Algorithm_Report\PrintReport_DHWSystem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\PrintReport_AHUSystem.cs">
+    <Compile Update="contents\Result\Algorithm_Report\PrintReport_AHUSystem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\PrintReport_Lighting.cs">
+    <Compile Update="contents\Result\Algorithm_Report\PrintReport_Lighting.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\PrintReport_HCneed.cs">
+    <Compile Update="contents\Result\Algorithm_Report\PrintReport_HCneed.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="contents\System\DHWSystem.cs">

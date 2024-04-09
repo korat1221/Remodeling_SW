@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using static main.contents.Model;
 using static main.MainContents;
+using main.contents.Result.Building_Report;
 
 namespace main
 {
@@ -86,7 +87,7 @@ namespace main
             new ZoneGeneral(), new ZoneEnvelope(), new ZoneLighting(), new ZoneSystem(),
             new EquipmentList(),new AHUSystem(), new DHWSystem(), new HeatingSystem(), new CoolingSystem(),
             new PV(), new FuelCell(), new WindPower(), new SupplyRatio(), new EIndependenceRate(),
-            new ReportExisting(), new ReportRemodeling(),
+            new Element_Report(), new Algorithm_Report(),
             new FormDebug(),
             new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow(),
             new List_Floor(), new List_Zone(),
@@ -96,7 +97,7 @@ namespace main
             new List_DHWSystem(),new List_ConstructionBlind(),new List_ConstructionDoor(),
             new PrintReport_Final(), 
             new List_PV(),new List_FuelCell(),new List_WindPower(),
-            new PrintReport_Main(),
+            new Building_Report(),
             new List_AHUSystem()
         }; 
         bool scriptable = false;
@@ -255,6 +256,12 @@ namespace main
             else if (formParam.formID == 23)
             {
                 WindPower f = (WindPower)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 26)
+            {
+                Element_Report f = (Element_Report)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -422,7 +429,7 @@ namespace main
             }
             else if (formParam.formID == 56)
             {
-                PrintReport_Main f = (PrintReport_Main)form;
+                Building_Report f = (Building_Report)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -770,8 +777,8 @@ namespace main
                     forms[23] = new WindPower();
                     forms[24] = new SupplyRatio();
                     forms[25] = new EIndependenceRate();
-                    forms[26] = new ReportExisting();
-                    forms[27] = new ReportRemodeling();
+                    forms[26] = new Element_Report();
+                    forms[27] = new Algorithm_Report();
                     forms[28] = new FormDebug();
                     forms[29] = new List_ConstructionWindow();
                     forms[30] = new List_ConstructionCW();
@@ -800,7 +807,7 @@ namespace main
                     forms[53] = new List_PV();
                     forms[54] = new List_FuelCell();
                     forms[55] = new List_WindPower();
-                    forms[56] = new PrintReport_Main();
+                    forms[56] = new Building_Report();
                     forms[57] = new List_AHUSystem();
 
                     i = -1;
