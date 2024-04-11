@@ -28,89 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            GeneralPanel = new Panel();
-            textBox2 = new TextBox();
-            label3 = new Label();
-            label1 = new Label();
-            textBox1 = new TextBox();
-            GeneralPanel.SuspendLayout();
+            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
-            // GeneralPanel
+            // webView21
             // 
-            GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(textBox2);
-            GeneralPanel.Controls.Add(label3);
-            GeneralPanel.Controls.Add(label1);
-            GeneralPanel.Controls.Add(textBox1);
-            GeneralPanel.Location = new Point(12, 12);
-            GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(977, 683);
-            GeneralPanel.TabIndex = 17;
-            GeneralPanel.Paint += GeneralPanel_Paint;
+            webView21.AllowExternalDrop = true;
+            webView21.BackColor = SystemColors.ActiveBorder;
+            webView21.CreationProperties = null;
+            webView21.DefaultBackgroundColor = Color.White;
+            webView21.Dock = DockStyle.Fill;
+            webView21.Location = new Point(0, 0);
+            webView21.Name = "webView21";
+            webView21.Size = new Size(1200, 730);
+            webView21.Source = new Uri("http://localhost:3000/report.html", UriKind.Absolute);
+            webView21.TabIndex = 2;
+            webView21.ZoomFactor = 1D;
             // 
-            // textBox2
-            // 
-            textBox2.BackColor = SystemColors.Window;
-            textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox2.Location = new Point(155, 52);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(120, 22);
-            textBox2.TabIndex = 89;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(74, 56);
-            label3.Name = "label3";
-            label3.Size = new Size(79, 15);
-            label3.TabIndex = 3;
-            label3.Text = "기존건물결과";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(102, 19);
-            label1.Name = "label1";
-            label1.Size = new Size(19, 15);
-            label1.TabIndex = 1;
-            label1.Text = "층";
-            // 
-            // textBox1
-            // 
-            textBox1.BackColor = SystemColors.Window;
-            textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.Location = new Point(155, 16);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(120, 22);
-            textBox1.TabIndex = 88;
-            // 
-            // ReportExisting
+            // Element_Report
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(GeneralPanel);
+            Controls.Add(webView21);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "ReportExisting";
+            Name = "Element_Report";
             Text = "Form3";
-            GeneralPanel.ResumeLayout(false);
-            GeneralPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel GeneralPanel;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox2;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
     }
 }
