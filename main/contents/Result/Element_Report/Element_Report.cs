@@ -182,8 +182,9 @@ namespace main.contents
                     data.Add(new { cname = "wall_tco2", data = __data[2] });
                     data.Add(new { cname = "wall_toe", data = __data[3] });
 
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT a.명칭,a.유효열관류율,a.기존외벽 From ConstructionWall as a  Inner Join ZoneEnvelope_3D as b  on a.번호 = b.구조체번호  where b.외피유형 ='외벽' Order by a.유효열관류율 DESC");
-                    string[] wall_name = new string[8]; double[] wall_ueff = new double[8]; double[] wall_ueff_old = new double[8];
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT a.명칭,a.유효열관류율,a.기존외벽,a.번호 From ConstructionWall as a  Inner Join ZoneEnvelope_3D as b  on a.번호 = b.구조체번호  where b.외피유형 ='외벽' Order by a.유효열관류율 DESC");
+                    string[] wall_num = new string[8]; string[] wall_name = new string[8]; double[] wall_ueff = new double[8]; double[] wall_ueff_old = new double[8]; double[] wall_area = new double[8]; double[] wall_saving_element = new double[8];    
+                    double wall_area_sum = 0;
                     if (Value.Length > 0)
                     {
                        for(int k =0; k < Value.Length; k++)
@@ -197,42 +198,77 @@ namespace main.contents
                                     wall_ueff_old[k] = Convert.ToDouble(value2[0][0]);
                                 }
                             }
+                            wall_num[k] = Value[k][3];
+                            string[][] valuek = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "외피유형='외벽' And 구조체번호='" + Value[k][3] + "'");
+                            if(valuek.Length > 0)
+                            {
+                                for (int a = 0; a < valuek.Length; a++)
+                                { wall_area[k] += Convert.ToDouble(valuek[a][0]); }
+                            }
+
+                            for (int a = 0; a < 8; a++)
+                            {
+                                __data[4 + a].Add(new { idx = i, val = wall_name[a] });//명칭
+                                data.Add(new { cname = "wall_name" + a, data = __data[4 + a] });
+                                if (wall_name[a] != null && wall_name[a] != "")
+                                {
+                                    if (wall_ueff[a] != 0)
+                                    {
+                                        __data[12 + a].Add(new { idx = i, val = wall_ueff[a].ToString("0.00") });//계획열관류율
+                                        data.Add(new { cname = "wall_ueff" + a, data = __data[12 + a] });
+                                    }
+                                    if (wall_ueff_old[a] != 0)
+                                    {
+                                        __data[20 + a].Add(new { idx = i, val = wall_ueff_old[a].ToString("0.00") });//기존열관류율
+                                        data.Add(new { cname = "wall_ueff_old" + a, data = __data[20 + a] });
+                                    }
+                                    else
+                                    {
+                                        __data[20 + a].Add(new { idx = i, val = "-" });//기존열관류율
+                                        data.Add(new { cname = "wall_ueff_old" + a, data = __data[20 + a] });
+                                    }
+
+                                    __data[28 + a].Add(new { idx = i, val = wall_area[a].ToString("0.0") });//면적
+                                    data.Add(new { cname = "wall_area" + a, data = __data[28 + a] });                                    
+                                }
+                            }
                         }
 
+                        for (int a = 0; a < 8; a++)
+                        {
+                            wall_area_sum += wall_area[a];
+                        }
+                        __data[36].Add(new { idx = i, val = wall_area_sum.ToString("0.0") });//면적
+                        data.Add(new { cname = "wall_area_sum", data = __data[36] });
+                        for (int a = 0; a < 8; a++)
+                        {
+                            if (wall_name[a] != null && wall_name[a] != "")
+                            {
 
-                        __data[4].Add(new { idx = i, val = wall_name[0] });//명칭
-                        __data[5].Add(new { idx = i, val = wall_name[1] });//명칭
-                        __data[6].Add(new { idx = i, val = wall_name[2] });//명칭
-                        __data[7].Add(new { idx = i, val = wall_name[3] });//명칭
-                        __data[8].Add(new { idx = i, val = wall_name[4] });//명칭
-                        __data[9].Add(new { idx = i, val = wall_name[5] });//명칭
-                        __data[10].Add(new { idx = i, val = wall_name[6] });//명칭   
-                        __data[11].Add(new { idx = i, val = wall_name[7] });//명칭
-                        data.Add(new { cname = "wall_name0", data = __data[4] });
-                        data.Add(new { cname = "wall_name1", data = __data[5] });
-                        data.Add(new { cname = "wall_name2", data = __data[6] });
-                        data.Add(new { cname = "wall_name3", data = __data[7] });
-                        data.Add(new { cname = "wall_name4", data = __data[8] });
-                        data.Add(new { cname = "wall_name5", data = __data[9] });
-                        data.Add(new { cname = "wall_name6", data = __data[10] });
-                        data.Add(new { cname = "wall_name7", data = __data[11] });
+                                __data[37 + a].Add(new { idx = i, val = (wall_area[a] / wall_area_sum * 100).ToString("0")+"%" });//면적
+                                data.Add(new { cname = "wall_area_percent" + a, data = __data[37 + a] });
 
-                        __data[12].Add(new { idx = i, val = wall_ueff[0].ToString("0.00") });//계획열관류율
-                        __data[13].Add(new { idx = i, val = wall_ueff[1].ToString("0.00") });//계획열관류율
-                        __data[14].Add(new { idx = i, val = wall_ueff[2].ToString("0.00") });//계획열관류율
-                        __data[15].Add(new { idx = i, val = wall_ueff[3].ToString("0.00") });//계획열관류율
-                        __data[16].Add(new { idx = i, val = wall_ueff[4].ToString("0.00") });//계획열관류율
-                        __data[17].Add(new { idx = i, val = wall_ueff[5].ToString("0.00") });//계획열관류율
-                        __data[18].Add(new { idx = i, val = wall_ueff[6].ToString("0.00") });//계획열관류율
-                        __data[19].Add(new { idx = i, val = wall_ueff[7].ToString("0.00") });//계획열관류율
-                        data.Add(new { cname = "wall_ueff0", data = __data[12] });
-                        data.Add(new { cname = "wall_ueff1", data = __data[13] });
-                        data.Add(new { cname = "wall_ueff2", data = __data[14] });
-                        data.Add(new { cname = "wall_ueff3", data = __data[15] });
-                        data.Add(new { cname = "wall_ueff4", data = __data[16] });
-                        data.Add(new { cname = "wall_ueff5", data = __data[17] });
-                        data.Add(new { cname = "wall_ueff6", data = __data[18] });
-                        data.Add(new { cname = "wall_ueff7", data = __data[19] });
+                                if (wall_ueff_old[a] != 0)
+                                {
+                                    wall_saving_element[a] = wall_area[a] / wall_area_sum * (wall_ueff_old[a] - wall_ueff[a]);
+                                }
+
+                            }
+                        }
+                        double sum = 0;
+                        for(int a = 0;a < 8; a++)
+                        {
+                            sum += wall_saving_element[a];
+                        }
+                        for (int a = 0; a < 8; a++)
+                        {
+                            if (wall_name[a]!=null && wall_name[a]!="")
+                            {
+                                __data[45 + a].Add(new { idx = i, val = ((wall_saving / zoning_sum) * (wall_saving_element[a] / sum) * 100).ToString("0.0") + "%" });//에너지절감률
+                                data.Add(new { cname = "wall_saving_element" + a, data = __data[45 + a] });
+                            }
+                           
+                        }
                     }
 
                     #endregion
