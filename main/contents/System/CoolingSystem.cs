@@ -1087,7 +1087,8 @@ namespace main.contents
                 if (Power.Max() == Power[h])
                 {
                     Comp_f = SelectCGComp_split[h];
-                    EvaType_f = AirCooler_dataGridView.Rows[h].Cells[14].Value.ToString(); //수정
+                    if (AirCooler_dataGridView.Rows[h].Cells[14].Value != null)
+                    { EvaType_f = AirCooler_dataGridView.Rows[h].Cells[14].Value.ToString(); } //수정
                 }
             }
 

@@ -83,7 +83,7 @@ namespace main
         string LoadSupply; //공냉식
         string Refriger; double PartLoad; //흡수식
 
-        string CSource, CompType, ArtType, ArtNumber, Cout, fC_M; // A 및 숫자에 대한 지정값 Cout : 직팽식, 수방식, fC_M 멀티보정계수
+        string CSource, CompType, ArtType, ArtNumber, Cout="직팽식", fC_M; // A 및 숫자에 대한 지정값 Cout : 직팽식, 수방식, fC_M 멀티보정계수
         string Control_f, Econo_f ;
         
         int Number_f, ZoneNumber_f, AhuNumber_f; //설비개수, 존개수
@@ -1145,14 +1145,14 @@ namespace main
                 }
               
             }
-            for(int i =0; ; i++)
+            for (int i = 0; i < 12; i++)
             {
                 W_ce[i] = sum * tC_op[i];
             }
             
             string[] data = new string[4];
             
-            string[][] val = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Form", "공급설비1종류,공급설비2종류,공급설비3종류,공급설비4종류", "냉방시스템= '" + CoolingNum + "'");
+            string[][] val = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Form", "공급설비1종류,공급설비2종류,공급설비3종류,공급설비4종류", "번호 = '" + CoolingNum + "'");
             for(int i=0; i<4; i++)
             {
                 if (val[0][i] != null && val[0][i] != "") data[i] = val[0][i];
@@ -1395,22 +1395,22 @@ namespace main
             Anf = Convert.ToDouble(v1[0][2]);
             
             string[][] v2 = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form", "부하율", " 존번호 = '" + ZoneNum + "' AND 냉방시스템 = '" + _CoolingNum + "' ");
-            foreach (string[] data in v2)
+            for (int i = 0; i < v2.Length; i++)
             {
-                load_sum += Convert.ToDouble(data[0]);
+                load_sum += Convert.ToDouble(v2[i][0]);
             }
             
             string[][] v3 = Program.DB.getValue(DB.type.ProjDB, " Zone_HCneed_Result", " Q_max,  Qb_mth, dwd_mth, theta_i", "번호= '" + ZoneNum + "' AND 비이용일_이용일 = '이용일' And 난방_냉방 = '냉방'");
-            QC_max = Convert.ToDouble(v2[7][0]); //7월달걸로 적용함
-            for (int i = 0; i < v2.Length; i++)
+            QC_max = Convert.ToDouble(v3[6][0]); //7월달걸로 적용함
+            for (int i = 0; i < v3.Length; i++)
             {
-                Q_nd[i] = Convert.ToDouble(v2[i][1]) * load_sum; //냉방요구량
+                Q_nd[i] = Convert.ToDouble(v3[i][1]) * load_sum; //냉방요구량
                 if (Q_nd[i] == 0)
                 {
                     dwd[i] = 0;
-                }else dwd[i] = Convert.ToDouble(v2[i][2]);  //냉방사용일수
+                }else dwd[i] = Convert.ToDouble(v3[i][2]);  //냉방사용일수
                 
-                θi_c[i] = Convert.ToDouble(v2[i][3]); //실내온도
+                θi_c[i] = Convert.ToDouble(v3[i][3]); //실내온도
             }
         }
         
