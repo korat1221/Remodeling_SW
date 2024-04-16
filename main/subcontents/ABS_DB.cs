@@ -88,11 +88,12 @@ namespace main.subcontents.HeatingSystem
             }
 
             if (DefaultUse == "기본DB 적용")
-            {
-                AS_dataGridView.Columns.Add("A14", "통합성능.IPLV");
+            { 
+                AS_dataGridView.Columns.Add("A14", "제품명");
+                AS_dataGridView.Columns.Add("A15", "통합성능.IPLV");
                 AS_dataGridView.Columns.Add("A16", "비고");
 
-                string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Heating, "흡수식냉온수기", "번호,통합성능,비고", "");
+                string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_Heating, "흡수식냉온수기", "번호,제품명,통합성능,비고", "");
                 if (DefaultDB_Value.Length > 0)
                 {
                     for (int n = 0; n < DefaultDB_Value.Length; n++)
@@ -101,11 +102,14 @@ namespace main.subcontents.HeatingSystem
                         AS_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[n][0];
                         AS_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[n][1];
                         AS_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[n][2];
+                        AS_dataGridView.Rows[nRow].Cells[4].Value = DefaultDB_Value[n][3];
                     }
+                    AS_dataGridView.Columns[1].Width = 80;
                 }
             }
             else
             {
+                
                 if (HC == "난방")
                 {
                     string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호,연료,난방용량,난방성능,온수입구온도,온수출구온도,대기전력,통합성능", "난방냉방 ='냉난방'");

@@ -23,145 +23,69 @@ namespace main.subcontents
     public partial class Cooling_Zone : Form
     {
 
-        string SystemNum, SystemName;
+        double Count_DB;
+        ArrayList SelectRow = new ArrayList(); ArrayList SelectZone_split = new ArrayList();
+        String SystemNum;
+        public string SelectZone;
 
-        public Cooling_Zone(string[] coolingzone_conn)
+        public Cooling_Zone(string Num, string SelectZone_nonsplit)
         {
             InitializeComponent();
+            load_table_DB();
+            SystemNum = Num;
 
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '냉방시스템'");
-            pictureBox1.Load(Program.gPath + Image[0][0]);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            if (SelectZone_nonsplit != null)
+            {
+                Load_SaveValue(SelectZone_nonsplit);
+            }
+        }
+
+        void load_table_DB()
+        {
             new StackedHeaderDecorator(CoolingZone_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
+            DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
+            CoolingZone_dataGridView.Columns.Clear();
+            checkBoxColumn.HeaderText = "선택";
+            checkBoxColumn.Name = "check";
+            CoolingZone_dataGridView.Columns.Add(checkBoxColumn);
 
-            SystemNum = coolingzone_conn[0];
-            SystemName = coolingzone_conn[1];
+            CoolingZone_dataGridView.Columns.Add("A1", "번호");
+            CoolingZone_dataGridView.Columns.Add("A2", "층");
+            CoolingZone_dataGridView.Columns.Add("A3", "존명칭");
+            CoolingZone_dataGridView.Columns.Add("A4", "용도프로필");
+            CoolingZone_dataGridView.Columns.Add("A5", "연간 냉방요구량.[kWh/a]");
+            CoolingZone_dataGridView.Columns.Add("A6", "최대냉방부하.[kW]");
+            CoolingZone_dataGridView.Columns.Add("A7", "면적.[m²]");
 
-            Reset();
-
-
-            string[][] CZ_Check = Program.DB.getValue(DB.type.ProjDB, "CoolingZone", "존번호", "");
-            if (CZ_Check.Length > 0)
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적", "냉난방유무 ='냉난방' OR 냉난방유무 = '냉방'");
+            if (Value.Length > 0)
             {
-                CoolingZoneList(CoolingZoneNames());
-            }
-            else
-            {
-                ZoneList(ZoneNames());
-            }
-
-
-
-            int n = ZoneNames().Length;
-
-
-            ZoneCount.Text = string.Format("{0} 개", n);
-
-        }
-
-        public string[][] ZoneNames() //?
-        {
-            string[][] _ZoneNames = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,순바닥면적,연이용일수", "냉난방유무 = '냉난방' or 냉난방유무 = '냉방'");
-            return _ZoneNames;
-        }
-
-        public string[][] CoolingZoneNames() //냉방존 이름만 저장함
-        {
-            string[][] _CoolingZoneNames = Program.DB.getValue(DB.type.ProjDB, "CoolingZone", "존번호,번호,명칭,복합설비", "");
-            return _CoolingZoneNames;
-        }
-
-
-        private void ZoneList(string[][] zonenames) //존번호, 존이름, 번호, 순바닥면적, 냉방시간, 연간이용일수, 에너지성능.최대냉방부하, 에너지성능.연간총에너지요구량
-        {
-            datagridviewShow();
-
-            for (int i = 0; i < zonenames.Length; i++)
-            {
-
-                //존번호, 존이름, 번호, 에너지성능.최대냉방부하, 에너지성능.연간총에너지요구량
-                string[][] ZoneGet0 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "번호,이름,Qb_a,Q_max", "번호='" + zonenames[i][0] + "' AND 비이용일_이용일 = '이용일' And 난방_냉방 = '냉방'"); //마지막
-
-                //순바닥면적, 냉방시간, 연간이용일수
-                string[][] ZoneGet1 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적,연이용일수", "존번호='" + zonenames[i][0] + "'");
-
-                ZDataGridViewAdd(ZoneGet0, ZoneGet1);
-            }
-        }
-
-        private void CoolingZoneList(string[][] coolingzonenames) //존번호, 존이름, 번호, 순바닥면적, 냉방시간, 연간이용일수, 에너지성능.최대냉방부하, 에너지성능.연간총에너지요구량
-        {
-            datagridviewShow();
-
-            for (int i = 0; i < coolingzonenames.Length; i++)
-            {
-
-                //존번호, 존이름, 번호, 에너지성능.최대냉방부하, 에너지성능.연간총에너지요구량
-                string[][] ZoneGet0 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "번호,이름,Qb_a,Q_max", "번호='" + coolingzonenames[i][0] + "' AND 비이용일_이용일 = '이용일' And 난방_냉방 = '냉방'"); //마지막
-
-                //순바닥면적, 냉방시간, 연간이용일수
-                string[][] ZoneGet1 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적,연이용일수", "존번호='" + coolingzonenames[i][0] + "'");
-                string cznum = coolingzonenames[i][1].ToString();
-                string czname = coolingzonenames[i][2].ToString();
-                Boolean czmul = Convert.ToBoolean(coolingzonenames[i][3].ToString());
-
-                CZDataGridViewAdd(ZoneGet0, ZoneGet1, cznum, czname, czmul);
-            }
-        }
-
-
-
-        #region // 그리드 디자인
-
-        private void ZDataGridViewAdd(string[][] _ZoneGet0, string[][] _ZoneGet1) //그리드 내용 구성
-        {
-            int nRow = CoolingZone_dataGridView.Rows.Add();
-
-            CoolingZone_dataGridView.Rows[nRow].Cells[0].Value = false;                      //선택
-            CoolingZone_dataGridView.Rows[nRow].Cells[1].Value = _ZoneGet0[0][0].ToString(); //존번호
-            CoolingZone_dataGridView.Rows[nRow].Cells[2].Value = _ZoneGet0[0][1].ToString(); //존이름   
-            CoolingZone_dataGridView.Rows[nRow].Cells[3].Value = null;                       //시스템번호
-            CoolingZone_dataGridView.Rows[nRow].Cells[4].Value = null;                       //시스템이름
-            CoolingZone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet1[0][0])); //순바닥면적
-            CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet1[0][1])); //연이용일수
-            CoolingZone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet0[0][2])); //연간냉방에너지요구량
-            CoolingZone_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet0[0][3]) / 1000); //최대냉방부하           
-            CoolingZone_dataGridView.Rows[nRow].Cells[9].Value = false;
-        }
-
-        private void CZDataGridViewAdd(string[][] _ZoneGet0, string[][] _ZoneGet1, string _cznum, string _czname, Boolean _czmul) //그리드 내용 구성
-        {
-            int nRow = CoolingZone_dataGridView.Rows.Add();
-
-            if (_cznum == SystemNum)
-            {
-                CoolingZone_dataGridView.Rows[nRow].Cells[0].Value = true;
-            }
-            else
-            {
-                CoolingZone_dataGridView.Rows[nRow].Cells[0].Value = false;
-            }
-            if (_ZoneGet0.Length > 0)
-            {
-                if (_ZoneGet1.Length > 0)
+                for (int n = 0; n < Value.Length; n++)
                 {
-                    CoolingZone_dataGridView.Rows[nRow].Cells[1].Value = _ZoneGet0[0][0].ToString(); //존번호
-                    CoolingZone_dataGridView.Rows[nRow].Cells[1].Value = _ZoneGet0[0][0].ToString(); //존번호
-                    CoolingZone_dataGridView.Rows[nRow].Cells[2].Value = _ZoneGet0[0][1].ToString(); //존이름   
-                    CoolingZone_dataGridView.Rows[nRow].Cells[3].Value = _cznum;      //시스템번호
-                    CoolingZone_dataGridView.Rows[nRow].Cells[4].Value = _czname;     //시스템이름
-                    CoolingZone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet1[0][0])); //순바닥면적
-                    CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet1[0][1])); //연이용일수
-                    CoolingZone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet0[0][2])); //연간냉방에너지요구량
-                    CoolingZone_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(_ZoneGet0[0][3]) / 1000); //최대냉방부하
-                    CoolingZone_dataGridView.Rows[nRow].Cells[9].Value = _czmul;
+                    string[][] 층 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "존 ='" + Value[n][0] + "'");
+                    string[][] 부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + Value[n][0] + "' AND 난방_냉방 = '냉방'");
+
+                    CoolingZone_dataGridView.Rows.Add();
+                    int nRow = CoolingZone_dataGridView.Rows.Count - 1;
+                    CoolingZone_dataGridView.Rows[nRow].Cells[1].Value = Value[n][0];
+                    if (층.Length > 0)
+                    {
+                        CoolingZone_dataGridView.Rows[nRow].Cells[2].Value = 층[0][0];
+                    }
+                    CoolingZone_dataGridView.Rows[nRow].Cells[3].Value = Value[n][1];
+                    CoolingZone_dataGridView.Rows[nRow].Cells[4].Value = Value[n][2];
+                    if (부하.Length > 0)
+                    {
+                        CoolingZone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", Convert.ToDouble(부하[0][0]));
+                        CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Convert.ToDouble(부하[0][1]) / 1000);
+                    }
+                    CoolingZone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(Value[n][3]));
+                    Count_DB = Value.Length;
                 }
             }
 
         }
-
-
-        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row) //그리드 디자인
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
             if (row % 2 == 1)
             {
@@ -180,107 +104,69 @@ namespace main.subcontents
                 return true;
             }
         }
-
-
-
-        public void datagridviewShow()
+        private void SelectCheckBox()
         {
-            DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
-            checkBoxColumn.HeaderText = "선택";
-            checkBoxColumn.Name = "check";
-            CoolingZone_dataGridView.Columns.Add(checkBoxColumn);
-
-            CoolingZone_dataGridView.Columns.Add("A1", "존.번호");
-            CoolingZone_dataGridView.Columns.Add("A2", "존.이름");
-            CoolingZone_dataGridView.Columns.Add("A3", "시스템.번호");
-            CoolingZone_dataGridView.Columns.Add("A4", "시스템.이름");
-            CoolingZone_dataGridView.Columns.Add("A5", "순바닥면적.[m2]");
-            CoolingZone_dataGridView.Columns.Add("A6", "연이용일수.[d/년]");
-            CoolingZone_dataGridView.Columns.Add("A7", "연간냉방에너지요구량.[kWh/m2·년]");
-            CoolingZone_dataGridView.Columns.Add("A8", "최대냉방부하.[kW]");
-
-            DataGridViewCheckBoxColumn MulticheckBoxColumn = new DataGridViewCheckBoxColumn();
-            MulticheckBoxColumn.HeaderText = "복합설비";
-            MulticheckBoxColumn.Name = "Mcheck";
-            CoolingZone_dataGridView.Columns.Add(MulticheckBoxColumn);
-
-            CoolingZone_dataGridView.Columns[0].FillWeight = 50;
-            CoolingZone_dataGridView.Columns[1].FillWeight = 70;
-            CoolingZone_dataGridView.Columns[2].FillWeight = 100;
-            CoolingZone_dataGridView.Columns[3].FillWeight = 70;
-            CoolingZone_dataGridView.Columns[4].FillWeight = 50;
-            CoolingZone_dataGridView.Columns[7].FillWeight = 130;
-            CoolingZone_dataGridView.Columns[8].FillWeight = 90;
-            CoolingZone_dataGridView.Columns[9].FillWeight = 50;
-
-
-        }
-        #endregion
-
-        private void Save_Button_Click(object sender, EventArgs e)
-        {
-            _sqlsave();
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-        }
-        public void _sqlsave() //SQL에 저장하기
-        {
-            List<string> Value = new List<string>();
-            for (int i = 0; i < CoolingZone_dataGridView.Rows.Count; i++)
+            SelectRow.Clear();
+            foreach (DataGridViewRow row in CoolingZone_dataGridView.Rows)
             {
-                Value.Clear();
-                for (int k = 0; k < CoolingZone_dataGridView.Columns.Count; k++)
+                if (Convert.ToBoolean(row.Cells["check"].Value))
                 {
-                    if (CoolingZone_dataGridView.Rows[i].Cells[k].Value == null)
-                    {
-                        Value.Add(null);
-                    }
-                    else
-                    {
-                        Value.Add(CoolingZone_dataGridView.Rows[i].Cells[k].Value.ToString());
-                    }
-                }
-
-                if (Convert.ToBoolean(Value[0]) == true)
-                {
-                    if (Convert.ToBoolean(Value[9]) == true)
-                    {
-                        Program.DB.setValue(DB.type.ProjDB, "CoolingZone", "번호,명칭,존번호,존이름,복합설비", "'" + Value[3] + "','" + Value[4] + "','" + Value[1] + "','" + Value[2] + "','True'", "존번호");
-                        Program.DB.setValue(DB.type.ProjDB, "CoolingZone", "번호,명칭,존번호,존이름,복합설비", "'" + SystemNum + "','" + SystemName + "','" + Value[1] + "','" + Value[2] + "','True'", "번호,존번호");
-
-                    }
-                    else
-                    {
-                        Program.DB.setValue(DB.type.ProjDB, "CoolingZone", "번호,명칭,존번호,존이름,복합설비", "'" + SystemNum + "','" + SystemName + "','" + Value[1] + "','" + Value[2] + "','" + Value[9] + "'", "존번호");
-                    }
-
-                }
-
-                else
-                {
-                    if (Value[3] == SystemNum)
-                    {
-                        Program.DB.setValue(DB.type.ProjDB, "CoolingZone", "번호,명칭,존번호,존이름, 복합설비", "'" + null + "','" + null + "','" + Value[1] + "','" + Value[2] + "','" + Value[9] + "'", "존번호");
-                    }
-                    else
-                    {
-                        Program.DB.setValue(DB.type.ProjDB, "CoolingZone", "번호,명칭,존번호,존이름, 복합설비", "'" + Value[3] + "','" + Value[4] + "','" + Value[1] + "','" + Value[2] + "','" + Value[9] + "'", "존번호");
-                    }
-
+                    row.DefaultCellStyle.SelectionBackColor = SystemColors.GradientInactiveCaption;
+                    SelectRow.Add(row.Index);
                 }
             }
         }
-        //냉방설비 기존 명칭을 그대로 돌려주는 매소드
 
-        public void Reset()
+        private void Save_Button_Click(object sender, EventArgs e)
         {
-            CoolingZone_dataGridView.Rows.Clear();
-            CoolingZone_dataGridView.Columns.Clear();
+            SelectCheckBox();
+            for (int k = 0; k < SelectRow.Count; k++)
+            {
+                if (k == SelectRow.Count - 1)
+                {
+                    this.SelectZone += CoolingZone_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString();
+                }
+                else
+                {
+                    this.SelectZone += CoolingZone_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + "+";
+                }
+            }
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
-        private void delete_Click(object sender, EventArgs e)
+        public void reset()
         {
-            
+            SelectRow.Clear();
+            SelectZone_split.Clear();
+            this.SelectZone = null;
+
+            for (int n = 0; n < CoolingZone_dataGridView.Rows.Count; n++)
+            {
+                CoolingZone_dataGridView.Rows[n].Cells[0].Value = false;
+            }
+        }
+
+        private void Load_SaveValue(String SelectZone_nonsplit)
+        {
+            reset();
+            string[] token = SelectZone_nonsplit.Split('+');
+            SelectZone_split.Clear();
+            foreach (var item in token)
+            {
+                SelectZone_split.Add(item.ToString());
+            }
+            for (int k = 0; k < SelectZone_split.Count; k++)
+            {
+                for (int n = 0; n < CoolingZone_dataGridView.Rows.Count; n++)
+                {
+                    if (CoolingZone_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectZone_split[k].ToString())
+                    {
+                        CoolingZone_dataGridView.Rows[n].Cells[0].Value = true;
+                    }
+                }
+            }
         }
     }
 }

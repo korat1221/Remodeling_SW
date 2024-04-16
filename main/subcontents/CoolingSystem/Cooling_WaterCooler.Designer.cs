@@ -100,7 +100,6 @@
             WaterCooler_dataGridView.RowTemplate.Height = 25;
             WaterCooler_dataGridView.Size = new Size(800, 358);
             WaterCooler_dataGridView.TabIndex = 25;
-            WaterCooler_dataGridView.CellContentClick += WaterCooler_dataGridView_CellContentClick;
             // 
             // Save_button
             // 

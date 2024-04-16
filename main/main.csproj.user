@@ -205,7 +205,16 @@
     <Compile Update="subcontents\CoolingSystem\Cooling_CoolerTop.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\CoolingSystem\Cooling_Pump.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\CoolingSystem\Cooling_SoilCooler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\CoolingSystem\Cooling_SoilWaterCooler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\CoolingSystem\Cooling_Top.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="subcontents\CoolingSystem\Cooling_WaterCooler.cs">

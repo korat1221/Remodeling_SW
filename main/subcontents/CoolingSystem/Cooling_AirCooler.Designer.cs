@@ -100,8 +100,7 @@
             AirCooler_dataGridView.RowTemplate.Height = 25;
             AirCooler_dataGridView.Size = new Size(844, 358);
             AirCooler_dataGridView.TabIndex = 25;
-            AirCooler_dataGridView.CellValueChanged += AirCooler_dataGridView_CellValueChanged;
-            // 
+           
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
