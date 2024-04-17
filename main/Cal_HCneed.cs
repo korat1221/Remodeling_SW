@@ -298,7 +298,7 @@ namespace main
                             {
                                 if (zone1 != null)
                                 {
-                                    if (Math.Abs(zone1.Theta_U[hc, wewd, mth] - thetaiset) > 4)
+                                    if (Math.Abs(zone1.Theta_U[hc, wewd, mth] - thetaiset) > 6)
                                     { Zone_HT_Inwall[hc, wewd, mth] += U * Convert.ToDouble(ZoneInW[i][2]); }
                                     else { }
                                 }
@@ -335,7 +335,7 @@ namespace main
                             {
                                 if (zone1 != null)
                                 {
-                                    if (Math.Abs(zone1.Theta_U[hc, wewd, mth] - thetaiset) > 4)
+                                    if (Math.Abs(zone1.Theta_U[hc, wewd, mth] - thetaiset) > 6)
                                     { Zone_HT_Slab[hc, wewd, mth] += U * Convert.ToDouble(ZoneSL[i][2]); }
                                     else { }
                                 }
@@ -933,14 +933,19 @@ namespace main
                             {
                                 if (zone1 != null)
                                 {
-                                    if (theta_i[hc, wewd, mth] > zone1.Theta_U[hc, wewd, mth])
+                                    if (Math.Abs(theta_i[hc, wewd, mth] - zone1.Theta_U[hc, wewd, mth]) >6 && theta_i[hc, wewd, mth]> zone1.Theta_U[hc, wewd, mth])
                                     {
                                         QT_u_sink_i[i, hc, wewd, mth] = qtcalc.Calc_sink(zone1.Theta_U[hc, wewd, mth], theta_i[hc, wewd, mth], zoneInWall_HT[hc, i]);
                                         QT_u_source_i[i, hc, wewd, mth] = 0;
                                     }
-                                    else
+                                    else if (Math.Abs(theta_i[hc, wewd, mth] - zone1.Theta_U[hc, wewd, mth]) > 6 && theta_i[hc, wewd, mth] < zone1.Theta_U[hc, wewd, mth])
                                     {
                                         QT_u_source_i[i, hc, wewd, mth] = qtcalc.Calc_source(zone1.Theta_U[hc, wewd, mth], theta_i[hc, wewd, mth], zoneInWall_HT[hc, i]);
+                                        QT_u_sink_i[i, hc, wewd, mth] = 0;
+                                    }
+                                    else
+                                    {
+                                        QT_u_source_i[i, hc, wewd, mth] = 0;
                                         QT_u_sink_i[i, hc, wewd, mth] = 0;
                                     }
                                 }
@@ -1031,14 +1036,19 @@ namespace main
                             {
                                 if (zone1 != null)
                                 {
-                                    if (theta_i[hc, wewd, mth] > zone1.Theta_U[hc, wewd, mth])
+                                    if (Math.Abs(theta_i[hc, wewd, mth] - zone1.Theta_U[hc, wewd, mth]) > 6 && theta_i[hc, wewd, mth] > zone1.Theta_U[hc, wewd, mth])
                                     {
                                         QT_u_sink_i[i, hc, wewd, mth] = qtcalc.Calc_sink(zone1.Theta_U[hc, wewd, mth], theta_i[hc, wewd, mth], zoneSlab_HT[hc, i]);
                                         QT_u_source_i[i, hc, wewd, mth] = 0;
                                     }
-                                    else
+                                    else if (Math.Abs(theta_i[hc, wewd, mth] - zone1.Theta_U[hc, wewd, mth]) > 6 && theta_i[hc, wewd, mth] < zone1.Theta_U[hc, wewd, mth])
                                     {
                                         QT_u_source_i[i, hc, wewd, mth] = qtcalc.Calc_source(zone1.Theta_U[hc, wewd, mth], theta_i[hc, wewd, mth], zoneSlab_HT[hc, i]);
+                                        QT_u_sink_i[i, hc, wewd, mth] = 0;
+                                    }
+                                    else
+                                    {
+                                        QT_u_source_i[i, hc, wewd, mth] = 0;
                                         QT_u_sink_i[i, hc, wewd, mth] = 0;
                                     }
                                 }
@@ -1640,8 +1650,28 @@ namespace main
                 {
                     for (int mth = 0; mth <= 11; mth++)
                     {
-                        QTsink_tot[hc, wewd, mth] = QTsink_TB[hc, wewd, mth] + QTsink_Wall[hc, wewd, mth] + QTsink_Roof[hc, wewd, mth] + QTsink_Door[hc, wewd, mth] + QTsink_Win[hc, wewd, mth] + QTsink_CW[hc, wewd, mth] + QTsink_Floor[hc, wewd, mth] + QTsink_GWall[hc, wewd, mth] + QT_u_sink[hc, wewd, mth];
-                        QTsource_tot[hc, wewd, mth] = QTsource_TB[hc, wewd, mth] + QTsource_Wall[hc, wewd, mth] + QTsource_Roof[hc, wewd, mth] + QTsource_Door[hc, wewd, mth] + QTsource_Win[hc, wewd, mth] + QTsource_CW[hc, wewd, mth] + QTsource_Floor[hc, wewd, mth] + QTsource_GWall[hc, wewd, mth] + QT_u_source[hc, wewd, mth];
+                        
+                        QTsink_tot[hc, wewd, mth] = QTsink_TB[hc, wewd, mth] + QTsink_Wall[hc, wewd, mth] + QTsink_Roof[hc, wewd, mth] + QTsink_Door[hc, wewd, mth] + QTsink_Win[hc, wewd, mth] + QTsink_CW[hc, wewd, mth] + QTsink_Floor[hc, wewd, mth] + QTsink_GWall[hc, wewd, mth] ;
+                        if( QTsink_tot[hc, wewd, mth] > 0)
+                        {
+                            QTsink_tot[hc, wewd, mth] = QTsink_tot[hc, wewd, mth] + QT_u_sink[hc, wewd, mth];
+                        }
+                        else
+                        {
+                            QT_u_sink[hc, wewd, mth] = 0;
+                            QTsink_tot[hc, wewd, mth] = QTsink_tot[hc, wewd, mth] + QT_u_sink[hc, wewd, mth];
+                        }
+                        
+                        QTsource_tot[hc, wewd, mth] = QTsource_TB[hc, wewd, mth] + QTsource_Wall[hc, wewd, mth] + QTsource_Roof[hc, wewd, mth] + QTsource_Door[hc, wewd, mth] + QTsource_Win[hc, wewd, mth] + QTsource_CW[hc, wewd, mth] + QTsource_Floor[hc, wewd, mth] + QTsource_GWall[hc, wewd, mth] ;
+                        if (QTsource_tot[hc, wewd, mth] > 0)
+                        {
+                            QTsource_tot[hc, wewd, mth] = QTsource_tot[hc, wewd, mth] +  QT_u_source[hc, wewd, mth];
+                        }
+                        else
+                        {
+                            QTsource_tot[hc, wewd, mth] = 0;
+                            QTsource_tot[hc, wewd, mth] = QTsource_tot[hc, wewd, mth] + QT_u_source[hc, wewd, mth];
+                        }
                     }
                 }
             }

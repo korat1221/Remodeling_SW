@@ -329,6 +329,10 @@ namespace main
                 {
                     Qbase_gas[mth] = 0;
                 }
+                else if (Qhf_gas[mth] <= 0)
+                {
+                    Qbase_gas[mth] = 0;
+                }
                 else
                 {
                     Qbase_gas[mth] = Qbase_gas[mth];
