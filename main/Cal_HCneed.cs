@@ -2148,8 +2148,8 @@ namespace main
                         zoneCWs_g_Qs[i, 0, mth] = qstrcalc.Calc(zonecw.Ff_g(), zonecw.Area_g(), zoneCWs_g_geff[i, 0, mth], zoneCWs_Is[i, mth]);
                         zoneCWs_g_Qs[i, 1, mth] = qstrcalc.Calc(zonecw.Ff_g(), zonecw.Area_g(), zoneCWs_g_geff[i, 1, mth], zoneCWs_Is[i, mth]);
                         zoneCWs_d_Qs[i, mth] = qstrcalc.Calc(zonecw.Ff_d(), zonecw.Area_d(), zoneCWs_d_geff[i, mth], zoneCWs_Is[i, mth]);
-                        zoneCWs_g_Qs_max[i] = qstrcalc.Calc(zonecw.Ff_g(), zonecw.Area_g(), zoneCWs_g_geff_max[i], zoneCWs_Is_max[i]);
-                        zoneCWs_d_Qs_max[i] = qstrcalc.Calc(zonecw.Ff_d(), zonecw.Area_d(), zoneCWs_d_geff_max[i], zoneCWs_Is_max[i]);
+                        zoneCWs_g_Qs_max[i] = qstrcalc.Calc_max(zonecw.Ff_g(), zonecw.Area_g(), zoneCWs_g_geff_max[i], zoneCWs_Is_max[i]);
+                        zoneCWs_d_Qs_max[i] = qstrcalc.Calc_max(zonecw.Ff_d(), zonecw.Area_d(), zoneCWs_d_geff_max[i], zoneCWs_Is_max[i]);
 
                         if (zonecw.CWType() == "유리부분")
                         {
