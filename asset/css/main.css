@@ -52,12 +52,12 @@ html,body {
 }
 
 .cont-item {
-    padding:10px;
+    padding :10px
 }
 
 .cont-icon {
     width:96px;
-    height:96px;
+    height:72px;
     background-repeat: no-repeat;
     background-size: contain;
     cursor:pointer;
