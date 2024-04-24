@@ -36,9 +36,6 @@
             ProjectOpen = new ToolStripButton();
             EnergyNeed_Sim = new ToolStripButton();
             FinalEnergy_Sim = new ToolStripButton();
-            Report_Rule = new ToolStripButton();
-            Report_Remodeling = new ToolStripButton();
-            Report_Detail = new ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.SuspendLayout();
             toolStripContainer1.ContentPanel.SuspendLayout();
@@ -92,11 +89,11 @@
             toolStrip1.BackColor = SystemColors.GradientInactiveCaption;
             toolStrip1.Dock = DockStyle.None;
             toolStrip1.ImageScalingSize = new Size(35, 35);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { Home, ProjectOpen, EnergyNeed_Sim, FinalEnergy_Sim, Report_Rule, Report_Remodeling, Report_Detail });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { Home, ProjectOpen, EnergyNeed_Sim, FinalEnergy_Sim });
             toolStrip1.Location = new Point(3, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Padding = new Padding(4);
-            toolStrip1.Size = new Size(323, 50);
+            toolStrip1.Size = new Size(175, 50);
             toolStrip1.TabIndex = 0;
             // 
             // Home
@@ -139,33 +136,6 @@
             FinalEnergy_Sim.Text = "toolStripButton5";
             FinalEnergy_Sim.Click += FinalEnergy_Sim_Click;
             // 
-            // Report_Rule
-            // 
-            Report_Rule.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            Report_Rule.Image = (Image)resources.GetObject("Report_Rule.Image");
-            Report_Rule.ImageTransparentColor = Color.Magenta;
-            Report_Rule.Name = "Report_Rule";
-            Report_Rule.Size = new Size(39, 39);
-            Report_Rule.Text = "toolStripButton6";
-            // 
-            // Report_Remodeling
-            // 
-            Report_Remodeling.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            Report_Remodeling.Image = (Image)resources.GetObject("Report_Remodeling.Image");
-            Report_Remodeling.ImageTransparentColor = Color.Magenta;
-            Report_Remodeling.Name = "Report_Remodeling";
-            Report_Remodeling.Size = new Size(39, 39);
-            Report_Remodeling.Text = "toolStripButton7";
-            // 
-            // Report_Detail
-            // 
-            Report_Detail.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            Report_Detail.Image = (Image)resources.GetObject("Report_Detail.Image");
-            Report_Detail.ImageTransparentColor = Color.Magenta;
-            Report_Detail.Name = "Report_Detail";
-            Report_Detail.Size = new Size(39, 39);
-            Report_Detail.Text = "toolStripButton8";
-            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -197,8 +167,5 @@
         private ToolStripButton ProjectOpen;
         private ToolStripButton EnergyNeed_Sim;
         private ToolStripButton FinalEnergy_Sim;
-        private ToolStripButton Report_Rule;
-        private ToolStripButton Report_Remodeling;
-        private ToolStripButton Report_Detail;
     }
 }
