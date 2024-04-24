@@ -55,7 +55,40 @@ namespace main.contents
                 drawList();
             }
             catch { }
+        }
 
+        private void SelectType()
+        {            
+            int k = GetSelectedIndex();
+            if (k >= 0)
+            {
+                String ProjectType = dataGridView1.Rows[k].Cells[4].Value.ToString();
+                if (ProjectType == null)
+                {
+                }
+                else if (ProjectType == "기존건물")
+                {
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro1.png");
+                    Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                else if (ProjectType == "리트로핏")
+                {
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro2.png");
+                    Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                else if (ProjectType == "리모델링")
+                {
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro3.png");
+                    Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                else
+                {
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro2.png");
+                    Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                ProjectType_textBox.Text = ProjectType;
+
+            }
         }
 
         private void drawList()
@@ -80,16 +113,9 @@ namespace main.contents
                     cell.Value = !!(res[n][1] == ProjectList.CurProjID);
                 }
             }
-           
+            SelectType();
         }
-        private void Copy_button_Click(object sender, EventArgs e)
-        {
-            ProjectCopy projectcopy = new ProjectCopy();
-            DialogResult result = projectcopy.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-            }
-        }
+      
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
             if (row % 2 == 1)
@@ -112,7 +138,21 @@ namespace main.contents
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            OpenCurrentProject();
+            int k = GetSelectedIndex();
+            if (k >= 0)
+            {
+                ProjectList.CurProjID = dataGridView1.Rows[k].Cells[2].Value.ToString();
+
+                Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET current = 0");
+                Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET current = 1 WHERE pnum='" + ProjectList.CurProjID + "'");
+
+                Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
+                Program.DB.initTables(DB.type.ProjDB);
+                Program.getMenuForm().resetAll();
+                Program.getMenuForm().DoLoadFormDirect(0);
+
+                Program.UTIL.ReloadModel();
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -131,20 +171,16 @@ namespace main.contents
                     {
                         dataGridView1.Rows[k].Cells[0].Value = true;
                     }
-
                 }
+                SelectType();
             }
+
         }
 
         private void Open_button_Click(object sender, EventArgs e)
         {
-            OpenCurrentProject();
-        }
-
-        private void OpenCurrentProject()
-        {
-            int k = dataGridView1.CurrentCell.RowIndex;
-            if (k > -1)
+            int k = GetSelectedIndex();
+            if (k >= 0)
             {
                 ProjectList.CurProjID = dataGridView1.Rows[k].Cells[2].Value.ToString();
 
@@ -153,9 +189,23 @@ namespace main.contents
 
                 Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
                 Program.DB.initTables(DB.type.ProjDB);
-                Program.getMenuForm().ResetForm(8);
+                Program.getMenuForm().resetAll();
                 Program.getMenuForm().DoLoadFormDirect(0);
+
+                Program.UTIL.ReloadModel();
             }
+        }
+
+        private int GetSelectedIndex()
+        {
+            for (int k = 0; k < dataGridView1.Rows.Count; k++)
+            {
+                if (Convert.ToBoolean(dataGridView1.Rows[k].Cells[0].Value) == true)
+                {
+                    return k;
+                }
+            }
+            return -1;
         }
     }
 }

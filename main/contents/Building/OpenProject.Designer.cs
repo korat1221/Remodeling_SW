@@ -39,13 +39,20 @@
             pnum = new DataGridViewTextBoxColumn();
             pname = new DataGridViewTextBoxColumn();
             type = new DataGridViewTextBoxColumn();
+            ProjectType_textBox = new TextBox();
+            label4 = new Label();
+            Icon_pictureBox = new PictureBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(ProjectType_textBox);
+            GeneralPanel.Controls.Add(label4);
+            GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Controls.Add(Open_button);
             GeneralPanel.Controls.Add(dataGridView1);
             GeneralPanel.Location = new Point(12, 12);
@@ -60,7 +67,7 @@
             Open_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Open_button.FlatStyle = FlatStyle.System;
             Open_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            Open_button.Location = new Point(762, 104);
+            Open_button.Location = new Point(762, 519);
             Open_button.Margin = new Padding(0);
             Open_button.Name = "Open_button";
             Open_button.Size = new Size(67, 23);
@@ -109,7 +116,7 @@
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(678, 504);
+            dataGridView1.Size = new Size(678, 355);
             dataGridView1.TabIndex = 99;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
@@ -159,6 +166,38 @@
             type.Resizable = DataGridViewTriState.False;
             type.Width = 96;
             // 
+            // ProjectType_textBox
+            // 
+            ProjectType_textBox.BackColor = Color.White;
+            ProjectType_textBox.BorderStyle = BorderStyle.None;
+            ProjectType_textBox.Enabled = false;
+            ProjectType_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ProjectType_textBox.ForeColor = SystemColors.ControlDark;
+            ProjectType_textBox.Location = new Point(240, 111);
+            ProjectType_textBox.Name = "ProjectType_textBox";
+            ProjectType_textBox.ReadOnly = true;
+            ProjectType_textBox.Size = new Size(116, 15);
+            ProjectType_textBox.TabIndex = 107;
+            ProjectType_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Location = new Point(151, 112);
+            label4.Name = "label4";
+            label4.Size = new Size(83, 15);
+            label4.TabIndex = 106;
+            label4.Text = "프로젝트 유형";
+            // 
+            // Icon_pictureBox
+            // 
+            Icon_pictureBox.Location = new Point(362, 88);
+            Icon_pictureBox.Name = "Icon_pictureBox";
+            Icon_pictureBox.Size = new Size(50, 50);
+            Icon_pictureBox.TabIndex = 105;
+            Icon_pictureBox.TabStop = false;
+            // 
             // OpenProject
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -171,7 +210,9 @@
             Name = "OpenProject";
             Text = "Form3";
             GeneralPanel.ResumeLayout(false);
+            GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
             ResumeLayout(false);
         }
 
@@ -184,5 +225,8 @@
         private DataGridViewTextBoxColumn pnum;
         private DataGridViewTextBoxColumn pname;
         private DataGridViewTextBoxColumn type;
+        private TextBox ProjectType_textBox;
+        private Label label4;
+        private PictureBox Icon_pictureBox;
     }
 }

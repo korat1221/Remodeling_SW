@@ -66,10 +66,6 @@ namespace main
             Program.getMenuForm().DoLoadForm(40, OnLoadProc1);
         }
 
-        private void toolStripButton4_Click(object sender, EventArgs e)
-        {
-            Program.getMenuForm().DoLoadForm(41, OnLoadProc2);
-        }
 
         public static bool OnLoadProc1(Form form)
         {
@@ -81,20 +77,13 @@ namespace main
         }
         public static bool OnLoadProc2(Form form)
         {
-            ProjectList f = (ProjectList)form;
-
-            f.LoadData("");
-
-            return true;
-        }
-        public static bool OnLoadProc3(Form form)
-        {
             OpenProject f = (OpenProject)form;
 
             f.LoadData("");
 
             return true;
         }
+       
 
         private void EnergyNeed_Sim_Click(object sender, EventArgs e)
         {
@@ -105,7 +94,12 @@ namespace main
         private void FinalEnergy_Sim_Click(object sender, EventArgs e)
         {
             CALC.Run_All();
-            MessageBox.Show("계산되었습니다."); 
+            MessageBox.Show("계산되었습니다.");
+        }
+
+        private void ProjectOpen_Click(object sender, EventArgs e)
+        {
+            Program.getMenuForm().DoLoadForm(42, OnLoadProc2);
         }
     }
 }

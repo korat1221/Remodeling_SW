@@ -1,5 +1,6 @@
 ﻿using main.contents;
 using main.contents.Building;
+using main.contents.Alt;
 using main.contents.Construction;
 using main.contents.Result;
 using main.contentslist;
@@ -46,7 +47,7 @@ namespace main
             WindPower,
             SupplyRate,
             EIndependenceRatio,
-            ReportExisting,
+            Element_Report,
             ReportRemodeling,
             FormDebug,
             List_ConstructionWindow,
@@ -78,6 +79,8 @@ namespace main
             List_WindPower,
             PrintReport_Main,
             List_AHUSystem,
+            Element_Structure,
+            Element_Win,
             None
 
         }
@@ -98,7 +101,9 @@ namespace main
             new PrintReport_Final(), 
             new List_PV(),new List_FuelCell(),new List_WindPower(),
             new Building_Report(),
-            new List_AHUSystem()
+            new List_AHUSystem(),
+            new Element_Structure(), new Element_Win(),
+            new AltMain()
         }; 
         bool scriptable = false;
         public class FormParam
@@ -436,6 +441,24 @@ namespace main
             else if (formParam.formID == 57)
             {
                 List_AHUSystem f = (List_AHUSystem)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 58)
+            {
+                Element_Structure f = (Element_Structure)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 59)
+            {
+                Element_Win f = (Element_Win)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 60)
+            {
+                AltMain f = (AltMain)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -809,6 +832,9 @@ namespace main
                     forms[55] = new List_WindPower();
                     forms[56] = new Building_Report();
                     forms[57] = new List_AHUSystem();
+                    forms[58] = new Element_Structure();
+                    forms[59] = new Element_Win();
+                    forms[60] = new AltMain();
 
                     i = -1;
                     while (++i < forms.Length)

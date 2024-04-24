@@ -53,7 +53,14 @@ namespace main.contents
 
         }
 
+        public static bool OnLoadProc1(Form form)
+        {
+            OpenProject f = (OpenProject)form;
 
+            f.LoadData("");
+
+            return true;
+        }
 
         public static bool OnLoadProc2(Form form)
         {
@@ -111,7 +118,7 @@ namespace main.contents
             dataGridView1.Rows.Clear();
 
             string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type FROM projects WHERE type='" + ProjectType + "'OR type = '" + ProjectType2 + "'");
-            if(res.Length > 0)
+            if (res.Length > 0)
             {
                 for (int n = 0; n < res.Length; n++)
                 {
@@ -129,7 +136,7 @@ namespace main.contents
                 }
                 drawing = false;
             }
-            
+
         }
         static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
         {
@@ -182,7 +189,7 @@ namespace main.contents
                     db.Open();
 
                     string[][] res = Program.DB.querySQL(db, "SELECT name FROM sqlite_master WHERE type IN('table', 'view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN('table', 'view') ORDER BY 1");
-                    if(res.Length > 0)
+                    if (res.Length > 0)
                     {
                         for (int n = 0; n < res.Length; n++)
                         {
@@ -210,6 +217,7 @@ namespace main.contents
                 }
             }
         }
+      
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
 
@@ -391,29 +399,6 @@ namespace main.contents
             }
         }
 
-        private void OpenCurrentProject()
-        {
-            int k = dataGridView1.CurrentCell.RowIndex;
-            if (k > -1)
-            {
-                ProjectList.CurProjID = dataGridView1.Rows[k].Cells[2].Value.ToString();
-
-                Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET current = 0");
-                Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET current = 1 WHERE pnum='" + ProjectList.CurProjID + "'");
-
-                Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
-                Program.DB.initTables(DB.type.ProjDB);
-                Program.getMenuForm().resetAll();
-                Program.getMenuForm().DoLoadFormDirect(0);
-
-                Program.UTIL.ReloadModel();
-            }
-        }
-
-        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            OpenCurrentProject();
-        }
 
         private void Save_button_Click(object sender, EventArgs e)
         {
@@ -424,11 +409,13 @@ namespace main.contents
                 { MessageBox.Show("프로젝트명을 전부 입력하세요."); }
                 else
                 {
-                    Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET title= '"+dataGridView1.Rows[k].Cells[3].Value.ToString()+"' WHERE pnum='" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "'");
-                    MessageBox.Show("저장되었습니다.");
+                    Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET title= '" + dataGridView1.Rows[k].Cells[3].Value.ToString() + "' WHERE pnum='" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "'");
+                    MessageBox.Show("생성되었습니다.");
                 }
             }
+            Program.getMenuForm().DoLoadForm(42, OnLoadProc1);
 
         }
+
     }
 }
