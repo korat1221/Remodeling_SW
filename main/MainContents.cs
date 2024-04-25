@@ -81,6 +81,8 @@ namespace main
             List_AHUSystem,
             Element_Structure,
             Element_Win,
+            List_Alt,
+            AltMain,
             None
 
         }
@@ -103,7 +105,7 @@ namespace main
             new Building_Report(),
             new List_AHUSystem(),
             new Element_Structure(), new Element_Win(),
-            new AltMain()
+            new List_Alt(), new AltMain()
         }; 
         bool scriptable = false;
         public class FormParam
@@ -457,6 +459,12 @@ namespace main
                 f.LoadData(formParam.ID);
             }
             else if (formParam.formID == 60)
+            {
+                List_Alt f = (List_Alt)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 61)
             {
                 AltMain f = (AltMain)form;
 
@@ -834,7 +842,8 @@ namespace main
                     forms[57] = new List_AHUSystem();
                     forms[58] = new Element_Structure();
                     forms[59] = new Element_Win();
-                    forms[60] = new AltMain();
+                    forms[60] = new List_Alt();
+                    forms[61] = new AltMain();
 
                     i = -1;
                     while (++i < forms.Length)
@@ -1058,6 +1067,20 @@ namespace main
                     {
                         openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
                         forms[idx] = new WindPower();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+            else if (idx == 61)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new AltMain();
                         forms[idx].TopLevel = false;
                         openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
                         return;
