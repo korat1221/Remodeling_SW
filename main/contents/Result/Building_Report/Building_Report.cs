@@ -348,8 +348,8 @@ namespace main.contents.Result.Building_Report
                 double 연간소요량 = 0, 연간전기 = 0, 연간가스 = 0;
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    string[][] Final1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
-                    string[][] Final2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조", "연료='가스' and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] Final1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] Final2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량", "연료='가스' and 월 ='" + (mth + 1).ToString() + "월'");
                     if (Final1.Length > 0)
                     {
                         난방[mth] = Convert.ToDouble(Final1[0][0]);
@@ -365,7 +365,7 @@ namespace main.contents.Result.Building_Report
                                 신재생[mth] += Convert.ToDouble(PV[a][0]);
                             }
                         }
-                        총전기[mth] = Convert.ToDouble(Final1[0][0]) + Convert.ToDouble(Final1[0][1]) + Convert.ToDouble(Final1[0][2]) + Convert.ToDouble(Final1[0][3]) + Convert.ToDouble(Final1[0][4]) - 신재생[mth];
+                        총전기[mth] = Convert.ToDouble(Final1[0][6])- 신재생[mth];
                     }
                     if (Final2.Length > 0)
                     {
@@ -374,7 +374,7 @@ namespace main.contents.Result.Building_Report
                         급탕[mth] = 급탕[mth] + Convert.ToDouble(Final2[0][2]);
                         조명[mth] = 조명[mth] + Convert.ToDouble(Final2[0][3]);
                         공조[mth] = 공조[mth] + Convert.ToDouble(Final2[0][4]);
-                        총가스[mth] = Convert.ToDouble(Final2[0][0]) + Convert.ToDouble(Final2[0][1]) + Convert.ToDouble(Final2[0][2]) + Convert.ToDouble(Final2[0][3]) + Convert.ToDouble(Final2[0][4]);
+                        총가스[mth] = Convert.ToDouble(Final2[0][6]);
                     }
 
                     총소요량[mth] = 총전기[mth] + 총가스[mth];
@@ -889,8 +889,8 @@ namespace main.contents.Result.Building_Report
                     double 연간소요량_후 = 0, 연간전기_후 = 0, 연간가스_후 = 0;
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        string[][] Final1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
-                        string[][] Final2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조", "연료='가스' and 월 ='" + (mth + 1).ToString() + "월'");
+                        string[][] Final1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
+                        string[][] Final2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량", "연료='가스' and 월 ='" + (mth + 1).ToString() + "월'");
                         if (Final1.Length > 0)
                         {
                             난방_후[mth] = Convert.ToDouble(Final1[0][0]);
@@ -906,7 +906,7 @@ namespace main.contents.Result.Building_Report
                                     신재생_후[mth] += Convert.ToDouble(PV[a][0]);
                                 }
                             }
-                            총전기_후[mth] = Convert.ToDouble(Final1[0][0]) + Convert.ToDouble(Final1[0][1]) + Convert.ToDouble(Final1[0][2]) + Convert.ToDouble(Final1[0][3]) + Convert.ToDouble(Final1[0][4]) - 신재생_후[mth];
+                            총전기_후[mth] =  Convert.ToDouble(Final1[0][6]) - 신재생_후[mth];
                         }
                         if (Final2.Length > 0)
                         {
@@ -915,7 +915,7 @@ namespace main.contents.Result.Building_Report
                             급탕_후[mth] = 급탕_후[mth] + Convert.ToDouble(Final2[0][2]);
                             조명_후[mth] = 조명_후[mth] + Convert.ToDouble(Final2[0][3]);
                             공조_후[mth] = 공조_후[mth] + Convert.ToDouble(Final2[0][4]);
-                            총가스_후[mth] = Convert.ToDouble(Final2[0][0]) + Convert.ToDouble(Final2[0][1]) + Convert.ToDouble(Final2[0][2]) + Convert.ToDouble(Final2[0][3]) + Convert.ToDouble(Final2[0][4]);
+                            총가스_후[mth] = Convert.ToDouble(Final2[0][6]);
                         }
 
                         총소요량_후[mth] = 총전기_후[mth] + 총가스_후[mth];
@@ -939,8 +939,8 @@ namespace main.contents.Result.Building_Report
                     double 연간소요량_전 = 0, 연간전기_전 = 0, 연간가스_전 = 0;
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        string[][] Final1 = Program.DB.querySQL(res[0][0], "Select 난방,냉방,급탕,조명,공조 from FinalEnergy_Result Where 연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
-                        string[][] Final2 = Program.DB.querySQL(res[0][0], "Select 난방,냉방,급탕,조명,공조 from FinalEnergy_Result Where 연료='가스' and 월 ='" + (mth + 1).ToString() + "월'");
+                        string[][] Final1 = Program.DB.querySQL(res[0][0], "Select 난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량 from FinalEnergy_Result Where 연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
+                        string[][] Final2 = Program.DB.querySQL(res[0][0], "Select 난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량 from FinalEnergy_Result Where 연료='가스' and 월 ='" + (mth + 1).ToString() + "월'");
                         if (Final1.Length > 0)
                         {
                             난방_전[mth] = Convert.ToDouble(Final1[0][0]);
@@ -948,7 +948,7 @@ namespace main.contents.Result.Building_Report
                             급탕_전[mth] = Convert.ToDouble(Final1[0][2]);
                             조명_전[mth] = Convert.ToDouble(Final1[0][3]);
                             공조_전[mth] = Convert.ToDouble(Final1[0][4]);
-                            string[][] PV = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "최종사용량", "월 ='" + (mth + 1).ToString() + "월'");
+                            string[][] PV = Program.DB.getValue(res[0][0], "PV_Result", "최종사용량", "월 ='" + (mth + 1).ToString() + "월'");
                             if (PV.Length > 0)
                             {
                                 for (int a = 0; a < PV.Length; a++)
@@ -956,7 +956,7 @@ namespace main.contents.Result.Building_Report
                                     신재생_전[mth] += Convert.ToDouble(PV[a][0]);
                                 }
                             }
-                            총전기_전[mth] = Convert.ToDouble(Final1[0][0]) + Convert.ToDouble(Final1[0][1]) + Convert.ToDouble(Final1[0][2]) + Convert.ToDouble(Final1[0][3]) + Convert.ToDouble(Final1[0][4]) - 신재생_전[mth];
+                            총전기_전[mth] = Convert.ToDouble(Final1[0][6]) - 신재생_전[mth];
                         }
                         if (Final2.Length > 0)
                         {
@@ -965,7 +965,7 @@ namespace main.contents.Result.Building_Report
                             급탕_전[mth] = 급탕_전[mth] + Convert.ToDouble(Final2[0][2]);
                             조명_전[mth] = 조명_전[mth] + Convert.ToDouble(Final2[0][3]);
                             공조_전[mth] = 공조_전[mth] + Convert.ToDouble(Final2[0][4]);
-                            총가스_전[mth] = Convert.ToDouble(Final2[0][0]) + Convert.ToDouble(Final2[0][1]) + Convert.ToDouble(Final2[0][2]) + Convert.ToDouble(Final2[0][3]) + Convert.ToDouble(Final2[0][4]);
+                            총가스_전[mth] =  Convert.ToDouble(Final2[0][6]);
                         }
 
                         총소요량_전[mth] = 총전기_전[mth] + 총가스_전[mth];
