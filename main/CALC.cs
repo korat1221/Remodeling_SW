@@ -54,22 +54,20 @@ namespace main
             Program.DB.deleteTable(DB.type.ProjDB, "HeatingSystem_Result");
             Program.DB.initTable(DB.type.ProjDB, "HeatingSystem_Result");
 
-            Program.DB.deleteTable(DB.type.ProjDB, "CoolingSystem_Result");
-            Program.DB.initTable(DB.type.ProjDB, "CoolingSystem_Result");
+          // Program.DB.deleteTable(DB.type.ProjDB, "CoolingSystem_Result");
+        //   Program.DB.initTable(DB.type.ProjDB, "CoolingSystem_Result");
 
 
-            Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result");
-            Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result");
-
-            Program.DB.deleteTable(DB.type.ProjDB, "PV_Result");
-            Program.DB.initTable(DB.type.ProjDB, "PV_Result");
+           Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result");
+           Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result");
+      
             string[][] NowProjNum = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
 
 
             Cal_Qb(NowProjNum[0][0]);
             Cal_Qahu(NowProjNum[0][0]);
             Cal_Qfh(NowProjNum[0][0]);
-            CoolingSystemCalc();
+           // CoolingSystemCalc();
             Cal_Qfw();
             Cal_Qf(NowProjNum[0][0]);
             RESystemCalc();
@@ -992,6 +990,7 @@ namespace main
         }
         private static void Final_Save(Final final1)
         {
+            #region 전기
             String MTH;
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             string[][] PNum = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
@@ -1003,9 +1002,30 @@ namespace main
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + MTH + "','" + "전기" + "','" +
                     final1.Qhf_elec[mth] + "','" + final1.Qcf_elec[mth] + "','" + final1.Qwf_elec[mth] + "','" + final1.Qlf_elec[mth] + "','" +
                     final1.Qvf_elec[mth] + "','" + final1.Qbase_elec[mth] + "','" + final1.Qf_elec_tot_mth[mth]
-                    + "'", "번호,월,연료"); ;
+                    + "'", "번호,월,연료"); 
 
             }
+
+            double Qhf_elec_a = 0, Qcf_elec_a = 0, Qwf_elec_a = 0, Qlf_elec_a = 0, Qvf_elec_a = 0, Qbase_elec_a = 0, Qf_elec_tot_a = 0;
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Qhf_elec_a += final1.Qhf_elec[mth];
+                Qcf_elec_a += final1.Qcf_elec[mth];
+                Qwf_elec_a += final1.Qwf_elec[mth];
+                Qlf_elec_a += final1.Qlf_elec[mth];
+                Qvf_elec_a += final1.Qvf_elec[mth];
+                Qbase_elec_a += final1.Qbase_elec[mth];
+            }
+            Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a + Qvf_elec_a + Qbase_elec_a;
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
+                     "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
+                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + "전기" + "','" +
+                     Qhf_elec_a + "','" + Qcf_elec_a + "','" + Qwf_elec_a + "','" + Qlf_elec_a + "','" +
+                     Qvf_elec_a + "','" + Qbase_elec_a + "','" + Qf_elec_tot_a
+                     + "'", "번호,월,연료");
+            #endregion
+            #region 가스
             string Carrier = "";
             if (final1.Carrier_h != "" && final1.Carrier_h != null) { Carrier = final1.Carrier_h; } else if (final1.Carrier_w != "" && final1.Carrier_w != null) { Carrier = final1.Carrier_w; } else if (final1.Carrier_c != "" && final1.Carrier_c != null) { Carrier = final1.Carrier_c; }
             if (Carrier == "LNG" || Carrier == "LPG") { Carrier = "가스"; }
@@ -1019,9 +1039,46 @@ namespace main
                         "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + MTH + "','" + Carrier + "','" +
                         final1.Qhf_gas[mth] + "','" + final1.Qcf_gas[mth] + "','" + final1.Qwf_gas[mth] + "','" + "0" + "','" +
                         "0" + "','" + final1.Qbase_gas[mth] + "','" + final1.Qf_gas_tot_mth[mth]
-                        + "'", "번호,월,연료"); ;
+                        + "'", "번호,월,연료"); 
                 }
             }
+            double Qhf_gas_a = 0, Qcf_gas_a = 0, Qwf_gas_a = 0, Qbase_gas_a = 0, Qf_gas_tot_a = 0;
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Qhf_gas_a += final1.Qhf_gas[mth];
+                Qcf_gas_a += final1.Qcf_gas[mth];
+                Qwf_gas_a += final1.Qwf_gas[mth];
+                Qbase_gas_a += final1.Qbase_gas[mth];
+            }
+            Qf_gas_tot_a = Qhf_gas_a + Qcf_gas_a + Qwf_gas_a + Qbase_gas_a;
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
+                     "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
+                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" +
+                     Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_elec_a + "','" + "0" + "','" +
+                     "0" + "','" + Qbase_gas_a + "','" + Qf_gas_tot_a
+                     + "'", "번호,월,연료");
+            #endregion
+
+            #region 전체
+            for (int mth = 0; mth <= 11; mth++)
+            {
+                MTH = (mth + 1).ToString() + "월";
+                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
+                    "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
+                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + MTH + "','" + "전체" + "','" +
+                    (final1.Qhf_elec[mth]+ final1.Qhf_gas[mth]) + "','" + (final1.Qcf_elec[mth]+final1.Qcf_gas[mth]) + "','" + (final1.Qwf_elec[mth]+final1.Qwf_gas[mth]) + "','" + final1.Qlf_elec[mth] + "','" +
+                    final1.Qvf_elec[mth] + "','" + (final1.Qbase_elec[mth]+final1.Qbase_gas[mth]) + "','" + (final1.Qf_elec_tot_mth[mth]+final1.Qf_gas_tot_mth[mth])
+                    + "'", "번호,월,연료"); 
+            }
+
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
+                   "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
+                   "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" +
+                   (Qhf_elec_a+Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_elec_a) + "','" + Qlf_elec_a + "','" +
+                   Qvf_elec_a + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + (Qf_elec_tot_a + Qf_gas_tot_a)
+                   + "'", "번호,월,연료");
+            #endregion
         }
         #endregion
 
@@ -1064,10 +1121,10 @@ namespace main
             Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result_Alt");
             Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result_Alt");
             Cal_Alt cal = new Cal_Alt();
-            //for(int  i = 0; i < RuleAlt.Length; i++)
-            //{
-            //    cal.Calc_Alt(RuleAlt[i]);
-            //}
+            for(int  i = 0; i < RuleAlt.Length; i++)
+            {
+                cal.Calc_Alt(RuleAlt[i]);
+            }
 
             string[][] Type = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호", "");
             if (Type.Length > 0)
