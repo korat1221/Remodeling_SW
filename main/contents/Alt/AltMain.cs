@@ -199,7 +199,7 @@ namespace main.contents.Alt
                     {                 
                         if (Energy[a] == Convert.ToDouble(value[i][1]))
                         {
-                            ElementType[a] = value[i][0];
+                            ElementType[a] = value[i][0].Substring(3, value[i][0].Length -3);
                             break;
                         }
                     }
@@ -216,7 +216,7 @@ namespace main.contents.Alt
 
 
                 string s = "", s2 = ""; 
-                for (int a = 0; a < Saving.Length ; a++)
+                for (int a = 1; a < Saving.Length ; a++)
                 {
                         s2 += Convert.ToDouble(Saving[a].ToString("0")) + ",";
                         s += "\""+ElementType[a] + "\",";
