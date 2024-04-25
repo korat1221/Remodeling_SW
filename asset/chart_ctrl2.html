@@ -346,6 +346,78 @@ function drawChart3(arr) {
     }
 }
 
+function drawChart5(arr, labels) {
+    if (arr) {
+        let datasets = [], i = -1;
+
+            let el = arr[1];
+
+            datasets.push({
+                type: el.type,
+                borderWidth: 1,
+                data: el.data, 
+                borderColor: el.borderColor,
+                backgroundColor: el.backgroundColor,
+                pointStyle: 'circle',
+                min:el.min,
+                max:el.max,
+                pointRadius: 3,
+                borderDash: [10, 10],
+            });
+
+        document.getElementById("cont").innerHTML = '<canvas id="myChart" style="width: 100%;height: 100%;"></canvas>';
+
+        new Chart(document.getElementById("myChart").getContext("2d"), {
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            showTooltips: false,
+            options: {
+                    animation:{
+                    onComplete : function(){
+                        var ctx = this.ctx;
+                        ctx.fillStyle = "#aaa";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "bottom";                      
+
+                        let el = this._metasets[1];
+                        
+                        el.data.forEach(function (el2, idx) {
+                            let val = el._dataset.data[idx];
+                            ctx.fillText(val.toFixed(1), el2.x, el2.y + 20);
+                        });                      
+                    }
+                },
+                responsive: false,
+                scales: {
+                    x: {
+                        grid: {
+                            color:"rgba(0,0,0,0)"
+                        },
+                        display: true,
+                        title: {
+                        display: false,
+                        },
+                        ticks: {
+                            autoSkip: true
+                        }
+                    },                   
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: false,
+                    },
+                },
+                events: ["touchstart", "touchmove", "touchend"],
+            },
+        });
+    }
+}
+
 </script>
 </body>
 </html>
