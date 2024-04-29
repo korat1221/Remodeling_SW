@@ -564,7 +564,7 @@ namespace main.contents
 
                         check_Type = TB_form.Select_TB[8];
                         check_dins = Convert.ToDouble(TB_form.Select_TB[9]);
-                        dU = Convert.ToDouble(TB_form.Select_TB[10]);
+                        dU = Convert.ToDouble(TB_form.Select_TB[10]);   // TB_form.Select_TB[12]
                         dU_textBox.Text = string.Format("{0:F3}", dU);
 
                         if (PerArea_textBox.Text != "" && PerArea != 0)
