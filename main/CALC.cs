@@ -54,8 +54,8 @@ namespace main
             Program.DB.deleteTable(DB.type.ProjDB, "HeatingSystem_Result");
             Program.DB.initTable(DB.type.ProjDB, "HeatingSystem_Result");
 
-          // Program.DB.deleteTable(DB.type.ProjDB, "CoolingSystem_Result");
-        //   Program.DB.initTable(DB.type.ProjDB, "CoolingSystem_Result");
+           Program.DB.deleteTable(DB.type.ProjDB, "CoolingSystem_Result");
+           Program.DB.initTable(DB.type.ProjDB, "CoolingSystem_Result");
 
 
            Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result");
@@ -67,7 +67,7 @@ namespace main
             Cal_Qb(NowProjNum[0][0]);
             Cal_Qahu(NowProjNum[0][0]);
             Cal_Qfh(NowProjNum[0][0]);
-           // CoolingSystemCalc();
+            CoolingSystemCalc();
             Cal_Qfw();
             Cal_Qf(NowProjNum[0][0]);
             RESystemCalc();
@@ -272,7 +272,7 @@ namespace main
                         }
                     }
 
-                    CMH_tot = Convert.ToDouble(BValue[0][1]) * Convert.ToDouble(BValue[0][2]);
+                    CMH_tot = Convert.ToDouble(BValue[0][1]) *Area_tot ;
                     q50_element[0] = q50_element[0] * CMH_tot / Area_q50;
                     q50_element[1] = q50_element[1] * CMH_tot / Area_q50;
                     q50_element[2] = q50_element[2] * CMH_tot / Area_q50;
