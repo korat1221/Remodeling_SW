@@ -256,7 +256,11 @@ namespace main
                 AHU_HU_Type = Value[0][16];
                 AHU_HU_Control = Value[0][17];
                 AHU_HU_HULevel = Value[0][18];
-                AHU_HU_Volume = Convert.ToDouble(Value[0][19]);
+                if (Value[0][19] != null && Value[0][19] != "")
+                {
+                    AHU_HU_Volume = Convert.ToDouble(Value[0][19]);
+                }
+                else AHU_HU_Volume = 0;
 
                 AHU_SA_Volume = Convert.ToDouble(Value[0][20]);
                 AHU_EA_Volume = Convert.ToDouble(Value[0][21]);
