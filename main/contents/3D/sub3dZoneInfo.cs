@@ -598,14 +598,14 @@ namespace main.contents
                         String[][] BlindValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "설치,외부반사율,투과율,흡수율", "번호 = '" + Blind + "'");
                         if (SubLoad.Length > 0)
                         {
-                            String[][] MainLoad = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "유리종류,태양열취득률,빛투과율,유리열관류율", "번호 = '" + SubLoad[0][0] + "'");
+                            String[][] MainLoad = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "유리종류,태양열취득률,빛투과율,유리열관류율,이중단창", "번호 = '" + SubLoad[0][0] + "'");
                             double SHGC_on;
                             if (BlindValue.Length > 0)
                             { SHGC_on = Calc_Blind_SHGC(Convert.ToDouble(MainLoad[0][1]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Convert.ToDouble(BlindValue[0][3]), Convert.ToDouble(MainLoad[0][3]), BlindValue[0][0]); }
                             else { SHGC_on = Convert.ToDouble(MainLoad[0][1]); }
 
                             double Glass_Ex, Glass_In;
-                            if (MainLoad[0][0].Contains("/"))
+                            if (MainLoad[0][4] == "단창")
                             {
                                 string[][] glass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "외부반사율,내부반사율", "제품명 ='" + MainLoad[0][0] + "'");
                                 if (glass.Length == 0)

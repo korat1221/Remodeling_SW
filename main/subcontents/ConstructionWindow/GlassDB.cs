@@ -27,7 +27,7 @@ namespace main.subcontents
             SingleDoubleTriple_comboBox.Items.Clear();
             SingleDoubleTriple_comboBox.Items.Add("단창");
             SingleDoubleTriple_comboBox.Items.Add("복층");
-            SingleDoubleTriple_comboBox.Items.Add("유리");
+            SingleDoubleTriple_comboBox.Items.Add("삼중");
             SingleDoubleTriple_comboBox.SelectedIndex = 0;
             //아르곤/공기 콤보박스
             ArAir_comboBox.Items.Clear();
