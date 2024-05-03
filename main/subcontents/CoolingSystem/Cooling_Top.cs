@@ -76,7 +76,7 @@ namespace main.subcontents.CoolingSystem
             CoolerTop_dataGridView.Columns.Add("A6", "성능.냉각수량[CMH]");
             CoolerTop_dataGridView.Columns.Add("A7", "냉각수온도.입구[℃]");
             CoolerTop_dataGridView.Columns.Add("A8", "냉각수온도.출구[℃]");
-            CoolerTop_dataGridView.Columns.Add("A9", "팬형식");
+            CoolerTop_dataGridView.Columns.Add("A9", "팬유형");
             CoolerTop_dataGridView.Columns.Add("A10", "전력소비계수");
             CoolerTop_dataGridView.Columns.Add("A11", "대기전력");
             CoolerTop_dataGridView.Columns.Add("A12", "설치");

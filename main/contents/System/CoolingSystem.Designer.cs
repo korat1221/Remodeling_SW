@@ -104,27 +104,33 @@
             PumpMethod_comboBox = new CustomComboBox();
             label13 = new Label();
             tabPage4 = new TabPage();
-            ce3Zone_textBox = new TextBox();
-            ce3Zone_button = new Button();
-            label18 = new Label();
-            label19 = new Label();
-            ce3Type_comboBox = new CustomComboBox();
+            ce2Ahu_textBox = new TextBox();
+            ce2Ahu_button = new Button();
+            ce2AhuText2 = new Label();
+            ce2AhuText = new Label();
+            ce2Ahu_comboBox = new CustomComboBox();
+            ce1Ahu_textBox = new TextBox();
+            ce1Ahu_button = new Button();
+            ce1AhuText2 = new Label();
+            ce1AhuText = new Label();
+            ce1Ahu_comboBox = new CustomComboBox();
             ce_Remove_button = new Button();
             ce_dataGridView = new DataGridView();
             ce2Zone_textBox = new TextBox();
             ce2Zone_button = new Button();
-            label14 = new Label();
+            ce2ZoneText = new Label();
             label15 = new Label();
             ce2Type_comboBox = new CustomComboBox();
             ce1Zone_textBox = new TextBox();
             ce1Zone_button = new Button();
-            label16 = new Label();
+            ce1ZoneText = new Label();
             label17 = new Label();
             ce1Type_comboBox = new CustomComboBox();
             ZoneS_label = new Label();
             label7 = new Label();
             ImagePanel = new Panel();
             panel4 = new Panel();
+            AhuS_label = new Label();
             eva = new PictureBox();
             Pump_pictureBox = new PictureBox();
             ce3_pictureBox = new PictureBox();
@@ -154,10 +160,10 @@
             radioButton1 = new RadioButton();
             label9 = new Label();
             label8 = new Label();
-            textBox1 = new TextBox();
-            textBox5 = new TextBox();
-            textBox6 = new TextBox();
-            textBox7 = new TextBox();
+            CA_MaxCoolingLoad_Textbox = new TextBox();
+            CA_AnnualCoolingNeed_Textbox = new TextBox();
+            SelectedAhuText = new TextBox();
+            CA_FloorArea_Textbox = new TextBox();
             CZ_MaxCoolingLoad_Textbox = new TextBox();
             CZ_AnnualCoolingNeed_Textbox = new TextBox();
             SelectedZoneText = new TextBox();
@@ -165,7 +171,7 @@
             label25 = new Label();
             label26 = new Label();
             label23 = new Label();
-            button2 = new Button();
+            Ahu_button = new Button();
             label6 = new Label();
             Zone_button = new Button();
             CZ_FloorArea_Textbox = new TextBox();
@@ -790,7 +796,6 @@
             tabPage3.TabIndex = 2;
             tabPage3.Text = "분배";
             tabPage3.UseVisualStyleBackColor = true;
-          
             // 
             // CPump2_textBox
             // 
@@ -805,7 +810,6 @@
             CPump2_textBox.TabIndex = 204;
             CPump2_textBox.TextAlign = HorizontalAlignment.Center;
             CPump2_textBox.Visible = false;
-          
             // 
             // CPump1_label
             // 
@@ -874,7 +878,6 @@
             CPump1_textBox.TabIndex = 201;
             CPump1_textBox.TextAlign = HorizontalAlignment.Center;
             CPump1_textBox.Visible = false;
-           
             // 
             // CPumpMethod_comboBox
             // 
@@ -1063,21 +1066,26 @@
             // 
             // tabPage4
             // 
-            tabPage4.Controls.Add(ce3Zone_textBox);
-            tabPage4.Controls.Add(ce3Zone_button);
-            tabPage4.Controls.Add(label18);
-            tabPage4.Controls.Add(label19);
-            tabPage4.Controls.Add(ce3Type_comboBox);
+            tabPage4.Controls.Add(ce2Ahu_textBox);
+            tabPage4.Controls.Add(ce2Ahu_button);
+            tabPage4.Controls.Add(ce2AhuText2);
+            tabPage4.Controls.Add(ce2AhuText);
+            tabPage4.Controls.Add(ce2Ahu_comboBox);
+            tabPage4.Controls.Add(ce1Ahu_textBox);
+            tabPage4.Controls.Add(ce1Ahu_button);
+            tabPage4.Controls.Add(ce1AhuText2);
+            tabPage4.Controls.Add(ce1AhuText);
+            tabPage4.Controls.Add(ce1Ahu_comboBox);
             tabPage4.Controls.Add(ce_Remove_button);
             tabPage4.Controls.Add(ce_dataGridView);
             tabPage4.Controls.Add(ce2Zone_textBox);
             tabPage4.Controls.Add(ce2Zone_button);
-            tabPage4.Controls.Add(label14);
+            tabPage4.Controls.Add(ce2ZoneText);
             tabPage4.Controls.Add(label15);
             tabPage4.Controls.Add(ce2Type_comboBox);
             tabPage4.Controls.Add(ce1Zone_textBox);
             tabPage4.Controls.Add(ce1Zone_button);
-            tabPage4.Controls.Add(label16);
+            tabPage4.Controls.Add(ce1ZoneText);
             tabPage4.Controls.Add(label17);
             tabPage4.Controls.Add(ce1Type_comboBox);
             tabPage4.Location = new Point(4, 24);
@@ -1088,62 +1096,131 @@
             tabPage4.Text = "공급";
             tabPage4.UseVisualStyleBackColor = true;
             // 
-            // ce3Zone_textBox
+            // ce2Ahu_textBox
             // 
-            ce3Zone_textBox.BackColor = Color.White;
-            ce3Zone_textBox.BorderStyle = BorderStyle.None;
-            ce3Zone_textBox.Enabled = false;
-            ce3Zone_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ce3Zone_textBox.ForeColor = SystemColors.ControlDark;
-            ce3Zone_textBox.Location = new Point(784, 9);
-            ce3Zone_textBox.Name = "ce3Zone_textBox";
-            ce3Zone_textBox.Size = new Size(120, 15);
-            ce3Zone_textBox.TabIndex = 211;
-            ce3Zone_textBox.TextAlign = HorizontalAlignment.Center;
+            ce2Ahu_textBox.BackColor = Color.White;
+            ce2Ahu_textBox.BorderStyle = BorderStyle.None;
+            ce2Ahu_textBox.Enabled = false;
+            ce2Ahu_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ce2Ahu_textBox.ForeColor = SystemColors.ControlDark;
+            ce2Ahu_textBox.Location = new Point(737, 30);
+            ce2Ahu_textBox.Name = "ce2Ahu_textBox";
+            ce2Ahu_textBox.Size = new Size(120, 15);
+            ce2Ahu_textBox.TabIndex = 216;
+            ce2Ahu_textBox.TextAlign = HorizontalAlignment.Center;
+            ce2Ahu_textBox.Visible = false;
             // 
-            // ce3Zone_button
+            // ce2Ahu_button
             // 
-            ce3Zone_button.BackColor = SystemColors.ControlLight;
-            ce3Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            ce3Zone_button.FlatStyle = FlatStyle.System;
-            ce3Zone_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            ce3Zone_button.Location = new Point(906, 5);
-            ce3Zone_button.Margin = new Padding(0);
-            ce3Zone_button.Name = "ce3Zone_button";
-            ce3Zone_button.Size = new Size(23, 23);
-            ce3Zone_button.TabIndex = 210;
-            ce3Zone_button.Text = "+";
-            ce3Zone_button.UseVisualStyleBackColor = false;
+            ce2Ahu_button.BackColor = SystemColors.ControlLight;
+            ce2Ahu_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            ce2Ahu_button.FlatStyle = FlatStyle.System;
+            ce2Ahu_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            ce2Ahu_button.Location = new Point(859, 26);
+            ce2Ahu_button.Margin = new Padding(0);
+            ce2Ahu_button.Name = "ce2Ahu_button";
+            ce2Ahu_button.Size = new Size(23, 23);
+            ce2Ahu_button.TabIndex = 215;
+            ce2Ahu_button.Text = "+";
+            ce2Ahu_button.UseVisualStyleBackColor = false;
+            ce2Ahu_button.Visible = false;
+            ce2Ahu_button.Click += ce2Ahu_button_Click;
             // 
-            // label18
+            // ce2AhuText2
             // 
-            label18.AutoSize = true;
-            label18.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label18.Location = new Point(726, 9);
-            label18.Name = "label18";
-            label18.Size = new Size(60, 15);
-            label18.TabIndex = 209;
-            label18.Text = "공급 AHU";
+            ce2AhuText2.AutoSize = true;
+            ce2AhuText2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            ce2AhuText2.Location = new Point(679, 30);
+            ce2AhuText2.Name = "ce2AhuText2";
+            ce2AhuText2.Size = new Size(60, 15);
+            ce2AhuText2.TabIndex = 214;
+            ce2AhuText2.Text = "공급 AHU";
+            ce2AhuText2.Visible = false;
             // 
-            // label19
+            // ce2AhuText
             // 
-            label19.AutoSize = true;
-            label19.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label19.Location = new Point(509, 9);
-            label19.Name = "label19";
-            label19.Size = new Size(95, 15);
-            label19.TabIndex = 208;
-            label19.Text = "공조기공급 종류";
+            ce2AhuText.AutoSize = true;
+            ce2AhuText.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            ce2AhuText.Location = new Point(461, 30);
+            ce2AhuText.Name = "ce2AhuText";
+            ce2AhuText.Size = new Size(95, 15);
+            ce2AhuText.TabIndex = 213;
+            ce2AhuText.Text = "공조기공급 종류";
+            ce2AhuText.Visible = false;
             // 
-            // ce3Type_comboBox
+            // ce2Ahu_comboBox
             // 
-            ce3Type_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            ce3Type_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ce3Type_comboBox.FormattingEnabled = true;
-            ce3Type_comboBox.Location = new Point(605, 4);
-            ce3Type_comboBox.Name = "ce3Type_comboBox";
-            ce3Type_comboBox.Size = new Size(120, 23);
-            ce3Type_comboBox.TabIndex = 207;
+            ce2Ahu_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            ce2Ahu_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ce2Ahu_comboBox.FormattingEnabled = true;
+            ce2Ahu_comboBox.Location = new Point(558, 26);
+            ce2Ahu_comboBox.Name = "ce2Ahu_comboBox";
+            ce2Ahu_comboBox.Size = new Size(120, 23);
+            ce2Ahu_comboBox.TabIndex = 212;
+            ce2Ahu_comboBox.Visible = false;
+            // 
+            // ce1Ahu_textBox
+            // 
+            ce1Ahu_textBox.BackColor = Color.White;
+            ce1Ahu_textBox.BorderStyle = BorderStyle.None;
+            ce1Ahu_textBox.Enabled = false;
+            ce1Ahu_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ce1Ahu_textBox.ForeColor = SystemColors.ControlDark;
+            ce1Ahu_textBox.Location = new Point(737, 6);
+            ce1Ahu_textBox.Name = "ce1Ahu_textBox";
+            ce1Ahu_textBox.Size = new Size(120, 15);
+            ce1Ahu_textBox.TabIndex = 211;
+            ce1Ahu_textBox.TextAlign = HorizontalAlignment.Center;
+            ce1Ahu_textBox.Visible = false;
+            // 
+            // ce1Ahu_button
+            // 
+            ce1Ahu_button.BackColor = SystemColors.ControlLight;
+            ce1Ahu_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            ce1Ahu_button.FlatStyle = FlatStyle.System;
+            ce1Ahu_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            ce1Ahu_button.Location = new Point(859, 2);
+            ce1Ahu_button.Margin = new Padding(0);
+            ce1Ahu_button.Name = "ce1Ahu_button";
+            ce1Ahu_button.Size = new Size(23, 23);
+            ce1Ahu_button.TabIndex = 210;
+            ce1Ahu_button.Text = "+";
+            ce1Ahu_button.UseVisualStyleBackColor = false;
+            ce1Ahu_button.Visible = false;
+            ce1Ahu_button.Click += ce1Ahu_button_Click;
+            // 
+            // ce1AhuText2
+            // 
+            ce1AhuText2.AutoSize = true;
+            ce1AhuText2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            ce1AhuText2.Location = new Point(679, 6);
+            ce1AhuText2.Name = "ce1AhuText2";
+            ce1AhuText2.Size = new Size(60, 15);
+            ce1AhuText2.TabIndex = 209;
+            ce1AhuText2.Text = "공급 AHU";
+            ce1AhuText2.Visible = false;
+            // 
+            // ce1AhuText
+            // 
+            ce1AhuText.AutoSize = true;
+            ce1AhuText.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            ce1AhuText.Location = new Point(461, 6);
+            ce1AhuText.Name = "ce1AhuText";
+            ce1AhuText.Size = new Size(95, 15);
+            ce1AhuText.TabIndex = 208;
+            ce1AhuText.Text = "공조기공급 종류";
+            ce1AhuText.Visible = false;
+            // 
+            // ce1Ahu_comboBox
+            // 
+            ce1Ahu_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            ce1Ahu_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ce1Ahu_comboBox.FormattingEnabled = true;
+            ce1Ahu_comboBox.Location = new Point(558, 1);
+            ce1Ahu_comboBox.Name = "ce1Ahu_comboBox";
+            ce1Ahu_comboBox.Size = new Size(120, 23);
+            ce1Ahu_comboBox.TabIndex = 207;
+            ce1Ahu_comboBox.Visible = false;
             // 
             // ce_Remove_button
             // 
@@ -1151,7 +1228,7 @@
             ce_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce_Remove_button.FlatStyle = FlatStyle.System;
             ce_Remove_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            ce_Remove_button.Location = new Point(906, 27);
+            ce_Remove_button.Location = new Point(939, 23);
             ce_Remove_button.Margin = new Padding(0);
             ce_Remove_button.Name = "ce_Remove_button";
             ce_Remove_button.Size = new Size(23, 23);
@@ -1231,15 +1308,15 @@
             ce2Zone_button.UseVisualStyleBackColor = false;
             ce2Zone_button.Click += ce2Zone_button_Click;
             // 
-            // label14
+            // ce2ZoneText
             // 
-            label14.AutoSize = true;
-            label14.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label14.Location = new Point(257, 32);
-            label14.Name = "label14";
-            label14.Size = new Size(47, 15);
-            label14.TabIndex = 202;
-            label14.Text = "공급 존";
+            ce2ZoneText.AutoSize = true;
+            ce2ZoneText.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            ce2ZoneText.Location = new Point(257, 32);
+            ce2ZoneText.Name = "ce2ZoneText";
+            ce2ZoneText.Size = new Size(47, 15);
+            ce2ZoneText.TabIndex = 202;
+            ce2ZoneText.Text = "공급 존";
             // 
             // label15
             // 
@@ -1290,15 +1367,15 @@
             ce1Zone_button.UseVisualStyleBackColor = false;
             ce1Zone_button.Click += ce1Zone_button_Click;
             // 
-            // label16
+            // ce1ZoneText
             // 
-            label16.AutoSize = true;
-            label16.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label16.Location = new Point(257, 6);
-            label16.Name = "label16";
-            label16.Size = new Size(47, 15);
-            label16.TabIndex = 197;
-            label16.Text = "공급 존";
+            ce1ZoneText.AutoSize = true;
+            ce1ZoneText.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            ce1ZoneText.Location = new Point(257, 6);
+            ce1ZoneText.Name = "ce1ZoneText";
+            ce1ZoneText.Size = new Size(47, 15);
+            ce1ZoneText.TabIndex = 197;
+            ce1ZoneText.Text = "공급 존";
             // 
             // label17
             // 
@@ -1358,6 +1435,7 @@
             // panel4
             // 
             panel4.BackgroundImageLayout = ImageLayout.None;
+            panel4.Controls.Add(AhuS_label);
             panel4.Controls.Add(eva);
             panel4.Controls.Add(Pump_pictureBox);
             panel4.Controls.Add(ce3_pictureBox);
@@ -1372,6 +1450,18 @@
             panel4.Name = "panel4";
             panel4.Size = new Size(663, 260);
             panel4.TabIndex = 4;
+            // 
+            // AhuS_label
+            // 
+            AhuS_label.AutoSize = true;
+            AhuS_label.Font = new Font("맑은 고딕", 9F, FontStyle.Italic, GraphicsUnit.Point);
+            AhuS_label.ForeColor = SystemColors.ControlDarkDark;
+            AhuS_label.Location = new Point(477, 21);
+            AhuS_label.Name = "AhuS_label";
+            AhuS_label.Size = new Size(55, 15);
+            AhuS_label.TabIndex = 163;
+            AhuS_label.Text = "ｔｔｅｅ";
+            AhuS_label.Visible = false;
             // 
             // eva
             // 
@@ -1590,10 +1680,10 @@
             GeneralPanel.Controls.Add(radioButton1);
             GeneralPanel.Controls.Add(label9);
             GeneralPanel.Controls.Add(label8);
-            GeneralPanel.Controls.Add(textBox1);
-            GeneralPanel.Controls.Add(textBox5);
-            GeneralPanel.Controls.Add(textBox6);
-            GeneralPanel.Controls.Add(textBox7);
+            GeneralPanel.Controls.Add(CA_MaxCoolingLoad_Textbox);
+            GeneralPanel.Controls.Add(CA_AnnualCoolingNeed_Textbox);
+            GeneralPanel.Controls.Add(SelectedAhuText);
+            GeneralPanel.Controls.Add(CA_FloorArea_Textbox);
             GeneralPanel.Controls.Add(CZ_MaxCoolingLoad_Textbox);
             GeneralPanel.Controls.Add(CZ_AnnualCoolingNeed_Textbox);
             GeneralPanel.Controls.Add(SelectedZoneText);
@@ -1601,7 +1691,7 @@
             GeneralPanel.Controls.Add(label25);
             GeneralPanel.Controls.Add(label26);
             GeneralPanel.Controls.Add(label23);
-            GeneralPanel.Controls.Add(button2);
+            GeneralPanel.Controls.Add(Ahu_button);
             GeneralPanel.Controls.Add(label6);
             GeneralPanel.Controls.Add(Zone_button);
             GeneralPanel.Controls.Add(CZ_FloorArea_Textbox);
@@ -1690,57 +1780,57 @@
             label8.TabIndex = 138;
             label8.Text = "기존";
             // 
-            // textBox1
+            // CA_MaxCoolingLoad_Textbox
             // 
-            textBox1.BackColor = Color.White;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Enabled = false;
-            textBox1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.ForeColor = SystemColors.ControlDark;
-            textBox1.Location = new Point(517, 74);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(120, 15);
-            textBox1.TabIndex = 137;
-            textBox1.TextAlign = HorizontalAlignment.Center;
+            CA_MaxCoolingLoad_Textbox.BackColor = Color.White;
+            CA_MaxCoolingLoad_Textbox.BorderStyle = BorderStyle.None;
+            CA_MaxCoolingLoad_Textbox.Enabled = false;
+            CA_MaxCoolingLoad_Textbox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CA_MaxCoolingLoad_Textbox.ForeColor = SystemColors.ControlDark;
+            CA_MaxCoolingLoad_Textbox.Location = new Point(517, 74);
+            CA_MaxCoolingLoad_Textbox.Name = "CA_MaxCoolingLoad_Textbox";
+            CA_MaxCoolingLoad_Textbox.Size = new Size(120, 15);
+            CA_MaxCoolingLoad_Textbox.TabIndex = 137;
+            CA_MaxCoolingLoad_Textbox.TextAlign = HorizontalAlignment.Center;
             // 
-            // textBox5
+            // CA_AnnualCoolingNeed_Textbox
             // 
-            textBox5.BackColor = Color.White;
-            textBox5.BorderStyle = BorderStyle.None;
-            textBox5.Enabled = false;
-            textBox5.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox5.ForeColor = SystemColors.ControlDark;
-            textBox5.Location = new Point(370, 74);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(120, 15);
-            textBox5.TabIndex = 136;
-            textBox5.TextAlign = HorizontalAlignment.Center;
+            CA_AnnualCoolingNeed_Textbox.BackColor = Color.White;
+            CA_AnnualCoolingNeed_Textbox.BorderStyle = BorderStyle.None;
+            CA_AnnualCoolingNeed_Textbox.Enabled = false;
+            CA_AnnualCoolingNeed_Textbox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CA_AnnualCoolingNeed_Textbox.ForeColor = SystemColors.ControlDark;
+            CA_AnnualCoolingNeed_Textbox.Location = new Point(370, 74);
+            CA_AnnualCoolingNeed_Textbox.Name = "CA_AnnualCoolingNeed_Textbox";
+            CA_AnnualCoolingNeed_Textbox.Size = new Size(120, 15);
+            CA_AnnualCoolingNeed_Textbox.TabIndex = 136;
+            CA_AnnualCoolingNeed_Textbox.TextAlign = HorizontalAlignment.Center;
             // 
-            // textBox6
+            // SelectedAhuText
             // 
-            textBox6.BackColor = Color.White;
-            textBox6.BorderStyle = BorderStyle.None;
-            textBox6.Enabled = false;
-            textBox6.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox6.ForeColor = SystemColors.ControlDark;
-            textBox6.Location = new Point(237, 74);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(120, 15);
-            textBox6.TabIndex = 135;
-            textBox6.TextAlign = HorizontalAlignment.Center;
+            SelectedAhuText.BackColor = Color.White;
+            SelectedAhuText.BorderStyle = BorderStyle.None;
+            SelectedAhuText.Enabled = false;
+            SelectedAhuText.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            SelectedAhuText.ForeColor = SystemColors.ControlDark;
+            SelectedAhuText.Location = new Point(237, 74);
+            SelectedAhuText.Name = "SelectedAhuText";
+            SelectedAhuText.Size = new Size(120, 15);
+            SelectedAhuText.TabIndex = 135;
+            SelectedAhuText.TextAlign = HorizontalAlignment.Center;
             // 
-            // textBox7
+            // CA_FloorArea_Textbox
             // 
-            textBox7.BackColor = Color.White;
-            textBox7.BorderStyle = BorderStyle.None;
-            textBox7.Enabled = false;
-            textBox7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox7.ForeColor = SystemColors.ControlDark;
-            textBox7.Location = new Point(641, 74);
-            textBox7.Name = "textBox7";
-            textBox7.Size = new Size(120, 15);
-            textBox7.TabIndex = 134;
-            textBox7.TextAlign = HorizontalAlignment.Center;
+            CA_FloorArea_Textbox.BackColor = Color.White;
+            CA_FloorArea_Textbox.BorderStyle = BorderStyle.None;
+            CA_FloorArea_Textbox.Enabled = false;
+            CA_FloorArea_Textbox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CA_FloorArea_Textbox.ForeColor = SystemColors.ControlDark;
+            CA_FloorArea_Textbox.Location = new Point(641, 74);
+            CA_FloorArea_Textbox.Name = "CA_FloorArea_Textbox";
+            CA_FloorArea_Textbox.Size = new Size(120, 15);
+            CA_FloorArea_Textbox.TabIndex = 134;
+            CA_FloorArea_Textbox.TextAlign = HorizontalAlignment.Center;
             // 
             // CZ_MaxCoolingLoad_Textbox
             // 
@@ -1821,19 +1911,20 @@
             label23.TabIndex = 127;
             label23.Text = "바닥면적";
             // 
-            // button2
+            // Ahu_button
             // 
-            button2.BackColor = SystemColors.ControlLight;
-            button2.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            button2.FlatStyle = FlatStyle.System;
-            button2.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.Location = new Point(205, 70);
-            button2.Margin = new Padding(0);
-            button2.Name = "button2";
-            button2.Size = new Size(23, 23);
-            button2.TabIndex = 126;
-            button2.Text = "+";
-            button2.UseVisualStyleBackColor = false;
+            Ahu_button.BackColor = SystemColors.ControlLight;
+            Ahu_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Ahu_button.FlatStyle = FlatStyle.System;
+            Ahu_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            Ahu_button.Location = new Point(205, 70);
+            Ahu_button.Margin = new Padding(0);
+            Ahu_button.Name = "Ahu_button";
+            Ahu_button.Size = new Size(23, 23);
+            Ahu_button.TabIndex = 126;
+            Ahu_button.Text = "+";
+            Ahu_button.UseVisualStyleBackColor = false;
+            Ahu_button.Click += Ahu_button_Click;
             // 
             // label6
             // 
@@ -2110,10 +2201,10 @@
         private Label label2;
         private Label label5;
         private Panel GeneralPanel;
-        private TextBox textBox1;
-        private TextBox textBox5;
-        private TextBox textBox6;
-        private TextBox textBox7;
+        private TextBox CA_MaxCoolingLoad_Textbox;
+        private TextBox CA_AnnualCoolingNeed_Textbox;
+        private TextBox SelectedAhuText;
+        private TextBox CA_FloorArea_Textbox;
         private TextBox CZ_MaxCoolingLoad_Textbox;
         private TextBox CZ_AnnualCoolingNeed_Textbox;
         private TextBox SelectedZoneText;
@@ -2121,7 +2212,7 @@
         private Label label25;
         private Label label26;
         private Label label23;
-        private Button button2;
+        private Button Ahu_button;
         private Label label6;
         private Button Zone_button;
         private TextBox CZ_FloorArea_Textbox;
@@ -2190,22 +2281,22 @@
         private DataGridView ce_dataGridView;
         private TextBox ce2Zone_textBox;
         private Button ce2Zone_button;
-        private Label label14;
+        private Label ce2ZoneText;
         private Label label15;
         private CustomComboBox ce2Type_comboBox;
         private TextBox ce1Zone_textBox;
         private Button ce1Zone_button;
-        private Label label16;
+        private Label ce1ZoneText;
         private Label label17;
         private CustomComboBox ce1Type_comboBox;
         private PictureBox ce1_pictureBox;
         private PictureBox ce3_pictureBox;
         private PictureBox ce2_pictureBox;
-        private TextBox ce3Zone_textBox;
-        private Button ce3Zone_button;
-        private Label label18;
-        private Label label19;
-        private CustomComboBox ce3Type_comboBox;
+        private TextBox ce1Ahu_textBox;
+        private Button ce1Ahu_button;
+        private Label ce1AhuText2;
+        private Label ce1AhuText;
+        private CustomComboBox ce1Ahu_comboBox;
         private Label G_label;
         private PictureBox Pump_pictureBox;
         private PictureBox eva;
@@ -2226,5 +2317,11 @@
         private Label CPumpMethod_label;
         private TabPage SoilCooler_tabPage;
         private TabPage SoilWaterCooler_tabPage;
+        private Label AhuS_label;
+        private TextBox ce2Ahu_textBox;
+        private Button ce2Ahu_button;
+        private Label ce2AhuText2;
+        private Label ce2AhuText;
+        private CustomComboBox ce2Ahu_comboBox;
     }
 }

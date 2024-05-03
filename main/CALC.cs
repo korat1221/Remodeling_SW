@@ -54,8 +54,8 @@ namespace main
             Program.DB.deleteTable(DB.type.ProjDB, "HeatingSystem_Result");
             Program.DB.initTable(DB.type.ProjDB, "HeatingSystem_Result");
 
-          // Program.DB.deleteTable(DB.type.ProjDB, "CoolingSystem_Result");
-        //   Program.DB.initTable(DB.type.ProjDB, "CoolingSystem_Result");
+           Program.DB.deleteTable(DB.type.ProjDB, "CoolingSystem_Result");
+           Program.DB.initTable(DB.type.ProjDB, "CoolingSystem_Result");
 
 
            Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result");
@@ -67,7 +67,7 @@ namespace main
             Cal_Qb(NowProjNum[0][0]);
             Cal_Qahu(NowProjNum[0][0]);
             Cal_Qfh(NowProjNum[0][0]);
-           // CoolingSystemCalc();
+            CoolingSystemCalc();
             Cal_Qfw();
             Cal_Qf(NowProjNum[0][0]);
             RESystemCalc();
@@ -272,7 +272,7 @@ namespace main
                         }
                     }
 
-                    CMH_tot = Convert.ToDouble(BValue[0][1]) * Convert.ToDouble(BValue[0][2]);
+                    CMH_tot = Convert.ToDouble(BValue[0][1]) *Area_tot ;
                     q50_element[0] = q50_element[0] * CMH_tot / Area_q50;
                     q50_element[1] = q50_element[1] * CMH_tot / Area_q50;
                     q50_element[2] = q50_element[2] * CMH_tot / Area_q50;
@@ -1055,7 +1055,7 @@ namespace main
             Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                      "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
                      "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" +
-                     Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_elec_a + "','" + "0" + "','" +
+                     Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + "0" + "','" +
                      "0" + "','" + Qbase_gas_a + "','" + Qf_gas_tot_a
                      + "'", "번호,월,연료");
             #endregion
@@ -1075,7 +1075,7 @@ namespace main
             Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                    "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" +
-                   (Qhf_elec_a+Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_elec_a) + "','" + Qlf_elec_a + "','" +
+                   (Qhf_elec_a+Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + Qlf_elec_a + "','" +
                    Qvf_elec_a + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + (Qf_elec_tot_a + Qf_gas_tot_a)
                    + "'", "번호,월,연료");
             #endregion

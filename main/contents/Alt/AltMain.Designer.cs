@@ -31,10 +31,13 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AltMain));
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AltMain));
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             AltMainPanel = new Panel();
             label1 = new Label();
             Type_textBox = new TextBox();
@@ -42,7 +45,7 @@
             Save_button = new Button();
             panel5 = new Panel();
             label2 = new Label();
-            Boiler_dataGridView = new DataGridView();
+            Alt_dataGridView = new DataGridView();
             Alt_Remove_button = new Button();
             Alt_Add_button = new Button();
             q50_textBox = new TextBox();
@@ -51,35 +54,32 @@
             label4 = new Label();
             tabControl1 = new CustomTabControl();
             Main_tabPage = new TabPage();
+            label6 = new Label();
+            RuleResult_dataGridView = new DataGridView();
             label5 = new Label();
             pictureBox2 = new PictureBox();
             webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
             Wall_tabPage = new TabPage();
-            Rse_textBox = new TextBox();
-            label12 = new Label();
-            Rsi_textBox = new TextBox();
-            label10 = new Label();
-            Material_Rtot_textBox = new TextBox();
-            Material_dtot_textBox = new TextBox();
-            label8 = new Label();
-            DiIndi2_comboBox = new CustomComboBox();
+            label7 = new Label();
+            WallEx_comboBox = new CustomComboBox();
+            WallEx_label = new Label();
+            WallRemodelingType_comboBox = new CustomComboBox();
+            label11 = new Label();
+            WallAlt_textBox = new TextBox();
+            WallAlt_button = new Button();
             label3 = new Label();
-            ISO_KS_comboBox = new CustomComboBox();
-            MaterialDown_button = new Button();
-            MaterialUP_button = new Button();
-            Deletebutton = new Button();
-            Ucalc_dataGridView = new DataGridView();
-            AddMaterial_button = new Button();
+            dataGridView1 = new DataGridView();
             AltMainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Alt_dataGridView).BeginInit();
             tabControl1.SuspendLayout();
             Main_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)RuleResult_dataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView22).BeginInit();
             Wall_tabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // AltMainPanel
@@ -129,7 +129,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1025, 615);
+            Save_button.Location = new Point(1020, 633);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 92;
@@ -141,7 +141,7 @@
             // 
             panel5.BackColor = Color.White;
             panel5.Controls.Add(label2);
-            panel5.Controls.Add(Boiler_dataGridView);
+            panel5.Controls.Add(Alt_dataGridView);
             panel5.Controls.Add(Alt_Remove_button);
             panel5.Controls.Add(Alt_Add_button);
             panel5.Controls.Add(q50_textBox);
@@ -163,17 +163,17 @@
             label2.TabIndex = 142;
             label2.Text = "요소기술 결정";
             // 
-            // Boiler_dataGridView
+            // Alt_dataGridView
             // 
-            Boiler_dataGridView.AllowUserToAddRows = false;
-            Boiler_dataGridView.AllowUserToDeleteRows = false;
-            Boiler_dataGridView.AllowUserToResizeColumns = false;
-            Boiler_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            Boiler_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            Boiler_dataGridView.BackgroundColor = SystemColors.Window;
-            Boiler_dataGridView.BorderStyle = BorderStyle.None;
-            Boiler_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            Boiler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            Alt_dataGridView.AllowUserToAddRows = false;
+            Alt_dataGridView.AllowUserToDeleteRows = false;
+            Alt_dataGridView.AllowUserToResizeColumns = false;
+            Alt_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Alt_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            Alt_dataGridView.BackgroundColor = SystemColors.Window;
+            Alt_dataGridView.BorderStyle = BorderStyle.None;
+            Alt_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            Alt_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
@@ -181,10 +181,10 @@
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            Boiler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            Boiler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Boiler_dataGridView.Location = new Point(565, 13);
-            Boiler_dataGridView.Name = "Boiler_dataGridView";
+            Alt_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            Alt_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Alt_dataGridView.Location = new Point(565, 13);
+            Alt_dataGridView.Name = "Alt_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
             dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -192,18 +192,18 @@
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            Boiler_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            Boiler_dataGridView.RowHeadersVisible = false;
-            Boiler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            Alt_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            Alt_dataGridView.RowHeadersVisible = false;
+            Alt_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            Boiler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Boiler_dataGridView.RowTemplate.Height = 25;
-            Boiler_dataGridView.Size = new Size(224, 129);
-            Boiler_dataGridView.TabIndex = 141;
+            Alt_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            Alt_dataGridView.RowTemplate.Height = 25;
+            Alt_dataGridView.Size = new Size(224, 129);
+            Alt_dataGridView.TabIndex = 141;
             // 
             // Alt_Remove_button
             // 
@@ -306,6 +306,8 @@
             // 
             // Main_tabPage
             // 
+            Main_tabPage.Controls.Add(label6);
+            Main_tabPage.Controls.Add(RuleResult_dataGridView);
             Main_tabPage.Controls.Add(label5);
             Main_tabPage.Controls.Add(pictureBox2);
             Main_tabPage.Controls.Add(webView22);
@@ -317,10 +319,62 @@
             Main_tabPage.Text = "법규기반 검토";
             Main_tabPage.UseVisualStyleBackColor = true;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label6.Location = new Point(6, 20);
+            label6.Name = "label6";
+            label6.Size = new Size(231, 15);
+            label6.TabIndex = 143;
+            label6.Text = "권장[법규] 성능 적용 시 에너지 절감 순위";
+            // 
+            // RuleResult_dataGridView
+            // 
+            RuleResult_dataGridView.AllowUserToAddRows = false;
+            RuleResult_dataGridView.AllowUserToDeleteRows = false;
+            RuleResult_dataGridView.AllowUserToResizeColumns = false;
+            RuleResult_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            RuleResult_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            RuleResult_dataGridView.BackgroundColor = SystemColors.Window;
+            RuleResult_dataGridView.BorderStyle = BorderStyle.None;
+            RuleResult_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            RuleResult_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            RuleResult_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            RuleResult_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            RuleResult_dataGridView.Location = new Point(652, 53);
+            RuleResult_dataGridView.Name = "RuleResult_dataGridView";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            RuleResult_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            RuleResult_dataGridView.RowHeadersVisible = false;
+            RuleResult_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            RuleResult_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            RuleResult_dataGridView.RowTemplate.Height = 25;
+            RuleResult_dataGridView.Size = new Size(294, 288);
+            RuleResult_dataGridView.TabIndex = 142;
+            // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(2, 246);
+            label5.Location = new Point(6, 53);
             label5.Name = "label5";
             label5.Size = new Size(122, 15);
             label5.TabIndex = 25;
@@ -329,7 +383,7 @@
             // pictureBox2
             // 
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(128, 240);
+            pictureBox2.Location = new Point(134, 53);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(28, 26);
             pictureBox2.TabIndex = 24;
@@ -340,30 +394,24 @@
             webView22.AllowExternalDrop = true;
             webView22.CreationProperties = null;
             webView22.DefaultBackgroundColor = Color.White;
-            webView22.Location = new Point(173, 35);
+            webView22.Location = new Point(6, 85);
             webView22.Name = "webView22";
-            webView22.Size = new Size(781, 235);
+            webView22.Size = new Size(610, 193);
             webView22.TabIndex = 23;
             webView22.ZoomFactor = 1D;
             // 
             // Wall_tabPage
             // 
             Wall_tabPage.BackColor = Color.White;
-            Wall_tabPage.Controls.Add(Rse_textBox);
-            Wall_tabPage.Controls.Add(label12);
-            Wall_tabPage.Controls.Add(Rsi_textBox);
-            Wall_tabPage.Controls.Add(label10);
-            Wall_tabPage.Controls.Add(Material_Rtot_textBox);
-            Wall_tabPage.Controls.Add(Material_dtot_textBox);
-            Wall_tabPage.Controls.Add(label8);
-            Wall_tabPage.Controls.Add(DiIndi2_comboBox);
+            Wall_tabPage.Controls.Add(label7);
+            Wall_tabPage.Controls.Add(WallEx_comboBox);
+            Wall_tabPage.Controls.Add(WallEx_label);
+            Wall_tabPage.Controls.Add(WallRemodelingType_comboBox);
+            Wall_tabPage.Controls.Add(label11);
+            Wall_tabPage.Controls.Add(WallAlt_textBox);
+            Wall_tabPage.Controls.Add(WallAlt_button);
             Wall_tabPage.Controls.Add(label3);
-            Wall_tabPage.Controls.Add(ISO_KS_comboBox);
-            Wall_tabPage.Controls.Add(MaterialDown_button);
-            Wall_tabPage.Controls.Add(MaterialUP_button);
-            Wall_tabPage.Controls.Add(Deletebutton);
-            Wall_tabPage.Controls.Add(Ucalc_dataGridView);
-            Wall_tabPage.Controls.Add(AddMaterial_button);
+            Wall_tabPage.Controls.Add(dataGridView1);
             Wall_tabPage.Location = new Point(4, 25);
             Wall_tabPage.Name = "Wall_tabPage";
             Wall_tabPage.Padding = new Padding(3);
@@ -371,218 +419,139 @@
             Wall_tabPage.TabIndex = 0;
             Wall_tabPage.Text = "외벽";
             // 
-            // Rse_textBox
+            // label7
             // 
-            Rse_textBox.BackColor = Color.White;
-            Rse_textBox.BorderStyle = BorderStyle.None;
-            Rse_textBox.Enabled = false;
-            Rse_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Rse_textBox.ForeColor = SystemColors.ControlDark;
-            Rse_textBox.Location = new Point(474, 303);
-            Rse_textBox.Name = "Rse_textBox";
-            Rse_textBox.Size = new Size(80, 15);
-            Rse_textBox.TabIndex = 118;
-            Rse_textBox.TextAlign = HorizontalAlignment.Center;
+            label7.AutoSize = true;
+            label7.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Location = new Point(470, 55);
+            label7.Name = "label7";
+            label7.Size = new Size(95, 15);
+            label7.TabIndex = 152;
+            label7.Text = "리모델링안 선택";
             // 
-            // label12
+            // WallEx_ComboBox
             // 
-            label12.AutoSize = true;
-            label12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label12.ForeColor = SystemColors.ControlDark;
-            label12.Location = new Point(301, 306);
-            label12.Name = "label12";
-            label12.Size = new Size(141, 15);
-            label12.TabIndex = 117;
-            label12.Text = "실외표면열전달저항[Rse]";
+            WallEx_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            WallEx_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            WallEx_comboBox.FormattingEnabled = true;
+            WallEx_comboBox.Location = new Point(821, 20);
+            WallEx_comboBox.Name = "WallEx_ComboBox";
+            WallEx_comboBox.Size = new Size(120, 23);
+            WallEx_comboBox.TabIndex = 151;
+            WallEx_comboBox.Visible = false;
+            WallEx_comboBox.SelectedIndexChanged += WallEx_comboBox_SelectedIndexChanged;
             // 
-            // Rsi_textBox
+            // WallEx_label
             // 
-            Rsi_textBox.BackColor = Color.White;
-            Rsi_textBox.BorderStyle = BorderStyle.None;
-            Rsi_textBox.Enabled = false;
-            Rsi_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Rsi_textBox.ForeColor = SystemColors.ControlDark;
-            Rsi_textBox.Location = new Point(474, 40);
-            Rsi_textBox.Name = "Rsi_textBox";
-            Rsi_textBox.Size = new Size(80, 15);
-            Rsi_textBox.TabIndex = 116;
-            Rsi_textBox.TextAlign = HorizontalAlignment.Center;
+            WallEx_label.AutoSize = true;
+            WallEx_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            WallEx_label.Location = new Point(727, 24);
+            WallEx_label.Name = "WallEx_label";
+            WallEx_label.Size = new Size(67, 15);
+            WallEx_label.TabIndex = 150;
+            WallEx_label.Text = "외장재유형";
+            WallEx_label.Visible = false;
             // 
-            // label10
+            // WallRemodelingType_comboBox
             // 
-            label10.AutoSize = true;
-            label10.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label10.ForeColor = SystemColors.ControlDark;
-            label10.Location = new Point(302, 43);
-            label10.Name = "label10";
-            label10.Size = new Size(138, 15);
-            label10.TabIndex = 114;
-            label10.Text = "실내표면열전달저항[Rsi]";
+            WallRemodelingType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            WallRemodelingType_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            WallRemodelingType_comboBox.FormattingEnabled = true;
+            WallRemodelingType_comboBox.Location = new Point(580, 20);
+            WallRemodelingType_comboBox.Name = "WallRemodelingType_comboBox";
+            WallRemodelingType_comboBox.Size = new Size(120, 23);
+            WallRemodelingType_comboBox.TabIndex = 149;
+            WallRemodelingType_comboBox.SelectedIndexChanged += WallRemodelingType_comboBox_SelectedIndexChanged;
             // 
-            // Material_Rtot_textBox
+            // label11
             // 
-            Material_Rtot_textBox.BackColor = Color.White;
-            Material_Rtot_textBox.BorderStyle = BorderStyle.None;
-            Material_Rtot_textBox.Enabled = false;
-            Material_Rtot_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Material_Rtot_textBox.ForeColor = SystemColors.ControlDark;
-            Material_Rtot_textBox.Location = new Point(474, 330);
-            Material_Rtot_textBox.Name = "Material_Rtot_textBox";
-            Material_Rtot_textBox.Size = new Size(80, 15);
-            Material_Rtot_textBox.TabIndex = 112;
-            Material_Rtot_textBox.TextAlign = HorizontalAlignment.Center;
+            label11.AutoSize = true;
+            label11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label11.Location = new Point(470, 24);
+            label11.Name = "label11";
+            label11.Size = new Size(83, 15);
+            label11.TabIndex = 148;
+            label11.Text = "리모델링 방식";
             // 
-            // Material_dtot_textBox
+            // WallAlt_textBox
             // 
-            Material_dtot_textBox.BackColor = Color.White;
-            Material_dtot_textBox.BorderStyle = BorderStyle.None;
-            Material_dtot_textBox.Enabled = false;
-            Material_dtot_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Material_dtot_textBox.ForeColor = SystemColors.ControlDark;
-            Material_dtot_textBox.Location = new Point(390, 330);
-            Material_dtot_textBox.Name = "Material_dtot_textBox";
-            Material_dtot_textBox.Size = new Size(80, 15);
-            Material_dtot_textBox.TabIndex = 111;
-            Material_dtot_textBox.TextAlign = HorizontalAlignment.Center;
+            WallAlt_textBox.BackColor = Color.White;
+            WallAlt_textBox.BorderStyle = BorderStyle.None;
+            WallAlt_textBox.Enabled = false;
+            WallAlt_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            WallAlt_textBox.ForeColor = SystemColors.ControlDark;
+            WallAlt_textBox.Location = new Point(580, 55);
+            WallAlt_textBox.Name = "WallAlt_textBox";
+            WallAlt_textBox.Size = new Size(120, 15);
+            WallAlt_textBox.TabIndex = 147;
+            WallAlt_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label8
+            // WallAlt_button
             // 
-            label8.AutoSize = true;
-            label8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label8.ForeColor = SystemColors.ControlDark;
-            label8.Location = new Point(356, 333);
-            label8.Name = "label8";
-            label8.Size = new Size(31, 15);
-            label8.TabIndex = 110;
-            label8.Text = "합계";
-            // 
-            // DiIndi2_comboBox
-            // 
-            DiIndi2_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            DiIndi2_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            DiIndi2_comboBox.FormattingEnabled = true;
-            DiIndi2_comboBox.Location = new Point(309, 3);
-            DiIndi2_comboBox.Name = "DiIndi2_comboBox";
-            DiIndi2_comboBox.Size = new Size(120, 23);
-            DiIndi2_comboBox.TabIndex = 102;
+            WallAlt_button.BackColor = SystemColors.ControlLight;
+            WallAlt_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            WallAlt_button.FlatStyle = FlatStyle.System;
+            WallAlt_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            WallAlt_button.Location = new Point(723, 51);
+            WallAlt_button.Margin = new Padding(0);
+            WallAlt_button.Name = "WallAlt_button";
+            WallAlt_button.Size = new Size(23, 23);
+            WallAlt_button.TabIndex = 145;
+            WallAlt_button.Text = "+";
+            WallAlt_button.UseVisualStyleBackColor = false;
+            WallAlt_button.Click += WallAlt_button_Click;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.Location = new Point(48, 11);
+            label3.Location = new Point(26, 20);
             label3.Name = "label3";
-            label3.Size = new Size(127, 15);
-            label3.TabIndex = 101;
-            label3.Text = "실내외표면열전달저항";
+            label3.Size = new Size(59, 15);
+            label3.TabIndex = 144;
+            label3.Text = "기존 외벽";
             // 
-            // ISO_KS_comboBox
+            // dataGridView1
             // 
-            ISO_KS_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            ISO_KS_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ISO_KS_comboBox.FormattingEnabled = true;
-            ISO_KS_comboBox.Location = new Point(172, 3);
-            ISO_KS_comboBox.Name = "ISO_KS_comboBox";
-            ISO_KS_comboBox.Size = new Size(120, 23);
-            ISO_KS_comboBox.TabIndex = 100;
-            // 
-            // MaterialDown_button
-            // 
-            MaterialDown_button.BackColor = SystemColors.ControlLight;
-            MaterialDown_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            MaterialDown_button.FlatStyle = FlatStyle.System;
-            MaterialDown_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            MaterialDown_button.Location = new Point(472, 4);
-            MaterialDown_button.Margin = new Padding(0);
-            MaterialDown_button.Name = "MaterialDown_button";
-            MaterialDown_button.Size = new Size(23, 23);
-            MaterialDown_button.TabIndex = 99;
-            MaterialDown_button.Text = "▼";
-            MaterialDown_button.UseVisualStyleBackColor = false;
-            // 
-            // MaterialUP_button
-            // 
-            MaterialUP_button.BackColor = SystemColors.ControlLight;
-            MaterialUP_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            MaterialUP_button.FlatStyle = FlatStyle.System;
-            MaterialUP_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            MaterialUP_button.Location = new Point(447, 4);
-            MaterialUP_button.Margin = new Padding(0);
-            MaterialUP_button.Name = "MaterialUP_button";
-            MaterialUP_button.Size = new Size(23, 23);
-            MaterialUP_button.TabIndex = 98;
-            MaterialUP_button.Text = "▲";
-            MaterialUP_button.UseVisualStyleBackColor = false;
-            // 
-            // Deletebutton
-            // 
-            Deletebutton.BackColor = SystemColors.ControlLight;
-            Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Deletebutton.Location = new Point(530, 4);
-            Deletebutton.Margin = new Padding(0);
-            Deletebutton.Name = "Deletebutton";
-            Deletebutton.Size = new Size(23, 23);
-            Deletebutton.TabIndex = 97;
-            Deletebutton.Text = "-";
-            Deletebutton.UseVisualStyleBackColor = false;
-            // 
-            // Ucalc_dataGridView
-            // 
-            Ucalc_dataGridView.AllowUserToAddRows = false;
-            Ucalc_dataGridView.AllowUserToDeleteRows = false;
-            Ucalc_dataGridView.AllowUserToResizeColumns = false;
-            Ucalc_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            Ucalc_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            Ucalc_dataGridView.BackgroundColor = SystemColors.InactiveBorder;
-            Ucalc_dataGridView.BorderStyle = BorderStyle.None;
-            Ucalc_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            Ucalc_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            Ucalc_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            Ucalc_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Ucalc_dataGridView.Location = new Point(-1, 61);
-            Ucalc_dataGridView.Name = "Ucalc_dataGridView";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            Ucalc_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            Ucalc_dataGridView.RowHeadersVisible = false;
-            Ucalc_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            Ucalc_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            Ucalc_dataGridView.RowTemplate.Height = 25;
-            Ucalc_dataGridView.Size = new Size(555, 234);
-            Ucalc_dataGridView.TabIndex = 96;
-            // 
-            // AddMaterial_button
-            // 
-            AddMaterial_button.BackColor = SystemColors.ControlLight;
-            AddMaterial_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            AddMaterial_button.FlatStyle = FlatStyle.System;
-            AddMaterial_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            AddMaterial_button.Location = new Point(505, 4);
-            AddMaterial_button.Margin = new Padding(0);
-            AddMaterial_button.Name = "AddMaterial_button";
-            AddMaterial_button.Size = new Size(23, 23);
-            AddMaterial_button.TabIndex = 95;
-            AddMaterial_button.Text = "+";
-            AddMaterial_button.UseVisualStyleBackColor = false;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToResizeColumns = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridView1.BackgroundColor = SystemColors.Window;
+            dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(26, 38);
+            dataGridView1.Name = "dataGridView1";
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = SystemColors.Control;
+            dataGridViewCellStyle8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
+            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle9.ForeColor = Color.Black;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
+            dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.Size = new Size(379, 288);
+            dataGridView1.TabIndex = 143;
             // 
             // AltMain
             // 
@@ -604,15 +573,16 @@
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Alt_dataGridView).EndInit();
             tabControl1.ResumeLayout(false);
             Main_tabPage.ResumeLayout(false);
             Main_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)RuleResult_dataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)webView22).EndInit();
             Wall_tabPage.ResumeLayout(false);
             Wall_tabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -634,29 +604,25 @@
         private Label q50_label2;
         private Label q50_label1;
         private Label label2;
-        private DataGridView Boiler_dataGridView;
+        private DataGridView Alt_dataGridView;
         private Button Alt_Remove_button;
         private Button Alt_Add_button;
         private CustomTabControl tabControl1;
         private TabPage Wall_tabPage;
-        private TextBox Rse_textBox;
-        private Label label12;
-        private TextBox Rsi_textBox;
-        private Label label10;
-        private TextBox Material_Rtot_textBox;
-        private TextBox Material_dtot_textBox;
-        private Label label8;
-        private CustomComboBox DiIndi2_comboBox;
-        private Label label3;
-        private CustomComboBox ISO_KS_comboBox;
-        private Button MaterialDown_button;
-        private Button MaterialUP_button;
-        private Button Deletebutton;
-        private DataGridView Ucalc_dataGridView;
-        private Button AddMaterial_button;
         private TabPage Main_tabPage;
         private Label label5;
         private PictureBox pictureBox2;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView22;
+        private DataGridView RuleResult_dataGridView;
+        private Label label6;
+        private DataGridView dataGridView1;
+        private Label label3;
+        private TextBox WallAlt_textBox;
+        private Button WallAlt_button;
+        private CustomComboBox WallRemodelingType_comboBox;
+        private Label label11;
+        private CustomComboBox WallEx_comboBox;
+        private Label WallEx_label;
+        private Label label7;
     }
 }

@@ -2159,10 +2159,10 @@ namespace main.contents
             GroundHP_dataGridView.Columns.Add("A5", "공급유형");
             GroundHP_dataGridView.Columns.Add("A6", "수직/수평");
             GroundHP_dataGridView.Columns.Add("A7", "냉방.용량.[kW]");
-            GroundHP_dataGridView.Columns.Add("A8", "냉방.EER.[kW]");
+            GroundHP_dataGridView.Columns.Add("A8", "냉방.EER.[W/W]");
             GroundHP_dataGridView.Columns.Add("A9", "냉방.소비전력.[kW]");
             GroundHP_dataGridView.Columns.Add("A10", "난방정격(0℃).용량.[kW]");
-            GroundHP_dataGridView.Columns.Add("A11", "난방정격(0℃).COP.[kW]");
+            GroundHP_dataGridView.Columns.Add("A11", "난방정격(0℃).COP.[W/W]");
             GroundHP_dataGridView.Columns.Add("A12", "난방정격(0℃).소비전력.[kW]");
             GroundHP_dataGridView.Columns.Add("A13", "난방(5℃).용량.[kW]");
             GroundHP_dataGridView.Columns.Add("A14", "난방(5℃).COP.[kW]");
@@ -2767,7 +2767,7 @@ namespace main.contents
             ce_dataGridView.Rows[nRow].Cells[3] = 난방냉방comboBox;
 
             DataGridViewComboBoxCell 공급설비종류comboBox = new DataGridViewComboBoxCell();
-            공급설비종류comboBox.Items.AddRange(new string[] { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방", "복사냉방(벽)", "복사냉방(천장)", "바닥매립형컨백터" });
+            공급설비종류comboBox.Items.AddRange(new string[] { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방", "복사냉방(벽)", "복사냉방(천장)", "바닥매립형컨백터","FPU","VAV","CAV"});
             ce_dataGridView.Rows[nRow].Cells[4] = 공급설비종류comboBox;
 
             DataGridViewComboBoxCell 온도제어방식comboBox = new DataGridViewComboBoxCell();
@@ -2789,30 +2789,37 @@ namespace main.contents
                 if (ce_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() == "냉방")
                 {
                     DataGridViewComboBoxCell 공급설비종류comboBox = new DataGridViewComboBoxCell();
-                    공급설비종류comboBox.Items.AddRange(new string[] { "실내기", "팬코일유닛", "복사냉방(벽)", "복사냉방(천장)", "바닥매립형컨백터" });
+                    공급설비종류comboBox.Items.AddRange(new string[] { "실내기", "팬코일유닛", "복사냉방(벽)", "복사냉방(천장)", "바닥매립형컨백터", "파워팬유닛", "VAV유닛", "CAV유닛" });
                     ce_dataGridView.Rows[e.RowIndex].Cells[4] = 공급설비종류comboBox;
-                    ce_dataGridView.Rows[e.RowIndex].Cells[7].Value = "제어 없음";
-                    ce_dataGridView.Rows[e.RowIndex].Cells[7].ReadOnly = true;
+                    ce_dataGridView.Rows[e.RowIndex].Cells[9].Value = "제어 없음";
+                    ce_dataGridView.Rows[e.RowIndex].Cells[9].ReadOnly = true;
                 }
                 else if (ce_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() == "냉난방")
                 {
                     DataGridViewComboBoxCell 공급설비종류comboBox = new DataGridViewComboBoxCell();
-                    공급설비종류comboBox.Items.AddRange(new string[] { "실내기", "팬코일유닛", "바닥매립형컨백터" });
+                    공급설비종류comboBox.Items.AddRange(new string[] { "실내기", "팬코일유닛", "바닥매립형컨백터", "파워팬유닛", "VAV유닛", "CAV유닛" });
                     ce_dataGridView.Rows[e.RowIndex].Cells[4] = 공급설비종류comboBox;
-                    ce_dataGridView.Rows[e.RowIndex].Cells[7].ReadOnly = false;
+                    ce_dataGridView.Rows[e.RowIndex].Cells[9].ReadOnly = false;
                 }
                 else if (ce_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() == "난방")
                 {
                     DataGridViewComboBoxCell 공급설비종류comboBox = new DataGridViewComboBoxCell();
-                    공급설비종류comboBox.Items.AddRange(new string[] { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방", "바닥매립형컨백터" });
+                    공급설비종류comboBox.Items.AddRange(new string[] { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방", "바닥매립형컨백터", "파워팬유닛", "VAV유닛", "CAV유닛" });
                     ce_dataGridView.Rows[e.RowIndex].Cells[4] = 공급설비종류comboBox;
-                    ce_dataGridView.Rows[e.RowIndex].Cells[7].ReadOnly = false;
+                    ce_dataGridView.Rows[e.RowIndex].Cells[9].ReadOnly = false;
                 }
+                //추가항목
+                else if(ce_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() == "VAV유닛" || ce_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() == "CAV유닛")
+                {
+                    ce_dataGridView.Rows[e.RowIndex].Cells[5].Value = "0";
+                    ce_dataGridView.Rows[e.RowIndex].Cells[6].Value = "0";
+                    ce_dataGridView.Rows[e.RowIndex].Cells[5].ReadOnly = true;
+                    ce_dataGridView.Rows[e.RowIndex].Cells[6].ReadOnly = true;
+                }
+
                 else return;
             }
             else return;
-
-
         }
 
         private void ce_Remove_button_Click(object sender, EventArgs e)
@@ -4199,10 +4206,16 @@ namespace main.contents
             CoolingTop_dataGridView.Columns.Add("A8", "온도.출구[℃]");
             CoolingTop_dataGridView.Columns.Add("A9", "대기전력[W]");
             CoolingTop_dataGridView.Columns.Add("A10", "소비전력[kW]");
-            CoolingTop_dataGridView.Columns.Add("A11", "풍량[CMH]");
+            
+
+            DataGridViewComboBoxColumn CtrlTypecomboBox = new DataGridViewComboBoxColumn();
+            CtrlTypecomboBox.HeaderText = "제어유형";
+            CtrlTypecomboBox.Items.AddRange(new string[] { "제어없음", "항온공급", "가변온도공급" });
+            CoolingTop_dataGridView.Columns.Add(CtrlTypecomboBox);
+
 
             DataGridViewComboBoxColumn FanTypecomboBox = new DataGridViewComboBoxColumn();
-            FanTypecomboBox.HeaderText = "팬형식";
+            FanTypecomboBox.HeaderText = "팬유형";
             FanTypecomboBox.Items.AddRange(new string[] { "축류형", "원심형" });
             CoolingTop_dataGridView.Columns.Add(FanTypecomboBox);
 
@@ -4289,7 +4302,7 @@ namespace main.contents
                     }
                     else { Value[i] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_CoolingTop", "번호,DB유형,명칭,형식,냉각능력,냉각수량,입구온도,출구온도,대기전력,소비전력,풍량,팬유형,대수,냉방전력소비계수,설치",
+                Program.DB.setValue(DB.type.ProjDB, "User_CoolingTop", "번호,DB유형,명칭,형식,냉각능력,냉각수량,입구온도,출구온도,대기전력,소비전력,제어유형,팬유형,대수,냉방전력소비계수,설치",
                 "'" + Value[0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','"
                  + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','"
@@ -4324,7 +4337,7 @@ namespace main.contents
         }
         private void Load_CoolingTop()
         {
-            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_CoolingTop", "번호,DB유형,명칭,형식,냉각능력,냉각수량,입구온도,출구온도,대기전력,소비전력,풍량,팬유형,대수,냉방전력소비계수,설치", "");
+            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_CoolingTop", "번호,DB유형,명칭,형식,냉각능력,냉각수량,입구온도,출구온도,대기전력,소비전력,제어유형,팬유형,대수,냉방전력소비계수,설치", "");
             if (User_Value.Length > 0)
             {
                 for (int n = 0; n < User_Value.Length; n++)

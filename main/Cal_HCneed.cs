@@ -1273,7 +1273,7 @@ namespace main
 
                             double[,,] theta_s = new double[2, 2, 12];
                             theta_s[0, wewd, mth] = theta_i[hc, wewd, mth] - zonefloor.Fx() * (theta_i[hc, wewd, mth] - theta_e[mth]);
-                            theta_s[1, wewd, mth] = theta_s_c;
+                            theta_s[1, wewd, mth] = theta_i[hc, wewd, mth] - zonefloor.Fx() * (theta_i[hc, wewd, mth] - theta_e[mth]);
                             if (theta_i[hc, wewd, mth] >= theta_s[hc, wewd, mth])
                             {
                                 zoneFloors_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_s[hc, wewd, mth], theta_i[hc, wewd, mth], zonefloor.Ueff() * zonefloor.Area());
@@ -1338,7 +1338,7 @@ namespace main
 
                             double[,,] theta_s_GWall = new double[2, 2, 12];
                             theta_s_GWall[0, wewd, mth] = theta_i[0, wewd, mth] - zonegwall.Fx() * (theta_i[0, wewd, mth] - theta_e[mth]);
-                            theta_s_GWall[1, wewd, mth] = theta_s_c;
+                            theta_s_GWall[1, wewd, mth] = theta_i[0, wewd, mth] - zonegwall.Fx() * (theta_i[0, wewd, mth] - theta_e[mth]);
                             if (theta_i[hc, wewd, mth] >= theta_s_GWall[hc, wewd, mth])
                             {
                                 zoneGWalls_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_s_GWall[hc, wewd, mth], theta_i[hc, wewd, mth], zonegwall.Ueff() * zonegwall.Area());

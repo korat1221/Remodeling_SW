@@ -55,6 +55,7 @@ namespace main
             string[][] PNum = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
             for (int mth = 0; mth <= 11; mth++)
             {
+                /*
                 MTH = (mth + 1).ToString() + "월";
                 Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Alt", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                     "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
@@ -62,7 +63,7 @@ namespace main
                     final1.Qhf_elec[mth] + "','" + final1.Qcf_elec[mth] + "','" + final1.Qwf_elec[mth] + "','" + final1.Qlf_elec[mth] + "','" +
                     final1.Qvf_elec[mth] + "','" + final1.Qbase_elec[mth] + "','" + final1.Qf_elec_tot_mth[mth]
                     + "'", "검토유형,번호,월,연료"); ;
-
+                */
             }
             double Qhf_elec_a = 0, Qcf_elec_a = 0, Qwf_elec_a = 0, Qlf_elec_a = 0, Qvf_elec_a = 0, Qbase_elec_a = 0, Qf_elec_tot_a = 0;
 
@@ -76,12 +77,15 @@ namespace main
                 Qbase_elec_a += final1.Qbase_elec[mth];
             }
             Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a + Qvf_elec_a + Qbase_elec_a;
+            /*
+            Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a + Qvf_elec_a + Qbase_elec_a;
             Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Alt", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                      "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
                      "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전기" + "','" +
                      Qhf_elec_a + "','" + Qcf_elec_a + "','" + Qwf_elec_a + "','" + Qlf_elec_a + "','" +
                      Qvf_elec_a + "','" + Qbase_elec_a + "','" + Qf_elec_tot_a
                      + "'", "검토유형,번호,월,연료");
+            */
             #endregion
 
             #region 가스
@@ -90,6 +94,7 @@ namespace main
             if (Carrier == "LNG" || Carrier == "LPG") { Carrier = "가스"; }
             if (Carrier != "")
             {
+            /*
                 for (int mth = 0; mth <= 11; mth++)
                 {
                     MTH = (mth + 1).ToString() + "월";
@@ -100,6 +105,7 @@ namespace main
                         "0" + "','" + final1.Qbase_gas[mth] + "','" + final1.Qf_gas_tot_mth[mth]
                         + "'", "검토유형,번호,월,연료"); ;
                 }
+            */
             }
             double Qhf_gas_a = 0, Qcf_gas_a = 0, Qwf_gas_a = 0, Qbase_gas_a = 0, Qf_gas_tot_a = 0;
             for (int mth = 0; mth < 12; mth++)
@@ -110,12 +116,14 @@ namespace main
                 Qbase_gas_a += final1.Qbase_gas[mth];
             }
             Qf_gas_tot_a = Qhf_gas_a + Qcf_gas_a + Qwf_gas_a + Qbase_gas_a;
+            /*
             Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Alt", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                      "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
                      "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" +
-                     Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_elec_a + "','" + "0" + "','" +
+                     Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + "0" + "','" +
                      "0" + "','" + Qbase_gas_a + "','" + Qf_gas_tot_a
                      + "'", "검토유형,번호,월,연료");
+            */
             #endregion
             #region 전체
             for (int mth = 0; mth <= 11; mth++)
@@ -132,7 +140,7 @@ namespace main
             Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Alt", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                    "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" +
-                   (Qhf_elec_a + Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_elec_a) + "','" + Qlf_elec_a + "','" +
+                   (Qhf_elec_a + Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + Qlf_elec_a + "','" +
                    Qvf_elec_a + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + (Qf_elec_tot_a + Qf_gas_tot_a)
                    + "'", "검토유형,번호,월,연료");
             #endregion
@@ -690,8 +698,7 @@ namespace main
             }
             #endregion
         }
-        #endregion
-
+        #endregion      
         #region 요소기술별 검토
         public void Calc_Qb_Element_Alt(string 검토유형)
         {
@@ -1670,6 +1677,289 @@ namespace main
         }
         #endregion
 
+        #endregion
+
+        #region 최적안 검토
+        public void Calc_Qb_Rule_Optimal(string 검토유형, string 리모델링안, string RemodelingType, double R, double dU)
+        {
+            CALC.Zone_Arrange();
+            for (int k = 0; k < CALC.zone.Count; k++)
+            {
+                Zone zone1 = (Zone)CALC.zone[k];
+                ZoneLight zonelight1 = (ZoneLight)CALC.zonelight[k];
+                CALC.Zone_LoadData(zone1, zonelight1, NowProjNum[0][0]);
+
+                switch (검토유형)
+                {
+                    case "외벽":
+                        Load_Optimal_Wall(zone1, RemodelingType, R, dU);
+                        break;
+                    case "법규_지붕":
+                        Load_Rule_Roof(zone1);
+                        break;
+                    case "법규_최하층바닥":
+                        Load_Rule_Floor(zone1);
+                        break;
+                    case "법규_창호":
+                        Load_Rule_Win(zone1);
+                        break;
+                    case "법규_커튼월창":
+                        Load_Rule_CW(zone1);
+                        break;
+                    case "법규_외부출입문":
+                        Load_Rule_Door(zone1);
+                        break;
+                    case "법규_전체":
+                        Load_Rule_All(zone1);
+                        break;
+                }
+                CALC.Zone_Calc(zone1, zonelight1, NowProjNum[0][0]);
+            }
+        }
+        private void Calc_System_Optimal(string 검토유형, string 리모델링안, string RemodelingType, double R, double dU)
+        {
+            int i;
+            #region 공조계산
+            string[][] Num = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형");
+            if (Num.Length > 0)
+            {
+                for (int k = 0; k < Num.Length; k++)
+                {
+                    CALC.AHUs[Num[k][0]] = null;
+                }
+                i = -1;
+                while (++i < Num.Length)
+                {
+                    if (Num[i][1] == "공조기")
+                    {
+                        AHU Pre_AHU1 = new AHU(Num[i][0]);
+                        CALC.AHUs[Num[i][0]] = Pre_AHU1;
+                        CALC.AHUSystem_LaodData(Pre_AHU1, NowProjNum[0][0]);
+                        CALC.AHUSystem_PreCalc(Pre_AHU1);
+                    }
+                    else
+                    {
+                        AHU Pre_HRV1 = new AHU(Num[i][0]);
+                        CALC.AHUs[Num[i][0]] = Pre_HRV1;
+                        CALC.HRV_LaodData(Pre_HRV1, NowProjNum[0][0]);
+                        CALC.AHUSystem_PreCalc(Pre_HRV1);
+                    }
+                }
+
+                Calc_Qb_Rule_Optimal(검토유형, 리모델링안, RemodelingType, R, dU);
+
+                i = -1;
+                for (int k = 0; k < Num.Length; k++)
+                {
+                    CALC.AHUs[Num[k][0]] = null;
+                }
+                while (++i < Num.Length)
+                {
+                    if (Num[i][1] == "공조기")
+                    {
+                        AHU Post_AHU1 = new AHU(Num[i][0]);
+                        CALC.AHUs[Num[i][0]] = Post_AHU1;
+                        CALC.AHUSystem_LaodData(Post_AHU1, NowProjNum[0][0]);
+                        CALC.AHUSystem_PostCalc(Post_AHU1);
+                    }
+                    else
+                    {
+                        AHU Post_HRV1 = new AHU(Num[i][0]);
+                        CALC.AHUs[Num[i][0]] = Post_HRV1;
+                        CALC.HRV_LaodData(Post_HRV1, NowProjNum[0][0]);
+                        CALC.HRV_PostCalc(Post_HRV1);
+                    }
+
+                }
+            }
+            #endregion
+
+            Cal_Qfh_Now(NowProjNum[0][0]);
+           // CALC.CoolingSystemCalc();
+            CALC.Cal_Qfw();
+
+            #region 파이널계산
+            Final final1 = new Final(NowProjNum[0][0]);
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
+            if (프로젝트유형[0][0] == "1")
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    string[][] Final2 = Program.DB.querySQL(DB.type.ProjDB, "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
+                    if (Final2.Length > 0)
+                    {
+                        final1.Qbase_elec[mth] = Convert.ToDouble(Final2[0][0]);
+                    }
+
+                    Final2 = Program.DB.querySQL(DB.type.ProjDB, "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 != '전기' and 월 = '" + (mth + 1).ToString() + "월'");
+                    if (Final2.Length > 0)
+                    {
+                        final1.Qbase_gas[mth] = Convert.ToDouble(Final2[0][0]);
+                    }
+                }
+            }
+            else
+            {
+                string[][] res = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기존프로젝트");
+                if (res.Length > 0 && res[0][0] != "")
+                {
+                    for (int mth = 0; mth < 12; mth++)
+                    {
+                        string[][] Final2 = Program.DB.querySQL(res[0][0], "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
+                        if (Final2.Length > 0)
+                        {
+                            final1.Qbase_elec[mth] = Convert.ToDouble(Final2[0][0]);
+                        }
+
+                        Final2 = Program.DB.querySQL(res[0][0], "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 != '전기' and 월 = '" + (mth + 1).ToString() + "월'");
+                        if (Final2.Length > 0)
+                        {
+                            final1.Qbase_gas[mth] = Convert.ToDouble(Final2[0][0]);
+                        }
+                    }
+                }
+            }
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                final1.Qf_elec_tot_mth[mth] = final1.Qhf_elec[mth] + final1.Qcf_elec[mth] + final1.Qwf_elec[mth] + final1.Qlf_elec[mth] + final1.Qvf_elec[mth] + final1.Qbase_elec[mth];
+                final1.Qf_gas_tot_mth[mth] = final1.Qhf_gas[mth] + final1.Qcf_gas[mth] + final1.Qwf_gas[mth] + final1.Qbase_gas[mth];
+            }
+            final1.Calc_Error();
+            Save_Final_Optimal(final1, 검토유형, 리모델링안);
+
+            #endregion
+
+            CALC.RESystemCalc();
+        }
+        private void Save_Final_Optimal(Final final1, string 검토유형, string 리모델링안)
+        {
+            #region 전기
+            String MTH;
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
+            string[][] PNum = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
+          
+            double Qhf_elec_a = 0, Qcf_elec_a = 0, Qwf_elec_a = 0, Qlf_elec_a = 0, Qvf_elec_a = 0, Qbase_elec_a = 0, Qf_elec_tot_a = 0;
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Qhf_elec_a += final1.Qhf_elec[mth];
+                Qcf_elec_a += final1.Qcf_elec[mth];
+                Qwf_elec_a += final1.Qwf_elec[mth];
+                Qlf_elec_a += final1.Qlf_elec[mth];
+                Qvf_elec_a += final1.Qvf_elec[mth];
+                Qbase_elec_a += final1.Qbase_elec[mth];
+            }
+            Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a  + Qvf_elec_a + Qbase_elec_a;
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Optimal", "프로젝트번호,프로젝트유형,검토유형,리모델링안,월,연료," +
+                "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
+                "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + 리모델링안 + "','" + "연간" + "','" + "전기" + "','" +
+                Qhf_elec_a + "','" + Qcf_elec_a  + "','" + Qwf_elec_a  + "','" + Qlf_elec_a + "','" +
+                Qvf_elec_a + "','" + Qbase_elec_a  + "','" + Qf_elec_tot_a 
+                + "'", "검토유형,리모델링안,월,연료");
+            #endregion
+
+            #region 가스           
+            double Qhf_gas_a = 0, Qcf_gas_a = 0, Qwf_gas_a = 0, Qbase_gas_a = 0, Qf_gas_tot_a = 0;
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Qhf_gas_a += final1.Qhf_gas[mth];
+                Qcf_gas_a += final1.Qcf_gas[mth];
+                Qwf_gas_a += final1.Qwf_gas[mth];
+                Qbase_gas_a += final1.Qbase_gas[mth];
+            }
+            Qf_gas_tot_a = Qhf_gas_a + Qcf_gas_a + Qwf_gas_a + Qbase_gas_a;
+            string Carrier = "";
+            if (final1.Carrier_h != "" && final1.Carrier_h != null) { Carrier = final1.Carrier_h; } else if (final1.Carrier_w != "" && final1.Carrier_w != null) { Carrier = final1.Carrier_w; } else if (final1.Carrier_c != "" && final1.Carrier_c != null) { Carrier = final1.Carrier_c; }
+            if (Carrier == "LNG" || Carrier == "LPG") { Carrier = "가스"; }
+            if (Carrier != "")
+            {
+                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Optimal", "프로젝트번호,프로젝트유형,검토유형,리모델링안,월,연료," +
+                  "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
+                  "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + 리모델링안 + "','" + "연간" + "','" + Carrier + "','" +
+                  Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + 0 + "','" +
+                  0 + "','" + Qbase_gas_a + "','" + Qf_gas_tot_a
+                  + "'", "검토유형,리모델링안,월,연료");
+            }
+            #endregion
+            #region 전체
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Optimal", "프로젝트번호,프로젝트유형,검토유형,리모델링안,월,연료," +
+                   "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
+                   "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + 리모델링안 + "','" + "연간" + "','" + "전체" + "','" +
+                   (Qhf_elec_a + Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + Qlf_elec_a + "','" +
+                   Qvf_elec_a + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + (Qf_elec_tot_a + Qf_gas_tot_a)
+                   + "'", "검토유형,리모델링안,월,연료");
+            #endregion
+
+        }
+
+
+        #region 외벽
+        public void Get_Optimal_WallData(string RemodelingType, string ExType)
+        {
+            string[][] value = Program.DB.getValue(DB.type.BaseDB_Optimal, "최적안_외벽_인덱스", "구분,외벽유형", "리모델링유형='"+RemodelingType+ "' and 외부마감재대분류 ='"+ExType+"'");
+            if(value.Length > 0)
+            {
+                for(int i =0;  i < value.Length; i++)
+                {
+                    double R = 0; double dU = 0; 
+                    string[][] R_value = Program.DB.getValue(DB.type.BaseDB_Optimal, "최적안_외벽", "열저항합계", "구분='" + value[i][1] + "'");
+                    if(R_value.Length > 0)
+                    {
+                        R= Convert.ToDouble(R_value[0][0]);
+                    }
+                    Calc_Qb_Rule_Optimal("외벽", value[i][0],RemodelingType,R,dU);
+                    Calc_System_Optimal("외벽", value[i][0], RemodelingType, R, dU);
+                }
+                
+            }
+
+        }
+        private void Load_Optimal_Wall(Zone zone1, string RemodelingType, double R, double dU)
+        {
+            zone1.zoneWall.Clear();
+            zone1.zoneGWall.Clear();
+            String[][] ZoneW = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "' And  NOT b.직접간접 = '지면'");
+            if (ZoneW.Length > 0)
+            {
+                int i = -1;
+                while (++i < ZoneW.Length)
+                {
+                    double Uvalue = 1 / (1 / Convert.ToDouble(ZoneW[0][3]) + R) + dU; 
+                    Wall wall = new Wall(ZoneW[i][0], ZoneW[i][2], Convert.ToDouble(ZoneW[i][1]), Uvalue, Convert.ToDouble(ZoneW[i][4]), ZoneW[i][5], ZoneW[i][6], ZoneW[i][7]);
+                    zone1.zoneWall.Add(wall);
+                }
+            }
+            String[][] ZoneG = Program.DB.querySQL(DB.type.ProjDB, "select a.번호,a.면적,b.번호,b.열관류율,b.직접간접 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "' And  b.직접간접 = '지면'");
+            if (ZoneG.Length > 0)
+            {
+                int i = -1;
+                while (++i < ZoneG.Length)
+                {
+                    double fx_f = 1;
+                    if (Convert.ToDouble(ZoneG[0][3]) >= 3)
+                    { fx_f = 0.35; }
+                    else if (Convert.ToDouble(ZoneG[0][3]) >= 1)
+                    { fx_f = 0.55; }
+                    else if (Convert.ToDouble(ZoneG[0][3]) > 0.3)
+                    { fx_f = 0.65; }
+                    else { fx_f = 0.75; }
+                    break;
+                    double Uvalue;
+                    if (RemodelingType=="내부덧댐")
+                    {
+                        Uvalue = 1 / (1 / Convert.ToDouble(ZoneW[0][3]) + R) + dU;
+                    }
+                    else
+                    {
+                        Uvalue = Convert.ToDouble(ZoneW[0][3]);
+                    }
+                    GWall gwall = new GWall(ZoneG[i][0], ZoneG[i][2], Convert.ToDouble(ZoneG[i][1]), Uvalue, fx_f);
+                    zone1.zoneGWall.Add(gwall);
+                }
+            }
+        }
+        #endregion
         #endregion
     }
     public class PrePostZone_HeatingCE
