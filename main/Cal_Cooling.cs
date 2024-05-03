@@ -1254,24 +1254,28 @@ namespace main
                     공급유형 = Comp_f;
                 }
                 string[][] val = Program.DB.getValue(DB.type.BaseDB_Cooling, "부분부하계수", "P1,P2,P3,P4,P5,P6,P7,P8,P9,P10", " 설비유형= '" + CG + "' And 제어유형 = '" + Control_f + "' And 공급유형 = '" + 공급유형 + "'");
-                for (int i = 0; i < 12; i++)
+                if(val.Length >0)
                 {
-                    double B2 = 0.15;
-                    for (int h = 0; h < 10; h++)
+                    for (int i = 0; i < 12; i++)
                     {
-                        if (BC_z[i] < 0.05)
+                        double B2 = 0.15;
+                        for (int h = 0; h < 10; h++)
                         {
-                            fC_PL_z[i] = 1;
-                            break;
+                            if (BC_z[i] < 0.05)
+                            {
+                                fC_PL_z[i] = 1;
+                                break;
+                            }
+                            else if (BC_z[i] < B2)
+                            {
+                                fC_PL_z[i] = Convert.ToDouble(val[0][h]);
+                                break;
+                            }
+                            else B2 = B2 + 0.1;
                         }
-                        else if (BC_z[i] < B2)
-                        {
-                            fC_PL_z[i] = Convert.ToDouble(val[0][h]);
-                            break;
-                        }
-                        else B2 = B2 + 0.1;
                     }
-                }    
+
+                }  
             }
             else if(Type == "Ahu")
             {
