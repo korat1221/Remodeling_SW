@@ -1055,7 +1055,7 @@ namespace main
             Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                      "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
                      "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" +
-                     Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_elec_a + "','" + "0" + "','" +
+                     Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + "0" + "','" +
                      "0" + "','" + Qbase_gas_a + "','" + Qf_gas_tot_a
                      + "'", "번호,월,연료");
             #endregion
@@ -1075,7 +1075,7 @@ namespace main
             Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                    "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" +
-                   (Qhf_elec_a+Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_elec_a) + "','" + Qlf_elec_a + "','" +
+                   (Qhf_elec_a+Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + Qlf_elec_a + "','" +
                    Qvf_elec_a + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + (Qf_elec_tot_a + Qf_gas_tot_a)
                    + "'", "번호,월,연료");
             #endregion

@@ -94,6 +94,9 @@
     <Compile Update="contents\Result\Element_Report\Element_Win.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\Alt\AltWall.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\ZoneGeneral\PreZone.cs">
       <SubType>Form</SubType>
     </Compile>
