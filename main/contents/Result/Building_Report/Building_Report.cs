@@ -349,7 +349,7 @@ namespace main.contents.Result.Building_Report
                 for (int mth = 0; mth < 12; mth++)
                 {
                     string[][] Final1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
-                    string[][] Final2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량", "연료='가스' and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] Final2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량", "not 연료='전기' and not 연료='전체'  and 월 ='" + (mth + 1).ToString() + "월'");
                     if (Final1.Length > 0)
                     {
                         난방[mth] = Convert.ToDouble(Final1[0][0]);
@@ -940,7 +940,7 @@ namespace main.contents.Result.Building_Report
                     for (int mth = 0; mth < 12; mth++)
                     {
                         string[][] Final1 = Program.DB.querySQL(res[0][0], "Select 난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량 from FinalEnergy_Result Where 연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
-                        string[][] Final2 = Program.DB.querySQL(res[0][0], "Select 난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량 from FinalEnergy_Result Where 연료='가스' and 월 ='" + (mth + 1).ToString() + "월'");
+                        string[][] Final2 = Program.DB.querySQL(res[0][0], "Select 난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량 from FinalEnergy_Result Where not 연료='전기' and not 연료='전체' and 월 ='" + (mth + 1).ToString() + "월'");
                         if (Final1.Length > 0)
                         {
                             난방_전[mth] = Convert.ToDouble(Final1[0][0]);
