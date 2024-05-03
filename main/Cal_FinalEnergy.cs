@@ -135,7 +135,7 @@ namespace main
 
             //에너지사용량
             string[][] Value1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "연료='전기'");
-            string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "연료='가스'");
+            string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "not 연료='전기' and not 연료='전체'");
             if (Value1.Length > 0)
             {
                 if (Convert.ToDouble(Value1[0][0]) > 1)
@@ -191,8 +191,8 @@ namespace main
                     string[][] Gas1, Gas2;
                     for (int mth = 0; mth < 11; mth++)
                     {
-                        Gas1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' AND 연료='가스' AND 단위 ='kWh'");
-                        Gas2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 2).ToString() + "월' AND 연료='가스' AND 단위 ='kWh'");
+                        Gas1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' and not 연료='전기' and not 연료='전체' AND 단위 ='kWh'");
+                        Gas2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 2).ToString() + "월' AND not 연료='전기' and not 연료='전체' AND 단위 ='kWh'");
                         if (Gas1.Length > 0 && Gas2.Length > 0)
                         {
                             for (int i = 0; i < Gas1.Length; i++) //연도별
@@ -203,8 +203,8 @@ namespace main
                         Quse_gas_mth[mth] = Quse_gas_mth[mth] / Gas1.Length;
                     }
 
-                    Gas1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (12).ToString() + "월' AND 연료='가스' AND 단위 ='kWh'");
-                    Gas2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (1).ToString() + "월' AND 연료='가스' AND 단위 ='kWh'");
+                    Gas1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (12).ToString() + "월' and not 연료='전기' and not 연료='전체' AND 단위 ='kWh'");
+                    Gas2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (1).ToString() + "월' and not 연료='전기' and not 연료='전체' AND 단위 ='kWh'");
                     if (Gas1.Length > 0 && Gas2.Length > 0)
                     {
                         for (int i = 0; i < Gas1.Length; i++) //연도별
@@ -220,7 +220,7 @@ namespace main
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        string[][] Gas = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' AND 연료='가스' AND 단위 ='kWh'");
+                        string[][] Gas = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (mth + 1).ToString() + "월' and not 연료='전기' and not 연료='전체' AND 단위 ='kWh'");
                         if (Gas.Length > 0)
                         {
                             for (int i = 0; i < Gas.Length; i++) //연도별
