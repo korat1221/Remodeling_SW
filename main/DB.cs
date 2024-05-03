@@ -38,6 +38,7 @@ namespace main
             BaseDB_Cooling,
             BaseDB_AHU,
             BaseDB_RESystem,
+            BaseDB_Optimal,
             ProjDB,
             CalcDB,
             ProjListDB
@@ -127,10 +128,11 @@ namespace main
             {"DHWSystem_Result", "CREATE TABLE IF NOT EXISTS DHWSystem_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),번호 VARCHAR (32),월 VARCHAR (32),Qwb_mth_sum VARCHAR (32),theta_ih_avg VARCHAR (32),Qw_a_sum VARCHAR (32),th_op_day_avg VARCHAR (32),theta_i_h_set_avg VARCHAR (32),dop_mth_avg VARCHAR (32),Qw_d VARCHAR (32),Qw_s VARCHAR (32),Qw_gen VARCHAR (32),Qw_outg VARCHAR (32),Qw_f VARCHAR (32),Ww_d VARCHAR (32),Ww_s VARCHAR (32),Ww_g VARCHAR (32),Qw_gen_day VARCHAR (32),Qw_gen_p0_day VARCHAR (32),eta_pn_w VARCHAR (32),연료 VARCHAR (32))"},
             {"AHUSystem_Result", "CREATE TABLE IF NOT EXISTS AHUSystem_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),번호 VARCHAR (32),난방_냉방 VARCHAR (32),월 VARCHAR (32),공조요구량 VARCHAR (32),가습요구량 VARCHAR (32),급기팬보조에너지 VARCHAR (32),배기팬보조에너지 VARCHAR (32),가습보조에너지 VARCHAR (32),프리히팅보조에너지 VARCHAR (32),theta_vmech VARCHAR (32),Vvmech VARCHAR (32),Vvmech_leak VARCHAR (32),theta_SA_prh VARCHAR (32),theta_OA_du VARCHAR (32),theta_RA_du VARCHAR (32),theta_SA_hr VARCHAR (32),theta_SA_rca VARCHAR (32),theta_SA_du VARCHAR (32),X_iset VARCHAR (32),X_SA_prh VARCHAR (32),X_SA_hr VARCHAR (32),X_SA_rca VARCHAR (32),Vmin_tot VARCHAR (32),Qb_mth_tot VARCHAR (32),Qmax_tot VARCHAR (32),theta_iset_avg VARCHAR (32),dvmech_avg VARCHAR (32),tvmech_avg VARCHAR (32),Q_gnd VARCHAR (32),Q_prh VARCHAR (32),Q_loss_OA_du VARCHAR (32),Q_loss_EA_du VARCHAR (32),Q_loss_SA_du VARCHAR (32),dtheta_prh VARCHAR (32),dtheta_du_OA VARCHAR (32),dtheta_du_RA VARCHAR (32),dtheta_hr VARCHAR (32),dtheta_rca VARCHAR (32),dtheta_du_EA VARCHAR (32),dtheta_du_SA VARCHAR (32),flea_du VARCHAR (32),flea_ahu VARCHAR (32),fins_ahu VARCHAR (32),theta_defrost VARCHAR (32),theta_sur_nc VARCHAR (32),Hduct_OA VARCHAR (32),Hduct_RA VARCHAR (32),Hduct_EA VARCHAR (32),Hduct_SA VARCHAR (32))"},
             {"FinalEnergy_Result", "CREATE TABLE IF NOT EXISTS FinalEnergy_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),번호 VARCHAR (32),월 VARCHAR (32),연료 VARCHAR (32),난방 VARCHAR (32),냉방 VARCHAR (32),급탕 VARCHAR (32),조명 VARCHAR (32),공조 VARCHAR (32),기저에너지 VARCHAR (32),총에너지소요량 VARCHAR (32))"},
-            {"FinalEnergy_Result_Alt", "CREATE TABLE IF NOT EXISTS FinalEnergy_Result_Alt (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),검토유형 VARCHAR (32),번호 VARCHAR (32),월 VARCHAR (32),연료 VARCHAR (32),난방 VARCHAR (32),냉방 VARCHAR (32),급탕 VARCHAR (32),조명 VARCHAR (32),공조 VARCHAR (32),기저에너지 VARCHAR (32),총에너지소요량 VARCHAR (32))"}
+            {"FinalEnergy_Result_Alt", "CREATE TABLE IF NOT EXISTS FinalEnergy_Result_Alt (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),검토유형 VARCHAR (32),번호 VARCHAR (32),월 VARCHAR (32),연료 VARCHAR (32),난방 VARCHAR (32),냉방 VARCHAR (32),급탕 VARCHAR (32),조명 VARCHAR (32),공조 VARCHAR (32),기저에너지 VARCHAR (32),총에너지소요량 VARCHAR (32))"},
+            {"FinalEnergy_Result_Optimal", "CREATE TABLE IF NOT EXISTS FinalEnergy_Result_Optimal (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),검토유형 VARCHAR (32),리모델링안 VARCHAR (32),월 VARCHAR (32),연료 VARCHAR (32),난방 VARCHAR (32),냉방 VARCHAR (32),급탕 VARCHAR (32),조명 VARCHAR (32),공조 VARCHAR (32),기저에너지 VARCHAR (32),총에너지소요량 VARCHAR (32))"}
         };
 
-        private SQLiteConnection? baseDB_hcneed, baseDB_lighting, baseDB_heating, baseDB_cooling, baseDB_ahu, baseDB_resystem, projDB, calcDB, proj_listDB;
+        private SQLiteConnection? baseDB_hcneed, baseDB_lighting, baseDB_heating, baseDB_cooling, baseDB_ahu, baseDB_resystem, baseDB_optimal, projDB, calcDB, proj_listDB;
 
 #if INMEMORY_DB
         private string gProjFName = "";
@@ -367,7 +369,36 @@ namespace main
             {
                 return false;
             }
+            //최적안 baseDB
+            if (GetFileSize("basedb_optimal.sqlite") > 0)
+            {
+#if INMEMORY_DB
+                baseDB_optimal = openDBInMemry("baseDB_optimal.sqlite");
+#else
+#if !DEBUG
 
+                baseDB_optimal = new SQLiteConnection(@"Data Source=baseDB_optimal.sqlite;Password=" + PASSWORD);
+#else
+                baseDB_optimal = new SQLiteConnection(@"Data Source=basedb_optimal.sqlite");
+#endif
+                baseDB_optimal.Open();
+#endif
+
+                if (baseDB_optimal.State != ConnectionState.Open)
+                {
+                    return false;
+                }
+
+                cmd.Connection = baseDB_optimal;
+                cmd.CommandText = "PRAGMA synchronous=OFF";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "PRAGMA journal_mode=OFF";
+                cmd.ExecuteNonQuery();
+            }
+            else
+            {
+                return false;
+            }
             if (GetFileSize(projPath) <= 0)
             {
 //#if !DEBUG
@@ -414,6 +445,9 @@ namespace main
                 baseDB_resystem.Close();
                 baseDB_resystem.Dispose();
 
+                baseDB_optimal.Close();
+                baseDB_optimal.Dispose();
+
                 return false;
             }
 
@@ -444,6 +478,9 @@ namespace main
 
                 baseDB_resystem.Close();
                 baseDB_resystem.Dispose();
+
+                baseDB_optimal.Close();
+                baseDB_optimal.Dispose();
 
                 projDB.Close();
                 projDB.Dispose();
@@ -498,6 +535,11 @@ namespace main
             {
                 baseDB_resystem.Close();
                 baseDB_resystem.Dispose();
+            }
+            if (baseDB_optimal != null)
+            {
+                baseDB_optimal.Close();
+                baseDB_optimal.Dispose();
             }
             if (projDB != null)
             {
@@ -604,6 +646,12 @@ namespace main
                             cmd.ExecuteNonQuery();
                         }
                         break;
+                    case type.BaseDB_Optimal:
+                        {
+                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_optimal);
+                            cmd.ExecuteNonQuery();
+                        }
+                        break;
                     case type.ProjDB:
                         {
                             SQLiteCommand cmd = new SQLiteCommand(exec, projDB);
@@ -678,6 +726,9 @@ namespace main
                         break;
                     case type.BaseDB_RESystem:
                         cmd.Connection = baseDB_resystem;
+                        break;
+                    case type.BaseDB_Optimal:
+                        cmd.Connection = baseDB_optimal;
                         break;
                     case type.ProjDB:
                         cmd.Connection = projDB;
@@ -1031,6 +1082,9 @@ namespace main
                 case type.BaseDB_RESystem:
                     cmd.Connection = baseDB_resystem;
                     break;
+                case type.BaseDB_Optimal:
+                    cmd.Connection = baseDB_optimal;
+                    break;
                 case type.ProjDB:
                     cmd.Connection = projDB;
                     break;
@@ -1132,6 +1186,9 @@ namespace main
                     break;
                 case type.BaseDB_RESystem:
                     cmd.Connection = baseDB_resystem;
+                    break;
+                case type.BaseDB_Optimal:
+                    cmd.Connection = baseDB_optimal;
                     break;
                 case type.ProjDB:
                     cmd.Connection = projDB;
