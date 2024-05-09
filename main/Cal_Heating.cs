@@ -43,6 +43,7 @@ namespace main
         ArrayList AirHPNum_split = new ArrayList(); ArrayList GroundHPNum_split = new ArrayList(); ArrayList GWHPNum_split = new ArrayList();
         ArrayList SelectSolar_split = new ArrayList(); ArrayList SolarNum_split = new ArrayList(); ArrayList SolarDirection_split = new ArrayList(); ArrayList SolarDegree_split = new ArrayList();
 
+        public double[] Qh_sol = new double[12];
 
 
         string[][] 지역, 외기온도;
@@ -207,6 +208,11 @@ namespace main
                         SelectSolar_split.Add(item.ToString());
                     }
                 }
+                else
+                {
+                    SelectSolar_split.Clear();
+                    SelectSolar_split.Add(nonSplit);
+                }
             }
             else { return; }
 
@@ -223,6 +229,11 @@ namespace main
                     {
                         SolarNum_split.Add(item.ToString());
                     }
+                }
+                else
+                {
+                    SolarNum_split.Clear();
+                    SolarNum_split.Add(nonSplit);
                 }
             }
             else { return; }
@@ -241,6 +252,11 @@ namespace main
                         SolarDirection_split.Add(item.ToString());
                     }
                 }
+                else
+                {
+                    SolarDirection_split.Clear();
+                    SolarDirection_split.Add(nonSplit);
+                }
             }
             else { return; }
 
@@ -257,6 +273,11 @@ namespace main
                     {
                         SolarDegree_split.Add(item.ToString());
                     }
+                }
+                else
+                {
+                    SolarDegree_split.Clear();
+                    SolarDegree_split.Add(nonSplit);
                 }
             }
             else { return; }
@@ -1071,7 +1092,7 @@ namespace main
                     String Combi = Value[0][1];
                     Carrier = Value[0][2];
                     String Type = Value[0][3];
-                    double Power = Convert.ToDouble(Value[0][4]);
+                    double Power = Convert.ToDouble(Value[0][4]) * Convert.ToDouble(BoilerNum_split[n]);
                     string[][] 기존신규 = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "프로젝트유형", "번호 = '" + HeatingNum + "'");
                     double eta_Pn = Convert.ToDouble(Value[0][5]) / 100;
                     double eta_Pint = Convert.ToDouble(Value[0][6]) / 100;
@@ -1151,7 +1172,7 @@ namespace main
         public void Calc_Solar(string ProjNum)
         {
             double qsol_HN_d, dtheta_korr;
-            double[] qsol_HN_mth = new double[12], eta = new double[12], qsol_mth = new double[12], Qsol_mth = new double[12], Qw_sol = new double[12], Qh_sol = new double[12], Ww_gen = new double[12];
+            double[] qsol_HN_mth = new double[12], eta = new double[12], qsol_mth = new double[12], Qsol_mth = new double[12],  Wh_gen = new double[12];
             string[][] Solarvalue;
             double Ac;
 
@@ -1164,11 +1185,11 @@ namespace main
 
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'방향='" + SolarDirection_split[k] + "' and 각도 ='" + SolarDegree_split[k] + "' and 기간 ='" + mth + 1 + "월'");
+                        string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'and 방향='" + SolarDirection_split[k] + "' and 각도 ='" + SolarDegree_split[k] + "' and 기간 ='" + (mth + 1) + "월'");
                         qsol_HN_d = Convert.ToDouble(value[0][0]);
                         qsol_HN_mth[mth] = qsol_HN_d * dmth[mth] * 24 / 1000;
 
-                        string[][] value2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select Max(일사량) from 기후데이터_전일사량 where 지역명 = '" + 지역[0][0] + "'방향 = '" + SolarDirection_split[k] + "' and 각도 = '" + SolarDegree_split[k] + "'");
+                        string[][] value2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select Max(일사량) from 기후데이터_전일사량 where 지역명 = '" + 지역[0][0] + "'and 방향 = '" + SolarDirection_split[k] + "' and 각도 = '" + SolarDegree_split[k] + "'");
 
                         Ac = Qh_max_sum * 2 * 1.03 * 1.03 / Convert.ToDouble(value2[0][0]) / 24 * 1000;
                         if (solar.M_Area() * solar.M_Count() / Ac < 1)
@@ -1179,15 +1200,21 @@ namespace main
                         {
                             dtheta_korr = Math.Min(-14 + 14 * solar.M_Area() * solar.M_Count() / Ac, 0);
                         }
-                        value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_태양열", "온도차", "지역명 ='" + 지역[0][0] + "'방위='" + SolarDirection_split[k] + "' and 기간 ='" + mth + 1 + "월'");
+                        value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_태양열", "온도차", "지역명 ='" + 지역[0][0] + "'and 방위='" + SolarDirection_split[k] + "' and 기간 ='" + (mth + 1) + "월'");
                         eta[mth] = solar.eta() * solar._50() - solar.K1() * Convert.ToDouble(value[0][0]) / qsol_HN_d - solar.K2() * Convert.ToDouble(value[0][0]) * Convert.ToDouble(value[0][0]) / qsol_HN_d;
+                        if (eta[mth] < 0) { eta[mth] = solar.eta(); }
                         qsol_mth[mth] = eta[mth] * qsol_HN_mth[mth];
                         Qsol_mth[mth] = qsol_mth[mth] * solar.M_Area() * solar.M_Count() / 1.03 / 1.03;
 
-                        Qw_sol[mth] = Math.Min(Qsol_mth[mth], Qh_outg[mth] * 2) * Qh_outg[mth] / (Qh_outg[mth] + Qh_outg[mth]);
-                        Qh_sol[mth] = Math.Min(Qsol_mth[mth], Qh_outg[mth] * 2) * Qh_outg[mth] / (Qh_outg[mth] + Qh_outg[mth]);
+                        if (MainSystem != "태양열 융합 히트펌프")
+                        { Qh_sol[mth] = Math.Min(Qsol_mth[mth], Qh_outg[mth]); } 
 
-                        Ww_gen[mth] = 0.025 * Qw_sol[mth];
+                        Wh_gen[mth] = 0.025 * Qh_sol[mth];
+                    }
+                    for (int mth = 0; mth < 12; mth++)
+                    {
+                        Wh_g[mth] = Wh_g[mth] + Wh_gen[mth];
+                        Qh_outg[mth] = Qh_outg[mth] - Qh_sol[mth];
                     }
                 }
             }
@@ -1220,10 +1247,10 @@ namespace main
                     Num = airHP[0][0];
                     Carrier = airHP[0][1];
                     SupplyType = airHP[0][2];
-                    Pi_nom = Convert.ToDouble(airHP[0][3]); //정격용량
+                    Pi_nom = Convert.ToDouble(airHP[0][3]) * Convert.ToDouble(AirHPNum_split[n]); ; //정격용량
                     COP_nom = Convert.ToDouble(airHP[0][4]); //정격COP
                     W_nom = Convert.ToDouble(airHP[0][5]); //정격소비전력 
-                    Pi_15 = Convert.ToDouble(airHP[0][6]); //정격용량
+                    Pi_15 = Convert.ToDouble(airHP[0][6]) * Convert.ToDouble(AirHPNum_split[n]); //정격용량
                     COP_15 = Convert.ToDouble(airHP[0][7]); //정격COP
                     W_15 = Convert.ToDouble(airHP[0][8]); //정격소비전력 
 
@@ -1295,6 +1322,12 @@ namespace main
                     Wi[0, mth - 1] = Math.Max(DH[0, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]), 0);
                     Wi[1, mth - 1] = Math.Max(DH[1, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]), 0);
                     Wi[2, mth - 1] = Math.Max(DH[2, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]), 0);
+                    if(MainSystem =="태양열 융합 히트펌프")
+                    {
+                        Wi[0, mth - 1] = 1;
+                        Wi[1, mth - 1] = 0;
+                        Wi[2, mth - 1] = 0;
+                    }
 
                 }
 

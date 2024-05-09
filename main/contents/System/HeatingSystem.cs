@@ -36,7 +36,7 @@ namespace main.contents
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Num, Pump2Num;
         String ce1Type, ce2Type; int ce_SelectRow;
         String StorageUse, StoragePumpUse, StoragePump; double Vs;
-        String[] SystemType = { "보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
+        String[] SystemType = { "보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
         String[] ceType = { "실내기", "방열기", "팬코일유닛", "복사난방" };
         double PipeD, PipeInsD, PipeIns_Ramda;
         String PipeIns;
@@ -332,7 +332,7 @@ namespace main.contents
             {
                 Load_BoilerForm();
             }
-            else if (MainSystem == "외기 히트펌프" || MainSystem == "지열 히트펌프" || MainSystem == "지하수 히트펌프")
+            else if (MainSystem == "외기 히트펌프" || MainSystem == "지열 히트펌프" || MainSystem == "지하수 히트펌프" || MainSystem == "태양열 융합 히트펌프")
             {
                 Load_HPForm(MainSystem);
             }
@@ -357,7 +357,7 @@ namespace main.contents
             {
                 Load_BoilerForm();
             }
-            else if (Sub1System == "외기 히트펌프" || Sub1System == "지열 히트펌프" || Sub1System == "지하수 히트펌프")
+            else if (Sub1System == "외기 히트펌프" || Sub1System == "지열 히트펌프" || Sub1System == "지하수 히트펌프" || Sub1System == "태양열 융합 히트펌프")
             {
                 Load_HPForm(Sub1System);
             }
@@ -381,7 +381,7 @@ namespace main.contents
             {
                 Load_BoilerForm();
             }
-            else if (Sub2System == "외기 히트펌프" || Sub2System == "지열 히트펌프" || Sub2System == "지하수 히트펌프")
+            else if (Sub2System == "외기 히트펌프" || Sub2System == "지열 히트펌프" || Sub2System == "지하수 히트펌프" || Sub2System == "태양열 융합 히트펌프")
             {
                 Load_HPForm(Sub2System);
             }
@@ -405,7 +405,7 @@ namespace main.contents
             {
                 tabControl2.SelectedTab = tabControl2.TabPages["Boiler_tabPage"];
             }
-            else if (System == "외기 히트펌프" || System == "지열 히트펌프" || System == "지하수 히트펌프")
+            else if (System == "외기 히트펌프" || System == "지열 히트펌프" || System == "지하수 히트펌프" || System == "태양열 융합 히트펌프")
             {
                 tabControl2.SelectedTab = tabControl2.TabPages["HP_tabPage"];
             }
@@ -1106,7 +1106,7 @@ namespace main.contents
         {
             // Heating_HP heating_HP = new Heating_HP(this);
             String nonsplit;
-            if (HeatSource == "외기 히트펌프")
+            if (HeatSource == "외기 히트펌프"|| HeatSource == "태양열 융합 히트펌프")
             {
                 nonsplit = SelectHP_nonsplit[0];
                 AirHP_DB heating_HP = new AirHP_DB("장비일람표 적용", nonsplit);
@@ -1321,7 +1321,7 @@ namespace main.contents
         private void Load_HP_Table(String HeatSource)
         {
             String source;
-            if (HeatSource == "외기 히트펌프") { source = "외기"; }
+            if (HeatSource == "외기 히트펌프" || HeatSource == "태양열 융합 히트펌프") { source = "외기"; }
             else if (HeatSource == "지열 히트펌프") { source = "지열"; }
             else { source = "지하수"; }
 
