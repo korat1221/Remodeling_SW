@@ -1308,7 +1308,12 @@ namespace main.contents.Result.Building_Report
                     for (int mth = 0; mth < 12; mth++)
                     {
                         __data[96].Add(new { idx = i * 12 + mth, val = ((Qtot2_mth_가스[mth] - Qtot_mth_가스[mth])).ToString("0.0") }); //월별 절감량 
-                        절감률_가스Chart.Add(Math.Round(Double.Parse((Math.Abs(Qtot2_mth_가스[mth] - Qtot_mth_가스[mth]) / Qtot2_mth_가스[mth]).ToString()), 3) + 0);
+                        if (Qtot2_mth_가스[mth] > 0)
+                        { 절감률_가스Chart.Add(Math.Round(Double.Parse((Math.Abs(Qtot2_mth_가스[mth] - Qtot_mth_가스[mth]) / Qtot2_mth_가스[mth]).ToString()), 3) + 0); }
+                        else
+                        {
+                            절감률_가스Chart.Add(0);
+                        }
                     }
                     __data[110].Add(new { idx = i, val = Carrier+ " 에너지소요량 절감량 검토보고서" });
                     __data[111].Add(new { idx = i, val = Carrier + " 에너지소요량" });
