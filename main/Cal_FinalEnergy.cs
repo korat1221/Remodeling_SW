@@ -95,7 +95,10 @@ namespace main
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "전기생산량", "월 ='" + (mth + 1).ToString() + "월'");
                 if (Value.Length > 0)
                 {
-                    Qreg_elec[mth] += Convert.ToDouble(Value[0][0]);
+                    for(int i =0; i< Value.Length; i++)
+                    {
+                        Qreg_elec[mth] += Convert.ToDouble(Value[i][0]);
+                    }                    
                 }
             }
             //냉방
