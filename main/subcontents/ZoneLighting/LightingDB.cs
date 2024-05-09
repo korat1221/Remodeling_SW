@@ -55,7 +55,7 @@ namespace main.subcontents.ZoneLighting
 
         void load_table_LightDB()
         {
-            new StackedHeaderDecorator(Light_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
+            new StackedHeaderDecorator(Light_dataGridView, DataGridViewAutoSizeColumnsMode.AllCells, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Light_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -81,11 +81,12 @@ namespace main.subcontents.ZoneLighting
                 {
                     Light_dataGridView.Rows.Add();
                     int nRow = Light_dataGridView.Rows.Count - 1;
-                    for (int k = 0; k < 10; k++)
+                    for (int k = 0; k < 8; k++)
                     {
                         Light_dataGridView.Rows[nRow].Cells[k + 1].Value = User_Lighting[n][k];
                     }
-                   
+                    Light_dataGridView.Rows[nRow].Cells[9].Value = Convert.ToDouble(User_Lighting[n][8]).ToString("0.00");
+                    Light_dataGridView.Rows[nRow].Cells[10].Value = Convert.ToDouble(User_Lighting[n][9]).ToString("0.00");
                 }
             }
             //표준 DB
@@ -100,8 +101,8 @@ namespace main.subcontents.ZoneLighting
                     {
                         Light_dataGridView.Rows[nRow].Cells[k + 1].Value = Light[n][k];
                     }
-                    Light_dataGridView.Rows[nRow].Cells[9].Value = Light[n][8];
-                    Light_dataGridView.Rows[nRow].Cells[10].Value = Light[n][9];
+                    Light_dataGridView.Rows[nRow].Cells[9].Value = Convert.ToDouble(Light[n][8]).ToString("0.00");
+                    Light_dataGridView.Rows[nRow].Cells[10].Value = Convert.ToDouble(Light[n][9]).ToString("0.00");
                     //table_Light.Rows.Add(Light[n][0],Light[n][1],Light[n][2],Light[n][3],Light[n][4],Light[n][5], Light[n][6], Light[n][7], String.Format("{0:F2}", Convert.ToDouble(Light[n][8])), String.Format("{0:F2}", Convert.ToDouble(Light[n][9])));
                 }
             }
