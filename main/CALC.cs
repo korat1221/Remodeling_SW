@@ -883,6 +883,12 @@ namespace main
                           Heating1.Qh_ce[mth] + "','" + Heating1.Qh_d[mth] + "','" + Heating1.Qh_s[mth] + "','" + Heating1.Qh_gen[mth] + "','" + Heating1.Qh_outg[mth] + "','" + Heating1.Qh_f[mth] + "','" +
                           Heating1.Wh_ce[mth] + "','" + Heating1.Wh_d[mth] + "','" + Heating1.Wh_s[mth] + "','" + Heating1.Wh_g[mth] + "','" + Heating1.Carrier
                           + "'", "번호,월"); ;
+                Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                       "월," +
+                       "Qh_sol",
+                       "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Heating1.HeatingNum + "','" + MTH + "','" +
+                        Heating1.Qh_sol[mth]
+                        + "'", "번호,월"); ;
             }
         }
         #endregion
@@ -910,6 +916,7 @@ namespace main
             DHW1.Load_DHWGeneral();
             DHW1.Load_Boiler();
             DHW1.Load_Solar();
+            DHW1.Load_HP();
             DHW1.Load_PumpData();
             DHW1.Load_StorageData();
             DHW1.Load_PipeData();
@@ -920,6 +927,7 @@ namespace main
             DHW1.Calc_Qh_s();
             DHW1.Calc_Qh_gen_Boiler();
             DHW1.Calc_Solar();
+            DHW1.Calc_HP();
             DHW1.nan();
         }
         private static void DHW_Save(DHW DHW1)
@@ -945,6 +953,13 @@ namespace main
                          DHW1.Ww_d[mth] + "','" + DHW1.Ww_s[mth] + "','" + DHW1.Ww_g[mth] + "','" +
                          DHW1.Qw_gen_day[mth] + "','" + DHW1.Qw_gen_p0_day[mth] + "','" + DHW1.eta_pn_w[mth] + "','" + DHW1.Carrier
                           + "'", "번호,월"); ;
+
+                Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                        "월," +
+                        "Qw_sol",
+                        "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + DHW1.DHWNum + "','" + MTH + "','" +
+                        DHW1.Qw_sol[mth]
+                         + "'", "번호,월"); ;
             }
         }
         #endregion
