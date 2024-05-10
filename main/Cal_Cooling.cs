@@ -35,8 +35,8 @@ namespace main
         List<double> Power = new List<double>(), EER = new List<double>(); //공통
         List<string> Comp = new List<string>(); //공냉식, 수냉식, 지열히트펌프 유형 
         double CWin, CWout; //냉수공급시
-        string CSource, ArtType, ArtNumber, Cout; // A 및 숫자에 대한 지정값 Cout : 직팽식, 수방식, fC_M 멀티보정계수
-        double fC_M;
+        string CSource, ArtNumber, Cout; // A 및 숫자에 대한 지정값 Cout : 직팽식, 수방식, fC_M 멀티보정계수
+        double fC_M, FanPower; //팬파워는 공냉식에만 해당됨
         int Number_f, ZoneNumber_f, AhuNumber_f; //설비개수, 존개수
         string Carrier; ///연료
 
@@ -402,7 +402,7 @@ namespace main
                     }
                     else
                     {
-                        string[][] 공냉식2 = Program.DB.getValue(DB.type.ProjDB, "User_AirCooler", "냉방출력,EERP,대기전력,연료,설치,증발기", "번호 = '" + _SelectCG + "'");
+                        string[][] 공냉식2 = Program.DB.getValue(DB.type.ProjDB, "User_AirCooler", "냉방출력,EERP,대기전력,연료,설치,증발기,송풍기전력", "번호 = '" + _SelectCG + "'");
                         CGM._install = 공냉식2[0][4];
                         CGM._power = Convert.ToDouble(공냉식2[0][0]);
                         if(CGM._install == "기존")
@@ -413,6 +413,7 @@ namespace main
                         CGM._pctrl = Convert.ToDouble(공냉식2[0][2]);
                         CGM._fuel = 공냉식2[0][3];
                         CGM._install = 공냉식2[0][4];
+                        CGM.fanpower = Convert.ToDouble(공냉식2[0][5]); //송풍기전력[kW]
                         if (공냉식2[0][5] == "직팽식")
                         {
                             CGM._cwin = 0;
@@ -490,6 +491,7 @@ namespace main
                     CGM._cwout = Convert.ToDouble(흡수식[0][4]);
                     CGM._comp = null;
                     CGM._fuel = 흡수식[0][5];
+                    CGM._cout = "수방식";
                     break;
             }
             return CGM;
@@ -516,6 +518,10 @@ namespace main
                     CWin += CGM._cwin * CGM._number * CGM._power;
                     CWout += CGM._cwout * CGM._number * CGM._power;
                 }
+                if (CG == nameof(_TYPE.공냉식냉동기))
+                {
+                    FanPower += CGM.fanpower;
+                }
             }
 
             for (int i = 0; i < Power.Count; i++)
@@ -540,6 +546,7 @@ namespace main
             if (CT_Sum.Count > 0)
             {
                 CSWin = 0; CSWout = 0; CTPower_f = 0; CTfhrPL_f = 0; CTPhrel_f = 0; CTPctrlel_f = 0; CTNum_f = 0;
+                FanPower = 0;
                 List<double> pow = new List<double>();
                 foreach (CoolTop CT in CT_Sum)
                 {
@@ -573,7 +580,6 @@ namespace main
                 CSWin = 30; //향후 KS기준 적용필요
                 CSWout = 25; //향후 KS기준 적용필요
             }
-
         }
 
         public void Cal_CLRate()//공급설비기준 요구량 반영을 위해 부하율을 적용함, 공조기 부분은 공조기에서 완료한 후 가져오기 때문에 100%로 적용함
@@ -1229,21 +1235,18 @@ namespace main
             } 
         }
 
-        public string[] type(string type) //종류,번호,fC_M 지정
-        {
-            string[] v = new string[3];
-            string[][] value = Program.DB.getValue(DB.type.BaseDB_Cooling, " 부분부하계수", "종류,번호", "설비유형 = '" + CG + "' And 제어유형 = '" + Control_f + "' And 공급유형 = '" + type + "'");
-            v[0] = value[0][0]; //ArtType
-            v[1] = value[0][1]; //ArtNumber
-            
-            return v;
-        }
-
         public void Cal_fPL(string Type) //부하율, 종류, 번호
         {
             string 공급유형 = null;
-            
-            if (Type == "Z")
+            if(CG == nameof(_TYPE.흡수식냉동기)||Carrier == "가스")
+            {
+                for (int i = 0; i < 12; i++)
+                {
+                    fC_PL_z[i] = 0.95;
+                    fC_PL_ahu[i] = 0.95;
+                }
+            }           
+            else if (Type == "Z" && CG != nameof(_TYPE.흡수식냉동기))
             {
                 if (CG == "실외기12kW")
                 {
@@ -1254,30 +1257,26 @@ namespace main
                     공급유형 = Comp_f;
                 }
                 string[][] val = Program.DB.getValue(DB.type.BaseDB_Cooling, "부분부하계수", "P1,P2,P3,P4,P5,P6,P7,P8,P9,P10", " 설비유형= '" + CG + "' And 제어유형 = '" + Control_f + "' And 공급유형 = '" + 공급유형 + "'");
-                if(val.Length >0)
+                for (int i = 0; i < 12; i++)
                 {
-                    for (int i = 0; i < 12; i++)
+                    double B2 = 0.15;
+                    for (int h = 0; h < 10; h++)
                     {
-                        double B2 = 0.15;
-                        for (int h = 0; h < 10; h++)
+                        if (BC_z[i] < 0.05)
                         {
-                            if (BC_z[i] < 0.05)
-                            {
-                                fC_PL_z[i] = 1;
-                                break;
-                            }
-                            else if (BC_z[i] < B2)
-                            {
-                                fC_PL_z[i] = Convert.ToDouble(val[0][h]);
-                                break;
-                            }
-                            else B2 = B2 + 0.1;
+                            fC_PL_z[i] = 1;
+                            break;
                         }
+                        else if (BC_z[i] < B2)
+                        {
+                            fC_PL_z[i] = Convert.ToDouble(val[0][h]);
+                            break;
+                        }
+                        else B2 = B2 + 0.1;
                     }
-
-                }  
+                }    
             }
-            else if(Type == "Ahu")
+            else if(Type == "Ahu" && CG != nameof(_TYPE.흡수식냉동기))
             {
                 if (CG == "실외기12kW")
                 {
@@ -1305,6 +1304,14 @@ namespace main
                         }
                         else B2 = B2 + 0.1;
                     }
+                }
+            }
+            else
+            {
+                for(int i=0; i < 12; i++)
+                {
+                    fC_PL_z[i] = 1;
+                    fC_PL_ahu[i] = 1;
                 }
             }
         }
@@ -1360,8 +1367,8 @@ namespace main
                 fSP = Convert.ToDouble(value[0][0]);
             }
             else fSP = 1;
-            
 
+           
             for (int i = 0; i < 12; i++)
             {
                 EER_c[i] = EER_f * feer_corr[i];
@@ -1378,8 +1385,7 @@ namespace main
 
         }
         public void Cal_feerCorr()
-        {
-            
+        { 
             string[][] v = Program.DB.getValue(DB.type.BaseDB_Cooling, "실외온도보정", "req_in, req_out, cond, evad", "냉방설비= '" + CG + "' And 구분 = '"+ Cout + "'"); //수방식, 직팽식 중 선택
             ThetaC_gen_hr_req_in = Convert.ToDouble(v[0][0]);//A
             ThetaC_gen_req_out = Convert.ToDouble(v[0][1]);//B
@@ -1452,9 +1458,15 @@ namespace main
                     for (int i = 0; i < 12; i++)
                     {
                         Tempin[i] = 273 + CWout;
-                        Tempout[i] = 273 + CSWout; //응축기내 냉각수유입온도[실제로는 변하는 값이지만 일단 기준에 따라 작성함
+                        Tempout[i] = 273 + OutdoorTemperature[i]; //응축기내 냉각수유입온도[실제로는 변하는 값이지만 일단 기준에 따라 작성함
                     }
-
+                    break;
+                case "지하수히트펌프":
+                    for (int i = 0; i < 12; i++)
+                    {
+                        Tempin[i] = 273 + CWout;
+                        Tempout[i] = 273 + OutdoorTemperature[i]; //응축기내 냉각수유입온도[실제로는 변하는 값이지만 일단 기준에 따라 작성함
+                    }
                     break;
                 case "흡수식냉동기":
                     for (int i = 0; i < 12; i++)
@@ -1462,9 +1474,7 @@ namespace main
                         Tempin[i] = 273 + CWout;
                         Tempout[i] = 273 + CSWout; //응축기내 냉각수유입온도[실제로는 변하는 값이지만 일단 기준에 따라 작성함
                     }
-
                     break;
-                
                 default:
                     break;
 
@@ -1524,7 +1534,7 @@ namespace main
             double sum = 0;
             foreach (CoolingCE ce in SelectCE)
             {
-                if (ce._cetype != "실내기")
+                if (CG != nameof(_TYPE.실외기12kW))
                 {
                     int index = ce._ceNum.IndexOf("_");
                     sum += Convert.ToInt32(ce._ceNum.Substring(index+1)) * ce._ceElec; //개수 x 소비전력
@@ -1686,6 +1696,11 @@ namespace main
                     CT_stanby[i] = (Convert.ToDouble(days[i][0]) * 24 - tC_op[i]) * CTPctrlel_f / 1000;
                     CTopfan[i] = QC_out[i] * CTPhrel_f * CTfhrPL_f;
                 }
+                else if(CG==nameof(_TYPE.공냉식냉동기)&& QC_out[i] != 0)
+                {
+                    CT_stanby[i] = (Convert.ToDouble(days[i][0]) * 24 - tC_op[i]) * CTPctrlel_f / 1000;
+                    CTopfan[i] = QC_out[i] * (FanPower/Power_f)  * 0.8; //소비전력계수(16kW/0.35kW/제어:제어없음)
+                }
                 else
                 {
                     CT_stanby[i] = 0;
@@ -1697,7 +1712,6 @@ namespace main
 
         }
         #endregion
-
         public void Cal_Save() 
         {
             //설비정보와 보조설비정보는 따로따로
@@ -1797,7 +1811,6 @@ namespace main
             }
         }  
     }
-
     class zonemake //냉방존 만들기 
     {
         public string ZoneName, ZoneNum;
@@ -1901,17 +1914,10 @@ namespace main
             }
         }
     }
-
-    class LoadCalc
-    {
-        public string CeNum, ZoneNum; //공급설비, 존번호
-        public double power, useTime;
-    }
-
     class CoolingGeneratorMake
     {
         public string _num, _control, _fuel, _econo, _install; 
-        public double _power, _eer, _pctrl;
+        public double _power, _eer, _pctrl, fanpower; //fanpower 는 공냉식냉동기에만 해당됨
         public int _number;
 
         public string _comp;
@@ -1924,7 +1930,6 @@ namespace main
         public int _number;
         public double B효율, 유량, 동력, 양정;
     }
-
     class CoolingCE
     {
         public string _zonenum, _cetype, _ceNum;
