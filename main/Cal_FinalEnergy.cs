@@ -104,19 +104,19 @@ namespace main
             //냉방
             for (int mth = 0; mth < 12; mth++)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Result", "Fuel,QC_ce,QC_d,QC_s,QC_out,QC_f", "월='" + (mth + 1).ToString() + "월'");
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Result", "Fuel,QC_ce,QC_d,QC_s,QC_out,QC_f,W", "월='" + (mth + 1).ToString() + "월'");
                 if (Value.Length > 0)
                 {
                     for (int i = 0; i < Value.Length; i++) //시스템별
                     {
                         if (Value[i][0].ToString() == "전기")
                         {
-                            Qcf_elec[mth] += Convert.ToDouble(Value[i][5]); //나중에 보조설비 에너지 합산 해야함 
+                            Qcf_elec[mth] += Convert.ToDouble(Value[i][5]) + Convert.ToDouble(Value[i][6]); //나중에 보조설비 에너지 합산 해야함 
                         }
                         else
                         {
                             Carrier_c = Value[i][0];
-                            Qcf_elec[mth] += 0; //나중에 보조설비 에너지 합산 해야함 
+                            Qcf_elec[mth] += Convert.ToDouble(Value[i][6]); //나중에 보조설비 에너지 합산 해야함 
                             Qcf_gas[mth] += 0;
                         }
                     }
