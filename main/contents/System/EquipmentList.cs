@@ -23,6 +23,7 @@ using main.subcontents.RESystem_PV;
 using main.subcontents;
 using Microsoft.VisualBasic;
 using main.subcontents.CoolingSystem;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.contents
 {
@@ -121,10 +122,10 @@ namespace main.contents
             Load_AHU();
             Load_HRV();
             Load_DHWHP();
-
-
             //냉방추가
             Load_CoolingTop();
+            //단위계산
+            unit_comboBox.Items.AddRange(new string[] { "열량", "유량", "수량" });
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -132,7 +133,6 @@ namespace main.contents
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
-
         ///////////////////////////////////////////////////보일러/////////////////////////////////////////////////////////////////
         #region 1.보일러
         public void Create_Boiler_Table()
@@ -696,7 +696,6 @@ namespace main.contents
         }
 
         #endregion
-
         ///////////////////////////////////////////////////지역난방/////////////////////////////////////////////////////////////////
         #region 3.지역난방
         public void Create_DH_Table()
@@ -1126,7 +1125,6 @@ namespace main.contents
             }
         }
         #endregion
-
         ///////////////////////////////////////////////////연료전지/////////////////////////////////////////////////////////////////
         #region 5.연료전지
         public void Create_FC_Table()
@@ -2163,7 +2161,6 @@ namespace main.contents
             }
         }
         #endregion
-
         //////////////////////////////////////////////////지열 히트펌프/////////////////////////////////////////////////////////////////
         #region 9.지열히트펌프
         public void Create_GroundHP_Table()
@@ -2430,7 +2427,6 @@ namespace main.contents
             }
         }
         #endregion
-
         ///////////////////////////////////////////////////펌프/////////////////////////////////////////////////////////////////
         #region 10.펌프
         public void Create_Pump_Table()
@@ -3160,24 +3156,32 @@ namespace main.contents
 
             for (int k = 0; k < AirCooler_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[15];
-                for (int i = 0; i < 15; i++)
+                String[] Value = new String[16];
+                for (int i = 0; i < 16; i++)
                 {
-                    if (AirCooler_dataGridView.Rows[k].Cells[i + 1].Value != null)
+                    if (AirCooler_dataGridView.Rows[k].Cells[i + 1].Value != null && AirCooler_dataGridView.Rows[k].Cells[i + 1].Value != "")
                     {
                         Value[i] = AirCooler_dataGridView.Rows[k].Cells[i + 1].Value.ToString();
                     }
-                    else { Value[i] = ""; }
+                    else if (i == 12 || i == 13 || i == 14)
+                    {
+                        Value[i] = null;
+                    }
+                    else
+                    {
+                        string v = AirCooler_dataGridView.Columns[i + 1].HeaderText;
+                        MessageBox.Show(string.Format("{0} 를 입력해 주세요.", v));
+                        return;
+                    }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_AirCooler", "번호,DB유형,명칭,냉방출력,냉방소비전력,EER,압축기,연료,대기전력,대수,설치,부하측공급형식,증발기,냉수입구온도,냉수출구온도",
+                Program.DB.setValue(DB.type.ProjDB, "User_AirCooler", "번호,DB유형,명칭,냉방출력,냉방소비전력,EER,압축기,연료,대기전력,대수,설치,부하측공급형식,증발기,냉수입구온도,냉수출구온도,송풍기전력", //16개항목임
                 "'" + Value[0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','"
                  + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','"
-                 + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "'", "번호");
+                 + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
         }
-
         private void Load_AirCooler()
         {
             string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_AirCooler", "번호,DB유형,명칭,냉방출력,냉방소비전력,EER,압축기,연료,대기전력,대수,설치,부하측공급형식,증발기,냉수입구온도,냉수출구온도", "");
@@ -3428,7 +3432,6 @@ namespace main.contents
             }
         }
         #endregion
-
         ///////////////////////////////////////////////////태양열/////////////////////////////////////////////////////////////////
         #region 14.태양열
         public void Create_Solar_Table()
@@ -3609,7 +3612,6 @@ namespace main.contents
         }
 
         #endregion
-
         ///////////////////////////////////////////////////공조/////////////////////////////////////////////////////////////////
         #region 15.공조
         public void Create_AHU_Table()
@@ -4189,7 +4191,7 @@ namespace main.contents
             }
         }
         #endregion
-
+        ///////////////////////////////////////////////////냉각탑//////////////////////////////////////////////////////////////////////////
         #region 15.냉각탑
         public void Create_CoolingTop_Table()
         {
@@ -4385,8 +4387,6 @@ namespace main.contents
             }
         }
         #endregion
-
-
         //////////////////////////////////////////////////난방급탕 히트펌프/////////////////////////////////////////////////////////////////
         #region 7. 난방급탕히트펌프
         public void Create_DHWHP_Table()
@@ -4697,5 +4697,70 @@ namespace main.contents
         }
         #endregion
 
+        private void unit_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (unit_comboBox.SelectedIndex == 0)
+            {
+                unitselect_comboBox.Visible = true;
+                unitselect_comboBox.Items.AddRange(new string[] { "kcal", "USRT", "RT", "CRT(냉각톤)" });
+            }
+            else if (unit_comboBox.SelectedIndex == 1)
+            {
+                unitselect_comboBox.Visible = true;
+                unitselect_comboBox.Text = "LPM";
+                input_textBox.Visible = true;
+
+            }
+            else
+            {
+                unitselect_comboBox.Visible = true;
+                unitselect_comboBox.Text = " CMM";
+                input_textBox.Visible = true;
+            }
+        }
+        private void unitselect_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            input_textBox.Visible = true;
+        }
+
+        private void input_textBox_TextChanged_1(object sender, EventArgs e)
+        {
+            string value = unitselect_comboBox.Text;
+            output_text.Text = null;
+            double v;
+            if (double.TryParse(input_textBox.Text, out v))
+            {
+                v = Convert.ToDouble(input_textBox.Text);
+                output_text.Visible = true;
+            }
+            else
+            {
+                MessageBox.Show("input값에 숫자를 입력하세요.");
+                return;
+            }
+            switch (value)
+            {
+                case "kcal":
+                    output_text.Text = Convert.ToString(string.Format("{0:F2} kW", v / 860));
+                    break;
+                case "USRT":
+                    output_text.Text = Convert.ToString(string.Format("{0:F2} kW", v * 3024 / 860));
+                    break;
+                case "RT":
+                    output_text.Text = Convert.ToString(string.Format("{0:F2} kW", v * 3320 / 860));
+                    break;
+                case "CRT(냉각톤)":
+                    output_text.Text = Convert.ToString(string.Format("{0:F2} kW", v * 3900 / 860));
+                    break;
+                case "LPM":
+                    output_text.Text = Convert.ToString(string.Format("{0:F2} CMH", v * 60 / 1000));
+                    break;
+                case "CMM":
+                    output_text.Text = Convert.ToString(string.Format("{0:F2} CMH", v * 60));
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
