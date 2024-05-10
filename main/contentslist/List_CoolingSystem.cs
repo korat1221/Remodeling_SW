@@ -154,12 +154,16 @@ namespace main.contentslist
                 {
                     String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
                     Program.DB.deleteValue(DB.type.ProjDB, "CoolingSystem_Form", "번호 ='" + Delete_Num + "'");
+                    Program.DB.deleteValue(DB.type.ProjDB, "Cooling_ce_Form", "냉방시스템 ='" + Delete_Num + "'");
+                    Program.DB.deleteValue(DB.type.ProjDB, "CoolingSystem_Result", "번호 ='" + Delete_Num + "'");
                     load_List();
 
                 }
             }
 
         }
+
+
 
         private void dataGridView1_DoubleClick(object sender, EventArgs e)
         {

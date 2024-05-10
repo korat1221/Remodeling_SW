@@ -18,15 +18,12 @@ namespace main.subcontents.CoolingSystem
 {
     public partial class Cooling_AirCon : Form
     {
-
         List<int> SelectRow = new List<int>();
         List<string> SelectCG_split = new List<string>();
         List<string> SelectCGN_split = new List<string>();
 
-
         string SystemNum;
         public string SelectCG, SelectCGN;
-
 
         public Cooling_AirCon(string _Num, string _SelectCG_nonsplit, string _SelectCGN_nonsplit)
 

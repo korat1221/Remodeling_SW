@@ -144,7 +144,7 @@ namespace main.subcontents.CoolingSystem
             Pump_dataGridView.Columns.Add("A5", "효율.A[%]");
             Pump_dataGridView.Columns.Add("A6", "효율.B.[%]");
             Pump_dataGridView.Columns.Add("A7", "유량.[CMH]");
-            Pump_dataGridView.Columns.Add("A8", "동력.[kW]");
+            Pump_dataGridView.Columns.Add("A8", "동력.[W]");
             Pump_dataGridView.Columns.Add("A9", "양정.[m]");
         }
 

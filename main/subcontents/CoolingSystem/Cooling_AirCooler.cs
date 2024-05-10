@@ -259,7 +259,7 @@ namespace main.subcontents.CoolingSystem
                     {
                         AirCooler_dataGridView.Rows[n].Cells[0].Value = true;
                         AirCooler_dataGridView.Rows[n].Cells[1].Value = SelectCGN_split[k];
-                        AirCooler_dataGridView.Rows[n].Cells[6].Value = SelectCGComp_split[k].ToString();
+                        AirCooler_dataGridView.Rows[n].Cells[7].Value = SelectCGComp_split[k].ToString();
                     }
                 }
             }
