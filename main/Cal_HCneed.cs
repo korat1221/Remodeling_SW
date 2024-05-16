@@ -724,7 +724,12 @@ namespace main
                     if (ZoneE[n][1] == "커튼월창")
                     {
                         AreaDirect_tot += Convert.ToDouble(ZoneE[n][3]);
-                        CMH += Convert.ToDouble(ZoneE[n][3]) * Win_q50;
+                        if (ZoneE[n][1] == "출입문부분")
+                        { CMH += Convert.ToDouble(ZoneE[n][3]) * Door_q50; }
+                        else
+                        {
+                            CMH += Convert.ToDouble(ZoneE[n][3]) * Win_q50;
+                        }
                     }
                     else if (ZoneE[n][1] == "외벽")
                     {
@@ -1322,10 +1327,10 @@ namespace main
 
             //지하벽 QT계산    
             i = -1;
-            double[,,,] zoneGWalls_QTsink = new double[zoneFloor.Count, 2, 2, 12];
-            double[,,,] zoneGWalls_QTsource = new double[zoneFloor.Count, 2, 2, 12];
-            double[,,,] zoneGWalls_QTsink_TB = new double[zoneFloor.Count, 2, 2, 12];
-            double[,,,] zoneGWalls_QTsource_TB = new double[zoneFloor.Count, 2, 2, 12];
+            double[,,,] zoneGWalls_QTsink = new double[zoneGWall.Count, 2, 2, 12];
+            double[,,,] zoneGWalls_QTsource = new double[zoneGWall.Count, 2, 2, 12];
+            double[,,,] zoneGWalls_QTsink_TB = new double[zoneGWall.Count, 2, 2, 12];
+            double[,,,] zoneGWalls_QTsource_TB = new double[zoneGWall.Count, 2, 2, 12];
             while (++i < zoneGWall.Count)
             {
                 GWall zonegwall = (GWall)zoneGWall[i];
@@ -2472,7 +2477,7 @@ namespace main
                     for (int mth = 0; mth < 12; mth++)
                     {
                         Theta_g = Theta_set[hc] - zonegwall.Fx() * (Theta_set[hc] - theta_e[mth]);
-                        H_Theta_F[hc, mth] += (Theta_g * zonegwall.Ueff() * zonegwall.Area());
+                        H_Theta_G[hc, mth] += (Theta_g * zonegwall.Ueff() * zonegwall.Area());
                     }
                 }
             }
