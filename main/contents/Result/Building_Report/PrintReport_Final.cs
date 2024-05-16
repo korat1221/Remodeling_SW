@@ -268,12 +268,11 @@ namespace main.contents.Result.Building_Report
                     전기사용량chart.Add(Math.Round(Double.Parse(Quse_elec_mth[3, mth].ToString()), 3) + 0);
                 }
                 double Qh_a_전기 = 0, Qc_a_전기 = 0, Qw_a_전기 = 0, Ql_a_전기 = 0, Qv_a_전기 = 0, Qbase_a_전기 = 0, Qreg_a_전기 =0, Qtot_a_전기 = 0;
-                double[] Qreg_mth = new double[12];
                 double[] Qtot_mth_전기 = new double[12];
                 double Error_mth_avg_전기 = 0;
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,연료", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,연료,신재생에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
                     if(Final.Length > 0)
                     {
                         __data[14].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][0]).ToString("0.0") }); //월별 난방 
@@ -289,15 +288,9 @@ namespace main.contents.Result.Building_Report
                         공조전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Final[0][4])), 3) + 0);
                         기저전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Final[0][5])), 3) + 0);
                         string[][] PV = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "최종사용량", "월 ='" + (mth + 1).ToString() + "월'");
-                        if (PV.Length > 0)
-                        {
-                            for (int a = 0; a < PV.Length; a++)
-                            {
-                                Qreg_mth[mth] += Convert.ToDouble(PV[a][0]);
-                            }
-                        }
-                        __data[101].Add(new { idx = i * 12 + mth, val = Qreg_mth[mth].ToString("0.0") }); //월별 신재생 
-                        Qtot_mth_전기[mth] = Convert.ToDouble(Final[0][0]) + Convert.ToDouble(Final[0][1]) + Convert.ToDouble(Final[0][2]) + Convert.ToDouble(Final[0][3]) + Convert.ToDouble(Final[0][4]) + Convert.ToDouble(Final[0][5]) - Qreg_mth[mth];
+                        
+                        __data[101].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][7]).ToString("0.0") }); //월별 신재생 
+                        Qtot_mth_전기[mth] = Convert.ToDouble(Final[0][8]);
                         __data[20].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(Qtot_mth_전기[mth].ToString()) }); //월별 전기 에너지소요량 
                         총전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Qtot_mth_전기[mth].ToString())), 3) + 0);
                         전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Qtot_mth_전기[mth].ToString())), 3) + 0);
@@ -313,7 +306,7 @@ namespace main.contents.Result.Building_Report
                         Ql_a_전기 += Convert.ToDouble(Final[0][3]);
                         Qv_a_전기 += Convert.ToDouble(Final[0][4]);
                         Qbase_a_전기 += Convert.ToDouble(Final[0][5]);
-                        Qreg_a_전기 += Qreg_mth[mth];
+                        Qreg_a_전기 += Convert.ToDouble(Final[0][7]);
                     }
                 }
                 Qtot_a_전기 = Qh_a_전기 + Qc_a_전기 + Qw_a_전기 + Ql_a_전기 + Qv_a_전기 + Qbase_a_전기 - Qreg_a_전기;
@@ -882,10 +875,9 @@ namespace main.contents.Result.Building_Report
                     List<object> 절감률_전기Chart = new List<object>();
 
                     double Qh_a2_전기 = 0, Qc_a2_전기 = 0, Qw_a2_전기 = 0, Ql_a2_전기 = 0, Qv_a2_전기 = 0, Qbase_a2_전기 = 0, Qreg_a2_전기 =0, Qtot_a2_전기 = 0;
-                    double[] Qreg2 = new double[12]; double[] Qreg1 = new double[12];
                     for (int mth = 0; mth < 12; mth++)
                     { //리모델링전 전기 소요량 
-                        string[][] Final = Program.DB.querySQL(res[0][0], "SELECT 난방,냉방,급탕,조명,공조,기저에너지 FROM FinalEnergy_Result where 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
+                        string[][] Final = Program.DB.querySQL(res[0][0], "SELECT 난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량 FROM FinalEnergy_Result where 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
                         if(Final.Length >0 )
                         {
                             __data[0].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][0]).ToString("0.0") }); //월별 난방 
@@ -893,20 +885,9 @@ namespace main.contents.Result.Building_Report
                             __data[2].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][2]).ToString("0.0") }); //월별 급탕 
                             __data[3].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][3]).ToString("0.0") }); //월별 조명 
                             __data[4].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][4]).ToString("0.0") }); //월별 공조
-                            __data[5].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][5]).ToString("0.0") }); //월별 기저
-                                                                                                                            //
-                            string[][] PV = Program.DB.querySQL(res[0][0], "SELECT 최종사용량 FROM PV_Result where 월 = '" + (mth + 1).ToString() + "월'");
-                            if (PV.Length > 0)
-                            {
-                                for (int a = 0; a < PV.Length; a++)
-                                {
-                                    if (PV[a][0] == "")
-                                    { Qreg2[mth] += 0; }
-                                    else { Qreg2[mth] += Convert.ToDouble(PV[a][0]); }
-                                }
-                            }
-                            __data[100].Add(new { idx = i * 12 + mth, val = Qreg2[mth].ToString("0.0") }); //월별 신재생 생산량 
-                            Qtot2_mth_전기[mth] = Convert.ToDouble(Final[0][0]) + Convert.ToDouble(Final[0][1]) + Convert.ToDouble(Final[0][2]) + Convert.ToDouble(Final[0][3]) + Convert.ToDouble(Final[0][4]) + Convert.ToDouble(Final[0][5]) - Qreg2[mth];
+                            __data[5].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][5]).ToString("0.0") }); //월별 기저            
+                            __data[100].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][6]).ToString("0.0") }); //월별 신재생 생산량 
+                            Qtot2_mth_전기[mth] = Convert.ToDouble(Final[0][7]);
                             __data[6].Add(new { idx = i * 12 + mth, val = Qtot2_mth_전기[mth].ToString("0.0") }); //월별 전기 에너지소요량 
 
                             전_난방_전기Chart.Add(Math.Round(Double.Parse(Final[0][0]), 3) + 0);
@@ -924,7 +905,7 @@ namespace main.contents.Result.Building_Report
                             Ql_a2_전기 += Convert.ToDouble(Final[0][3]);
                             Qv_a2_전기 += Convert.ToDouble(Final[0][4]);
                             Qbase_a2_전기 += Convert.ToDouble(Final[0][5]);
-                            Qreg_a2_전기 += Qreg2[mth];
+                            Qreg_a2_전기 += Convert.ToDouble(Final[0][6]);
                         }
                     }
                     Qtot_a2_전기 = Qh_a2_전기 + Qc_a2_전기 + Qw_a2_전기 + Ql_a2_전기 + Qv_a2_전기 + Qbase_a2_전기 - Qreg_a2_전기;
@@ -959,7 +940,7 @@ namespace main.contents.Result.Building_Report
                     double Qh_a_전기 = 0, Qc_a_전기 = 0, Qw_a_전기 = 0, Ql_a_전기 = 0, Qv_a_전기 = 0, Qbase_a_전기 = 0, Qreg_a_전기 =0, Qtot_a_전기 = 0;
                     for (int mth = 0; mth < 12; mth++)
                     { //리모델링후 전기 소요량 
-                        string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
+                        string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
                         string[][] Final2 = Program.DB.querySQL(res[0][0], "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
                         if(Final.Length >0 && Final2.Length >0)
                         {
@@ -969,24 +950,9 @@ namespace main.contents.Result.Building_Report
                             __data[24].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][3]).ToString("0.0") }); //월별 조명 
                             __data[25].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][4]).ToString("0.0") }); //월별 공조
                             __data[26].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final2[0][0]).ToString("0.0") }); //월별 기저 >>>리모델링 전 값 가져옴 
-
-                            string[][] PV = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "최종사용량", "월 ='" + (mth + 1).ToString() + "월'");
-                            if (PV.Length > 0)
-                            {
-                                for (int a = 0; a < PV.Length; a++)
-                                {
-                                    if (PV[a][0] == "")
-                                    {
-                                        Qreg1[mth] += 0;
-                                    }
-                                    else
-                                    {
-                                        Qreg1[mth] += Convert.ToDouble(PV[a][0]);
-                                    }
-                                }
-                            }
-                            __data[103].Add(new { idx = i * 12 + mth, val = Qreg1[mth].ToString("0.0") }); //월별 신재생 생산량 
-                            Qtot_mth_전기[mth] = Convert.ToDouble(Final[0][0]) + Convert.ToDouble(Final[0][1]) + Convert.ToDouble(Final[0][2]) + Convert.ToDouble(Final[0][3]) + Convert.ToDouble(Final[0][4]) + Convert.ToDouble(Final2[0][0]) - Qreg1[mth];
+                           
+                            __data[103].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][6]).ToString("0.0") }); //월별 신재생 생산량 
+                            Qtot_mth_전기[mth] = Convert.ToDouble(Final[0][7]);
                             __data[27].Add(new { idx = i * 12 + mth, val = Qtot_mth_전기[mth].ToString("0.0") }); //월별 전기 에너지소요량 
 
                             후_난방_전기Chart.Add(Math.Round(Double.Parse(Final[0][0]), 3) + 0);
@@ -1004,7 +970,7 @@ namespace main.contents.Result.Building_Report
                             Ql_a_전기 += Convert.ToDouble(Final[0][3]);
                             Qv_a_전기 += Convert.ToDouble(Final[0][4]);
                             Qbase_a_전기 += Convert.ToDouble(Final2[0][0]); //리모델링전 값 가져옴 
-                            Qreg_a_전기 += Qreg1[mth];
+                            Qreg_a_전기 += Convert.ToDouble(Final[0][6]);
                         }                       
                     }
                     Qtot_a_전기 = Qh_a_전기 + Qc_a_전기 + Qw_a_전기 + Ql_a_전기 + Qv_a_전기 + Qbase_a_전기 - Qreg_a_전기;
