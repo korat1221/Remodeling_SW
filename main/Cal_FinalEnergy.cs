@@ -22,34 +22,9 @@ namespace main
         public double Qf_gas_tot_a, Qf_elec_tot_a; 
         public double[] Quse_gas_mth = new double[12], Quse_elec_mth = new double[12];
         public double Quse_gas_a, Quse_elec_a;
-        public double[] Error_gas_mth = new double[12], Error_elec_mth = new double[12];
-        public double Error_gas_a, Error_elec_a;
+      
         public Final(string ProjNum)
         {
-            #region 난방
-            string[][] HeatingNum = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "번호");
-            if(HeatingNum.Length >0)
-            {
-                int i = -1;
-                while (++i < HeatingNum.Length)
-                {
-                    Heating Heating1 = Program.CALC.getHeating(HeatingNum[i][0]);
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-                        if (Heating1.Carrier == "전기")
-                        {
-                            Qhf_elec[mth] += (Heating1.Qh_f[mth] + Heating1.Wh_ce[mth] + Heating1.Wh_d[mth] + Heating1.Wh_s[mth] + Heating1.Wh_g[mth]);
-                        }
-                        else
-                        {
-                            Carrier_h = Heating1.Carrier;
-                            Qhf_elec[mth] += (Heating1.Wh_ce[mth] + Heating1.Wh_d[mth] + Heating1.Wh_s[mth] + Heating1.Wh_g[mth]);
-                            Qhf_gas[mth] += Heating1.Qh_f[mth];
-                        }
-                    }
-                }
-            }
-            #endregion 
             #region 급탕
             string[][] DHWNum = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호");
             if (DHWNum.Length > 0)
@@ -89,18 +64,7 @@ namespace main
                 }
             }
             #endregion 
-            //신재생
-            for (int mth = 0; mth < 12; mth++)
-            {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "전기생산량", "월 ='" + (mth + 1).ToString() + "월'");
-                if (Value.Length > 0)
-                {
-                    for(int i =0; i< Value.Length; i++)
-                    {
-                        Qreg_elec[mth] += Convert.ToDouble(Value[i][0]);
-                    }                    
-                }
-            }
+           
             //냉방
             for (int mth = 0; mth < 12; mth++)
             {
@@ -119,18 +83,6 @@ namespace main
                             Qcf_elec[mth] += Convert.ToDouble(Value[i][6]); //나중에 보조설비 에너지 합산 해야함 
                             Qcf_gas[mth] += 0;
                         }
-                    }
-                }
-            }
-            //공조 
-            for (int mth = 0; mth < 12; mth++)
-            {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지", "월='" + (mth + 1).ToString() + "월'");
-                if (Value.Length > 0)
-                {
-                    for (int i = 0; i < Value.Length; i++) //시스템별
-                    {
-                        Qvf_elec[mth] += (Convert.ToDouble(Value[i][0]) + Convert.ToDouble(Value[i][1]) + Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]));
                     }
                 }
             }
@@ -236,16 +188,73 @@ namespace main
 
                 }
             }
-
+           
+        }
+        public void Load_Heating_Final(string ProjNum)
+        {
+            string[][] HeatingNum = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "번호");
+            if (HeatingNum.Length > 0)
+            {
+                int i = -1;
+                while (++i < HeatingNum.Length)
+                {
+                    Heating Heating1 = Program.CALC.getHeating(HeatingNum[i][0]);
+                    for (int mth = 0; mth < 12; mth++)
+                    {
+                        if (Heating1.Carrier == "전기")
+                        {
+                            Qhf_elec[mth] += (Heating1.Qh_f[mth] + Heating1.Wh_ce[mth] + Heating1.Wh_d[mth] + Heating1.Wh_s[mth] + Heating1.Wh_g[mth]);
+                        }
+                        else
+                        {
+                            Carrier_h = Heating1.Carrier;
+                            Qhf_elec[mth] += (Heating1.Wh_ce[mth] + Heating1.Wh_d[mth] + Heating1.Wh_s[mth] + Heating1.Wh_g[mth]);
+                            Qhf_gas[mth] += Heating1.Qh_f[mth];
+                        }
+                    }
+                }
+            }
+        }
+        public void Load_AHU_Final(string ProjNum)
+        {
+            //공조 
+            for (int mth = 0; mth < 12; mth++)
+            {
+                string[][] Value = Program.DB.getValue(ProjNum, "AHUSystem_Result", "급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지", "월='" + (mth + 1).ToString() + "월'");
+                if (Value.Length > 0)
+                {
+                    for (int i = 0; i < Value.Length; i++) //시스템별
+                    {
+                        Qvf_elec[mth] += (Convert.ToDouble(Value[i][0]) + Convert.ToDouble(Value[i][1]) + Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]));
+                    }
+                }
+            }
+        }
+        public void Load_REG_Final(string ProjNum)
+        {
+            for (int mth = 0; mth < 12; mth++)
+            {
+                string[][] Value = Program.DB.getValue(ProjNum, "PV_Result", "전기생산량", "월 ='" + (mth + 1).ToString() + "월'");
+                if (Value.Length > 0)
+                {
+                    for (int i = 0; i < Value.Length; i++)
+                    {
+                        Qreg_elec[mth] += Convert.ToDouble(Value[i][0]);
+                    }
+                }
+            }
+        }
+        public void Calc_Qtot()
+        {
             for (int mth = 0; mth < 12; mth++)
             {
                 Qf_elec_tot1[mth] = Qhf_elec[mth] + Qcf_elec[mth] + Qwf_elec[mth] + Qlf_elec[mth] + Qvf_elec[mth];
                 Qf_gas_tot1[mth] = Qhf_gas[mth] + Qcf_gas[mth] + Qwf_gas[mth];
             }
         }
-
-        public void Calc_Qbase_elec()
-        {
+          public void Calc_Qbase_elec()
+          {
+            
             double beta, alpha;
             double[] x = new double[12];
             double[] y = new double[12];
@@ -294,9 +303,10 @@ namespace main
             }
              for (int mth = 0; mth < 12; mth++)
             {
-                Qf_elec_tot_mth[mth] = Qf_elec_tot1[mth] + Qbase_elec[mth];
+                Qf_elec_tot_mth[mth] = Qf_elec_tot1[mth] + Qbase_elec[mth] - Qreg_elec[mth];
             }
         }
+
         public void Calc_Qbase_gas()
         {
             double beta, alpha;
@@ -355,20 +365,5 @@ namespace main
             }
         }
 
-        public void Calc_Error()
-        { 
-           for(int mth  =0; mth < 12;mth++)
-            {
-                Error_elec_mth[mth] = Math.Abs(Quse_elec_mth[mth] - Qf_elec_tot_mth[mth]);
-                Error_gas_mth[mth] = Math.Abs(Quse_gas_mth[mth] - Qf_gas_tot_mth[mth]);
-
-                Quse_elec_a += Quse_elec_mth[mth];
-                Quse_gas_a += Quse_gas_mth[mth];
-                Qf_elec_tot_a += Qf_elec_tot_mth[mth];
-                Qf_gas_tot_a += Qf_gas_tot_mth[mth];
-                Error_elec_a = Math.Abs(Quse_elec_a - Qf_elec_tot_a);
-                Error_gas_a = Math.Abs(Quse_gas_a - Qf_gas_tot_a); 
-            }
-        }
     }
 }
