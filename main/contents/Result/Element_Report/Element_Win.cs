@@ -83,7 +83,7 @@ namespace main.contents
             List<object>[] Win_data = new List<object>[700];
             List<object>[] CW_data = new List<object>[700];
             List<object>[] Door_data = new List<object>[700];
-            string[] ElementAlt = { "조닝", "요소기술_기밀", "요소기술_열회수기", "요소기술_창호", "요소기술_커튼월창", "요소기술_외부출입문", "요소기술_창호", "요소기술_커튼월창", "요소기술_외부출입문", "요소기술_난방", "요소기술_공조" };
+            string[] ElementAlt = { "조닝", "기밀", "열회수기", "창호", "커튼월창", "외부출입문", "창호", "커튼월창", "외부출입문", "난방", "공조", "신재생" };
             int i = -1, n;
             while (++i < 700)
             {
@@ -105,7 +105,7 @@ namespace main.contents
                     double[] Element_EnergySum = new double[ElementAlt.Length];
                     for (int a =0; a< ElementAlt.Length; a++)
                     {
-                        string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Alt", "총에너지소요량", "검토유형='" + ElementAlt[a] + "' And 연료='전기'");
+                        string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "총에너지소요량", "검토유형='" + ElementAlt[a] + "' And 연료='전기'");
                         if (Value2.Length > 0)
                         {
                             for (int k = 0; k < Value2.Length; k++)
@@ -113,7 +113,7 @@ namespace main.contents
                                 Element_ElecSum[a] += Convert.ToDouble(Value2[k][0]);
                             }
                         }
-                        Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Alt", "총에너지소요량", "검토유형='" + ElementAlt[a] + "' And Not 연료='전기'");
+                        Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "총에너지소요량", "검토유형='" + ElementAlt[a] + "' And Not 연료='전기' and Not 연료='전체'");
                         if (Value2.Length > 0)
                         {
                             for (int k = 0; k < Value2.Length; k++)
@@ -139,8 +139,8 @@ namespace main.contents
                             Total_ElecSaving += (Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final2[0][0]));
                         }
 
-                         Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
-                         Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
+                         Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='" + (mth + 1).ToString() + "월'");
+                         Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='" + (mth + 1).ToString() + "월'");
                         if (Final1.Length > 0 && Final2.Length > 0)
                         {
                             Total_Energy_pre += Convert.ToDouble(Final1[0][0]);
@@ -165,7 +165,7 @@ namespace main.contents
                     for (int a = 1; a < ElementAlt.Length; a++)
                     {
                         Element_ElecSaving[a] = Total_ElecSaving * (Element_ElecSum[0] - Element_ElecSum[a]) / sum_elec;
-                        Element_GasSaving[a] = Total_GasSaving * (Element_GasSum[0] - Element_GasSum[a]) / sum_elec;
+                        Element_GasSaving[a] = Total_GasSaving * (Element_GasSum[0] - Element_GasSum[a]) / sum_gas;
                         Element_EnergySaving[a] = Element_ElecSaving[a] + Element_GasSaving[a];
                     }
 
@@ -177,7 +177,7 @@ namespace main.contents
                     int j_창호 = 0;
                     for(int a =0; a< ElementAlt.Length; a++)
                     {
-                        if (ElementAlt[a] == "요소기술_창호")
+                        if (ElementAlt[a] == "창호")
                         {
                             j_창호 = a; break;
                         }
@@ -388,7 +388,7 @@ namespace main.contents
                     int j_커튼월창 = 0;
                     for (int a = 0; a < ElementAlt.Length; a++)
                     {
-                        if (ElementAlt[a] == "요소기술_커튼월창")
+                        if (ElementAlt[a] == "커튼월창")
                         {
                             j_커튼월창 = a; break;
                         }
@@ -603,7 +603,7 @@ namespace main.contents
                     int j_외부출입문 = 0;
                     for (int a = 0; a < ElementAlt.Length; a++)
                     {
-                        if (ElementAlt[a] == "요소기술_외부출입문")
+                        if (ElementAlt[a] == "외부출입문")
                         {
                             j_외부출입문 = a; break;
                         }

@@ -91,7 +91,7 @@ namespace main.contents
             List<object>[] Wall_data = new List<object>[700];
             List<object>[] Roof_data = new List<object>[700];
             List<object>[] Floor_data = new List<object>[700];
-            string[] ElementAlt = { "조닝", "요소기술_기밀", "요소기술_열회수기", "요소기술_외벽", "요소기술_지붕", "요소기술_최하층바닥", "요소기술_창호", "요소기술_커튼월창", "요소기술_외부출입문", "요소기술_난방", "요소기술_공조" };
+            string[] ElementAlt = { "조닝", "기밀", "열회수기", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "난방", "공조" };
             int i = -1, n;
             while (++i < 700)
             {
@@ -113,7 +113,7 @@ namespace main.contents
                     double[] Element_EnergySum = new double[ElementAlt.Length];
                     for (int a =0; a< ElementAlt.Length; a++)
                     {
-                        string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Alt", "총에너지소요량", "검토유형='" + ElementAlt[a] + "' And 연료='전기'");
+                        string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "총에너지소요량", "검토유형='" + ElementAlt[a] + "' And 연료='전기'");
                         if (Value2.Length > 0)
                         {
                             for (int k = 0; k < Value2.Length; k++)
@@ -121,7 +121,7 @@ namespace main.contents
                                 Element_ElecSum[a] += Convert.ToDouble(Value2[k][0]);
                             }
                         }
-                        Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Alt", "총에너지소요량", "검토유형='" + ElementAlt[a] + "' And Not 연료='전기'");
+                        Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "총에너지소요량", "검토유형='" + ElementAlt[a] + "' And Not 연료='전기' and Not 연료='전체'");
                         if (Value2.Length > 0)
                         {
                             for (int k = 0; k < Value2.Length; k++)
@@ -147,8 +147,8 @@ namespace main.contents
                             Total_ElecSaving += (Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final2[0][0]));
                         }
 
-                         Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
-                         Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
+                         Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='" + (mth + 1).ToString() + "월'");
+                         Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='" + (mth + 1).ToString() + "월'");
                         if (Final1.Length > 0 && Final2.Length > 0)
                         {
                             Total_Energy_pre += Convert.ToDouble(Final1[0][0]);
@@ -185,7 +185,7 @@ namespace main.contents
                     int j_외벽 = 0;
                     for(int a =0; a< ElementAlt.Length; a++)
                     {
-                        if (ElementAlt[a] =="요소기술_외벽")
+                        if (ElementAlt[a] =="외벽")
                         {
                             j_외벽 = a; break;
                         }
@@ -343,7 +343,7 @@ namespace main.contents
                     int j_지붕 = 0;
                     for (int a = 0; a < ElementAlt.Length; a++)
                     {
-                        if (ElementAlt[a] == "요소기술_지붕")
+                        if (ElementAlt[a] == "지붕")
                         {
                             j_지붕 = a; break;
                         }
@@ -501,7 +501,7 @@ namespace main.contents
                     int j_최하층바닥 = 0;
                     for (int a = 0; a < ElementAlt.Length; a++)
                     {
-                        if (ElementAlt[a] == "요소기술_최하층바닥")
+                        if (ElementAlt[a] == "최하층바닥")
                         {
                             j_최하층바닥 = a; break;
                         }
