@@ -203,7 +203,7 @@ namespace main.contents.Alt
         #region 법규기반 검토
         private void Load_RuleResult()
         {
-            string[][] value = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Alt", "검토유형, 총에너지소요량", "월='연간' and 연료='전체'");
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Rule", "검토유형, 총에너지소요량", "월='연간' and 연료='전체'");
             if (value.Length > 0)
             {
                 string[] ElementType = new string[value.Length];
@@ -221,7 +221,7 @@ namespace main.contents.Alt
                     {
                         if (Energy[a] == Convert.ToDouble(value[i][1]))
                         {
-                            ElementType[a] = value[i][0].Substring(3, value[i][0].Length - 3);
+                            ElementType[a] = value[i][0];
                             break;
                         }
                     }
