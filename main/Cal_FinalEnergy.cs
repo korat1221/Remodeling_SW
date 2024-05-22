@@ -213,7 +213,7 @@
         }
         public void Load_AHU_Final(string ProjNum)
         {
-            string[][] Num = Program.DB.getValue(ProjNum, "AHUSystem_Result", "번호");
+            string[][] Num = Program.DB.getValue(ProjNum, "AHUSystem_Form", "번호");
             if (Num.Length > 0)
             {
                 int i = -1;
