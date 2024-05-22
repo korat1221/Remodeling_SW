@@ -604,23 +604,27 @@ namespace main.contents.Result.Building_Report
                 __data[92].Add(new { idx = i, val = Carrier + " 에너지사용량 및 에너지소요량 오차율 검토보고서" });
                 __data[93].Add(new { idx = i, val = "대표 "+Carrier+" 에너지사용량" });
                 __data[94].Add(new { idx = i, val = Carrier+" 에너지소요량" });
+                string[][] check2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "not 연료 ='전기'");
+                if(check2.Length > 0 )
+                {
+                    chart_가스사용량1.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart1.ToArray()));
+                    chart_가스사용량2.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart2.ToArray()));
+                    chart_가스사용량3.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart3.ToArray()));
+                    chart_가스사용량4.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart4.ToArray()));
 
-                chart_가스사용량1.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart1.ToArray()));
-                chart_가스사용량2.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart2.ToArray()));
-                chart_가스사용량3.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart3.ToArray()));
-                chart_가스사용량4.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart4.ToArray()));
 
+                    chart_난방가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(난방가스소요량chart.ToArray()));
+                    chart_냉방가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(냉방가스소요량chart.ToArray()));
+                    chart_급탕가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(급탕가스소요량chart.ToArray()));
+                    chart_조명가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(조명가스소요량chart.ToArray()));
+                    chart_공조가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(공조가스소요량chart.ToArray()));
+                    chart_기저가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(기저가스소요량chart.ToArray()));
 
-                chart_난방가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(난방가스소요량chart.ToArray()));
-                chart_냉방가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(냉방가스소요량chart.ToArray()));
-                chart_급탕가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(급탕가스소요량chart.ToArray()));
-                chart_조명가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(조명가스소요량chart.ToArray()));
-                chart_공조가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(공조가스소요량chart.ToArray()));
-                chart_기저가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(기저가스소요량chart.ToArray()));
-
-                chart_가스사용량.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart.ToArray()));
-                chart_가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(가스소요량chart.ToArray()));
-                chart_가스오차율.Add(System.Text.Json.JsonSerializer.Serialize(가스오차율chart.ToArray()));
+                    chart_가스사용량.Add(System.Text.Json.JsonSerializer.Serialize(가스사용량chart.ToArray()));
+                    chart_가스소요량.Add(System.Text.Json.JsonSerializer.Serialize(가스소요량chart.ToArray()));
+                    chart_가스오차율.Add(System.Text.Json.JsonSerializer.Serialize(가스오차율chart.ToArray()));
+                }
+                
 
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "yeartitle1_gas", data = __data[50] });
@@ -713,8 +717,7 @@ namespace main.contents.Result.Building_Report
                     max_graph_elec = max_elec[k];
                 }
             }
-
-            for (int k = 0; k < 4; k++)
+                for (int k = 0; k < 4; k++)
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
@@ -732,8 +735,9 @@ namespace main.contents.Result.Building_Report
                 }
             }
             Debug.Print("start");
-
-            i = -1;
+            string[][] check = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "not 연료 ='전기'");
+            
+                i = -1;
             while (++i < 번호.Length)
             {
                 if (charts != "") charts += ",";
@@ -757,25 +761,27 @@ namespace main.contents.Result.Building_Report
                 "{type:\"line\",yAxisID: 'y',label:\"전기 에너지 소요량 [kWh]\",data:" + chart_전기소요량[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
                 "{type:\"bar\",yAxisID: 'y1',barPercentage:0.4,label:\"오차율 [%]\",data:" + chart_전기오차율[i] + ",borderColor:\"#A5A5A5\",backgroundColor:\"#A5A5A5\",dash:false}," +
                 "],max:" + (Math.Round(max_graph_elec / 1000) * 1000 + 500).ToString() + ",step:100,legend:true}";
-
-                charts += ",{data:[{type:\"line\",label:\"" + year_gas[0] + "\",data:" + chart_가스사용량1[i] + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:false, tension: 0.4}," +
+                if (check.Length > 0)
+                {
+                    charts += ",{data:[{type:\"line\",label:\"" + year_gas[0] + "\",data:" + chart_가스사용량1[i] + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:false, tension: 0.4}," +
                "{type:\"line\",label:\"" + year_gas[1] + "\",data:" + chart_가스사용량2[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false, tension: 0.4}," +
                "{type:\"line\",label:\"" + year_gas[2] + "\",data:" + chart_가스사용량3[i] + ",borderColor:\"#4472C4\",backgroundColor:\"#4472C4\",dash:false, tension: 0.4}," +
                "{type:\"line\",label:\"평균\",data:" + chart_가스사용량4[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
                "],max:" + (Math.Round(max_graph_gas / 1000) * 1000 + 500).ToString() + ",step:100,legend:true}";
 
-                charts += ",{data:[" +
-                "{type:\"bar\",barPercentage:0.4,label:\"기저 가스 에너지 소요량 [kWh]\",data:" + chart_기저가스소요량[i] + ",borderColor:\"#BFBFBF\",backgroundColor:\"#BFBFBF\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"급탕 가스 에너지 소요량 [kWh]\",data:" + chart_급탕가스소요량[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"공조 가스 에너지 소요량 [kWh]\",data:" + chart_공조가스소요량[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"난방 가스 에너지 소요량 [kWh]\",data:" + chart_난방가스소요량[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"냉방 가스 에너지 소요량 [kWh]\",data:" + chart_냉방가스소요량[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
-                "],max:" + (Math.Round(max_graph_gas / 1000) * 1000 + 500).ToString() + ",step:100,legend:true,stacked:true}";
+                    charts += ",{data:[" +
+                    "{type:\"bar\",barPercentage:0.4,label:\"기저 가스 에너지 소요량 [kWh]\",data:" + chart_기저가스소요량[i] + ",borderColor:\"#BFBFBF\",backgroundColor:\"#BFBFBF\",dash:false}," +
+                    "{type:\"bar\",barPercentage:0.4,label:\"급탕 가스 에너지 소요량 [kWh]\",data:" + chart_급탕가스소요량[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
+                    "{type:\"bar\",barPercentage:0.4,label:\"공조 가스 에너지 소요량 [kWh]\",data:" + chart_공조가스소요량[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
+                    "{type:\"bar\",barPercentage:0.4,label:\"난방 가스 에너지 소요량 [kWh]\",data:" + chart_난방가스소요량[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
+                    "{type:\"bar\",barPercentage:0.4,label:\"냉방 가스 에너지 소요량 [kWh]\",data:" + chart_냉방가스소요량[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
+                    "],max:" + (Math.Round(max_graph_gas / 1000) * 1000 + 500).ToString() + ",step:100,legend:true,stacked:true}";
 
-                charts += ",{data:[{type:\"line\",yAxisID: 'y',label:\"가스 에너지 사용량 [kWh]\",data:" + chart_가스사용량[i] + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:false, tension: 0.4}," +
-                "{type:\"line\",yAxisID: 'y',label:\"가스 에너지 소요량 [kWh]\",data:" + chart_가스소요량[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
-                "{type:\"bar\",yAxisID: 'y1',barPercentage:0.4,label:\"오차율 [%]\",data:" + chart_가스오차율[i] + ",borderColor:\"#A5A5A5\",backgroundColor:\"#A5A5A5\",dash:false}," +
-                "],max:" + (Math.Round(max_graph_gas / 1000) * 1000 + 500).ToString() + ",step:100,legend:true}";
+                    charts += ",{data:[{type:\"line\",yAxisID: 'y',label:\"가스 에너지 사용량 [kWh]\",data:" + chart_가스사용량[i] + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:false, tension: 0.4}," +
+                    "{type:\"line\",yAxisID: 'y',label:\"가스 에너지 소요량 [kWh]\",data:" + chart_가스소요량[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
+                    "{type:\"bar\",yAxisID: 'y1',barPercentage:0.4,label:\"오차율 [%]\",data:" + chart_가스오차율[i] + ",borderColor:\"#A5A5A5\",backgroundColor:\"#A5A5A5\",dash:false}," +
+                    "],max:" + (Math.Round(max_graph_gas / 1000) * 1000 + 500).ToString() + ",step:100,legend:true}";
+                }
             }
 
             runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
