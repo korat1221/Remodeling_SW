@@ -25,9 +25,50 @@
 window.addEventListener("message", async (event) => {
   let o = event.data;
   if (o.chart) {
-    drawChart2(o.data, o.max, o.step, o.legend, o.stacked);
+    if (o.donut) {
+        drawDonut(o.donut);
+    }
+    else {
+        drawChart2(o.data, o.max, o.step, o.legend, o.stacked);
+    }
   }
 });
+
+function drawDonut(val) {
+
+    document.getElementById("cont").innerHTML = '<div style="left:30px;top:32px;position:absolute;width:87px;height:87px;"><canvas id="myChart" style="width: 100%;height:100%"></canvas><div style="position: absolute;left: 30px;top: 32px;font-weight: 900;">' + parseInt(val) + '%</div></div>';
+    document.getElementById("cont").style.backgroundImage="url(donut.png)";
+    document.getElementById("cont").style.backgroundSize="contain";
+    document.getElementById("cont").style.backgroundRepeat = "no-repeat";
+    document.getElementById("cont").style.marginTop = "10px";
+
+    new Chart(document.getElementById("myChart").getContext("2d"), {
+        type: 'doughnut',
+        data: {
+            labels: ['disable', 'enable'],
+            datasets: [   {
+                label: '--',
+                data: [val,100 - val],
+                backgroundColor: [
+                    '#4472C4',
+                    '#A5A5A5',
+                ],
+            }]
+        },
+        showTooltips: false,
+        options: {
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                title: {
+                    display: false,
+                },
+            },
+            events: ["touchstart", "touchmove", "touchend"],
+        },
+    });
+}
 
 function drawChart2(arr, max, step = 500, legend = false, stacked = false) {
     if (arr) {

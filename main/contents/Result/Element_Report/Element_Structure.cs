@@ -82,7 +82,10 @@ namespace main.contents
             List<object>[] Roof_data = new List<object>[700];
             List<object>[] Floor_data = new List<object>[700];
             string[] ElementAlt = CALC.ElementAlt;
+            double d;
+            string sp;
             int i = -1, n;
+
             while (++i < 700)
             {
                 Wall_data[i] = new List<object>();
@@ -178,10 +181,15 @@ namespace main.contents
                     }
 
                     double wall_saving = Element_EnergySaving[j_외벽];
+
+                    d = (wall_saving / Total_Energy_pre * 100);
+
                     Wall_data[0].Add(new { idx = i, val = wall_saving.ToString("0.0") }); ; //절감량 
-                    Wall_data[1].Add(new { idx = i, val = (wall_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+                    Wall_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "wall_saving", data = Wall_data[0] });
                     data.Add(new { cname = "wall_savingpercent", data = Wall_data[1] });
+
+                    charts += "{donut:" + d + "},";
 
                     double wall_saving_elec = Element_ElecSaving[j_외벽];
                     double wall_saving_noelec = Element_GasSaving[j_외벽];
@@ -321,6 +329,7 @@ namespace main.contents
                         data.Add(new { cname = "wall_saving_element_sum", data = Wall_data[64] });
 
                         double wall_law_avg = 0;
+
                         for (int a = 0; a < 8; a++)
                         {
                             if (wall_name[a] != null && wall_name[a] != "")
@@ -328,13 +337,20 @@ namespace main.contents
                                 string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "법규열관류율", "번호 ='" + wall_num[a] + "'");
                                 if(value2.Length > 0)
                                 {
-                                    Wall_data[65 + a].Add(new { idx = i, val = (Convert.ToDouble(value2[0][0])/wall_ueff[a] * 100).ToString("0") + " 점" });//법규대비 성능점수
+                                    d = (Convert.ToDouble(value2[0][0]) / wall_ueff[a] * 100);
+                                    sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 270) + "px'></div>";
+                                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                                    Wall_data[65 + a].Add(new { idx = i, val = sp });//법규대비 성능점수
                                     data.Add(new { cname = "wall_law_point" + a, data = Wall_data[65 + a] });
                                     wall_law_avg += Convert.ToDouble(value2[0][0]) * wall_area[a] / wall_area_sum;
                                 }
                             }
                         }
-                        Wall_data[73].Add(new { idx = i, val = (wall_law_avg / wall_ueff_avg * 100).ToString("0") + " 점" });//법규대비 성능점수 평균
+                        d = (wall_law_avg / wall_ueff_avg * 100);
+                        sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 270) + "px'></div>";
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+
+                        Wall_data[73].Add(new { idx = i, val = sp });//법규대비 성능점수 평균
                         data.Add(new { cname = "wall_law_point_avg", data = Wall_data[73] });                       
 
                     }
@@ -351,10 +367,15 @@ namespace main.contents
                         }
                     }
                     double roof_saving = Element_EnergySaving[j_지붕];
+
+                    d = (roof_saving / Total_Energy_pre * 100);
+
                     Roof_data[0].Add(new { idx = i, val = roof_saving.ToString("0.0") }); ; //절감량 
-                    Roof_data[1].Add(new { idx = i, val = (roof_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+                    Roof_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "roof_saving", data = Roof_data[0] });
                     data.Add(new { cname = "roof_savingpercent", data = Roof_data[1] });
+
+                    charts += "{donut:" + d + "},";
 
                     double roof_saving_elec = Element_ElecSaving[j_지붕];
                     double roof_saving_noelec = Element_GasSaving[j_지붕];
@@ -502,13 +523,20 @@ namespace main.contents
                                 string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "법규열관류율", "번호 ='" + roof_num[a] + "'");
                                 if (value2.Length > 0)
                                 {
-                                    Roof_data[65 + a].Add(new { idx = i, val = (Convert.ToDouble(value2[0][0]) / roof_ueff[a] * 100).ToString("0") + " 점" });//법규대비 성능점수
+                                    d = (Convert.ToDouble(value2[0][0]) / roof_ueff[a] * 100);
+                                    sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 270) + "px'></div>";
+                                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+
+                                    Roof_data[65 + a].Add(new { idx = i, val = sp });//법규대비 성능점수
                                     data.Add(new { cname = "roof_law_point" + a, data = Roof_data[65 + a] });
                                     roof_law_avg += Convert.ToDouble(value2[0][0]) * roof_area[a] / roof_area_sum;
                                 }
                             }
                         }
-                        Roof_data[73].Add(new { idx = i, val = (roof_law_avg / roof_ueff_avg * 100).ToString("0") + " 점" });//법규대비 성능점수 평균
+                        d = (roof_law_avg / roof_ueff_avg * 100);
+                        sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 270) + "px'></div>";
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        Roof_data[73].Add(new { idx = i, val = sp});//법규대비 성능점수 평균
                         data.Add(new { cname = "roof_law_point_avg", data = Roof_data[73] });
 
                     }
@@ -525,10 +553,14 @@ namespace main.contents
                         }
                     }
                     double floor_saving = Element_EnergySaving[j_최하층바닥];
+
+                    d = (floor_saving / Total_Energy_pre * 100);
                     Floor_data[0].Add(new { idx = i, val = floor_saving.ToString("0.0") }); ; //절감량 
-                    Floor_data[1].Add(new { idx = i, val = (floor_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+                    Floor_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "floor_saving", data = Floor_data[0] });
                     data.Add(new { cname = "floor_savingpercent", data = Floor_data[1] });
+
+                    charts += "{donut:" + d + "},";
 
                     double floor_saving_elec = Element_ElecSaving[j_최하층바닥];
                     double floor_saving_noelec = Element_GasSaving[j_최하층바닥];
@@ -675,13 +707,19 @@ namespace main.contents
                                 string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "법규열관류율", "번호 ='" + floor_num[a] + "'");
                                 if (value2.Length > 0)
                                 {
-                                    Floor_data[65 + a].Add(new { idx = i, val = (Convert.ToDouble(value2[0][0]) / floor_ueff[a] * 100).ToString("0") + " 점" });//법규대비 성능점수
+                                    d = (Convert.ToDouble(value2[0][0]) / floor_ueff[a] * 100);
+                                    sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 270) + "px'></div>";
+                                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                                    Floor_data[65 + a].Add(new { idx = i, val = sp });//법규대비 성능점수
                                     data.Add(new { cname = "floor_law_point" + a, data = Floor_data[65 + a] });
                                     floor_law_avg += Convert.ToDouble(value2[0][0]) * floor_area[a] / floor_area_sum;
                                 }
                             }
                         }
-                        Floor_data[73].Add(new { idx = i, val = (floor_law_avg / floor_ueff_avg * 100).ToString("0") + " 점" });//법규대비 성능점수 평균
+                        d = (floor_law_avg / floor_ueff_avg * 100);
+                        sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 270) + "px'></div>";
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        Floor_data[73].Add(new { idx = i, val = sp });//법규대비 성능점수 평균
                         data.Add(new { cname = "floor_law_point_avg", data = Floor_data[73] });
 
                     }
@@ -695,7 +733,7 @@ namespace main.contents
                     System.Text.Json.JsonSerializer.Serialize(Wall_data[10].ToArray());
                    
                     Debug.Print("start");
-                    if (charts != "") charts += ",";                  
+
                     runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
                 }
             }
