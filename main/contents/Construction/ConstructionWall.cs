@@ -1455,7 +1455,9 @@ namespace main.contents
                             Ucalc_dataGridView.Rows[nRow].Cells[4].Value = Value[0][1];
                             Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Load[0][(2 * i + 24)];
                             Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Material_R[i]);
-                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = Value[0][2];
+                            try
+                            { Ucalc_dataGridView.Rows[nRow].Cells[7].Value = Value[0][2]; }
+                            catch { Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "FFFFFF"; }
                         }
                     }
                     else { }
