@@ -117,7 +117,7 @@ namespace main
             {"User_WaterCooler", "CREATE TABLE IF NOT EXISTS User_WaterCooler (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),냉방출력 VARCHAR (32),냉방소비전력 VARCHAR (32),EER VARCHAR (32),압축기 VARCHAR (32),연료 VARCHAR (32),대기전력 VARCHAR (32),대수 VARCHAR (32),설치 VARCHAR (32), 증발기 VARCHAR (32), 냉수입구온도 VARCHAR (32), 냉수출구온도 VARCHAR (32))"},
             {"User_CoolingTop", "CREATE TABLE IF NOT EXISTS User_CoolingTop (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),형식 VARCHAR (32),냉각능력 VARCHAR (32),냉각수량 VARCHAR (32),입구온도 VARCHAR (32),출구온도 VARCHAR (32),소비전력 VARCHAR (32),제어유형 VARCHAR (32),팬유형 VARCHAR (32), 냉방전력소비계수 VARCHAR (32), 대수 VARCHAR (32), 대기전력 VARCHAR (32), 설치 VARCHAR (32))"},
             {"CoolingSystem_Form", "CREATE TABLE IF NOT EXISTS CoolingSystem_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32), 프로젝트유형 VARCHAR (32), 명칭 VARCHAR(32), 공급존 VARCHAR(32), 공급AHU VARCHAR(32), 냉방설비 VARCHAR(32),  열원설비 VARCHAR(32), 냉방유닛 VARCHAR(32), 제어유형 VARCHAR(32), 외기냉방시스템 VARCHAR(32), 설치대수 VARCHAR(32), 저장탱크 VARCHAR(32), 저장유형 VARCHAR(32), 압축기 VARCHAR(32), 펌프유무 VARCHAR (32),냉수펌프방식 VARCHAR (32),냉수펌프1 VARCHAR (32),냉수펌프2 VARCHAR (32),냉각수펌프방식 VARCHAR(32), 냉각수펌프1 VARCHAR (32),냉각수펌프2 VARCHAR (32),공급설비1종류 VARCHAR (32),공급설비2종류 VARCHAR (32),공급설비3종류 VARCHAR (32),공급설비4종류 VARCHAR (32),냉방출력 VARCHAR(32), 냉방성능 VARCHAR(32), 냉각탑 VARCHAR(32), 냉각탑개수 VARCHAR(32))"},
-            
+            {"Cooling_ce_Form_Element", "CREATE TABLE IF NOT EXISTS Cooling_ce_Form_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32), 프로젝트유형 VARCHAR (32), 냉방시스템 VARCHAR (32),공급설비종류 VARCHAR (32),공급설비 VARCHAR (32), 가동시간 VARCHAR (32), 용량 VARCHAR (32), 소비전력 VARCHAR (32), 부하율 VARCHAR (32))"},
             //신재생
             {"PV_Form", "CREATE TABLE IF NOT EXISTS PV_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),모듈번호 VARCHAR (32),인버터번호 VARCHAR (32),인버터명칭 VARCHAR (32),인버터효율 VARCHAR (32),배터리번호 VARCHAR (32),배터리용량 VARCHAR (32),통풍유무 VARCHAR (32),계통유형 VARCHAR (32),가로개수 VARCHAR (32),세로개수 VARCHAR (32),용량 VARCHAR (32),면적 VARCHAR (32),방위 VARCHAR (32),기울기 VARCHAR (32),지형물거리 VARCHAR (32),지형물높이 VARCHAR (32))"},
             {"PV_Result", "CREATE TABLE IF NOT EXISTS PV_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),번호 VARCHAR (32),월 VARCHAR (32),수직음영길이 VARCHAR (32),수평음영길이 VARCHAR (32),직달일사음영적용 VARCHAR (32),음영계수 VARCHAR (32),태양광전일사량 VARCHAR (32),최대성능 VARCHAR (32),평균효율 VARCHAR (32),전기생산량 VARCHAR (32),매칭계수 VARCHAR (32),배터리손실 VARCHAR (32),계통연계형사용량 VARCHAR (32),독립형사용량 VARCHAR (32),최종사용량 VARCHAR (32))"},
@@ -1227,6 +1227,46 @@ namespace main
                 }
             }
 
+            return objects.ToArray();
+        }
+        public string[][] getValue_SameCheck(string projName, string table, string columns, string conditions = "")
+        {
+            List<string[]> objects = new List<string[]>();
+            SQLiteConnection db = new SQLiteConnection(@"Data Source=projects\\" + projName + ".sqlite");
+            db.Open();
+
+
+            if (db.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = db.CreateCommand();
+
+                if (conditions != "")
+                {
+                    cmd.CommandText = "SELECT DISTINCT " + columns + " FROM " + table + " WHERE " + conditions;
+                }
+                else
+                {
+                    cmd.CommandText = "SELECT DISTINCT " + columns + " FROM " + table;
+                }
+
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    string json = string.Empty;
+
+                    while (reader.Read())
+                    {
+                        string[] rec = new string[reader.FieldCount];
+
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            rec[i] = reader[i].ToString();
+                        }
+                        objects.Add(rec);
+                    }
+                }
+
+                db.Close();
+            }
             return objects.ToArray();
         }
     }

@@ -33,7 +33,8 @@ namespace main
         public String Carrier; 
         ArrayList SelectSolar_split = new ArrayList(); ArrayList SolarNum_split = new ArrayList(); ArrayList SolarDirection_split = new ArrayList(); ArrayList SolarDegree_split = new ArrayList();
         ArrayList SelectHP_split = new ArrayList(); ArrayList HPNum_split = new ArrayList(); ArrayList HPControl_split = new ArrayList();
-        public double[] Qw_sol = new double[12]; 
+        public double[] Qw_sol = new double[12];
+        string[][] 프로젝트번호 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
 
         string[][] 지역, 외기온도;
         public DHW(String Num)
@@ -53,17 +54,50 @@ namespace main
 
         }
 
-        public void Load_Zonedata()
+        private ArrayList Split_(String nonSplit)
+        {
+            ArrayList split = new ArrayList();
+            if (nonSplit != null && nonSplit != "")
+            {
+                if (nonSplit.Contains('+'))
+                {
+                    string[] token = nonSplit.Split('+');
+                    split.Clear();
+                    foreach (var item in token)
+                    {
+                        split.Add(item.ToString());
+                    }
+                }
+                else
+                {
+                    split.Clear();
+                    split.Add(nonSplit);
+                }
+            }
+            else
+            {
+                split.Clear();
+            }
+            return split;
+        }
+
+
+        public void Load_Zonedata(string ProjNum)
         {
             double[,] Qwb_mth; double[,] theta_ih;double[,] dop_mth; double[] th_op_day;  double[] Qwb_a; double[] theta_i_h_set;
+            Boolean Now_Check = true;
+            if (ProjNum == 프로젝트번호[0][0])
+            { Now_Check = true; }
+            else
+            { Now_Check = false; }
 
             //존 정보 불러오기
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "명칭,존", "번호 = '" + DHWNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "명칭,존", "번호 = '" + DHWNum + "'");
             if (Value.Length > 0)
             {
                 DHWName = Value[0][0];
                 SelectZone_nonsplit = Value[0][1];
-                Split_Zone(SelectZone_nonsplit);
+                SelectZone_split = Split_(SelectZone_nonsplit);
                 Qwb_mth = new double[SelectZone_split.Count, 12];
                 theta_ih = new double[SelectZone_split.Count, 12];
                 Qwb_a = new double[SelectZone_split.Count];
@@ -73,7 +107,36 @@ namespace main
                 double[] dop_a = new double[SelectZone_split.Count];
                 for (int n = 0; n < SelectZone_split.Count; n++)
                 {
-                    Zone zone = Program.CALC.getZone(SelectZone_split[n].ToString());
+                    Zone zone = null; double Qwb_day = 0;
+                    if (Now_Check == true)
+                    {
+                        zone = Program.CALC.getZone(SelectZone_split[n].ToString());
+                        string[][] kk = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "일일급탕요구량", "존번호 = '" + zone.ZoneNum + "'");
+                        if (kk.Length > 0)
+                        { Qwb_day += Convert.ToDouble(kk[0][0]); }
+                    }
+                    else
+                    {
+                        string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,기존존", "");
+                        if (PostZone.Length > 0)
+                        {
+                            for (int j = 0; j < PostZone.Length; j++)
+                            {
+                                ArrayList split = Split_(PostZone[j][1]);
+                                for (int m = 0; m < split.Count; m++)
+                                {
+                                    if (split[m].ToString() == SelectZone_split[n].ToString())
+                                    {
+                                        zone = Program.CALC.getZone(PostZone[j][0]);
+                                        string[][] kk = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "일일급탕요구량", "존번호 = '" + zone.ZoneNum + "'");
+                                        if (kk.Length > 0)
+                                        { Qwb_day += Convert.ToDouble(kk[0][0]); }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     if (zone != null)
                     {
 
@@ -84,9 +147,7 @@ namespace main
                         }
                         for (int mth = 0; mth < 12; mth++)
                         {
-                            string[][] Qwb_day = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "일일급탕요구량", "존번호 = '" + SelectZone_split[n].ToString() + "'");
-                            if (Qwb_day.Length > 0)
-                            { Qwb_mth[n, mth] = Convert.ToDouble(Qwb_day[0][0]) * dop_a[n] * dmth[mth] / 365 * (-0.02 * theta_e[mth] + 1.25); }
+                            Qwb_mth[n, mth] = Qwb_day * dop_a[n] * dmth[mth] / 365 * (-0.02 * theta_e[mth] + 1.25);
                             theta_ih[n, mth] = zone.theta_i[1, 0, mth]; //이용일 난방
                             Qwb_a[n] += Qwb_mth[n, mth]; //연간 요구량
                             th_op_day[n] = zone.th_op_d;
@@ -126,9 +187,9 @@ namespace main
         }
 
         //일반정보 불러오기 
-        public void Load_DHWGeneral()
+        public void Load_DHWGeneral(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "번호 = '" + DHWNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "번호 = '" + DHWNum + "'");
             if (Value.Length > 0)
             {
                 SystemLoacation = Value[0][0];
@@ -151,211 +212,55 @@ namespace main
         }
 
         //보일러 정보 불러오기
-        public void Load_Boiler()
+        public void Load_Boiler(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "보일러종류,보일러대수", "번호 = '" + DHWNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "보일러종류,보일러대수", "번호 = '" + DHWNum + "'");
             if (Value.Length > 0)
             {
                 SelectBoiler_nonsplit = Value[0][0];
-                Split_Boiler(SelectBoiler_nonsplit);
+                SelectBoiler_split = Split_(SelectBoiler_nonsplit);
 
                 BoilerNum_nonsplit = Value[0][1];
-                Split_BoilerNum(BoilerNum_nonsplit);
+                BoilerNum_split = Split_(BoilerNum_nonsplit);
             }
         }
-        public void Load_Solar()
+        public void Load_Solar(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "태양열번호,모듈개수,모듈방위,모듈기울기", "번호 = '" + DHWNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "태양열번호,모듈개수,모듈방위,모듈기울기", "번호 = '" + DHWNum + "'");
             if (Value.Length > 0)
             {
                 SelectSolar_nonsplit = Value[0][0];
-                Split_Solar(SelectSolar_nonsplit);
+                SelectSolar_split = Split_(SelectSolar_nonsplit);
 
                 SolarNum_nonsplit = Value[0][1];
-                Split_SolarNum(SolarNum_nonsplit);
+                SolarNum_split = Split_(SolarNum_nonsplit);
 
                 SolarDirection_nonsplit = Value[0][2];
-                Split_SolarDirection(SolarDirection_nonsplit);
+                SolarDirection_split = Split_(SolarDirection_nonsplit);
 
                 SolarDegree_nonsplit = Value[0][3];
-                Split_SolarDegree(SolarDegree_nonsplit);
+                SolarDegree_split = Split_(SolarDegree_nonsplit);
             }
         }
-        private void Split_Solar(String nonSplit)
+        public void Load_HP(string ProjNum)
         {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SelectSolar_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SelectSolar_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    SelectSolar_split.Clear();
-                    SelectSolar_split.Add(nonSplit);
-                }
-            }
-            else { return; }
-
-        }
-        private void Split_SolarNum(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SolarNum_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SolarNum_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    SolarNum_split.Clear();
-                    SolarNum_split.Add(nonSplit);
-                }
-            }
-            else { return; }
-
-        }
-        private void Split_SolarDirection(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SolarDirection_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SolarDirection_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    SolarDirection_split.Clear();
-                    SolarDirection_split.Add(nonSplit);
-                }
-            }
-            else { return; }
-
-        }
-        private void Split_SolarDegree(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SolarDegree_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SolarDegree_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    SolarDegree_split.Clear();
-                    SolarDegree_split.Add(nonSplit);
-                }
-            }
-            else { return; }
-
-        }
-
-        public void Load_HP()
-        {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "히트펌프번호,히트펌프제어방식,히트펌프대수", "번호 = '" + DHWNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "히트펌프번호,히트펌프제어방식,히트펌프대수", "번호 = '" + DHWNum + "'");
             if (Value.Length > 0)
             {
                 SelectHP_nonsplit = Value[0][0];
-                Split_HP(SelectHP_nonsplit);
+                SelectHP_split = Split_(SelectHP_nonsplit);
 
                 HPNum_nonsplit = Value[0][1];
-                Split_HPNum(HPNum_nonsplit);
+                HPNum_split =  Split_(HPNum_nonsplit);
 
                 HPControl_nonsplit = Value[0][2];
-                Split_HPControl(HPControl_nonsplit);
+                HPControl_split =  Split_(HPControl_nonsplit);
 
             }
         }
-        private void Split_HP(String nonSplit)
+        public void Load_PumpData(string ProjNum)
         {
-            if (nonSplit != null && nonSplit!="" )
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SelectHP_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SelectHP_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    SelectHP_split.Clear();
-                    SelectHP_split.Add(nonSplit);
-                }
-            }
-            else { return; }
-
-        }
-        private void Split_HPNum(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    HPNum_split.Clear();
-                    foreach (var item in token)
-                    {
-                        HPNum_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    HPNum_split.Clear();
-                    HPNum_split.Add(nonSplit);
-                }
-            }
-            else { return; }
-
-        }
-        private void Split_HPControl(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    HPControl_split.Clear();
-                    foreach (var item in token)
-                    {
-                        HPControl_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    HPControl_split.Clear();
-                    HPControl_split.Add(nonSplit);
-                }
-            }
-            else { return; }
-
-        }
-
-        public void Load_PumpData()
-        {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "번호 = '" + DHWNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "번호 = '" + DHWNum + "'");
             if (Value.Length > 0)
             {
                 PumpUse = Value[0][0];
@@ -373,9 +278,9 @@ namespace main
         }
        
 
-        public void Load_StorageData()
+        public void Load_StorageData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "축열유무,축열펌프유무,축열펌프,축열용량,축열유형", "번호 = '" + DHWNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "축열유무,축열펌프유무,축열펌프,축열용량,축열유형", "번호 = '" + DHWNum + "'");
             if (Value.Length > 0)
             {
                 StorageUse = Value[0][0];
@@ -389,9 +294,9 @@ namespace main
             }
         }
 
-        public void Load_PipeData()
+        public void Load_PipeData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재", "번호 = '" + DHWNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재", "번호 = '" + DHWNum + "'");
             if (Value.Length > 0)
             {
                 PipeD = Convert.ToDouble(Value[0][0]);
@@ -401,71 +306,7 @@ namespace main
             }
         }
        
-        private void Split_Zone(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains("+"))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SelectZone_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SelectZone_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    SelectZone_split.Clear();
-                    SelectZone_split.Add(nonSplit);
-                }
-            }
-        }
-        private void Split_Boiler(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains(','))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SelectBoiler_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SelectBoiler_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    SelectBoiler_split.Clear();
-                    SelectBoiler_split.Add(nonSplit);
-                }
-            }
-        }
-        private void Split_BoilerNum(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains(','))
-                {
-                    string[] token = nonSplit.Split('+');
-                    BoilerNum_split.Clear();
-                    foreach (var item in token)
-                    {
-                        BoilerNum_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    BoilerNum_split.Clear();
-                    BoilerNum_split.Add(nonSplit);
-                }
-            }
-
-        }
-
-       
-
-        public void Calc_Qd()
+        public void Calc_Qd(string ProjNum)
         {
             
 
@@ -477,12 +318,12 @@ namespace main
                 Ramda_se = 5 + 0.15 * 5.67 / 100000000 * 4 * 1000;
                 R_se = 1 / (Ramda_se * 2 * Math.PI * (PipeD / 2 + PipeInsD) / 1000);
                 Psi_pipe = 1 / (R_pipe + R_se);            
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "양정", "번호 = '" + Pump1 + "'");
+                string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "양정", "번호 = '" + Pump1 + "'");
                 if (Value.Length > 0)
                 {
                     L1 = Convert.ToDouble(Value[0][0]);
                 }
-                Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "양정", "번호 = '" + Pump2 + "'");
+                Value = Program.DB.getValue(ProjNum, "User_Pump", "양정", "번호 = '" + Pump2 + "'");
                 if (Value.Length > 0)
                 {
                     L2 = Convert.ToDouble(Value[0][0]);
@@ -510,7 +351,7 @@ namespace main
                 }
 
             //펌프
-            string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "A효율,B효율,유량,동력,양정,대수", "번호 = '" + Pump1 + "'");
+            string[][] Value2 = Program.DB.getValue(ProjNum, "User_Pump", "A효율,B효율,유량,동력,양정,대수", "번호 = '" + Pump1 + "'");
             Pump.Clear();
             if (Value2.Length > 0)
             {
@@ -562,7 +403,7 @@ namespace main
             }
         }
     
-        public void Calc_Qh_s()
+        public void Calc_Qh_s(string ProjNum)
         {
             
             double[] thetai = new double[12];
@@ -606,8 +447,15 @@ namespace main
                 Qw_outg[mth] = Qwb_mth_sum[mth] + Qw_d[mth] + Qw_s[mth];
             }
 
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "동력", "번호 = '" + StoragePump + "'");
-            string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량", "번호 = '" + SelectBoiler_split[0] + "'"); //수정 필요 
+            string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + StoragePump + "'");
+            string[][] Value2;
+            if(SelectBoiler_split.Count>0 )
+            { Value2 = Program.DB.getValue(ProjNum, "User_Boiler", "용량", "번호 = '" + SelectBoiler_split[0] + "'");  }
+            else
+            {
+                Value2 = Program.DB.getValue(ProjNum, "User_DHWHP", "급탕정격용량", "번호 = '" + SelectHP_split[0] + "'");
+            }
+
             if (Value.Length > 0 && Value2.Length > 0)
             {
                 for (int mth = 0; mth < 12; mth++)
@@ -619,7 +467,7 @@ namespace main
             }
         }
      
-        public void Calc_Solar()
+        public void Calc_Solar(string ProjNum)
         {
             double qsol_HN_d, dtheta_korr;
             double[] qsol_HN_mth= new double[12], eta = new double[12], qsol_mth = new double[12], Qsol_mth = new double[12], Qh_sol = new double[12], Ww_gen = new double[12];
@@ -628,7 +476,7 @@ namespace main
 
             for (int  k = 0; k < SelectSolar_split.Count; k++)
             {
-                Solarvalue = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "번호,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "번호 ='" + SelectSolar_split[k] + "'");
+                Solarvalue = Program.DB.getValue(ProjNum, "User_Solar", "번호,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "번호 ='" + SelectSolar_split[k] + "'");
                 if (Solarvalue.Length > 0)
                 {
                     DHW_Solar solar = new DHW_Solar(Solarvalue[0][0], Convert.ToDouble(Solarvalue[0][1]), Convert.ToDouble(Solarvalue[0][2]), Convert.ToDouble(Solarvalue[0][3]), Convert.ToDouble(Solarvalue[0][4]), Convert.ToDouble(Solarvalue[0][5]), Convert.ToDouble(Solarvalue[0][6]), Convert.ToDouble(SolarNum_split[k]), SolarDirection_split[k].ToString(), SolarDegree_split[k].ToString());
@@ -669,11 +517,11 @@ namespace main
             }
         }
 
-        public void Calc_Qh_gen_Boiler()
+        public void Calc_Qh_gen_Boiler(string ProjNum)
         {
             for (int n = 0; n < SelectBoiler_split.Count; n++)
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "번호,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력", "번호 = '" + SelectBoiler_split[n] + "'");
+                string[][] Value = Program.DB.getValue(ProjNum, "User_Boiler", "번호,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력", "번호 = '" + SelectBoiler_split[n] + "'");
                 if (Value.Length > 0)
                 {
                     String Num = Value[0][0];
@@ -735,7 +583,7 @@ namespace main
                 }
             }
         }
-        public void Calc_HP()
+        public void Calc_HP(string ProjNum)
         {
             for (int k = 0; k < SelectHP_split.Count; k++)
             {
@@ -746,7 +594,7 @@ namespace main
 
 
 
-                string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_DHWHP", "급탕정격용량,급탕정격COP", "번호='" + SelectHP_split[0] + "'");
+                string[][] value = Program.DB.getValue(ProjNum, "User_DHWHP", "급탕정격용량,급탕정격COP", "번호='" + SelectHP_split[0] + "'");
                 if(value.Length >0)
                 {
                     Pi_gen_combi_corr = Convert.ToDouble(value[0][0]);

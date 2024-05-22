@@ -1,11 +1,4 @@
-﻿using Eagle._Components.Public;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace main
+﻿namespace main
 {
     internal class Final
     {
@@ -25,38 +18,14 @@ namespace main
       
         public Final(string ProjNum)
         {
-            #region 급탕
-            string[][] DHWNum = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호");
-            if (DHWNum.Length > 0)
-            {
-                int i = -1;
-                while (++i < DHWNum.Length)
-                {
-                    DHW DHW1 = Program.CALC.getDHW(DHWNum[i][0]);
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-                        if (DHW1.Carrier == "전기")
-                        {
-                            Qwf_elec[mth] += (DHW1.Qw_f[mth] + DHW1.Ww_d[mth] + DHW1.Ww_s[mth] + DHW1.Ww_g[mth]);
-                        }
-                        else
-                        {
-                            Carrier_w = DHW1.Carrier;
-                            Qwf_elec[mth] += (DHW1.Ww_d[mth] + DHW1.Ww_s[mth] + DHW1.Ww_g[mth]);
-                            Qwf_gas[mth] += DHW1.Qw_f[mth];
-                        }
-                    }
-                }
-            }
-            #endregion 
             #region 조명
-            string[][] ZoneNum = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호");
-            if (ZoneNum.Length > 0)
+            string[][] Num = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호");
+            if (Num.Length > 0)
             {
                 int i = -1;
-                while (++i < ZoneNum.Length)
+                while (++i < Num.Length)
                 {
-                    ZoneLight zoneLight1 = Program.CALC.getZoneLight(ZoneNum[i][0]);
+                    ZoneLight zoneLight1 = Program.CALC.getZoneLight(Num[i][0]);
                     for (int mth = 0; mth < 12; mth++)
                     {
                         Qlf_elec[mth] += zoneLight1.Zone_Final_kWh[mth];
@@ -64,29 +33,6 @@ namespace main
                 }
             }
             #endregion 
-           
-            //냉방
-            for (int mth = 0; mth < 12; mth++)
-            {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Result", "Fuel,QC_ce,QC_d,QC_s,QC_out,QC_f,W", "월='" + (mth + 1).ToString() + "월'");
-                if (Value.Length > 0)
-                {
-                    for (int i = 0; i < Value.Length; i++) //시스템별
-                    {
-                        if (Value[i][0].ToString() == "전기")
-                        {
-                            Qcf_elec[mth] += Convert.ToDouble(Value[i][5]) + Convert.ToDouble(Value[i][6]); //나중에 보조설비 에너지 합산 해야함 
-                        }
-                        else
-                        {
-                            Carrier_c = Value[i][0];
-                            Qcf_elec[mth] += Convert.ToDouble(Value[i][6]); //나중에 보조설비 에너지 합산 해야함 
-                            Qcf_gas[mth] += 0;
-                        }
-                    }
-                }
-            }
-
 
             //에너지사용량
             string[][] Value1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "연료='전기'");
@@ -215,17 +161,69 @@ namespace main
                 }
             }
         }
+        public void Load_DHW_Final(string ProjNum)
+        {
+            string[][] DHWNum = Program.DB.getValue(ProjNum, "DHWSystem_Form", "번호");
+            if (DHWNum.Length > 0)
+            {
+                int i = -1;
+                while (++i < DHWNum.Length)
+                {
+                    DHW DHW1 = Program.CALC.getDHW(DHWNum[i][0]);
+                    for (int mth = 0; mth < 12; mth++)
+                    {
+                        if (DHW1.Carrier == "전기")
+                        {
+                            Qwf_elec[mth] += (DHW1.Qw_f[mth] + DHW1.Ww_d[mth] + DHW1.Ww_s[mth] + DHW1.Ww_g[mth]);
+                        }
+                        else
+                        {
+                            Carrier_w = DHW1.Carrier;
+                            Qwf_elec[mth] += (DHW1.Ww_d[mth] + DHW1.Ww_s[mth] + DHW1.Ww_g[mth]);
+                            Qwf_gas[mth] += DHW1.Qw_f[mth];
+                        }
+                    }
+                }
+            }
+        }
+        public void Load_Cooling_Final(string ProjNum)
+        {
+            string[][] Num = Program.DB.getValue(ProjNum, "CoolingSystem_Form", "번호");
+            if (Num.Length > 0)
+            {
+                int i = -1;
+                while (++i < Num.Length)
+                {
+                    Cal_Cooling Cooling1 = Program.CALC.getCooling(Num[i][0]);
+                    for (int mth = 0; mth < 12; mth++)
+                    {
+                        if (Cooling1.Carrier == "전기")
+                        {
+                            Qcf_elec[mth] += (Cooling1.QC_f[mth] + Cooling1.W[mth]);
+                        }
+                        else
+                        {
+                            Carrier_c = Cooling1.Carrier;
+                            Qcf_elec[mth] += (Cooling1.W[mth]);
+                            Qcf_gas[mth] += Cooling1.QC_f[mth];
+                        }
+                    }
+                }
+            }
+        }
         public void Load_AHU_Final(string ProjNum)
         {
-            //공조 
-            for (int mth = 0; mth < 12; mth++)
+            string[][] Num = Program.DB.getValue(ProjNum, "AHUSystem_Result", "번호");
+            if (Num.Length > 0)
             {
-                string[][] Value = Program.DB.getValue(ProjNum, "AHUSystem_Result", "급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지", "월='" + (mth + 1).ToString() + "월'");
-                if (Value.Length > 0)
+                int i = -1;
+                while (++i < Num.Length)
                 {
-                    for (int i = 0; i < Value.Length; i++) //시스템별
+                    AHU AHU1 = Program.CALC.getAHU(Num[i][0]);
+                    for (int mth = 0; mth < 12; mth++)
                     {
-                        Qvf_elec[mth] += (Convert.ToDouble(Value[i][0]) + Convert.ToDouble(Value[i][1]) + Convert.ToDouble(Value[i][2]) + Convert.ToDouble(Value[i][3]));
+                        if (AHU1 != null)
+                        { Qvf_elec[mth] += AHU1.Ev_gen_fan_SA[mth] + AHU1.Ev_gen_fan_EA[mth] + AHU1.W_HU_aux[mth] + AHU1.Wv_aux_preh[mth]; }
                     }
                 }
             }

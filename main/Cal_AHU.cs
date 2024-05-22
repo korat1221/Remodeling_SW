@@ -30,7 +30,8 @@ namespace main
         double AHU_SA_Volume, AHU_EA_Volume, AHU_SA_Pressure, AHU_EA_Pressure, AHU_SA_FanPower, AHU_EA_FanPower, AHU_SA_FanEta, AHU_EA_FanEta;
         string AHU_MotorControl;
         //공조기일반정보
-        string AHULocation, AHULeakageLevel, AHUVolumeControl, DuctLeakageLevel;
+        public string AHULocation;
+        string AHULeakageLevel, AHUVolumeControl, DuctLeakageLevel;
         double AHUInsulationThickness;
         public double flea_du, flea_ahu, fins_ahu;
         //예열예냉

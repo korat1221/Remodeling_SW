@@ -83,7 +83,7 @@ namespace main.contents
             List<object>[] Win_data = new List<object>[700];
             List<object>[] CW_data = new List<object>[700];
             List<object>[] Door_data = new List<object>[700];
-            string[] ElementAlt = { "조닝", "기밀", "열회수기", "창호", "커튼월창", "외부출입문", "창호", "커튼월창", "외부출입문", "난방", "공조", "신재생" };
+            string[] ElementAlt = CALC.ElementAlt;
             int i = -1, n;
             while (++i < 700)
             {
@@ -164,8 +164,12 @@ namespace main.contents
                     double[] Element_EnergySaving = new double[ElementAlt.Length];
                     for (int a = 1; a < ElementAlt.Length; a++)
                     {
-                        Element_ElecSaving[a] = Total_ElecSaving * (Element_ElecSum[0] - Element_ElecSum[a]) / sum_elec;
-                        Element_GasSaving[a] = Total_GasSaving * (Element_GasSum[0] - Element_GasSum[a]) / sum_gas;
+                        if (sum_elec == 0)
+                        { Element_ElecSaving[a] = 0; }
+                        else { Element_ElecSaving[a] = Total_ElecSaving * (Element_ElecSum[0] - Element_ElecSum[a]) / sum_elec; }
+                        if (sum_gas == 0)
+                        { Element_GasSaving[a] = 0; }
+                        else { Element_GasSaving[a] = Total_GasSaving * (Element_GasSum[0] - Element_GasSum[a]) / sum_gas; }
                         Element_EnergySaving[a] = Element_ElecSaving[a] + Element_GasSaving[a];
                     }
 

@@ -77,7 +77,7 @@ namespace main
             {
                 HeatingName = Value[0][0];
                 SelectZone_nonsplit = Value[0][1];
-                Split_Zone(SelectZone_nonsplit);
+                SelectZone_split =  Split_(SelectZone_nonsplit);
             }
             string[][] Value_ce = null;
             if (Now_Check == true)
@@ -102,10 +102,14 @@ namespace main
 
                 for (int n = 0; n < Value_ce.Length; n++)
                 {
-                    Zone zone = null; 
+                    Zone zone = null; double[] Qhb_mth_ = new double [12];
                     if (Now_Check == true)
                     {
                         zone = Program.CALC.getZone(Value_ce[n][1]);
+                        for (int mth = 0; mth < 12; mth++)
+                        {
+                            Qhb_mth_[mth] += zone.Qb_mth[0, 1, mth];
+                        }
                     }
                     else
                     {
@@ -120,19 +124,22 @@ namespace main
                                     if (split[m].ToString() == Value_ce[n][1])
                                     {
                                         zone = Program.CALC.getZone(PostZone[j][0]);
-                                        goto goto_Zone;
+                                        for (int mth = 0; mth < 12; mth++)
+                                        {
+                                            Qhb_mth_[mth] += zone.Qb_mth[0, 1, mth];
+                                        }
                                     }
                                 }
+                           
                             }
                         }                        
                     }
-                
-                    goto_Zone:
-                    if(zone != null)
+
+                    if (zone != null)
                     {
                         for (int mth = 0; mth < 12; mth++)
                         {
-                            Qhb_mth[n, mth] = zone.Qb_mth[0, 1, mth] * Convert.ToDouble(Value_ce[n][2]);
+                            Qhb_mth[n, mth] = Qhb_mth_[mth] * Convert.ToDouble(Value_ce[n][2]);
                             Qh_a[n] = zone.Qb_a[0] * Convert.ToDouble(Value_ce[n][2]); //연간 난방요구량
                             theta_ih[n, mth] = zone.theta_i[0, 1, mth]; //이용일 난방
                             th[n, mth] = zone.t_max[0, mth]; // 난방 시간                             
@@ -164,14 +171,12 @@ namespace main
                                     if (split[m].ToString() == SelectZone_split[k].ToString())
                                     {
                                         zone = Program.CALC.getZone(PostZone[j][0]);
-                                        goto goto_Zone;
                                     }
                                 }
+                           
                             }
                         }
                     }
-
-                    goto_Zone:
                     if (zone != null)
                     {
                         Qh_max[k] = zone.Q_max[0];//최대부하 
@@ -237,10 +242,10 @@ namespace main
             if (Value.Length > 0)
             {
                 SelectBoiler_nonsplit = Value[0][0];
-                Split_Boiler(SelectBoiler_nonsplit);
+                SelectBoiler_split = Split_(SelectBoiler_nonsplit);
 
                 BoilerNum_nonsplit = Value[0][1];
-                Split_BoilerNum(BoilerNum_nonsplit);
+                BoilerNum_split = Split_(BoilerNum_nonsplit);
             }
         }
         public void Load_Solar(string ProjNum)
@@ -249,106 +254,19 @@ namespace main
             if (Value.Length > 0)
             {
                 SelectSolar_nonsplit = Value[0][0];
-                Split_Solar(SelectSolar_nonsplit);
+                SelectSolar_split = Split_(SelectSolar_nonsplit);
 
                 SolarNum_nonsplit = Value[0][1];
-                Split_SolarNum(SolarNum_nonsplit);
+                SolarNum_split =Split_(SolarNum_nonsplit);
 
                 SolarDirection_nonsplit = Value[0][2];
-                Split_SolarDirection(SolarDirection_nonsplit);
+                SolarDirection_split = Split_(SolarDirection_nonsplit);
 
                 SolarDegree_nonsplit = Value[0][3];
-                Split_SolarDegree(SolarDegree_nonsplit);
+                SolarDegree_split = Split_(SolarDegree_nonsplit);
             }
         }
-        private void Split_Solar(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SelectSolar_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SelectSolar_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    SelectSolar_split.Clear();
-                    SelectSolar_split.Add(nonSplit);
-                }
-            }
-            else { return; }
-
-        }
-        private void Split_SolarNum(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SolarNum_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SolarNum_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    SolarNum_split.Clear();
-                    SolarNum_split.Add(nonSplit);
-                }
-            }
-            else { return; }
-
-        }
-        private void Split_SolarDirection(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SolarDirection_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SolarDirection_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    SolarDirection_split.Clear();
-                    SolarDirection_split.Add(nonSplit);
-                }
-            }
-            else { return; }
-
-        }
-        private void Split_SolarDegree(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SolarDegree_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SolarDegree_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    SolarDegree_split.Clear();
-                    SolarDegree_split.Add(nonSplit);
-                }
-            }
-            else { return; }
-
-        }
+       
         public void Load_PumpData(string ProjNum)
         {
             string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "번호 = '" + HeatingNum + "'");
@@ -412,16 +330,16 @@ namespace main
             {
                 String HeatSource = "외기";
                 SelectHP_nonsplit[0] = Value[0][0];
-                Split_HP(SelectHP_nonsplit[0], HeatSource);
+                SelectAirHP_split = Split_(SelectHP_nonsplit[0]);
 
                 HPSupply_nonsplit[0] = Value[0][1];
-                Split_HPSupply(HPSupply_nonsplit[0], HeatSource);
+                AirHPSupply_split = Split_(HPSupply_nonsplit[0]);
 
                 HPControl_nonsplit[0] = Value[0][2];
-                Split_HPControl(HPControl_nonsplit[0], HeatSource);
+                AirHPControl_split = Split_(HPControl_nonsplit[0]);
 
                 HPNum_nonsplit[0] = Value[0][3];
-                Split_HPNum(HPNum_nonsplit[0], HeatSource);
+                AirHPNum_split = Split_(HPNum_nonsplit[0]);
             }
         }
 
@@ -433,16 +351,16 @@ namespace main
             {
                 String HeatSource = "지열";
                 SelectHP_nonsplit[1] = Value[0][0];
-                Split_HP(SelectHP_nonsplit[1], HeatSource);
+                SelectGroundHP_split = Split_(SelectHP_nonsplit[1]);
 
                 HPSupply_nonsplit[1] = Value[0][1];
-                Split_HPSupply(HPSupply_nonsplit[1], HeatSource);
+                GroundHPSupply_split = Split_(HPSupply_nonsplit[1]);
 
                 HPControl_nonsplit[1] = Value[0][2];
-                Split_HPControl(HPControl_nonsplit[1], HeatSource);
+                GroundHPControl_split = Split_(HPControl_nonsplit[1]);
 
                 HPNum_nonsplit[1] = Value[0][3];
-                Split_HPNum(HPNum_nonsplit[1], HeatSource);
+                GroundHPNum_split  = Split_(HPNum_nonsplit[1]);
             }
         }
 
@@ -454,169 +372,23 @@ namespace main
             {
                 String HeatSource = "지하수";
                 SelectHP_nonsplit[2] = Value[0][0];
-                Split_HP(SelectHP_nonsplit[2], HeatSource);
+                SelectGWHP_split = Split_(SelectHP_nonsplit[2]);
 
                 HPSupply_nonsplit[2] = Value[0][1];
-                Split_HPSupply(HPSupply_nonsplit[2], HeatSource);
+                GWHPSupply_split = Split_(HPSupply_nonsplit[2]);
 
                 HPControl_nonsplit[2] = Value[0][2];
-                Split_HPControl(HPControl_nonsplit[2], HeatSource);
+                GWHPControl_split = Split_(HPControl_nonsplit[2]);
 
                 HPNum_nonsplit[2] = Value[0][3];
-                Split_HPNum(HPNum_nonsplit[2], HeatSource);
+                GWHPNum_split = Split_(HPNum_nonsplit[2]);
             }
         }
 
-
-        private void Split_HP(String nonSplit, String HeatSource)
-        {
-            if (nonSplit != "")
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    if (HeatSource == "외기")
-                    { SelectAirHP_split.Clear(); }
-                    else if (HeatSource == "지열")
-                    { SelectGroundHP_split.Clear(); }
-                    else { SelectGWHP_split.Clear(); }
-                    foreach (var item in token)
-                    {
-                        if (HeatSource == "외기")
-                        { SelectAirHP_split.Add(item.ToString()); }
-                        else if (HeatSource == "지열")
-                        { SelectGroundHP_split.Add(item.ToString()); }
-                        else
-                        { SelectGWHP_split.Add(item.ToString()); }
-                    }
-                }
-                else
-                {
-                    if (HeatSource == "외기")
-                    {
-                        SelectAirHP_split.Clear();
-                        SelectAirHP_split.Add(nonSplit.ToString());
-                    }
-                    else if (HeatSource == "지열")
-                    {
-                        SelectGroundHP_split.Clear();
-                        SelectGroundHP_split.Add(nonSplit.ToString());
-                    }
-                    else
-                    {
-                        SelectGWHP_split.Clear();
-                        SelectGWHP_split.Add(nonSplit.ToString());
-                    }
-                }
-            }
-            else { return; }
-        }
-        private void Split_HPSupply(String nonSplit, String HeatSource)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    if (HeatSource == "외기")
-                    { AirHPSupply_split.Clear(); }
-                    else if (HeatSource == "지열")
-                    { GroundHPSupply_split.Clear(); }
-                    else { GWHPSupply_split.Clear(); }
-                    foreach (var item in token)
-                    {
-                        if (HeatSource == "외기")
-                        { AirHPSupply_split.Add(item.ToString()); }
-                        else if (HeatSource == "지열")
-                        { GroundHPSupply_split.Add(item.ToString()); }
-                        else
-                        { GWHPSupply_split.Add(item.ToString()); }
-                    }
-                }
-                else
-                {
-                    if (HeatSource == "외기")
-                    { AirHPSupply_split.Add(nonSplit.ToString()); }
-                    else if (HeatSource == "지열")
-                    { GroundHPSupply_split.Add(nonSplit.ToString()); }
-                    else
-                    { GWHPSupply_split.Add(nonSplit.ToString()); }
-                }
-            }
-            else { return; }
-        }
-        private void Split_HPControl(String nonSplit, String HeatSource)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    if (HeatSource == "외기")
-                    { AirHPControl_split.Clear(); }
-                    else if (HeatSource == "지열")
-                    { GroundHPControl_split.Clear(); }
-                    else { GWHPControl_split.Clear(); }
-                    foreach (var item in token)
-                    {
-                        if (HeatSource == "외기")
-                        { AirHPControl_split.Add(item.ToString()); }
-                        else if (HeatSource == "지열")
-                        { GroundHPControl_split.Add(item.ToString()); }
-                        else
-                        { GWHPControl_split.Add(item.ToString()); }
-                    }
-                }
-                else
-                {
-                    if (HeatSource == "외기")
-                    { AirHPControl_split.Add(nonSplit.ToString()); }
-                    else if (HeatSource == "지열")
-                    { GroundHPControl_split.Add(nonSplit.ToString()); }
-                    else
-                    { GWHPControl_split.Add(nonSplit.ToString()); }
-                }
-            }
-            else { return; }
-        }
-        private void Split_HPNum(String nonSplit, String HeatSource)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains('+'))
-                {
-                    string[] token = nonSplit.Split('+');
-                    if (HeatSource == "외기")
-                    { AirHPNum_split.Clear(); }
-                    else if (HeatSource == "지열")
-                    { GroundHPNum_split.Clear(); }
-                    else { GWHPNum_split.Clear(); }
-                    foreach (var item in token)
-                    {
-                        if (HeatSource == "외기")
-                        { AirHPNum_split.Add(item.ToString()); }
-                        else if (HeatSource == "지열")
-                        { GroundHPNum_split.Add(item.ToString()); }
-                        else
-                        { GWHPNum_split.Add(item.ToString()); }
-                    }
-                }
-                else
-                {
-                    if (HeatSource == "외기")
-                    { AirHPNum_split.Add(nonSplit.ToString()); }
-                    else if (HeatSource == "지열")
-                    { GroundHPNum_split.Add(nonSplit.ToString()); }
-                    else
-                    { GWHPNum_split.Add(nonSplit.ToString()); }
-                }
-            }
-            else { return; }
-        }
         private ArrayList Split_(String nonSplit)
         {
             ArrayList split = new ArrayList();
-            if (nonSplit != null)
+            if (nonSplit != null && nonSplit !="")
             {
                 if (nonSplit.Contains('+'))
                 {
@@ -633,71 +405,14 @@ namespace main
                     split.Add(nonSplit);
                 }
             }
+            else
+            {
+                split.Clear() ;
+            }
             return split;
         }
 
-        public void Split_Zone(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains("+"))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SelectZone_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SelectZone_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    SelectZone_split.Clear();
-                    SelectZone_split.Add(nonSplit);
-                }
-            }
-        }
-        private void Split_Boiler(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains(','))
-                {
-                    string[] token = nonSplit.Split('+');
-                    SelectBoiler_split.Clear();
-                    foreach (var item in token)
-                    {
-                        SelectBoiler_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    SelectBoiler_split.Clear();
-                    SelectBoiler_split.Add(nonSplit);                 
-                }
-            }
-        }
-        private void Split_BoilerNum(String nonSplit)
-        {
-            if (nonSplit != null)
-            {
-                if (nonSplit.Contains(','))
-                {
-                    string[] token = nonSplit.Split('+');
-                    BoilerNum_split.Clear();
-                    foreach (var item in token)
-                    {
-                        BoilerNum_split.Add(item.ToString());
-                    }
-                }
-                else
-                {
-                    BoilerNum_split.Clear();
-                    BoilerNum_split.Add(nonSplit);
-                }
-            }
-
-        }
-
+      
         public void Calc_thrL()
         {
             double dop_a = 0;
@@ -923,15 +638,13 @@ namespace main
                                 if (split[m].ToString() == ce.ZoneNum())
                                 {
                                     zone = Program.CALC.getZone(PostZone[j][0]);
-                                    goto goto_Zone;
                                 }
                             }
+                        
                         }
                     }
                 }
-
-                goto_Zone:
-                if(zone != null)
+                if (zone != null)
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -983,15 +696,14 @@ namespace main
                                 if (split[m].ToString() == ce.ZoneNum())
                                 {
                                     zone = Program.CALC.getZone(PostZone[j][0]);
-                                    goto goto_Zone;
                                 }
                             }
                         }
                     }
                 }
 
-                goto_Zone: 
-                if(zone != null)
+
+                if (zone != null)
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
