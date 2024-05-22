@@ -249,9 +249,9 @@ namespace main
                 }              
             }
         }
-        public void Load_CoolingZone()
+        public void Load_CoolingZone(string ProjNum)
         {
-            string[][] DefaultValue = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_form",
+            string[][] DefaultValue = Program.DB.getValue(ProjNum, "CoolingSystem_form",
               "공급존", "번호 = '" + CoolingNum + "'");
             if (DefaultValue.Length > 0)
             {
@@ -608,11 +608,11 @@ namespace main
         }
 
         #region  존계산
-        public void Cal_Zone() // 여러존 정보작성
+        public void Cal_Zone(string ProjNum) // 여러존 정보작성
         {
             if (ZoneNameList.Count > 0)
             {
-                Cal_ZoneSum();
+                Cal_ZoneSum(ProjNum);
                 Cal_CED_Z();
                 Cal_S_Z();
                 Cal_Oper_Z();
@@ -636,17 +636,76 @@ namespace main
             }
         }
 
-        public void Cal_ZoneAhu() //최대부하,평균일일시간,총면적
+        private ArrayList Split_(String nonSplit)
+        {
+            ArrayList split = new ArrayList();
+            if (nonSplit != null && nonSplit != "")
+            {
+                if (nonSplit.Contains('+'))
+                {
+                    string[] token = nonSplit.Split('+');
+                    split.Clear();
+                    foreach (var item in token)
+                    {
+                        split.Add(item.ToString());
+                    }
+                }
+                else
+                {
+                    split.Clear();
+                    split.Add(nonSplit);
+                }
+            }
+            else
+            {
+                split.Clear();
+            }
+            return split;
+        }
+
+
+        public void Cal_ZoneAhu(string ProjNum) //최대부하,평균일일시간,총면적
         {
             //존산정
             Qc_max_z = 0;
-            
+            Boolean Now_Check = true;
+            if (ProjNum == 프로젝트번호[0][0])
+            {
+                Now_Check = true;
+            }
+            else
+            {
+                Now_Check = false;
+            }
+
             if (SelectZone.Count > 0)
             {
+                Zone zone = null; 
                 for (int j = 0; j < SelectZone.Count; j++)
                 {
-                    Zone zone = Program.CALC.getZone(SelectZone[j]);
-                   // zonemake zoneinfo = new zonemake(SelectZone[j], CoolingNum);
+                    if (Now_Check == true)
+                    {
+                        zone = Program.CALC.getZone(SelectZone[j]);
+                    }
+                    else
+                    {
+                        string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,기존존", "");
+                        if (PostZone.Length > 0)
+                        {
+                            for (int a = 0; a < PostZone.Length; a++)
+                            {
+                                ArrayList split = Split_(PostZone[a][1]);
+                                for (int m = 0; m < split.Count; m++)
+                                {
+                                    if (split[m].ToString() == SelectZone[j])
+                                    {
+                                        zone = Program.CALC.getZone(PostZone[j][0]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     ZoneNameList.Add(zone);
                 }
                 foreach (Zone value in ZoneNameList)
@@ -689,17 +748,38 @@ namespace main
         }
 
 
-        public void Cal_ZoneSum() //연간냉방에너지요구량,월이용일수,월실내온도,월냉방에너지요구량
+        public void Cal_ZoneSum(string ProjNum) //연간냉방에너지요구량,월이용일수,월실내온도,월냉방에너지요구량
         {
             double[] dwd_sum = new double[12];
             double[] theta_sum = new double[12];
             QC_a_z = 0;
-           
+            Boolean Now_Check = true;
+            if (ProjNum == 프로젝트번호[0][0])
+            { Now_Check = true; }
+            else
+            { Now_Check = false; }
+            string[][] 공급설비종류;
+            
             for (int i = 0; i < 12; i++)
             {
                 foreach (Zone value in ZoneNameList)
                 {
-                    QC_nd_z[i] += value.Qb_mth[1,1,i]; //공급설비 부하율을 반영한 요구량 산정
+                    double load_sum = 0;
+                    string[][] v2;
+                    if (Now_Check == true)
+                    {
+                        v2 = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form", "부하율", " 존번호 = '" + value.ZoneNum + "' AND 냉방시스템 = '" + CoolingNum + "' ");
+                    }
+                    else
+                    {
+                        v2 = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form_Element", "부하율", " 존번호 = '" + value.ZoneNum + "' AND 냉방시스템 = '" + CoolingNum + "' ");
+                    }
+
+                    for (int k = 0; k < v2.Length; k++)
+                    {
+                        load_sum += Convert.ToDouble(v2[k][0]);
+                    }
+                    QC_nd_z[i] += value.Qb_mth[1,1,i] * load_sum; //공급설비 부하율을 반영한 요구량 산정
                 }
                 if (QC_nd_z[i] == 0)
                 {
@@ -1457,7 +1537,7 @@ namespace main
 
                 mam1 = ThetaC_gen_hr_req_in - Theta_evad;
                 mam2 = (ThetaC_gen_req_out + Theta_cond) - (ThetaC_gen_hr_req_in - Theta_evad);
-                feer_corr[j] = (son1 / son2) / (mam1 / mam2);
+                feer_corr[j] = Math.Max((son1 / son2) / (mam1 / mam2),0);
             }
         }
         public void Cal_MultiFactor()
