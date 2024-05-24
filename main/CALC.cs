@@ -1017,7 +1017,7 @@ namespace main
         public static void Cooling_LoadData(Cal_Cooling cc1, string ProjNum)
         {
             cc1.Generator_Check(ProjNum);
-            cc1.Load_CoolingZone();
+            cc1.Load_CoolingZone(ProjNum);
             cc1.Cooling_CE_Zone(ProjNum);
         }
         public static void Cooling_Calc(Cal_Cooling cc1, string ProjNum)
@@ -1028,9 +1028,9 @@ namespace main
             //공급설비 기준 부하율 반영
             cc1.Cal_CLRate();
             //최대부하,연간요구량,일일작동시간, 면적
-            cc1.Cal_ZoneAhu();
+            cc1.Cal_ZoneAhu(ProjNum);
             //냉방존
-            cc1.Cal_Zone();
+            cc1.Cal_Zone(ProjNum);
             //공조존         
             cc1.Cal_Ahu();
             //계산시작
@@ -1175,7 +1175,7 @@ namespace main
 
 
 
-        private static void Cooling_Save(Cal_Cooling cc1)
+        public static void Cooling_Save(Cal_Cooling cc1)
         {
             //설비정보와 보조설비정보는 따로따로
             cc1.QCa_nd = 0;
@@ -1517,8 +1517,8 @@ namespace main
         public static Dictionary<string, AHU> AHUs = new Dictionary<string, AHU>();
         public static Dictionary<string, DHW> DHWs = new Dictionary<string, DHW>();
         public static Dictionary<string, Final> Finals = new Dictionary<string, Final>();
-       // public static string[] ElementAlt = { "조닝", "기밀+열회수기"};
-        public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀+열회수기","난방", "냉방", "급탕", "조명", "공조", "신재생" };
+      //  public static string[] ElementAlt = { "조닝", "냉방"};
+       public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀+열회수기","난방", "냉방", "급탕", "조명", "공조", "신재생" };
 
         public Zone getZone(string zoneNum)
         {

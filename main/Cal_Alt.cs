@@ -1776,6 +1776,7 @@ namespace main
                     CALC.Coolings[CoolingNum[i][0]] = Cooling1;
                     CALC.Cooling_LoadData(Cooling1, ProjNum);
                     CALC.Cooling_Calc(Cooling1, ProjNum);
+                    //CALC.Cooling_Save(Cooling1);
                 }
             }
         }
@@ -1796,6 +1797,7 @@ namespace main
                     CALC.Coolings[CoolingNum[i][0]] = Cooling1;
                     CALC.Cooling_LoadData(Cooling1, ProjNum);
                     CALC.Cooling_Calc(Cooling1, ProjNum);
+                    //CALC.Cooling_Save(Cooling1);
                 }
             }
         }

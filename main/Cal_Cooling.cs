@@ -55,7 +55,7 @@ namespace main
         string[] mth = new string[12];
         
         //냉방존
-        public List<Zone> ZoneNameList = new List<Zone>();
+        public List<Zone> ZoneNameList = new List<Zone>(); public List<string> PreZoneNameList = new List<string>();
         public double[] QC_nd_z = new double[12], dwd_z = new double[12], theta_z = new double[12], tmth_z = new double[12], BC_z = new double[12];
         public double[] tC_op_z = new double[12], PL_Rate_z = new double[12], fC_PL_z = new double[12];
         public double top_z, Qc_max_z, QC_p_z, Beta_grenz_z, QC_a_z, A_z; //QC_p_z 공조기와 파워나누기, top_c_z는 공조기 가동시간임
@@ -686,6 +686,7 @@ namespace main
                     if (Now_Check == true)
                     {
                         zone = Program.CALC.getZone(SelectZone[j]);
+                        ZoneNameList.Add(zone);
                     }
                     else
                     {
@@ -699,14 +700,16 @@ namespace main
                                 {
                                     if (split[m].ToString() == SelectZone[j])
                                     {
-                                        zone = Program.CALC.getZone(PostZone[j][0]);
+                                        zone = Program.CALC.getZone(PostZone[a][0]);
+                                        PreZoneNameList.Add(split[m].ToString());
+                                        ZoneNameList.Add(zone);
                                     }
                                 }
                             }
                         }
                     }
 
-                    ZoneNameList.Add(zone);
+                    
                 }
                 foreach (Zone value in ZoneNameList)
                 {
@@ -762,6 +765,7 @@ namespace main
             
             for (int i = 0; i < 12; i++)
             {
+                int pre = 0; 
                 foreach (Zone value in ZoneNameList)
                 {
                     double load_sum = 0;
@@ -772,7 +776,7 @@ namespace main
                     }
                     else
                     {
-                        v2 = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form_Element", "부하율", " 존번호 = '" + value.ZoneNum + "' AND 냉방시스템 = '" + CoolingNum + "' ");
+                        v2 = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form_Element", "부하율", " 존번호 = '" + PreZoneNameList[pre] + "' AND 냉방시스템 = '" + CoolingNum + "' ");
                     }
 
                     for (int k = 0; k < v2.Length; k++)
@@ -780,30 +784,15 @@ namespace main
                         load_sum += Convert.ToDouble(v2[k][0]);
                     }
                     QC_nd_z[i] += value.Qb_mth[1,1,i] * load_sum; //공급설비 부하율을 반영한 요구량 산정
+                    dwd_z[i] += value.dwd_mth[i] * value.Qb_mth[1, 1, i] * load_sum; // 요구량 가중하여 산정함
+                    theta_z[i] += value.theta_i[1, 1, i] * value.Qb_mth[1, 1, i] * load_sum; //요구량 가중하여 산정함
+                    pre = pre + 1; 
                 }
-                if (QC_nd_z[i] == 0)
-                {
-                    foreach (Zone value in ZoneNameList)
-                    {
-                        dwd_sum[i] += value.dwd_mth[i] * value.zoneArea;
-                        theta_sum[i] += value.theta_i[1,1,i] * value.zoneArea;
-                    }
-                    dwd_z[i] = dwd_sum[i] / A_z; //요구량이 없으므로 면적가중으로 산정함
-                    theta_z[i] = theta_sum[i] / A_z; //요구량이 없으므로 면적가중으로 산정함
-                }
-                else
-                {
-                    foreach (Zone value in ZoneNameList)
-                    {
-                        dwd_sum[i] += value.dwd_mth[i] * value.Qb_mth[1, 1, i]; // 요구량 가중하여 산정함
-                        theta_sum[i] += value.theta_i[1, 1, i] * value.Qb_mth[1, 1, i]; //요구량 가중하여 산정함
-                    }
-                    dwd_z[i] = dwd_sum[i] / QC_nd_z[i];
-                    theta_z[i] = theta_sum[i] / QC_nd_z[i];
-                }
+                dwd_z[i] = dwd_z[i] / QC_nd_z[i];
+                theta_z[i] = theta_z[i]/ QC_nd_z[i];
                 QC_a_z += QC_nd_z[i];
             }
-           
+            QC_a_z = QC_a_z;
         }
 
         public void Cal_CED_Z()
@@ -1417,7 +1406,7 @@ namespace main
             }
             else fSP = 1;
 
-           
+            double a = 0;
             for (int i = 0; i < 12; i++)
             {
                 EER_c[i] = EER_f * feer_corr[i];
@@ -1430,8 +1419,9 @@ namespace main
 
                 }
                 else QC_f[i] = QC_out[i] / SEER_c[i];
+                a += QC_f[i];
             }
-
+            a = a;
         }
         public void Cal_feerCorr()
         { 

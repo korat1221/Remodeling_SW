@@ -338,7 +338,7 @@ namespace main.contents
                                 if(value2.Length > 0)
                                 {
                                     d = (Convert.ToDouble(value2[0][0]) / wall_ueff[a] * 100);
-                                    sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 270) + "px'></div>";
+                                    sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 270) + "px'></div>"; //성능 수준 중 가장 큰 값을을 270로 가정, 139는 픽셀 최대 크기
                                     sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
                                     Wall_data[65 + a].Add(new { idx = i, val = sp });//법규대비 성능점수
                                     data.Add(new { cname = "wall_law_point" + a, data = Wall_data[65 + a] });
