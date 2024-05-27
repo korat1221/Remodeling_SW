@@ -271,8 +271,8 @@ namespace main.contents
                                     for (int a = 0; a < valuek.Length; a++)
                                     { 
                                         win_area[k] += Convert.ToDouble(valuek[a][0]);
-                                        win_count[k] += 1; 
                                     }
+                                    win_count[k] =valuek.Length;
                                 }
                             }
 
@@ -297,17 +297,17 @@ namespace main.contents
                                     win_count_sum += win_count[a];
                                 }
                             }
-                            Win_data[37].Add(new { idx = i, val = win_count_sum.ToString("0.0") });//개수합계
-                            Win_data[38].Add(new { idx = i, val = "100 %" });//면적율합계
-                            data.Add(new { cname = "win_count_sum", data = Win_data[37] });
-                            data.Add(new { cname = "win_area_sum_percent", data = Win_data[38] });
+                            Win_data[44].Add(new { idx = i, val = win_count_sum.ToString("0") });//개수합계
+                            Win_data[45].Add(new { idx = i, val = "100 %" });//면적율합계
+                            data.Add(new { cname = "win_count_sum", data = Win_data[44] });
+                            data.Add(new { cname = "win_area_sum_percent", data = Win_data[45] });
 
                             for (int a = 0; a < 8; a++)
                             {
                                 if (win_name[a] != null && win_name[a] != "")
                                 {
-                                    Win_data[39 + a].Add(new { idx = i, val = (win_area[a] / win_area_sum * 100).ToString("0") + " %" });//면적율
-                                    data.Add(new { cname = "win_area_percent" + a, data = Win_data[39 + a] });
+                                    Win_data[46 + a].Add(new { idx = i, val = (win_area[a] / win_area_sum * 100).ToString("0") + " %" });//면적율
+                                    data.Add(new { cname = "win_area_percent" + a, data = Win_data[46 + a] });
 
                                     if (win_ueff_old[a] != 0)
                                     {
@@ -320,10 +320,10 @@ namespace main.contents
                             {
                                 if (win_name[a] != null && win_name[a] != "")
                                 {
-                                    Win_data[47 + a].Add(new { idx = i, val = win_ueff[a].ToString("0.00") });//계획열관류율
-                                    data.Add(new { cname = "win_ueff" + a, data = Win_data[47 + a] });
-                                    Win_data[55+ a].Add(new { idx = i, val = win_ueff_old[a].ToString("0.00") });//기존열관류율
-                                    data.Add(new { cname = "win_ueff_old" + a, data = Win_data[55 + a] });
+                                    Win_data[54 + a].Add(new { idx = i, val = win_ueff[a].ToString("0.00") });//계획열관류율
+                                    data.Add(new { cname = "win_ueff" + a, data = Win_data[54 + a] });
+                                    Win_data[62+ a].Add(new { idx = i, val = win_ueff_old[a].ToString("0.00") });//기존열관류율
+                                    data.Add(new { cname = "win_ueff_old" + a, data = Win_data[62 + a] });
 
                                 }
                             }
@@ -336,12 +336,12 @@ namespace main.contents
                                 win_ueff_old_avg += win_ueff_old[a] * win_area[a] / win_area_sum;
                                 win_shgc_avg += win_shgc[a] * win_area[a] / win_area_sum;
                             }
-                            Win_data[56].Add(new { idx = i, val = win_ueff_avg.ToString("0.00") });//계획열관류율 평균
-                            Win_data[57].Add(new { idx = i, val = win_ueff_old_avg.ToString("0.00") });//기존열관류율 평균
-                            Win_data[58].Add(new { idx = i, val = win_shgc_avg.ToString("0.00") });//기존열관류율 평균
-                            data.Add(new { cname = "win_ueff_avg", data = Win_data[56] });
-                            data.Add(new { cname = "win_ueff_old_avg", data = Win_data[57] });
-                            data.Add(new { cname = "win_shgc_avg", data = Win_data[58] });
+                            Win_data[70].Add(new { idx = i, val = win_ueff_avg.ToString("0.00") });//계획열관류율 평균
+                            Win_data[71].Add(new { idx = i, val = win_ueff_old_avg.ToString("0.00") });//기존열관류율 평균
+                            Win_data[72].Add(new { idx = i, val = win_shgc_avg.ToString("0.00") });//기존열관류율 평균
+                            data.Add(new { cname = "win_ueff_avg", data = Win_data[70] });
+                            data.Add(new { cname = "win_ueff_old_avg", data = Win_data[71] });
+                            data.Add(new { cname = "win_shgc_avg", data = Win_data[72] });
 
                             double sum = 0;
                             for (int a = 0; a < 8; a++)
@@ -354,17 +354,17 @@ namespace main.contents
                                 {
                                     if (sum != 0)
                                     {
-                                        Win_data[59 + a].Add(new { idx = i, val = ((win_saving / Total_Energy_pre) * (win_saving_element[a] / sum) * 100).ToString("0.0") + " %" });//요소기술별 에너지절감률
+                                        Win_data[73 + a].Add(new { idx = i, val = ((win_saving / Total_Energy_pre) * (win_saving_element[a] / sum) * 100).ToString("0.0") + " %" });//요소기술별 에너지절감률
                                     }
                                     else
                                     {
-                                        Win_data[59 + a].Add(new { idx = i, val = (0).ToString("0.0") + " %" });//요소기술별 에너지절감률
+                                        Win_data[73 + a].Add(new { idx = i, val = (0).ToString("0.0") + " %" });//요소기술별 에너지절감률
                                     }
-                                    data.Add(new { cname = "win_saving_element" + a, data = Win_data[59 + a] });
+                                    data.Add(new { cname = "win_saving_element" + a, data = Win_data[73 + a] });
                                 }
                             }
-                            Win_data[67].Add(new { idx = i, val = (win_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });  //요소기술별 절감률 합계
-                            data.Add(new { cname = "win_saving_element_sum", data = Win_data[67] });
+                            Win_data[81].Add(new { idx = i, val = (win_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });  //요소기술별 절감률 합계
+                            data.Add(new { cname = "win_saving_element_sum", data = Win_data[81] });
 
                             double win_law_avg = 0;
                             for (int a = 0; a < 8; a++)
@@ -374,14 +374,14 @@ namespace main.contents
                                     string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "법규열관류율", "번호 ='" + kk[a][0] + "'");
                                     if (value2.Length > 0)
                                     {
-                                        Win_data[68+ a].Add(new { idx = i, val = (Convert.ToDouble(value2[0][0]) / win_ueff[a] * 100).ToString("0") + " 점" });//법규대비 성능점수
-                                        data.Add(new { cname = "win_law_point" + a, data = Win_data[68 + a] });
+                                        Win_data[89+ a].Add(new { idx = i, val = (Convert.ToDouble(value2[0][0]) / win_ueff[a] * 100).ToString("0") + " 점" });//법규대비 성능점수
+                                        data.Add(new { cname = "win_law_point" + a, data = Win_data[89 + a] });
                                         win_law_avg += Convert.ToDouble(value2[0][0]) * win_area[a] / win_area_sum;
                                     }
                                 }
                             }
-                            Win_data[76].Add(new { idx = i, val = (win_law_avg / win_ueff_avg * 100).ToString("0") + " 점" });//법규대비 성능점수 평균
-                            data.Add(new { cname = "win_law_point_avg", data = Win_data[76] });
+                            Win_data[97].Add(new { idx = i, val = (win_law_avg / win_ueff_avg * 100).ToString("0") + " 점" });//법규대비 성능점수 평균
+                            data.Add(new { cname = "win_law_point_avg", data = Win_data[97] });
 
                         }
                     }
@@ -663,8 +663,7 @@ namespace main.contents
                             string[][] valuek = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "외피유형='외부출입문' And 구조체번호='" + Value[k][3] + "'");
                             if (valuek.Length > 0)
                             {
-                                for (int a = 0; a < valuek.Length; a++)
-                                { door_count[k] = valuek.Length; }
+                                door_count[k] = valuek.Length;
                             }
                         }
 
