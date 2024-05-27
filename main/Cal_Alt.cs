@@ -1733,6 +1733,7 @@ namespace main
                     CALC.Heatings[HeatingNum[i][0]] = Heating1;
                     CALC.Heating_LoadData(Heating1, ProjNum);
                     CALC.Heating_Calc(Heating1, ProjNum);
+                  //  CALC.Heating_Save(Heating1);
                 }
             }
         }
@@ -1753,6 +1754,7 @@ namespace main
                     CALC.Heatings[HeatingNum[i][0]] = Heating1;
                     CALC.Heating_LoadData(Heating1, ProjNum);
                     CALC.Heating_Calc(Heating1, ProjNum);
+                 //   CALC.Heating_Save(Heating1);
                 }
             }
         }

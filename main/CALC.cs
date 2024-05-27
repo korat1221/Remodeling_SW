@@ -973,7 +973,7 @@ namespace main
             Heating1.Calc_Q_Air_HP(ProjNum);
             Heating1.nan();
         }
-        private static void Heating_Save(Heating Heating1)
+        public static void Heating_Save(Heating Heating1)
         {
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             for (int mth = 0; mth <= 11; mth++)
@@ -1517,8 +1517,8 @@ namespace main
         public static Dictionary<string, AHU> AHUs = new Dictionary<string, AHU>();
         public static Dictionary<string, DHW> DHWs = new Dictionary<string, DHW>();
         public static Dictionary<string, Final> Finals = new Dictionary<string, Final>();
-      //  public static string[] ElementAlt = { "조닝", "냉방"};
-       public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀+열회수기","난방", "냉방", "급탕", "조명", "공조", "신재생" };
+       // public static string[] ElementAlt = { "조닝", "난방"};
+        public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀+열회수기","난방", "냉방", "급탕", "조명", "공조", "신재생" };
 
         public Zone getZone(string zoneNum)
         {
