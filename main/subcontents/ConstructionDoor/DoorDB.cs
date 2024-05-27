@@ -363,32 +363,35 @@ namespace main.subcontents
 
         private void Calc_U(int nRow)
         {
-
-            //문짝내부가 단열재인 경우
-            if (Door_dataGridView.Rows[nRow].Cells[11].Value.ToString() != "-")
+            if(Door_dataGridView.Rows[nRow].Cells[11].Value != null && Door_dataGridView.Rows[nRow].Cells[11].Value.ToString() !="")
             {
-                U = (1 / (R + 0.17));
-            }
-            else
-            {
-                if (Door_dataGridView.Rows[nRow].Cells[9].Value.ToString() == "목재문")
+                //문짝내부가 단열재인 경우
+                if (Door_dataGridView.Rows[nRow].Cells[11].Value.ToString() != "-")
                 {
-                    //목재문일 경우 두께 -10 
-                    d2 = d - 10;
-
-                    //두께에 대한 벽체 열저항 선형보간
-
-                    Interpolate(x, y, d2);
-                    U = (1 / (0.17 + yi));
+                    U = (1 / (R + 0.17));
                 }
                 else
                 {
-                    Interpolate(x, y, d);
-                    U = (1 / (0.17 + yi));
+                    if (Door_dataGridView.Rows[nRow].Cells[9].Value.ToString() == "목재문")
+                    {
+                        //목재문일 경우 두께 -10 
+                        d2 = d - 10;
+
+                        //두께에 대한 벽체 열저항 선형보간
+
+                        Interpolate(x, y, d2);
+                        U = (1 / (0.17 + yi));
+                    }
+                    else
+                    {
+                        Interpolate(x, y, d);
+                        U = (1 / (0.17 + yi));
+                    }
                 }
+                Door_dataGridView.Rows[nRow].Cells[16].Value = string.Format("{0:F3}", U);
             }
 
-            Door_dataGridView.Rows[nRow].Cells[16].Value = string.Format("{0:F3}", U);
+            
         }
 
        
