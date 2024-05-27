@@ -741,8 +741,11 @@ namespace main.contents
         {
             if (UDoorMethod == "법규")
             {
-                DoorUDGlass = Convert.ToDouble(UD1_textBox.Text);
-                UD2_textBox.Text = String.Format("{0:F3}", DoorUDGlass);
+                if (UD1_textBox.Text != null && UD1_textBox.Text.ToString()!="")
+                {
+                    DoorUDGlass = Convert.ToDouble(UD1_textBox.Text);
+                    UD2_textBox.Text = String.Format("{0:F3}", DoorUDGlass);
+                }
             }
             else
             {
