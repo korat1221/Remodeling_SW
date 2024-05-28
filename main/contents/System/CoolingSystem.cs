@@ -231,7 +231,8 @@ namespace main.contents
                 string[] token = nonSplit.Split('+');
                 foreach (string item in token)
                 {
-                    type.Add(item);
+                    string _item = item.Trim();
+                    type.Add(_item);
                 }
             }
         }

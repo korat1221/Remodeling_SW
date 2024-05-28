@@ -37,6 +37,7 @@
             //에너지사용량
             string[][] Value1 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "연료='전기'");
             string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일", "not 연료='전기' and not 연료='전체'");
+            double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
             if (Value1.Length > 0)
             {
                 if (Convert.ToDouble(Value1[0][0]) > 1)
@@ -50,7 +51,7 @@
                         {
                             for (int i = 0; i < Elec1.Length; i++) //연도별
                             {
-                                Quse_elec_mth[mth] += (Convert.ToDouble(Elec1[i][0]) * Convert.ToDouble(Value1[0][0]) / 30 + Convert.ToDouble(Elec2[i][0]) * (30 - Convert.ToDouble(Value1[0][0])) / 30);
+                                Quse_elec_mth[mth] += (Convert.ToDouble(Elec1[i][0]) * Convert.ToDouble(Value1[0][0]) / dmth[mth] + Convert.ToDouble(Elec2[i][0]) * (dmth[mth] - Convert.ToDouble(Value1[0][0])) / dmth[mth]);
                             }
                         }
                         Quse_elec_mth[mth] = Quse_elec_mth[mth] / Elec1.Length;
@@ -62,10 +63,10 @@
                     {
                         for (int i = 0; i < Elec1.Length; i++) //연도별
                         {
-                            Quse_elec_mth[12] += (Convert.ToDouble(Elec1[i][0]) * Convert.ToDouble(Value1[0][0]) / 30 + Convert.ToDouble(Elec2[i][0]) * (30 - Convert.ToDouble(Value1[0][0])) / 30);
+                            Quse_elec_mth[11] += (Convert.ToDouble(Elec1[i][0]) * Convert.ToDouble(Value1[0][0]) / dmth[11] + Convert.ToDouble(Elec2[i][0]) * (dmth[11] - Convert.ToDouble(Value1[0][0])) / dmth[11]);
                         }
                     }
-                    Quse_elec_mth[12] = Quse_elec_mth[12] / Elec1.Length;
+                    Quse_elec_mth[11] = Quse_elec_mth[11] / Elec1.Length;
 
                 }
                 else
@@ -98,7 +99,7 @@
                         {
                             for (int i = 0; i < Gas1.Length; i++) //연도별
                             {
-                                Quse_gas_mth[mth] += (Convert.ToDouble(Gas1[i][0]) * Convert.ToDouble(Value2[0][0]) / 30 + Convert.ToDouble(Gas2[i][0]) * (30 - Convert.ToDouble(Value2[0][0])) / 30);
+                                Quse_gas_mth[mth] += (Convert.ToDouble(Gas1[i][0]) * Convert.ToDouble(Value2[0][0]) / dmth[mth] + Convert.ToDouble(Gas2[i][0]) * (dmth[mth] - Convert.ToDouble(Value2[0][0])) / dmth[mth]);
                             }
                         }
                         Quse_gas_mth[mth] = Quse_gas_mth[mth] / Gas1.Length;
@@ -110,12 +111,10 @@
                     {
                         for (int i = 0; i < Gas1.Length; i++) //연도별
                         {
-                            Quse_gas_mth[12] += (Convert.ToDouble(Gas1[i][0]) * Convert.ToDouble(Value2[0][0]) / 30 + Convert.ToDouble(Gas2[i][0]) * (30 - Convert.ToDouble(Value2[0][0])) / 30);
+                            Quse_gas_mth[11] += (Convert.ToDouble(Gas1[i][0]) * Convert.ToDouble(Value2[0][0]) / dmth[11] + Convert.ToDouble(Gas2[i][0]) * (dmth[11] - Convert.ToDouble(Value2[0][0])) / dmth[11]);
                         }
                     }
-                    Quse_gas_mth[12] = Quse_gas_mth[12] / Gas1.Length;
-
-
+                    Quse_gas_mth[11] = Quse_gas_mth[11] / Gas1.Length;
                 }
                 else
                 {

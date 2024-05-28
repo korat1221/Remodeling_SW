@@ -663,6 +663,24 @@ namespace main.contents
                     }
                 }
             }
+
+            Program.DB.deleteTable(DB.type.ProjDB, "Shade_3D");
+            string[][] Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호", "외피유형 = '창호' or 외피유형 = '커튼월창'");
+            if (Win.Length > 0)
+            {
+                for (int k = 0; k < Win.Length; k++)
+                {
+                    ZoneShade zoneshade = new ZoneShade(Win[k][0]);
+                    zoneshade.Calc_방위각();
+                    zoneshade.Calc_지형물음영();
+
+                    zoneshade.Calc_상부음영();
+                    zoneshade.Calc_좌측음영();
+                    zoneshade.Calc_우측음영();
+                    zoneshade.Calc_음영계수();
+                    zoneshade.Save();
+                }
+            }
             //           redrawList();
             MessageBox.Show("저장되었습니다.");
 
