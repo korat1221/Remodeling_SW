@@ -5,6 +5,7 @@ import {
 } from "../../examples/jsm/loaders/ifc/web-ifc-api.js";
 import { Utility } from "./Utility.js";
 
+
 function Spacing(editor) {
   this.editor = editor;
   this.util = new Utility();
