@@ -121,7 +121,8 @@ namespace main
                 string[] token = nonSplit.Split('+');
                 foreach (string item in token)
                 {
-                    type.Add(item);
+                    string _item = item.Trim();
+                    type.Add(_item);
                 }
             }
         }
@@ -380,7 +381,12 @@ namespace main
                     CGM._power = Convert.ToDouble(DefaultValue[0][0]);
                     if (CGM._install == "기존")
                     {
-                        CGM._eer = Convert.ToDouble(DefaultValue[0][1]) * 0.9; //10%성능저하 적용
+                        if (Convert.ToDouble(DefaultValue[0][1]) < 4)
+                        { CGM._eer = Convert.ToDouble(DefaultValue[0][1]) * 0.9; }//10%성능저하 적용
+                        else
+                        {
+                            CGM._eer = Convert.ToDouble(DefaultValue[0][1]) ;
+                        }
                     }
                     else CGM._eer = Convert.ToDouble(DefaultValue[0][1]);
                     CGM._pctrl = Convert.ToDouble(DefaultValue[0][2]);
@@ -1258,7 +1264,7 @@ namespace main
             {
                 Theta_Around = Convert.ToDouble(v[0][0]);
             }else Theta_Around = 0;
-
+            
             for (int j = 0; j < 12; j++)
             {
                 if (CG == nameof(_TYPE.지열히트펌프))
