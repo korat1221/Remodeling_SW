@@ -120,6 +120,7 @@ namespace main.contents.Result.Building_Report
             double[,] Quse_elec_mth = new double[4, 12]; double[] Quse_elec_a = new double[4];
             double[,] Quse_gas_mth = new double[4, 12]; double[] Quse_gas_a = new double[4];
             string[] year_elec = new string[3]; string[] year_gas = new string[3];
+            double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
             while (++i < 700)
             {
                 __data[i] = new List<object>();
@@ -197,7 +198,7 @@ namespace main.contents.Result.Building_Report
                             {
                                 for (int k = 0; k < Elec1.Length; k++) //연도별
                                 {
-                                    Quse_elec_mth[k, mth] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value_사용시작일_전기[0][0]) / 30 + Convert.ToDouble(Elec2[k][0]) * (30 - Convert.ToDouble(Value_사용시작일_전기[0][0])) / 30);
+                                    Quse_elec_mth[k, mth] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value_사용시작일_전기[0][0]) / dmth[mth] + Convert.ToDouble(Elec2[k][0]) * (dmth[11] - Convert.ToDouble(Value_사용시작일_전기[0][0])) / dmth[mth]);
                                 }
                                 yearnum = Elec1.Length;
                             }                            
@@ -207,9 +208,9 @@ namespace main.contents.Result.Building_Report
                         Elec2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (1).ToString() + "월' AND 연료='전기'");
                         if (Elec1.Length > 0 && Elec2.Length > 0)
                         {
-                            for (int k = 0; k < Elec1.Length; i++) //연도별
+                            for (int k = 0; k < Elec1.Length; k++) //연도별
                             {
-                                Quse_elec_mth[k, 12] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value_사용시작일_전기[0][0]) / 30 + Convert.ToDouble(Elec2[k][0]) * (30 - Convert.ToDouble(Value_사용시작일_전기[0][0])) / 30);
+                                Quse_elec_mth[k, 11] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value_사용시작일_전기[0][0]) / dmth[11] + Convert.ToDouble(Elec2[k][0]) * (dmth[11] - Convert.ToDouble(Value_사용시작일_전기[0][0])) / dmth[11]);
                             }
                         }
                     }
@@ -464,7 +465,7 @@ namespace main.contents.Result.Building_Report
                             {
                                 for (int k = 0; k < Gas1.Length; k++) //연도별
                                 {
-                                    Quse_gas_mth[k, mth] = (Convert.ToDouble(Gas1[k][0]) * Convert.ToDouble(Value_사용시작일_가스[0][0]) / 30 + Convert.ToDouble(Gas2[k][0]) * (30 - Convert.ToDouble(Value_사용시작일_가스[0][0])) / 30);
+                                    Quse_gas_mth[k, mth] = (Convert.ToDouble(Gas1[k][0]) * Convert.ToDouble(Value_사용시작일_가스[0][0]) / dmth[mth] + Convert.ToDouble(Gas2[k][0]) * (dmth[mth] - Convert.ToDouble(Value_사용시작일_가스[0][0])) / dmth[mth]);
                                 }
                                 yearnum = Gas1.Length;
                             }                            
@@ -473,9 +474,9 @@ namespace main.contents.Result.Building_Report
                         Gas2 = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "월 ='" + (1).ToString() + "월' AND not 연료='전기' and not 연료='전체' AND 단위 ='kWh'");
                         if (Gas1.Length > 0 && Gas2.Length > 0)
                         {
-                            for (int k = 0; k < Gas1.Length; i++) //연도별
+                            for (int k = 0; k < Gas1.Length; k++) //연도별
                             {
-                                Quse_gas_mth[k, 12] = (Convert.ToDouble(Gas1[k][0]) * Convert.ToDouble(Value_사용시작일_가스[0][0]) / 30 + Convert.ToDouble(Gas2[k][0]) * (30 - Convert.ToDouble(Value_사용시작일_가스[0][0])) / 30);
+                                Quse_gas_mth[k, 11] = (Convert.ToDouble(Gas1[k][0]) * Convert.ToDouble(Value_사용시작일_가스[0][0]) / dmth[11] + Convert.ToDouble(Gas2[k][0]) * (dmth[11] - Convert.ToDouble(Value_사용시작일_가스[0][0])) / dmth[11]);
                             }
                         }     
                     }
