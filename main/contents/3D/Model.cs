@@ -137,6 +137,7 @@ namespace main.contents
                         s = s.Replace("__PROJ_TYPE__", ProjectList.ProjectType);
                         Program.DB.executeSQL(DB.type.ProjDB, s);
 
+                        Program.DB.deleteTable(DB.type.ProjDB, "Shade_3D");
                         string[][] Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호", "외피유형 = '창호' or 외피유형 = '커튼월창'");
                         if (Win.Length > 0)
                         {
