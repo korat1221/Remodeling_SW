@@ -1,77 +1,23 @@
-﻿using Eagle._Components.Public;
-using Eagle._Interfaces.Public;
-using Microsoft.Office.Interop.Excel;
-using Microsoft.Web.WebView2.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace main.contents
+namespace main.contents.Result.Element_Report
 {
-    public partial class Element_Structure : Form
+    internal class Element_Structure
     {
-        bool scriptable = false;
-        public Element_Structure()
+        public string Report_Before()
         {
-            InitializeComponent();
-
-            InitializeAsync();
-        }
-        async void InitializeAsync()
-        {
-            await webView21.EnsureCoreWebView2Async(null);
-            webView21.CoreWebView2.WebMessageReceived += OnJSMessage;
-            webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
-        }
-        void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
-        {
-            try
-            {
-                string s = args.TryGetWebMessageAsString();
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-        void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
-        {
-            scriptable = true;
-        }
-        public void runScript(string script)
-        {
-            if (scriptable)
-            {
-                webView21.CoreWebView2.ExecuteScriptAsync(script);
-            }
-        }
-        public void LoadData(string ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
-        {
-            string[][] 프로젝트유형 = Program.DB.querySQL(DB.type.ProjListDB, "Select type from projects where current = '1'");
-            if (프로젝트유형[0][0] == "1")
-            {
-                Report_Before();
-            }
-            else
-            {
-                Report_After();
-            }
+            string script=null;
+            return script;
         }
 
-        private void Report_Before()
+        public string Report_After()
         {
-
-        }
-
-        private void Report_After()
-        {
+            string script=null; 
             string s, s2;
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
             string[][] res = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기존프로젝트");
@@ -85,15 +31,12 @@ namespace main.contents
             double d;
             string sp;
             int i = -1, n;
-
             while (++i < 700)
             {
                 Wall_data[i] = new List<object>();
                 Roof_data[i] = new List<object>();
                 Floor_data[i] = new List<object>();
             }
-
-
             string charts = "";
             i = -1;
             while (++i < 번호.Length)
@@ -104,7 +47,7 @@ namespace main.contents
                     double[] Element_ElecSum = new double[ElementAlt.Length];
                     double[] Element_GasSum = new double[ElementAlt.Length];
                     double[] Element_EnergySum = new double[ElementAlt.Length];
-                    for (int a =0; a< ElementAlt.Length; a++)
+                    for (int a = 0; a < ElementAlt.Length; a++)
                     {
                         string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "총에너지소요량", "검토유형='" + ElementAlt[a] + "' And 연료='전기'");
                         if (Value2.Length > 0)
@@ -120,37 +63,37 @@ namespace main.contents
                         Element_EnergySum[a] = Element_ElecSum[a] + Element_GasSum[a];
                     }
 
-                    double Total_Energy_pre = 0; 
+                    double Total_Energy_pre = 0;
                     double Total_EnergySaving = 0;
                     double Total_ElecSaving = 0;
                     double Total_GasSaving = 0;
-                   
-                        string[][] Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량 from FinalEnergy_Result Where 연료='전기' and 월 ='연간'");
-                        string[][] Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result Where 연료='전기' and 월 ='연간'");
-                        if(Final1.Length > 0 &&Final2.Length >0)
-                        {
-                            Total_Energy_pre += Convert.ToDouble(Final1[0][0]);
-                            Total_ElecSaving += (Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final2[0][0]));
-                        }
 
-                         Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='연간'");
-                         Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='연간'");
-                        if (Final1.Length > 0 && Final2.Length > 0)
-                        {
-                            Total_Energy_pre += Convert.ToDouble(Final1[0][0]);
-                            Total_GasSaving += (Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final2[0][0]));
-                        }
+                    string[][] Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량 from FinalEnergy_Result Where 연료='전기' and 월 ='연간'");
+                    string[][] Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result Where 연료='전기' and 월 ='연간'");
+                    if (Final1.Length > 0 && Final2.Length > 0)
+                    {
+                        Total_Energy_pre += Convert.ToDouble(Final1[0][0]);
+                        Total_ElecSaving += (Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final2[0][0]));
+                    }
 
-                        Total_EnergySaving = Total_ElecSaving + Total_GasSaving;
-                  
+                    Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='연간'");
+                    Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='연간'");
+                    if (Final1.Length > 0 && Final2.Length > 0)
+                    {
+                        Total_Energy_pre += Convert.ToDouble(Final1[0][0]);
+                        Total_GasSaving += (Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final2[0][0]));
+                    }
+
+                    Total_EnergySaving = Total_ElecSaving + Total_GasSaving;
+
                     double sum_elec = 0;
                     double sum_gas = 0;
                     double sum_energy = 0;
                     for (int a = 1; a < ElementAlt.Length; a++)
                     {
-                      sum_elec += Element_ElecSum[0] - Element_ElecSum[a]; // 조닝 대비 절감량 
-                      sum_gas += Element_GasSum[0] - Element_GasSum[a];
-                      sum_energy += Element_EnergySum[0] - Element_EnergySum[a];
+                        sum_elec += Element_ElecSum[0] - Element_ElecSum[a]; // 조닝 대비 절감량 
+                        sum_gas += Element_GasSum[0] - Element_GasSum[a];
+                        sum_energy += Element_EnergySum[0] - Element_EnergySum[a];
                     }
                     double[] Element_ElecSaving = new double[ElementAlt.Length];
                     double[] Element_GasSaving = new double[ElementAlt.Length];
@@ -161,20 +104,20 @@ namespace main.contents
                         { Element_ElecSaving[a] = 0; }
                         else { Element_ElecSaving[a] = Total_ElecSaving * (Element_ElecSum[0] - Element_ElecSum[a]) / sum_elec; }
                         if (sum_gas == 0)
-                        { Element_GasSaving[a] =0; }
+                        { Element_GasSaving[a] = 0; }
                         else { Element_GasSaving[a] = Total_GasSaving * (Element_GasSum[0] - Element_GasSum[a]) / sum_gas; }
                         Element_EnergySaving[a] = Element_ElecSaving[a] + Element_GasSaving[a];
                     }
 
                     #endregion
 
-                   
+
 
                     #region 외벽                                
                     int j_외벽 = 0;
-                    for(int a =0; a< ElementAlt.Length; a++)
+                    for (int a = 0; a < ElementAlt.Length; a++)
                     {
-                        if (ElementAlt[a] =="외벽")
+                        if (ElementAlt[a] == "외벽")
                         {
                             j_외벽 = a; break;
                         }
@@ -199,7 +142,7 @@ namespace main.contents
 
                     double wall_tCO2_noelec = wall_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
                     double wall_TOE_noelec = wall_saving_noelec / 43.1 / 0.277778 * 0.00103;
-                    double wall_tCO2 = wall_tCO2_elec + wall_tCO2_noelec; 
+                    double wall_tCO2 = wall_tCO2_elec + wall_tCO2_noelec;
                     double wall_TOE = wall_TOE_elec + wall_TOE_noelec;
                     Wall_data[2].Add(new { idx = i, val = wall_tCO2.ToString("0.0") });  //tco2
                     Wall_data[3].Add(new { idx = i, val = wall_TOE.ToString("0.0") });  //TOE 
@@ -211,13 +154,14 @@ namespace main.contents
                     double wall_area_sum = 0;
                     if (Value.Length > 0)
                     {
-                       for(int k =0; k < Value.Length; k++)
+                        for (int k = 0; k < Value.Length; k++)
                         {
                             wall_name[k] = Value[k][0];
                             wall_ueff[k] = Convert.ToDouble(Value[k][1]);
                             if (Value[k][2] != "")
-                            { string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭 ='" + Value[k][2] + "'"); 
-                                if(value2.Length > 0)
+                            {
+                                string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭 ='" + Value[k][2] + "'");
+                                if (value2.Length > 0)
                                 {
                                     wall_ueff_old[k] = Convert.ToDouble(value2[0][0]);
                                 }
@@ -229,7 +173,7 @@ namespace main.contents
 
                             wall_num[k] = Value[k][3];
                             string[][] valuek = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "외피유형='외벽' And 구조체번호='" + Value[k][3] + "'");
-                            if(valuek.Length > 0)
+                            if (valuek.Length > 0)
                             {
                                 for (int a = 0; a < valuek.Length; a++)
                                 { wall_area[k] += Convert.ToDouble(valuek[a][0]); }
@@ -238,7 +182,7 @@ namespace main.contents
                             if (Value[k][5] == "법규") { wall_feature[k] = "-"; }
                             else
                             {
-                                if (Convert.ToDouble(Value[k][4]) >0)
+                                if (Convert.ToDouble(Value[k][4]) > 0)
                                 {
                                     wall_feature[k] = "단열두께 " + Convert.ToDouble(Value[k][4]).ToString("") + "mm";
                                 }
@@ -284,7 +228,7 @@ namespace main.contents
 
                         for (int a = 0; a < 8; a++)
                         {
-                            if (wall_name[a] != null && wall_name[a]!="")
+                            if (wall_name[a] != null && wall_name[a] != "")
                             {
                                 Wall_data[38 + a].Add(new { idx = i, val = wall_ueff[a].ToString("0.00") });//계획열관류율
                                 data.Add(new { cname = "wall_ueff" + a, data = Wall_data[38 + a] });
@@ -295,7 +239,7 @@ namespace main.contents
                         }
                         double wall_ueff_avg = 0;
                         double wall_ueff_old_avg = 0;
-                        for (int a=0; a < 8; a++)
+                        for (int a = 0; a < 8; a++)
                         {
                             wall_ueff_avg += wall_ueff[a] * wall_area[a] / wall_area_sum;
                             wall_ueff_old_avg += wall_ueff_old[a] * wall_area[a] / wall_area_sum;
@@ -306,13 +250,13 @@ namespace main.contents
                         data.Add(new { cname = "wall_ueff_old_avg", data = Wall_data[55] });
 
                         double sum = 0;
-                        for(int a = 0;a < 8; a++)
+                        for (int a = 0; a < 8; a++)
                         {
                             sum += wall_saving_element[a];
                         }
                         for (int a = 0; a < 8; a++)
                         {
-                            if (wall_name[a]!=null && wall_name[a]!="")
+                            if (wall_name[a] != null && wall_name[a] != "")
                             {
                                 if (sum != 0)
                                 {
@@ -335,7 +279,7 @@ namespace main.contents
                             if (wall_name[a] != null && wall_name[a] != "")
                             {
                                 string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "법규열관류율", "번호 ='" + wall_num[a] + "'");
-                                if(value2.Length > 0)
+                                if (value2.Length > 0)
                                 {
                                     d = (Convert.ToDouble(value2[0][0]) / wall_ueff[a] * 100);
                                     sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 270) + "px'></div>"; //성능 수준 중 가장 큰 값을을 270로 가정, 139는 픽셀 최대 크기
@@ -351,7 +295,7 @@ namespace main.contents
                         sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
 
                         Wall_data[73].Add(new { idx = i, val = sp });//법규대비 성능점수 평균
-                        data.Add(new { cname = "wall_law_point_avg", data = Wall_data[73] });                       
+                        data.Add(new { cname = "wall_law_point_avg", data = Wall_data[73] });
 
                     }
 
@@ -422,7 +366,7 @@ namespace main.contents
                                 { roof_area[k] += Convert.ToDouble(valuek[a][0]); }
                             }
 
-                            if (Value[k][5] == "법규") {roof_feature[k] = "-"; }
+                            if (Value[k][5] == "법규") { roof_feature[k] = "-"; }
                             else
                             {
                                 if (Convert.ToDouble(Value[k][4]) > 0)
@@ -536,7 +480,7 @@ namespace main.contents
                         d = (roof_law_avg / roof_ueff_avg * 100);
                         sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 270) + "px'></div>";
                         sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
-                        Roof_data[73].Add(new { idx = i, val = sp});//법규대비 성능점수 평균
+                        Roof_data[73].Add(new { idx = i, val = sp });//법규대비 성능점수 평균
                         data.Add(new { cname = "roof_law_point_avg", data = Roof_data[73] });
 
                     }
@@ -731,12 +675,14 @@ namespace main.contents
                     s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
                     s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
                     System.Text.Json.JsonSerializer.Serialize(Wall_data[10].ToArray());
-                   
+
                     Debug.Print("start");
 
-                    runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
+                    script = "init(" + s + "," + s2 + "," + "[" + charts + "])";
+                    return script;
                 }
             }
+            return script;
         }
     }
 }
