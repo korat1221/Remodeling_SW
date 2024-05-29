@@ -79,8 +79,6 @@ namespace main
             List_WindPower,
             PrintReport_Main,
             List_AHUSystem,
-            Element_Structure,
-            Element_Win,
             List_Alt,
             AltMain,
             None
@@ -104,7 +102,6 @@ namespace main
             new List_PV(),new List_FuelCell(),new List_WindPower(),
             new Building_Report(),
             new List_AHUSystem(),
-            new Element_Structure(), new Element_Win(),
             new List_Alt(), new AltMain()
         }; 
         bool scriptable = false;
@@ -445,26 +442,14 @@ namespace main
                 List_AHUSystem f = (List_AHUSystem)form;
 
                 f.LoadData(formParam.ID);
-            }
+            }           
             else if (formParam.formID == 58)
-            {
-                Element_Structure f = (Element_Structure)form;
-
-                f.LoadData(formParam.ID);
-            }
-            else if (formParam.formID == 59)
-            {
-                Element_Win f = (Element_Win)form;
-
-                f.LoadData(formParam.ID);
-            }
-            else if (formParam.formID == 60)
             {
                 List_Alt f = (List_Alt)form;
 
                 f.LoadData(formParam.ID);
             }
-            else if (formParam.formID == 61)
+            else if (formParam.formID == 59)
             {
                 AltMain f = (AltMain)form;
 
@@ -840,10 +825,8 @@ namespace main
                     forms[55] = new List_WindPower();
                     forms[56] = new Building_Report();
                     forms[57] = new List_AHUSystem();
-                    forms[58] = new Element_Structure();
-                    forms[59] = new Element_Win();
-                    forms[60] = new List_Alt();
-                    forms[61] = new AltMain();
+                    forms[58] = new List_Alt();
+                    forms[59] = new AltMain();
 
                     i = -1;
                     while (++i < forms.Length)
@@ -1073,7 +1056,7 @@ namespace main
                     }
                 }
             }
-            else if (idx == 61)
+            else if (idx == 59)
             {
                 foreach (FormMain openForm in Application.OpenForms)
                 {

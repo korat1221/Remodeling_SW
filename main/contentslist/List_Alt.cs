@@ -46,7 +46,7 @@ namespace main.contentslist
         {
             Num = Program.UTIL.CreateNum("ConstructionWall", "번호", "WL");
 
-            Program.getMenuForm().ResetForm(61);
+            Program.getMenuForm().ResetForm(59);
 
             Load_form(Num, "Add");
         }
@@ -76,7 +76,7 @@ namespace main.contentslist
         {
             currentID = ID;
             inEditing = editing;
-            Program.getMenuForm().DoLoadForm(61, OnLoadProc);
+            Program.getMenuForm().DoLoadForm(59, OnLoadProc);
         }
 
 
@@ -147,7 +147,7 @@ namespace main.contentslist
                
             //}
             //CountDB = List.Length;
-            //Program.UTIL.resetMainTree(1, 1, mainMenu.ToArray(), "61"); // 예시 코드: 메인 메뉴 동적 할당
+            //Program.UTIL.resetMainTree(1, 1, mainMenu.ToArray(), "59"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
         private void Remove_button_Click(object sender, EventArgs e)

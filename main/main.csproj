@@ -88,12 +88,6 @@
     <Compile Update="contents\Alt\AltMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\Element_Report\Element_Structure.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="contents\Result\Element_Report\Element_Win.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="subcontents\Alt\AltWall.cs">
       <SubType>Form</SubType>
     </Compile>
