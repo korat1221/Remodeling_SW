@@ -65,11 +65,14 @@ Bridges.prototype = {
 					o.data.push({type:'INWALL', dir:0, wall:false});
 					break;
 				case 12:
-					o.map = [{dir:1, wall:false},{dir:0, wall:false},{dir:0, wall:false},{dir:2, wall:false}];
+					o.map = [{dir:1, wall:false},{dir:0, wall:false}];
 					o.data.push({type:'ROOF', dir:1, wall:false});
 					o.data.push({type:'WALL', dir:0, wall:false});
-					o.data.push({type:'INWALL', dir:0, wall:false});
-					o.data.push({type:'INWALL', dir:2, wall:false});
+//					o.map = [{dir:1, wall:false},{dir:0, wall:false},{dir:0, wall:false},{dir:2, wall:false}];
+//					o.data.push({type:'ROOF', dir:1, wall:false});
+//					o.data.push({type:'WALL', dir:0, wall:false});
+//					o.data.push({type:'INWALL', dir:0, wall:false});
+//					o.data.push({type:'INWALL', dir:2, wall:false});
 					break;
 				case 13:
 					o.map = [{dir:2, wall:false}];
@@ -265,11 +268,6 @@ Bridges.prototype = {
 			let j = -1;
 			let cri = _getCriteria(kind), r, ret = [];
 
-			if (kind === 14) {
-				let i = 0;
-				i = i;
-			}
-
 			while(++j < edge.walls.length) {
 				let el = edge.walls[j];
 				if (cri.excludes && cri.excludes.find(el2 => {
@@ -281,10 +279,6 @@ Bridges.prototype = {
 				else if ((r = _doCriteria(kind, cri, el.cardi, el.id, line)) !== null) {
 					ret.push(r);
 				}
-			}
-
-			if (kind == 14 && ret.length > 0) {
-				console.log(ret);
 			}
 
 			return  _validCriteria(kind, cri, ret, line) ? {kind:kind, data:ret} : null;
@@ -300,6 +294,40 @@ Bridges.prototype = {
 			return false;
 		};
 
+		let _is2FOutwall = (edge) => {
+			let infloor = false;
+			let outerwall = false;
+	
+			edge.walls.forEach((el, idx) => {
+			  let el2 = this.editor.wall[el.cardi][el.id];
+			  if (el2.type == 'INWALL' && (el2.cardinal ===  'DOWN' || el2.cardinal ===  'UP')) {
+				infloor = true;
+			  }
+			  else if (el2.type == 'WALL') {
+				outerwall = true;
+			  }
+			});
+	
+			return (infloor && outerwall);
+		  };
+	
+		  let _is270Outwall = (edge) => {
+			let rf_y = null;
+			let ot_y = null;
+	
+			edge.walls.forEach((el, idx) => {
+			  let el2 = this.editor.wall[el.cardi][el.id];
+			  if (el2.type == 'ROOF') {
+				rf_y = el2.center[1];
+			  }
+			  else if (el2.type == 'WALL') {
+				ot_y = el2.center[1];
+			  }
+			});
+	
+			return (rf_y && ot_y && rf_y < ot_y);
+		  };
+	
 		let _pushBridges = (kind) => {
 			let i = -1;
 
@@ -308,8 +336,8 @@ Bridges.prototype = {
 			while(++i < this.editor.edges.length) {
 				let el = this.editor.edges[i];
 
-				if ((o = _getBridgeKind(kind, el, el.line)) !== null && !_findBridge(kind, el.line)) {
-					this.editor.bridges[kind].items.push({line:el.line, data:o.data});
+				if ((o = _getBridgeKind(kind, el, el.line)) !== null && !_findBridge(kind, el.line) && (kind !== 14 || _is2FOutwall(el)) && (kind !== 12 || _is270Outwall(el))) {
+					this.editor.bridges[kind].items.push({line:el.line, data:o.data, edge:el});
 				}
 			}
 		};

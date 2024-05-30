@@ -1958,6 +1958,40 @@ Editor.prototype = {
         return a.distanceTo(b);
       };
 
+      let _is2FOutwall = (edge) => {
+        let infloor = false;
+        let outerwall = false;
+
+        edge.walls.forEach((el, idx) => {
+          let el2 = this.wall[el.cardi][el.id];
+          if (el2.type == 'INWALL' && (el2.cardinal ===  'DOWN' || el2.cardinal ===  'UP')) {
+            infloor = true;
+          }
+          else if (el2.type == 'WALL') {
+            outerwall = true;
+          }
+        });
+
+        return (infloor && outerwall);
+      };
+
+      let _is270Outwall = (edge) => {
+        let rf_y = null;
+        let ot_y = null;
+    
+        edge.walls.forEach((el, idx) => {
+          let el2 = this.editor.wall[el.cardi][el.id];
+          if (el2.type == 'ROOF') {
+          rf_y = el2.center[1];
+          }
+          else if (el2.type == 'WALL') {
+          ot_y = el2.center[1];
+          }
+        });
+    
+        return (rf_y && ot_y && rf_y < ot_y);
+        };
+  
       let m = 0;
       this.bridges["11"].items.forEach((el2, idx) => {
         ++m;
@@ -1970,14 +2004,16 @@ Editor.prototype = {
           "');";
       });
       this.bridges["12"].items.forEach((el2, idx) => {
-        ++m;
-        let n = m <= 9 ? "0" + m : m;
-        sql +=
-          "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('RTB2_" +
-          n +
-          "','__PROJ_TYPE__','평지붕+외벽[270]','" +
-          _getDistance(el2.line) +
-          "');";
+        if (_is270Outwall(el2.edge)) {
+          ++m;
+          let n = m <= 9 ? "0" + m : m;
+          sql +=
+            "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('RTB2_" +
+            n +
+            "','__PROJ_TYPE__','평지붕+외벽[270]','" +
+            _getDistance(el2.line) +
+            "');";
+        }
       });
 
       this.bridges["13"].items.forEach((el2, idx) => {
@@ -1990,13 +2026,15 @@ Editor.prototype = {
           "');";
       });
       this.bridges["14"].items.forEach((el2, idx) => {
-        let n = idx <= 8 ? "0" + (idx + 1) : idx + 1;
-        sql +=
+        if (_is2FOutwall(el2.edge)) {
+          let n = idx <= 8 ? "0" + (idx + 1) : idx + 1;
+          sql +=
           "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('WTB6_" +
           n +
           "','__PROJ_TYPE__','바닥+외벽[270]','" +
           _getDistance(el2.line) +
           "');";
+        }
       });
 
       Object.keys(this.bridges).forEach((el) => {
