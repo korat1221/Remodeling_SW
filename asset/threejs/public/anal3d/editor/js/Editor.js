@@ -1980,7 +1980,7 @@ Editor.prototype = {
         let ot_y = null;
     
         edge.walls.forEach((el, idx) => {
-          let el2 = this.editor.wall[el.cardi][el.id];
+          let el2 = this.wall[el.cardi][el.id];
           if (el2.type == 'ROOF') {
           rf_y = el2.center[1];
           }
