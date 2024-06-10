@@ -21,11 +21,11 @@ namespace main
         double PipeD, PipeInsD, PipeIns_Ramda;
         String PipeIns;
         int ZoneCount;
-        ArrayList SelectZone_split = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList(); ArrayList BoilerNum_split = new ArrayList();
+        public ArrayList SelectZone_split = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList(); ArrayList BoilerNum_split = new ArrayList();
         public double[] Qwb_mth_sum = new double[12]; public double[] theta_ih_avg = new double[12]; public double[] theta_e = new double[12]; public double[] theta_u = new double[12];
         public double Qw_a_sum, th_op_day_avg, theta_i_h_set_avg; public double[] dop_mth_avg = new double[12];
         double SL, RL;
-        double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        public double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         public double[] Qw_d = new double[12], Qw_s = new double[12], Qw_gen = new double[12], Qw_outg = new double[12], Qw_f = new double[12];
         public double[] Ww_d = new double[12], Ww_s = new double[12], Ww_g = new double[12];
         public double Psi_pipe, L, Qs_po_day;
