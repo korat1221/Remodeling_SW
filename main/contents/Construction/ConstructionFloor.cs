@@ -876,16 +876,20 @@ namespace main.contents.Construction
               
                 for (int k = 0; k < Ucalc_dataGridView.RowCount; k++)
                 {
-                    if (Ucalc_dataGridView.Rows[k].Cells[3].Value != null)
+                    if (Ucalc_dataGridView.Rows[k].Cells[4].Value != null && Ucalc_dataGridView.Rows[k].Cells[5].Value != null && Ucalc_dataGridView.Rows[k].Cells[6].Value != null)
                     {
-                        Material[k] = Ucalc_dataGridView.Rows[k].Cells[3].Value.ToString();
+                        if (Ucalc_dataGridView.Rows[k].Cells[3].Value != null)
+                        {
+                            Material[k] = Ucalc_dataGridView.Rows[k].Cells[3].Value.ToString();
+                        }
+                        else { }
+                        Material_d[k] = Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[5].Value);
+                        Material_λ[k] = Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[4].Value);
+                        Material_R[k] = Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[6].Value);
+                        dtot += Material_d[k];
+                        Rtot += Material_R[k];
                     }
                     else { }
-                    Material_d[k] = Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[5].Value);
-                    Material_λ[k] = Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[4].Value);
-                    Material_R[k] = Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[6].Value);
-                    dtot += Material_d[k];
-                    Rtot += Material_R[k];
                 }
                 Rtot = Rsi + Rse + Rtot;
                 double Q = (20 - (-5)) / Rtot;
@@ -1317,7 +1321,7 @@ namespace main.contents.Construction
 
                 for (int i = 0; i < 10; i++)
                 {
-                    if (Material[i] != "")
+                    if (Material[i] != null && Material[i] != "")
                     {
                         string[][] Value;
                         string[][] OldFloor_U;
