@@ -17,6 +17,21 @@ namespace main.contents.Result.Element_Report
 
         public string Report_After()
         {
+            Element_Saving element_saving = new Element_Saving();
+            element_saving.Calc_Element_Saving();
+            string[] ElementAlt = element_saving.ElementAlt;
+            double[] Element_ElecSum = element_saving.Element_ElecSum;
+            double[] Element_GasSum = element_saving.Element_GasSum;
+            double[] Element_EnergySum = element_saving.Element_EnergySum;
+            double[] Element_ElecSaving = element_saving.Element_ElecSaving;
+            double[] Element_GasSaving = element_saving.Element_GasSaving;
+            double[] Element_EnergySaving = element_saving.Element_EnergySaving;
+            double Total_Energy_pre = element_saving.Total_Energy_pre;
+            double Total_EnergySaving = element_saving.Total_EnergySaving;
+            double Total_ElecSaving = element_saving.Total_ElecSaving;
+            double Total_GasSaving = element_saving.Total_GasSaving;
+            
+
             string script = null;
             string s, s2;
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
@@ -27,7 +42,6 @@ namespace main.contents.Result.Element_Report
             List<object>[] Win_data = new List<object>[700];
             List<object>[] CW_data = new List<object>[700];
             List<object>[] Door_data = new List<object>[700];
-            string[] ElementAlt = CALC.ElementAlt;
             int i = -1, n;
             while (++i < 700)
             {
@@ -41,84 +55,6 @@ namespace main.contents.Result.Element_Report
             {
                 if (res.Length > 0)
                 {
-                    #region 요소기술별 절감량 비율 계산 
-                    double[] Element_ElecSum = new double[ElementAlt.Length];
-                    double[] Element_GasSum = new double[ElementAlt.Length];
-                    double[] Element_EnergySum = new double[ElementAlt.Length];
-                    for (int a = 0; a < ElementAlt.Length; a++)
-                    {
-                        string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "총에너지소요량", "검토유형='" + ElementAlt[a] + "' And 연료='전기'");
-                        if (Value2.Length > 0)
-                        {
-                            for (int k = 0; k < Value2.Length; k++)
-                            {
-                                Element_ElecSum[a] += Convert.ToDouble(Value2[k][0]);
-                            }
-                        }
-                        Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "총에너지소요량", "검토유형='" + ElementAlt[a] + "' And Not 연료='전기' and Not 연료='전체'");
-                        if (Value2.Length > 0)
-                        {
-                            for (int k = 0; k < Value2.Length; k++)
-                            {
-                                Element_GasSum[a] += Convert.ToDouble(Value2[k][0]);
-                            }
-                        }
-
-                        Element_EnergySum[a] = Element_ElecSum[a] + Element_GasSum[a];
-                    }
-
-                    double Total_Energy_pre = 0;
-                    double Total_EnergySaving = 0;
-                    double Total_ElecSaving = 0;
-                    double Total_GasSaving = 0;
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-                        string[][] Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량 from FinalEnergy_Result Where 연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
-                        string[][] Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result Where 연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
-                        if (Final1.Length > 0 && Final2.Length > 0)
-                        {
-                            Total_Energy_pre += Convert.ToDouble(Final1[0][0]);
-                            Total_ElecSaving += (Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final2[0][0]));
-                        }
-
-                        Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='" + (mth + 1).ToString() + "월'");
-                        Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='" + (mth + 1).ToString() + "월'");
-                        if (Final1.Length > 0 && Final2.Length > 0)
-                        {
-                            Total_Energy_pre += Convert.ToDouble(Final1[0][0]);
-                            Total_GasSaving += (Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final2[0][0]));
-                        }
-
-                        Total_EnergySaving = Total_ElecSaving + Total_GasSaving;
-                    }
-
-                    double sum_elec = 0;
-                    double sum_gas = 0;
-                    double sum_energy = 0;
-                    for (int a = 1; a < ElementAlt.Length; a++)
-                    {
-                        sum_elec += Element_ElecSum[0] - Element_ElecSum[a]; // 조닝 대비 절감량 
-                        sum_gas += Element_GasSum[0] - Element_GasSum[a];
-                        sum_energy += Element_EnergySum[0] - Element_EnergySum[a];
-                    }
-                    double[] Element_ElecSaving = new double[ElementAlt.Length];
-                    double[] Element_GasSaving = new double[ElementAlt.Length];
-                    double[] Element_EnergySaving = new double[ElementAlt.Length];
-                    for (int a = 1; a < ElementAlt.Length; a++)
-                    {
-                        if (sum_elec == 0)
-                        { Element_ElecSaving[a] = 0; }
-                        else { Element_ElecSaving[a] = Total_ElecSaving * (Element_ElecSum[0] - Element_ElecSum[a]) / sum_elec; }
-                        if (sum_gas == 0)
-                        { Element_GasSaving[a] = 0; }
-                        else { Element_GasSaving[a] = Total_GasSaving * (Element_GasSum[0] - Element_GasSum[a]) / sum_gas; }
-                        Element_EnergySaving[a] = Element_ElecSaving[a] + Element_GasSaving[a];
-                    }
-
-                    #endregion
-
-
-
                     #region 창호                                
                     int j_창호 = 0;
                     for (int a = 0; a < ElementAlt.Length; a++)

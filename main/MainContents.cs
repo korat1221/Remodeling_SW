@@ -90,7 +90,7 @@ namespace main
             new ZoneGeneral(), new ZoneEnvelope(), new ZoneLighting(), new ZoneSystem(),
             new EquipmentList(),new AHUSystem(), new DHWSystem(), new HeatingSystem(), new CoolingSystem(),
             new PV(), new FuelCell(), new WindPower(), new SupplyRatio(), new EIndependenceRate(),
-            new Element_Report(), new Algorithm_Report(),
+            new Element_Report_Main(), new Algorithm_Report(),
             new FormDebug(),
             new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow(),
             new List_Floor(), new List_Zone(),
@@ -265,7 +265,7 @@ namespace main
             }
             else if (formParam.formID == 26)
             {
-                Element_Report f = (Element_Report)form;
+                Element_Report_Main f = (Element_Report_Main)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -793,7 +793,7 @@ namespace main
                     forms[23] = new WindPower();
                     forms[24] = new SupplyRatio();
                     forms[25] = new EIndependenceRate();
-                    forms[26] = new Element_Report();
+                    forms[26] = new Element_Report_Main();
                     forms[27] = new Algorithm_Report();
                     forms[28] = new FormDebug();
                     forms[29] = new List_ConstructionWindow();

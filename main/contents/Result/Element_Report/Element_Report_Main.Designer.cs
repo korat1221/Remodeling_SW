@@ -1,6 +1,6 @@
 ﻿namespace main.contents
 {
-    partial class Element_Report
+    partial class Element_Report_Main
     {
         /// <summary>
         /// Required designer variable.
