@@ -750,7 +750,7 @@ namespace main.contents
             reset();
             Load_OtherFormData();
 
-            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,실제어방식,냉난방유무,환기유무,환기방식,선택열회수기,환기방식,환기방식,환기방식," +
+            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,실제어방식,냉난방유무,환기유무,환기방식,선택열회수기," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
                 "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적", "존번호 = '" + ZoneNum + "'");
@@ -803,106 +803,109 @@ namespace main.contents
                 {
                     Usage = item.Row.ItemArray[0].ToString();
                 }
-                if (Value[0][31] != "")
+                if (Value[0][28] != "")
                 {
-                    NetArea = Convert.ToDouble(Value[0][31]);
+                    NetArea = Convert.ToDouble(Value[0][28]);
                     NetArea_textBox.Text = NetArea.ToString();
+                }
+                if (Value[0][7] != "")
+                {
+                    CeilingHeight = Convert.ToDouble(Value[0][7]);
+                    CeilingHeight_textBox.Text = CeilingHeight.ToString();
+                }
+                if (Value[0][8] != "")
+                {
+                    StartTime = Value[0][8];
+                    StartTime_comboBox.SelectedItem = StartTime;
+                }
+                if (Value[0][9] != "")
+                {
+                    EndTime = Value[0][9];
+                    EndTime_comboBox.SelectedItem = EndTime;
                 }
                 if (Value[0][10] != "")
                 {
-                    CeilingHeight = Convert.ToDouble(Value[0][10]);
-                    CeilingHeight_textBox.Text = CeilingHeight.ToString();
+                    WeekUseDay = Convert.ToDouble(Value[0][10]);
+                    WeekUseDay_comboBox.SelectedItem = "주 " + WeekUseDay.ToString() + ".0 일 근무";
                 }
                 if (Value[0][11] != "")
                 {
-                    StartTime = Value[0][11];
-                    StartTime_comboBox.SelectedItem = StartTime;
+                    PersonNum = Convert.ToDouble(Value[0][11]);
+                    PersonNum_textBox.Text = PersonNum.ToString();
                 }
                 if (Value[0][12] != "")
                 {
-                    EndTime = Value[0][12];
-                    EndTime_comboBox.SelectedItem = EndTime;
+                    EquipIHG_index = Value[0][12];
+                    EquipIHG_comboBox.SelectedItem = EquipIHG_index;
                 }
                 if (Value[0][13] != "")
                 {
-                    WeekUseDay = Convert.ToDouble(Value[0][13]);
-                    WeekUseDay_comboBox.SelectedItem = "주 " + WeekUseDay.ToString() + ".0 일 근무";
-                }
-                if (Value[0][14] != "")
-                {
-                    PersonNum = Convert.ToDouble(Value[0][14]);
-                    PersonNum_textBox.Text = PersonNum.ToString();
-                }
-                if (Value[0][15] != "")
-                {
-                    EquipIHG_index = Value[0][15];
-                    EquipIHG_comboBox.SelectedItem = EquipIHG_index;
-                }
-                if (Value[0][16] != "")
-                {
-                    DHWneed = Convert.ToDouble(Value[0][16]);
+                    DHWneed = Convert.ToDouble(Value[0][13]);
                     DHWneed_textBox.Text = string.Format("{0:F1}", (DHWneed));
                     DHWneed_image_textBox.Text = string.Format("{0:F1}", (DHWneed)) + "kWh/d";
                 }
+                if (Value[0][14] != "")
+                {
+                    HCTime = Convert.ToDouble(Value[0][14]);
+                    HCTime_textBox.Text = HCTime.ToString();
+                }
+                if (Value[0][15] != "")
+                {
+                    UseTime = Convert.ToDouble(Value[0][15]);
+                    UseTime_textBox.Text = UseTime.ToString();
+                }
+                if (Value[0][16] != "")
+                {
+                    AHUTime = Convert.ToDouble(Value[0][16]);
+                }
                 if (Value[0][17] != "")
                 {
-                    HCTime = Convert.ToDouble(Value[0][17]);
-                    HCTime_textBox.Text = HCTime.ToString();
+                    AnnualUseDay = Convert.ToDouble(Value[0][17]);
+                    AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
                 }
                 if (Value[0][18] != "")
                 {
-                    UseTime = Convert.ToDouble(Value[0][18]);
-                    UseTime_textBox.Text = UseTime.ToString();
+                    OccupancyDensity = Convert.ToDouble(Value[0][18]);
+                    OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
                 }
                 if (Value[0][19] != "")
                 {
-                    AHUTime = Convert.ToDouble(Value[0][19]);
+                    OccupancyDensity_index = Value[0][19];
+                    OccupancyDensity_index_textBox.Text = OccupancyDensity_index;
                 }
                 if (Value[0][20] != "")
                 {
-                    AnnualUseDay = Convert.ToDouble(Value[0][20]);
-                    AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
-                }
-                if (Value[0][21] != "")
-                {
-                    OccupancyDensity = Convert.ToDouble(Value[0][21]);
-                    OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
-                    OccupancyDensity_index = Value[0][22];
-                    OccupancyDensity_index_textBox.Text = OccupancyDensity_index;
-                }
-                if (Value[0][23] != "")
-                {
-                    PersonIHG_1day = Convert.ToDouble(Value[0][23]);
-                    PersonIHG = Convert.ToDouble(Value[0][24]);
+                    PersonIHG_1day = Convert.ToDouble(Value[0][20]);
+                    PersonIHG = Convert.ToDouble(Value[0][20]);
                     PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day);
                     PersonIHG_image_textBox.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m²·d";
                 }
-                if (Value[0][25] != "")
+                if (Value[0][22] != "")
                 {
-                    EquipIHG_1day = Convert.ToDouble(Value[0][25]);
-                    EquipIHG = Convert.ToDouble(Value[0][26]);
+                    EquipIHG_1day = Convert.ToDouble(Value[0][22]);
+                    EquipIHG = Convert.ToDouble(Value[0][22]);
                     EquipIHG_textBox.Text = string.Format("{0:F1}", EquipIHG_1day);
                     EquipIHG_image_textBox.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m²·d";
                 }
-                if (Value[0][27] != "")
+                if (Value[0][24] != "")
                 {
-                    NetVolume = Convert.ToDouble(Value[0][27]);
+                    NetVolume = Convert.ToDouble(Value[0][24]);
                     NetVolume_textBox.Text = String.Format("{0:F1}", NetVolume);
                 }
-                if (Value[0][28] != "")
+                if (Value[0][25] != "")
                 {
-                    VentilationRate = Convert.ToDouble(Value[0][28]);
+                    VentilationRate = Convert.ToDouble(Value[0][25]);
                     VentilationRate_textBox.Text = String.Format("{0:F1}", VentilationRate);
                 }
-                if (Value[0][29] != "")
+                if (Value[0][26] != "")
                 {
-                    Volume_wd = Convert.ToDouble(Value[0][29]);
+                    Volume_wd = Convert.ToDouble(Value[0][26]);
                     Volume_wd_textBox.Text = String.Format("{0:F1}", Volume_wd);
                     SA_Volume_textBox.Text = String.Format("{0:F1}", Volume_wd) + "m³/h";
                 }
-                if (Value[0][30] != "")
+                if (Value[0][27] != "")
                 {
-                    Volume_we = Convert.ToDouble(Value[0][30]);
+                    Volume_we = Convert.ToDouble(Value[0][27]);
                     RA_Volume_textBox.Text = String.Format("{0:F1}", Volume_we) + "m³/h";
                 }
             }
