@@ -1479,12 +1479,14 @@ namespace main
 
         public static bool AltCalc()
         {
+            MessageBox.Show("a");
+
             string[] RuleAlt = { "외벽", "지붕" , "최하층바닥" , "커튼월창" , "창호" , "외부출입문" , "전체" };
-          
+           // string[] RuleAlt = { "외벽", "지붕", "최하층바닥" };
             Cal_Alt cal = new Cal_Alt();
-            //Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result_Rule");
-            //Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result_Rule");            
-            //for(int  i = 0; i < RuleAlt.Length; i++)
+            Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result_Rule");
+            Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result_Rule");
+            //for (int i = 0; i < RuleAlt.Length; i++)
             //{
             //    cal.Calc_Rule(RuleAlt[i]);
             //}
@@ -1492,13 +1494,27 @@ namespace main
             Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result_Element");
             Program.DB.deleteTable(DB.type.ProjDB, "Zone_Alt_Result");
             Program.DB.initTable(DB.type.ProjDB, "Zone_Alt_Result");
+
+            Program.DB.deleteTable(DB.type.ProjDB, "Heating_ce_Form_Element");
+            Program.DB.initTable(DB.type.ProjDB, "Heating_ce_Form_Element");
+            Program.DB.deleteTable(DB.type.ProjDB, "Heating_Result_Element");
+            Program.DB.initTable(DB.type.ProjDB, "Heating_Result_Element");
+
+            Program.DB.deleteTable(DB.type.ProjDB, "Cooling_ce_Form_Element");
+            Program.DB.initTable(DB.type.ProjDB, "Cooling_ce_Form_Element");
+            Program.DB.deleteTable(DB.type.ProjDB, "Cooling_Result_Element");
+            Program.DB.initTable(DB.type.ProjDB, "Cooling_Result_Element");
+            Program.DB.deleteTable(DB.type.ProjDB, "DHWSystem_Result_Element");
+            Program.DB.initTable(DB.type.ProjDB, "DHWSystem_Result_Element");
             string[][] Type = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호", "");
+            MessageBox.Show("-1");
             if (Type.Length > 0)
             {
                 if (Type[0][0] != "1")
                 {
                     for (int i = 0; i < ElementAlt.Length; i++)
                     {
+                        MessageBox.Show(i + "");
                         cal.Calc_Element(ElementAlt[i]);
                     }
                 }
