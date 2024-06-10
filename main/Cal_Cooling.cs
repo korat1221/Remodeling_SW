@@ -376,7 +376,7 @@ namespace main
             switch (CG)
             {
                 case nameof(_TYPE.실외기12kW):
-                    string[][] DefaultValue = Program.DB.getValue(ProjNum, "User_AirHP", "냉방정격용량,냉방정격COP,대기전력,연료,설치", "번호 = '" + _SelectCG + "'");
+                    string[][] DefaultValue = Program.DB.getValue(ProjNum, "User_AirHP", "냉방정격용량,냉방정격COP,대기전력,연료,설치,냉방정격소비전력", "번호 = '" + _SelectCG + "'");
                     CGM._install = DefaultValue[0][4];
                     CGM._power = Convert.ToDouble(DefaultValue[0][0]);
                     if (CGM._install == "기존")
@@ -391,10 +391,11 @@ namespace main
                     else CGM._eer = Convert.ToDouble(DefaultValue[0][1]);
                     CGM._pctrl = Convert.ToDouble(DefaultValue[0][2]);
                     CGM._fuel = DefaultValue[0][3];
+                    CGM._w_aircon = Convert.ToDouble(DefaultValue[0][5]);
                     CGM._cout = "직팽식";
                     break;
                 case nameof(_TYPE.공냉식냉동기):
-                    string[][] 공냉식1 = Program.DB.getValue(ProjNum, "User_AirHP", "냉방정격용량,냉방정격COP,대기전력,연료,설치", "번호 = '" + _SelectCG + "'");
+                    string[][] 공냉식1 = Program.DB.getValue(ProjNum, "User_AirHP", "냉방정격용량,냉방정격COP,대기전력,연료,설치,냉방정격소비전력", "번호 = '" + _SelectCG + "'");
                     if(공냉식1.Length > 0)
                     {
                         CGM._install = 공냉식1[0][4];
@@ -409,6 +410,7 @@ namespace main
                         CGM._cwout = 0;
                         CGM._fuel = 공냉식1[0][3];
                         CGM._cout = "직팽식";
+                        CGM._w_aircon = Convert.ToDouble(공냉식1[0][5]);
                     }
                     else
                     {
@@ -1577,18 +1579,29 @@ namespace main
         public void CalW_ce() //공조기 포함해서 한번에 계산함
         {
             double sum = 0;
+
             foreach (CoolingCE ce in SelectCE)
             {
+                foreach (CoolingGeneratorMake cc in CGM_Sum)
+                {
+                    if (cc._w_aircon.ToString("0") == ce._ceElec.ToString("0"))
+                    {
+                        goto goto_;
+                    }
+                }
+
                 if (CG != nameof(_TYPE.실외기12kW))
                 {
                     int index = ce._ceNum.IndexOf("_");
-                    sum += Convert.ToInt32(ce._ceNum.Substring(index+1)) * ce._ceElec; //개수 x 소비전력
+                    sum += Convert.ToInt32(ce._ceNum.Substring(index + 1)) * ce._ceElec; //개수 x 소비전력
                 }
+
+                for (int i = 0; i < 12; i++)
+                {
+                    W_ce[i] = sum * tC_op[i];
+                }
+                goto_: int a = 0; a = a;
             }
-            for (int i = 0; i < 12; i++)
-            {
-                W_ce[i] = sum * tC_op[i];
-            } 
         }
 
         // ///////////////////////////////////////////////////분배 보조설비 에너지 소요량 계산//////////////////////////////////////////////
@@ -1789,6 +1802,7 @@ namespace main
         public string _comp;
         public double _cwin, _cwout;
         public string _cout; //직팽식, 수방식
+        public double _w_aircon; //실외기 소비전력
     }
     class CoolPump
     {
@@ -1801,7 +1815,6 @@ namespace main
         public string _zonenum, _cetype, _ceNum;
         public int _operhour;
         public double _cePower, _ceElec, _ceRate;
-        
         public string _type(string _ct)
         {
             string t;

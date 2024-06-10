@@ -693,11 +693,18 @@ namespace main
                     string[][] Value2 = Program.DB.getValue(ProjNum, "User_ce", "소비전력_난방", "번호 = '" + ce.ceNum() + "'");
                     if (Value2.Length > 0)
                     {
-                        Wh_ce[mth] += 0;
-                        if (double.IsNaN(Wh_ce[mth]))
+                        for (int n = 0; n < SelectAirHP_split.Count; n++)
                         {
-                            Wh_ce[mth] = 0;
+                            string[][] airHP = Program.DB.getValue(ProjNum, "User_AirHP", "난방정격소비전력", "번호 = '" + SelectAirHP_split[n] + "'");
+                            if (Convert.ToDouble(Value2[0][0]).ToString("0") == Convert.ToDouble(airHP[0][0]).ToString("0"))
+                            { goto goto_; }
                         }
+
+                        if (Value2[0][0] != "")
+                        {
+                           Wh_ce[mth] += Convert.ToDouble(Value2[0][0]) * th_op_day_avg * dop_mth_avg[mth]; 
+                        }
+                        goto_: int a = 0; a = a;
                     }
                 }
             }
