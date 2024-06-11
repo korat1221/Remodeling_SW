@@ -126,7 +126,12 @@ namespace main.contents
         }
         private void LightDB_button_Click(object sender, EventArgs e)
         {
-
+            LightType = null;
+            Pj_textbox.Text = "0.00";
+            if (Pj_textbox.Text == "0.00") 
+            {
+                MessageBox.Show("조명 종류를 선택하세요.");
+            }
             LightingDB lightingdb_form = new LightingDB();
             //this.Main_pictureBox.Controls.Add(this.Main_pictureBox2);
             DialogResult result = lightingdb_form.ShowDialog();
@@ -141,8 +146,6 @@ namespace main.contents
                 LightW = lightingdb_form.Select_Light[7];
                 lm_W = Convert.ToDouble(lightingdb_form.Select_Light[8]);  //광효율
                 LightFL = Convert.ToDouble(lightingdb_form.Select_Light[9]);
-
-
                 //Default의 경우 VAR이지만 사용자 DB의 경우 숫자
                 //사용자 이름 나중에 LP 포함해서 하지 말아야겠다
 
@@ -158,6 +161,7 @@ namespace main.contents
                     U_LightPi = Convert.ToDouble(lightingdb_form.Select_Light[7]);
                 }
             }
+
             LightInfo();
             Match_Pjlx();
             Calc_Pj();
