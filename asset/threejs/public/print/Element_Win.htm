@@ -11,6 +11,26 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <!--table
 	{mso-displayed-decimal-separator:"\.";
 	mso-displayed-thousand-separator:"\,";}
+	
+.cls-sparkline {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 21px;
+  background-image: linear-gradient(to right, #656565, lightgray);
+}
+
+.cls-sparkline-red {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 21px;
+  background-image: linear-gradient(to right, #ed6f26, #ffefef);
+}
+
+.cls-sparkline-text {
+  width: 100%;
+  position: relative;
+}
+
 .font520804
 	{color:windowtext;
 	font-size:8.0pt;
@@ -877,10 +897,10 @@ rt
   <td class=xl6820804>tCO<font class="font820804"><sub>2</sub></font><font
   class="font620804">/a</font></td>
   <td class=xl6921343>동</td>
-  <td class="xl11521343 ehp_qmax_h">　</td>
+  <td class="xl11521343 win_east">　</td>
   <td class=xl6821343>m<font class="font721343"><sup>2</sup></font></td>
   <td class=xl6921343>서</td>
-  <td class="xl11521343 ehp_qmax_c">　</td>
+  <td class="xl11521343 win_west">　</td>
   <td class=xl6821343>m<font class="font721343"><sup>2</sup></font></td>
   <td class=xl6321343>　</td>
  </tr>
@@ -893,10 +913,10 @@ rt
   <td colspan=2 class="xl8220804 win_toe">　</td>
   <td class=xl6820804>TOE/a</td>
   <td class=xl6921343>남</td>
-  <td class="xl11521343 ehp_zonecount" style='border-top:none'>　</td>
+  <td class="xl11521343 win_south" style='border-top:none'>　</td>
   <td class=xl6821343>m<font class="font721343"><sup>2</sup></font></td>
   <td class=xl6921343>북</td>
-  <td class="xl11521343 ehp_zonearea" style='border-top:none'>　</td>
+  <td class="xl11521343 win_north" style='border-top:none'>　</td>
   <td class=xl6821343>m<font class="font721343"><sup>2</sup></font></td>
   <td class=xl6321343>　</td>
  </tr>
@@ -914,7 +934,7 @@ rt
   <td class=xl6421343>　</td>
   <td class=xl6421343>　</td>
   <td class=xl6921343>개구부비율</td>
-  <td class="xl11521343 ehp_zonearea" style='border-top:none'>　</td>
+  <td class="xl11521343 win_openpercent" style='border-top:none'>　</td>
   <td class=xl6821343>%</td>
   <td class=xl6321343>　</td>
  </tr>
@@ -1156,10 +1176,10 @@ rt
   <td class=xl6820804>tCO<font class="font820804"><sub>2</sub></font><font
   class="font620804">/a</font></td>
   <td class=xl6921343>동</td>
-  <td class="xl11521343 ehp_qmax_h">　</td>
+  <td class="xl11521343 cw_east">　</td>
   <td class=xl6821343>m<font class="font721343"><sup>2</sup></font></td>
   <td class=xl6921343>서</td>
-  <td class="xl11521343 ehp_qmax_c">　</td>
+  <td class="xl11521343 cw_west">　</td>
   <td class=xl6821343>m<font class="font721343"><sup>2</sup></font></td>
   <td class=xl6321343>　</td>
  </tr>
@@ -1172,10 +1192,10 @@ rt
   <td colspan=2 class="xl8220804 cw_toe">　</td>
   <td class=xl6820804>TOE/a</td>
   <td class=xl6921343>남</td>
-  <td class="xl11521343 ehp_zonecount" style='border-top:none'>　</td>
+  <td class="xl11521343 cw_south" style='border-top:none'>　</td>
   <td class=xl6821343>m<font class="font721343"><sup>2</sup></font></td>
   <td class=xl6921343>북</td>
-  <td class="xl11521343 ehp_zonearea" style='border-top:none'>　</td>
+  <td class="xl11521343 cw_north" style='border-top:none'>　</td>
   <td class=xl6821343>m<font class="font721343"><sup>2</sup></font></td>
   <td class=xl6321343>　</td>
  </tr>
@@ -1193,7 +1213,7 @@ rt
   <td class=xl6421343>　</td>
   <td class=xl6421343>　</td>
   <td class=xl6921343>개구부비율</td>
-  <td class="xl11521343 ehp_zonearea" style='border-top:none'>　</td>
+  <td class="xl11521343 cw_openpercent" style='border-top:none'>　</td>
   <td class=xl6821343>%</td>
   <td class=xl6321343>　</td>
  </tr>
@@ -1436,10 +1456,10 @@ rt
   <td class=xl6820804>tCO<font class="font820804"><sub>2</sub></font><font
   class="font620804">/a</font></td>
   <td class=xl6921343>동</td>
-  <td class="xl11521343 ehp_qmax_h">　</td>
+  <td class="xl11521343 door_east">　</td>
   <td class=xl6821343>m<font class="font721343"><sup>2</sup></font></td>
   <td class=xl6921343>서</td>
-  <td class="xl11521343 ehp_qmax_c">　</td>
+  <td class="xl11521343 door_west">　</td>
   <td class=xl6821343>m<font class="font721343"><sup>2</sup></font></td>
   <td class=xl6321343>　</td>
  </tr>
@@ -1452,10 +1472,10 @@ rt
   <td colspan=2 class="xl8220804 door_toe">　</td>
   <td class=xl6820804>TOE/a</td>
   <td class=xl6921343>남</td>
-  <td class="xl11521343 ehp_zonecount" style='border-top:none'>　</td>
+  <td class="xl11521343 door_south" style='border-top:none'>　</td>
   <td class=xl6821343>m<font class="font721343"><sup>2</sup></font></td>
   <td class=xl6921343>북</td>
-  <td class="xl11521343 ehp_zonearea" style='border-top:none'>　</td>
+  <td class="xl11521343 door_north" style='border-top:none'>　</td>
   <td class=xl6821343>m<font class="font721343"><sup>2</sup></font></td>
   <td class=xl6321343>　</td>
  </tr>
@@ -1472,9 +1492,9 @@ rt
   <td class=xl6421343>　</td>
   <td class=xl6421343>　</td>
   <td class=xl6421343>　</td>
-  <td class=xl6921343>개구부비율</td>
-  <td class="xl11521343 ehp_zonearea" style='border-top:none'>　</td>
-  <td class=xl6821343>%</td>
+  <td class=xl6421343>　</td>
+  <td class=xl6421343>　</td>
+  <td class=xl6421343>　</td>
   <td class=xl6321343>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
