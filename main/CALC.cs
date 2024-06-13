@@ -21,9 +21,14 @@ namespace main
     {
         public static ArrayList zone = new ArrayList();
         public static ArrayList zonelight = new ArrayList();
-        
 
-        public static void Run_Zone()
+        public CALC()
+        {
+            _calculations["모두계산"] = new Func<bool>(Run_All);
+            _calculations["존계산"] = new Func<bool>(Run_Zone);
+        }
+
+        public static bool Run_Zone()
         {
             Program.DB.deleteTable(DB.type.ProjDB, "Zone_LightResult");
             Program.DB.initTable(DB.type.ProjDB, "Zone_LightResult");
@@ -34,8 +39,10 @@ namespace main
             Program.DB.deleteTable(DB.type.ProjDB, "Zone_Envelope_Result");
             Program.DB.initTable(DB.type.ProjDB, "Zone_Envelope_Result");
             Cal_Qb();
+
+            return true;
         }
-        public static void Run_All()
+        public static bool Run_All()
         {
             Program.DB.deleteTable(DB.type.ProjDB, "Zone_LightResult");
             Program.DB.initTable(DB.type.ProjDB, "Zone_LightResult");
@@ -72,7 +79,9 @@ namespace main
             Cal_Qfw(NowProjNum[0][0]);
             Cal_Qf(NowProjNum[0][0]);
             RESystemCalc(NowProjNum[0][0]);
-           // MessageBox.Show("계산되었습니다.");
+            // MessageBox.Show("계산되었습니다.");
+
+            return true;
         }
         public static void Cal_Qb()
         {
@@ -1525,7 +1534,7 @@ namespace main
         }
         /////////////////////////////////////////////////////////////////////////////////////
 
-        private Dictionary<string, Delegate> _calculations = new Dictionary<string, Delegate>();
+        private static Dictionary<string, Delegate> _calculations = new Dictionary<string, Delegate>();
         public static Dictionary<string, Zone> Zones = new Dictionary<string, Zone>();
         public static Dictionary<string, ZoneLight> ZoneLights = new Dictionary<string, ZoneLight>();
         public static Dictionary<string, Heating> Heatings = new Dictionary<string, Heating>();
@@ -1601,7 +1610,7 @@ namespace main
             else return null;
         }
 
-        public bool run(string[] calculations)
+        public static bool run(string[] calculations)
         {
             foreach (string calc in calculations)
             {
