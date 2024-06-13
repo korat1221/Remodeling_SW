@@ -87,13 +87,13 @@ namespace main
 
         private void EnergyNeed_Sim_Click(object sender, EventArgs e)
         {
-            CALC.Run_Zone();
+            CALC.run(new string[] { "존계산" });
             MessageBox.Show("계산되었습니다.");
         }
 
         private void FinalEnergy_Sim_Click(object sender, EventArgs e)
         {
-            CALC.Run_All();
+            CALC.run(new string[]{ "모두계산" });
             MessageBox.Show("계산되었습니다.");
         }
 
