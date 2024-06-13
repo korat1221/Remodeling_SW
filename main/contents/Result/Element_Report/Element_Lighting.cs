@@ -35,7 +35,6 @@ namespace main.contents.Result.Element_Report
             element_saving.Calc_Cooling_Saving();
             ArrayList HeatingGroup = element_saving.HeatingGroup;
             ArrayList CoolingGroup = element_saving.CoolingGroup;
-
             string script=null; 
             string s, s2;
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
