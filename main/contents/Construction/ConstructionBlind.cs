@@ -377,6 +377,8 @@ namespace main.contents
                     BlindSHGC = Convert.ToDouble(Value[0][11]);
                     BlindAlpha_textBox.Text = Value[0][12];
                     BlindAlpha = Convert.ToDouble(Value[0][12]);
+                    Load_Image();
+
                 }
                 
          
