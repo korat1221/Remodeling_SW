@@ -202,9 +202,14 @@ namespace main.subcontents
             {
                 if (e.ColumnIndex == 12)
                 {
-                    CW_PanelDB material = new CW_PanelDB();
-                    DialogResult result = material.ShowDialog();
-                    Door_dataGridView.Rows[e.RowIndex].Cells[11].Value = material.Select_CWPanel[1];
+                    if (Door_dataGridView.Rows[nRow].Cells[10].Value.ToString() == "단열재")
+                    {
+                        CW_PanelDB material = new CW_PanelDB();
+                        DialogResult result = material.ShowDialog();
+                        Door_dataGridView.Rows[e.RowIndex].Cells[11].Value = material.Select_CWPanel[1];
+                    }
+                    else { }
+
                 }
             }
         }
@@ -234,7 +239,6 @@ namespace main.subcontents
                         DataGridViewButtonCell default_ButtonCell = new DataGridViewButtonCell();
                         Door_dataGridView.Rows[nRow].Cells[3] = default_ButtonCell;
                         default_ButtonCell.Value = "+";
-                        Door_dataGridView.Rows[e.RowIndex].Cells[11].Value = null;
                         Door_dataGridView.Rows[e.RowIndex].Cells[13].Value = null;
                         Door_dataGridView.Rows[e.RowIndex].Cells[16].Value = null;
                     }
