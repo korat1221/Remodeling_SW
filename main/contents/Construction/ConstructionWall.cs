@@ -788,15 +788,23 @@ namespace main.contents
         }
         private void DeleteMaterial_button_Click(object sender, EventArgs e)
         {
-            Ucalc_dataGridView.Rows.Remove(Ucalc_dataGridView.Rows[SelectRow]);
-            Load_Material_Num();
-            Calc_dins();
-            Array.Clear(Material, 0, 10);
-            Array.Clear(Material_d, 0, 10);
-            Array.Clear(Material_λ, 0, 10);
-            Array.Clear(Material_R, 0, 10);
-            Array.Clear(Material_T, 0, 12);
-            Calc_U();
+            if (Ucalc_dataGridView.Rows.Count > 0)
+            {
+                Ucalc_dataGridView.Rows.Remove(Ucalc_dataGridView.Rows[SelectRow]);
+                Load_Material_Num();
+                Calc_dins();
+                Array.Clear(Material, 0, 10);
+                Array.Clear(Material_d, 0, 10);
+                Array.Clear(Material_λ, 0, 10);
+                Array.Clear(Material_R, 0, 10);
+                Array.Clear(Material_T, 0, 12);
+                Calc_U();
+            }
+            else
+            {
+                MessageBox.Show("우선 재료를 입력해 주세요.");
+            }
+            
         }
 
         private void MaterialUP_button_Click(object sender, EventArgs e)
