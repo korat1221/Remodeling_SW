@@ -1488,8 +1488,6 @@ namespace main
 
         public static bool AltCalc()
         {
-            MessageBox.Show("a");
-
             string[] RuleAlt = { "외벽", "지붕" , "최하층바닥" , "커튼월창" , "창호" , "외부출입문" , "전체" };
            // string[] RuleAlt = { "외벽", "지붕", "최하층바닥" };
             Cal_Alt cal = new Cal_Alt();
@@ -1516,14 +1514,12 @@ namespace main
             Program.DB.deleteTable(DB.type.ProjDB, "DHWSystem_Result_Element");
             Program.DB.initTable(DB.type.ProjDB, "DHWSystem_Result_Element");
             string[][] Type = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호", "");
-            MessageBox.Show("-1");
             if (Type.Length > 0)
             {
                 if (Type[0][0] != "1")
                 {
                     for (int i = 0; i < ElementAlt.Length; i++)
                     {
-                        MessageBox.Show(i + "");
                         cal.Calc_Element(ElementAlt[i]);
                     }
                 }
@@ -1561,14 +1557,6 @@ namespace main
             }
             else return null;
         }
-        //public Zone_HeatingCE getZone_HeatingCE(string ID)
-        //{
-        //    //if (Zone_HeatingCEs.ContainsKey(ID))
-        //    //{
-        //    //    return Zone_HeatingCEs[ID];
-        //    //}
-        //    //else return null;
-        //}
         public Heating getHeating(string HeatingNum)
         {
             if (Heatings.ContainsKey(HeatingNum))
