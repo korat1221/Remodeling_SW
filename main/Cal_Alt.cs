@@ -833,7 +833,8 @@ namespace main
                         break;
                 }
                 CALC.Zone_Calc(zone1, zonelight1);
-               // Save_Alt_Qb(zone1, 검토유형);
+                // Save_Alt_Qb(zone1, 검토유형);
+                if (검토유형 == "조닝" || 검토유형 == "조명") { Save_Qlf_Element(zonelight1, 검토유형); }
             }
         }
         public void Zone_LoadData_PreElement(Zone zone1, ZoneLight zonelight1)
@@ -2322,7 +2323,41 @@ namespace main
             }
         }
         #endregion 
-
+        #region 조명
+        private void Save_Qlf_Element(ZoneLight light1, string 검토유형)
+        {
+            string 조명번호 = null; string[][] Value = null;
+            if (검토유형 == "조닝")
+            {
+                string[][] 기존존 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존", "존번호='" + light1.ZoneNum + "'");
+                if (기존존.Length > 0)
+                {
+                    ArrayList prezone = new ArrayList();
+                    prezone = Split_(기존존[0][0]);
+                    if (prezone.Count > 0)
+                    {
+                        Value = Program.DB.getValue(PreProjNum[0][0], "ZoneLighting_form", "조명번호", "번호='" + prezone[0].ToString() + "'");
+                    }
+                }
+            }
+            else
+            {
+                Value = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "조명번호", "번호='" + light1.ZoneNum + "'");
+            }
+            if (Value.Length > 0)
+            {
+                조명번호 = Value[0][0];
+            }
+            double Qlf_a = 0;
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Qlf_a += light1.Zone_Final_kWh[mth];
+            }
+            Program.DB.setValue(DB.type.ProjDB, "Light_Result_Element", "검토유형,존번호,조명번호,조명소요량",
+                               "'" + 검토유형 + "','" + light1.ZoneNum + "','" + 조명번호 + "','" + Qlf_a + "'"
+                            , "검토유형,존번호");
+        }
+        #endregion
         #endregion
         #region 최적안 검토
         public void Calc_Qb_Rule_Optimal(string 검토유형, string 리모델링안, string RemodelingType, double R, double dU)
