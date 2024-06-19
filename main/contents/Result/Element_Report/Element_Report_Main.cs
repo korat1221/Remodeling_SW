@@ -95,6 +95,11 @@ namespace main.contents
                         Element_Boiler boiler = new Element_Boiler();
                         boiler.Report_Before();
                     }
+                    else if (Element_comboBox.SelectedItem.ToString() == "조명_기밀_환기")
+                    {
+                        Element_Lighting light = new Element_Lighting();
+                        light.Report_Before();
+                    }
                     else
                     {
                         Element_Structure Structure = new Element_Structure();
@@ -128,6 +133,11 @@ namespace main.contents
                     {
                         Element_Boiler boiler = new Element_Boiler();
                         script = boiler.Report_After();
+                    }
+                    else if (Element_comboBox.SelectedItem.ToString() == "조명_기밀_환기")
+                    {
+                        Element_Lighting light = new Element_Lighting();
+                        script = light.Report_After();
                     }
                     else
                     {

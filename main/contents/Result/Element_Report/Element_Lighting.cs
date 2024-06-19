@@ -60,52 +60,38 @@ namespace main.contents.Result.Element_Report
                 if (res.Length > 0)
                 {
 
-                    #region 냉난방 절약 : 모든 요소기술 적용 절감량 중                                
-                    int j_lighting = 0;
+                    #region 조명   
+                    int j_조명 = 0;
                     for (int a = 0; a < ElementAlt.Length; a++)
                     {
                         if (ElementAlt[a] == "조명")
                         {
-                            j_lighting = a; break;
+                            j_조명 = a; break;
                         }
                     }
-                    double lighting_saving = Element_EnergySaving[j_lighting];
-                    double lighting_saving_elec = Element_ElecSaving[j_lighting];
-                    double lighting_saving_noelec = Element_GasSaving[j_lighting];
 
-                    int j_ventil = 0;
-                    for (int a = 0; a < ElementAlt.Length; a++)
-                    {
-                        if (ElementAlt[a] == "기밀+열회수기")
-                        {
-                            j_ventil = a; break;
-                        }
-                    }
-                    double ventil_saving = Element_EnergySaving[j_ventil];
-                    double ventil_saving_elec = Element_ElecSaving[j_ventil];
-                    double ventil_saving_noelec = Element_GasSaving[j_ventil];
-                    #endregion
+                    double wall_saving = Element_EnergySaving[j_조명];
 
-                    #region 난방 절약 : 각 난방설비별
-                    double heating_saving_total = 0;
-                    for (int aa = 0; aa < HeatingGroup.Count; aa++)
-                    {
-                        Heating_New_Old hh = (Heating_New_Old)HeatingGroup[aa];
-                        heating_saving_total += hh.Before_Energy() - hh.After_Energy();
-                    }
+                    d = (wall_saving / Total_Energy_pre * 100);
 
-                    double[] heating_element_saving = new double[HeatingGroup.Count];
-                    double[] heating_element_saving_elec = new double[HeatingGroup.Count];
-                    double[] heating_element_saving_gas = new double[HeatingGroup.Count];
-                    for (int aa = 0; aa < HeatingGroup.Count; aa++)
-                    {
-                        Heating_New_Old hh = (Heating_New_Old)HeatingGroup[aa];
-                        heating_element_saving[aa] = lighting_saving * (hh.Before_Energy() - hh.After_Energy()) / heating_saving_total;
-                        heating_element_saving_elec[aa] = lighting_saving_elec * (hh.Before_Energy() - hh.After_Energy()) / heating_saving_total;
-                        heating_element_saving_gas[aa] = lighting_saving_noelec * (hh.Before_Energy() - hh.After_Energy()) / heating_saving_total;
-                    }
-                    #endregion
-                    #region 조명   
+                    Light_data[0].Add(new { idx = i, val = wall_saving.ToString("0.0") }); ; //절감량 
+                    Light_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
+                    data.Add(new { cname = "light_saving", data = Light_data[0] });
+                    data.Add(new { cname = "light_savingpercent", data = Light_data[1] });
+
+                    charts += "{donut:" + d + "},";
+
+                    double light_saving_elec = Element_ElecSaving[j_조명];
+                    double light_saving_noelec = Element_GasSaving[j_조명];
+
+                    double light_tCO2 = light_saving_elec * 0.4747 / 1000000 * 1000;
+                    double light_TOE = light_saving_elec * 0.00023;
+
+                    Light_data[2].Add(new { idx = i, val = light_tCO2.ToString("0.0") });  //tco2
+                    Light_data[3].Add(new { idx = i, val = light_TOE.ToString("0.0") });  //TOE 
+                    data.Add(new { cname = "light_tco2", data = Light_data[2] });
+                    data.Add(new { cname = "light_toe", data = Light_data[3] });
+
                     string[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneLighting_form", "조명번호");
                     string[] Light_Name = new string[10]; string[] Light_Zone_text = new string[10]; double[] Light_eta = new double[10];
                     double[] Light_Area_Old = new double[10]; double[] Light_Area_New = new double[10]; double[] Light_Density_Old = new double[10]; double[] Light_Density_New = new double[10]; double[] Light_Saving = new double[10]; double[] Light_Point = new double[10];
@@ -127,6 +113,7 @@ namespace main.contents.Result.Element_Report
                                 //효율
                                 Light_eta[a] = Convert.ToDouble(조명존[0][4]);
                                 //면적, 조명밀도 
+                                Boolean samecheck = false;
                                 for (int aa=0; aa < 조명존.Length; aa++)
                                 {
                                     Light_Area_New[a] += Convert.ToDouble(조명존[aa][1]);
@@ -135,42 +122,54 @@ namespace main.contents.Result.Element_Report
                                     prezone = Split_(조명존[0][6]);
                                     for(int aaa=0; aaa < prezone.Count; aaa++)
                                     {
-                                        string[][] 기존존 = Program.DB.querySQL(DB.type.ProjDB, "Select 번호,순바닥면적,조명밀도 From ZoneLighting_form where 번호='" + prezone[aaa].ToString() + "'");
+                                        string[][] 기존존 = Program.DB.querySQL(res[0][0], "Select 번호,순바닥면적,조명밀도,조명번호 From ZoneLighting_form where 번호='" + prezone[aaa].ToString() + "'");
                                         if(기존존.Length > 0)
                                         {
                                             Light_Area_Old[a] += Convert.ToDouble(기존존[0][1]);
                                             Light_Density_Old[a] += Convert.ToDouble(기존존[0][1]) * Convert.ToDouble(기존존[0][2]);
+                                            if (기존존[0][3] == Value[a][0])
+                                            {
+                                                samecheck = true;
+                                            }
                                         }
                                     }
                                    
                                 }
                                 Light_Density_New[a] = Light_Density_New[a] / Light_Area_New[a];
-                                Light_Density_Old[a] = Light_Density_Old[a] / Light_Area_Old[a];
+                                if (samecheck)
+                                {
+                                    Light_Density_Old[a] = Light_Density_New[a];
+                                }
+                                else
+                                {
+                                    Light_Density_Old[a] = Light_Density_Old[a] / Light_Area_Old[a];
+                                }            
                             }
                         }
                     }
                     for (int a = 0; a < 10; a++)
                     {
-                        Light_data[a].Add(new { idx = i, val = Light_Name[a] });//명칭
-                        data.Add(new { cname = "light_name" + a, data = Light_data[a] });
+                        Light_data[4 + a].Add(new { idx = i, val = Light_Name[a] });//명칭
+                        data.Add(new { cname = "light_name" + a, data = Light_data[4 + a] });
                         if (Light_Name[a] != null & Light_Name[a] != "")
                         {
-                            Light_data[10 + a].Add(new { idx = i, val = Light_Zone_text[a] });//존
-                            data.Add(new { cname = "light_zone" + a, data = Light_data[10 + a] });
+                            Light_data[14 + a].Add(new { idx = i, val = Light_Zone_text[a] });//존
+                            data.Add(new { cname = "light_zone" + a, data = Light_data[14 + a] });
 
-                            Light_data[20 + a].Add(new { idx = i, val = Light_Area_New[a].ToString("0.0") });//면적
-                            data.Add(new { cname = "light_area" + a, data = Light_data[20 + a] });
+                            Light_data[24 + a].Add(new { idx = i, val = Light_Area_New[a].ToString("0.0") });//면적
+                            data.Add(new { cname = "light_area" + a, data = Light_data[24 + a] });
 
-                            Light_data[30 + a].Add(new { idx = i, val = Light_eta[a].ToString("0.0") });//효율
-                            data.Add(new { cname = "light_eta" + a, data = Light_data[30 + a] });
+                            Light_data[34 + a].Add(new { idx = i, val = Light_eta[a].ToString("0.0") });//효율
+                            data.Add(new { cname = "light_eta" + a, data = Light_data[34 + a] });
 
-                            Light_data[40 + a].Add(new { idx = i, val = Light_Density_Old[a].ToString("0.0") });//기존 조명밀도
-                            data.Add(new { cname = "light_density_old" + a, data = Light_data[40 + a] });
+                            Light_data[44 + a].Add(new { idx = i, val = Light_Density_Old[a].ToString("0.0") });//기존 조명밀도
+                            data.Add(new { cname = "light_density_old" + a, data = Light_data[44 + a] });
 
-                            Light_data[50 + a].Add(new { idx = i, val = Light_Density_New[a].ToString("0.0") });//신규 조명밀도
-                            data.Add(new { cname = "light_density_new" + a, data = Light_data[50 + a] });
+                            Light_data[54 + a].Add(new { idx = i, val = Light_Density_New[a].ToString("0.0") });//신규 조명밀도
+                            data.Add(new { cname = "light_density_new" + a, data = Light_data[54 + a] });
                         }  
                     }
+
                     #endregion
 
                     items.Add("Element_Lighting.htm");

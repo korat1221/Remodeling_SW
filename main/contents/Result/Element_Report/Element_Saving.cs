@@ -263,8 +263,8 @@ namespace main.contents.Result.Element_Report
                     }
                     #endregion
 
-                    DHW_New_Old Cooling = new DHW_New_Old(DHWNum[a][0], Num_Old, before_energy, after_energy);
-                    DHWGroup.Add(Cooling);
+                    DHW_New_Old dhw = new DHW_New_Old(DHWNum[a][0], Num_Old, before_energy, after_energy);
+                    DHWGroup.Add(dhw);
                 }
 
             }

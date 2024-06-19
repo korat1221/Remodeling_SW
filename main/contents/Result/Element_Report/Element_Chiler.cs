@@ -60,19 +60,7 @@ namespace main.contents.Result.Element_Report
                 if (res.Length > 0)
                 {
 
-                    #region 냉난방 절약 : 모든 요소기술 적용 절감량 중                                
-                    int j_heating = 0;
-                    for (int a = 0; a < ElementAlt.Length; a++)
-                    {
-                        if (ElementAlt[a] == "난방")
-                        {
-                            j_heating = a; break;
-                        }
-                    }
-                    double heating_saving = Element_EnergySaving[j_heating];
-                    double heating_saving_elec = Element_ElecSaving[j_heating];
-                    double heating_saving_noelec = Element_GasSaving[j_heating];
-
+                    #region 냉방 절약 : 모든 요소기술 적용 절감량 중    
                     int j_cooling = 0;
                     for (int a = 0; a < ElementAlt.Length; a++)
                     {
@@ -85,26 +73,7 @@ namespace main.contents.Result.Element_Report
                     double cooling_saving_elec = Element_ElecSaving[j_cooling];
                     double cooling_saving_noelec = Element_GasSaving[j_cooling];
                     #endregion
-
-                    #region 난방 절약 : 각 난방설비별
-                    double heating_saving_total = 0;
-                    for (int aa = 0; aa < HeatingGroup.Count; aa++)
-                    {
-                        Heating_New_Old hh = (Heating_New_Old)HeatingGroup[aa];
-                        heating_saving_total += hh.Before_Energy() - hh.After_Energy();
-                    }
-
-                    double[] heating_element_saving = new double[HeatingGroup.Count];
-                    double[] heating_element_saving_elec = new double[HeatingGroup.Count];
-                    double[] heating_element_saving_gas = new double[HeatingGroup.Count];
-                    for (int aa = 0; aa < HeatingGroup.Count; aa++)
-                    {
-                        Heating_New_Old hh = (Heating_New_Old)HeatingGroup[aa];
-                        heating_element_saving[aa] = heating_saving * (hh.Before_Energy() - hh.After_Energy()) / heating_saving_total;
-                        heating_element_saving_elec[aa] = heating_saving_elec * (hh.Before_Energy() - hh.After_Energy()) / heating_saving_total;
-                        heating_element_saving_gas[aa] = heating_saving_noelec * (hh.Before_Energy() - hh.After_Energy()) / heating_saving_total;
-                    }
-                    #endregion
+                 
 
                     #region 냉방 절약 : 각 냉방설비별
                     double cooling_saving_total = 0;
