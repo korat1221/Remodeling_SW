@@ -95,7 +95,9 @@ namespace main
 
         private void button8_Click(object sender, EventArgs e)
         {
+            Program.DB.UseCaches(true);  
             CALC.AltCalc();
+            Program.DB.UseCaches(false);
         }
     }
 }

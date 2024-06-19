@@ -93,7 +93,9 @@ namespace main
 
         private void FinalEnergy_Sim_Click(object sender, EventArgs e)
         {
+            Program.DB.UseCaches(true);
             CALC.run(new string[]{ "모두계산" });
+            Program.DB.UseCaches(false);
             MessageBox.Show("계산되었습니다.");
         }
 

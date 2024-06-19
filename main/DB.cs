@@ -46,6 +46,9 @@ namespace main
         }
 
         private string PASSWORD = "abcd";
+        private bool useCaches = false;
+        private Dictionary<type, Dictionary<string, string[][]>> caches = new Dictionary<type, Dictionary<string, string[][]>>();
+        private Dictionary<string, Dictionary<string, string[][]>> caches2 = new Dictionary<string, Dictionary<string, string[][]>>();
         private Dictionary<string, string> tables = new Dictionary<string, string>()
         {
             //프로젝트유형 기존:1, 리트로핏:2, 리모델링:3, 신규:4
@@ -709,6 +712,11 @@ namespace main
         }
         public string[][] querySQL(type dbType, string query)
         {
+            if (useCaches && caches.ContainsKey(dbType) && caches[dbType].ContainsKey(query))
+            {
+                return caches[dbType][query];
+            }
+
             SQLiteCommand cmd = new SQLiteCommand();
             List<string[]> objects = new List<string[]>();
 
@@ -766,10 +774,38 @@ namespace main
                     }
                 }
             }
-            return objects.ToArray();
+
+            if (useCaches)
+            {
+                string[][] ret = objects.ToArray();
+
+                if (caches.ContainsKey(dbType))
+                {
+                    caches[dbType].Add(query, ret);
+                }
+                else
+                {
+                    Dictionary<string, string[][]> v = new Dictionary<string, string[][]>();
+
+                    v.Add(query, ret);
+
+                    caches.Add(dbType, v);
+                }
+
+                return ret;
+            }
+            else
+            {
+                return objects.ToArray();
+            }
         }
         public string[][] querySQL(string projName, string query)
         {
+            if (useCaches && caches2.ContainsKey(projName) && caches2[projName].ContainsKey(query))
+            {
+                return caches2[projName][query];
+            }
+
             List<string[]> objects = new List<string[]>();
             SQLiteConnection db = new SQLiteConnection(@"Data Source=projects\\" + projName + ".sqlite");
 
@@ -803,7 +839,30 @@ namespace main
 
                 db.Close();
             }
-            return objects.ToArray();
+
+            if (useCaches)
+            {
+                string[][] ret = objects.ToArray();
+
+                if (caches2.ContainsKey(projName))
+                {
+                    caches2[projName].Add(query, ret);
+                }
+                else
+                {
+                    Dictionary<string, string[][]> v = new Dictionary<string, string[][]>();
+
+                    v.Add(query, ret);
+
+                    caches2.Add(projName, v);
+                }
+
+                return ret;
+            }
+            else
+            {
+                return objects.ToArray();
+            }
         }
         private long GetFileSize(string filePath)
         {
@@ -1066,6 +1125,22 @@ namespace main
 
         public string[][] getValue(type dbType, string table, string columns, string conditions = "")
         {
+            string sql;
+
+            if (conditions != "")
+            {
+                sql = "SELECT " + columns + " FROM " + table + " WHERE " + conditions;
+            }
+            else
+            {
+                sql = "SELECT " + columns + " FROM " + table;
+            }
+
+            if (useCaches && caches.ContainsKey(dbType) && caches[dbType].ContainsKey(sql)) 
+            { 
+                return caches[dbType][sql];
+            }
+
             SQLiteCommand cmd = new SQLiteCommand();
             List<string[]> objects = new List<string[]>();
 
@@ -1100,14 +1175,7 @@ namespace main
                     break;
             }
 
-            if (conditions != "")
-            {
-                cmd.CommandText = "SELECT " + columns + " FROM " + table + " WHERE " + conditions;
-            }
-            else
-            {
-                cmd.CommandText = "SELECT " + columns + " FROM " + table;
-            }
+            cmd.CommandText = sql;
 
             using (SQLiteDataReader reader = cmd.ExecuteReader())
             {
@@ -1125,11 +1193,49 @@ namespace main
                 }
             }
 
-            return objects.ToArray();
+            if (useCaches)
+            {
+                string[][] ret = objects.ToArray();
+
+                if (caches.ContainsKey(dbType))
+                {
+                    caches[dbType].Add(sql, ret);
+                }
+                else
+                {
+                    Dictionary<string, string[][]> v = new Dictionary<string, string[][]>();
+
+                    v.Add(sql, ret);
+
+                    caches.Add(dbType, v);
+                }
+
+                return ret;
+            }
+            else
+            {
+                return objects.ToArray();
+            }
         }
 
         public string[][] getValue(string projName, string table, string columns, string conditions = "")
         {
+            string sql;
+
+            if (conditions != "")
+            {
+                sql = "SELECT " + columns + " FROM " + table + " WHERE " + conditions;
+            }
+            else
+            {
+                sql = "SELECT " + columns + " FROM " + table;
+            }
+
+            if (useCaches && caches2.ContainsKey(projName) && caches2[projName].ContainsKey(sql))
+            {
+                return caches2[projName][sql];
+            }
+
             List<string[]> objects = new List<string[]>();
             SQLiteConnection db = new SQLiteConnection(@"Data Source=projects\\" + projName + ".sqlite");
 
@@ -1139,14 +1245,7 @@ namespace main
             {
                 SQLiteCommand cmd = db.CreateCommand();
 
-                if (conditions != "")
-                {
-                    cmd.CommandText = "SELECT " + columns + " FROM " + table + " WHERE " + conditions;
-                }
-                else
-                {
-                    cmd.CommandText = "SELECT " + columns + " FROM " + table;
-                }
+                cmd.CommandText = sql;
 
                 using (SQLiteDataReader reader = cmd.ExecuteReader())
                 {
@@ -1166,7 +1265,30 @@ namespace main
 
                 db.Close();
             }
-            return objects.ToArray();
+
+            if (useCaches)
+            {
+                string[][] ret = objects.ToArray();
+
+                if (caches2.ContainsKey(projName))
+                {
+                    caches2[projName].Add(sql, ret);
+                }
+                else
+                {
+                    Dictionary<string, string[][]> v = new Dictionary<string, string[][]>();
+
+                    v.Add(sql, ret);
+
+                    caches2.Add(projName, v);
+                }
+
+                return ret;
+            }
+            else
+            {
+                return objects.ToArray();
+            }
         }
         //중복 제거하고 값 가져오기
         public string[][] getValue_SameCheck(type dbType, string table, string columns, string conditions = "")
@@ -1272,6 +1394,13 @@ namespace main
             }
             return objects.ToArray();
         }
+        public void UseCaches(bool use)
+        {
+            useCaches = use;
+            caches.Clear();
+            caches2.Clear();
+        }
+
     }
 }
 
