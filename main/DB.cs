@@ -139,7 +139,8 @@ namespace main
             {"Heating_ce_Form_Element", "CREATE TABLE IF NOT EXISTS Heating_ce_Form_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),난방시스템 VARCHAR (32),공급설비종류 VARCHAR (32),공급설비 VARCHAR (32),설치위치 VARCHAR (32),가동시간 VARCHAR (32),부하율 VARCHAR (32))"},
             {"Heating_Result_Element" ,"CREATE TABLE IF NOT EXISTS Heating_Result_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,검토유형 VARCHAR (32),난방시스템 VARCHAR (32),기존존번호 VARCHAR (32),계획존번호 VARCHAR (32),공급설비 VARCHAR (32),부하율 VARCHAR (32),연료 VARCHAR (32),난방소요량 VARCHAR (32))"},
             {"Cooling_Result_Element" ,"CREATE TABLE IF NOT EXISTS Cooling_Result_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,검토유형 VARCHAR (32),냉방시스템 VARCHAR (32),기존존번호 VARCHAR (32),계획존번호 VARCHAR (32),공급설비 VARCHAR (32),부하율 VARCHAR (32),연료 VARCHAR (32),냉방소요량 VARCHAR (32))"},
-            {"DHWSystem_Result_Element" ,"CREATE TABLE IF NOT EXISTS DHWSystem_Result_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,검토유형 VARCHAR (32),급탕시스템 VARCHAR (32),기존존번호 VARCHAR (32),계획존번호 VARCHAR (32),연료 VARCHAR (32),급탕소요량 VARCHAR (32))"}
+            {"DHWSystem_Result_Element" ,"CREATE TABLE IF NOT EXISTS DHWSystem_Result_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,검토유형 VARCHAR (32),급탕시스템 VARCHAR (32),기존존번호 VARCHAR (32),계획존번호 VARCHAR (32),연료 VARCHAR (32),급탕소요량 VARCHAR (32))"},
+            {"Light_Result_Element" ,"CREATE TABLE IF NOT EXISTS Light_Result_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,검토유형 VARCHAR (32),존번호 VARCHAR (32),조명번호 VARCHAR (32),조명소요량 VARCHAR (32))"}
         };
 
         private SQLiteConnection? baseDB_hcneed, baseDB_lighting, baseDB_heating, baseDB_cooling, baseDB_ahu, baseDB_resystem, baseDB_optimal, projDB, calcDB, proj_listDB;
