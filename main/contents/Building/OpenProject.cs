@@ -68,22 +68,22 @@ namespace main.contents
                 }
                 else if (ProjectType == "기존건물")
                 {
-                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro1.png");
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_1.Previous.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
                 else if (ProjectType == "리트로핏")
                 {
-                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro2.png");
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_2.Retrofit.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
                 else if (ProjectType == "리모델링")
                 {
-                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro3.png");
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_3.Remodeling.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
                 else
                 {
-                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro2.png");
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_4.New.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
                 ProjectType_textBox.Text = ProjectType;
@@ -148,11 +148,39 @@ namespace main.contents
 
                 Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
                 Program.DB.initTables(DB.type.ProjDB);
+                Create_Project_GeneralData(k);
                 Program.getMenuForm().resetAll();
                 Program.getMenuForm().DoLoadFormDirect(0);
-
                 Program.UTIL.ReloadModel();
             }
+        }
+        private void Create_Project_GeneralData(int k)
+        {
+            String ProjectType = dataGridView1.Rows[k].Cells[4].Value.ToString();
+            string ProjectTypeNum = null;
+            if (ProjectType == null)
+            {
+            }
+            else if (ProjectType == "기존건물")
+            {
+                ProjectTypeNum = "1";
+            }
+            else if (ProjectType == "리트로핏")
+            {
+                ProjectTypeNum = "2";
+            }
+            else if (ProjectType == "리모델링")
+            {
+                ProjectTypeNum = "3";
+            }
+            else
+            {
+                ProjectTypeNum = "4";
+            }
+
+            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트명,프로젝트유형,프로젝트유형번호"
+                    , "'" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "','" + dataGridView1.Rows[k].Cells[3].Value.ToString() + "','" + ProjectType + "','" + ProjectTypeNum  + "'"
+                    , "프로젝트번호");
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -189,9 +217,9 @@ namespace main.contents
 
                 Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
                 Program.DB.initTables(DB.type.ProjDB);
+                Create_Project_GeneralData(k);
                 Program.getMenuForm().resetAll();
                 Program.getMenuForm().DoLoadFormDirect(0);
-
                 Program.UTIL.ReloadModel();
             }
         }

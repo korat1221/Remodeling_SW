@@ -83,25 +83,25 @@ namespace main.contents
                 }
                 else if (ProjectType == "1")
                 {
-                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro1.png");
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_1.Previous.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     drawList(1.ToString());
                 }
                 else if (ProjectType == "2")
                 {
-                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro2.png");
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_2.Retrofit.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     drawList(1.ToString());
                 }
                 else if (ProjectType == "3")
                 {
-                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro3.png");
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_3.Remodeling.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     drawList(1.ToString());
                 }
                 else
                 {
-                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0.Intro2.png");
+                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_4.New.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     drawList(4.ToString());
                 }
@@ -305,7 +305,6 @@ namespace main.contents
             {
                 File.Copy("templ.sqlite", Program.gPath + "projects\\" + pid + ".sqlite", true);
             }
-
             Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
 
             return pid;
@@ -410,9 +409,9 @@ namespace main.contents
                 else
                 {
                     Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET title= '" + dataGridView1.Rows[k].Cells[3].Value.ToString() + "' WHERE pnum='" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "'");
-                    MessageBox.Show("생성되었습니다.");
                 }
             }
+            MessageBox.Show("생성되었습니다.");
             Program.getMenuForm().DoLoadForm(42, OnLoadProc1);
 
         }

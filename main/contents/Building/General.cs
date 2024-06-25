@@ -790,15 +790,23 @@ namespace main.contents
 
                 Month = Value[0][14];
                 Month_comboBox.SelectedItem = Month;
-
-                ConstrucitonDate = Convert.ToDouble(Value[0][15]);
-                Calc_LawDate();
-
-
-                GrossArea = Convert.ToDouble(Value[0][17]);
-                GrossArea_textBox.Text = GrossArea.ToString();
-                BuildingArea = Convert.ToDouble(Value[0][18]);
-                BuildingArea_textBox.Text = BuildingArea.ToString();
+                if (Value[0][15] != "")
+                { 
+                    ConstrucitonDate = Convert.ToDouble(Value[0][15]);
+                    Calc_LawDate();
+                }
+               
+                if (Value[0][17] != "")
+                {
+                    GrossArea = Convert.ToDouble(Value[0][17]);
+                    GrossArea_textBox.Text = GrossArea.ToString();
+                }
+                
+                if (Value[0][18] != "")
+                {
+                    BuildingArea = Convert.ToDouble(Value[0][18]);
+                    BuildingArea_textBox.Text = BuildingArea.ToString();
+                }
 
                 AboveGround = Value[0][19];
                 AboveGround_comboBox.SelectedItem = AboveGround;
@@ -821,9 +829,11 @@ namespace main.contents
                 ReviewMonth = Value[0][25];
                 ReviewMonth_comboBox.SelectedItem = ReviewMonth;
 
-                ReviewDate = Convert.ToDouble(Value[0][26]);
-                Calc_ReviewDate();
-
+                if (Value[0][26] != "")
+                {
+                    ReviewDate = Convert.ToDouble(Value[0][26]);
+                    Calc_ReviewDate();
+                }                               
                 Load_OldProject();
                 OldProject = Value[0][27];
                 OldProject_comboBox.SelectedIndex = OldProject_comboBox.FindStringExact(Value[0][27]);
