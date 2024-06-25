@@ -93,7 +93,7 @@
             toolStrip1.Location = new Point(3, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Padding = new Padding(4);
-            toolStrip1.Size = new Size(206, 50);
+            toolStrip1.Size = new Size(175, 50);
             toolStrip1.TabIndex = 0;
             // 
             // Home
