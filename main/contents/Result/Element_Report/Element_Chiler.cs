@@ -97,9 +97,9 @@ namespace main.contents.Result.Element_Report
 
 
                     #region 공냉식냉동기   
-                    string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.냉방유닛,a.명칭,b.공급존,a.냉방출력,a.EER,b.번호 From User_AirCooler as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛");
+                    string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.냉방유닛,a.명칭,b.공급존,a.냉방출력,a.EER,b.번호,b.설치대수 From User_AirCooler as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛");
                     string[] Air_Name = new string[18]; string[] Air_Zone_text = new string[18];
-                    double[] Air_Power = new double[18]; double[] Air_COP_Old = new double[18]; double[] Air_COP_New = new double[18]; double[] Air_Saving = new double[18]; double[] Air_Point = new double[18];
+                    double[] Air_Power = new double[18]; double[] Air_COP_Old = new double[18]; double[] Air_COP_New = new double[18]; double[] Air_Saving = new double[18]; double[] Air_Point = new double[18]; double[] Air_COP_Rule = new double[18];
 
                     double[] Air_elec = new double[18]; double[] Air_gas = new double[18];
                     ArrayList Air_Zones_split = new ArrayList();
@@ -150,8 +150,10 @@ namespace main.contents.Result.Element_Report
                                 else { Air_Zones_split.Add(splitzone[aa]); }                                
                             }                          
 
-                            Air_Power[a] = Convert.ToDouble(Value[a][3]);
+                            Air_Power[a] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][6]);
                             Air_COP_New[a] = Convert.ToDouble(Value[a][4]);
+                            Air_COP_Rule[a] =5.5;
+                            Air_Point[a] = Math.Min(100, Air_COP_New[a] / Air_COP_Rule[a]*100);
                         }                       
                     }
                     double air_total_saving = 0; double air_total_elec = 0; double air_total_gas = 0;
@@ -180,7 +182,12 @@ namespace main.contents.Result.Element_Report
                             Air_data[162 + a].Add(new { idx = i, val = (Air_Saving[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감률
                             data.Add(new { cname = "air_saving" + a, data = Air_data[162 + a] });
 
-                            Air_data[198 + a].Add(new { idx = i, val = Air_Point[a].ToString("0.0") });//냉방 성능점수
+                            d = Air_Point[a];
+                            if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                            sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                            Air_data[198 + a].Add(new { idx = i, val = sp });//냉방 성능점수
                             data.Add(new { cname = "air_point" + a, data = Air_data[198 + a] });
                         }
 
@@ -193,7 +200,7 @@ namespace main.contents.Result.Element_Report
                     {
                         Air_COP_New_total = Air_COP_New_total / Air_Power.Sum();
                         Air_COP_Old_total = Air_COP_Old_total / Air_Power.Sum();
-                        Air_Point_total = Air_Point_total / Air_Power.Sum();
+                        Air_Point_total = Math.Min(100, Air_Point_total / Air_Power.Sum());
                     }                    
 
                     for (int a = 0; a < 18; a++)
@@ -212,6 +219,9 @@ namespace main.contents.Result.Element_Report
                     Air_data[219].Add(new { idx = i, val = (air_total_elec * 0.00023 + air_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "air_toe", data = Air_data[219] });
 
+                    d = (air_total_saving / Total_Energy_pre * 100);
+                    charts += "{donut:" + d + "},";
+
                     //합산 계 
                     Air_data[225].Add(new { idx = i, val = Air_Power.Sum().ToString("0.0") });//냉방 용량 합계  
                     data.Add(new { cname = "air_power_total", data = Air_data[225] });
@@ -221,7 +231,12 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "air_cop_new_total", data = Air_data[227] });
                     Air_data[228].Add(new { idx = i, val = (Air_Saving.Sum() / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감량 합계  
                     data.Add(new { cname = "air_saving_total2", data = Air_data[228] });
-                    Air_data[229].Add(new { idx = i, val = Air_Point_total.ToString("0.0") });//냉방 성능수준 평균  
+                    d = Air_Point_total;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    Air_data[229].Add(new { idx = i, val = sp });//냉방 성능수준 평균  
                     data.Add(new { cname = "air_point_total", data = Air_data[229] });
 
                     double Air_Qmax_c = 0; double Air_ZoneArea = 0; 
@@ -248,9 +263,9 @@ namespace main.contents.Result.Element_Report
                     #endregion
 
                     #region 수냉식냉동기    
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.냉방유닛,a.명칭,b.공급존,a.냉방출력,a.EER,b.번호 From User_WaterCooler as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.냉방유닛,a.명칭,b.공급존,a.냉방출력,a.EER,b.번호,b.설치대수 From User_WaterCooler as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛");
                     string[] Water_Name = new string[18]; string[] Water_Zone_text = new string[18];
-                    double[] Water_Power = new double[18]; double[] Water_COP_Old = new double[18]; double[] Water_COP_New = new double[18]; double[] Water_Saving = new double[18]; double[] Water_Point = new double[18];
+                    double[] Water_Power = new double[18]; double[] Water_COP_Old = new double[18]; double[] Water_COP_New = new double[18]; double[] Water_Saving = new double[18]; double[] Water_Point = new double[18]; double[] Water_COP_Rule = new double[18];
 
                     double[] Water_elec = new double[18];double[] Water_gas = new double[18];
                     ArrayList Water_Zones_split = new ArrayList();
@@ -300,8 +315,10 @@ namespace main.contents.Result.Element_Report
                                 { }
                                 else { Water_Zones_split.Add(splitzone[aa]); }
                             }
-                            Water_Power[a] = Convert.ToDouble(Value[a][3]);
+                            Water_Power[a] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][6]);
                             Water_COP_New[a] = Convert.ToDouble(Value[a][4]);
+                            Water_COP_Rule[a] = 5.5;
+                            Water_Point[a] = Math.Min(100, Water_COP_New[a] / Water_COP_Rule[a] * 100);
                         }
                     }
                     double water_total_saving = 0; double water_total_elec = 0; double water_total_gas = 0;
@@ -329,7 +346,12 @@ namespace main.contents.Result.Element_Report
                             Water_data[162 + a].Add(new { idx = i, val = (Water_Saving[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감률
                             data.Add(new { cname = "water_saving" + a, data = Water_data[162 + a] });
 
-                            Water_data[198 + a].Add(new { idx = i, val = Water_Point[a].ToString("0.0") });//냉방 성능점수
+                            d = Water_Point[a];
+                            if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                            sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                            Water_data[198 + a].Add(new { idx = i, val = sp });//냉방 성능점수
                             data.Add(new { cname = "water_point" + a, data = Water_data[198 + a] });
                         }
 
@@ -342,7 +364,7 @@ namespace main.contents.Result.Element_Report
                     {
                         Water_COP_New_total = Water_COP_New_total / Water_Power.Sum();
                         Water_COP_Old_total = Water_COP_Old_total / Water_Power.Sum();
-                        Water_Point_total = Water_Point_total / Water_Power.Sum();
+                        Water_Point_total = Math.Min(100, Water_Point_total / Water_Power.Sum());
                     }
 
                     for (int a = 0; a < 18; a++)
@@ -361,6 +383,9 @@ namespace main.contents.Result.Element_Report
                     Water_data[219].Add(new { idx = i, val = (water_total_elec * 0.00023 + water_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "water_toe", data = Water_data[219] });
 
+                    d = (air_total_saving / Total_Energy_pre * 100);
+                    charts += "{donut:" + d + "},";
+
                     //합산 계 
                     Water_data[225].Add(new { idx = i, val = Water_Power.Sum().ToString("0.0") });//냉방 용량 합계  
                     data.Add(new { cname = "water_power_total", data = Water_data[225] });
@@ -370,7 +395,12 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "water_cop_new_total", data = Water_data[227] });
                     Water_data[228].Add(new { idx = i, val = (Water_Saving.Sum() / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감량 합계  
                     data.Add(new { cname = "water_saving_total2", data = Water_data[228] });
-                    Water_data[229].Add(new { idx = i, val = Water_Point_total.ToString("0.0") });//냉방 성능수준 평균  
+                    d = Water_Point_total;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    Water_data[229].Add(new { idx = i, val = sp });//냉방 성능수준 평균  
                     data.Add(new { cname = "water_point_total", data = Water_data[229] });
 
                     double Water_Qmax_c = 0; double Water_ZoneArea = 0;

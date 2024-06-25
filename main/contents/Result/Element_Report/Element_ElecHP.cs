@@ -128,15 +128,14 @@ namespace main.contents.Result.Element_Report
 
 
                     #region 냉난방 전기히트펌프   
-                    string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.외기히트펌프번호,a.명칭,b.존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호 From User_AirHP as a Inner Join HeatingSystem_Form as b ON a.번호 = b.외기히트펌프번호 Where a.난방냉방='냉난방' And a.연료='전기'");
+                    string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.외기히트펌프번호,a.명칭,b.존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호,b.외기히트펌프대수 From User_AirHP as a Inner Join HeatingSystem_Form as b ON a.번호 = b.외기히트펌프번호 Where a.난방냉방='냉난방' And a.연료='전기'");
                     string[] EHP_Name = new string[18]; string[] EHP_Zone_text = new string[18];
-                    double[] EHP_Power_H = new double[18]; double[] EHP_COP_Old_H = new double[18]; double[] EHP_COP_New_H = new double[18]; double[] EHP_Saving_H = new double[18]; double[] EHP_Point_H = new double[18];
-                    double[] EHP_Power_C = new double[18]; double[] EHP_COP_Old_C = new double[18]; double[] EHP_COP_New_C = new double[18]; double[] EHP_Saving_C = new double[18]; double[] EHP_Point_C = new double[18];
+                    double[] EHP_Power_H = new double[18]; double[] EHP_COP_Old_H = new double[18]; double[] EHP_COP_New_H = new double[18]; double[] EHP_Saving_H = new double[18]; double[] EHP_Point_H = new double[18]; double[] EHP_COP_Rule_H = new double[18];
+                    double[] EHP_Power_C = new double[18]; double[] EHP_COP_Old_C = new double[18]; double[] EHP_COP_New_C = new double[18]; double[] EHP_Saving_C = new double[18]; double[] EHP_Point_C = new double[18]; double[] EHP_COP_Rule_C = new double[18];
 
                     double[] EHP_elec_H = new double[18]; double[] EHP_elec_C = new double[18];
                     double[] EHP_gas_H = new double[18]; double[] EHP_gas_C = new double[18];
                     ArrayList EHP_Zones_split = new ArrayList();
-
                     if (Value.Length > 0)
                     {
                         for (int a = 0; a < Value.Length; a++)
@@ -224,11 +223,17 @@ namespace main.contents.Result.Element_Report
                             }
                            
 
-                            EHP_Power_H[a] = Convert.ToDouble(Value[a][3]);
+                            EHP_Power_H[a] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
                             EHP_COP_New_H[a] = Convert.ToDouble(Value[a][4]);
 
-                            EHP_Power_C[a] = Convert.ToDouble(Value[a][5]);
+                            EHP_Power_C[a] = Convert.ToDouble(Value[a][5]) * Convert.ToDouble(Value[a][8]);
                             EHP_COP_New_C[a] = Convert.ToDouble(Value[a][6]);
+
+                            EHP_COP_Rule_H[a] = 5.5;
+                            EHP_COP_Rule_C[a] = 5.5;
+
+                            EHP_Point_H[a] = Math.Min(100, EHP_COP_New_H[a] / EHP_COP_Rule_H[a] * 100);
+                            EHP_Point_C[a] = Math.Min(100, EHP_COP_New_H[a] / EHP_COP_Rule_C[a] * 100);
                         }                       
                     }
                     double ehp_total_saving = 0; double ehp_total_elec = 0; double ehp_total_gas = 0;
@@ -271,10 +276,20 @@ namespace main.contents.Result.Element_Report
                             EHP_data[162 + a].Add(new { idx = i, val = (EHP_Saving_C[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감률
                             data.Add(new { cname = "ehp_saving_c" + a, data = EHP_data[162 + a] });
 
-                            EHP_data[180 + a].Add(new { idx = i, val = EHP_Point_H[a].ToString("0.0") });//난방 성능점수
+                            d = EHP_Point_H[a];
+                            if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                            sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                            EHP_data[180 + a].Add(new { idx = i, val = sp });//난방 성능점수
                             data.Add(new { cname = "ehp_point_h" + a, data = EHP_data[180 + a] });
 
-                            EHP_data[198 + a].Add(new { idx = i, val = EHP_Point_C[a].ToString("0.0") });//냉방 성능점수
+                            d = EHP_Point_C[a];
+                            if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                            sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                            EHP_data[198 + a].Add(new { idx = i, val =sp });//냉방 성능점수
                             data.Add(new { cname = "ehp_point_c" + a, data = EHP_data[198 + a] });
                         }
 
@@ -290,10 +305,10 @@ namespace main.contents.Result.Element_Report
                     {
                         EHP_COP_New_H_total = EHP_COP_New_H_total / EHP_Power_H.Sum();
                         EHP_COP_Old_H_total = EHP_COP_Old_H_total / EHP_Power_H.Sum();
-                        EHP_Point_H_total = EHP_Point_H_total / EHP_Power_H.Sum();
+                        EHP_Point_H_total = Math.Min(100, EHP_Point_H_total / EHP_Power_H.Sum());
                         EHP_COP_New_C_total = EHP_COP_New_C_total / EHP_Power_C.Sum();
                         EHP_COP_Old_C_total = EHP_COP_Old_C_total / EHP_Power_C.Sum();
-                        EHP_Point_C_total = EHP_Point_C_total / EHP_Power_C.Sum();
+                        EHP_Point_C_total = Math.Min(100, EHP_Point_C_total / EHP_Power_C.Sum());
                     }                    
 
                     for (int a = 0; a < 18; a++)
@@ -312,6 +327,9 @@ namespace main.contents.Result.Element_Report
                     EHP_data[219].Add(new { idx = i, val = (ehp_total_elec * 0.00023 + ehp_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "ehp_toe", data = EHP_data[219] });
 
+                    d = (ehp_total_saving / Total_Energy_pre * 100);
+                    charts += "{donut:" + d + "},";
+
                     //합산 계 
                     EHP_data[220].Add(new { idx = i, val = EHP_Power_H.Sum().ToString("0.0") });//난방 용량 합계  
                     data.Add(new { cname = "ehp_power_h_total", data = EHP_data[220] });
@@ -321,7 +339,12 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "ehp_cop_new_h_total", data = EHP_data[222] });
                     EHP_data[223].Add(new { idx = i, val = (EHP_Saving_H.Sum() / Total_Energy_pre * 100).ToString("0.0") + " %" });//난방 절감량 합계  
                     data.Add(new { cname = "ehp_saving_h_total", data = EHP_data[223] });
-                    EHP_data[224].Add(new { idx = i, val = EHP_Point_H_total.ToString("0.0") });//난방 성능수준 평균  
+                    d = EHP_Point_H_total;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    EHP_data[224].Add(new { idx = i, val = sp});//난방 성능수준 평균  
                     data.Add(new { cname = "ehp_point_h_total", data = EHP_data[224] });
 
                     EHP_data[225].Add(new { idx = i, val = EHP_Power_C.Sum().ToString("0.0") });//냉방 용량 합계  
@@ -332,7 +355,12 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "ehp_cop_new_c_total", data = EHP_data[227] });
                     EHP_data[228].Add(new { idx = i, val = (EHP_Saving_C.Sum() / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감량 합계  
                     data.Add(new { cname = "ehp_saving_c_total", data = EHP_data[228] });
-                    EHP_data[229].Add(new { idx = i, val = EHP_Point_C_total.ToString("0.0") });//냉방 성능수준 평균  
+                    d = EHP_Point_C_total;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    EHP_data[229].Add(new { idx = i, val =sp });//냉방 성능수준 평균  
                     data.Add(new { cname = "ehp_point_c_total", data = EHP_data[229] });
 
                     double EHP_Qmax_h = 0; double EHP_Qmax_c = 0; double EHP_ZoneArea = 0; 
@@ -365,10 +393,11 @@ namespace main.contents.Result.Element_Report
 
                     #endregion
 
+
                     #region 냉방 전기히트펌프   
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.냉방유닛,a.명칭,b.공급존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호 From User_AirHP as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛 Where a.난방냉방='냉방' And a.연료='전기'");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.냉방유닛,a.명칭,b.공급존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호,b.설치대수 From User_AirHP as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛 Where a.난방냉방='냉방' And a.연료='전기'");
                     string[] AirC_Name = new string[18]; string[] AirC_Zone_text = new string[18];
-                    double[] AirC_Power = new double[18]; double[] AirC_COP_Old = new double[18]; double[] AirC_COP_New = new double[18]; double[] AirC_Saving = new double[18]; double[] AirC_Point = new double[18];
+                    double[] AirC_Power = new double[18]; double[] AirC_COP_Old = new double[18]; double[] AirC_COP_New = new double[18]; double[] AirC_Saving = new double[18]; double[] AirC_Point = new double[18]; double[] AirC_COP_Rule = new double[18];
 
                     double[] AirC_elec = new double[18];double[] AirC_gas = new double[18];
                     ArrayList AirC_Zones_split = new ArrayList();
@@ -422,8 +451,10 @@ namespace main.contents.Result.Element_Report
                                 { }
                                 else { AirC_Zones_split.Add(splitzone[aa]); }
                             }
-                            AirC_Power[a] = Convert.ToDouble(Value[a][5]);
+                            AirC_Power[a] = Convert.ToDouble(Value[a][5]) * Convert.ToDouble(Value[a][8]);
                             AirC_COP_New[a] = Convert.ToDouble(Value[a][6]);
+                            AirC_COP_Rule[a] = 5.5;
+                            AirC_Point[a] = Math.Min(100, AirC_COP_New[a]/ AirC_COP_Rule[a] *100);
                         }
                     }
                     double airc_total_saving = 0; double airc_total_elec = 0; double airc_total_gas = 0;
@@ -451,7 +482,12 @@ namespace main.contents.Result.Element_Report
                             AirC_data[162 + a].Add(new { idx = i, val = (AirC_Saving[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감률
                             data.Add(new { cname = "airc_saving" + a, data = AirC_data[162 + a] });
 
-                            AirC_data[198 + a].Add(new { idx = i, val = AirC_Point[a].ToString("0.0") });//냉방 성능점수
+                            d = AirC_Point[a];
+                            if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                            sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                            AirC_data[198 + a].Add(new { idx = i, val =sp });//냉방 성능점수
                             data.Add(new { cname = "airc_point" + a, data = AirC_data[198 + a] });
                         }
 
@@ -464,7 +500,7 @@ namespace main.contents.Result.Element_Report
                     {
                         AirC_COP_New_C_total = AirC_COP_New_C_total / AirC_Power.Sum();
                         AirC_COP_Old_C_total = AirC_COP_Old_C_total / AirC_Power.Sum();
-                        AirC_Point_C_total = AirC_Point_C_total / AirC_Power.Sum();
+                        AirC_Point_C_total = Math.Min(100, AirC_Point_C_total / AirC_Power.Sum());
                     }
 
                     for (int a = 0; a < 18; a++)
@@ -483,6 +519,9 @@ namespace main.contents.Result.Element_Report
                     AirC_data[219].Add(new { idx = i, val = (airc_total_elec * 0.00023 + airc_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "airc_toe", data = AirC_data[219] });
 
+                    d = (airc_total_saving / Total_Energy_pre * 100);
+                    charts += "{donut:" + d + "},";
+
                     //합산 계 
                     AirC_data[225].Add(new { idx = i, val = AirC_Power.Sum().ToString("0.0") });//냉방 용량 합계  
                     data.Add(new { cname = "airc_power_c_total", data = AirC_data[225] });
@@ -492,7 +531,12 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "airc_cop_new_c_total", data = AirC_data[227] });
                     AirC_data[228].Add(new { idx = i, val = (AirC_Saving.Sum() / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감량 합계  
                     data.Add(new { cname = "airc_saving_c_total", data = AirC_data[228] });
-                    AirC_data[229].Add(new { idx = i, val = AirC_Point_C_total.ToString("0.0") });//냉방 성능수준 평균  
+                    d = AirC_Point_C_total;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    AirC_data[229].Add(new { idx = i, val = sp});//냉방 성능수준 평균  
                     data.Add(new { cname = "airc_point_c_total", data = AirC_data[229] });
 
                     double AirC_Qmax_c = 0; double AirC_ZoneArea = 0;

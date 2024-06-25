@@ -100,6 +100,16 @@ namespace main.contents
                         Element_Lighting light = new Element_Lighting();
                         light.Report_Before();
                     }
+                    else if (Element_comboBox.SelectedItem.ToString() == "태양광_풍력_연료전지")
+                    {
+                        Element_RESystem re = new Element_RESystem();
+                        re.Report_Before();
+                    }
+                    else if (Element_comboBox.SelectedItem.ToString() == "가스HP_흡수식냉온수기")
+                    {
+                        Element_GasHP re = new Element_GasHP();
+                        re.Report_Before();
+                    }
                     else
                     {
                         Element_Structure Structure = new Element_Structure();
@@ -138,6 +148,16 @@ namespace main.contents
                     {
                         Element_Lighting light = new Element_Lighting();
                         script = light.Report_After();
+                    }
+                    else if (Element_comboBox.SelectedItem.ToString() == "태양광_풍력_연료전지")
+                    {
+                        Element_RESystem re = new Element_RESystem();
+                        script = re.Report_After();
+                    }
+                    else if (Element_comboBox.SelectedItem.ToString() == "가스HP_흡수식냉온수기")
+                    {
+                        Element_GasHP re = new Element_GasHP();
+                        script = re.Report_After();
                     }
                     else
                     {

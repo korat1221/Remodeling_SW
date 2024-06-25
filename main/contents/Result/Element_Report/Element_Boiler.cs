@@ -130,9 +130,9 @@ namespace main.contents.Result.Element_Report
                     #endregion
 
                     #region 보일러 
-                    string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.태양열번호 From User_Boiler as a Inner Join HeatingSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='난방+급탕'");
+                    string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.태양열번호,b.보일러대수 From User_Boiler as a Inner Join HeatingSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='난방+급탕'");
                     string[] Boiler_Name = new string[8]; string[] Boiler_Zone_text = new string[8];
-                    double[] Boiler_Power = new double[8]; double[] Boiler_eta_Old = new double[8]; double[] Boiler_eta_New = new double[8]; double[] Boiler_Saving = new double[8]; double[] Boiler_Point = new double[8];
+                    double[] Boiler_Power = new double[8]; double[] Boiler_eta_Old = new double[8]; double[] Boiler_eta_New = new double[8]; double[] Boiler_Saving = new double[8]; double[] Boiler_Point = new double[8]; double[] Boiler_eta_Rule = new double[8];
                     string[] Boiler_H_W = new string[8];
                     double[] Boiler_elec = new double[8];double[] Boiler_gas = new double[8];
                     ArrayList Boiler_Zones_split_H_W = new ArrayList(); ArrayList Boiler_Zones_split_W = new ArrayList(); ArrayList Boiler_Zones_split_H = new ArrayList();
@@ -220,12 +220,14 @@ namespace main.contents.Result.Element_Report
                                 { }
                                 else { Boiler_Zones_split_W.Add(splitzone[aa]); }
                             }
-                            Boiler_Power[a] = Convert.ToDouble(Value[a][3]);
+                            Boiler_Power[a] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
                             Boiler_eta_New[a] = Convert.ToDouble(Value[a][4]);
+                            Boiler_eta_Rule[a] = 90;
+                            Boiler_Point[a] = Math.Min(100, Boiler_eta_New[a]/ Boiler_eta_Rule[a] * 100);
                         }                       
                     }
 
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.태양열번호 From User_Boiler as a Inner Join HeatingSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='난방'");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.태양열번호,b.보일러대수 From User_Boiler as a Inner Join HeatingSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='난방'");
 
                     if (Value.Length > 0)
                     {
@@ -294,12 +296,14 @@ namespace main.contents.Result.Element_Report
                             }
 
 
-                            Boiler_Power[a + Boiler_HW_count] = Convert.ToDouble(Value[a][3]);
+                            Boiler_Power[a + Boiler_HW_count] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
                             Boiler_eta_New[a+ Boiler_HW_count] = Convert.ToDouble(Value[a][4]);
+                            Boiler_eta_Rule[a + Boiler_HW_count] = 90;
+                            Boiler_Point[a + Boiler_HW_count] = Math.Min(100, Boiler_eta_New[a + Boiler_HW_count] / Boiler_eta_Rule[a + Boiler_HW_count] * 100);
                         }
                     }
 
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.태양열번호 From User_Boiler as a Inner Join DHWSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='급탕'");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.태양열번호,b.보일러대수 From User_Boiler as a Inner Join DHWSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='급탕'");
 
                     if (Value.Length > 0)
                     {
@@ -366,8 +370,10 @@ namespace main.contents.Result.Element_Report
                                 { }
                                 else { Boiler_Zones_split_W.Add(splitzone[aa]); }
                             }
-                            Boiler_Power[a + Boiler_HW_count + Boiler_H_count] = Convert.ToDouble(Value[a][3]);
+                            Boiler_Power[a + Boiler_HW_count + Boiler_H_count] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
                             Boiler_eta_New[a + Boiler_HW_count + Boiler_H_count] = Convert.ToDouble(Value[a][4]);
+                            Boiler_eta_Rule[a + Boiler_HW_count + Boiler_H_count] = 90;
+                            Boiler_Point[a + Boiler_HW_count + Boiler_H_count] = Math.Min(100, Boiler_eta_New[a + Boiler_HW_count + Boiler_H_count] / Boiler_eta_Rule[a + Boiler_HW_count + Boiler_H_count] * 100);
                         }
                     }
 
@@ -396,7 +402,12 @@ namespace main.contents.Result.Element_Report
                             Boiler_data[40 + a].Add(new { idx = i, val =( Boiler_Saving[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률
                             data.Add(new { cname = "boiler_saving" + a, data = Boiler_data[40 + a] });
 
-                            Boiler_data[48 + a].Add(new { idx = i, val = Boiler_Point[a].ToString("0.0") });//성능점수
+                            d = Boiler_Point[a];
+                            if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                            sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                            Boiler_data[48 + a].Add(new { idx = i, val = sp});//성능점수
                             data.Add(new { cname = "boiler_point" + a, data = Boiler_data[48 + a] });
                             if (Boiler_H_W[a] == "난방+급탕") { Boiler_data[56 + a].Add(new { idx = i, val = "난방급탕" }); }
                             else { Boiler_data[56 + a].Add(new { idx = i, val = Boiler_H_W[a] }); }//난방급탕여부
@@ -412,7 +423,7 @@ namespace main.contents.Result.Element_Report
                     {
                         Boiler_eta_New_total = Boiler_eta_New_total / Boiler_Power.Sum();
                         Boiler_eta_Old_total = Boiler_eta_Old_total / Boiler_Power.Sum();
-                        Boiler_Point_total = Boiler_Point_total / Boiler_Power.Sum();
+                        Boiler_Point_total = Math.Min(100, Boiler_Point_total / Boiler_Power.Sum());
                     }                    
 
                     for (int a = 0; a < 8; a++)
@@ -431,6 +442,9 @@ namespace main.contents.Result.Element_Report
                     Boiler_data[67].Add(new { idx = i, val = (boiler_total_elec * 0.00023 + boiler_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "boiler_toe", data = Boiler_data[67] });
 
+                    d = (boiler_total_saving / Total_Energy_pre * 100);
+                    charts += "{donut:" + d + "},";
+
                     //합산 계 
                     Boiler_data[68].Add(new { idx = i, val = Boiler_Power.Sum().ToString("0.0") });//용량 합계  
                     data.Add(new { cname = "boiler_power_total", data = Boiler_data[68] });
@@ -440,7 +454,12 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "boiler_eta_new_total", data = Boiler_data[70] });
                     Boiler_data[71].Add(new { idx = i, val = (Boiler_Saving.Sum() / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감량 합계  
                     data.Add(new { cname = "boiler_saving_total2", data = Boiler_data[71] });
-                    Boiler_data[72].Add(new { idx = i, val = Boiler_Point_total.ToString("0.0") });//성능수준 평균  
+                    d = Boiler_Point_total;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    Boiler_data[72].Add(new { idx = i, val = sp });//성능수준 평균  
                     data.Add(new { cname = "boiler_point_total", data = Boiler_data[72] });
 
 
@@ -485,7 +504,7 @@ namespace main.contents.Result.Element_Report
                     #region 태양열
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.태양열번호,a.명칭,b.존,a.모듈면적,a.효율,a.난방급탕,b.번호,b.모듈개수 From User_Solar as a Inner Join DHWSystem_Form as b ON a.번호 = b.태양열번호 Where a.난방급탕='난방+급탕'");
                     string[] Solar_Name = new string[8]; string[] Solar_Zone_text = new string[8];
-                    double[] Solar_marea_new = new double[8]; double[] Solar_marea_Old = new double[8]; double[] Solar_eta = new double[8]; double[] Solar_Saving = new double[8]; double[] Solar_Point = new double[8];
+                    double[] Solar_marea_new = new double[8]; double[] Solar_marea_Old = new double[8]; double[] Solar_eta = new double[8]; double[] Solar_Saving = new double[8]; double[] Solar_Point = new double[8]; double[] Solar_eta_Rule = new double[8];
                     string[] Solar_H_W = new string[8];
                     double[] Solar_elec = new double[8]; double[] Solar_gas = new double[8];
                     ArrayList Solar_Zones_split_H_W = new ArrayList(); ArrayList Solar_Zones_split_W = new ArrayList(); ArrayList Solar_Zones_split_H = new ArrayList();
@@ -590,6 +609,8 @@ namespace main.contents.Result.Element_Report
                             }
                             Solar_marea_new[a] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][7]);
                             Solar_eta[a] = Convert.ToDouble(Value[a][4]);
+                            Solar_eta_Rule[a] = 0.88;
+                            Solar_Point[a] = Math.Min(100, Solar_eta_Rule[a] / Solar_eta[a] *100);
                         }
                     }
 
@@ -661,6 +682,8 @@ namespace main.contents.Result.Element_Report
 
                             Solar_marea_new[a + Solar_HW_count] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][7]);
                             Solar_eta[a + Solar_HW_count] = Convert.ToDouble(Value[a][4]);
+                            Solar_eta_Rule[a + Solar_HW_count] = 0.88;
+                            Solar_Point[a + Solar_HW_count] = Math.Min(100, Solar_eta_Rule[a + Solar_HW_count] / Solar_eta[a + Solar_HW_count] * 100);
                         }
                     }
 
@@ -730,6 +753,8 @@ namespace main.contents.Result.Element_Report
                             }
                             Solar_marea_new[a + Solar_HW_count + Solar_H_count] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][7]);
                             Solar_eta[a + Solar_HW_count + Solar_H_count] = Convert.ToDouble(Value[a][4]);
+                            Solar_eta_Rule[a + Solar_HW_count + Solar_H_count] = 0.88;
+                            Solar_Point[a + Solar_HW_count + Solar_H_count] = Math.Min(100, Solar_eta_Rule[a + Solar_HW_count + Solar_H_count] / Solar_eta[a + Solar_HW_count + Solar_H_count] * 100);
                         }
                     }
 
@@ -756,7 +781,12 @@ namespace main.contents.Result.Element_Report
                             Solar_data[40 + a].Add(new { idx = i, val = (Solar_Saving[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률
                             data.Add(new { cname = "solar_saving" + a, data = Solar_data[40 + a] });
 
-                            Solar_data[48 + a].Add(new { idx = i, val = Solar_Point[a].ToString("0.0") });//성능점수
+                            d = Solar_Point[a];
+                            if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                            sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                            Solar_data[48 + a].Add(new { idx = i, val = sp});//성능점수
                             data.Add(new { cname = "solar_point" + a, data = Solar_data[48 + a] });
 
                             if (Solar_H_W[a] == "난방+급탕") { Solar_data[56 + a].Add(new { idx = i, val = "난방급탕" }); }
@@ -773,7 +803,7 @@ namespace main.contents.Result.Element_Report
                     {
                         Solar_eta_New_total = Solar_eta_New_total / Solar_marea_new.Sum();
                         Solar_eta_Old_total = Solar_eta_Old_total / Solar_marea_new.Sum();
-                        Solar_Point_total = Solar_Point_total / Solar_marea_new.Sum();
+                        Solar_Point_total = Math.Min(100, Solar_Point_total / Solar_marea_new.Sum());
                     }
 
                     for (int a = 0; a < 8; a++)
@@ -792,6 +822,9 @@ namespace main.contents.Result.Element_Report
                     Solar_data[67].Add(new { idx = i, val = (solar_total_elec * 0.00023 + solar_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "solar_toe", data = Solar_data[67] });
 
+                    d = (solar_total_saving / Total_Energy_pre * 100);
+                    charts += "{donut:" + d + "},";
+
                     //합산 계 
                     Solar_data[68].Add(new { idx = i, val = Solar_marea_new.Sum().ToString("0.0") });//용량 합계  
                     data.Add(new { cname = "solar_power_total", data = Solar_data[68] });
@@ -801,7 +834,12 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "solar_eta_new_total", data = Solar_data[70] });
                     Solar_data[71].Add(new { idx = i, val = (Solar_Saving.Sum() / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감량 합계  
                     data.Add(new { cname = "solar_saving_total2", data = Solar_data[71] });
-                    Solar_data[72].Add(new { idx = i, val = Solar_Point_total.ToString("0.0") });//성능수준 평균  
+                    d = Solar_Point_total;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    Solar_data[72].Add(new { idx = i, val = sp});//성능수준 평균  
                     data.Add(new { cname = "solar_point_total", data = Solar_data[72] });
 
 
@@ -849,7 +887,7 @@ namespace main.contents.Result.Element_Report
                     double[] WHP_elec = new double[8]; double[] WHP_gas = new double[8];
                     ArrayList WHP_Zones_split_H_W = new ArrayList(); ArrayList WHP_Zones_split_W = new ArrayList(); ArrayList WHP_Zones_split_H = new ArrayList();
                   
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.히트펌프번호,a.명칭,b.존,a.급탕정격용량,a.급탕정격COP,a.난방급탕,b.번호,b.태양열번호 From User_DHWHP as a Inner Join DHWSystem_Form as b ON a.번호 = b.히트펌프번호 Where a.난방급탕='급탕'");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.히트펌프번호,a.명칭,b.존,a.급탕정격용량,a.급탕정격COP,a.난방급탕,b.번호,b.태양열번호,b.보일러대수 From User_DHWHP as a Inner Join DHWSystem_Form as b ON a.번호 = b.히트펌프번호 Where a.난방급탕='급탕'");
 
                     if (Value.Length > 0)
                     {
@@ -915,7 +953,7 @@ namespace main.contents.Result.Element_Report
                                 { }
                                 else { WHP_Zones_split_W.Add(splitzone[aa]); }
                             }
-                            WHP_Power[a] = Convert.ToDouble(Value[a][3]);
+                            WHP_Power[a] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
                             WHP_COP_New[a] = Convert.ToDouble(Value[a][4]);
                         }
                     }
@@ -945,7 +983,12 @@ namespace main.contents.Result.Element_Report
                             WHP_data[40 + a].Add(new { idx = i, val = (WHP_Saving[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률
                             data.Add(new { cname = "whp_saving" + a, data = WHP_data[40 + a] });
 
-                            WHP_data[48 + a].Add(new { idx = i, val = WHP_Point[a].ToString("0.0") });//성능점수
+                            d = WHP_Point[a];
+                            if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                            else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                            sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                            WHP_data[48 + a].Add(new { idx = i, val = sp });//성능점수
                             data.Add(new { cname = "whp_point" + a, data = WHP_data[48 + a] });
                             if (WHP_H_W[a] == "난방+급탕") { WHP_data[56 + a].Add(new { idx = i, val = "난방급탕" }); }
                             else { WHP_data[56 + a].Add(new { idx = i, val = WHP_H_W[a] }); }//난방급탕여부
@@ -980,6 +1023,9 @@ namespace main.contents.Result.Element_Report
                     WHP_data[67].Add(new { idx = i, val = (WHP_total_elec * 0.00023 + WHP_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "whp_toe", data = WHP_data[67] });
 
+                    d = (WHP_total_saving / Total_Energy_pre * 100);
+                    charts += "{donut:" + d + "},";
+
                     //합산 계 
                     WHP_data[68].Add(new { idx = i, val = WHP_Power.Sum().ToString("0.0") });//용량 합계  
                     data.Add(new { cname = "whp_power_total", data = WHP_data[68] });
@@ -989,7 +1035,12 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "whp_eta_new_total", data = WHP_data[70] });
                     WHP_data[71].Add(new { idx = i, val = (WHP_Saving.Sum() / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감량 합계  
                     data.Add(new { cname = "whp_saving_total2", data = WHP_data[71] });
-                    WHP_data[72].Add(new { idx = i, val = WHP_Point_total.ToString("0.0") });//성능수준 평균  
+                    d = WHP_Point_total;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    WHP_data[72].Add(new { idx = i, val =sp});//성능수준 평균  
                     data.Add(new { cname = "whp_point_total", data = WHP_data[72] });
 
 

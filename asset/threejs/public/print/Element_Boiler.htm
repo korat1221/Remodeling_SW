@@ -11,6 +11,32 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <!--table
 	{mso-displayed-decimal-separator:"\.";
 	mso-displayed-thousand-separator:"\,";}
+
+.cls-sparkline {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 21px;
+  background-image: linear-gradient(to right, #656565, lightgray);
+}
+
+.cls-sparkline-blue {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 21px;
+  background-image: linear-gradient(to right, #0070C0, #D5EDFF);
+}
+.cls-sparkline-red {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 21px;
+  background-image: linear-gradient(to right, #ed6f26, #ffefef);
+}
+
+.cls-sparkline-text {
+  width: 100%;
+  position: relative;
+}
+
 .font53364
 	{color:windowtext;
 	font-size:8.0pt;
@@ -169,7 +195,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 	background:white;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl723364
+.xl7221343
 	{padding-top:1px;
 	padding-right:1px;
 	padding-left:1px;
@@ -631,7 +657,9 @@ xmlns="http://www.w3.org/TR/REC-html40">
 	border-left:.5pt solid #A6A6A6;
 	mso-background-source:auto;
 	mso-pattern:auto;
-	white-space:nowrap;}
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;}
 .xl943364
 	{padding-top:1px;
 	padding-right:1px;
@@ -1223,8 +1251,7 @@ rt
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
+  <td class=xl7221343 colspan=2 rowspan="5"><iframe class="ifrm-chart1" src="/chart_ctrl2.html" frameBorder="0" style="width:100%;height:150px;border:0;"></iframe></td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1242,8 +1269,6 @@ rt
   <td class=xl1133364>급탕부하</td>
   <td class="xl1123364 boiler_qmax_w">　</td>
   <td class=xl683364>kW</td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1260,8 +1285,6 @@ rt
   <td class=xl693364>면적</td>
   <td class="xl1123364 boiler_zonearea" style='border-top:none'>　</td>
   <td class=xl683364>m<font class="font73364"><sup>2</sup></font></td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1276,8 +1299,6 @@ rt
   <td class=xl663364>　</td>
   <td class=xl683364>　</td>
   <td class=xl663364>　</td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1296,8 +1317,6 @@ rt
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1324,7 +1343,7 @@ rt
   <td colspan=2 rowspan=2 class=xl813364 style='border-bottom:.5pt solid #A6A6A6'>명칭</td>
   <td colspan=2 rowspan=2 class=xl783364 style='border-right:.5pt solid #A6A6A6;
   border-bottom:.5pt solid #A6A6A6'>공급존</td>
-  <td rowspan=2 class=xl1073364 style='border-bottom:.5pt solid #A6A6A6'>난방급탕</td>
+  <td colspan=2  rowspan=2 class=xl1073364 style='border-bottom:.5pt solid #A6A6A6'>난방급탕</td>
   <td colspan=2 class=xl783364 style='border-right:.5pt solid #A6A6A6;
   border-left:none'>용량</td>
   <td colspan=2 class=xl783364 style='border-right:.5pt solid #A6A6A6;
@@ -1333,7 +1352,7 @@ rt
   border-left:none'><span style='mso-spacerun:yes'> </span>효율</td>
   <td colspan=2 class=xl783364 style='border-right:.5pt solid #A6A6A6;
   border-left:none'>에너지절감률</td>
-  <td colspan=3 rowspan=2 class=xl1013364 style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 rowspan=2 class=xl1013364 style='border-right:.5pt solid #A6A6A6;
   border-bottom:.5pt solid #A6A6A6'>성능 수준</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1354,7 +1373,7 @@ rt
   <td colspan=2 class="xl933364 boiler_name0" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 boiler_zone0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 boiler_h_w0" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 boiler_h_w0" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_power0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_eta_old0" style='border-right:.5pt solid #A6A6A6;
@@ -1363,7 +1382,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_saving0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 boiler_point0" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 boiler_point0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1372,7 +1391,7 @@ rt
   <td colspan=2 class="xl933364 boiler_name1" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 boiler_zone1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 boiler_h_w1" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 boiler_h_w1" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_power1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_eta_old1" style='border-right:.5pt solid #A6A6A6;
@@ -1381,7 +1400,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_saving1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 boiler_point1" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 boiler_point1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1390,7 +1409,7 @@ rt
   <td colspan=2 class="xl933364 boiler_name2" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 boiler_zone2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 boiler_h_w2" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 boiler_h_w2" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_power2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_eta_old2" style='border-right:.5pt solid #A6A6A6;
@@ -1399,7 +1418,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_saving2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 boiler_point2" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 boiler_point2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1408,7 +1427,7 @@ rt
   <td colspan=2 class="xl933364 boiler_name3" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 boiler_zone3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 boiler_h_w3" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 boiler_h_w3" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_power3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_eta_old3" style='border-right:.5pt solid #A6A6A6;
@@ -1417,7 +1436,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_saving3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 boiler_point3" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 boiler_point3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1426,7 +1445,7 @@ rt
   <td colspan=2 class="xl933364 boiler_name4" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 boiler_zone4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 boiler_h_w4" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 boiler_h_w4" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_power4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_eta_old4" style='border-right:.5pt solid #A6A6A6;
@@ -1435,7 +1454,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_saving4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 boiler_point4" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 boiler_point4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1444,7 +1463,7 @@ rt
   <td colspan=2 class="xl933364 boiler_name5" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 boiler_zone5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 boiler_h_w5" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 boiler_h_w5" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_power5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_eta_old5" style='border-right:.5pt solid #A6A6A6;
@@ -1453,7 +1472,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_saving5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 boiler_point5" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 boiler_point5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1462,7 +1481,7 @@ rt
   <td colspan=2 class="xl933364 boiler_name6" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 boiler_zone6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 boiler_h_w6" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 boiler_h_w6" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_power6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_eta_old6" style='border-right:.5pt solid #A6A6A6;
@@ -1471,7 +1490,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_saving6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 boiler_point6" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 boiler_point6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1480,7 +1499,7 @@ rt
   <td colspan=2 class="xl933364 boiler_name7" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 boiler_zone7" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 boiler_h_w7" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 boiler_h_w7" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_power7" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_eta_old7" style='border-right:.5pt solid #A6A6A6;
@@ -1489,14 +1508,13 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_saving7" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 boiler_point7" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 boiler_point7" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl653364 style='height:20.25pt'>　</td>
-  <td colspan=4 class=xl903364 style='border-right:.5pt solid #A6A6A6'>계</td>
-  <td class=xl853364 style='border-top:none;border-left:none'>　</td>
+  <td colspan=6 class=xl903364 style='border-right:.5pt solid #A6A6A6'>계</td>
   <td colspan=2 class="xl863364 boiler_power_total" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_eta_old_total" style='border-right:.5pt solid #A6A6A6;
@@ -1505,7 +1523,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 boiler_saving_total2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 boiler_point_total" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 boiler_point_total" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1544,9 +1562,7 @@ rt
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
-  <td class=xl663364>　</td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
+  <td class=xl663364>　</td> <td class=xl7221343 colspan=2 rowspan="5"><iframe class="ifrm-chart1" src="/chart_ctrl2.html" frameBorder="0" style="width:100%;height:150px;border:0;"></iframe></td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1564,8 +1580,6 @@ rt
   <td class=xl1133364>급탕부하</td>
   <td class="xl1123364 solar_qmax_w">　</td>
   <td class=xl683364>kW</td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1582,8 +1596,6 @@ rt
   <td class=xl693364>면적</td>
   <td class="xl1123364 solar_zonearea" style='border-top:none'>　</td>
   <td class=xl683364>m<font class="font73364"><sup>2</sup></font></td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1602,8 +1614,6 @@ rt
   <td class=xl663364>　</td>
   <td class=xl683364>　</td>
   <td class=xl663364>　</td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1622,8 +1632,6 @@ rt
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1651,14 +1659,14 @@ rt
   border-bottom:.5pt solid #A6A6A6'>명칭</td>
   <td colspan=2 rowspan=3 class=xl1013364 style='border-right:.5pt solid #A6A6A6;
   border-bottom:.5pt solid #A6A6A6'>공급존</td>
-  <td rowspan=3 class=xl1073364 style='border-bottom:.5pt solid #A6A6A6'>난방급탕</td>
+  <td colspan=2 rowspan=3 class=xl1073364 style='border-bottom:.5pt solid #A6A6A6'>난방급탕</td>
   <td colspan=2 rowspan=2 class=xl783364 style='border-right:.5pt solid #A6A6A6'>모듈 효율</td>
   <td colspan=2 rowspan=2 class=xl783364 style='border-right:.5pt solid #A6A6A6'>기존
   설치 면적</td>
   <td colspan=2 rowspan=2 class=xl783364 style='border-right:.5pt solid #A6A6A6'>설치
   면적</td>
   <td colspan=2 rowspan=2 class=xl783364 style='border-right:.5pt solid #A6A6A6'>에너지절감률</td>
-  <td colspan=3 rowspan=3 class=xl1013364 style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 rowspan=3 class=xl1013364 style='border-right:.5pt solid #A6A6A6;
   border-bottom:.5pt solid #A6A6A6'>성능 수준</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1683,14 +1691,14 @@ rt
   <td colspan=2 class="xl933364 solar_name0" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 solar_zone0"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl1103364 solar_h_w0" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl1103364 solar_h_w0" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 solar_eta0" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_old0" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_new0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 Solar_Saving0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 solar_point0" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 solar_point0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1699,14 +1707,14 @@ rt
   <td colspan=2 class="xl933364 solar_name1" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 solar_zone1"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl1103364 solar_h_w1" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl1103364 solar_h_w1" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 solar_eta1" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_old1" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_new1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 Solar_Saving1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 solar_point1" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 solar_point1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1715,14 +1723,14 @@ rt
   <td colspan=2 class="xl933364 solar_name2" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 solar_zone2"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl1103364 solar_h_w2" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl1103364 solar_h_w2" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 solar_eta2" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_old2" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_new2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 Solar_Saving2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 solar_point2" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 solar_point2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1731,14 +1739,14 @@ rt
   <td colspan=2 class="xl933364 solar_name3" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 solar_zone3"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl1103364 solar_h_w3" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl1103364 solar_h_w3" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 solar_eta3" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_old3" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_new3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 Solar_Saving3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 solar_point3" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 solar_point3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1747,14 +1755,14 @@ rt
   <td colspan=2 class="xl933364 solar_name4" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 solar_zone4"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl1103364 solar_h_w4" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl1103364 solar_h_w4" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 solar_eta4" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_old4" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_new4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 Solar_Saving4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 solar_point4" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 solar_point4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1763,14 +1771,14 @@ rt
   <td colspan=2 class="xl933364 solar_name5" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 solar_zone5"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl1103364 solar_h_w5" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl1103364 solar_h_w5" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 solar_eta5" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_old5" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_new5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 Solar_Saving5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 solar_point5" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 solar_point5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1779,21 +1787,20 @@ rt
   <td colspan=2 class="xl933364 solar_name6" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 solar_zone6"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl1103364 solar_h_w6" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl1103364 solar_h_w6" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 solar_eta6" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_old6" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl863364 solar_marea_new6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 Solar_Saving6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 solar_point6" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 solar_point6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl653364 style='height:20.25pt'>　</td>
-  <td colspan=4 class=xl903364 style='border-right:.5pt solid #A6A6A6'>계</td>
-  <td class=xl853364 style='border-top:none;border-left:none'>　</td>
+  <td colspan=6 class=xl903364 style='border-right:.5pt solid #A6A6A6'>계</td>
   <td colspan=2 class="xl863364 solar_power_total" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 solar_eta_old_total" style='border-right:.5pt solid #A6A6A6;
@@ -1802,7 +1809,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 solar_saving_total2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 solar_point_total" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 solar_point_total" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1841,9 +1848,7 @@ rt
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
-  <td class=xl663364>　</td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
+  <td class=xl663364>　</td> <td class=xl7221343 colspan=2 rowspan="5"><iframe class="ifrm-chart1" src="/chart_ctrl2.html" frameBorder="0" style="width:100%;height:150px;border:0;"></iframe></td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1861,8 +1866,6 @@ rt
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1879,8 +1882,6 @@ rt
   <td class=xl693364>면적</td>
   <td class="xl1123364 whp_zonearea">　</td>
   <td class=xl683364>m<font class="font73364"><sup>2</sup></font></td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1895,8 +1896,6 @@ rt
   <td class=xl663364>　</td>
   <td class=xl683364>　</td>
   <td class=xl663364>　</td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1915,8 +1914,6 @@ rt
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
   <td class=xl663364>　</td>
-  <td class=xl723364>　</td>
-  <td class=xl723364>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1943,7 +1940,7 @@ rt
   <td colspan=2 rowspan=2 class=xl813364 style='border-bottom:.5pt solid #A6A6A6'>명칭</td>
   <td colspan=2 rowspan=2 class=xl783364 style='border-right:.5pt solid #A6A6A6;
   border-bottom:.5pt solid #A6A6A6'>공급존</td>
-  <td rowspan=2 class=xl1073364 style='border-bottom:.5pt solid #A6A6A6'>난방급탕</td>
+  <td colspan=2  rowspan=2 class=xl1073364 style='border-bottom:.5pt solid #A6A6A6'>난방급탕</td>
   <td colspan=2 class=xl783364 style='border-right:.5pt solid #A6A6A6;
   border-left:none'>용량</td>
   <td colspan=2 class=xl783364 style='border-right:.5pt solid #A6A6A6;
@@ -1952,7 +1949,7 @@ rt
   border-left:none'>COP</td>
   <td colspan=2 class=xl783364 style='border-right:.5pt solid #A6A6A6;
   border-left:none'>에너지절감률</td>
-  <td colspan=3 rowspan=2 class=xl1013364 style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 rowspan=2 class=xl1013364 style='border-right:.5pt solid #A6A6A6;
   border-bottom:.5pt solid #A6A6A6'>성능 수준</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1973,7 +1970,7 @@ rt
   <td colspan=2 class="xl933364 whp_name0" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 whp_zone0"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 whp_h_w0" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 whp_h_w0" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_power0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_cop_old0" style='border-right:.5pt solid #A6A6A6;
@@ -1982,7 +1979,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_saving0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 whp_point0" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 whp_point0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -1991,7 +1988,7 @@ rt
   <td colspan=2 class="xl933364 whp_name1" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 whp_zone1"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 whp_h_w1" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 whp_h_w1" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_power1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_cop_old1" style='border-right:.5pt solid #A6A6A6;
@@ -2000,7 +1997,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_saving1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 whp_point1" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 whp_point1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -2009,7 +2006,7 @@ rt
   <td colspan=2 class="xl933364 whp_name2" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 whp_zone2"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 whp_h_w2" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 whp_h_w2" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_power2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_cop_old2" style='border-right:.5pt solid #A6A6A6;
@@ -2018,7 +2015,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_saving2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 whp_point2" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 whp_point2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -2027,7 +2024,7 @@ rt
   <td colspan=2 class="xl933364 whp_name3" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 whp_zone3"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 whp_h_w3" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 whp_h_w3" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_power3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_cop_old3" style='border-right:.5pt solid #A6A6A6;
@@ -2036,7 +2033,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_saving3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 whp_point3" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 whp_point3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -2045,7 +2042,7 @@ rt
   <td colspan=2 class="xl933364 whp_name4" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 whp_zone4"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 whp_h_w4" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 whp_h_w4" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_power4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_cop_old4" style='border-right:.5pt solid #A6A6A6;
@@ -2054,7 +2051,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_saving4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 whp_point4" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 whp_point4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -2063,7 +2060,7 @@ rt
   <td colspan=2 class="xl933364 whp_name5" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 whp_zone5"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 whp_h_w5" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 whp_h_w5" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_power5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_cop_old5" style='border-right:.5pt solid #A6A6A6;
@@ -2072,7 +2069,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_saving5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 whp_point5" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 whp_point5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -2081,7 +2078,7 @@ rt
   <td colspan=2 class="xl933364 whp_name6" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 whp_zone6"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 whp_h_w6" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 whp_h_w6" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_power6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_cop_old6" style='border-right:.5pt solid #A6A6A6;
@@ -2090,7 +2087,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_saving6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 whp_point6" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 whp_point6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
@@ -2099,7 +2096,7 @@ rt
   <td colspan=2 class="xl933364 whp_name7" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl933364 whp_zone7"style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td class="xl853364 whp_h_w7" style='border-top:none;border-left:none'>　</td>
+  <td colspan=2 class="xl853364 whp_h_w7" style='border-top:none;border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_power7" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_cop_old7" style='border-right:.5pt solid #A6A6A6;
@@ -2108,14 +2105,13 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_saving7" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 whp_point7" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 whp_point7" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl653364 style='height:20.25pt'>　</td>
-  <td colspan=4 class=xl903364 style='border-right:.5pt solid #A6A6A6'>계</td>
-  <td class=xl853364 style='border-top:none;border-left:none'>　</td>
+  <td colspan=6 class=xl903364 style='border-right:.5pt solid #A6A6A6'>계</td>
   <td colspan=2 class="xl863364 whp_power_total" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_eta_old_total" style='border-right:.5pt solid #A6A6A6;
@@ -2124,7 +2120,7 @@ rt
   border-left:none'>　</td>
   <td colspan=2 class="xl863364 whp_saving_total2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl863364 whp_point_total" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl863364 whp_point_total" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl653364>　</td>
  </tr>

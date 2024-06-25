@@ -11,6 +11,31 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <!--table
 	{mso-displayed-decimal-separator:"\.";
 	mso-displayed-thousand-separator:"\,";}
+
+.cls-sparkline {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 21px;
+  background-image: linear-gradient(to right, #656565, lightgray);
+}
+
+.cls-sparkline-blue {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 21px;
+  background-image: linear-gradient(to right, #0070C0, #D5EDFF);
+}
+.cls-sparkline-red {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 21px;
+  background-image: linear-gradient(to right, #ed6f26, #ffefef);
+}
+
+.cls-sparkline-text {
+  width: 100%;
+  position: relative;
+}
 .font515745
 	{color:windowtext;
 	font-size:8.0pt;
@@ -169,7 +194,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 	background:white;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl7215745
+.xl7221343
 	{padding-top:1px;
 	padding-right:1px;
 	padding-left:1px;
@@ -1010,8 +1035,7 @@ rt
   <td class=xl6615745>　</td>
   <td class=xl6615745>　</td>
   <td class=xl6615745>　</td>
-  <td class=xl7215745>　</td>
-  <td class=xl7215745>　</td>
+  <td class=xl7221343 colspan=2 rowspan="5"><iframe class="ifrm-chart1" src="/chart_ctrl2.html" frameBorder="0" style="width:100%;height:150px;border:0;"></iframe></td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1029,8 +1053,6 @@ rt
   <td class=xl6615745>　</td>
   <td class=xl6615745>　</td>
   <td class=xl6615745>　</td>
-  <td class=xl7215745>　</td>
-  <td class=xl7215745>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1047,8 +1069,6 @@ rt
   <td class=xl6915745>면적</td>
   <td class="xl10615745 air_zonearea">　</td>
   <td class=xl6815745>m<font class="font715745"><sup>2</sup></font></td>
-  <td class=xl7215745>　</td>
-  <td class=xl7215745>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1063,8 +1083,6 @@ rt
   <td class=xl6615745>　</td>
   <td class=xl6815745>　</td>
   <td class=xl6615745>　</td>
-  <td class=xl7215745>　</td>
-  <td class=xl7215745>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1078,8 +1096,6 @@ rt
   <td class=xl6615745>　</td>
   <td class=xl6615745>　</td>
   <td class=xl6615745>　</td>
-  <td class=xl7215745>　</td>
-  <td class=xl7215745>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1103,7 +1119,7 @@ rt
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 rowspan=2 class=xl8115745 style='border-bottom:.5pt solid #A6A6A6'>명칭</td>
+  <td colspan=3 rowspan=2 class=xl8115745 style='border-bottom:.5pt solid #A6A6A6'>명칭</td>
   <td colspan=2 rowspan=2 class=xl7715745 style='border-right:.5pt solid #A6A6A6;
   border-bottom:.5pt solid #A6A6A6'>공급존</td>
   <td colspan=2 class=xl7715745 style='border-right:.5pt solid #A6A6A6;
@@ -1114,7 +1130,7 @@ rt
   border-left:none'>COP</td>
   <td colspan=3 class=xl7715745 style='border-right:.5pt solid #A6A6A6;
   border-left:none'>에너지절감률</td>
-  <td colspan=3 rowspan=2 class=xl9815745 style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 rowspan=2 class=xl9815745 style='border-right:.5pt solid #A6A6A6;
   border-bottom:.5pt solid #A6A6A6'>성능 수준</td>
   <td class=xl6515745>　</td>
  </tr>
@@ -1132,7 +1148,7 @@ rt
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name0" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name0" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power0" style='border-right:.5pt solid #A6A6A6;
@@ -1143,13 +1159,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point0" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name1" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name1" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power1" style='border-right:.5pt solid #A6A6A6;
@@ -1160,13 +1176,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point1" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name2" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name2" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power2" style='border-right:.5pt solid #A6A6A6;
@@ -1177,13 +1193,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point2" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name3" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name3" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power3" style='border-right:.5pt solid #A6A6A6;
@@ -1194,13 +1210,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point3" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name4" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name4" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power4" style='border-right:.5pt solid #A6A6A6;
@@ -1211,13 +1227,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point4" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name5" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name5" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power5" style='border-right:.5pt solid #A6A6A6;
@@ -1228,13 +1244,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point5" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name6" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name6" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power6" style='border-right:.5pt solid #A6A6A6;
@@ -1245,13 +1261,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point6" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name7" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name7" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone7" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power7" style='border-right:.5pt solid #A6A6A6;
@@ -1262,13 +1278,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving7" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point7" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point7" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name8" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name8" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone8" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power8" style='border-right:.5pt solid #A6A6A6;
@@ -1279,13 +1295,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving8" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point8" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point8" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name9" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name9" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone9" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power9" style='border-right:.5pt solid #A6A6A6;
@@ -1296,13 +1312,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving9" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point9" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point9" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name10" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name10" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone10" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power10" style='border-right:.5pt solid #A6A6A6;
@@ -1313,13 +1329,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving10" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point10" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point10" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name11" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name11" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone11" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power11" style='border-right:.5pt solid #A6A6A6;
@@ -1330,13 +1346,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving11" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point11" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point11" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name12" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name12" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone12" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power12" style='border-right:.5pt solid #A6A6A6;
@@ -1347,13 +1363,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving12" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point12" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point12" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name13" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name13" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone13" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power13" style='border-right:.5pt solid #A6A6A6;
@@ -1364,13 +1380,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving13" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point13" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point13" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name14" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name14" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone14" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power14" style='border-right:.5pt solid #A6A6A6;
@@ -1381,13 +1397,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving14" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point14" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point14" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name15" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name15" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone15" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power15" style='border-right:.5pt solid #A6A6A6;
@@ -1398,13 +1414,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving15" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point15" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point15" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name16" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name16" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone16" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power16" style='border-right:.5pt solid #A6A6A6;
@@ -1415,13 +1431,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving16" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point16" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point16" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name17" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name17" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone17" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power17" style='border-right:.5pt solid #A6A6A6;
@@ -1432,13 +1448,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving17" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point17" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point17" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 air_name18" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 air_name18" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 air_zone18" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_power18" style='border-right:.5pt solid #A6A6A6;
@@ -1449,13 +1465,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving18" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point18" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point18" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=4 class=xl8715745 style='border-right:.5pt solid #A6A6A6'>계</td>
+  <td colspan=5 class=xl8715745 style='border-right:.5pt solid #A6A6A6'>계</td>
   <td colspan=2 class="xl8515745 air_power_total" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 air_cop_old_total" style='border-right:.5pt solid #A6A6A6;
@@ -1464,7 +1480,7 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 air_saving_total2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 air_point_total" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 air_point_total" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
@@ -1504,8 +1520,7 @@ rt
   <td class=xl6615745>　</td>
   <td class=xl6615745>　</td>
   <td class=xl6615745>　</td>
-  <td class=xl7215745>　</td>
-  <td class=xl7215745>　</td>
+  <td class=xl7221343 colspan=2 rowspan="5"><iframe class="ifrm-chart1" src="/chart_ctrl2.html" frameBorder="0" style="width:100%;height:150px;border:0;"></iframe></td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1523,8 +1538,6 @@ rt
   <td class=xl6615745>　</td>
   <td class=xl6615745>　</td>
   <td class=xl6615745>　</td>
-  <td class=xl7215745>　</td>
-  <td class=xl7215745>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1541,8 +1554,6 @@ rt
   <td class=xl6915745>면적</td>
   <td class="xl10615745 water_zonearea" >　</td>
   <td class=xl6815745>m<font class="font715745"><sup>2</sup></font></td>
-  <td class=xl7215745>　</td>
-  <td class=xl7215745>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1557,8 +1568,6 @@ rt
   <td class=xl6615745>　</td>
   <td class=xl6815745>　</td>
   <td class=xl6615745>　</td>
-  <td class=xl7215745>　</td>
-  <td class=xl7215745>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1572,8 +1581,6 @@ rt
   <td class=xl6615745>　</td>
   <td class=xl6615745>　</td>
   <td class=xl6615745>　</td>
-  <td class=xl7215745>　</td>
-  <td class=xl7215745>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -1597,7 +1604,7 @@ rt
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 rowspan=2 class=xl8115745 style='border-bottom:.5pt solid #A6A6A6'>명칭</td>
+  <td colspan=3 rowspan=2 class=xl8115745 style='border-bottom:.5pt solid #A6A6A6'>명칭</td>
   <td colspan=2 rowspan=2 class=xl7715745 style='border-right:.5pt solid #A6A6A6;
   border-bottom:.5pt solid #A6A6A6'>공급존</td>
   <td colspan=2 class=xl7715745 style='border-right:.5pt solid #A6A6A6;
@@ -1608,7 +1615,7 @@ rt
   border-left:none'>COP</td>
   <td colspan=3 class=xl7715745 style='border-right:.5pt solid #A6A6A6;
   border-left:none'>에너지절감률</td>
-  <td colspan=3 rowspan=2 class=xl9815745 style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 rowspan=2 class=xl9815745 style='border-right:.5pt solid #A6A6A6;
   border-bottom:.5pt solid #A6A6A6'>성능 수준</td>
   <td class=xl6515745>　</td>
  </tr>
@@ -1626,7 +1633,7 @@ rt
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name0" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name0" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power0" style='border-right:.5pt solid #A6A6A6;
@@ -1637,13 +1644,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point0" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point0" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name1" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name1" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power1" style='border-right:.5pt solid #A6A6A6;
@@ -1654,13 +1661,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point1" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point1" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name2" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name2" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power2" style='border-right:.5pt solid #A6A6A6;
@@ -1671,13 +1678,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point2" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name3" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name3" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power3" style='border-right:.5pt solid #A6A6A6;
@@ -1688,13 +1695,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point3" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point3" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name4" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name4" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power4" style='border-right:.5pt solid #A6A6A6;
@@ -1705,13 +1712,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point4" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point4" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name5" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name5" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power5" style='border-right:.5pt solid #A6A6A6;
@@ -1722,13 +1729,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point5" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point5" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name6" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name6" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power6" style='border-right:.5pt solid #A6A6A6;
@@ -1739,13 +1746,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point6" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point6" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name7" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name7" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone7" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power7" style='border-right:.5pt solid #A6A6A6;
@@ -1756,13 +1763,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving7" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point7" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point7" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name8" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name8" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone8" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power8" style='border-right:.5pt solid #A6A6A6;
@@ -1773,13 +1780,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving8" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point8" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point8" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name9" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name9" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone9" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power9" style='border-right:.5pt solid #A6A6A6;
@@ -1790,13 +1797,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving9" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point9" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point9" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name10" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name10" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone10" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power10" style='border-right:.5pt solid #A6A6A6;
@@ -1807,13 +1814,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving10" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point10" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point10" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name11" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name11" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone11" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power11" style='border-right:.5pt solid #A6A6A6;
@@ -1824,13 +1831,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving11" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point11" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point11" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name12" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name12" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone12" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power12" style='border-right:.5pt solid #A6A6A6;
@@ -1841,13 +1848,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving12" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point12" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point12" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name13" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name13" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone13" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power13" style='border-right:.5pt solid #A6A6A6;
@@ -1858,13 +1865,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving13" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point13" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point13" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name14" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name14" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone14" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power14" style='border-right:.5pt solid #A6A6A6;
@@ -1875,13 +1882,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving14" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point14" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point14" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name15" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name15" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone15" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power15" style='border-right:.5pt solid #A6A6A6;
@@ -1892,13 +1899,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving15" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point15" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point15" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name16" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name16" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone16" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power16" style='border-right:.5pt solid #A6A6A6;
@@ -1909,13 +1916,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving16" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point16" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point16" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=2 class="xl9015745 water_name17" style='border-right:.5pt solid #A6A6A6'>　</td>
+  <td colspan=3 class="xl9015745 water_name17" style='border-right:.5pt solid #A6A6A6'>　</td>
   <td colspan=2 class="xl9015745 water_zone17" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_power17" style='border-right:.5pt solid #A6A6A6;
@@ -1926,13 +1933,13 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving17" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point17" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point17" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6515745 style='height:20.25pt'>　</td>
-  <td colspan=4 class=xl8715745 style='border-right:.5pt solid #A6A6A6'>계</td>
+  <td colspan=5 class=xl8715745 style='border-right:.5pt solid #A6A6A6'>계</td>
   <td colspan=2 class="xl8515745 water_power_total" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td colspan=2 class="xl8515745 water_cop_old_total" style='border-right:.5pt solid #A6A6A6;
@@ -1941,7 +1948,7 @@ rt
   border-left:none'>　</td>
   <td colspan=3 class="xl8515745 water_saving_total2" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
-  <td colspan=3 class="xl8515745 water_point_total" style='border-right:.5pt solid #A6A6A6;
+  <td colspan=2 class="xl8515745 water_point_total" style='border-right:.5pt solid #A6A6A6;
   border-left:none'>　</td>
   <td class=xl6515745>　</td>
  </tr>

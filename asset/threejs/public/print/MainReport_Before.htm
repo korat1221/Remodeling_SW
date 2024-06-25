@@ -20,6 +20,31 @@ x\:* {behavior:url(#default#VML);}
 <!--table
 	{mso-displayed-decimal-separator:"\.";
 	mso-displayed-thousand-separator:"\,";}
+
+.cls-sparkline {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 21px;
+  background-image: linear-gradient(to right, #656565, lightgray);
+}
+
+.cls-sparkline-blue {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 21px;
+  background-image: linear-gradient(to right, #0070C0, #D5EDFF);
+}
+.cls-sparkline-red {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 21px;
+  background-image: linear-gradient(to right, #ed6f26, #ffefef);
+}
+
+.cls-sparkline-text {
+  width: 100%;
+  position: relative;
+}	
 .font518536
 	{color:windowtext;
 	font-size:8.0pt;
@@ -2418,7 +2443,7 @@ Z1BLBQYAAAAABgAGAIQBAABxWAAAAAA=
   <td class=xl8918536 style='border-top:none'>　</td>
   <td class=xl9318536 style='border-top:none'>　</td>
   <td colspan=2 class=xl12218536 style='border-right:.5pt solid #D9D9D9'>개수</td>
-  <td colspan=2 class=xl9318536>용량</td>
+  <td colspan=2 class=xl9318536>총 용량</td>
   <td colspan=3 class=xl12218536 style='border-right:.5pt solid #D9D9D9'>평균 성능</td>
   <td colspan=3 class=xl12218536 style='border-right:.5pt solid #D9D9D9;
   border-left:none'>권장 성능</td>
@@ -2440,90 +2465,95 @@ Z1BLBQYAAAAABgAGAIQBAABxWAAAAAA=
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6518536 style='height:20.25pt'>　</td>
-  <td colspan=2 class=xl7118536>냉난방</td>
-  <td colspan=2 class=xl10218536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=2 class=xl10618536>　</td>
-  <td colspan=3 class=xl10218536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=3 class=xl10518536 style='border-right:.5pt solid #D9D9D9;
+  <td colspan=1 class=xl7118536>난방/급탕</td>
+  <td colspan=1 class=xl7118536>보일러</td>
+  <td colspan=2 class="xl10218536 boiler_count" style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=2 class="xl10618536 boiler_power">　</td>
+  <td colspan=3 class="xl10218536 boiler_eta_avg"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=3 class="xl10518536 boiler_eta_rule"style='border-right:.5pt solid #D9D9D9;
   border-left:none'>　</td>
-  <td colspan=4 class=xl10518536 style='border-left:none'>　</td>
+  <td colspan=4 class="xl10518536 boiler_point"style='border-left:none'>　</td>
   <td class=xl6518536>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6518536 style='height:20.25pt'>　</td>
-  <td colspan=2 class=xl7118536>난방 및 급탕</td>
-  <td colspan=2 class=xl10018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=2 class=xl10918536>　</td>
-  <td colspan=3 class=xl10018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=3 class=xl11118536 style='border-right:.5pt solid #D9D9D9;
+  <td colspan=1 rowspan=3 class=xl7118536>난방/냉방</td>
+  <td colspan=1 class=xl7118536>EHP</td>
+  <td colspan=2 class="xl10018536 ehp_count"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=2 class="xl10918536 ehp_power">　</td>
+  <td colspan=3 class="xl10018536 ehp_cop_avg"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=3 class="xl11118536 ehp_cop_rule"style='border-right:.5pt solid #D9D9D9;
   border-left:none'>　</td>
-  <td colspan=4 class=xl11118536 style='border-left:none'>　</td>
+  <td colspan=4 class="xl11118536 ehp_point"style='border-left:none'>　</td>
   <td class=xl6518536>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6518536 style='height:20.25pt'>　</td>
-  <td colspan=2 class=xl7118536>난방</td>
-  <td colspan=2 class=xl10018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=2 class=xl10918536>　</td>
-  <td colspan=3 class=xl10018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=3 class=xl11118536 style='border-right:.5pt solid #D9D9D9;
+  <td colspan=1 class=xl7118536>GHP</td>
+  <td colspan=2 class="xl10018536 ghp_count"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=2 class="xl10918536 ghp_power">　</td>
+  <td colspan=3 class="xl10018536 ghp_cop_avg"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=3 class="xl11118536 ghp_cop_rule"style='border-right:.5pt solid #D9D9D9;
   border-left:none'>　</td>
-  <td colspan=4 class=xl11118536 style='border-left:none'>　</td>
+  <td colspan=4 class="xl11118536 ghp_point"style='border-left:none'>　</td>
   <td class=xl6518536>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6518536 style='height:20.25pt'>　</td>
-  <td colspan=2 class=xl7118536>냉방</td>
-  <td colspan=2 class=xl10018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=2 class=xl10918536>　</td>
-  <td colspan=3 class=xl10018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=3 class=xl11118536 style='border-right:.5pt solid #D9D9D9;
+  <td colspan=1 class=xl7118536>흡수식</td>
+  <td colspan=2 class="xl10018536 abs_count"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=2 class="xl10918536 abs_power">　</td>
+  <td colspan=3 class="xl10018536 abs_cop_avg"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=3 class="xl11118536 abs_cop_rule"style='border-right:.5pt solid #D9D9D9;
   border-left:none'>　</td>
-  <td colspan=4 class=xl11118536 style='border-left:none'>　</td>
+  <td colspan=4 class="xl11118536 abs_point"style='border-left:none'>　</td>
   <td class=xl6518536>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6518536 style='height:20.25pt'>　</td>
-  <td colspan=2 class=xl7118536>급탕</td>
-  <td colspan=2 class=xl10018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=2 class=xl10918536>　</td>
-  <td colspan=3 class=xl10018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=3 class=xl11118536 style='border-right:.5pt solid #D9D9D9;
+  <td colspan=1 rowspan=2 class=xl7118536>냉방</td>
+  <td colspan=1 class=xl7118536>EHP</td>
+  <td colspan=2 class="xl10018536 airc_count"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=2 class="xl10918536 airc_power">　</td>
+  <td colspan=3 class="xl10018536 airc_cop_avg"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=3 class="xl11118536 airc_cop_rule"style='border-right:.5pt solid #D9D9D9;
   border-left:none'>　</td>
-  <td colspan=4 class=xl11118536 style='border-left:none'>　</td>
+  <td colspan=4 class="xl11118536 airc_point"style='border-left:none'>　</td>
   <td class=xl6518536>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6518536 style='height:20.25pt'>　</td>
-  <td colspan=2 class=xl7118536>조명</td>
-  <td colspan=2 class=xl10018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=2 class=xl10918536>　</td>
-  <td colspan=3 class=xl10018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=3 class=xl11118536 style='border-right:.5pt solid #D9D9D9;
+  <td colspan=1 class=xl7118536>냉동기</td>
+  <td colspan=2 class="xl10018536 chiler_count"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=2 class="xl10918536 chiler_power">　</td>
+  <td colspan=3 class="xl10018536 chiler_cop_avg"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=3 class="xl11118536 chiler_cop_rule"style='border-right:.5pt solid #D9D9D9;
   border-left:none'>　</td>
-  <td colspan=4 class=xl11118536 style='border-left:none'>　</td>
+  <td colspan=4 class="xl11118536 chiler_point"style='border-left:none'>　</td>
   <td class=xl6518536>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6518536 style='height:20.25pt'>　</td>
-  <td colspan=2 class=xl7118536>공조</td>
-  <td colspan=2 class=xl10018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=2 class=xl10918536>　</td>
-  <td colspan=3 class=xl10018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=3 class=xl11118536 style='border-right:.5pt solid #D9D9D9;
+  <td colspan=1 class=xl7118536 >조명</td>
+  <td colspan=1 class=xl7118536></td>
+  <td colspan=2 class="xl10018536 light_count"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=2 class="xl10918536 light_power">　</td>
+  <td colspan=3 class="xl10018536 light_eta_avg"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=3 class="xl11118536 light_eta_rule"style='border-right:.5pt solid #D9D9D9;
   border-left:none'>　</td>
-  <td colspan=4 class=xl11118536 style='border-left:none'>　</td>
+  <td colspan=4 class="xl11118536 light_point"style='border-left:none'>　</td>
   <td class=xl6518536>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6518536 style='height:20.25pt'>　</td>
-  <td colspan=2 class=xl9218536>신재생</td>
-  <td colspan=2 class=xl13018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=2 class=xl10818536>　</td>
-  <td colspan=3 class=xl13018536 style='border-right:.5pt solid #D9D9D9'>　</td>
-  <td colspan=3 class=xl11418536 style='border-right:.5pt solid #D9D9D9;
+  <td colspan=1 class=xl9218536>신재생</td>
+  <td colspan=1 class=xl9218536>PV</td>
+  <td colspan=2 class="xl13018536 pv_count"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=2 class="xl10818536 pv_power">　</td>
+  <td colspan=3 class="xl13018536 pv_eta_avg"style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td colspan=3 class="xl11418536 pv_eta_rule"style='border-right:.5pt solid #D9D9D9;
   border-left:none'>　</td>
-  <td colspan=4 class=xl11418536 style='border-left:none'>　</td>
+  <td colspan=4 class="xl11418536 pv_point"style='border-left:none'>　</td>
   <td class=xl6518536>　</td>
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
@@ -2564,15 +2594,15 @@ Z1BLBQYAAAAABgAGAIQBAABxWAAAAAA=
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6518536 style='height:20.25pt'>　</td>
-  <td class=xl6718536>　</td>
+  <td class=xl6718536>에너지소요량　</td>
   <td colspan=2 class="xl13818536 qfa" style='border-right:.5pt solid #D9D9D9'>　</td>
   <td class=xl6718536><font class="font718536">kWh</font><font
   class="font618536">/</font><font class="font718536">a</font></td>
+  <td colspan=2 class="xl13818536 qfa_area" style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td class=xl6718536 colspan=2>kWh/m<font class="font1018536"><sup>2</sup></font><font
+  class="font718536">·a</font></td>
   <td class=xl7718536>　</td>
-  <td class=xl7118536>　</td>
-  <td class=xl7118536>　</td>
-  <td class=xl7718536>　</td>
-  <td class=xl6718536><span style='mso-spacerun:yes'> </span></td>
+  <td class=xl6718536>tCO2<span style='mso-spacerun:yes'> </span></td>
   <td colspan=2 class="xl14018536 tco2" style='border-right:.5pt solid #D9D9D9'>　</td>
   <td class=xl6718536><span style='mso-spacerun:yes'> </span>tCO2/a</td>
   <td class=xl7818536>　</td>
@@ -2583,14 +2613,15 @@ Z1BLBQYAAAAABgAGAIQBAABxWAAAAAA=
  </tr>
  <tr height=27 style='mso-height-source:userset;height:20.25pt'>
   <td height=27 class=xl6518536 style='height:20.25pt'>　</td>
-  <td class=xl7518536>　</td>
-  <td colspan=2 class="xl14418536 qfa_area" style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td class=xl7518536>1차에너지</td>
+  <td colspan=2 class="xl14418536 qpa" style='border-right:.5pt solid #D9D9D9'>　</td>
+  <td class=xl7518536><font class="font718536">kWh</font><font
+  class="font618536">/</font><font class="font718536">a</font></td>
+  <td colspan=2 class="xl14418536 qpa_area" style='border-right:.5pt solid #D9D9D9'>　</td>
   <td class=xl7518536 colspan=2>kWh/m<font class="font1018536"><sup>2</sup></font><font
   class="font718536">·a</font></td>
-  <td class=xl7618536>　</td>
-  <td class=xl7618536>　</td>
   <td class=xl7618536 >　</td>
-  <td class=xl7518536><span style='mso-spacerun:yes'> </span></td>
+  <td class=xl7518536>TOE<span style='mso-spacerun:yes'> </span></td>
   <td colspan=2 class="xl14418536 TOE" style='border-right:.5pt solid #D9D9D9'>　</td>
   <td class=xl7518536><span style='mso-spacerun:yes'> </span>TOE/a</td>
   <td class=xl8018536>　</td>

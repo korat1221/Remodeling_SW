@@ -1,4 +1,5 @@
-﻿using main.subcontents.CoolingSystem;
+﻿using main.contents.Result.Element_Report;
+using main.subcontents.CoolingSystem;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -80,6 +81,8 @@ namespace main.contents.Result.Building_Report
         private void Report_Before()
         {
             string s, s2;
+            double d;
+            string sp;
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
 
             List<object> items = new List<object>();
@@ -157,8 +160,13 @@ namespace main.contents.Result.Building_Report
                     RuleValue = RuleValue / Total_Area;
                     __data[13].Add(new { idx = i, val = Total_Area.ToString("0.0") }); //외벽 면적
                     __data[14].Add(new { idx = i, val = Uvalue.ToString("0.00") }); //외벽 유효 열관류율
-                    __data[15].Add(new { idx = i, val = RuleValue.ToString("0.00") }); //외벽 법규 열관류율     
-                    __data[47].Add(new { idx = i, val = (RuleValue / Uvalue * 100).ToString("0") + " 점" }); //외벽 법규 열관류율                     
+                    __data[15].Add(new { idx = i, val = RuleValue.ToString("0.00") }); //외벽 법규 열관류율
+                    d = RuleValue / Uvalue * 100;if(d>=100){d=100;}
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[47].Add(new { idx = i, val = sp }); //법규 열관류율                     
                 }
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "wall_count", data = __data[12] });
@@ -189,7 +197,12 @@ namespace main.contents.Result.Building_Report
                     __data[17].Add(new { idx = i, val = Total_Area.ToString("0.0") }); //지붕 면적
                     __data[18].Add(new { idx = i, val = Uvalue.ToString("0.00") }); //지붕 유효 열관류율
                     __data[19].Add(new { idx = i, val = RuleValue.ToString("0.00") }); //지붕 법규 열관류율     
-                    __data[48].Add(new { idx = i, val = (RuleValue / Uvalue * 100).ToString("0") + " 점" }); //지붕 법규 열관류율                   
+                    d = RuleValue / Uvalue * 100;if(d>=100){d=100;}
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[48].Add(new { idx = i, val = sp }); //법규 열관류율                
                 }
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "roof_count", data = __data[16] });
@@ -220,7 +233,12 @@ namespace main.contents.Result.Building_Report
                     __data[21].Add(new { idx = i, val = Total_Area.ToString("0.0") }); //바닥 면적
                     __data[22].Add(new { idx = i, val = Uvalue.ToString("0.00") }); //바닥 유효 열관류율
                     __data[23].Add(new { idx = i, val = RuleValue.ToString("0.00") }); //바닥 법규 열관류율  
-                    __data[49].Add(new { idx = i, val = (RuleValue / Uvalue * 100).ToString("0") + " 점" }); //바닥 법규 열관류율                      
+                    d = RuleValue / Uvalue * 100;if(d>=100){d=100;}
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[49].Add(new { idx = i, val = sp }); //법규 열관류율                   
                 }
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "floor_count", data = __data[20] });
@@ -251,7 +269,12 @@ namespace main.contents.Result.Building_Report
                     __data[25].Add(new { idx = i, val = Total_Area.ToString("0.0") }); //창호 면적
                     __data[26].Add(new { idx = i, val = Uvalue.ToString("0.00") }); //창호 유효 열관류율
                     __data[27].Add(new { idx = i, val = RuleValue.ToString("0.00") }); //창호 법규 열관류율  
-                    __data[50].Add(new { idx = i, val = (RuleValue / Uvalue * 100).ToString("0") + " 점" }); //창호 법규 열관류율                      
+                    d = RuleValue / Uvalue * 100;if(d>=100){d=100;}
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[50].Add(new { idx = i, val = sp }); //법규 열관류율               
                 }
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "win_count", data = __data[24] });
@@ -303,8 +326,13 @@ namespace main.contents.Result.Building_Report
                 __data[29].Add(new { idx = i, val = Total_Area_CW.ToString("0.0") }); //커튼월창 면적
                 __data[30].Add(new { idx = i, val = Uvalue_CW.ToString("0.00") }); //커튼월창 유효 열관류율
                 __data[31].Add(new { idx = i, val = RuleValue_CW.ToString("0.00") }); //커튼월창 법규 열관류율 
-                __data[51].Add(new { idx = i, val = (RuleValue_CW / Uvalue_CW * 100).ToString("0") + " 점" }); //커튼월창 법규 열관류율     
-                                                                                                              ////////////////////////////////////////////////////////////////////
+                d = RuleValue_CW / Uvalue_CW * 100; if (d >= 100) { d = 100; }
+                if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                __data[51].Add(new { idx = i, val = sp }); //법규 열관류율   
+
                 data.Add(new { cname = "cw_count", data = __data[28] });
                 data.Add(new { cname = "cw_area", data = __data[29] });
                 data.Add(new { cname = "cw_uvalue", data = __data[30] });
@@ -333,7 +361,12 @@ namespace main.contents.Result.Building_Report
                     __data[33].Add(new { idx = i, val = Total_Area.ToString("0.0") }); //출입문 면적
                     __data[34].Add(new { idx = i, val = Uvalue.ToString("0.00") }); //출입문 유효 열관류율
                     __data[35].Add(new { idx = i, val = RuleValue.ToString("0.00") }); //출입문 법규 열관류율   
-                    __data[52].Add(new { idx = i, val = (RuleValue / Uvalue * 100).ToString("0") + " 점" }); //출입문 법규 열관류율                     
+                    d = RuleValue / Uvalue * 100;if(d>=100){d=100;}
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[52].Add(new { idx = i, val = sp }); //법규 열관류율     
                 }
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "door_count", data = __data[32] });
@@ -358,7 +391,7 @@ namespace main.contents.Result.Building_Report
                         조명[mth] = Convert.ToDouble(Final1[0][3]);
                         공조[mth] = Convert.ToDouble(Final1[0][4]);
                         신재생[mth] = Convert.ToDouble(Final1[0][6]);
-                        총전기[mth] = Convert.ToDouble(Final1[0][7]);
+                        총전기[mth] = Convert.ToDouble(Final1[0][7]) - Convert.ToDouble(Final1[0][5]);
                     }
                     if (Final2.Length > 0)
                     {
@@ -368,7 +401,7 @@ namespace main.contents.Result.Building_Report
                         조명[mth] = 조명[mth] + Convert.ToDouble(Final2[0][3]);
                         공조[mth] = 공조[mth] + Convert.ToDouble(Final2[0][4]);
                         신재생[mth] = 신재생[mth] + Convert.ToDouble(Final2[0][6]);
-                        총가스[mth] = Convert.ToDouble(Final2[0][7]);
+                        총가스[mth] = Convert.ToDouble(Final2[0][7]) - Convert.ToDouble(Final2[0][5]);
                     }
 
                     총소요량[mth] = 총전기[mth] + 총가스[mth];
@@ -388,6 +421,7 @@ namespace main.contents.Result.Building_Report
                 }
                 double tCO2 = 연간전기 * 0.4747 / 1000000 * 1000 + 연간가스 / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
                 double TOE = 연간전기 * 0.00023 + 연간가스 / 43.1 / 0.277778 * 0.00103;
+                double 연간1차 = 연간전기 * 2.75 + 연간가스  * 1.1;
                 double Area = 0;
                 string[][] A = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "냉난방유무 <> '비냉난방'");
                 if (A.Length > 0)
@@ -397,10 +431,12 @@ namespace main.contents.Result.Building_Report
                         Area += Convert.ToDouble(A[a][0]);
                     }
                 }
-                __data[43].Add(new { idx = i, val = 연간소요량.ToString("0.0") });
+                __data[43].Add(new { idx = i, val = (연간소요량).ToString("0.0") });
                 __data[44].Add(new { idx = i, val = (연간소요량 / Area).ToString("0.0") });
                 __data[45].Add(new { idx = i, val = tCO2.ToString("0.0") });
                 __data[46].Add(new { idx = i, val = TOE.ToString("0.0") });
+                __data[53].Add(new { idx = i, val = (연간1차).ToString("0.0") });
+                __data[54].Add(new { idx = i, val = (연간1차 / Area).ToString("0.0") });
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "qh_mth", data = __data[36] });
                 data.Add(new { cname = "qc_mth", data = __data[37] });
@@ -413,6 +449,8 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "qfa_area", data = __data[44] });
                 data.Add(new { cname = "tco2", data = __data[45] });
                 data.Add(new { cname = "toe", data = __data[46] });
+                data.Add(new { cname = "qpa", data = __data[53] });
+                data.Add(new { cname = "qpa_area", data = __data[54] });
 
                 List<object> 난방소요량chart = new List<object>();
                 List<object> 냉방소요량chart = new List<object>();
@@ -435,6 +473,360 @@ namespace main.contents.Result.Building_Report
                 chart_공조소요량.Add(System.Text.Json.JsonSerializer.Serialize(공조소요량chart.ToArray()));
                 chart_공조소요량.Add(System.Text.Json.JsonSerializer.Serialize(공조소요량chart.ToArray()));
                 #endregion
+
+                #region 보일러정보   
+                double boiler_count = 0; double boiler_power = 0; double boiler_eta_avg = 0; double boiler_eta_rule = 0; double boiler_point = 0;
+                string[][] Value1 = Program.DB.querySQL(DB.type.ProjDB, "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.보일러대수 From User_Boiler as a Inner Join HeatingSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='난방+급탕'");
+                if (Value1.Length> 0)
+                {
+                    for(int a=0; a<Value1.Length;a++)
+                    {
+                        boiler_count += Convert.ToDouble(Value1[a][7]);
+                        boiler_power += Convert.ToDouble(Value1[a][3]) * Convert.ToDouble(Value1[a][7]);
+                        boiler_eta_avg += Convert.ToDouble(Value1[a][4]) * Convert.ToDouble(Value1[a][3]) * Convert.ToDouble(Value1[a][7]);
+                    }
+                }
+                string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.보일러대수 From User_Boiler as a Inner Join HeatingSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='난방'");
+                if (Value2.Length > 0)
+                {
+                    for (int a = 0; a < Value2.Length; a++)
+                    {
+                        boiler_count += Convert.ToDouble(Value2[a][7]);
+                        boiler_power += Convert.ToDouble(Value2[a][3]) * Convert.ToDouble(Value2[a][7]);
+                        boiler_eta_avg += Convert.ToDouble(Value2[a][4]) * Convert.ToDouble(Value2[a][3]) * Convert.ToDouble(Value2[a][7]);
+                    }
+                }
+                string[][] Value3 = Program.DB.querySQL(DB.type.ProjDB, "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.보일러대수 From User_Boiler as a Inner Join DHWSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='급탕'");
+                if (Value3.Length > 0)
+                {
+                    for (int a = 0; a < Value3.Length; a++)
+                    {
+                        boiler_count += Convert.ToDouble(Value3[a][7]);
+                        boiler_power += Convert.ToDouble(Value3[a][3])* Convert.ToDouble(Value3[a][7]);
+                        boiler_eta_avg += Convert.ToDouble(Value3[a][4]) * Convert.ToDouble(Value3[a][3])* Convert.ToDouble(Value3[a][7]);
+                    }
+                }
+                if (boiler_count > 0)
+                {
+                    boiler_eta_avg = boiler_eta_avg / boiler_power;
+                    boiler_eta_rule = 90;
+                    boiler_point = Math.Min(100, boiler_eta_avg / boiler_eta_rule * 100);
+                    __data[55].Add(new { idx = i, val = boiler_count.ToString("0") }); //보일러 개수 
+                    __data[56].Add(new { idx = i, val = boiler_power.ToString("0.0") }); //보일러 용량
+                    __data[57].Add(new { idx = i, val = boiler_eta_avg.ToString("0.0") + " %" }); //보일러 효율
+                    __data[58].Add(new { idx = i, val = boiler_eta_rule.ToString("0.0") + " %" }); //보일러 권장 효율 
+                    d = boiler_point;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[59].Add(new { idx = i, val = sp }); //성능점수       
+                }
+                else
+                {
+                    __data[55].Add(new { idx = i, val = "-" }); //보일러 개수 
+                    __data[56].Add(new { idx = i, val = "-" }); //보일러 용량
+                    __data[57].Add(new { idx = i, val = "-" }); //보일러 효율
+                    __data[58].Add(new { idx = i, val = "-" }); //보일러 권장 효율    
+                    __data[59].Add(new { idx = i, val = "-" }); //성능점수       
+                }               
+                data.Add(new { cname = "boiler_count", data = __data[55] });
+                data.Add(new { cname = "boiler_power", data = __data[56] });
+                data.Add(new { cname = "boiler_eta_avg", data = __data[57] });
+                data.Add(new { cname = "boiler_eta_rule", data = __data[58] });
+                data.Add(new { cname = "boiler_point", data = __data[59] });
+                #endregion
+                #region 냉난방EHP정보   
+                double ehp_count = 0; double ehp_power = 0; double ehp_cop_avg = 0; double ehp_cop_rule = 0; double ehp_point = 0;
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.외기히트펌프번호,a.명칭,b.존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호,b.외기히트펌프대수 From User_AirHP as a Inner Join HeatingSystem_Form as b ON a.번호 = b.외기히트펌프번호 Where a.난방냉방='냉난방' And a.연료='전기'");
+                if (Value.Length > 0)
+                {
+                    for (int a = 0; a < Value.Length; a++)
+                    {
+                        ehp_count += Convert.ToDouble(Value[a][8]);
+                        ehp_power += Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                        ehp_cop_avg += Convert.ToDouble(Value[a][4]) * Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                    }
+                    ehp_cop_avg = ehp_cop_avg / ehp_power;
+                    ehp_cop_rule = 5.5;
+                    ehp_point = Math.Min(100, ehp_cop_avg / ehp_cop_rule * 100);
+                    __data[60].Add(new { idx = i, val = ehp_count.ToString("0") }); //개수 
+                    __data[61].Add(new { idx = i, val = ehp_power.ToString("0.0") }); //용량
+                    __data[62].Add(new { idx = i, val = ehp_cop_avg.ToString("0.0") + " W/W" }); //성능
+                    __data[63].Add(new { idx = i, val = ehp_cop_rule.ToString("0.0") + " W/W" }); //권장 성능                
+                    d = ehp_point;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[64].Add(new { idx = i, val = sp }); //성능점수       
+                    
+                }
+                else
+                {
+                    __data[60].Add(new { idx = i, val = "-" }); //개수 
+                    __data[61].Add(new { idx = i, val = "-" }); //용량
+                    __data[62].Add(new { idx = i, val = "-" }); //성능
+                    __data[63].Add(new { idx = i, val = "-" }); //권장 성능  
+                    __data[64].Add(new { idx = i, val = "-" }); //성능점수       
+                }
+                data.Add(new { cname = "ehp_count", data = __data[60] });
+                data.Add(new { cname = "ehp_power", data = __data[61] });
+                data.Add(new { cname = "ehp_cop_avg", data = __data[62] });
+                data.Add(new { cname = "ehp_cop_rule", data = __data[63] });
+                data.Add(new { cname = "ehp_point", data = __data[64] });
+                #endregion
+                #region 냉난방GHP정보   
+                double ghp_count = 0; double ghp_power = 0; double ghp_cop_avg = 0; double ghp_cop_rule = 0; double ghp_point = 0;
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.외기히트펌프번호,a.명칭,b.존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호,b.외기히트펌프대수  From User_AirHP as a Inner Join HeatingSystem_Form as b ON a.번호 = b.외기히트펌프번호 Where a.난방냉방='냉난방' And NOT a.연료='전기'");
+                if (Value.Length > 0)
+                {
+                    for (int a = 0; a < Value.Length; a++)
+                    {
+                        ghp_count += Convert.ToDouble(Value[a][8]);
+                        ghp_power += Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                        ghp_cop_avg += Convert.ToDouble(Value[a][4]) * Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                    }
+                    ghp_cop_avg = ghp_cop_avg / ghp_power;
+                    ghp_cop_rule = 5.5;
+                    ghp_point = Math.Min(100, ghp_cop_avg / ghp_cop_rule * 100);
+                    __data[65].Add(new { idx = i, val = ghp_count.ToString("0") }); //개수 
+                    __data[66].Add(new { idx = i, val = ghp_power.ToString("0.0") }); //용량
+                    __data[67].Add(new { idx = i, val = ghp_cop_avg.ToString("0.0") + " W/W" }); //성능
+                    __data[68].Add(new { idx = i, val = ghp_cop_rule.ToString("0.0") + " W/W" }); //권장 성능                
+                    d = ghp_point;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[69].Add(new { idx = i, val = sp }); //성능점수       
+                   
+                }
+                else
+                {
+                    __data[65].Add(new { idx = i, val = "-" }); //개수 
+                    __data[66].Add(new { idx = i, val = "-" }); //용량
+                    __data[67].Add(new { idx = i, val = "-" }); //성능
+                    __data[68].Add(new { idx = i, val = "-" }); //권장 성능      
+                    __data[69].Add(new { idx = i, val = "-" }); //성능점수       
+                }
+                data.Add(new { cname = "ghp_count", data = __data[65] });
+                data.Add(new { cname = "ghp_power", data = __data[66] });
+                data.Add(new { cname = "ghp_cop_avg", data = __data[67] });
+                data.Add(new { cname = "ghp_cop_rule", data = __data[68] });
+                data.Add(new { cname = "ghp_point", data = __data[69] });
+                #endregion
+                #region 흡수식냉온수기정보   
+                double abs_count = 0; double abs_power = 0; double abs_cop_avg = 0; double abs_cop_rule = 0; double abs_point = 0;
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.흡수식온수기번호,a.명칭,b.존,a.난방용량,a.난방성능,a.냉방용량,a.냉방성능,b.번호,b.흡수식온수기대수 From User_ABS as a Inner Join HeatingSystem_Form as b ON a.번호 = b.흡수식온수기번호 Where a.난방냉방='냉난방'");
+                if (Value.Length > 0)
+                {
+                    for (int a = 0; a < Value.Length; a++)
+                    {
+                        abs_count += Convert.ToDouble(Value[a][8]);
+                        abs_power += Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                        abs_cop_avg += Convert.ToDouble(Value[a][4]) * Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                    }
+                    abs_cop_avg = abs_cop_avg / abs_power;
+                    abs_cop_rule = 5.5;
+                    abs_point = Math.Min(100, abs_cop_avg / abs_cop_rule * 100);
+                    __data[70].Add(new { idx = i, val = abs_count.ToString("0") }); //개수 
+                    __data[71].Add(new { idx = i, val = abs_power.ToString("0.0") }); //용량
+                    __data[72].Add(new { idx = i, val = abs_cop_avg.ToString("0.0") + " W/W" }); //성능
+                    __data[73].Add(new { idx = i, val = abs_cop_rule.ToString("0.0") + " W/W" }); //권장 성능                
+                    d = abs_point;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[74].Add(new { idx = i, val = sp }); //성능점수                         
+                }
+                else
+                {
+                    __data[70].Add(new { idx = i, val = "-" }); //개수 
+                    __data[71].Add(new { idx = i, val = "-" }); //용량
+                    __data[72].Add(new { idx = i, val = "-" }); //성능
+                    __data[73].Add(new { idx = i, val = "-" }); //권장 성능      
+                    __data[74].Add(new { idx = i, val = "-" }); //성능점수                 
+                }
+                data.Add(new { cname = "abs_count", data = __data[70] });
+                data.Add(new { cname = "abs_power", data = __data[71] });
+                data.Add(new { cname = "abs_cop_avg", data = __data[72] });
+                data.Add(new { cname = "abs_cop_rule", data = __data[73] });
+                data.Add(new { cname = "abs_point", data = __data[74] });
+                #endregion
+                #region 에어컨정보   
+                double airc_count = 0; double airc_power = 0; double airc_cop_avg = 0; double airc_cop_rule = 0; double airc_point = 0;
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.냉방유닛,a.명칭,b.공급존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호,b.설치대수 From User_AirHP as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛 Where a.난방냉방='냉방' And a.연료='전기'");
+                if (Value.Length > 0)
+                {
+                    for (int a = 0; a < Value.Length; a++)
+                    {
+                        airc_count += Convert.ToDouble(Value[a][8]);
+                        airc_power += Convert.ToDouble(Value[a][5])* Convert.ToDouble(Value[a][8]);
+                        airc_cop_avg += Convert.ToDouble(Value[a][6]) * Convert.ToDouble(Value[a][5])* Convert.ToDouble(Value[a][8]);
+                    }
+                    airc_cop_avg = airc_cop_avg / airc_power;
+                    airc_cop_rule = 5.5;
+                    airc_point = Math.Min(100, airc_cop_avg / airc_cop_rule * 100);
+                    __data[75].Add(new { idx = i, val = airc_count.ToString("0") }); //개수 
+                    __data[76].Add(new { idx = i, val = airc_power.ToString("0.0") }); //용량
+                    __data[77].Add(new { idx = i, val = airc_cop_avg.ToString("0.0") + " W/W" }); //성능
+                    __data[78].Add(new { idx = i, val = airc_cop_rule.ToString("0.0") + " W/W" }); //권장 성능                
+                    d = airc_point;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[79].Add(new { idx = i, val = sp }); //성능점수    
+                }
+                else
+                {
+                    __data[75].Add(new { idx = i, val = "-" }); //개수 
+                    __data[76].Add(new { idx = i, val = "-" }); //용량
+                    __data[77].Add(new { idx = i, val = "-" }); //성능
+                    __data[78].Add(new { idx = i, val = "-" }); //권장 성능       
+                    __data[79].Add(new { idx = i, val = "-" }); //성능점수             
+                }
+                data.Add(new { cname = "airc_count", data = __data[75] });
+                data.Add(new { cname = "airc_power", data = __data[76] });
+                data.Add(new { cname = "airc_cop_avg", data = __data[77] });
+                data.Add(new { cname = "airc_cop_rule", data = __data[78] });
+                data.Add(new { cname = "airc_point", data = __data[79] });
+                #endregion
+                #region 냉동기정보   
+                double chiler_count = 0; double chiler_power = 0; double chiler_cop_avg = 0; double chiler_cop_rule = 0; double chiler_point = 0;
+                string[][] Value11 = Program.DB.querySQL(DB.type.ProjDB, "Select b.냉방유닛,a.명칭,b.공급존,a.냉방출력,a.EER,b.번호,b.설치대수 From User_AirCooler as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛");
+                if (Value1.Length > 0)
+                { 
+                    for (int a = 0; a < Value11.Length; a++)
+                    {
+                        chiler_count += Convert.ToDouble(Value11[a][6]);
+                        chiler_power += Convert.ToDouble(Value11[a][3])* Convert.ToDouble(Value11[a][6]);
+                        chiler_cop_avg += Convert.ToDouble(Value11[a][4]) * Convert.ToDouble(Value11[a][3])* Convert.ToDouble(Value11[a][6]);
+                    }
+                }
+                string[][] Value12 = Program.DB.querySQL(DB.type.ProjDB, "Select b.냉방유닛,a.명칭,b.공급존,a.냉방출력,a.EER,b.번호,b.설치대수 From User_WaterCooler as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛");
+                if (Value2.Length > 0)
+                {
+                    for (int a = 0; a < Value12.Length; a++)
+                    {
+                        chiler_count += Convert.ToDouble(Value12[a][6]);
+                        chiler_power += Convert.ToDouble(Value12[a][3])* Convert.ToDouble(Value12[a][6]);
+                        chiler_cop_avg += Convert.ToDouble(Value12[a][4]) * Convert.ToDouble(Value12[a][3])* Convert.ToDouble(Value12[a][6]);
+                    }
+                }
+                if (Value11.Length > 0 || Value12.Length >0)
+                {
+                    chiler_cop_avg = chiler_cop_avg / chiler_power;
+                    chiler_cop_rule = 5.5;
+                    chiler_point = Math.Min(100, chiler_cop_avg / chiler_cop_rule * 100);
+                    __data[80].Add(new { idx = i, val = chiler_count.ToString("0") }); //개수 
+                    __data[81].Add(new { idx = i, val = chiler_power.ToString("0.0") }); //용량
+                    __data[82].Add(new { idx = i, val = chiler_cop_avg.ToString("0.0") + " W/W" }); //성능
+                    __data[83].Add(new { idx = i, val = chiler_cop_rule.ToString("0.0") + " W/W" }); //권장 성능                
+                    d = chiler_point;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[84].Add(new { idx = i, val = sp }); //성능점수    
+                }
+                else
+                {
+                    __data[80].Add(new { idx = i, val = "-" }); //개수 
+                    __data[81].Add(new { idx = i, val = "-" }); //용량
+                    __data[82].Add(new { idx = i, val = "-" }); //성능
+                    __data[83].Add(new { idx = i, val = "-" }); //권장 성능 
+                    __data[84].Add(new { idx = i, val = "-" }); //성능점수    
+                }
+                data.Add(new { cname = "chiler_count", data = __data[81] });
+                data.Add(new { cname = "chiler_power", data = __data[82] });
+                data.Add(new { cname = "chiler_cop_avg", data = __data[83] });
+                data.Add(new { cname = "chiler_cop_rule", data = __data[84] });
+                data.Add(new { cname = "chiler_point", data = __data[85] });
+                #endregion
+                #region 조명정보   
+                string light_count; double light_density = 0; double light_eta_avg = 0; double light_eta_rule = 0; double light_point = 0; double light_area = 0;
+                Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneLighting_form", "조명번호");                
+                if (Value.Length > 0)
+                {
+                    light_count = "-";
+                    for (int a = 0; a < Value.Length; a++)
+                    {
+                        string[][] 조명존 = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.순바닥면적,a.조명밀도,a.등기구명칭,a.광효율,a.자연채광유형,b.기존존 From ZoneLighting_form as a Inner Join ZoneGeneral_Form as b on a.번호 =b.존번호 where a.조명번호='" + Value[a][0] + "'");
+                        if (조명존.Length > 0)
+                        {
+                            for (int aa = 0; aa < 조명존.Length; aa++)
+                            {
+                                light_area = Convert.ToDouble(조명존[aa][1]);
+                                light_density = Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][2]);
+                                light_eta_avg = Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][4]);
+                            }
+                        }
+                    }
+                    light_density = light_density / light_area;
+                    light_eta_avg = light_eta_avg / light_area;
+                    light_eta_rule = 70;
+                    light_point = Math.Min(100, light_eta_avg / light_eta_rule * 100);
+                    __data[85].Add(new { idx = i, val = light_count}); //개수 
+                    __data[86].Add(new { idx = i, val = light_density.ToString("0.0")+ " W/m²" }); //용량
+                    __data[87].Add(new { idx = i, val = light_eta_avg.ToString("0")+ " lm/W" }); //성능
+                    __data[88].Add(new { idx = i, val = light_eta_rule.ToString("0") + " lm/W" }); //권장 성능                
+                    d = light_point;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[89].Add(new { idx = i, val = sp }); //성능점수       
+                    data.Add(new { cname = "light_count", data = __data[85] });
+                    data.Add(new { cname = "light_power", data = __data[86] });
+                    data.Add(new { cname = "light_eta_avg", data = __data[87] });
+                    data.Add(new { cname = "light_eta_rule", data = __data[88] });
+                    data.Add(new { cname = "light_point", data = __data[89] });
+                }
+
+                #endregion
+                #region 태양광정보   
+                double pv_count = 0; double pv_power = 0; double pv_eta_avg = 0; string pv_eta_rule = "-"; double pv_point = 0;
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.명칭,a.모듈번호,a.가로개수,a.세로개수,a.용량,a.면적,b.CELLTYPE,b.Kpk From PV_Form as a inner Join User_PVModule as b on a.모듈번호=b.번호");
+                if (Value.Length > 0)
+                {
+                   
+                    for (int a = 0; a < Value.Length; a++)
+                    {
+                        pv_count += Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][4]) ;
+                        pv_power += Convert.ToDouble(Value[a][5]);
+                        pv_eta_avg += Convert.ToDouble(Value[a][8]) * Convert.ToDouble(Value[a][5]);
+                    }
+                    pv_eta_avg = pv_eta_avg / pv_power;
+                    pv_point = 100;
+                    __data[80].Add(new { idx = i, val = pv_count.ToString("0") }); //개수 
+                    __data[81].Add(new { idx = i, val = pv_power.ToString("0.0") }); //용량
+                    __data[82].Add(new { idx = i, val = pv_eta_avg.ToString("0.00")+ " kW/m²" }); //성능
+                    __data[83].Add(new { idx = i, val = pv_eta_rule.ToString() }); //권장 성능                
+                    d = pv_point;
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[84].Add(new { idx = i, val = sp }); //성능점수    
+                }
+                else
+                {
+                    __data[81].Add(new { idx = i, val = "-" }); //개수 
+                    __data[82].Add(new { idx = i, val = "-" }); //용량
+                    __data[83].Add(new { idx = i, val = "-" }); //성능
+                    __data[84].Add(new { idx = i, val = "-" }); //권장 성능       
+                    __data[85].Add(new { idx = i, val = "-" }); //성능점수             
+                }
+                data.Add(new { cname = "pv_count", data = __data[81] });
+                data.Add(new { cname = "pv_power", data = __data[82] });
+                data.Add(new { cname = "pv_eta_avg", data = __data[83] });
+                data.Add(new { cname = "pv_eta_rule", data = __data[84] });
+                data.Add(new { cname = "pv_point", data = __data[85] });
+                #endregion
+
 
                 items.Add("MainReport_Before.htm");
                 s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
@@ -464,6 +856,8 @@ namespace main.contents.Result.Building_Report
         private void Report_After()
         {
             string s, s2;
+            double d;
+            string sp;
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
             string[][] res = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기존프로젝트");
             List<object> items = new List<object>();
@@ -544,12 +938,18 @@ namespace main.contents.Result.Building_Report
                         RuleValue = RuleValue / Total_Area;
                         __data[13].Add(new { idx = i, val = Total_Area.ToString("0.0") }); //외벽 면적
                         __data[14].Add(new { idx = i, val = Uvalue.ToString("0.00") }); //외벽 유효 열관류율
-                        __data[15].Add(new { idx = i, val = (RuleValue / Uvalue * 100).ToString("0") + " 점" }); //외벽 법규 열관류율                   
+                        d = RuleValue / Uvalue * 100;if(d>=100){d=100;}
+                        if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        __data[15].Add(new { idx = i, val = sp }); //법규 열관류율             
                     }
                     data.Add(new { cname = "wall_count_after", data = __data[12] });
                     data.Add(new { cname = "wall_area_after", data = __data[13] });
                     data.Add(new { cname = "wall_uvalue_after", data = __data[14] });
                     data.Add(new { cname = "wall_rulevalue", data = __data[15] });
+                   
                     ////////////////////////////////////////////////////////////////////
                     //리모델링전
                     Value = Program.DB.querySQL(res[0][0], "SELECT DISTINCT  구조체번호 FROM ZoneEnvelope_3D WHERE 외피유형 = '외벽'");
@@ -596,7 +996,12 @@ namespace main.contents.Result.Building_Report
                         RuleValue = RuleValue / Total_Area;
                         __data[20].Add(new { idx = i, val = Total_Area.ToString("0.0") }); //지붕 면적
                         __data[21].Add(new { idx = i, val = Uvalue.ToString("0.00") }); //지붕 유효 열관류율
-                        __data[22].Add(new { idx = i, val = (RuleValue / Uvalue * 100).ToString("0") + " 점" }); //지붕 법규 열관류율                      
+                        d = RuleValue / Uvalue * 100;if(d>=100){d=100;}
+                        if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        __data[22].Add(new { idx = i, val = sp }); //법규 열관류율                 
                     }
                     data.Add(new { cname = "roof_count_after", data = __data[19] });
                     data.Add(new { cname = "roof_area_after", data = __data[20] });
@@ -649,7 +1054,12 @@ namespace main.contents.Result.Building_Report
                         RuleValue = RuleValue / Total_Area;
                         __data[27].Add(new { idx = i, val = Total_Area.ToString("0.0") }); //바닥 면적
                         __data[28].Add(new { idx = i, val = Uvalue.ToString("0.00") }); //바닥 유효 열관류율
-                        __data[29].Add(new { idx = i, val = (RuleValue / Uvalue * 100).ToString("0") + " 점" }); //바닥 법규 열관류율                    
+                        d = RuleValue / Uvalue * 100;if(d>=100){d=100;}
+                        if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        __data[29].Add(new { idx = i, val = sp }); //법규 열관류율              
                     }
                     data.Add(new { cname = "floor_count_after", data = __data[26] });
                     data.Add(new { cname = "floor_area_after", data = __data[27] });
@@ -701,7 +1111,12 @@ namespace main.contents.Result.Building_Report
                         RuleValue = RuleValue / Total_Area;
                         __data[34].Add(new { idx = i, val = Total_Area.ToString("0.0") }); //창호 면적
                         __data[35].Add(new { idx = i, val = Uvalue.ToString("0.00") }); //창호 유효 열관류율열관류율
-                        __data[36].Add(new { idx = i, val = (RuleValue / Uvalue * 100).ToString("0") + " 점" }); //창호 법규 열관류율                                     
+                        d = RuleValue / Uvalue * 100;if(d>=100){d=100;}
+                        if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        __data[36].Add(new { idx = i, val = sp }); //법규 열관류율                                    
                     }
                     data.Add(new { cname = "win_count_after", data = __data[33] });
                     data.Add(new { cname = "win_area_after", data = __data[34] });
@@ -774,7 +1189,12 @@ namespace main.contents.Result.Building_Report
                     RuleValue_CW_후 = RuleValue_CW_후 / Total_Area_CW_후;
                     __data[41].Add(new { idx = i, val = Total_Area_CW_후.ToString("0.0") }); //커튼월창 면적
                     __data[42].Add(new { idx = i, val = Uvalue_CW_후.ToString("0.00") }); //커튼월창 유효 열관류율
-                    __data[43].Add(new { idx = i, val = (RuleValue_CW_후 / Uvalue_CW_후 * 100).ToString("0") + " 점" }); //커튼월창 법규 열관류율                                                                                           
+                    d = RuleValue_CW_후 / Uvalue_CW_후 * 100; if (d >= 100) { d = 100; }
+                    if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                    else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }
+                    sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                    __data[43].Add(new { idx = i, val = sp }); //법규 열관류율                                                                                        
                     data.Add(new { cname = "cw_count_after", data = __data[40] });
                     data.Add(new { cname = "cw_area_after", data = __data[41] });
                     data.Add(new { cname = "cw_uvalue_after", data = __data[42] });
@@ -846,7 +1266,12 @@ namespace main.contents.Result.Building_Report
                         RuleValue = RuleValue / Total_Area;
                         __data[48].Add(new { idx = i, val = Total_Area.ToString("0.0") }); //출입문 면적
                         __data[49].Add(new { idx = i, val = Uvalue.ToString("0.00") }); //출입문 유효 열관류율
-                        __data[50].Add(new { idx = i, val = (RuleValue_CW_후 / Uvalue_CW_후 * 100).ToString("0") + " 점" }); //출입문 법규 열관류율                        
+                        d = RuleValue / Uvalue * 100;if(d>=100){d=100;}
+                        if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175)/ 100) + "px'></div>"; }
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        __data[50].Add(new { idx = i, val = sp }); //법규 열관류율                      
                     }
                     data.Add(new { cname = "door_count_after", data = __data[47] });
                     data.Add(new { cname = "door_area_after", data = __data[48] });
@@ -893,7 +1318,7 @@ namespace main.contents.Result.Building_Report
                             조명_후[mth] = Convert.ToDouble(Final1[0][3]);
                             공조_후[mth] = Convert.ToDouble(Final1[0][4]);
                             신재생_후[mth] = Convert.ToDouble(Final1[0][6]);
-                            총전기_후[mth] = Convert.ToDouble(Final1[0][7]);
+                            총전기_후[mth] = Convert.ToDouble(Final1[0][7]) - Convert.ToDouble(Final1[0][5]);
                         }
                         if (Final2.Length > 0)
                         {
@@ -903,7 +1328,7 @@ namespace main.contents.Result.Building_Report
                             조명_후[mth] = 조명_후[mth] + Convert.ToDouble(Final2[0][3]);
                             공조_후[mth] = 공조_후[mth] + Convert.ToDouble(Final2[0][4]);
                             신재생_후[mth] = 신재생_후[mth] + Convert.ToDouble(Final2[0][6]);
-                            총가스_후[mth] = Convert.ToDouble(Final2[0][7]);
+                            총가스_후[mth] = Convert.ToDouble(Final2[0][7]) - Convert.ToDouble(Final2[0][5]);
                         }
 
                         총소요량_후[mth] = 총전기_후[mth] + 총가스_후[mth];
@@ -937,7 +1362,7 @@ namespace main.contents.Result.Building_Report
                             조명_전[mth] = Convert.ToDouble(Final1[0][3]);
                             공조_전[mth] = Convert.ToDouble(Final1[0][4]);
                             신재생_전[mth] = Convert.ToDouble(Final1[0][6]);
-                            총전기_전[mth] = Convert.ToDouble(Final1[0][7]);
+                            총전기_전[mth] = Convert.ToDouble(Final1[0][7]) - Convert.ToDouble(Final1[0][5]);
                         }
                         if (Final2.Length > 0)
                         {
@@ -947,7 +1372,7 @@ namespace main.contents.Result.Building_Report
                             조명_전[mth] = 조명_전[mth] + Convert.ToDouble(Final2[0][3]);
                             공조_전[mth] = 공조_전[mth] + Convert.ToDouble(Final2[0][4]);
                             신재생_전[mth] = 신재생_전[mth] + Convert.ToDouble(Final2[0][6]);
-                            총가스_전[mth] =  Convert.ToDouble(Final2[0][7]);
+                            총가스_전[mth] =  Convert.ToDouble(Final2[0][7]) - Convert.ToDouble(Final2[0][5]);
                         }
 
                         총소요량_전[mth] = 총전기_전[mth] + 총가스_전[mth];
@@ -962,6 +1387,8 @@ namespace main.contents.Result.Building_Report
 
                     double tCO2 = (연간전기_전 - 연간전기_후) * 0.4747 / 1000000 * 1000 + (연간가스_전 - 연간가스_후) / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
                     double TOE = (연간전기_전 - 연간전기_후) * 0.00023 + (연간가스_전 - 연간가스_후) / 43.1 / 0.277778 * 0.00103;
+                    double 전_1차 = (연간전기_전 ) * 2.75 + (연간가스_전 ) * 1.1;
+                    double 후_1차 = (연간전기_후) * 2.75 + (연간가스_후) * 1.1;
                     double Area = 0;
                     string[][] A = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "냉난방유무 <> '비냉난방'");
                     if (A.Length > 0)
@@ -971,11 +1398,19 @@ namespace main.contents.Result.Building_Report
                             Area += Convert.ToDouble(A[a][0]);
                         }
                     }
-                    __data[61].Add(new { idx = i, val = (연간소요량_전 - 연간소요량_후).ToString("0.0") });
+                    __data[61].Add(new { idx = i, val = ((연간소요량_전 - 연간소요량_후) ).ToString("0.0") });
                     __data[62].Add(new { idx = i, val = ((연간소요량_전 - 연간소요량_후) / Area).ToString("0.0") });
                     __data[63].Add(new { idx = i, val = tCO2.ToString("0.0") });
                     __data[64].Add(new { idx = i, val = TOE.ToString("0.0") });
                     __data[65].Add(new { idx = i, val = ((연간소요량_전 - 연간소요량_후) / 연간소요량_전 * 100).ToString("0") + " %" });
+                    __data[66].Add(new { idx = i, val = (연간소요량_전 ).ToString("0.0") });
+                    __data[67].Add(new { idx = i, val = (연간소요량_후 ).ToString("0.0") });
+                    __data[68].Add(new { idx = i, val = (연간소요량_전 / Area).ToString("0.0") });
+                    __data[69].Add(new { idx = i, val = (연간소요량_후 / Area).ToString("0.0") });
+                    __data[70].Add(new { idx = i, val = (전_1차 ).ToString("0.0") });
+                    __data[71].Add(new { idx = i, val = (후_1차 ).ToString("0.0") });
+                    __data[72].Add(new { idx = i, val = (전_1차 / Area).ToString("0.0") });
+                    __data[73].Add(new { idx = i, val = (후_1차 / Area).ToString("0.0") });
 
                     ////////////////////////////////////////////////////////////////////
                     data.Add(new { cname = "qh_mth", data = __data[54] });
@@ -990,6 +1425,14 @@ namespace main.contents.Result.Building_Report
                     data.Add(new { cname = "tco2", data = __data[63] });
                     data.Add(new { cname = "toe", data = __data[64] });
                     data.Add(new { cname = "savingpercent", data = __data[65] });
+                    data.Add(new { cname = "qfa_pre", data = __data[66] });
+                    data.Add(new { cname = "qfa_post", data = __data[67] });
+                    data.Add(new { cname = "qfa_area_pre", data = __data[68] });
+                    data.Add(new { cname = "qfa_area_post", data = __data[69] });
+                    data.Add(new { cname = "qpa_pre", data = __data[70] });
+                    data.Add(new { cname = "qpa_post", data = __data[71] });
+                    data.Add(new { cname = "qpa_area_pre", data = __data[72] });
+                    data.Add(new { cname = "qpa_area_post", data = __data[73] });
                     List<object> 난방소요량chart = new List<object>();
                     List<object> 냉방소요량chart = new List<object>();
                     List<object> 급탕소요량chart = new List<object>();
@@ -1010,6 +1453,604 @@ namespace main.contents.Result.Building_Report
                     chart_조명소요량.Add(System.Text.Json.JsonSerializer.Serialize(조명소요량chart.ToArray()));
                     chart_공조소요량.Add(System.Text.Json.JsonSerializer.Serialize(공조소요량chart.ToArray()));
                     chart_공조소요량.Add(System.Text.Json.JsonSerializer.Serialize(공조소요량chart.ToArray()));
+                    #endregion
+                    #region 보일러정보   
+                    //리모델링 후 
+                    double boiler_count_post = 0; double boiler_power_post = 0; double boiler_eta_post = 0; double boiler_eta_rule = 0; double boiler_point = 0;
+                    string[][] Value1 = Program.DB.querySQL(DB.type.ProjDB, "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.보일러대수 From User_Boiler as a Inner Join HeatingSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='난방+급탕'");
+                    if (Value1.Length > 0)
+                    {
+                        for (int a = 0; a < Value1.Length; a++)
+                        {
+                            boiler_count_post += Convert.ToDouble(Value1[a][7]);
+                            boiler_power_post += Convert.ToDouble(Value1[a][3]) * Convert.ToDouble(Value1[a][7]);
+                            boiler_eta_post += Convert.ToDouble(Value1[a][4]) * Convert.ToDouble(Value1[a][3]) * Convert.ToDouble(Value1[a][7]);
+                        }
+                    }
+                    string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.보일러대수 From User_Boiler as a Inner Join HeatingSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='난방'");
+                    if (Value2.Length > 0)
+                    {
+                        for (int a = 0; a < Value2.Length; a++)
+                        {
+                            boiler_count_post += Convert.ToDouble(Value2[a][7]);
+                            boiler_power_post += Convert.ToDouble(Value2[a][3]) * Convert.ToDouble(Value2[a][7]);
+                            boiler_eta_post += Convert.ToDouble(Value2[a][4]) * Convert.ToDouble(Value2[a][3]) * Convert.ToDouble(Value2[a][7]);
+                        }
+                    }
+                    string[][] Value3 = Program.DB.querySQL(DB.type.ProjDB, "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.보일러대수 From User_Boiler as a Inner Join DHWSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='급탕'");
+                    if (Value3.Length > 0)
+                    {
+                        for (int a = 0; a < Value3.Length; a++)
+                        {
+                            boiler_count_post += Convert.ToDouble(Value3[a][7]);
+                            boiler_power_post += Convert.ToDouble(Value3[a][3])* Convert.ToDouble(Value3[a][7]);
+                            boiler_eta_post += Convert.ToDouble(Value3[a][4]) * Convert.ToDouble(Value3[a][3])* Convert.ToDouble(Value3[a][7]);
+                        }
+                    }
+                    if (boiler_count_post > 0)
+                    {
+                        boiler_eta_post = boiler_eta_post / boiler_power_post;
+                        boiler_eta_rule = 90;
+                        boiler_point = Math.Min(100, boiler_eta_post / boiler_eta_rule * 100);
+                        __data[74].Add(new { idx = i, val = boiler_count_post.ToString("0") }); //보일러 개수 
+                        __data[75].Add(new { idx = i, val = boiler_power_post.ToString("0.0") }); //보일러 용량
+                        __data[76].Add(new { idx = i, val = boiler_eta_post.ToString("0.0") + " %" }); //보일러 효율
+                        __data[77].Add(new { idx = i, val = boiler_eta_rule.ToString("0.0") + " %" }); //보일러 권장 효율 
+                        d = boiler_point;
+                        if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        __data[78].Add(new { idx = i, val = sp }); //성능점수       
+                    }
+                    else
+                    {
+                        __data[74].Add(new { idx = i, val = "-" }); //보일러 개수 
+                        __data[75].Add(new { idx = i, val = "-" }); //보일러 용량
+                        __data[76].Add(new { idx = i, val = "-" }); //보일러 효율
+                        __data[77].Add(new { idx = i, val = "-" }); //보일러 권장 효율    
+                        __data[78].Add(new { idx = i, val = "-" }); //성능점수       
+                    }
+                    data.Add(new { cname = "boiler_count_post", data = __data[74] });
+                    data.Add(new { cname = "boiler_power_post", data = __data[75] });
+                    data.Add(new { cname = "boiler_eta_post", data = __data[76] });
+                    data.Add(new { cname = "boiler_eta_rule", data = __data[77] });
+                    data.Add(new { cname = "boiler_point", data = __data[78] });
+                    //리모델링 전
+                    double boiler_count_pre = 0; double boiler_power_pre = 0; double boiler_eta_pre = 0; 
+                    Value1 = Program.DB.querySQL(res[0][0], "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.보일러대수 From User_Boiler as a Inner Join HeatingSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='난방+급탕'");
+                    if (Value1.Length > 0)
+                    {
+                        boiler_count_pre = Value1.Length;
+                        for (int a = 0; a < Value1.Length; a++)
+                        {
+                            boiler_count_pre += Convert.ToDouble(Value1[a][7]);
+                            boiler_power_pre += Convert.ToDouble(Value1[a][3]) * Convert.ToDouble(Value1[a][7]);
+                            boiler_eta_pre += Convert.ToDouble(Value1[a][4]) * Convert.ToDouble(Value1[a][3]) * Convert.ToDouble(Value1[a][7]);
+                        }
+                    }
+                    Value2 = Program.DB.querySQL(res[0][0], "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.보일러대수 From User_Boiler as a Inner Join HeatingSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='난방'");
+                    if (Value2.Length > 0)
+                    {
+                        for (int a = 0; a < Value2.Length; a++)
+                        {
+                            boiler_count_pre += Convert.ToDouble(Value2[a][7]);
+                            boiler_power_pre += Convert.ToDouble(Value2[a][3])* Convert.ToDouble(Value2[a][7]);
+                            boiler_eta_pre += Convert.ToDouble(Value2[a][4]) * Convert.ToDouble(Value2[a][3])* Convert.ToDouble(Value2[a][7]);
+                        }
+                    }
+                    Value3 = Program.DB.querySQL(res[0][0], "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.보일러대수 From User_Boiler as a Inner Join DHWSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='급탕'");
+                    if (Value3.Length > 0)
+                    {
+                        for (int a = 0; a < Value3.Length; a++)
+                        {
+                            boiler_count_pre += Convert.ToDouble(Value3[a][7]);
+                            boiler_power_pre += Convert.ToDouble(Value3[a][3])* Convert.ToDouble(Value3[a][7]);
+                            boiler_eta_pre += Convert.ToDouble(Value3[a][4]) * Convert.ToDouble(Value3[a][3])* Convert.ToDouble(Value3[a][7]);
+                        }
+                    }
+                    if (boiler_count_pre > 0)
+                    {
+                        boiler_eta_pre = boiler_eta_pre / boiler_power_pre;
+                        __data[79].Add(new { idx = i, val = boiler_count_pre.ToString("0") }); //보일러 개수 
+                        __data[80].Add(new { idx = i, val = boiler_power_pre.ToString("0.0") }); //보일러 용량
+                        __data[81].Add(new { idx = i, val = boiler_eta_pre.ToString("0.0") + " %" }); //보일러 효율
+                    }
+                    else
+                    {
+                        __data[79].Add(new { idx = i, val = "-" }); //보일러 개수 
+                        __data[80].Add(new { idx = i, val = "-" }); //보일러 용량
+                        __data[81].Add(new { idx = i, val = "-" }); //보일러 효율
+                    }
+                    data.Add(new { cname = "boiler_count_pre", data = __data[79] });
+                    data.Add(new { cname = "boiler_power_pre", data = __data[80] });
+                    data.Add(new { cname = "boiler_eta_pre", data = __data[81] });
+                    #endregion
+                    #region 냉난방EHP정보   
+                    //리모델링 후
+                    double ehp_count_post = 0; double ehp_power_post = 0; double ehp_cop_post = 0; double ehp_cop_rule = 0; double ehp_point = 0;
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.외기히트펌프번호,a.명칭,b.존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호,b.외기히트펌프대수 From User_AirHP as a Inner Join HeatingSystem_Form as b ON a.번호 = b.외기히트펌프번호 Where a.난방냉방='냉난방' And a.연료='전기'");
+                    if (Value.Length > 0)
+                    {
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            ehp_count_post += Convert.ToDouble(Value[a][8]);
+                            ehp_power_post += Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                            ehp_cop_post += Convert.ToDouble(Value[a][4]) * Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                        }
+                        ehp_cop_post = ehp_cop_post / ehp_power_post;
+                        ehp_cop_rule = 5.5;
+                        ehp_point = Math.Min(100, ehp_cop_post / ehp_cop_rule * 100);
+                        __data[82].Add(new { idx = i, val = ehp_count_post.ToString("0") }); //개수 
+                        __data[83].Add(new { idx = i, val = ehp_power_post.ToString("0.0") }); //용량
+                        __data[84].Add(new { idx = i, val = ehp_cop_post.ToString("0.0")+" W/W" }); //성능
+                        __data[85].Add(new { idx = i, val = ehp_cop_rule.ToString("0.0") }); //권장 성능                
+                        d = ehp_point;
+                        if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        __data[86].Add(new { idx = i, val = sp }); //성능점수       
+
+                    }
+                    else
+                    {
+                        __data[82].Add(new { idx = i, val = "-" }); //개수 
+                        __data[83].Add(new { idx = i, val = "-" }); //용량
+                        __data[84].Add(new { idx = i, val = "-" }); //성능
+                        __data[85].Add(new { idx = i, val = "-" }); //권장 성능  
+                        __data[86].Add(new { idx = i, val = "-" }); //성능점수       
+                    }
+                    data.Add(new { cname = "ehp_count_post", data = __data[82] });
+                    data.Add(new { cname = "ehp_power_post", data = __data[83] });
+                    data.Add(new { cname = "ehp_cop_post", data = __data[84] });
+                    data.Add(new { cname = "ehp_cop_rule", data = __data[85] });
+                    data.Add(new { cname = "ehp_point", data = __data[86] });
+                    //리모델링 전
+                    double ehp_count_pre = 0; double ehp_power_pre = 0; double ehp_cop_pre = 0; 
+                    Value = Program.DB.querySQL(res[0][0], "Select b.외기히트펌프번호,a.명칭,b.존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호,b.외기히트펌프대수 From User_AirHP as a Inner Join HeatingSystem_Form as b ON a.번호 = b.외기히트펌프번호 Where a.난방냉방='냉난방' And a.연료='전기'");
+                    if (Value.Length > 0)
+                    {
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            ehp_count_pre += Convert.ToDouble(Value[a][8]);
+                            ehp_power_pre += Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                            ehp_cop_pre += Convert.ToDouble(Value[a][4]) * Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                        }
+                        ehp_cop_pre = ehp_cop_pre / ehp_power_pre;
+                        __data[87].Add(new { idx = i, val = ehp_count_pre.ToString("0") }); //개수 
+                        __data[88].Add(new { idx = i, val = ehp_power_pre.ToString("0.0") }); //용량
+                        __data[89].Add(new { idx = i, val = ehp_cop_pre.ToString("0.0")+" W/W" }); //성능       
+                    }
+                    else
+                    {
+                        __data[87].Add(new { idx = i, val = "-" }); //개수 
+                        __data[88].Add(new { idx = i, val = "-" }); //용량
+                        __data[89].Add(new { idx = i, val = "-" }); //성능    
+                    }
+                    data.Add(new { cname = "ehp_count_pre", data = __data[87] });
+                    data.Add(new { cname = "ehp_power_pre", data = __data[88] });
+                    data.Add(new { cname = "ehp_cop_pre", data = __data[89] });
+                    #endregion
+                    #region 냉난방GHP정보   
+                    //리모델링후
+                    double ghp_count_post = 0; double ghp_power_post = 0; double ghp_cop_post = 0; double ghp_cop_rule = 0; double ghp_point = 0;
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.외기히트펌프번호,a.명칭,b.존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호,b.외기히트펌프대수  From User_AirHP as a Inner Join HeatingSystem_Form as b ON a.번호 = b.외기히트펌프번호 Where a.난방냉방='냉난방' And NOT a.연료='전기'");
+                    if (Value.Length > 0)
+                    {
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            ghp_count_post += Convert.ToDouble(Value[a][8]);
+                            ghp_power_post += Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
+                            ghp_cop_post += Convert.ToDouble(Value[a][4]) * Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
+                        }
+                        ghp_cop_post = ghp_cop_post / ghp_power_post;
+                        ghp_cop_rule = 5.5;
+                        ghp_point = Math.Min(100, ghp_cop_post / ghp_cop_rule * 100);
+                        __data[90].Add(new { idx = i, val = ghp_count_post.ToString("0") }); //개수 
+                        __data[91].Add(new { idx = i, val = ghp_power_post.ToString("0.0") }); //용량
+                        __data[92].Add(new { idx = i, val = ghp_cop_post.ToString("0.0") + " W/W" }); //성능
+                        __data[93].Add(new { idx = i, val = ghp_cop_rule.ToString("0.0") }); //권장 성능                
+                        d = ghp_point;
+                        if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        __data[94].Add(new { idx = i, val = sp }); //성능점수
+                    }
+                    else
+                    {
+                        __data[90].Add(new { idx = i, val = "-" }); //개수 
+                        __data[91].Add(new { idx = i, val = "-" }); //용량
+                        __data[92].Add(new { idx = i, val = "-" }); //성능
+                        __data[93].Add(new { idx = i, val = "-" }); //권장 성능      
+                        __data[94].Add(new { idx = i, val = "-" }); //성능점수       
+                    }
+                    data.Add(new { cname = "ghp_count_post", data = __data[90] });
+                    data.Add(new { cname = "ghp_power_post", data = __data[91] });
+                    data.Add(new { cname = "ghp_cop_post", data = __data[92] });
+                    data.Add(new { cname = "ghp_cop_rule", data = __data[93] });
+                    data.Add(new { cname = "ghp_point", data = __data[94] });
+                    //리모델링전
+                    double ghp_count_pre = 0; double ghp_power_pre = 0; double ghp_cop_pre = 0; 
+                    Value = Program.DB.querySQL(res[0][0], "Select b.외기히트펌프번호,a.명칭,b.존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호,b.외기히트펌프대수  From User_AirHP as a Inner Join HeatingSystem_Form as b ON a.번호 = b.외기히트펌프번호 Where a.난방냉방='냉난방' And NOT a.연료='전기'");
+                    if (Value.Length > 0)
+                    {
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            ghp_count_pre += Convert.ToDouble(Value[a][8]);
+                            ghp_power_pre += Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                            ghp_cop_pre += Convert.ToDouble(Value[a][4]) * Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                        }
+                        ghp_cop_pre = ghp_cop_pre / ghp_power_pre;
+                        __data[95].Add(new { idx = i, val = ghp_count_pre.ToString("0") }); //개수 
+                        __data[96].Add(new { idx = i, val = ghp_power_pre.ToString("0.0") }); //용량         
+                        __data[97].Add(new { idx = i, val = ghp_cop_pre.ToString("0.0") + " W/W" }); //성능        
+                    }
+                    else
+                    {
+                        __data[95].Add(new { idx = i, val = "-" }); //개수 
+                        __data[96].Add(new { idx = i, val = "-" }); //용량
+                        __data[97].Add(new { idx = i, val = "-" }); //성능
+                    }
+                    data.Add(new { cname = "ghp_count_pre", data = __data[95] });
+                    data.Add(new { cname = "ghp_power_pre", data = __data[96] });
+                    data.Add(new { cname = "ghp_cop_pre", data = __data[97] });
+                    #endregion
+                    #region 흡수식냉온수기정보 
+                    //리모델링후
+                    double abs_count_post = 0; double abs_power_post = 0; double abs_cop_post = 0; double abs_cop_rule = 0; double abs_point = 0;
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.흡수식온수기번호,a.명칭,b.존,a.난방용량,a.난방성능,a.냉방용량,a.냉방성능,b.번호,b.흡수식온수기대수 From User_ABS as a Inner Join HeatingSystem_Form as b ON a.번호 = b.흡수식온수기번호 Where a.난방냉방='냉난방'");
+                    if (Value.Length > 0)
+                    {
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            abs_count_post += Convert.ToDouble(Value[a][8]);
+                            abs_power_post += Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
+                            abs_cop_post += Convert.ToDouble(Value[a][4]) * Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
+                        }
+                        abs_cop_post = abs_cop_post / abs_power_post;
+                        abs_cop_rule = 5.5;
+                        abs_point = Math.Min(100, abs_cop_post / abs_cop_rule * 100);
+                        __data[98].Add(new { idx = i, val = abs_count_post.ToString("0") }); //개수 
+                        __data[99].Add(new { idx = i, val = abs_power_post.ToString("0.0") }); //용량
+                        __data[100].Add(new { idx = i, val = abs_cop_post.ToString("0.0") + " W/W" }); //성능
+                        __data[101].Add(new { idx = i, val = abs_cop_rule.ToString("0.0") }); //권장 성능                
+                        d = abs_point;
+                        if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        __data[102].Add(new { idx = i, val = sp }); //성능점수                         
+                    }
+                    else
+                    {
+                        __data[98].Add(new { idx = i, val = "-" }); //개수 
+                        __data[99].Add(new { idx = i, val = "-" }); //용량
+                        __data[100].Add(new { idx = i, val = "-" }); //성능
+                        __data[101].Add(new { idx = i, val = "-" }); //권장 성능      
+                        __data[102].Add(new { idx = i, val = "-" }); //성능점수                 
+                    }
+                    data.Add(new { cname = "abs_count_post", data = __data[98] });
+                    data.Add(new { cname = "abs_power_post", data = __data[99] });
+                    data.Add(new { cname = "abs_cop_post", data = __data[100] });
+                    data.Add(new { cname = "abs_cop_rule", data = __data[101] });
+                    data.Add(new { cname = "abs_point", data = __data[102] });
+                    //리모델링전
+                    double abs_count_pre = 0; double abs_power_pre = 0; double abs_cop_pre = 0;
+                    Value = Program.DB.querySQL(res[0][0], "Select b.흡수식온수기번호,a.명칭,b.존,a.난방용량,a.난방성능,a.냉방용량,a.냉방성능,b.번호,b.흡수식온수기대수 From User_ABS as a Inner Join HeatingSystem_Form as b ON a.번호 = b.흡수식온수기번호 Where a.난방냉방='냉난방'");
+                    if (Value.Length > 0)
+                    {
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            abs_count_pre += Convert.ToDouble(Value[a][8]);
+                            abs_power_pre += Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                            abs_cop_pre += Convert.ToDouble(Value[a][4]) * Convert.ToDouble(Value[a][3])* Convert.ToDouble(Value[a][8]);
+                        }
+                        abs_cop_pre = abs_cop_pre / abs_power_pre;
+                        __data[103].Add(new { idx = i, val = abs_count_pre.ToString("0") }); //개수 
+                        __data[104].Add(new { idx = i, val = abs_power_pre.ToString("0.0") }); //용량
+                        __data[105].Add(new { idx = i, val = abs_cop_pre.ToString("0.0") + " W/W" }); //성능    
+                    }
+                    else
+                    {
+                        __data[103].Add(new { idx = i, val = "-" }); //개수 
+                        __data[104].Add(new { idx = i, val = "-" }); //용량
+                        __data[105].Add(new { idx = i, val = "-" }); //성능              
+                    }
+                    data.Add(new { cname = "abs_count_pre", data = __data[103] });
+                    data.Add(new { cname = "abs_power_pre", data = __data[104] });
+                    data.Add(new { cname = "abs_cop_pre", data = __data[105] });
+                    #endregion
+                    #region 에어컨정보   
+                    //리모델링후
+                    double airc_count_post = 0; double airc_power_post = 0; double airc_cop_post = 0; double airc_cop_rule = 0; double airc_point = 0;
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.냉방유닛,a.명칭,b.공급존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호,b.설치대수 From User_AirHP as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛 Where a.난방냉방='냉방' And a.연료='전기'");
+                    if (Value.Length > 0)
+                    {
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            airc_count_post += Convert.ToDouble(Value[a][8]);
+                            airc_power_post += Convert.ToDouble(Value[a][5])* Convert.ToDouble(Value[a][8]);
+                            airc_cop_post += Convert.ToDouble(Value[a][6]) * Convert.ToDouble(Value[a][5])* Convert.ToDouble(Value[a][8]);
+                        }
+                        airc_cop_post = airc_cop_post / airc_power_post;
+                        airc_cop_rule = 5.5;
+                        airc_point = Math.Min(100, airc_cop_post / airc_cop_rule * 100);
+                        __data[106].Add(new { idx = i, val = airc_count_post.ToString("0") }); //개수 
+                        __data[107].Add(new { idx = i, val = airc_power_post.ToString("0.0") }); //용량
+                        __data[108].Add(new { idx = i, val = airc_cop_post.ToString("0.0") + " W/W" }); //성능
+                        __data[109].Add(new { idx = i, val = airc_cop_rule.ToString("0.0") }); //권장 성능                
+                        d = airc_point;
+                        if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        __data[110].Add(new { idx = i, val = sp }); //성능점수    
+                    }
+                    else
+                    {
+                        __data[106].Add(new { idx = i, val = "-" }); //개수 
+                        __data[107].Add(new { idx = i, val = "-" }); //용량
+                        __data[108].Add(new { idx = i, val = "-" }); //성능
+                        __data[109].Add(new { idx = i, val = "-" }); //권장 성능       
+                        __data[110].Add(new { idx = i, val = "-" }); //성능점수             
+                    }
+                    data.Add(new { cname = "airc_count_post", data = __data[106] });
+                    data.Add(new { cname = "airc_power_post", data = __data[107] });
+                    data.Add(new { cname = "airc_cop_post", data = __data[108] });
+                    data.Add(new { cname = "airc_cop_rule", data = __data[109] });
+                    data.Add(new { cname = "airc_point", data = __data[110] });
+                    //리모델링전
+                    double airc_count_pre = 0; double airc_power_pre = 0; double airc_cop_pre = 0;
+                    Value = Program.DB.querySQL(res[0][0], "Select b.냉방유닛,a.명칭,b.공급존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호,b.설치대수 From User_AirHP as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛 Where a.난방냉방='냉방' And a.연료='전기'");
+                    if (Value.Length > 0)
+                    {
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            airc_count_pre += Convert.ToDouble(Value[a][8]);
+                            airc_power_pre += Convert.ToDouble(Value[a][5])* Convert.ToDouble(Value[a][8]);
+                            airc_cop_pre += Convert.ToDouble(Value[a][6]) * Convert.ToDouble(Value[a][5])* Convert.ToDouble(Value[a][8]);
+                        }
+                        airc_cop_pre = airc_cop_pre / airc_power_pre;
+                        __data[111].Add(new { idx = i, val = airc_count_pre.ToString("0") }); //개수 
+                        __data[112].Add(new { idx = i, val = airc_power_pre.ToString("0.0") }); //용량
+                        __data[113].Add(new { idx = i, val = airc_cop_pre.ToString("0.0") + " W/W" }); //성능
+                    }
+                    else
+                    {
+                        __data[111].Add(new { idx = i, val = "-" }); //개수 
+                        __data[112].Add(new { idx = i, val = "-" }); //용량
+                        __data[113].Add(new { idx = i, val = "-" }); //성능           
+                    }
+                    data.Add(new { cname = "airc_count_pre", data = __data[111] });
+                    data.Add(new { cname = "airc_power_pre", data = __data[112] });
+                    data.Add(new { cname = "airc_cop_pre", data = __data[113] });
+                    #endregion
+                    #region 냉동기정보   
+                    //리모델링후
+                    double chiler_count_post = 0; double chiler_power_post = 0; double chiler_cop_post = 0; double chiler_cop_rule = 0; double chiler_point = 0;
+                    string[][] Value11 = Program.DB.querySQL(DB.type.ProjDB, "Select b.냉방유닛,a.명칭,b.공급존,a.냉방출력,a.EER,b.번호,b.설치대수 From User_AirCooler as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛");
+                    if (Value1.Length > 0)
+                    {
+                        for (int a = 0; a < Value11.Length; a++)
+                        {
+                            chiler_count_post += Convert.ToDouble(Value11[a][6]);
+                            chiler_power_post += Convert.ToDouble(Value11[a][3])* Convert.ToDouble(Value11[a][6]);
+                            chiler_cop_post += Convert.ToDouble(Value11[a][4]) * Convert.ToDouble(Value11[a][3])* Convert.ToDouble(Value11[a][6]);
+                        }
+                    }
+                    string[][] Value12 = Program.DB.querySQL(DB.type.ProjDB, "Select b.냉방유닛,a.명칭,b.공급존,a.냉방출력,a.EER,b.번호,b.설치대수 From User_WaterCooler as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛");
+                    if (Value2.Length > 0)
+                    {
+                        for (int a = 0; a < Value12.Length; a++)
+                        {
+                            chiler_count_post += Convert.ToDouble(Value12[a][6]);
+                            chiler_power_post += Convert.ToDouble(Value12[a][3])* Convert.ToDouble(Value12[a][6]);
+                            chiler_cop_post += Convert.ToDouble(Value12[a][4]) * Convert.ToDouble(Value12[a][3])* Convert.ToDouble(Value12[a][6]);
+                        }
+                    }
+                    if (Value11.Length > 0 || Value12.Length > 0)
+                    {
+                        chiler_cop_post = chiler_cop_post / chiler_power_post;
+                        chiler_cop_rule = 5.5;
+                        chiler_point = Math.Min(100, chiler_cop_post / chiler_cop_rule * 100);
+                        __data[114].Add(new { idx = i, val = chiler_count_post.ToString("0") }); //개수 
+                        __data[115].Add(new { idx = i, val = chiler_power_post.ToString("0.0") }); //용량
+                        __data[116].Add(new { idx = i, val = chiler_cop_post.ToString("0.0") + " W/W" }); //성능
+                        __data[117].Add(new { idx = i, val = chiler_cop_rule.ToString("0.0") }); //권장 성능                
+                        d = chiler_point;
+                        if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        __data[118].Add(new { idx = i, val = sp }); //성능점수    
+                    }
+                    else
+                    {
+                        __data[114].Add(new { idx = i, val = "-" }); //개수 
+                        __data[115].Add(new { idx = i, val = "-" }); //용량
+                        __data[116].Add(new { idx = i, val = "-" }); //성능
+                        __data[117].Add(new { idx = i, val = "-" }); //권장 성능 
+                        __data[118].Add(new { idx = i, val = "-" }); //성능점수    
+                    }
+                    data.Add(new { cname = "chiler_count_post", data = __data[114] });
+                    data.Add(new { cname = "chiler_power_post", data = __data[115] });
+                    data.Add(new { cname = "chiler_cop_post", data = __data[116] });
+                    data.Add(new { cname = "chiler_cop_rule", data = __data[117] });
+                    data.Add(new { cname = "chiler_point", data = __data[118] });
+                    //리모델링전
+                    double chiler_count_pre = 0; double chiler_power_pre = 0; double chiler_cop_pre = 0;
+                    Value11 = Program.DB.querySQL(res[0][0], "Select b.냉방유닛,a.명칭,b.공급존,a.냉방출력,a.EER,b.번호,b.설치대수 From User_AirCooler as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛");
+                    if (Value1.Length > 0)
+                    {
+                        for (int a = 0; a < Value11.Length; a++)
+                        {
+                            chiler_count_pre += Convert.ToDouble(Value11[a][6]);
+                            chiler_power_pre += Convert.ToDouble(Value11[a][3]) * Convert.ToDouble(Value11[a][6]);
+                            chiler_cop_pre += Convert.ToDouble(Value11[a][4]) * Convert.ToDouble(Value11[a][3]) * Convert.ToDouble(Value11[a][6]);
+                        }
+                    }
+                    Value12 = Program.DB.querySQL(res[0][0], "Select b.냉방유닛,a.명칭,b.공급존,a.냉방출력,a.EER,b.번호,b.설치대수 From User_WaterCooler as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛");
+                    if (Value2.Length > 0)
+                    {
+                        for (int a = 0; a < Value12.Length; a++)
+                        {
+                            chiler_count_pre += Convert.ToDouble(Value12[a][6]);
+                            chiler_power_pre += Convert.ToDouble(Value12[a][3])* Convert.ToDouble(Value12[a][6]);
+                            chiler_cop_pre += Convert.ToDouble(Value12[a][4]) * Convert.ToDouble(Value12[a][3])* Convert.ToDouble(Value12[a][6]);
+                        }
+                    }
+                    if (Value11.Length > 0 || Value12.Length > 0)
+                    {
+                        chiler_cop_pre = chiler_cop_pre / chiler_power_pre;
+                        __data[117].Add(new { idx = i, val = chiler_count_pre.ToString("0") }); //개수 
+                        __data[118].Add(new { idx = i, val = chiler_power_pre.ToString("0.0") }); //용량
+                        __data[119].Add(new { idx = i, val = chiler_cop_pre.ToString("0.0") + " W/W" }); //성능
+                    }
+                    else
+                    {
+                        __data[117].Add(new { idx = i, val = "-" }); //개수 
+                        __data[118].Add(new { idx = i, val = "-" }); //용량
+                        __data[119].Add(new { idx = i, val = "-" }); //성능
+                    }
+                    data.Add(new { cname = "chiler_count_pre", data = __data[117] });
+                    data.Add(new { cname = "chiler_power_pre", data = __data[118] });
+                    data.Add(new { cname = "chiler_cop_pre", data = __data[119] });
+
+
+                    #endregion
+                    #region 조명정보   
+                    //리모델링후
+                    string light_count_post; double light_density_post = 0; double light_eta_post = 0; double light_eta_rule = 0; double light_point = 0; double light_area_post = 0;
+                    Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneLighting_form", "조명번호");
+                    if (Value.Length > 0)
+                    {
+                        light_count_post = "-";
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            string[][] 조명존 = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.순바닥면적,a.조명밀도,a.등기구명칭,a.광효율,a.자연채광유형,b.기존존 From ZoneLighting_form as a Inner Join ZoneGeneral_Form as b on a.번호 =b.존번호 where a.조명번호='" + Value[a][0] + "'");
+                            if (조명존.Length > 0)
+                            {
+                                for (int aa = 0; aa < 조명존.Length; aa++)
+                                {
+                                    light_area_post = Convert.ToDouble(조명존[aa][1]);
+                                    light_density_post = Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][2]);
+                                    light_eta_post = Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][4]);
+                                }
+                            }
+                        }
+                        light_density_post = light_density_post / light_area_post;
+                        light_eta_post = light_eta_post / light_area_post;
+                        light_eta_rule = 70;
+                        light_point = Math.Min(100, light_eta_post / light_eta_rule * 100);
+                        __data[120].Add(new { idx = i, val = light_count_post }); //개수 
+                        __data[121].Add(new { idx = i, val = light_density_post.ToString("0.0") + " W/m²" }); //용량
+                        __data[122].Add(new { idx = i, val = light_eta_post.ToString("0") + " lm/W" }); //성능
+                        __data[123].Add(new { idx = i, val = light_eta_rule.ToString("0") + " lm/W" }); //권장 성능                
+                        d = light_point;
+                        if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        __data[124].Add(new { idx = i, val = sp }); //성능점수       
+                        data.Add(new { cname = "light_count_post", data = __data[120] });
+                        data.Add(new { cname = "light_power_post", data = __data[121] });
+                        data.Add(new { cname = "light_eta_post", data = __data[122] });
+                        data.Add(new { cname = "light_eta_rule", data = __data[123] });
+                        data.Add(new { cname = "light_point", data = __data[124] });
+                    }
+                    //리모델링전
+                    string light_count_pre; double light_density_pre = 0; double light_eta_pre = 0; double light_area_pre = 0;
+                    Value = Program.DB.getValue_SameCheck(res[0][0], "ZoneLighting_form", "조명번호");
+                    if (Value.Length > 0)
+                    {
+                        light_count_pre = "-";
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            string[][] 조명존 = Program.DB.querySQL(res[0][0], "Select a.번호,a.순바닥면적,a.조명밀도,a.등기구명칭,a.광효율,a.자연채광유형,b.기존존 From ZoneLighting_form as a Inner Join ZoneGeneral_Form as b on a.번호 =b.존번호 where a.조명번호='" + Value[a][0] + "'");
+                            if (조명존.Length > 0)
+                            {
+                                for (int aa = 0; aa < 조명존.Length; aa++)
+                                {
+                                    light_area_pre = Convert.ToDouble(조명존[aa][1]);
+                                    light_density_pre = Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][2]);
+                                    light_eta_pre = Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][4]);
+                                }
+                            }
+                        }
+                        light_density_pre = light_density_pre / light_area_pre;
+                        light_eta_pre = light_eta_pre / light_area_pre;
+                        __data[125].Add(new { idx = i, val = light_count_pre }); //개수 
+                        __data[126].Add(new { idx = i, val = light_density_pre.ToString("0.0") + " W/m²" }); //용량
+                        __data[127].Add(new { idx = i, val = light_eta_pre.ToString("0") + " lm/W" }); //성능
+                        data.Add(new { cname = "light_count_pre", data = __data[125] });
+                        data.Add(new { cname = "light_power_pre", data = __data[126] });
+                        data.Add(new { cname = "light_eta_pre", data = __data[127] });
+                    }
+                    #endregion
+                    #region 태양광정보   
+                    double pv_count_post = 0; double pv_power_post = 0; double pv_eta_post = 0; string pv_eta_rule = "-"; double pv_point = 0;
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.명칭,a.모듈번호,a.가로개수,a.세로개수,a.용량,a.면적,b.CELLTYPE,b.Kpk From PV_Form as a inner Join User_PVModule as b on a.모듈번호=b.번호");
+                    if (Value.Length > 0)
+                    {
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            pv_count_post += Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][4]);
+                            pv_power_post += Convert.ToDouble(Value[a][5]);
+                            pv_eta_post += Convert.ToDouble(Value[a][8]) * Convert.ToDouble(Value[a][5]);
+                        }
+                        pv_eta_post = pv_eta_post / pv_power_post;
+                        pv_point = 100;
+                        __data[128].Add(new { idx = i, val = pv_count_post.ToString("0") }); //개수 
+                        __data[129].Add(new { idx = i, val = pv_power_post.ToString("0.0") }); //용량
+                        __data[130].Add(new { idx = i, val = pv_eta_post.ToString("0.00") + " kW/m²" }); //성능
+                        __data[131].Add(new { idx = i, val = pv_eta_rule.ToString() }); //권장 성능                
+                        d = pv_point;
+                        if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
+                        else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }
+                        sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
+                        __data[132].Add(new { idx = i, val = sp }); //성능점수    
+                    }
+                    else
+                    {
+                        __data[128].Add(new { idx = i, val = "-" }); //개수 
+                        __data[129].Add(new { idx = i, val = "-" }); //용량
+                        __data[130].Add(new { idx = i, val = "-" }); //성능
+                        __data[131].Add(new { idx = i, val = "-" }); //권장 성능       
+                        __data[132].Add(new { idx = i, val = "-" }); //성능점수             
+                    }
+                    data.Add(new { cname = "pv_count_post", data = __data[128] });
+                    data.Add(new { cname = "pv_power_post", data = __data[129] });
+                    data.Add(new { cname = "pv_eta_post", data = __data[130] });
+                    data.Add(new { cname = "pv_eta_rule", data = __data[131] });
+                    data.Add(new { cname = "pv_point", data = __data[132] });
+                    //리모델링전
+                    double pv_count_pre = 0; double pv_power_pre = 0; double pv_eta_pre = 0;
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.명칭,a.모듈번호,a.가로개수,a.세로개수,a.용량,a.면적,b.CELLTYPE,b.Kpk From PV_Form as a inner Join User_PVModule as b on a.모듈번호=b.번호");
+                    if (Value.Length > 0)
+                    {
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            pv_count_pre += Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][4]);
+                            pv_power_pre += Convert.ToDouble(Value[a][5]);
+                            pv_eta_pre += Convert.ToDouble(Value[a][8]) * Convert.ToDouble(Value[a][5]);
+                        }
+                        pv_eta_pre = pv_eta_pre / pv_power_pre;
+                        __data[133].Add(new { idx = i, val = pv_count_pre.ToString("0") }); //개수 
+                        __data[134].Add(new { idx = i, val = pv_power_pre.ToString("0.0") }); //용량
+                        __data[135].Add(new { idx = i, val = pv_eta_pre.ToString("0.00") + " kW/m²" }); //성능       
+                    }
+                    else
+                    {
+                        __data[133].Add(new { idx = i, val = "-" }); //개수 
+                        __data[134].Add(new { idx = i, val = "-" }); //용량
+                        __data[134].Add(new { idx = i, val = "-" }); //성능             
+                    }
+                    data.Add(new { cname = "pv_count_pre", data = __data[133] });
+                    data.Add(new { cname = "pv_power_pre", data = __data[134] });
+                    data.Add(new { cname = "pv_eta_pre", data = __data[135] });
                     #endregion
 
                     items.Add("MainReport_After.htm");
