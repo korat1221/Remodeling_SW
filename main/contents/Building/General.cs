@@ -27,11 +27,12 @@ namespace main.contents
     {
         String ProjectName, ProjectType, ProjectNum;
         String BuildingCategory, BuildingUse, BuildingName, BuildingLocation, Climate, BylawClimate;
-        String Year, Month;
+        double Year, Month;
         double ConstrucitonDate, BylawDate;
         double GrossArea, BuildingArea;
         String AboveGround, UnderGround;
-        String ReviewerName, ReviewerLocation, ReviewerCompany, ReviewYear, ReviewMonth;
+        String ReviewerName, ReviewerLocation, ReviewerCompany;
+        double ReviewYear, ReviewMonth;
         double ReviewDate;
         double[] law = new double[11];
         string OldProject;
@@ -100,14 +101,12 @@ namespace main.contents
             {
                 Year_comboBox.Items.Add((2040 - i).ToString());
             }
-            Year_comboBox.SelectedItem = (2023).ToString();
             //준공연월 월 콤보박스
             Month_comboBox.Items.Clear();
             for (int i = 0; i < 12; i++)
             {
                 Month_comboBox.Items.Add((i + 1).ToString());
             }
-            Month_comboBox.SelectedIndex = 0;
 
             //작성시기 연 콤보박스
             ReviewYear_comboBox.Items.Clear();
@@ -115,15 +114,12 @@ namespace main.contents
             {
                 ReviewYear_comboBox.Items.Add((2030 - i).ToString());
             }
-            ReviewYear_comboBox.SelectedItem = (2023).ToString();
             //작성시기 월 콤보박스
             ReviewMonth_comboBox.Items.Clear();
             for (int i = 0; i < 12; i++)
             {
                 ReviewMonth_comboBox.Items.Add((i + 1).ToString());
             }
-            ReviewMonth_comboBox.SelectedIndex = 0;
-
             //지상층수
             AboveGround_comboBox.Items.Clear();
             for (int i = 0; i < 30; i++)
@@ -445,9 +441,9 @@ namespace main.contents
         private void Year_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            if (Year_comboBox.SelectedItem != null)
+            if (Year_comboBox.SelectedItem != null && Year_comboBox.SelectedItem.ToString()!="")
             {
-                Year = Year_comboBox.SelectedItem.ToString();
+                Year = Convert.ToDouble(Year_comboBox.SelectedItem.ToString());
                 Calc_LawDate();
 
             }
@@ -455,9 +451,9 @@ namespace main.contents
 
         private void Month_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Month_comboBox.SelectedItem != null)
+            if (Month_comboBox.SelectedItem != null && Month_comboBox.SelectedItem.ToString() != "" )
             {
-                Month = Month_comboBox.SelectedItem.ToString();
+                Month = Convert.ToDouble(Month_comboBox.SelectedItem.ToString());
                 Calc_LawDate();
             }
         }
@@ -572,18 +568,18 @@ namespace main.contents
 
         private void ReviewYear_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ReviewYear_comboBox.SelectedItem != null)
+            if (ReviewYear_comboBox.SelectedItem != null && ReviewYear_comboBox.SelectedItem.ToString() !="")
             {
-                ReviewYear = ReviewYear_comboBox.SelectedItem.ToString();
+                ReviewYear = Convert.ToDouble(ReviewYear_comboBox.SelectedItem.ToString());
                 Calc_ReviewDate();
             }
         }
 
         private void ReviewMonth_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ReviewMonth_comboBox.SelectedItem != null)
+            if (ReviewMonth_comboBox.SelectedItem != null && ReviewMonth_comboBox.SelectedItem.ToString()!="")
             {
-                ReviewMonth = ReviewMonth_comboBox.SelectedItem.ToString();
+                ReviewMonth = Convert.ToDouble(ReviewMonth_comboBox.SelectedItem.ToString());
                 Calc_ReviewDate();
             }
         }
@@ -699,9 +695,6 @@ namespace main.contents
 
             Climate_comboBox.SelectedIndex = 2;
 
-            Year_comboBox.SelectedItem = (2023).ToString();
-            Month_comboBox.SelectedIndex = 0;
-            Calc_LawDate();
 
 
             GrossArea = 0;
@@ -722,9 +715,6 @@ namespace main.contents
             ReviewerCompany = null;
             ReviewerCompany_textBox.Text = null;
 
-            ReviewYear_comboBox.SelectedItem = (2023).ToString();
-            ReviewMonth_comboBox.SelectedIndex = 0;
-            Calc_ReviewDate();
 
         }
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
@@ -784,12 +774,16 @@ namespace main.contents
                 Climate = Value[0][9];
                 BylawClimate = Value[0][10];
                 ByRawClimate_textBox.Text = BylawClimate;
-
-                Year = Value[0][13];
-                Year_comboBox.SelectedItem = Year;
-
-                Month = Value[0][14];
-                Month_comboBox.SelectedItem = Month;
+                if (Value[0][13] != "")
+                {
+                    Year = Convert.ToDouble(Value[0][13]);
+                    Year_comboBox.SelectedItem = Year;
+                }
+                if (Value[0][14] != "")
+                {
+                    Month = Convert.ToDouble(Value[0][14]);
+                    Month_comboBox.SelectedItem = Month;
+                }
                 if (Value[0][15] != "")
                 { 
                     ConstrucitonDate = Convert.ToDouble(Value[0][15]);
@@ -822,12 +816,17 @@ namespace main.contents
 
                 ReviewerCompany = Value[0][23];
                 ReviewerCompany_textBox.Text = ReviewerCompany;
+                if (Value[0][24] != "")
+                {
+                    ReviewYear = Convert.ToDouble(Value[0][24]);
+                    ReviewYear_comboBox.SelectedItem = ReviewYear;
+                }
 
-                ReviewYear = Value[0][24];
-                ReviewYear_comboBox.SelectedItem = ReviewYear;
-
-                ReviewMonth = Value[0][25];
-                ReviewMonth_comboBox.SelectedItem = ReviewMonth;
+                if (Value[0][25] != "")
+                {
+                    ReviewMonth = Convert.ToDouble(Value[0][25]);
+                    ReviewMonth_comboBox.SelectedItem = ReviewMonth;
+                }
 
                 if (Value[0][26] != "")
                 {
