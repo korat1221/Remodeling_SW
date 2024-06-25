@@ -92,7 +92,6 @@ namespace main.contents
                 {
                     Climate_comboBox.Items.Add(Value[i][0]);
                 }
-                Climate_comboBox.SelectedIndex = 2;
             }
 
             //준공연월 연 콤보박스
@@ -693,10 +692,6 @@ namespace main.contents
             BuildingLocation = null;
             BuildingLocation_textBox.Text = null;
 
-            Climate_comboBox.SelectedIndex = 2;
-
-
-
             GrossArea = 0;
             GrossArea_textBox.Text = null;
             BuildingArea = 0;
@@ -777,12 +772,12 @@ namespace main.contents
                 if (Value[0][13] != "")
                 {
                     Year = Convert.ToDouble(Value[0][13]);
-                    Year_comboBox.SelectedItem = Year;
+                    Year_comboBox.SelectedItem = Year.ToString();
                 }
                 if (Value[0][14] != "")
                 {
                     Month = Convert.ToDouble(Value[0][14]);
-                    Month_comboBox.SelectedItem = Month;
+                    Month_comboBox.SelectedItem = Month.ToString();
                 }
                 if (Value[0][15] != "")
                 { 
@@ -819,13 +814,13 @@ namespace main.contents
                 if (Value[0][24] != "")
                 {
                     ReviewYear = Convert.ToDouble(Value[0][24]);
-                    ReviewYear_comboBox.SelectedItem = ReviewYear;
+                    ReviewYear_comboBox.SelectedItem = ReviewYear.ToString();
                 }
 
                 if (Value[0][25] != "")
                 {
                     ReviewMonth = Convert.ToDouble(Value[0][25]);
-                    ReviewMonth_comboBox.SelectedItem = ReviewMonth;
+                    ReviewMonth_comboBox.SelectedItem = ReviewMonth.ToString();
                 }
 
                 if (Value[0][26] != "")
