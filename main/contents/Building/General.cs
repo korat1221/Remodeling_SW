@@ -81,7 +81,8 @@ namespace main.contents
 
             //건물대상 콤보박스
             Program.UTIL.FillComboBox_Parents(BuildingCategory_comboBox, "존일반", "건물용도", "1");
-
+            BuildingCategory = "에너지다소비형건물";
+            BuildingUse ="정부청사";
 
             //기후데이터 콤보박스
             string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "인덱스", "이름", "종류 = '2'");
@@ -753,10 +754,24 @@ namespace main.contents
                 ProjectNum = Value[0][2];
                 ProjectNum_textBox.Text = ProjectNum.ToString();
 
-                BuildingCategory = Value[0][4];
+                if (Value[0][4] != "")
+                {
+                    BuildingCategory = Value[0][4];
+                }
+                else
+                {
+                    BuildingCategory = "에너지다소비형건물";
+                }
                 BuildingUse_comboBox.SelectedItem = BuildingCategory;
 
-                BuildingUse = Value[0][5];
+                if (Value[0][5] != "")
+                {
+                    BuildingUse = Value[0][5];
+                }
+                else
+                {
+                    BuildingUse = "정부청사";
+                }
                 BuildingUse_comboBox.SelectedItem = BuildingUse;
 
                 BuildingName = Value[0][6];
@@ -842,7 +857,14 @@ namespace main.contents
                 "지붕기밀여부,지붕q50", "");
             if (Value.Length > 0)
             {
-                BlowDoorTest = Value[0][1];
+                if (Value[0][1] != "")
+                {
+                    BlowDoorTest = Value[0][1];
+                }
+                else
+                {
+                    BlowDoorTest = "기밀 테스트 미실시";
+                }
                 BlowDoorTest_comboBox.SelectedItem = Value[0][1];
 
                 q50_textBox.Text = Value[0][2];
