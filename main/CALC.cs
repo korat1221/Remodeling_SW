@@ -1539,7 +1539,7 @@ namespace main
         public static Dictionary<string, DHW> DHWs = new Dictionary<string, DHW>();
         public static Dictionary<string, Final> Finals = new Dictionary<string, Final>();
        // public static string[] ElementAlt = { "조닝", "난방"};
-        public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀+열회수기","난방", "냉방", "급탕", "조명", "공조", "신재생" };
+        public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문","기밀", "기밀+열회수기","난방", "냉방", "급탕", "조명", "공조", "태양광" };
 
         public Zone getZone(string zoneNum)
         {

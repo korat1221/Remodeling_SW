@@ -824,6 +824,9 @@ namespace main
                         zone1.zoneDoor.Clear();
                         zone1.LoadData_Door();
                         break;
+                    case "기밀":
+                        zone1.LoadData_q50();
+                        break;
                     case "기밀+열회수기":
                         zone1.LoadData_q50();
                         zone1.LoadData_Ventil();
@@ -1457,7 +1460,7 @@ namespace main
             { Cal_Qfw(PreProjNum[0][0],검토유형); }
             else { Cal_Qfw(NowProjNum[0][0],검토유형); }
 
-            if (검토유형 != "신재생")
+            if (검토유형 != "태양광")
             { CALC.RESystemCalc(PreProjNum[0][0]); }
             else
             {
@@ -1502,7 +1505,7 @@ namespace main
                 final1.Load_AHU_Final(NowProjNum[0][0]);
                 final1.Load_REG_Final(PreProjNum[0][0]);
             }
-            else if (검토유형 == "신재생")
+            else if (검토유형 == "태양광")
             {
                 final1 = new Final(PreProjNum[0][0]);
                 final1.Load_Heating_Final(PreProjNum[0][0]);
