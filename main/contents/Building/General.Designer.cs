@@ -949,9 +949,9 @@
             n50_label2.ForeColor = SystemColors.ControlDarkDark;
             n50_label2.Location = new Point(902, 22);
             n50_label2.Name = "n50_label2";
-            n50_label2.Size = new Size(51, 16);
+            n50_label2.Size = new Size(25, 16);
             n50_label2.TabIndex = 150;
-            n50_label2.Text = "m³/h·m²";
+            n50_label2.Text = "1/h";
             // 
             // n50_label1
             // 
