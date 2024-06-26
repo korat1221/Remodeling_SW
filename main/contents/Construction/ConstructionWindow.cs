@@ -496,6 +496,7 @@ namespace main.contents
                     법규U = Convert.ToDouble(Uvalue[0][0]);
                 }
             }
+
             #endregion
 
             Size = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭,상위창호번호,창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이", "상위창호번호 = '" + WinNum + "'");
@@ -898,6 +899,7 @@ namespace main.contents
                         Uw3_textBox.Text = String.Format("{0:F3}", Uw);
                     }                   
                 }
+                SingleDoubleType = "단창";
             }
         }
 
