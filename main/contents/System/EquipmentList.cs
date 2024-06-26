@@ -126,6 +126,7 @@ namespace main.contents
             Load_CoolingTop();
             //단위계산
             unit_comboBox.Items.AddRange(new string[] { "열량", "유량", "수량" });
+            Load_Qmax();
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -133,6 +134,20 @@ namespace main.contents
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
+        private void Load_Qmax()
+        {
+            string[][] value = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Q_max) From Zone_HCneed_Result Where 난방_냉방='난방' and 비이용일_이용일='이용일' and  월='1월'");
+            if(value.Length > 0 )
+            {
+                Qhmax_textBox.Text = (Convert.ToDouble(value[0][0])/1000).ToString("0.0");
+            }
+            value = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Q_max) From Zone_HCneed_Result Where 난방_냉방='냉방' and 비이용일_이용일='이용일' and  월='1월'");
+            if (value.Length > 0)
+            {
+                Qcmax_textBox.Text = (Convert.ToDouble(value[0][0]) / 1000).ToString("0.0");
+            }
+        }
+
         ///////////////////////////////////////////////////보일러/////////////////////////////////////////////////////////////////
         #region 1.보일러
         public void Create_Boiler_Table()
