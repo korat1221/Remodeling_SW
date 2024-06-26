@@ -411,13 +411,13 @@ namespace main.contents.Result.Building_Report
                     연간전기 += 총전기[mth];
                     연간가스 += 총가스[mth];
                     연간소요량 += 총소요량[mth];
-                    __data[36].Add(new { idx = i * 12 + mth, val = 난방[mth].ToString("0.0") });
-                    __data[37].Add(new { idx = i * 12 + mth, val = 냉방[mth].ToString("0.0") });
-                    __data[38].Add(new { idx = i * 12 + mth, val = 급탕[mth].ToString("0.0") });
-                    __data[39].Add(new { idx = i * 12 + mth, val = 조명[mth].ToString("0.0") });
-                    __data[40].Add(new { idx = i * 12 + mth, val = 공조[mth].ToString("0.0") });
-                    __data[41].Add(new { idx = i * 12 + mth, val = 신재생[mth].ToString("0.0") });
-                    __data[42].Add(new { idx = i * 12 + mth, val = 총소요량[mth].ToString("0.0") });
+                    __data[36].Add(new { idx = i * 12 + mth, val = 난방[mth].ToString("#,##0") });
+                    __data[37].Add(new { idx = i * 12 + mth, val = 냉방[mth].ToString("#,##0") });
+                    __data[38].Add(new { idx = i * 12 + mth, val = 급탕[mth].ToString("#,##0") });
+                    __data[39].Add(new { idx = i * 12 + mth, val = 조명[mth].ToString("#,##0") });
+                    __data[40].Add(new { idx = i * 12 + mth, val = 공조[mth].ToString("#,##0") });
+                    __data[41].Add(new { idx = i * 12 + mth, val = 신재생[mth].ToString("#,##0") });
+                    __data[42].Add(new { idx = i * 12 + mth, val = 총소요량[mth].ToString("#,##0") });
                 }
                 double tCO2 = 연간전기 * 0.4747 / 1000000 * 1000 + 연간가스 / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
                 double TOE = 연간전기 * 0.00023 + 연간가스 / 43.1 / 0.277778 * 0.00103;
@@ -431,11 +431,11 @@ namespace main.contents.Result.Building_Report
                         Area += Convert.ToDouble(A[a][0]);
                     }
                 }
-                __data[43].Add(new { idx = i, val = (연간소요량).ToString("0.0") });
+                __data[43].Add(new { idx = i, val = (연간소요량).ToString("#,##0") });
                 __data[44].Add(new { idx = i, val = (연간소요량 / Area).ToString("0.0") });
                 __data[45].Add(new { idx = i, val = tCO2.ToString("0.0") });
                 __data[46].Add(new { idx = i, val = TOE.ToString("0.0") });
-                __data[53].Add(new { idx = i, val = (연간1차).ToString("0.0") });
+                __data[53].Add(new { idx = i, val = (연간1차).ToString("#,##0") });
                 __data[54].Add(new { idx = i, val = (연간1차 / Area).ToString("0.0") });
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "qh_mth", data = __data[36] });
@@ -1338,13 +1338,13 @@ namespace main.contents.Result.Building_Report
                         연간전기_후 += 총전기_후[mth];
                         연간가스_후 += 총가스_후[mth];
                         연간소요량_후 += 총소요량_후[mth];
-                        __data[54].Add(new { idx = i * 12 + mth, val = 난방_후[mth].ToString("0.0") });
-                        __data[55].Add(new { idx = i * 12 + mth, val = 냉방_후[mth].ToString("0.0") });
-                        __data[56].Add(new { idx = i * 12 + mth, val = 급탕_후[mth].ToString("0.0") });
-                        __data[57].Add(new { idx = i * 12 + mth, val = 조명_후[mth].ToString("0.0") });
-                        __data[58].Add(new { idx = i * 12 + mth, val = 공조_후[mth].ToString("0.0") });
-                        __data[59].Add(new { idx = i * 12 + mth, val = 신재생_후[mth].ToString("0.0") });
-                        __data[60].Add(new { idx = i * 12 + mth, val = 총소요량_후[mth].ToString("0.0") });
+                        __data[54].Add(new { idx = i * 12 + mth, val = 난방_후[mth].ToString("#,##0") });
+                        __data[55].Add(new { idx = i * 12 + mth, val = 냉방_후[mth].ToString("#,##0") });
+                        __data[56].Add(new { idx = i * 12 + mth, val = 급탕_후[mth].ToString("#,##0") });
+                        __data[57].Add(new { idx = i * 12 + mth, val = 조명_후[mth].ToString("#,##0") });
+                        __data[58].Add(new { idx = i * 12 + mth, val = 공조_후[mth].ToString("#,##0") });
+                        __data[59].Add(new { idx = i * 12 + mth, val = 신재생_후[mth].ToString("#,##0") });
+                        __data[60].Add(new { idx = i * 12 + mth, val = 총소요량_후[mth].ToString("#,##0") });
                     }
 
                     //리모델링 전 
@@ -1398,17 +1398,17 @@ namespace main.contents.Result.Building_Report
                             Area += Convert.ToDouble(A[a][0]);
                         }
                     }
-                    __data[61].Add(new { idx = i, val = ((연간소요량_전 - 연간소요량_후) ).ToString("0.0") });
+                    __data[61].Add(new { idx = i, val = ((연간소요량_전 - 연간소요량_후) ).ToString("#,##0") });
                     __data[62].Add(new { idx = i, val = ((연간소요량_전 - 연간소요량_후) / Area).ToString("0.0") });
                     __data[63].Add(new { idx = i, val = tCO2.ToString("0.0") });
                     __data[64].Add(new { idx = i, val = TOE.ToString("0.0") });
                     __data[65].Add(new { idx = i, val = ((연간소요량_전 - 연간소요량_후) / 연간소요량_전 * 100).ToString("0") + " %" });
-                    __data[66].Add(new { idx = i, val = (연간소요량_전 ).ToString("0.0") });
-                    __data[67].Add(new { idx = i, val = (연간소요량_후 ).ToString("0.0") });
+                    __data[66].Add(new { idx = i, val = (연간소요량_전 ).ToString("#,##0") });
+                    __data[67].Add(new { idx = i, val = (연간소요량_후 ).ToString("#,##0") });
                     __data[68].Add(new { idx = i, val = (연간소요량_전 / Area).ToString("0.0") });
                     __data[69].Add(new { idx = i, val = (연간소요량_후 / Area).ToString("0.0") });
-                    __data[70].Add(new { idx = i, val = (전_1차 ).ToString("0.0") });
-                    __data[71].Add(new { idx = i, val = (후_1차 ).ToString("0.0") });
+                    __data[70].Add(new { idx = i, val = (전_1차 ).ToString("0") });
+                    __data[71].Add(new { idx = i, val = (후_1차 ).ToString("0") });
                     __data[72].Add(new { idx = i, val = (전_1차 / Area).ToString("0.0") });
                     __data[73].Add(new { idx = i, val = (후_1차 / Area).ToString("0.0") });
 
