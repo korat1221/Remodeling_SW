@@ -31,33 +31,33 @@ namespace main.contents.Result.Element_Report
 
             for (int a = 0; a < ElementAlt.Length; a++)
             {
-                string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "총에너지소요량", "검토유형='" + ElementAlt[a] + "' And 연료='전기'");
+                string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "총에너지소요량,기저에너지", "검토유형='" + ElementAlt[a] + "' And 연료='전기'");
                 if (Value2.Length > 0)
                 {
-                    Element_ElecSum[a] += Convert.ToDouble(Value2[0][0]);
+                    Element_ElecSum[a] += Convert.ToDouble(Value2[0][0]) - Convert.ToDouble(Value2[0][1]);
                 }
-                Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "총에너지소요량", "검토유형='" + ElementAlt[a] + "' And Not 연료='전기' and Not 연료='전체'");
+                Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "총에너지소요량,기저에너지", "검토유형='" + ElementAlt[a] + "' And Not 연료='전기' and Not 연료='전체'");
                 if (Value2.Length > 0)
                 {
-                    Element_GasSum[a] += Convert.ToDouble(Value2[0][0]);
+                    Element_GasSum[a] += Convert.ToDouble(Value2[0][0]) - Convert.ToDouble(Value2[0][1]);
                 }
 
                 Element_EnergySum[a] = Element_ElecSum[a] + Element_GasSum[a];
             }
 
-            string[][] Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량 from FinalEnergy_Result Where 연료='전기' and 월 ='연간'");
-            string[][] Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result Where 연료='전기' and 월 ='연간'");
+            string[][] Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량,기저에너지 from FinalEnergy_Result Where 연료='전기' and 월 ='연간'");
+            string[][] Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량,기저에너지 from FinalEnergy_Result Where 연료='전기' and 월 ='연간'");
             if (Final1.Length > 0 && Final2.Length > 0)
             {
-                Total_Energy_pre += Convert.ToDouble(Final1[0][0]);
+                Total_Energy_pre += Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final1[0][1]);
                 Total_ElecSaving += (Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final2[0][0]));
             }
 
-            Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='연간'");
-            Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='연간'");
+            Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량,기저에너지 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='연간'");
+            Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량,기저에너지 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='연간'");
             if (Final1.Length > 0 && Final2.Length > 0)
             {
-                Total_Energy_pre += Convert.ToDouble(Final1[0][0]);
+                Total_Energy_pre += Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final1[0][1]);
                 Total_GasSaving += (Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final2[0][0]));
             }
 
@@ -66,7 +66,7 @@ namespace main.contents.Result.Element_Report
             double sum_elec = 0;
             double sum_gas = 0;
             double sum_energy = 0;
-            for (int a = 1; a < ElementAlt.Length; a++)
+            for (int a = 1; a < ElementAlt.Length -1; a++)
             {
                 sum_elec += Element_ElecSum[0] - Element_ElecSum[a]; // 조닝 대비 절감량 
                 sum_gas += Element_GasSum[0] - Element_GasSum[a];

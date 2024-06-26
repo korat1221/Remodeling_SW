@@ -237,6 +237,17 @@ namespace main.contents.Result.Element_Report
                             ghp_Point_C[a] = Math.Min(100, ghp_COP_New_H[a] / ghp_COP_Rule_C[a] * 100);
                         }                       
                     }
+                    
+                    for(int a =0; a< 18;  a++)
+                    {
+                        if (ghp_Saving_H[a] < 0) { ghp_Saving_H[a] = 0; }
+                        if (ghp_elec_H[a] < 0) { ghp_elec_H[a] = 0; }
+                        if (ghp_gas_H[a] < 0) { ghp_gas_H[a] = 0; }
+
+                        if (ghp_Saving_C[a] < 0) { ghp_Saving_C[a] = 0; }
+                        if (ghp_elec_C[a] < 0) { ghp_elec_C[a] = 0; }
+                        if (ghp_gas_C[a] < 0) { ghp_gas_C[a] = 0; }
+                    }
                     double ghp_total_saving = 0; double ghp_total_elec = 0; double ghp_total_gas = 0;
                     double ghp_COP_New_H_total = 0; double ghp_COP_Old_H_total = 0; double ghp_Point_H_total = 0;
                     double ghp_COP_New_C_total = 0; double ghp_COP_Old_C_total = 0; double ghp_Point_C_total = 0;
@@ -319,7 +330,7 @@ namespace main.contents.Result.Element_Report
                         ghp_total_gas += ghp_gas_H[a] + ghp_gas_C[a];
                     }
 
-                    ghp_data[216].Add(new { idx = i, val = ghp_total_saving.ToString("0.0") });//절감량 전체 
+                    ghp_data[216].Add(new { idx = i, val = ghp_total_saving.ToString("#,##0") });//절감량 전체 
                     data.Add(new { cname = "ghp_saving_total" , data = ghp_data[216] });
                     ghp_data[217].Add(new { idx = i, val = (ghp_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "ghp_saving_percent", data = ghp_data[217] });
@@ -505,6 +516,17 @@ namespace main.contents.Result.Element_Report
                             abs_Point_C[a] = Math.Min(100, abs_COP_New_H[a] / abs_COP_Rule_C[a] * 100);
                         }
                     }
+                    for (int a = 0; a < 18; a++)
+                    {
+                        if (abs_Saving_H[a] < 0) { abs_Saving_H[a] = 0; }
+                        if (abs_elec_H[a] < 0) { abs_elec_H[a] = 0; }
+                        if (abs_gas_H[a] < 0) { abs_gas_H[a] = 0; }
+
+                        if (abs_Saving_C[a] < 0) { abs_Saving_C[a] = 0; }
+                        if (abs_elec_C[a] < 0) { abs_elec_C[a] = 0; }
+                        if (abs_gas_C[a] < 0) { abs_gas_C[a] = 0; }
+                    }
+
                     double abs_total_saving = 0; double abs_total_elec = 0; double abs_total_gas = 0;
                     double abs_COP_New_H_total = 0; double abs_COP_Old_H_total = 0; double abs_Point_H_total = 0;
                     double abs_COP_New_C_total = 0; double abs_COP_Old_C_total = 0; double abs_Point_C_total = 0;
@@ -587,7 +609,7 @@ namespace main.contents.Result.Element_Report
                         abs_total_gas += abs_gas_H[a] + abs_gas_C[a];
                     }
 
-                    abs_data[216].Add(new { idx = i, val = abs_total_saving.ToString("0.0") });//절감량 전체 
+                    abs_data[216].Add(new { idx = i, val = abs_total_saving.ToString("#,##0") });//절감량 전체 
                     data.Add(new { cname = "abs_saving_total", data = abs_data[216] });
                     abs_data[217].Add(new { idx = i, val = (abs_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "abs_saving_percent", data = abs_data[217] });

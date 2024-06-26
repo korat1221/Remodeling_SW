@@ -67,17 +67,17 @@ namespace main.contents.Result.Element_Report
                         }
                     }
 
-                    double win_saving = Element_EnergySaving[j_창호];
+                    double win_saving = Math.Max(Element_EnergySaving[j_창호], 0);
                     d = (win_saving / Total_Energy_pre * 100);
-                    Win_data[0].Add(new { idx = i, val = win_saving.ToString("0.0") }); ; //절감량 
+                    Win_data[0].Add(new { idx = i, val = win_saving.ToString("#,##0") }); ; //절감량 
                     Win_data[1].Add(new { idx = i, val = (win_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "win_saving", data = Win_data[0] });
                     data.Add(new { cname = "win_savingpercent", data = Win_data[1] });
 
                     charts += "{donut:" + d + "},";
 
-                    double win_saving_elec = Element_ElecSaving[j_창호];
-                    double win_saving_noelec = Element_GasSaving[j_창호];
+                    double win_saving_elec = Math.Max(Element_ElecSaving[j_창호], 0);
+                    double win_saving_noelec = Math.Max(Element_GasSaving[j_창호], 0);
 
                     double win_tCO2_elec = win_saving_elec * 0.4747 / 1000000 * 1000;
                     double win_TOE_elec = win_saving_elec * 0.00023;
@@ -181,16 +181,25 @@ namespace main.contents.Result.Element_Report
                                 }
                             }
                             Win_data[44].Add(new { idx = i, val = win_count_sum.ToString("0") });//개수합계
-                            Win_data[45].Add(new { idx = i, val = win_area_sum.ToString("0.0") });//면적합계
+                            if(win_area_sum < 0)
+                            {
+
+                                Win_data[45].Add(new { idx = i, val = 0.ToString("0") + " %" });//면적율합계
+                            }
+                            else
+                            {
+                                Win_data[45].Add(new { idx = i, val = (win_area_sum / win_area_sum * 100).ToString("0") + " %" });//면적율합계
+                            }
+                           
                             data.Add(new { cname = "win_count_sum", data = Win_data[44] });
-                            data.Add(new { cname = "win_area_sum", data = Win_data[45] });
+                            data.Add(new { cname = "win_area_sum_percent", data = Win_data[45] });
 
                             for (int a = 0; a < 8; a++)
                             {
                                 if (win_name[a] != null && win_name[a] != "")
                                 {
-                                    Win_data[46 + a].Add(new { idx = i, val = win_area[a].ToString("0.0") });//면적
-                                    data.Add(new { cname = "win_area" + a, data = Win_data[46 + a] });
+                                    Win_data[46 + a].Add(new { idx = i, val = (win_area[a]/ win_area_sum*100).ToString("0") + " %" } );//면적율
+                                    data.Add(new { cname = "win_area_percent" + a, data = Win_data[46 + a] });
 
                                     if (win_ueff_old[a] != 0)
                                     {
@@ -330,17 +339,17 @@ namespace main.contents.Result.Element_Report
                             j_커튼월창 = a; break;
                         }
                     }
-                    double cw_saving = Element_EnergySaving[j_커튼월창];
+                    double cw_saving = Math.Max(Element_EnergySaving[j_커튼월창], 0);
                     d = (cw_saving / Total_Energy_pre * 100);
-                    CW_data[0].Add(new { idx = i, val = cw_saving.ToString("0.0") }); ; //절감량 
+                    CW_data[0].Add(new { idx = i, val = cw_saving.ToString("#,##0") }); ; //절감량 
                     CW_data[1].Add(new { idx = i, val = (cw_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "cw_saving", data = CW_data[0] });
                     data.Add(new { cname = "cw_savingpercent", data = CW_data[1] });
 
                     charts += "{donut:" + d + "},";
 
-                    double cw_saving_elec = Element_ElecSaving[j_커튼월창];
-                    double cw_saving_noelec = Element_GasSaving[j_커튼월창];
+                    double cw_saving_elec = Math.Max(Element_ElecSaving[j_커튼월창], 0);
+                    double cw_saving_noelec = Math.Max(Element_GasSaving[j_커튼월창], 0);
 
                     double cw_tCO2_elec = cw_saving_elec * 0.4747 / 1000000 * 1000;
                     double cw_TOE_elec = cw_saving_elec * 0.00023;
@@ -597,16 +606,16 @@ namespace main.contents.Result.Element_Report
                             j_외부출입문 = a; break;
                         }
                     }
-                    double door_saving = Element_EnergySaving[j_외부출입문];
+                    double door_saving = Math.Max(Element_EnergySaving[j_외부출입문], 0);
                     d = (door_saving / Total_Energy_pre * 100);
-                    Door_data[0].Add(new { idx = i, val = door_saving.ToString("0.0") }); ; //절감량 
+                    Door_data[0].Add(new { idx = i, val = door_saving.ToString("#,##0") }); ; //절감량 
                     Door_data[1].Add(new { idx = i, val = (door_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "door_saving", data = Door_data[0] });
                     data.Add(new { cname = "door_savingpercent", data = Door_data[1] });
 
                     charts += "{donut:" + d + "},";
-                    double door_saving_elec = Element_ElecSaving[j_외부출입문];
-                    double door_saving_noelec = Element_GasSaving[j_외부출입문];
+                    double door_saving_elec = Math.Max(Element_ElecSaving[j_외부출입문],0);
+                    double door_saving_noelec = Math.Max(Element_GasSaving[j_외부출입문], 0);
 
                     double door_tCO2_elec = door_saving_elec * 0.4747 / 1000000 * 1000;
                     double door_TOE_elec = door_saving_elec * 0.00023;

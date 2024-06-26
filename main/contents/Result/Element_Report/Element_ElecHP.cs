@@ -236,6 +236,19 @@ namespace main.contents.Result.Element_Report
                             EHP_Point_C[a] = Math.Min(100, EHP_COP_New_H[a] / EHP_COP_Rule_C[a] * 100);
                         }                       
                     }
+                    for (int a = 0; a < 18; a++)
+                    {
+                        if (EHP_Saving_H[a] < 0) { EHP_Saving_H[a] = 0; }
+                        if (EHP_elec_H[a] < 0) { EHP_elec_H[a] = 0; }
+                        if (EHP_gas_H[a] < 0) { EHP_gas_H[a] = 0; }
+
+                        if (EHP_Saving_C[a] < 0) { EHP_Saving_C[a] = 0; }
+                        if (EHP_elec_C[a] < 0) { EHP_elec_C[a] = 0; }
+                        if (EHP_gas_C[a] < 0) { EHP_gas_C[a] = 0; }
+
+                    }
+
+                    double ehp_total_saving_h = 0; double ehp_total_saving_c = 0;
                     double ehp_total_saving = 0; double ehp_total_elec = 0; double ehp_total_gas = 0;
                     double EHP_COP_New_H_total = 0; double EHP_COP_Old_H_total = 0; double EHP_Point_H_total = 0;
                     double EHP_COP_New_C_total = 0; double EHP_COP_Old_C_total = 0; double EHP_Point_C_total = 0;
@@ -269,8 +282,7 @@ namespace main.contents.Result.Element_Report
                             { EHP_data[126 + a].Add(new { idx = i, val = EHP_COP_Old_C[a].ToString("0.0") }); }//냉방 기존 COP
                             else { EHP_data[126 + a].Add(new { idx = i, val = "Not EHP" }); }
                             data.Add(new { cname = "ehp_cop_old_c" + a, data = EHP_data[126 + a] });
-
-                            EHP_data[144 + a].Add(new { idx = i, val =( EHP_Saving_H[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//난방 절감률
+                            EHP_data[144 + a].Add(new { idx = i, val = (EHP_Saving_H[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//난방 절감률
                             data.Add(new { cname = "ehp_saving_h" + a, data = EHP_data[144 + a] });
 
                             EHP_data[162 + a].Add(new { idx = i, val = (EHP_Saving_C[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감률
@@ -313,12 +325,13 @@ namespace main.contents.Result.Element_Report
 
                     for (int a = 0; a < 18; a++)
                     {
+                        ehp_total_saving_h += EHP_Saving_H[a];
+                        ehp_total_saving_c += EHP_Saving_C[a];
                         ehp_total_saving += EHP_Saving_H[a] + EHP_Saving_C[a];
                         ehp_total_elec += EHP_elec_H[a] + EHP_elec_C[a];
                         ehp_total_gas += EHP_gas_H[a] + EHP_gas_C[a];
                     }
-
-                    EHP_data[216].Add(new { idx = i, val = ehp_total_saving.ToString("0.0") });//절감량 전체 
+                    EHP_data[216].Add(new { idx = i, val = ehp_total_saving.ToString("#,##0") });//절감량 전체 
                     data.Add(new { cname = "ehp_saving_total" , data = EHP_data[216] });
                     EHP_data[217].Add(new { idx = i, val = (ehp_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "ehp_saving_percent", data = EHP_data[217] });
@@ -337,7 +350,7 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "ehp_cop_old_h_total", data = EHP_data[221] });
                     EHP_data[222].Add(new { idx = i, val = EHP_COP_New_H_total.ToString("0.0") });//난방 COP 평균  
                     data.Add(new { cname = "ehp_cop_new_h_total", data = EHP_data[222] });
-                    EHP_data[223].Add(new { idx = i, val = (EHP_Saving_H.Sum() / Total_Energy_pre * 100).ToString("0.0") + " %" });//난방 절감량 합계  
+                    EHP_data[223].Add(new { idx = i, val = (ehp_total_saving_h / Total_Energy_pre * 100).ToString("0.0") + " %" });//난방 절감량 합계  
                     data.Add(new { cname = "ehp_saving_h_total", data = EHP_data[223] });
                     d = EHP_Point_H_total;
                     if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
@@ -353,7 +366,7 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "ehp_cop_old_c_total", data = EHP_data[226] });
                     EHP_data[227].Add(new { idx = i, val = EHP_COP_New_C_total.ToString("0.0") });//냉방 COP 평균  
                     data.Add(new { cname = "ehp_cop_new_c_total", data = EHP_data[227] });
-                    EHP_data[228].Add(new { idx = i, val = (EHP_Saving_C.Sum() / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감량 합계  
+                    EHP_data[228].Add(new { idx = i, val = (ehp_total_saving_c / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감량 합계  
                     data.Add(new { cname = "ehp_saving_c_total", data = EHP_data[228] });
                     d = EHP_Point_C_total;
                     if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
@@ -457,6 +470,12 @@ namespace main.contents.Result.Element_Report
                             AirC_Point[a] = Math.Min(100, AirC_COP_New[a]/ AirC_COP_Rule[a] *100);
                         }
                     }
+                    for(int a =0; a<18; a++)
+                    {
+                        if (AirC_Saving[a] < 0) { AirC_Saving[a] = 0; }
+                        if (AirC_elec[a] < 0) { AirC_elec[a] = 0; }
+                        if (AirC_gas[a] < 0) { AirC_gas[a] = 0; }
+                    }
                     double airc_total_saving = 0; double airc_total_elec = 0; double airc_total_gas = 0;
                     double AirC_COP_New_C_total = 0; double AirC_COP_Old_C_total = 0; double AirC_Point_C_total = 0;
                     for (int a = 0; a < 18; a++)
@@ -478,7 +497,6 @@ namespace main.contents.Result.Element_Report
                             { AirC_data[126 + a].Add(new { idx = i, val = AirC_COP_Old[a].ToString("0.0") }); }//냉방 기존 COP
                             else { AirC_data[126 + a].Add(new { idx = i, val = "Not EHP" }); }
                             data.Add(new { cname = "airc_cop_old" + a, data = AirC_data[126 + a] });
-
                             AirC_data[162 + a].Add(new { idx = i, val = (AirC_Saving[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감률
                             data.Add(new { cname = "airc_saving" + a, data = AirC_data[162 + a] });
 
@@ -510,7 +528,7 @@ namespace main.contents.Result.Element_Report
                         airc_total_gas += AirC_gas[a];
                     }
 
-                    AirC_data[216].Add(new { idx = i, val = airc_total_saving.ToString("0.0") });//절감량 전체 
+                    AirC_data[216].Add(new { idx = i, val = airc_total_saving.ToString("#,##0") });//절감량 전체 
                     data.Add(new { cname = "airc_saving_total", data = AirC_data[216] });
                     AirC_data[217].Add(new { idx = i, val = (airc_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "airc_saving_percent", data = AirC_data[217] });
@@ -529,7 +547,7 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "airc_cop_old_c_total", data = AirC_data[226] });
                     AirC_data[227].Add(new { idx = i, val = AirC_COP_New_C_total.ToString("0.0") });//냉방 COP 평균  
                     data.Add(new { cname = "airc_cop_new_c_total", data = AirC_data[227] });
-                    AirC_data[228].Add(new { idx = i, val = (AirC_Saving.Sum() / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감량 합계  
+                    AirC_data[228].Add(new { idx = i, val = (airc_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감량 합계  
                     data.Add(new { cname = "airc_saving_c_total", data = AirC_data[228] });
                     d = AirC_Point_C_total;
                     if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기

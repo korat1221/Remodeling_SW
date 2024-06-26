@@ -65,19 +65,19 @@ namespace main.contents.Result.Element_Report
                         }
                     }
 
-                    double wall_saving = Element_EnergySaving[j_외벽];
+                    double wall_saving = Math.Max(Element_EnergySaving[j_외벽],0);
 
                     d = (wall_saving / Total_Energy_pre * 100);
 
-                    Wall_data[0].Add(new { idx = i, val = wall_saving.ToString("0.0") }); ; //절감량 
+                    Wall_data[0].Add(new { idx = i, val = wall_saving.ToString("#,##0") }); ; //절감량 
                     Wall_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "wall_saving", data = Wall_data[0] });
                     data.Add(new { cname = "wall_savingpercent", data = Wall_data[1] });
 
                     charts += "{donut:" + d + "},";
 
-                    double wall_saving_elec = Element_ElecSaving[j_외벽];
-                    double wall_saving_noelec = Element_GasSaving[j_외벽];
+                    double wall_saving_elec = Math.Max(Element_ElecSaving[j_외벽], 0);
+                    double wall_saving_noelec = Math.Max(Element_GasSaving[j_외벽], 0);
 
                     double wall_tCO2_elec = wall_saving_elec * 0.4747 / 1000000 * 1000;
                     double wall_TOE_elec = wall_saving_elec * 0.00023;
@@ -285,19 +285,19 @@ namespace main.contents.Result.Element_Report
                             j_지붕 = a; break;
                         }
                     }
-                    double roof_saving = Element_EnergySaving[j_지붕];
+                    double roof_saving = Math.Max(Element_EnergySaving[j_지붕], 0);
 
                     d = (roof_saving / Total_Energy_pre * 100);
 
-                    Roof_data[0].Add(new { idx = i, val = roof_saving.ToString("0.0") }); ; //절감량 
+                    Roof_data[0].Add(new { idx = i, val = roof_saving.ToString("#,##0") }); ; //절감량 
                     Roof_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "roof_saving", data = Roof_data[0] });
                     data.Add(new { cname = "roof_savingpercent", data = Roof_data[1] });
 
                     charts += "{donut:" + d + "},";
 
-                    double roof_saving_elec = Element_ElecSaving[j_지붕];
-                    double roof_saving_noelec = Element_GasSaving[j_지붕];
+                    double roof_saving_elec = Math.Max(Element_ElecSaving[j_지붕], 0);
+                    double roof_saving_noelec = Math.Max(Element_GasSaving[j_지붕], 0);
 
                     double roof_tCO2_elec = roof_saving_elec * 0.4747 / 1000000 * 1000;
                     double roof_TOE_elec = roof_saving_elec * 0.00023;
@@ -512,18 +512,18 @@ namespace main.contents.Result.Element_Report
                             j_최하층바닥 = a; break;
                         }
                     }
-                    double floor_saving = Element_EnergySaving[j_최하층바닥];
+                    double floor_saving = Math.Max(Element_EnergySaving[j_최하층바닥], 0);
 
                     d = (floor_saving / Total_Energy_pre * 100);
-                    Floor_data[0].Add(new { idx = i, val = floor_saving.ToString("0.0") }); ; //절감량 
+                    Floor_data[0].Add(new { idx = i, val = floor_saving.ToString("#,##0") }); ; //절감량 
                     Floor_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "floor_saving", data = Floor_data[0] });
                     data.Add(new { cname = "floor_savingpercent", data = Floor_data[1] });
 
                     charts += "{donut:" + d + "},";
 
-                    double floor_saving_elec = Element_ElecSaving[j_최하층바닥];
-                    double floor_saving_noelec = Element_GasSaving[j_최하층바닥];
+                    double floor_saving_elec = Math.Max(Element_ElecSaving[j_최하층바닥], 0);
+                    double floor_saving_noelec = Math.Max(Element_GasSaving[j_최하층바닥], 0);
 
                     double floor_tCO2_elec = floor_saving_elec * 0.4747 / 1000000 * 1000;
                     double floor_TOE_elec = floor_saving_elec * 0.00023;

@@ -71,11 +71,10 @@ namespace main.contents.Result.Element_Report
                             j_조명 = a; break;
                         }
                     }
+                    double light_saving = Math.Max(Element_EnergySaving[j_조명],0);
 
-                    double light_saving = Element_EnergySaving[j_조명];
 
-
-                    Light_data[0].Add(new { idx = i, val = light_saving.ToString("0.0") }); ; //절감량 
+                    Light_data[0].Add(new { idx = i, val = light_saving.ToString("#,##0") }); ; //절감량 
                     Light_data[1].Add(new { idx = i, val = (light_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "light_saving", data = Light_data[0] });
                     data.Add(new { cname = "light_savingpercent", data = Light_data[1] });
@@ -197,6 +196,11 @@ namespace main.contents.Result.Element_Report
                         }  
                     }
 
+                    for (int a = 0; a < 10; a++)
+                    {
+                        if(Light_Saving[a] <0) { Light_Saving[a] = 0; }
+                    }
+
                     double sum = 0;
                     for (int a = 0; a < 10; a++)
                     {
@@ -306,9 +310,9 @@ namespace main.contents.Result.Element_Report
                             j_기밀 = a; break;
                         }
                     }
-                    double infil_saving = Element_EnergySaving[j_기밀];
-                    double infil_saving_elec = Element_ElecSaving[j_기밀];
-                    double infil_saving_noelec = Element_GasSaving[j_기밀];
+                    double infil_saving = Math.Max(Element_EnergySaving[j_기밀],0);
+                    double infil_saving_elec = Math.Max(Element_ElecSaving[j_기밀],0);
+                    double infil_saving_noelec = Math.Max(Element_GasSaving[j_기밀], 0);
                     int j_환기 = 0;
                     for (int a = 0; a < ElementAlt.Length; a++)
                     {
@@ -317,11 +321,11 @@ namespace main.contents.Result.Element_Report
                             j_환기 = a; break;
                         }
                     }
-                    double ventil_saving = Element_EnergySaving[j_환기] - infil_saving;
-                    double ventil_saving_elec = Element_ElecSaving[j_환기] - infil_saving_elec;
-                    double ventil_saving_noelec = Element_GasSaving[j_환기] - infil_saving_noelec;
+                    double ventil_saving = Math.Max(Element_EnergySaving[j_환기] - infil_saving,0);
+                    double ventil_saving_elec = Math.Max(Element_ElecSaving[j_환기] - infil_saving_elec, 0);
+                    double ventil_saving_noelec = Math.Max(Element_GasSaving[j_환기] - infil_saving_noelec, 0);
 
-                    Ventil_data[0].Add(new { idx = i, val = ventil_saving.ToString("0.0") }); ; //절감량 
+                    Ventil_data[0].Add(new { idx = i, val = ventil_saving.ToString("#,##0") }); ; //절감량 
                     Ventil_data[1].Add(new { idx = i, val = (ventil_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "ventil_saving", data = Ventil_data[0] });
                     data.Add(new { cname = "ventil_savingpercent", data = Ventil_data[1] });
@@ -485,7 +489,7 @@ namespace main.contents.Result.Element_Report
 
 
 
-                    Infil_data[0].Add(new { idx = i, val = infil_saving.ToString("0.0") }); ; //절감량 
+                    Infil_data[0].Add(new { idx = i, val = infil_saving.ToString("#,##0") }); ; //절감량 
                     Infil_data[1].Add(new { idx = i, val = (infil_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "infil_saving", data = Infil_data[0] });
                     data.Add(new { cname = "infil_savingpercent", data = Infil_data[1] });

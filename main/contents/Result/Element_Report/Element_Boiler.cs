@@ -376,7 +376,12 @@ namespace main.contents.Result.Element_Report
                             Boiler_Point[a + Boiler_HW_count + Boiler_H_count] = Math.Min(100, Boiler_eta_New[a + Boiler_HW_count + Boiler_H_count] / Boiler_eta_Rule[a + Boiler_HW_count + Boiler_H_count] * 100);
                         }
                     }
-
+                    for (int a = 0; a < 8; a++)
+                    {
+                        if (Boiler_Saving[a] < 0) { Boiler_Saving[a] = 0; }
+                        if (Boiler_elec[a] < 0) { Boiler_elec[a] = 0; }
+                        if (Boiler_gas[a] < 0) { Boiler_gas[a] = 0; }
+                    }
                     double boiler_total_saving = 0; double boiler_total_elec = 0; double boiler_total_gas = 0;
                     double Boiler_eta_New_total = 0; double Boiler_eta_Old_total = 0; double Boiler_Point_total = 0;
                     for (int a = 0; a < 8; a++)
@@ -398,8 +403,7 @@ namespace main.contents.Result.Element_Report
                             { Boiler_data[32 + a].Add(new { idx = i, val = Boiler_eta_Old[a].ToString("0.0") }); }//기존 효율
                             else { Boiler_data[32 + a].Add(new { idx = i, val = "Not Boiler" }); }
                             data.Add(new { cname = "boiler_eta_old" + a, data = Boiler_data[32 + a] });
-
-                            Boiler_data[40 + a].Add(new { idx = i, val =( Boiler_Saving[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률
+                            Boiler_data[40 + a].Add(new { idx = i, val = (Boiler_Saving[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률
                             data.Add(new { cname = "boiler_saving" + a, data = Boiler_data[40 + a] });
 
                             d = Boiler_Point[a];
@@ -433,7 +437,7 @@ namespace main.contents.Result.Element_Report
                         boiler_total_gas += Boiler_gas[a];
                     }
 
-                    Boiler_data[64].Add(new { idx = i, val = boiler_total_saving.ToString("0.0") });//절감량 전체 
+                    Boiler_data[64].Add(new { idx = i, val = boiler_total_saving.ToString("#,##0") });//절감량 전체 
                     data.Add(new { cname = "boiler_saving_total" , data = Boiler_data[64] });
                     Boiler_data[65].Add(new { idx = i, val = (boiler_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "boiler_saving_percent", data = Boiler_data[65] });
@@ -451,8 +455,8 @@ namespace main.contents.Result.Element_Report
                     Boiler_data[69].Add(new { idx = i, val = Boiler_eta_Old_total.ToString("0.0") });//기존 효율 평균  
                     data.Add(new { cname = "boiler_eta_old_total", data = Boiler_data[69] });
                     Boiler_data[70].Add(new { idx = i, val = Boiler_eta_New_total.ToString("0.0") });//효율 평균  
-                    data.Add(new { cname = "boiler_eta_new_total", data = Boiler_data[70] });
-                    Boiler_data[71].Add(new { idx = i, val = (Boiler_Saving.Sum() / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감량 합계  
+                    data.Add(new { cname = "boiler_eta_new_total", data = Boiler_data[70] });                  
+                    Boiler_data[71].Add(new { idx = i, val = (boiler_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감량 합계  
                     data.Add(new { cname = "boiler_saving_total2", data = Boiler_data[71] });
                     d = Boiler_Point_total;
                     if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기
@@ -813,7 +817,7 @@ namespace main.contents.Result.Element_Report
                         solar_total_gas += Solar_gas[a];
                     }
 
-                    Solar_data[64].Add(new { idx = i, val = solar_total_saving.ToString("0.0") });//절감량 전체 
+                    Solar_data[64].Add(new { idx = i, val = solar_total_saving.ToString("#,##0") });//절감량 전체 
                     data.Add(new { cname = "solar_saving_total", data = Solar_data[64] });
                     Solar_data[65].Add(new { idx = i, val = (solar_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "solar_saving_percent", data = Solar_data[65] });
@@ -957,7 +961,12 @@ namespace main.contents.Result.Element_Report
                             WHP_COP_New[a] = Convert.ToDouble(Value[a][4]);
                         }
                     }
-
+                    for (int a = 0; a < 8; a++)
+                    {
+                        if (WHP_Saving[a] < 0) { WHP_Saving[a] = 0; }
+                        if (WHP_elec[a] < 0) { WHP_elec[a] = 0; }
+                        if (WHP_gas[a] < 0) { WHP_gas[a] = 0; }
+                    }
                     double WHP_total_saving = 0; double WHP_total_elec = 0; double WHP_total_gas = 0;
                     double WHP_eta_New_total = 0; double WHP_eta_Old_total = 0; double WHP_Point_total = 0;
                     for (int a = 0; a < 8; a++)
@@ -979,8 +988,7 @@ namespace main.contents.Result.Element_Report
                             { WHP_data[32 + a].Add(new { idx = i, val = WHP_COP_Old[a].ToString("0.0") }); }//기존 효율
                             else { WHP_data[32 + a].Add(new { idx = i, val = "Not HP" }); }
                             data.Add(new { cname = "whp_cop_old" + a, data = WHP_data[32 + a] });
-
-                            WHP_data[40 + a].Add(new { idx = i, val = (WHP_Saving[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률
+                            WHP_data[40 + a].Add(new { idx = i, val = (WHP_Saving[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률             
                             data.Add(new { cname = "whp_saving" + a, data = WHP_data[40 + a] });
 
                             d = WHP_Point[a];
@@ -1014,7 +1022,7 @@ namespace main.contents.Result.Element_Report
                         WHP_total_gas += WHP_gas[a];
                     }
 
-                    WHP_data[64].Add(new { idx = i, val = WHP_total_saving.ToString("0.0") });//절감량 전체 
+                    WHP_data[64].Add(new { idx = i, val = WHP_total_saving.ToString("#,##0") });//절감량 전체 
                     data.Add(new { cname = "whp_saving_total", data = WHP_data[64] });
                     WHP_data[65].Add(new { idx = i, val = (WHP_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "whp_saving_percent", data = WHP_data[65] });
@@ -1033,7 +1041,7 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "whp_eta_old_total", data = WHP_data[69] });
                     WHP_data[70].Add(new { idx = i, val = WHP_eta_New_total.ToString("0.0") });//효율 평균  
                     data.Add(new { cname = "whp_eta_new_total", data = WHP_data[70] });
-                    WHP_data[71].Add(new { idx = i, val = (WHP_Saving.Sum() / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감량 합계  
+                    WHP_data[71].Add(new { idx = i, val = (WHP_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감량 합계  
                     data.Add(new { cname = "whp_saving_total2", data = WHP_data[71] });
                     d = WHP_Point_total;
                     if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 139) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 139는 픽셀 최대 크기

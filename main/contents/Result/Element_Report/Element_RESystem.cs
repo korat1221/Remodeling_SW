@@ -58,11 +58,11 @@ namespace main.contents.Result.Element_Report
                 if (res.Length > 0)
                 {
 
-                    #region 환기  
+                    #region 태양광
                     int j_태양광 = 0;
                     for (int a = 0; a < ElementAlt.Length; a++)
                     {
-                        if (ElementAlt[a] == "기밀")
+                        if (ElementAlt[a] == "태양광")
                         {
                             j_태양광 = a; break;
                         }
@@ -71,7 +71,7 @@ namespace main.contents.Result.Element_Report
                     double solar_saving_elec = Element_ElecSaving[j_태양광];
                     double solar_saving_noelec = Element_GasSaving[j_태양광];
                    
-                    solar_data[0].Add(new { idx = i, val = solar_saving.ToString("0.0") }); ; //절감량 
+                    solar_data[0].Add(new { idx = i, val = solar_saving.ToString("#,##0") }); ; //절감량 
                     solar_data[1].Add(new { idx = i, val = (solar_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "solar_saving", data = solar_data[0] });
                     data.Add(new { cname = "solar_savingpercent", data = solar_data[1] });
