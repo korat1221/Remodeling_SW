@@ -27,11 +27,12 @@ namespace main.contents
     {
         String ProjectName, ProjectType, ProjectNum;
         String BuildingCategory, BuildingUse, BuildingName, BuildingLocation, Climate, BylawClimate;
-        String Year, Month;
+        double Year, Month;
         double ConstrucitonDate, BylawDate;
         double GrossArea, BuildingArea;
         String AboveGround, UnderGround;
-        String ReviewerName, ReviewerLocation, ReviewerCompany, ReviewYear, ReviewMonth;
+        String ReviewerName, ReviewerLocation, ReviewerCompany;
+        double ReviewYear, ReviewMonth;
         double ReviewDate;
         double[] law = new double[11];
         string OldProject;
@@ -80,7 +81,8 @@ namespace main.contents
 
             //건물대상 콤보박스
             Program.UTIL.FillComboBox_Parents(BuildingCategory_comboBox, "존일반", "건물용도", "1");
-
+            BuildingCategory = "에너지다소비형건물";
+            BuildingUse ="정부청사";
 
             //기후데이터 콤보박스
             string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "인덱스", "이름", "종류 = '2'");
@@ -91,7 +93,6 @@ namespace main.contents
                 {
                     Climate_comboBox.Items.Add(Value[i][0]);
                 }
-                Climate_comboBox.SelectedIndex = 2;
             }
 
             //준공연월 연 콤보박스
@@ -100,14 +101,12 @@ namespace main.contents
             {
                 Year_comboBox.Items.Add((2040 - i).ToString());
             }
-            Year_comboBox.SelectedItem = (2023).ToString();
             //준공연월 월 콤보박스
             Month_comboBox.Items.Clear();
             for (int i = 0; i < 12; i++)
             {
                 Month_comboBox.Items.Add((i + 1).ToString());
             }
-            Month_comboBox.SelectedIndex = 0;
 
             //작성시기 연 콤보박스
             ReviewYear_comboBox.Items.Clear();
@@ -115,15 +114,12 @@ namespace main.contents
             {
                 ReviewYear_comboBox.Items.Add((2030 - i).ToString());
             }
-            ReviewYear_comboBox.SelectedItem = (2023).ToString();
             //작성시기 월 콤보박스
             ReviewMonth_comboBox.Items.Clear();
             for (int i = 0; i < 12; i++)
             {
                 ReviewMonth_comboBox.Items.Add((i + 1).ToString());
             }
-            ReviewMonth_comboBox.SelectedIndex = 0;
-
             //지상층수
             AboveGround_comboBox.Items.Clear();
             for (int i = 0; i < 30; i++)
@@ -445,9 +441,9 @@ namespace main.contents
         private void Year_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            if (Year_comboBox.SelectedItem != null)
+            if (Year_comboBox.SelectedItem != null && Year_comboBox.SelectedItem.ToString()!="")
             {
-                Year = Year_comboBox.SelectedItem.ToString();
+                Year = Convert.ToDouble(Year_comboBox.SelectedItem.ToString());
                 Calc_LawDate();
 
             }
@@ -455,9 +451,9 @@ namespace main.contents
 
         private void Month_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Month_comboBox.SelectedItem != null)
+            if (Month_comboBox.SelectedItem != null && Month_comboBox.SelectedItem.ToString() != "" )
             {
-                Month = Month_comboBox.SelectedItem.ToString();
+                Month = Convert.ToDouble(Month_comboBox.SelectedItem.ToString());
                 Calc_LawDate();
             }
         }
@@ -572,18 +568,18 @@ namespace main.contents
 
         private void ReviewYear_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ReviewYear_comboBox.SelectedItem != null)
+            if (ReviewYear_comboBox.SelectedItem != null && ReviewYear_comboBox.SelectedItem.ToString() !="")
             {
-                ReviewYear = ReviewYear_comboBox.SelectedItem.ToString();
+                ReviewYear = Convert.ToDouble(ReviewYear_comboBox.SelectedItem.ToString());
                 Calc_ReviewDate();
             }
         }
 
         private void ReviewMonth_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ReviewMonth_comboBox.SelectedItem != null)
+            if (ReviewMonth_comboBox.SelectedItem != null && ReviewMonth_comboBox.SelectedItem.ToString()!="")
             {
-                ReviewMonth = ReviewMonth_comboBox.SelectedItem.ToString();
+                ReviewMonth = Convert.ToDouble(ReviewMonth_comboBox.SelectedItem.ToString());
                 Calc_ReviewDate();
             }
         }
@@ -697,13 +693,6 @@ namespace main.contents
             BuildingLocation = null;
             BuildingLocation_textBox.Text = null;
 
-            Climate_comboBox.SelectedIndex = 2;
-
-            Year_comboBox.SelectedItem = (2023).ToString();
-            Month_comboBox.SelectedIndex = 0;
-            Calc_LawDate();
-
-
             GrossArea = 0;
             GrossArea_textBox.Text = null;
             BuildingArea = 0;
@@ -722,9 +711,6 @@ namespace main.contents
             ReviewerCompany = null;
             ReviewerCompany_textBox.Text = null;
 
-            ReviewYear_comboBox.SelectedItem = (2023).ToString();
-            ReviewMonth_comboBox.SelectedIndex = 0;
-            Calc_ReviewDate();
 
         }
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
@@ -768,10 +754,24 @@ namespace main.contents
                 ProjectNum = Value[0][2];
                 ProjectNum_textBox.Text = ProjectNum.ToString();
 
-                BuildingCategory = Value[0][4];
+                if (Value[0][4] != "")
+                {
+                    BuildingCategory = Value[0][4];
+                }
+                else
+                {
+                    BuildingCategory = "에너지다소비형건물";
+                }
                 BuildingUse_comboBox.SelectedItem = BuildingCategory;
 
-                BuildingUse = Value[0][5];
+                if (Value[0][5] != "")
+                {
+                    BuildingUse = Value[0][5];
+                }
+                else
+                {
+                    BuildingUse = "정부청사";
+                }
                 BuildingUse_comboBox.SelectedItem = BuildingUse;
 
                 BuildingName = Value[0][6];
@@ -784,12 +784,16 @@ namespace main.contents
                 Climate = Value[0][9];
                 BylawClimate = Value[0][10];
                 ByRawClimate_textBox.Text = BylawClimate;
-
-                Year = Value[0][13];
-                Year_comboBox.SelectedItem = Year;
-
-                Month = Value[0][14];
-                Month_comboBox.SelectedItem = Month;
+                if (Value[0][13] != "")
+                {
+                    Year = Convert.ToDouble(Value[0][13]);
+                    Year_comboBox.SelectedItem = Year.ToString();
+                }
+                if (Value[0][14] != "")
+                {
+                    Month = Convert.ToDouble(Value[0][14]);
+                    Month_comboBox.SelectedItem = Month.ToString();
+                }
                 if (Value[0][15] != "")
                 { 
                     ConstrucitonDate = Convert.ToDouble(Value[0][15]);
@@ -822,12 +826,17 @@ namespace main.contents
 
                 ReviewerCompany = Value[0][23];
                 ReviewerCompany_textBox.Text = ReviewerCompany;
+                if (Value[0][24] != "")
+                {
+                    ReviewYear = Convert.ToDouble(Value[0][24]);
+                    ReviewYear_comboBox.SelectedItem = ReviewYear.ToString();
+                }
 
-                ReviewYear = Value[0][24];
-                ReviewYear_comboBox.SelectedItem = ReviewYear;
-
-                ReviewMonth = Value[0][25];
-                ReviewMonth_comboBox.SelectedItem = ReviewMonth;
+                if (Value[0][25] != "")
+                {
+                    ReviewMonth = Convert.ToDouble(Value[0][25]);
+                    ReviewMonth_comboBox.SelectedItem = ReviewMonth.ToString();
+                }
 
                 if (Value[0][26] != "")
                 {
@@ -848,7 +857,14 @@ namespace main.contents
                 "지붕기밀여부,지붕q50", "");
             if (Value.Length > 0)
             {
-                BlowDoorTest = Value[0][1];
+                if (Value[0][1] != "")
+                {
+                    BlowDoorTest = Value[0][1];
+                }
+                else
+                {
+                    BlowDoorTest = "기밀 테스트 미실시";
+                }
                 BlowDoorTest_comboBox.SelectedItem = Value[0][1];
 
                 q50_textBox.Text = Value[0][2];
