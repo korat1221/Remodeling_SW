@@ -280,6 +280,7 @@ namespace main.contents
             tabPage12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CoolingTop_dataGridView).BeginInit();
             SuspendLayout();
+
             // 
             // PV_dataGridView
             // 

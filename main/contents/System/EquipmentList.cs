@@ -127,6 +127,7 @@ namespace main.contents
             //단위계산
             unit_comboBox.Items.AddRange(new string[] { "열량", "유량", "수량" });
             Load_Qmax();
+
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
