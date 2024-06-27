@@ -83,7 +83,7 @@ namespace main
 
             return true;
         }
-       
+
 
         private void EnergyNeed_Sim_Click(object sender, EventArgs e)
         {
@@ -94,7 +94,7 @@ namespace main
         private void FinalEnergy_Sim_Click(object sender, EventArgs e)
         {
             Program.DB.UseCaches(true);
-            CALC.run(new string[]{ "모두계산" });
+            CALC.run(new string[] { "모두계산" });
             Program.DB.UseCaches(false);
             MessageBox.Show("계산되었습니다.");
         }
@@ -102,6 +102,14 @@ namespace main
         private void ProjectOpen_Click(object sender, EventArgs e)
         {
             Program.getMenuForm().DoLoadForm(42, OnLoadProc2);
+        }
+
+        private void Element_Sim_Click(object sender, EventArgs e)
+        {
+            Program.DB.UseCaches(true);
+            CALC.run(new string[] { "요소기술계산" });
+            Program.DB.UseCaches(false);
+            MessageBox.Show("요소기술별 계산이 완료되었습니다.");
         }
     }
 }

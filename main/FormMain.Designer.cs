@@ -36,6 +36,7 @@
             ProjectOpen = new ToolStripButton();
             EnergyNeed_Sim = new ToolStripButton();
             FinalEnergy_Sim = new ToolStripButton();
+            Element_Sim = new ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.SuspendLayout();
             toolStripContainer1.ContentPanel.SuspendLayout();
@@ -89,11 +90,11 @@
             toolStrip1.BackColor = SystemColors.GradientInactiveCaption;
             toolStrip1.Dock = DockStyle.None;
             toolStrip1.ImageScalingSize = new Size(35, 35);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { Home, ProjectOpen, EnergyNeed_Sim, FinalEnergy_Sim });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { Home, ProjectOpen, EnergyNeed_Sim, FinalEnergy_Sim, Element_Sim });
             toolStrip1.Location = new Point(3, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Padding = new Padding(4);
-            toolStrip1.Size = new Size(175, 50);
+            toolStrip1.Size = new Size(245, 50);
             toolStrip1.TabIndex = 0;
             // 
             // Home
@@ -136,6 +137,16 @@
             FinalEnergy_Sim.Text = "toolStripButton5";
             FinalEnergy_Sim.Click += FinalEnergy_Sim_Click;
             // 
+            // Element_Sim
+            // 
+            Element_Sim.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            Element_Sim.Image = (Image)resources.GetObject("Element_Sim.Image");
+            Element_Sim.ImageTransparentColor = Color.Magenta;
+            Element_Sim.Name = "Element_Sim";
+            Element_Sim.Size = new Size(39, 39);
+            Element_Sim.Text = "toolStripButton1";
+            Element_Sim.Click += Element_Sim_Click;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -167,5 +178,6 @@
         private ToolStripButton ProjectOpen;
         private ToolStripButton EnergyNeed_Sim;
         private ToolStripButton FinalEnergy_Sim;
+        private ToolStripButton Element_Sim;
     }
 }
