@@ -94,11 +94,11 @@ namespace main.contents
             Qhmax_textBox = new TextBox();
             output_text = new System.Windows.Forms.Label();
             input_textBox = new TextBox();
-            unitselect_comboBox = new ComboBox();
             unit_comboBox = new ComboBox();
             label19 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
             Icon_pictureBox = new PictureBox();
+            unitselect_comboBox = new ComboBox();
             tabControl1 = new CustomTabControl();
             HP_tabPage = new TabPage();
             label3 = new System.Windows.Forms.Label();
@@ -280,7 +280,6 @@ namespace main.contents
             tabPage12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CoolingTop_dataGridView).BeginInit();
             SuspendLayout();
-
             // 
             // PV_dataGridView
             // 
@@ -337,11 +336,11 @@ namespace main.contents
             GeneralPanel.Controls.Add(Qhmax_textBox);
             GeneralPanel.Controls.Add(output_text);
             GeneralPanel.Controls.Add(input_textBox);
-            GeneralPanel.Controls.Add(unitselect_comboBox);
             GeneralPanel.Controls.Add(unit_comboBox);
             GeneralPanel.Controls.Add(label19);
             GeneralPanel.Controls.Add(label4);
             GeneralPanel.Controls.Add(Icon_pictureBox);
+            GeneralPanel.Controls.Add(unitselect_comboBox);
             GeneralPanel.Location = new Point(12, 12);
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(1150, 57);
@@ -352,7 +351,7 @@ namespace main.contents
             // 
             label23.AutoSize = true;
             label23.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label23.Location = new Point(538, 20);
+            label23.Location = new Point(475, 20);
             label23.Name = "label23";
             label23.Size = new Size(59, 15);
             label23.TabIndex = 140;
@@ -362,7 +361,7 @@ namespace main.contents
             // 
             label22.AutoSize = true;
             label22.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label22.Location = new Point(353, 20);
+            label22.Location = new Point(290, 20);
             label22.Name = "label22";
             label22.Size = new Size(59, 15);
             label22.TabIndex = 139;
@@ -373,7 +372,7 @@ namespace main.contents
             Qcmax_label.AutoSize = true;
             Qcmax_label.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
             Qcmax_label.ForeColor = SystemColors.ControlText;
-            Qcmax_label.Location = new Point(667, 20);
+            Qcmax_label.Location = new Point(604, 20);
             Qcmax_label.Name = "Qcmax_label";
             Qcmax_label.Size = new Size(24, 15);
             Qcmax_label.TabIndex = 137;
@@ -386,7 +385,7 @@ namespace main.contents
             Qcmax_textBox.Enabled = false;
             Qcmax_textBox.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
             Qcmax_textBox.ForeColor = SystemColors.ControlText;
-            Qcmax_textBox.Location = new Point(602, 20);
+            Qcmax_textBox.Location = new Point(539, 20);
             Qcmax_textBox.Name = "Qcmax_textBox";
             Qcmax_textBox.ReadOnly = true;
             Qcmax_textBox.Size = new Size(60, 14);
@@ -398,7 +397,7 @@ namespace main.contents
             Qhmax_label.AutoSize = true;
             Qhmax_label.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
             Qhmax_label.ForeColor = SystemColors.ControlText;
-            Qhmax_label.Location = new Point(482, 20);
+            Qhmax_label.Location = new Point(419, 20);
             Qhmax_label.Name = "Qhmax_label";
             Qhmax_label.Size = new Size(24, 15);
             Qhmax_label.TabIndex = 135;
@@ -411,7 +410,7 @@ namespace main.contents
             Qhmax_textBox.Enabled = false;
             Qhmax_textBox.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
             Qhmax_textBox.ForeColor = SystemColors.ControlText;
-            Qhmax_textBox.Location = new Point(417, 20);
+            Qhmax_textBox.Location = new Point(354, 20);
             Qhmax_textBox.Name = "Qhmax_textBox";
             Qhmax_textBox.ReadOnly = true;
             Qhmax_textBox.Size = new Size(60, 14);
@@ -422,7 +421,7 @@ namespace main.contents
             // 
             output_text.AutoSize = true;
             output_text.Enabled = false;
-            output_text.Location = new Point(984, 20);
+            output_text.Location = new Point(1080, 20);
             output_text.Name = "output_text";
             output_text.Size = new Size(0, 15);
             output_text.TabIndex = 107;
@@ -430,27 +429,17 @@ namespace main.contents
             // 
             // input_textBox
             // 
-            input_textBox.Location = new Point(1027, 16);
+            input_textBox.Location = new Point(964, 16);
             input_textBox.Name = "input_textBox";
             input_textBox.Size = new Size(100, 23);
             input_textBox.TabIndex = 106;
             input_textBox.Visible = false;
             input_textBox.TextChanged += input_textBox_TextChanged_1;
             // 
-            // unitselect_comboBox
-            // 
-            unitselect_comboBox.FormattingEnabled = true;
-            unitselect_comboBox.Location = new Point(900, 16);
-            unitselect_comboBox.Name = "unitselect_comboBox";
-            unitselect_comboBox.Size = new Size(121, 23);
-            unitselect_comboBox.TabIndex = 105;
-            unitselect_comboBox.Visible = false;
-            unitselect_comboBox.SelectedIndexChanged += unitselect_comboBox_SelectedIndexChanged;
-            // 
             // unit_comboBox
             // 
             unit_comboBox.FormattingEnabled = true;
-            unit_comboBox.Location = new Point(773, 16);
+            unit_comboBox.Location = new Point(710, 16);
             unit_comboBox.Name = "unit_comboBox";
             unit_comboBox.Size = new Size(121, 23);
             unit_comboBox.TabIndex = 104;
@@ -460,7 +449,7 @@ namespace main.contents
             // 
             label19.AutoSize = true;
             label19.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label19.Location = new Point(701, 21);
+            label19.Location = new Point(653, 21);
             label19.Name = "label19";
             label19.Size = new Size(55, 15);
             label19.TabIndex = 103;
@@ -483,6 +472,16 @@ namespace main.contents
             Icon_pictureBox.Size = new Size(50, 50);
             Icon_pictureBox.TabIndex = 97;
             Icon_pictureBox.TabStop = false;
+            // 
+            // unitselect_comboBox
+            // 
+            unitselect_comboBox.FormattingEnabled = true;
+            unitselect_comboBox.Location = new Point(837, 16);
+            unitselect_comboBox.Name = "unitselect_comboBox";
+            unitselect_comboBox.Size = new Size(121, 23);
+            unitselect_comboBox.TabIndex = 105;
+            unitselect_comboBox.Visible = false;
+            unitselect_comboBox.SelectedIndexChanged += unitselect_comboBox_SelectedIndexChanged;
             // 
             // tabControl1
             // 
