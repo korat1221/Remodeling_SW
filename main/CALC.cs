@@ -26,6 +26,7 @@ namespace main
         {
             _calculations["모두계산"] = new Func<bool>(Run_All);
             _calculations["존계산"] = new Func<bool>(Run_Zone);
+            _calculations["요소기술계산"] = new Func<bool>(AltCalc);
         }
 
         public static bool Run_Zone()
@@ -1524,8 +1525,6 @@ namespace main
                     }
                 }
             }
-
-            MessageBox.Show("요소기술별 계산이 완료되었습니다.");
             return true;
         }
         /////////////////////////////////////////////////////////////////////////////////////
