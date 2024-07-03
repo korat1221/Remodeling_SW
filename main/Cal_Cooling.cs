@@ -24,7 +24,8 @@ namespace main
         string SelectZone_nonsplit;
         string SelectAhu_nonsplit;
 
-        List<string> SelectZone = new List<string>(), SelectAhu = new List<string>(), SelectCG = new List<string>(), SelectCGE = new List<string>(), SelectCGN = new List<string>(); //공통사항
+        List<string> SelectZone = new List<string>(), SelectAhu = new List<string>();
+        public List<string> SelectCG = new List<string>(), SelectCGE = new List<string>(), SelectCGN = new List<string>(); //공통사항
         List<string> SelectCGC = new List<string>(), SelectCGComp = new List<string>(), SelectCT = new List<string>(), SelectCTN = new List<string>(); //선택사항
 
      
@@ -36,7 +37,7 @@ namespace main
         List<string> Comp = new List<string>(); //공냉식, 수냉식, 지열히트펌프 유형 
         public double CWin, CWout; //냉수공급시
         public string CSource, ArtNumber, Cout; // A 및 숫자에 대한 지정값 Cout : 직팽식, 수방식, fC_M 멀티보정계수
-        double fC_M, FanPower; //팬파워는 공냉식에만 해당됨
+        public double fC_M, FanPower; //팬파워는 공냉식에만 해당됨
         public int Number_f, ZoneNumber_f, AhuNumber_f; //설비개수, 존개수
         public string Carrier; ///연료
 
@@ -75,7 +76,7 @@ namespace main
 
 
         //분배/저장열손실         
-        double nc_ce_sens, nc_ce, nc_d, nc_s, fSP;
+       public double nc_ce_sens, nc_ce, nc_d, nc_s, fSP;
         public string Sto_Tank, Sto_Type;
        
 

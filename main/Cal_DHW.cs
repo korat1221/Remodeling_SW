@@ -21,7 +21,7 @@ namespace main
         double PipeD, PipeInsD, PipeIns_Ramda;
         String PipeIns;
         int ZoneCount;
-        public ArrayList SelectZone_split = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList(); ArrayList BoilerNum_split = new ArrayList();
+        public ArrayList SelectZone_split = new ArrayList(); public ArrayList SelectBoiler_split = new ArrayList(); public ArrayList BoilerNum_split = new ArrayList();
         public double[] Qwb_mth_sum = new double[12]; public double[] theta_ih_avg = new double[12]; public double[] theta_e = new double[12]; public double[] theta_u = new double[12];
         public double Qw_a_sum, th_op_day_avg, theta_i_h_set_avg; public double[] dop_mth_avg = new double[12];
         double SL, RL;
@@ -30,9 +30,9 @@ namespace main
         public double[] Ww_d = new double[12], Ww_s = new double[12], Ww_g = new double[12];
         public double Psi_pipe, L, Qs_po_day;
         public double[] Qw_gen_day = new double[12], Qw_gen_p0_day = new double[12], eta_pn_w = new double[12];
-        public String Carrier; 
-        ArrayList SelectSolar_split = new ArrayList(); ArrayList SolarNum_split = new ArrayList(); ArrayList SolarDirection_split = new ArrayList(); ArrayList SolarDegree_split = new ArrayList();
-        ArrayList SelectHP_split = new ArrayList(); ArrayList HPNum_split = new ArrayList(); ArrayList HPControl_split = new ArrayList();
+        public String Carrier;
+        public ArrayList SelectSolar_split = new ArrayList(); public ArrayList SolarNum_split = new ArrayList(); public ArrayList SolarDirection_split = new ArrayList(); ArrayList SolarDegree_split = new ArrayList();
+        public ArrayList SelectHP_split = new ArrayList(); public ArrayList HPNum_split = new ArrayList(); public ArrayList HPControl_split = new ArrayList();
         public double[] Qw_sol = new double[12];
         string[][] 프로젝트번호 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
 
@@ -212,7 +212,7 @@ namespace main
         }
 
         //보일러 정보 불러오기
-        public void Load_Boiler(string ProjNum)
+        public void Load_Boiler_general(string ProjNum)
         {
             string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "보일러종류,보일러대수", "번호 = '" + DHWNum + "'");
             if (Value.Length > 0)
@@ -224,7 +224,7 @@ namespace main
                 BoilerNum_split = Split_(BoilerNum_nonsplit);
             }
         }
-        public void Load_Solar(string ProjNum)
+        public void Load_Solar_general(string ProjNum)
         {
             string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "태양열번호,모듈개수,모듈방위,모듈기울기", "번호 = '" + DHWNum + "'");
             if (Value.Length > 0)
@@ -242,7 +242,7 @@ namespace main
                 SolarDegree_split = Split_(SolarDegree_nonsplit);
             }
         }
-        public void Load_HP(string ProjNum)
+        public void Load_HP_general(string ProjNum)
         {
             string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "히트펌프번호,히트펌프제어방식,히트펌프대수", "번호 = '" + DHWNum + "'");
             if (Value.Length > 0)
@@ -466,58 +466,63 @@ namespace main
                 }
             }
         }
-     
-        public void Calc_Solar(string ProjNum)
-        {
-            double qsol_HN_d, dtheta_korr;
-            double[] qsol_HN_mth= new double[12], eta = new double[12], qsol_mth = new double[12], Qsol_mth = new double[12], Qh_sol = new double[12], Ww_gen = new double[12];
-            string[][] Solarvalue;
-            double Ac; 
 
-            for (int  k = 0; k < SelectSolar_split.Count; k++)
+        public void LoadCalc_Solar(string ProjNum)
+        {
+
+            for (int k = 0; k < SelectSolar_split.Count; k++)
             {
-                Solarvalue = Program.DB.getValue(ProjNum, "User_Solar", "번호,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "번호 ='" + SelectSolar_split[k] + "'");
+                string[][] Solarvalue = Program.DB.getValue(ProjNum, "User_Solar", "번호,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "번호 ='" + SelectSolar_split[k] + "'");
                 if (Solarvalue.Length > 0)
                 {
                     DHW_Solar solar = new DHW_Solar(Solarvalue[0][0], Convert.ToDouble(Solarvalue[0][1]), Convert.ToDouble(Solarvalue[0][2]), Convert.ToDouble(Solarvalue[0][3]), Convert.ToDouble(Solarvalue[0][4]), Convert.ToDouble(Solarvalue[0][5]), Convert.ToDouble(Solarvalue[0][6]), Convert.ToDouble(SolarNum_split[k]), SolarDirection_split[k].ToString(), SolarDegree_split[k].ToString());
-
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-                        string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'and 방향='" + SolarDirection_split[k] + "' and 각도 ='" + SolarDegree_split[k] + "' and 기간 ='" + (mth + 1) + "월'");
-                        qsol_HN_d = Convert.ToDouble(value[0][0]);
-                        qsol_HN_mth[mth] = qsol_HN_d * dmth[mth] * 24 / 1000;
-
-                        string[][] value2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select Max(일사량) from 기후데이터_전일사량 where 지역명 = '" + 지역[0][0] + "' and 방향 = '" + SolarDirection_split[k] + "' and 각도 = '" + SolarDegree_split[k] + "'");
-
-                        Ac = Qw_outg[mth] * 2 * 1.03 * 1.03 / Convert.ToDouble(value2[0][0]) / 24 * 1000;
-                        if (solar.M_Area() * solar.M_Count() / Ac < 1)
-                        {
-                            dtheta_korr = Math.Min(-20 + 20 * solar.M_Area() * solar.M_Count() / Ac, 0);
-                        }
-                        else
-                        {
-                            dtheta_korr = Math.Min(-14 + 14 * solar.M_Area() * solar.M_Count() / Ac, 0);
-                        }
-                        value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_태양열", "온도차", "지역명 ='" + 지역[0][0] + "' and 방위='" + SolarDirection_split[k] + "' and 기간 ='" + (mth + 1) + "월'");
-                        eta[mth] = solar.eta() * solar._50() - solar.K1() * Convert.ToDouble(value[0][0]) / qsol_HN_d - solar.K2() * Convert.ToDouble(value[0][0]) * Convert.ToDouble(value[0][0]) / qsol_HN_d;
-                        if (eta[mth] < 0) { eta[mth] = solar.eta(); }
-                        qsol_mth[mth] = eta[mth] * qsol_HN_mth[mth];
-                        Qsol_mth[mth] = qsol_mth[mth] * solar.M_Area() * solar.M_Count() / 1.03 / 1.03;
-
-                        Qw_sol[mth] = Math.Min(Qsol_mth[mth], Qw_outg[mth]);
-
-                        Ww_gen[mth] = 0.025 * Qw_sol[mth];
-                    }
-                    for(int mth =0; mth<12; mth++)
-                    {
-                        Ww_g[mth] =  Ww_g[mth]+ Ww_gen[mth];
-                        Qw_outg[mth] = Qw_outg[mth] - Qw_sol[mth]; 
-                    }
+                    Calc_Solar(solar, SolarDirection_split[k].ToString(), SolarDegree_split[k].ToString());
                 }
             }
         }
 
-        public void Calc_Qh_gen_Boiler(string ProjNum)
+        public void Calc_Solar(DHW_Solar solar, string direction, string degree)
+        {
+            double qsol_HN_d, dtheta_korr;
+            double[] qsol_HN_mth= new double[12], eta = new double[12], qsol_mth = new double[12], Qsol_mth = new double[12], Qh_sol = new double[12], Ww_gen = new double[12];
+            string[][] Solarvalue;
+            double Ac;
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'and 방향='" + direction + "' and 각도 ='" + degree + "' and 기간 ='" + (mth + 1) + "월'");
+                qsol_HN_d = Convert.ToDouble(value[0][0]);
+                qsol_HN_mth[mth] = qsol_HN_d * dmth[mth] * 24 / 1000;
+
+                string[][] value2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select Max(일사량) from 기후데이터_전일사량 where 지역명 = '" + 지역[0][0] + "' and 방향 = '" + direction + "' and 각도 = '" + degree + "'");
+
+                Ac = Qw_outg[mth] * 2 * 1.03 * 1.03 / Convert.ToDouble(value2[0][0]) / 24 * 1000;
+                if (solar.M_Area() * solar.M_Count() / Ac < 1)
+                {
+                    dtheta_korr = Math.Min(-20 + 20 * solar.M_Area() * solar.M_Count() / Ac, 0);
+                }
+                else
+                {
+                    dtheta_korr = Math.Min(-14 + 14 * solar.M_Area() * solar.M_Count() / Ac, 0);
+                }
+                value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_태양열", "온도차", "지역명 ='" + 지역[0][0] + "' and 방위='" + direction+ "' and 기간 ='" + (mth + 1) + "월'");
+                eta[mth] = solar.eta() * solar._50() - solar.K1() * Convert.ToDouble(value[0][0]) / qsol_HN_d - solar.K2() * Convert.ToDouble(value[0][0]) * Convert.ToDouble(value[0][0]) / qsol_HN_d;
+                if (eta[mth] < 0) { eta[mth] = solar.eta(); }
+                qsol_mth[mth] = eta[mth] * qsol_HN_mth[mth];
+                Qsol_mth[mth] = qsol_mth[mth] * solar.M_Area() * solar.M_Count() / 1.03 / 1.03;
+
+                Qw_sol[mth] = Math.Min(Qsol_mth[mth], Qw_outg[mth]);
+
+                Ww_gen[mth] = 0.025 * Qw_sol[mth];
+            }
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Ww_g[mth] = Ww_g[mth] + Ww_gen[mth];
+                Qw_outg[mth] = Qw_outg[mth] - Qw_sol[mth];
+            }
+        }
+
+        public void LoadCalc_Boiler(string ProjNum)
         {
             for (int n = 0; n < SelectBoiler_split.Count; n++)
             {
@@ -534,91 +539,99 @@ namespace main
                     double W = Convert.ToDouble(Value[0][7]);
                     double W_0 = Convert.ToDouble(Value[0][8]);
                     double count = Convert.ToDouble(BoilerNum_split[n]);
-                    Value = Program.DB.getValue(DB.type.BaseDB_Heating, "보일러", "온도보정계수K,온도보정계수L,대기상태열손실E,대기상태열손실F,보조설비G_Pn,보조설비H_Pn,보조설비n_Pn,보조설비G_Pint,보조설비H_Pint,보조설비n_Pint", "종류 = '" + Type + "'");
-                    double K = Convert.ToDouble(Value[0][0]);
-                    double L = Convert.ToDouble(Value[0][1]);
-                    double E = Convert.ToDouble(Value[0][2]);
-                    double F = Convert.ToDouble(Value[0][3]);
-                    double G_Pn = Convert.ToDouble(Value[0][4]);
-                    double H_Pn = Convert.ToDouble(Value[0][5]);
-                    double n_Pn = Convert.ToDouble(Value[0][6]);
-                    double G_Pint = Convert.ToDouble(Value[0][7]);
-                    double H_Pint = Convert.ToDouble(Value[0][8]);
-                    double n_Pint = Convert.ToDouble(Value[0][9]);
-                    Boiler boiler = new Boiler(Num, Combi, Carrier, Type, Power, eta_Pn, eta_Pint, W, W_0, count, K, L, E, F, G_Pn, H_Pn, n_Pn, G_Pint, H_Pint, n_Pint);
-                    double theta_pn, theta_pint, theta_con;
-                    theta_pn = (80 + 60) / 2;
-                    theta_pint = (80 + 30) / 2;
-                    theta_con = (50 + 30) / 2;
-                    Value = Program.DB.getValue(DB.type.BaseDB_Heating, "연소난방비", "연소난방비", "연료 = '" + Carrier + "'");
-                    double fHN_HI = Convert.ToDouble(Value[0][0]);
-                    double qP0_70 = E * Math.Pow(Power, F) / 100;
-                    double[] tw_Pn_day = new double[12]; //나중에 급탕과 연결 해야 함 
-                    double[] Pd_in = new double[12];
-                    double beta_gen_pint = 0.3, qp0_theta;
-                    double[] Qh_gen_mth = new double[12];
-
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-
-                        eta_pn_w[mth] = eta_Pn + K * (50 - 55);
-                        qp0_theta = Math.Max(qP0_70 * (50 - theta_ih_avg[mth]) / 50, 0);
-                        tw_Pn_day[mth] = Qw_outg[mth] / (Power * dop_mth_avg[mth]);
-                        Qw_gen_day[mth] = (fHN_HI - eta_pn_w[mth]) / eta_pn_w[mth] * Qw_outg[mth] / (tw_Pn_day[mth] * dop_mth_avg[mth]);
-                        Qw_gen_p0_day[mth] = qp0_theta / eta_pn_w[mth] * (th_op_day_avg - tw_Pn_day[mth]) * fHN_HI;
-                        Qw_gen[mth] = Qw_gen_day[mth] * tw_Pn_day[mth] * dop_mth_avg[mth];
-                        Qw_f[mth] = Qw_outg[mth] + Qw_gen[mth];
-                    }
-
-                    double Paux_Pn, Paux_Pint;
-                    Paux_Pn = Math.Min((G_Pn + H_Pn * Math.Pow(Power, n_Pn)) / 1000, W / 1000);
-                    Paux_Pint = Math.Min((G_Pint + H_Pint * Math.Pow(Power, n_Pint)) / 1000, W / 1000);
-                    double[] Ph_gen_aux = new double[12], Wh_g_i = new double[12];
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-
-                        Wh_g_i[mth] = Paux_Pn * tw_Pn_day[mth] * dop_mth_avg[mth];
-                        Ww_g[mth] += Wh_g_i[mth];
-                    }
+                    Calc_Qh_gen_Boiler(Num, Combi, Type, Power, eta_Pn, eta_Pint, W, W_0, count);
                 }
             }
         }
-        public void Calc_HP(string ProjNum)
+
+        public void Calc_Qh_gen_Boiler(String Num, String Combi, String Type, double Power, double eta_Pn, double eta_Pint, double W, double W_0, double count)
+        {
+            string[][] Value = Program.DB.getValue(DB.type.BaseDB_Heating, "보일러", "온도보정계수K,온도보정계수L,대기상태열손실E,대기상태열손실F,보조설비G_Pn,보조설비H_Pn,보조설비n_Pn,보조설비G_Pint,보조설비H_Pint,보조설비n_Pint", "종류 = '" + Type + "'");
+            if (Value.Length > 0)
+            {
+                double K = Convert.ToDouble(Value[0][0]);
+                double L = Convert.ToDouble(Value[0][1]);
+                double E = Convert.ToDouble(Value[0][2]);
+                double F = Convert.ToDouble(Value[0][3]);
+                double G_Pn = Convert.ToDouble(Value[0][4]);
+                double H_Pn = Convert.ToDouble(Value[0][5]);
+                double n_Pn = Convert.ToDouble(Value[0][6]);
+                double G_Pint = Convert.ToDouble(Value[0][7]);
+                double H_Pint = Convert.ToDouble(Value[0][8]);
+                double n_Pint = Convert.ToDouble(Value[0][9]);
+                Boiler boiler = new Boiler(Num, Combi, Carrier, Type, Power, eta_Pn, eta_Pint, W, W_0, count, K, L, E, F, G_Pn, H_Pn, n_Pn, G_Pint, H_Pint, n_Pint);
+                double theta_pn, theta_pint, theta_con;
+                theta_pn = (80 + 60) / 2;
+                theta_pint = (80 + 30) / 2;
+                theta_con = (50 + 30) / 2;
+                Value = Program.DB.getValue(DB.type.BaseDB_Heating, "연소난방비", "연소난방비", "연료 = '" + Carrier + "'");
+                double fHN_HI = Convert.ToDouble(Value[0][0]);
+                double qP0_70 = E * Math.Pow(Power, F) / 100;
+                double[] tw_Pn_day = new double[12]; //나중에 급탕과 연결 해야 함 
+                double[] Pd_in = new double[12];
+                double beta_gen_pint = 0.3, qp0_theta;
+                double[] Qh_gen_mth = new double[12];
+
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    eta_pn_w[mth] = eta_Pn + K * (50 - 55);
+                    qp0_theta = Math.Max(qP0_70 * (50 - theta_ih_avg[mth]) / 50, 0);
+                    tw_Pn_day[mth] = Qw_outg[mth] / (Power * dop_mth_avg[mth]);
+                    Qw_gen_day[mth] = (fHN_HI - eta_pn_w[mth]) / eta_pn_w[mth] * Qw_outg[mth] / (tw_Pn_day[mth] * dop_mth_avg[mth]);
+                    Qw_gen_p0_day[mth] = qp0_theta / eta_pn_w[mth] * (th_op_day_avg - tw_Pn_day[mth]) * fHN_HI;
+                    Qw_gen[mth] = Qw_gen_day[mth] * tw_Pn_day[mth] * dop_mth_avg[mth];
+                    Qw_f[mth] = Qw_outg[mth] + Qw_gen[mth];
+                }
+
+                double Paux_Pn, Paux_Pint;
+                Paux_Pn = Math.Min((G_Pn + H_Pn * Math.Pow(Power, n_Pn)) / 1000, W / 1000);
+                Paux_Pint = Math.Min((G_Pint + H_Pint * Math.Pow(Power, n_Pint)) / 1000, W / 1000);
+                double[] Ph_gen_aux = new double[12], Wh_g_i = new double[12];
+                for (int mth = 0; mth < 12; mth++)
+                {
+
+                    Wh_g_i[mth] = Paux_Pn * tw_Pn_day[mth] * dop_mth_avg[mth];
+                    Ww_g[mth] += Wh_g_i[mth];
+                }
+            }
+        }
+        public void LoadCalc_HP(string ProjNum)
         {
             for (int k = 0; k < SelectHP_split.Count; k++)
             {
-                double theta_upper_hp = 60;
-                double[] Qw_outg_bu = new double[12], Qw_outg_bu_t = new double[12], kbu_w = new double[12];
-                double[] tw_gen_prel_combi = new double[12], top_max = new double[12], tw_gen_op_combi = new double[12], tw_gen_op_sng = new double[12];
-                double Pi_gen_combi_corr=0, Pi_gen_sng_corr=0, COPw_sng_corr = 0, COPw_combi_corr=0;
-
-
-
+                double Pi_gen_combi_corr; double Pi_gen_sng_corr; double COPw_sng_corr; double COPw_combi_corr;
                 string[][] value = Program.DB.getValue(ProjNum, "User_DHWHP", "급탕정격용량,급탕정격COP", "번호='" + SelectHP_split[0] + "'");
-                if(value.Length >0)
+                if (value.Length > 0)
                 {
                     Pi_gen_combi_corr = Convert.ToDouble(value[0][0]);
                     Pi_gen_sng_corr = Convert.ToDouble(value[0][0]);
                     COPw_sng_corr = Convert.ToDouble(value[0][1]);
                     COPw_combi_corr = Convert.ToDouble(value[0][1]);
                     Carrier = "전기";
+                    Calc_HP(Pi_gen_combi_corr, Pi_gen_sng_corr, COPw_sng_corr, COPw_combi_corr);
                 }
-               
-                for (int mth = 0; mth < 12; mth++)
+            }
+        }
+        public void Calc_HP(double Pi_gen_combi_corr, double Pi_gen_sng_corr, double COPw_sng_corr, double COPw_combi_corr)
+        {
+            double theta_upper_hp = 60;
+            double[] Qw_outg_bu = new double[12], Qw_outg_bu_t = new double[12], kbu_w = new double[12];
+            double[] tw_gen_prel_combi = new double[12], top_max = new double[12], tw_gen_op_combi = new double[12], tw_gen_op_sng = new double[12];
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Qw_outg_bu[mth] = Math.Max(Qw_outg[mth] * (SL - theta_upper_hp) / (SL - 10), 0);
+                tw_gen_prel_combi[mth] = (Qw_outg[mth] - Qw_outg_bu[mth]) / Pi_gen_combi_corr;
+                top_max[mth] = dop_mth_avg[mth] * th_op_day_avg;
+                if (top_max[mth] >= tw_gen_prel_combi[mth])
+                { tw_gen_op_combi[mth] = tw_gen_prel_combi[mth]; }
+                else
                 {
-                    Qw_outg_bu[mth] = Math.Max(Qw_outg[mth] * (SL - theta_upper_hp) / (SL - 10),0);
-                    tw_gen_prel_combi[mth] = (Qw_outg[mth] - Qw_outg_bu[mth]) / Pi_gen_combi_corr;
-                    top_max[mth] = dop_mth_avg[mth] * th_op_day_avg;
-                    if(top_max[mth] >= tw_gen_prel_combi[mth])
-                    { tw_gen_op_combi[mth] = tw_gen_prel_combi[mth];  }
-                    else
-                    {
-                        tw_gen_op_combi[mth] = Math.Max((Qw_outg[mth] - Qw_outg_bu[mth] - Pi_gen_sng_corr * top_max[mth]) / Pi_gen_combi_corr , 0);
-                    }
-                    tw_gen_op_sng[mth] = Math.Min((Qw_outg[mth] - Qw_outg_bu[mth] - Pi_gen_combi_corr * tw_gen_op_combi[mth]) / Pi_gen_sng_corr, top_max[mth]);
-                    Qw_outg_bu_t[mth] = Math.Max(0, Qw_outg[mth] - Qw_outg_bu[mth] - Pi_gen_sng_corr * tw_gen_op_sng[mth] - Pi_gen_combi_corr * tw_gen_op_combi[mth]);
-                    Qw_f[mth] = Pi_gen_combi_corr * tw_gen_op_sng[mth] / COPw_sng_corr + Pi_gen_combi_corr * tw_gen_op_combi[mth] / COPw_combi_corr;
-                }               
+                    tw_gen_op_combi[mth] = Math.Max((Qw_outg[mth] - Qw_outg_bu[mth] - Pi_gen_sng_corr * top_max[mth]) / Pi_gen_combi_corr, 0);
+                }
+                tw_gen_op_sng[mth] = Math.Min((Qw_outg[mth] - Qw_outg_bu[mth] - Pi_gen_combi_corr * tw_gen_op_combi[mth]) / Pi_gen_sng_corr, top_max[mth]);
+                Qw_outg_bu_t[mth] = Math.Max(0, Qw_outg[mth] - Qw_outg_bu[mth] - Pi_gen_sng_corr * tw_gen_op_sng[mth] - Pi_gen_combi_corr * tw_gen_op_combi[mth]);
+                Qw_f[mth] = Pi_gen_combi_corr * tw_gen_op_sng[mth] / COPw_sng_corr + Pi_gen_combi_corr * tw_gen_op_combi[mth] / COPw_combi_corr;
             }
         }
         public void nan()
