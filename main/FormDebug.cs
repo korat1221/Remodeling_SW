@@ -95,9 +95,10 @@ namespace main
 
         private void button8_Click(object sender, EventArgs e)
         {
-            Program.DB.UseCaches(true);  
-            CALC.AltCalc();
+            Program.DB.UseCaches(true);
+            CALC.run(new string[] { "요소기술계산" });
             Program.DB.UseCaches(false);
+            MessageBox.Show("요소기술별 계산이 완료되었습니다.");
         }
     }
 }
