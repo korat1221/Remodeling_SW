@@ -224,11 +224,11 @@ namespace main.subcontents.ConstructionWall
                     {
                         for (int n = 0; n < TB.Length; n++)
                         {
-                            //A = Convert.ToDouble(TB[n][1]);
-                            //B = Convert.ToDouble(TB[n][2]);
-                            //C = Convert.ToDouble(TB[n][3]);
-                            //Psi = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
-                            Psi = 0.05805; //홍은동 티푸스 열교 가산치 계산 임의로 넣어놓음
+                            A = Convert.ToDouble(TB[n][1]);
+                            B = Convert.ToDouble(TB[n][2]);
+                            C = Convert.ToDouble(TB[n][3]);
+                            Psi = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
+                            //Psi = 0.05805; //홍은동 티푸스 열교 가산치 계산 임의로 넣어놓음
                             Count_DB = TB.Length;
                         }
                     }
@@ -305,8 +305,8 @@ namespace main.subcontents.ConstructionWall
             }
             else
             {
-                //PerArea = 1 / (dx + dy);
-                PerArea = 1 ; // 홍은동 티푸스 열교 가산치 임의
+                PerArea = 1 / (dx + dy);
+               // PerArea = 1 ; // 홍은동 티푸스 열교 가산치 임의
                 PerArea_label1.Text = "적용길이";
                 PerArea_label2.Text = "m/m²";
             }

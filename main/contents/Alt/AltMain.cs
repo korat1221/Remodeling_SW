@@ -24,11 +24,15 @@ using System.Drawing.Text;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.Web.WebView2.Core;
 using main.subcontents.ConstructionWall;
+using System.Collections;
+using Microsoft.Office.Interop.Excel;
+using Eagle._Interfaces.Public;
 
 namespace main.contents.Alt
 {
     public partial class AltMain : Form
     {
+        double MoneyTotal; 
         bool scriptable = false;
         DataGridViewCheckBoxColumn Alt_checkBoxColumn = new DataGridViewCheckBoxColumn();
         public AltMain()
@@ -79,7 +83,7 @@ namespace main.contents.Alt
         }
         public void LoadData(String ID)
         {
-            create_wall_table();
+            create_wall_Old_table();
         }
 
         private void AltMainPanel_Paint(object sender, PaintEventArgs e)
@@ -94,6 +98,7 @@ namespace main.contents.Alt
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
+
 
         #region 사용자 요소기술 우선순위
         private void create_Alt_Table()
@@ -155,7 +160,7 @@ namespace main.contents.Alt
 
         private string[] Get_ElementList(string[] Selectlist)
         {
-            string[] list = { "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀환기", "난방설비", "냉방설비", "급탕설비", "조명" };
+            string[] list = CALC.RuleAlt;
             string[] Newlist = null;
             if (Selectlist != null)
             {
@@ -203,61 +208,49 @@ namespace main.contents.Alt
         #region 법규기반 검토
         private void Load_RuleResult()
         {
-            string[][] value = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Rule", "검토유형, 총에너지소요량", "월='연간' and 연료='전체'");
-            if (value.Length > 0)
+            string[][] value = Program.DB.querySQL(DB.type.ProjDB, "Select 검토유형, 총에너지소요량,기저에너지 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전체' Order By 총에너지소요량 ASC");
+            string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량,기저에너지", "월='연간' and 연료='전체'");
+            if (value.Length > 0 && value2.Length > 0)
             {
-                string[] ElementType = new string[value.Length];
-                double[] Energy = new double[value.Length];
-                double[] Saving = new double[value.Length];
-                for (int i = 0; i < value.Length; i++)
-                {
-                    Energy[i] = Convert.ToDouble(value[i][1]);
-                }
-                Array.Sort(Energy);
+                label_rule.Visible = true;
+                label_rule2.Visible = true;
+                RuleResult_dataGridView.Visible = true;
 
-                for (int a = 0; a < Energy.Length; a++)
+                List<string> Type_List = new List<string>();
+                List<double> Saving_List = new List<double>();
+                for (int a = 0; a < value.Length; a++)
                 {
-                    for (int i = 0; i < value.Length; i++)
+                    double saving = Convert.ToDouble(value2[0][0]) - Convert.ToDouble(value[a][1]);
+                    if (saving > 0)
                     {
-                        if (Energy[a] == Convert.ToDouble(value[i][1]))
-                        {
-                            ElementType[a] = value[i][0];
-                            break;
-                        }
+                        Saving_List.Add(saving);
+                        Type_List.Add(value[a][0]);
                     }
                 }
-
-                string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "월='연간' and 연료='전체'");
-                if (value2.Length > 0)
-                {
-                    for (int a = 0; a < Energy.Length; a++)
-                    {
-                        Saving[a] = Convert.ToDouble(value2[0][0]) - Energy[a];
-                    }
-                }
-
 
                 string s = "", s2 = "";
-                for (int a = 1; a < Saving.Length; a++)
+                for (int a = 0; a < Saving_List.Count; a++)
                 {
-                    s2 += Convert.ToDouble(Saving[a].ToString("0")) + ",";
-                    s += "\"" + ElementType[a] + "\",";
+                    s2 += Convert.ToDouble(Saving_List[a].ToString("0")) + ",";
+                    s += "\"" + Type_List[a] + "\",";
                 }
 
-                runScript("drawChart5([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150}],[" + s + "])");
+                runScript("drawChart5([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#9bc2e6\",min:0,max:150}],[" + s + "])");
 
                 new StackedHeaderDecorator(RuleResult_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
                 RuleResult_dataGridView.Columns.Clear();
                 RuleResult_dataGridView.Columns.Add("A0", "순위");
                 RuleResult_dataGridView.Columns.Add("A1", "요소기술");
-                RuleResult_dataGridView.Columns.Add("A2", "절감량");
+                RuleResult_dataGridView.Columns.Add("A2", "예상 절감량.[kWh]");
+                RuleResult_dataGridView.Columns.Add("A3", "예상 절감률.[%]");
                 RuleResult_dataGridView.Columns[0].Width = 60;
-                for (int a = 1; a < Saving.Length; a++)
+                for (int a = 0; a < Saving_List.Count; a++)
                 {
                     int nRow = RuleResult_dataGridView.Rows.Add();
-                    RuleResult_dataGridView.Rows[nRow].Cells[0].Value = a + " 순위";
-                    RuleResult_dataGridView.Rows[nRow].Cells[1].Value = ElementType[a];
-                    RuleResult_dataGridView.Rows[nRow].Cells[2].Value = Saving[a].ToString("0") + " kWh";
+                    RuleResult_dataGridView.Rows[nRow].Cells[0].Value = (a + 1).ToString() + " 순위";
+                    RuleResult_dataGridView.Rows[nRow].Cells[1].Value = Type_List[a];
+                    RuleResult_dataGridView.Rows[nRow].Cells[2].Value = Saving_List[a].ToString("#,##0");
+                    RuleResult_dataGridView.Rows[nRow].Cells[3].Value = (Saving_List[a] / (Convert.ToDouble(value2[0][0]) - Convert.ToDouble(value2[0][1])) * 100).ToString("0.0") + " %";
 
                 }
             }
@@ -265,29 +258,26 @@ namespace main.contents.Alt
         #endregion
 
         #region 외벽
-        string WallRemodelingType, WallEx;
-        private void create_wall_table()
+        private void create_wall_Old_table()
         {
-            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.Fill);
-            dataGridView1.Columns.Clear();
-            dataGridView1.Columns.Add("A0", "번호");
-            dataGridView1.Columns.Add("A1", "명칭");
-            dataGridView1.Columns.Add("A2", "유효열관류율.[W/m²·K]");
-            dataGridView1.Columns.Add("A3", "흡수율.[-]");
-            dataGridView1.Columns.Add("A4", "면적.[m²]");
-            dataGridView1.Columns[0].Width = 40;
+            new StackedHeaderDecorator(Wall_Old_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            Wall_Old_dataGridView.Columns.Clear();
+            Wall_Old_dataGridView.Columns.Add("A0", "번호");
+            Wall_Old_dataGridView.Columns.Add("A1", "명칭");
+            Wall_Old_dataGridView.Columns.Add("A2", "유효열관류율.[W/m²·K]");
+            Wall_Old_dataGridView.Columns.Add("A3", "면적.[m²]");
+            Wall_Old_dataGridView.Columns[0].Width = 40;
 
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭,유효열관류율,흡수율", "");
+            string[][] List = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.번호,a.명칭,a.유효열관류율 From ConstructionWall as a  Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호");
             if (List.Length > 0)
             {
-                dataGridView1.Rows.Clear();
+                Wall_Old_dataGridView.Rows.Clear();
                 for (int n = 0; n < List.Length; n++)
                 {
-                    int nRow = dataGridView1.Rows.Add();
-                    dataGridView1.Rows[nRow].Cells[0].Value = List[n][0];
-                    dataGridView1.Rows[nRow].Cells[1].Value = List[n][1];
-                    dataGridView1.Rows[nRow].Cells[2].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][2]));
-                    dataGridView1.Rows[nRow].Cells[3].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][3]));
+                    int nRow = Wall_Old_dataGridView.Rows.Add();
+                    Wall_Old_dataGridView.Rows[nRow].Cells[0].Value = List[n][0];
+                    Wall_Old_dataGridView.Rows[nRow].Cells[1].Value = List[n][1];
+                    Wall_Old_dataGridView.Rows[nRow].Cells[2].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][2]));
                     string[][] Area = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "구조체번호='" + List[n][0] + "'");
                     double A = 0;
                     if (Area.Length > 0)
@@ -296,86 +286,160 @@ namespace main.contents.Alt
                         {
                             A += Convert.ToDouble(Area[a][0]);
                         }
-                        dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F2}", A);
+                        Wall_Old_dataGridView.Rows[nRow].Cells[3].Value = String.Format("{0:F2}", A);
                     }
                 }
-            }
-
-            WallRemodelingType_comboBox.Items.Clear();
-            WallRemodelingType_comboBox.Items.Add("내부덧댐");
-            WallRemodelingType_comboBox.Items.Add("외부덧댐");
-            WallRemodelingType_comboBox.Items.Add("철거 후 신규");
-        }
-        private void WallRemodelingType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (WallRemodelingType_comboBox.SelectedItem != null)
-            {
-                WallRemodelingType = WallRemodelingType_comboBox.SelectedItem.ToString();
-                change_comboBox_WallEx();
-            }
-        }
-        private void change_comboBox_WallEx()
-        {
-            if (WallRemodelingType == "외부덧댐")
-            {
-                WallEx_label.Visible = true;
-                WallEx_comboBox.Visible = true;
-                WallEx_comboBox.Items.Clear();
-                WallEx_comboBox.Items.Add("외단열미장");
-                WallEx_comboBox.Items.Add("석재");
-                WallEx_comboBox.Items.Add("금속패널");
-                WallEx_comboBox.Items.Add("목재패널");
-                WallEx_comboBox.Items.Add("시멘트패널");
-            }
-            else if (WallRemodelingType == "철거 후 신규")
-            {
-                WallEx_label.Visible = true;
-                WallEx_comboBox.Visible = true;
-                WallEx_comboBox.Items.Clear();
-                WallEx_comboBox.Items.Add("석재");
-                WallEx_comboBox.Items.Add("금속패널");
-                WallEx_comboBox.Items.Add("목재패널");
-                WallEx_comboBox.Items.Add("시멘트패널");
-            }
-            else
-            {
-                WallEx_label.Visible = false;
-                WallEx_comboBox.Visible = false;
-                WallEx = "내부덧댐";
-            }
-        }
-        private void WallEx_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (WallEx_comboBox.SelectedItem != null)
-            {
-                WallEx = WallEx_comboBox.SelectedItem.ToString();
             }
         }
         private void WallAlt_button_Click(object sender, EventArgs e)
         {
-            if (WallRemodelingType != null && WallEx != null)
+            AltWall form = new AltWall("");
+            DialogResult result = form.ShowDialog();
+            if (result == DialogResult.OK)
             {
-              //  Cal_Alt cal = new Cal_Alt();
-              //  cal.Get_Optimal_WallData(WallRemodelingType, WallEx);
-                AltWall TB_form = new AltWall(WallRemodelingType);
-                DialogResult result = TB_form.ShowDialog();
-                if (result == DialogResult.OK)
-                {
 
-                }
             }
-            else
-            {
-                if (WallRemodelingType == null) { MessageBox.Show("외벽 리모델링 방식을 선택하세요."); }
-                else if (WallEx == null) { MessageBox.Show("외벽 마감재 유형을 선택하세요."); }
-            }
-            
         }
         #endregion
 
+        private void CostTotal_textBox_TextChanged(object sender, EventArgs e)
+        {
+            double result;
+            if (CostTotal_textBox.Text == null || CostTotal_textBox.Text == "") { }
+            else if (double.TryParse(CostTotal_textBox.Text, out result) == true)
+            {
+                MoneyTotal = Convert.ToDouble(CostTotal_textBox.Text.ToString());
+                Calc_NetCost(MoneyTotal);
+            }
+            else
+            {
+                MessageBox.Show("숫자를 입력하세요.");
+            }
+        }
 
+        private void Calc_NetCost(double CostTotal)
+        {
+            double Area = 0; double 일반관리비_비율 = 0, 이윤_비율 = 0;
+            double 부가가치세_비율 = 0.1, 재료비_비율 = 0.65, 노무비_비율 = 0.25, 경비_비율 = 0.1;
+            double 순공사비=0, 일반관리비 = 0, 이윤 = 0, 공급가액 = 0, 부가가치세 = 0, 폐기물처리비 = 0;
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "외피유형='층간바닥' Or 외피유형='최하층바닥'");
+            if (Value.Length > 0)
+            {
+                for (int a = 0; a < Value.Length; a++)
+                {
+                    Area += Convert.ToDouble(Value[a][0]);
+                }
+            }   
+            폐기물처리비 = Cal_CostWaste(Area);
 
+            Value = Program.DB.getValue(DB.type.BaseDB_Optimal, "공사비비율", "공사비하한,공사비상한,일반관리비,이윤", "");
+            if(Value.Length > 0)
+            {
+                for (int a = 0; a < Value.Length; a++)
+                {
+                    if (Convert.ToDouble(Value[a][0]) < CostTotal && CostTotal < Convert.ToDouble(Value[a][1]))
+                    { 
+                        일반관리비_비율 = Convert.ToDouble(Value[a][2]);
+                        이윤_비율 = Convert.ToDouble(Value[a][3]);
+                        break;
+                    }
+                }
+            }
+            부가가치세 = (CostTotal - 폐기물처리비) * 부가가치세_비율 / (1 + 부가가치세_비율);
+            공급가액 = (CostTotal - 폐기물처리비) * 1 / (1 + 부가가치세_비율);
+            순공사비 = 공급가액 * (재료비_비율 + 노무비_비율 + 경비_비율) / ((재료비_비율 + 노무비_비율 + 경비_비율) * (1 + 일반관리비_비율 + 일반관리비_비율 * 이윤_비율) + 이윤_비율 * (노무비_비율 + 경비_비율));
+            일반관리비 = 순공사비 * 일반관리비_비율;
+            이윤 = (순공사비 * (노무비_비율 + 경비_비율) + 일반관리비) * 이윤_비율;
+            Load_CostTable(순공사비,일반관리비, 이윤, 부가가치세, 폐기물처리비,CostTotal);
+        }
+        private void Load_CostTable(double 순공사비, double 일반관리비, double 이윤, double 부가가치세,double 폐기물처리비, double 합계 )
+        {
+            new StackedHeaderDecorator(Cost_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            Cost_dataGridView.Columns.Clear();
+            Cost_dataGridView.Rows.Clear();
+            Cost_dataGridView.Columns.Add("A0", "항목");
+            Cost_dataGridView.Columns.Add("A1", "예상비용[원]");
 
-       
-    }
+            int nRow = Cost_dataGridView.Rows.Add();
+            Cost_dataGridView.Rows[nRow].Cells[0].Value = "순공사비";
+            Cost_dataGridView.Rows[nRow].Cells[1].Value = 순공사비.ToString("#,##0");
+
+            nRow = Cost_dataGridView.Rows.Add();
+            Cost_dataGridView.Rows[nRow].Cells[0].Value = "일반관리비";
+            Cost_dataGridView.Rows[nRow].Cells[1].Value = 일반관리비.ToString("#,##0");
+
+            nRow = Cost_dataGridView.Rows.Add();
+            Cost_dataGridView.Rows[nRow].Cells[0].Value = "이윤";
+            Cost_dataGridView.Rows[nRow].Cells[1].Value = 이윤.ToString("#,##0");
+
+            nRow = Cost_dataGridView.Rows.Add();
+            Cost_dataGridView.Rows[nRow].Cells[0].Value = "부가가치세";
+            Cost_dataGridView.Rows[nRow].Cells[1].Value = 부가가치세.ToString("#,##0");
+
+            nRow = Cost_dataGridView.Rows.Add();
+            Cost_dataGridView.Rows[nRow].Cells[0].Value = "폐기물처리비";
+            Cost_dataGridView.Rows[nRow].Cells[1].Value = 폐기물처리비.ToString("#,##0");
+
+            nRow = Cost_dataGridView.Rows.Add();
+            Cost_dataGridView.Rows[nRow].Cells[0].Value = "합계";
+            Cost_dataGridView.Rows[nRow].Cells[1].Value = 합계.ToString("#,##0");
+        }
+
+        private double Cal_CostWaste(double Area)
+        { 
+            double[] 폐기물원단위 = new double[3];//건설폐재류,금속철재류,혼합폐기물
+            double[] 폐기물발생량 = new double[3];//건설폐재류,금속철재류,혼합폐기물
+            double[] 중간처리비 = new double[3];//건설폐재류,금속철재류,혼합폐기물
+            double[] 수집운반비 = new double[3];//건설폐재류,금속철재류,혼합폐기물
+
+           string[][] Value = Program.DB.getValue(DB.type.BaseDB_Optimal, "폐기물원단위", "폐기물유형,원단위", "구조='RC조'");
+            if (Value.Length > 0)
+            {
+                for (int a = 0; a < Value.Length; a++)
+                {
+                    if (Value[a][0] == "폐콘크리트")
+                    {
+                        폐기물원단위[0] = Convert.ToDouble(Value[a][1]);
+                    }
+                    else if (Value[a][0] == "폐금속류")
+                    {
+                        폐기물원단위[1] = Convert.ToDouble(Value[a][1]);
+                    }
+                    else
+                    {
+                        폐기물원단위[2] += Convert.ToDouble(Value[a][1]);
+                    }
+                }
+            }
+            for (int a = 0; a < 폐기물원단위.Length; a++)
+            {
+                폐기물발생량[a] = Area * 폐기물원단위[a];
+            }
+
+            Value = Program.DB.getValue(DB.type.BaseDB_Optimal, "폐기물적용단가", "적용단가", "비용유형='중간처리단가' and 폐기물유형='건설폐재류'");
+            if (Value.Length > 0)
+            {
+                중간처리비[0] = 폐기물발생량[0] * Convert.ToDouble(Value[0][0]);
+            }
+            Value = Program.DB.getValue(DB.type.BaseDB_Optimal, "폐기물적용단가", "적용단가", "비용유형='수집운반비' and 폐기물유형='건설폐재류'");
+            if (Value.Length > 0)
+            {
+                수집운반비[0] = 폐기물발생량[0] * Convert.ToDouble(Value[0][0]);
+            }
+            Value = Program.DB.getValue(DB.type.BaseDB_Optimal, "폐기물적용단가", "적용단가", "비용유형='중간처리단가' and 폐기물유형='혼합건설폐기물'");
+            if (Value.Length > 0)
+            {
+                중간처리비[2] = 폐기물발생량[2] * Convert.ToDouble(Value[0][0]);
+            }
+            Value = Program.DB.getValue(DB.type.BaseDB_Optimal, "폐기물적용단가", "적용단가", "비용유형='수집운반비' and 폐기물유형='혼합건설폐기물'");
+            if (Value.Length > 0)
+            {
+                수집운반비[2] = 폐기물발생량[2] * Convert.ToDouble(Value[0][0]);
+            }
+            double 건설폐기물비 = (중간처리비.Sum() + 수집운반비.Sum()) * 1.1;
+
+            return 건설폐기물비;
+        }
+
+    }    
 }
