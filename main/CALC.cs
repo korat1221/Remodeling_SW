@@ -27,6 +27,7 @@ namespace main
             _calculations["모두계산"] = new Func<bool>(Run_All);
             _calculations["존계산"] = new Func<bool>(Run_Zone);
             _calculations["요소기술계산"] = new Func<bool>(AltCalc);
+
         }
 
         public static bool Run_Zone()
@@ -957,15 +958,15 @@ namespace main
         {
             Heating1.Load_Zonedata(ProjNum);
             Heating1.Load_HeatingGeneral(ProjNum);
-            Heating1.Load_Boiler(ProjNum);
-            Heating1.Load_Solar(ProjNum);
+            Heating1.Load_Boiler_general(ProjNum);
+            Heating1.Load_Solar_general(ProjNum);
             Heating1.Load_PumpData(ProjNum);
             Heating1.Load_ceData(ProjNum);
             Heating1.Load_StorageData(ProjNum);
             Heating1.Load_PipeData(ProjNum);
-            Heating1.Load_AirHP(ProjNum);
-            Heating1.Load_GroundHP(ProjNum);
-            Heating1.Load_GWHP(ProjNum);
+            Heating1.Load_AirHP_general(ProjNum);
+            Heating1.Load_GroundHP_general(ProjNum);
+            Heating1.Load_GWHP_general(ProjNum);
             Heating1.Load_ce(ProjNum);
         }
         public static void Heating_Calc(Heating Heating1,string ProjNum)
@@ -978,9 +979,9 @@ namespace main
             Heating1.Calc_beta_s();
             Heating1.Calc_Qh_s(ProjNum);
             Heating1.Calc_beta_gen();
-            Heating1.Calc_Qh_gen_Boiler(ProjNum);
-            Heating1.Calc_Solar(ProjNum);
-            Heating1.Calc_Q_Air_HP(ProjNum);
+            Heating1.LoadCalc_Solar(ProjNum);
+            Heating1.LoadCalc_Boiler(ProjNum);
+            Heating1.LoadCalc_AirHP(ProjNum);
             Heating1.nan();
         }
         public static void Heating_Save(Heating Heating1)
@@ -1270,9 +1271,9 @@ namespace main
         {
             DHW1.Load_Zonedata(ProjNum);
             DHW1.Load_DHWGeneral(ProjNum);
-            DHW1.Load_Boiler(ProjNum);
-            DHW1.Load_Solar(ProjNum);
-            DHW1.Load_HP(ProjNum);
+            DHW1.Load_Boiler_general(ProjNum);
+            DHW1.Load_Solar_general(ProjNum);
+            DHW1.Load_HP_general(ProjNum);
             DHW1.Load_PumpData(ProjNum);
             DHW1.Load_StorageData(ProjNum);
             DHW1.Load_PipeData(ProjNum);
@@ -1281,9 +1282,9 @@ namespace main
         {
             DHW1.Calc_Qd(ProjNum);
             DHW1.Calc_Qh_s(ProjNum);
-            DHW1.Calc_Qh_gen_Boiler(ProjNum);
-            DHW1.Calc_Solar(ProjNum);
-            DHW1.Calc_HP(ProjNum);
+            DHW1.LoadCalc_Solar(ProjNum);
+            DHW1.LoadCalc_Boiler(ProjNum);
+            DHW1.LoadCalc_HP(ProjNum);
             DHW1.nan();
         }
         private static void DHW_Save(DHW DHW1)
@@ -1487,17 +1488,16 @@ namespace main
         #endregion
 
 
+
         public static bool AltCalc()
         {
-            string[] RuleAlt = { "외벽", "지붕" , "최하층바닥" , "커튼월창" , "창호" , "외부출입문" , "전체" };
-           // string[] RuleAlt = { "외벽", "지붕", "최하층바닥" };
+            ElementCalc();
+            RuleCalc();
+            return true;
+        }
+        public static bool ElementCalc()
+        {
             Cal_Alt cal = new Cal_Alt();
-            Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result_Rule");
-            Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result_Rule");
-            //for (int i = 0; i < RuleAlt.Length; i++)
-            //{
-            //    cal.Calc_Rule(RuleAlt[i]);
-            //}
             Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result_Element");
             Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result_Element");
             Program.DB.deleteTable(DB.type.ProjDB, "Zone_Alt_Result");
@@ -1527,9 +1527,20 @@ namespace main
             }
             return true;
         }
+        public static bool RuleCalc()
+        {
+            Cal_Rule cal = new Cal_Rule();
+            Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result_Rule");
+            Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result_Rule");
+            for (int i = 0; i < RuleAlt.Length; i++)
+            {
+                cal.Calc_Rule(RuleAlt[i]);
+            }
+            return true;
+        }
         /////////////////////////////////////////////////////////////////////////////////////
 
-        private static Dictionary<string, Delegate> _calculations = new Dictionary<string, Delegate>();
+        public static Dictionary<string, Delegate> _calculations = new Dictionary<string, Delegate>();
         public static Dictionary<string, Zone> Zones = new Dictionary<string, Zone>();
         public static Dictionary<string, ZoneLight> ZoneLights = new Dictionary<string, ZoneLight>();
         public static Dictionary<string, Heating> Heatings = new Dictionary<string, Heating>();
@@ -1537,9 +1548,9 @@ namespace main
         public static Dictionary<string, AHU> AHUs = new Dictionary<string, AHU>();
         public static Dictionary<string, DHW> DHWs = new Dictionary<string, DHW>();
         public static Dictionary<string, Final> Finals = new Dictionary<string, Final>();
-       // public static string[] ElementAlt = { "조닝", "난방"};
-        public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문","기밀+열회수기","난방", "냉방", "급탕", "조명", "공조", "태양광", "기밀"}; //기밀은 요소기술별 합계 계산 시 제외되어야 하므로 마지막 순서여야 함 
-
+        public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀+열회수기", "난방", "냉방", "급탕", "조명", "공조", "태양광", "기밀" }; //기밀은 요소기술별 합계 계산 시 제외되어야 하므로 마지막 순서여야 함 
+      //  public static string[] RuleAlt = { "기밀", "기밀+열회수기" };
+        public static string[] RuleAlt = { "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀", "기밀+열회수기", "조명", "보일러", "냉난방EHP", "냉방EHP", "공냉식냉동기", "수냉식냉동기", "냉난방GHP", "흡수식냉온수기", "태양광" };
         public Zone getZone(string zoneNum)
         {
             if (Zones.ContainsKey(zoneNum))

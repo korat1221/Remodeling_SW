@@ -42,30 +42,7 @@ namespace main
             return split;
         }
 
-        private void Save_Alt_Qb(Zone zone1, string 검토유형)
-        {
-            String[] HC = { "난방", "냉방" };
-            String[] WEWD = { "비이용일", "이용일" };
-            String[] MTH = { "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" };
-
-            for (int hc = 0; hc <= 1; hc++)
-            {
-                Program.DB.setValue(DB.type.ProjDB, "Zone_Alt_Result", "검토유형,번호,이름," +
-                         "난방_냉방,비이용일_이용일,월," +
-                         "Qb_day," +
-                         "Qb_mth," +
-                         "Qb_a,Q_max, t_max,비냉난방존온도",
-                          "'" + 검토유형 + "','" + zone1.ZoneNum + "','" + zone1.zoneName + "','" +
-                          HC[hc] + "','" + WEWD[1] + "','" + MTH[0] + "','" +
-                          zone1.Qb_day[hc, 1, 0].ToString() + "','" +
-                          zone1.Qb_mth[hc, 1, 0].ToString() + "','" +
-                          zone1.Qb_a[hc].ToString() + "','" + zone1.Q_max[hc].ToString() + "','" + zone1.t_max[hc, 0].ToString() + "','" +
-                          zone1.Theta_U[hc, 1, 0].ToString()
-                          + "'", "번호,난방_냉방,비이용일_이용일,월,검토유형");
-
-            }
-        }
-        private void Save_Alt(Final final1, string 검토유형, string table명칭)
+        public void Save_Alt(Final final1, string 검토유형)
         {
             #region 전기
             String MTH;
@@ -85,7 +62,7 @@ namespace main
                 Qreg_elec_a += final1.Qreg_elec[mth];
             }
             Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a + Qvf_elec_a + Qbase_elec_a - Qreg_elec_a;
-            Program.DB.setValue(DB.type.ProjDB, table명칭, "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                     "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전기" + "','" +
                     Qhf_elec_a + "','" + Qcf_elec_a + "','" + Qwf_elec_a + "','" + Qlf_elec_a + "','" +
@@ -107,7 +84,7 @@ namespace main
                 Qbase_gas_a += final1.Qbase_gas[mth];
             }
             Qf_gas_tot_a = Qhf_gas_a + Qcf_gas_a + Qwf_gas_a + Qbase_gas_a;
-            Program.DB.setValue(DB.type.ProjDB, table명칭, "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                     "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" +
                     Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + "0" + "','" +
@@ -116,7 +93,7 @@ namespace main
             #endregion
             #region 전체           
 
-            Program.DB.setValue(DB.type.ProjDB, table명칭, "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                    "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" +
                    (Qhf_elec_a + Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + Qlf_elec_a + "','" +
@@ -125,668 +102,13 @@ namespace main
             #endregion
         }
 
-        public void Calc_Rule(string 검토유형)
-        {
-            Calc_Qb_Rule_Alt(검토유형);
-            Calc_System_Rule(검토유형);
-        }
+
         public void Calc_Element(string 검토유형)
         {
             Calc_Qb_Element(검토유형);
             Calc_System_element(검토유형);
         }
 
-        #region 법규기반 검토
-        public void Calc_Qb_Rule_Alt(string 검토유형)
-        {
-            CALC.Zone_Arrange();
-            for (int k = 0; k < CALC.zone.Count; k++)
-            {
-                Zone zone1 = (Zone)CALC.zone[k];
-                ZoneLight zonelight1 = (ZoneLight)CALC.zonelight[k];
-                CALC.Zone_LoadData(zone1, zonelight1);
-
-                switch (검토유형)
-                {
-                    case "외벽":
-                       Load_Rule_Wall(zone1);
-                        break;
-                    case "지붕":
-                        Load_Rule_Roof(zone1);
-                        break;
-                    case "최하층바닥":
-                        Load_Rule_Floor(zone1);
-                        break;
-                    case "창호":
-                        Load_Rule_Win(zone1);
-                        break;
-                    case "커튼월창":
-                        Load_Rule_CW(zone1);
-                        break;
-                    case "외부출입문":
-                        Load_Rule_Door(zone1);
-                        break;
-                    case "전체":
-                        Load_Rule_All(zone1);
-                        break;
-                }
-                CALC.Zone_Calc(zone1, zonelight1);
-            }
-        }
-        //private void Calc_System_Rule(string 검토유형)
-        private void Calc_System_Rule(string 검토유형)
-        {
-            int i;
-            #region 공조계산
-            string[][] Num = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형");
-            if (Num.Length > 0)
-            {
-                for (int k = 0; k < Num.Length; k++)
-                {
-                    CALC.AHUs[Num[k][0]] = null;
-                }
-                i = -1;
-                while (++i < Num.Length)
-                {
-                    if (Num[i][1] == "공조기")
-                    {
-                        AHU Pre_AHU1 = new AHU(Num[i][0]);
-                        CALC.AHUs[Num[i][0]] = Pre_AHU1;
-                        CALC.AHUSystem_LaodData(Pre_AHU1, NowProjNum[0][0]);
-                        CALC.AHUSystem_PreCalc(Pre_AHU1);
-                    }
-                    else
-                    {
-                        AHU Pre_HRV1 = new AHU(Num[i][0]);
-                        CALC.AHUs[Num[i][0]] = Pre_HRV1;
-                        CALC.HRV_LaodData(Pre_HRV1, NowProjNum[0][0]);
-                        CALC.AHUSystem_PreCalc(Pre_HRV1);
-                    }
-                }
-
-                Calc_Qb_Rule_Alt(검토유형);
-
-                i = -1;
-                for (int k = 0; k < Num.Length; k++)
-                {
-                    CALC.AHUs[Num[k][0]] = null;
-                }
-                while (++i < Num.Length)
-                {
-                    if (Num[i][1] == "공조기")
-                    {
-                        AHU Post_AHU1 = new AHU(Num[i][0]);
-                        CALC.AHUs[Num[i][0]] = Post_AHU1;
-                        CALC.AHUSystem_LaodData(Post_AHU1, NowProjNum[0][0]);
-                        CALC.AHUSystem_PostCalc(Post_AHU1);
-                    }
-                    else
-                    {
-                        AHU Post_HRV1 = new AHU(Num[i][0]);
-                        CALC.AHUs[Num[i][0]] = Post_HRV1;
-                        CALC.HRV_LaodData(Post_HRV1, NowProjNum[0][0]);
-                        CALC.HRV_PostCalc(Post_HRV1);
-                    }
-
-                }
-            }
-            #endregion
-
-            Cal_Qfh_Now(NowProjNum[0][0], "법규");
-            Cal_Qfc_Now(NowProjNum[0][0], "법규");
-            Cal_Qfw(NowProjNum[0][0],"법규");
-
-            #region 파이널계산
-            Final final1 = new Final(NowProjNum[0][0]);
-            final1.Load_Heating_Final(NowProjNum[0][0]);
-            final1.Load_Cooling_Final(NowProjNum[0][0]);
-            final1.Load_DHW_Final(NowProjNum[0][0]);
-            final1.Load_AHU_Final(NowProjNum[0][0]);
-            final1.Load_REG_Final(NowProjNum[0][0]);
-            final1.Calc_Qtot();
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
-            if (프로젝트유형[0][0] == "1")
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    string[][] Final2 = Program.DB.querySQL(DB.type.ProjDB, "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
-                    if (Final2.Length > 0)
-                    {
-                        final1.Qbase_elec[mth] = Convert.ToDouble(Final2[0][0]);
-                    }
-
-                    Final2 = Program.DB.querySQL(DB.type.ProjDB, "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 != '전기' and 월 = '" + (mth + 1).ToString() + "월'");
-                    if (Final2.Length > 0)
-                    {
-                        final1.Qbase_gas[mth] = Convert.ToDouble(Final2[0][0]);
-                    }
-                }
-            }
-            else
-            {
-                string[][] res = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기존프로젝트");
-                if (res.Length > 0 && res[0][0] != "")
-                {
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-                        string[][] Final2 = Program.DB.querySQL(res[0][0], "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
-                        if (Final2.Length > 0)
-                        {
-                            final1.Qbase_elec[mth] = Convert.ToDouble(Final2[0][0]);
-                        }
-
-                        Final2 = Program.DB.querySQL(res[0][0], "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 != '전기' and 월 = '" + (mth + 1).ToString() + "월'");
-                        if (Final2.Length > 0)
-                        {
-                            final1.Qbase_gas[mth] = Convert.ToDouble(Final2[0][0]);
-                        }
-                    }
-                }
-            }
-
-            for (int mth = 0; mth < 12; mth++)
-            {
-                final1.Qf_elec_tot_mth[mth] = final1.Qhf_elec[mth] + final1.Qcf_elec[mth] + final1.Qwf_elec[mth] + final1.Qlf_elec[mth] + final1.Qvf_elec[mth] + final1.Qbase_elec[mth];
-                final1.Qf_gas_tot_mth[mth] = final1.Qhf_gas[mth] + final1.Qcf_gas[mth] + final1.Qwf_gas[mth] + final1.Qbase_gas[mth];
-            }
-            Save_Alt(final1, 검토유형, "FinalEnergy_Result_Rule");
-
-            #endregion
-
-            //CALC.RESystemCalc(PreProjNum[0][0]);
-        }
-        private void Load_Rule_Wall2(Zone zone1, double d)
-        {
-            zone1.zoneWall.Clear();
-            zone1.zoneGWall.Clear();
-
-            double dR = d / 1000 / 0.025; //페놀보드 
-
-            String[][] ZoneW = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "' And  NOT b.직접간접 = '지면'");
-            if (ZoneW.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneW.Length)
-                {
-                    Wall wall = new Wall(ZoneW[i][0], ZoneW[i][2], Convert.ToDouble(ZoneW[i][1]),1/(1/ Convert.ToDouble(ZoneW[i][3]) + dR), Convert.ToDouble(ZoneW[i][4]), ZoneW[i][5], ZoneW[i][6], ZoneW[i][7]);
-                    zone1.zoneWall.Add(wall);
-                }
-            }
-            String[][] ZoneG = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.유효열관류율,b.직접간접 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "' And  b.직접간접 = '지면'");
-            if (ZoneG.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneG.Length)
-                {
-                    double fx_f = 1;
-                    if (Convert.ToDouble(ZoneG[i][3]) >= 3)
-                    { fx_f = 0.35; }
-                    else if (Convert.ToDouble(ZoneG[i][3]) >= 1)
-                    { fx_f = 0.55; }
-                    else if (Convert.ToDouble(ZoneG[i][3]) > 0.3)
-                    { fx_f = 0.65; }
-                    else { fx_f = 0.75; }
-                    break;
-
-                    GWall gwall = new GWall(ZoneG[i][0], ZoneG[i][2], Convert.ToDouble(ZoneG[i][1]), 1/(1/Convert.ToDouble(ZoneG[i][3]) + dR), fx_f);
-                    zone1.zoneGWall.Add(gwall);
-                }
-            }
-        }
-        private void Load_Rule_Roof2(Zone zone1, double d)
-        {
-            zone1.zoneRoof.Clear();
-            double dR = d / 1000 / 0.028; //압출법 1호
-            String[][] ZoneR = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionRoof AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
-            if (ZoneR.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneR.Length)
-                {
-                    Roof roof = new Roof(ZoneR[i][0], ZoneR[i][2], Convert.ToDouble(ZoneR[i][1]),1/ (1/Convert.ToDouble(ZoneR[i][3])+dR), Convert.ToDouble(ZoneR[i][4]), ZoneR[i][5], ZoneR[i][6], ZoneR[i][7]);
-                    zone1.zoneRoof.Add(roof);
-                }
-            }
-        }
-        private void Load_Rule_Floor2(Zone zone1, double d)
-        {
-            zone1.zoneFloor.Clear();
-            String[][] ZoneF = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.유효열관류율,b.직접간접,b.기초설치 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionFloor AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
-            if (ZoneF.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneF.Length)
-                {
-                    double fx_f = 1;
-                    double dR = d / 1000 / 0.024; //난연경질우레탄폼스프레이
-                    switch (ZoneF[i][5].ToString())
-                    {
-                        case "지면위":
-                            {
-                                dR = d / 1000 / 0.033; //비드법 2종 3호
-                                if (Convert.ToDouble(ZoneF[i][3]) >= 3)
-                                { fx_f = 0.3; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) >= 1)
-                                { fx_f = 0.55; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) > 0.3)
-                                { fx_f = 0.7; }
-                                else { fx_f = 0.8; }
-                                break;
-                            }
-                        case "단열지하":
-                            {
-                                dR = d / 1000 / 0.033; //비드법 2종 3호
-                                if (Convert.ToDouble(ZoneF[i][3]) >= 3)
-                                { fx_f = 0.2; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) >= 1)
-                                { fx_f = 0.45; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) > 0.3)
-                                { fx_f = 0.55; }
-                                else { fx_f = 0.7; }
-                                break;
-                            }
-                        case "비단열지하":
-                            {
-                                dR = d / 1000 / 0.033; //비드법 2종 3호
-                                if (Convert.ToDouble(ZoneF[i][3]) >= 3)
-                                { fx_f = 0.45; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) >= 1)
-                                { fx_f = 0.75; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) > 0.3)
-                                { fx_f = 0.8; }
-                                else { fx_f = 0.85; }
-                                break;
-                            }
-                    }
-                    Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Convert.ToDouble(ZoneF[i][1]), 1/(1/Convert.ToDouble(ZoneF[i][3])+dR), ZoneF[i][5], fx_f);
-                    zone1.zoneFloor.Add(floor);
-                }
-            }
-        }
-        private void Load_Rule_Wall(Zone zone1)
-        {
-            zone1.zoneWall.Clear();
-            zone1.zoneGWall.Clear();
-            String[][] ZoneW = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "' And  NOT b.직접간접 = '지면'");
-            if (ZoneW.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneW.Length)
-                {
-                    Wall wall = new Wall(ZoneW[i][0], ZoneW[i][2], Convert.ToDouble(ZoneW[i][1]), Convert.ToDouble(ZoneW[i][3]), Convert.ToDouble(ZoneW[i][4]), ZoneW[i][5], ZoneW[i][6], ZoneW[i][7]);
-                    zone1.zoneWall.Add(wall);
-                }
-            }
-            String[][] ZoneG = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.직접간접 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "' And  b.직접간접 = '지면'");
-            if (ZoneG.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneG.Length)
-                {
-                    double fx_f = 1;
-                    if (Convert.ToDouble(ZoneG[i][3]) >= 3)
-                    { fx_f = 0.35; }
-                    else if (Convert.ToDouble(ZoneG[i][3]) >= 1)
-                    { fx_f = 0.55; }
-                    else if (Convert.ToDouble(ZoneG[i][3]) > 0.3)
-                    { fx_f = 0.65; }
-                    else { fx_f = 0.75; }
-                    break;
-
-                    GWall gwall = new GWall(ZoneG[i][0], ZoneG[i][2], Convert.ToDouble(ZoneG[i][1]), Convert.ToDouble(ZoneG[i][3]), fx_f);
-                    zone1.zoneGWall.Add(gwall);
-                }
-            }
-        }
-        private void Load_Rule_Roof(Zone zone1)
-        {
-            zone1.zoneRoof.Clear();
-            String[][] ZoneR = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionRoof AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
-            if (ZoneR.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneR.Length)
-                {
-                    Roof roof = new Roof(ZoneR[i][0], ZoneR[i][2], Convert.ToDouble(ZoneR[i][1]), Convert.ToDouble(ZoneR[i][3]), Convert.ToDouble(ZoneR[i][4]), ZoneR[i][5], ZoneR[i][6], ZoneR[i][7]);
-                    zone1.zoneRoof.Add(roof);
-                }
-            }
-        }
-        private void Load_Rule_Floor(Zone zone1)
-        {
-            zone1.zoneFloor.Clear();
-            String[][] ZoneF = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.직접간접,b.기초설치 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionFloor AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
-            if (ZoneF.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneF.Length)
-                {
-                    double fx_f = 1;
-                    switch (ZoneF[i][5].ToString())
-                    {
-                        case "지면위":
-                            {
-                                if (Convert.ToDouble(ZoneF[i][3]) >= 3)
-                                { fx_f = 0.3; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) >= 1)
-                                { fx_f = 0.55; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) > 0.3)
-                                { fx_f = 0.7; }
-                                else { fx_f = 0.8; }
-                                break;
-                            }
-                        case "단열지하":
-                            {
-                                if (Convert.ToDouble(ZoneF[i][3]) >= 3)
-                                { fx_f = 0.2; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) >= 1)
-                                { fx_f = 0.45; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) > 0.3)
-                                { fx_f = 0.55; }
-                                else { fx_f = 0.7; }
-                                break;
-                            }
-                        case "비단열지하":
-                            {
-                                if (Convert.ToDouble(ZoneF[i][3]) >= 3)
-                                { fx_f = 0.45; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) >= 1)
-                                { fx_f = 0.75; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) > 0.3)
-                                { fx_f = 0.8; }
-                                else { fx_f = 0.85; }
-                                break;
-                            }
-                    }
-                    Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Convert.ToDouble(ZoneF[i][1]), Convert.ToDouble(ZoneF[i][3]), ZoneF[i][5], fx_f);
-                    zone1.zoneFloor.Add(floor);
-                }
-            }
-        }
-        private void Load_Rule_Win(Zone zone1)
-        {
-            zone1.zoneWin.Clear();
-            String[][] ZoneWin = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.설치열교가산치,b.창호유효열관류율,b.유리면적비,b.상위창호번호,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
-            if (ZoneWin.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneWin.Length)
-                {
-                    String[][] ZoneWin_P = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접,태양열취득률,빛투과율", "번호='" + ZoneWin[i][7] + "'");
-                    string[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호='" + ZoneWin[i][0] + "'");
-                    if (ZoneWin_P.Length > 0)
-                    {
-                        if (Blind.Length > 0)
-                        {
-                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]), Convert.ToDouble(Blind[0][0]), Convert.ToDouble(Blind[0][1]), ZoneWin[i][8], ZoneWin[i][9]);
-                            zone1.zoneWin.Add(win);
-                        }
-                        else
-                        {
-                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]), 0, 0, ZoneWin[i][8], ZoneWin[i][9]);
-                            zone1.zoneWin.Add(win);
-                        }
-                    }
-                }
-            }
-        }
-        private void Load_Rule_CW(Zone zone1)
-        {
-            zone1.zoneCW.Clear();
-            String[][] ZoneCW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,면적,커튼월부위,구조체번호,방위,기울기", "존 = '" + zone1.ZoneNum + "' AND 외피유형 = '커튼월창'");
-            if (ZoneCW.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneCW.Length)
-                { //유리부분면적,유리부분열관류율,유리부분유리면적비,태양열취득률,빛투과율, 패널부분 면적, 패널부분흡수율, 출입문부분면적, 출입문부분열관류율,출입문부분유리면적비, 출입문부분태양열취득률, 출입문부분빛투과율, 커튼월창면적, 설치열교가산치
-
-                    if (ZoneCW[i][2] == "유리부분")
-                    {
-                        String[][] CW_g = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "법규유리부분열관류율,유리부분유리면적비,태양열취득률,빛투과율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
-                        string[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호='" + ZoneCW[i][3] + "'");
-                        if (CW_g.Length > 0)
-                        {
-                            if (Blind.Length > 0)
-
-                            {
-                                CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][0]), Convert.ToDouble(CW_g[0][1]), Convert.ToDouble(CW_g[0][2]), Convert.ToDouble(Blind[0][0]), Convert.ToDouble(CW_g[0][3]), Convert.ToDouble(Blind[0][1]), 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
-                                zone1.zoneCW.Add(cw);
-                            }
-                            else
-                            {
-                                CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][0]), Convert.ToDouble(CW_g[0][1]), Convert.ToDouble(CW_g[0][2]), 0, Convert.ToDouble(CW_g[0][3]), 0, 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
-                                zone1.zoneCW.Add(cw);
-                            }
-                        }
-
-                    }
-                    else if (ZoneCW[i][2] == "패널부분")
-                    {
-                        String[][] CW_p = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "법규패널부분열관류율,패널흡수율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
-                        if (CW_p.Length > 0)
-                        {
-                            CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[0][0]), Convert.ToDouble(CW_p[0][1]), 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[0][2]), ZoneCW[i][4], ZoneCW[i][5], "패널부분");
-                            zone1.zoneCW.Add(cw);
-                        }
-                    }
-                    else
-                    {
-                        String[][] CW_d = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "법규출입문부분열관류율,출입문부분유리면적비,출입문태양열취득률,출입문빛투과율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
-                        if (CW_d.Length > 0)
-                        {
-                            CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[0][0]), Convert.ToDouble(CW_d[0][1]), Convert.ToDouble(CW_d[0][2]), Convert.ToDouble(CW_d[0][3]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[0][4]), ZoneCW[i][4], ZoneCW[i][5], "출입문부분");
-                            zone1.zoneCW.Add(cw);
-                        }
-                    }
-                }
-            }
-        }
-        private void Load_Rule_Door(Zone zone1)
-        {
-            zone1.zoneDoor.Clear();
-            String[][] ZoneD = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionDoor AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
-            if (ZoneD.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneD.Length)
-                {
-                    Door door = new Door(ZoneD[i][0], ZoneD[i][2], Convert.ToDouble(ZoneD[i][1]), Convert.ToDouble(ZoneD[i][3]), Convert.ToDouble(ZoneD[i][4]), ZoneD[i][5], ZoneD[i][6], ZoneD[i][7]);
-                    zone1.zoneDoor.Add(door);
-                }
-            }
-        }
-        private void Load_Rule_All(Zone zone1)
-        {
-            #region LoadData_Wall
-            zone1.zoneWall.Clear();
-            zone1.zoneGWall.Clear();
-            String[][] ZoneW = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "' And  NOT b.직접간접 = '지면'");
-            if (ZoneW.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneW.Length)
-                {
-                    Wall wall = new Wall(ZoneW[i][0], ZoneW[i][2], Convert.ToDouble(ZoneW[i][1]), Convert.ToDouble(ZoneW[i][3]), Convert.ToDouble(ZoneW[i][4]), ZoneW[i][5], ZoneW[i][6], ZoneW[i][7]);
-                    zone1.zoneWall.Add(wall);
-                }
-            }
-            String[][] ZoneG = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.직접간접 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "' And  b.직접간접 = '지면'");
-            if (ZoneG.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneG.Length)
-                {
-                    double fx_f = 1;
-                    if (Convert.ToDouble(ZoneG[0][3]) >= 3)
-                    { fx_f = 0.35; }
-                    else if (Convert.ToDouble(ZoneG[0][3]) >= 1)
-                    { fx_f = 0.55; }
-                    else if (Convert.ToDouble(ZoneG[0][3]) > 0.3)
-                    { fx_f = 0.65; }
-                    else { fx_f = 0.75; }
-                    break;
-
-                    GWall gwall = new GWall(ZoneG[i][0], ZoneG[i][2], Convert.ToDouble(ZoneG[i][1]), Convert.ToDouble(ZoneG[i][3]), fx_f);
-                    zone1.zoneGWall.Add(gwall);
-                }
-            }
-            #endregion
-            #region LoadData_Roof
-            zone1.zoneRoof.Clear();
-            String[][] ZoneR = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionRoof AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
-            if (ZoneR.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneR.Length)
-                {
-                    Roof roof = new Roof(ZoneR[i][0], ZoneR[i][2], Convert.ToDouble(ZoneR[i][1]), Convert.ToDouble(ZoneR[i][3]), Convert.ToDouble(ZoneR[i][4]), ZoneR[i][5], ZoneR[i][6], ZoneR[i][7]);
-                    zone1.zoneRoof.Add(roof);
-                }
-            }
-            #endregion
-            #region LoadData_Floor
-            zone1.zoneFloor.Clear();
-            String[][] ZoneF = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.직접간접,b.기초설치 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionFloor AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
-            if (ZoneF.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneF.Length)
-                {
-                    double fx_f = 1;
-                    switch (ZoneF[i][5].ToString())
-                    {
-                        case "지면위":
-                            {
-                                if (Convert.ToDouble(ZoneF[0][3]) >= 3)
-                                { fx_f = 0.3; }
-                                else if (Convert.ToDouble(ZoneF[0][3]) >= 1)
-                                { fx_f = 0.55; }
-                                else if (Convert.ToDouble(ZoneF[0][3]) > 0.3)
-                                { fx_f = 0.7; }
-                                else { fx_f = 0.8; }
-                                break;
-                            }
-                        case "단열지하":
-                            {
-                                if (Convert.ToDouble(ZoneF[0][3]) >= 3)
-                                { fx_f = 0.2; }
-                                else if (Convert.ToDouble(ZoneF[0][3]) >= 1)
-                                { fx_f = 0.45; }
-                                else if (Convert.ToDouble(ZoneF[0][3]) > 0.3)
-                                { fx_f = 0.55; }
-                                else { fx_f = 0.7; }
-                                break;
-                            }
-                        case "비단열지하":
-                            {
-                                if (Convert.ToDouble(ZoneF[0][3]) >= 3)
-                                { fx_f = 0.45; }
-                                else if (Convert.ToDouble(ZoneF[0][3]) >= 1)
-                                { fx_f = 0.75; }
-                                else if (Convert.ToDouble(ZoneF[0][3]) > 0.3)
-                                { fx_f = 0.8; }
-                                else { fx_f = 0.85; }
-                                break;
-                            }
-                    }
-                    Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Convert.ToDouble(ZoneF[i][1]), Convert.ToDouble(ZoneF[i][3]), ZoneF[i][5], fx_f);
-                    zone1.zoneFloor.Add(floor);
-                }
-            }
-            #endregion
-            #region LoadData_Win
-            zone1.zoneWin.Clear();
-            String[][] ZoneWin = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.설치열교가산치,b.창호유효열관류율,b.유리면적비,b.상위창호번호,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
-            if (ZoneWin.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneWin.Length)
-                {
-                    String[][] ZoneWin_P = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접,태양열취득률,빛투과율", "번호='" + ZoneWin[i][7] + "'");
-                    string[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호='" + ZoneWin[i][0] + "'");
-                    if (ZoneWin_P.Length > 0)
-                    {
-                        if (Blind.Length > 0)
-                        {
-                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]), Convert.ToDouble(Blind[0][0]), Convert.ToDouble(Blind[0][1]), ZoneWin[i][8], ZoneWin[i][9]);
-                            zone1.zoneWin.Add(win);
-                        }
-                        else
-                        {
-                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]), 0, 0, ZoneWin[i][8], ZoneWin[i][9]);
-                            zone1.zoneWin.Add(win);
-                        }
-                    }
-                }
-            }
-            #endregion
-            #region LoadDat_CW
-            zone1.zoneCW.Clear();
-            String[][] ZoneCW = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,면적,커튼월부위,구조체번호,방위,기울기", "존 = '" + zone1.ZoneNum + "' AND 외피유형 = '커튼월창'");
-            if (ZoneCW.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneCW.Length)
-                { //유리부분면적,유리부분열관류율,유리부분유리면적비,태양열취득률,빛투과율, 패널부분 면적, 패널부분흡수율, 출입문부분면적, 출입문부분열관류율,출입문부분유리면적비, 출입문부분태양열취득률, 출입문부분빛투과율, 커튼월창면적, 설치열교가산치
-
-                    if (ZoneCW[i][2] == "유리부분")
-                    {
-                        String[][] CW_g = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "법규유리부분열관류율,유리부분유리면적비,태양열취득률,빛투과율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
-                        string[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호='" + ZoneCW[i][3] + "'");
-                        if (CW_g.Length > 0)
-                        {
-                            if (Blind.Length > 0)
-
-                            {
-                                CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][0]), Convert.ToDouble(CW_g[0][1]), Convert.ToDouble(CW_g[0][2]), Convert.ToDouble(Blind[0][0]), Convert.ToDouble(CW_g[0][3]), Convert.ToDouble(Blind[0][1]), 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
-                                zone1.zoneCW.Add(cw);
-                            }
-                            else
-                            {
-                                CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][0]), Convert.ToDouble(CW_g[0][1]), Convert.ToDouble(CW_g[0][2]), 0, Convert.ToDouble(CW_g[0][3]), 0, 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
-                                zone1.zoneCW.Add(cw);
-                            }
-                        }
-
-                    }
-                    else if (ZoneCW[i][2] == "패널부분")
-                    {
-                        String[][] CW_p = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "법규패널부분열관류율,패널흡수율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
-                        if (CW_p.Length > 0)
-                        {
-                            CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[0][0]), Convert.ToDouble(CW_p[0][1]), 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[0][2]), ZoneCW[i][4], ZoneCW[i][5], "패널부분");
-                            zone1.zoneCW.Add(cw);
-                        }
-                    }
-                    else
-                    {
-                        String[][] CW_d = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "법규출입문부분열관류율,출입문부분유리면적비,출입문태양열취득률,출입문빛투과율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
-                        if (CW_d.Length > 0)
-                        {
-                            CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[0][0]), Convert.ToDouble(CW_d[0][1]), Convert.ToDouble(CW_d[0][2]), Convert.ToDouble(CW_d[0][3]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[0][4]), ZoneCW[i][4], ZoneCW[i][5], "출입문부분");
-                            zone1.zoneCW.Add(cw);
-                        }
-                    }
-                }
-            }
-            #endregion
-            #region LoadData_Door
-            zone1.zoneDoor.Clear();
-            String[][] ZoneD = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionDoor AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
-
-            if (ZoneD.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneD.Length)
-                {
-                    Door door = new Door(ZoneD[i][0], ZoneD[i][2], Convert.ToDouble(ZoneD[i][1]), Convert.ToDouble(ZoneD[i][3]), Convert.ToDouble(ZoneD[i][4]), ZoneD[i][5], ZoneD[i][6], ZoneD[i][7]);
-                    zone1.zoneDoor.Add(door);
-                }
-            }
-            #endregion
-        }
-        #endregion      
-        #region 요소기술별 검토
         public void Calc_Qb_Element(string 검토유형)
         {
             CALC.Zone_Arrange();
@@ -836,7 +158,6 @@ namespace main
                         break;
                 }
                 CALC.Zone_Calc(zone1, zonelight1);
-                // Save_Alt_Qb(zone1, 검토유형);
                 if (검토유형 == "조닝" || 검토유형 == "조명") { Save_Qlf_Element(zonelight1, 검토유형); }
             }
         }
@@ -1457,8 +778,8 @@ namespace main
             else { Cal_Qfc_Now(NowProjNum[0][0], 검토유형); }
 
             if (검토유형 != "급탕")
-            { Cal_Qfw(PreProjNum[0][0],검토유형); }
-            else { Cal_Qfw(NowProjNum[0][0],검토유형); }
+            { Cal_Qfw(PreProjNum[0][0], 검토유형); }
+            else { Cal_Qfw(NowProjNum[0][0], 검토유형); }
 
             if (검토유형 != "태양광")
             { CALC.RESystemCalc(PreProjNum[0][0]); }
@@ -1555,7 +876,7 @@ namespace main
                 final1.Qf_elec_tot_mth[mth] = final1.Qhf_elec[mth] + final1.Qcf_elec[mth] + final1.Qwf_elec[mth] + final1.Qlf_elec[mth] + final1.Qvf_elec[mth] + final1.Qbase_elec[mth] - final1.Qreg_elec[mth];
                 final1.Qf_gas_tot_mth[mth] = final1.Qhf_gas[mth] + final1.Qcf_gas[mth] + final1.Qwf_gas[mth] + final1.Qbase_gas[mth];
             }
-            Save_Alt(final1, 검토유형, "FinalEnergy_Result_Element");
+            Save_Alt(final1, 검토유형);
 
             #endregion
 
@@ -1826,7 +1147,6 @@ namespace main
             }
         }
         #endregion
-
         #region 난방
         public void Cal_Qfh_Pre(string ProjNum, string 검토유형)
         {
@@ -2001,7 +1321,6 @@ namespace main
             }
         }
         #endregion
-
         #region 냉방
         public void Cal_Qfc_Pre(string ProjNum, string 검토유형)
         {
@@ -2024,7 +1343,7 @@ namespace main
                     {
                         Save_Qfc_result_byZone(Cooling1, 검토유형, ProjNum);
                     }
-                   // CALC.Cooling_Save(Cooling1);
+                    // CALC.Cooling_Save(Cooling1);
                 }
             }
         }
@@ -2082,12 +1401,12 @@ namespace main
             { Value_ce = Program.DB.getValue_SameCheck(ProjNum, "Cooling_ce_Form", "공급설비,존번호,부하율", "냉방시스템 = '" + Cooling1.CoolingNum + "'"); }
             else
             {
-              Value_ce = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Cooling_ce_Form_Element", "공급설비,존번호,부하율", "냉방시스템 = '" + Cooling1.CoolingNum + "'");
+                Value_ce = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Cooling_ce_Form_Element", "공급설비,존번호,부하율", "냉방시스템 = '" + Cooling1.CoolingNum + "'");
             }
 
             Zone zone = null;
             if (Value_ce.Length > 0)
-            {               
+            {
                 double Qb_a_sum = 0;
                 for (int n = 0; n < Value_ce.Length; n++)
                 {
@@ -2285,7 +1604,7 @@ namespace main
                     if (PostZone.Length > 0)
                     {
                         Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
-                                   "'" + 검토유형 + "','" + DHW1.DHWNum + "','" + PostZone[0][0] + "','" + DHW1.SelectZone_split[n].ToString() + "','" + "전기" + "','" + Qwf_elec / Qwb_a_sum  * Qwb_a[n] + "'"
+                                   "'" + 검토유형 + "','" + DHW1.DHWNum + "','" + PostZone[0][0] + "','" + DHW1.SelectZone_split[n].ToString() + "','" + "전기" + "','" + Qwf_elec / Qwb_a_sum * Qwb_a[n] + "'"
                                 , "검토유형,급탕시스템,기존존번호,계획존번호,연료");
                         if (DHW1.Carrier != "전기")
                         {
@@ -2361,290 +1680,5 @@ namespace main
                             , "검토유형,존번호");
         }
         #endregion
-        #endregion
-        #region 최적안 검토
-        public void Calc_Qb_Rule_Optimal(string 검토유형, string 리모델링안, string RemodelingType, double R, double dU)
-        {
-            CALC.Zone_Arrange();
-            for (int k = 0; k < CALC.zone.Count; k++)
-            {
-                Zone zone1 = (Zone)CALC.zone[k];
-                ZoneLight zonelight1 = (ZoneLight)CALC.zonelight[k];
-                CALC.Zone_LoadData(zone1, zonelight1);
-
-                switch (검토유형)
-                {
-                    case "외벽":
-                        Load_Optimal_Wall(zone1, RemodelingType, R, dU);
-                        break;
-                    case "지붕":
-                        Load_Rule_Roof(zone1);
-                        break;
-                    case "최하층바닥":
-                        Load_Rule_Floor(zone1);
-                        break;
-                    case "창호":
-                        Load_Rule_Win(zone1);
-                        break;
-                    case "커튼월창":
-                        Load_Rule_CW(zone1);
-                        break;
-                    case "외부출입문":
-                        Load_Rule_Door(zone1);
-                        break;
-                    case "전체":
-                        Load_Rule_All(zone1);
-                        break;
-                }
-                CALC.Zone_Calc(zone1, zonelight1);
-            }
-        }
-        private void Calc_System_Optimal(string 검토유형, string 리모델링안, string RemodelingType, double R, double dU)
-        {
-            int i;
-            #region 공조계산
-            string[][] Num = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형");
-            if (Num.Length > 0)
-            {
-                for (int k = 0; k < Num.Length; k++)
-                {
-                    CALC.AHUs[Num[k][0]] = null;
-                }
-                i = -1;
-                while (++i < Num.Length)
-                {
-                    if (Num[i][1] == "공조기")
-                    {
-                        AHU Pre_AHU1 = new AHU(Num[i][0]);
-                        CALC.AHUs[Num[i][0]] = Pre_AHU1;
-                        CALC.AHUSystem_LaodData(Pre_AHU1, NowProjNum[0][0]);
-                        CALC.AHUSystem_PreCalc(Pre_AHU1);
-                    }
-                    else
-                    {
-                        AHU Pre_HRV1 = new AHU(Num[i][0]);
-                        CALC.AHUs[Num[i][0]] = Pre_HRV1;
-                        CALC.HRV_LaodData(Pre_HRV1, NowProjNum[0][0]);
-                        CALC.AHUSystem_PreCalc(Pre_HRV1);
-                    }
-                }
-
-                Calc_Qb_Rule_Optimal(검토유형, 리모델링안, RemodelingType, R, dU);
-
-                i = -1;
-                for (int k = 0; k < Num.Length; k++)
-                {
-                    CALC.AHUs[Num[k][0]] = null;
-                }
-                while (++i < Num.Length)
-                {
-                    if (Num[i][1] == "공조기")
-                    {
-                        AHU Post_AHU1 = new AHU(Num[i][0]);
-                        CALC.AHUs[Num[i][0]] = Post_AHU1;
-                        CALC.AHUSystem_LaodData(Post_AHU1, NowProjNum[0][0]);
-                        CALC.AHUSystem_PostCalc(Post_AHU1);
-                    }
-                    else
-                    {
-                        AHU Post_HRV1 = new AHU(Num[i][0]);
-                        CALC.AHUs[Num[i][0]] = Post_HRV1;
-                        CALC.HRV_LaodData(Post_HRV1, NowProjNum[0][0]);
-                        CALC.HRV_PostCalc(Post_HRV1);
-                    }
-
-                }
-            }
-            #endregion
-
-            Cal_Qfh_Now(NowProjNum[0][0],"최적안");
-           // CALC.CoolingSystemCalc();
-            Cal_Qfw(NowProjNum[0][0],검토유형);
-
-            #region 파이널계산
-            Final final1 = new Final(NowProjNum[0][0]);
-
-            final1.Calc_Qtot();
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
-            if (프로젝트유형[0][0] == "1")
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    string[][] Final2 = Program.DB.querySQL(DB.type.ProjDB, "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
-                    if (Final2.Length > 0)
-                    {
-                        final1.Qbase_elec[mth] = Convert.ToDouble(Final2[0][0]);
-                    }
-
-                    Final2 = Program.DB.querySQL(DB.type.ProjDB, "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 != '전기' and 월 = '" + (mth + 1).ToString() + "월'");
-                    if (Final2.Length > 0)
-                    {
-                        final1.Qbase_gas[mth] = Convert.ToDouble(Final2[0][0]);
-                    }
-                }
-            }
-            else
-            {
-                string[][] res = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기존프로젝트");
-                if (res.Length > 0 && res[0][0] != "")
-                {
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-                        string[][] Final2 = Program.DB.querySQL(res[0][0], "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
-                        if (Final2.Length > 0)
-                        {
-                            final1.Qbase_elec[mth] = Convert.ToDouble(Final2[0][0]);
-                        }
-
-                        Final2 = Program.DB.querySQL(res[0][0], "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 != '전기' and 월 = '" + (mth + 1).ToString() + "월'");
-                        if (Final2.Length > 0)
-                        {
-                            final1.Qbase_gas[mth] = Convert.ToDouble(Final2[0][0]);
-                        }
-                    }
-                }
-            }
-
-            for (int mth = 0; mth < 12; mth++)
-            {
-                final1.Qf_elec_tot_mth[mth] = final1.Qhf_elec[mth] + final1.Qcf_elec[mth] + final1.Qwf_elec[mth] + final1.Qlf_elec[mth] + final1.Qvf_elec[mth] + final1.Qbase_elec[mth] - final1.Qreg_elec[mth];
-                final1.Qf_gas_tot_mth[mth] = final1.Qhf_gas[mth] + final1.Qcf_gas[mth] + final1.Qwf_gas[mth] + final1.Qbase_gas[mth];
-            }
-            Save_Final_Optimal(final1, 검토유형, 리모델링안);
-
-            #endregion
-
-            CALC.RESystemCalc(NowProjNum[0][0]);
-        }
-        private void Save_Final_Optimal(Final final1, string 검토유형, string 리모델링안)
-        {
-            #region 전기
-            String MTH;
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
-            string[][] PNum = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
-          
-            double Qhf_elec_a = 0, Qcf_elec_a = 0, Qwf_elec_a = 0, Qlf_elec_a = 0, Qvf_elec_a = 0, Qbase_elec_a = 0, Qreg_elec_a = 0, Qf_elec_tot_a = 0;
-
-            for (int mth = 0; mth < 12; mth++)
-            {
-                Qhf_elec_a += final1.Qhf_elec[mth];
-                Qcf_elec_a += final1.Qcf_elec[mth];
-                Qwf_elec_a += final1.Qwf_elec[mth];
-                Qlf_elec_a += final1.Qlf_elec[mth];
-                Qvf_elec_a += final1.Qvf_elec[mth];
-                Qbase_elec_a += final1.Qbase_elec[mth];
-                Qreg_elec_a += final1.Qreg_elec[mth];
-            }
-            Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a  + Qvf_elec_a + Qbase_elec_a - Qreg_elec_a;
-            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Optimal", "프로젝트번호,프로젝트유형,검토유형,리모델링안,월,연료," +
-                "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
-                "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + 리모델링안 + "','" + "연간" + "','" + "전기" + "','" +
-                Qhf_elec_a + "','" + Qcf_elec_a  + "','" + Qwf_elec_a  + "','" + Qlf_elec_a + "','" +
-                Qvf_elec_a + "','" + Qbase_elec_a  + "','" + Qreg_elec_a + "','" + Qf_elec_tot_a
-                + "'", "검토유형,리모델링안,월,연료");
-            #endregion
-
-            #region 가스           
-            double Qhf_gas_a = 0, Qcf_gas_a = 0, Qwf_gas_a = 0, Qbase_gas_a = 0, Qf_gas_tot_a = 0;
-            for (int mth = 0; mth < 12; mth++)
-            {
-                Qhf_gas_a += final1.Qhf_gas[mth];
-                Qcf_gas_a += final1.Qcf_gas[mth];
-                Qwf_gas_a += final1.Qwf_gas[mth];
-                Qbase_gas_a += final1.Qbase_gas[mth];
-            }
-            Qf_gas_tot_a = Qhf_gas_a + Qcf_gas_a + Qwf_gas_a + Qbase_gas_a;
-            string Carrier = "";
-            if (final1.Carrier_h != "" && final1.Carrier_h != null) { Carrier = final1.Carrier_h; } else if (final1.Carrier_w != "" && final1.Carrier_w != null) { Carrier = final1.Carrier_w; } else if (final1.Carrier_c != "" && final1.Carrier_c != null) { Carrier = final1.Carrier_c; }
-            if (Carrier == "LNG" || Carrier == "LPG") { Carrier = "가스"; }
-            if (Carrier != "")
-            {
-                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Optimal", "프로젝트번호,프로젝트유형,검토유형,리모델링안,월,연료," +
-                  "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
-                  "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + 리모델링안 + "','" + "연간" + "','" + Carrier + "','" +
-                  Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + 0 + "','" +
-                  0 + "','" + Qbase_gas_a + "','" + Qf_gas_tot_a
-                  + "'", "검토유형,리모델링안,월,연료");
-            }
-            #endregion
-            #region 전체
-            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Optimal", "프로젝트번호,프로젝트유형,검토유형,리모델링안,월,연료," +
-                   "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
-                   "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + 리모델링안 + "','" + "연간" + "','" + "전체" + "','" +
-                   (Qhf_elec_a + Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + Qlf_elec_a + "','" +
-                   Qvf_elec_a + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + Qreg_elec_a + "','" + (Qf_elec_tot_a + Qf_gas_tot_a)
-                   + "'", "검토유형,리모델링안,월,연료");
-            #endregion
-
-        }
-
-
-        #region 외벽
-        public void Get_Optimal_WallData(string RemodelingType, string ExType)
-        {
-            string[][] value = Program.DB.getValue(DB.type.BaseDB_Optimal, "최적안_외벽_인덱스", "구분,외벽유형", "리모델링유형='"+RemodelingType+ "' and 외부마감재대분류 ='"+ExType+"'");
-            if(value.Length > 0)
-            {
-                for(int i =0;  i < value.Length; i++)
-                {
-                    double R = 0; double dU = 0; 
-                    string[][] R_value = Program.DB.getValue(DB.type.BaseDB_Optimal, "최적안_외벽", "열저항합계", "구분='" + value[i][1] + "'");
-                    if(R_value.Length > 0)
-                    {
-                        R= Convert.ToDouble(R_value[0][0]);
-                    }
-                    Calc_Qb_Rule_Optimal("외벽", value[i][0],RemodelingType,R,dU);
-                    Calc_System_Optimal("외벽", value[i][0], RemodelingType, R, dU);
-                }
-                
-            }
-
-        }
-        private void Load_Optimal_Wall(Zone zone1, string RemodelingType, double R, double dU)
-        {
-            zone1.zoneWall.Clear();
-            zone1.zoneGWall.Clear();
-            String[][] ZoneW = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "' And  NOT b.직접간접 = '지면'");
-            if (ZoneW.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneW.Length)
-                {
-                    double Uvalue = 1 / (1 / Convert.ToDouble(ZoneW[0][3]) + R) + dU; 
-                    Wall wall = new Wall(ZoneW[i][0], ZoneW[i][2], Convert.ToDouble(ZoneW[i][1]), Uvalue, Convert.ToDouble(ZoneW[i][4]), ZoneW[i][5], ZoneW[i][6], ZoneW[i][7]);
-                    zone1.zoneWall.Add(wall);
-                }
-            }
-            String[][] ZoneG = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.열관류율,b.직접간접 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "' And  b.직접간접 = '지면'");
-            if (ZoneG.Length > 0)
-            {
-                int i = -1;
-                while (++i < ZoneG.Length)
-                {
-                    double fx_f = 1;
-                    if (Convert.ToDouble(ZoneG[0][3]) >= 3)
-                    { fx_f = 0.35; }
-                    else if (Convert.ToDouble(ZoneG[0][3]) >= 1)
-                    { fx_f = 0.55; }
-                    else if (Convert.ToDouble(ZoneG[0][3]) > 0.3)
-                    { fx_f = 0.65; }
-                    else { fx_f = 0.75; }
-                    break;
-                    double Uvalue;
-                    if (RemodelingType=="내부덧댐")
-                    {
-                        Uvalue = 1 / (1 / Convert.ToDouble(ZoneW[0][3]) + R) + dU;
-                    }
-                    else
-                    {
-                        Uvalue = Convert.ToDouble(ZoneW[0][3]);
-                    }
-                    GWall gwall = new GWall(ZoneG[i][0], ZoneG[i][2], Convert.ToDouble(ZoneG[i][1]), Uvalue, fx_f);
-                    zone1.zoneGWall.Add(gwall);
-                }
-            }
-        }
-        #endregion
-        #endregion
-    }    
+    }
 }
