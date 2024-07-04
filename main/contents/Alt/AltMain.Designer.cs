@@ -65,8 +65,13 @@
             label_rule = new Label();
             webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
             Wall_tabPage = new TabPage();
+            WallSavingPercent_textBox = new TextBox();
+            label8 = new Label();
+            WallCost_textBox = new TextBox();
+            label6 = new Label();
+            Wall_webView = new Microsoft.Web.WebView2.WinForms.WebView2();
             Wall_new_label = new Label();
-            Wall_new_dataGridView = new DataGridView();
+            Wall_New_dataGridView = new DataGridView();
             WallAlt_textBox = new TextBox();
             WallAlt_button = new Button();
             label3 = new Label();
@@ -81,7 +86,8 @@
             ((System.ComponentModel.ISupportInitialize)RuleResult_dataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView22).BeginInit();
             Wall_tabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Wall_new_dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Wall_webView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Wall_New_dataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Wall_Old_dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -444,8 +450,13 @@
             // Wall_tabPage
             // 
             Wall_tabPage.BackColor = Color.White;
+            Wall_tabPage.Controls.Add(WallSavingPercent_textBox);
+            Wall_tabPage.Controls.Add(label8);
+            Wall_tabPage.Controls.Add(WallCost_textBox);
+            Wall_tabPage.Controls.Add(label6);
+            Wall_tabPage.Controls.Add(Wall_webView);
             Wall_tabPage.Controls.Add(Wall_new_label);
-            Wall_tabPage.Controls.Add(Wall_new_dataGridView);
+            Wall_tabPage.Controls.Add(Wall_New_dataGridView);
             Wall_tabPage.Controls.Add(WallAlt_textBox);
             Wall_tabPage.Controls.Add(WallAlt_button);
             Wall_tabPage.Controls.Add(label3);
@@ -457,27 +468,84 @@
             Wall_tabPage.TabIndex = 0;
             Wall_tabPage.Text = "외벽";
             // 
+            // WallSavingPercent_textBox
+            // 
+            WallSavingPercent_textBox.BackColor = Color.White;
+            WallSavingPercent_textBox.BorderStyle = BorderStyle.None;
+            WallSavingPercent_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            WallSavingPercent_textBox.ForeColor = SystemColors.ControlText;
+            WallSavingPercent_textBox.Location = new Point(376, 69);
+            WallSavingPercent_textBox.Name = "WallSavingPercent_textBox";
+            WallSavingPercent_textBox.Size = new Size(120, 15);
+            WallSavingPercent_textBox.TabIndex = 160;
+            WallSavingPercent_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.Location = new Point(267, 69);
+            label8.Name = "label8";
+            label8.Size = new Size(107, 15);
+            label8.TabIndex = 159;
+            label8.Text = "예상 에너지절감률";
+            // 
+            // WallCost_textBox
+            // 
+            WallCost_textBox.BackColor = Color.White;
+            WallCost_textBox.BorderStyle = BorderStyle.None;
+            WallCost_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            WallCost_textBox.ForeColor = SystemColors.ControlText;
+            WallCost_textBox.Location = new Point(376, 48);
+            WallCost_textBox.Name = "WallCost_textBox";
+            WallCost_textBox.Size = new Size(120, 15);
+            WallCost_textBox.TabIndex = 157;
+            WallCost_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Location = new Point(267, 48);
+            label6.Name = "label6";
+            label6.Size = new Size(59, 15);
+            label6.TabIndex = 156;
+            label6.Text = "예상 비용";
+            // 
+            // Wall_webView
+            // 
+            Wall_webView.AllowExternalDrop = true;
+            Wall_webView.CreationProperties = null;
+            Wall_webView.DefaultBackgroundColor = Color.White;
+            Wall_webView.Location = new Point(585, 38);
+            Wall_webView.Name = "Wall_webView";
+            Wall_webView.Size = new Size(366, 314);
+            Wall_webView.Source = new Uri("http://localhost:3000/transmit.html", UriKind.Absolute);
+            Wall_webView.TabIndex = 155;
+            Wall_webView.Visible = false;
+            Wall_webView.ZoomFactor = 1D;
+            // 
             // Wall_new_label
             // 
             Wall_new_label.AutoSize = true;
             Wall_new_label.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            Wall_new_label.Location = new Point(351, 20);
+            Wall_new_label.Location = new Point(263, 20);
             Wall_new_label.Name = "Wall_new_label";
             Wall_new_label.Size = new Size(95, 15);
             Wall_new_label.TabIndex = 154;
             Wall_new_label.Text = "리모델링안 외벽";
             // 
-            // Wall_new_dataGridView
+            // Wall_New_dataGridView
             // 
-            Wall_new_dataGridView.AllowUserToAddRows = false;
-            Wall_new_dataGridView.AllowUserToDeleteRows = false;
-            Wall_new_dataGridView.AllowUserToResizeColumns = false;
-            Wall_new_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            Wall_new_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            Wall_new_dataGridView.BackgroundColor = SystemColors.Window;
-            Wall_new_dataGridView.BorderStyle = BorderStyle.None;
-            Wall_new_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            Wall_new_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            Wall_New_dataGridView.AllowUserToAddRows = false;
+            Wall_New_dataGridView.AllowUserToDeleteRows = false;
+            Wall_New_dataGridView.AllowUserToResizeColumns = false;
+            Wall_New_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Wall_New_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            Wall_New_dataGridView.BackgroundColor = SystemColors.Window;
+            Wall_New_dataGridView.BorderStyle = BorderStyle.None;
+            Wall_New_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            Wall_New_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle10.BackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle10.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
@@ -485,10 +553,10 @@
             dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle10.SelectionForeColor = Color.Black;
             dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
-            Wall_new_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
-            Wall_new_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Wall_new_dataGridView.Location = new Point(351, 38);
-            Wall_new_dataGridView.Name = "Wall_new_dataGridView";
+            Wall_New_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            Wall_New_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Wall_New_dataGridView.Location = new Point(267, 100);
+            Wall_New_dataGridView.Name = "Wall_New_dataGridView";
             dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle11.BackColor = SystemColors.Control;
             dataGridViewCellStyle11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -496,18 +564,19 @@
             dataGridViewCellStyle11.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
-            Wall_new_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
-            Wall_new_dataGridView.RowHeadersVisible = false;
-            Wall_new_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            Wall_New_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            Wall_New_dataGridView.RowHeadersVisible = false;
+            Wall_New_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle12.ForeColor = Color.Black;
             dataGridViewCellStyle12.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle12.SelectionForeColor = Color.Black;
-            Wall_new_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
-            Wall_new_dataGridView.RowTemplate.Height = 25;
-            Wall_new_dataGridView.Size = new Size(267, 288);
-            Wall_new_dataGridView.TabIndex = 153;
+            Wall_New_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            Wall_New_dataGridView.RowTemplate.Height = 25;
+            Wall_New_dataGridView.Size = new Size(300, 223);
+            Wall_New_dataGridView.TabIndex = 153;
+            Wall_New_dataGridView.CellContentClick += Wall_New_dataGridView_CellContentClick;
             // 
             // WallAlt_textBox
             // 
@@ -528,7 +597,7 @@
             WallAlt_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             WallAlt_button.FlatStyle = FlatStyle.System;
             WallAlt_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            WallAlt_button.Location = new Point(449, 15);
+            WallAlt_button.Location = new Point(361, 15);
             WallAlt_button.Margin = new Padding(0);
             WallAlt_button.Name = "WallAlt_button";
             WallAlt_button.Size = new Size(23, 23);
@@ -567,7 +636,7 @@
             dataGridViewCellStyle13.WrapMode = DataGridViewTriState.True;
             Wall_Old_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             Wall_Old_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Wall_Old_dataGridView.Location = new Point(26, 38);
+            Wall_Old_dataGridView.Location = new Point(6, 100);
             Wall_Old_dataGridView.Name = "Wall_Old_dataGridView";
             dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle14.BackColor = SystemColors.Control;
@@ -586,7 +655,7 @@
             dataGridViewCellStyle15.SelectionForeColor = Color.Black;
             Wall_Old_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
             Wall_Old_dataGridView.RowTemplate.Height = 25;
-            Wall_Old_dataGridView.Size = new Size(267, 288);
+            Wall_Old_dataGridView.Size = new Size(267, 223);
             Wall_Old_dataGridView.TabIndex = 143;
             // 
             // AltMain
@@ -618,7 +687,8 @@
             ((System.ComponentModel.ISupportInitialize)webView22).EndInit();
             Wall_tabPage.ResumeLayout(false);
             Wall_tabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)Wall_new_dataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Wall_webView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Wall_New_dataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)Wall_Old_dataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -655,8 +725,13 @@
         private Label label3;
         private TextBox WallAlt_textBox;
         private Button WallAlt_button;
-        private DataGridView Wall_new_dataGridView;
+        private DataGridView Wall_New_dataGridView;
         private Label Wall_new_label;
         private DataGridView Cost_dataGridView;
+        private Microsoft.Web.WebView2.WinForms.WebView2 Wall_webView;
+        private TextBox WallCost_textBox;
+        private Label label6;
+        private TextBox WallSavingPercent_textBox;
+        private Label label8;
     }
 }

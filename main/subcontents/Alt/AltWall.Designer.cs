@@ -43,6 +43,7 @@
             WallRemodelingType_comboBox = new CustomComboBox();
             label11 = new Label();
             SIM_button = new Button();
+            Graph_label = new Label();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Alt_dataGridView).BeginInit();
@@ -107,9 +108,9 @@
             webView21.AllowExternalDrop = true;
             webView21.CreationProperties = null;
             webView21.DefaultBackgroundColor = Color.White;
-            webView21.Location = new Point(538, -3);
+            webView21.Location = new Point(538, 48);
             webView21.Name = "webView21";
-            webView21.Size = new Size(354, 337);
+            webView21.Size = new Size(354, 286);
             webView21.Source = new Uri("http://localhost:3000/transmit.html", UriKind.Absolute);
             webView21.TabIndex = 100;
             webView21.Visible = false;
@@ -157,6 +158,7 @@
             Alt_dataGridView.Size = new Size(891, 184);
             Alt_dataGridView.TabIndex = 101;
             Alt_dataGridView.CellContentClick += Alt_dataGridView_CellContentClick;
+            Alt_dataGridView.CellValueChanged += Alt_dataGridView_CellValueChanged;
             // 
             // WallEx_comboBox
             // 
@@ -214,12 +216,24 @@
             SIM_button.UseVisualStyleBackColor = true;
             SIM_button.Click += SIM_button_Click;
             // 
+            // Graph_label
+            // 
+            Graph_label.AutoSize = true;
+            Graph_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            Graph_label.Location = new Point(622, 30);
+            Graph_label.Name = "Graph_label";
+            Graph_label.Size = new Size(187, 15);
+            Graph_label.TabIndex = 157;
+            Graph_label.Text = "대표(면적이 가장 큰) 외벽 그래프";
+            Graph_label.Visible = false;
+            // 
             // AltWall
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(892, 568);
+            Controls.Add(Graph_label);
             Controls.Add(SIM_button);
             Controls.Add(WallEx_comboBox);
             Controls.Add(WallEx_label);
@@ -257,5 +271,6 @@
         private CustomComboBox WallRemodelingType_comboBox;
         private Label label11;
         private Button SIM_button;
+        private Label Graph_label;
     }
 }
