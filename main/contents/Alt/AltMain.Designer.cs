@@ -49,6 +49,7 @@
             Icon_pictureBox = new PictureBox();
             Save_button = new Button();
             panel5 = new Panel();
+            CostCalc_button = new Button();
             Cost_dataGridView = new DataGridView();
             label2 = new Label();
             Alt_dataGridView = new DataGridView();
@@ -57,6 +58,7 @@
             CostTotal_textBox = new TextBox();
             q50_label2 = new Label();
             q50_label1 = new Label();
+            WallAlt_button = new Button();
             label4 = new Label();
             tabControl1 = new CustomTabControl();
             Main_tabPage = new TabPage();
@@ -73,9 +75,11 @@
             Wall_new_label = new Label();
             Wall_New_dataGridView = new DataGridView();
             WallAlt_textBox = new TextBox();
-            WallAlt_button = new Button();
             label3 = new Label();
             Wall_Old_dataGridView = new DataGridView();
+            label5 = new Label();
+            textBox1 = new TextBox();
+            label7 = new Label();
             AltMainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel5.SuspendLayout();
@@ -119,7 +123,7 @@
             Type_textBox.BorderStyle = BorderStyle.None;
             Type_textBox.Enabled = false;
             Type_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Type_textBox.ForeColor = SystemColors.ControlDark;
+            Type_textBox.ForeColor = Color.White;
             Type_textBox.Location = new Point(177, 57);
             Type_textBox.Name = "Type_textBox";
             Type_textBox.Size = new Size(120, 15);
@@ -149,6 +153,10 @@
             // panel5
             // 
             panel5.BackColor = Color.White;
+            panel5.Controls.Add(textBox1);
+            panel5.Controls.Add(label7);
+            panel5.Controls.Add(label5);
+            panel5.Controls.Add(CostCalc_button);
             panel5.Controls.Add(Cost_dataGridView);
             panel5.Controls.Add(label2);
             panel5.Controls.Add(Alt_dataGridView);
@@ -157,11 +165,27 @@
             panel5.Controls.Add(CostTotal_textBox);
             panel5.Controls.Add(q50_label2);
             panel5.Controls.Add(q50_label1);
+            panel5.Controls.Add(WallAlt_button);
             panel5.Location = new Point(14, 109);
             panel5.Name = "panel5";
             panel5.Size = new Size(976, 159);
             panel5.TabIndex = 105;
             panel5.Paint += panel5_Paint;
+            // 
+            // CostCalc_button
+            // 
+            CostCalc_button.BackColor = SystemColors.ControlLight;
+            CostCalc_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            CostCalc_button.FlatStyle = FlatStyle.System;
+            CostCalc_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            CostCalc_button.Location = new Point(232, 12);
+            CostCalc_button.Margin = new Padding(0);
+            CostCalc_button.Name = "CostCalc_button";
+            CostCalc_button.Size = new Size(23, 23);
+            CostCalc_button.TabIndex = 146;
+            CostCalc_button.Text = "+";
+            CostCalc_button.UseVisualStyleBackColor = false;
+            CostCalc_button.Click += CostCalc_button_Click;
             // 
             // Cost_dataGridView
             // 
@@ -254,7 +278,7 @@
             dataGridViewCellStyle6.SelectionForeColor = Color.Black;
             Alt_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
             Alt_dataGridView.RowTemplate.Height = 25;
-            Alt_dataGridView.Size = new Size(224, 129);
+            Alt_dataGridView.Size = new Size(334, 129);
             Alt_dataGridView.TabIndex = 141;
             // 
             // Alt_Remove_button
@@ -263,7 +287,7 @@
             Alt_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Alt_Remove_button.FlatStyle = FlatStyle.System;
             Alt_Remove_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Alt_Remove_button.Location = new Point(841, 11);
+            Alt_Remove_button.Location = new Point(939, 5);
             Alt_Remove_button.Margin = new Padding(0);
             Alt_Remove_button.Name = "Alt_Remove_button";
             Alt_Remove_button.Size = new Size(23, 23);
@@ -278,7 +302,7 @@
             Alt_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Alt_Add_button.FlatStyle = FlatStyle.System;
             Alt_Add_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Alt_Add_button.Location = new Point(804, 11);
+            Alt_Add_button.Location = new Point(902, 5);
             Alt_Add_button.Margin = new Padding(0);
             Alt_Add_button.Name = "Alt_Add_button";
             Alt_Add_button.Size = new Size(23, 23);
@@ -293,7 +317,7 @@
             CostTotal_textBox.BorderStyle = BorderStyle.FixedSingle;
             CostTotal_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             CostTotal_textBox.ForeColor = SystemColors.ControlText;
-            CostTotal_textBox.Location = new Point(114, 13);
+            CostTotal_textBox.Location = new Point(91, 12);
             CostTotal_textBox.Name = "CostTotal_textBox";
             CostTotal_textBox.Size = new Size(120, 22);
             CostTotal_textBox.TabIndex = 137;
@@ -305,7 +329,7 @@
             q50_label2.AutoSize = true;
             q50_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             q50_label2.ForeColor = SystemColors.ControlText;
-            q50_label2.Location = new Point(234, 16);
+            q50_label2.Location = new Point(211, 15);
             q50_label2.Name = "q50_label2";
             q50_label2.Size = new Size(18, 16);
             q50_label2.TabIndex = 138;
@@ -320,6 +344,21 @@
             q50_label1.Size = new Size(47, 15);
             q50_label1.TabIndex = 136;
             q50_label1.Text = "총 예산";
+            // 
+            // WallAlt_button
+            // 
+            WallAlt_button.BackColor = SystemColors.ControlLight;
+            WallAlt_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            WallAlt_button.FlatStyle = FlatStyle.System;
+            WallAlt_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            WallAlt_button.Location = new Point(902, 55);
+            WallAlt_button.Margin = new Padding(0);
+            WallAlt_button.Name = "WallAlt_button";
+            WallAlt_button.Size = new Size(23, 23);
+            WallAlt_button.TabIndex = 145;
+            WallAlt_button.Text = "+";
+            WallAlt_button.UseVisualStyleBackColor = false;
+            WallAlt_button.Click += WallAlt_button_Click;
             // 
             // label4
             // 
@@ -458,7 +497,6 @@
             Wall_tabPage.Controls.Add(Wall_new_label);
             Wall_tabPage.Controls.Add(Wall_New_dataGridView);
             Wall_tabPage.Controls.Add(WallAlt_textBox);
-            Wall_tabPage.Controls.Add(WallAlt_button);
             Wall_tabPage.Controls.Add(label3);
             Wall_tabPage.Controls.Add(Wall_Old_dataGridView);
             Wall_tabPage.Location = new Point(4, 25);
@@ -591,21 +629,6 @@
             WallAlt_textBox.TabIndex = 147;
             WallAlt_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // WallAlt_button
-            // 
-            WallAlt_button.BackColor = SystemColors.ControlLight;
-            WallAlt_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            WallAlt_button.FlatStyle = FlatStyle.System;
-            WallAlt_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            WallAlt_button.Location = new Point(361, 15);
-            WallAlt_button.Margin = new Padding(0);
-            WallAlt_button.Name = "WallAlt_button";
-            WallAlt_button.Size = new Size(23, 23);
-            WallAlt_button.TabIndex = 145;
-            WallAlt_button.Text = "+";
-            WallAlt_button.UseVisualStyleBackColor = false;
-            WallAlt_button.Click += WallAlt_button_Click;
-            // 
             // label3
             // 
             label3.AutoSize = true;
@@ -657,6 +680,39 @@
             Wall_Old_dataGridView.RowTemplate.Height = 25;
             Wall_Old_dataGridView.Size = new Size(267, 223);
             Wall_Old_dataGridView.TabIndex = 143;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.Location = new Point(27, 56);
+            label5.Name = "label5";
+            label5.Size = new Size(59, 15);
+            label5.TabIndex = 147;
+            label5.Text = "잔여 예산";
+            // 
+            // textBox1
+            // 
+            textBox1.BackColor = Color.White;
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox1.ForeColor = SystemColors.ControlText;
+            textBox1.Location = new Point(91, 56);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(120, 15);
+            textBox1.TabIndex = 148;
+            textBox1.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.ForeColor = SystemColors.ControlText;
+            label7.Location = new Point(211, 55);
+            label7.Name = "label7";
+            label7.Size = new Size(18, 16);
+            label7.TabIndex = 149;
+            label7.Text = "원";
             // 
             // AltMain
             // 
@@ -733,5 +789,9 @@
         private Label label6;
         private TextBox WallSavingPercent_textBox;
         private Label label8;
+        private Button CostCalc_button;
+        private TextBox textBox1;
+        private Label label7;
+        private Label label5;
     }
 }

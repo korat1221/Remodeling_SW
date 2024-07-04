@@ -124,7 +124,7 @@ namespace main.subcontents.Alt
             Alt_dataGridView.Columns.Add("A7", "점수.법규");
             Alt_dataGridView.Columns.Add("A8", "점수.경제성");
             Alt_dataGridView.Columns.Add("A9", "에너지절감률.[%]");
-            Alt_dataGridView.Columns.Add("A10", "예상비용.[원]");
+            Alt_dataGridView.Columns.Add("A10", "예상 순공사비.[원]");
             Alt_dataGridView.Columns[0].Width = 40;
             Alt_dataGridView.Columns[1].Width = 30;
             Alt_dataGridView.Columns[3].Width = 80;
@@ -162,26 +162,26 @@ namespace main.subcontents.Alt
                         Cost[a] = Cal_Cost(Value[a][0]);
                     }
 
-                    Array.Sort(TotalPoint_Order);
-                    Array.Reverse(TotalPoint_Order);
-                    for (int a = 0; a < TotalPoint_Order.Length; a++)
-                    {
-                        for (int aa = 0; aa < TotalPoint.Length; aa++)
-                        {
-                            if (TotalPoint_Order[a] == TotalPoint[aa])
-                            {
-                                Name[a] = Name[aa];
-                                Ueff[a] = Ueff[aa];
-                                SavingPoint[a] = SavingPoint[aa];
-                                ComfortPoint[a] = ComfortPoint[aa];
-                                RulePoint[a] = RulePoint[aa];
-                                CostPoint[a] = CostPoint[aa];
-                                SavingPercent[a] = SavingPercent[aa];
-                                Cost[a] = Cost[aa];
-                                break;
-                            }
-                        }
-                    }
+                    //Array.Sort(TotalPoint_Order);
+                    //Array.Reverse(TotalPoint_Order);
+                    //for (int a = 0; a < TotalPoint_Order.Length; a++)
+                    //{
+                    //    for (int aa = 0; aa < TotalPoint.Length; aa++)
+                    //    {
+                    //        if (TotalPoint_Order[a] == TotalPoint[aa])
+                    //        {
+                    //            Name[a] = Name[aa];
+                    //            Ueff[a] = Ueff[aa];
+                    //            SavingPoint[a] = SavingPoint[aa];
+                    //            ComfortPoint[a] = ComfortPoint[aa];
+                    //            RulePoint[a] = RulePoint[aa];
+                    //            CostPoint[a] = CostPoint[aa];
+                    //            SavingPercent[a] = SavingPercent[aa];
+                    //            Cost[a] = Cost[aa];
+                    //            break;
+                    //        }
+                    //    }
+                    //}
                     for (int a = 0; a < TotalPoint_Order.Length; a++)
                     {
                         int nRow = Alt_dataGridView.Rows.Add();

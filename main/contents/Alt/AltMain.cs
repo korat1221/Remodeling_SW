@@ -113,8 +113,11 @@ namespace main.contents.Alt
 
             Alt_dataGridView.Columns.Add("A1", "순위");
             Alt_dataGridView.Columns.Add("A2", "요소기술");
+            Alt_dataGridView.Columns.Add("A3", "리모델링안");
+            Alt_dataGridView.Columns.Add("A4", "예상 순공사비.[원]");
             Alt_dataGridView.Columns[0].Width = 40;
             Alt_dataGridView.Columns[1].Width = 60;
+            Alt_dataGridView.Columns[2].Width = 80;
         }
 
         private void Alt_Add_button_Click(object sender, EventArgs e)
@@ -260,6 +263,15 @@ namespace main.contents.Alt
         #endregion
 
         #region 비용계산
+
+        private void CostCalc_button_Click(object sender, EventArgs e)
+        {
+            if (MoneyTotal !=0)
+            {
+                Calc_NetCost(MoneyTotal);
+            }
+
+        }
         private void CostTotal_textBox_TextChanged(object sender, EventArgs e)
         {
             double result;
@@ -267,7 +279,6 @@ namespace main.contents.Alt
             else if (double.TryParse(CostTotal_textBox.Text, out result) == true)
             {
                 MoneyTotal = Convert.ToDouble(CostTotal_textBox.Text.ToString());
-                Calc_NetCost(MoneyTotal);
             }
             else
             {
@@ -482,10 +493,10 @@ namespace main.contents.Alt
                 Create_Wall_New_table(SelectAlt_Wall);
 
                 SelectCost_Wall = form.SelectCost;
-                WallCost_textBox.Text = SelectCost_Wall.ToString("#,##0")+" 원";
+                WallCost_textBox.Text = SelectCost_Wall.ToString("#,##0") + " 원";
 
                 SelectSavingPercent_Wall = form.SelectSavingPercent;
-                WallSavingPercent_textBox.Text = SelectSavingPercent_Wall.ToString("0.0")+" %";
+                WallSavingPercent_textBox.Text = SelectSavingPercent_Wall.ToString("0.0") + " %";
             }
         }
         private double Get_Wall_Ueff(string 리모델링안, double Uold, string 직접간접)
@@ -586,7 +597,7 @@ namespace main.contents.Alt
                     if (i != e.RowIndex) { Wall_New_dataGridView.Rows[i].Cells[0].Value = false; }
                     else { Wall_New_dataGridView.Rows[i].Cells[0].Value = true; }
                 }
-                int row =-1;
+                int row = -1;
                 for (int k = 0; k < Wall_New_dataGridView.Rows.Count; k++)
                 {
                     if (Convert.ToBoolean(Wall_New_dataGridView.Rows[k].Cells[0].Value) == true)
@@ -597,7 +608,7 @@ namespace main.contents.Alt
                 if (row > -1)
                 {
                     string Select = Wall_New_dataGridView.Rows[row].Cells[1].Value.ToString();
-                    if (Select != null && Select != "" && SelectAlt_Wall!="" && SelectAlt_Wall!=null)
+                    if (Select != null && Select != "" && SelectAlt_Wall != "" && SelectAlt_Wall != null)
                     {
                         Load_Graph(Select, SelectAlt_Wall);
                     }
@@ -612,19 +623,19 @@ namespace main.contents.Alt
             if (SelectNum != "" && SelectNum != null)
             {
                 Wall_webView.Visible = true;
-                
+
                 double[] Material_T = new double[12]; //온도
                 double Rsi = 0.13, Rse = 0.04;
                 double dtot = 0; double Rtot = 0;
-                string 직접간접="";
-                string[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall","직접간접", "번호 = '" + SelectNum + "'");
+                string 직접간접 = "";
+                string[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호 = '" + SelectNum + "'");
                 if (Load.Length > 0)
                 {
                     직접간접 = Load[0][0];
                 }
 
                 string[][] Alt = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,a.재료유형,a.재료,a.열전도율,a.두께,a.열저항 from 최적안_외벽 as a  Inner Join  최적안_외벽_인덱스 as b  on a.구분=b.외벽유형 Where b.구분='" + 리모델링안 + "' Order by a.번호");
-                if(Alt.Length > 0)
+                if (Alt.Length > 0)
                 {
                     if (Alt[0][0] == "내부덧댐" || (Alt[0][0] == "외부덧댐" && 직접간접 != "지면"))
                     {
@@ -666,7 +677,7 @@ namespace main.contents.Alt
                 }
                 for (int k = 0; k < Materials_Wall.Count; k++)
                 {
-                    Material_Wall w = (Material_Wall)Materials_Wall[k]; 
+                    Material_Wall w = (Material_Wall)Materials_Wall[k];
                     dtot += w.Material_d();
                     Rtot += w.Material_R();
                 }
@@ -675,7 +686,7 @@ namespace main.contents.Alt
                 Material_T[0] = (20 - Q * Rsi);
                 for (int k = 1; k < Materials_Wall.Count + 1; k++)
                 {
-                    Material_Wall w = (Material_Wall)Materials_Wall[k-1];
+                    Material_Wall w = (Material_Wall)Materials_Wall[k - 1];
                     Material_T[k] = (Material_T[k - 1] - Q * w.Material_R());
                 }
                 Material_T[Materials_Wall.Count + 1] = Material_T[Materials_Wall.Count] - Q * Rse;
@@ -723,7 +734,7 @@ namespace main.contents.Alt
                 for (int a = 0; a < 10; a++)
                 {
                     Material_sub[a] = Load[0][(2 * a)];
-                    Material_d[a] = Convert.ToDouble(Load[0][(2 * a+1)]);
+                    Material_d[a] = Convert.ToDouble(Load[0][(2 * a + 1)]);
                 }
             }
 
@@ -769,7 +780,7 @@ namespace main.contents.Alt
                         try
                         { Material_Color[a] = Value[0][2]; }
                         catch { Material_Color[a] = "FFFFFF"; }
-                    };     
+                    };
                     Material_Wall w = new Material_Wall(Material_main[a], Material_sub[a], Material_d[a], Material_R[a], Material_Color[a]);
                     Materials_OldWall.Add(w);
                 }
@@ -784,6 +795,7 @@ namespace main.contents.Alt
             }
         }
         #endregion
+
     }
     public class Material_Wall
     {
