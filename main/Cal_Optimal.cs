@@ -33,8 +33,8 @@ namespace main
             {
                 for(int a= 0; a<Value.Length; a++)
                 {
-                    string[][] RValue = Program.DB.getValue_SameCheck(DB.type.BaseDB_Optimal, "최적안_외벽", "열저항합계", "구분='" + Value[a][1] +"'");
-                    if(RValue.Length > 0)
+                    string[][] RValue = Program.DB.getValue_SameCheck(DB.type.BaseDB_Optimal, "최적안_외벽", "열저항합계", "구분='" + Value[a][1] + "'");
+                    if (RValue.Length > 0)
                     {
                         Calc_Optimal("외벽", Value[a][0], Convert.ToDouble(RValue[0][0]));
                     }
@@ -92,10 +92,10 @@ namespace main
                 CALC.Zone_Calc(zone1, zonelight1);
             }
         }
-        private double Get_Wall_Utb(string 리모델링안)
+        private double Get_Wall_Utb(string 유형)
         {
-            double dU = 0; double d_Ins = 0; 
-            string[][] Value1 = Program.DB.getValue(DB.type.BaseDB_Optimal, "최적안_외벽", "열전도율,두께", "구분='" + 리모델링안 + "'");
+            double dU = 0; double d_Ins = 0;
+            string[][] Value1 = Program.DB.getValue(DB.type.BaseDB_Optimal, "최적안_외벽", "열전도율,두께", "구분='" + 유형 + "'");
             if (Value1.Length > 0)
             {
                 for (int aa = 0; aa < Value1.Length; aa++)
@@ -106,7 +106,7 @@ namespace main
                     }
                 }
             }
-            string[][] Value2 = Program.DB.getValue_SameCheck(DB.type.BaseDB_Optimal, "최적안_외벽_인덱스", "열교유형", "외벽유형='" + 리모델링안 + "'");
+            string[][] Value2 = Program.DB.getValue_SameCheck(DB.type.BaseDB_Optimal, "최적안_외벽_인덱스", "열교유형", "외벽유형='" + 유형 + "'");
             if (Value2.Length > 0 && Value2[0][0] != "")
             {
                 if (Value2[0][0] == "직접고정" || Value2[0][0] == "트러스(점형)")
@@ -150,7 +150,12 @@ namespace main
         }
         private void Load_Optimal_Wall(Zone zone1,string 리모델링안, double dR)
         {
-            double dR_wall = dR; double dU_wall = Get_Wall_Utb(리모델링안);  //지상 외벽 열저항, 추가열교가산치
+            double dR_wall = dR; double dU_wall = 0;//지상 외벽 열저항, 추가열교가산치
+            string[][] Value = Program.DB.getValue(DB.type.BaseDB_Optimal, "최적안_외벽_인덱스", "외벽유형,열교유형", "구분='" + 리모델링안 + "'");
+            if (Value.Length > 0)
+            {
+                dU_wall = Get_Wall_Utb(Value[0][0]);
+            }
             double dR_gWall = 0; double dU_gWall = 0;  //지상 외벽 열저항, 추가열교가산치
 
             string[][] value = Program.DB.getValue(DB.type.BaseDB_Optimal, "최적안_외벽", "리모델링유형", "구분='" + 리모델링안 + "'");
