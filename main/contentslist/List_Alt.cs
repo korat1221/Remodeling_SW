@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.contents.Alt;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,7 +30,7 @@ namespace main.contentslist
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외벽'");
             if (Image.Length > 0)
             {
-                Icon_pictureBox.Load(Program.gPath + Image[0][0]);
+                Icon_pictureBox.Load(Program.gPath + "images/1sticon/8.Remodeling_2.png");
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
             Create_Table();
@@ -44,7 +45,8 @@ namespace main.contentslist
 
         private void Add_button_Click(object sender, EventArgs e)
         {
-            Num = Program.UTIL.CreateNum("ConstructionWall", "번호", "WL");
+            dataGridView1.Rows.Add();
+            Num = Program.UTIL.CreateNum("OptimalForm", "번호", "Alt");
 
             Program.getMenuForm().ResetForm(59);
 
@@ -53,7 +55,7 @@ namespace main.contentslist
 
         public static bool OnLoadProc(Form form)
         {
-            ConstructionWall f = (ConstructionWall)form;
+            AltMain  f = (AltMain)form;
 
             if (inEditing == "Edit")
             {
@@ -88,12 +90,22 @@ namespace main.contentslist
             checkBoxColumn.Name = "check";
             dataGridView1.Columns.Add(checkBoxColumn);
             dataGridView1.Columns.Add("A1", "번호");
-            dataGridView1.Columns.Add("A2", "명칭");
-            dataGridView1.Columns.Add("A3", "Type");
-            dataGridView1.Columns.Add("A4", "유효열관류율.[W/m²·K]");
-            dataGridView1.Columns.Add("A5", "흡수율.[-]");
-            dataGridView1.Columns.Add("A6", "면적.[m²]");
+            dataGridView1.Columns.Add("A2", "적용 요소기술");
+            dataGridView1.Columns.Add("A3", "에너지절감량.[kWh]");
+            dataGridView1.Columns.Add("A4", "예상 순공사비.[원]");
+            dataGridView1.Columns.Add("A5", "점수.에너지");
+            dataGridView1.Columns.Add("A6", "점수.법규");
+            dataGridView1.Columns.Add("A7", "점수.쾌적성");
+            dataGridView1.Columns.Add("A8", "점수.경제성");
+            dataGridView1.Columns.Add("A9", "점수.종합점수");
             dataGridView1.Columns[0].Width = 40;
+            dataGridView1.Columns[1].Width = 60;
+            dataGridView1.Columns[2].Width = 250;
+            dataGridView1.Columns[5].Width = 40;
+            dataGridView1.Columns[6].Width = 40;
+            dataGridView1.Columns[7].Width = 40;
+            dataGridView1.Columns[8].Width = 40;
+            dataGridView1.Columns[9].Width = 60;
         }
 
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
@@ -117,37 +129,6 @@ namespace main.contentslist
         }
         public void load_List()
         {
-            //List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            //string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭,Type,유효열관류율,흡수율", "");
-            //if (List.Length > 0)
-            //{
-            //    String Blank = "";
-            //    dataGridView1.Rows.Clear();
-            //    for (int n = 0; n < List.Length; n++)
-            //    {
-            //        dataGridView1.Rows.Add();
-            //        int nRow = dataGridView1.Rows.Count - 1;
-            //        dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
-            //        dataGridView1.Rows[nRow].Cells[2].Value = List[n][1];
-            //        dataGridView1.Rows[nRow].Cells[3].Value = List[n][2];
-            //        dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][3]));
-            //        dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][4]));
-            //        string[][] Area = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "구조체번호='"+ List[n][0]+"'");
-            //        double A=0;
-            //        if(Area.Length > 0)
-            //        {
-            //            for(int a  = 0; a < Area.Length; a++)
-            //            {
-            //                A += Convert.ToDouble(Area[a][0]);
-            //            }                       
-            //            dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F2}", A);
-            //        }
-            //        mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":3,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            //    }
-               
-            //}
-            //CountDB = List.Length;
-            //Program.UTIL.resetMainTree(1, 1, mainMenu.ToArray(), "59"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
         private void Remove_button_Click(object sender, EventArgs e)
@@ -179,14 +160,14 @@ namespace main.contentslist
 
         private void Copy_button_Click(object sender, EventArgs e)
         {
-            Num = Program.UTIL.CreateNum("ConstructionWall", "번호", "WL");
+            Num = Program.UTIL.CreateNum("OptimalForm", "번호", "WL");
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
                 String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
 
-                Program.DB.CopyValue(DB.type.ProjDB, "ConstructionWall", "번호 ='" + Copy_Num + "'", Num);
-                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionWall" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
+                Program.DB.CopyValue(DB.type.ProjDB, "OptimalForm", "번호 ='" + Copy_Num + "'", Num);
+                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  OptimalForm" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
                 Load_form(Num, "Copy");
 
             }

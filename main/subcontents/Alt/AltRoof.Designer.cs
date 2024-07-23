@@ -1,6 +1,6 @@
 ﻿namespace main.subcontents.Alt
 {
-    partial class AltWall
+    partial class AltRoof
     {
         /// <summary>
         /// Required designer variable.
@@ -40,7 +40,7 @@
             Alt_dataGridView = new DataGridView();
             WallEx_comboBox = new CustomComboBox();
             WallEx_label = new Label();
-            WallRemodelingType_comboBox = new CustomComboBox();
+            RoofRemodelingType_comboBox = new CustomComboBox();
             label11 = new Label();
             Graph_label = new Label();
             SIM_button = new Button();
@@ -191,14 +191,14 @@
             // 
             // WallRemodelingType_comboBox
             // 
-            WallRemodelingType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            WallRemodelingType_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            WallRemodelingType_comboBox.FormattingEnabled = true;
-            WallRemodelingType_comboBox.Location = new Point(109, 12);
-            WallRemodelingType_comboBox.Name = "WallRemodelingType_comboBox";
-            WallRemodelingType_comboBox.Size = new Size(120, 23);
-            WallRemodelingType_comboBox.TabIndex = 153;
-            WallRemodelingType_comboBox.SelectedIndexChanged += WallRemodelingType_comboBox_SelectedIndexChanged;
+            RoofRemodelingType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            RoofRemodelingType_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            RoofRemodelingType_comboBox.FormattingEnabled = true;
+            RoofRemodelingType_comboBox.Location = new Point(109, 12);
+            RoofRemodelingType_comboBox.Name = "WallRemodelingType_comboBox";
+            RoofRemodelingType_comboBox.Size = new Size(120, 23);
+            RoofRemodelingType_comboBox.TabIndex = 153;
+            RoofRemodelingType_comboBox.SelectedIndexChanged += WallRemodelingType_comboBox_SelectedIndexChanged;
             // 
             // label11
             // 
@@ -282,7 +282,7 @@
             dU_textBox.TextAlign = HorizontalAlignment.Center;
             dU_textBox.Visible = false;
             // 
-            // AltWall
+            // AltRoof
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -295,7 +295,7 @@
             Controls.Add(SIM_button);
             Controls.Add(WallEx_comboBox);
             Controls.Add(WallEx_label);
-            Controls.Add(WallRemodelingType_comboBox);
+            Controls.Add(RoofRemodelingType_comboBox);
             Controls.Add(label11);
             Controls.Add(Alt_dataGridView);
             Controls.Add(Ucalc_dataGridView);
@@ -303,7 +303,7 @@
             Controls.Add(Graph_label);
             Controls.Add(webView21);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            Name = "AltWall";
+            Name = "AltRoof";
             Text = "Review of Alternatives";
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
@@ -329,7 +329,7 @@
         private Label label9;
         private CustomComboBox WallEx_comboBox;
         private Label WallEx_label;
-        private CustomComboBox WallRemodelingType_comboBox;
+        private CustomComboBox RoofRemodelingType_comboBox;
         private Label label11;
         private Label Graph_label;
         private Button SIM_button;

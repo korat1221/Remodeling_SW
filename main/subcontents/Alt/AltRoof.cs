@@ -18,9 +18,9 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.subcontents.Alt
 {
-    public partial class AltWall : Form
+    public partial class AltRoof : Form
     {
-        string WallRemodelingType, WallEx;
+        string RoofRemodelingType, RoofEx;
         int SelectRow;
         public string SelectName;
         public double SelectUeff;
@@ -36,14 +36,14 @@ namespace main.subcontents.Alt
         public double SelectCost_etc;
 
         bool scriptable = false;
-        public AltWall(String SelectValue)
+        public AltRoof(String SelectValue)
         {
             InitializeComponent();
 
-            WallRemodelingType_comboBox.Items.Clear();
-            WallRemodelingType_comboBox.Items.Add("내부덧댐");
-            WallRemodelingType_comboBox.Items.Add("외부덧댐");
-           // WallRemodelingType_comboBox.Items.Add("철거 후 신규");
+            RoofRemodelingType_comboBox.Items.Clear();
+            RoofRemodelingType_comboBox.Items.Add("내부덧댐");
+            RoofRemodelingType_comboBox.Items.Add("외부덧댐");
+           // RoofRemodelingType_comboBox.Items.Add("철거 후 신규");
             create_table_DB();
             InitializeAsync();
         }
@@ -51,7 +51,7 @@ namespace main.subcontents.Alt
         #region 최적안 자재 리스트
         private void change_comboBox_WallEx()
         {
-            if (WallRemodelingType == "외부덧댐")
+            if (RoofRemodelingType == "외부덧댐")
             {
                 WallEx_label.Visible = true;
                 WallEx_comboBox.Visible = true;
@@ -62,7 +62,7 @@ namespace main.subcontents.Alt
                 WallEx_comboBox.Items.Add("목재패널");
                 WallEx_comboBox.Items.Add("시멘트패널");
             }
-            else if (WallRemodelingType == "신규")
+            else if (RoofRemodelingType == "신규")
             {
                 WallEx_label.Visible = true;
                 WallEx_comboBox.Visible = true;
@@ -76,15 +76,15 @@ namespace main.subcontents.Alt
             {
                 WallEx_label.Visible = false;
                 WallEx_comboBox.Visible = false;
-                WallEx = "내부덧댐";
+                RoofEx = "내부덧댐";
             }
         }
         private void WallRemodelingType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (WallRemodelingType_comboBox.SelectedItem != null)
+            if (RoofRemodelingType_comboBox.SelectedItem != null)
             {
-                WallRemodelingType = WallRemodelingType_comboBox.SelectedItem.ToString();
-                if (WallRemodelingType == "철거 후 신규") { WallRemodelingType = "신규"; }
+                RoofRemodelingType = RoofRemodelingType_comboBox.SelectedItem.ToString();
+                if (RoofRemodelingType == "철거 후 신규") { RoofRemodelingType = "신규"; }
                 change_comboBox_WallEx();
             }
         }
@@ -92,17 +92,17 @@ namespace main.subcontents.Alt
         {
             if (WallEx_comboBox.SelectedItem != null)
             {
-                WallEx = WallEx_comboBox.SelectedItem.ToString();
+                RoofEx = WallEx_comboBox.SelectedItem.ToString();
             }
         }
         private void SIM_button_Click(object sender, EventArgs e)
         {
-            if (WallRemodelingType != null && WallRemodelingType != "" && WallEx != null && WallEx != "")
+            if (RoofRemodelingType != null && RoofRemodelingType != "" && RoofEx != null && RoofEx != "")
             {
                 Cal_Optimal cal = new Cal_Optimal();
                 cal.Calc_Optimal_Wall();
                 MessageBox.Show("리모델링안 검토가 완료되었습니다.");
-                load_table_DB(WallRemodelingType, WallEx);
+                load_table_DB(RoofRemodelingType, RoofEx);
             }
             else
             {
@@ -291,7 +291,7 @@ namespace main.subcontents.Alt
             Ucalc_dataGridView.Columns[3].Width = 70;
             Ucalc_dataGridView.Columns[4].Width = 70;
 
-            string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.재료,a.열전도율,a.두께,a.열저항,b.외부마감재 from 외벽_최적안유형 as a  Inner Join  외벽_최적안 as b  on a.최적안구분=b.최적안구분 Where b.최적안='" + 리모델링안 + "' Order by a.번호");
+            string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.재료,a.열전도율,a.두께,a.열저항,b.외부마감재 from 외벽_최적안유형 as a  Inner Join  외벽_최적안 as b  on a.구분=b.최적안구분 Where b.최적안='" + 리모델링안 + "' Order by a.번호");
             if (Value.Length > 0)
             {
                 for (int a = 0; a < Value.Length; a++)
@@ -352,7 +352,7 @@ namespace main.subcontents.Alt
                     직접간접 = Load[0][0];
                 }
 
-                string[][] Alt = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,a.재료유형,a.재료,a.열전도율,a.두께,a.열저항 from 외벽_최적안유형 as a  Inner Join  외벽_최적안 as b  on a.최적안구분=b.최적안구분 Where b.최적안='" + 리모델링안 + "' Order by a.번호");
+                string[][] Alt = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,a.재료유형,a.재료,a.열전도율,a.두께,a.열저항 from 외벽_최적안유형 as a  Inner Join  외벽_최적안 as b  on a.구분=b.최적안구분 Where b.최적안='" + 리모델링안 + "' Order by a.번호");
                 if (Alt.Length > 0)
                 {
                     if (Alt[0][0] == "내부덧댐" || (Alt[0][0] == "외부덧댐" && 직접간접 != "지면"))
@@ -614,7 +614,7 @@ namespace main.subcontents.Alt
         {
             double[] cost = new double[4];//직접공사비, 재료비, 노무비, 경비 순 
             double Area = 0;
-            string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,a.직접공사비,a.재료비,a.노무비,a.경비,b.외부마감재 from 외벽_최적안유형 as a  Inner Join  외벽_최적안 as b  on a.최적안구분=b.최적안구분 Where b.최적안='" + 리모델링안 + "' Order by a.번호");
+            string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,a.직접공사비,a.재료비,a.노무비,a.경비,b.외부마감재 from 외벽_최적안유형 as a  Inner Join  외벽_최적안 as b  on a.구분=b.최적안구분 Where b.최적안='" + 리모델링안 + "' Order by a.번호");
             if (Value.Length > 0)
             {
                 if (Value[0][0] == "내부덧댐")
@@ -678,10 +678,10 @@ namespace main.subcontents.Alt
         private double Cal_Ueff(string 리모델링안)
         {
             double R = 0; double dU = 0; string 리모델링유형 = "";
-            string[][] V = Program.DB.getValue(DB.type.BaseDB_Optimal, "외벽_최적안", "최적안구분,리모델링유형", "최적안='" + 리모델링안 + "'");
+            string[][] V = Program.DB.getValue(DB.type.BaseDB_Optimal, "외벽_최적안", "외벽유형,리모델링유형", "최적안='" + 리모델링안 + "'");
             if (V.Length > 0)
             {
-                string[][] R_value = Program.DB.getValue(DB.type.BaseDB_Optimal, "외벽_최적안유형", "열저항합계", "최적안구분='" + V[0][0] + "'");
+                string[][] R_value = Program.DB.getValue(DB.type.BaseDB_Optimal, "외벽_최적안유형", "열저항합계", "구분='" + V[0][0] + "'");
                 if (R_value.Length > 0)
                 {
                     R = Convert.ToDouble(R_value[0][0]);
@@ -748,7 +748,7 @@ namespace main.subcontents.Alt
         private double Get_Wall_Utb(string 유형)
         {
             double dU = 0; double d_Ins = 0;
-            string[][] Value1 = Program.DB.getValue(DB.type.BaseDB_Optimal, "외벽_최적안유형", "열전도율,두께", "최적안구분='" + 유형 + "'");
+            string[][] Value1 = Program.DB.getValue(DB.type.BaseDB_Optimal, "외벽_최적안유형", "열전도율,두께", "구분='" + 유형 + "'");
             if (Value1.Length > 0)
             {
                 for (int aa = 0; aa < Value1.Length; aa++)

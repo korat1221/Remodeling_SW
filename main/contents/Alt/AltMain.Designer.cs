@@ -43,12 +43,22 @@
             DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
             AltMainPanel = new Panel();
-            label1 = new Label();
+            AltNum_textBox = new TextBox();
+            Name_textBox = new TextBox();
             Type_textBox = new TextBox();
             Icon_pictureBox = new PictureBox();
+            label9 = new Label();
             Save_button = new Button();
             panel5 = new Panel();
+            BalanceCost_textBox = new TextBox();
+            BalanceCost_label = new Label();
             CostCalc_button = new Button();
             Cost_dataGridView = new DataGridView();
             label2 = new Label();
@@ -58,9 +68,8 @@
             CostTotal_textBox = new TextBox();
             q50_label2 = new Label();
             q50_label1 = new Label();
-            WallAlt_button = new Button();
             label4 = new Label();
-            tabControl1 = new CustomTabControl();
+            RoofSavingPercent_textBox = new CustomTabControl();
             Main_tabPage = new TabPage();
             label_rule2 = new Label();
             RuleResult_dataGridView = new DataGridView();
@@ -77,15 +86,22 @@
             WallAlt_textBox = new TextBox();
             label3 = new Label();
             Wall_Old_dataGridView = new DataGridView();
-            label5 = new Label();
+            Roof_tabPage = new TabPage();
             textBox1 = new TextBox();
+            label1 = new Label();
+            RoofCost_textBox = new TextBox();
+            label5 = new Label();
+            Roof_webView = new Microsoft.Web.WebView2.WinForms.WebView2();
             label7 = new Label();
+            Roof_New_dataGridView = new DataGridView();
+            label10 = new Label();
+            Roof_Old_dataGridView = new DataGridView();
             AltMainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Cost_dataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Alt_dataGridView).BeginInit();
-            tabControl1.SuspendLayout();
+            RoofSavingPercent_textBox.SuspendLayout();
             Main_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)RuleResult_dataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView22).BeginInit();
@@ -93,29 +109,46 @@
             ((System.ComponentModel.ISupportInitialize)Wall_webView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Wall_New_dataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Wall_Old_dataGridView).BeginInit();
+            Roof_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Roof_webView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Roof_New_dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Roof_Old_dataGridView).BeginInit();
             SuspendLayout();
             // 
             // AltMainPanel
             // 
             AltMainPanel.BackColor = Color.White;
-            AltMainPanel.Controls.Add(label1);
+            AltMainPanel.Controls.Add(AltNum_textBox);
+            AltMainPanel.Controls.Add(Name_textBox);
             AltMainPanel.Controls.Add(Type_textBox);
             AltMainPanel.Controls.Add(Icon_pictureBox);
+            AltMainPanel.Controls.Add(label9);
             AltMainPanel.Location = new Point(12, 12);
             AltMainPanel.Name = "AltMainPanel";
             AltMainPanel.Size = new Size(977, 73);
             AltMainPanel.TabIndex = 17;
             AltMainPanel.Paint += AltMainPanel_Paint;
             // 
-            // label1
+            // AltNum_textBox
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(116, 27);
-            label1.Name = "label1";
-            label1.Size = new Size(67, 15);
-            label1.TabIndex = 112;
-            label1.Text = "리모델링안";
+            AltNum_textBox.BackColor = Color.White;
+            AltNum_textBox.BorderStyle = BorderStyle.None;
+            AltNum_textBox.Enabled = false;
+            AltNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AltNum_textBox.ForeColor = SystemColors.ControlText;
+            AltNum_textBox.Location = new Point(86, 26);
+            AltNum_textBox.Name = "AltNum_textBox";
+            AltNum_textBox.Size = new Size(67, 15);
+            AltNum_textBox.TabIndex = 114;
+            AltNum_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Name_textBox
+            // 
+            Name_textBox.BorderStyle = BorderStyle.FixedSingle;
+            Name_textBox.Location = new Point(183, 23);
+            Name_textBox.Name = "Name_textBox";
+            Name_textBox.Size = new Size(120, 23);
+            Name_textBox.TabIndex = 113;
             // 
             // Type_textBox
             // 
@@ -138,6 +171,15 @@
             Icon_pictureBox.TabIndex = 91;
             Icon_pictureBox.TabStop = false;
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(148, 26);
+            label9.Name = "label9";
+            label9.Size = new Size(31, 15);
+            label9.TabIndex = 115;
+            label9.Text = "명칭";
+            // 
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
@@ -153,9 +195,8 @@
             // panel5
             // 
             panel5.BackColor = Color.White;
-            panel5.Controls.Add(textBox1);
-            panel5.Controls.Add(label7);
-            panel5.Controls.Add(label5);
+            panel5.Controls.Add(BalanceCost_textBox);
+            panel5.Controls.Add(BalanceCost_label);
             panel5.Controls.Add(CostCalc_button);
             panel5.Controls.Add(Cost_dataGridView);
             panel5.Controls.Add(label2);
@@ -165,12 +206,35 @@
             panel5.Controls.Add(CostTotal_textBox);
             panel5.Controls.Add(q50_label2);
             panel5.Controls.Add(q50_label1);
-            panel5.Controls.Add(WallAlt_button);
             panel5.Location = new Point(14, 109);
             panel5.Name = "panel5";
             panel5.Size = new Size(976, 159);
             panel5.TabIndex = 105;
             panel5.Paint += panel5_Paint;
+            // 
+            // BalanceCost_textBox
+            // 
+            BalanceCost_textBox.BackColor = Color.White;
+            BalanceCost_textBox.BorderStyle = BorderStyle.None;
+            BalanceCost_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BalanceCost_textBox.ForeColor = SystemColors.ControlText;
+            BalanceCost_textBox.Location = new Point(845, 133);
+            BalanceCost_textBox.Name = "BalanceCost_textBox";
+            BalanceCost_textBox.Size = new Size(120, 15);
+            BalanceCost_textBox.TabIndex = 148;
+            BalanceCost_textBox.TextAlign = HorizontalAlignment.Center;
+            BalanceCost_textBox.Visible = false;
+            // 
+            // BalanceCost_label
+            // 
+            BalanceCost_label.AutoSize = true;
+            BalanceCost_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            BalanceCost_label.Location = new Point(781, 133);
+            BalanceCost_label.Name = "BalanceCost_label";
+            BalanceCost_label.Size = new Size(59, 15);
+            BalanceCost_label.TabIndex = 147;
+            BalanceCost_label.Text = "잔여 예산";
+            BalanceCost_label.Visible = false;
             // 
             // CostCalc_button
             // 
@@ -235,9 +299,9 @@
             label2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label2.Location = new Point(477, 13);
             label2.Name = "label2";
-            label2.Size = new Size(83, 15);
+            label2.Size = new Size(55, 15);
             label2.TabIndex = 142;
-            label2.Text = "요소기술 결정";
+            label2.Text = "요소기술";
             // 
             // Alt_dataGridView
             // 
@@ -259,7 +323,7 @@
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
             Alt_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             Alt_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Alt_dataGridView.Location = new Point(565, 13);
+            Alt_dataGridView.Location = new Point(538, 15);
             Alt_dataGridView.Name = "Alt_dataGridView";
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
@@ -278,8 +342,9 @@
             dataGridViewCellStyle6.SelectionForeColor = Color.Black;
             Alt_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
             Alt_dataGridView.RowTemplate.Height = 25;
-            Alt_dataGridView.Size = new Size(334, 129);
+            Alt_dataGridView.Size = new Size(427, 112);
             Alt_dataGridView.TabIndex = 141;
+            Alt_dataGridView.CellContentClick += Alt_dataGridView_CellContentClick;
             // 
             // Alt_Remove_button
             // 
@@ -287,7 +352,7 @@
             Alt_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Alt_Remove_button.FlatStyle = FlatStyle.System;
             Alt_Remove_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Alt_Remove_button.Location = new Point(939, 5);
+            Alt_Remove_button.Location = new Point(502, 32);
             Alt_Remove_button.Margin = new Padding(0);
             Alt_Remove_button.Name = "Alt_Remove_button";
             Alt_Remove_button.Size = new Size(23, 23);
@@ -302,7 +367,7 @@
             Alt_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Alt_Add_button.FlatStyle = FlatStyle.System;
             Alt_Add_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Alt_Add_button.Location = new Point(902, 5);
+            Alt_Add_button.Location = new Point(479, 32);
             Alt_Add_button.Margin = new Padding(0);
             Alt_Add_button.Name = "Alt_Add_button";
             Alt_Add_button.Size = new Size(23, 23);
@@ -345,21 +410,6 @@
             q50_label1.TabIndex = 136;
             q50_label1.Text = "총 예산";
             // 
-            // WallAlt_button
-            // 
-            WallAlt_button.BackColor = SystemColors.ControlLight;
-            WallAlt_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            WallAlt_button.FlatStyle = FlatStyle.System;
-            WallAlt_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            WallAlt_button.Location = new Point(902, 55);
-            WallAlt_button.Margin = new Padding(0);
-            WallAlt_button.Name = "WallAlt_button";
-            WallAlt_button.Size = new Size(23, 23);
-            WallAlt_button.TabIndex = 145;
-            WallAlt_button.Text = "+";
-            WallAlt_button.UseVisualStyleBackColor = false;
-            WallAlt_button.Click += WallAlt_button_Click;
-            // 
             // label4
             // 
             label4.AutoSize = true;
@@ -370,31 +420,32 @@
             label4.TabIndex = 94;
             label4.Text = "리모델링 의사결정";
             // 
-            // tabControl1
+            // RoofSavingPercent_textBox
             // 
-            tabControl1.Controls.Add(Main_tabPage);
-            tabControl1.Controls.Add(Wall_tabPage);
-            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
-            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
-            tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
-            tabControl1.DisplayStyleProvider.FocusTrack = true;
-            tabControl1.DisplayStyleProvider.HotTrack = true;
-            tabControl1.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
-            tabControl1.DisplayStyleProvider.Opacity = 1F;
-            tabControl1.DisplayStyleProvider.Overlap = 0;
-            tabControl1.DisplayStyleProvider.Padding = new Point(6, 3);
-            tabControl1.DisplayStyleProvider.ShowTabCloser = false;
-            tabControl1.DisplayStyleProvider.TextColor = SystemColors.ControlText;
-            tabControl1.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
-            tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
-            tabControl1.HotTrack = true;
-            tabControl1.ItemSize = new Size(128, 20);
-            tabControl1.Location = new Point(12, 274);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(977, 388);
-            tabControl1.SizeMode = TabSizeMode.Fixed;
-            tabControl1.TabIndex = 106;
+            RoofSavingPercent_textBox.Controls.Add(Main_tabPage);
+            RoofSavingPercent_textBox.Controls.Add(Wall_tabPage);
+            RoofSavingPercent_textBox.Controls.Add(Roof_tabPage);
+            RoofSavingPercent_textBox.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
+            RoofSavingPercent_textBox.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
+            RoofSavingPercent_textBox.DisplayStyleProvider.CloserColor = Color.Empty;
+            RoofSavingPercent_textBox.DisplayStyleProvider.FocusTrack = true;
+            RoofSavingPercent_textBox.DisplayStyleProvider.HotTrack = true;
+            RoofSavingPercent_textBox.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
+            RoofSavingPercent_textBox.DisplayStyleProvider.Opacity = 1F;
+            RoofSavingPercent_textBox.DisplayStyleProvider.Overlap = 0;
+            RoofSavingPercent_textBox.DisplayStyleProvider.Padding = new Point(6, 3);
+            RoofSavingPercent_textBox.DisplayStyleProvider.ShowTabCloser = false;
+            RoofSavingPercent_textBox.DisplayStyleProvider.TextColor = SystemColors.ControlText;
+            RoofSavingPercent_textBox.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
+            RoofSavingPercent_textBox.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
+            RoofSavingPercent_textBox.HotTrack = true;
+            RoofSavingPercent_textBox.ItemSize = new Size(128, 20);
+            RoofSavingPercent_textBox.Location = new Point(12, 274);
+            RoofSavingPercent_textBox.Name = "RoofSavingPercent_textBox";
+            RoofSavingPercent_textBox.SelectedIndex = 0;
+            RoofSavingPercent_textBox.Size = new Size(977, 388);
+            RoofSavingPercent_textBox.SizeMode = TabSizeMode.Fixed;
+            RoofSavingPercent_textBox.TabIndex = 106;
             // 
             // Main_tabPage
             // 
@@ -478,6 +529,7 @@
             // webView22
             // 
             webView22.AllowExternalDrop = true;
+            webView22.BackColor = Color.White;
             webView22.CreationProperties = null;
             webView22.DefaultBackgroundColor = Color.White;
             webView22.Location = new Point(6, 73);
@@ -681,15 +733,24 @@
             Wall_Old_dataGridView.Size = new Size(267, 223);
             Wall_Old_dataGridView.TabIndex = 143;
             // 
-            // label5
+            // Roof_tabPage
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.Location = new Point(27, 56);
-            label5.Name = "label5";
-            label5.Size = new Size(59, 15);
-            label5.TabIndex = 147;
-            label5.Text = "잔여 예산";
+            Roof_tabPage.Controls.Add(textBox1);
+            Roof_tabPage.Controls.Add(label1);
+            Roof_tabPage.Controls.Add(RoofCost_textBox);
+            Roof_tabPage.Controls.Add(label5);
+            Roof_tabPage.Controls.Add(Roof_webView);
+            Roof_tabPage.Controls.Add(label7);
+            Roof_tabPage.Controls.Add(Roof_New_dataGridView);
+            Roof_tabPage.Controls.Add(label10);
+            Roof_tabPage.Controls.Add(Roof_Old_dataGridView);
+            Roof_tabPage.Location = new Point(4, 25);
+            Roof_tabPage.Name = "Roof_tabPage";
+            Roof_tabPage.Padding = new Padding(3);
+            Roof_tabPage.Size = new Size(969, 359);
+            Roof_tabPage.TabIndex = 2;
+            Roof_tabPage.Text = "지붕";
+            Roof_tabPage.UseVisualStyleBackColor = true;
             // 
             // textBox1
             // 
@@ -697,22 +758,161 @@
             textBox1.BorderStyle = BorderStyle.None;
             textBox1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             textBox1.ForeColor = SystemColors.ControlText;
-            textBox1.Location = new Point(91, 56);
+            textBox1.Location = new Point(376, 69);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(120, 15);
-            textBox1.TabIndex = 148;
+            textBox1.TabIndex = 169;
             textBox1.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(267, 69);
+            label1.Name = "label1";
+            label1.Size = new Size(107, 15);
+            label1.TabIndex = 168;
+            label1.Text = "예상 에너지절감률";
+            // 
+            // RoofCost_textBox
+            // 
+            RoofCost_textBox.BackColor = Color.White;
+            RoofCost_textBox.BorderStyle = BorderStyle.None;
+            RoofCost_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            RoofCost_textBox.ForeColor = SystemColors.ControlText;
+            RoofCost_textBox.Location = new Point(376, 48);
+            RoofCost_textBox.Name = "RoofCost_textBox";
+            RoofCost_textBox.Size = new Size(120, 15);
+            RoofCost_textBox.TabIndex = 167;
+            RoofCost_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.Location = new Point(267, 48);
+            label5.Name = "label5";
+            label5.Size = new Size(59, 15);
+            label5.TabIndex = 166;
+            label5.Text = "예상 비용";
+            // 
+            // Roof_webView
+            // 
+            Roof_webView.AllowExternalDrop = true;
+            Roof_webView.BackColor = Color.White;
+            Roof_webView.CreationProperties = null;
+            Roof_webView.DefaultBackgroundColor = Color.White;
+            Roof_webView.Location = new Point(585, 38);
+            Roof_webView.Name = "Roof_webView";
+            Roof_webView.Size = new Size(366, 314);
+            Roof_webView.Source = new Uri("http://localhost:3000/transmit.html", UriKind.Absolute);
+            Roof_webView.TabIndex = 165;
+            Roof_webView.Visible = false;
+            Roof_webView.ZoomFactor = 1D;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label7.ForeColor = SystemColors.ControlText;
-            label7.Location = new Point(211, 55);
+            label7.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label7.Location = new Point(263, 20);
             label7.Name = "label7";
-            label7.Size = new Size(18, 16);
-            label7.TabIndex = 149;
-            label7.Text = "원";
+            label7.Size = new Size(95, 15);
+            label7.TabIndex = 164;
+            label7.Text = "리모델링안 지붕";
+            // 
+            // Roof_New_dataGridView
+            // 
+            Roof_New_dataGridView.AllowUserToAddRows = false;
+            Roof_New_dataGridView.AllowUserToDeleteRows = false;
+            Roof_New_dataGridView.AllowUserToResizeColumns = false;
+            Roof_New_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Roof_New_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            Roof_New_dataGridView.BackgroundColor = SystemColors.Window;
+            Roof_New_dataGridView.BorderStyle = BorderStyle.None;
+            Roof_New_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            Roof_New_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle16.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle16.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle16.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle16.WrapMode = DataGridViewTriState.True;
+            Roof_New_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
+            Roof_New_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Roof_New_dataGridView.Location = new Point(267, 100);
+            Roof_New_dataGridView.Name = "Roof_New_dataGridView";
+            dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.BackColor = SystemColors.Control;
+            dataGridViewCellStyle17.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle17.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle17.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle17.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = DataGridViewTriState.True;
+            Roof_New_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            Roof_New_dataGridView.RowHeadersVisible = false;
+            Roof_New_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle18.ForeColor = Color.Black;
+            dataGridViewCellStyle18.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle18.SelectionForeColor = Color.Black;
+            Roof_New_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle18;
+            Roof_New_dataGridView.RowTemplate.Height = 25;
+            Roof_New_dataGridView.Size = new Size(300, 223);
+            Roof_New_dataGridView.TabIndex = 163;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label10.Location = new Point(26, 20);
+            label10.Name = "label10";
+            label10.Size = new Size(59, 15);
+            label10.TabIndex = 162;
+            label10.Text = "기존 지붕";
+            // 
+            // Roof_Old_dataGridView
+            // 
+            Roof_Old_dataGridView.AllowUserToAddRows = false;
+            Roof_Old_dataGridView.AllowUserToDeleteRows = false;
+            Roof_Old_dataGridView.AllowUserToResizeColumns = false;
+            Roof_Old_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Roof_Old_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            Roof_Old_dataGridView.BackgroundColor = SystemColors.Window;
+            Roof_Old_dataGridView.BorderStyle = BorderStyle.None;
+            Roof_Old_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            Roof_Old_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle19.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle19.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle19.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle19.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle19.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle19.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle19.WrapMode = DataGridViewTriState.True;
+            Roof_Old_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
+            Roof_Old_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Roof_Old_dataGridView.Location = new Point(6, 100);
+            Roof_Old_dataGridView.Name = "Roof_Old_dataGridView";
+            dataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle20.BackColor = SystemColors.Control;
+            dataGridViewCellStyle20.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle20.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle20.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle20.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle20.WrapMode = DataGridViewTriState.True;
+            Roof_Old_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle20;
+            Roof_Old_dataGridView.RowHeadersVisible = false;
+            Roof_Old_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle21.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle21.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle21.ForeColor = Color.Black;
+            dataGridViewCellStyle21.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle21.SelectionForeColor = Color.Black;
+            Roof_Old_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle21;
+            Roof_Old_dataGridView.RowTemplate.Height = 25;
+            Roof_Old_dataGridView.Size = new Size(267, 223);
+            Roof_Old_dataGridView.TabIndex = 161;
             // 
             // AltMain
             // 
@@ -721,7 +921,7 @@
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(tabControl1);
+            Controls.Add(RoofSavingPercent_textBox);
             Controls.Add(panel5);
             Controls.Add(label4);
             Controls.Add(Save_button);
@@ -736,7 +936,7 @@
             panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Cost_dataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)Alt_dataGridView).EndInit();
-            tabControl1.ResumeLayout(false);
+            RoofSavingPercent_textBox.ResumeLayout(false);
             Main_tabPage.ResumeLayout(false);
             Main_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)RuleResult_dataGridView).EndInit();
@@ -746,6 +946,11 @@
             ((System.ComponentModel.ISupportInitialize)Wall_webView).EndInit();
             ((System.ComponentModel.ISupportInitialize)Wall_New_dataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)Wall_Old_dataGridView).EndInit();
+            Roof_tabPage.ResumeLayout(false);
+            Roof_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Roof_webView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Roof_New_dataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Roof_Old_dataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -756,7 +961,6 @@
         private TextBox Type_textBox;
         private Button Previous_button;
         private Button Save_button;
-        private Label label1;
         private ComboBox Diagnosis_comboBox;
         private ComboBox Target_comboBox;
         private ComboBox RoofType_comboBox;
@@ -770,7 +974,7 @@
         private DataGridView Alt_dataGridView;
         private Button Alt_Remove_button;
         private Button Alt_Add_button;
-        private CustomTabControl tabControl1;
+        private CustomTabControl RoofSavingPercent_textBox;
         private TabPage Wall_tabPage;
         private TabPage Main_tabPage;
         private Label label_rule;
@@ -780,7 +984,6 @@
         private DataGridView Wall_Old_dataGridView;
         private Label label3;
         private TextBox WallAlt_textBox;
-        private Button WallAlt_button;
         private DataGridView Wall_New_dataGridView;
         private Label Wall_new_label;
         private DataGridView Cost_dataGridView;
@@ -790,8 +993,20 @@
         private TextBox WallSavingPercent_textBox;
         private Label label8;
         private Button CostCalc_button;
+        private TextBox BalanceCost_textBox;
+        private Label BalanceCost_label;
+        private TextBox AltNum_textBox;
+        private TextBox Name_textBox;
+        private Label label9;
+        private TabPage Roof_tabPage;
         private TextBox textBox1;
-        private Label label7;
+        private Label label1;
+        private TextBox RoofCost_textBox;
         private Label label5;
+        private Microsoft.Web.WebView2.WinForms.WebView2 Roof_webView;
+        private Label label7;
+        private DataGridView Roof_New_dataGridView;
+        private Label label10;
+        private DataGridView Roof_Old_dataGridView;
     }
 }
