@@ -85,8 +85,8 @@ namespace main.contents.Result.Element_Report
                     double light_saving_elec = Element_ElecSaving[j_조명];
                     double light_saving_noelec = Element_GasSaving[j_조명];
 
-                    double light_tCO2 = light_saving_elec * 0.4747 / 1000000 * 1000;
-                    double light_TOE = light_saving_elec * 0.00023;
+                    double light_tCO2 = Math.Max(0,light_saving_elec * 0.4747 / 1000000 * 1000);
+                    double light_TOE = Math.Max(0, light_saving_elec * 0.00023);
 
                     Light_data[2].Add(new { idx = i, val = light_tCO2.ToString("0.0") });  //tco2
                     Light_data[3].Add(new { idx = i, val = light_TOE.ToString("0.0") });  //TOE 
@@ -505,15 +505,15 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "infil_tco2", data = Infil_data[2] });
                     data.Add(new { cname = "infil_toe", data = Infil_data[3] });
 
-                    string door = null, win = null, wall = null, roof = null;
+                    string door = null, win = null, wire = null, pipe = null;
                     double n50_new = 0, n50_old = 0;
-                    Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "출입문기밀여부,창호기밀여부,외벽기밀여부,지붕기밀여부,n50");
+                    Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "출입문기밀여부,창호기밀여부,배선기밀여부,배관기밀여부,n50");
                     if(Value.Length > 0)
                     {
                         if (Convert.ToBoolean(Value[0][0])) { door = "시공"; } else { door = "미시공"; }
                         if (Convert.ToBoolean(Value[0][1])) { win = "시공"; } else { win = "미시공"; }
-                        if (Convert.ToBoolean(Value[0][2])) { wall = "시공"; } else { wall = "미시공"; }
-                        if (Convert.ToBoolean(Value[0][3])) { roof = "시공"; } else { roof = "미시공"; }
+                        if (Convert.ToBoolean(Value[0][2])) { wire = "시공"; } else { wire = "미시공"; }
+                        if (Convert.ToBoolean(Value[0][3])) { pipe = "시공"; } else { pipe = "미시공"; }
                         n50_new = Convert.ToDouble(Value[0][4]);
                     }
                     Value = Program.DB.getValue(res[0][0], "BuildingGeneral", "n50");
@@ -523,8 +523,8 @@ namespace main.contents.Result.Element_Report
                     }
                     Infil_data[4].Add(new { idx = i, val = door });  //출입문
                     Infil_data[5].Add(new { idx = i, val = win });  //창호
-                    Infil_data[6].Add(new { idx = i, val = wall });  //외벽
-                    Infil_data[7].Add(new { idx = i, val = roof });  //지붕
+                    Infil_data[6].Add(new { idx = i, val = wire });  //배선
+                    Infil_data[7].Add(new { idx = i, val = pipe });  //배관
                     Infil_data[8].Add(new { idx = i, val = n50_old.ToString("0.0") });  //기존 n50
                     Infil_data[9].Add(new { idx = i, val = n50_new.ToString("0.0") });  //신규 n50
                     data.Add(new { cname = "infil_door", data = Infil_data[4] });

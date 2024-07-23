@@ -68,7 +68,6 @@ namespace main.contents.Result.Element_Report
                     double wall_saving = Math.Max(Element_EnergySaving[j_외벽],0);
 
                     d = (wall_saving / Total_Energy_pre * 100);
-
                     Wall_data[0].Add(new { idx = i, val = wall_saving.ToString("#,##0") }); ; //절감량 
                     Wall_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "wall_saving", data = Wall_data[0] });
@@ -91,27 +90,31 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "wall_tco2", data = Wall_data[2] });
                     data.Add(new { cname = "wall_toe", data = Wall_data[3] });
 
-                    string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT a.명칭,a.유효열관류율,a.기존외벽,a.번호,a.단열재두께,a.U적용방법 From ConstructionWall as a  Inner Join ZoneEnvelope_3D as b  on a.번호 = b.구조체번호  where b.외피유형 ='외벽' Order by a.유효열관류율 DESC");
-                    string[] wall_num = new string[8]; string[] wall_name = new string[8]; double[] wall_ueff = new double[8]; double[] wall_ueff_old = new double[8]; double[] wall_area = new double[8]; double[] wall_saving_element = new double[8]; string[] wall_feature = new string[8];
-                    double wall_area_sum = 0;
+                    string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT a.명칭,a.유효열관류율,a.기존외벽,a.번호,a.단열재두께,a.U적용방법,a.Type From ConstructionWall as a  Inner Join ZoneEnvelope_3D as b  on a.번호 = b.구조체번호  where b.외피유형 ='외벽' Order by a.유효열관류율 DESC");
+                    string[] wall_num = new string[8]; string[] wall_name = new string[8]; double[] wall_ueff = new double[8]; double[] wall_ueff_old = new double[8]; double[] wall_area = new double[8]; double[] wall_saving_element = new double[8]; string[] wall_feature = new string[8]; string[] wall_retype = new string[8];
+                    double wall_area_sum = 0; double wall_area_sum_old = 0;
                     if (Value.Length > 0)
                     {
                         for (int k = 0; k < Value.Length; k++)
                         {
                             wall_name[k] = Value[k][0];
+                            wall_retype[k] = Value[k][6];
                             wall_ueff[k] = Convert.ToDouble(Value[k][1]);
-                            if (Value[k][2] != "")
+                            if (wall_retype[k] !="신규")
                             {
-                                string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭 ='" + Value[k][2] + "'");
-                                if (value2.Length > 0)
+                                if (Value[k][2] != "")
                                 {
-                                    wall_ueff_old[k] = Convert.ToDouble(value2[0][0]);
+                                    string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭 ='" + Value[k][2] + "'");
+                                    if (value2.Length > 0)
+                                    {
+                                        wall_ueff_old[k] = Convert.ToDouble(value2[0][0]);
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                wall_ueff_old[k] = wall_ueff[k];
-                            }
+                                else
+                                {
+                                    wall_ueff_old[k] = wall_ueff[k];
+                                }
+                            }                           
 
                             wall_num[k] = Value[k][3];
                             string[][] valuek = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "외피유형='외벽' And 구조체번호='" + Value[k][3] + "'");
@@ -144,7 +147,7 @@ namespace main.contents.Result.Element_Report
                                 Wall_data[12 + a].Add(new { idx = i, val = wall_area[a].ToString("0.0") });//면적
                                 data.Add(new { cname = "wall_area" + a, data = Wall_data[12 + a] });
                                 wall_area_sum += wall_area[a];
-
+                                if (wall_retype[a] != "신규") { wall_area_sum_old += wall_area[a]; }
                                 Wall_data[20 + a].Add(new { idx = i, val = wall_feature[a] });//특징
                                 data.Add(new { cname = "wall_feature" + a, data = Wall_data[20 + a] });
                             }
@@ -174,17 +177,19 @@ namespace main.contents.Result.Element_Report
                             {
                                 Wall_data[38 + a].Add(new { idx = i, val = wall_ueff[a].ToString("0.00") });//계획열관류율
                                 data.Add(new { cname = "wall_ueff" + a, data = Wall_data[38 + a] });
-                                Wall_data[46 + a].Add(new { idx = i, val = wall_ueff_old[a].ToString("0.00") });//기존열관류율
-                                data.Add(new { cname = "wall_ueff_old" + a, data = Wall_data[46 + a] });
+                                if (wall_retype[a] != "신규")
+                                { Wall_data[46 + a].Add(new { idx = i, val = wall_ueff_old[a].ToString("0.00") }); }
+                                else { Wall_data[46 + a].Add(new { idx = i, val = "-" }); }
+                                data.Add(new { cname = "wall_ueff_old" + a, data = Wall_data[46 + a] });//기존열관류율
 
-                            }
+                                }
                         }
                         double wall_ueff_avg = 0;
                         double wall_ueff_old_avg = 0;
                         for (int a = 0; a < 8; a++)
                         {
                             wall_ueff_avg += wall_ueff[a] * wall_area[a] / wall_area_sum;
-                            wall_ueff_old_avg += wall_ueff_old[a] * wall_area[a] / wall_area_sum;
+                            wall_ueff_old_avg += wall_ueff_old[a] * wall_area[a] / wall_area_sum_old;
                         }
                         Wall_data[54].Add(new { idx = i, val = wall_ueff_avg.ToString("0.00") });//계획열관류율 평균
                         Wall_data[55].Add(new { idx = i, val = wall_ueff_old_avg.ToString("0.00") });//기존열관류율 평균
@@ -311,26 +316,30 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "roof_tco2", data = Roof_data[2] });
                     data.Add(new { cname = "roof_toe", data = Roof_data[3] });
 
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT a.명칭,a.유효열관류율,a.기존지붕,a.번호,a.단열재두께,a.U적용방법 From ConstructionRoof as a  Inner Join ZoneEnvelope_3D as b  on a.번호 = b.구조체번호  where b.외피유형 ='지붕' Order by a.유효열관류율 DESC");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT a.명칭,a.유효열관류율,a.기존지붕,a.번호,a.단열재두께,a.U적용방법,a.Type  From ConstructionRoof as a  Inner Join ZoneEnvelope_3D as b  on a.번호 = b.구조체번호  where b.외피유형 ='지붕' Order by a.유효열관류율 DESC");
                     string[] roof_num = new string[8]; string[] roof_name = new string[8]; double[] roof_ueff = new double[8]; double[] roof_ueff_old = new double[8]; double[] roof_area = new double[8]; double[] roof_saving_element = new double[8]; string[] roof_feature = new string[8];
-                    double roof_area_sum = 0;
+                    double roof_area_sum = 0; string[] roof_retype = new string[8]; double roof_area_sum_old = 0;
                     if (Value.Length > 0)
                     {
                         for (int k = 0; k < Value.Length; k++)
                         {
                             roof_name[k] = Value[k][0];
+                            roof_retype[k]= Value[k][6];
                             roof_ueff[k] = Convert.ToDouble(Value[k][1]);
-                            if (Value[k][2] != "")
+                            if(roof_retype[k] !="신규")
                             {
-                                string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "유효열관류율", "명칭 ='" + Value[k][2] + "'");
-                                if (value2.Length > 0)
+                                if (Value[k][2] != "")
                                 {
-                                    roof_ueff_old[k] = Convert.ToDouble(value2[0][0]);
+                                    string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "유효열관류율", "명칭 ='" + Value[k][2] + "'");
+                                    if (value2.Length > 0)
+                                    {
+                                        roof_ueff_old[k] = Convert.ToDouble(value2[0][0]);
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                roof_ueff_old[k] = roof_ueff[k];
+                                else
+                                {
+                                    roof_ueff_old[k] = roof_ueff[k];
+                                }
                             }
 
                             roof_num[k] = Value[k][3];
@@ -364,6 +373,7 @@ namespace main.contents.Result.Element_Report
                                 Roof_data[12 + a].Add(new { idx = i, val = roof_area[a].ToString("0.0") });//면적
                                 data.Add(new { cname = "roof_area" + a, data = Roof_data[12 + a] });
                                 roof_area_sum += roof_area[a];
+                                if (roof_retype[a] != "신규") { roof_area_sum_old += roof_area[a]; }
 
                                 Roof_data[20 + a].Add(new { idx = i, val = roof_feature[a] });//특징
                                 data.Add(new { cname = "roof_feature" + a, data = Roof_data[20 + a] });
@@ -394,9 +404,10 @@ namespace main.contents.Result.Element_Report
                             {
                                 Roof_data[38 + a].Add(new { idx = i, val = roof_ueff[a].ToString("0.00") });//계획열관류율
                                 data.Add(new { cname = "roof_ueff" + a, data = Roof_data[38 + a] });
-                                Roof_data[46 + a].Add(new { idx = i, val = roof_ueff_old[a].ToString("0.00") });//기존열관류율
-                                data.Add(new { cname = "roof_ueff_old" + a, data = Roof_data[46 + a] });
-
+                                if (roof_retype[a] != "신규")
+                                { Roof_data[46 + a].Add(new { idx = i, val = roof_ueff_old[a].ToString("0.00") }); }
+                                else { Roof_data[46 + a].Add(new { idx = i, val = "-"}); }
+                                data.Add(new { cname = "roof_ueff_old" + a, data = Roof_data[46 + a] });//기존열관류율
                             }
                         }
                         double roof_ueff_avg = 0;
@@ -404,7 +415,7 @@ namespace main.contents.Result.Element_Report
                         for (int a = 0; a < 8; a++)
                         {
                             roof_ueff_avg += roof_ueff[a] * roof_area[a] / roof_area_sum;
-                            roof_ueff_old_avg += roof_ueff_old[a] * roof_area[a] / roof_area_sum;
+                            roof_ueff_old_avg += roof_ueff_old[a] * roof_area[a] / roof_area_sum_old;
                         }
                         Roof_data[54].Add(new { idx = i, val = roof_ueff_avg.ToString("0.00") });//계획열관류율 평균
                         Roof_data[55].Add(new { idx = i, val = roof_ueff_old_avg.ToString("0.00") });//기존열관류율 평균
@@ -537,26 +548,30 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "floor_tco2", data = Floor_data[2] });
                     data.Add(new { cname = "floor_toe", data = Floor_data[3] });
 
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT a.명칭,a.유효열관류율,a.기존바닥,a.번호,a.단열재두께,a.U적용방법 From ConstructionFloor as a  Inner Join ZoneEnvelope_3D as b  on a.번호 = b.구조체번호  where b.외피유형 ='최하층바닥' Order by a.유효열관류율 DESC");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT a.명칭,a.유효열관류율,a.기존바닥,a.번호,a.단열재두께,a.U적용방법,a.Type  From ConstructionFloor as a  Inner Join ZoneEnvelope_3D as b  on a.번호 = b.구조체번호  where b.외피유형 ='최하층바닥' Order by a.유효열관류율 DESC");
                     string[] floor_num = new string[8]; string[] floor_name = new string[8]; double[] floor_ueff = new double[8]; double[] floor_ueff_old = new double[8]; double[] floor_area = new double[8]; double[] floor_saving_element = new double[8]; string[] floor_feature = new string[8];
-                    double floor_area_sum = 0;
+                    double floor_area_sum = 0; string[] floor_retype = new string[8]; double floor_area_sum_old = 0; 
                     if (Value.Length > 0)
                     {
                         for (int k = 0; k < Value.Length; k++)
                         {
                             floor_name[k] = Value[k][0];
+                            floor_retype[k] = Value[k][6];
                             floor_ueff[k] = Convert.ToDouble(Value[k][1]);
-                            if (Value[k][2] != "")
+                            if (floor_retype[k]!="신규")
                             {
-                                string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "유효열관류율", "명칭 ='" + Value[k][2] + "'");
-                                if (value2.Length > 0)
+                                if (Value[k][2] != "")
                                 {
-                                    floor_ueff_old[k] = Convert.ToDouble(value2[0][0]);
+                                    string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "유효열관류율", "명칭 ='" + Value[k][2] + "'");
+                                    if (value2.Length > 0)
+                                    {
+                                        floor_ueff_old[k] = Convert.ToDouble(value2[0][0]);
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                floor_ueff_old[k] = floor_ueff[k];
+                                else
+                                {
+                                    floor_ueff_old[k] = floor_ueff[k];
+                                }
                             }
 
                             floor_num[k] = Value[k][3];
@@ -589,7 +604,7 @@ namespace main.contents.Result.Element_Report
                                 Floor_data[12 + a].Add(new { idx = i, val = floor_area[a].ToString("0.0") });//면적
                                 data.Add(new { cname = "floor_area" + a, data = Floor_data[12 + a] });
                                 floor_area_sum += floor_area[a];
-
+                                if (floor_retype[a] != "신규") { floor_area_sum_old += floor_area[a]; }
                                 Floor_data[20 + a].Add(new { idx = i, val = floor_feature[a] });//특징
                                 data.Add(new { cname = "floor_feature" + a, data = Floor_data[20 + a] });
                             }
@@ -619,9 +634,10 @@ namespace main.contents.Result.Element_Report
                             {
                                 Floor_data[38 + a].Add(new { idx = i, val = floor_ueff[a].ToString("0.00") });//계획열관류율
                                 data.Add(new { cname = "floor_ueff" + a, data = Floor_data[38 + a] });
-                                Floor_data[46 + a].Add(new { idx = i, val = floor_ueff_old[a].ToString("0.00") });//기존열관류율
-                                data.Add(new { cname = "floor_ueff_old" + a, data = Floor_data[46 + a] });
-
+                                if (floor_retype[a] != "신규")
+                                {Floor_data[46 + a].Add(new { idx = i, val = floor_ueff_old[a].ToString("0.00") });}
+                                else { Floor_data[46 + a].Add(new { idx = i, val = "-"}); }                               
+                                data.Add(new { cname = "floor_ueff_old" + a, data = Floor_data[46 + a] }); //기존열관류율
                             }
                         }
                         double floor_ueff_avg = 0;
@@ -629,7 +645,7 @@ namespace main.contents.Result.Element_Report
                         for (int a = 0; a < 8; a++)
                         {
                             floor_ueff_avg += floor_ueff[a] * floor_area[a] / floor_area_sum;
-                            floor_ueff_old_avg += floor_ueff_old[a] * floor_area[a] / floor_area_sum;
+                            floor_ueff_old_avg += floor_ueff_old[a] * floor_area[a] / floor_area_sum_old;
                         }
                         Floor_data[54].Add(new { idx = i, val = floor_ueff_avg.ToString("0.00") });//계획열관류율 평균
                         Floor_data[55].Add(new { idx = i, val = floor_ueff_old_avg.ToString("0.00") });//기존열관류율 평균

@@ -113,17 +113,18 @@ namespace main.contents.Result.Element_Report
 
                         string[][] kk = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT a.상위창호번호 From SubWindow as a  Inner Join ZoneEnvelope_3D as b  on a.번호 = b.구조체번호  where b.외피유형 ='창호' Order by a.창호유효열관류율 DESC");
                         string[] win_name = new string[8]; double[] win_ueff = new double[8]; double[] win_ueff_old = new double[8]; double[] win_area = new double[8]; double[] win_count = new double[8]; double[] win_saving_element = new double[8];
-                        string[] win_frame = new string[8]; string[] win_glass = new string[8]; double[] win_shgc = new double[8];
-                        double win_area_sum = 0; double win_count_sum = 0;
+                        string[] win_frame = new string[8]; string[] win_glass = new string[8]; double[] win_shgc = new double[8]; string[] win_retype = new string[8];
+                        double win_area_sum = 0; double win_count_sum = 0; double win_area_sum_old = 0;
                         if (kk.Length > 0)
                         {
                             for (int k = 0; k < kk.Length; k++)
                             {
-                                string[][] main_value = Program.DB.querySQL(DB.type.ProjDB, "SELECT 창호명칭,기존창호,유리종류,프레임유형,태양열취득률 From ConstructionWindow where 번호 ='" + kk[k][0] + "'");
+                                string[][] main_value = Program.DB.querySQL(DB.type.ProjDB, "SELECT 창호명칭,기존창호,유리종류,프레임유형,태양열취득률,Type From ConstructionWindow where 번호 ='" + kk[k][0] + "'");
                                 win_name[k] = main_value[0][0];
                                 win_glass[k] = main_value[0][2];
                                 win_frame[k] = main_value[0][3];
                                 win_shgc[k] = Convert.ToDouble(main_value[0][4]);
+                                win_retype[k] = main_value[0][5];
                                 for (int a = 0; a < 상위창호.Length; a++)
                                 {
                                     if (kk[k][0] == 상위창호[a][0])
@@ -131,8 +132,9 @@ namespace main.contents.Result.Element_Report
                                         win_ueff[k] = Ueff_avg_상위창호[a];
                                     }
                                 }
-
-                                if (main_value[0][1] != "")
+                                if (win_retype[k] != "신규")
+                                {
+                                    if (main_value[0][1] != "")
                                 {
                                     string[][] prewin = Program.DB.querySQL(res[0][0], "SELECT 번호 From ConstructionWindow where 창호명칭 ='" + main_value[0][1] + "'");
                                     for (int a = 0; a < 상위창호.Length; a++)
@@ -147,7 +149,7 @@ namespace main.contents.Result.Element_Report
                                 {
                                     win_ueff_old[k] = win_ueff[k];
                                 }
-
+                                }
                                 string[][] valuek = Program.DB.querySQL(DB.type.ProjDB, "SELECT b.면적 From ZoneEnvelope_3D as b  Inner Join SubWindow as a  on a.번호 = b.구조체번호  where b.외피유형 = '창호' And a.상위창호번호 ='" + kk[k][0] + "'");
                                 if (valuek.Length > 0)
                                 {
@@ -177,6 +179,7 @@ namespace main.contents.Result.Element_Report
                                     Win_data[36 + a].Add(new { idx = i, val = win_count[a].ToString("0") });//개수
                                     data.Add(new { cname = "win_count" + a, data = Win_data[36 + a] });
                                     win_area_sum += win_area[a];
+                                    if (win_retype[a] != "신규") { win_area_sum_old += win_area[a]; }
                                     win_count_sum += win_count[a];
                                 }
                             }
@@ -214,9 +217,10 @@ namespace main.contents.Result.Element_Report
                                 {
                                     Win_data[54 + a].Add(new { idx = i, val = win_ueff[a].ToString("0.00") });//계획열관류율
                                     data.Add(new { cname = "win_ueff" + a, data = Win_data[54 + a] });
-                                    Win_data[62 + a].Add(new { idx = i, val = win_ueff_old[a].ToString("0.00") });//기존열관류율
-                                    data.Add(new { cname = "win_ueff_old" + a, data = Win_data[62 + a] });
-
+                                    if (win_retype[a] != "신규")
+                                    { Win_data[62 + a].Add(new { idx = i, val = win_ueff_old[a].ToString("0.00") }); }
+                                    else{ Win_data[62 + a].Add(new { idx = i, val = "-" }); }
+                                    data.Add(new { cname = "win_ueff_old" + a, data = Win_data[62 + a] });//기존열관류율
                                 }
                             }
                             double win_ueff_avg = 0;
@@ -225,7 +229,7 @@ namespace main.contents.Result.Element_Report
                             for (int a = 0; a < 8; a++)
                             {
                                 win_ueff_avg += win_ueff[a] * win_area[a] / win_area_sum;
-                                win_ueff_old_avg += win_ueff_old[a] * win_area[a] / win_area_sum;
+                                win_ueff_old_avg += win_ueff_old[a] * win_area[a] / win_area_sum_old;
                                 win_shgc_avg += win_shgc[a] * win_area[a] / win_area_sum;
                             }
                             Win_data[70].Add(new { idx = i, val = win_ueff_avg.ToString("0.00") });//계획열관류율 평균
@@ -288,6 +292,8 @@ namespace main.contents.Result.Element_Report
                             data.Add(new { cname = "win_law_point_avg", data = Win_data[97] });
 
                             double east = 0, west = 0, south = 0, north = 0;
+                            double east_p = 0, west_p = 0, south_p = 0, north_p = 0;
+
                             string[][] area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='동' and 외피유형='창호'");
                             if (area.Length > 0 && area[0][0] != "")
                             {
@@ -308,22 +314,54 @@ namespace main.contents.Result.Element_Report
                             {
                                 north = Convert.ToDouble(area[0][0]);
                             }
-                            Win_data[98].Add(new { idx = i, val = east.ToString("0.0") });
+
+                            area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='동' and not 외피유형='최하층바닥'and not 외피유형='층간바닥' and not 외피유형='내벽'and not 외피유형='지붕'");
+                            if (area.Length > 0 && area[0][0] != "")
+                            {
+                                east_p = east *100 /Convert.ToDouble(area[0][0]);
+                            }
+                            area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='서' and not 외피유형='최하층바닥'and not 외피유형='층간바닥' and not 외피유형='내벽'and not 외피유형='지붕'");
+                            if (area.Length > 0 && area[0][0] != "")
+                            {
+                                west_p = west * 100 / Convert.ToDouble(area[0][0]);
+                            }
+                            area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where (방위 ='남' or 방위 ='남동' or 방위 ='남서') and not 외피유형='최하층바닥'and not 외피유형='층간바닥' and not 외피유형='내벽'and not 외피유형='지붕'");
+                            if (area.Length > 0 && area[0][0] != "")
+                            {
+                                south_p = south *100 / Convert.ToDouble(area[0][0]);
+                            }
+                            area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where (방위 ='북' or 방위 ='북동' or 방위 ='북서') and not 외피유형='최하층바닥'and not 외피유형='층간바닥' and not 외피유형='내벽'and not 외피유형='지붕'");
+                            if (area.Length > 0 && area[0][0] != "")
+                            {
+                                north_p = north *100 / Convert.ToDouble(area[0][0]);
+                            }
+
+                            Win_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m²" });
                             data.Add(new { cname = "win_east", data = Win_data[98] });
-                            Win_data[99].Add(new { idx = i, val = west.ToString("0.0") });
+                            Win_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m²" });
                             data.Add(new { cname = "win_west", data = Win_data[99] });
-                            Win_data[100].Add(new { idx = i, val = south.ToString("0.0") });
+                            Win_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m²" });
                             data.Add(new { cname = "win_south", data = Win_data[100] });
-                            Win_data[101].Add(new { idx = i, val = north.ToString("0.0") });
+                            Win_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m²" });
                             data.Add(new { cname = "win_north", data = Win_data[101] });
+
+                            Win_data[102].Add(new { idx = i, val = east_p.ToString("0.0") + " %" });
+                            data.Add(new { cname = "win_east_p", data = Win_data[102] });
+                            Win_data[103].Add(new { idx = i, val = west_p.ToString("0.0") + " %" });
+                            data.Add(new { cname = "win_west_p", data = Win_data[103] });
+                            Win_data[104].Add(new { idx = i, val = south_p.ToString("0.0") + " %" });
+                            data.Add(new { cname = "win_south_p", data = Win_data[104] });
+                            Win_data[105].Add(new { idx = i, val = north_p.ToString("0.0") + " %" });
+                            data.Add(new { cname = "win_north_p", data = Win_data[105] });
+
                             double totalarea = 0;
                             area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where not 외피유형='최하층바닥'and not 외피유형='층간바닥' and not 외피유형='내벽'");
                             if (area.Length > 0 && area[0][0] != "")
                             {
                                 totalarea = Convert.ToDouble(area[0][0]);
                             }
-                            Win_data[102].Add(new { idx = i, val = (win_area_sum / totalarea * 100).ToString("0.0") });
-                            data.Add(new { cname = "win_openpercent", data = Win_data[102] });
+                            Win_data[106].Add(new { idx = i, val = (win_area_sum / totalarea * 100).ToString("0.0") });
+                            data.Add(new { cname = "win_openpercent", data = Win_data[106] });
 
                         }
                     }
@@ -363,14 +401,15 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "cw_tco2", data = CW_data[2] });
                     data.Add(new { cname = "cw_toe", data = CW_data[3] });
 
-                    string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT a.명칭,a.유리부분유효열관류율,a.기존커튼월,a.번호,b.커튼월부위 From ConstructionCW as a  Inner Join ZoneEnvelope_3D as b  on a.번호 = b.구조체번호  where b.외피유형 ='커튼월창' Order by a.커튼월창유효열관류율 DESC");
+                    string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT a.명칭,a.유리부분유효열관류율,a.기존커튼월,a.번호,b.커튼월부위,a.Type From ConstructionCW as a  Inner Join ZoneEnvelope_3D as b  on a.번호 = b.구조체번호  where b.외피유형 ='커튼월창' Order by a.커튼월창유효열관류율 DESC");
                     string[] cw_num = new string[8]; string[] cw_name = new string[8]; double[] cw_ueff = new double[8]; double[] cw_ueff_old = new double[8]; double[] cw_area = new double[8]; double[] cw_saving_element = new double[8]; double[] cw_shgc = new double[8]; string[] cw_frame = new string[8]; string[] cw_glass = new string[8]; string[] cw_part = new string[8];
-                    double cw_area_sum = 0;
+                    double cw_area_sum = 0; string[] cw_retype = new string[8]; double cw_area_sum_old = 0;
                     if (Value.Length > 0)
                     {
                         for (int k = 0; k < Value.Length; k++)
                         {
                             cw_name[k] = Value[k][0] + "_" + Value[k][4];
+                            cw_retype[k] = Value[k][5];
                             if (Value[k][4] == "유리부분")
                             {
                                 string[][] value3 = Program.DB.querySQL(DB.type.ProjDB, "SELECT 유리부분유효열관류율,프레임유형,태양열취득률,고정유리종류 From ConstructionCW  where 번호='" + Value[k][3] + "'");
@@ -395,31 +434,33 @@ namespace main.contents.Result.Element_Report
                                 cw_shgc[k] = Convert.ToDouble(value3[0][2]);
                                 cw_glass[k] = value3[0][3];
                             }
-
-                            if (Value[k][2] != "")
+                            if (cw_retype[k]!= "신규 커튼월창")
                             {
-                                string[][] value2;
-                                if (Value[k][4] == "유리부분")
+                                if (Value[k][2] != "")
                                 {
-                                    value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "유리부분유효열관류율", "명칭 ='" + Value[k][2] + "'");
-                                }
-                                else if (Value[k][4] == "유리부분")
-                                {
-                                    value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "패널부분유효열관류율", "명칭 ='" + Value[k][2] + "'");
+                                    string[][] value2;
+                                    if (Value[k][4] == "유리부분")
+                                    {
+                                        value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "유리부분유효열관류율", "명칭 ='" + Value[k][2] + "'");
+                                    }
+                                    else if (Value[k][4] == "패널부분")
+                                    {
+                                        value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "패널부분유효열관류율", "명칭 ='" + Value[k][2] + "'");
+                                    }
+                                    else
+                                    {
+                                        value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "출입문부분유효열관류율", "명칭 ='" + Value[k][2] + "'");
+                                    }
+
+                                    if (value2.Length > 0)
+                                    {
+                                        cw_ueff_old[k] = Convert.ToDouble(value2[0][0]);
+                                    }
                                 }
                                 else
                                 {
-                                    value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "출입문부분유효열관류율", "명칭 ='" + Value[k][2] + "'");
+                                    cw_ueff_old[k] = cw_ueff[k];
                                 }
-
-                                if (value2.Length > 0)
-                                {
-                                    cw_ueff_old[k] = Convert.ToDouble(value2[0][0]);
-                                }
-                            }
-                            else
-                            {
-                                cw_ueff_old[k] = cw_ueff[k];
                             }
 
                             cw_num[k] = Value[k][3];
@@ -446,6 +487,10 @@ namespace main.contents.Result.Element_Report
                                 CW_data[28 + a].Add(new { idx = i, val = cw_area[a].ToString("0.0") });//면적
                                 data.Add(new { cname = "cw_area" + a, data = CW_data[28 + a] });
                                 cw_area_sum += cw_area[a];
+                                if(cw_retype[a] !="신규 커튼월창")
+                                {
+                                    cw_area_sum_old += cw_area[a];
+                                }
                             }
                         }
                         CW_data[36].Add(new { idx = i, val = cw_area_sum.ToString("0.0") });//면적합계
@@ -473,8 +518,10 @@ namespace main.contents.Result.Element_Report
                             {
                                 CW_data[53 + a].Add(new { idx = i, val = cw_ueff[a].ToString("0.00") });//계획열관류율
                                 data.Add(new { cname = "cw_ueff" + a, data = CW_data[53 + a] });
-                                CW_data[61 + a].Add(new { idx = i, val = cw_ueff_old[a].ToString("0.00") });//기존열관류율
-                                data.Add(new { cname = "cw_ueff_old" + a, data = CW_data[61 + a] });
+                                if (cw_retype[a] != "신규 커튼월창")
+                                { CW_data[61 + a].Add(new { idx = i, val = cw_ueff_old[a].ToString("0.00") }); }
+                                else{ CW_data[61 + a].Add(new { idx = i, val = "-" }); }
+                                data.Add(new { cname = "cw_ueff_old" + a, data = CW_data[61 + a] });//기존열관류율
                                 CW_data[69 + a].Add(new { idx = i, val = cw_shgc[a].ToString("0.00") });//태양열취득률
                                 data.Add(new { cname = "cw_shgc" + a, data = CW_data[69 + a] });
                             }
@@ -486,7 +533,7 @@ namespace main.contents.Result.Element_Report
                         for (int a = 0; a < 8; a++)
                         {
                             cw_ueff_avg += cw_ueff[a] * cw_area[a] / cw_area_sum;
-                            cw_ueff_old_avg += cw_ueff_old[a] * cw_area[a] / cw_area_sum;
+                            cw_ueff_old_avg += cw_ueff_old[a] * cw_area[a] / cw_area_sum_old;
                             if (cw_part[a] != "패널부분")
                             {
                                 area_shgc += cw_area[a];
@@ -555,6 +602,7 @@ namespace main.contents.Result.Element_Report
                         data.Add(new { cname = "cw_law_point_avg", data = CW_data[97] });
 
                         double east = 0, west = 0, south = 0, north = 0;
+                        double east_p = 0, west_p = 0, south_p = 0, north_p = 0;
                         string[][] area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='동' and 외피유형='커튼월창'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
@@ -569,28 +617,60 @@ namespace main.contents.Result.Element_Report
                         if (area.Length > 0 && area[0][0] != "")
                         {
                             south = Convert.ToDouble(area[0][0]);
-                        }
+                        }           
                         area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where (방위 ='북' or 방위 ='북동' or 방위 ='북서')and 외피유형='커튼월창'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
                             north = Convert.ToDouble(area[0][0]);
                         }
-                        CW_data[98].Add(new { idx = i, val = east.ToString("0.0") });
+                       
+
+                        area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='동'and not 외피유형='최하층바닥'and not 외피유형='층간바닥' and not 외피유형='내벽'and not 외피유형='지붕'");
+                        if (area.Length > 0 && area[0][0] != "")
+                        {
+                            east_p = east / Convert.ToDouble(area[0][0]) * 100;
+                        }
+                        area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='서'and not 외피유형='최하층바닥'and not 외피유형='층간바닥' and not 외피유형='내벽'and not 외피유형='지붕'");
+                        if (area.Length > 0 && area[0][0] != "")
+                        {
+                            west_p = west / Convert.ToDouble(area[0][0]) * 100;
+                        }
+                        area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where (방위 ='남' or 방위 ='남동' or 방위 ='남서')and not 외피유형='최하층바닥'and not 외피유형='층간바닥' and not 외피유형='내벽'and not 외피유형='지붕'");
+                        if (area.Length > 0 && area[0][0] != "")
+                        {
+                            south_p = south / Convert.ToDouble(area[0][0]) * 100;
+                        }
+                        area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where (방위 ='북' or 방위 ='북동' or 방위 ='북서')and not 외피유형='최하층바닥'and not 외피유형='층간바닥' and not 외피유형='내벽'and not 외피유형='지붕'");
+                        if (area.Length > 0 && area[0][0] != "")
+                        {
+                            north_p = north / Convert.ToDouble(area[0][0]) * 100;
+                        }
+                        CW_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m²" });
                         data.Add(new { cname = "cw_east", data = CW_data[98] });
-                        CW_data[99].Add(new { idx = i, val = west.ToString("0.0") });
+                        CW_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m²" });
                         data.Add(new { cname = "cw_west", data = CW_data[99] });
-                        CW_data[100].Add(new { idx = i, val = south.ToString("0.0") });
+                        CW_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m²" });
                         data.Add(new { cname = "cw_south", data = CW_data[100] });
-                        CW_data[101].Add(new { idx = i, val = north.ToString("0.0") });
+                        CW_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m²" });
                         data.Add(new { cname = "cw_north", data = CW_data[101] });
+
+                        CW_data[102].Add(new { idx = i, val = east_p.ToString("0.0") +" %"});
+                        data.Add(new { cname = "cw_east_p", data = CW_data[102] });
+                        CW_data[103].Add(new { idx = i, val = west_p.ToString("0.0") + " %" });
+                        data.Add(new { cname = "cw_west_p", data = CW_data[103] });
+                        CW_data[104].Add(new { idx = i, val = south_p.ToString("0.0") + " %" });
+                        data.Add(new { cname = "cw_south_p", data = CW_data[104] });
+                        CW_data[105].Add(new { idx = i, val = north_p.ToString("0.0") + " %" });
+                        data.Add(new { cname = "cw_north_p", data = CW_data[105] });
+
                         double totalarea = 0;
                         area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where not 외피유형='최하층바닥'and not 외피유형='층간바닥' and not 외피유형='내벽'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
                             totalarea = Convert.ToDouble(area[0][0]);
                         }
-                        CW_data[102].Add(new { idx = i, val = (cw_area_sum / totalarea * 100).ToString("0.0") });
-                        data.Add(new { cname = "cw_openpercent", data = CW_data[102] });
+                        CW_data[106].Add(new { idx = i, val = (cw_area_sum / totalarea * 100).ToString("0.0") });
+                        data.Add(new { cname = "cw_openpercent", data = CW_data[106] });
 
                     }
 
@@ -629,32 +709,35 @@ namespace main.contents.Result.Element_Report
                     data.Add(new { cname = "door_tco2", data = Door_data[2] });
                     data.Add(new { cname = "door_toe", data = Door_data[3] });
 
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT a.명칭,a.문유효열관류율,a.기존출입문,a.번호,a.문면적,a.출입문재질, a.문짝내부유형 From ConstructionDoor as a  Inner Join ZoneEnvelope_3D as b  on a.번호 = b.구조체번호  where b.외피유형 ='외부출입문' Order by a.문유효열관류율 DESC");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT a.명칭,a.문유효열관류율,a.기존출입문,a.번호,a.문면적,a.출입문재질, a.문짝내부유형,a.Type From ConstructionDoor as a  Inner Join ZoneEnvelope_3D as b  on a.번호 = b.구조체번호  where b.외피유형 ='외부출입문' Order by a.문유효열관류율 DESC");
                     string[] door_num = new string[8]; string[] door_name = new string[8]; double[] door_ueff = new double[8]; double[] door_ueff_old = new double[8]; double[] door_area = new double[8]; double[] door_saving_element = new double[8]; double[] door_count = new double[8]; string[] door_type = new string[8];
-                    double door_area_sum = 0; double door_count_sum = 0;
+                    double door_area_sum = 0; double door_count_sum = 0; string[] door_retype = new string[8]; double door_area_sum_old = 0;
                     if (Value.Length > 0)
                     {
                         for (int k = 0; k < Value.Length; k++)
                         {
                             door_name[k] = Value[k][0];
+                            door_retype[k] = Value[k][7];
                             door_ueff[k] = Convert.ToDouble(Value[k][1]);
                             door_area[k] = Convert.ToDouble(Value[k][4]);
                             if (Value[k][5] != "")
                             { door_type[k] = Value[k][5] + "_" + Value[k][6]; }
                             else { door_type[k] = ""; }
-                            if (Value[k][2] != "")
+                            if(door_retype[k] != "신규 출입문")
                             {
-                                string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "문유효열관류율", "명칭 ='" + Value[k][2] + "'");
-                                if (value2.Length > 0)
+                                if (Value[k][2] != "")
                                 {
-                                    door_ueff_old[k] = Convert.ToDouble(value2[0][0]);
+                                    string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "문유효열관류율", "명칭 ='" + Value[k][2] + "'");
+                                    if (value2.Length > 0)
+                                    {
+                                        door_ueff_old[k] = Convert.ToDouble(value2[0][0]);
+                                    }
+                                }
+                                else
+                                {
+                                    door_ueff_old[k] = door_ueff[k];
                                 }
                             }
-                            else
-                            {
-                                door_ueff_old[k] = door_ueff[k];
-                            }
-
                             door_num[k] = Value[k][3];
                             string[][] valuek = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "외피유형='외부출입문' And 구조체번호='" + Value[k][3] + "'");
                             if (valuek.Length > 0)
@@ -672,6 +755,10 @@ namespace main.contents.Result.Element_Report
                                 Door_data[12 + a].Add(new { idx = i, val = door_area[a].ToString("0.0") });//면적
                                 data.Add(new { cname = "door_area" + a, data = Door_data[12 + a] });
                                 door_area_sum += door_area[a] * door_count[a];
+                                if (door_retype[a]!="신규 출입문")
+                                {
+                                    door_area_sum_old += door_area[a] * door_count[a];
+                                }
 
                                 Door_data[20 + a].Add(new { idx = i, val = door_count[a].ToString("0") });//개수
                                 data.Add(new { cname = "door_count" + a, data = Door_data[20 + a] });
@@ -706,8 +793,10 @@ namespace main.contents.Result.Element_Report
                             {
                                 Door_data[46 + a].Add(new { idx = i, val = door_ueff[a].ToString("0.00") });//계획열관류율
                                 data.Add(new { cname = "door_ueff" + a, data = Door_data[46 + a] });
-                                Door_data[54 + a].Add(new { idx = i, val = door_ueff_old[a].ToString("0.00") });//기존열관류율
-                                data.Add(new { cname = "door_ueff_old" + a, data = Door_data[54 + a] });
+                                if (door_retype[a] != "신규 출입문")
+                                { Door_data[54 + a].Add(new { idx = i, val = door_ueff_old[a].ToString("0.00") }); }
+                                else{ Door_data[54 + a].Add(new { idx = i, val = "-" }); }
+                                data.Add(new { cname = "door_ueff_old" + a, data = Door_data[54 + a] });//기존열관류율
 
                             }
                         }
@@ -716,7 +805,7 @@ namespace main.contents.Result.Element_Report
                         for (int a = 0; a < 8; a++)
                         {
                             door_ueff_avg += door_ueff[a] * (door_area[a] * door_count[a]) / door_area_sum;
-                            door_ueff_old_avg += door_ueff_old[a] * (door_area[a] * door_count[a]) / door_area_sum;
+                            door_ueff_old_avg += door_ueff_old[a] * (door_area[a] * door_count[a]) / door_area_sum_old;
                         }
                         Door_data[62].Add(new { idx = i, val = door_ueff_avg.ToString("0.00") });//계획열관류율 평균
                         Door_data[63].Add(new { idx = i, val = door_ueff_old_avg.ToString("0.00") });//기존열관류율 평균
