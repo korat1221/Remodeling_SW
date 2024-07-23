@@ -94,18 +94,19 @@
             label32 = new Label();
             label33 = new Label();
             panel7 = new Panel();
+            BlowDoor_button = new Button();
             n50_textBox = new TextBox();
             n50_label2 = new Label();
             n50_label1 = new Label();
-            Roof_label = new Label();
-            Roof_groupBox = new GroupBox();
-            Roof_False_radioButton = new RadioButton();
-            Roof_True_radioButton = new RadioButton();
-            Wall_label = new Label();
+            Pipe_label = new Label();
+            Pipe_groupBox = new GroupBox();
+            Pipe_False_radioButton = new RadioButton();
+            Pipe_True_radioButton = new RadioButton();
+            ElecWiring_label = new Label();
             Win_label = new Label();
-            Wall_groupBox = new GroupBox();
-            Wall_False_radioButton = new RadioButton();
-            Wall_True_radioButton = new RadioButton();
+            ElecWiring_groupBox = new GroupBox();
+            ElecWiring_False_radioButton = new RadioButton();
+            ElecWiring_True_radioButton = new RadioButton();
             Win_groupBox = new GroupBox();
             Win_False_radioButton = new RadioButton();
             Win_True_radioButton = new RadioButton();
@@ -113,12 +114,6 @@
             Door_groupBox = new GroupBox();
             Door_False_radioButton = new RadioButton();
             Door_True_radioButton = new RadioButton();
-            q50Area_label2 = new Label();
-            q50Area_textBox = new TextBox();
-            q50Area_label1 = new Label();
-            q50_textBox = new TextBox();
-            q50_label2 = new Label();
-            q50_label1 = new Label();
             BlowDoorTest_comboBox = new CustomComboBox();
             textBox3 = new TextBox();
             label40 = new Label();
@@ -129,8 +124,8 @@
             panel3.SuspendLayout();
             panel5.SuspendLayout();
             panel7.SuspendLayout();
-            Roof_groupBox.SuspendLayout();
-            Wall_groupBox.SuspendLayout();
+            Pipe_groupBox.SuspendLayout();
+            ElecWiring_groupBox.SuspendLayout();
             Win_groupBox.SuspendLayout();
             Door_groupBox.SuspendLayout();
             SuspendLayout();
@@ -904,23 +899,18 @@
             // panel7
             // 
             panel7.BackColor = Color.White;
+            panel7.Controls.Add(BlowDoor_button);
             panel7.Controls.Add(n50_textBox);
             panel7.Controls.Add(n50_label2);
             panel7.Controls.Add(n50_label1);
-            panel7.Controls.Add(Roof_label);
-            panel7.Controls.Add(Roof_groupBox);
-            panel7.Controls.Add(Wall_label);
+            panel7.Controls.Add(Pipe_label);
+            panel7.Controls.Add(Pipe_groupBox);
+            panel7.Controls.Add(ElecWiring_label);
             panel7.Controls.Add(Win_label);
-            panel7.Controls.Add(Wall_groupBox);
+            panel7.Controls.Add(ElecWiring_groupBox);
             panel7.Controls.Add(Win_groupBox);
             panel7.Controls.Add(Door_label);
             panel7.Controls.Add(Door_groupBox);
-            panel7.Controls.Add(q50Area_label2);
-            panel7.Controls.Add(q50Area_textBox);
-            panel7.Controls.Add(q50Area_label1);
-            panel7.Controls.Add(q50_textBox);
-            panel7.Controls.Add(q50_label2);
-            panel7.Controls.Add(q50_label1);
             panel7.Controls.Add(BlowDoorTest_comboBox);
             panel7.Controls.Add(textBox3);
             panel7.Controls.Add(label40);
@@ -930,13 +920,28 @@
             panel7.TabIndex = 108;
             panel7.Paint += panel7_Paint;
             // 
+            // BlowDoor_button
+            // 
+            BlowDoor_button.BackColor = SystemColors.ControlLight;
+            BlowDoor_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            BlowDoor_button.FlatStyle = FlatStyle.System;
+            BlowDoor_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            BlowDoor_button.Location = new Point(454, 19);
+            BlowDoor_button.Margin = new Padding(0);
+            BlowDoor_button.Name = "BlowDoor_button";
+            BlowDoor_button.Size = new Size(23, 23);
+            BlowDoor_button.TabIndex = 173;
+            BlowDoor_button.Text = "+";
+            BlowDoor_button.UseVisualStyleBackColor = false;
+            BlowDoor_button.Click += BlowDoor_button_Click;
+            // 
             // n50_textBox
             // 
             n50_textBox.BackColor = Color.White;
             n50_textBox.BorderStyle = BorderStyle.None;
             n50_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            n50_textBox.ForeColor = SystemColors.ControlDarkDark;
-            n50_textBox.Location = new Point(782, 23);
+            n50_textBox.ForeColor = SystemColors.ControlText;
+            n50_textBox.Location = new Point(308, 23);
             n50_textBox.Name = "n50_textBox";
             n50_textBox.Size = new Size(120, 15);
             n50_textBox.TabIndex = 149;
@@ -946,8 +951,8 @@
             // 
             n50_label2.AutoSize = true;
             n50_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            n50_label2.ForeColor = SystemColors.ControlDarkDark;
-            n50_label2.Location = new Point(902, 22);
+            n50_label2.ForeColor = SystemColors.ControlText;
+            n50_label2.Location = new Point(428, 23);
             n50_label2.Name = "n50_label2";
             n50_label2.Size = new Size(25, 16);
             n50_label2.TabIndex = 150;
@@ -957,66 +962,66 @@
             // 
             n50_label1.AutoSize = true;
             n50_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            n50_label1.ForeColor = SystemColors.ControlDarkDark;
-            n50_label1.Location = new Point(725, 23);
+            n50_label1.ForeColor = SystemColors.ControlText;
+            n50_label1.Location = new Point(251, 24);
             n50_label1.Name = "n50_label1";
             n50_label1.Size = new Size(28, 15);
             n50_label1.TabIndex = 148;
             n50_label1.Text = "n50";
             // 
-            // Roof_label
+            // Pipe_label
             // 
-            Roof_label.AutoSize = true;
-            Roof_label.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            Roof_label.Location = new Point(704, 65);
-            Roof_label.Name = "Roof_label";
-            Roof_label.Size = new Size(77, 13);
-            Roof_label.TabIndex = 147;
-            Roof_label.Text = "지붕 기밀시공";
+            Pipe_label.AutoSize = true;
+            Pipe_label.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            Pipe_label.Location = new Point(673, 65);
+            Pipe_label.Name = "Pipe_label";
+            Pipe_label.Size = new Size(103, 13);
+            Pipe_label.TabIndex = 147;
+            Pipe_label.Text = "덕트/배관 기밀시공";
             // 
-            // Roof_groupBox
+            // Pipe_groupBox
             // 
-            Roof_groupBox.Controls.Add(Roof_False_radioButton);
-            Roof_groupBox.Controls.Add(Roof_True_radioButton);
-            Roof_groupBox.Location = new Point(782, 48);
-            Roof_groupBox.Name = "Roof_groupBox";
-            Roof_groupBox.Size = new Size(120, 69);
-            Roof_groupBox.TabIndex = 146;
-            Roof_groupBox.TabStop = false;
+            Pipe_groupBox.Controls.Add(Pipe_False_radioButton);
+            Pipe_groupBox.Controls.Add(Pipe_True_radioButton);
+            Pipe_groupBox.Location = new Point(782, 48);
+            Pipe_groupBox.Name = "Pipe_groupBox";
+            Pipe_groupBox.Size = new Size(120, 69);
+            Pipe_groupBox.TabIndex = 146;
+            Pipe_groupBox.TabStop = false;
             // 
-            // Roof_False_radioButton
+            // Pipe_False_radioButton
             // 
-            Roof_False_radioButton.AutoSize = true;
-            Roof_False_radioButton.Location = new Point(27, 44);
-            Roof_False_radioButton.Name = "Roof_False_radioButton";
-            Roof_False_radioButton.Size = new Size(61, 19);
-            Roof_False_radioButton.TabIndex = 1;
-            Roof_False_radioButton.TabStop = true;
-            Roof_False_radioButton.Text = "미시공";
-            Roof_False_radioButton.UseVisualStyleBackColor = true;
-            Roof_False_radioButton.CheckedChanged += Roof_False_radioButton_CheckedChanged;
+            Pipe_False_radioButton.AutoSize = true;
+            Pipe_False_radioButton.Location = new Point(27, 44);
+            Pipe_False_radioButton.Name = "Pipe_False_radioButton";
+            Pipe_False_radioButton.Size = new Size(61, 19);
+            Pipe_False_radioButton.TabIndex = 1;
+            Pipe_False_radioButton.TabStop = true;
+            Pipe_False_radioButton.Text = "미시공";
+            Pipe_False_radioButton.UseVisualStyleBackColor = true;
+            Pipe_False_radioButton.CheckedChanged += Pipe_False_radioButton_CheckedChanged;
             // 
-            // Roof_True_radioButton
+            // Pipe_True_radioButton
             // 
-            Roof_True_radioButton.AutoSize = true;
-            Roof_True_radioButton.Location = new Point(27, 17);
-            Roof_True_radioButton.Name = "Roof_True_radioButton";
-            Roof_True_radioButton.Size = new Size(49, 19);
-            Roof_True_radioButton.TabIndex = 0;
-            Roof_True_radioButton.TabStop = true;
-            Roof_True_radioButton.Text = "시공";
-            Roof_True_radioButton.UseVisualStyleBackColor = true;
-            Roof_True_radioButton.CheckedChanged += Roof_True_radioButton_CheckedChanged;
+            Pipe_True_radioButton.AutoSize = true;
+            Pipe_True_radioButton.Location = new Point(27, 17);
+            Pipe_True_radioButton.Name = "Pipe_True_radioButton";
+            Pipe_True_radioButton.Size = new Size(49, 19);
+            Pipe_True_radioButton.TabIndex = 0;
+            Pipe_True_radioButton.TabStop = true;
+            Pipe_True_radioButton.Text = "시공";
+            Pipe_True_radioButton.UseVisualStyleBackColor = true;
+            Pipe_True_radioButton.CheckedChanged += Duct_True_radioButton_CheckedChanged;
             // 
-            // Wall_label
+            // ElecWiring_label
             // 
-            Wall_label.AutoSize = true;
-            Wall_label.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            Wall_label.Location = new Point(503, 65);
-            Wall_label.Name = "Wall_label";
-            Wall_label.Size = new Size(77, 13);
-            Wall_label.TabIndex = 145;
-            Wall_label.Text = "외벽 기밀시공";
+            ElecWiring_label.AutoSize = true;
+            ElecWiring_label.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            ElecWiring_label.Location = new Point(454, 65);
+            ElecWiring_label.Name = "ElecWiring_label";
+            ElecWiring_label.Size = new Size(77, 13);
+            ElecWiring_label.TabIndex = 145;
+            ElecWiring_label.Text = "배선 기밀시공";
             // 
             // Win_label
             // 
@@ -1028,39 +1033,39 @@
             Win_label.TabIndex = 143;
             Win_label.Text = "창호 기밀";
             // 
-            // Wall_groupBox
+            // ElecWiring_groupBox
             // 
-            Wall_groupBox.Controls.Add(Wall_False_radioButton);
-            Wall_groupBox.Controls.Add(Wall_True_radioButton);
-            Wall_groupBox.Location = new Point(582, 48);
-            Wall_groupBox.Name = "Wall_groupBox";
-            Wall_groupBox.Size = new Size(120, 69);
-            Wall_groupBox.TabIndex = 144;
-            Wall_groupBox.TabStop = false;
+            ElecWiring_groupBox.Controls.Add(ElecWiring_False_radioButton);
+            ElecWiring_groupBox.Controls.Add(ElecWiring_True_radioButton);
+            ElecWiring_groupBox.Location = new Point(533, 48);
+            ElecWiring_groupBox.Name = "ElecWiring_groupBox";
+            ElecWiring_groupBox.Size = new Size(120, 69);
+            ElecWiring_groupBox.TabIndex = 144;
+            ElecWiring_groupBox.TabStop = false;
             // 
-            // Wall_False_radioButton
+            // ElecWiring_False_radioButton
             // 
-            Wall_False_radioButton.AutoSize = true;
-            Wall_False_radioButton.Location = new Point(27, 44);
-            Wall_False_radioButton.Name = "Wall_False_radioButton";
-            Wall_False_radioButton.Size = new Size(61, 19);
-            Wall_False_radioButton.TabIndex = 1;
-            Wall_False_radioButton.TabStop = true;
-            Wall_False_radioButton.Text = "미시공";
-            Wall_False_radioButton.UseVisualStyleBackColor = true;
-            Wall_False_radioButton.CheckedChanged += Wall_False_radioButton_CheckedChanged;
+            ElecWiring_False_radioButton.AutoSize = true;
+            ElecWiring_False_radioButton.Location = new Point(27, 44);
+            ElecWiring_False_radioButton.Name = "ElecWiring_False_radioButton";
+            ElecWiring_False_radioButton.Size = new Size(61, 19);
+            ElecWiring_False_radioButton.TabIndex = 1;
+            ElecWiring_False_radioButton.TabStop = true;
+            ElecWiring_False_radioButton.Text = "미시공";
+            ElecWiring_False_radioButton.UseVisualStyleBackColor = true;
+            ElecWiring_False_radioButton.CheckedChanged += ElecWiring_False_radioButton_CheckedChanged;
             // 
-            // Wall_True_radioButton
+            // ElecWiring_True_radioButton
             // 
-            Wall_True_radioButton.AutoSize = true;
-            Wall_True_radioButton.Location = new Point(27, 17);
-            Wall_True_radioButton.Name = "Wall_True_radioButton";
-            Wall_True_radioButton.Size = new Size(49, 19);
-            Wall_True_radioButton.TabIndex = 0;
-            Wall_True_radioButton.TabStop = true;
-            Wall_True_radioButton.Text = "시공";
-            Wall_True_radioButton.UseVisualStyleBackColor = true;
-            Wall_True_radioButton.CheckedChanged += Wall_True_radioButton_CheckedChanged;
+            ElecWiring_True_radioButton.AutoSize = true;
+            ElecWiring_True_radioButton.Location = new Point(27, 17);
+            ElecWiring_True_radioButton.Name = "ElecWiring_True_radioButton";
+            ElecWiring_True_radioButton.Size = new Size(49, 19);
+            ElecWiring_True_radioButton.TabIndex = 0;
+            ElecWiring_True_radioButton.TabStop = true;
+            ElecWiring_True_radioButton.Text = "시공";
+            ElecWiring_True_radioButton.UseVisualStyleBackColor = true;
+            ElecWiring_True_radioButton.CheckedChanged += ElecWiring_True_radioButton_CheckedChanged;
             // 
             // Win_groupBox
             // 
@@ -1140,74 +1145,6 @@
             Door_True_radioButton.UseVisualStyleBackColor = true;
             Door_True_radioButton.CheckedChanged += Door_True_radioButton_CheckedChanged;
             // 
-            // q50Area_label2
-            // 
-            q50Area_label2.AutoSize = true;
-            q50Area_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            q50Area_label2.ForeColor = SystemColors.ControlText;
-            q50Area_label2.Location = new Point(703, 22);
-            q50Area_label2.Name = "q50Area_label2";
-            q50Area_label2.Size = new Size(22, 16);
-            q50Area_label2.TabIndex = 138;
-            q50Area_label2.Text = "m²";
-            // 
-            // q50Area_textBox
-            // 
-            q50Area_textBox.BackColor = Color.White;
-            q50Area_textBox.BorderStyle = BorderStyle.FixedSingle;
-            q50Area_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            q50Area_textBox.ForeColor = SystemColors.ControlText;
-            q50Area_textBox.Location = new Point(582, 19);
-            q50Area_textBox.Name = "q50Area_textBox";
-            q50Area_textBox.Size = new Size(120, 22);
-            q50Area_textBox.TabIndex = 137;
-            q50Area_textBox.TextAlign = HorizontalAlignment.Center;
-            q50Area_textBox.TextChanged += q50Area_textBox_TextChanged;
-            // 
-            // q50Area_label1
-            // 
-            q50Area_label1.AutoSize = true;
-            q50Area_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            q50Area_label1.Location = new Point(503, 23);
-            q50Area_label1.Name = "q50Area_label1";
-            q50Area_label1.Size = new Size(55, 15);
-            q50Area_label1.TabIndex = 136;
-            q50Area_label1.Text = "외피면적";
-            // 
-            // q50_textBox
-            // 
-            q50_textBox.BackColor = Color.White;
-            q50_textBox.BorderStyle = BorderStyle.FixedSingle;
-            q50_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            q50_textBox.ForeColor = SystemColors.ControlText;
-            q50_textBox.Location = new Point(308, 19);
-            q50_textBox.Name = "q50_textBox";
-            q50_textBox.Size = new Size(120, 22);
-            q50_textBox.TabIndex = 134;
-            q50_textBox.TextAlign = HorizontalAlignment.Center;
-            q50_textBox.TextChanged += q50_textBox_TextChanged;
-            // 
-            // q50_label2
-            // 
-            q50_label2.AutoSize = true;
-            q50_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            q50_label2.ForeColor = SystemColors.ControlText;
-            q50_label2.Location = new Point(428, 22);
-            q50_label2.Name = "q50_label2";
-            q50_label2.Size = new Size(51, 16);
-            q50_label2.TabIndex = 135;
-            q50_label2.Text = "m³/h·m²";
-            // 
-            // q50_label1
-            // 
-            q50_label1.AutoSize = true;
-            q50_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            q50_label1.Location = new Point(274, 23);
-            q50_label1.Name = "q50_label1";
-            q50_label1.Size = new Size(28, 15);
-            q50_label1.TabIndex = 133;
-            q50_label1.Text = "q50";
-            // 
             // BlowDoorTest_comboBox
             // 
             BlowDoorTest_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
@@ -1277,10 +1214,10 @@
             panel5.PerformLayout();
             panel7.ResumeLayout(false);
             panel7.PerformLayout();
-            Roof_groupBox.ResumeLayout(false);
-            Roof_groupBox.PerformLayout();
-            Wall_groupBox.ResumeLayout(false);
-            Wall_groupBox.PerformLayout();
+            Pipe_groupBox.ResumeLayout(false);
+            Pipe_groupBox.PerformLayout();
+            ElecWiring_groupBox.ResumeLayout(false);
+            ElecWiring_groupBox.PerformLayout();
             Win_groupBox.ResumeLayout(false);
             Win_groupBox.PerformLayout();
             Door_groupBox.ResumeLayout(false);
@@ -1322,8 +1259,8 @@
         private Label label19;
         private ComboBox WallType_comboBox;
         private Label label20;
-        private Label Wall_label;
-        private Label Roof_label;
+        private Label ElecWiring_label;
+        private Label Pipe_label;
         private TextBox BuildingLocation_textBox;
         private TextBox BuildingName_textBox;
         private Label label30;
@@ -1367,18 +1304,12 @@
         private CustomComboBox UnderGround_comboBox;
         private CustomComboBox AboveGround_comboBox;
         private CustomComboBox OldProject_comboBox;
-        private Label q50Area_label2;
-        private TextBox q50Area_textBox;
-        private Label q50Area_label1;
-        private TextBox q50_textBox;
-        private Label q50_label2;
-        private Label q50_label1;
-        private GroupBox Roof_groupBox;
-        private RadioButton Roof_False_radioButton;
-        private RadioButton Roof_True_radioButton;
-        private GroupBox Wall_groupBox;
-        private RadioButton Wall_False_radioButton;
-        private RadioButton Wall_True_radioButton;
+        private GroupBox Pipe_groupBox;
+        private RadioButton Pipe_False_radioButton;
+        private RadioButton Pipe_True_radioButton;
+        private GroupBox ElecWiring_groupBox;
+        private RadioButton ElecWiring_False_radioButton;
+        private RadioButton ElecWiring_True_radioButton;
         private GroupBox Win_groupBox;
         private RadioButton Win_False_radioButton;
         private RadioButton Win_True_radioButton;
@@ -1389,5 +1320,6 @@
         private TextBox n50_textBox;
         private Label n50_label2;
         private Label n50_label1;
+        private Button BlowDoor_button;
     }
 }

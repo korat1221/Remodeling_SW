@@ -1,5 +1,6 @@
 ﻿using main.contentslist;
 using System;
+using main.subcontents.BuildingGeneral;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +21,7 @@ using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using Eagle._Components.Public;
 using System.Drawing.Text;
+using main.subcontents.HeatingSystem;
 
 namespace main.contents
 {
@@ -37,9 +39,9 @@ namespace main.contents
         double[] law = new double[11];
         string OldProject;
         string BlowDoorTest;
-        double q50, q50Area;
-        bool Door_Infil, Win_Infil, Wall_Infil, Roof_Infil;
-        double Door_q50, Win_q50, CW_q50, Wall_q50, Roof_q50;
+        bool Door_Infil =false, Win_Infil = false, ElecWiring_Infil = false, Pipe_Infil = false;
+        double n50;
+
         public General()
         {
             InitializeComponent();
@@ -82,7 +84,7 @@ namespace main.contents
             //건물대상 콤보박스
             Program.UTIL.FillComboBox_Parents(BuildingCategory_comboBox, "존일반", "건물용도", "1");
             BuildingCategory = "에너지다소비형건물";
-            BuildingUse ="정부청사";
+            BuildingUse = "정부청사";
 
             //기후데이터 콤보박스
             string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "인덱스", "이름", "종류 = '2'");
@@ -143,10 +145,10 @@ namespace main.contents
             BlowDoorTest_comboBox.SelectedIndex = 1;
             BlowDoorTest = "기밀 테스트 미실시";
 
-            Door_True_radioButton.Checked = true;
-            Win_True_radioButton.Checked = true;
-            Wall_True_radioButton.Checked = true;
-            Roof_True_radioButton.Checked = true;
+            Door_False_radioButton.Checked = true;
+            Win_False_radioButton.Checked = true;
+            ElecWiring_False_radioButton.Checked = true;
+            Pipe_False_radioButton.Checked = true;
         }
 
         private void Load_OldProject()
@@ -235,13 +237,7 @@ namespace main.contents
         {
             if (BlowDoorTest == "기밀 테스트 실시")
             {
-                q50_label1.Visible = true;
-                q50_textBox.Visible = true;
-                q50_label2.Visible = true;
-
-                q50Area_label1.Visible = true;
-                q50Area_textBox.Visible = true;
-                q50Area_label2.Visible = true;
+                BlowDoor_button.Visible = true;
 
                 Door_label.Visible = false;
                 Door_groupBox.Visible = false;
@@ -249,30 +245,15 @@ namespace main.contents
                 Win_label.Visible = false;
                 Win_groupBox.Visible = false;
 
-                Wall_label.Visible = false;
-                Wall_groupBox.Visible = false;
+                ElecWiring_label.Visible = false;
+                ElecWiring_groupBox.Visible = false;
 
-                Roof_label.Visible = false;
-                Roof_groupBox.Visible = false;
-
-                Door_q50 = 0;
-                Win_q50 = 0;
-                Wall_q50 = 0;
-                Roof_q50 = 0;
-
-                n50_textBox.Visible = false;
-                n50_label1.Visible = false;
-                n50_label2.Visible = false;
+                Pipe_label.Visible = false;
+                Pipe_groupBox.Visible = false;
             }
             else
             {
-                q50_label1.Visible = false;
-                q50_textBox.Visible = false;
-                q50_label2.Visible = false;
-
-                q50Area_label1.Visible = false;
-                q50Area_textBox.Visible = false;
-                q50Area_label2.Visible = false;
+                BlowDoor_button.Visible = false;
 
                 Door_label.Visible = true;
                 Door_groupBox.Visible = true;
@@ -280,58 +261,29 @@ namespace main.contents
                 Win_label.Visible = true;
                 Win_groupBox.Visible = true;
 
-                Wall_label.Visible = true;
-                Wall_groupBox.Visible = true;
+                ElecWiring_label.Visible = true;
+                ElecWiring_groupBox.Visible = true;
 
-                Roof_label.Visible = true;
-                Roof_groupBox.Visible = true;
+                Pipe_label.Visible = true;
+                Pipe_groupBox.Visible = true;
             }
         }
-        private void q50_textBox_TextChanged(object sender, EventArgs e)
+        private void Cal_Infiltration(string BlowDoorTest, bool door, bool win, bool elec, bool pipe)
         {
-            if (q50_textBox.Text != null && q50_textBox.Text.ToString() != "")
+            if(BlowDoorTest == "기밀 테스트 미실시")
             {
-                q50 = Convert.ToDouble(q50_textBox.Text.ToString());
-            }
-        }
+                string[] check = new string[4];
+                if (door) { check[0] = "적용"; } else { check[0] = "미적용"; }
+                if (win) { check[1] = "적용"; } else { check[1] = "미적용"; }
+                if (elec) { check[2] = "적용"; } else { check[2] = "미적용"; }
+                if (pipe) { check[3] = "적용"; } else { check[3] = "미적용"; }
 
-        private void q50Area_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if (q50Area_textBox.Text != null && q50Area_textBox.Text.ToString() != "")
-            {
-                q50Area = Convert.ToDouble(q50Area_textBox.Text.ToString());
-            }
-        }
-        private void Cal_Infiltration(string Construction, bool Infiltration)
-        {
-            string[][] value;
-            if (Infiltration == true)
-            {
-                value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기밀", "기밀시공", "구조체 ='" + Construction + "'");
-            }
-            else
-            {
-                value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기밀", "기밀미시공", "구조체 ='" + Construction + "'");
-            }
-            if (value.Length > 0)
-            {
-                switch (Construction)
+                string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기밀", "n50", "방풍출입문 ='" + check[0] + "' and 창호='" + check[1] + "' and 배선='" + check[2] + "' and 배관='" + check[3] + "'");
+                if (Value.Length > 0)
                 {
-                    case "외부출입문":
-                        Door_q50 = Convert.ToDouble(value[0][0]);
-                        break;
-                    case "외벽":
-                        Wall_q50 = Convert.ToDouble(value[0][0]);
-                        break;
-                    case "창호":
-                        Win_q50 = Convert.ToDouble(value[0][0]);
-                        CW_q50 = Convert.ToDouble(value[0][0]);
-                        break;
-                    case "지붕":
-                        Roof_q50 = Convert.ToDouble(value[0][0]);
-                        break;
+                    n50 = Convert.ToDouble(Value[0][0]);
+                    n50_textBox.Text = n50.ToString("0.0");
                 }
-
             }
         }
 
@@ -340,7 +292,7 @@ namespace main.contents
             if (Door_True_radioButton.Checked == true)
             {
                 Door_Infil = true;
-                Cal_Infiltration("외부출입문", Door_Infil);
+                Cal_Infiltration(BlowDoorTest,Door_Infil, Win_Infil, ElecWiring_Infil, Pipe_Infil);
             }
         }
 
@@ -349,7 +301,7 @@ namespace main.contents
             if (Door_False_radioButton.Checked == true)
             {
                 Door_Infil = false;
-                Cal_Infiltration("외부출입문", Door_Infil);
+                Cal_Infiltration(BlowDoorTest, Door_Infil, Win_Infil, ElecWiring_Infil, Pipe_Infil);
             }
         }
 
@@ -358,7 +310,7 @@ namespace main.contents
             if (Win_True_radioButton.Checked == true)
             {
                 Win_Infil = true;
-                Cal_Infiltration("창호", Win_Infil);
+                Cal_Infiltration(BlowDoorTest, Door_Infil, Win_Infil, ElecWiring_Infil, Pipe_Infil);
             }
         }
 
@@ -367,43 +319,43 @@ namespace main.contents
             if (Win_False_radioButton.Checked == true)
             {
                 Win_Infil = false;
-                Cal_Infiltration("창호", Win_Infil);
+                Cal_Infiltration(BlowDoorTest, Door_Infil, Win_Infil, ElecWiring_Infil, Pipe_Infil);
             }
         }
 
-        private void Wall_True_radioButton_CheckedChanged(object sender, EventArgs e)
+        private void ElecWiring_True_radioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (Wall_True_radioButton.Checked == true)
+            if (ElecWiring_True_radioButton.Checked == true)
             {
-                Wall_Infil = true;
-                Cal_Infiltration("외벽", Wall_Infil);
+                ElecWiring_Infil = true;
+                Cal_Infiltration(BlowDoorTest, Door_Infil, Win_Infil, ElecWiring_Infil, Pipe_Infil);
             }
         }
 
-        private void Wall_False_radioButton_CheckedChanged(object sender, EventArgs e)
+        private void ElecWiring_False_radioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (Wall_False_radioButton.Checked == true)
+            if (ElecWiring_False_radioButton.Checked == true)
             {
-                Wall_Infil = false;
-                Cal_Infiltration("외벽", Wall_Infil);
+                ElecWiring_Infil = false;
+                Cal_Infiltration(BlowDoorTest, Door_Infil, Win_Infil, ElecWiring_Infil, Pipe_Infil);
             }
         }
 
-        private void Roof_True_radioButton_CheckedChanged(object sender, EventArgs e)
+        private void Duct_True_radioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (Roof_True_radioButton.Checked == true)
+            if (Pipe_True_radioButton.Checked == true)
             {
-                Roof_Infil = true;
-                Cal_Infiltration("지붕", Roof_Infil);
+                Pipe_Infil = true;
+                Cal_Infiltration(BlowDoorTest, Door_Infil, Win_Infil, ElecWiring_Infil, Pipe_Infil);
             }
         }
 
-        private void Roof_False_radioButton_CheckedChanged(object sender, EventArgs e)
+        private void Pipe_False_radioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (Roof_True_radioButton.Checked == false)
+            if (Pipe_False_radioButton.Checked == true)
             {
-                Roof_Infil = false;
-                Cal_Infiltration("지붕", Roof_Infil);
+                Pipe_Infil = false;
+                Cal_Infiltration(BlowDoorTest, Door_Infil, Win_Infil, ElecWiring_Infil, Pipe_Infil);
             }
 
         }
@@ -441,7 +393,7 @@ namespace main.contents
         private void Year_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            if (Year_comboBox.SelectedItem != null && Year_comboBox.SelectedItem.ToString()!="")
+            if (Year_comboBox.SelectedItem != null && Year_comboBox.SelectedItem.ToString() != "")
             {
                 Year = Convert.ToDouble(Year_comboBox.SelectedItem.ToString());
                 Calc_LawDate();
@@ -451,7 +403,7 @@ namespace main.contents
 
         private void Month_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Month_comboBox.SelectedItem != null && Month_comboBox.SelectedItem.ToString() != "" )
+            if (Month_comboBox.SelectedItem != null && Month_comboBox.SelectedItem.ToString() != "")
             {
                 Month = Convert.ToDouble(Month_comboBox.SelectedItem.ToString());
                 Calc_LawDate();
@@ -568,7 +520,7 @@ namespace main.contents
 
         private void ReviewYear_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ReviewYear_comboBox.SelectedItem != null && ReviewYear_comboBox.SelectedItem.ToString() !="")
+            if (ReviewYear_comboBox.SelectedItem != null && ReviewYear_comboBox.SelectedItem.ToString() != "")
             {
                 ReviewYear = Convert.ToDouble(ReviewYear_comboBox.SelectedItem.ToString());
                 Calc_ReviewDate();
@@ -577,7 +529,7 @@ namespace main.contents
 
         private void ReviewMonth_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ReviewMonth_comboBox.SelectedItem != null && ReviewMonth_comboBox.SelectedItem.ToString()!="")
+            if (ReviewMonth_comboBox.SelectedItem != null && ReviewMonth_comboBox.SelectedItem.ToString() != "")
             {
                 ReviewMonth = Convert.ToDouble(ReviewMonth_comboBox.SelectedItem.ToString());
                 Calc_ReviewDate();
@@ -592,6 +544,17 @@ namespace main.contents
             else
             {
                 ReviewDate = Convert.ToDouble((ReviewYear + "." + ReviewMonth));
+            }
+        }
+
+        private void BlowDoor_button_Click(object sender, EventArgs e)
+        {
+            BlowDoorTest form = new BlowDoorTest();
+            DialogResult result = form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                n50 = form.n50;
+                n50_textBox.Text = form.n50.ToString("0.0");
             }
         }
 
@@ -661,17 +624,16 @@ namespace main.contents
             ReviewDate.ToString()
                  + "'", "프로젝트번호");
 
-            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,기밀측정여부,q50,q50Area," +
-                "출입문기밀여부,출입문q50," +
-                "창호기밀여부,창호q50," +
-                "외벽기밀여부,외벽q50," +
-                "지붕기밀여부,지붕q50",
-                 "'" + 번호[0][0] + "','" + BlowDoorTest + "','" + q50.ToString() + "','" + q50Area.ToString() + "','" +
-                 Door_Infil + "','" + Door_q50.ToString() + "','" +
-                 Win_Infil + "','" + Win_q50.ToString() + "','" +
-                 Wall_Infil + "','" + Wall_q50.ToString() + "','" +
-                 Roof_Infil + "','" + Roof_q50.ToString()
-                 + "'", "프로젝트번호");
+            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,기밀측정여부,n50," +
+               "출입문기밀여부," +
+               "창호기밀여부," +
+               "배선기밀여부," +
+               "배관기밀여부",
+                "'" + 번호[0][0] + "','" + BlowDoorTest + "','" + n50.ToString() + "','" +
+                Door_Infil + "','" +
+                Win_Infil + "','" +
+                ElecWiring_Infil + "','" +
+                Pipe_Infil + "'", "프로젝트번호");
 
             MessageBox.Show("저장되었습니다.");
         }
@@ -795,17 +757,17 @@ namespace main.contents
                     Month_comboBox.SelectedItem = Month.ToString();
                 }
                 if (Value[0][15] != "")
-                { 
+                {
                     ConstrucitonDate = Convert.ToDouble(Value[0][15]);
                     Calc_LawDate();
                 }
-               
+
                 if (Value[0][17] != "")
                 {
                     GrossArea = Convert.ToDouble(Value[0][17]);
                     GrossArea_textBox.Text = GrossArea.ToString();
                 }
-                
+
                 if (Value[0][18] != "")
                 {
                     BuildingArea = Convert.ToDouble(Value[0][18]);
@@ -842,7 +804,7 @@ namespace main.contents
                 {
                     ReviewDate = Convert.ToDouble(Value[0][26]);
                     Calc_ReviewDate();
-                }                               
+                }
                 Load_OldProject();
                 OldProject = Value[0][27];
                 OldProject_comboBox.SelectedIndex = OldProject_comboBox.FindStringExact(Value[0][27]);
@@ -850,29 +812,27 @@ namespace main.contents
             }
 
 
-            Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,기밀측정여부,q50,q50Area," +
-                "출입문기밀여부,출입문q50," +
-                "창호기밀여부,창호q50," +
-                "외벽기밀여부,외벽q50," +
-                "지붕기밀여부,지붕q50", "");
+            Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기밀측정여부," +
+                "출입문기밀여부," +
+                "창호기밀여부," +
+                "배선기밀여부," +
+                "배관기밀여부", "");
             if (Value.Length > 0)
             {
-                if (Value[0][1] != "")
+                if (Value[0][0] != "")
                 {
-                    BlowDoorTest = Value[0][1];
+                    BlowDoorTest = Value[0][0];
                 }
                 else
                 {
                     BlowDoorTest = "기밀 테스트 미실시";
                 }
-                BlowDoorTest_comboBox.SelectedItem = Value[0][1];
+                BlowDoorTest_comboBox.SelectedItem = Value[0][0];
+                Change_BlowDoorTest();
 
-                q50_textBox.Text = Value[0][2];
-                q50Area_textBox.Text = Value[0][3];
-
-                if (Value[0][4] != null && Value[0][4] != "")
+                if (Value[0][1] != null && Value[0][1] != "")
                 {
-                    if (Convert.ToBoolean(Value[0][4]))
+                    if (Convert.ToBoolean(Value[0][1]))
                     {
                         Door_True_radioButton.Checked = true;
                     }
@@ -882,9 +842,9 @@ namespace main.contents
                     }
                 }
 
-                if (Value[0][6] != null && Value[0][6] != "")
+                if (Value[0][2] != null && Value[0][2] != "")
                 {
-                    if (Convert.ToBoolean(Value[0][6]))
+                    if (Convert.ToBoolean(Value[0][2]))
                     {
                         Win_True_radioButton.Checked = true;
                     }
@@ -893,49 +853,38 @@ namespace main.contents
                         Win_False_radioButton.Checked = true;
                     }
                 }
-                if (Value[0][8] != null && Value[0][8] != "")
+                if (Value[0][3] != null && Value[0][3] != "")
                 {
-                    if (Convert.ToBoolean(Value[0][8]))
+                    if (Convert.ToBoolean(Value[0][3]))
                     {
-                        Wall_True_radioButton.Checked = true;
+                        ElecWiring_True_radioButton.Checked = true;
                     }
                     else
                     {
-                        Wall_False_radioButton.Checked = true;
+                        ElecWiring_False_radioButton.Checked = true;
                     }
                 }
-                if (Value[0][10] != null && Value[0][10] != "")
+                if (Value[0][4] != null && Value[0][4] != "")
                 {
-                    if (Convert.ToBoolean(Value[0][10]))
+                    if (Convert.ToBoolean(Value[0][4]))
                     {
-                        Roof_True_radioButton.Checked = true;
+                        Pipe_True_radioButton.Checked = true;
                     }
                     else
                     {
-                        Roof_False_radioButton.Checked = true;
+                        Pipe_False_radioButton.Checked = true;
                     }
                 }
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "n50", "");
-            if (Value.Length > 0)
+           
+            if (Value.Length > 0 && Value[0][0]!="")
             {
-                if (Value[0][0] != "" && Convert.ToDouble(Value[0][0]) > 0 && BlowDoorTest == "기밀 테스트 미실시")
-                {
-                    n50_textBox.Visible = true;
-                    n50_label1.Visible = true;
-                    n50_label2.Visible = true;
-                    n50_textBox.Text = Convert.ToDouble(Value[0][0]).ToString("0.0");
-                }
-                else
-                {
-                    n50_textBox.Visible = false;
-                    n50_label1.Visible = false;
-                    n50_label2.Visible = false;
-                }
+                n50 = Convert.ToDouble(Value[0][0]);
+                n50_textBox.Text = Convert.ToDouble(Value[0][0]).ToString("0.0");
             }
         }
-
 
     }
 }
