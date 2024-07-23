@@ -87,8 +87,12 @@ namespace main
         }
         public static void Cal_Qb()
         {
-            Cal_BlowDoor();
-            Cal_n50_tot();
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BUildingGeneral", "n50");
+            if (Value.Length > 0 && Value[0][0] != "")
+            { 
+                double[] q50_ = Cal_q50(Convert.ToDouble(Value[0][0])); 
+                Save_q50(q50_);
+            }
             Zone_Arrange();
             for (int k = 0; k < zone.Count; k++)
             {
@@ -223,192 +227,116 @@ namespace main
         }
 
         #region 기밀
-        private static void Cal_BlowDoor()
+        public static double[] Cal_q50(double n50)
         {
             double Area_tot = 0; //직접외기 외피면적
             double Area_q50 = 0; // 면적 * q50 합산 
-            double[] q50_element = new double[5];
+            double[] q50_element = new double[4];
             double CMH_tot = 0;
-            string[][] BValue = Program.DB.getValue(DB.type.ProjDB,"BuildingGeneral", "기밀측정여부,q50,q50Area","");
-            if (BValue.Length >0 )
-            {
-                if (BValue[0][0]== "기밀 테스트 실시")
-                {
-                    //출입문5,외벽2,창호3,커튼월창3,지붕2 
-                    q50_element[0] = 5;
-                    q50_element[1] = 2;
-                    q50_element[2] = 3;
-                    q50_element[3] = 3;
-                    q50_element[4] = 2;
+            double Volume_tot = 0;
 
-                    string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,면적,구조체번호", "");
-                    if (ZoneE.Length > 0)
+            string[][] ZoneV = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적,천장고", "");
+            if(ZoneV.Length > 0)
+            {
+                for(int a=0; a<ZoneV.Length; a++)
+                {
+                    Volume_tot += Convert.ToDouble(ZoneV[a][0]) * Convert.ToDouble(ZoneV[a][1]);
+                }
+                CMH_tot = n50 * Volume_tot;
+            }
+
+
+            //출입문5,창호3,외벽2,지붕2 
+            q50_element[0] = 5;
+            q50_element[1] = 3;
+            q50_element[2] = 2;
+            q50_element[3] = 2;
+
+            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,면적,구조체번호,커튼월부위", "");
+            if (ZoneE.Length > 0)
+            {
+                string[][] ss;
+                for (int n = 0; n < ZoneE.Length; n++)
+                {
+                    if (ZoneE[n][1] == "외부출입문")
                     {
-                        string[][] Value;
-                        for (int n = 0; n < ZoneE.Length; n++)
+                        ss = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "직접간접", "번호='" + ZoneE[n][3] + "'");
+                        if (ss.Length > 0)
                         {
-                            if (ZoneE[n][1] == "외부출입문")
-                            {
-                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "직접간접", "번호='" + ZoneE[n][3] + "'");
-                                if (Value.Length > 0)
-                                {
-                                    if (Value[0][0] == "직접외기")
-                                    {
-                                        Area_tot += Convert.ToDouble(ZoneE[n][2]);
-                                        Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[0];
-                                    }
-                                }
-                            }
-                            else if (ZoneE[n][1] == "외벽")
-                            {
-                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + ZoneE[n][3] + "'");
-                                if (Value.Length > 0)
-                                {
-                                    if (Value[0][0] == "직접외기")
-                                    {
-                                        Area_tot += Convert.ToDouble(ZoneE[n][2]);
-                                        Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[1];
-                                    }
-                                }
-                            }
-                            else if (ZoneE[n][1] == "창호")
-                            {
-                                Value = Program.DB.querySQL(DB.type.ProjDB, "select a.직접간접 FROM ConstructionWindow AS a INNER JOIN SubWindow AS b ON a.번호 = b.상위창호번호 where b.번호 = '" + ZoneE[n][3] + "'");
-                                if (Value.Length > 0)
-                                {
-                                    if (Value[0][0] == "직접외기")
-                                    {
-                                        Area_tot += Convert.ToDouble(ZoneE[n][2]);
-                                        Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[2];
-                                    }
-                                }
-                            }
-                            else if (ZoneE[n][1] == "커튼월창")
+                            if (ss[0][0] == "직접외기")
                             {
                                 Area_tot += Convert.ToDouble(ZoneE[n][2]);
-                                Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[3];
+                                Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[0];
                             }
-                            else if (ZoneE[n][1] == "지붕")
+                        }
+                    }                   
+                    else if (ZoneE[n][1] == "창호")
+                    {
+                        ss = Program.DB.querySQL(DB.type.ProjDB, "select a.직접간접 FROM ConstructionWindow AS a INNER JOIN SubWindow AS b ON a.번호 = b.상위창호번호 where b.번호 = '" + ZoneE[n][3] + "'");
+                        if (ss.Length > 0)
+                        {
+                            if (ss[0][0] == "직접외기")
                             {
-                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "직접간접", "번호='" + ZoneE[n][3] + "'");
-                                if (Value.Length > 0)
-                                {
-                                    if (Value[0][0] == "직접외기")
-                                    {
-                                        Area_tot += Convert.ToDouble(ZoneE[n][2]);
-                                        Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[4];
-                                    }
-                                }
+                                Area_tot += Convert.ToDouble(ZoneE[n][2]);
+                                Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[1];
                             }
                         }
                     }
-
-                    CMH_tot = Convert.ToDouble(BValue[0][1]) *Area_tot ;
-                    q50_element[0] = q50_element[0] * CMH_tot / Area_q50;
-                    q50_element[1] = q50_element[1] * CMH_tot / Area_q50;
-                    q50_element[2] = q50_element[2] * CMH_tot / Area_q50;
-                    q50_element[3] = q50_element[3] * CMH_tot / Area_q50;
-                    q50_element[4] = q50_element[4] * CMH_tot / Area_q50;
-
-                    string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
-                    Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,출입문q50,창호q50,외벽q50,지붕q50",
-                         "'" + 번호[0][0] + "','" + q50_element[0] + "','" + q50_element[1] + "','" + q50_element[2] + "','" + q50_element[3] + "','" + q50_element[4]
-                   + "'", "프로젝트번호");
-                }
-            }
-        }
-        private static void Cal_n50_tot()
-        {
-            double n50_tot;
-            double CMH = 0;
-            double V_NF_tot =0; // 순체적합산
-            string[][] Value;
-            double Door_q50 = 0, Win_q50 = 0, CW_q50 = 0, Wall_q50 = 0, Roof_q50 = 0;
-
-
-            string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기밀측정여부,출입문q50,창호q50,외벽q50,지붕q50", "");
-            if (Value2.Length > 0)
-            {
-                Door_q50 = Convert.ToDouble(Value2[0][1]);
-                Win_q50 = Convert.ToDouble(Value2[0][2]);
-                Wall_q50 = Convert.ToDouble(Value2[0][3]);
-                Roof_q50 = Convert.ToDouble(Value2[0][4]);
-            }
-            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,커튼월부위,면적,구조체,구조체번호,층", "");
-            if (ZoneE.Length > 0)
-            {
-                for (int n = 0; n < ZoneE.Length; n++)
-                {
-                    if (ZoneE[n][1] == "커튼월창")
+                    else if (ZoneE[n][1] == "커튼월창")
                     {
-                        CMH += Convert.ToDouble(ZoneE[n][3]) * Win_q50;
+                        if (ZoneE[n][4] != "출입문부분")
+                        {
+                            Area_tot += Convert.ToDouble(ZoneE[n][2]);
+                            Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[1];
+                        }
+                        else
+                        {
+                            Area_tot += Convert.ToDouble(ZoneE[n][2]);
+                            Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[0];
+                        }
                     }
                     else if (ZoneE[n][1] == "외벽")
                     {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                        if (Value.Length > 0)
+                        ss = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + ZoneE[n][3] + "'");
+                        if (ss.Length > 0)
                         {
-                            if (Value[0][0] == "직접외기")
+                            if (ss[0][0] == "직접외기")
                             {
-                                CMH += Convert.ToDouble(ZoneE[n][3]) * Wall_q50;
+                                Area_tot += Convert.ToDouble(ZoneE[n][2]);
+                                Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[2];
                             }
                         }
                     }
                     else if (ZoneE[n][1] == "지붕")
                     {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                        if (Value.Length > 0)
+                        ss = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "직접간접", "번호='" + ZoneE[n][3] + "'");
+                        if (ss.Length > 0)
                         {
-                            if (Value[0][0] == "직접외기")
+                            if (ss[0][0] == "직접외기")
                             {
-                                CMH += Convert.ToDouble(ZoneE[n][3]) * Roof_q50;
+                                Area_tot += Convert.ToDouble(ZoneE[n][2]);
+                                Area_q50 += Convert.ToDouble(ZoneE[n][2]) * q50_element[3];
                             }
                         }
-                    }
-                    else if (ZoneE[n][1] == "창호")
-                    {
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "select a.직접간접 FROM ConstructionWindow AS a INNER JOIN SubWindow AS b ON a.번호 = b.상위창호번호 where b.번호 = '" + ZoneE[n][5] + "'");
-                        if (Value.Length > 0)
-                        {
-                            if (Value[0][0] == "직접외기")
-                            {
-                                CMH += Convert.ToDouble(ZoneE[n][3]) * Win_q50;
-                            }
-                        }
-                    }
-                    else if (ZoneE[n][1] == "외부출입문")
-                    {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "직접간접", "번호='" + ZoneE[n][5] + "'");
-                        if (Value.Length > 0)
-                        {
-                            if (Value[0][0] == "직접외기")
-                            {
-                                CMH += Convert.ToDouble(ZoneE[n][3]) * Door_q50;
-                            }
-                        }
-                    }
-                    else
-                    {
-
                     }
                 }
+            }
 
-            }
-            ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적,천장고", "");
-            if (ZoneE.Length > 0)
-            {
-              for(int i = 0; i < ZoneE.Length; i++)
-                {
-                    V_NF_tot += (Convert.ToDouble(ZoneE[i][0]) * Convert.ToDouble(ZoneE[i][1]));
-                }
-            }
-            n50_tot = CMH  / V_NF_tot;
-            string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
-            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,n50",
-                 "'" + 번호[0][0] + "','" + n50_tot.ToString()
-           + "'", "프로젝트번호");
+            q50_element[0] = q50_element[0] * CMH_tot / Area_q50;
+            q50_element[1] = q50_element[1] * CMH_tot / Area_q50;
+            q50_element[2] = q50_element[2] * CMH_tot / Area_q50;
+            q50_element[3] = q50_element[3] * CMH_tot / Area_q50;
+
+            return q50_element;
         }
 
+        private static void Save_q50(double[] q50_element)
+        {
+            string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
+            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,출입문q50,창호q50,외벽q50,지붕q50",
+                 "'" + 번호[0][0] + "','" + q50_element[0] + "','" + q50_element[1] + "','" + q50_element[2] + "','" + q50_element[3] + "'", "프로젝트번호");
+        }
+        
         #endregion
 
         #region 요구량
