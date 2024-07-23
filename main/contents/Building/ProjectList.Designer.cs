@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            ProjectType_label = new Label();
+            PreCopy_label = new Label();
+            PreCopy_button = new Button();
             Save_button = new Button();
-            ProjectType_textBox = new TextBox();
-            label4 = new Label();
             Copy_button = new Button();
             Delete_button = new Button();
             New_button = new Button();
@@ -53,9 +54,10 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(ProjectType_label);
+            GeneralPanel.Controls.Add(PreCopy_label);
+            GeneralPanel.Controls.Add(PreCopy_button);
             GeneralPanel.Controls.Add(Save_button);
-            GeneralPanel.Controls.Add(ProjectType_textBox);
-            GeneralPanel.Controls.Add(label4);
             GeneralPanel.Controls.Add(Copy_button);
             GeneralPanel.Controls.Add(Delete_button);
             GeneralPanel.Controls.Add(New_button);
@@ -67,13 +69,53 @@
             GeneralPanel.TabIndex = 133;
             GeneralPanel.Paint += GeneralPanel_Paint;
             // 
+            // ProjectType_label
+            // 
+            ProjectType_label.AutoSize = true;
+            ProjectType_label.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            ProjectType_label.Location = new Point(207, 106);
+            ProjectType_label.Name = "ProjectType_label";
+            ProjectType_label.Size = new Size(58, 21);
+            ProjectType_label.TabIndex = 108;
+            ProjectType_label.Text = "기존 건물";
+            ProjectType_label.UseCompatibleTextRendering = true;
+            // 
+            // PreCopy_label
+            // 
+            PreCopy_label.AutoSize = true;
+            PreCopy_label.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            PreCopy_label.Location = new Point(807, 81);
+            PreCopy_label.Name = "PreCopy_label";
+            PreCopy_label.Size = new Size(58, 21);
+            PreCopy_label.TabIndex = 107;
+            PreCopy_label.Text = "기존 건물";
+            PreCopy_label.UseCompatibleTextRendering = true;
+            PreCopy_label.Visible = false;
+            // 
+            // PreCopy_button
+            // 
+            PreCopy_button.BackColor = SystemColors.ControlLight;
+            PreCopy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            PreCopy_button.FlatStyle = FlatStyle.System;
+            PreCopy_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            PreCopy_button.Location = new Point(803, 105);
+            PreCopy_button.Margin = new Padding(0);
+            PreCopy_button.Name = "PreCopy_button";
+            PreCopy_button.Size = new Size(67, 23);
+            PreCopy_button.TabIndex = 106;
+            PreCopy_button.Text = "Copy";
+            PreCopy_button.UseCompatibleTextRendering = true;
+            PreCopy_button.UseVisualStyleBackColor = false;
+            PreCopy_button.Visible = false;
+            PreCopy_button.Click += PreCopy_button_Click;
+            // 
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ControlLight;
             Save_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Save_button.FlatStyle = FlatStyle.System;
             Save_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            Save_button.Location = new Point(762, 500);
+            Save_button.Location = new Point(803, 500);
             Save_button.Margin = new Padding(0);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(67, 23);
@@ -82,37 +124,13 @@
             Save_button.UseVisualStyleBackColor = false;
             Save_button.Click += Save_button_Click;
             // 
-            // ProjectType_textBox
-            // 
-            ProjectType_textBox.BackColor = Color.White;
-            ProjectType_textBox.BorderStyle = BorderStyle.None;
-            ProjectType_textBox.Enabled = false;
-            ProjectType_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ProjectType_textBox.ForeColor = SystemColors.ControlDark;
-            ProjectType_textBox.Location = new Point(240, 109);
-            ProjectType_textBox.Name = "ProjectType_textBox";
-            ProjectType_textBox.ReadOnly = true;
-            ProjectType_textBox.Size = new Size(116, 15);
-            ProjectType_textBox.TabIndex = 104;
-            ProjectType_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(151, 110);
-            label4.Name = "label4";
-            label4.Size = new Size(83, 15);
-            label4.TabIndex = 103;
-            label4.Text = "프로젝트 유형";
-            // 
             // Copy_button
             // 
             Copy_button.BackColor = SystemColors.ControlLight;
             Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Copy_button.FlatStyle = FlatStyle.System;
             Copy_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            Copy_button.Location = new Point(761, 105);
+            Copy_button.Location = new Point(736, 105);
             Copy_button.Margin = new Padding(0);
             Copy_button.Name = "Copy_button";
             Copy_button.Size = new Size(67, 23);
@@ -127,7 +145,7 @@
             Delete_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Delete_button.FlatStyle = FlatStyle.System;
             Delete_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            Delete_button.Location = new Point(734, 105);
+            Delete_button.Location = new Point(713, 105);
             Delete_button.Margin = new Padding(0);
             Delete_button.Name = "Delete_button";
             Delete_button.Size = new Size(23, 23);
@@ -142,7 +160,7 @@
             New_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             New_button.FlatStyle = FlatStyle.System;
             New_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            New_button.Location = new Point(707, 105);
+            New_button.Location = new Point(689, 105);
             New_button.Margin = new Padding(0);
             New_button.Name = "New_button";
             New_button.Size = new Size(23, 23);
@@ -162,34 +180,34 @@
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { chk, num, pnum, pname, type });
             dataGridView1.Location = new Point(151, 142);
             dataGridView1.Name = "dataGridView1";
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle9.ForeColor = Color.Black;
-            dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
-            dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(678, 355);
             dataGridView1.TabIndex = 99;
@@ -235,7 +253,7 @@
             // 
             type.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             type.FillWeight = 22.2307777F;
-            type.HeaderText = "유형 상세";
+            type.HeaderText = "유형";
             type.Name = "type";
             type.ReadOnly = true;
             type.Resizable = DataGridViewTriState.False;
@@ -243,7 +261,7 @@
             // 
             // Icon_pictureBox
             // 
-            Icon_pictureBox.Location = new Point(362, 86);
+            Icon_pictureBox.Location = new Point(151, 78);
             Icon_pictureBox.Name = "Icon_pictureBox";
             Icon_pictureBox.Size = new Size(50, 50);
             Icon_pictureBox.TabIndex = 98;
@@ -269,18 +287,19 @@
 
         #endregion
         private Panel GeneralPanel;
-        private Label label4;
         private Button Copy_button;
         private Button Delete_button;
         private Button New_button;
         private DataGridView dataGridView1;
         private PictureBox Icon_pictureBox;
-        private TextBox ProjectType_textBox;
+        private Button Save_button;
+        private Button PreCopy_button;
+        private Label PreCopy_label;
         private DataGridViewCheckBoxColumn chk;
         private DataGridViewTextBoxColumn num;
         private DataGridViewTextBoxColumn pnum;
         private DataGridViewTextBoxColumn pname;
         private DataGridViewTextBoxColumn type;
-        private Button Save_button;
+        private Label ProjectType_label;
     }
 }

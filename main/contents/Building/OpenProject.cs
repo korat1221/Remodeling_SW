@@ -86,7 +86,7 @@ namespace main.contents
                     Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_4.New.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
-                ProjectType_textBox.Text = ProjectType;
+                ProjectType_label.Text = ProjectType;
 
             }
         }

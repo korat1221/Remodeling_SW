@@ -51,6 +51,7 @@ namespace main.contents
             {
                 tables.Add("BuildingGeneral");
                 tables.Add("BuildingEnergyUse");
+                tables.Add("BlowDoorTest");
                 tables.Add("User_PVModule");
                 tables.Add("User_PVInverter");
                 tables.Add("User_PVBattery");
@@ -67,6 +68,10 @@ namespace main.contents
                 tables.Add("User_DH");
                 tables.Add("User_AHU");
                 tables.Add("User_HRV");
+                tables.Add("User_DHWHP");
+                tables.Add("User_AirCooler");
+                tables.Add("User_WaterCooler");
+                tables.Add("User_CoolerTop");
             }
             if (Construction_checkBox.Checked)
             {
@@ -101,6 +106,7 @@ namespace main.contents
                 tables.Add("ZoneGeneral_3D");
                 tables.Add("ZoneEnvelope_3D");
                 tables.Add("ThermalBridge_3D");
+                tables.Add("User_TB");
             }
             if (Zone_checkBox.Checked)
             {
@@ -111,21 +117,12 @@ namespace main.contents
             }
             if (System_checkBox.Checked)
             {        
-                tables.Add("DHWSystem_Form");
                 tables.Add("HeatingSystem_Form");
                 tables.Add("Heating_ce_Form");
-                tables.Add("AHUSystem_Form");
-
+                tables.Add("CoolingSystem_Form");
                 tables.Add("Cooling_ce_Form");
-                tables.Add("CoolingZone");
-                tables.Add("User_CoolingSystem");
-                tables.Add("User_AirCon");
-                tables.Add("User_AirCooler");
-                tables.Add("User_WaterCooler");
-                tables.Add("User_AbsorbCooler");
-                tables.Add("User_SoilCooler");
-                tables.Add("User_CoolerTop");
-
+                tables.Add("DHWSystem_Form");
+                tables.Add("AHUSystem_Form");
                 tables.Add("PV_Form");
                 tables.Add("PV_Result");
             }

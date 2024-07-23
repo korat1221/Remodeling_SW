@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
+            label4 = new Label();
             System_checkBox = new CheckBox();
             System_pictureBox = new PictureBox();
             Zone_checkBox = new CheckBox();
@@ -50,7 +51,8 @@
             // 
             // GeneralPanel
             // 
-            GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(label4);
             GeneralPanel.Controls.Add(System_checkBox);
             GeneralPanel.Controls.Add(System_pictureBox);
             GeneralPanel.Controls.Add(Zone_checkBox);
@@ -58,20 +60,30 @@
             GeneralPanel.Controls.Add(Model_checkBox);
             GeneralPanel.Controls.Add(Model_pictureBox);
             GeneralPanel.Controls.Add(Construction_checkBox);
-            GeneralPanel.Controls.Add(Construction_pictureBox);
             GeneralPanel.Controls.Add(Building_checkBox);
             GeneralPanel.Controls.Add(Building_pictureBox);
             GeneralPanel.Controls.Add(Save_button);
-            GeneralPanel.Location = new Point(0, -47);
+            GeneralPanel.Controls.Add(Construction_pictureBox);
+            GeneralPanel.Location = new Point(0, 0);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(713, 548);
+            GeneralPanel.Size = new Size(713, 245);
             GeneralPanel.TabIndex = 18;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Location = new Point(53, 29);
+            label4.Name = "label4";
+            label4.Size = new Size(83, 15);
+            label4.TabIndex = 131;
+            label4.Text = "프로젝트 복사";
             // 
             // System_checkBox
             // 
             System_checkBox.AutoSize = true;
             System_checkBox.Enabled = false;
-            System_checkBox.Location = new Point(314, 450);
+            System_checkBox.Location = new Point(520, 155);
             System_checkBox.Name = "System_checkBox";
             System_checkBox.Size = new Size(78, 19);
             System_checkBox.TabIndex = 118;
@@ -81,9 +93,9 @@
             // 
             // System_pictureBox
             // 
-            System_pictureBox.Location = new Point(284, 317);
+            System_pictureBox.Location = new Point(524, 80);
             System_pictureBox.Name = "System_pictureBox";
-            System_pictureBox.Size = new Size(138, 127);
+            System_pictureBox.Size = new Size(70, 60);
             System_pictureBox.TabIndex = 117;
             System_pictureBox.TabStop = false;
             // 
@@ -91,7 +103,7 @@
             // 
             Zone_checkBox.AutoSize = true;
             Zone_checkBox.Enabled = false;
-            Zone_checkBox.Location = new Point(86, 450);
+            Zone_checkBox.Location = new Point(422, 155);
             Zone_checkBox.Name = "Zone_checkBox";
             Zone_checkBox.Size = new Size(66, 19);
             Zone_checkBox.TabIndex = 116;
@@ -101,9 +113,9 @@
             // 
             // Zone_pictureBox
             // 
-            Zone_pictureBox.Location = new Point(56, 317);
+            Zone_pictureBox.Location = new Point(420, 80);
             Zone_pictureBox.Name = "Zone_pictureBox";
-            Zone_pictureBox.Size = new Size(138, 127);
+            Zone_pictureBox.Size = new Size(70, 60);
             Zone_pictureBox.TabIndex = 115;
             Zone_pictureBox.TabStop = false;
             // 
@@ -111,7 +123,7 @@
             // 
             Model_checkBox.AutoSize = true;
             Model_checkBox.Enabled = false;
-            Model_checkBox.Location = new Point(542, 246);
+            Model_checkBox.Location = new Point(316, 155);
             Model_checkBox.Name = "Model_checkBox";
             Model_checkBox.Size = new Size(70, 19);
             Model_checkBox.TabIndex = 114;
@@ -121,9 +133,9 @@
             // 
             // Model_pictureBox
             // 
-            Model_pictureBox.Location = new Point(512, 113);
+            Model_pictureBox.Location = new Point(316, 80);
             Model_pictureBox.Name = "Model_pictureBox";
-            Model_pictureBox.Size = new Size(138, 127);
+            Model_pictureBox.Size = new Size(70, 60);
             Model_pictureBox.TabIndex = 113;
             Model_pictureBox.TabStop = false;
             // 
@@ -131,7 +143,7 @@
             // 
             Construction_checkBox.AutoSize = true;
             Construction_checkBox.Enabled = false;
-            Construction_checkBox.Location = new Point(314, 246);
+            Construction_checkBox.Location = new Point(202, 155);
             Construction_checkBox.Name = "Construction_checkBox";
             Construction_checkBox.Size = new Size(90, 19);
             Construction_checkBox.TabIndex = 112;
@@ -141,16 +153,16 @@
             // 
             // Construction_pictureBox
             // 
-            Construction_pictureBox.Location = new Point(284, 113);
+            Construction_pictureBox.Location = new Point(212, 80);
             Construction_pictureBox.Name = "Construction_pictureBox";
-            Construction_pictureBox.Size = new Size(138, 127);
+            Construction_pictureBox.Size = new Size(70, 60);
             Construction_pictureBox.TabIndex = 111;
             Construction_pictureBox.TabStop = false;
             // 
             // Building_checkBox
             // 
             Building_checkBox.AutoSize = true;
-            Building_checkBox.Location = new Point(86, 246);
+            Building_checkBox.Location = new Point(104, 155);
             Building_checkBox.Name = "Building_checkBox";
             Building_checkBox.Size = new Size(78, 19);
             Building_checkBox.TabIndex = 110;
@@ -160,9 +172,9 @@
             // 
             // Building_pictureBox
             // 
-            Building_pictureBox.Location = new Point(56, 113);
+            Building_pictureBox.Location = new Point(108, 80);
             Building_pictureBox.Name = "Building_pictureBox";
-            Building_pictureBox.Size = new Size(138, 127);
+            Building_pictureBox.Size = new Size(70, 60);
             Building_pictureBox.TabIndex = 109;
             Building_pictureBox.TabStop = false;
             // 
@@ -170,7 +182,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(525, 447);
+            Save_button.Location = new Point(524, 203);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -183,11 +195,11 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AliceBlue;
-            ClientSize = new Size(710, 500);
+            ClientSize = new Size(710, 243);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "ProjectCopy";
-            Text = "기존 프로젝트 Import";
+            Text = "프로젝트 복사";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)System_pictureBox).EndInit();
@@ -214,5 +226,6 @@
         private PictureBox Construction_pictureBox;
         private CheckBox Building_checkBox;
         private PictureBox Building_pictureBox;
+        private Label label4;
     }
 }

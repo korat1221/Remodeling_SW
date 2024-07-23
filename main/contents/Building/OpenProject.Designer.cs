@@ -32,6 +32,8 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            ProjectType_label = new Label();
+            Icon_pictureBox = new PictureBox();
             Open_button = new Button();
             dataGridView1 = new DataGridView();
             chk = new DataGridViewCheckBoxColumn();
@@ -39,19 +41,15 @@
             pnum = new DataGridViewTextBoxColumn();
             pname = new DataGridViewTextBoxColumn();
             type = new DataGridViewTextBoxColumn();
-            ProjectType_textBox = new TextBox();
-            label4 = new Label();
-            Icon_pictureBox = new PictureBox();
             GeneralPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(ProjectType_textBox);
-            GeneralPanel.Controls.Add(label4);
+            GeneralPanel.Controls.Add(ProjectType_label);
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Controls.Add(Open_button);
             GeneralPanel.Controls.Add(dataGridView1);
@@ -60,6 +58,25 @@
             GeneralPanel.Size = new Size(977, 661);
             GeneralPanel.TabIndex = 133;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // ProjectType_label
+            // 
+            ProjectType_label.AutoSize = true;
+            ProjectType_label.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            ProjectType_label.Location = new Point(207, 115);
+            ProjectType_label.Name = "ProjectType_label";
+            ProjectType_label.Size = new Size(58, 21);
+            ProjectType_label.TabIndex = 109;
+            ProjectType_label.Text = "기존 건물";
+            ProjectType_label.UseCompatibleTextRendering = true;
+            // 
+            // Icon_pictureBox
+            // 
+            Icon_pictureBox.Location = new Point(151, 86);
+            Icon_pictureBox.Name = "Icon_pictureBox";
+            Icon_pictureBox.Size = new Size(50, 50);
+            Icon_pictureBox.TabIndex = 105;
+            Icon_pictureBox.TabStop = false;
             // 
             // Open_button
             // 
@@ -160,43 +177,11 @@
             // 
             type.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             type.FillWeight = 22.2307777F;
-            type.HeaderText = "유형 상세";
+            type.HeaderText = "유형";
             type.Name = "type";
             type.ReadOnly = true;
             type.Resizable = DataGridViewTriState.False;
             type.Width = 96;
-            // 
-            // ProjectType_textBox
-            // 
-            ProjectType_textBox.BackColor = Color.White;
-            ProjectType_textBox.BorderStyle = BorderStyle.None;
-            ProjectType_textBox.Enabled = false;
-            ProjectType_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ProjectType_textBox.ForeColor = SystemColors.ControlDark;
-            ProjectType_textBox.Location = new Point(240, 111);
-            ProjectType_textBox.Name = "ProjectType_textBox";
-            ProjectType_textBox.ReadOnly = true;
-            ProjectType_textBox.Size = new Size(116, 15);
-            ProjectType_textBox.TabIndex = 107;
-            ProjectType_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(151, 112);
-            label4.Name = "label4";
-            label4.Size = new Size(83, 15);
-            label4.TabIndex = 106;
-            label4.Text = "프로젝트 유형";
-            // 
-            // Icon_pictureBox
-            // 
-            Icon_pictureBox.Location = new Point(362, 88);
-            Icon_pictureBox.Name = "Icon_pictureBox";
-            Icon_pictureBox.Size = new Size(50, 50);
-            Icon_pictureBox.TabIndex = 105;
-            Icon_pictureBox.TabStop = false;
             // 
             // OpenProject
             // 
@@ -211,8 +196,8 @@
             Text = "Form3";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
@@ -220,13 +205,12 @@
         private Panel GeneralPanel;
         private Button Open_button;
         private DataGridView dataGridView1;
+        private PictureBox Icon_pictureBox;
         private DataGridViewCheckBoxColumn chk;
         private DataGridViewTextBoxColumn num;
         private DataGridViewTextBoxColumn pnum;
         private DataGridViewTextBoxColumn pname;
         private DataGridViewTextBoxColumn type;
-        private TextBox ProjectType_textBox;
-        private Label label4;
-        private PictureBox Icon_pictureBox;
+        private Label ProjectType_label;
     }
 }

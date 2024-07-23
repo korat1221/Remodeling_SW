@@ -28,7 +28,6 @@ namespace main.contents
     {
         public static String ProjectType = null;
         public static String CurProjID = null;
-
         private bool drawing = false;
 
         Dictionary<string, string> types = new Dictionary<string, string>();
@@ -85,39 +84,47 @@ namespace main.contents
                 {
                     Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_1.Previous.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                    drawList(1.ToString());
+                    drawList(ProjectType);
+                    PreCopy_button.Visible = false;
+                    PreCopy_label.Visible = false;
                 }
                 else if (ProjectType == "2")
                 {
                     Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_2.Retrofit.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                    drawList(1.ToString());
+                    drawList(ProjectType);
+                    PreCopy_button.Visible = true;
+                    PreCopy_label.Visible = true;
                 }
                 else if (ProjectType == "3")
                 {
                     Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_3.Remodeling.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                    drawList(1.ToString());
+                    drawList(ProjectType);
+                    PreCopy_button.Visible = true;
+                    PreCopy_label.Visible = true;
                 }
                 else
                 {
                     Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_4.New.png");
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                    drawList(4.ToString());
+                    drawList(ProjectType);
+                    PreCopy_button.Visible = false;
+                    PreCopy_label.Visible = false;
                 }
-                ProjectType_textBox.Text = types[ProjectType];
+                ProjectType_label.Text = types[ProjectType];
 
             }
             catch { }
 
         }
 
-        private void drawList(String ProjectType2)
+        private void drawList(String ProjectType)
         {
             drawing = true;
             dataGridView1.Rows.Clear();
 
-            string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type FROM projects WHERE type='" + ProjectType + "'OR type = '" + ProjectType2 + "'");
+            string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type FROM projects WHERE type='" + ProjectType + "'");
             if (res.Length > 0)
             {
                 for (int n = 0; n < res.Length; n++)
@@ -171,16 +178,15 @@ namespace main.contents
             }
         }
 
-        private void Copy_button_Click(object sender, EventArgs e)
+        private void PreCopy_button_Click(object sender, EventArgs e)
         {
             int k = GetSelectedIndex();
             if (k >= 0)
             {
-                string pid0 = dataGridView1.Rows[k].Cells[2].Value.ToString();
-
                 //  Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET type = '" + ProjectType + "', title = WHERE pnum = '" + pid + "'");
-                ProjectCopy projectcopy = new ProjectCopy();
+                PreProjectCopy projectcopy = new PreProjectCopy();
                 DialogResult result = projectcopy.ShowDialog();
+                string pid0 = projectcopy.pid0;
                 if (result == DialogResult.OK)
                 {
                     string pid = AddProject(pid0, dataGridView1.Rows[k].Cells[3].Value.ToString());
@@ -200,6 +206,8 @@ namespace main.contents
                                 Program.DB.executeSQL(db, "DROP TABLE " + table);
                             }
                         }
+
+                        Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "'");
                         db.Close();
                     }
 
@@ -217,7 +225,54 @@ namespace main.contents
                 }
             }
         }
-      
+        private void Copy_button_Click(object sender, EventArgs e)
+        {
+            int k = GetSelectedIndex();
+            if (k >= 0)
+            {
+                //  Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET type = '" + ProjectType + "', title = WHERE pnum = '" + pid + "'");
+                ProjectCopy projectcopy = new ProjectCopy();
+                DialogResult result = projectcopy.ShowDialog();
+                string pid0 = dataGridView1.Rows[k].Cells[2].Value.ToString();
+                if (result == DialogResult.OK)
+                {
+                    string pid = AddProject(pid0, dataGridView1.Rows[k].Cells[3].Value.ToString());
+
+                    SQLiteConnection db = new SQLiteConnection(@"Data Source=" + Program.gPath + "projects\\" + pid + ".sqlite");
+                    db.Open();
+
+                    string[][] res = Program.DB.querySQL(db, "SELECT name FROM sqlite_master WHERE type IN('table', 'view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN('table', 'view') ORDER BY 1");
+                    if (res.Length > 0)
+                    {
+                        for (int n = 0; n < res.Length; n++)
+                        {
+                            string table = res[n][0];
+
+                            if (projectcopy.tables.Find(p => p == table) == null)
+                            {
+                                Program.DB.executeSQL(db, "DROP TABLE " + table);
+                            }
+                        }
+
+                        Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "'");
+                        db.Close();
+                    }
+
+
+                    if (projectcopy.model_copy)
+                    {
+                        Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
+
+                        CopyDirectory(Program.gPath + "threejs\\public\\models\\" + pid0, Program.gPath + "threejs\\public\\models\\" + pid, true);
+                    }
+
+                    drawList(ProjectType.ToString());
+
+                    MessageBox.Show("프로젝트를 복사하였습니다.");
+                }
+            }
+        }
+
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
 
