@@ -1319,6 +1319,11 @@ namespace main
                             fC_PL_z[i] = Convert.ToDouble(val[0][h]);
                             break;
                         }
+                        else if (h==9)
+                        {
+                            fC_PL_z[i] = Convert.ToDouble(val[0][h]);
+                            break;
+                        }
                         else B2 = B2 + 0.1;
                     }
                 }    
@@ -1345,6 +1350,11 @@ namespace main
                             break;
                         }
                         else if (BC_ahu[i] < B2)
+                        {
+                            fC_PL_ahu[i] = Convert.ToDouble(val[0][h]);
+                            break;
+                        }
+                        else if (h==9)
                         {
                             fC_PL_ahu[i] = Convert.ToDouble(val[0][h]);
                             break;
