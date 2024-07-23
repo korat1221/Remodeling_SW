@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using main.contents;
+using System.Collections;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace main
@@ -255,29 +256,16 @@ namespace main
         }
         private void Load_Rule_q50(Zone zone1)
         {
-            string[] Construction = { "외부출입문", "외벽", "지붕", "창호" };
-            for (int a = 0; a < Construction.Length; a++)
+            string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기밀", "n50", "방풍출입문 ='적용' and 창호='적용' and 배선='적용' and 배관='적용'");
+            if (Value.Length > 0)
             {
-                string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기밀", "기밀시공", "구조체 ='" + Construction[a] + "'");
-                if (value.Length > 0)
-                {
-                    switch (Construction[a])
-                    {
-                        case "외부출입문":
-                            zone1.Door_q50 = Convert.ToDouble(value[0][0]);
-                            break;
-                        case "외벽":
-                            zone1.Wall_q50 = Convert.ToDouble(value[0][0]);
-                            break;
-                        case "창호":
-                            zone1.Win_q50 = Convert.ToDouble(value[0][0]);
-                            zone1.CW_q50 = Convert.ToDouble(value[0][0]);
-                            break;
-                        case "지붕":
-                            zone1.Roof_q50 = Convert.ToDouble(value[0][0]);
-                            break;
-                    }
-                }
+                double n50 = Convert.ToDouble(Value[0][0]);
+                double[] q50_ = CALC.Cal_q50(n50);
+                zone1.Door_q50 = q50_[0];
+                zone1.Win_q50 = q50_[1];
+                zone1.CW_q50 = q50_[1];
+                zone1.Wall_q50 = q50_[2];
+                zone1.Roof_q50 = q50_[3];
             }
         }
         private void Load_Rule_Ventil(Zone zone1)
