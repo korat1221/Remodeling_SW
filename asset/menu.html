@@ -42,7 +42,7 @@
             { "type": "AlgorithmReport", "text": "알고리즘 레포트", "id": "{\"formID\":27}" },
         ],
         [
-            { "type": "BuildingReport", "text": "리모델링안", "id": "{\"formID\":59}" }
+            { "type": "Remodeling",  "text": "리모델링안", "id": "{\"formID\":58}", "children": [{ "text": "Alt01", "id": "{\"formID\":59}" }] }
         ],
     ];
     let gDefaultSelect = ["0", "3", "8", "12", "16", "56","59"];
@@ -118,7 +118,7 @@
 </script>
 <body onload="init()">
     <div id="cont-left" class="split split-horizontal" style="width:320px;padding:4px">
-        <div id="cont-menu" style="width:125px;float:left;height: calc(100% - 16px);background-color: #B5C2CB;padding-top: 16px;border-radius: 4px;box-shadow: 2px 2px 2px 2px #eee;color:#fff">
+        <div id="cont-menu" style="width:125px;float:left;height: calc(100% - 16px);background-color: #204d70;padding-top: 16px;border-radius: 4px;box-shadow: 2px 2px 2px 2px #eee;color:#fff">
             <div class="cont-item" onclick="first = false;load(0, false, '0')">
                 <div class="cont-icon item0" style="background-image: url('images/1sticon/1.Building.png');"></div>
                 <div class="cont-title">건물 정보</div>
@@ -143,7 +143,7 @@
                 <div class="cont-icon item5" style="background-image: url('images/1sticon/7.Result.png');"></div>
                 <div class="cont-title">결과 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(6, false, '59')">
+            <div class="cont-item" onclick="first = false;load(6, false, '58')">
                 <div class="cont-icon item6" style="background-image: url('images/1sticon/8.Remodeling.png');"></div>
                 <div class="cont-title">리모델링안</div>
             </div>
