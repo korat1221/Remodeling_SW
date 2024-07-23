@@ -58,7 +58,7 @@
     <Compile Update="contents\Building\General.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Building\ProjectCopy.cs">
+    <Compile Update="contents\Building\PreProjectCopy.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="contents\Construction\ConstructionCW.cs">
