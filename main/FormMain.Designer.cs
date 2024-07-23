@@ -81,20 +81,20 @@
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
-            toolStripContainer1.TopToolStripPanel.BackColor = SystemColors.GradientInactiveCaption;
+            toolStripContainer1.TopToolStripPanel.BackColor =System.Drawing.Color.FromArgb(166,201,232);
             toolStripContainer1.TopToolStripPanel.Controls.Add(toolStrip1);
             toolStripContainer1.TopToolStripPanel.MinimumSize = new Size(0, 32);
             // 
             // toolStrip1
             // 
-            toolStrip1.BackColor = SystemColors.GradientInactiveCaption;
+            toolStrip1.BackColor = System.Drawing.Color.FromArgb(166, 201, 232);
             toolStrip1.Dock = DockStyle.None;
             toolStrip1.ImageScalingSize = new Size(35, 35);
             toolStrip1.Items.AddRange(new ToolStripItem[] { Home, ProjectOpen, EnergyNeed_Sim, FinalEnergy_Sim, Element_Sim });
             toolStrip1.Location = new Point(3, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Padding = new Padding(4);
-            toolStrip1.Size = new Size(245, 50);
+            toolStrip1.Size = new Size(214, 50);
             toolStrip1.TabIndex = 0;
             // 
             // Home
