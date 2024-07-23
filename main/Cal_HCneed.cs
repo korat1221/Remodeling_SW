@@ -145,7 +145,7 @@ namespace main
                 VA_we = Convert.ToDouble(ZoneG[0][8]) / zoneArea; //단위면적당 값 
                 VA_wd = Convert.ToDouble(ZoneG[0][9]) / zoneArea;//단위면적당 값 
 
-                e = 0.07;
+                e = 0.05;
                 f = 15;
 
                 for (int mth = 0; mth < 12; mth++)
