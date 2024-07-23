@@ -117,7 +117,6 @@ namespace main
                 Zone zone1 = (Zone)CALC.zone[k];
                 ZoneLight zonelight1 = (ZoneLight)CALC.zonelight[k];
                 Zone_LoadData_PreElement(zone1, zonelight1);
-
                 switch (검토유형)
                 {
                     case "외벽":
