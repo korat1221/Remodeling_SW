@@ -82,9 +82,7 @@ namespace main.contents
             Load_OldProject();
 
             //건물대상 콤보박스
-            Program.UTIL.FillComboBox_Parents(BuildingCategory_comboBox, "존일반", "건물용도", "1");
-            BuildingCategory = "에너지다소비형건물";
-            BuildingUse = "정부청사";
+            LoadOption_BuildingCategory();
 
             //기후데이터 콤보박스
             string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "인덱스", "이름", "종류 = '2'");
@@ -150,7 +148,53 @@ namespace main.contents
             ElecWiring_False_radioButton.Checked = true;
             Pipe_False_radioButton.Checked = true;
         }
+        private void BuildingCategory_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (BuildingCategory_comboBox.SelectedItem != null && BuildingCategory_comboBox.SelectedItem.ToString() != "")
+            {
+                BuildingCategory = Program.UTIL.SelectedItem_ByComboBox(BuildingCategory_comboBox);
+                LoadOption_BuildingUse();
+            }
+        }
 
+        private void BuildingUse_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (BuildingUse_comboBox.SelectedItem != null)
+            {
+                BuildingUse = Program.UTIL.SelectedItem_ByComboBox(BuildingUse_comboBox);
+            }
+        }
+
+        private void LoadOption_BuildingCategory()
+        {
+            string[][] V = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select a.이름 From 인덱스 as a Inner Join 인덱스분류 as b  on a.종류=b.아이디 Where b.종류='존일반' and b.이름='건물용도'");
+            if (V.Length > 0)
+            {
+                BuildingCategory_comboBox.Items.Clear();
+                for (int a = 0; a < V.Length; a++)
+                {
+                    BuildingCategory_comboBox.Items.Add(V[a][0]);
+                }
+                BuildingCategory_comboBox.SelectedIndex = 0;
+            }
+        }
+        private void LoadOption_BuildingUse()
+        {
+            BuildingUse_comboBox.Items.Clear();
+            string[][] V1 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 아이디 From 인덱스 Where 이름='" + BuildingCategory_comboBox.SelectedItem.ToString() + "'");
+            if (V1.Length > 0)
+            {
+                string[][] V2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 이름 From 인덱스 Where 부모아이디='" + V1[0][0] + "'");
+                if (V2.Length > 0)
+                {
+                    for (int a = 0; a < V2.Length; a++)
+                    {
+                        BuildingUse_comboBox.Items.Add(V2[a][0]);
+                    }
+                    BuildingUse_comboBox.SelectedIndex = 0;
+                }
+            }
+        }
         private void Load_OldProject()
         {
             string[][] res;
@@ -359,22 +403,7 @@ namespace main.contents
             }
 
         }
-        private void BuildingCategory_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (BuildingCategory_comboBox.SelectedItem != null)
-            {
-                BuildingCategory = Program.UTIL.SelectedItem_ByComboBox(BuildingCategory_comboBox);
-                Program.UTIL.FillComboBox_ByComboBox(BuildingUse_comboBox, BuildingCategory_comboBox, "1");
-            }
-        }
-
-        private void BuildingUse_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (BuildingUse_comboBox.SelectedItem != null)
-            {
-                BuildingUse = Program.UTIL.SelectedItem_ByComboBox(BuildingUse_comboBox);
-            }
-        }
+        
 
         private void Climate_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -716,25 +745,16 @@ namespace main.contents
                 ProjectNum = Value[0][2];
                 ProjectNum_textBox.Text = ProjectNum.ToString();
 
+                LoadOption_BuildingCategory();
                 if (Value[0][4] != "")
                 {
-                    BuildingCategory = Value[0][4];
+                    BuildingCategory_comboBox.SelectedItem = Value[0][4];
                 }
-                else
-                {
-                    BuildingCategory = "에너지다소비형건물";
-                }
-                BuildingUse_comboBox.SelectedItem = BuildingCategory;
 
                 if (Value[0][5] != "")
                 {
-                    BuildingUse = Value[0][5];
+                    BuildingUse_comboBox.SelectedItem = Value[0][5];
                 }
-                else
-                {
-                    BuildingUse = "정부청사";
-                }
-                BuildingUse_comboBox.SelectedItem = BuildingUse;
 
                 BuildingName = Value[0][6];
                 BuildingName_textBox.Text = BuildingName;
@@ -751,11 +771,7 @@ namespace main.contents
                     Year = Convert.ToDouble(Value[0][13]);
                     Year_comboBox.SelectedItem = Year.ToString();
                 }
-                if (Value[0][14] != "")
-                {
-                    Month = Convert.ToDouble(Value[0][14]);
-                    Month_comboBox.SelectedItem = Month.ToString();
-                }
+
                 if (Value[0][15] != "")
                 {
                     ConstrucitonDate = Convert.ToDouble(Value[0][15]);
