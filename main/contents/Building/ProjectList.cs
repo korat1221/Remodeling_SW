@@ -407,7 +407,20 @@ namespace main.contents
                         Program.DB.executeSQL(DB.type.ProjListDB, "DELETE FROM projects WHERE pnum='" + pid + "'");
 
                         if (File.Exists(Program.gPath + "projects\\" + pid + ".sqlite"))
-                            File.Delete(Program.gPath + "projects\\" + pid + ".sqlite");
+                        {
+                            if(k >1)
+                            {
+                                dataGridView1.Rows[k].Cells[0].Value = false;
+                                dataGridView1.Rows[k - 1].Cells[0].Value = true;
+                                ProjectOpen();
+                                File.Delete(Program.gPath + "projects\\" + pid + ".sqlite");
+                            }
+                            else
+                            {
+                                MessageBox.Show("최소 한 개 이상의 프로젝트가 필요하므로 삭제할 수 없습니다.");
+                            }
+                        }
+                           
 
                         if (Directory.Exists(Program.gPath + "threejs\\public\\models\\" + pid))
                             Directory.Delete(Program.gPath + "threejs\\public\\models\\" + pid, true);
@@ -428,6 +441,26 @@ namespace main.contents
                 }
             }
         }
+
+
+
+        private void ProjectOpen()
+        {
+            int k = GetSelectedIndex();
+            if (k >= 0)
+            {
+                ProjectList.CurProjID = dataGridView1.Rows[k].Cells[2].Value.ToString();
+
+                Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET current = 0");
+                Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET current = 1 WHERE pnum='" + ProjectList.CurProjID + "'");
+
+                Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
+                Program.DB.initTables(DB.type.ProjDB);
+                Program.getMenuForm().resetAll();
+                Program.UTIL.ReloadModel();
+            }
+        }
+
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
