@@ -42,7 +42,8 @@ namespace main.subcontents.CoolingSystem
         {
             TableMake();
             
-            // 히트펌프에서 설비 찾아오기
+            // 히트펌프에서 설비 찾아오기, 주석처리함_20240724
+            /*
             string[][] AirHP = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "번호,명칭,냉방정격용량,냉방정격소비전력,냉방정격COP,대기전력,연료,설치", "난방냉방 = '냉난방' OR 난방냉방 = '냉방'");
 
             if (AirHP.Length > 0)
@@ -80,6 +81,7 @@ namespace main.subcontents.CoolingSystem
                 }
 
             }
+            */
             //공냉식냉동기에서 찾아오기
             string[][] AirCooler = Program.DB.getValue(DB.type.ProjDB, "User_AirCooler", " 번호,명칭,냉방출력,냉방소비전력,EER,압축기,연료,대기전력,설치,부하측공급형식,증발기,냉수입구온도,냉수출구온도", ""); //수정 필요
 

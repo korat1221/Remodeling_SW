@@ -246,9 +246,17 @@ namespace main.contents
             {
                 string[][] 면적 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호 ='" + zone + "'");
                 string[][] 부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + zone + "' And 난방_냉방 ='냉방'");
-                A_z += Convert.ToDouble(면적[0][0]);
-                QC_a_z += Convert.ToDouble(부하[0][0]);
-                QC_max_z += Convert.ToDouble(부하[0][1]) / 1000;
+                if (부하.Length == null || 부하.Length == 0)
+                {
+                    MessageBox.Show("요구량계산을 해주세요!");
+                    return;
+                }
+                else
+                {
+                    A_z += Convert.ToDouble(면적[0][0]);
+                    QC_a_z += Convert.ToDouble(부하[0][0]);
+                    QC_max_z += Convert.ToDouble(부하[0][1]) / 1000;
+                }
             }
             if (ZoneNameList.Count > 1)
             {
@@ -356,6 +364,10 @@ namespace main.contents
         private void CoolingGeneratorSelect_comboBox_SelectedIndexChanged(object sender, EventArgs e)//설비항목선택
         {
             CG = CoolingGeneratorSelect_comboBox.Text;
+            SelectCG_nonsplit = null;
+            SelectCGC_nonsplit = null;
+            SelectCGE_nonsplit = null;
+            SelectCGN_nonsplit = null;
             if (CG != "수냉식냉동기" && CG != "흡수식냉동기")
             {
                 CoolingTop_dataGridView.Rows.Clear();
@@ -370,6 +382,8 @@ namespace main.contents
             if (_CG == "실외기12kW")
             {
                 Install_comboBox.Items.Clear();
+                Install_comboBox.Text = null;
+                SourcepictureBox.Visible = false;
                 Install_comboBox.Enabled = true;
                 Install_comboBox.Items.AddRange(Installtype("열원설비").ToArray());
                 tabControl2.SelectedTab = tabControl2.TabPages["AirCon_tabPage"];
@@ -379,6 +393,8 @@ namespace main.contents
             else if (_CG == "공냉식냉동기")
             {
                 Install_comboBox.Items.Clear();
+                Install_comboBox.Text = null;
+                SourcepictureBox.Visible = false;
                 Install_comboBox.Enabled = true;
                 Install_comboBox.Items.AddRange(Installtype("열원설비").ToArray());
                 tabControl2.SelectedTab = tabControl2.TabPages["AirCooler_tabPage"];
@@ -387,6 +403,8 @@ namespace main.contents
             else if (_CG == "수냉식냉동기")
             {
                 Install_comboBox.Items.Clear();
+                Install_comboBox.Text = null;
+                SourcepictureBox.Visible = false;
                 Install_comboBox.Enabled = false;
                 //Install_comboBox.Items.AddRange(Installtype("C열원설비").ToArray());
                 tabControl2.SelectedTab = tabControl2.TabPages["WaterCooler_tabPage"];
@@ -395,6 +413,8 @@ namespace main.contents
             else if (_CG == "흡수식냉동기")
             {
                 Install_comboBox.Items.Clear();
+                Install_comboBox.Text = null;
+                SourcepictureBox.Visible = false;
                 Install_comboBox.Enabled = false;
                 Install_comboBox.Items.AddRange(Installtype("C열원설비").ToArray());
                 tabControl2.SelectedTab = tabControl2.TabPages["AbsorbCooler_tabPage"];
@@ -404,6 +424,8 @@ namespace main.contents
             else if (_CG == "지열히트펌프")
             {
                 Install_comboBox.Items.Clear();
+                Install_comboBox.Text = null;
+                SourcepictureBox.Visible = false;
                 Install_comboBox.Enabled = false;
                 //Install_comboBox.Items.AddRange(Installtype("S열원설비").ToArray());
                 tabControl2.SelectedTab = tabControl2.TabPages["SoilCooler_tabPage"];
@@ -413,6 +435,8 @@ namespace main.contents
             else if (_CG == "지하수히트펌프")
             {
                 Install_comboBox.Items.Clear();
+                Install_comboBox.Text = null;
+                SourcepictureBox.Visible = false;
                 Install_comboBox.Enabled = false;
                 //Install_comboBox.Items.AddRange(Installtype("S열원설비").ToArray());
                 tabControl2.SelectedTab = tabControl2.TabPages["SoilWaterCooler_tabPage"];
@@ -504,6 +528,7 @@ namespace main.contents
             string[][] image = Program.DB.getValue(DB.type.BaseDB_Cooling, "냉방설비이미지", "이미지", "설비유형='" + csource + "' And 설치유형='" + install + "'");
             if (image.Length > 0)
             {
+                SourcepictureBox.Visible = true;
                 SourcepictureBox.Size = new System.Drawing.Size(250, 200);
                 SourcepictureBox.Location = new Point(0, 60);
                 SourcepictureBox.Load(Program.gPath + image[0][0]);
