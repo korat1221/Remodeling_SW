@@ -396,26 +396,27 @@ namespace main
                     CGM._cout = "직팽식";
                     break;
                 case nameof(_TYPE.공냉식냉동기):
-                    string[][] 공냉식1 = Program.DB.getValue(ProjNum, "User_AirHP", "냉방정격용량,냉방정격COP,대기전력,연료,설치,냉방정격소비전력", "번호 = '" + _SelectCG + "'");
-                    if(공냉식1.Length > 0)
-                    {
-                        CGM._install = 공냉식1[0][4];
-                        CGM._power = Convert.ToDouble(공냉식1[0][0]);
-                        if (CGM._install == "기존")
-                        {
-                            CGM._eer = Convert.ToDouble(공냉식1[0][1]) * 0.9;
-                        }
-                        else CGM._eer = Convert.ToDouble(공냉식1[0][1]);
-                        CGM._pctrl = Convert.ToDouble(공냉식1[0][2]);
-                        CGM._cwin = 0;
-                        CGM._cwout = 0;
-                        CGM._fuel = 공냉식1[0][3];
-                        CGM._cout = "직팽식";
-                        CGM._w_aircon = Convert.ToDouble(공냉식1[0][5]);
-                    }
-                    else
-                    {
-                        string[][] 공냉식2 = Program.DB.getValue(ProjNum, "User_AirCooler", "냉방출력,EERP,대기전력,연료,설치,증발기,송풍기전력", "번호 = '" + _SelectCG + "'");
+                    //2024년 7월 24일 주석 처리함
+                    //string[][] 공냉식1 = Program.DB.getValue(ProjNum, "User_AirHP", "냉방정격용량,냉방정격COP,대기전력,연료,설치,냉방정격소비전력", "번호 = '" + _SelectCG + "'");
+                    //if(공냉식1.Length > 0)
+                    //{
+                    //    CGM._install = 공냉식1[0][4];
+                    //    CGM._power = Convert.ToDouble(공냉식1[0][0]);
+                    //    if (CGM._install == "기존")
+                    //    {
+                    //        CGM._eer = Convert.ToDouble(공냉식1[0][1]) * 0.9;
+                    //    }
+                    //    else CGM._eer = Convert.ToDouble(공냉식1[0][1]);
+                    //    CGM._pctrl = Convert.ToDouble(공냉식1[0][2]);
+                    //    CGM._cwin = 0;
+                    //    CGM._cwout = 0;
+                    //    CGM._fuel = 공냉식1[0][3];
+                    //    CGM._cout = "직팽식";
+                    //    CGM._w_aircon = Convert.ToDouble(공냉식1[0][5]);
+                    //}
+                    //else
+                    //{
+                        string[][] 공냉식2 = Program.DB.getValue(ProjNum, "User_AirCooler", "냉방출력,EER,대기전력,연료,설치,부하측공급형식,송풍기전력", "번호 = '" + _SelectCG + "'");
                         CGM._install = 공냉식2[0][4];
                         CGM._power = Convert.ToDouble(공냉식2[0][0]);
                         if(CGM._install == "기존")
@@ -426,7 +427,7 @@ namespace main
                         CGM._pctrl = Convert.ToDouble(공냉식2[0][2]);
                         CGM._fuel = 공냉식2[0][3];
                         CGM._install = 공냉식2[0][4];
-                        CGM.fanpower = Convert.ToDouble(공냉식2[0][5]); //송풍기전력[kW]
+                        
                         if (공냉식2[0][5] == "직팽식")
                         {
                             CGM._cwin = 0;
@@ -440,7 +441,8 @@ namespace main
                             CGM._cwout = Convert.ToDouble(공냉식3[0][1]);
                             CGM._cout = "수방식";
                         }
-                    }         
+                        CGM.fanpower = Convert.ToDouble(공냉식2[0][6]); //송풍기전력[kW]
+                    //}         
                     break;
                 case nameof(_TYPE.수냉식냉동기):
                     string[][] 수냉식 = Program.DB.getValue(ProjNum, "User_WaterCooler", "냉방출력,EER,대기전력,냉수입구온도,냉수출구온도,압축기,연료,설치", "번호 = '" + _SelectCG + "'");
@@ -1593,13 +1595,14 @@ namespace main
 
             foreach (CoolingCE ce in SelectCE)
             {
-                foreach (CoolingGeneratorMake cc in CGM_Sum)
-                {
-                    if (cc._w_aircon.ToString("0") == ce._ceElec.ToString("0"))
-                    {
-                        goto goto_;
-                    }
-                }
+                //2024년7월24일 업데이트함
+                //foreach (CoolingGeneratorMake cc in CGM_Sum)
+                //{
+                //    if (cc._w_aircon.ToString("0") == ce._ceElec.ToString("0")) // 대기전력
+                //    {
+                //        goto goto_;
+                //    }
+                //}
 
                 if (CG != nameof(_TYPE.실외기12kW))
                 {
@@ -1611,7 +1614,7 @@ namespace main
                 {
                     W_ce[i] = sum * tC_op[i];
                 }
-                goto_: int a = 0; a = a;
+                //goto_: int a = 0; a = a;
             }
         }
 
