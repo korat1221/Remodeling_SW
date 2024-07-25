@@ -2898,6 +2898,13 @@ namespace main.contents
             CoolingTop_dataGridView.BorderStyle = BorderStyle.None;
             CoolingTop_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             CoolingTop_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle52.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle52.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle52.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle52.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle52.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle52.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle52.WrapMode = DataGridViewTriState.True;
             CoolingTop_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle52;
             CoolingTop_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             CoolingTop_dataGridView.Location = new Point(19, 51);
@@ -2908,6 +2915,8 @@ namespace main.contents
             CoolingTop_dataGridView.RowTemplate.Height = 25;
             CoolingTop_dataGridView.Size = new Size(1105, 150);
             CoolingTop_dataGridView.TabIndex = 118;
+       
+            CoolingTop_dataGridView.CellContentClick += CoolingTop_dataGridView_CellContentClick;
             CoolingTop_dataGridView.CellValueChanged += CoolingTop_dataGridView_CellValueChanged;
             // 
             // CoolerTop_Add_button
