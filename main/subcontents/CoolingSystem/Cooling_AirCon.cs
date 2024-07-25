@@ -89,16 +89,18 @@ namespace main.subcontents.CoolingSystem
 
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
-            if (row % 2 == 1)
+            if (column == 1) // 추가
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 248, 206);
+                return true;
+            }
+            else  if (row % 2 == 1)
             {
                 cell.Style.BackColor = SystemColors.InactiveBorder;
                 cell.Style.ForeColor = Color.Black;
                 cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
                 cell.Style.SelectionForeColor = Color.Black;
-                if(column == 1) // 추가
-                {
-                    cell.Style.BackColor = Color.FromArgb(255, 248, 206);
-                }
+                
                 return true;
             }
             else
