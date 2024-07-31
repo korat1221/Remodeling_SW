@@ -2345,14 +2345,21 @@ namespace main
             QI_P[1] = qI_p * zoneArea;
             QI_fac[1] = qI_fac * zoneArea;
 
+            double[] h_summer = new double[12];
+            for(int mth =0; mth< 12; mth++)
+            {
+                h_summer[mth] = (H_winter - H_summer) / (theta_e[2] - theta_e[5]) * (theta_e[mth] - theta_e[2]) + H_winter;
+            }
+            
+
             for (int hc = 0; hc <= 1; hc++)
             {
                 for (int wewd = 0; wewd <= 1; wewd++)
                 {
                     for (int mth = 0; mth <= 11; mth++)
                     {
-                        QI_Humidity[mth] = twd_d * H_summer * Peope_Num * 2260 / 3600;
-                        
+                        QI_Humidity[mth] = twd_d * h_summer[mth] * Peope_Num * 2260 / 3600;
+
                         if (hc == 1 && wewd == 1)
                         {
                             QI_tot[hc, wewd, mth] = QI_P[wewd] + QI_fac[wewd] + QI_L[hc, wewd, mth] + QI_Humidity[mth];
