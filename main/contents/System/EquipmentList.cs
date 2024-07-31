@@ -3144,11 +3144,11 @@ namespace main.contents
                 int k = e.RowIndex;
                 if (AirCooler_dataGridView.Rows[k].Cells[12].Value.ToString() == "직팽식")
                 {
-                    AirCooler_dataGridView.Rows[k].Cells[13].Value = "";
+                    AirCooler_dataGridView.Rows[k].Cells[13].Value = "0";
                     AirCooler_dataGridView.Rows[k].Cells[14].Value = "";
                     AirCooler_dataGridView.Rows[k].Cells[15].Value = "";
 
-                    AirCooler_dataGridView.Rows[k].Cells[13].ReadOnly = true;
+                    AirCooler_dataGridView.Rows[k].Cells[13].ReadOnly = false;
                     AirCooler_dataGridView.Rows[k].Cells[14].ReadOnly = true;
                     AirCooler_dataGridView.Rows[k].Cells[15].ReadOnly = true;
                 }
@@ -3168,7 +3168,8 @@ namespace main.contents
 
             for (int k = 0; k < AirCooler_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[15];
+                String[] Value = new String[16];
+                
                 for (int i = 0; i < 15; i++)
                 {
                     if (AirCooler_dataGridView.Rows[k].Cells[i + 1].Value != null && AirCooler_dataGridView.Rows[k].Cells[i + 1].Value != "")
@@ -3185,11 +3186,19 @@ namespace main.contents
                         MessageBox.Show(string.Format("{0} 를 입력해 주세요.", v));
                         return;
                     }
+                    if (Value[11] == "직팽식")
+                    {
+                        Value[15] = null;
+                    }
+                    else if (Value[11]=="수방식")
+                    {
+                        Value[15] = "판형";
+                    }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_AirCooler", "번호,DB유형,명칭,냉방출력,냉방소비전력,EER,압축기,연료,대기전력,대수,설치,부하측공급형식,송풍기전력,냉수입구온도,냉수출구온도,증발기", //16개항목임
                 "'" + Value[0] + "','" + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','"
                  + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','"
-                 + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + "판형" + "'", "번호");
+                 + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
         }

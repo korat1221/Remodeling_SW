@@ -1315,6 +1315,7 @@ namespace main
                         {
                             fC_PL_z[i] = 1;
                             break;
+
                         }
                         else if (BC_z[i] < B2)
                         {
