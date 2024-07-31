@@ -1473,16 +1473,30 @@ namespace main
                 if (double.IsNaN(eta_gen_Pn[mth])) { eta_gen_Pn[mth] = 0; }
                 if (double.IsNaN(eta_gen_Pint[mth])) { eta_gen_Pint[mth] = 0; }
 
-                if (Qh_ce[mth] < 0) { Qh_ce[mth] = 0; }
-                if (Qh_d[mth] < 0) { Qh_d[mth] = 0; }
-                if (Qh_s[mth] < 0) { Qh_s[mth] = 0; }
-                if (Qh_gen[mth] < 0) { Qh_gen[mth] = 0; }
-                if (Qh_f[mth] < 0) { Qh_f[mth] = 0; }
+                if (Qh_ce[mth] <= 0) { Qh_ce[mth] = 0; }
+                if (Qh_d[mth] <= 0) { Qh_d[mth] = 0; }
+                if (Qh_s[mth] <= 0) { Qh_s[mth] = 0; }
+                if (Qh_gen[mth] <= 0) { Qh_gen[mth] = 0; }
+                if (Qh_f[mth] <= 0) { Qh_f[mth] = 0; }
 
-                if (Wh_ce[mth] < 0) { Wh_ce[mth] = 0; }
-                if (Wh_d[mth] < 0) { Wh_d[mth] = 0; }
-                if (Wh_s[mth] < 0) { Wh_s[mth] = 0; }
-                if (Wh_g[mth] < 0) { Wh_g[mth] = 0; }
+                if (Wh_ce[mth] <= 0) { Wh_ce[mth] = 0; }
+                if (Wh_d[mth] <= 0) { Wh_d[mth] = 0; }
+                if (Wh_s[mth] <= 0) { Wh_s[mth] = 0; }
+                if (Wh_g[mth] <= 0) { Wh_g[mth] = 0; }
+
+                if (Qhb_mth_sum[mth] <= 0) 
+                {
+                    Qh_ce[mth] = 0;
+                    Qh_d[mth] = 0;
+                    Qh_s[mth] = 0;
+                    Qh_gen[mth] = 0;
+                    Qh_f[mth] = 0;
+                    Wh_ce[mth] = 0;
+                    Wh_d[mth] = 0;
+                    Wh_s[mth] = 0;
+                    Wh_g[mth] = 0;
+                }
+
             }
 
         }
