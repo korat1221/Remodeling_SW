@@ -169,7 +169,7 @@ namespace main
                 while (++i < ZoneW.Length)
                 {
                     double U = Convert.ToDouble(ZoneW[i][3]); double dU = 0; double dR = 0;
-                    string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "a.리모델링유형,a.최적안구분,b.열저항합계 From 외벽_최적안 as a Inner Join 외벽_최적안유형 as b  on a.최적안구분 = b.최적안구분 where a.최적안='" + 리모델링안 + "'");
+                    string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,a.최적안구분,b.열저항합계 From 외벽_최적안 as a Inner Join 외벽_최적안유형 as b  on a.최적안구분 = b.최적안구분 where a.최적안='" + 리모델링안 + "'");
                     if (Value.Length > 0)
                     {
                         dU = Get_Wall_Utb(Value[0][1]);
@@ -195,7 +195,7 @@ namespace main
                 while (++i < ZoneG.Length)
                 {
                     double U = Convert.ToDouble(ZoneG[i][3]); double dU = 0; double dR = 0;
-                    string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "a.리모델링유형,a.최적안구분,b.열저항합계 From 외벽_최적안 as a Inner Join 외벽_최적안유형 as b  on a.최적안구분 = b.최적안구분 where a.최적안='" + 리모델링안 + "'");
+                    string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,a.최적안구분,b.열저항합계 From 외벽_최적안 as a Inner Join 외벽_최적안유형 as b  on a.최적안구분 = b.최적안구분 where a.최적안='" + 리모델링안 + "'");
                     if (Value.Length > 0)
                     {
                         dU = Get_Wall_Utb(Value[0][1]);
@@ -282,7 +282,7 @@ namespace main
                 while (++i < ZoneR.Length)
                 {
                     double U = Convert.ToDouble(ZoneR[i][3]); double dU = 0; double dR = 0; 
-                    string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "a.리모델링유형,a.최적안구분,b.열저항합계,a.평지붕시공 From 지붕_최적안 as a Inner Join 지붕_최적안유형 as b  on a.최적안구분 = b.최적안구분 where a.최적안='" + 리모델링안 + "'");
+                    string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,a.최적안구분,b.열저항합계,a.평지붕시공 From 지붕_최적안 as a Inner Join 지붕_최적안유형 as b  on a.최적안구분 = b.최적안구분 where a.최적안='" + 리모델링안 + "'");
                     if (Value.Length > 0)
                     {
                         dU = Get_Roof_Utb(Value[0][1]);

@@ -870,7 +870,7 @@ namespace main.contents.Alt
         #endregion
 
 
-        #region 외벽
+        #region 지붕
         private void Open_RoofAlt()
         {
             AltRoof form = new AltRoof("");
