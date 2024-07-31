@@ -128,24 +128,24 @@ namespace main.contents
             label4 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
             label13 = new System.Windows.Forms.Label();
-            EquipIHG_image_textBox = new System.Windows.Forms.TextBox();
-            DHWneed_image_textBox = new System.Windows.Forms.TextBox();
+            EquipIHG_image_Label = new System.Windows.Forms.Label();
+            DHWneed_image_Label = new System.Windows.Forms.Label();
             Door_textBox = new System.Windows.Forms.TextBox();
             InWall_textBox = new System.Windows.Forms.TextBox();
             CW_textBox = new System.Windows.Forms.TextBox();
-            PersonIHG_image_textBox = new System.Windows.Forms.TextBox();
-            Em_textBox = new System.Windows.Forms.TextBox();
-            theta_i_h_set_textBox = new System.Windows.Forms.TextBox();
-            theta_i_c_set_textBox = new System.Windows.Forms.TextBox();
-            EndTime_image_textBox = new System.Windows.Forms.TextBox();
-            StartTime_image_textBox = new System.Windows.Forms.TextBox();
+            PersonIHG_image_Label = new System.Windows.Forms.Label();
+            Em_Label = new System.Windows.Forms.Label();
+            theta_i_h_set_Label = new System.Windows.Forms.Label();
+            theta_i_c_set_Label = new System.Windows.Forms.Label();
+            EndTime_image_Label = new System.Windows.Forms.Label();
+            StartTime_image_Label = new System.Windows.Forms.Label();
             Floor_textBox = new System.Windows.Forms.TextBox();
             Window_textBox = new System.Windows.Forms.TextBox();
             Wall_textBox = new System.Windows.Forms.TextBox();
             Roof_textBox = new System.Windows.Forms.TextBox();
             AdditionalPanel = new Panel();
-            SA_Volume_textBox = new System.Windows.Forms.TextBox();
-            RA_Volume_textBox = new System.Windows.Forms.TextBox();
+            SA_Volume_Label = new System.Windows.Forms.Label();
+            RA_Volume_Label = new System.Windows.Forms.Label();
             label72 = new System.Windows.Forms.Label();
             label71 = new System.Windows.Forms.Label();
             label70 = new System.Windows.Forms.Label();
@@ -153,8 +153,6 @@ namespace main.contents
             label68 = new System.Windows.Forms.Label();
             label67 = new System.Windows.Forms.Label();
             label66 = new System.Windows.Forms.Label();
-            AHU_pictureBox = new PictureBox();
-            HC_pictureBox = new PictureBox();
             Ground_pictureBox = new PictureBox();
             RoomControl_pictureBox = new PictureBox();
             Main_pictureBox = new PictureBox();
@@ -163,8 +161,6 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
             AdditionalPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)AHU_pictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)HC_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Ground_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RoomControl_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox).BeginInit();
@@ -1209,29 +1205,25 @@ namespace main.contents
             label13.Size = new Size(100, 23);
             label13.TabIndex = 0;
             // 
-            // EquipIHG_image_textBox
+            // EquipIHG_image_Label
             // 
-            EquipIHG_image_textBox.BackColor = Color.OldLace;
-            EquipIHG_image_textBox.BorderStyle = BorderStyle.None;
-            EquipIHG_image_textBox.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            EquipIHG_image_textBox.ForeColor = SystemColors.ControlDarkDark;
-            EquipIHG_image_textBox.Location = new Point(462, 277);
-            EquipIHG_image_textBox.Name = "EquipIHG_image_textBox";
-            EquipIHG_image_textBox.Size = new Size(69, 14);
-            EquipIHG_image_textBox.TabIndex = 103;
-            EquipIHG_image_textBox.TextAlign = HorizontalAlignment.Center;
+            EquipIHG_image_Label.BackColor = SystemColors.Control;
+            EquipIHG_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            EquipIHG_image_Label.ForeColor = SystemColors.ControlDarkDark;
+            EquipIHG_image_Label.Location = new Point(473, 243);
+            EquipIHG_image_Label.Name = "EquipIHG_image_Label";
+            EquipIHG_image_Label.Size = new Size(80, 22);
+            EquipIHG_image_Label.TabIndex = 103;
             // 
-            // DHWneed_image_textBox
+            // DHWneed_image_Label
             // 
-            DHWneed_image_textBox.BackColor = Color.OldLace;
-            DHWneed_image_textBox.BorderStyle = BorderStyle.None;
-            DHWneed_image_textBox.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            DHWneed_image_textBox.ForeColor = SystemColors.ControlDarkDark;
-            DHWneed_image_textBox.Location = new Point(348, 106);
-            DHWneed_image_textBox.Name = "DHWneed_image_textBox";
-            DHWneed_image_textBox.Size = new Size(65, 14);
-            DHWneed_image_textBox.TabIndex = 102;
-            DHWneed_image_textBox.TextAlign = HorizontalAlignment.Center;
+            DHWneed_image_Label.BackColor = SystemColors.Control;
+            DHWneed_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            DHWneed_image_Label.ForeColor = SystemColors.ControlDarkDark;
+            DHWneed_image_Label.Location = new Point(342, 86);
+            DHWneed_image_Label.Name = "DHWneed_image_Label";
+            DHWneed_image_Label.Size = new Size(74, 22);
+            DHWneed_image_Label.TabIndex = 102;
             // 
             // Door_textBox
             // 
@@ -1269,77 +1261,65 @@ namespace main.contents
             CW_textBox.TabIndex = 99;
             CW_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // PersonIHG_image_textBox
+            // PersonIHG_image_Label
             // 
-            PersonIHG_image_textBox.BackColor = Color.OldLace;
-            PersonIHG_image_textBox.BorderStyle = BorderStyle.None;
-            PersonIHG_image_textBox.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            PersonIHG_image_textBox.ForeColor = SystemColors.ControlDarkDark;
-            PersonIHG_image_textBox.Location = new Point(262, 277);
-            PersonIHG_image_textBox.Name = "PersonIHG_image_textBox";
-            PersonIHG_image_textBox.Size = new Size(79, 14);
-            PersonIHG_image_textBox.TabIndex = 94;
-            PersonIHG_image_textBox.TextAlign = HorizontalAlignment.Center;
+            PersonIHG_image_Label.BackColor = SystemColors.Control;
+            PersonIHG_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            PersonIHG_image_Label.ForeColor = SystemColors.ControlDarkDark;
+            PersonIHG_image_Label.Location = new Point(273, 243);
+            PersonIHG_image_Label.Name = "PersonIHG_image_Label";
+            PersonIHG_image_Label.Size = new Size(80, 22);
+            PersonIHG_image_Label.TabIndex = 94;
             // 
-            // Em_textBox
+            // Em_Label
             // 
-            Em_textBox.BackColor = Color.OldLace;
-            Em_textBox.BorderStyle = BorderStyle.None;
-            Em_textBox.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            Em_textBox.ForeColor = SystemColors.ControlDarkDark;
-            Em_textBox.Location = new Point(212, 213);
-            Em_textBox.Name = "Em_textBox";
-            Em_textBox.Size = new Size(49, 14);
-            Em_textBox.TabIndex = 93;
-            Em_textBox.TextAlign = HorizontalAlignment.Center;
+            Em_Label.BackColor = SystemColors.Control;
+            Em_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            Em_Label.ForeColor = SystemColors.ControlDarkDark;
+            Em_Label.Location = new Point(199, 198);
+            Em_Label.Name = "Em_Label";
+            Em_Label.Size = new Size(74, 22);
+            Em_Label.TabIndex = 93;
             // 
-            // theta_i_h_set_textBox
+            // theta_i_h_set_Label
             // 
-            theta_i_h_set_textBox.BackColor = Color.OldLace;
-            theta_i_h_set_textBox.BorderStyle = BorderStyle.None;
-            theta_i_h_set_textBox.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            theta_i_h_set_textBox.ForeColor = SystemColors.ControlDarkDark;
-            theta_i_h_set_textBox.Location = new Point(254, 162);
-            theta_i_h_set_textBox.Name = "theta_i_h_set_textBox";
-            theta_i_h_set_textBox.Size = new Size(37, 14);
-            theta_i_h_set_textBox.TabIndex = 92;
-            theta_i_h_set_textBox.TextAlign = HorizontalAlignment.Center;
+            theta_i_h_set_Label.BackColor = SystemColors.Control;
+            theta_i_h_set_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            theta_i_h_set_Label.ForeColor = SystemColors.ControlDarkDark;
+            theta_i_h_set_Label.Location = new Point(253, 145);
+            theta_i_h_set_Label.Name = "theta_i_h_set_Label";
+            theta_i_h_set_Label.Size = new Size(37, 22);
+            theta_i_h_set_Label.TabIndex = 92;
             // 
-            // theta_i_c_set_textBox
+            // theta_i_c_set_Label
             // 
-            theta_i_c_set_textBox.BackColor = Color.OldLace;
-            theta_i_c_set_textBox.BorderStyle = BorderStyle.None;
-            theta_i_c_set_textBox.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            theta_i_c_set_textBox.ForeColor = SystemColors.ControlDarkDark;
-            theta_i_c_set_textBox.Location = new Point(252, 136);
-            theta_i_c_set_textBox.Name = "theta_i_c_set_textBox";
-            theta_i_c_set_textBox.Size = new Size(39, 14);
-            theta_i_c_set_textBox.TabIndex = 91;
-            theta_i_c_set_textBox.TextAlign = HorizontalAlignment.Center;
+            theta_i_c_set_Label.BackColor = SystemColors.Control;
+            theta_i_c_set_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            theta_i_c_set_Label.ForeColor = SystemColors.ControlDarkDark;
+            theta_i_c_set_Label.Location = new Point(252, 119);
+            theta_i_c_set_Label.Name = "theta_i_c_set_Label";
+            theta_i_c_set_Label.Size = new Size(39, 22);
+            theta_i_c_set_Label.TabIndex = 91;
             // 
-            // EndTime_image_textBox
+            // EndTime_image_Label
             // 
-            EndTime_image_textBox.BackColor = Color.OldLace;
-            EndTime_image_textBox.BorderStyle = BorderStyle.None;
-            EndTime_image_textBox.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            EndTime_image_textBox.ForeColor = SystemColors.ControlDarkDark;
-            EndTime_image_textBox.Location = new Point(252, 103);
-            EndTime_image_textBox.Name = "EndTime_image_textBox";
-            EndTime_image_textBox.Size = new Size(39, 14);
-            EndTime_image_textBox.TabIndex = 90;
-            EndTime_image_textBox.TextAlign = HorizontalAlignment.Center;
+            EndTime_image_Label.BackColor = SystemColors.Control;
+            EndTime_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            EndTime_image_Label.ForeColor = SystemColors.ControlDarkDark;
+            EndTime_image_Label.Location = new Point(239, 86);
+            EndTime_image_Label.Name = "EndTime_image_Label";
+            EndTime_image_Label.Size = new Size(39, 22);
+            EndTime_image_Label.TabIndex = 90;
             // 
-            // StartTime_image_textBox
+            // StartTime_image_Label
             // 
-            StartTime_image_textBox.BackColor = Color.OldLace;
-            StartTime_image_textBox.BorderStyle = BorderStyle.None;
-            StartTime_image_textBox.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            StartTime_image_textBox.ForeColor = SystemColors.ControlDarkDark;
-            StartTime_image_textBox.Location = new Point(212, 103);
-            StartTime_image_textBox.Name = "StartTime_image_textBox";
-            StartTime_image_textBox.Size = new Size(39, 14);
-            StartTime_image_textBox.TabIndex = 89;
-            StartTime_image_textBox.TextAlign = HorizontalAlignment.Center;
+            StartTime_image_Label.BackColor = SystemColors.Control;
+            StartTime_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            StartTime_image_Label.ForeColor = SystemColors.ControlDarkDark;
+            StartTime_image_Label.Location = new Point(199, 86);
+            StartTime_image_Label.Name = "StartTime_image_Label";
+            StartTime_image_Label.Size = new Size(39, 22);
+            StartTime_image_Label.TabIndex = 89;
             // 
             // Floor_textBox
             // 
@@ -1393,8 +1373,8 @@ namespace main.contents
             // 
             AdditionalPanel.BackColor = Color.White;
             AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
-            AdditionalPanel.Controls.Add(SA_Volume_textBox);
-            AdditionalPanel.Controls.Add(RA_Volume_textBox);
+            AdditionalPanel.Controls.Add(SA_Volume_Label);
+            AdditionalPanel.Controls.Add(RA_Volume_Label);
             AdditionalPanel.Controls.Add(label72);
             AdditionalPanel.Controls.Add(label71);
             AdditionalPanel.Controls.Add(label70);
@@ -1402,23 +1382,21 @@ namespace main.contents
             AdditionalPanel.Controls.Add(label68);
             AdditionalPanel.Controls.Add(label67);
             AdditionalPanel.Controls.Add(label66);
-            AdditionalPanel.Controls.Add(EquipIHG_image_textBox);
-            AdditionalPanel.Controls.Add(DHWneed_image_textBox);
+            AdditionalPanel.Controls.Add(EquipIHG_image_Label);
+            AdditionalPanel.Controls.Add(DHWneed_image_Label);
             AdditionalPanel.Controls.Add(Door_textBox);
             AdditionalPanel.Controls.Add(InWall_textBox);
             AdditionalPanel.Controls.Add(CW_textBox);
-            AdditionalPanel.Controls.Add(PersonIHG_image_textBox);
-            AdditionalPanel.Controls.Add(Em_textBox);
-            AdditionalPanel.Controls.Add(theta_i_h_set_textBox);
-            AdditionalPanel.Controls.Add(theta_i_c_set_textBox);
-            AdditionalPanel.Controls.Add(EndTime_image_textBox);
-            AdditionalPanel.Controls.Add(StartTime_image_textBox);
+            AdditionalPanel.Controls.Add(PersonIHG_image_Label);
+            AdditionalPanel.Controls.Add(Em_Label);
+            AdditionalPanel.Controls.Add(theta_i_h_set_Label);
+            AdditionalPanel.Controls.Add(theta_i_c_set_Label);
+            AdditionalPanel.Controls.Add(EndTime_image_Label);
+            AdditionalPanel.Controls.Add(StartTime_image_Label);
             AdditionalPanel.Controls.Add(Floor_textBox);
             AdditionalPanel.Controls.Add(Window_textBox);
             AdditionalPanel.Controls.Add(Wall_textBox);
             AdditionalPanel.Controls.Add(Roof_textBox);
-            AdditionalPanel.Controls.Add(AHU_pictureBox);
-            AdditionalPanel.Controls.Add(HC_pictureBox);
             AdditionalPanel.Controls.Add(Ground_pictureBox);
             AdditionalPanel.Controls.Add(RoomControl_pictureBox);
             AdditionalPanel.Controls.Add(Main_pictureBox);
@@ -1427,29 +1405,25 @@ namespace main.contents
             AdditionalPanel.Size = new Size(977, 430);
             AdditionalPanel.TabIndex = 18;
             // 
-            // SA_Volume_textBox
+            // SA_Volume_Label
             // 
-            SA_Volume_textBox.BackColor = Color.OldLace;
-            SA_Volume_textBox.BorderStyle = BorderStyle.None;
-            SA_Volume_textBox.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            SA_Volume_textBox.ForeColor = SystemColors.ControlDarkDark;
-            SA_Volume_textBox.Location = new Point(506, 213);
-            SA_Volume_textBox.Name = "SA_Volume_textBox";
-            SA_Volume_textBox.Size = new Size(71, 14);
-            SA_Volume_textBox.TabIndex = 115;
-            SA_Volume_textBox.TextAlign = HorizontalAlignment.Center;
+            SA_Volume_Label.BackColor = SystemColors.Control;
+            SA_Volume_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            SA_Volume_Label.ForeColor = SystemColors.ControlDarkDark;
+            SA_Volume_Label.Location = new Point(495, 198);
+            SA_Volume_Label.Name = "SA_Volume_Label";
+            SA_Volume_Label.Size = new Size(74, 22);
+            SA_Volume_Label.TabIndex = 115;
             // 
-            // RA_Volume_textBox
+            // RA_Volume_Label
             // 
-            RA_Volume_textBox.BackColor = Color.OldLace;
-            RA_Volume_textBox.BorderStyle = BorderStyle.None;
-            RA_Volume_textBox.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            RA_Volume_textBox.ForeColor = SystemColors.ControlDarkDark;
-            RA_Volume_textBox.Location = new Point(427, 213);
-            RA_Volume_textBox.Name = "RA_Volume_textBox";
-            RA_Volume_textBox.Size = new Size(61, 14);
-            RA_Volume_textBox.TabIndex = 114;
-            RA_Volume_textBox.TextAlign = HorizontalAlignment.Center;
+            RA_Volume_Label.BackColor = SystemColors.Control;
+            RA_Volume_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            RA_Volume_Label.ForeColor = SystemColors.ControlDarkDark;
+            RA_Volume_Label.Location = new Point(416, 198);
+            RA_Volume_Label.Name = "RA_Volume_Label";
+            RA_Volume_Label.Size = new Size(74, 22);
+            RA_Volume_Label.TabIndex = 114;
             // 
             // label72
             // 
@@ -1528,24 +1502,6 @@ namespace main.contents
             label66.TabIndex = 107;
             label66.Text = "지붕";
             // 
-            // AHU_pictureBox
-            // 
-            AHU_pictureBox.Location = new Point(9, 16);
-            AHU_pictureBox.Name = "AHU_pictureBox";
-            AHU_pictureBox.Size = new Size(953, 370);
-            AHU_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            AHU_pictureBox.TabIndex = 119;
-            AHU_pictureBox.TabStop = false;
-            // 
-            // HC_pictureBox
-            // 
-            HC_pictureBox.Location = new Point(9, 16);
-            HC_pictureBox.Name = "HC_pictureBox";
-            HC_pictureBox.Size = new Size(953, 370);
-            HC_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            HC_pictureBox.TabIndex = 118;
-            HC_pictureBox.TabStop = false;
-            // 
             // Ground_pictureBox
             // 
             Ground_pictureBox.Location = new Point(9, 16);
@@ -1607,8 +1563,6 @@ namespace main.contents
             panel2.PerformLayout();
             AdditionalPanel.ResumeLayout(false);
             AdditionalPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)AHU_pictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)HC_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)Ground_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)RoomControl_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox).EndInit();
@@ -1691,24 +1645,24 @@ namespace main.contents
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.TextBox DHWneed_image_textBox;
+        private System.Windows.Forms.Label DHWneed_image_Label;
         private System.Windows.Forms.TextBox Door_textBox;
         private System.Windows.Forms.TextBox InWall_textBox;
         private System.Windows.Forms.TextBox CW_textBox;
         private System.Windows.Forms.TextBox HeatingLoad_textBox;
         private System.Windows.Forms.TextBox CoolingLoad_textBox;
         private System.Windows.Forms.TextBox textBox22;
-        private System.Windows.Forms.TextBox PersonIHG_image_textBox;
-        private System.Windows.Forms.TextBox Em_textBox;
-        private System.Windows.Forms.TextBox theta_i_h_set_textBox;
-        private System.Windows.Forms.TextBox theta_i_c_set_textBox;
-        private System.Windows.Forms.TextBox EndTime_image_textBox;
-        private System.Windows.Forms.TextBox StartTime_image_textBox;
+        private System.Windows.Forms.Label PersonIHG_image_Label;
+        private System.Windows.Forms.Label Em_Label;
+        private System.Windows.Forms.Label theta_i_h_set_Label;
+        private System.Windows.Forms.Label theta_i_c_set_Label;
+        private System.Windows.Forms.Label EndTime_image_Label;
+        private System.Windows.Forms.Label StartTime_image_Label;
         private System.Windows.Forms.TextBox Floor_textBox;
         private System.Windows.Forms.TextBox Window_textBox;
         private System.Windows.Forms.TextBox Wall_textBox;
         private System.Windows.Forms.TextBox Roof_textBox;
-        private System.Windows.Forms.TextBox EquipIHG_image_textBox;
+        private System.Windows.Forms.Label EquipIHG_image_Label;
         private System.Windows.Forms.TextBox ZoneName_textBox;
         private System.Windows.Forms.TextBox OccupancyDensity_index_textBox;
         private System.Windows.Forms.Button Save_button;
@@ -1733,18 +1687,16 @@ namespace main.contents
         private System.Windows.Forms.Label label68;
         private System.Windows.Forms.Label label67;
         private System.Windows.Forms.Label label66;
-        private System.Windows.Forms.TextBox RA_Volume_textBox;
+        private System.Windows.Forms.Label RA_Volume_Label;
         private PictureBox Main_pictureBox;
-        private PictureBox RoomControl_pictureBox;
-        private PictureBox Ground_pictureBox;
-        private PictureBox HC_pictureBox;
-        private PictureBox AHU_pictureBox;
-        private System.Windows.Forms.TextBox SA_Volume_textBox;
+        private System.Windows.Forms.Label SA_Volume_Label;
         private System.Windows.Forms.Label AHU_label2;
         private System.Windows.Forms.TextBox AHU_textBox;
         private System.Windows.Forms.Button AHU_button;
         private System.Windows.Forms.Button PreZone_button;
         private System.Windows.Forms.TextBox PreZone_textBox;
         private System.Windows.Forms.Label PreZone_label;
+        private PictureBox Ground_pictureBox;
+        private PictureBox RoomControl_pictureBox;
     }
 }
