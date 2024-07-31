@@ -417,24 +417,26 @@ namespace main
                     //else
                     //{
                         string[][] 공냉식2 = Program.DB.getValue(ProjNum, "User_AirCooler", "냉방출력,EER,대기전력,연료,설치,부하측공급형식,송풍기전력", "번호 = '" + _SelectCG + "'");
+                    if(공냉식2.Length >0)
+                    {
                         CGM._install = 공냉식2[0][4];
                         CGM._power = Convert.ToDouble(공냉식2[0][0]);
-                        if(CGM._install == "기존")
+                        if (CGM._install == "기존")
                         {
-                            CGM._eer = Convert.ToDouble(공냉식2[0][1])*0.9;
+                            CGM._eer = Convert.ToDouble(공냉식2[0][1]) * 0.9;
                         }
                         else CGM._eer = Convert.ToDouble(공냉식2[0][1]);
                         CGM._pctrl = Convert.ToDouble(공냉식2[0][2]);
                         CGM._fuel = 공냉식2[0][3];
                         CGM._install = 공냉식2[0][4];
-                        
+
                         if (공냉식2[0][5] == "직팽식")
                         {
                             CGM._cwin = 0;
                             CGM._cwout = 0;
                             CGM._cout = "직팽식";
                         }
-                        else if(공냉식2[0][5] == "수방식")
+                        else if (공냉식2[0][5] == "수방식")
                         {
                             string[][] 공냉식3 = Program.DB.getValue(ProjNum, "User_AirCooler", "냉수입구온도,냉수출구온도", "번호 = '" + _SelectCG + "'");
                             CGM._cwin = Convert.ToDouble(공냉식3[0][0]);
@@ -442,6 +444,8 @@ namespace main
                             CGM._cout = "수방식";
                         }
                         CGM.fanpower = Convert.ToDouble(공냉식2[0][6]); //송풍기전력[kW]
+                    }
+                        
                     //}         
                     break;
                 case nameof(_TYPE.수냉식냉동기):
@@ -1448,11 +1452,18 @@ namespace main
         public void Cal_feerCorr()
         { 
             string[][] v = Program.DB.getValue(DB.type.BaseDB_Cooling, "실외온도보정", "req_in, req_out, cond, evad", "냉방설비= '" + CG + "' And 구분 = '"+ Cout + "'"); //수방식, 직팽식 중 선택
-            ThetaC_gen_hr_req_in = Convert.ToDouble(v[0][0]);//A
-            ThetaC_gen_req_out = Convert.ToDouble(v[0][1]);//B
-            Theta_cond = Convert.ToDouble(v[0][2]);//C
-            Theta_evad = Convert.ToDouble(v[0][3]);//D
-
+           if(v.Length >0)
+            {
+                ThetaC_gen_hr_req_in = Convert.ToDouble(v[0][0]);//A
+                ThetaC_gen_req_out = Convert.ToDouble(v[0][1]);//B
+                Theta_cond = Convert.ToDouble(v[0][2]);//C
+                Theta_evad = Convert.ToDouble(v[0][3]);//D
+            }
+            else
+            {
+                MessageBox.Show("냉방설비 입력값이 적절하지 않습니다.");
+            }
+               
             double son1, son2, mam1, mam2;
             double[] Tempout = new double[12], Tempin = new double[12]; //열원측, 부하측
 
