@@ -771,6 +771,11 @@ namespace main.contents
                     Year = Convert.ToDouble(Value[0][13]);
                     Year_comboBox.SelectedItem = Year.ToString();
                 }
+                if (Value[0][14] != "")
+                {
+                    Month = Convert.ToDouble(Value[0][14]);
+                    Month_comboBox.SelectedItem = Month.ToString();
+                }
 
                 if (Value[0][15] != "")
                 {
