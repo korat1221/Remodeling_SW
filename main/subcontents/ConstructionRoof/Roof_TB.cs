@@ -53,7 +53,7 @@ namespace main.subcontents.ConstructionRoof
                     TB_Type_comboBox.Items.Add("내단열(보선형)");
                     TB_Type_comboBox.Items.Add("내부덧댐");
                     TB_Type_comboBox.Items.Add("트러스(점형)");
-                    TB_Type_comboBox.Items.Add("트러스(점형)");
+                    TB_Type_comboBox.Items.Add("트러스(선형)");
                     break;
 
             }
