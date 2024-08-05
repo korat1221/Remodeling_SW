@@ -40,7 +40,7 @@ namespace main
         public double[] Zone_HV_tot = new double[2], Zone_HV_inf = new double[2], Zone_HV_win = new double[2], Zone_HV_z = new double[2], Zone_HV_mech = new double[2]; public double HV_tot_max; //[비이용일/이용일] = [we/wd]=[0/1]
         public double[,,] Zone_H_tot = new double[2,2,12]; //[비이용일/이용일] = [we/wd]=[0/1]
         public double[,,] tao = new double[2,2,12]; double tao_max; //[비이용일/이용일] = [we/wd]=[0/1]
-        public double[] theta_e = new double[12], dwe_mth = new double[12], dwd_mth = new double[12];
+        public double[,] theta_e = new double[2, 12]; public double[] dwe_mth = new double[12], dwd_mth = new double[12];
         public double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         public double[,,] theta_i = new double[2, 2, 12];
 
@@ -65,7 +65,7 @@ namespace main
         public double QVsink_tot_Cmax, QV_inf_sink_Cmax, QV_win_sink_Cmax, QVsource_tot_Cmax, QV_inf_source_Cmax, QV_win_source_Cmax;
         //QI
         public double[,,] QI_tot = new double[2, 2, 12], QI_L = new double[2, 2, 12]; public double[] QI_Humidity = new double[12];
-        public double[] QI_P = new double[2], QI_fac = new double[2];
+        public double[,] QI_P = new double[2,12], QI_fac = new double[2,12];
         //
         public double[,,] Qsink = new double[2, 2, 12], Qsource = new double[2, 2, 12], gamma = new double[2, 2, 12], a = new double[2, 2, 12], eta = new double[2, 2, 12], dQc_b = new double[2, 2, 12], dQc_sink = new double[2, 2, 12];
         public double[] Qhb_we_day = new double[12], Qhb_wd_day = new double[12], Qcb_we_day = new double[12], Qcb_wd_day = new double[12];
@@ -83,16 +83,7 @@ namespace main
         public Zone(String zoneNum)
         {
             this.ZoneNum = zoneNum;
-            Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
-            string[][] OTemp = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "기간,온도", "지역명 ='" + Location[0][0] + "'");
-            int i = -1;
-            if (OTemp.Length > 0)
-            {
-                while (++i < 12)
-                {
-                    theta_e[i] = Convert.ToDouble(OTemp[i][1]);
-                }
-            }
+           
         }
 
         public void LoadData_ZoneGeneral()
@@ -130,7 +121,8 @@ namespace main
             }
 
             //존 일반정보 가져오기
-            ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "사용시간,냉난방시간,연이용일수,순바닥면적,천장고, 면적당인체발열, 면적당기기발열, 존축열성능, 비이용일환기량,이용일환기량,주이용일", "존번호='" + ZoneNum + "'");
+            // ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "사용시간,냉난방시간,연이용일수,순바닥면적,천장고, 면적당인체발열, 면적당기기발열, 존축열성능, 비이용일환기량,이용일환기량,주이용일", "존번호='" + ZoneNum + "'");
+            ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "사용시간,냉난방시간,연이용일수,순바닥면적,천장고, 일일인체발열, 일일기기발열, 존축열성능, 비이용일환기량,이용일환기량,주이용일", "존번호='" + ZoneNum + "'");
             if (ZoneG.Length > 0)
             {
                 twd_d = Convert.ToDouble(ZoneG[0][0]);
@@ -163,6 +155,23 @@ namespace main
                 }
             }
 
+            //외기온도 데이터 불러오기 
+            Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
+            string[][] OTemp = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "기간,온도", "지역명 ='" + Location[0][0] + "'");
+            int m = -1;
+            if (OTemp.Length > 0)
+            {
+                
+                while (++m < 12)
+                {
+                    theta_e[0, m] = Convert.ToDouble(OTemp[m][1]); //난방 실외온도 
+                    theta_e[1, m] = Convert.ToDouble(OTemp[m][1]); //냉방 실외온도
+                    if(3<= m && m <= 9)
+                    {
+                        theta_e[1, m] = theta_e[1, m] + 2;
+                    }
+                }
+            }
             //부하 관련 데이터 불러오기 
             string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_부하 ", "해석설계외기온도,최고온도,최고절대습도", "지역명='" + Location[0][0] + "'");
             if (Value.Length > 0)
@@ -854,12 +863,12 @@ namespace main
                     for (int mth = 0; mth < 12; mth++)
                     {
                         //[hc, wewd, mth]	
-                        theta_i[0, 0, mth] = calc.theta_ihwe_Calc(tao[hc,wewd,mth], Mode_we, theta_e[mth], theta_i_h_set, dtheta_i_NA);
-                        theta_i[0, 1, mth] = calc.theta_ihwd_Calc(tao[hc,wewd,mth], Mode_night, (24 - th_op_d), theta_e[mth], theta_i_h_set, dtheta_i_NA);
+                        theta_i[0, 0, mth] = calc.theta_ihwe_Calc(tao[hc,wewd,mth], Mode_we, theta_e[hc, mth], theta_i_h_set, dtheta_i_NA);
+                        theta_i[0, 1, mth] = calc.theta_ihwd_Calc(tao[hc,wewd,mth], Mode_night, (24 - th_op_d), theta_e[hc, mth], theta_i_h_set, dtheta_i_NA);
                         theta_i[1, 0, mth] = calc.theta_ic_Calc(theta_i_c_set);
                         theta_i[1, 1, mth] = calc.theta_ic_Calc(theta_i_c_set);
 
-                        theta_u[hc, wewd, mth] = theta_i[wewd, hc, mth] - 0.8 * (theta_i[0, 0, mth] - theta_e[mth]);
+                        theta_u[hc, wewd, mth] = theta_i[wewd, hc, mth] - 0.8 * (theta_i[0, 0, mth] - theta_e[hc, mth]);
 
 
                     }
@@ -1115,15 +1124,15 @@ namespace main
                             }
                             else
                             {
-                                if (theta_i[hc, wewd, mth] >= theta_e[mth])
+                                if (theta_i[hc, wewd, mth] >= theta_e[hc, mth])
                                 {
-                                    zoneWalls_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], zonewall.Ueff() * zonewall.Area());
-                                    zoneWalls_QTsink_TB[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], Utb * zonewall.Area());
+                                    zoneWalls_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], zonewall.Ueff() * zonewall.Area());
+                                    zoneWalls_QTsink_TB[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], Utb * zonewall.Area());
                                 }
                                 else
                                 {
-                                    zoneWalls_QTsource[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], zonewall.Ueff() * zonewall.Area());
-                                    zoneWalls_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], Utb * zonewall.Area());
+                                    zoneWalls_QTsource[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], zonewall.Ueff() * zonewall.Area());
+                                    zoneWalls_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], Utb * zonewall.Area());
                                 }
                             }
                             MTH = (mth + 1).ToString() + "월";
@@ -1204,15 +1213,15 @@ namespace main
                             }
                             else
                             {
-                                if (theta_i[hc, wewd, mth] >= theta_e[mth])
+                                if (theta_i[hc, wewd, mth] >= theta_e[hc, mth])
                                 {
-                                    zoneRoofs_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], zoneroof.Ueff() * zoneroof.Area());
-                                    zoneRoofs_QTsink_TB[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], Utb * zoneroof.Area());
+                                    zoneRoofs_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], zoneroof.Ueff() * zoneroof.Area());
+                                    zoneRoofs_QTsink_TB[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], Utb * zoneroof.Area());
                                 }
                                 else
                                 {
-                                    zoneRoofs_QTsource[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], zoneroof.Ueff() * zoneroof.Area());
-                                    zoneRoofs_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], Utb * zoneroof.Area());
+                                    zoneRoofs_QTsource[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], zoneroof.Ueff() * zoneroof.Area());
+                                    zoneRoofs_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], Utb * zoneroof.Area());
                                 }
                             }
                             MTH = (mth + 1).ToString() + "월";
@@ -1277,17 +1286,17 @@ namespace main
                         {
 
                             double[,,] theta_s = new double[2, 2, 12];
-                            theta_s[0, wewd, mth] = theta_i[hc, wewd, mth] - zonefloor.Fx() * (theta_i[hc, wewd, mth] - theta_e[mth]);
-                            theta_s[1, wewd, mth] = theta_i[hc, wewd, mth] - zonefloor.Fx() * (theta_i[hc, wewd, mth] - theta_e[mth]);
+                            theta_s[0, wewd, mth] = theta_i[hc, wewd, mth] - zonefloor.Fx() * (theta_i[hc, wewd, mth] - theta_e[hc, mth]);
+                            theta_s[1, wewd, mth] = theta_i[hc, wewd, mth] - zonefloor.Fx() * (theta_i[hc, wewd, mth] - theta_e[hc, mth]);
                             if (theta_i[hc, wewd, mth] >= theta_s[hc, wewd, mth])
                             {
                                 zoneFloors_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_s[hc, wewd, mth], theta_i[hc, wewd, mth], zonefloor.Ueff() * zonefloor.Area());
-                                zoneFloors_QTsink_TB[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], Utb * zonefloor.Area());
+                                zoneFloors_QTsink_TB[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], Utb * zonefloor.Area());
                             }
                             else
                             {
                                 zoneFloors_QTsource[i, hc, wewd, mth] = qtcalc.Calc_source(theta_s[hc, wewd, mth], theta_i[hc, wewd, mth], zonefloor.Ueff() * zonefloor.Area());
-                                zoneFloors_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], Utb * zonefloor.Area());
+                                zoneFloors_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], Utb * zonefloor.Area());
                             }
 
 
@@ -1342,8 +1351,8 @@ namespace main
                         {
 
                             double[,,] theta_s_GWall = new double[2, 2, 12];
-                            theta_s_GWall[0, wewd, mth] = theta_i[0, wewd, mth] - zonegwall.Fx() * (theta_i[0, wewd, mth] - theta_e[mth]);
-                            theta_s_GWall[1, wewd, mth] = theta_i[0, wewd, mth] - zonegwall.Fx() * (theta_i[0, wewd, mth] - theta_e[mth]);
+                            theta_s_GWall[0, wewd, mth] = theta_i[0, wewd, mth] - zonegwall.Fx() * (theta_i[0, wewd, mth] - theta_e[hc, mth]);
+                            theta_s_GWall[1, wewd, mth] = theta_i[0, wewd, mth] - zonegwall.Fx() * (theta_i[0, wewd, mth] - theta_e[hc, mth]);
                             if (theta_i[hc, wewd, mth] >= theta_s_GWall[hc, wewd, mth])
                             {
                                 zoneGWalls_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_s_GWall[hc, wewd, mth], theta_i[hc, wewd, mth], zonegwall.Ueff() * zonegwall.Area());
@@ -1421,15 +1430,15 @@ namespace main
                             }
                             else
                             {
-                                if (theta_i[hc, wewd, mth] >= theta_e[mth])
+                                if (theta_i[hc, wewd, mth] >= theta_e[hc, mth])
                                 {
-                                    zoneDoors_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], zonedoor.Ueff() * zonedoor.Area());
-                                    zoneDoors_QTsink_TB[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], Utb * zonedoor.Area());
+                                    zoneDoors_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], zonedoor.Ueff() * zonedoor.Area());
+                                    zoneDoors_QTsink_TB[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], Utb * zonedoor.Area());
                                 }
                                 else
                                 {
-                                    zoneDoors_QTsource[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], zonedoor.Ueff() * zonedoor.Area());
-                                    zoneDoors_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], Utb * zonedoor.Area());
+                                    zoneDoors_QTsource[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], zonedoor.Ueff() * zonedoor.Area());
+                                    zoneDoors_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], Utb * zonedoor.Area());
                                 }
                             }
                             MTH = (mth + 1).ToString() + "월";
@@ -1511,16 +1520,16 @@ namespace main
                     {
                         for (int mth = 0; mth <= 11; mth++)
                         {
-                            if (theta_i[hc, wewd, mth] >= theta_e[mth])
+                            if (theta_i[hc, wewd, mth] >= theta_e[hc, mth])
                             {
 
-                                zoneCWs_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], U * A);
-                                zoneCWs_QTsink_TB[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], Uinst * A);
+                                zoneCWs_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], U * A);
+                                zoneCWs_QTsink_TB[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], Uinst * A);
                             }
                             else
                             {
-                                zoneCWs_QTsource[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], U * A);
-                                zoneCWs_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], Uinst * A);
+                                zoneCWs_QTsource[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], U * A);
+                                zoneCWs_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], Uinst * A);
                             }
 
                             MTH = (mth + 1).ToString() + "월";
@@ -1589,15 +1598,15 @@ namespace main
                             }
                             else
                             {
-                                if (theta_i[hc, wewd, mth] >= theta_e[mth])
+                                if (theta_i[hc, wewd, mth] >= theta_e[hc, mth])
                                 {
-                                    zoneWins_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], zonewin.Uvalue() * zonewin.Area());
-                                    zoneWins_QTsink_TB[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], zonewin.Uinst() * zonewin.Area());
+                                    zoneWins_QTsink[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], zonewin.Uvalue() * zonewin.Area());
+                                    zoneWins_QTsink_TB[i, hc, wewd, mth] = qtcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], zonewin.Uinst() * zonewin.Area());
                                 }
                                 else
                                 {
-                                    zoneWins_QTsource[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], zonewin.Uvalue() * zonewin.Area());
-                                    zoneWins_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], zonewin.Uinst() * zonewin.Area());
+                                    zoneWins_QTsource[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], zonewin.Uvalue() * zonewin.Area());
+                                    zoneWins_QTsource_TB[i, hc, wewd, mth] = qtcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], zonewin.Uinst() * zonewin.Area());
                                 }
                             }
                             MTH = (mth + 1).ToString() + "월";
@@ -2209,28 +2218,28 @@ namespace main
                             }
                             else
                             {
-                                theta_v_mech[0, mth] = theta_e[mth] + eta_V_mech[0] * (theta_i_h_set - theta_e[mth]);
-                                theta_v_mech[1, mth] = theta_e[mth] + eta_V_mech[1] * (theta_i_h_set - theta_e[mth]);
+                                theta_v_mech[0, mth] = theta_e[hc, mth] + eta_V_mech[0] * (theta_i_h_set - theta_e[hc, mth]);
+                                theta_v_mech[1, mth] = theta_e[hc, mth] + eta_V_mech[1] * (theta_i_h_set - theta_e[hc, mth]);
                             }
                         }
                         else
                         {
-                            theta_v_mech[0, mth] = theta_e[mth] + eta_V_mech[0] * (theta_i_h_set - theta_e[mth]);
-                            theta_v_mech[1, mth] = theta_e[mth] + eta_V_mech[1] * (theta_i_h_set - theta_e[mth]);
+                            theta_v_mech[0, mth] = theta_e[hc, mth] + eta_V_mech[0] * (theta_i_h_set - theta_e[hc, mth]);
+                            theta_v_mech[1, mth] = theta_e[hc, mth] + eta_V_mech[1] * (theta_i_h_set - theta_e[hc, mth]);
                         }
                         
                         QVCalc qvcalc = new QVCalc();
-                        if (theta_i[hc, wewd, mth] >= theta_e[mth])
+                        if (theta_i[hc, wewd, mth] >= theta_e[hc, mth])
                         {
-                            QV_inf_sink[hc, wewd, mth] = qvcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], Zone_HV_inf[wewd]);
-                            QV_z_sink[hc, wewd, mth] = qvcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], Zone_HV_z[wewd]);
-                            QV_win_sink[hc, wewd, mth] = qvcalc.Calc_sink(theta_e[mth], theta_i[hc, wewd, mth], Zone_HV_win[wewd]);
+                            QV_inf_sink[hc, wewd, mth] = qvcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], Zone_HV_inf[wewd]);
+                            QV_z_sink[hc, wewd, mth] = qvcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], Zone_HV_z[wewd]);
+                            QV_win_sink[hc, wewd, mth] = qvcalc.Calc_sink(theta_e[hc, mth], theta_i[hc, wewd, mth], Zone_HV_win[wewd]);
                         }
-                        else if (theta_i[hc, wewd, mth] < theta_e[mth])
+                        else if (theta_i[hc, wewd, mth] < theta_e[hc, mth])
                         {
-                            QV_inf_source[hc, wewd, mth] = qvcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], Zone_HV_inf[wewd]);
-                            QV_z_source[0, 1, mth] = qvcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], Zone_HV_z[wewd]);
-                            QV_win_source[hc, wewd, mth] = qvcalc.Calc_source(theta_e[mth], theta_i[hc, wewd, mth], Zone_HV_win[wewd]);
+                            QV_inf_source[hc, wewd, mth] = qvcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], Zone_HV_inf[wewd]);
+                            QV_z_source[0, 1, mth] = qvcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], Zone_HV_z[wewd]);
+                            QV_win_source[hc, wewd, mth] = qvcalc.Calc_source(theta_e[hc, mth], theta_i[hc, wewd, mth], Zone_HV_win[wewd]);
                         }
 
                         if (theta_i[hc, wewd, mth] >= theta_v_mech[hc, mth])
@@ -2338,17 +2347,28 @@ namespace main
 
         public void ZoneQI() //내부발열 계산
         {
+            double t_person = 0;
+            string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed,"용도프로필","사람일일이용시간", "용도명='" + zoneUsage + "'");
+            if(value.Length >0)
+            {
+                t_person = Convert.ToDouble(value[0][0]);
+            }
             //비이용일
-            QI_P[0] = 0;
-            QI_fac[0] = 0;
+            for (int mth =0; mth <12; mth++)
+            {
+                
+                QI_P[0,mth] = 0;
+                QI_fac[0,mth] = 0;
+                QI_P[1,mth] = qI_p * zoneArea * dwd_mth[mth]/1000 * t_person / twd_d;
+                QI_fac[1,mth] = qI_fac * zoneArea * dwd_mth[mth] /1000;
+            }
+           
             //이용일
-            QI_P[1] = qI_p * zoneArea;
-            QI_fac[1] = qI_fac * zoneArea;
 
             double[] h_summer = new double[12];
             for(int mth =0; mth< 12; mth++)
             {
-                h_summer[mth] = (H_winter - H_summer) / (theta_e[2] - theta_e[5]) * (theta_e[mth] - theta_e[2]) + H_winter;
+                h_summer[mth] = (H_winter - H_summer) / (theta_e[1,2] - theta_e[1,5]) * (theta_e[1, mth] - theta_e[1,2]) + H_winter;
             }
             
 
@@ -2358,13 +2378,13 @@ namespace main
                 {
                     for (int mth = 0; mth <= 11; mth++)
                     {
-                        QI_Humidity[mth] = twd_d * h_summer[mth] * Peope_Num * 2260 / 3600;
+                        QI_Humidity[mth] = t_person * h_summer[mth] * Peope_Num * 2260 / 3600 * dwd_mth[mth] / 1000;
 
                         if (hc == 1 && wewd == 1)
                         {
-                            QI_tot[hc, wewd, mth] = QI_P[wewd] + QI_fac[wewd] + QI_L[hc, wewd, mth] + QI_Humidity[mth];
+                            QI_tot[hc, wewd, mth] = QI_P[wewd,mth] + QI_fac[wewd, mth] + QI_L[hc, wewd, mth] + QI_Humidity[mth];
                         }
-                        else { QI_tot[hc, wewd, mth] = QI_P[wewd] + QI_fac[wewd] + QI_L[hc, wewd, mth]; }
+                        else { QI_tot[hc, wewd, mth] = QI_P[wewd, mth] + QI_fac[wewd, mth] + QI_L[hc, wewd, mth]; }
                     }
                 }
             }
@@ -2458,7 +2478,7 @@ namespace main
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    Theta_Indi[hc, mth] = Theta_set[hc] - 0.8 * (Theta_set[hc] - theta_e[mth]);
+                    Theta_Indi[hc, mth] = Theta_set[hc] - 0.8 * (Theta_set[hc] - theta_e[hc, mth]);
                 }
             }
 
@@ -2470,7 +2490,7 @@ namespace main
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Theta_s = Theta_set[hc] - zonefloor.Fx() * (Theta_set[hc] - theta_e[mth]);
+                        Theta_s = Theta_set[hc] - zonefloor.Fx() * (Theta_set[hc] - theta_e[hc, mth]);
                         H_Theta_F[hc, mth] += (Theta_s * zonefloor.Ueff() * zonefloor.Area());
                     }
                 }
@@ -2483,7 +2503,7 @@ namespace main
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Theta_g = Theta_set[hc] - zonegwall.Fx() * (Theta_set[hc] - theta_e[mth]);
+                        Theta_g = Theta_set[hc] - zonegwall.Fx() * (Theta_set[hc] - theta_e[hc, mth]);
                         H_Theta_G[hc, mth] += (Theta_g * zonegwall.Ueff() * zonegwall.Area());
                     }
                 }
@@ -2500,7 +2520,7 @@ namespace main
                         HT_Indi_tot = (Zone_HT_Indi_Wall + Zone_HT_Indi_Roof + Zone_HT_Indi_Win + Zone_HT_Indi_Door); //간접외기 
                         HV_u = 0.6 * (zoneArea * zoneHeight) * 0.34;
                         
-                            Theta_U[hc, wewd, mth] = (Qsource_h[hc, wewd, mth] + HT_Di_tot * theta_e[mth] + HT_Indi_tot * Theta_Indi[hc, mth] + H_Theta_F[hc, mth] + H_Theta_G[hc, mth] + HT_z[hc] * Theta_set[hc] + HV_u * theta_e[mth]) / (HT_Di_tot + HT_Indi_tot + Zone_HT_Floor + Zone_HT_GWall + HT_z[hc] + HV_u);
+                            Theta_U[hc, wewd, mth] = (Qsource_h[hc, wewd, mth] + HT_Di_tot * theta_e[hc, mth] + HT_Indi_tot * Theta_Indi[hc, mth] + H_Theta_F[hc, mth] + H_Theta_G[hc, mth] + HT_z[hc] * Theta_set[hc] + HV_u * theta_e[hc, mth]) / (HT_Di_tot + HT_Indi_tot + Zone_HT_Floor + Zone_HT_GWall + HT_z[hc] + HV_u);
                        if(Double.IsInfinity(Theta_U[hc, wewd, mth]))
                         {
                             Theta_U[0, wewd, mth] = theta_i_h_set;
@@ -3564,7 +3584,7 @@ namespace main
 
         public double theta_ic_Calc(double theta_i_c_set)
         {
-            double theta_i_c = theta_i_c_set - 3;
+            double theta_i_c = theta_i_c_set;
 
             return theta_i_c;
         }
