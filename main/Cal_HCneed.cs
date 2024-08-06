@@ -842,7 +842,7 @@ namespace main
             {
                 for(int wewd =0; wewd < 2; wewd ++)
                 {
-                    for(int mth  =0; mth < 2; mth ++)
+                    for(int mth  =0; mth < 12; mth ++)
                     {
                         Zone_H_tot[hc,wewd,mth] = Zone_HT_tot[hc,wewd,mth] + Zone_HV_tot[0];
                         theta_iCalc calc = new theta_iCalc();
@@ -2359,8 +2359,8 @@ namespace main
                 
                 QI_P[0,mth] = 0;
                 QI_fac[0,mth] = 0;
-                QI_P[1,mth] = qI_p * zoneArea * dwd_mth[mth]/1000 * t_person / twd_d;
-                QI_fac[1,mth] = qI_fac * zoneArea * dwd_mth[mth] /1000;
+                QI_P[1,mth] = qI_p * zoneArea * t_person / twd_d;
+                QI_fac[1,mth] = qI_fac * zoneArea ;
             }
            
             //이용일
@@ -2378,7 +2378,7 @@ namespace main
                 {
                     for (int mth = 0; mth <= 11; mth++)
                     {
-                        QI_Humidity[mth] = t_person * h_summer[mth] * Peope_Num * 2260 / 3600 * dwd_mth[mth] / 1000;
+                        QI_Humidity[mth] = t_person * h_summer[mth] * Peope_Num * 2260 / 3600 ;
 
                         if (hc == 1 && wewd == 1)
                         {
