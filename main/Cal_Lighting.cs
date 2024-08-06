@@ -16,6 +16,7 @@ namespace main
         //다른 클래스(하위) 객체화해서 Calc
         public string ZoneNum;
         public double Wr, Lr, A, hR, hm, Zone_hLi, Zone_hTa, K;  //존 일반정보 csv 변수
+        public double A_DL, AL;
         public string WinNum; //존이름과 일치하는 주창아이디
         public string Location;  //존 용도프로필 csv 변수
         public double Em, KA, FA;
@@ -1014,7 +1015,7 @@ namespace main
             {
                 for (int i = 0; i < 12; i++)
                 {
-                    Zone_Final_kWh[i] = Math.Round(final_w.Calc_W_re_yes(Fc, Zone_Sunlight_PjSC[i], Pj, Fo, Zone_daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], Zone_nighttime[i], Calc_wsp[i], A),3);
+                    Zone_Final_kWh[i] = Math.Round(final_w.Calc_W_re_yes(Fc, Zone_Sunlight_PjSC[i], Pj, Fo, Zone_daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], Zone_nighttime[i], Calc_wsp[i], A, Zone_f_AD),3);
                     //MessageBox.Show((i + 1) + "월 조명에너지 소요량 : " + " " + Zone_Final_W[i]);
                 }
             }
@@ -1023,7 +1024,7 @@ namespace main
             {
                 for (int i = 0; i < 12; i++)
                 {
-                    Zone_Final_kWh[i] = Math.Round(final_w.Calc_W_re_no(Fc, Pj, Fo, Zone_daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], Zone_nighttime[i], Calc_wsp[i], A),3);
+                    Zone_Final_kWh[i] = Math.Round(final_w.Calc_W_re_no(Fc, Pj, Fo, Zone_daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], Zone_nighttime[i], Calc_wsp[i], A, Zone_f_AD),3);
                     //MessageBox.Show((i + 1) + "월 조명에너지 소요량 : " + " " + Zone_Final_W[i]);
                 }
             }
@@ -1102,9 +1103,9 @@ namespace main
             //     else daytime = 0;
             // }
 
-            if (starttime == endtime)
+            if (starttime == endtime) //24시간이용
             {
-                daytime = (sunsettime - sunrisetime) * 24;
+                daytime = (sunsettime - sunrisetime) * 24; //해지는시간, 해뜨는시간 (18:00 - 7:00)  11시간 
             }
             else if ((starttime < sunrisetime) && (endtime > sunsettime) || (starttime < sunrisetime) && (endtime < sunrisetime) || (starttime > sunsettime) && (endtime > sunsettime))
             {
@@ -1208,7 +1209,7 @@ namespace main
 
             if (starttime == endtime)
             {
-                nighttime = 24 + ((sunrisetime - sunsettime) * 24);
+                nighttime = 24 - ((sunrisetime - sunsettime) * 24);
             }
             else if ((starttime < sunrisetime) && (endtime > sunsettime) || (starttime < sunrisetime) && (endtime < sunrisetime) || (starttime > sunsettime) && (endtime > sunsettime))
             {
@@ -1541,19 +1542,21 @@ namespace main
 
     public class Final_kW
     {
-        public double Calc_W_re_yes(double Fc, double Pj_SC, double P, double Fo, double daytime, double facade_FD, double roof_FD, double nighttime, double wsp, double A)
+        public double Calc_W_re_yes(double Fc, double Pj_SC, double P, double Fo, double daytime, double facade_FD, double roof_FD, double nighttime, double wsp, double A, double Zone_f_AD)
         {
-            double W1;
-            W1 = ((Fc * (Pj_SC / 1000)) * Fo * daytime * (facade_FD + roof_FD) +
-                (Fc * (P / 1000) * Fo * nighttime) + wsp ) * A; 
-            
+            double W1, W_11, W_12;
+            W_11 = ((Fc * (Pj_SC / 1000)) * Fo * daytime * (facade_FD + roof_FD) + (Fc * (P / 1000) * Fo * nighttime) + wsp ) * Zone_f_AD;
+            W_12 = ((Fc * (Pj_SC / 1000)) * Fo * daytime + (Fc * (P / 1000) * Fo * nighttime) + wsp) * (A - Zone_f_AD);//추가
+            W1 = W_11 + W_12;//추가
             return W1;
         }
-        public double Calc_W_re_no(double Fc, double P, double Fo, double daytime, double facade_FD, double roof_FD, double nighttime, double wsp, double A)
+        public double Calc_W_re_no(double Fc, double P, double Fo, double daytime, double facade_FD, double roof_FD, double nighttime, double wsp, double A, double Zone_f_AD)
         {
-            double W2;
-            W2 = ((Fc * (P / 1000)) * Fo * daytime * (facade_FD + roof_FD) +
-                (Fc * (P / 1000) * Fo * nighttime) + wsp) * A;
+            double W2, W2_11, W2_12;
+            W2_11 = ((Fc * (P / 1000)) * Fo * daytime * (facade_FD + roof_FD) + (Fc * (P / 1000) * Fo * nighttime) + wsp) * Zone_f_AD;
+            W2_12 = ((Fc * (P / 1000)) * Fo * daytime + (Fc * (P / 1000) * Fo * nighttime) + wsp) * (A-Zone_f_AD);//추가
+            
+            W2 = W2_11 + W2_12;//추가
             return W2;
         }
     }
