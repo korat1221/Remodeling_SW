@@ -1484,7 +1484,7 @@ namespace main
                 if (Wh_s[mth] <= 0) { Wh_s[mth] = 0; }
                 if (Wh_g[mth] <= 0) { Wh_g[mth] = 0; }
 
-                if (Qhb_mth_sum[mth] <= 0) 
+                if (Qhb_mth_sum[mth] <= 0.01) 
                 {
                     Qh_ce[mth] = 0;
                     Qh_d[mth] = 0;
