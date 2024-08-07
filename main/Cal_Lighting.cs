@@ -1054,87 +1054,74 @@ namespace main
         }
         
 
-        //조명 사용 낮시간 (시간 저거 더블로 가져오는게 맞겠지?)
-        //public double Calc_daytime(double starttime, double endtime, double sunrisetime, double sunsettime, double dayofuse, double useday)
-       // public double Calc_daytime(string starttime, string endtime, string sunrisetime, string sunsettime, double dayofuse, double useday)
         public double Calc_daytime(double starttime, double endtime, double sunrisetime, double sunsettime, double dayofuse, double useday)
         {
-            // TimeSpan ts, ts2;
-
-            // if (starttime == endtime)
-            // {
-            //     ts = DateTime.Parse(sunsettime) - DateTime.Parse(sunrisetime);
-            //     daytime = Double.Parse(ts.Hours.ToString());
-
-            // }
-            // else if ((DateTime.Parse(starttime) < DateTime.Parse(sunrisetime)) && (DateTime.Parse(endtime) > DateTime.Parse(sunsettime)) || (DateTime.Parse(starttime)< DateTime.Parse(sunrisetime)) && (DateTime.Parse(endtime) < DateTime.Parse(sunrisetime)) || (DateTime.Parse(starttime) > DateTime.Parse(sunsettime)) && (DateTime.Parse(endtime) > DateTime.Parse(sunsettime)))
-            //{
-            //     if (DateTime.Parse(starttime) < DateTime.Parse(endtime))
-            //     {
-            //         ts = DateTime.Parse(sunsettime) - DateTime.Parse(sunrisetime);
-            //         daytime = Double.Parse(ts.Hours.ToString());
-            //     }
-            //     else daytime = 0;
-            // }
-            // else if (DateTime.Parse(starttime) >= DateTime.Parse(sunrisetime) && DateTime.Parse(starttime) <= DateTime.Parse(sunsettime) && (DateTime.Parse(endtime) < DateTime.Parse(sunrisetime) || DateTime.Parse(endtime) > DateTime.Parse(sunsettime)))
-            // {
-            //     ts = DateTime.Parse(sunsettime) - DateTime.Parse(starttime);
-            //     daytime = Double.Parse(ts.Hours.ToString());
-            // }
-            // else if (DateTime.Parse(endtime) >= DateTime.Parse(sunrisetime) && DateTime.Parse(endtime) <= DateTime.Parse(sunsettime) && (DateTime.Parse(starttime) < DateTime.Parse(sunrisetime) || DateTime.Parse(starttime) > DateTime.Parse(sunsettime)))
-            // {
-            //     ts = DateTime.Parse(endtime) - DateTime.Parse(starttime);
-            //     daytime = Double.Parse(ts.Hours.ToString());
-            // }
-            // else if ((DateTime.Parse(starttime) >= DateTime.Parse(sunrisetime) && DateTime.Parse(starttime) <= DateTime.Parse(sunsettime)) && (DateTime.Parse(endtime) >= DateTime.Parse(sunrisetime) && DateTime.Parse(endtime) <= DateTime.Parse(sunsettime)))
-            // {
-            //     if (DateTime.Parse(starttime) < DateTime.Parse(endtime))
-            //     {
-            //         ts = DateTime.Parse(endtime) - DateTime.Parse(starttime);
-            //         daytime = Double.Parse(ts.Hours.ToString());
-            //     }
-            //     else if (DateTime.Parse(starttime) > DateTime.Parse(endtime))
-            //     {
-            //         ts = DateTime.Parse(sunsettime) - DateTime.Parse(starttime);
-            //         ts2 = DateTime.Parse(endtime) - DateTime.Parse(sunrisetime);
-            //         daytime = Double.Parse(ts.Hours.ToString() + ts2.Hours.ToString());
-
-            //     }
-            //     else daytime = 0;
-            // }
-
-            if (starttime == endtime) //24시간이용
+            if (sunsettime > sunrisetime && starttime == endtime) 
             {
-                daytime = (sunsettime - sunrisetime) * 24; //해지는시간, 해뜨는시간 (18:00 - 7:00)  11시간 
+                daytime = (sunsettime - sunrisetime) * 24;
             }
-            else if ((starttime < sunrisetime) && (endtime > sunsettime) || (starttime < sunrisetime) && (endtime < sunrisetime) || (starttime > sunsettime) && (endtime > sunsettime))
+            else
             {
-                if (starttime < endtime)
+                if (sunsettime > sunrisetime && starttime < sunrisetime)
                 {
-                    daytime = (sunsettime - sunrisetime) * 24;
+                    if(starttime > endtime && endtime < sunrisetime)
+                    {
+                        daytime = (sunsettime - sunrisetime) * 24;
+                    }
+                    else if (starttime < endtime && endtime <sunrisetime)
+                    {
+                        daytime = 0;
+                    }
+                    else if (starttime < endtime && endtime > sunrisetime && endtime < sunsettime)
+                    {
+                        daytime = (endtime - sunrisetime) * 24;
+                    }
+                    else if (starttime < endtime && endtime > sunsettime)
+                    {
+                        daytime = (sunsettime - sunrisetime) * 24;
+                    }
                 }
-                else daytime = 0;
-            }
-            else if (starttime >= sunrisetime && starttime <= sunsettime && (endtime < sunrisetime || endtime > sunsettime))
-            {
-                daytime = (sunsettime - starttime) * 24;
-            }
-            else if (endtime >= sunrisetime && endtime <= sunsettime && (starttime < sunrisetime || starttime > sunsettime))
-            {
-                daytime = (endtime - starttime) * 24;
-            }
-            else if ((starttime >= sunrisetime && starttime <= sunsettime) && (endtime >= sunrisetime && endtime <= sunsettime))
-            {
-                if (starttime < endtime)
+                else if (sunsettime > sunrisetime && starttime > sunrisetime && starttime < sunsettime)
                 {
-                    daytime = (endtime - starttime) * 24;
+                    if (endtime < starttime && endtime < sunrisetime)
+                    {
+                        daytime = (sunsettime - starttime) * 24;
+                    }
+                    else if (endtime <starttime && endtime > sunrisetime && endtime <sunsettime)
+                    {
+                        daytime = ((sunsettime - sunrisetime) - Math.Abs(starttime - endtime)) * 24;
+                    }
+                    else if (endtime > starttime && endtime > sunrisetime && endtime < sunsettime)
+                    {
+                        daytime = (endtime - starttime) * 24;
+                    }
+                    else if (endtime > starttime && endtime > sunsettime)
+                    {
+                        daytime = (sunsettime - starttime) * 24;
+                    }
                 }
-                else if (starttime > endtime)
+                else if (sunsettime > sunrisetime && starttime > sunsettime)
                 {
-                    daytime = ((sunsettime - starttime) + (endtime - sunrisetime)) * 24;
+                    if (endtime < starttime && endtime < sunrisetime)
+                    {
+                        daytime = 0;
+                    }
+                    else if (endtime < starttime && endtime > sunrisetime && endtime < sunsettime)
+                    {
+                        daytime = (endtime - sunrisetime) * 24;
+                    }
+                    else if (endtime < starttime && endtime > sunsettime)
+                    {
+                        daytime = (sunsettime - sunrisetime) * 24;
+                    }
+                    else if (endtime > starttime)
+                    {
+                        daytime = 0;
+                    }
                 }
-                else daytime = 0;
             }
+           
+               
 
             // Light_daytime = daytime * 24 * dayofuse * (useday / 7);
             Light_daytime = daytime * dayofuse * (useday / 7);
@@ -1145,140 +1132,78 @@ namespace main
         //public double Calc_nighttime(string starttime, string endtime, string sunrisetime, string sunsettime, double dayofuse, double useday)
         public double Calc_nighttime(double starttime, double endtime, double sunrisetime, double sunsettime, double dayofuse, double useday)
         {
-
-            //TimeSpan ts, ts2;
-
-
-            //if (starttime == endtime)
-            //{
-            //    ts = DateTime.Parse(sunrisetime) - DateTime.Parse(sunsettime);
-            //    nighttime = Double.Parse(ts.Hours.ToString() + 24);
-            //}
-            //else if ((DateTime.Parse(starttime) < DateTime.Parse(sunrisetime)) && (DateTime.Parse(endtime) > DateTime.Parse(sunsettime)) || (DateTime.Parse(starttime) < DateTime.Parse(sunrisetime)) && (DateTime.Parse(endtime) < DateTime.Parse(sunrisetime)) || (DateTime.Parse(starttime) > DateTime.Parse(sunsettime)) && (DateTime.Parse(endtime) > DateTime.Parse(sunsettime)))
-            //{
-            //    if (DateTime.Parse(starttime) < DateTime.Parse(endtime))
-            //    {
-            //        ts = DateTime.Parse(sunrisetime) - DateTime.Parse(starttime);
-            //        ts2 = DateTime.Parse(endtime) - DateTime.Parse(sunsettime);
-            //        nighttime = Double.Parse(ts.Hours.ToString() + ts2.Hours.ToString());
-
-            //    }
-            //    else if (DateTime.Parse(starttime) > DateTime.Parse(endtime))
-            //    {
-            //        ts = -(DateTime.Parse(endtime) - DateTime.Parse(starttime));
-            //        nighttime = Double.Parse(ts.Hours.ToString());
-            //    }
-            //}
-            //else if (DateTime.Parse(starttime) >= DateTime.Parse(sunrisetime) && DateTime.Parse(starttime) <= DateTime.Parse(sunsettime) && (DateTime.Parse(endtime) < DateTime.Parse(sunrisetime) || DateTime.Parse(endtime) > DateTime.Parse(sunsettime)))
-            //{
-            //    if (DateTime.Parse(endtime) < DateTime.Parse(starttime))
-            //    {
-            //        ts = -(DateTime.Parse(endtime) - DateTime.Parse(sunsettime));
-            //        nighttime = Double.Parse(ts.Hours.ToString());
-            //    }
-            //    else if (DateTime.Parse(endtime) > DateTime.Parse(starttime))
-            //    {
-            //        ts = (DateTime.Parse(endtime) - DateTime.Parse(sunsettime));
-            //        nighttime = Double.Parse(ts.Hours.ToString());
-            //    }
-            //}
-            //else if (DateTime.Parse(endtime) >= DateTime.Parse(sunrisetime) && DateTime.Parse(endtime) <= DateTime.Parse(sunsettime) && (DateTime.Parse(starttime) < DateTime.Parse(sunrisetime) || DateTime.Parse(starttime) > DateTime.Parse(sunsettime)))
-            //{
-            //    if (DateTime.Parse(endtime) < DateTime.Parse(starttime))
-            //    {
-            //        ts = -(DateTime.Parse(sunrisetime) - DateTime.Parse(starttime));
-            //        nighttime = Double.Parse(ts.Hours.ToString());
-            //    }
-            //    else if (DateTime.Parse(endtime) > DateTime.Parse(starttime))
-            //    {
-            //        ts = (DateTime.Parse(sunrisetime) - DateTime.Parse(starttime));
-            //        nighttime = Double.Parse(ts.Hours.ToString());
-            //    }
-            //}
-
-            //else if ((DateTime.Parse(starttime) >= DateTime.Parse(sunrisetime) && DateTime.Parse(starttime) <= DateTime.Parse(sunsettime)) && (DateTime.Parse(endtime) >= DateTime.Parse(sunrisetime) && DateTime.Parse(endtime) <= DateTime.Parse(sunsettime)))
-            //{
-            //    if (DateTime.Parse(starttime) > DateTime.Parse(endtime))
-            //    {
-            //        ts = -(DateTime.Parse(sunrisetime) - DateTime.Parse(sunsettime));
-            //        nighttime = Double.Parse(ts.Hours.ToString());
-            //    }
-            //    else nighttime = 0;
-            //}
-
-
-            if (starttime == endtime)
+            if (sunsettime > sunrisetime && starttime == endtime)
             {
-                nighttime = 24 - ((sunrisetime - sunsettime) * 24);
+                nighttime = (1 - (sunsettime - sunrisetime)) * 24;
             }
-            else if ((starttime < sunrisetime) && (endtime > sunsettime) || (starttime < sunrisetime) && (endtime < sunrisetime) || (starttime > sunsettime) && (endtime > sunsettime))
+            else
             {
-                if (starttime < endtime)
+                if (sunsettime > sunrisetime && starttime < sunrisetime)
                 {
-                    nighttime = ((sunrisetime - starttime) + (endtime - sunsettime)) * 24;
+                    if (starttime > endtime && endtime < sunrisetime)
+                    {
+                        nighttime = (1 - (Math.Abs(endtime - starttime) + (sunsettime - sunrisetime))) * 24;
+                    }
+                    else if (starttime < endtime && endtime < sunrisetime)
+                    {
+                        nighttime = (endtime - starttime) * 24;
+                    }
+                    else if (starttime < endtime && endtime > sunrisetime && endtime < sunsettime)
+                    {
+                        nighttime = (sunrisetime - starttime) * 24;
+                    }
+                    else if (starttime < endtime && endtime > sunsettime)
+                    {
+                        nighttime = ((endtime - sunsettime)+(sunrisetime - starttime)) * 24;
+                    }
                 }
-                else if (starttime > endtime)
+                else if (sunsettime > sunrisetime && starttime > sunrisetime && starttime < sunsettime)
                 {
-                    nighttime = -((endtime - starttime) * 24);
+                    if (endtime < starttime && endtime < sunrisetime)
+                    {
+                        nighttime = (1 - ((sunrisetime - endtime) + (sunsettime - sunrisetime))) * 24;
+                    }
+                    else if (endtime < starttime && endtime > sunrisetime && endtime < sunsettime)
+                    {
+                        nighttime = (1 - (sunsettime - sunrisetime)) * 24;
+                    }
+                    else if (endtime > starttime && endtime > sunrisetime && endtime < sunsettime)
+                    {
+                        nighttime = 0;
+                    }
+                    else if (endtime > starttime && endtime > sunsettime)
+                    {
+                        nighttime = (endtime - sunsettime) * 24;
+                    }
+                }
+                else if (sunsettime > sunrisetime && starttime > sunsettime)
+                {
+                    if (endtime < starttime && endtime < sunrisetime)
+                    {
+                        nighttime = (1 - ((sunrisetime - endtime) + (sunsettime - sunrisetime) + (starttime - sunsettime))) * 24;
+                    }
+                    else if (endtime < starttime && endtime > sunrisetime && endtime < sunsettime)
+                    {
+                        nighttime = (1 - ((sunsettime- sunrisetime) + (starttime - sunsettime))) * 24;
+                    }
+                    else if (endtime < starttime && endtime > sunsettime)
+                    {
+                        nighttime = (1 - (Math.Abs(starttime - endtime) + (sunsettime - sunrisetime))) * 24;
+                    }
+                    else if (endtime > starttime)
+                    {
+                        nighttime = (endtime - starttime) * 24;
+                    }
                 }
             }
-            else if (starttime >= sunrisetime && starttime <= sunsettime && (endtime < sunrisetime || endtime > sunsettime))
-            {
-                if (endtime < starttime)
-                {
-                    nighttime = -((endtime - sunsettime) * 24);
-                }
-                else if (endtime > starttime)
-                {
-                    nighttime = (endtime - sunsettime) * 24;
-                }
-            }
-            else if (endtime >= sunrisetime && endtime <= sunsettime && (starttime < sunrisetime || starttime > sunsettime))
-            {
-                if (endtime < starttime)
-                {
-                    nighttime = -((sunrisetime - starttime) * 24);
-                }
-                else if (endtime > starttime)
-                {
-                    nighttime = (sunrisetime - starttime) * 24;
-                }
-            }
-            else if ((starttime >= sunrisetime && starttime <= sunsettime) && (endtime >= sunrisetime && endtime <= sunsettime))
-            {
-                if (starttime > endtime)
-                {
-                    nighttime = -((sunrisetime - sunsettime) * 24);
-                }
-                else nighttime = 0;
-            }
-            // Light_nighttime = nighttime * 24 * dayofuse * (useday / 7);
-            Light_nighttime = nighttime * dayofuse * (useday / 7);
+
+
+                // Light_nighttime = nighttime * 24 * dayofuse * (useday / 7);
+                Light_nighttime = nighttime * dayofuse * (useday / 7);
             return Light_nighttime;
         }
 
     }
-
-    //public class Form_general
-    //{
-    //    double K, near_K;
-    //    //K계산
-    //    public double Calc_K(double Wr, double Lr, double hm)
-    //    {
-    //        K = Lr * Wr / (hm * (Lr + Wr));
-    //        return K;
-    //    }
-
-    //    //K근사값 계산
-    //    public double Calc_nearK()
-    //    {
-    //        double[] data = { 0.6, 0.8, 1, 1.25, 1.5, 2, 2.5, 3, 4, 5 };
-    //        double target = K;
-    //        var min = data.Min(x => Math.Abs(x - target));
-    //        near_K = data.First(y => Math.Abs(y - target) == min);
-    //        return near_K;
-    //    }
-    //}
 
     public class Facade_general
     {
