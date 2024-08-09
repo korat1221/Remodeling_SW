@@ -476,16 +476,16 @@ namespace main.contents.Building
         public void LoadData(String ID)             // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             reset();
-          
-                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일,사용종료일", "연료 = '전기'");
-                if(Value.Length > 0)
-                {
-                    Elec_StartDay_comboBox.SelectedItem = Value[0][0];
-                    Elec_EndDay_comboBox.SelectedItem = Value[0][1];
-                }
-                
 
-                Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "BuildingEnergyUse", "연도", "연료 = '전기'");
+            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일,사용종료일", "연료 = '전기'");
+            if (Value.Length > 0)
+            {
+                Elec_StartDay_comboBox.SelectedItem = Value[0][0];
+                Elec_EndDay_comboBox.SelectedItem = Value[0][1];
+            }
+
+
+            Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "BuildingEnergyUse", "연도", "연료 = '전기'");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
@@ -502,14 +502,14 @@ namespace main.contents.Building
             }
 
 
-                Value = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일,사용종료일", "연료 = '가스'");
+            Value = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일,사용종료일", "연료 = '가스'");
             if (Value.Length > 0)
             {
                 Gas_StartDay_comboBox.SelectedItem = Value[0][0];
                 Gas_EndDay_comboBox.SelectedItem = Value[0][1];
             }
 
-                Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "BuildingEnergyUse", "연도", "연료 = '가스' and 단위 ='m3'");
+            Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "BuildingEnergyUse", "연도", "연료 = '가스' and 단위 ='m3'");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
@@ -527,7 +527,7 @@ namespace main.contents.Building
                 }
             }
 
-           
+
 
         }
 

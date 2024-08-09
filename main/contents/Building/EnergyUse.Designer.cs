@@ -188,6 +188,7 @@
             // 
             // Gas_tabPage
             // 
+            Gas_tabPage.BackColor = Color.White;
             Gas_tabPage.Controls.Add(textBox4);
             Gas_tabPage.Controls.Add(textBox3);
             Gas_tabPage.Controls.Add(textBox2);
@@ -213,7 +214,6 @@
             Gas_tabPage.Size = new Size(969, 527);
             Gas_tabPage.TabIndex = 6;
             Gas_tabPage.Text = "가스사용량";
-            Gas_tabPage.UseVisualStyleBackColor = true;
             // 
             // textBox4
             // 
@@ -275,7 +275,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.Location = new Point(293, 23);
+            label4.Location = new Point(308, 23);
             label4.Name = "label4";
             label4.Size = new Size(19, 15);
             label4.TabIndex = 131;
@@ -286,7 +286,7 @@
             Gas_EndDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Gas_EndDay_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Gas_EndDay_comboBox.FormattingEnabled = true;
-            Gas_EndDay_comboBox.Location = new Point(227, 19);
+            Gas_EndDay_comboBox.Location = new Point(242, 19);
             Gas_EndDay_comboBox.Name = "Gas_EndDay_comboBox";
             Gas_EndDay_comboBox.Size = new Size(60, 23);
             Gas_EndDay_comboBox.TabIndex = 130;
@@ -295,7 +295,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.Location = new Point(182, 23);
+            label5.Location = new Point(197, 23);
             label5.Name = "label5";
             label5.Size = new Size(39, 15);
             label5.TabIndex = 129;
@@ -306,7 +306,7 @@
             Gas_StartDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Gas_StartDay_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Gas_StartDay_comboBox.FormattingEnabled = true;
-            Gas_StartDay_comboBox.Location = new Point(118, 19);
+            Gas_StartDay_comboBox.Location = new Point(133, 19);
             Gas_StartDay_comboBox.Name = "Gas_StartDay_comboBox";
             Gas_StartDay_comboBox.Size = new Size(60, 23);
             Gas_StartDay_comboBox.TabIndex = 128;
@@ -315,11 +315,11 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label6.Location = new Point(33, 23);
+            label6.Location = new Point(7, 23);
             label6.Name = "label6";
-            label6.Size = new Size(83, 15);
+            label6.Size = new Size(123, 15);
             label6.TabIndex = 127;
-            label6.Text = "사용기간 매월";
+            label6.Text = "고지서 기준 사용기간";
             // 
             // Gas_kWh_dataGridView
             // 
@@ -609,7 +609,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(298, 27);
+            label2.Location = new Point(310, 27);
             label2.Name = "label2";
             label2.Size = new Size(19, 15);
             label2.TabIndex = 126;
@@ -620,7 +620,7 @@
             Elec_EndDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Elec_EndDay_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Elec_EndDay_comboBox.FormattingEnabled = true;
-            Elec_EndDay_comboBox.Location = new Point(232, 23);
+            Elec_EndDay_comboBox.Location = new Point(244, 23);
             Elec_EndDay_comboBox.Name = "Elec_EndDay_comboBox";
             Elec_EndDay_comboBox.Size = new Size(60, 23);
             Elec_EndDay_comboBox.TabIndex = 125;
@@ -629,7 +629,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(187, 27);
+            label1.Location = new Point(199, 27);
             label1.Name = "label1";
             label1.Size = new Size(39, 15);
             label1.TabIndex = 124;
@@ -640,7 +640,7 @@
             Elec_StartDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Elec_StartDay_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Elec_StartDay_comboBox.FormattingEnabled = true;
-            Elec_StartDay_comboBox.Location = new Point(123, 23);
+            Elec_StartDay_comboBox.Location = new Point(135, 23);
             Elec_StartDay_comboBox.Name = "Elec_StartDay_comboBox";
             Elec_StartDay_comboBox.Size = new Size(60, 23);
             Elec_StartDay_comboBox.TabIndex = 123;
@@ -649,11 +649,11 @@
             // 
             label25.AutoSize = true;
             label25.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label25.Location = new Point(38, 27);
+            label25.Location = new Point(10, 27);
             label25.Name = "label25";
-            label25.Size = new Size(83, 15);
+            label25.Size = new Size(123, 15);
             label25.TabIndex = 122;
-            label25.Text = "사용기간 매월";
+            label25.Text = "고지서 기준 사용기간";
             // 
             // Elec_Remove_button
             // 
@@ -788,7 +788,7 @@
         #endregion
 
         private Panel GeneralPanel;
-        private System.Windows.Forms.Label label3;
+        private Label label3;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
         private PictureBox pictureBox1;
         private CheckBox checkBox1;
