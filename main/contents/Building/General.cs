@@ -39,7 +39,7 @@ namespace main.contents
         double[] law = new double[11];
         string OldProject;
         string BlowDoorTest;
-        bool Door_Infil =false, Win_Infil = false, ElecWiring_Infil = false, Pipe_Infil = false;
+        bool Door_Infil = false, Win_Infil = false, ElecWiring_Infil = false, Pipe_Infil = false;
         double n50;
 
         public General()
@@ -175,7 +175,6 @@ namespace main.contents
                 {
                     BuildingCategory_comboBox.Items.Add(V[a][0]);
                 }
-                BuildingCategory_comboBox.SelectedIndex = 0;
             }
         }
         private void LoadOption_BuildingUse()
@@ -191,7 +190,6 @@ namespace main.contents
                     {
                         BuildingUse_comboBox.Items.Add(V2[a][0]);
                     }
-                    BuildingUse_comboBox.SelectedIndex = 0;
                 }
             }
         }
@@ -314,7 +312,7 @@ namespace main.contents
         }
         private void Cal_Infiltration(string BlowDoorTest, bool door, bool win, bool elec, bool pipe)
         {
-            if(BlowDoorTest == "기밀 테스트 미실시")
+            if (BlowDoorTest == "기밀 테스트 미실시")
             {
                 string[] check = new string[4];
                 if (door) { check[0] = "적용"; } else { check[0] = "미적용"; }
@@ -336,7 +334,7 @@ namespace main.contents
             if (Door_True_radioButton.Checked == true)
             {
                 Door_Infil = true;
-                Cal_Infiltration(BlowDoorTest,Door_Infil, Win_Infil, ElecWiring_Infil, Pipe_Infil);
+                Cal_Infiltration(BlowDoorTest, Door_Infil, Win_Infil, ElecWiring_Infil, Pipe_Infil);
             }
         }
 
@@ -403,7 +401,7 @@ namespace main.contents
             }
 
         }
-        
+
 
         private void Climate_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -899,8 +897,8 @@ namespace main.contents
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "n50", "");
-           
-            if (Value.Length > 0 && Value[0][0]!="")
+
+            if (Value.Length > 0 && Value[0][0] != "")
             {
                 n50 = Convert.ToDouble(Value[0][0]);
                 n50_textBox.Text = Convert.ToDouble(Value[0][0]).ToString("0.0");
