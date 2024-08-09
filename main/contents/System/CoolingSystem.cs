@@ -106,7 +106,10 @@ namespace main.contents
             }
 
             string[][] 프로젝트 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-            프로젝트유형 = 프로젝트[0][0];
+            if(프로젝트.Length > 0)
+            {
+                프로젝트유형 = 프로젝트[0][0];
+            }
 
             //시스템 콤보박스
             CoolingGeneratorSelect_comboBox.Items.Clear();
