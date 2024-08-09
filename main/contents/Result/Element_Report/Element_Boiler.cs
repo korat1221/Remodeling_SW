@@ -957,8 +957,12 @@ namespace main.contents.Result.Element_Report
                                 { }
                                 else { WHP_Zones_split_W.Add(splitzone[aa]); }
                             }
-                            WHP_Power[a] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
-                            WHP_COP_New[a] = Convert.ToDouble(Value[a][4]);
+                            if (Value[a][8] != "")
+                            {
+                                WHP_Power[a] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
+                                WHP_COP_New[a] = Convert.ToDouble(Value[a][4]);
+                            }
+                            
                         }
                     }
                     for (int a = 0; a < 8; a++)
