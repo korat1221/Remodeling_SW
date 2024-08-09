@@ -139,8 +139,19 @@ namespace main.contentslist
                     dataGridView1.Rows[nRow].Cells[5].Value = List[n][4];
                     dataGridView1.Rows[nRow].Cells[6].Value = List[n][5];
                     dataGridView1.Rows[nRow].Cells[7].Value = List[n][6];
-                    dataGridView1.Rows[nRow].Cells[8].Value = null;
+
+                    string[][] Area = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "차양적용='" + List[n][0] + "'");
+                    double A = 0;
+                    if (Area.Length > 0)
+                    {
+                        for (int a = 0; a < Area.Length; a++)
+                        {
+                            A += Convert.ToDouble(Area[a][0]);
+                        }
+                        dataGridView1.Rows[nRow].Cells[8].Value = String.Format("{0:F2}", A);
+                    }
                     mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":10,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                
                 }
             }
             //dataGridView1.DataSource = WallList;
