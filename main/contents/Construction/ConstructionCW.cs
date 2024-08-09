@@ -44,7 +44,7 @@ namespace main.contents
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-           
+
 
             //직접간접 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi_comboBox, "커튼월", "실외조건", "1");
@@ -65,7 +65,22 @@ namespace main.contents
                 CWGlass_pictureBox.Load(Program.gPath + Image[0][0]);
                 CWGlass_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호", "");
+            if (value.Length > 0)
+            {
+                if (value[0][0] == "1")
+                {
+                    radioButton1.Checked = true;
+                    radioButton2.Enabled = false;
+                    radioButton3.Enabled = false;
+                }
+                else if (value[0][0] == "4")
+                {
+                    radioButton1.Enabled = false;
+                    radioButton2.Checked = true;
+                    radioButton3.Enabled = false;
+                }
+            }
             Panel_checkBox.Checked = true;
             Panel_checkBox.Checked = false;
 
@@ -170,7 +185,7 @@ namespace main.contents
                 def_value = "Type = ''";
                 Table = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "명칭", def_value);
             }
-            if(Table.Length >0)
+            if (Table.Length > 0)
             {
                 int i = -1;
                 DataTable sources = new DataTable();
@@ -197,7 +212,7 @@ namespace main.contents
                     }
                 }
             }
-            
+
         }
 
         private void OldCW_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -215,12 +230,12 @@ namespace main.contents
         {
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
-            if(Image.Length > 0)
+            if (Image.Length > 0)
             {
                 CWType_pictureBox.Visible = true;
                 CWType_pictureBox.Load(Program.gPath + Image[0][0]);
                 CWType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }            
+            }
         }
 
         private void Ucw_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -259,7 +274,7 @@ namespace main.contents
             }
             else if (UcwMethod == "법규")
             {
-                
+
                 Frame_label.Visible = false;
                 Frame_comboBox.Visible = false;
                 FrameName_textBox.Visible = false;
@@ -708,11 +723,11 @@ namespace main.contents
             {
                 PanelColor = PanelColor_comboBox.SelectedItem.ToString();
                 String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + PanelColor + "'");
-                if(value.Length >0)
+                if (value.Length > 0)
                 {
                     αp = Convert.ToDouble(value[0][0]);
                     αp_textBox.Text = String.Format("{0:F1}", αp);
-                }                
+                }
             }
         }
 
@@ -947,12 +962,12 @@ namespace main.contents
 
 
                         string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
-                        if(Image.Length >0)
+                        if (Image.Length > 0)
                         {
                             CWnstall_pictureBox.Visible = true;
                             CWnstall_pictureBox.Load(Program.gPath + Image[0][0]);
                             CWnstall_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                        }                        
+                        }
                     }
                 }
             }
@@ -983,12 +998,12 @@ namespace main.contents
 
 
                         string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
-                        if(Image.Length > 0)
+                        if (Image.Length > 0)
                         {
                             CWnstall_pictureBox.Visible = true;
                             CWnstall_pictureBox.Load(Program.gPath + Image[0][0]);
                             CWnstall_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                        }                       
+                        }
                     }
                 }
             }
@@ -1055,16 +1070,16 @@ namespace main.contents
                 {
                     Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '" + Date[0][0] + "' AND  지역 ='" + Date[0][1] + "'  AND  직접간접 =  '" + DiIndi + "'");
                 }
-                else 
+                else
                 {
-                    Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'"); 
+                    Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
                 }
-                if(Uvalue.Length > 0)
+                if (Uvalue.Length > 0)
                 {
                     Ucw_g = Convert.ToDouble(Uvalue[0][0]);
                     UCW_g_textBox.Text = String.Format("{0:F3}", Ucw_g);
                 }
-               
+
             }
         }
 
@@ -1074,7 +1089,7 @@ namespace main.contents
             {
                 String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
                 String[][] Uvalue;
-             
+
                 if (Type == "기존 커튼월창")
                 {
                     Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '외벽' And 시기 = '" + Date[0][0] + "' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
@@ -1086,11 +1101,11 @@ namespace main.contents
 
                 if (Panel_checkBox.Checked)
                 {
-                    if(Uvalue.Length >0)
+                    if (Uvalue.Length > 0)
                     {
                         Ucw_p = Convert.ToDouble(Uvalue[0][0]);
                         UCW_p_textBox.Text = String.Format("{0:F3}", Ucw_p);
-                    }                    
+                    }
                 }
                 else
                 {
@@ -1113,15 +1128,15 @@ namespace main.contents
                 {
                     Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
                 }
-                
+
                 if (Door_checkBox.Checked)
                 {
-                    if(Uvalue.Length > 0)
+                    if (Uvalue.Length > 0)
                     {
                         Ucw_d = Convert.ToDouble(Uvalue[0][0]);
                         UCW_d_textBox.Text = String.Format("{0:F3}", Ucw_d);
                         Ff_d = 0.7;
-                    }                    
+                    }
                 }
                 else
                 {
@@ -1148,7 +1163,7 @@ namespace main.contents
                 {
                     Ucw_g = ((Ug_Fix * Ag_fix) + (Ug_Open * Ag_open) + (Uf_mt * Af_mt_g) + (Uf_open * Af_open) + (Psi_g_fix * Lg_fix) + (Psi_g_open * Lg_open)) / (Ag_fix + Ag_open + Af_mt_g + Af_open);
                     UCW_g_textBox.Text = String.Format("{0:F3}", Ucw_g);
-                    Ff_g = ( Ag_fix + Ag_open ) / (Ag_fix + Ag_open + Af_mt_g + Af_open);
+                    Ff_g = (Ag_fix + Ag_open) / (Ag_fix + Ag_open + Af_mt_g + Af_open);
                 }
 
                 if (Panel_checkBox.Checked)
@@ -1170,7 +1185,7 @@ namespace main.contents
                     {
                         Ucw_d = ((Ug_Door * Ag_d) + (Uf_mt * Af_mt_d) + (Uf_door * Af_d) + (Psi_g_Door * Lg_d)) / (Ag_d + Af_mt_d + Af_d);
                         UCW_d_textBox.Text = String.Format("{0:F3}", Ucw_d);
-                        Ff_d = Ag_d   / (Ag_d + Af_mt_d + Af_d);
+                        Ff_d = Ag_d / (Ag_d + Af_mt_d + Af_d);
                     }
                 }
                 else
@@ -1327,9 +1342,9 @@ namespace main.contents
         {
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             #region 법규
-            double 법규Ucw_g=0, 법규Ucw_p=0, 법규Ucw_d = 0; 
+            double 법규Ucw_g = 0, 법규Ucw_p = 0, 법규Ucw_d = 0;
             String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
-            String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");            
+            String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
             if (Uvalue.Length > 0)
             {
                 법규Ucw_g = Convert.ToDouble(Uvalue[0][0]);
@@ -1496,17 +1511,17 @@ namespace main.contents
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             reset();
-                CWNum_textBox.Text = ID;
-                CWNum = ID;
+            CWNum_textBox.Text = ID;
+            CWNum = ID;
 
-                String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭,Type,기존커튼월,Ucw적용방법,직접간접,프레임유형,프레임종류,고정유리종류,개폐유리종류,간봉종류,설치유형,설치종류,LE_CL_V," +
-                      "고정유리열관류율,개폐유리열관류율,태양열취득률,빛투과율,고정유리선형열관류율,개폐유리선형열관류율,고정프레임열관류율,개폐프레임열관류율,고정프레임두께,개폐프레임두께," +
-                      "상부설치열관류율,측면설치열관류율,하부설치열관류율," +
-                      "사이즈명칭,커튼월면적,너비,높이,고정창유리면적,개폐창유리면적,고정창유리둘레길이,개폐창유리둘레길이,M_T프레임면적,개폐창프레임면적," +
-                      "커튼월창열관류율,유리부분열관류율,설치열교가산치,커튼월창유효열관류율,유리부분유효열관류율," +
-                      "패널적용유무,출입문적용유무"
-                      , "번호 = '" + ID + "'");
-            if(Load.Length >0)
+            String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭,Type,기존커튼월,Ucw적용방법,직접간접,프레임유형,프레임종류,고정유리종류,개폐유리종류,간봉종류,설치유형,설치종류,LE_CL_V," +
+                  "고정유리열관류율,개폐유리열관류율,태양열취득률,빛투과율,고정유리선형열관류율,개폐유리선형열관류율,고정프레임열관류율,개폐프레임열관류율,고정프레임두께,개폐프레임두께," +
+                  "상부설치열관류율,측면설치열관류율,하부설치열관류율," +
+                  "사이즈명칭,커튼월면적,너비,높이,고정창유리면적,개폐창유리면적,고정창유리둘레길이,개폐창유리둘레길이,M_T프레임면적,개폐창프레임면적," +
+                  "커튼월창열관류율,유리부분열관류율,설치열교가산치,커튼월창유효열관류율,유리부분유효열관류율," +
+                  "패널적용유무,출입문적용유무"
+                  , "번호 = '" + ID + "'");
+            if (Load.Length > 0)
             {
                 Name_textBox.Text = Load[0][1];
                 Type = Load[0][2];
@@ -1525,7 +1540,7 @@ namespace main.contents
                         break; ;
                 }
                 OldCW = Load[0][3];
-                OldCW_comboBox.SelectedIndex = OldCW_comboBox.FindStringExact(OldCW); 
+                OldCW_comboBox.SelectedIndex = OldCW_comboBox.FindStringExact(OldCW);
                 UcwMethod = Load[0][4];
                 Ucw_comboBox.SelectedItem = UcwMethod;
                 DiIndi = Load[0][5];
@@ -1623,15 +1638,15 @@ namespace main.contents
                 Door_checkBox.Checked = Convert.ToBoolean(Load[0][43]);
 
             }
-                
+
             if (Panel_check == true)
             {
-                   Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "패널종류,패널유리종류,LE_CL_V_Panel," +
-                          "패널열관류율,패널유리열관류율,패널열전도율,패널흡수율,패널선형열관류율,패널두께," +
-                          "패널면적,패널둘레길이," +
-                          "패널부분열관류율,패널부분유효열관류율"
-                          , "번호 = '" + ID + "'");
-                if(Load.Length > 0)
+                Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "패널종류,패널유리종류,LE_CL_V_Panel," +
+                       "패널열관류율,패널유리열관류율,패널열전도율,패널흡수율,패널선형열관류율,패널두께," +
+                       "패널면적,패널둘레길이," +
+                       "패널부분열관류율,패널부분유효열관류율"
+                       , "번호 = '" + ID + "'");
+                if (Load.Length > 0)
                 {
                     PanelName = Load[0][0];
                     Panel_textBox.Text = PanelName;
@@ -1668,12 +1683,12 @@ namespace main.contents
 
             if (Door_check == true)
             {
-                    Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "출입문프레임유형,출입문프레임종류,출입문유리종류,출입문간봉종류,LE_CL_V_Door," +
-                       "출입문유리열관류율,출입문태양열취득률,출입문빛투과율,출입문유리선형열관류율,출입문프레임두께,출입문프레임열관류율," +
-                       "출입문프레임면적,출입문유리면적,출입문유리둘레길이," +
-                       "출입문부분열관류율,출입문부분유효열관류율"
-                          , "번호 = '" + ID + "'");
-                if(Load.Length >0)
+                Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "출입문프레임유형,출입문프레임종류,출입문유리종류,출입문간봉종류,LE_CL_V_Door," +
+                   "출입문유리열관류율,출입문태양열취득률,출입문빛투과율,출입문유리선형열관류율,출입문프레임두께,출입문프레임열관류율," +
+                   "출입문프레임면적,출입문유리면적,출입문유리둘레길이," +
+                   "출입문부분열관류율,출입문부분유효열관류율"
+                      , "번호 = '" + ID + "'");
+                if (Load.Length > 0)
                 {
                     DoorFrame = Load[0][1];
                     DoorFrame_textBox.Text = DoorFrame;
@@ -1719,23 +1734,23 @@ namespace main.contents
             }
             else { }
 
-          
-                string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
-                if(Image1.Length > 0)
-                {
-                    CWType_pictureBox.Visible = true;
-                    CWType_pictureBox.Load(Program.gPath + Image1[0][0]);
-                    CWType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                }
-          
-                string[][] Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
-            if(Image2.Length > 0)
+
+            string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
+            if (Image1.Length > 0)
+            {
+                CWType_pictureBox.Visible = true;
+                CWType_pictureBox.Load(Program.gPath + Image1[0][0]);
+                CWType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+
+            string[][] Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교이미지", "이미지", "구분1 = '" + InstallType + "' AND 구분3 = '" + InstallName + "'");
+            if (Image2.Length > 0)
             {
                 CWnstall_pictureBox.Visible = true;
                 CWnstall_pictureBox.Load(Program.gPath + Image2[0][0]);
                 CWnstall_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             }
-                
+
         }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
