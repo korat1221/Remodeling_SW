@@ -95,7 +95,7 @@ namespace main.contents
         {
             dataGridView1.Rows.Clear();
 
-            string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type FROM projects");
+            string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type,date FROM projects");
             if(res.Length > 0)
             {
                 for (int n = 0; n < res.Length; n++)
@@ -103,7 +103,7 @@ namespace main.contents
                     dataGridView1.Rows.Add();
                     int nRow = dataGridView1.Rows.Count - 1;
 
-                    for (int k = 0; k < 4; k++)
+                    for (int k = 0; k < 5; k++)
                     {
                         dataGridView1.Rows[nRow].Cells[k + 1].Value = (k == 3) ? types[res[n][k]] : res[n][k];
                     }

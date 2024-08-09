@@ -33,19 +33,19 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             ProjectType_label = new Label();
-            PreCopy_label = new Label();
             PreCopy_button = new Button();
             Save_button = new Button();
             Copy_button = new Button();
             Delete_button = new Button();
             New_button = new Button();
             dataGridView1 = new DataGridView();
+            Icon_pictureBox = new PictureBox();
             chk = new DataGridViewCheckBoxColumn();
             num = new DataGridViewTextBoxColumn();
             pnum = new DataGridViewTextBoxColumn();
             pname = new DataGridViewTextBoxColumn();
             type = new DataGridViewTextBoxColumn();
-            Icon_pictureBox = new PictureBox();
+            CreateDate = new DataGridViewTextBoxColumn();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -55,7 +55,6 @@
             // 
             GeneralPanel.BackColor = Color.White;
             GeneralPanel.Controls.Add(ProjectType_label);
-            GeneralPanel.Controls.Add(PreCopy_label);
             GeneralPanel.Controls.Add(PreCopy_button);
             GeneralPanel.Controls.Add(Save_button);
             GeneralPanel.Controls.Add(Copy_button);
@@ -80,30 +79,18 @@
             ProjectType_label.Text = "기존 건물";
             ProjectType_label.UseCompatibleTextRendering = true;
             // 
-            // PreCopy_label
-            // 
-            PreCopy_label.AutoSize = true;
-            PreCopy_label.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            PreCopy_label.Location = new Point(807, 81);
-            PreCopy_label.Name = "PreCopy_label";
-            PreCopy_label.Size = new Size(58, 21);
-            PreCopy_label.TabIndex = 107;
-            PreCopy_label.Text = "기존 건물";
-            PreCopy_label.UseCompatibleTextRendering = true;
-            PreCopy_label.Visible = false;
-            // 
             // PreCopy_button
             // 
             PreCopy_button.BackColor = SystemColors.ControlLight;
             PreCopy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             PreCopy_button.FlatStyle = FlatStyle.System;
             PreCopy_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            PreCopy_button.Location = new Point(803, 105);
+            PreCopy_button.Location = new Point(797, 105);
             PreCopy_button.Margin = new Padding(0);
             PreCopy_button.Name = "PreCopy_button";
-            PreCopy_button.Size = new Size(67, 23);
+            PreCopy_button.Size = new Size(97, 23);
             PreCopy_button.TabIndex = 106;
-            PreCopy_button.Text = "Copy";
+            PreCopy_button.Text = "기존건물 Copy";
             PreCopy_button.UseCompatibleTextRendering = true;
             PreCopy_button.UseVisualStyleBackColor = false;
             PreCopy_button.Visible = false;
@@ -130,7 +117,7 @@
             Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Copy_button.FlatStyle = FlatStyle.System;
             Copy_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            Copy_button.Location = new Point(736, 105);
+            Copy_button.Location = new Point(730, 105);
             Copy_button.Margin = new Padding(0);
             Copy_button.Name = "Copy_button";
             Copy_button.Size = new Size(67, 23);
@@ -145,12 +132,12 @@
             Delete_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Delete_button.FlatStyle = FlatStyle.System;
             Delete_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            Delete_button.Location = new Point(713, 105);
+            Delete_button.Location = new Point(663, 105);
             Delete_button.Margin = new Padding(0);
             Delete_button.Name = "Delete_button";
-            Delete_button.Size = new Size(23, 23);
+            Delete_button.Size = new Size(67, 23);
             Delete_button.TabIndex = 101;
-            Delete_button.Text = "-";
+            Delete_button.Text = "Delete";
             Delete_button.UseVisualStyleBackColor = false;
             Delete_button.Click += Delete_button_Click;
             // 
@@ -160,12 +147,12 @@
             New_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             New_button.FlatStyle = FlatStyle.System;
             New_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            New_button.Location = new Point(689, 105);
+            New_button.Location = new Point(596, 105);
             New_button.Margin = new Padding(0);
             New_button.Name = "New_button";
-            New_button.Size = new Size(23, 23);
+            New_button.Size = new Size(67, 23);
             New_button.TabIndex = 100;
-            New_button.Text = "+";
+            New_button.Text = "New";
             New_button.UseVisualStyleBackColor = false;
             New_button.Click += New_button_Click;
             // 
@@ -189,7 +176,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { chk, num, pnum, pname, type });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { chk, num, pnum, pname, type, CreateDate });
             dataGridView1.Location = new Point(151, 142);
             dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -213,6 +200,14 @@
             dataGridView1.TabIndex = 99;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
+            // 
+            // Icon_pictureBox
+            // 
+            Icon_pictureBox.Location = new Point(151, 78);
+            Icon_pictureBox.Name = "Icon_pictureBox";
+            Icon_pictureBox.Size = new Size(50, 50);
+            Icon_pictureBox.TabIndex = 98;
+            Icon_pictureBox.TabStop = false;
             // 
             // chk
             // 
@@ -259,13 +254,10 @@
             type.Resizable = DataGridViewTriState.False;
             type.Width = 96;
             // 
-            // Icon_pictureBox
+            // CreateDate
             // 
-            Icon_pictureBox.Location = new Point(151, 78);
-            Icon_pictureBox.Name = "Icon_pictureBox";
-            Icon_pictureBox.Size = new Size(50, 50);
-            Icon_pictureBox.TabIndex = 98;
-            Icon_pictureBox.TabStop = false;
+            CreateDate.HeaderText = "생성 날짜";
+            CreateDate.Name = "CreateDate";
             // 
             // ProjectList
             // 
@@ -294,12 +286,12 @@
         private PictureBox Icon_pictureBox;
         private Button Save_button;
         private Button PreCopy_button;
-        private Label PreCopy_label;
+        private Label ProjectType_label;
         private DataGridViewCheckBoxColumn chk;
         private DataGridViewTextBoxColumn num;
         private DataGridViewTextBoxColumn pnum;
         private DataGridViewTextBoxColumn pname;
         private DataGridViewTextBoxColumn type;
-        private Label ProjectType_label;
+        private DataGridViewTextBoxColumn CreateDate;
     }
 }

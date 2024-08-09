@@ -46,6 +46,7 @@ namespace main.contents
             System_pictureBox.Load(Program.gPath + "images/1sticon/5.System_on.png");
             System_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             drawList();
+            Construction_checkBox.Enabled = Building_checkBox.Checked;
         }
         private void drawList()
         {

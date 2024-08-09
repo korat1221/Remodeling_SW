@@ -41,6 +41,7 @@
             pnum = new DataGridViewTextBoxColumn();
             pname = new DataGridViewTextBoxColumn();
             type = new DataGridViewTextBoxColumn();
+            CreateDate = new DataGridViewTextBoxColumn();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -113,7 +114,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { chk, num, pnum, pname, type });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { chk, num, pnum, pname, type, CreateDate });
             dataGridView1.Location = new Point(151, 142);
             dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -172,6 +173,7 @@
             pname.FillWeight = 257.877F;
             pname.HeaderText = "프로젝트명";
             pname.Name = "pname";
+            pname.ReadOnly = true;
             // 
             // type
             // 
@@ -182,6 +184,12 @@
             type.ReadOnly = true;
             type.Resizable = DataGridViewTriState.False;
             type.Width = 96;
+            // 
+            // CreateDate
+            // 
+            CreateDate.HeaderText = "생성 날짜";
+            CreateDate.Name = "CreateDate";
+            CreateDate.ReadOnly = true;
             // 
             // OpenProject
             // 
@@ -206,11 +214,12 @@
         private Button Open_button;
         private DataGridView dataGridView1;
         private PictureBox Icon_pictureBox;
+        private Label ProjectType_label;
         private DataGridViewCheckBoxColumn chk;
         private DataGridViewTextBoxColumn num;
         private DataGridViewTextBoxColumn pnum;
         private DataGridViewTextBoxColumn pname;
         private DataGridViewTextBoxColumn type;
-        private Label ProjectType_label;
+        private DataGridViewTextBoxColumn CreateDate;
     }
 }

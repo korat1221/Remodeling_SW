@@ -173,6 +173,8 @@
             // Building_checkBox
             // 
             Building_checkBox.AutoSize = true;
+            Building_checkBox.Checked = true;
+            Building_checkBox.CheckState = CheckState.Checked;
             Building_checkBox.Location = new Point(104, 260);
             Building_checkBox.Name = "Building_checkBox";
             Building_checkBox.Size = new Size(78, 19);

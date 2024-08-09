@@ -43,6 +43,7 @@ namespace main.contents
             Zone_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             System_pictureBox.Load(Program.gPath + "images/1sticon/5.System_on.png");
             System_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            Construction_checkBox.Enabled = Building_checkBox.Checked;
         }
 
         private void Save_button_Click(object sender, EventArgs e)

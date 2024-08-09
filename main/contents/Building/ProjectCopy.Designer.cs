@@ -37,16 +37,16 @@
             Model_checkBox = new CheckBox();
             Model_pictureBox = new PictureBox();
             Construction_checkBox = new CheckBox();
-            Construction_pictureBox = new PictureBox();
             Building_checkBox = new CheckBox();
             Building_pictureBox = new PictureBox();
             Save_button = new Button();
+            Construction_pictureBox = new PictureBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)System_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Zone_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Model_pictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Construction_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Building_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Construction_pictureBox).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -151,17 +151,11 @@
             Construction_checkBox.UseVisualStyleBackColor = true;
             Construction_checkBox.CheckedChanged += CheckBox_CheckedChanged;
             // 
-            // Construction_pictureBox
-            // 
-            Construction_pictureBox.Location = new Point(212, 80);
-            Construction_pictureBox.Name = "Construction_pictureBox";
-            Construction_pictureBox.Size = new Size(70, 60);
-            Construction_pictureBox.TabIndex = 111;
-            Construction_pictureBox.TabStop = false;
-            // 
             // Building_checkBox
             // 
             Building_checkBox.AutoSize = true;
+            Building_checkBox.Checked = true;
+            Building_checkBox.CheckState = CheckState.Checked;
             Building_checkBox.Location = new Point(104, 155);
             Building_checkBox.Name = "Building_checkBox";
             Building_checkBox.Size = new Size(78, 19);
@@ -190,6 +184,14 @@
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
             // 
+            // Construction_pictureBox
+            // 
+            Construction_pictureBox.Location = new Point(212, 80);
+            Construction_pictureBox.Name = "Construction_pictureBox";
+            Construction_pictureBox.Size = new Size(70, 60);
+            Construction_pictureBox.TabIndex = 111;
+            Construction_pictureBox.TabStop = false;
+            // 
             // ProjectCopy
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -205,8 +207,8 @@
             ((System.ComponentModel.ISupportInitialize)System_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)Zone_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)Model_pictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Construction_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)Building_pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Construction_pictureBox).EndInit();
             ResumeLayout(false);
         }
 

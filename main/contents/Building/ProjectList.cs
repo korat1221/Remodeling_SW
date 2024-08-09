@@ -86,7 +86,7 @@ namespace main.contents
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     drawList(ProjectType);
                     PreCopy_button.Visible = false;
-                    PreCopy_label.Visible = false;
+                    New_button.Visible = true;
                 }
                 else if (ProjectType == "2")
                 {
@@ -94,7 +94,7 @@ namespace main.contents
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     drawList(ProjectType);
                     PreCopy_button.Visible = true;
-                    PreCopy_label.Visible = true;
+                    New_button.Visible = false;
                 }
                 else if (ProjectType == "3")
                 {
@@ -102,7 +102,7 @@ namespace main.contents
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     drawList(ProjectType);
                     PreCopy_button.Visible = true;
-                    PreCopy_label.Visible = true;
+                    New_button.Visible = false;
                 }
                 else
                 {
@@ -110,7 +110,7 @@ namespace main.contents
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     drawList(ProjectType);
                     PreCopy_button.Visible = false;
-                    PreCopy_label.Visible = false;
+                    New_button.Visible = true;
                 }
                 ProjectType_label.Text = types[ProjectType];
 
@@ -124,7 +124,7 @@ namespace main.contents
             drawing = true;
             dataGridView1.Rows.Clear();
 
-            string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type FROM projects WHERE type='" + ProjectType + "'");
+            string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type, date FROM projects WHERE type='" + ProjectType + "'");
             if (res.Length > 0)
             {
                 for (int n = 0; n < res.Length; n++)
@@ -132,7 +132,7 @@ namespace main.contents
                     dataGridView1.Rows.Add();
                     int nRow = dataGridView1.Rows.Count - 1;
 
-                    for (int k = 0; k < 4; k++)
+                    for (int k = 0; k < 5; k++)
                     {
                         dataGridView1.Rows[nRow].Cells[k + 1].Value = (k == 3) ? types[res[n][k]] : res[n][k];
                     }
@@ -143,6 +143,7 @@ namespace main.contents
                 }
                 drawing = false;
             }
+           
 
         }
         static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
@@ -180,48 +181,58 @@ namespace main.contents
 
         private void PreCopy_button_Click(object sender, EventArgs e)
         {
-            int k = GetSelectedIndex();
-            if (k >= 0)
+            PreProjectCopy projectcopy = new PreProjectCopy();
+            DialogResult result = projectcopy.ShowDialog();
+            string pid0 = projectcopy.pid0;
+            if (result == DialogResult.OK)
             {
-                //  Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET type = '" + ProjectType + "', title = WHERE pnum = '" + pid + "'");
-                PreProjectCopy projectcopy = new PreProjectCopy();
-                DialogResult result = projectcopy.ShowDialog();
-                string pid0 = projectcopy.pid0;
-                if (result == DialogResult.OK)
+                string title0 = "";
+                string[][] value = Program.DB.querySQL(DB.type.ProjListDB, "SELECT title FROM projects WHERE pnum ='" + pid0 + "'");
+                if(value.Length >0)
                 {
-                    string pid = AddProject(pid0, dataGridView1.Rows[k].Cells[3].Value.ToString());
+                    title0 = value[0][0];
+                }
+                string pid = AddProject(pid0, title0);
 
-                    SQLiteConnection db = new SQLiteConnection(@"Data Source=" + Program.gPath + "projects\\" + pid + ".sqlite");
-                    db.Open();
+                SQLiteConnection db = new SQLiteConnection(@"Data Source=" + Program.gPath + "projects\\" + pid + ".sqlite");
+                db.Open();
 
-                    string[][] res = Program.DB.querySQL(db, "SELECT name FROM sqlite_master WHERE type IN('table', 'view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN('table', 'view') ORDER BY 1");
-                    if (res.Length > 0)
+                string[][] res = Program.DB.querySQL(db, "SELECT name FROM sqlite_master WHERE type IN('table', 'view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN('table', 'view') ORDER BY 1");
+                if (res.Length > 0)
+                {
+                    for (int n = 0; n < res.Length; n++)
                     {
-                        for (int n = 0; n < res.Length; n++)
+                        string table = res[n][0];
+
+                        if (projectcopy.tables.Find(p => p == table) == null)
                         {
-                            string table = res[n][0];
-
-                            if (projectcopy.tables.Find(p => p == table) == null)
-                            {
-                                Program.DB.executeSQL(db, "DROP TABLE " + table);
-                            }
+                            Program.DB.executeSQL(db, "DROP TABLE " + table);
                         }
-
-                        Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "'");
-                        db.Close();
                     }
 
+                    Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "'");
+                    db.Close();
+                }
 
-                    if (projectcopy.model_copy)
-                    {
-                        Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
 
-                        CopyDirectory(Program.gPath + "threejs\\public\\models\\" + pid0, Program.gPath + "threejs\\public\\models\\" + pid, true);
-                    }
+                if (projectcopy.model_copy)
+                {
+                    Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
 
-                    drawList(ProjectType.ToString());
+                    CopyDirectory(Program.gPath + "threejs\\public\\models\\" + pid0, Program.gPath + "threejs\\public\\models\\" + pid, true);
+                }
 
-                    MessageBox.Show("프로젝트를 복사하였습니다.");
+                drawList(ProjectType.ToString());
+                MessageBox.Show("프로젝트를 복사하였습니다.");
+                int k = GetSelectedIndex();
+                if (k > 1)
+                {
+                    dataGridView1.Rows[k].Cells[0].Value = false;
+                    int k_new = dataGridView1.Rows.Count - 1;
+                    dataGridView1.Rows[k_new].Cells[0].Value = true;
+                    ProjectOpen();
+                    Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,기존프로젝트", "'" + pid + "','" + pid0 + "'", "프로젝트번호");
+                    Program.getMenuForm().DoLoadFormDirect(0);
                 }
             }
         }
@@ -230,7 +241,6 @@ namespace main.contents
             int k = GetSelectedIndex();
             if (k >= 0)
             {
-                //  Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET type = '" + ProjectType + "', title = WHERE pnum = '" + pid + "'");
                 ProjectCopy projectcopy = new ProjectCopy();
                 DialogResult result = projectcopy.ShowDialog();
                 string pid0 = dataGridView1.Rows[k].Cells[2].Value.ToString();
@@ -269,6 +279,11 @@ namespace main.contents
                     drawList(ProjectType.ToString());
 
                     MessageBox.Show("프로젝트를 복사하였습니다.");
+                    dataGridView1.Rows[k].Cells[0].Value = false;
+                    int k_new = dataGridView1.Rows.Count - 1;
+                    dataGridView1.Rows[k_new].Cells[0].Value = true;
+                    ProjectOpen();
+                    Program.getMenuForm().DoLoadFormDirect(0);
                 }
             }
         }
@@ -329,7 +344,6 @@ namespace main.contents
         private void New_button_Click(object sender, EventArgs e)
         {
             AddProject();
-
             drawList(ProjectType.ToString());
         }
         string AddProject(string pid0 = "", string title = "")
@@ -349,8 +363,8 @@ namespace main.contents
             }
 
             string pid = dt.Year + "-" + dt.Month.ToString().PadLeft(2, '0') + "-" + num.ToString().PadLeft(3, '0');
-
-            Program.DB.executeSQL(DB.type.ProjListDB, "INSERT INTO projects (pnum, type, title) VALUES ('" + pid + "'," + ProjectType + ",'" + title + "')");
+            string today = DateTime.Now.ToString("yyyy/MM/dd");
+            Program.DB.executeSQL(DB.type.ProjListDB, "INSERT INTO projects (pnum, type, title,date) VALUES ('" + pid + "'," + ProjectType + ",'" + title +"','"+ today + "')");
 
             if (pid0 != "")
             {
@@ -360,6 +374,7 @@ namespace main.contents
             {
                 File.Copy("templ.sqlite", Program.gPath + "projects\\" + pid + ".sqlite", true);
             }
+
             Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
 
             return pid;
@@ -458,6 +473,8 @@ namespace main.contents
                 Program.DB.initTables(DB.type.ProjDB);
                 Program.getMenuForm().resetAll();
                 Program.UTIL.ReloadModel();
+
+                
             }
         }
 
@@ -486,21 +503,25 @@ namespace main.contents
             }
         }
 
-
         private void Save_button_Click(object sender, EventArgs e)
         {
             if (dataGridView1.Rows.Count == 0) { return; }
             for (int k = 0; k < dataGridView1.Rows.Count; k++)
             {
+                dataGridView1.Rows[k].Cells[0].Value = false;
                 if (dataGridView1.Rows[k].Cells[3].Value.ToString() == "")
-                { MessageBox.Show("프로젝트명을 전부 입력하세요."); }
+                { MessageBox.Show("프로젝트명을 전부 입력하세요."); goto create_stop; }
                 else
                 {
                     Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET title= '" + dataGridView1.Rows[k].Cells[3].Value.ToString() + "' WHERE pnum='" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "'");
                 }
             }
             MessageBox.Show("생성되었습니다.");
-            Program.getMenuForm().DoLoadForm(42, OnLoadProc1);
+            int k_new = dataGridView1.Rows.Count - 1;
+            dataGridView1.Rows[k_new].Cells[0].Value = true;
+            ProjectOpen();
+            Program.getMenuForm().DoLoadFormDirect(0);
+            create_stop: int a = 0;
 
         }
 
