@@ -1,4 +1,6 @@
-﻿namespace main.contents
+﻿using System;
+
+namespace main.contents
 {
     partial class General
     {
@@ -40,7 +42,7 @@
             BuildingName_textBox = new TextBox();
             ByRawClimate_textBox = new TextBox();
             BuildingUse_comboBox = new CustomComboBox();
-            label2 = new Label();
+            BuildingUse_label = new Label();
             Climate_comboBox = new CustomComboBox();
             label6 = new Label();
             BuildingCategory_comboBox = new CustomComboBox();
@@ -48,10 +50,10 @@
             label13 = new Label();
             label14 = new Label();
             panel2 = new Panel();
+            OldProject_textBox = new TextBox();
             ProjectNum_textBox = new TextBox();
             label11 = new Label();
             OldProject_label = new Label();
-            OldProject_comboBox = new CustomComboBox();
             ProjectType_textBox = new TextBox();
             ProjectName_textBox = new TextBox();
             label16 = new Label();
@@ -212,7 +214,7 @@
             panel1.Controls.Add(BuildingName_textBox);
             panel1.Controls.Add(ByRawClimate_textBox);
             panel1.Controls.Add(BuildingUse_comboBox);
-            panel1.Controls.Add(label2);
+            panel1.Controls.Add(BuildingUse_label);
             panel1.Controls.Add(Climate_comboBox);
             panel1.Controls.Add(label6);
             panel1.Controls.Add(BuildingCategory_comboBox);
@@ -275,15 +277,15 @@
             BuildingUse_comboBox.TabIndex = 125;
             BuildingUse_comboBox.SelectedIndexChanged += BuildingUse_comboBox_SelectedIndexChanged;
             // 
-            // label2
+            // BuildingUse_label
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(220, 23);
-            label2.Name = "label2";
-            label2.Size = new Size(59, 15);
-            label2.TabIndex = 124;
-            label2.Text = "건물 용도";
+            BuildingUse_label.AutoSize = true;
+            BuildingUse_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            BuildingUse_label.Location = new Point(220, 23);
+            BuildingUse_label.Name = "BuildingUse_label";
+            BuildingUse_label.Size = new Size(59, 15);
+            BuildingUse_label.TabIndex = 124;
+            BuildingUse_label.Text = "건물 용도";
             // 
             // Climate_comboBox
             // 
@@ -350,10 +352,10 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(OldProject_textBox);
             panel2.Controls.Add(ProjectNum_textBox);
             panel2.Controls.Add(label11);
             panel2.Controls.Add(OldProject_label);
-            panel2.Controls.Add(OldProject_comboBox);
             panel2.Controls.Add(ProjectType_textBox);
             panel2.Controls.Add(ProjectName_textBox);
             panel2.Controls.Add(label16);
@@ -363,6 +365,19 @@
             panel2.Size = new Size(489, 158);
             panel2.TabIndex = 99;
             panel2.Paint += panel2_Paint;
+            // 
+            // OldProject_textBox
+            // 
+            OldProject_textBox.BackColor = Color.White;
+            OldProject_textBox.BorderStyle = BorderStyle.None;
+            OldProject_textBox.Enabled = false;
+            OldProject_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            OldProject_textBox.ForeColor = SystemColors.ControlDark;
+            OldProject_textBox.Location = new Point(108, 119);
+            OldProject_textBox.Name = "OldProject_textBox";
+            OldProject_textBox.Size = new Size(116, 15);
+            OldProject_textBox.TabIndex = 140;
+            OldProject_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // ProjectNum_textBox
             // 
@@ -392,22 +407,12 @@
             // 
             OldProject_label.AutoSize = true;
             OldProject_label.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            OldProject_label.ForeColor = SystemColors.ControlDark;
             OldProject_label.Location = new Point(20, 119);
             OldProject_label.Name = "OldProject_label";
             OldProject_label.Size = new Size(83, 15);
             OldProject_label.TabIndex = 137;
             OldProject_label.Text = "기존 프로젝트";
-            // 
-            // OldProject_comboBox
-            // 
-            OldProject_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            OldProject_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            OldProject_comboBox.FormattingEnabled = true;
-            OldProject_comboBox.Location = new Point(108, 115);
-            OldProject_comboBox.Name = "OldProject_comboBox";
-            OldProject_comboBox.Size = new Size(120, 23);
-            OldProject_comboBox.TabIndex = 136;
-            OldProject_comboBox.SelectedIndexChanged += OldProject_comboBox_SelectedIndexChanged;
             // 
             // ProjectType_textBox
             // 
@@ -1226,6 +1231,8 @@
             PerformLayout();
         }
 
+
+
         #endregion
         private Panel GeneralPanel;
         private PictureBox Icon_pictureBox;
@@ -1240,7 +1247,7 @@
         private Panel panel1;
         private Label label6;
         private Label label7;
-        private Label label2;
+        private Label BuildingUse_label;
         private TextBox ByRawClimate_textBox;
         private Panel panel2;
         private ComboBox Diagnosis_comboBox;
@@ -1303,7 +1310,6 @@
         private CustomComboBox ReviewYear_comboBox;
         private CustomComboBox UnderGround_comboBox;
         private CustomComboBox AboveGround_comboBox;
-        private CustomComboBox OldProject_comboBox;
         private GroupBox Pipe_groupBox;
         private RadioButton Pipe_False_radioButton;
         private RadioButton Pipe_True_radioButton;
@@ -1321,5 +1327,6 @@
         private Label n50_label2;
         private Label n50_label1;
         private Button BlowDoor_button;
+        private TextBox OldProject_textBox;
     }
 }

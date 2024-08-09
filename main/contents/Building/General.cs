@@ -65,21 +65,28 @@ namespace main.contents
                 {
                     case "1":
                         ProjectType = "기존";
+                        OldProject_label.Visible = false;
+                        OldProject_textBox.Visible = false;
                         break;
                     case "2":
                         ProjectType = "리트로핏";
+                        OldProject_label.Visible = true;
+                        OldProject_textBox.Visible = true;
                         break;
                     case "3":
                         ProjectType = "리모델링";
+                        OldProject_label.Visible = true;
+                        OldProject_textBox.Visible = true;
                         break;
                     case "4":
                         ProjectType = "신규";
+                        OldProject_label.Visible = false;
+                        OldProject_textBox.Visible = false;
                         break;
                 }
                 if (ProjectType != null) { ProjectType_textBox.Text = ProjectType.ToString(); }
                 else { }
             }
-            Load_OldProject();
 
             //건물대상 콤보박스
             LoadOption_BuildingCategory();
@@ -152,7 +159,7 @@ namespace main.contents
         {
             if (BuildingCategory_comboBox.SelectedItem != null && BuildingCategory_comboBox.SelectedItem.ToString() != "")
             {
-                BuildingCategory = Program.UTIL.SelectedItem_ByComboBox(BuildingCategory_comboBox);
+                BuildingCategory = BuildingCategory_comboBox.SelectedItem.ToString();
                 LoadOption_BuildingUse();
             }
         }
@@ -161,13 +168,13 @@ namespace main.contents
         {
             if (BuildingUse_comboBox.SelectedItem != null)
             {
-                BuildingUse = Program.UTIL.SelectedItem_ByComboBox(BuildingUse_comboBox);
+                BuildingUse = BuildingUse_comboBox.SelectedItem.ToString();
             }
         }
 
         private void LoadOption_BuildingCategory()
         {
-            string[][] V = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select a.이름 From 인덱스 as a Inner Join 인덱스분류 as b  on a.종류=b.아이디 Where b.종류='존일반' and b.이름='건물용도'");
+            string[][] V = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select a.이름 From 인덱스 as a Inner Join 인덱스분류 as b  on a.종류=b.아이디 Where b.종류='존일반' and b.이름='건물용도' Order by a.값 ");
             if (V.Length > 0)
             {
                 BuildingCategory_comboBox.Items.Clear();
@@ -190,47 +197,23 @@ namespace main.contents
                     {
                         BuildingUse_comboBox.Items.Add(V2[a][0]);
                     }
+                    if (BuildingCategory_comboBox.SelectedItem.ToString() == "기타유형")
+                    {
+                        BuildingUse_comboBox.SelectedIndex = 0;
+                        BuildingUse_label.Visible = false;
+                        BuildingUse_comboBox.Visible = false;
+                    }
+                    else
+                    {
+                        BuildingUse_comboBox.SelectedIndex = 0;
+                        BuildingUse_label.Visible = true;
+                        BuildingUse_comboBox.Visible = true;
+                    }
+
                 }
             }
         }
-        private void Load_OldProject()
-        {
-            string[][] res;
-            if (ProjectType != "기존" && ProjectType != "신규")
-            {
-                OldProject_comboBox.Visible = true;
-                OldProject_label.Visible = true;
-                res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT pnum FROM projects WHERE type='1' AND title ='" + ProjectName + "'");
-            }
-            else
-            {
-                OldProject_comboBox.Visible = false;
-                OldProject_label.Visible = false;
-                res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT pnum FROM projects ");
-            }
-            DataTable sources = new DataTable();
-            sources.Columns.Add("Text");
-            int i = -1;
-            while (++i < res.Length)
-            {
-                DataRow dr = sources.NewRow();
-                dr["Text"] = res[i][0];
-                sources.Rows.Add(dr);
-            }
 
-            OldProject_comboBox.DataSource = sources.DefaultView;
-            OldProject_comboBox.DisplayMember = "Text";
-        }
-        private void OldProject_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DataRowView? item = OldProject_comboBox.SelectedItem as DataRowView;
-            if (item != null)
-            {
-                OldProject = item.Row.ItemArray[0].ToString();
-            }
-            else { }
-
-        }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
@@ -501,16 +484,16 @@ namespace main.contents
             if (BuildingLocation_textBox.Text != null) { BuildingLocation = BuildingLocation_textBox.Text.ToString(); }
             else { }
         }
-        private void GrossArea_textBox_TextChanged(object sender, EventArgs e)
+        public void GrossArea_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (GrossArea_textBox.Text != null) { try { GrossArea = Convert.ToDouble(GrossArea_textBox.Text); } catch { } }
-            else { }
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(GrossArea_textBox, false);
+            GrossArea = textbox.text;
         }
 
         private void BuildingArea_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (BuildingArea_textBox.Text != null) { try { BuildingArea = Convert.ToDouble(BuildingArea_textBox.Text); } catch { } }
-            else { }
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(BuildingArea_textBox , false);
+            BuildingArea = textbox.text;
         }
         private void AboveGround_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -785,12 +768,14 @@ namespace main.contents
                 {
                     GrossArea = Convert.ToDouble(Value[0][17]);
                     GrossArea_textBox.Text = GrossArea.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(GrossArea_textBox, true);
                 }
 
                 if (Value[0][18] != "")
                 {
                     BuildingArea = Convert.ToDouble(Value[0][18]);
                     BuildingArea_textBox.Text = BuildingArea.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(BuildingArea_textBox, true);
                 }
 
                 AboveGround = Value[0][19];
@@ -824,10 +809,8 @@ namespace main.contents
                     ReviewDate = Convert.ToDouble(Value[0][26]);
                     Calc_ReviewDate();
                 }
-                Load_OldProject();
                 OldProject = Value[0][27];
-                OldProject_comboBox.SelectedIndex = OldProject_comboBox.FindStringExact(Value[0][27]);
-
+                OldProject_textBox.Text = OldProject;
             }
 
 
