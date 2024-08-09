@@ -37,6 +37,10 @@
             EnergyNeed_Sim = new ToolStripButton();
             FinalEnergy_Sim = new ToolStripButton();
             Element_Sim = new ToolStripButton();
+            toolStripSeparator1 = new ToolStripSeparator();
+            toolStripSeparator2 = new ToolStripSeparator();
+            toolStripSeparator3 = new ToolStripSeparator();
+            toolStripSeparator4 = new ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.SuspendLayout();
             toolStripContainer1.ContentPanel.SuspendLayout();
@@ -81,20 +85,20 @@
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
-            toolStripContainer1.TopToolStripPanel.BackColor =System.Drawing.Color.FromArgb(166,201,232);
+            toolStripContainer1.TopToolStripPanel.BackColor = Color.FromArgb(166, 201, 232);
             toolStripContainer1.TopToolStripPanel.Controls.Add(toolStrip1);
             toolStripContainer1.TopToolStripPanel.MinimumSize = new Size(0, 32);
             // 
             // toolStrip1
             // 
-            toolStrip1.BackColor = System.Drawing.Color.FromArgb(166, 201, 232);
+            toolStrip1.BackColor = Color.FromArgb(166, 201, 232);
             toolStrip1.Dock = DockStyle.None;
             toolStrip1.ImageScalingSize = new Size(35, 35);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { Home, ProjectOpen, EnergyNeed_Sim, FinalEnergy_Sim, Element_Sim });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { Home, toolStripSeparator2, ProjectOpen, toolStripSeparator1, EnergyNeed_Sim, toolStripSeparator3, FinalEnergy_Sim, toolStripSeparator4, Element_Sim });
             toolStrip1.Location = new Point(3, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Padding = new Padding(4);
-            toolStrip1.Size = new Size(214, 50);
+            toolStrip1.Size = new Size(238, 50);
             toolStrip1.TabIndex = 0;
             // 
             // Home
@@ -104,7 +108,7 @@
             Home.ImageTransparentColor = Color.Magenta;
             Home.Name = "Home";
             Home.Size = new Size(39, 39);
-            Home.Text = "toolStripButton1";
+            Home.Text = "Home";
             Home.Click += toolStripButton1_Click;
             // 
             // ProjectOpen
@@ -115,6 +119,7 @@
             ProjectOpen.Name = "ProjectOpen";
             ProjectOpen.Size = new Size(39, 39);
             ProjectOpen.Text = "ProjectOpenButton";
+            ProjectOpen.ToolTipText = "Project List";
             ProjectOpen.Click += ProjectOpen_Click;
             // 
             // EnergyNeed_Sim
@@ -124,7 +129,7 @@
             EnergyNeed_Sim.ImageTransparentColor = Color.Magenta;
             EnergyNeed_Sim.Name = "EnergyNeed_Sim";
             EnergyNeed_Sim.Size = new Size(39, 39);
-            EnergyNeed_Sim.Text = "toolStripButton2";
+            EnergyNeed_Sim.Text = "Energy needs";
             EnergyNeed_Sim.Click += EnergyNeed_Sim_Click;
             // 
             // FinalEnergy_Sim
@@ -134,7 +139,7 @@
             FinalEnergy_Sim.ImageTransparentColor = Color.Magenta;
             FinalEnergy_Sim.Name = "FinalEnergy_Sim";
             FinalEnergy_Sim.Size = new Size(39, 39);
-            FinalEnergy_Sim.Text = "toolStripButton5";
+            FinalEnergy_Sim.Text = "Final Energy";
             FinalEnergy_Sim.Click += FinalEnergy_Sim_Click;
             // 
             // Element_Sim
@@ -144,8 +149,28 @@
             Element_Sim.ImageTransparentColor = Color.Magenta;
             Element_Sim.Name = "Element_Sim";
             Element_Sim.Size = new Size(39, 39);
-            Element_Sim.Text = "toolStripButton1";
+            Element_Sim.Text = "Components result";
             Element_Sim.Click += Element_Sim_Click;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(6, 42);
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(6, 42);
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(6, 42);
+            // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new Size(6, 42);
             // 
             // FormMain
             // 
@@ -179,5 +204,9 @@
         private ToolStripButton EnergyNeed_Sim;
         private ToolStripButton FinalEnergy_Sim;
         private ToolStripButton Element_Sim;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripSeparator toolStripSeparator4;
     }
 }

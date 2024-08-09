@@ -345,7 +345,7 @@
             label14.Name = "label14";
             label14.Size = new Size(59, 15);
             label14.TabIndex = 37;
-            label14.Text = "건물 대상";
+            label14.Text = "건물 유형";
             // 
             // panel2
             // 

@@ -34,6 +34,23 @@ namespace main.contents
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호", "");
+            if (value.Length > 0)
+            {
+                if (value[0][0] == "1")
+                {
+                    radioButton1.Checked = true;
+                    radioButton2.Enabled = false;
+                    radioButton3.Enabled = false;
+                }
+                else if (value[0][0] == "4")
+                {
+                    radioButton1.Enabled = false;
+                    radioButton2.Checked = true;
+                    radioButton3.Enabled = false;
+                }
+            }
+
             ControlType_comboBox.Items.Clear();
             ControlType_comboBox.Items.Add("차양없음");
             ControlType_comboBox.Items.Add("일사제어차양(수동)");

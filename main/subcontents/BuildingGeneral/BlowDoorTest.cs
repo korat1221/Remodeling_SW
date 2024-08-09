@@ -34,14 +34,15 @@ public partial class BlowDoorTest : Form
 
         Blow_dataGridView.Columns.Add("A1", "번호");
         Blow_dataGridView.Columns.Add("A2", "측정 위치");
-        Blow_dataGridView.Columns.Add("A3", "AirFlow @50.[m³/h]");
-        Blow_dataGridView.Columns.Add("A4", "ACH @50.[1/h]");
+        Blow_dataGridView.Columns.Add("A3", "침기량.AirFlow @50.[m³/h]");
+        Blow_dataGridView.Columns.Add("A4", "침기횟수.ACH @50.[1/h]");
         Blow_dataGridView.Columns.Add("A5", "Volume.[m³]");
         Blow_dataGridView.Columns[0].Width = 30;
         Blow_dataGridView.Columns[1].Width = 30;
         Blow_dataGridView.Columns[2].Width = 80;
         Blow_dataGridView.Columns[4].Width = 80;
         Blow_dataGridView.Columns[5].Width = 80;
+        Blow_dataGridView.Columns[5].Visible = false;
     }
 
     private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)

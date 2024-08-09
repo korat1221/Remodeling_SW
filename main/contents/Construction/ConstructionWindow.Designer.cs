@@ -50,6 +50,7 @@ namespace main.contents
             AdditionalWindow_comboBox = new CustomComboBox();
             Name_textBox = new TextBox();
             panel2 = new Panel();
+            label20 = new Label();
             Size_textBox = new TextBox();
             label1 = new Label();
             ImportSize_button = new Button();
@@ -122,6 +123,8 @@ namespace main.contents
             label14 = new Label();
             WindowFrame_pictureBox = new PictureBox();
             tabControl1 = new CustomTabControl();
+            Glass_tabPage = new TabPage();
+            Spacer_tabPage = new TabPage();
             g2_textBox = new TextBox();
             label13 = new Label();
             Uw3_textBox = new TextBox();
@@ -348,6 +351,7 @@ namespace main.contents
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(label20);
             panel2.Controls.Add(Size_textBox);
             panel2.Controls.Add(label1);
             panel2.Controls.Add(ImportSize_button);
@@ -391,6 +395,16 @@ namespace main.contents
             panel2.Size = new Size(977, 307);
             panel2.TabIndex = 18;
             panel2.Paint += panel2_Paint;
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label20.Location = new Point(78, 55);
+            label20.Name = "label20";
+            label20.Size = new Size(54, 16);
+            label20.TabIndex = 104;
+            label20.Text = "창호 유형";
             // 
             // Size_textBox
             // 
@@ -581,7 +595,7 @@ namespace main.contents
             FrameName_textBox.Enabled = false;
             FrameName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             FrameName_textBox.ForeColor = SystemColors.ControlDark;
-            FrameName_textBox.Location = new Point(327, 56);
+            FrameName_textBox.Location = new Point(175, 115);
             FrameName_textBox.Name = "FrameName_textBox";
             FrameName_textBox.Size = new Size(120, 15);
             FrameName_textBox.TabIndex = 89;
@@ -593,7 +607,7 @@ namespace main.contents
             FrameDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             FrameDB_button.FlatStyle = FlatStyle.System;
             FrameDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            FrameDB_button.Location = new Point(449, 52);
+            FrameDB_button.Location = new Point(297, 111);
             FrameDB_button.Margin = new Padding(0);
             FrameDB_button.Name = "FrameDB_button";
             FrameDB_button.Size = new Size(23, 23);
@@ -692,9 +706,9 @@ namespace main.contents
             label26.ForeColor = SystemColors.ControlDark;
             label26.Location = new Point(484, 114);
             label26.Name = "label26";
-            label26.Size = new Size(176, 16);
+            label26.Size = new Size(124, 16);
             label26.TabIndex = 71;
-            label26.Text = "[τD65,SNA] 빛투과율(덧댐포함)";
+            label26.Text = "[τD65,SNA] 빛투과율";
             // 
             // g_textBox
             // 
@@ -716,9 +730,9 @@ namespace main.contents
             label23.ForeColor = SystemColors.ControlDark;
             label23.Location = new Point(484, 85);
             label23.Name = "label23";
-            label23.Size = new Size(144, 16);
+            label23.Size = new Size(92, 16);
             label23.TabIndex = 68;
-            label23.Text = "[g] 태양열취득률(덧댐포함)";
+            label23.Text = "[g] 태양열취득률";
             // 
             // Ug_unit_label
             // 
@@ -751,9 +765,9 @@ namespace main.contents
             Ug_label.ForeColor = SystemColors.ControlDark;
             Ug_label.Location = new Point(484, 56);
             Ug_label.Name = "Ug_label";
-            Ug_label.Size = new Size(157, 16);
+            Ug_label.Size = new Size(105, 16);
             Ug_label.TabIndex = 65;
-            Ug_label.Text = "[Ug] 유리 열관류율(덧댐제외)";
+            Ug_label.Text = "[Ug] 유리 열관류율";
             // 
             // DiIndi_comboBox
             // 
@@ -822,7 +836,7 @@ namespace main.contents
             // 
             Frame_label.AutoSize = true;
             Frame_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Frame_label.Location = new Point(78, 56);
+            Frame_label.Location = new Point(78, 114);
             Frame_label.Name = "Frame_label";
             Frame_label.Size = new Size(40, 16);
             Frame_label.TabIndex = 39;
@@ -909,8 +923,8 @@ namespace main.contents
             Install_tabPage.Name = "Install_tabPage";
             Install_tabPage.Padding = new Padding(3);
             Install_tabPage.Size = new Size(969, 210);
-            Install_tabPage.TabIndex = 1;
-            Install_tabPage.Text = "설치열교 정보";
+            Install_tabPage.TabIndex = 3;
+            Install_tabPage.Text = "설치열교";
             // 
             // label44
             // 
@@ -1059,8 +1073,8 @@ namespace main.contents
             Frame_tabPage.Name = "Frame_tabPage";
             Frame_tabPage.Padding = new Padding(3);
             Frame_tabPage.Size = new Size(969, 210);
-            Frame_tabPage.TabIndex = 0;
-            Frame_tabPage.Text = "프레임 세부정보";
+            Frame_tabPage.TabIndex = 1;
+            Frame_tabPage.Text = "프레임";
             // 
             // label10
             // 
@@ -1251,7 +1265,9 @@ namespace main.contents
             // 
             // tabControl1
             // 
+            tabControl1.Controls.Add(Glass_tabPage);
             tabControl1.Controls.Add(Frame_tabPage);
+            tabControl1.Controls.Add(Spacer_tabPage);
             tabControl1.Controls.Add(Install_tabPage);
             tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
@@ -1274,6 +1290,26 @@ namespace main.contents
             tabControl1.Size = new Size(977, 239);
             tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.TabIndex = 19;
+            // 
+            // Glass_tabPage
+            // 
+            Glass_tabPage.Location = new Point(4, 25);
+            Glass_tabPage.Name = "Glass_tabPage";
+            Glass_tabPage.Padding = new Padding(3);
+            Glass_tabPage.Size = new Size(969, 210);
+            Glass_tabPage.TabIndex = 0;
+            Glass_tabPage.Text = "유리";
+            Glass_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // Spacer_tabPage
+            // 
+            Spacer_tabPage.Location = new Point(4, 25);
+            Spacer_tabPage.Name = "Spacer_tabPage";
+            Spacer_tabPage.Padding = new Padding(3);
+            Spacer_tabPage.Size = new Size(969, 210);
+            Spacer_tabPage.TabIndex = 2;
+            Spacer_tabPage.Text = "간봉";
+            Spacer_tabPage.UseVisualStyleBackColor = true;
             // 
             // g2_textBox
             // 
@@ -1505,5 +1541,8 @@ namespace main.contents
         private Label Uw3_label;
         private TextBox τD65_SNA2_textBox;
         private Label label27;
+        private Label label20;
+        private TabPage Glass_tabPage;
+        private TabPage Spacer_tabPage;
     }
 }
