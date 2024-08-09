@@ -118,8 +118,8 @@
             ProjectOpen.ImageTransparentColor = Color.Magenta;
             ProjectOpen.Name = "ProjectOpen";
             ProjectOpen.Size = new Size(39, 39);
-            ProjectOpen.Text = "ProjectOpenButton";
-            ProjectOpen.ToolTipText = "Project List";
+            ProjectOpen.Text = "ProjectOpen";
+            ProjectOpen.ToolTipText = "ProjectOpen";
             ProjectOpen.Click += ProjectOpen_Click;
             // 
             // EnergyNeed_Sim
