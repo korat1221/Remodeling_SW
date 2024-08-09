@@ -43,6 +43,26 @@ namespace main.contents.Construction
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호", "");
+            if (value.Length > 0)
+            {
+                if (value[0][0] == "1")
+                {
+                    radioButton1.Checked = true;
+                    radioButton2.Enabled = false;
+                    radioButton3.Enabled = false;
+                    radioButton4.Enabled = false;
+                    radioButton5.Enabled = false;
+                }
+                else if (value[0][0] == "4")
+                {
+                    radioButton1.Enabled = false;
+                    radioButton2.Checked = true;
+                    radioButton3.Enabled = false;
+                    radioButton4.Enabled = false;
+                    radioButton5.Enabled = false;
+                }
+            }
             //표면열전달저항기준 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, ISO_KS_comboBox, "바닥", "실내외표면열전달저항");
             //단열수준콤보박스

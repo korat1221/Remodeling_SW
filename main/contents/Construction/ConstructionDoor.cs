@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace main.contents
 {
@@ -55,7 +56,22 @@ namespace main.contents
 
             //치수정보 그림 시작하자마자 불러오기
             Load_DoorType_image2();
-
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호", "");
+            if (value.Length > 0)
+            {
+                if (value[0][0] == "1")
+                {
+                    radioButton1.Checked = true;
+                    radioButton2.Enabled = false;
+                    radioButton3.Enabled = false;
+                }
+                else if (value[0][0] == "4")
+                {
+                    radioButton1.Enabled = false;
+                    radioButton2.Checked = true;
+                    radioButton3.Enabled = false;
+                }
+            }
 
 
         }

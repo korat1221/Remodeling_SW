@@ -48,7 +48,26 @@ namespace main.contents
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-           
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호", "");
+            if (value.Length > 0)
+            {
+                if (value[0][0] == "1")
+                {
+                    radioButton1.Checked = true;
+                    radioButton2.Enabled = false;
+                    radioButton3.Enabled = false;
+                    radioButton4.Enabled = false;
+                    radioButton5.Enabled = false;
+                }              
+                else if (value[0][0] == "4")
+                {
+                    radioButton1.Enabled = false;
+                    radioButton2.Checked = true;
+                    radioButton3.Enabled = false;
+                    radioButton4.Enabled = false;
+                    radioButton5.Enabled = false;
+                }
+            }
             //외장재색 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Color_comboBox, "외벽", "외장재색", "1");
             //직접간접 콤보박스
