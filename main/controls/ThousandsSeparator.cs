@@ -15,17 +15,19 @@ namespace main.controls
     {
         private readonly TextBox textBox;
         public double text = 0;
-        public ThousandsSeparator(TextBox textBox, bool LoadOrNot)
+        string code_N = "";
+        public ThousandsSeparator(TextBox textBox, bool LoadOrNot, int NumberDecimal)
         {
             this.textBox = textBox;
             this.textBox.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            
+            this.code_N = NumberDecimalPlaces(NumberDecimal);
+
             //Load일 경우 true,아니고 입력일 경우 false
-            if(LoadOrNot)
+            if (LoadOrNot)
             {
                 Double value;
                 if (Double.TryParse(textBox.Text, out value))
-                    textBox.Text = string.Format("{0:#,#.##}", value);
+                    textBox.Text = string.Format("{0:"+ code_N + "}", value);
                 else
                     textBox.Text = String.Empty;
             }
@@ -46,11 +48,33 @@ namespace main.controls
                 }
             }                 
         }
+        private string NumberDecimalPlaces(int a)
+        {
+            string code = "";
+            if(a ==0 )
+            {
+                code = "#,##0";
+            }
+            else if(a ==1 )
+            {
+                code = "#,#.#";
+            }
+            else if (a == 2)
+            {
+                code = "#,#.##";
+            }
+            else
+            {
+                code = "#,#.###";
+            }
+
+            return code;
+        }
         private void textBox_Leave(object sender, EventArgs e)
         {
             Double value;
             if (Double.TryParse(textBox.Text, out value))
-                textBox.Text = string.Format("{0:#,#.##}", value);
+                textBox.Text = string.Format("{0:" + code_N + "}", value);
             else
                 textBox.Text = String.Empty;
         }

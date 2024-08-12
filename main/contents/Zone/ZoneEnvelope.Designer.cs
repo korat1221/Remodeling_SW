@@ -316,11 +316,11 @@ namespace main.contents
             // Cwirk_textBox
             // 
             Cwirk_textBox.BackColor = SystemColors.Window;
-            Cwirk_textBox.BorderStyle = BorderStyle.FixedSingle;
+            Cwirk_textBox.BorderStyle = BorderStyle.None;
             Cwirk_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Cwirk_textBox.Location = new Point(288, 50);
+            Cwirk_textBox.Location = new Point(288, 55);
             Cwirk_textBox.Name = "Cwirk_textBox";
-            Cwirk_textBox.Size = new Size(120, 22);
+            Cwirk_textBox.Size = new Size(120, 15);
             Cwirk_textBox.TabIndex = 99;
             // 
             // SlabCwirk_comboBox

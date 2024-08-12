@@ -321,7 +321,8 @@ namespace main.contents
                 {
                     WeekUseDay = Convert.ToDouble(res[0][0].ToString());
                     AnnualUseDay = Convert.ToDouble(Program.UTIL.GetValue2_BySelectComboBox(WeekUseDay_comboBox, "이용일수", "주간일수", "월='연간'", "이용일수"));
-                    AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
+                    AnnualUseDay_textBox.Text =  AnnualUseDay.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(AnnualUseDay_textBox, true,0);
                 }
             }
         }
@@ -395,7 +396,9 @@ namespace main.contents
                     HCTime = 24;
                     AHUTime = 24;
                     UseTime_textBox.Text = UseTime.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(UseTime_textBox, true, 0);
                     HCTime_textBox.Text = HCTime.ToString();
+                    controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(HCTime_textBox, true, 0);
                     PersonIHG_Cal(PersonIHG, UseTime);
                 }
                 else
@@ -409,7 +412,9 @@ namespace main.contents
                     HCTime = UseTime + 1;
                     AHUTime = UseTime + 1;
                     UseTime_textBox.Text = UseTime.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(UseTime_textBox, true, 0);
                     HCTime_textBox.Text = HCTime.ToString();
+                    controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(HCTime_textBox, true, 0);
                     PersonIHG_Cal(PersonIHG, UseTime);
                 }
 
@@ -421,7 +426,8 @@ namespace main.contents
         {
             if (String.IsNullOrEmpty(PersonNum_textBox.Text) == false)
             {
-                PersonNum = double.Parse(PersonNum_textBox.Text);
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PersonNum_textBox, false, 0);
+                PersonNum = textbox.text;
                 DHWneed_Cal(DHWneed_1p, PersonNum);
                 OccupancyDensity_Cal(PersonNum, NetArea);
                 PersonIHG_Cal(PersonIHG, UseTime);
@@ -431,13 +437,16 @@ namespace main.contents
         {
             if (String.IsNullOrEmpty(NetArea_textBox.Text) == false)
             {
-                NetArea = double.Parse(NetArea_textBox.Text);
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(NetArea_textBox, false, 2);
+                NetArea = textbox.text;
                 OccupancyDensity_Cal(PersonNum, NetArea);
                 PersonIHG_Cal(PersonIHG, UseTime);
                 NetVolume = NetArea * CeilingHeight;
-                NetVolume_textBox.Text = String.Format("{0:F1}", NetVolume);
-                Calc_VentilationVolume(NetArea, NetVolume, VA, VA_we);
 
+                NetVolume_textBox.Text =  NetVolume.ToString();
+                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(NetVolume_textBox, true, 1);
+
+                Calc_VentilationVolume(NetArea, NetVolume, VA, VA_we);
             }
         }
 
@@ -445,9 +454,13 @@ namespace main.contents
         {
             if (String.IsNullOrEmpty(CeilingHeight_textBox.Text) == false)
             {
-                CeilingHeight = double.Parse(CeilingHeight_textBox.Text);
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(CeilingHeight_textBox, false, 2);
+                CeilingHeight = textbox.text;
                 NetVolume = NetArea * CeilingHeight;
-                NetVolume_textBox.Text = String.Format("{0:F1}", NetVolume);
+
+                NetVolume_textBox.Text = NetVolume.ToString();
+                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(NetVolume_textBox, true, 1);
+
                 Calc_VentilationVolume(NetArea, NetVolume, VA, VA_we);
             }
 
@@ -470,7 +483,9 @@ namespace main.contents
                 if (String.IsNullOrEmpty(PersonNum_textBox.Text) == false)
                 {
                     DHWneed = DHWneed_1p * PersonNum;
-                    DHWneed_textBox.Text = string.Format("{0:F1}", (DHWneed));
+
+                    DHWneed_textBox.Text = DHWneed.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(DHWneed_textBox, true, 1);
                     DHWneed_image_Label.Text = string.Format("{0:F1}", (DHWneed)) + "kWh/d";
                 }
             }
@@ -481,12 +496,14 @@ namespace main.contents
             if (PersonNum != 0 && String.IsNullOrEmpty(NetArea_textBox.Text) == false)
             {
                 OccupancyDensity = Area / PersonNum;
-                OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
+                OccupancyDensity_textBox.Text = OccupancyDensity.ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(OccupancyDensity_textBox, true, 1);
             }
             else if (PersonNum == 0)
             {
                 OccupancyDensity = 0;
-                OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
+                OccupancyDensity_textBox.Text = OccupancyDensity.ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(OccupancyDensity_textBox, true, 0);
             }
 
             if (String.IsNullOrEmpty(PersonNum_textBox.Text) == false && String.IsNullOrEmpty(NetArea_textBox.Text) == false && Usage_comboBox.SelectedItem != null)
@@ -546,7 +563,8 @@ namespace main.contents
                         break;
                 }
                 EquipIHG_1day = EquipIHG * EquipIHG_Time;
-                EquipIHG_textBox.Text = string.Format("{0:F1}", EquipIHG_1day);
+                EquipIHG_textBox.Text = EquipIHG_1day.ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(EquipIHG_textBox, true, 1);
                 EquipIHG_image_Label.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m²d";
             }
         }
@@ -554,7 +572,8 @@ namespace main.contents
         {
 
             Volume_wd = Area * VA;
-            Volume_wd_textBox.Text = String.Format("{0:F1}", Volume_wd);
+            Volume_wd_textBox.Text = Volume_wd.ToString();
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Volume_wd_textBox, true, 1);
             SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m³/h";
 
             Volume_we = Area * VA_we;
@@ -563,7 +582,8 @@ namespace main.contents
             if (NetVolume != null && NetVolume != 0)
             { VentilationRate = Volume_wd / NetVolume; }
             else { VentilationRate = 0; }
-            VentilationRate_textBox.Text = String.Format("{0:F1}", VentilationRate);
+            VentilationRate_textBox.Text = VentilationRate_textBox.ToString();
+            controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(VentilationRate_textBox, true, 1);
         }
 
         private void Save_button_Click(object sender, EventArgs e)
@@ -762,11 +782,13 @@ namespace main.contents
                 {
                     NetArea = Convert.ToDouble(Value[0][28]);
                     NetArea_textBox.Text = NetArea.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(NetArea_textBox, true, 2);
                 }
                 if (Value[0][7] != "")
                 {
                     CeilingHeight = Convert.ToDouble(Value[0][7]);
                     CeilingHeight_textBox.Text = CeilingHeight.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(CeilingHeight_textBox, true, 2);
                 }
                 if (Value[0][8] != "")
                 {
@@ -787,6 +809,7 @@ namespace main.contents
                 {
                     PersonNum = Convert.ToDouble(Value[0][11]);
                     PersonNum_textBox.Text = PersonNum.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PersonNum_textBox, true, 0);
                 }
                 if (Value[0][12] != "")
                 {
@@ -796,18 +819,21 @@ namespace main.contents
                 if (Value[0][13] != "")
                 {
                     DHWneed = Convert.ToDouble(Value[0][13]);
-                    DHWneed_textBox.Text = string.Format("{0:F1}", (DHWneed));
+                    DHWneed_textBox.Text = DHWneed.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(DHWneed_textBox, true, 1);
                     DHWneed_image_Label.Text = string.Format("{0:F1}", (DHWneed)) + "kWh/d";
                 }
                 if (Value[0][14] != "")
                 {
                     HCTime = Convert.ToDouble(Value[0][14]);
                     HCTime_textBox.Text = HCTime.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(HCTime_textBox, true, 0);
                 }
                 if (Value[0][15] != "")
                 {
                     UseTime = Convert.ToDouble(Value[0][15]);
                     UseTime_textBox.Text = UseTime.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(UseTime_textBox, true, 0);
                 }
                 if (Value[0][16] != "")
                 {
@@ -816,12 +842,14 @@ namespace main.contents
                 if (Value[0][17] != "")
                 {
                     AnnualUseDay = Convert.ToDouble(Value[0][17]);
-                    AnnualUseDay_textBox.Text = string.Format("{0:F0}", AnnualUseDay);
+                    AnnualUseDay_textBox.Text = AnnualUseDay.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(AnnualUseDay_textBox, true, 0);
                 }
                 if (Value[0][18] != "")
                 {
                     OccupancyDensity = Convert.ToDouble(Value[0][18]);
-                    OccupancyDensity_textBox.Text = string.Format("{0:F1}", OccupancyDensity);
+                    OccupancyDensity_textBox.Text = OccupancyDensity.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(OccupancyDensity_textBox, true, 1);
                 }
                 if (Value[0][19] != "")
                 {
@@ -832,30 +860,35 @@ namespace main.contents
                 {
                     PersonIHG_1day = Convert.ToDouble(Value[0][20]);
                     PersonIHG = Convert.ToDouble(Value[0][21]);
-                    PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day);
+                    PersonIHG_textBox.Text = PersonIHG_1day.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PersonIHG_textBox, true, 1);
                     PersonIHG_image_Label.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m²d";
                 }
                 if (Value[0][22] != "")
                 {
                     EquipIHG_1day = Convert.ToDouble(Value[0][22]);
                     EquipIHG = Convert.ToDouble(Value[0][22]);
-                    EquipIHG_textBox.Text = string.Format("{0:F1}", EquipIHG_1day);
+                    EquipIHG_textBox.Text = EquipIHG_1day.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(EquipIHG_textBox, true, 1);
                     EquipIHG_image_Label.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m²d";
                 }
                 if (Value[0][24] != "")
                 {
                     NetVolume = Convert.ToDouble(Value[0][24]);
-                    NetVolume_textBox.Text = String.Format("{0:F1}", NetVolume);
+                    NetVolume_textBox.Text = NetVolume.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(NetVolume_textBox, true,1);
                 }
                 if (Value[0][25] != "")
                 {
                     VentilationRate = Convert.ToDouble(Value[0][25]);
-                    VentilationRate_textBox.Text = String.Format("{0:F1}", VentilationRate);
+                    VentilationRate_textBox.Text = VentilationRate.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(VentilationRate_textBox, true, 1);
                 }
                 if (Value[0][26] != "")
                 {
                     Volume_wd = Convert.ToDouble(Value[0][26]);
-                    Volume_wd_textBox.Text = String.Format("{0:F1}", Volume_wd);
+                    Volume_wd_textBox.Text = Volume_wd.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Volume_wd_textBox, true, 1);
                     SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m³/h";
                 }
                 if (Value[0][27] != "")
@@ -1077,27 +1110,54 @@ namespace main.contents
                     }
                 }
                 if (Construction_AreaSum[0] != 0)
-                { CW_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[0]) + "m²"; }
-
+                {
+                    CW_textBox.Text = Construction_AreaSum[0].ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(CW_textBox, true, 1);
+                    CW_textBox.Text = CW_textBox.Text.ToString() + "m²";
+                }
                 if (Construction_AreaSum[1] != 0)
-                { Wall_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[1]) + "m²"; }
+                {
+                    Wall_textBox.Text = Construction_AreaSum[1].ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Wall_textBox, true, 1);
+                    Wall_textBox.Text = Wall_textBox.Text.ToString() + "m²";
+                }
 
                 if (Construction_AreaSum[2] != 0)
-                { Roof_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[2]) + "m²"; }
+                {
+                    Roof_textBox.Text = Construction_AreaSum[2].ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Roof_textBox, true, 1);
+                    Roof_textBox.Text = Roof_textBox.Text.ToString() + "m²";
+                }
 
                 if (Construction_AreaSum[3] != 0)
-                { Floor_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[3]) + "m²"; }
+                {
+                    Floor_textBox.Text = Construction_AreaSum[3].ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Floor_textBox, true, 1);
+                    Floor_textBox.Text = Floor_textBox.Text.ToString() + "m²";
+                }
 
                 if (Construction_AreaSum[4] != 0)
-                { Window_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[4]) + "m²"; }
+                {
+                    Window_textBox.Text = Construction_AreaSum[4].ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Window_textBox, true, 1);
+                    Window_textBox.Text = Window_textBox.Text.ToString() + "m²";
+                }
 
                 if (Construction_AreaSum[5] != 0)
-                { Door_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[5]) + "m²"; }
+                {
+                    Door_textBox.Text = Construction_AreaSum[5].ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Door_textBox, true, 1);
+                    Door_textBox.Text = Door_textBox.Text.ToString() + "m²";
+                }
 
                 if (Construction_AreaSum[6] != 0)
-                { InWall_textBox.Text = string.Format("{0:F1}", Construction_AreaSum[6]) + "m²"; }
+                {
+                    InWall_textBox.Text = Construction_AreaSum[6].ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(InWall_textBox, true, 1);
+                    InWall_textBox.Text = InWall_textBox.Text.ToString() + "m²";
+                }
 
-                if(Construction_AreaSum[3] >0) //최하층 바닥 존재
+                if (Construction_AreaSum[3] >0) //최하층 바닥 존재
                 {
                     String[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.기초설치 From ConstructionFloor as a Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호 Where b.존 = '" + ZoneNum + "'");
                     if(Value.Length > 0)

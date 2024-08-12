@@ -486,13 +486,13 @@ namespace main.contents
         }
         public void GrossArea_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(GrossArea_textBox, false);
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(GrossArea_textBox, false,2);
             GrossArea = textbox.text;
         }
 
         private void BuildingArea_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(BuildingArea_textBox , false);
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(BuildingArea_textBox , false,2);
             BuildingArea = textbox.text;
         }
         private void AboveGround_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -768,14 +768,14 @@ namespace main.contents
                 {
                     GrossArea = Convert.ToDouble(Value[0][17]);
                     GrossArea_textBox.Text = GrossArea.ToString();
-                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(GrossArea_textBox, true);
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(GrossArea_textBox, true,2);
                 }
 
                 if (Value[0][18] != "")
                 {
                     BuildingArea = Convert.ToDouble(Value[0][18]);
                     BuildingArea_textBox.Text = BuildingArea.ToString();
-                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(BuildingArea_textBox, true);
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(BuildingArea_textBox, true,2);
                 }
 
                 AboveGround = Value[0][19];

@@ -133,7 +133,6 @@ namespace main.contents
                 MessageBox.Show("조명 종류를 선택하세요.");
             }
             LightingDB lightingdb_form = new LightingDB();
-            //this.Main_pictureBox.Controls.Add(this.Main_pictureBox2);
             DialogResult result = lightingdb_form.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -221,9 +220,8 @@ namespace main.contents
         {
             Pci_textBox.ForeColor = Color.Gray;
             //Pci_Value();
-           
-            if (Pci_textBox.Text != null && Pci_textBox.Text != "") { Pci = Convert.ToDouble(Pci_textBox.Text); }
-            else { }
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Pci_textBox, false, 1);
+            Pci = textbox.text;
         }
 
 
@@ -377,7 +375,8 @@ namespace main.contents
                     Pn = U_LightPi * N;
                     Pj = Pn / A;
                 }
-                Pj_textbox.Text = string.Format("{0:F2}", Pj);
+                Pj_textbox.Text = Pj.ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Pj_textbox, true, 2);
             }
             else
             {
@@ -389,6 +388,7 @@ namespace main.contents
         public void Pci_Value()
         {
             Pci_textBox.Text = Pci.ToString();
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Pj_textbox, true, 2);
             if (control == "일반제어")
             {
                 Pci = 0;
@@ -447,7 +447,8 @@ namespace main.contents
                 {
                     Fc = 1;
                 }
-                fc_textBox.Text = string.Format("{0:F2}", Fc * Fo);
+                fc_textBox.Text = (Fc * Fo).ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(fc_textBox, true, 2);
             }
             else
             {
@@ -460,7 +461,8 @@ namespace main.contents
         private void LightInfo()
         {
             LightType_textBox.Text = LightType;
-            FL_textBox.Text = string.Format("{0:F2}", LightFL);
+            FL_textBox.Text = LightFL.ToString();
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(FL_textBox, true, 2);
             L1_textBox.Text = LightType;
             L2_textBox.Text = LightType2;
             L4_textBox.Text = LightConverter;
@@ -614,29 +616,43 @@ namespace main.contents
             if (NaturalType == "파사드")
             {
                 Window1_textBox.Text = facade_di;
-                WindowA_textBox.Text = string.Format("{0:F2}", Zone_f_Aca);
-                Window_glass_textBox.Text = Main_glass;
-                Window_Tao_textBox.Text = string.Format("{0:F3}", f_τD65_SNA);
-                bbd_textBox.Text = string.Format("{0:F2}", bd);
-                aad_textBox.Text = string.Format("{0:F2}", ad);
-                AD_textBox.Text = string.Format("{0:F2}", AD);
-                NA_textBox.Text = string.Format("{0:F2}", unAD);
+                WindowA_textBox.Text = Zone_f_Aca.ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(WindowA_textBox, true, 2);
 
+                Window_glass_textBox.Text = Main_glass;
+                Window_Tao_textBox.Text = f_τD65_SNA.ToString();
+                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Window_Tao_textBox, true, 3);
+
+                bbd_textBox.Text = bd.ToString();
+                controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(bbd_textBox, true, 2);
+
+                aad_textBox.Text = ad.ToString();
+                controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(aad_textBox, true, 2);
+
+                AD_textBox.Text = AD.ToString();
+                controls.ThousandsSeparator textbox4 = new controls.ThousandsSeparator(AD_textBox, true, 2);
+
+                NA_textBox.Text = unAD.ToString();
+                controls.ThousandsSeparator textbox5 = new controls.ThousandsSeparator(NA_textBox, true, 2);
             }
             else if (NaturalType == "천창")
             {
                 Window1_textBox.Text = roof_di;
-                WindowA_textBox.Text = string.Format("{0:F2}", r_Aca);
+                WindowA_textBox.Text = r_Aca.ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(WindowA_textBox, true, 2);
+
                 Window_glass_textBox.Text = Main_glass;
-                Window_Tao_textBox.Text = string.Format("{0:F3}", r_τD65_SNA);
+                Window_Tao_textBox.Text = r_τD65_SNA.ToString();
+                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Window_Tao_textBox, true, 3);
+
                 bbd_textBox.Text = bd.ToString();
+                controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(bbd_textBox, true, 2);
                 aad_textBox.Text = ad.ToString();
+                controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(aad_textBox, true, 2);
                 AD_textBox.Text = AD.ToString();
+                controls.ThousandsSeparator textbox4 = new controls.ThousandsSeparator(AD_textBox, true, 2);
                 NA_textBox.Text = unAD.ToString();
-                bbd_textBox.Text = string.Format("{0:F2}", bd);
-                aad_textBox.Text = string.Format("{0:F2}", ad);
-                AD_textBox.Text = string.Format("{0:F2}", AD);
-                NA_textBox.Text = string.Format("{0:F2}", unAD);
+                controls.ThousandsSeparator textbox5 = new controls.ThousandsSeparator(NA_textBox, true, 2);
             }
             else;
 
@@ -806,12 +822,15 @@ namespace main.contents
             if (NaturalType == "파사드")
             {
                 direction_textBox.Text = facade_di;
-                Aca_textBox.Text = string.Format("{0:F2}", Zone_f_Aca);
+                Aca_textBox.Text =  Zone_f_Aca.ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Aca_textBox, true, 2);
+               
             }
             else if (NaturalType == "천창")
             {
                 direction_textBox.Text = roof_di;
-                Aca_textBox.Text = string.Format("{0:F2}", r_Aca);
+                Aca_textBox.Text = r_Aca.ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Aca_textBox, true, 2);
             }
             else
             {
@@ -856,23 +875,6 @@ namespace main.contents
             }
 
         }
-
-        ////대분류에 따른 변화 (콤보박스에 걸기)
-        //private void Load_AD_image()
-        //{
-        //    if (facadeButton.Checked == true || roofButton.Checked == true)
-        //    {
-        //        type_pictureBox.Visible = true;
-        //        string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "일반 파사드" + "'");
-        //        type_pictureBox.Load(Program.gPath + Image[0][0]);
-        //        type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-        //    }
-        //    else
-        //    {
-        //        type_pictureBox.Visible = false;
-        //    }
-        //}
-
 
         //상세 선택에 따른 변화 (체크박스에 걸기)
         private void Load_AD2_image()
@@ -1157,14 +1159,18 @@ namespace main.contents
                 DimmingType_comboBox.SelectedItem = dimming;
 
                 Pj = Convert.ToDouble(Load[0][4]);
-                Pj_textbox.Text = string.Format("{0:F2}", Pj);
+                Pj_textbox.Text = Pj.ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Pj_textbox, true, 2);
 
-                Pci_textBox.Text = Load[0][5];
+                Pci = Convert.ToDouble(Load[0][5]);
+                Pci_textBox.Text = Pci.ToString();
+                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Pci_textBox, true, 1);
 
                 Fo = Convert.ToDouble(Load[0][6]);
 
                 Fc = Convert.ToDouble(Load[0][7]);
-                fc_textBox.Text = string.Format("{0:F2}", Fc * Fo);
+                fc_textBox.Text = (Fc * Fo).ToString();
+                controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(fc_textBox, true, 2);
 
                 String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "주이용일", "존번호='" + ZoneNum + "'");
                 dayofuse = Convert.ToDouble(Value[0][0]);
@@ -1275,7 +1281,9 @@ namespace main.contents
                 LightW = Load[0][5];
                 LightFL = Convert.ToDouble(Load[0][6]);
                 L8_textBox.Text = LightFL.ToString();
-                FL_textBox.Text = string.Format("{0:F2}", LightFL);
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(L8_textBox, true, 2);
+                FL_textBox.Text = LightFL.ToString();
+                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(FL_textBox, true, 2);
 
                 if (LightNumber.Contains("LP"))
                 {
@@ -1334,7 +1342,8 @@ namespace main.contents
                 if (Value[0][3] != "")
                 {
                     A = Convert.ToDouble(Value[0][3]); //순바닥면적
-                    A_textBox.Text = string.Format("{0:F2}", A);
+                    A_textBox.Text = A.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(A_textBox, true, 2);
                 }
                
                

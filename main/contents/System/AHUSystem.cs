@@ -26,6 +26,7 @@ using System.Xml.Linq;
 using static main.DB;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.contents
 {
@@ -242,19 +243,25 @@ namespace main.contents
                 if (난방.Length > 0)
                 {
                     AnnualHeatingNeed += Convert.ToDouble(난방[0][0]);
+                    AnnualHeatingNeed_textBox.Text = AnnualHeatingNeed.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(AnnualHeatingNeed_textBox, true, 0);
+
                     HeatingLoad += Convert.ToDouble(난방[0][1]);
+                    HeatingLoad_textBox.Text = HeatingLoad.ToString();
+                    controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(HeatingLoad_textBox, true, 2);
                 }
                 string[][] 냉방 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + SelectZone_split[i] + "' AND 난방_냉방 = '냉방'");
                 if (냉방.Length > 0)
                 {
                     AnnualCoolingNeed += Convert.ToDouble(냉방[0][0]);
+                    AnnualCoolingNeed_textBox.Text = AnnualCoolingNeed. ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(AnnualCoolingNeed_textBox, true, 0);
+
                     CoolingLoad += Convert.ToDouble(냉방[0][1]);
+                    CoolingLoad_textBox.Text = CoolingLoad.ToString();
+                    controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(CoolingLoad_textBox, true, 2);
                 }
-            }
-            AnnualHeatingNeed_textBox.Text = AnnualHeatingNeed.ToString("0.0");
-            HeatingLoad_textBox.Text = HeatingLoad.ToString("0.0");
-            AnnualCoolingNeed_textBox.Text = AnnualCoolingNeed.ToString("0.0");
-            CoolingLoad_textBox.Text = CoolingLoad.ToString("0.0");
+            }            
         }
         #endregion
 
@@ -566,18 +573,17 @@ namespace main.contents
         #region 덕트
         private void OASALength_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (OASALength_textBox.Text != null && OASALength_textBox.Text != "")
+            if (AHULocation != "단열외피 내부")
             {
-                if (AHULocation != "단열외피 내부")
-                {
-                    SALength = Convert.ToDouble(OASALength_textBox.Text);
-                    OALength = 0;
-                }
-                else
-                {
-                    OALength = Convert.ToDouble(OASALength_textBox.Text);
-                    SALength = 0;
-                }
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(OASALength_textBox, false, 2);
+                SALength = textbox.text;
+                OALength = 0;
+            }
+            else
+            {
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(OASALength_textBox, false, 2);
+                OALength = textbox.text;
+                SALength = 0;
             }
         }
 
@@ -600,35 +606,30 @@ namespace main.contents
 
         private void EARALength_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (EARALength_textBox.Text != null && EARALength_textBox.Text != "")
+            if (AHULocation != "단열외피 내부")
             {
-                if (AHULocation != "단열외피 내부")
-                {
-                    RALength = Convert.ToDouble(EARALength_textBox.Text);
-                    EALength = 0;
-                }
-                else
-                {
-                    EALength = Convert.ToDouble(EARALength_textBox.Text);
-                    RALength = 0;
-                }
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(EARALength_textBox, false, 2);
+                RALength = textbox.text;
+                EALength = 0;
+            }
+            else
+            {
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(EARALength_textBox, false, 2);
+                EALength = textbox.text;
+                RALength = 0;
             }
         }
 
 
         private void DuctInsulationThickness_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (DuctInsulationThickness_textBox.Text != null && DuctInsulationThickness_textBox.Text != "")
-            {
-                DuctInsulationThickness = Convert.ToDouble(DuctInsulationThickness_textBox.Text);
-            }
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(DuctInsulationThickness_textBox, false, 3);
+            DuctInsulationThickness = textbox.text;
         }
         private void DuctDiameter_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (DuctDiameter_textBox.Text != null && DuctDiameter_textBox.Text != "")
-            {
-                DuctDiameter = Convert.ToDouble(DuctDiameter_textBox.Text);
-            }
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(DuctDiameter_textBox, false, 3);
+            DuctDiameter = textbox.text;
         }
 
         private void PipeIns_button_Click(object sender, EventArgs e)
@@ -730,51 +731,26 @@ namespace main.contents
 
         private void GroundDepth_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (GroundDepth_textBox.Text != null && GroundDepth_textBox.Text != "")
-            {
-                GroundDepth = Convert.ToDouble(GroundDepth_textBox.Text.ToString());
-            }
-            else
-            {
-                GroundDepth = 0;
-            }
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(GroundDepth_textBox, false, 3);
+            GroundDepth = textbox.text;
         }
 
         private void CooltubeDiameter_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (CooltubeDiameter_textBox.Text != null && CooltubeDiameter_textBox.Text != "")
-            {
-                CooltubeDiameter = Convert.ToDouble(CooltubeDiameter_textBox.Text.ToString());
-            }
-            else
-            {
-                CooltubeDiameter = 0;
-            }
-
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(CooltubeDiameter_textBox, false, 2);
+            CooltubeDiameter = textbox.text;
         }
 
         private void CooltubeThickness_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (CooltubeThickness_textBox.Text != null && CooltubeThickness_textBox.Text != "")
-            {
-                CooltubeThickness = Convert.ToDouble(CooltubeThickness_textBox.Text.ToString());
-            }
-            else
-            {
-                CooltubeThickness = 0;
-            }
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(CooltubeThickness_textBox, false, 2);
+            CooltubeThickness = textbox.text;
         }
 
         private void CooltubeLength_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (CooltubeLength_textBox.Text != null && CooltubeLength_textBox.Text != "")
-            {
-                CooltubeLength = Convert.ToDouble(CooltubeLength_textBox.Text.ToString());
-            }
-            else
-            {
-                CooltubeLength = 0;
-            }
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(CooltubeLength_textBox, false, 3);
+            CooltubeLength = textbox.text;
         }
 
         private void CooltubeMaterial_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -1181,32 +1157,40 @@ namespace main.contents
 
                 if (AHULocation == "단열외피 내부")
                 {
-                    OASALength_textBox.Text = Value[0][0];
                     OALength = Convert.ToDouble(Value[0][0]);
+                    OASALength_textBox.Text = OALength.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(OASALength_textBox, true, 2);
 
-                    EARALength_textBox.Text = Value[0][1];
                     EALength = Convert.ToDouble(Value[0][1]);
+                    EARALength_textBox.Text = EALength.ToString();
+                    controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(EARALength_textBox, true, 2);
                 }
                 else
                 {
-                    OASALength_textBox.Text = Value[0][2];
                     SALength = Convert.ToDouble(Value[0][2]);
+                    OASALength_textBox.Text = SALength.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(OASALength_textBox, true, 2);
 
-                    EARALength_textBox.Text = Value[0][3];
                     RALength = Convert.ToDouble(Value[0][3]);
+                    EARALength_textBox.Text = RALength.ToString();
+                    controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(EARALength_textBox, true, 2);
                 }
 
-                DuctInsulationThickness_textBox.Text = Value[0][4];
                 DuctInsulationThickness = Convert.ToDouble(Value[0][4]);
+                DuctInsulationThickness_textBox.Text = DuctInsulationThickness.ToString();
+                controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(DuctInsulationThickness_textBox, true, 3);
 
-                DuctDiameter_textBox.Text = Value[0][5];
                 DuctDiameter = Convert.ToDouble(Value[0][5]);
+                DuctDiameter_textBox.Text = DuctDiameter.ToString();
+                controls.ThousandsSeparator textbox4 = new controls.ThousandsSeparator(DuctDiameter_textBox, true, 3);
 
-                PipeIns_textBox.Text = Value[0][6];
                 PipeIns = Value[0][6];
+                PipeIns_textBox.Text = PipeIns.ToString();
+                controls.ThousandsSeparator textbox5 = new controls.ThousandsSeparator(PipeIns_textBox, true, 3);
 
-                PipeIns_Ramda_textBox.Text = Value[0][7];
                 PipeIns_Ramda = Convert.ToDouble(Value[0][7]);
+                PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
+                controls.ThousandsSeparator textbox6 = new controls.ThousandsSeparator(PipeIns_Ramda_textBox, true, 3);
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "예열예냉유형", "번호 = '" + ID + "'");
@@ -1237,17 +1221,21 @@ namespace main.contents
                 GroundOptions_comboBox.SelectedItem = Value[0][0];
                 GroundOptions = Value[0][0];
 
-                GroundDepth_textBox.Text = Value[0][1];
                 GroundDepth = Convert.ToDouble(Value[0][1]);
+                GroundDepth_textBox.Text = GroundDepth.ToString();
+                controls.ThousandsSeparator textbox6 = new controls.ThousandsSeparator(GroundDepth_textBox, true, 3);
 
-                CooltubeDiameter_textBox.Text = Value[0][2];
                 CooltubeDiameter = Convert.ToDouble(Value[0][2]);
+                CooltubeDiameter_textBox.Text = CooltubeDiameter.ToString();
+                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(CooltubeDiameter_textBox, true, 2);
 
-                CooltubeThickness_textBox.Text = Value[0][3];
                 CooltubeThickness = Convert.ToDouble(Value[0][3]);
+                CooltubeThickness_textBox.Text = CooltubeThickness.ToString();
+                controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(CooltubeThickness_textBox, true, 2);
 
-                CooltubeLength_textBox.Text = Value[0][4];
                 CooltubeLength = Convert.ToDouble(Value[0][4]);
+                CooltubeLength_textBox.Text = CooltubeLength.ToString();
+                controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(CooltubeLength_textBox, true, 3);
 
                 CooltubeMaterial_comboBox.SelectedItem = Value[0][5];
                 CooltubeMaterial = Value[0][5];

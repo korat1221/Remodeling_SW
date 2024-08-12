@@ -140,12 +140,15 @@ namespace main.contents
             string[][] value = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Q_max) From Zone_HCneed_Result Where 난방_냉방='난방' and 비이용일_이용일='이용일' and  월='1월'");
             if (value.Length > 0 && value[0][0] != "")
             {
-                Qhmax_textBox.Text = (Convert.ToDouble(value[0][0]) / 1000).ToString("0.0");
+                Qhmax_textBox.Text = (Convert.ToDouble(value[0][0]) / 1000).ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Qhmax_textBox, true, 2);
+
             }
             value = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Q_max) From Zone_HCneed_Result Where 난방_냉방='냉방' and 비이용일_이용일='이용일' and  월='1월'");
             if (value.Length > 0 && value[0][0] != "")
             {
-                Qcmax_textBox.Text = (Convert.ToDouble(value[0][0]) / 1000).ToString("0.0");
+                Qcmax_textBox.Text = (Convert.ToDouble(value[0][0]) / 1000).ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Qcmax_textBox, true, 2);
             }
         }
 

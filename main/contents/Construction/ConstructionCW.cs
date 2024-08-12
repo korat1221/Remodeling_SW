@@ -681,7 +681,8 @@ namespace main.contents
         {
             if (dPanel_textBox.Text != null)
             {
-                dPanel = Convert.ToDouble(dPanel_textBox.Text);
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(dPanel_textBox, false,1);
+                dPanel = textbox.text;
                 Calc_Up();
             }
         }
@@ -1666,7 +1667,8 @@ namespace main.contents
                     Psi_p = Convert.ToDouble(Load[0][7]);
 
                     dPanel = Convert.ToDouble(Load[0][8]);
-                    dPanel_textBox.Text = String.Format("{0:F1}", dPanel_textBox.Text);
+                    dPanel_textBox.Text = dPanel.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(dPanel_textBox, true,1);
 
                     Ap = Convert.ToDouble(Load[0][9]);
                     Lp = Convert.ToDouble(Load[0][10]);
