@@ -933,7 +933,7 @@ namespace main.contents
             PV_dataGridView.Columns.Add("A7", "모듈.가로길이.[m]");
             PV_dataGridView.Columns.Add("A8", "모듈.세로길이.[m]");
             PV_dataGridView.Columns.Add("A9", "모듈.정격출력.[W]");
-            PV_dataGridView.Columns.Add("A10", "K"+ "\u209A"+ "\u2096"+".[kW/m²]");
+            PV_dataGridView.Columns.Add("A10", "K" + "\u209A" + "\u2096" + ".[kW/m²]");
             PV_dataGridView.Columns[0].Width = 40;
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
             설치유형Combo.HeaderText = "설치";
@@ -1652,14 +1652,20 @@ namespace main.contents
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "")
                         {
-                            AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
+                            {
+                                AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                            }
                         }
                     }
                     if (e.ColumnIndex == 8)
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "")
                         {
-                            AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
+                            {
+                                AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                            }
                         }
                     }
                     if (e.ColumnIndex == 10)
@@ -1680,14 +1686,20 @@ namespace main.contents
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "")
                         {
-                            AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
+                            {
+                                AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                            }
                         }
                     }
                     if (e.ColumnIndex == 14)
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "")
                         {
-                            AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
+                            {
+                                AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                            }
                         }
                     }
                 }
@@ -1703,7 +1715,7 @@ namespace main.contents
                     AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value = "-";
                     AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = "-";
                 }
-                
+
             }
         }
 
@@ -1916,98 +1928,64 @@ namespace main.contents
         {
             if (e.RowIndex >= 0)
             {
-
-                double 냉방용량 = 0, 냉방소비전력 = 0, 냉방EER = 0;
-                double 난방정격용량 = 0, 난방정격소비전력 = 0, 난방정격COP = 0;
-                double 난방15도용량 = 0, 난방15도소비전력 = 0, 난방15도COP = 0;
-                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()))
+                try
                 {
-                    냉방용량 = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString());
-                }
-                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()))
-                {
-                    냉방EER = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString());
-                }
-                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString()))
-                {
-                    냉방소비전력 = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString());
-                }
-
-                if (e.ColumnIndex == 7 || e.ColumnIndex == 8)
-                {
-                    if (냉방용량 > 0 && 냉방EER > 0)
+                    if (e.ColumnIndex == 7)
                     {
-                        냉방소비전력 = 냉방용량 / 냉방EER;
-                        GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = string.Format("{0:F1}", 냉방소비전력);
+                        if (GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "")
+                        {
+                            if (GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
+                            {
+                                GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                            }
+                        }
+                    }
+                    if (e.ColumnIndex == 8)
+                    {
+                        if (GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "")
+                        {
+                            if (GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
+                            {
+                                GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                            }
+                        }
+                    }
+                    if (e.ColumnIndex == 10)
+                    {
+                        if (GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "")
+                        {
+                            GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString())).ToString("0.00");
+                        }
+                    }
+                    if (e.ColumnIndex == 11)
+                    {
+                        if (GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "")
+                        {
+                            GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString())).ToString("0.00");
+                        }
+                    }
+                    if (e.ColumnIndex == 13)
+                    {
+                        if (GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value != null && GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "")
+                        {
+                            if (GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
+                            {
+                                GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                            }
+                        }
+                    }
+                    if (e.ColumnIndex == 14)
+                    {
+                        if (GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null && GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "")
+                        {
+                            if (GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
+                            {
+                                GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                            }
+                        }
                     }
                 }
-                if (e.ColumnIndex == 7 || e.ColumnIndex == 9)
-                {
-                    if (냉방용량 > 0 && 냉방소비전력 > 0)
-                    {
-                        냉방EER = 냉방용량 / 냉방소비전력;
-                        GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value = string.Format("{0:F1}", 냉방EER);
-                    }
-                }
-
-                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()))
-                {
-                    난방정격용량 = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString());
-                }
-                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString()))
-                {
-                    난방정격COP = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString());
-                }
-                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString()))
-                {
-                    난방정격소비전력 = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString());
-                }
-
-                if (e.ColumnIndex == 10 || e.ColumnIndex == 11)
-                {
-                    if (난방정격용량 > 0 && 난방정격COP > 0)
-                    {
-                        난방정격소비전력 = 난방정격용량 / 난방정격COP;
-                        GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = string.Format("{0:F1}", 난방정격소비전력);
-                    }
-                }
-                if (e.ColumnIndex == 10 || e.ColumnIndex == 12)
-                {
-                    if (난방정격용량 > 0 && 난방정격소비전력 > 0)
-                    {
-                        난방정격COP = 난방정격용량 / 난방정격소비전력;
-                        GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value = string.Format("{0:F1}", 난방정격COP);
-                    }
-                }
-                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()))
-                {
-                    난방15도용량 = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString());
-                }
-                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString()))
-                {
-                    난방15도COP = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString());
-                }
-                if (GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value != null && Information.IsNumeric(GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString()))
-                {
-                    난방15도소비전력 = Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString());
-                }
-
-                if (e.ColumnIndex == 13 || e.ColumnIndex == 14)
-                {
-                    if (난방15도용량 > 0 && 난방15도COP > 0)
-                    {
-                        난방15도소비전력 = 난방15도용량 / 난방15도COP;
-                        GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = string.Format("{0:F1}", 난방15도소비전력);
-                    }
-                }
-                if (e.ColumnIndex == 13 || e.ColumnIndex == 15)
-                {
-                    if (난방15도용량 > 0 && 난방15도소비전력 > 0)
-                    {
-                        난방15도COP = 난방15도용량 / 난방15도소비전력;
-                        GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value = string.Format("{0:F1}", 난방15도COP);
-                    }
-                }
+                catch { }
             }
         }
         private void GWHP_Remove_button_Click(object sender, EventArgs e)
@@ -2073,7 +2051,7 @@ namespace main.contents
         private void GWHP_Save_button_Click(object sender, EventArgs e)
         {
 
-            Program.DB.deleteValue(DB.type.ProjDB, "User_GroundWHP", "");
+            Program.DB.deleteValue(DB.type.ProjDB, "User_GWHP", "");
 
             for (int k = 0; k < GWHP_dataGridView.RowCount; k++)
             {
@@ -2084,7 +2062,7 @@ namespace main.contents
                     { Value[i - 1] = GWHP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_GroundWHP", "번호,프로젝트유형,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,설치,대기전력",
+                Program.DB.setValue(DB.type.ProjDB, "User_GWHP", "번호,프로젝트유형,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,설치,대기전력",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" +
                  Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "','" + Value[18] + "','" + Value[19] + "','" + Value[20]
@@ -2205,98 +2183,64 @@ namespace main.contents
         {
             if (e.RowIndex >= 0)
             {
-
-                double 냉방용량 = 0, 냉방소비전력 = 0, 냉방EER = 0;
-                double 난방정격용량 = 0, 난방정격소비전력 = 0, 난방정격COP = 0;
-                double 난방5도용량 = 0, 난방5도소비전력 = 0, 난방5도COP = 0;
-                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()))
+                try
                 {
-                    냉방용량 = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString());
-                }
-                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()))
-                {
-                    냉방EER = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString());
-                }
-                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString()))
-                {
-                    냉방소비전력 = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString());
-                }
-
-                if (e.ColumnIndex == 7 || e.ColumnIndex == 8)
-                {
-                    if (냉방용량 > 0 && 냉방EER > 0)
+                    if (e.ColumnIndex == 7)
                     {
-                        냉방소비전력 = 냉방용량 / 냉방EER;
-                        GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = string.Format("{0:F1}", 냉방소비전력);
+                        if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "")
+                        {
+                            if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
+                            {
+                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                            }
+                        }
+                    }
+                    if (e.ColumnIndex == 8)
+                    {
+                        if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "")
+                        {
+                            if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
+                            {
+                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                            }
+                        }
+                    }
+                    if (e.ColumnIndex == 10)
+                    {
+                        if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "")
+                        {
+                            GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString())).ToString("0.00");
+                        }
+                    }
+                    if (e.ColumnIndex == 11)
+                    {
+                        if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "")
+                        {
+                            GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString())).ToString("0.00");
+                        }
+                    }
+                    if (e.ColumnIndex == 13)
+                    {
+                        if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value != null && GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "")
+                        {
+                            if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
+                            {
+                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                            }
+                        }
+                    }
+                    if (e.ColumnIndex == 14)
+                    {
+                        if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null && GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "")
+                        {
+                            if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
+                            {
+                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                            }
+                        }
                     }
                 }
-                if (e.ColumnIndex == 7 || e.ColumnIndex == 9)
-                {
-                    if (냉방용량 > 0 && 냉방소비전력 > 0)
-                    {
-                        냉방EER = 냉방용량 / 냉방소비전력;
-                        GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value = string.Format("{0:F1}", 냉방EER);
-                    }
-                }
-
-                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()))
-                {
-                    난방정격용량 = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString());
-                }
-                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString()))
-                {
-                    난방정격COP = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString());
-                }
-                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString()))
-                {
-                    난방정격소비전력 = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString());
-                }
-
-                if (e.ColumnIndex == 10 || e.ColumnIndex == 11)
-                {
-                    if (난방정격용량 > 0 && 난방정격COP > 0)
-                    {
-                        난방정격소비전력 = 난방정격용량 / 난방정격COP;
-                        GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = string.Format("{0:F1}", 난방정격소비전력);
-                    }
-                }
-                if (e.ColumnIndex == 10 || e.ColumnIndex == 12)
-                {
-                    if (난방정격용량 > 0 && 난방정격소비전력 > 0)
-                    {
-                        난방정격COP = 난방정격용량 / 난방정격소비전력;
-                        GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value = string.Format("{0:F1}", 난방정격COP);
-                    }
-                }
-                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()))
-                {
-                    난방5도용량 = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString());
-                }
-                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString()))
-                {
-                    난방5도COP = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString());
-                }
-                if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value != null && Information.IsNumeric(GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString()))
-                {
-                    난방5도소비전력 = Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString());
-                }
-
-                if (e.ColumnIndex == 13 || e.ColumnIndex == 14)
-                {
-                    if (난방5도용량 > 0 && 난방5도COP > 0)
-                    {
-                        난방5도소비전력 = 난방5도용량 / 난방5도COP;
-                        GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = string.Format("{0:F1}", 난방5도소비전력);
-                    }
-                }
-                if (e.ColumnIndex == 13 || e.ColumnIndex == 15)
-                {
-                    if (난방5도용량 > 0 && 난방5도소비전력 > 0)
-                    {
-                        난방5도COP = 난방5도용량 / 난방5도소비전력;
-                        GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value = string.Format("{0:F1}", 난방5도COP);
-                    }
-                }
+                catch { }
             }
         }
         private void GroundHP_Remove_button_Click(object sender, EventArgs e)
@@ -3059,38 +3003,20 @@ namespace main.contents
 
         private void AirCooler_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-
-            double 냉방용량 = 0, 냉방소비전력 = 0, 냉방EER = 0;
-            if (AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && Information.IsNumeric(AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()))
+            if (e.ColumnIndex == 4)
             {
-                냉방용량 = Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString());
-            }
-            if (AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value != null && Information.IsNumeric(AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()))
-            {
-                냉방소비전력 = Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
-            }
-            if (AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && Information.IsNumeric(AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString()))
-            {
-                냉방EER = Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
-            }
-
-            if (e.ColumnIndex == 4 || e.ColumnIndex == 6)
-            {
-                if (냉방용량 > 0 && 냉방EER > 0)
+                if (AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "")
                 {
-                    냉방소비전력 = 냉방용량 / 냉방EER;
-                    AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = string.Format("{0:F1}", 냉방소비전력);
+                    AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()) / Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())).ToString("0.00");
                 }
             }
-            if (e.ColumnIndex == 4 || e.ColumnIndex == 5)
+            if (e.ColumnIndex == 6)
             {
-                if (냉방용량 > 0 && 냉방소비전력 > 0)
+                if (AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() != "")
                 {
-                    냉방EER = 냉방용량 / 냉방소비전력;
-                    AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value = string.Format("{0:F1}", 냉방EER);
+                    AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()) / Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())).ToString("0.00");
                 }
             }
-
             if (e.ColumnIndex == 12)
             {
                 int k = e.RowIndex;
@@ -3310,34 +3236,18 @@ namespace main.contents
         private void WaterCooler_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
 
-            double 냉방용량 = 0, 냉방소비전력 = 0, 냉방EER = 0;
-            if (WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && Information.IsNumeric(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()))
+            if (e.ColumnIndex == 4)
             {
-                냉방용량 = Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString());
-            }
-            if (WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value != null && Information.IsNumeric(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()))
-            {
-                냉방소비전력 = Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
-            }
-            if (WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && Information.IsNumeric(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString()))
-            {
-                냉방EER = Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
-            }
-
-            if (e.ColumnIndex == 4 || e.ColumnIndex == 6)
-            {
-                if (냉방용량 > 0 && 냉방EER > 0)
+                if (WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "")
                 {
-                    냉방소비전력 = 냉방용량 / 냉방EER;
-                    WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = string.Format("{0:F1}", 냉방소비전력);
+                    WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()) / Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())).ToString("0.00");
                 }
             }
-            if (e.ColumnIndex == 4 || e.ColumnIndex == 5)
+            if (e.ColumnIndex == 6)
             {
-                if (냉방용량 > 0 && 냉방소비전력 > 0)
+                if (WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() != "")
                 {
-                    냉방EER = 냉방용량 / 냉방소비전력;
-                    WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value = string.Format("{0:F1}", 냉방EER);
+                    WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()) / Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())).ToString("0.00");
                 }
             }
         }
@@ -4474,149 +4384,67 @@ namespace main.contents
         {
             if (e.RowIndex >= 0)
             {
-                double 급탕용량 = 0, 급탕소비전력 = 0, 급탕COP = 0, 난방용량 = 0, 난방소비전력 = 0, 난방COP = 0, 한랭지용량 = 0, 한랭지소비전력 = 0, 한랭지COP = 0;
-
-                if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value != null && Information.IsNumeric(DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()))
+                try
                 {
-                    급탕용량 = Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
-                }
-                if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && Information.IsNumeric(DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString()))
-                {
-                    급탕COP = Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
-                }
-                if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && Information.IsNumeric(DHWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()))
-                {
-                    급탕소비전력 = Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString());
-                }
-
-                if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && Information.IsNumeric(DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()))
-                {
-                    난방용량 = Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString());
-                }
-                if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null && Information.IsNumeric(DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString()))
-                {
-                    난방COP = Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString());
-                }
-                if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && Information.IsNumeric(DHWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()))
-                {
-                    난방소비전력 = Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString());
-                }
-
-                if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && Information.IsNumeric(DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString()))
-                {
-                    한랭지용량 = Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString());
-                }
-                if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value != null && Information.IsNumeric(DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString()))
-                {
-                    한랭지COP = Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString());
-                }
-                if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null && Information.IsNumeric(DHWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()))
-                {
-                    한랭지소비전력 = Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString());
-                }
-
-                if (e.ColumnIndex == 5)
-                {
-                    if (급탕소비전력 != 0)
+                    if (e.ColumnIndex == 5)
                     {
-                        급탕COP = 급탕용량 / 급탕소비전력;
+                        if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "")
+                        {
+                            if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString() != "-" && DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "-")
+                            {
+                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value = (Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()) / Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())).ToString("0.00");
+                            }
+                        }
                     }
-                    else if (급탕COP != 0)
+                    if (e.ColumnIndex == 6)
                     {
-                        급탕소비전력 = 급탕용량 / 급탕COP;
+                        if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value != null && DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString() != "")
+                        {
+                            if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString() != "-" && DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "-")
+                            {
+                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value = (Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()) / Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())).ToString("0.00");
+                            }
+                        }
                     }
-                }
-                else if (e.ColumnIndex == 6)
-                {
-                    if (급탕COP != 0)
+                    if (e.ColumnIndex == 8)
                     {
-                        급탕소비전력 = 급탕용량 / 급탕COP;
+                        if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null && DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString() != "")
+                        {
+                            DHWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value = (Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()) / Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString())).ToString("0.00");
+                        }
+                    }
+                    if (e.ColumnIndex == 9)
+                    {
+                        if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "")
+                        {
+                            DHWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value = (Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()) / Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString())).ToString("0.00");
+                        }
+                    }
+                    if (e.ColumnIndex == 11)
+                    {
+                        if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value != null && DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString() != "")
+                        {
+                            if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-" && DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString() != "-")
+                            {
+                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value = (Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString()) / Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString())).ToString("0.00");
+                            }
+                        }
+                    }
+                    if (e.ColumnIndex == 12)
+                    {
+                        if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "")
+                        {
+                            if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-" && DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString() != "-")
+                            {
+                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value = (Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString()) / Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString())).ToString("0.00");
+                            }
+                        }
                     }
                 }
-                else if (e.ColumnIndex == 7)
-                {
-                    if (급탕소비전력 != 0)
-                    {
-                        급탕COP = 급탕용량 / 급탕소비전력;
-                    }
-                }
-
-                else if (e.ColumnIndex == 8)
-                {
-                    if (난방소비전력 != 0)
-                    {
-                        난방COP = 난방용량 / 난방소비전력;
-                    }
-                    else if (난방COP != 0)
-                    {
-                        난방소비전력 = 난방용량 / 난방COP;
-                    }
-                }
-                else if (e.ColumnIndex == 9)
-                {
-                    if (난방COP != 0)
-                    {
-                        난방소비전력 = 난방용량 / 난방COP;
-                    }
-                }
-                else if (e.ColumnIndex == 10)
-                {
-                    if (난방소비전력 != 0)
-                    {
-                        난방COP = 난방용량 / 난방소비전력;
-                    }
-                }
-
-                else if (e.ColumnIndex == 11)
-                {
-                    if (한랭지소비전력 > 0)
-                    {
-                        한랭지COP = 한랭지용량 / 한랭지소비전력;
-                    }
-                    else if (한랭지COP > 0)
-                    {
-                        한랭지소비전력 = 한랭지용량 / 한랭지COP;
-                    }
-                }
-                else if (e.ColumnIndex == 12)
-                {
-                    if (한랭지COP > 0)
-                    {
-                        한랭지소비전력 = 한랭지용량 / 한랭지COP;
-                    }
-                }
-                else if (e.ColumnIndex == 13)
-                {
-                    if (한랭지소비전력 > 0)
-                    {
-                        한랭지COP = 한랭지용량 / 한랭지소비전력;
-                    }
-                }
+                catch { }
 
 
-                if (급탕용량 > 0)
-                {
-                    DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value = string.Format("{0:F1}", 급탕용량);
-                    DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value = string.Format("{0:F1}", 급탕COP);
-                    DHWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value = string.Format("{0:F1}", 급탕소비전력);
-                }
-
-                if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && DHWHP_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() == "난방+급탕")
-                {
-                    if (난방용량 > 0)
-                    {
-                        DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value = string.Format("{0:F1}", 난방용량);
-                        DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = string.Format("{0:F1}", 난방COP);
-                        DHWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value = string.Format("{0:F1}", 난방소비전력);
-                    }
-                    if (한랭지용량 > 0)
-                    {
-                        DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value = string.Format("{0:F1}", 한랭지용량);
-                        DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = string.Format("{0:F1}", 한랭지COP);
-                        DHWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value = string.Format("{0:F1}", 한랭지소비전력);
-                    }
-                }
-                else if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && DHWHP_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() == "급탕")
+                if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && DHWHP_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() == "급탕")
                 {
                     DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value = "-";
                     DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = "-";
@@ -4625,6 +4453,7 @@ namespace main.contents
                     DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = "-";
                     DHWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value = "-";
                 }
+
             }
         }
 
@@ -4674,7 +4503,7 @@ namespace main.contents
 
         private void DHWHP_Save_button_Click(object sender, EventArgs e)
         {
-            Program.DB.deleteValue(DB.type.ProjDB, "User_AirHP", "");
+            Program.DB.deleteValue(DB.type.ProjDB, "User_DHWHP", "");
             for (int k = 0; k < DHWHP_dataGridView.RowCount; k++)
             {
                 String[] Value = new String[16];

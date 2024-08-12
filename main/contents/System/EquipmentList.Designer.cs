@@ -673,6 +673,7 @@ namespace main.contents
             // 
             // Boiler_tabPage
             // 
+            Boiler_tabPage.BackColor = Color.White;
             Boiler_tabPage.Controls.Add(label18);
             Boiler_tabPage.Controls.Add(label20);
             Boiler_tabPage.Controls.Add(DefaultBoiler_Add_button);
@@ -687,8 +688,6 @@ namespace main.contents
             Boiler_tabPage.Size = new Size(1142, 226);
             Boiler_tabPage.TabIndex = 6;
             Boiler_tabPage.Text = "보일러";
-            Boiler_tabPage.UseVisualStyleBackColor = true;
-            Boiler_tabPage.BackColor = Color.White;
             // 
             // label18
             // 
@@ -828,6 +827,7 @@ namespace main.contents
             // 
             // AS_tabPage
             // 
+            AS_tabPage.BackColor = Color.White;
             AS_tabPage.Controls.Add(label8);
             AS_tabPage.Controls.Add(label9);
             AS_tabPage.Controls.Add(ABS_dataGridView);
@@ -842,8 +842,6 @@ namespace main.contents
             AS_tabPage.Size = new Size(1142, 226);
             AS_tabPage.TabIndex = 3;
             AS_tabPage.Text = "흡수식냉온수기";
-            AS_tabPage.UseVisualStyleBackColor = true;
-            AS_tabPage.BackColor = Color.White;
             // 
             // label8
             // 
@@ -983,6 +981,7 @@ namespace main.contents
             // 
             // DH_tabPage
             // 
+            DH_tabPage.BackColor = Color.White;
             DH_tabPage.Controls.Add(DH_dataGridView);
             DH_tabPage.Controls.Add(label10);
             DH_tabPage.Controls.Add(label11);
@@ -997,8 +996,6 @@ namespace main.contents
             DH_tabPage.Size = new Size(1142, 226);
             DH_tabPage.TabIndex = 4;
             DH_tabPage.Text = "지역난방";
-            DH_tabPage.UseVisualStyleBackColor = true;
-            DH_tabPage.BackColor = Color.White;
             // 
             // DH_dataGridView
             // 
@@ -1137,6 +1134,7 @@ namespace main.contents
             // 
             // AirCooler_tabPage
             // 
+            AirCooler_tabPage.BackColor = Color.White;
             AirCooler_tabPage.Controls.Add(label14);
             AirCooler_tabPage.Controls.Add(label15);
             AirCooler_tabPage.Controls.Add(AirCooler_dataGridView);
@@ -1151,8 +1149,6 @@ namespace main.contents
             AirCooler_tabPage.Size = new Size(1142, 226);
             AirCooler_tabPage.TabIndex = 5;
             AirCooler_tabPage.Text = "공냉식냉동기";
-            AirCooler_tabPage.UseVisualStyleBackColor = true;
-            AirCooler_tabPage.BackColor = Color.White;
             // 
             // label14
             // 
@@ -1291,6 +1287,7 @@ namespace main.contents
             // 
             // WaterCooler_tabPage
             // 
+            WaterCooler_tabPage.BackColor = Color.White;
             WaterCooler_tabPage.Controls.Add(label16);
             WaterCooler_tabPage.Controls.Add(label17);
             WaterCooler_tabPage.Controls.Add(WaterCooler_dataGridView);
@@ -1305,8 +1302,6 @@ namespace main.contents
             WaterCooler_tabPage.Size = new Size(1142, 226);
             WaterCooler_tabPage.TabIndex = 7;
             WaterCooler_tabPage.Text = "수냉식냉동기";
-            WaterCooler_tabPage.UseVisualStyleBackColor = true;
-            WaterCooler_tabPage.BackColor = Color.White;
             // 
             // label16
             // 
@@ -1646,6 +1641,7 @@ namespace main.contents
             // 
             // tabPage6
             // 
+            tabPage6.BackColor = Color.White;
             tabPage6.Controls.Add(WP_dataGridView);
             tabPage6.Controls.Add(WP_Save_button);
             tabPage6.Controls.Add(WP_Copy_button);
@@ -1658,8 +1654,6 @@ namespace main.contents
             tabPage6.Size = new Size(1142, 226);
             tabPage6.TabIndex = 7;
             tabPage6.Text = "소형풍력";
-            tabPage6.UseVisualStyleBackColor = true;
-            tabPage6.BackColor = Color.White;
             // 
             // WP_dataGridView
             // 
@@ -1775,6 +1769,7 @@ namespace main.contents
             // 
             // tabPage5
             // 
+            tabPage5.BackColor = Color.White;
             tabPage5.Controls.Add(label12);
             tabPage5.Controls.Add(label13);
             tabPage5.Controls.Add(FC_dataGridView);
@@ -1789,8 +1784,6 @@ namespace main.contents
             tabPage5.Size = new Size(1142, 226);
             tabPage5.TabIndex = 5;
             tabPage5.Text = "연료전지";
-            tabPage5.UseVisualStyleBackColor = true;
-            tabPage5.BackColor = Color.White;
             // 
             // label12
             // 
@@ -1929,6 +1922,7 @@ namespace main.contents
             // 
             // tabPage4
             // 
+            tabPage4.BackColor = Color.White;
             tabPage4.Controls.Add(GWHP_Save_button);
             tabPage4.Controls.Add(GWHP_dataGridView);
             tabPage4.Controls.Add(UserGWHP_Add_button);
@@ -1940,8 +1934,6 @@ namespace main.contents
             tabPage4.Size = new Size(1142, 226);
             tabPage4.TabIndex = 4;
             tabPage4.Text = "지하수히트펌프";
-            tabPage4.UseVisualStyleBackColor = true;
-            tabPage4.BackColor = Color.White;
             // 
             // GWHP_Save_button
             // 
@@ -2046,6 +2038,7 @@ namespace main.contents
             // 
             // tabPage3
             // 
+            tabPage3.BackColor = Color.White;
             tabPage3.Controls.Add(GroundHP_Save_button);
             tabPage3.Controls.Add(GroundHP_dataGridView);
             tabPage3.Controls.Add(GroundHP_Copy_button);
@@ -2057,8 +2050,6 @@ namespace main.contents
             tabPage3.Size = new Size(1142, 226);
             tabPage3.TabIndex = 3;
             tabPage3.Text = "지열히트펌프";
-            tabPage3.UseVisualStyleBackColor = true;
-            tabPage3.BackColor = Color.White;
             // 
             // GroundHP_Save_button
             // 
@@ -2163,6 +2154,7 @@ namespace main.contents
             // 
             // tabPage2
             // 
+            tabPage2.BackColor = Color.White;
             tabPage2.Controls.Add(Solar_Save_button);
             tabPage2.Controls.Add(label6);
             tabPage2.Controls.Add(label7);
@@ -2177,8 +2169,6 @@ namespace main.contents
             tabPage2.Size = new Size(1142, 226);
             tabPage2.TabIndex = 6;
             tabPage2.Text = "태양열시스템";
-            tabPage2.UseVisualStyleBackColor = true;
-            tabPage2.BackColor = Color.White;
             // 
             // Solar_Save_button
             // 
@@ -2458,6 +2448,7 @@ namespace main.contents
             // 
             // DHWHP_tabPage
             // 
+            DHWHP_tabPage.BackColor = Color.White;
             DHWHP_tabPage.Controls.Add(DHWHP_dataGridView);
             DHWHP_tabPage.Controls.Add(DHWHP_Save_button);
             DHWHP_tabPage.Controls.Add(DHWHP_Copy_button);
@@ -2469,8 +2460,6 @@ namespace main.contents
             DHWHP_tabPage.Size = new Size(1142, 226);
             DHWHP_tabPage.TabIndex = 8;
             DHWHP_tabPage.Text = "급탕히트펌프";
-            DHWHP_tabPage.UseVisualStyleBackColor = true;
-            DHWHP_tabPage.BackColor = Color.White;
             // 
             // DHWHP_dataGridView
             // 
