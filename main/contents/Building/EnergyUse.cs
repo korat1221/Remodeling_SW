@@ -24,7 +24,9 @@ namespace main.contents.Building
         DataGridViewCheckBoxColumn Gas_m3_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn Gas_kWh_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn Elec_checkBoxColumn = new DataGridViewCheckBoxColumn();
-        int Elec_SelectRow; int Gas_SelectRow, Gas_SelectColumn;
+        DataGridViewCheckBoxColumn DH_Mcal_checkBoxColumn = new DataGridViewCheckBoxColumn();
+        DataGridViewCheckBoxColumn DH_kWh_checkBoxColumn = new DataGridViewCheckBoxColumn();
+        int Elec_SelectRow; int Gas_SelectRow, Gas_SelectColumn; int DH_SelectRow, DH_SelectColumn;
         public EnergyUse()
         {
             InitializeComponent();
@@ -34,23 +36,30 @@ namespace main.contents.Building
             Elec_EndDay_comboBox.Items.Clear();
             Gas_StartDay_comboBox.Items.Clear();
             Gas_EndDay_comboBox.Items.Clear();
+            DH_StartDay_comboBox.Items.Clear();
+            DH_EndDay_comboBox.Items.Clear();
             for (int i = 1; i < 32; i++)
             {
                 Elec_StartDay_comboBox.Items.Add((i).ToString());
                 Elec_EndDay_comboBox.Items.Add((i).ToString());
                 Gas_StartDay_comboBox.Items.Add((i).ToString());
                 Gas_EndDay_comboBox.Items.Add((i).ToString());
+                DH_StartDay_comboBox.Items.Add((i).ToString());
+                DH_EndDay_comboBox.Items.Add((i).ToString());
             }
 
             Create_ElecUse_Table();
             Create_GasUse_Table();
+            Create_DHUse_Table();
             webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
             webView22.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
+            webView23.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
         }
         async void InitializeAsync()
         {
             await webView21.EnsureCoreWebView2Async(null);
             await webView22.EnsureCoreWebView2Async(null);
+            await webView23.EnsureCoreWebView2Async(null);
         }
 
 
@@ -59,13 +68,12 @@ namespace main.contents.Building
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
         }
+       
+        
+        
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-            Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
-        }
-        public void Create_ElecUse_Table()
+        #region 전기
+        private void Create_ElecUse_Table()
         {
             new StackedHeaderDecorator(Elec_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
             Elec_dataGridView.Columns.Clear();
@@ -86,40 +94,6 @@ namespace main.contents.Building
                 Elec_dataGridView.Columns.Add("A" + mth.ToString(), "전기사용량." + mth + "월.[kWh]");
             }
         }
-        public void Create_GasUse_Table()
-        {
-            new StackedHeaderDecorator(Gas_m3_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
-            Gas_m3_dataGridView.Columns.Clear();
-            Gas_m3_checkBoxColumn.HeaderText = "선택";
-            Gas_m3_checkBoxColumn.Name = "check";
-            Gas_m3_dataGridView.Columns.Add(Gas_m3_checkBoxColumn);
-
-            DataGridViewComboBoxColumn 연도Combo = new DataGridViewComboBoxColumn();
-            연도Combo.HeaderText = "연도";
-            연도Combo.Items.Clear();
-            for (int i = 0; i < 100; i++)
-            {
-                연도Combo.Items.Add((2040 - i).ToString());
-            }
-            Gas_m3_dataGridView.Columns.Add(연도Combo);
-            for (int mth = 1; mth < 13; mth++)
-            {
-                Gas_m3_dataGridView.Columns.Add("B" + mth.ToString(), "가스사용량." + mth + "월.[m3]");
-            }
-
-            new StackedHeaderDecorator(Gas_kWh_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
-            Gas_kWh_dataGridView.Columns.Clear();
-            Gas_kWh_checkBoxColumn.HeaderText = "선택";
-            Gas_kWh_checkBoxColumn.Name = "check";
-            Gas_kWh_dataGridView.Columns.Add(Gas_kWh_checkBoxColumn);
-
-            Gas_kWh_dataGridView.Columns.Add("C0", "연도");
-
-            for (int mth = 1; mth < 13; mth++)
-            {
-                Gas_kWh_dataGridView.Columns.Add("C" + mth.ToString(), mth + "월.[kWh]");
-            }
-        }
         private void Elec_Add_button_Click(object sender, EventArgs e)
         {
             int nRow = Elec_dataGridView.Rows.Add();
@@ -137,37 +111,6 @@ namespace main.contents.Building
                 Elec_SelectRow = e.RowIndex;
             }
         }
-        private void Gas_Add_button_Click(object sender, EventArgs e)
-        {
-            int nRow = Gas_m3_dataGridView.Rows.Add();
-            Gas_kWh_dataGridView.Rows.Add();
-        }
-
-        private void Gas_Remove_button_Click(object sender, EventArgs e)
-        {
-            Gas_m3_dataGridView.Rows.Remove(Gas_m3_dataGridView.Rows[Gas_SelectRow]);
-            Gas_kWh_dataGridView.Rows.Remove(Gas_kWh_dataGridView.Rows[Gas_SelectRow]);
-        }
-
-        private void Gas_m3_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                Gas_m3_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                Gas_SelectRow = e.RowIndex;
-            }
-        }
-
-        private void Gas_m3_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                Gas_SelectColumn = e.ColumnIndex;
-                Gas_SelectRow = e.RowIndex;
-                Load_Gas_kWh_Value();
-                Gas_updateGraph();
-            }
-        }
         private void Elec_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -175,118 +118,6 @@ namespace main.contents.Building
                 Elec_updateGraph();
             }
         }
-        private void Load_Gas_kWh_Value()
-        {
-            if (Gas_SelectColumn > 1)
-            { Gas_kWh_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(Gas_m3_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value.ToString()) * 43.1 * 0.277778); }
-            else
-            {
-                Gas_kWh_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(Gas_m3_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value.ToString()));
-            }
-        }
-
-        private void Gas_updateGraph()
-        {
-            string s = "";
-
-            if (checkBox1.Checked && Gas_kWh_dataGridView.Rows.Count > 0)
-            {
-                if (Gas_kWh_dataGridView.Rows[0].Cells[1].Value != null)
-                { textBox1.Text = Gas_kWh_dataGridView.Rows[0].Cells[1].Value.ToString() + "년"; }
-                string s3 = null;
-                for (int mth = 1; mth < 12; mth++)
-                {
-                    s3 += Gas_kWh_dataGridView.Rows[0].Cells[mth + 1].Value + ",";
-                }
-                s3 += Gas_kWh_dataGridView.Rows[0].Cells[13].Value;
-                string s2 = "[" + s3 + "]";
-                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:true,tension: 0.4},";
-
-            }
-
-            if (checkBox2.Checked && Gas_kWh_dataGridView.Rows.Count > 1)
-            {
-                if (Gas_kWh_dataGridView.Rows[1].Cells[1].Value != null)
-                { textBox2.Text = Gas_kWh_dataGridView.Rows[1].Cells[1].Value.ToString() + "년"; }
-                string s3 = null;
-                for (int mth = 1; mth < 12; mth++)
-                {
-                    s3 += Gas_kWh_dataGridView.Rows[1].Cells[mth + 1].Value + ",";
-                }
-                s3 += Gas_kWh_dataGridView.Rows[1].Cells[13].Value;
-                string s2 = "[" + s3 + "]";
-                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:true,tension: 0.4},";
-
-            }
-
-            if (checkBox3.Checked && Gas_kWh_dataGridView.Rows.Count > 2)
-            {
-                if (Gas_kWh_dataGridView.Rows[2].Cells[1].Value != null)
-                { textBox3.Text = Gas_kWh_dataGridView.Rows[2].Cells[1].Value.ToString() + "년"; }
-
-                string s3 = null;
-                for (int mth = 1; mth < 12; mth++)
-                {
-                    s3 += Gas_kWh_dataGridView.Rows[2].Cells[mth + 1].Value + ",";
-                }
-                s3 += Gas_kWh_dataGridView.Rows[2].Cells[13].Value;
-                string s2 = "[" + s3 + "]";
-                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#4472C4\",backgroundColor:\"#4472C4\",dash:true,tension: 0.4},";
-
-            }
-
-            if (checkBox4.Checked && Gas_kWh_dataGridView.Rows.Count > 0)
-            {
-
-                { textBox4.Text = "평균"; }
-                double[] average = new double[12];
-                for (int mth = 1; mth < 13; mth++)
-                {
-                    for (int row = 0; row < Gas_kWh_dataGridView.Rows.Count; row++)
-                    {
-                        if (Gas_kWh_dataGridView.Rows[row].Cells[mth + 1].Value != null)
-                        { average[mth - 1] += Convert.ToDouble(Gas_kWh_dataGridView.Rows[row].Cells[mth + 1].Value); }
-                    }
-                    average[mth - 1] = average[mth - 1] / Gas_kWh_dataGridView.Rows.Count;
-                }
-
-
-                string s3 = null;
-                for (int mth = 1; mth < 12; mth++)
-                {
-                    s3 += average[mth - 1].ToString() + ",";
-                }
-                s3 += average[11].ToString();
-                string s2 = "[" + s3 + "]";
-                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false,tension: 0.4},";
-
-            }
-
-            double Gas_max = 0;
-            for (int row = 0; row < Gas_kWh_dataGridView.Rows.Count; row++)
-            {
-                for (int column = 2; column < Gas_kWh_dataGridView.Columns.Count; column++)
-                {
-                    if (Gas_kWh_dataGridView.Rows[row].Cells[column].Value != null)
-                    {
-                        if (Gas_max < Convert.ToDouble(Gas_kWh_dataGridView.Rows[row].Cells[column].Value))
-                        {
-                            Gas_max = Convert.ToDouble(Gas_kWh_dataGridView.Rows[row].Cells[column].Value);
-                        }
-                        else
-                        {
-                            Gas_max = Gas_max;
-                        }
-                    }
-
-                }
-            }
-
-            Gas_max = Convert.ToDouble(String.Format("{0:F0}", Gas_max / 1000)) * 1000 + 1000;
-            webView21.CoreWebView2.ExecuteScriptAsync("drawChart2([" + s + "]," + Gas_max.ToString() + ")");
-
-        }
-
         private void Elec_updateGraph()
         {
             string s = "";
@@ -387,25 +218,6 @@ namespace main.contents.Building
             webView22.CoreWebView2.ExecuteScriptAsync("drawChart2([" + s + "]," + Elec_max.ToString() + ")");
 
         }
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            Gas_updateGraph();
-        }
-
-        private void checkBox5_CheckedChanged(object sender, EventArgs e)
-        {
-            Gas_updateGraph();
-        }
-
-        private void checkBox4_CheckedChanged(object sender, EventArgs e)
-        {
-            Gas_updateGraph();
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            Gas_updateGraph();
-        }
         private void checkBox5_CheckedChanged_1(object sender, EventArgs e)
         {
             Elec_updateGraph();
@@ -425,6 +237,400 @@ namespace main.contents.Building
         {
             Elec_updateGraph();
         }
+        #endregion
+        #region 가스
+        private void Create_GasUse_Table()
+        {
+            new StackedHeaderDecorator(Gas_m3_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            Gas_m3_dataGridView.Columns.Clear();
+            Gas_m3_checkBoxColumn.HeaderText = "선택";
+            Gas_m3_checkBoxColumn.Name = "check";
+            Gas_m3_dataGridView.Columns.Add(Gas_m3_checkBoxColumn);
+
+            DataGridViewComboBoxColumn 연도Combo = new DataGridViewComboBoxColumn();
+            연도Combo.HeaderText = "연도";
+            연도Combo.Items.Clear();
+            for (int i = 0; i < 100; i++)
+            {
+                연도Combo.Items.Add((2040 - i).ToString());
+            }
+            Gas_m3_dataGridView.Columns.Add(연도Combo);
+            for (int mth = 1; mth < 13; mth++)
+            {
+                Gas_m3_dataGridView.Columns.Add("B" + mth.ToString(), "가스사용량." + mth + "월.[m3]");
+            }
+
+            new StackedHeaderDecorator(Gas_kWh_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            Gas_kWh_dataGridView.Columns.Clear();
+            Gas_kWh_checkBoxColumn.HeaderText = "선택";
+            Gas_kWh_checkBoxColumn.Name = "check";
+            Gas_kWh_dataGridView.Columns.Add(Gas_kWh_checkBoxColumn);
+
+            Gas_kWh_dataGridView.Columns.Add("C0", "연도");
+
+            for (int mth = 1; mth < 13; mth++)
+            {
+                Gas_kWh_dataGridView.Columns.Add("C" + mth.ToString(), mth + "월.[kWh]");
+            }
+        }
+        private void Gas_Add_button_Click(object sender, EventArgs e)
+        {
+            int nRow = Gas_m3_dataGridView.Rows.Add();
+            Gas_kWh_dataGridView.Rows.Add();
+        }
+
+        private void Gas_Remove_button_Click(object sender, EventArgs e)
+        {
+            Gas_m3_dataGridView.Rows.Remove(Gas_m3_dataGridView.Rows[Gas_SelectRow]);
+            Gas_kWh_dataGridView.Rows.Remove(Gas_kWh_dataGridView.Rows[Gas_SelectRow]);
+        }
+
+        private void Gas_m3_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                Gas_m3_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                Gas_SelectRow = e.RowIndex;
+            }
+        }
+
+        private void Gas_m3_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                Gas_SelectColumn = e.ColumnIndex;
+                Gas_SelectRow = e.RowIndex;
+                Load_Gas_kWh_Value();
+                Gas_updateGraph();
+            }
+        }
+        private void Load_Gas_kWh_Value()
+        {
+            if (Gas_SelectColumn > 1)
+            { Gas_kWh_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(Gas_m3_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value.ToString()) * 43.1 * 0.277778); }
+            else
+            {
+                Gas_kWh_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(Gas_m3_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value.ToString()));
+            }
+        }
+        private void Gas_updateGraph()
+        {
+            string s = "";
+
+            if (checkBox1.Checked && Gas_kWh_dataGridView.Rows.Count > 0)
+            {
+                if (Gas_kWh_dataGridView.Rows[0].Cells[1].Value != null)
+                { textBox1.Text = Gas_kWh_dataGridView.Rows[0].Cells[1].Value.ToString() + "년"; }
+                string s3 = null;
+                for (int mth = 1; mth < 12; mth++)
+                {
+                    s3 += Gas_kWh_dataGridView.Rows[0].Cells[mth + 1].Value + ",";
+                }
+                s3 += Gas_kWh_dataGridView.Rows[0].Cells[13].Value;
+                string s2 = "[" + s3 + "]";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:true,tension: 0.4},";
+
+            }
+
+            if (checkBox2.Checked && Gas_kWh_dataGridView.Rows.Count > 1)
+            {
+                if (Gas_kWh_dataGridView.Rows[1].Cells[1].Value != null)
+                { textBox2.Text = Gas_kWh_dataGridView.Rows[1].Cells[1].Value.ToString() + "년"; }
+                string s3 = null;
+                for (int mth = 1; mth < 12; mth++)
+                {
+                    s3 += Gas_kWh_dataGridView.Rows[1].Cells[mth + 1].Value + ",";
+                }
+                s3 += Gas_kWh_dataGridView.Rows[1].Cells[13].Value;
+                string s2 = "[" + s3 + "]";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:true,tension: 0.4},";
+
+            }
+
+            if (checkBox3.Checked && Gas_kWh_dataGridView.Rows.Count > 2)
+            {
+                if (Gas_kWh_dataGridView.Rows[2].Cells[1].Value != null)
+                { textBox3.Text = Gas_kWh_dataGridView.Rows[2].Cells[1].Value.ToString() + "년"; }
+
+                string s3 = null;
+                for (int mth = 1; mth < 12; mth++)
+                {
+                    s3 += Gas_kWh_dataGridView.Rows[2].Cells[mth + 1].Value + ",";
+                }
+                s3 += Gas_kWh_dataGridView.Rows[2].Cells[13].Value;
+                string s2 = "[" + s3 + "]";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#4472C4\",backgroundColor:\"#4472C4\",dash:true,tension: 0.4},";
+
+            }
+
+            if (checkBox4.Checked && Gas_kWh_dataGridView.Rows.Count > 0)
+            {
+
+                { textBox4.Text = "평균"; }
+                double[] average = new double[12];
+                for (int mth = 1; mth < 13; mth++)
+                {
+                    for (int row = 0; row < Gas_kWh_dataGridView.Rows.Count; row++)
+                    {
+                        if (Gas_kWh_dataGridView.Rows[row].Cells[mth + 1].Value != null)
+                        { average[mth - 1] += Convert.ToDouble(Gas_kWh_dataGridView.Rows[row].Cells[mth + 1].Value); }
+                    }
+                    average[mth - 1] = average[mth - 1] / Gas_kWh_dataGridView.Rows.Count;
+                }
+
+
+                string s3 = null;
+                for (int mth = 1; mth < 12; mth++)
+                {
+                    s3 += average[mth - 1].ToString() + ",";
+                }
+                s3 += average[11].ToString();
+                string s2 = "[" + s3 + "]";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false,tension: 0.4},";
+
+            }
+
+            double Gas_max = 0;
+            for (int row = 0; row < Gas_kWh_dataGridView.Rows.Count; row++)
+            {
+                for (int column = 2; column < Gas_kWh_dataGridView.Columns.Count; column++)
+                {
+                    if (Gas_kWh_dataGridView.Rows[row].Cells[column].Value != null)
+                    {
+                        if (Gas_max < Convert.ToDouble(Gas_kWh_dataGridView.Rows[row].Cells[column].Value))
+                        {
+                            Gas_max = Convert.ToDouble(Gas_kWh_dataGridView.Rows[row].Cells[column].Value);
+                        }
+                        else
+                        {
+                            Gas_max = Gas_max;
+                        }
+                    }
+
+                }
+            }
+
+            Gas_max = Convert.ToDouble(String.Format("{0:F0}", Gas_max / 1000)) * 1000 + 1000;
+            webView21.CoreWebView2.ExecuteScriptAsync("drawChart2([" + s + "]," + Gas_max.ToString() + ")");
+        }
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            Gas_updateGraph();
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+            Gas_updateGraph();
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            Gas_updateGraph();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            Gas_updateGraph();
+        }
+        #endregion
+        #region 지역난방
+        private void Create_DHUse_Table()
+        {
+            new StackedHeaderDecorator(DH_Mcal_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            DH_Mcal_dataGridView.Columns.Clear();
+            DH_Mcal_checkBoxColumn.HeaderText = "선택";
+            DH_Mcal_checkBoxColumn.Name = "check";
+            DH_Mcal_dataGridView.Columns.Add(DH_Mcal_checkBoxColumn);
+
+            DataGridViewComboBoxColumn 연도Combo = new DataGridViewComboBoxColumn();
+            연도Combo.HeaderText = "연도";
+            연도Combo.Items.Clear();
+            for (int i = 0; i < 100; i++)
+            {
+                연도Combo.Items.Add((2040 - i).ToString());
+            }
+            DH_Mcal_dataGridView.Columns.Add(연도Combo);
+            for (int mth = 1; mth < 13; mth++)
+            {
+                DH_Mcal_dataGridView.Columns.Add("B" + mth.ToString(), "지역난방사용량." + mth + "월.[Mcal]");
+            }
+
+            new StackedHeaderDecorator(DH_kWh_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            DH_kWh_dataGridView.Columns.Clear();
+            DH_kWh_checkBoxColumn.HeaderText = "선택";
+            DH_kWh_checkBoxColumn.Name = "check";
+            DH_kWh_dataGridView.Columns.Add(DH_kWh_checkBoxColumn);
+
+            DH_kWh_dataGridView.Columns.Add("C0", "연도");
+
+            for (int mth = 1; mth < 13; mth++)
+            {
+                DH_kWh_dataGridView.Columns.Add("C" + mth.ToString(), mth + "월.[kWh]");
+            }
+        }
+        private void DH_Add_button_Click(object sender, EventArgs e)
+        {
+            int nRow = DH_Mcal_dataGridView.Rows.Add();
+            DH_kWh_dataGridView.Rows.Add();
+        }
+
+        private void DH_Remove_button_Click(object sender, EventArgs e)
+        {
+            DH_Mcal_dataGridView.Rows.Remove(DH_Mcal_dataGridView.Rows[DH_SelectRow]);
+            DH_kWh_dataGridView.Rows.Remove(DH_kWh_dataGridView.Rows[DH_SelectRow]);
+        }
+
+        private void DH_Mcal_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DH_Mcal_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                DH_SelectRow = e.RowIndex;
+            }
+        }
+
+        private void DH_Mcal_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DH_SelectColumn = e.ColumnIndex;
+                DH_SelectRow = e.RowIndex;
+                Load_DH_kWh_Value();
+                DH_updateGraph();
+            }
+        }
+        private void Load_DH_kWh_Value()
+        {
+            if (DH_SelectColumn > 1)
+            { DH_kWh_dataGridView.Rows[DH_SelectRow].Cells[DH_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(DH_Mcal_dataGridView.Rows[DH_SelectRow].Cells[DH_SelectColumn].Value.ToString()) * 1.1622); }
+            else
+            {
+                DH_kWh_dataGridView.Rows[DH_SelectRow].Cells[DH_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(DH_Mcal_dataGridView.Rows[DH_SelectRow].Cells[DH_SelectColumn].Value.ToString()));
+            }
+        }
+        private void DH_updateGraph()
+        {
+            string s = "";
+
+            if (checkBox9.Checked && DH_kWh_dataGridView.Rows.Count > 0)
+            {
+                if (DH_kWh_dataGridView.Rows[0].Cells[1].Value != null)
+                { textBox1.Text = DH_kWh_dataGridView.Rows[0].Cells[1].Value.ToString() + "년"; }
+                string s3 = null;
+                for (int mth = 1; mth < 12; mth++)
+                {
+                    s3 += DH_kWh_dataGridView.Rows[0].Cells[mth + 1].Value + ",";
+                }
+                s3 += DH_kWh_dataGridView.Rows[0].Cells[13].Value;
+                string s2 = "[" + s3 + "]";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#5B9BD5\",backgroundColor:\"#5B9BD5\",dash:true,tension: 0.4},";
+
+            }
+
+            if (checkBox10.Checked && DH_kWh_dataGridView.Rows.Count > 1)
+            {
+                if (DH_kWh_dataGridView.Rows[1].Cells[1].Value != null)
+                { textBox2.Text = DH_kWh_dataGridView.Rows[1].Cells[1].Value.ToString() + "년"; }
+                string s3 = null;
+                for (int mth = 1; mth < 12; mth++)
+                {
+                    s3 += DH_kWh_dataGridView.Rows[1].Cells[mth + 1].Value + ",";
+                }
+                s3 += DH_kWh_dataGridView.Rows[1].Cells[13].Value;
+                string s2 = "[" + s3 + "]";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:true,tension: 0.4},";
+
+            }
+
+            if (checkBox11.Checked && DH_kWh_dataGridView.Rows.Count > 2)
+            {
+                if (DH_kWh_dataGridView.Rows[2].Cells[1].Value != null)
+                { textBox3.Text = DH_kWh_dataGridView.Rows[2].Cells[1].Value.ToString() + "년"; }
+
+                string s3 = null;
+                for (int mth = 1; mth < 12; mth++)
+                {
+                    s3 += DH_kWh_dataGridView.Rows[2].Cells[mth + 1].Value + ",";
+                }
+                s3 += DH_kWh_dataGridView.Rows[2].Cells[13].Value;
+                string s2 = "[" + s3 + "]";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#4472C4\",backgroundColor:\"#4472C4\",dash:true,tension: 0.4},";
+
+            }
+
+            if (checkBox12.Checked && DH_kWh_dataGridView.Rows.Count > 0)
+            {
+
+                { textBox4.Text = "평균"; }
+                double[] average = new double[12];
+                for (int mth = 1; mth < 13; mth++)
+                {
+                    for (int row = 0; row < DH_kWh_dataGridView.Rows.Count; row++)
+                    {
+                        if (DH_kWh_dataGridView.Rows[row].Cells[mth + 1].Value != null)
+                        { average[mth - 1] += Convert.ToDouble(DH_kWh_dataGridView.Rows[row].Cells[mth + 1].Value); }
+                    }
+                    average[mth - 1] = average[mth - 1] / DH_kWh_dataGridView.Rows.Count;
+                }
+
+
+                string s3 = null;
+                for (int mth = 1; mth < 12; mth++)
+                {
+                    s3 += average[mth - 1].ToString() + ",";
+                }
+                s3 += average[11].ToString();
+                string s2 = "[" + s3 + "]";
+                s += "{type:\"line\",data:" + s2 + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false,tension: 0.4},";
+
+            }
+
+            double DH_max = 0;
+            for (int row = 0; row < DH_kWh_dataGridView.Rows.Count; row++)
+            {
+                for (int column = 2; column < DH_kWh_dataGridView.Columns.Count; column++)
+                {
+                    if (DH_kWh_dataGridView.Rows[row].Cells[column].Value != null)
+                    {
+                        if (DH_max < Convert.ToDouble(DH_kWh_dataGridView.Rows[row].Cells[column].Value))
+                        {
+                            DH_max = Convert.ToDouble(DH_kWh_dataGridView.Rows[row].Cells[column].Value);
+                        }
+                        else
+                        {
+                            DH_max = DH_max;
+                        }
+                    }
+
+                }
+            }
+
+            DH_max = Convert.ToDouble(String.Format("{0:F0}", DH_max / 1000)) * 1000 + 1000;
+            webView23.CoreWebView2.ExecuteScriptAsync("drawChart2([" + s + "]," + DH_max.ToString() + ")");
+        }
+        private void checkBox9_CheckedChanged(object sender, EventArgs e)
+        {
+            DH_updateGraph();
+        }
+
+        private void checkBox10_CheckedChanged(object sender, EventArgs e)
+        {
+            DH_updateGraph();
+        }
+
+        private void checkBox11_CheckedChanged(object sender, EventArgs e)
+        {
+            DH_updateGraph();
+        }
+
+        private void checkBox12_CheckedChanged(object sender, EventArgs e)
+        {
+            DH_updateGraph();
+        }
+        #endregion
+
+
+
         private void Save_button_Click(object sender, EventArgs e)
         {
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
@@ -458,6 +664,26 @@ namespace main.contents.Building
                           + "'", "연료,연도,월,단위");
                 }
             }
+            for (int n = 0; n < DH_Mcal_dataGridView.Rows.Count; n++)
+            {
+                for (int mth = 1; mth < 13; mth++)
+                {
+                    Program.DB.setValue(DB.type.ProjDB, "BuildingEnergyUse", "프로젝트유형,연료,연도,월,단위,에너지사용량,사용시작일,사용종료일",
+                          "'" + 프로젝트유형[0][0] + "','지역난방','" + DH_Mcal_dataGridView.Rows[n].Cells[1].Value + "','" + mth + "월','Mcal','" + DH_Mcal_dataGridView.Rows[n].Cells[mth + 1].Value + "','" +
+                          DH_StartDay_comboBox.Text + "','" + DH_EndDay_comboBox.Text
+                          + "'", "연료,연도,월,단위");
+                }
+            }
+            for (int n = 0; n < Gas_kWh_dataGridView.Rows.Count; n++)
+            {
+                for (int mth = 1; mth < 13; mth++)
+                {
+                    Program.DB.setValue(DB.type.ProjDB, "BuildingEnergyUse", "프로젝트유형,연료,연도,월,단위,에너지사용량,사용시작일,사용종료일",
+                          "'" + 프로젝트유형[0][0] + "','지역난방','" + DH_kWh_dataGridView.Rows[n].Cells[1].Value + "','" + mth + "월','kWh','" + DH_kWh_dataGridView.Rows[n].Cells[mth + 1].Value + "','" +
+                          DH_StartDay_comboBox.Text + "','" + DH_EndDay_comboBox.Text
+                          + "'", "연료,연도,월,단위");
+                }
+            }
             MessageBox.Show("저장 되었습니다.");
         }
 
@@ -466,11 +692,15 @@ namespace main.contents.Building
         {
             Elec_StartDay_comboBox.SelectedItem = null;
             Gas_StartDay_comboBox.SelectedItem = null;
+            DH_StartDay_comboBox.SelectedItem = null;
             Elec_EndDay_comboBox.SelectedItem = null;
             Gas_EndDay_comboBox.SelectedItem = null;
+            DH_EndDay_comboBox.SelectedItem = null;
             Elec_dataGridView.Rows.Clear();
             Gas_m3_dataGridView.Rows.Clear();
             Gas_kWh_dataGridView.Rows.Clear();
+            DH_Mcal_dataGridView.Rows.Clear();
+            DH_kWh_dataGridView.Rows.Clear();
         }
 
         public void LoadData(String ID)             // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
@@ -528,9 +758,31 @@ namespace main.contents.Building
             }
 
 
+            Value = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "사용시작일,사용종료일", "연료 = '지역난방'");
+            if (Value.Length > 0)
+            {
+                DH_StartDay_comboBox.SelectedItem = Value[0][0];
+                DH_EndDay_comboBox.SelectedItem = Value[0][1];
+            }
+
+            Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "BuildingEnergyUse", "연도", "연료 = '지역난방' and 단위 ='Mcal'");
+            if (Value.Length > 0)
+            {
+                for (int n = 0; n < Value.Length; n++)
+                {
+                    int Row = DH_Mcal_dataGridView.Rows.Add();
+                    DH_kWh_dataGridView.Rows.Add();
+                    DH_Mcal_dataGridView.Rows[Row].Cells[1].Value = Value[n][0];
+                    DH_kWh_dataGridView.Rows[Row].Cells[1].Value = Value[n][0];
+                    for (int mth = 1; mth < 13; mth++)
+                    {
+                        string[][] EnergyValue = Program.DB.getValue(DB.type.ProjDB, "BuildingEnergyUse", "에너지사용량", "연료 = '지역난방' and 단위 ='Mcal' And 연도 ='" + Value[n][0] + "' And 월 ='" + mth + "월'");
+                        DH_Mcal_dataGridView.Rows[Row].Cells[1 + mth].Value = EnergyValue[0][0];
+                    }
+
+                }
+            }
 
         }
-
-
     }
 }

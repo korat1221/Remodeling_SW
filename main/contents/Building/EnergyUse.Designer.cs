@@ -29,15 +29,21 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnergyUse));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle46 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle47 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle48 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle49 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle50 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle51 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle52 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle53 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle54 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle55 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle56 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle57 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle58 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle59 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle60 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             label3 = new Label();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
@@ -80,7 +86,27 @@
             Elec_Remove_button = new Button();
             Elec_Add_button = new Button();
             Elec_dataGridView = new DataGridView();
-            Gas_Save_button = new CustomTabControl();
+            tabControl = new CustomTabControl();
+            DH_tabPage = new TabPage();
+            textBox12 = new TextBox();
+            textBox11 = new TextBox();
+            textBox10 = new TextBox();
+            textBox9 = new TextBox();
+            webView23 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            label7 = new Label();
+            DH_EndDay_comboBox = new CustomComboBox();
+            checkBox12 = new CheckBox();
+            label8 = new Label();
+            DH_StartDay_comboBox = new CustomComboBox();
+            checkBox10 = new CheckBox();
+            label9 = new Label();
+            checkBox11 = new CheckBox();
+            DH_kWh_dataGridView = new DataGridView();
+            checkBox9 = new CheckBox();
+            DH_Remove_button = new Button();
+            DH_Add_button = new Button();
+            DH_Mcal_dataGridView = new DataGridView();
+            pictureBox3 = new PictureBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -91,7 +117,12 @@
             ((System.ComponentModel.ISupportInitialize)webView22).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Elec_dataGridView).BeginInit();
-            Gas_Save_button.SuspendLayout();
+            tabControl.SuspendLayout();
+            DH_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)webView23).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DH_kWh_dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DH_Mcal_dataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -213,7 +244,7 @@
             Gas_tabPage.Padding = new Padding(3);
             Gas_tabPage.Size = new Size(969, 527);
             Gas_tabPage.TabIndex = 6;
-            Gas_tabPage.Text = "가스사용량";
+            Gas_tabPage.Text = "가스";
             // 
             // textBox4
             // 
@@ -332,33 +363,33 @@
             Gas_kWh_dataGridView.BorderStyle = BorderStyle.None;
             Gas_kWh_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Gas_kWh_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            Gas_kWh_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle46.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle46.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle46.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle46.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle46.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle46.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle46.WrapMode = DataGridViewTriState.True;
+            Gas_kWh_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle46;
             Gas_kWh_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Gas_kWh_dataGridView.Location = new Point(20, 180);
             Gas_kWh_dataGridView.Name = "Gas_kWh_dataGridView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            Gas_kWh_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle47.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle47.BackColor = SystemColors.Control;
+            dataGridViewCellStyle47.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle47.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle47.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle47.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle47.WrapMode = DataGridViewTriState.True;
+            Gas_kWh_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle47;
             Gas_kWh_dataGridView.RowHeadersVisible = false;
             Gas_kWh_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            Gas_kWh_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle48.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle48.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle48.ForeColor = Color.Black;
+            dataGridViewCellStyle48.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle48.SelectionForeColor = Color.Black;
+            Gas_kWh_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle48;
             Gas_kWh_dataGridView.RowTemplate.Height = 25;
             Gas_kWh_dataGridView.Size = new Size(928, 125);
             Gas_kWh_dataGridView.TabIndex = 120;
@@ -404,33 +435,33 @@
             Gas_m3_dataGridView.BorderStyle = BorderStyle.None;
             Gas_m3_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Gas_m3_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            Gas_m3_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle49.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle49.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle49.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle49.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle49.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle49.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle49.WrapMode = DataGridViewTriState.True;
+            Gas_m3_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle49;
             Gas_m3_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Gas_m3_dataGridView.Location = new Point(20, 54);
             Gas_m3_dataGridView.Name = "Gas_m3_dataGridView";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            Gas_m3_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle50.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle50.BackColor = SystemColors.Control;
+            dataGridViewCellStyle50.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle50.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle50.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle50.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle50.WrapMode = DataGridViewTriState.True;
+            Gas_m3_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle50;
             Gas_m3_dataGridView.RowHeadersVisible = false;
             Gas_m3_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            Gas_m3_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle51.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle51.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle51.ForeColor = Color.Black;
+            dataGridViewCellStyle51.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle51.SelectionForeColor = Color.Black;
+            Gas_m3_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle51;
             Gas_m3_dataGridView.RowTemplate.Height = 25;
             Gas_m3_dataGridView.Size = new Size(928, 125);
             Gas_m3_dataGridView.TabIndex = 116;
@@ -475,7 +506,7 @@
             Elec_tabPage.Padding = new Padding(3);
             Elec_tabPage.Size = new Size(969, 527);
             Elec_tabPage.TabIndex = 2;
-            Elec_tabPage.Text = "전기사용량";
+            Elec_tabPage.Text = "전기";
             // 
             // textBox8
             // 
@@ -696,64 +727,389 @@
             Elec_dataGridView.BorderStyle = BorderStyle.None;
             Elec_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Elec_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            Elec_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle52.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle52.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle52.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle52.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle52.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle52.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle52.WrapMode = DataGridViewTriState.True;
+            Elec_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle52;
             Elec_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Elec_dataGridView.Location = new Point(21, 64);
             Elec_dataGridView.Name = "Elec_dataGridView";
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            Elec_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle53.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle53.BackColor = SystemColors.Control;
+            dataGridViewCellStyle53.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle53.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle53.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle53.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle53.WrapMode = DataGridViewTriState.True;
+            Elec_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle53;
             Elec_dataGridView.RowHeadersVisible = false;
             Elec_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle9.ForeColor = Color.Black;
-            dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
-            Elec_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle54.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle54.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle54.ForeColor = Color.Black;
+            dataGridViewCellStyle54.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle54.SelectionForeColor = Color.Black;
+            Elec_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle54;
             Elec_dataGridView.RowTemplate.Height = 25;
             Elec_dataGridView.Size = new Size(928, 188);
             Elec_dataGridView.TabIndex = 112;
             Elec_dataGridView.CellContentClick += Elec_dataGridView_CellContentClick;
             Elec_dataGridView.CellValueChanged += Elec_dataGridView_CellValueChanged;
             // 
-            // Gas_Save_button
+            // tabControl
             // 
-            Gas_Save_button.Controls.Add(Gas_tabPage);
-            Gas_Save_button.Controls.Add(Elec_tabPage);
-            Gas_Save_button.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
-            Gas_Save_button.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
-            Gas_Save_button.DisplayStyleProvider.CloserColor = Color.Empty;
-            Gas_Save_button.DisplayStyleProvider.FocusTrack = true;
-            Gas_Save_button.DisplayStyleProvider.HotTrack = true;
-            Gas_Save_button.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
-            Gas_Save_button.DisplayStyleProvider.Opacity = 1F;
-            Gas_Save_button.DisplayStyleProvider.Overlap = 0;
-            Gas_Save_button.DisplayStyleProvider.Padding = new Point(6, 3);
-            Gas_Save_button.DisplayStyleProvider.ShowTabCloser = false;
-            Gas_Save_button.DisplayStyleProvider.TextColor = SystemColors.ControlText;
-            Gas_Save_button.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
-            Gas_Save_button.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
-            Gas_Save_button.HotTrack = true;
-            Gas_Save_button.ItemSize = new Size(128, 20);
-            Gas_Save_button.Location = new Point(12, 119);
-            Gas_Save_button.Name = "Gas_Save_button";
-            Gas_Save_button.SelectedIndex = 0;
-            Gas_Save_button.Size = new Size(977, 556);
-            Gas_Save_button.SizeMode = TabSizeMode.Fixed;
-            Gas_Save_button.TabIndex = 146;
+            tabControl.Controls.Add(Elec_tabPage);
+            tabControl.Controls.Add(Gas_tabPage);
+            tabControl.Controls.Add(DH_tabPage);
+            tabControl.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
+            tabControl.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
+            tabControl.DisplayStyleProvider.CloserColor = Color.Empty;
+            tabControl.DisplayStyleProvider.FocusTrack = true;
+            tabControl.DisplayStyleProvider.HotTrack = true;
+            tabControl.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
+            tabControl.DisplayStyleProvider.Opacity = 1F;
+            tabControl.DisplayStyleProvider.Overlap = 0;
+            tabControl.DisplayStyleProvider.Padding = new Point(6, 3);
+            tabControl.DisplayStyleProvider.ShowTabCloser = false;
+            tabControl.DisplayStyleProvider.TextColor = SystemColors.ControlText;
+            tabControl.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
+            tabControl.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
+            tabControl.HotTrack = true;
+            tabControl.ItemSize = new Size(128, 20);
+            tabControl.Location = new Point(12, 119);
+            tabControl.Name = "tabControl";
+            tabControl.SelectedIndex = 0;
+            tabControl.Size = new Size(977, 556);
+            tabControl.SizeMode = TabSizeMode.Fixed;
+            tabControl.TabIndex = 146;
+            // 
+            // DH_tabPage
+            // 
+            DH_tabPage.Controls.Add(pictureBox3);
+            DH_tabPage.Controls.Add(textBox12);
+            DH_tabPage.Controls.Add(textBox11);
+            DH_tabPage.Controls.Add(textBox10);
+            DH_tabPage.Controls.Add(textBox9);
+            DH_tabPage.Controls.Add(webView23);
+            DH_tabPage.Controls.Add(label7);
+            DH_tabPage.Controls.Add(DH_EndDay_comboBox);
+            DH_tabPage.Controls.Add(checkBox12);
+            DH_tabPage.Controls.Add(label8);
+            DH_tabPage.Controls.Add(DH_StartDay_comboBox);
+            DH_tabPage.Controls.Add(checkBox10);
+            DH_tabPage.Controls.Add(label9);
+            DH_tabPage.Controls.Add(checkBox11);
+            DH_tabPage.Controls.Add(DH_kWh_dataGridView);
+            DH_tabPage.Controls.Add(checkBox9);
+            DH_tabPage.Controls.Add(DH_Remove_button);
+            DH_tabPage.Controls.Add(DH_Add_button);
+            DH_tabPage.Controls.Add(DH_Mcal_dataGridView);
+            DH_tabPage.Location = new Point(4, 25);
+            DH_tabPage.Name = "DH_tabPage";
+            DH_tabPage.Padding = new Padding(3);
+            DH_tabPage.Size = new Size(969, 527);
+            DH_tabPage.TabIndex = 7;
+            DH_tabPage.Text = "지역난방";
+            DH_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // textBox12
+            // 
+            textBox12.BackColor = Color.White;
+            textBox12.BorderStyle = BorderStyle.None;
+            textBox12.Enabled = false;
+            textBox12.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox12.ForeColor = SystemColors.ControlDark;
+            textBox12.Location = new Point(19, 478);
+            textBox12.Name = "textBox12";
+            textBox12.ReadOnly = true;
+            textBox12.Size = new Size(86, 15);
+            textBox12.TabIndex = 153;
+            textBox12.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBox11
+            // 
+            textBox11.BackColor = Color.White;
+            textBox11.BorderStyle = BorderStyle.None;
+            textBox11.Enabled = false;
+            textBox11.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox11.ForeColor = SystemColors.ControlDark;
+            textBox11.Location = new Point(19, 451);
+            textBox11.Name = "textBox11";
+            textBox11.ReadOnly = true;
+            textBox11.Size = new Size(86, 15);
+            textBox11.TabIndex = 152;
+            textBox11.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBox10
+            // 
+            textBox10.BackColor = Color.White;
+            textBox10.BorderStyle = BorderStyle.None;
+            textBox10.Enabled = false;
+            textBox10.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox10.ForeColor = SystemColors.ControlDark;
+            textBox10.Location = new Point(19, 424);
+            textBox10.Name = "textBox10";
+            textBox10.ReadOnly = true;
+            textBox10.Size = new Size(86, 15);
+            textBox10.TabIndex = 151;
+            textBox10.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBox9
+            // 
+            textBox9.BackColor = Color.White;
+            textBox9.BorderStyle = BorderStyle.None;
+            textBox9.Enabled = false;
+            textBox9.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox9.ForeColor = SystemColors.ControlDark;
+            textBox9.Location = new Point(19, 397);
+            textBox9.Name = "textBox9";
+            textBox9.ReadOnly = true;
+            textBox9.Size = new Size(86, 15);
+            textBox9.TabIndex = 150;
+            textBox9.TextAlign = HorizontalAlignment.Center;
+            // 
+            // webView23
+            // 
+            webView23.AllowExternalDrop = true;
+            webView23.BackColor = Color.White;
+            webView23.CreationProperties = null;
+            webView23.DefaultBackgroundColor = Color.White;
+            webView23.Location = new Point(212, 314);
+            webView23.Name = "webView23";
+            webView23.Size = new Size(743, 200);
+            webView23.TabIndex = 136;
+            webView23.ZoomFactor = 1D;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Location = new Point(315, 16);
+            label7.Name = "label7";
+            label7.Size = new Size(19, 15);
+            label7.TabIndex = 149;
+            label7.Text = "일";
+            // 
+            // DH_EndDay_comboBox
+            // 
+            DH_EndDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            DH_EndDay_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DH_EndDay_comboBox.FormattingEnabled = true;
+            DH_EndDay_comboBox.Location = new Point(249, 12);
+            DH_EndDay_comboBox.Name = "DH_EndDay_comboBox";
+            DH_EndDay_comboBox.Size = new Size(60, 23);
+            DH_EndDay_comboBox.TabIndex = 148;
+            // 
+            // checkBox12
+            // 
+            checkBox12.AutoSize = true;
+            checkBox12.Checked = true;
+            checkBox12.CheckState = CheckState.Checked;
+            checkBox12.Location = new Point(108, 478);
+            checkBox12.Name = "checkBox12";
+            checkBox12.RightToLeft = RightToLeft.Yes;
+            checkBox12.Size = new Size(15, 14);
+            checkBox12.TabIndex = 140;
+            checkBox12.UseVisualStyleBackColor = true;
+            checkBox12.CheckedChanged += checkBox12_CheckedChanged;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.Location = new Point(204, 16);
+            label8.Name = "label8";
+            label8.Size = new Size(39, 15);
+            label8.TabIndex = 147;
+            label8.Text = "일  ~ ";
+            // 
+            // DH_StartDay_comboBox
+            // 
+            DH_StartDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            DH_StartDay_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DH_StartDay_comboBox.FormattingEnabled = true;
+            DH_StartDay_comboBox.Location = new Point(140, 12);
+            DH_StartDay_comboBox.Name = "DH_StartDay_comboBox";
+            DH_StartDay_comboBox.Size = new Size(60, 23);
+            DH_StartDay_comboBox.TabIndex = 146;
+            // 
+            // checkBox10
+            // 
+            checkBox10.AutoSize = true;
+            checkBox10.Checked = true;
+            checkBox10.CheckState = CheckState.Checked;
+            checkBox10.Location = new Point(108, 424);
+            checkBox10.Name = "checkBox10";
+            checkBox10.RightToLeft = RightToLeft.Yes;
+            checkBox10.Size = new Size(15, 14);
+            checkBox10.TabIndex = 138;
+            checkBox10.UseVisualStyleBackColor = true;
+            checkBox10.CheckedChanged += checkBox10_CheckedChanged;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label9.Location = new Point(14, 16);
+            label9.Name = "label9";
+            label9.Size = new Size(123, 15);
+            label9.TabIndex = 145;
+            label9.Text = "고지서 기준 사용기간";
+            // 
+            // checkBox11
+            // 
+            checkBox11.AutoSize = true;
+            checkBox11.Checked = true;
+            checkBox11.CheckState = CheckState.Checked;
+            checkBox11.Location = new Point(108, 451);
+            checkBox11.Name = "checkBox11";
+            checkBox11.RightToLeft = RightToLeft.Yes;
+            checkBox11.Size = new Size(15, 14);
+            checkBox11.TabIndex = 139;
+            checkBox11.UseVisualStyleBackColor = true;
+            checkBox11.CheckedChanged += checkBox11_CheckedChanged;
+            // 
+            // DH_kWh_dataGridView
+            // 
+            DH_kWh_dataGridView.AllowUserToAddRows = false;
+            DH_kWh_dataGridView.AllowUserToDeleteRows = false;
+            DH_kWh_dataGridView.AllowUserToResizeColumns = false;
+            DH_kWh_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            DH_kWh_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            DH_kWh_dataGridView.BackgroundColor = SystemColors.Window;
+            DH_kWh_dataGridView.BorderStyle = BorderStyle.None;
+            DH_kWh_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            DH_kWh_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle55.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle55.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle55.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle55.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle55.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle55.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle55.WrapMode = DataGridViewTriState.True;
+            DH_kWh_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle55;
+            DH_kWh_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DH_kWh_dataGridView.Location = new Point(27, 173);
+            DH_kWh_dataGridView.Name = "DH_kWh_dataGridView";
+            dataGridViewCellStyle56.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle56.BackColor = SystemColors.Control;
+            dataGridViewCellStyle56.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle56.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle56.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle56.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle56.WrapMode = DataGridViewTriState.True;
+            DH_kWh_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle56;
+            DH_kWh_dataGridView.RowHeadersVisible = false;
+            DH_kWh_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle57.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle57.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle57.ForeColor = Color.Black;
+            dataGridViewCellStyle57.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle57.SelectionForeColor = Color.Black;
+            DH_kWh_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle57;
+            DH_kWh_dataGridView.RowTemplate.Height = 25;
+            DH_kWh_dataGridView.Size = new Size(928, 125);
+            DH_kWh_dataGridView.TabIndex = 144;
+            // 
+            // checkBox9
+            // 
+            checkBox9.AutoSize = true;
+            checkBox9.Checked = true;
+            checkBox9.CheckState = CheckState.Checked;
+            checkBox9.Location = new Point(108, 397);
+            checkBox9.Name = "checkBox9";
+            checkBox9.RightToLeft = RightToLeft.Yes;
+            checkBox9.Size = new Size(15, 14);
+            checkBox9.TabIndex = 137;
+            checkBox9.UseVisualStyleBackColor = true;
+            checkBox9.CheckedChanged += checkBox9_CheckedChanged;
+            // 
+            // DH_Remove_button
+            // 
+            DH_Remove_button.BackColor = SystemColors.ControlLight;
+            DH_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DH_Remove_button.FlatStyle = FlatStyle.System;
+            DH_Remove_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            DH_Remove_button.Location = new Point(904, 12);
+            DH_Remove_button.Margin = new Padding(0);
+            DH_Remove_button.Name = "DH_Remove_button";
+            DH_Remove_button.Size = new Size(23, 23);
+            DH_Remove_button.TabIndex = 143;
+            DH_Remove_button.Text = "-";
+            DH_Remove_button.UseVisualStyleBackColor = false;
+            DH_Remove_button.Click += DH_Remove_button_Click;
+            // 
+            // DH_Add_button
+            // 
+            DH_Add_button.BackColor = SystemColors.ControlLight;
+            DH_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DH_Add_button.FlatStyle = FlatStyle.System;
+            DH_Add_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            DH_Add_button.Location = new Point(867, 12);
+            DH_Add_button.Margin = new Padding(0);
+            DH_Add_button.Name = "DH_Add_button";
+            DH_Add_button.Size = new Size(23, 23);
+            DH_Add_button.TabIndex = 142;
+            DH_Add_button.Text = "+";
+            DH_Add_button.UseVisualStyleBackColor = false;
+            DH_Add_button.Click += DH_Add_button_Click;
+            // 
+            // DH_Mcal_dataGridView
+            // 
+            DH_Mcal_dataGridView.AllowUserToAddRows = false;
+            DH_Mcal_dataGridView.AllowUserToDeleteRows = false;
+            DH_Mcal_dataGridView.AllowUserToResizeColumns = false;
+            DH_Mcal_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            DH_Mcal_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            DH_Mcal_dataGridView.BackgroundColor = SystemColors.Window;
+            DH_Mcal_dataGridView.BorderStyle = BorderStyle.None;
+            DH_Mcal_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            DH_Mcal_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle58.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle58.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle58.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle58.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle58.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle58.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle58.WrapMode = DataGridViewTriState.True;
+            DH_Mcal_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle58;
+            DH_Mcal_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DH_Mcal_dataGridView.Location = new Point(27, 47);
+            DH_Mcal_dataGridView.Name = "DH_Mcal_dataGridView";
+            dataGridViewCellStyle59.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle59.BackColor = SystemColors.Control;
+            dataGridViewCellStyle59.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle59.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle59.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle59.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle59.WrapMode = DataGridViewTriState.True;
+            DH_Mcal_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle59;
+            DH_Mcal_dataGridView.RowHeadersVisible = false;
+            DH_Mcal_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle60.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle60.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle60.ForeColor = Color.Black;
+            dataGridViewCellStyle60.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle60.SelectionForeColor = Color.Black;
+            DH_Mcal_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle60;
+            DH_Mcal_dataGridView.RowTemplate.Height = 25;
+            DH_Mcal_dataGridView.Size = new Size(928, 125);
+            DH_Mcal_dataGridView.TabIndex = 141;
+            DH_Mcal_dataGridView.CellContentClick += DH_Mcal_dataGridView_CellContentClick;
+            DH_Mcal_dataGridView.CellValueChanged += DH_Mcal_dataGridView_CellValueChanged;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.Location = new Point(129, 397);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(75, 115);
+            pictureBox3.TabIndex = 154;
+            pictureBox3.TabStop = false;
             // 
             // EnergyUse
             // 
@@ -764,7 +1120,7 @@
             ClientSize = new Size(1200, 730);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
-            Controls.Add(Gas_Save_button);
+            Controls.Add(tabControl);
             FormBorderStyle = FormBorderStyle.None;
             Name = "EnergyUse";
             Text = "Form3";
@@ -781,7 +1137,13 @@
             ((System.ComponentModel.ISupportInitialize)webView22).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)Elec_dataGridView).EndInit();
-            Gas_Save_button.ResumeLayout(false);
+            tabControl.ResumeLayout(false);
+            DH_tabPage.ResumeLayout(false);
+            DH_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)webView23).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DH_kWh_dataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DH_Mcal_dataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
         }
 
@@ -798,7 +1160,7 @@
         private TabPage Gas_tabPage;
         private TabPage Elec_tabPage;
         private DataGridView Elec_dataGridView;
-        private CustomTabControl Gas_Save_button;
+        private CustomTabControl tabControl;
         private Button Elec_Remove_button;
         private Button Elec_Add_button;
         private Button Gas_Remove_button;
@@ -830,5 +1192,25 @@
         private TextBox textBox7;
         private TextBox textBox6;
         private TextBox textBox5;
+        private TabPage DH_tabPage;
+        private TextBox textBox12;
+        private TextBox textBox11;
+        private TextBox textBox10;
+        private TextBox textBox9;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView23;
+        private Label label7;
+        private CustomComboBox DH_EndDay_comboBox;
+        private CheckBox checkBox12;
+        private Label label8;
+        private CustomComboBox DH_StartDay_comboBox;
+        private CheckBox checkBox10;
+        private Label label9;
+        private CheckBox checkBox11;
+        private DataGridView DH_kWh_dataGridView;
+        private CheckBox checkBox9;
+        private Button DH_Remove_button;
+        private Button DH_Add_button;
+        private DataGridView DH_Mcal_dataGridView;
+        private PictureBox pictureBox3;
     }
 }
