@@ -483,9 +483,9 @@ namespace main.contents
             natural_label.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             natural_label.Location = new Point(47, 247);
             natural_label.Name = "natural_label";
-            natural_label.Size = new Size(87, 15);
+            natural_label.Size = new Size(59, 15);
             natural_label.TabIndex = 100;
-            natural_label.Text = "주광 관련 요소";
+            natural_label.Text = "자연 채광";
             // 
             // NaturalType_label
             // 
@@ -516,7 +516,7 @@ namespace main.contents
             Aca_label.Name = "Aca_label";
             Aca_label.Size = new Size(79, 16);
             Aca_label.TabIndex = 43;
-            Aca_label.Text = "주향 창 면적합";
+            Aca_label.Text = "주향 창호 면적";
             Aca_label.Visible = false;
             // 
             // panel3
@@ -763,6 +763,7 @@ namespace main.contents
             // 
             // 주창정보
             // 
+            주창정보.BackColor = Color.White;
             주창정보.Controls.Add(Blind3_textBox);
             주창정보.Controls.Add(Shade5_label);
             주창정보.Controls.Add(Blind_textBox);
@@ -785,8 +786,7 @@ namespace main.contents
             주창정보.Name = "주창정보";
             주창정보.Size = new Size(480, 243);
             주창정보.TabIndex = 2;
-            주창정보.Text = "주창 정보";
-            주창정보.UseVisualStyleBackColor = true;
+            주창정보.Text = "채광 정보";
             // 
             // Blind3_textBox
             // 
@@ -968,9 +968,9 @@ namespace main.contents
             Shade7_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Shade7_label.Location = new Point(108, 62);
             Shade7_label.Name = "Shade7_label";
-            Shade7_label.Size = new Size(65, 16);
+            Shade7_label.Size = new Size(54, 16);
             Shade7_label.TabIndex = 146;
-            Shade7_label.Text = "창호 면적합";
+            Shade7_label.Text = "창호 면적";
             Shade7_label.Visible = false;
             // 
             // Shade2_label
@@ -1011,6 +1011,7 @@ namespace main.contents
             // 
             // 조명정보
             // 
+            조명정보.BackColor = Color.White;
             조명정보.Controls.Add(L8_textBox);
             조명정보.Controls.Add(L6_textBox);
             조명정보.Controls.Add(L5_textBox);
@@ -1031,7 +1032,6 @@ namespace main.contents
             조명정보.Size = new Size(480, 243);
             조명정보.TabIndex = 0;
             조명정보.Text = "조명 정보";
-            조명정보.UseVisualStyleBackColor = true;
             // 
             // L8_textBox
             // 
@@ -1101,12 +1101,12 @@ namespace main.contents
             // L8_label
             // 
             L8_label.AutoSize = true;
-            L8_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            L8_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             L8_label.Location = new Point(63, 198);
             L8_label.Name = "L8_label";
-            L8_label.Size = new Size(82, 16);
+            L8_label.Size = new Size(51, 16);
             L8_label.TabIndex = 146;
-            L8_label.Text = "조명계수 [FL]";
+            L8_label.Text = "조명계수";
             // 
             // L6_label
             // 
@@ -1195,6 +1195,7 @@ namespace main.contents
             // 
             // 집광채광정보
             // 
+            집광채광정보.BackColor = Color.White;
             집광채광정보.Controls.Add(label9);
             집광채광정보.Controls.Add(label8);
             집광채광정보.Controls.Add(R3_label);
@@ -1209,7 +1210,6 @@ namespace main.contents
             집광채광정보.Size = new Size(480, 243);
             집광채광정보.TabIndex = 1;
             집광채광정보.Text = "집광채광 정보";
-            집광채광정보.UseVisualStyleBackColor = true;
             // 
             // label9
             // 

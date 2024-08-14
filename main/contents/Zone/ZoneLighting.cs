@@ -128,7 +128,7 @@ namespace main.contents
         {
             LightType = null;
             Pj_textbox.Text = "0.00";
-            if (Pj_textbox.Text == "0.00") 
+            if (Pj_textbox.Text == "0.00")
             {
                 MessageBox.Show("조명 종류를 선택하세요.");
             }
@@ -370,7 +370,7 @@ namespace main.contents
                     //    Pj = Pn / A;
                     //}                    
                     N = Em / (U_LightFi / A);
-                    if(double.IsNaN(N))
+                    if (double.IsNaN(N))
                     { N = 0; }
                     Pn = U_LightPi * N;
                     Pj = Pn / A;
@@ -822,9 +822,9 @@ namespace main.contents
             if (NaturalType == "파사드")
             {
                 direction_textBox.Text = facade_di;
-                Aca_textBox.Text =  Zone_f_Aca.ToString();
+                Aca_textBox.Text = Zone_f_Aca.ToString();
                 controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Aca_textBox, true, 2);
-               
+
             }
             else if (NaturalType == "천창")
             {
@@ -1334,10 +1334,10 @@ namespace main.contents
                 ZoneName_textBox.Text = ZoneName;
                 if (Value[0][1] != "")
                 {
-                  hR = Convert.ToDouble(Value[0][1]);
-                  hm = hR;
+                    hR = Convert.ToDouble(Value[0][1]);
+                    hm = hR;
                 }
-                
+
                 Usage = Value[0][2];
                 if (Value[0][3] != "")
                 {
@@ -1345,8 +1345,8 @@ namespace main.contents
                     A_textBox.Text = A.ToString();
                     controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(A_textBox, true, 2);
                 }
-               
-               
+
+
                 //층정보 불러오기
                 String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,상인방높이", "존번호 = '" + ZoneNum + "'");
 
@@ -1356,7 +1356,7 @@ namespace main.contents
                 {
                     hLi = Convert.ToDouble(General_3D[0][1]);
                 }
-               
+
                 //Zonelight profile 가져오기 
                 string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "조도,이용영역계수,조명이용시부재율,작업면높이", "용도명 = '" + Usage + "'");
                 if (ValueA[0][0] != "")
@@ -1595,7 +1595,7 @@ namespace main.contents
             if (CW_Type.Length == 0)
             {
                 //창호 구조체 타입별로 면적 합계 구하기
-                if(MEnvelope_Win.Length >0 && Win_Type.Length >0) 
+                if (MEnvelope_Win.Length > 0 && Win_Type.Length > 0)
                 {
                     for (int j = 0; j < MEnvelope_Win.Length; j++)
                     {
@@ -1638,12 +1638,12 @@ namespace main.contents
                     }
                 }
 
-                }
-                else if (Win_Type.Length == 0)
+            }
+            else if (Win_Type.Length == 0)
             {
                 //커튼월창 구조체 타입별로 면적 합계 구하기
                 double[] AreaSum_ConstructionCW = new double[CW_Type.Length];
-                if (MEnvelope_CW.Length > 0 && CW_Type.Length >0)
+                if (MEnvelope_CW.Length > 0 && CW_Type.Length > 0)
                 {
                     for (int j = 0; j < MEnvelope_CW.Length; j++)
                     {
@@ -1742,7 +1742,7 @@ namespace main.contents
                             if (AreaSum_ConstructionCW[k] == AreaSum_ConstructionCW.Max())
                             { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
                         }
-                        if(CW_Type.Length > 0) 
+                        if (CW_Type.Length > 0)
                         {
                             MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호, 유리부분유리면적비", "번호 = '" + CW_Type[index][1] + "'");
                             if (MainType_CW_Value.Length > 0)
