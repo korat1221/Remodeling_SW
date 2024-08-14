@@ -4622,5 +4622,22 @@ namespace main.contents
             }
         }
 
+        private void Qmax_button_Click(object sender, EventArgs e)
+        {
+            string[][] 결과 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "");
+            if(결과.Length >0)
+            {
+                ZoneResult pumpcal_form = new ZoneResult();
+                DialogResult result = pumpcal_form.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                }
+            }
+            else
+            {
+                MessageBox.Show("에너지요구량 해석 시뮬레이션을 진행하시고 확인하세요.");
+            }
+           
+        }
     }
 }

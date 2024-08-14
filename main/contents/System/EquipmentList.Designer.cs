@@ -86,6 +86,7 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle53 = new DataGridViewCellStyle();
             PV_dataGridView = new DataGridView();
             GeneralPanel = new Panel();
+            Qmax_button = new Button();
             label23 = new System.Windows.Forms.Label();
             label22 = new System.Windows.Forms.Label();
             Qcmax_label = new System.Windows.Forms.Label();
@@ -237,6 +238,7 @@ namespace main.contents
             CoolerTop_Add_button = new Button();
             CoolerTop_Copy_button = new Button();
             CoolerTop_Remove_button = new Button();
+            label21 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)PV_dataGridView).BeginInit();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -327,6 +329,7 @@ namespace main.contents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(Qmax_button);
             GeneralPanel.Controls.Add(label23);
             GeneralPanel.Controls.Add(label22);
             GeneralPanel.Controls.Add(Qcmax_label);
@@ -345,6 +348,21 @@ namespace main.contents
             GeneralPanel.Size = new Size(1150, 57);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // Qmax_button
+            // 
+            Qmax_button.BackColor = SystemColors.ControlLight;
+            Qmax_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Qmax_button.FlatStyle = FlatStyle.System;
+            Qmax_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            Qmax_button.Location = new Point(203, 15);
+            Qmax_button.Margin = new Padding(0);
+            Qmax_button.Name = "Qmax_button";
+            Qmax_button.Size = new Size(84, 23);
+            Qmax_button.TabIndex = 141;
+            Qmax_button.Text = "Zone Check";
+            Qmax_button.UseVisualStyleBackColor = false;
+            Qmax_button.Click += Qmax_button_Click;
             // 
             // label23
             // 
@@ -2681,6 +2699,7 @@ namespace main.contents
             // tabPage9
             // 
             tabPage9.BackColor = Color.White;
+            tabPage9.Controls.Add(label21);
             tabPage9.Controls.Add(ce_Save_button);
             tabPage9.Controls.Add(ce_dataGridView);
             tabPage9.Controls.Add(ce_Add_button);
@@ -2956,6 +2975,16 @@ namespace main.contents
             CoolerTop_Remove_button.UseVisualStyleBackColor = false;
             CoolerTop_Remove_button.Click += CoolerTop_Remove_button_Click;
             // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label21.Location = new Point(18, 200);
+            label21.Name = "label21";
+            label21.Size = new Size(420, 15);
+            label21.TabIndex = 116;
+            label21.Text = "※ 용량을 잘 모를 경우 존별 부하 시뮬레이션 결과값을 참고하여 입력하세요.";
+            // 
             // EquipmentList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -3015,6 +3044,7 @@ namespace main.contents
             tabPage10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)AHU_dataGridView).EndInit();
             tabPage9.ResumeLayout(false);
+            tabPage9.PerformLayout();
             tabPage8.ResumeLayout(false);
             customTabControl2.ResumeLayout(false);
             tabPage11.ResumeLayout(false);
@@ -3179,5 +3209,7 @@ namespace main.contents
         private TextBox Qhmax_textBox;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label22;
+        private Button Qmax_button;
+        private System.Windows.Forms.Label label21;
     }
 }
