@@ -254,12 +254,18 @@ namespace main.subcontents.ConstructionWindow
                 Uw = Uw;
             }
 
-            g_textBox.Text = String.Format("{0:F3}", g);
-            τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
-            g2_textBox.Text = String.Format("{0:F3}", g);
-            τD65_SNA2_textBox.Text = String.Format("{0:F3}", τD65_SNA);
-            Uw_textBox.Text = String.Format("{0:F3}", Uw);
-
+            g_textBox.Text = g.ToString();
+            controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(g_textBox, true, 3);
+            g2_textBox.Text = g.ToString();
+            controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(g2_textBox, true, 3);
+            g3_textBox.Text = g.ToString();
+            controls.ThousandsSeparator textbox4 = new controls.ThousandsSeparator(g3_textBox, true, 3);
+            τD65_SNA_textBox.Text = τD65_SNA.ToString();
+            controls.ThousandsSeparator textbox5 = new controls.ThousandsSeparator(τD65_SNA_textBox, true, 3);
+            τD65_SNA2_textBox.Text = τD65_SNA.ToString();
+            controls.ThousandsSeparator textbox6 = new controls.ThousandsSeparator(τD65_SNA2_textBox, true, 3);
+            Uw_textBox.Text = Uw.ToString();
+            controls.ThousandsSeparator textbox7 = new controls.ThousandsSeparator(Uw_textBox, true, 3);
         }
 
         private void Load_WindowType_image(String Type)
@@ -288,6 +294,7 @@ namespace main.subcontents.ConstructionWindow
 
                     Spacer_label.Visible = true;
                     SpacerName_textBox.Visible = true;
+                    SpacerName_textBox2.Visible = true;
 
                     Ug_label.Visible = true;
                     Ug_textBox.Visible = true;
@@ -299,16 +306,6 @@ namespace main.subcontents.ConstructionWindow
                     Psi_open_unit_label.Visible = true;
                     Psi_g_fix_textBox.Visible = true;
                     Psi_g_open_textBox.Visible = true;
-
-                    Uw_textBox.Visible = true;
-                    Uw_label.Visible = true;
-                    Uw_unit_label.Visible = true;
-
-                    Uw2_label.Visible = false;
-                    Uw2_unit_label.Visible = false;
-                    Uw2_textBox.Visible = false;
-                    Uw2_textBox.Enabled = false;
-                    Uw2_textBox.BorderStyle = BorderStyle.None;
                 }
                 else if (UwMethod == "법규")
                 {
@@ -318,6 +315,7 @@ namespace main.subcontents.ConstructionWindow
 
                     Spacer_label.Visible = false;
                     SpacerName_textBox.Visible = false;
+                    SpacerName_textBox2.Visible = false;
 
                     Ug_label.Visible = false;
                     Ug_textBox.Visible = false;
@@ -329,16 +327,6 @@ namespace main.subcontents.ConstructionWindow
                     Psi_open_unit_label.Visible = false;
                     Psi_g_fix_textBox.Visible = false;
                     Psi_g_open_textBox.Visible = false;
-
-                    Uw_textBox.Visible = false;
-                    Uw_label.Visible = false;
-                    Uw_unit_label.Visible = false;
-
-                    Uw2_label.Visible = true;
-                    Uw2_unit_label.Visible = true;
-                    Uw2_textBox.Visible = true;
-                    Uw2_textBox.Enabled = false;
-                    Uw2_textBox.BorderStyle = BorderStyle.None;
                 }
                 else if (UwMethod == "진단")
                 {
@@ -348,6 +336,7 @@ namespace main.subcontents.ConstructionWindow
 
                     Spacer_label.Visible = false;
                     SpacerName_textBox.Visible = false;
+                    SpacerName_textBox2.Visible = false;
 
                     Ug_label.Visible = false;
                     Ug_textBox.Visible = false;
@@ -359,17 +348,6 @@ namespace main.subcontents.ConstructionWindow
                     Psi_open_unit_label.Visible = false;
                     Psi_g_fix_textBox.Visible = false;
                     Psi_g_open_textBox.Visible = false;
-
-                    Uw_textBox.Visible = false;
-                    Uw_label.Visible = false;
-                    Uw_unit_label.Visible = false;
-
-                    Uw2_label.Visible = true;
-                    Uw2_unit_label.Visible = true;
-                    Uw2_textBox.Visible = true;
-                    Uw2_textBox.Text = string.Empty;
-                    Uw2_textBox.Enabled = true;
-                    Uw2_textBox.BorderStyle = BorderStyle.FixedSingle;
                 }
                 Calc_Uw();
                 Rule_Uw();
@@ -381,9 +359,9 @@ namespace main.subcontents.ConstructionWindow
 
         private void Uw2_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (UwMethod == "진단" && Uw2_textBox.Text != string.Empty)
+            if (UwMethod == "진단" && Uw_textBox.Text != string.Empty)
             {
-                Uw = Convert.ToDouble(Uw2_textBox.Text);
+                Uw = Convert.ToDouble(Uw_textBox.Text);
                 Calc_dUinst();
             }
         }
@@ -428,8 +406,10 @@ namespace main.subcontents.ConstructionWindow
                             FrameName_textBox.Text = "";
                             GlassName = "";
                             GlassName_textBox.Text = "";
+                            GlassName_textBox2.Text = "";
                             SpacerName = "";
                             SpacerName_textBox.Text = "";
+                            SpacerName_textBox2.Text = "";
                             InstallName = "";
                             Install_textBox.Text = "";
                             Uf_open_textBox.Text = "";
@@ -473,7 +453,8 @@ namespace main.subcontents.ConstructionWindow
                 Uw = (Ug * (Ag_fix + Ag_open) + (Uf_open * Af_open) + (Uf_fix * Af_fix) + (Uf_btw * Af_btw) + (Psi_g_fix * Lg_fix) + (Psi_g_open * Lg_open)) / Area;
                 if (Uw.Equals(double.NaN) == false)
                 {
-                    Uw_textBox.Text = String.Format("{0:F3}", Uw);
+                    Uw_textBox.Text = Uw.ToString();
+                    controls.ThousandsSeparator textboxa = new controls.ThousandsSeparator(Uw_textBox, true, 3);
                 }
             }
         }
@@ -486,7 +467,8 @@ namespace main.subcontents.ConstructionWindow
                 if(Uvalue.Length  > 0)
                 {
                     Uw = Convert.ToDouble(Uvalue[0][0]);
-                    Uw2_textBox.Text = String.Format("{0:F3}", Uw);
+                    Uw_textBox.Text =  Uw.ToString();
+                    controls.ThousandsSeparator textboxa = new controls.ThousandsSeparator(Uw_textBox, true, 3);
                 }                
             }
         }
@@ -497,14 +479,17 @@ namespace main.subcontents.ConstructionWindow
                 dUinst = ((Psi_InstallTop * Width) + (Psi_InstallButtom * Width) + (Psi_InstallSide * Height * 2)) / Area;
                 if (dUinst.Equals(double.NaN) == false)
                 {
-                    dUinst_textBox.Text = String.Format("{0:F3}", dUinst);
+                    dUinst_textBox.Text = dUinst.ToString();
+                    controls.ThousandsSeparator textboxa = new controls.ThousandsSeparator(dUinst_textBox, true, 3);
                 }
 
                 if (dUinst.Equals(double.NaN) == false && Uw.Equals(double.NaN) == false)
                 {
                     Uw_inst = dUinst + Uw;
-                    Uw_inst_textBox.Text = String.Format("{0:F3}", Uw_inst);
-                    Uw_inst2_textBox.Text = String.Format("{0:F3}", Uw_inst);
+                    Uw_inst_textBox.Text = Uw_inst.ToString();
+                    controls.ThousandsSeparator textboxb = new controls.ThousandsSeparator(Uw_inst_textBox, true, 3);
+                    Uw_inst2_textBox.Text = Uw_inst.ToString();
+                    controls.ThousandsSeparator textboxc = new controls.ThousandsSeparator(Uw_inst2_textBox, true, 3);
                 }
             }
 
@@ -546,22 +531,25 @@ namespace main.subcontents.ConstructionWindow
             FrameMaterial_textBox.Text = null;
             FrameName_textBox.Text = null;
             GlassName_textBox.Text = null;
+            GlassName_textBox2.Text = null;
             SpacerName_textBox.Text = null;
+            SpacerName_textBox2.Text = null;
 
             Install_comboBox.SelectedItem = null;
             Install_textBox.Text = null;
 
             Ug_textBox.Text = null;
             g_textBox.Text = null;
-            τD65_SNA_textBox.Text = null;
             g2_textBox.Text = null;
+            g3_textBox.Text = null;
+            τD65_SNA_textBox.Text = null;
             τD65_SNA2_textBox.Text = null;
             Psi_g_fix_textBox.Text = null;
             Psi_g_open_textBox.Text = null;
             Psi_InstallTop_textBox.Text = null;
             Psi_InstallSide_textBox.Text = null;
             Psi_InstallButtom_textBox.Text = null;
-            Uw2_textBox.Text = null;
+            Uw_textBox.Text = null;
             Uf_open_textBox.Text = null;
             Uf_fix_textBox.Text = null;
             Uf_btw_textBox.Text = null;
@@ -595,7 +583,6 @@ namespace main.subcontents.ConstructionWindow
             check_InstallType = null;
 
             Uw_textBox.Text = null;
-            Uw2_textBox.Text = null;
             dUinst_textBox.Text = null;
             Uw_inst_textBox.Text = null;
             Uw_inst2_textBox.Text = null;
@@ -705,8 +692,10 @@ namespace main.subcontents.ConstructionWindow
                     FrameName_textBox.Text = MainLoad[0][9];
                     GlassName = MainLoad[0][10];
                     GlassName_textBox.Text = MainLoad[0][10];
+                    GlassName_textBox2.Text = MainLoad[0][10];
                     SpacerName = MainLoad[0][11];
                     SpacerName_textBox.Text = MainLoad[0][11];
+                    SpacerName_textBox2.Text = MainLoad[0][11];
                     InstallType = MainLoad[0][12];
                     check_InstallType = MainLoad[0][12];
                     Install_comboBox.SelectedItem = MainLoad[0][12];
@@ -719,83 +708,124 @@ namespace main.subcontents.ConstructionWindow
                     Ug_textBox.Text = MainLoad[0][15];
 
                     g = Convert.ToDouble(MainLoad[0][16]);
-                    g_textBox.Text = String.Format("{0:F3}", g);
-                    g2_textBox.Text = String.Format("{0:F3}", g);
-
-
                     τD65_SNA = Convert.ToDouble(MainLoad[0][17]);
-                    τD65_SNA_textBox.Text = String.Format("{0:F3}", τD65_SNA);
-                    τD65_SNA2_textBox.Text = String.Format("{0:F3}", τD65_SNA);
+
+                    g_textBox.Text = g.ToString();
+                    controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(g_textBox, true, 3);
+                    g2_textBox.Text = g.ToString();
+                    controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(g2_textBox, true, 3);
+                    g3_textBox.Text = g.ToString();
+                    controls.ThousandsSeparator textbox4 = new controls.ThousandsSeparator(g3_textBox, true, 3);
+                    τD65_SNA_textBox.Text = τD65_SNA.ToString();
+                    controls.ThousandsSeparator textbox5 = new controls.ThousandsSeparator(τD65_SNA_textBox, true, 3);
+                    τD65_SNA2_textBox.Text = τD65_SNA.ToString();
+                    controls.ThousandsSeparator textbox6 = new controls.ThousandsSeparator(τD65_SNA2_textBox, true, 3);
+
 
                     Psi_g_fix = Convert.ToDouble(MainLoad[0][18]);
-                    Psi_g_fix_textBox.Text = string.Format("{0:F3}", Psi_g_fix);
-
                     Psi_g_open = Convert.ToDouble(MainLoad[0][19]);
-                    Psi_g_open_textBox.Text = String.Format("{0:F3}", Psi_g_open);
+
+                    Psi_g_fix_textBox.Text = Psi_g_fix.ToString();
+                    controls.ThousandsSeparator textbox21 = new controls.ThousandsSeparator(Psi_g_fix_textBox, true, 3);
+                    Psi_g_open_textBox.Text = Psi_g_open.ToString();
+                    controls.ThousandsSeparator textbox22 = new controls.ThousandsSeparator(Psi_g_open_textBox, true, 3);
+
 
                     Psi_InstallTop = Convert.ToDouble(MainLoad[0][20]);
-                    Psi_InstallTop_textBox.Text = String.Format("{0:F3}", Psi_InstallTop);
-
                     Psi_InstallSide = Convert.ToDouble(MainLoad[0][21]);
-                    Psi_InstallSide_textBox.Text = String.Format("{0:F3}", Psi_InstallSide);
-
-
                     Psi_InstallButtom = Convert.ToDouble(MainLoad[0][22]);
-                    Psi_InstallButtom_textBox.Text = String.Format("{0:F3}", Psi_InstallButtom);
+
+                    Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
+                    controls.ThousandsSeparator textbox23 = new controls.ThousandsSeparator(Psi_InstallTop_textBox, true, 3);
+                    Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
+                    controls.ThousandsSeparator textbox24 = new controls.ThousandsSeparator(Psi_InstallSide_textBox, true, 3);
+                    Psi_InstallButtom_textBox.Text = Psi_InstallButtom.ToString();
+                    controls.ThousandsSeparator textbox25 = new controls.ThousandsSeparator(Psi_InstallButtom_textBox, true, 3);
+
 
                     Uw = Convert.ToDouble(SubLoad[0][13]);
                     if (UwMethod == "계산")
                     {
-                        Uw_textBox.Text = String.Format("{0:F3}", Uw);
+                        Uw_textBox.Text = Uw.ToString();
+                        controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Uw_textBox, true, 3);
                     }
                     else
                     {
-                        Uw2_textBox.Text = String.Format("{0:F3}", Uw);
+                        Uw_textBox.Text = Uw.ToString();
+                        controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Uw_textBox, true, 3);
                     }
                     dUinst = Convert.ToDouble(SubLoad[0][14]);
-                    dUinst_textBox.Text = String.Format("{0:F3}", dUinst);
-
+                    dUinst_textBox.Text = dUinst.ToString();
+                    controls.ThousandsSeparator textboxa = new controls.ThousandsSeparator(dUinst_textBox, true, 3);
                     Uw_inst = Convert.ToDouble(SubLoad[0][15]);
-                    Uw_inst_textBox.Text = String.Format("{0:F3}", Uw_inst);
-                    Uw_inst2_textBox.Text = String.Format("{0:F3}", Uw_inst);
+                    Uw_inst_textBox.Text =  Uw_inst.ToString();
+                    controls.ThousandsSeparator textboxb = new controls.ThousandsSeparator(Uw_inst_textBox, true, 3);
+                    Uw_inst2_textBox.Text =  Uw_inst.ToString();
+                    controls.ThousandsSeparator textboxc = new controls.ThousandsSeparator(Uw_inst2_textBox, true, 3);
 
                     Uf_open = Convert.ToDouble(MainLoad[0][24]);
-                    Uf_open_textBox.Text = String.Format("{0:F2}", Uf_open);
+                    Uf_open_textBox.Text = Uf_open.ToString();
+                    controls.ThousandsSeparator textbox11 = new controls.ThousandsSeparator(Uf_open_textBox, true, 2);
+
                     Uf_fix = Convert.ToDouble(MainLoad[0][25]);
-                    Uf_fix_textBox.Text = String.Format("{0:F2}", Uf_fix);
+                    Uf_fix_textBox.Text = Uf_fix.ToString();
+                    controls.ThousandsSeparator textbox12 = new controls.ThousandsSeparator(Uf_fix_textBox, true, 2);
+
                     Uf_btw = Convert.ToDouble(MainLoad[0][26]);
-                    Uf_btw_textBox.Text = String.Format("{0:F2}", Uf_btw);
+                    Uf_btw_textBox.Text = Uf_btw.ToString();
+                    controls.ThousandsSeparator textbox13 = new controls.ThousandsSeparator(Uf_btw_textBox, true, 2);
+
                     df_open = Convert.ToDouble(MainLoad[0][27]);
-                    df_open_textBox.Text = String.Format("{0:F2}", df_open);
+                    df_open_textBox.Text = df_open.ToString();
+                    controls.ThousandsSeparator textbox14 = new controls.ThousandsSeparator(df_open_textBox, true, 2);
+
                     df_fix = Convert.ToDouble(MainLoad[0][28]);
-                    df_fix_textBox.Text = String.Format("{0:F2}", df_fix);
+                    df_fix_textBox.Text = df_fix.ToString();
+                    controls.ThousandsSeparator textbox15 = new controls.ThousandsSeparator(df_fix_textBox, true, 2);
+
                     df_btw = Convert.ToDouble(MainLoad[0][29]);
-                    df_btw_textBox.Text = String.Format("{0:F2}", df_btw);
+                    df_btw_textBox.Text = df_btw.ToString();
+                    controls.ThousandsSeparator textbox16 = new controls.ThousandsSeparator(df_btw_textBox, true, 2);
 
                     Area = Convert.ToDouble(SubLoad[0][3]);
-                    Area_textBox.Text = String.Format("{0:F2}", Area);
                     Width = Convert.ToDouble(SubLoad[0][4]);
-                    Width_textBox.Text = String.Format("{0:F2}", Width);
                     Height = Convert.ToDouble(SubLoad[0][5]);
-                    Height_textBox.Text = String.Format("{0:F2}", Height);
                     Ag_fix = Convert.ToDouble(SubLoad[0][6]);
-                    Ag_fix_textBox.Text = String.Format("{0:F2}", Ag_fix);
                     Ag_open = Convert.ToDouble(SubLoad[0][7]);
-                    Ag_open_textBox.Text = String.Format("{0:F2}", Ag_open);
                     Af_open = Convert.ToDouble(SubLoad[0][8]);
-                    Af_open_textBox.Text = String.Format("{0:F2}", Af_open);
                     Af_fix = Convert.ToDouble(SubLoad[0][9]);
-                    Af_fix_textBox.Text = String.Format("{0:F2}", Af_fix);
                     Af_btw = Convert.ToDouble(SubLoad[0][10]);
-                    Af_btw_textBox.Text = String.Format("{0:F2}", Af_btw);
                     Lg_fix = Convert.ToDouble(SubLoad[0][11]);
-                    Lg_fix_textBox.Text = String.Format("{0:F2}", Lg_fix);
                     Lg_open = Convert.ToDouble(SubLoad[0][12]);
-                    Lg_open_textBox.Text = String.Format("{0:F2}", Lg_open);
 
-                    d_InstallTop_textBox.Text = String.Format("{0:F2}", Width);
-                    d_InstallButtom_textBox.Text = String.Format("{0:F2}", Width);
-                    d_InstallSide_textBox.Text = String.Format("{0:F2}", (Height * 2));
+                    Area_textBox.Text = Area.ToString();
+                    Width_textBox.Text = Width.ToString();
+                    Height_textBox.Text = Height.ToString();
+                    Ag_fix_textBox.Text = Ag_fix.ToString();
+                    Ag_open_textBox.Text = Ag_open.ToString();
+                    Af_open_textBox.Text = Af_open.ToString();
+                    Af_fix_textBox.Text = Af_fix.ToString();
+                    Af_btw_textBox.Text = Af_btw.ToString();
+                    Lg_fix_textBox.Text = Lg_fix.ToString();
+                    Lg_open_textBox.Text = Lg_open.ToString();
+
+                    controls.ThousandsSeparator textbox111 = new controls.ThousandsSeparator(Area_textBox, true, 2);
+                    controls.ThousandsSeparator textbox112 = new controls.ThousandsSeparator(Width_textBox, true, 2);
+                    controls.ThousandsSeparator textbox113 = new controls.ThousandsSeparator(Height_textBox, true, 2);
+                    controls.ThousandsSeparator textbox114 = new controls.ThousandsSeparator(Ag_fix_textBox, true, 2);
+                    controls.ThousandsSeparator textbox115 = new controls.ThousandsSeparator(Ag_open_textBox, true, 2);
+                    controls.ThousandsSeparator textbox116 = new controls.ThousandsSeparator(Af_open_textBox, true, 2);
+                    controls.ThousandsSeparator textbox117 = new controls.ThousandsSeparator(Af_fix_textBox, true, 2);
+                    controls.ThousandsSeparator textbox118 = new controls.ThousandsSeparator(Af_btw_textBox, true, 2);
+                    controls.ThousandsSeparator textbox119 = new controls.ThousandsSeparator(Lg_fix_textBox, true, 2);
+                    controls.ThousandsSeparator textbox120 = new controls.ThousandsSeparator(Lg_open_textBox, true, 2);
+                    
+                    d_InstallTop_textBox.Text = Width.ToString();
+                    controls.ThousandsSeparator textbox31 = new controls.ThousandsSeparator(d_InstallTop_textBox, true, 2);
+                    d_InstallButtom_textBox.Text = Width.ToString();
+                    controls.ThousandsSeparator textbox32 = new controls.ThousandsSeparator(d_InstallButtom_textBox, true, 2);
+                    d_InstallSide_textBox.Text = (Height * 2).ToString();
+                    controls.ThousandsSeparator textbox33 = new controls.ThousandsSeparator(d_InstallSide_textBox, true, 2);
 
                     string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
                     if(Image1.Length > 0 )
