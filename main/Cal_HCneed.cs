@@ -2359,8 +2359,8 @@ namespace main
                 
                 QI_P[0,mth] = 0;
                 QI_fac[0,mth] = 0;
-                QI_P[1,mth] = qI_p * zoneArea * t_person / twd_d;
-                QI_fac[1,mth] = qI_fac * zoneArea ;
+                QI_P[1, mth] = qI_p * zoneArea;
+                QI_fac[1, mth] = qI_fac * zoneArea;
             }
            
             //이용일
@@ -2750,7 +2750,7 @@ namespace main
                 t_person = Convert.ToDouble(value[0][0]);
             }
 
-            Qsource_max = QTsource_tot_Cmax + QVsource_tot_Cmax + QSopsource_tot_Cmax + QStr_tot_Cmax + (qI_p * zoneArea * t_person / twd_d + qI_fac * zoneArea) / t_c_op_d+ Peope_Num*H_summer*twd_d*2260/3600/twd_d;
+            Qsource_max = QTsource_tot_Cmax + QVsource_tot_Cmax + QSopsource_tot_Cmax + QStr_tot_Cmax + (qI_p * zoneArea + qI_fac * zoneArea) / t_c_op_d+ Peope_Num*H_summer*twd_d*2260/3600/twd_d;
             Qsink_max = QTsink_tot_Cmax + QVsink_tot_Cmax + QSopsink_tot_Cmax;
 
             Q_max[1] = 0.8 * (Qsource_max - Qsink_max) * (1 + 0.3 * Math.Exp(-tao_max / 120)) - Cwirk_A * zoneArea / 60 * (dtheta_i_NA - 2) + Cwirk_A * zoneArea / 40 * (12 / t_c_op_d - 1) +Q_DHU_max;

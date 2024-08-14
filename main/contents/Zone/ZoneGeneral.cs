@@ -536,7 +536,10 @@ namespace main.contents
         private void PersonIHG_Cal(double PersonIHG, double UseTime)
         {
 
-            PersonIHG_1day = PersonIHG * UseTime;
+            double 일일이용시간 = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "일일이용시간"));
+            double 사람일일이용시간 = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "사람일일이용시간"));
+
+            PersonIHG_1day = PersonIHG * UseTime * 사람일일이용시간 / 일일이용시간;
             PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day);
             PersonIHG_image_Label.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m²d";
         }
@@ -562,7 +565,10 @@ namespace main.contents
                         EquipIHG = EquipIHG_High;
                         break;
                 }
-                EquipIHG_1day = EquipIHG * EquipIHG_Time;
+                double 일일이용시간 = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "일일이용시간"));
+                double 기기일일이용시간 = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기일일이용시간"));
+                EquipIHG_1day = EquipIHG * UseTime * 기기일일이용시간 / 일일이용시간;
+
                 EquipIHG_textBox.Text = EquipIHG_1day.ToString();
                 controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(EquipIHG_textBox, true, 1);
                 EquipIHG_image_Label.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m²d";
