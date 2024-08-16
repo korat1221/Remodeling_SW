@@ -6,6 +6,7 @@ using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Policy;
@@ -82,7 +83,7 @@ namespace main
 
         //냉방부분부하계산 및 최종 계산 결과값
         public double Theta_Around, ThetaC_gen_hr_req_in, ThetaC_gen_req_out, Theta_cond, Theta_evad, Anf, top;
-        public double[] tC_op = new double[12], feer_corr = new double[12], EER_c = new double[12], SEER_c = new double[12], Theta_IC = new double[12], tmth = new double[12], fC_PL = new double[12];
+        public double[] tC_op = new double[12], feer_corr = new double[12], EER_c = new double[12], SEER_c = new double[12], Theta_IC = new double[12], tmth = new double[12], fC_PL = new double[12], fC_hr = new double[12];
         public double[] QC_nd = new double[12], QC_ce = new double[12], QC_d = new double[12], QC_s = new double[12], QC_out = new double[12], QC_f = new double[12];
         public double QCa_nd, QCa_ce, QCa_d, QCa_s, QCa_out, QCa_f, QCa_p, QCa_CO2; //정의 필요
         public double[] W_ce = new double[12], W_d = new double[12], W_s = new double[12], W_g = new double[12],  W = new double[12]; //정의 필요
@@ -1422,6 +1423,7 @@ namespace main
         public void Cal_CS()
         { 
             Cal_feerCorr();
+            Cal_fhr_PL();
             Cal_MultiFactor(); //fC_M 작성
 
             //저장제어운영계수중 운영계수 반영
@@ -1518,7 +1520,6 @@ namespace main
                         } 
                     }
                     break;
-
                 case "수냉식냉동기":
                     for (int i = 0; i < 12; i++)
                     {
@@ -1561,6 +1562,161 @@ namespace main
                 mam1 = ThetaC_gen_hr_req_in - Theta_evad;
                 mam2 = (ThetaC_gen_req_out + Theta_cond) - (ThetaC_gen_hr_req_in - Theta_evad);
                 feer_corr[j] = Math.Max((son1 / son2) / (mam1 / mam2),0);
+            }
+        }
+
+        public void Cal_fhr_PL() //열원 부분부하계수
+        {
+            double a0 = 0, a1 = 0, a2 = 0; 
+            double[] twathr_in = new double[12];//수냉식 적용시 사용됨
+            
+            if (CG == "실외기12kW" || CG == "공냉식냉동기")
+            {
+                if (Comp_f == "스크류" || Comp_f == "터보")
+                {
+                    a2 = 0.00071;
+                    a1 = -0.08224;
+                    a0 = 2.91;
+                }
+                else
+                {
+                    a2 = 0.00080;
+                    a1 = -0.07753;
+                    a0 = 2.64;
+                }
+
+                for (int i = 0; i < 12; i++)
+                {
+                    if (OutdoorTemperature[i] < 12)
+                    {
+                        fC_hr[i] = 1;
+                    }
+                    else if (OutdoorTemperature[i] > 35)
+                    {
+                        fC_hr[i] = 1;
+                    }
+                    else
+                    {
+                        fC_hr[i] = a2 * OutdoorTemperature[i] * OutdoorTemperature[i] + a1 * OutdoorTemperature[i] + a0;
+                    }
+                }
+            }
+            else if (CG == "수냉식냉동기")
+            {
+                //ctctrl_f에 따라
+                double[] Qhr_out = new double[12];
+                
+                for (int i = 0;i < 12; i++)
+                {
+                    Qhr_out[i] = QC_out[i] * (1 + 1 / (EER_f * feer_corr[i] * fC_PL[i]));
+                }
+                              
+                
+                switch (CTControl_f)
+                {
+                    case "제어없음":
+                        //냉각수공급온도  
+
+                        for (int k = 0; k < 12; k++)
+                        {
+                            twathr_in[k] = CWout + Qhr_out[k] / (tC_op[k] * Power_f) * 5;
+
+                        }
+                        break;
+                    
+                    case "항온공급":
+
+                        if (CTtype_f == "건식") 
+                        {
+                            for (int k = 0; k < 12; k++)
+                            {
+                                twathr_in[k] = 45;
+                            }
+                        }
+                        else if(CTtype_f == "습식")
+                        {
+                            for (int k = 0; k < 12; k++)
+                            {
+                                twathr_in[k] = 33;
+                            }
+                        }
+                        break;
+                    
+                    case "가변온도공급":
+
+                        double[] maxfind = new double[2];
+                        maxfind[0] = 20; //EN16798-13 표 B.19
+                       
+                        for (int k = 0; k < 12; k++)
+                        {
+                            maxfind[1] = CWout + Qhr_out[k] / (tC_op[k] * Power_f) * 5;
+                            twathr_in[k] = maxfind.Max();
+                        }
+                        break;
+                    default:
+                        break;
+
+                }
+                if (CTtype_f == "건식") //15~50
+                {
+                    if (Comp_f == "스크류")
+                    {
+                        a2 = 0;
+                        a1 = -0.0486;
+                        a0 = 3.1851;
+                    }
+                    else
+                    {
+                        a2 = 0;
+                        a1 = -0.0249;
+                        a0 = 2.1181;
+                    }
+
+                    for (int i = 0; i < 12; i++)
+                    {
+                        if (twathr_in[i] < 12)
+                        {
+                            fC_hr[i] = 1;
+                        }
+                        else if (twathr_in[i] > 40)
+                        {
+                            fC_hr[i] = 1;
+                        }
+                        else
+                        {
+                            fC_hr[i] = a2 * twathr_in[i] * twathr_in[i] + a1 * twathr_in[i] + a0;
+                        }
+                    }
+                }
+                else if (CTtype_f == "습식") //12~40
+                {
+                    a2 = 0;
+                    a1 = -0.0307;
+                    a0 = 2.0164;
+
+                    for (int i = 0; i < 12; i++)
+                    {
+                        if (twathr_in[i] < 15)
+                        {
+                            fC_hr[i] = 1;
+                        }
+                        else if (twathr_in[i] > 50)
+                        {
+                            fC_hr[i] = 1;
+                        }
+                        else
+                        {
+                            fC_hr[i] = a2 * twathr_in[i] * twathr_in[i] + a1 * twathr_in[i] + a0;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 12; i++)
+                {
+                    fC_hr[i] = 1;
+                }
             }
         }
         public void Cal_MultiFactor()
