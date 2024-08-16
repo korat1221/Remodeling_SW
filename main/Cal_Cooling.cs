@@ -1438,7 +1438,7 @@ namespace main
             for (int i = 0; i < 12; i++)
             {
                 EER_c[i] = EER_f * feer_corr[i];
-                SEER_c[i] = EER_c[i] * fC_PL[i] * fC_M * fSP;
+                SEER_c[i] = EER_c[i] * fC_PL[i] * fC_hr[i]* fC_M * fSP;
                
 
                 if (SEER_c[i] == 0)
