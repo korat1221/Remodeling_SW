@@ -136,19 +136,13 @@
       }
 
       function getColor(gubun) {
-        if (type === "roof" || type === "floor") {
-          let categories = {
-          };
-          return categories[gubun] ? categories[gubun] : "#fff";
-        } else {
-          let categories = {
+        let categories = {
             "기존외벽":"#6e6e6e",
             "덧댐커튼월":"#99CCFF",            
             "기존지붕":"#6e6e6e",            
             "기존바닥":"#6e6e6e",
           }
           return categories[gubun];
-        }
       }
 
       function drawWall(arr) {
