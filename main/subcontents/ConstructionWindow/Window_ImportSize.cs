@@ -26,6 +26,7 @@ namespace main.subcontents
             this.df_open = df_open;
             this.df_fix = df_fix;
             this.df_btw = df_btw;
+            load_table_SizeInfo();
         }
 
         private void CSVImport_button_Click(object sender, EventArgs e)
@@ -41,7 +42,7 @@ namespace main.subcontents
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Program.DB.deleteTable(DB.type.CalcDB, "Import_WindowSize");
+                Program.DB.deleteTable(DB.type.ProjDB, "Import_WindowSize");
 
                 try
                 {
@@ -56,7 +57,7 @@ namespace main.subcontents
                             }
                             else
                             {
-                                Program.DB.setValue(DB.type.CalcDB, "Import_WindowSize", "창호명칭,창호면적,창호너비,창호높이,고정창유리면적,개폐창유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정창유리둘레길이,개폐창유리둘레길이",
+                                Program.DB.setValue(DB.type.ProjDB, "Import_WindowSize", "창호명칭,창호면적,창호너비,창호높이,고정창유리면적,개폐창유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정창유리둘레길이,개폐창유리둘레길이",
                                 "'" + token[0] + "','" + token[1] + "','" + token[2] + "','" + token[3] + "','"
                                 + token[4] + "','" + token[5] + "','" + token[6] + "','" + token[7] + "','" + token[8] + "','"
                                 + token[9] + "','" + token[10] + "'", "창호명칭");
@@ -94,7 +95,7 @@ namespace main.subcontents
             Size_dataGridView.Columns.Add("A10", "유리 둘레길이.고정창.[m]");
             Size_dataGridView.Columns.Add("A11", "유리 둘레길이.개폐창.[m]");
 
-            string[][] WinSize = Program.DB.getValue(DB.type.CalcDB, "Import_WindowSize", "창호명칭,창호면적,창호너비,창호높이,고정창유리면적,개폐창유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정창유리둘레길이,개폐창유리둘레길이");
+            string[][] WinSize = Program.DB.getValue(DB.type.ProjDB, "Import_WindowSize", "창호명칭,창호면적,창호너비,창호높이,고정창유리면적,개폐창유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정창유리둘레길이,개폐창유리둘레길이");
             if (WinSize.Length > 0)
             {
                 for (int n = 0; n < WinSize.Length; n++)
@@ -104,8 +105,12 @@ namespace main.subcontents
                     Size_dataGridView.Rows[nRow].Cells[1].Value = WinSize[n][0];
                     for (int k = 1; k < 11; k++)
                     {
-                        if(WinSize[n][k] != ""&& Convert.ToDouble(WinSize[n][k])>0)
-                        { Size_dataGridView.Rows[nRow].Cells[k + 1].Value = Convert.ToDouble( WinSize[n][k]).ToString("0.00"); }
+                        if (WinSize[n][k] != "" && Convert.ToDouble(WinSize[n][k]) > 0)
+                        { Size_dataGridView.Rows[nRow].Cells[k + 1].Value = Convert.ToDouble(WinSize[n][k]).ToString("0.00"); }
+                        else
+                        {
+                            Size_dataGridView.Rows[nRow].Cells[k + 1].Value = 0;
+                        }
                     }
                 }
             }
@@ -174,25 +179,25 @@ namespace main.subcontents
 
         private void Calc_button_Click(object sender, EventArgs e)
         {
-            Calc_Uw2by2();
+            Calc_Area();
             load_table_SizeInfo();
         }
-        private void Calc_Uw2by2()
+        private void Calc_Area()
         {
-            if (Name != null && Name != "" && width >0 && height > 0 && n_hori >0 && n_ver>0)
+            if (Name != null && Name != "" && width > 0 && height > 0 && n_hori > 0 && n_ver > 0)
             {
-                double Af_open = Math.Max(((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2) * percent_open / 100 * df_open,0);
-                double Af_fix = Math.Max(((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2) * (1 - percent_open / 100) * df_btw,0);
-                double Af_btw = Math.Max(((n_hori - 1) * height + (n_ver - 1) * width) * df_btw,0);
+                double Af_open = Math.Max(((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2) * percent_open / 100 * df_open, 0);
+                double Af_fix = Math.Max(((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2) * (1 - percent_open / 100) * df_btw, 0);
+                double Af_btw = Math.Max(((n_hori - 1) * height + (n_ver - 1) * width) * df_btw, 0);
                 double Area = width * height;
                 double Ag_fix = Math.Max((Area - (Af_open + Af_fix + Af_btw)) * (1 - percent_open / 100), 0);
                 double Ag_open = Math.Max(Area - (Af_open + Af_fix + Af_btw + Ag_fix), 0);
-                double Lg_fix = Math.Max(((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2 + ((n_hori - 1) * height + (n_ver - 1) * width)) * (1 - percent_open / 100),0);
-                double Lg_open = Math.Max(((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2 + ((n_hori - 1) * height + (n_ver - 1) * width)) * (percent_open / 100),0);
+                double Lg_fix = Math.Max(((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2 + ((n_hori - 1) * height + (n_ver - 1) * width)) * (1 - percent_open / 100), 0);
+                double Lg_open = Math.Max(((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2 + ((n_hori - 1) * height + (n_ver - 1) * width)) * (percent_open / 100), 0);
 
                 if ((Af_open + Af_fix) > 0 && (Ag_fix + Ag_open) > 0)
                 {
-                    Program.DB.setValue(DB.type.CalcDB, "Import_WindowSize", "창호명칭,창호면적,창호너비,창호높이,고정창유리면적,개폐창유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정창유리둘레길이,개폐창유리둘레길이",
+                    Program.DB.setValue(DB.type.ProjDB, "Import_WindowSize", "창호명칭,창호면적,창호너비,창호높이,고정창유리면적,개폐창유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정창유리둘레길이,개폐창유리둘레길이",
                                     "'" + Name + "','" + Area + "','" + width + "','" + height + "','"
                                     + Ag_fix + "','" + Ag_open + "','" + Af_open + "','" + Af_fix + "','" + Af_btw + "','"
                                     + Lg_fix + "','" + Lg_open + "'", "창호명칭");
@@ -202,12 +207,12 @@ namespace main.subcontents
             {
                 MessageBox.Show("창호 명칭, 너비, 높이, 가로/세로 칸 수는 필수 입력입니다.");
             }
-                     
+
         }
 
         private void Name_textBox_TextChanged(object sender, EventArgs e)
         {
-            if(Name_textBox.Text != null)
+            if (Name_textBox.Text != null)
             {
                 Name = Name_textBox.Text.ToString();
             }
@@ -229,7 +234,7 @@ namespace main.subcontents
         {
             controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(percent_open_textBox, false, 1);
             percent_open = textbox.text;
-            if(percent_open <1)
+            if (percent_open < 1)
             {
                 MessageBox.Show("퍼센트 단위로 입력하세요.(Ex : 90.1% ⇒ 90.1)");
             }
@@ -246,5 +251,6 @@ namespace main.subcontents
             controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(n_ver_textBox, false, 0);
             n_ver = textbox.text;
         }
+
     }
 }

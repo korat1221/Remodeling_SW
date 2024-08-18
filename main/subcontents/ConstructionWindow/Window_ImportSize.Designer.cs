@@ -53,7 +53,6 @@
             label10 = new Label();
             label12 = new Label();
             Calc_button = new Button();
-            Delete_button = new Button();
             label13 = new Label();
             Name_textBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)Size_dataGridView).BeginInit();
@@ -303,20 +302,6 @@
             Calc_button.UseVisualStyleBackColor = false;
             Calc_button.Click += Calc_button_Click;
             // 
-            // Delete_button
-            // 
-            Delete_button.BackColor = SystemColors.ControlLight;
-            Delete_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            Delete_button.FlatStyle = FlatStyle.System;
-            Delete_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Delete_button.Location = new Point(1115, 78);
-            Delete_button.Margin = new Padding(0);
-            Delete_button.Name = "Delete_button";
-            Delete_button.Size = new Size(23, 23);
-            Delete_button.TabIndex = 116;
-            Delete_button.Text = "-";
-            Delete_button.UseVisualStyleBackColor = false;
-            // 
             // label13
             // 
             label13.AutoSize = true;
@@ -340,11 +325,10 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
+            BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(1147, 459);
             Controls.Add(label13);
             Controls.Add(Name_textBox);
-            Controls.Add(Delete_button);
             Controls.Add(Calc_button);
             Controls.Add(label12);
             Controls.Add(label10);
@@ -395,7 +379,6 @@
         private Label label10;
         private Label label12;
         private Button Calc_button;
-        private Button Delete_button;
         private Label label13;
         private TextBox Name_textBox;
     }
