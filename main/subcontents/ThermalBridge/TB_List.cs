@@ -71,7 +71,7 @@ namespace main.contents
 
             string[][] Value;
             Value = Program.DB.getValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,열교항목,열교길이,선택열교", "열교항목 = '" + TBType + "'");
-
+            Total_length = 0;
             for (int i = 0; i < Value.Length; i++)
             {
                 int nRow = dataGridView1.Rows.Add();
