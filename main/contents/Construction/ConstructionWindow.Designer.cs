@@ -356,6 +356,7 @@ namespace main.contents
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(Uw2_label);
             panel2.Controls.Add(label21);
             panel2.Controls.Add(g3_textBox);
             panel2.Controls.Add(label28);
@@ -365,7 +366,6 @@ namespace main.contents
             panel2.Controls.Add(ImportSize_button);
             panel2.Controls.Add(Uw2_unit_label);
             panel2.Controls.Add(Uw2_textBox);
-            panel2.Controls.Add(Uw2_label);
             panel2.Controls.Add(Install_textBox);
             panel2.Controls.Add(Install_button);
             panel2.Controls.Add(SpacerName_textBox);

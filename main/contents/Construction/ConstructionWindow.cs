@@ -380,7 +380,7 @@ namespace main.contents
 
 
                     Uw2_label.Visible = true;
-                    Uw2_label.Text = "[Uw] 창호열관류율\r\n(2m *2m 사이즈 기준)";
+                    Uw2_label.Text = "[Uw] 창호열관류율 (2m *2m 사이즈 기준)";
                     Uw2_unit_label.Visible = true;
                     Uw2_textBox.Visible = true;
                     Uw2_textBox.Enabled = false;
