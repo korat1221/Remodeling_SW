@@ -44,6 +44,7 @@ namespace main.subcontents.ConstructionFloor
             {
                 TB_Type_comboBox.Items.Clear();
                 TB_Type_comboBox.Items.Add("외단열");
+                TB_Type_comboBox.Items.Add("내단열");
             }
             else if (FloorType == "외부덧댐" )
             {
@@ -62,15 +63,7 @@ namespace main.subcontents.ConstructionFloor
         }
         private void Check_LinearPoint(String TB_Type)
         {
-            if (TB_Type == "외단열" || TB_Type == "외부덧댐형")
-            {
-                LinearPoint = "선형";
-            }
-            else
-            {
-                LinearPoint = "점형";
-                //바닥은 점형열교가 없긴한데 그냥 둠..
-            }
+            LinearPoint = "선형";
             load_table_DB();
             Load_Image1();
         }
