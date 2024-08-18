@@ -419,31 +419,5 @@ namespace main.subcontents
             this.Close();
 
         }
-
-        private void LoadData(string DoorNum)
-        {
-            String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,Door유형,제품명,제조사,문틀내부," +
-                            "문틀상부측면열관류율,문틀하부열관류율,출입문재질," +
-                            "문짝내부유형,문짝단열재종류 ,문짝두께,문길이,문높이,문짝열관류율"
-                            , "번호 = '" + DoorNum + "'");
-            if (Load.Length > 0)
-            {
-                Door_dataGridView.Rows[nRow].Cells[1].Value = Load[0][0];
-                Door_dataGridView.Rows[nRow].Cells[2].Value = Load[0][1];
-                Door_dataGridView.Rows[nRow].Cells[4].Value = Load[0][2];
-                Door_dataGridView.Rows[nRow].Cells[5].Value = Load[0][3];
-                Door_dataGridView.Rows[nRow].Cells[6].Value = Load[0][4];
-                Door_dataGridView.Rows[nRow].Cells[7].Value = Load[0][5];
-                Door_dataGridView.Rows[nRow].Cells[8].Value = Load[0][6];
-                Door_dataGridView.Rows[nRow].Cells[9].Value = Load[0][7];
-                Door_dataGridView.Rows[nRow].Cells[10].Value = Load[0][8];
-                Door_dataGridView.Rows[nRow].Cells[11].Value = Load[0][9];
-                Door_dataGridView.Rows[nRow].Cells[13].Value = Load[0][10];
-                Door_dataGridView.Rows[nRow].Cells[14].Value = Load[0][11];
-                Door_dataGridView.Rows[nRow].Cells[15].Value = Load[0][12];
-                Door_dataGridView.Rows[nRow].Cells[16].Value = Load[0][13]; //로드 이상
-            }
-                
-        }
     }
 }
