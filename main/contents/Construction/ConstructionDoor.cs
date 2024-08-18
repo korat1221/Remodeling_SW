@@ -25,7 +25,6 @@ namespace main.contents
         double DoorArea, DoorL, DoorH, GlassL, GlassH, GlassArea;//치수정보
         double DoorUD, DoorOver, DoorBottom, DoorUDGlass, DoorUDinsGlass, DoorThk, αd;//문열관류율,문틀상하부열관류율,유리반영문열관류율,유효문열관류율, 문짝두께, 문흡수율
         String Material, FrameIn, DoorIn, DoorDB, DoorInsul; //문짝문틀정보,제품명
-        double OverL, UnderL;//상부하부길이
         String[] Select = new String[14];
 
         private String DoorNum;
@@ -493,10 +492,8 @@ namespace main.contents
                 DoorArea_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000);
                 DoorArea2_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000);
 
-                OverL = (2 * DoorH + DoorL) / 1000;
-                OverL_textBox.Text = OverL.ToString();
-                UnderL = DoorL / 1000;
-                UnderL_textBox.Text = UnderL.ToString();
+                OverL_textBox.Text = ((DoorL  + DoorH* 2)/ 1000).ToString();
+                UnderL_textBox.Text = (DoorL / 1000).ToString();
             }
         }
 
@@ -508,10 +505,8 @@ namespace main.contents
                 DoorArea_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000);
                 DoorArea2_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000);
 
-                OverL = (2 * DoorH + DoorL) / 1000;
-                OverL_textBox.Text = OverL.ToString();
-                UnderL = DoorL / 1000;
-                UnderL_textBox.Text = UnderL.ToString();
+                OverL_textBox.Text = ((DoorL + DoorH * 2 / 1000)).ToString();
+                UnderL_textBox.Text = (DoorL / 1000).ToString();
             }
         }
 
@@ -949,13 +944,13 @@ namespace main.contents
 
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             Program.DB.setValue(DB.type.ProjDB, "ConstructionDoor", "번호,프로젝트유형,명칭,Type,기존출입문,UD적용방법,직접간접,문짝제품,출입문재질,문틀내부,문짝내부유형,문짝색,흡수율,문짝단열재종류," +
-                      "문짝두께,문짝열관류율,문틀상부측면열관류율,문틀하부열관류율,문면적,문높이,문길이,유리적용유무," +
-                      "설치유형,설치유형2,상부측면설치길이,하부설치길이,상부선형열관류율,측면부선형열관류율,하부선형열관류율,상부설치길이,측면설치길이,하부설치길이2,열교가산치," +
+                      "문짝두께,문열관류율,문틀상부측면열관류율,문틀하부열관류율,문면적,문높이,문길이,유리적용유무," +
+                      "설치유형,설치유형2,상부선형열관류율,측면부선형열관류율,하부선형열관류율,상부설치길이,측면설치길이,하부설치길이,열교가산치," +
                       "문유효열관류율,Door유형,제품명,제조사," +
                       "법규열관류율",
                     "'" + DoorNum_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + DoorName + "','" + Type + "','" + OldDoor + "','" + UDoorMethod + "','" + DiIndi + "','" + DoorDB + "','" + Material + "','" + FrameIn + "','" + DoorIn + "','" + DoorColor + "','" + αd.ToString() + "','" + DoorInsul + "','" +
                     DoorThk.ToString() + "','" + DoorUD.ToString() + "','" + DoorOver.ToString() + "','" + DoorBottom.ToString() + "','" + DoorArea_textBox.Text + "','" + DoorH.ToString() + "','" + DoorL.ToString() + "','" + glass_check.ToString() + "','" +
-                    InstallType + "','" + Install2 + "','" + OverL.ToString() + "','" + UnderL.ToString() + "','" + Psi_InstallTop.ToString() + "','" + Psi_InstallSide.ToString() + "','" + Psi_InstallBottom.ToString() + "','" + d_InstallTop_textBox.Text + "','" + d_InstallSide_textBox.Text + "','" + d_InstallBottom_textBox.Text + "','" + dUinst_textBox.Text + "','" +
+                    InstallType + "','" + Install2 + "','" + Psi_InstallTop.ToString() + "','" + Psi_InstallSide.ToString() + "','" + Psi_InstallBottom.ToString() + "','" + d_InstallTop_textBox.Text + "','" + d_InstallSide_textBox.Text + "','" + d_InstallBottom_textBox.Text + "','" + dUinst_textBox.Text + "','" +
                     DoorUDinsGlass.ToString() + "','" + DBType + "','" + DBName + "','" + DBName2 + "','" +
                     법규U.ToString()
                     + "'", "번호");
@@ -964,7 +959,7 @@ namespace main.contents
             if (glass_checkBox.Checked)
             {
                 Program.DB.setValue(DB.type.ProjDB, "ConstructionDoor", "번호," +
-                          "유리가로,유리세로,유리종류,유리면적,유리열관류율,문열관류율",
+                          "유리가로,유리세로,유리종류,유리면적,유리열관류율,유리반영문열관류율",
                         "'" + DoorNum_textBox.Text + "','" +
                         GlassL.ToString() + "','" + GlassH.ToString() + "','" + GlassName + "','" +
                        GlassArea_textBox.Text + "','" + Ug.ToString() + "','" + DoorUDGlass.ToString()
@@ -1047,7 +1042,6 @@ namespace main.contents
             DoorArea = 0; DoorL = 0; DoorH = 0; GlassL = 0; GlassH = 0; GlassArea = 0;
             DoorUD = 0; DoorOver = 0; DoorBottom = 0; DoorUDGlass = 0; DoorUDinsGlass = 0; DoorThk = 0; αd = 0;
             Material = null; FrameIn = null; DoorIn = null; DoorDB = null; DoorInsul = null;
-            OverL = 0; UnderL = 0;
             for (int i = 0; i < 14; i++)
             {
                 Select[i] = null;
@@ -1070,8 +1064,8 @@ namespace main.contents
             DoorNum = ID;
 
             String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,명칭,Type,기존출입문,UD적용방법,직접간접,문짝제품,출입문재질,문틀내부,문짝내부유형,문짝색,흡수율,문짝단열재종류," +
-                  "문짝두께,문짝열관류율,문틀상부측면열관류율,문틀하부열관류율,문면적,문높이,문길이,유리적용유무," +
-                  "설치유형,설치유형2,상부측면설치길이,하부설치길이,상부선형열관류율,측면부선형열관류율,하부선형열관류율,상부설치길이,측면설치길이,하부설치길이2,열교가산치," +
+                  "문짝두께,문열관류율,문틀상부측면열관류율,문틀하부열관류율,문면적,문높이,문길이,유리적용유무," +
+                  "설치유형,설치유형2,상부선형열관류율,측면부선형열관류율,하부선형열관류율,상부설치길이,측면설치길이,하부설치길이,열교가산치," +
                   "문유효열관류율"
                   , "번호 = '" + ID + "'");
             if (Load.Length > 0)
@@ -1124,7 +1118,7 @@ namespace main.contents
                 Install2 = Load[0][22];
                 Install_textBox.Text = Install2;
 
-                DoorUDinsGlass = Convert.ToDouble(Load[0][32]);
+                DoorUDinsGlass = Convert.ToDouble(Load[0][30]);
                 UD_textBox.Text = String.Format("{0:F3}", DoorUDinsGlass);
 
                 //문짝문틀정보
@@ -1139,31 +1133,30 @@ namespace main.contents
                 over_textBox.Text = DoorOver.ToString();
                 DoorBottom = Convert.ToDouble(Load[0][16]);
                 bottom_textBox.Text = DoorBottom.ToString();
-                OverL = Convert.ToDouble(Load[0][23]);
-                OverL_textBox.Text = OverL.ToString();
-                UnderL = Convert.ToDouble(Load[0][24]);
-                UnderL_textBox.Text = Convert.ToString(UnderL.ToString());
+
+                OverL_textBox.Text = ((DoorL + DoorH * 2)/1000).ToString();
+                UnderL_textBox.Text = (DoorL / 1000).ToString();
 
                 //설치열교정보
-                Psi_InstallTop = Convert.ToDouble(Load[0][25]);
+                Psi_InstallTop = Convert.ToDouble(Load[0][23]);
                 Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
-                Psi_InstallSide = Convert.ToDouble(Load[0][26]);
+                Psi_InstallSide = Convert.ToDouble(Load[0][24]);
                 Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
-                Psi_InstallBottom = Convert.ToDouble(Load[0][27]);
+                Psi_InstallBottom = Convert.ToDouble(Load[0][25]);
                 Psi_InstallBottom_textBox.Text = Psi_InstallBottom.ToString();
 
-                d_InstallTop_textBox.Text = Load[0][28];
-                d_InstallSide_textBox.Text = Load[0][29];
-                d_InstallBottom_textBox.Text = Load[0][30];
+                d_InstallTop_textBox.Text = Load[0][26];
+                d_InstallSide_textBox.Text = Load[0][27];
+                d_InstallBottom_textBox.Text = Load[0][28];
 
-                DoorUDinsGlass = Convert.ToDouble(Load[0][31]);
+                DoorUDinsGlass = Convert.ToDouble(Load[0][29]);
                 dUinst_textBox.Text = String.Format("{0:F3}", DoorUDinsGlass);
                 Load_DoorType_image2();
                 Load_DoorType_image3();
                 Load_DoorType_image4();
                 Load_DoorType_image5();
 
-                Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "Door유형,제품명,제조사,문틀내부,문틀상부측면열관류율,문틀하부열관류율,출입문재질,문짝내부유형,문짝단열재종류,문짝두께,문길이,문높이,문짝열관류율", "번호 = '" + ID + "'");
+                Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "Door유형,제품명,제조사,문틀내부,문틀상부측면열관류율,문틀하부열관류율,출입문재질,문짝내부유형,문짝단열재종류,문짝두께,문길이,문높이,문열관류율", "번호 = '" + ID + "'");
                 if (Load.Length > 0)
                 {
                     Select[0] = ID;
@@ -1186,7 +1179,7 @@ namespace main.contents
             }
             if (glass_check == true)
             {
-                Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "유리가로,유리세로,유리종류,유리면적,유리열관류율,문열관류율"
+                Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "유리가로,유리세로,유리종류,유리면적,유리열관류율,유리반영문열관류율"
               , "번호 = '" + ID + "'");
                 if (Load.Length > 0)
                 {
