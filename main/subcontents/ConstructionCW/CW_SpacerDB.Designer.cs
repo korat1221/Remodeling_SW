@@ -31,10 +31,6 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            GeneralPanel = new Panel();
-            label2 = new Label();
-            pictureBox1 = new PictureBox();
-            label1 = new Label();
             Save_button = new Button();
             label5 = new Label();
             label10 = new Label();
@@ -57,55 +53,15 @@
             UserDBType2_comboBox = new CustomComboBox();
             label8 = new Label();
             UserDBType1_comboBox = new CustomComboBox();
-            GeneralPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Spacer_dataGridView).BeginInit();
             SuspendLayout();
-            // 
-            // GeneralPanel
-            // 
-            GeneralPanel.BackColor = Color.AliceBlue;
-            GeneralPanel.Controls.Add(label2);
-            GeneralPanel.Controls.Add(pictureBox1);
-            GeneralPanel.Controls.Add(label1);
-            GeneralPanel.Location = new Point(0, -2);
-            GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(985, 181);
-            GeneralPanel.TabIndex = 18;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(655, 58);
-            label2.Name = "label2";
-            label2.Size = new Size(191, 60);
-            label2.TabIndex = 2;
-            label2.Text = "Ψg,mt: ①②③⑦ 길이 가중\r\n         평균 유리엣지선형열관류율\r\nΨg,fr: ④⑤⑥⑦ 길이 가중 \r\n       평균 유리엣지선형열관류율\r\n";
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(470, 12);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(201, 153);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(70, 36);
-            label1.Name = "label1";
-            label1.Size = new Size(362, 105);
-            label1.TabIndex = 0;
-            label1.Text = "- ISO 10211기준, ISO 10077-2 기준 시뮬레이션 값을 적용합니다.\r\n\r\n- 오른쪽 그림을 참조하여 해당하는 값을 입력하시오.\r\n\r\n- 고정(개폐)유리부분은 상부, 측면, 하부길이 가중\r\n\r\n  평균 선형열관류율을 적용합니다.";
             // 
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(838, 450);
+            Save_button.Location = new Point(828, 255);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -232,7 +188,7 @@
             panel1.Controls.Add(label8);
             panel1.Controls.Add(UserDBType1_comboBox);
             panel1.Controls.Add(label6);
-            panel1.Location = new Point(-1, 185);
+            panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(985, 249);
             panel1.TabIndex = 27;
@@ -306,7 +262,7 @@
             Spacer_dataGridView.AllowUserToResizeColumns = false;
             Spacer_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             Spacer_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            Spacer_dataGridView.BackgroundColor = SystemColors.Control;
+            Spacer_dataGridView.BackgroundColor = Color.White;
             Spacer_dataGridView.BorderStyle = BorderStyle.None;
             Spacer_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Spacer_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -319,7 +275,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             Spacer_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Spacer_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Spacer_dataGridView.Location = new Point(3, 78);
+            Spacer_dataGridView.Location = new Point(2, 79);
             Spacer_dataGridView.Name = "Spacer_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
@@ -344,6 +300,7 @@
             // 
             // UserDBType2_comboBox
             // 
+            UserDBType2_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             UserDBType2_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDBType2_comboBox.FormattingEnabled = true;
             UserDBType2_comboBox.Location = new Point(828, 12);
@@ -363,6 +320,7 @@
             // 
             // UserDBType1_comboBox
             // 
+            UserDBType1_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             UserDBType1_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDBType1_comboBox.FormattingEnabled = true;
             UserDBType1_comboBox.Location = new Point(652, 12);
@@ -375,18 +333,14 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.Control;
-            ClientSize = new Size(985, 487);
+            BackColor = Color.White;
+            ClientSize = new Size(985, 295);
             Controls.Add(panel1);
             Controls.Add(Save_button);
-            Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             MdiChildrenMinimizedAnchorBottom = false;
             Name = "CW_SpacerDB";
             Text = "CW_SpacerDB";
-            GeneralPanel.ResumeLayout(false);
-            GeneralPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Spacer_dataGridView).EndInit();

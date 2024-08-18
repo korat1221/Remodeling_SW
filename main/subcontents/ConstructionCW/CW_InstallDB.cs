@@ -50,6 +50,7 @@ namespace main.subcontents.ConstructionCW
         {
             InitializeComponent();
             this.InstallType = InstallType;
+            this.FrameType = FrameType;
             load_table_InstallDB();
             //사용자DB 구분1 콤보박스
             UserDBType1_comboBox.Items.Add("내단열");
