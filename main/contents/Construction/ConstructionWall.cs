@@ -58,6 +58,7 @@ namespace main.contents
                     radioButton3.Enabled = false;
                     radioButton4.Enabled = false;
                     radioButton5.Enabled = false;
+                    radioButton6.Enabled = false;
                 }              
                 else if (value[0][0] == "4")
                 {
@@ -66,6 +67,7 @@ namespace main.contents
                     radioButton3.Enabled = false;
                     radioButton4.Enabled = false;
                     radioButton5.Enabled = false;
+                    radioButton6.Enabled = false;
                 }
             }
             //외장재색 콤보박스
