@@ -674,7 +674,7 @@ namespace main.contents.Building
                           + "'", "연료,연도,월,단위");
                 }
             }
-            for (int n = 0; n < Gas_kWh_dataGridView.Rows.Count; n++)
+            for (int n = 0; n < DH_kWh_dataGridView.Rows.Count; n++)
             {
                 for (int mth = 1; mth < 13; mth++)
                 {
