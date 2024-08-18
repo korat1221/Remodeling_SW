@@ -28,7 +28,6 @@ namespace main.contents
         {
             InitializeComponent();
             InitializeAsync();
-
             webView21.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '차양정보'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);

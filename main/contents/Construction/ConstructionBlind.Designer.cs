@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConstructionBlind));
             GeneralPanel = new Panel();
+            OldBlind_textBox = new TextBox();
+            OldBlind_comboBox = new CustomComboBox();
             label3 = new Label();
             Name_textBox = new TextBox();
             Type_textBox = new TextBox();
@@ -73,8 +75,6 @@
             label1 = new Label();
             Previous_button = new Button();
             Save_button = new Button();
-            OldBlind_textBox = new TextBox();
-            OldBlind_comboBox = new CustomComboBox();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -103,6 +103,28 @@
             GeneralPanel.Size = new Size(977, 101);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // OldBlind_textBox
+            // 
+            OldBlind_textBox.BackColor = Color.White;
+            OldBlind_textBox.BorderStyle = BorderStyle.None;
+            OldBlind_textBox.Enabled = false;
+            OldBlind_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            OldBlind_textBox.ForeColor = SystemColors.ControlText;
+            OldBlind_textBox.Location = new Point(693, 23);
+            OldBlind_textBox.Name = "OldBlind_textBox";
+            OldBlind_textBox.Size = new Size(67, 15);
+            OldBlind_textBox.TabIndex = 104;
+            OldBlind_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // OldBlind_comboBox
+            // 
+            OldBlind_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            OldBlind_comboBox.FormattingEnabled = true;
+            OldBlind_comboBox.Location = new Point(717, 46);
+            OldBlind_comboBox.Name = "OldBlind_comboBox";
+            OldBlind_comboBox.Size = new Size(120, 24);
+            OldBlind_comboBox.TabIndex = 103;
             // 
             // label3
             // 
@@ -602,28 +624,6 @@
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
-            // 
-            // AdditionalCW_textBox
-            // 
-            OldBlind_textBox.BackColor = Color.White;
-            OldBlind_textBox.BorderStyle = BorderStyle.None;
-            OldBlind_textBox.Enabled = false;
-            OldBlind_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            OldBlind_textBox.ForeColor = SystemColors.ControlText;
-            OldBlind_textBox.Location = new Point(693, 23);
-            OldBlind_textBox.Name = "AdditionalCW_textBox";
-            OldBlind_textBox.Size = new Size(67, 15);
-            OldBlind_textBox.TabIndex = 104;
-            OldBlind_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // OldCW_comboBox
-            // 
-            OldBlind_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            OldBlind_comboBox.FormattingEnabled = true;
-            OldBlind_comboBox.Location = new Point(717, 46);
-            OldBlind_comboBox.Name = "OldCW_comboBox";
-            OldBlind_comboBox.Size = new Size(120, 24);
-            OldBlind_comboBox.TabIndex = 103;
             // 
             // ConstructionBlind
             // 
