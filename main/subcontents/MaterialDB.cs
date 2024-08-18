@@ -92,6 +92,7 @@ namespace main.subcontents
             table.Columns.Add("투습저항계수" + Environment.NewLine + "wet", typeof(string));
             table.Columns.Add("비고", typeof(string));
 
+
             if(MaterialType=="공기층")
             {
                 table.Rows.Add("M_000", "표준", "공기층",null,null,"0");
@@ -124,6 +125,10 @@ namespace main.subcontents
                 }
             }
             dataGridView.DataSource = table;
+            dataGridView.Columns[0].Width = 40;
+            dataGridView.Columns[1].Width = 60;
+            dataGridView.Columns[2].Width = 70;
+            dataGridView.Columns[3].Width = 150;
             Count_FrameDB = Value.Length;
         }
 
