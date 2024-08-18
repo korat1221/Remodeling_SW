@@ -30,7 +30,6 @@
         {
             GeneralPanel = new Panel();
             label64 = new Label();
-            label2 = new Label();
             AdditionalCW_textBox = new TextBox();
             OldCW_comboBox = new CustomComboBox();
             Type_textBox = new TextBox();
@@ -228,6 +227,8 @@
             Area_textBox = new TextBox();
             label66 = new Label();
             CWType_pictureBox = new PictureBox();
+            label1 = new Label();
+            Area_textBox2 = new TextBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -247,7 +248,6 @@
             // 
             GeneralPanel.BackColor = Color.White;
             GeneralPanel.Controls.Add(label64);
-            GeneralPanel.Controls.Add(label2);
             GeneralPanel.Controls.Add(AdditionalCW_textBox);
             GeneralPanel.Controls.Add(OldCW_comboBox);
             GeneralPanel.Controls.Add(Type_textBox);
@@ -257,7 +257,6 @@
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Controls.Add(Name_textBox);
             GeneralPanel.Controls.Add(groupBox1);
-            GeneralPanel.Controls.Add(ImportSize_button);
             GeneralPanel.Controls.Add(CWNum_textBox);
             GeneralPanel.Location = new Point(12, 12);
             GeneralPanel.Name = "GeneralPanel";
@@ -273,16 +272,6 @@
             label64.Size = new Size(31, 15);
             label64.TabIndex = 104;
             label64.Text = "명칭";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(800, 56);
-            label2.Name = "label2";
-            label2.Size = new Size(123, 16);
-            label2.TabIndex = 103;
-            label2.Text = "커튼월창 치수 불러오기";
             // 
             // AdditionalCW_textBox
             // 
@@ -417,14 +406,14 @@
             ImportSize_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ImportSize_button.FlatStyle = FlatStyle.System;
             ImportSize_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            ImportSize_button.Location = new Point(929, 53);
+            ImportSize_button.Location = new Point(296, 261);
             ImportSize_button.Margin = new Padding(0);
             ImportSize_button.Name = "ImportSize_button";
             ImportSize_button.Size = new Size(23, 23);
             ImportSize_button.TabIndex = 101;
             ImportSize_button.Text = "+";
             ImportSize_button.UseVisualStyleBackColor = false;
-            ImportSize_button.Click += ImportSize_button_Click_1;
+            ImportSize_button.Click += ImportSize_button_Click;
             // 
             // CWNum_textBox
             // 
@@ -456,7 +445,7 @@
             // 
             Previous_button.BackColor = SystemColors.ButtonHighlight;
             Previous_button.ForeColor = Color.Black;
-            Previous_button.Location = new Point(995, 668);
+            Previous_button.Location = new Point(995, 676);
             Previous_button.Name = "Previous_button";
             Previous_button.Size = new Size(88, 25);
             Previous_button.TabIndex = 93;
@@ -468,7 +457,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1089, 668);
+            Save_button.Location = new Point(1089, 676);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 92;
@@ -537,7 +526,7 @@
             Install_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Install_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Install_comboBox.FormattingEnabled = true;
-            Install_comboBox.Location = new Point(175, 259);
+            Install_comboBox.Location = new Point(175, 296);
             Install_comboBox.Name = "Install_comboBox";
             Install_comboBox.Size = new Size(120, 23);
             Install_comboBox.TabIndex = 52;
@@ -547,7 +536,7 @@
             // 
             label16.AutoSize = true;
             label16.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label16.Location = new Point(45, 263);
+            label16.Location = new Point(45, 300);
             label16.Name = "label16";
             label16.Size = new Size(29, 16);
             label16.TabIndex = 51;
@@ -628,6 +617,8 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(Area_textBox2);
+            panel2.Controls.Add(label1);
             panel2.Controls.Add(DoorSpacer_textBox);
             panel2.Controls.Add(DoorSpacerDB_button);
             panel2.Controls.Add(τd_label2);
@@ -637,6 +628,7 @@
             panel2.Controls.Add(Door_checkBox);
             panel2.Controls.Add(DoorGlass_label);
             panel2.Controls.Add(DoorFrame_label);
+            panel2.Controls.Add(ImportSize_button);
             panel2.Controls.Add(DoorGlass_textBox);
             panel2.Controls.Add(DoorGlassDB_button);
             panel2.Controls.Add(gd_label2);
@@ -699,7 +691,7 @@
             panel2.Controls.Add(label25);
             panel2.Location = new Point(12, 133);
             panel2.Name = "panel2";
-            panel2.Size = new Size(977, 307);
+            panel2.Size = new Size(977, 328);
             panel2.TabIndex = 95;
             panel2.Paint += panel2_Paint;
             // 
@@ -1220,7 +1212,7 @@
             Install_textBox.Enabled = false;
             Install_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Install_textBox.ForeColor = SystemColors.ControlDark;
-            Install_textBox.Location = new Point(351, 264);
+            Install_textBox.Location = new Point(351, 301);
             Install_textBox.Name = "Install_textBox";
             Install_textBox.Size = new Size(120, 15);
             Install_textBox.TabIndex = 95;
@@ -1232,7 +1224,7 @@
             Install_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Install_button.FlatStyle = FlatStyle.System;
             Install_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Install_button.Location = new Point(473, 260);
+            Install_button.Location = new Point(473, 297);
             Install_button.Margin = new Padding(0);
             Install_button.Name = "Install_button";
             Install_button.Size = new Size(23, 23);
@@ -1407,7 +1399,7 @@
             tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
             tabControl1.HotTrack = true;
             tabControl1.ItemSize = new Size(128, 20);
-            tabControl1.Location = new Point(12, 446);
+            tabControl1.Location = new Point(12, 467);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(977, 239);
@@ -2768,6 +2760,29 @@
             CWType_pictureBox.TabIndex = 97;
             CWType_pictureBox.TabStop = false;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(45, 264);
+            label1.Name = "label1";
+            label1.Size = new Size(76, 16);
+            label1.TabIndex = 146;
+            label1.Text = "커튼월창 치수";
+            // 
+            // Area_textBox2
+            // 
+            Area_textBox2.BackColor = Color.White;
+            Area_textBox2.BorderStyle = BorderStyle.None;
+            Area_textBox2.Enabled = false;
+            Area_textBox2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Area_textBox2.ForeColor = SystemColors.ControlDark;
+            Area_textBox2.Location = new Point(175, 265);
+            Area_textBox2.Name = "Area_textBox2";
+            Area_textBox2.Size = new Size(120, 15);
+            Area_textBox2.TabIndex = 148;
+            Area_textBox2.TextAlign = HorizontalAlignment.Center;
+            // 
             // ConstructionCW
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -3010,5 +3025,8 @@
         private Label label60;
         private Label label64;
         private TextBox CWNum_textBox;
+        private Label label1;
+        private Label label82;
+        private TextBox Area_textBox2;
     }
 }
