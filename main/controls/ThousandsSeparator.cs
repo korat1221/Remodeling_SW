@@ -20,19 +20,25 @@ namespace main.controls
         {
             this.textBox = textBox;
             this.textBox.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            this.textBox.TextAlign = HorizontalAlignment.Center;
             this.NumberDecimal = NumberDecimal;
 
             //Load일 경우 true,아니고 입력일 경우 false
             if (LoadOrNot)
             {
                 double value;
-                if (double.TryParse(textBox.Text, out value))
+                if (textBox.Text != null && textBox.Text.ToString() != "")
                 {
-                    string code_N = NumberDecimalPlaces(NumberDecimal, value);
-                    textBox.Text = value.ToString(code_N);
+                    if (double.TryParse(textBox.Text, out value) == true)
+                    {
+                        string code_N = NumberDecimalPlaces(NumberDecimal, value);
+                        textBox.Text = value.ToString(code_N);
+                    }
+                    else
+                    {
+                        textBox.Text = String.Empty;
+                    }
                 }
-                else
-                    textBox.Text = String.Empty;
             }
             else
             {
@@ -47,6 +53,7 @@ namespace main.controls
                     else
                     {
                         MessageBox.Show("숫자를 입력하세요.");
+                        textBox.Text = String.Empty;
                     }
                 }
             }                 
@@ -102,7 +109,14 @@ namespace main.controls
             if (double.TryParse(textBox.Text, out value))
             {
                 string code_N = NumberDecimalPlaces(NumberDecimal, value);
-                textBox.Text = value.ToString(code_N);
+                try
+                {
+                    textBox.Text = value.ToString(code_N);
+                }
+                catch
+                {
+                    textBox.Text = value.ToString();
+                }
             }
             else
                 textBox.Text = String.Empty;
