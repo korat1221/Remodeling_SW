@@ -400,6 +400,7 @@ namespace main.contents
                     HCTime_textBox.Text = HCTime.ToString();
                     controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(HCTime_textBox, true, 0);
                     PersonIHG_Cal(PersonIHG, UseTime);
+                    EquipIHG_Cal(EquipIHG_Time); //usetime 반영되므로 추가 
                 }
                 else
                 {
@@ -416,6 +417,7 @@ namespace main.contents
                     HCTime_textBox.Text = HCTime.ToString();
                     controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(HCTime_textBox, true, 0);
                     PersonIHG_Cal(PersonIHG, UseTime);
+                    EquipIHG_Cal(EquipIHG_Time); //usetime 반영되므로 추가 
                 }
 
             }
@@ -588,7 +590,7 @@ namespace main.contents
             if (NetVolume != null && NetVolume != 0)
             { VentilationRate = Volume_wd / NetVolume; }
             else { VentilationRate = 0; }
-            VentilationRate_textBox.Text = VentilationRate_textBox.ToString();
+            VentilationRate_textBox.Text = VentilationRate.ToString();
             controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(VentilationRate_textBox, true, 1);
         }
 
@@ -910,7 +912,7 @@ namespace main.contents
                 Split_Zone(SelectPreZone_nonsplit);
             }
 
-            
+            Calc_Time();
         }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화

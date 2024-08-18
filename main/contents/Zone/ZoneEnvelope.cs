@@ -424,7 +424,8 @@ namespace main.contents
                 {
                     Cwirk_total = 150;
                 }
-                Cwirk_textBox.Text = string.Format("{0:F2}", Cwirk_total);
+                Cwirk_textBox.Text = Cwirk_total.ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Cwirk_textBox, true, 2);
             }
             else
             {
@@ -617,12 +618,14 @@ namespace main.contents
                 {
                     Cwirk_total = Convert.ToDouble(Value[0][12]);
                 }
-
-                Cwirk_textBox.Text = string.Format("{0:F2}", Cwirk_total);
+                Calc_Cwirk_all();
+                Cwirk_textBox.Text = Cwirk_total.ToString();
+                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Cwirk_textBox, true, 2);
 
             }
 
-        }     
+        }    
+        
         private void ZoneEnvelope_VisibleChanged(object sender, EventArgs e)
         {
             if (main.MainContents.currentForm == main.MainContents.FormID.ZoneEnvelope)
@@ -671,5 +674,59 @@ namespace main.contents
            
         }
 
+        private void Calc_Cwirk_all()
+        {
+            if (CeilingCwirk_comboBox.SelectedItem != null)
+            {
+
+                double CwirkA;
+                string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "Cwirk", "구조체='천장' AND 축열유형='" + CeilingCwirk_comboBox.SelectedItem.ToString() + "'");
+                if (CwirkDB.Length > 0)
+                {
+                    Ceiling_index = CeilingCwirk_comboBox.SelectedItem.ToString();
+                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    Cwirk_Ceiling = Calc_Cwirk_Construction(Area_Ceiling, CwirkA);
+                    Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+                }
+            }
+
+            if (WallCwirk_comboBox.SelectedItem != null)
+            {
+                double CwirkA;
+                string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "Cwirk", "구조체='외벽' AND 축열유형='" + WallCwirk_comboBox.SelectedItem.ToString() + "'");
+                if (CwirkDB.Length > 0)
+                {
+                    Wall_index = WallCwirk_comboBox.SelectedItem.ToString();
+                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    Cwirk_Wall = Calc_Cwirk_Construction(Area_Wall, CwirkA);
+                    Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+                }
+            }
+
+            if (InWallCwirk_comboBox.SelectedItem != null)
+            {
+                double CwirkA;
+                string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "Cwirk", "구조체='간벽' AND 축열유형='" + InWallCwirk_comboBox.SelectedItem.ToString() + "'");
+                if (CwirkDB.Length > 0)
+                {
+                    InWall_index = InWallCwirk_comboBox.SelectedItem.ToString();
+                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    Cwirk_InWall = Calc_Cwirk_Construction(Area_InWall, CwirkA);
+                    Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+                }
+            }
+            if (SlabCwirk_comboBox.SelectedItem != null)
+            {
+                double CwirkA;
+                string[][] CwirkDB = Program.DB.getValue(DB.type.BaseDB_HCneed, "축열", "Cwirk", "구조체='바닥' AND 축열유형='" + SlabCwirk_comboBox.SelectedItem.ToString() + "'");
+                if (CwirkDB.Length > 0)
+                {
+                    Slab_index = SlabCwirk_comboBox.SelectedItem.ToString();
+                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    Cwirk_Slab = Calc_Cwirk_Construction(Area_Slab, CwirkA);
+                    Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
+                }
+            }
+        }
     }
 }
