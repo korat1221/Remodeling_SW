@@ -492,10 +492,11 @@ namespace main.contents.Construction
             }
         }
 
+
         private void TB_button_Click(object sender, EventArgs e)
         {
             //지면접합, 단열지하의 경우 1D 열교를 미반영하고 지면접합 검토에서 반영하는 것으로 함( 그런데, 지면접합 유형을 단순방식으로 간단히 검토하기로 해서 추후 변경 필요)
-            if (Base == "지면위" )
+            if (Base == "지면위")
             {
                 MessageBox.Show("지면위는 열교 평가는 하지 않습니다.");
                 TBName_textBox.Text = "열교없음";
@@ -529,52 +530,54 @@ namespace main.contents.Construction
                     {
                         TBName = TB_form.Select_TB[1];
                         TBName_textBox.Text = TBName;
-                        check_StructureType = TB_form.Select_TB[2];
-                        TBType = TB_form.Select_TB[3];
-                        A = Convert.ToDouble(TB_form.Select_TB[4]);
-                        B = Convert.ToDouble(TB_form.Select_TB[5]);
-                        C = Convert.ToDouble(TB_form.Select_TB[6]);
-                        PerArea = Convert.ToDouble(TB_form.Select_TB[7]);
-                        if (PerArea != 0)
-                        { PerArea_textBox.Text = string.Format("{0:F3}", PerArea); }
-
-                        check_Type = TB_form.Select_TB[8];
-                        check_dins = Convert.ToDouble(TB_form.Select_TB[9]);
-                        dU = Convert.ToDouble(TB_form.Select_TB[10]);
-                        dU_textBox.Text = string.Format("{0:F3}", dU);
-
-                        if (PerArea_textBox.Text != "" && PerArea != 0)
-                        { dU2_textBox.Text = string.Format("{0:F3}", dU); }
-
-                        LinearPoint = TB_form.Select_TB[11];
-                        PsiKai = Convert.ToDouble(TB_form.Select_TB[12]);
-
-                        if (PerArea_textBox.Text != "" && PerArea != 0)
-                        { PsiKai_textBox.Text = string.Format("{0:F3}", PsiKai); }
-
-                        tabControl1.SelectedTab = tabControl1.TabPages["dU_tabPage"];
-                        if (LinearPoint == "점형")
+                        if (TBName != "열교없음")
                         {
-                            PerArea_label1.Text = "적용개수";
-                            PerArea_label2.Text = "EA/m²";
-                            PsiKai_label1.Text = "점형열교 열관류율";
-                            PsiKai_label2.Text = "W/K";
-                            dU_label3.Text = "1D 열교가산치";
-                            dU_label4.Text = "W/m²·K";
+                            check_StructureType = TB_form.Select_TB[2];
+                            TBType = TB_form.Select_TB[3];
+                            A = Convert.ToDouble(TB_form.Select_TB[4]);
+                            B = Convert.ToDouble(TB_form.Select_TB[5]);
+                            C = Convert.ToDouble(TB_form.Select_TB[6]);
+                            PerArea = Convert.ToDouble(TB_form.Select_TB[7]);
+                            if (PerArea != 0)
+                            { PerArea_textBox.Text = string.Format("{0:F3}", PerArea); }
+
+                            check_Type = TB_form.Select_TB[8];
+                            check_dins = Convert.ToDouble(TB_form.Select_TB[9]);
+                            dU = Convert.ToDouble(TB_form.Select_TB[10]);
+                            dU_textBox.Text = string.Format("{0:F3}", dU);
+
+                            if (PerArea_textBox.Text != "" && PerArea != 0)
+                            { dU2_textBox.Text = string.Format("{0:F3}", dU); }
+
+                            LinearPoint = TB_form.Select_TB[11];
+                            PsiKai = Convert.ToDouble(TB_form.Select_TB[12]);
+
+                            if (PerArea_textBox.Text != "" && PerArea != 0)
+                            { PsiKai_textBox.Text = string.Format("{0:F3}", PsiKai); }
+                            tabControl1.SelectedTab = tabControl1.TabPages["dU_tabPage"];
+                            if (LinearPoint == "점형")
+                            {
+                                PerArea_label1.Text = "적용개수";
+                                PerArea_label2.Text = "EA/m²";
+                                PsiKai_label1.Text = "점형열교 열관류율";
+                                PsiKai_label2.Text = "W/K";
+                                dU_label3.Text = "1D 열교가산치";
+                                dU_label4.Text = "W/m²·K";
 
 
+                            }
+                            else
+                            {
+                                PerArea_label1.Text = "적용길이";
+                                PerArea_label2.Text = "m/m²";
+                                PsiKai_label1.Text = "선형열교 열관류율";
+                                PsiKai_label2.Text = "W/mK";
+                                dU_label3.Text = "1D 열교가산치";
+                                dU_label4.Text = "W/m²·K";
+                            }
+
+                            Load_TB_Image();
                         }
-                        else
-                        {
-                            PerArea_label1.Text = "적용길이";
-                            PerArea_label2.Text = "m/m²";
-                            PsiKai_label1.Text = "선형열교 열관류율";
-                            PsiKai_label2.Text = "W/mK";
-                            dU_label3.Text = "1D 열교가산치";
-                            dU_label4.Text = "W/m²·K";
-                        }
-
-                        Load_TB_Image();
                     }
                 }
             }
