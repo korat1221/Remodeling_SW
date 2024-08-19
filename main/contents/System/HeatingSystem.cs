@@ -22,6 +22,7 @@ using System.Xml.Linq;
 using static main.DB;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace main.contents
 {
@@ -53,6 +54,23 @@ namespace main.contents
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
             프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            if (프로젝트유형.Length > 0)
+            {
+                if (프로젝트유형[0][0] == "1")
+                {
+                    radioButton1.Checked = true;
+                    radioButton2.Enabled = false;
+                    radioButton3.Enabled = false;
+                    radioButton4.Enabled = false;
+                }
+                else if (프로젝트유형[0][0] == "4")
+                {
+                    radioButton1.Enabled = false;
+                    radioButton2.Checked = false;
+                    radioButton3.Enabled = true;
+                    radioButton4.Enabled = false;
+                }
+            }
             //복합설비 콤보박스  
             Complex_comboBox.Items.Clear();
             Complex_comboBox.Items.Add("단일설비가동");
@@ -2285,7 +2303,19 @@ namespace main.contents
         {
             if (ce_dataGridView.Rows[row].Cells[2].Value != null && ce_dataGridView.Rows[row].Cells[2].Value.ToString() == "복사난방")
             {
-                if (column == 4 || column == 5)
+                if (column == 4 || column == 5 )
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+            else if (ce_dataGridView.Rows[row].Cells[2].Value != null && ce_dataGridView.Rows[row].Cells[2].Value.ToString() == "방열기")
+            {
+                if (column == 5)
                 {
                     cell.Style.BackColor = Color.FromArgb(255, 255, 255);
                     cell.Style.ForeColor = Color.Black;
@@ -2544,6 +2574,8 @@ namespace main.contents
             PipeInsD_textBox.Text = null;
             PipeIns_Ramda_textBox.Text = null;
             PipeIns_textBox.Text = null;
+            ce1_pictureBox.Visible = false;
+            ce2_pictureBox.Visible = false;
         }
 
         #endregion

@@ -2671,7 +2671,43 @@ namespace main.contents
         {
             if (ce_dataGridView.Rows[row].Cells[4].Value != null && ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "복사난방")
             {
-                if (column == 5 || column == 6 || column == 8)
+                if (column == 5 || column == 6 || column == 7 || column == 8)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+            else if (ce_dataGridView.Rows[row].Cells[4].Value != null && ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "방열기")
+            {
+                if (column == 5 || column == 6 ||  column == 8)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+            else if (ce_dataGridView.Rows[row].Cells[3].Value != null && ce_dataGridView.Rows[row].Cells[3].Value.ToString() == "난방")
+            {
+                if (column == 5 || column == 6 )
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+            else if (ce_dataGridView.Rows[row].Cells[3].Value != null && ce_dataGridView.Rows[row].Cells[3].Value.ToString() == "냉방")
+            {
+                if (column == 7 || column == 8)
                 {
                     cell.Style.BackColor = Color.FromArgb(255, 255, 255);
                     cell.Style.ForeColor = Color.Black;

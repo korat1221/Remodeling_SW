@@ -49,6 +49,23 @@ namespace main.contents
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            if (프로젝트유형.Length > 0)
+            {
+                if (프로젝트유형[0][0] == "1")
+                {
+                    radioButton1.Checked = true;
+                    radioButton2.Enabled = false;
+                    radioButton3.Enabled = false;
+                    radioButton4.Enabled = false;
+                }
+                else if (프로젝트유형[0][0] == "4")
+                {
+                    radioButton1.Enabled = false;
+                    radioButton2.Checked = false;
+                    radioButton3.Enabled = true;
+                    radioButton4.Enabled = false;
+                }
+            }
             //복합설비 콤보박스  
             Complex_comboBox.Items.Clear();
             Complex_comboBox.Items.Add("단일설비가동");
@@ -1869,6 +1886,7 @@ namespace main.contents
                 Split_Boiler(SelectBoiler_nonsplit);
 
                 BoilerNum_nonsplit = Value[0][1];
+                Split_BoilerNum(BoilerNum_nonsplit);
             }
             Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "태양열번호,모듈개수,모듈방위,모듈기울기", "번호 = '" + ID + "'");
             if (Value.Length > 0)

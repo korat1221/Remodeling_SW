@@ -258,6 +258,7 @@
             Oldsystem_comboBox.Name = "Oldsystem_comboBox";
             Oldsystem_comboBox.Size = new Size(120, 24);
             Oldsystem_comboBox.TabIndex = 120;
+            Oldsystem_comboBox.Visible = false;
             // 
             // label13
             // 
