@@ -128,10 +128,6 @@ namespace main.contents
         {
             LightType = null;
             Pj_textbox.Text = "0.00";
-            if (Pj_textbox.Text == "0.00")
-            {
-                MessageBox.Show("조명 종류를 선택하세요.");
-            }
             LightingDB lightingdb_form = new LightingDB();
             DialogResult result = lightingdb_form.ShowDialog();
             if (result == DialogResult.OK)
@@ -595,8 +591,9 @@ namespace main.contents
                 String[][] Blind2 = null;
                 if (Blind[0][0] == "")
                 {
+                    Shade4_label.Visible = false;
+                    Blind2_textBox.Visible = false;
                     Blind_textBox.Text = "없음";
-                    Blind2_textBox.Text = "0";
                     Blind3_textBox.Text = "차양없음";
                     ShadeType = Blind3_textBox.Text;
                 }
@@ -605,6 +602,8 @@ namespace main.contents
                     Blind2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "명칭,투과율,제어방식1", "번호='" + Blind[0][0] + "'");
                     if (Blind2.Length > 0)
                     {
+                        Shade4_label.Visible = true;
+                        Blind2_textBox.Visible = true;
                         Blind_textBox.Text = Blind2[0][0];
                         Blind2_textBox.Text = Blind2[0][1];
                         Blind3_textBox.Text = Blind2[0][2];
@@ -1651,7 +1650,7 @@ namespace main.contents
                         {
                             for (int k = 0; k < CW_Type.Length; k++)
                             {
-                                if (MEnvelope_CW[j][3] == CW_Type[k][1])
+                                if (MEnvelope_CW[j][4] == CW_Type[k][1])
                                 { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
                             }
                         }
@@ -1729,7 +1728,7 @@ namespace main.contents
                             {
                                 for (int k = 0; k < CW_Type.Length; k++)
                                 {
-                                    if (MEnvelope_CW[j][3] == CW_Type[k][1])
+                                    if (MEnvelope_CW[j][4] == CW_Type[k][1])
                                     { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
                                 }
                             }
