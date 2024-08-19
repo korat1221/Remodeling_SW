@@ -30,7 +30,7 @@ namespace main.subcontents.ConstructionFloor
             this.FloorType = FloorType;
             WallType_textBox.Text = FloorType;
             this.StructureType = StructureType;
-            if(StructureType=="기존바닥")
+            if (StructureType == "기존바닥")
             {
                 this.StructureType = "콘크리트조";
             }
@@ -46,7 +46,7 @@ namespace main.subcontents.ConstructionFloor
                 TB_Type_comboBox.Items.Add("외단열");
                 TB_Type_comboBox.Items.Add("내단열");
             }
-            else if (FloorType == "외부덧댐" )
+            else if (FloorType == "외부덧댐")
             {
                 TB_Type_comboBox.Items.Clear();
                 TB_Type_comboBox.Items.Add("외부덧댐형");
@@ -89,9 +89,9 @@ namespace main.subcontents.ConstructionFloor
             TB_dataGridView.Columns.Add("A9", "선형열관류율.(단열재 두께 =" + string.Format("{0:F0}", d_Ins) + "mm).[W/mK]");
             TB_dataGridView.Columns[3].Width = 130;
             TB_dataGridView.Columns[9].Width = 130;
-    
+
             string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥선형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
-            if(TB.Length > 0 )
+            if (TB.Length > 0)
             {
                 for (int n = 0; n < TB.Length; n++)
                 {
@@ -111,7 +111,7 @@ namespace main.subcontents.ConstructionFloor
                     Count_DB = TB.Length;
                 }
             }
-            
+
         }
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
@@ -129,7 +129,7 @@ namespace main.subcontents.ConstructionFloor
         private void Load_Image1()
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥선형열교이미지", "이미지_구조유형", "열교유형 = '" + TB_Type + "'");
-            if(Image.Length > 0)
+            if (Image.Length > 0)
             {
                 pictureBox1.Load(Program.gPath + Image[0][0]);
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -152,7 +152,7 @@ namespace main.subcontents.ConstructionFloor
 
 
                 string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥선형열교", "번호, A, B, C", "번호 = '" + row.Cells[1].Value.ToString() + "'");
-                if(TB.Length > 0 )
+                if (TB.Length > 0)
                 {
                     for (int n = 0; n < TB.Length; n++)
                     {
@@ -163,8 +163,12 @@ namespace main.subcontents.ConstructionFloor
                         Count_DB = TB.Length;
                     }
                 }
+                dx = Convert.ToDouble(row.Cells[7].Value) / 1000;
+                dy = Convert.ToDouble(row.Cells[8].Value) / 1000;
+                dx_textBox.Text = string.Format("{0:F1}", dx);
+                dy_textBox.Text = string.Format("{0:F1}", dy);
+                Calc_PerArea();
             }
-            Calc_dU();
 
         }
         private void Load_Image2()
@@ -176,38 +180,15 @@ namespace main.subcontents.ConstructionFloor
                 pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             }
         }
-
-        private void dx_textBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!(char.IsDigit(e.KeyChar) || e.KeyChar == Convert.ToChar(Keys.Back) || e.KeyChar == '-' || e.KeyChar == '.'))
-            {
-                e.Handled = true;
-                dx = Convert.ToDouble(dx_textBox.Text);
-                Calc_PerArea();
-            }
-        }
-
-        private void dy_textBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!(char.IsDigit(e.KeyChar) || e.KeyChar == Convert.ToChar(Keys.Back) || e.KeyChar == '-' || e.KeyChar == '.'))
-            {
-                e.Handled = true;
-                dy = Convert.ToDouble(dy_textBox.Text);
-                Calc_PerArea();
-            }
-
-        }
         private void Calc_PerArea()
         {
-            dx_textBox.Text = string.Format("{0:F1}", dx);
-            dy_textBox.Text = string.Format("{0:F1}", dy);
             if (LinearPoint == "점형")
             {
                 if (dx != 0 && dy != 0)
                 {
                     if (TB_Type == "직접고정")
                     {
-                        PerArea = 2 * dx * dy;
+                        PerArea = 2 / dx / dy;
                     }
                     else
                     {
@@ -223,27 +204,24 @@ namespace main.subcontents.ConstructionFloor
             }
             else
             {
-                PerArea = 1 / (dx + dy);
-                PerArea_label1.Text = "적용길이";
-                PerArea_label2.Text = "m/m²";
+                if (dx != 0 && dy != 0)
+                {
+                    PerArea = 1 / Math.Max(dx, dy);
+                    PerArea_label1.Text = "적용길이";
+                    PerArea_label2.Text = "m/m²";
+                }
             }
             PerArea_textBox.Text = string.Format("{0:F3}", PerArea);
+            Calc_dU();
         }
         private void Calc_dU()
         {
-            DataGridViewRow row = TB_dataGridView.Rows[SelectRow];
-            dx = Convert.ToDouble(row.Cells[7].Value) / 1000;
-            dy = Convert.ToDouble(row.Cells[8].Value) / 1000;
-            Calc_PerArea();
-
             if (LinearPoint == "점형")
             {
-                Kai = Convert.ToDouble(row.Cells[9].Value);
                 dU = Kai * PerArea;
             }
             else
             {
-                Psi = Convert.ToDouble(row.Cells[9].Value);
                 dU = Psi * PerArea;
             }
             dU_textBox.Text = string.Format("{0:F3}", dU);
@@ -279,6 +257,18 @@ namespace main.subcontents.ConstructionFloor
             this.Close();
 
         }
+        private void dx_textBox_TextChanged(object sender, EventArgs e)
+        {
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(dx_textBox, false, 1);
+            dx = textbox.text;
+            Calc_PerArea();
+        }
 
+        private void dy_textBox_TextChanged(object sender, EventArgs e)
+        {
+            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(dy_textBox, false, 1);
+            dy = textbox.text;
+            Calc_PerArea();
+        }
     }
 }
