@@ -138,7 +138,7 @@ namespace main.contents
                         Program.DB.executeSQL(DB.type.ProjDB, s);
 
                         Program.DB.deleteTable(DB.type.ProjDB, "Shade_3D");
-                        string[][] Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호", "외피유형 = '창호' or 외피유형 = '커튼월창'");
+                        string[][] Win = Program.DB.querySQL(DB.type.ProjDB, "Select 번호 From ZoneEnvelope_3D Where 외피유형 = '창호' or 외피유형 = '커튼월창' Order by 번호");
                         if (Win.Length > 0)
                         {
                             for (int k = 0; k < Win.Length; k++)
@@ -243,7 +243,7 @@ namespace main.contents
                 //Zone
                 int index = 1;
                 workSheet_Zone = workBook.Sheets[index];
-                string[][] Data_Zone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "존번호,층,존이름");
+                string[][] Data_Zone = Program.DB.querySQL(DB.type.ProjDB, "Select 존번호,층,존이름 from ZoneGeneral_3D Order by 존번호");
 
                 workSheet_Zone.Cells[1, 1] = "번호";
                 workSheet_Zone.Cells[1, 2] = "존번호";
@@ -269,7 +269,7 @@ namespace main.contents
                 //Envelope
                 index = index + 1;
                 workSheet_Envelope = workBook.Sheets[index];
-                string[][] Data_Envelope = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이");
+                string[][] Data_Envelope = Program.DB.querySQL(DB.type.ProjDB, "Select 아이디,번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이 from ZoneEnvelope_3D order by 존");
                 workSheet_Envelope.Cells[1, 1] = "번호";
                 workSheet_Envelope.Cells[1, 2] = "외피아이디";
                 workSheet_Envelope.Cells[1, 3] = "외피번호";
@@ -530,7 +530,7 @@ namespace main.contents
                     workBook.Close(true);
                     excelApp.Quit();
 
-                    runScript("regenTree(" + System.Text.Json.JsonSerializer.Serialize(Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "존번호")) + "," + System.Text.Json.JsonSerializer.Serialize(Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,존,외피유형,커튼월부위")) + ")");
+                    runScript("regenTree(" + System.Text.Json.JsonSerializer.Serialize(Program.DB.querySQL(DB.type.ProjDB, "Select 존번호 from ZoneGeneral_3D Ordery by 존번호")) + "," + System.Text.Json.JsonSerializer.Serialize(Program.DB.querySQL(DB.type.ProjDB, "Select 아이디,번호,존,외피유형,커튼월부위 From ZoneEnvelope_3D Order By 존")) + ")");
 
                     MessageBox.Show("3D 정보 엑셀을 Import 하였습니다.");
 

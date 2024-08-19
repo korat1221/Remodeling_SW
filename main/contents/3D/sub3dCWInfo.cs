@@ -60,6 +60,7 @@ namespace main.contents
 
                 if (rec.Length > 0)
                 {
+                    tabControl1.Visible = true;
                     string _ID = rec[0][9];
 
                     //음영정보 이미지로드
@@ -223,6 +224,10 @@ namespace main.contents
                     }
                     runScript("drawChart([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\"}])");
 
+                }
+                else
+                {
+                    tabControl1.Visible = false;
                 }
 
                 //차양정보 불러오기

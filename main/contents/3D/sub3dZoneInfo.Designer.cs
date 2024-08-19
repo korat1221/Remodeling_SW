@@ -38,6 +38,7 @@
             tabPage1 = new TabPage();
             dataGridView2 = new DataGridView();
             tabPage2 = new TabPage();
+            comboBox4 = new CheckedComboBox();
             button2 = new Button();
             button1 = new Button();
             comboBox3 = new CheckedComboBox();
@@ -133,6 +134,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(comboBox4);
             tabPage2.Controls.Add(button2);
             tabPage2.Controls.Add(button1);
             tabPage2.Controls.Add(comboBox3);
@@ -147,9 +149,26 @@
             tabPage2.Text = "존 외피 정보";
             tabPage2.UseVisualStyleBackColor = true;
             // 
+            // comboBox4
+            // 
+            comboBox4.CheckOnClick = true;
+            comboBox4.DrawMode = DrawMode.OwnerDrawVariable;
+            comboBox4.DropDownHeight = 1;
+            comboBox4.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            comboBox4.FormattingEnabled = true;
+            comboBox4.IntegralHeight = false;
+            comboBox4.Location = new Point(389, 25);
+            comboBox4.Margin = new Padding(3, 0, 3, 0);
+            comboBox4.Name = "comboBox4";
+            comboBox4.Size = new Size(121, 23);
+            comboBox4.TabIndex = 103;
+            comboBox4.ValueSeparator = ", ";
+            comboBox4.Visible = false;
+            comboBox4.DropDownClosed += comboBox_DropDownClosed;
+            // 
             // button2
             // 
-            button2.Location = new Point(389, 25);
+            button2.Location = new Point(527, 3);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 102;
@@ -160,7 +179,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(475, 25);
+            button1.Location = new Point(527, 25);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 101;
@@ -299,5 +318,6 @@
         private CheckedComboBox comboBox2;
         private Button button1;
         private Button button2;
+        public CheckedComboBox comboBox4;
     }
 }

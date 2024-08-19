@@ -77,8 +77,7 @@ namespace main.contents
 
                 if (rec.Length > 0)
                 {
-
-
+                    tabControl1.Visible = true;
                     //음영정보 이미지로드
                     string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "음영이미지", "이미지", "분류 = '이미지1'");
                     pictureBox1.Load(Program.gPath + Image[0][0]);
@@ -253,6 +252,10 @@ namespace main.contents
                         label25.Visible = false;
                     }
 
+                }
+                else
+                {
+                    tabControl1.Visible = false;
                 }
             }
         }

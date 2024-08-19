@@ -55,6 +55,7 @@ namespace main.contents
 
                 if (value1.Length > 0)
                 {
+                    panel2.Visible = true;
                     //외피에 구조체 지정 안되어 있을 경우
                     Boolean check = (value1[0][0] != "");
                     Ucalc_dataGridView.Visible = check;
@@ -265,6 +266,10 @@ namespace main.contents
                     Name_textBox.Text = value1[0][2];
                     Area = Convert.ToDouble(value1[0][1]);
                     Area_textBox.Text = String.Format("{0:F2}", Area);
+                }
+                else
+                {
+                    panel2.Visible = false;
                 }
             }
         }

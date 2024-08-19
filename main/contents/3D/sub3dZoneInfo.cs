@@ -30,6 +30,7 @@ namespace main.contents
             comboBox1.SetLoaded();
             comboBox2.SetLoaded();
             comboBox3.SetLoaded();
+            comboBox4.SetLoaded();
 
         }
         public sub3dZoneInfo()
@@ -79,6 +80,7 @@ namespace main.contents
             comboBox1.SetLoaded();
             comboBox2.SetLoaded();
             comboBox3.SetLoaded();
+            comboBox4.SetLoaded();
         }
         private void create_datagridview2()
         {
@@ -223,21 +225,24 @@ namespace main.contents
         private void fillFilterCombos()
         {
             int i = -1;
-            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "층,존,외피유형");
+            string[][] rec = Program.DB.querySQL(DB.type.ProjDB, "Select 층,존,외피유형,방위 from ZoneEnvelope_3D Order by 존");
 
             comboBox1.Items.Clear();
             comboBox2.Items.Clear();
             comboBox3.Items.Clear();
+            comboBox4.Items.Clear();
 
             comboBox1.Add("All");
             comboBox2.Add("All");
             comboBox3.Add("All");
+            comboBox4.Add("All");
 
             while (++i < rec.Length)
             {
                 comboBox1.Add(rec[i][0]);
                 comboBox2.Add(rec[i][1]);
                 comboBox3.Add(rec[i][2]);
+                comboBox4.Add(rec[i][3]);
             }
         }
         private void redrawList()
@@ -247,7 +252,7 @@ namespace main.contents
 
             {
                 int i = -1;
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "ID,존번호,존이름");
+                string[][] rec = Program.DB.querySQL(DB.type.ProjDB, "Select ID,존번호,존이름 From ZoneGeneral_3D Order by 존번호");
 
                 ids.Clear();
 
@@ -260,11 +265,11 @@ namespace main.contents
             }
             {
                 int i = -1, idx;
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,천창유무,차양적용");
+                string[][] rec = Program.DB.querySQL(DB.type.ProjDB, "Select 번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,천창유무,차양적용 from ZoneEnvelope_3D Order by 존");
 
                 while (++i < rec.Length)
                 {
-                    if (comboBox1.IsChecked(rec[i][1]) && comboBox2.IsChecked(rec[i][2]) && comboBox3.IsChecked(rec[i][3]))
+                    if (comboBox1.IsChecked(rec[i][1]) && comboBox2.IsChecked(rec[i][2]) && comboBox3.IsChecked(rec[i][3]) && comboBox4.IsChecked(rec[i][7]))
                     {
                         idx = dataGridView1.Rows.Add(null, rec[i][0], rec[i][1], rec[i][2], null, null, rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]), null);
 
@@ -874,8 +879,16 @@ namespace main.contents
             {
                 int cellX = dataGridView1.Location.X + e.CellBounds.X;
                 int cellY = dataGridView1.Location.Y + e.CellBounds.Y;
-
-                if (e.ColumnIndex == 2)
+                if (e.ColumnIndex == 1)
+                {
+                    if (!button2.Visible)
+                    {
+                        button2.Location = new Point(cellX, cellY - 1);
+                        button2.Size = new Size(e.CellBounds.Width , e.CellBounds.Height);
+                        button2.Show();
+                    }
+                }
+                else if (e.ColumnIndex == 2)
                 {
                     if (!comboBox1.Visible)
                     {
@@ -904,12 +917,13 @@ namespace main.contents
                 }
                 else if (e.ColumnIndex == 8)
                 {
-                    if (!button2.Visible)
+                    if (!comboBox4.Visible)
                     {
-                        button2.Location = new Point(cellX, cellY - 1);
-                        button2.Size = new Size(e.CellBounds.Width + 10, e.CellBounds.Height);
-                        button2.Show();
+                        comboBox4.Location = new Point(cellX, cellY);
+                        comboBox4.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
+                        comboBox4.Show();
                     }
+                    
                 }
                 else if (e.ColumnIndex == 10)
                 {
@@ -928,13 +942,14 @@ namespace main.contents
             comboBox1.Hide();
             comboBox2.Hide();
             comboBox3.Hide();
+            comboBox4.Hide();
             button1.Hide();
             button2.Hide();
         }
 
         private void comboBox_DropDownClosed(object sender, EventArgs e)
         {
-            if (comboBox1.ValueChanged || comboBox2.ValueChanged || comboBox3.ValueChanged)
+            if (comboBox1.ValueChanged || comboBox2.ValueChanged || comboBox3.ValueChanged || comboBox4.ValueChanged)
             {
                 redrawList();
             }

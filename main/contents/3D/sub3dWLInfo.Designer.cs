@@ -49,9 +49,11 @@
             Wallinst_pictureBox = new PictureBox();
             label1 = new Label();
             pictureBox2 = new PictureBox();
+            panel2 = new Panel();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Wallinst_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // Name_textBox1
@@ -293,30 +295,39 @@
             pictureBox2.TabIndex = 156;
             pictureBox2.TabStop = false;
             // 
+            // panel2
+            // 
+            panel2.BackColor = Color.White;
+            panel2.Controls.Add(label11);
+            panel2.Controls.Add(pictureBox2);
+            panel2.Controls.Add(label1);
+            panel2.Controls.Add(Wallinst_pictureBox);
+            panel2.Controls.Add(TBType2_textBox);
+            panel2.Controls.Add(uw_textBox);
+            panel2.Controls.Add(TBType_textBox);
+            panel2.Controls.Add(Type_textBox);
+            panel2.Controls.Add(label7);
+            panel2.Controls.Add(abs_textBox);
+            panel2.Controls.Add(label14);
+            panel2.Controls.Add(DI_textBox);
+            panel2.Controls.Add(label5);
+            panel2.Controls.Add(Area_textBox);
+            panel2.Controls.Add(label6);
+            panel2.Controls.Add(Name_textBox1);
+            panel2.Controls.Add(Name_textBox);
+            panel2.Controls.Add(Ucalc_dataGridView);
+            panel2.Location = new Point(12, 2);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(960, 436);
+            panel2.TabIndex = 181;
+            // 
             // sub3dWLInfo
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(984, 450);
-            Controls.Add(label11);
-            Controls.Add(pictureBox2);
-            Controls.Add(label1);
-            Controls.Add(Wallinst_pictureBox);
-            Controls.Add(TBType2_textBox);
-            Controls.Add(uw_textBox);
-            Controls.Add(TBType_textBox);
-            Controls.Add(Type_textBox);
-            Controls.Add(label7);
-            Controls.Add(abs_textBox);
-            Controls.Add(label14);
-            Controls.Add(DI_textBox);
-            Controls.Add(label5);
-            Controls.Add(Area_textBox);
-            Controls.Add(label6);
-            Controls.Add(Name_textBox1);
-            Controls.Add(Name_textBox);
-            Controls.Add(Ucalc_dataGridView);
+            Controls.Add(panel2);
             FormBorderStyle = FormBorderStyle.None;
             Name = "sub3dWLInfo";
             Text = "sub3dWLInfo";
@@ -324,8 +335,9 @@
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)Wallinst_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -348,5 +360,6 @@
         private PictureBox Wallinst_pictureBox;
         private Label label1;
         private PictureBox pictureBox2;
+        private Panel panel2;
     }
 }
