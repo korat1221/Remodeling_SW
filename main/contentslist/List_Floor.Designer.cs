@@ -32,73 +32,47 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
-            Copy_button = new Button();
-            Remove_button = new Button();
-            Add_button = new Button();
-            dataGridView1 = new DataGridView();
             Icon_pictureBox = new PictureBox();
+            Num_textBox = new TextBox();
+            dataGridView1 = new DataGridView();
             GeneralPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(Copy_button);
-            GeneralPanel.Controls.Add(Remove_button);
-            GeneralPanel.Controls.Add(Add_button);
-            GeneralPanel.Controls.Add(dataGridView1);
             GeneralPanel.Controls.Add(Icon_pictureBox);
+            GeneralPanel.Controls.Add(Num_textBox);
+            GeneralPanel.Controls.Add(dataGridView1);
             GeneralPanel.Location = new Point(12, 12);
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(977, 661);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
             // 
-            // Copy_button
+            // Icon_pictureBox
             // 
-            Copy_button.BackColor = SystemColors.ControlLight;
-            Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            Copy_button.FlatStyle = FlatStyle.System;
-            Copy_button.Font = new Font("나눔고딕", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
-            Copy_button.Location = new Point(901, 52);
-            Copy_button.Margin = new Padding(0);
-            Copy_button.Name = "Copy_button";
-            Copy_button.Size = new Size(47, 23);
-            Copy_button.TabIndex = 91;
-            Copy_button.Text = "Copy";
-            Copy_button.UseVisualStyleBackColor = false;
-            Copy_button.Click += Copy_button_Click;
+            Icon_pictureBox.Location = new Point(30, 14);
+            Icon_pictureBox.Name = "Icon_pictureBox";
+            Icon_pictureBox.Size = new Size(50, 50);
+            Icon_pictureBox.TabIndex = 0;
+            Icon_pictureBox.TabStop = false;
             // 
-            // Remove_button
+            // Num_textBox
             // 
-            Remove_button.BackColor = SystemColors.ControlLight;
-            Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            Remove_button.FlatStyle = FlatStyle.System;
-            Remove_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Remove_button.Location = new Point(868, 52);
-            Remove_button.Margin = new Padding(0);
-            Remove_button.Name = "Remove_button";
-            Remove_button.Size = new Size(23, 23);
-            Remove_button.TabIndex = 90;
-            Remove_button.Text = "-";
-            Remove_button.UseVisualStyleBackColor = false;
-            Remove_button.Click += Remove_button_Click;
-            // 
-            // Add_button
-            // 
-            Add_button.BackColor = SystemColors.ControlLight;
-            Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            Add_button.FlatStyle = FlatStyle.System;
-            Add_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Add_button.Location = new Point(835, 52);
-            Add_button.Margin = new Padding(0);
-            Add_button.Name = "Add_button";
-            Add_button.Size = new Size(23, 23);
-            Add_button.TabIndex = 89;
-            Add_button.Text = "+";
-            Add_button.UseVisualStyleBackColor = false;
+            Num_textBox.BackColor = Color.White;
+            Num_textBox.BorderStyle = BorderStyle.None;
+            Num_textBox.Enabled = false;
+            Num_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Num_textBox.ForeColor = SystemColors.ControlText;
+            Num_textBox.Location = new Point(86, 29);
+            Num_textBox.Name = "Num_textBox";
+            Num_textBox.Size = new Size(67, 15);
+            Num_textBox.TabIndex = 101;
+            Num_textBox.Text = "층별 정보";
+            Num_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // dataGridView1
             // 
@@ -143,14 +117,6 @@
             dataGridView1.TabIndex = 19;
             dataGridView1.DoubleClick += dataGridView1_DoubleClick;
             // 
-            // Icon_pictureBox
-            // 
-            Icon_pictureBox.Location = new Point(30, 14);
-            Icon_pictureBox.Name = "Icon_pictureBox";
-            Icon_pictureBox.Size = new Size(50, 50);
-            Icon_pictureBox.TabIndex = 0;
-            Icon_pictureBox.TabStop = false;
-            // 
             // List_Floor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -163,8 +129,9 @@
             Name = "List_Floor";
             Text = "Form3";
             GeneralPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
@@ -173,8 +140,6 @@
         private Panel GeneralPanel;
         private PictureBox Icon_pictureBox;
         private DataGridView dataGridView1;
-        private Button Remove_button;
-        private Button Add_button;
-        private Button Copy_button;
+        private TextBox Num_textBox;
     }
 }

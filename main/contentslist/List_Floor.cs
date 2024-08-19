@@ -19,7 +19,7 @@ namespace main.contentslist
 
         double CountDB;
         int SelectRow;
-       // DataTable ListTable = new DataTable();
+        // DataTable ListTable = new DataTable();
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
 
         public List_Floor()
@@ -112,7 +112,7 @@ namespace main.contentslist
             string[][] List = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "");
 
             int[] List_arr = new int[List.Length];
-            string[] List_F = new string [List.Length];
+            string[] List_F = new string[List.Length];
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
             if (List.Length > 0)
             {
@@ -131,6 +131,7 @@ namespace main.contentslist
                     string[][] Zone = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + List_F[n] + "'");
                     int[] List_arr_Zone = new int[Zone.Length];
                     string[] List_F_Zone = new string[Zone.Length];
+                    String[] 존이름 = new String[Zone.Length];
                     String[] 용도프로필 = new String[Zone.Length];
                     double[] 순바닥면적 = new double[Zone.Length];
                     double[] 천장고 = new double[Zone.Length];
@@ -139,12 +140,13 @@ namespace main.contentslist
                         for (int a = 0; a < Zone.Length; a++)
                         { List_arr_Zone[a] = Convert.ToInt32(Zone[a][0].Substring(Zone[a][0].Length - 3, 3)); }
                         Array.Sort(List_arr_Zone);
-                        for(int a=0; a < List_arr_Zone.Length; a++)
+                        for (int a = 0; a < List_arr_Zone.Length; a++)
                         {
-                            for(int k=0; k < Zone.Length; k++)
+                            for (int k = 0; k < Zone.Length; k++)
                             {
                                 if (List_arr_Zone[a] == Convert.ToInt32(Zone[k][0].Substring(Zone[k][0].Length - 3, 3)))
-                                { List_F_Zone[a] = Zone[k][0];
+                                {
+                                    List_F_Zone[a] = Zone[k][0];
                                     break;
                                 }
                             }
@@ -157,6 +159,7 @@ namespace main.contentslist
                                 Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", " 존이름, 용도프로필, 순바닥면적, 천장고", "존번호 = '" + List_F_Zone[k] + "'");
                                 if (Value.Length > 0)
                                 {
+                                    존이름[k] = Value[0][0];
                                     용도프로필[k] = Value[0][1];
                                     순바닥면적[k] = Convert.ToDouble(Value[0][2]);
                                     천장고[k] = Convert.ToDouble(Value[0][3]);
@@ -201,19 +204,14 @@ namespace main.contentslist
                             subsubMenu.Add(new { text = "존 조명정보", id = "{\\\"formID\\\":14,\\\"ID\\\":\\\"" + List_F_Zone[k] + "_3" + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                             subsubMenu.Add(new { text = "존 설비정보", id = "{\\\"formID\\\":15,\\\"ID\\\":\\\"" + List_F_Zone[k] + "_4" + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
 
-                            subMenu.Add(new { text = List_F_Zone[k], id = "{\\\"formID\\\":12,\\\"ID\\\":\\\"" + List_F_Zone[k] + "\\\"}", children = subsubMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
+                            subMenu.Add(new { text = List_F_Zone[k].Substring(List_F[n].Length + 5, 3) + "_" + 존이름[k], id = "{\\\"formID\\\":12,\\\"ID\\\":\\\"" + List_F_Zone[k] + "\\\"}", children = subsubMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
                         }
                         mainMenu.Add(new { text = List_F[n], id = "{\\\"formID\\\":33,\\\"ID\\\":\\\"" + List_F[n] + "\\\"}", children = subMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
                     }
                 }
             }
             CountDB = List.Length;
-           Program.UTIL.resetMainTree(3, 0, mainMenu.ToArray(), "32"); // 예시 코드: 메인 메뉴 동적 할당
-        }
-
-
-        private void Remove_button_Click(object sender, EventArgs e)
-        {
+            Program.UTIL.resetMainTree(3, 0, mainMenu.ToArray(), "32"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
         private void dataGridView1_DoubleClick(object sender, EventArgs e)
@@ -221,20 +219,16 @@ namespace main.contentslist
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
-                    Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
+                Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
             }
 
         }
 
-        private void Copy_button_Click(object sender, EventArgs e)
-        {
-        }
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
         }
-       
 
     }
 }
