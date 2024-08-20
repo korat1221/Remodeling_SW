@@ -914,19 +914,37 @@ namespace main.contents
             {
                 if (e.ColumnIndex == 5)
                 {
-                    double d = Convert.ToDouble(Ucalc_dataGridView.Rows[e.RowIndex].Cells[5].Value);
-                    if (Ucalc_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString() == "공기층")
+                    if (Ucalc_dataGridView.Rows[e.RowIndex].Cells[5].Value != null)
                     {
-                        Calc_Air_Layer(e.RowIndex, d);
+                        double d = Convert.ToDouble(Ucalc_dataGridView.Rows[e.RowIndex].Cells[5].Value);
+                        if (Ucalc_dataGridView.Rows[e.RowIndex].Cells[2].Value != null && Ucalc_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString() == "공기층")
+                        {
+                            Calc_Air_Layer(e.RowIndex, d);
+                        }
+                        double λ = Convert.ToDouble(Ucalc_dataGridView.Rows[e.RowIndex].Cells[4].Value);
+                        double R = d / 1000 / λ;
+                        Ucalc_dataGridView.Rows[e.RowIndex].Cells[6].Value = String.Format("{0:F2}", R);
                     }
-                    double λ = Convert.ToDouble(Ucalc_dataGridView.Rows[e.RowIndex].Cells[4].Value);
-                    double R = d / 1000 / λ;
-                    Ucalc_dataGridView.Rows[e.RowIndex].Cells[6].Value = String.Format("{0:F2}", R);
-                }              
+                }
+                else if (e.ColumnIndex == 2)
+                {
+                    if (Ucalc_dataGridView.Rows[e.RowIndex].Cells[2].Value != null && Ucalc_dataGridView.Rows[e.RowIndex].Cells[5].Value != null)
+                    {
+                        if (Ucalc_dataGridView.Rows[e.RowIndex].Cells[2].Value != null && Ucalc_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString() == "공기층")
+                        {
+                            double d = Convert.ToDouble(Ucalc_dataGridView.Rows[e.RowIndex].Cells[5].Value);
+                            Calc_Air_Layer(e.RowIndex, d);
+                            double λ = Convert.ToDouble(Ucalc_dataGridView.Rows[e.RowIndex].Cells[4].Value);
+                            double R = d / 1000 / λ;
+                            Ucalc_dataGridView.Rows[e.RowIndex].Cells[6].Value = String.Format("{0:F2}", R);
+                        }
+                    }
+                }
+                Calc_U();
+                Calc_dins();
+                Calc_Ueff();
             }
-            Calc_U();
-            Calc_dins();
-            Calc_Ueff();
+          
         }
 
 
@@ -1028,8 +1046,8 @@ namespace main.contents
 
             hr = 5.1 / (1 / 0.9 + 1 / 0.9 - 1);
 
-            Ramda_air = d / 1000 * (hr + ha);
-
+            //Ramda_air = d / 1000 * (hr + ha);
+            Ramda_air = d / 1000 * ha;
             Ucalc_dataGridView.Rows[nRow].Cells[4].Value = String.Format("{0:F2}", Ramda_air);
 
         }
@@ -1486,7 +1504,15 @@ namespace main.contents
 
                 for (int i = 0; i < 10; i++)
                 {
-                    if (Material[i] != "")
+                    if (Material[i] == "공기층")
+                    {
+                        int nRow = Ucalc_dataGridView.Rows.Add();
+                        Ucalc_dataGridView.Rows[i].Cells[5].Value = Material_d[i];
+                        Ucalc_dataGridView.Rows[i].Cells[2].Value = Material[i];
+                        Ucalc_dataGridView.Rows[i].Cells[3].Value = Material[i];
+                        Calc_Air_Layer(i, Material_d[i]);
+                    }
+                    else if (Material[i] != "")
                     {
                         string[][] Value;
                         string[][] OldWall_U;
