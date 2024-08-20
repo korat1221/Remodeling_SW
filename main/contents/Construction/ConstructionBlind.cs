@@ -266,16 +266,19 @@ namespace main.contents
 
         private void LoadGraph()
         {
+            if(ControlType2 != null)
+            {
+                webView21.Visible = true;
                 string s = "", s2 = "";
                 string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
                 string[][] res1;
                 for (int mth = 1; mth < 12; mth++)
                 {
                     res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='남' And 기간 = '" + mth.ToString() + "월'");
-                    if(res1.Length > 0)
+                    if (res1.Length > 0)
                     {
                         s += Convert.ToDouble(res1[0][0]) * 100 + ",";
-                    }                    
+                    }
                 }
                 res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='남' And 기간 = '" + 12.ToString() + "월'");
                 if (res1.Length > 0)
@@ -285,8 +288,8 @@ namespace main.contents
 
 
 
-                string[][] res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT AVG(일사량) FROM 기후데이터_전일사량 WHERE 지역명 = '" + Location[0][0] + "' AND 기간 LIKE '%월' GROUP BY 기간 ORDER BY 기간*1 ASC");
-                if(res2.Length > 0) 
+                string[][] res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT AVG(일사량) FROM 기후데이터_전일사량 WHERE 지역명 = '" + Location[0][0] + "' AND 방향 ='남' and 기간 LIKE '%월' GROUP BY 기간 ORDER BY 기간*1 ASC");
+                if (res2.Length > 0)
                 {
                     for (int k = 0; k < res2.Length; k++)
                     {
@@ -298,6 +301,12 @@ namespace main.contents
                 }
 
                 runScript("drawChart3([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150}])");
+            }
+            else
+            {
+                webView21.Visible = false;
+            }
+                
           
         }
         public static bool OnLoadListProc(Form form)
