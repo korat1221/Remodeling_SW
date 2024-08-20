@@ -210,7 +210,8 @@ namespace main.contents
                         }
                     }
 
-                    Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "'");
+                    Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='"+ types[ProjectType]+"', 프로젝트유형번호='"+ ProjectType+"'");
+
                     db.Close();
                 }
 
@@ -228,12 +229,13 @@ namespace main.contents
                 if (k > 1)
                 {
                     dataGridView1.Rows[k].Cells[0].Value = false;
-                    int k_new = dataGridView1.Rows.Count - 1;
-                    dataGridView1.Rows[k_new].Cells[0].Value = true;
-                    ProjectOpen();
-                    Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,기존프로젝트", "'" + pid + "','" + pid0 + "'", "프로젝트번호");
-                    Program.getMenuForm().DoLoadFormDirect(0);
                 }
+
+                int k_new = dataGridView1.Rows.Count - 1;
+                dataGridView1.Rows[k_new].Cells[0].Value = true;
+                ProjectOpen();
+                Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,기존프로젝트", "'" + pid + "','" + pid0 + "'", "프로젝트번호");
+                Program.getMenuForm().DoLoadFormDirect(0);
             }
         }
         private void Copy_button_Click(object sender, EventArgs e)
@@ -264,7 +266,7 @@ namespace main.contents
                             }
                         }
 
-                        Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "'");
+                        Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='" + types[ProjectType] + "', 프로젝트유형번호='" + ProjectType + "'");
                         db.Close();
                     }
 
