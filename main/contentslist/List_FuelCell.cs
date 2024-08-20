@@ -36,6 +36,7 @@ namespace main.contentslist
         {
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            
         }
 
         public static bool OnLoadProc(Form form)
@@ -110,7 +111,7 @@ namespace main.contentslist
             }
             mainMenu.Add(new { text = "연료전지", id = "{\\\"formID\\\":22,\\\"ID\\\":\\\"SOLAR_2\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
 
-            CountDB = Value.Length;        
+            CountDB = Value.Length;
         }
         private void Add_button_Click(object sender, EventArgs e)
         {
@@ -166,6 +167,12 @@ namespace main.contentslist
             load_List();
         }
 
-       
+        private void List_FuelCell_VisibleChanged(object sender, EventArgs e)
+        {
+            if (main.MainContents.currentForm == main.MainContents.FormID.List_FuelCell)
+            {
+                MessageBox.Show("연료전지 화면은 아직 작업 중입니다.");
+            }
+        }
     }
 }

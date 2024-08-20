@@ -70,6 +70,7 @@ namespace main.contents
                 string[][] 프로젝트유형 = Program.DB.querySQL(DB.type.ProjListDB, "Select type from projects where current = '1'");
                 if (프로젝트유형[0][0] == "1")
                 {
+                    MessageBox.Show("리모델링 전 요소기술 레포트는 아직 준비 중입니다.");
                     if (Element_comboBox.SelectedItem.ToString() == "외벽_지붕_바닥")
                     {
                         Element_Structure Structure = new Element_Structure();

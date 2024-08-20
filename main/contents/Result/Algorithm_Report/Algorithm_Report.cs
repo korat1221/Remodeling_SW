@@ -20,6 +20,7 @@ namespace main.contents
         {
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            MessageBox.Show("알고리즘 레포트는 아직 준비 중입니다.");
         }
        
     }

@@ -163,6 +163,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "List_FuelCell";
             Text = "Form3";
+            VisibleChanged += List_FuelCell_VisibleChanged;
             GeneralPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();

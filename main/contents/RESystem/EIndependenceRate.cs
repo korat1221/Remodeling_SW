@@ -20,6 +20,7 @@ namespace main.contents
         {
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            MessageBox.Show("에너지자립률 화면은 아직 작업 중입니다.");
         }
     }
 }

@@ -110,7 +110,7 @@ namespace main.contentslist
             }
             mainMenu.Add(new { text = "풍력시스템", id = "{\\\"formID\\\":23,\\\"ID\\\":\\\"SOLAR_3\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
 
-            CountDB = Value.Length;        
+            CountDB = Value.Length;
         }
         private void Add_button_Click(object sender, EventArgs e)
         {
@@ -166,6 +166,12 @@ namespace main.contentslist
             load_List();
         }
 
-       
+        private void List_WindPower_VisibleChanged(object sender, EventArgs e)
+        {
+            if (main.MainContents.currentForm == main.MainContents.FormID.List_WindPower)
+            {
+                MessageBox.Show("풍력시스템 화면은 아직 작업 중입니다.");
+            }
+        }
     }
 }
