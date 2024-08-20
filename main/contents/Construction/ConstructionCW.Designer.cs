@@ -42,8 +42,8 @@
             radioButton3 = new RadioButton();
             radioButton2 = new RadioButton();
             radioButton1 = new RadioButton();
-            ImportSize_button = new Button();
             CWNum_textBox = new TextBox();
+            ImportSize_button = new Button();
             Size_textBox = new TextBox();
             Previous_button = new Button();
             Save_button = new Button();
@@ -61,6 +61,8 @@
             label25 = new Label();
             label4 = new Label();
             panel2 = new Panel();
+            Area_textBox2 = new TextBox();
+            label1 = new Label();
             DoorSpacer_textBox = new TextBox();
             DoorSpacerDB_button = new Button();
             τd_label2 = new Label();
@@ -227,8 +229,6 @@
             Area_textBox = new TextBox();
             label66 = new Label();
             CWType_pictureBox = new PictureBox();
-            label1 = new Label();
-            Area_textBox2 = new TextBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -400,6 +400,19 @@
             radioButton1.UseVisualStyleBackColor = true;
             radioButton1.CheckedChanged += radioButton1_CheckedChanged;
             // 
+            // CWNum_textBox
+            // 
+            CWNum_textBox.BackColor = Color.White;
+            CWNum_textBox.BorderStyle = BorderStyle.None;
+            CWNum_textBox.Enabled = false;
+            CWNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CWNum_textBox.ForeColor = SystemColors.ControlText;
+            CWNum_textBox.Location = new Point(80, 19);
+            CWNum_textBox.Name = "CWNum_textBox";
+            CWNum_textBox.Size = new Size(67, 15);
+            CWNum_textBox.TabIndex = 90;
+            CWNum_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
             // ImportSize_button
             // 
             ImportSize_button.BackColor = SystemColors.ControlLight;
@@ -414,19 +427,6 @@
             ImportSize_button.Text = "+";
             ImportSize_button.UseVisualStyleBackColor = false;
             ImportSize_button.Click += ImportSize_button_Click;
-            // 
-            // CWNum_textBox
-            // 
-            CWNum_textBox.BackColor = Color.White;
-            CWNum_textBox.BorderStyle = BorderStyle.None;
-            CWNum_textBox.Enabled = false;
-            CWNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            CWNum_textBox.ForeColor = SystemColors.ControlText;
-            CWNum_textBox.Location = new Point(80, 19);
-            CWNum_textBox.Name = "CWNum_textBox";
-            CWNum_textBox.Size = new Size(67, 15);
-            CWNum_textBox.TabIndex = 90;
-            CWNum_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // Size_textBox
             // 
@@ -694,6 +694,29 @@
             panel2.Size = new Size(977, 328);
             panel2.TabIndex = 95;
             panel2.Paint += panel2_Paint;
+            // 
+            // Area_textBox2
+            // 
+            Area_textBox2.BackColor = Color.White;
+            Area_textBox2.BorderStyle = BorderStyle.None;
+            Area_textBox2.Enabled = false;
+            Area_textBox2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Area_textBox2.ForeColor = SystemColors.ControlDark;
+            Area_textBox2.Location = new Point(175, 265);
+            Area_textBox2.Name = "Area_textBox2";
+            Area_textBox2.Size = new Size(120, 15);
+            Area_textBox2.TabIndex = 148;
+            Area_textBox2.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(45, 264);
+            label1.Name = "label1";
+            label1.Size = new Size(76, 16);
+            label1.TabIndex = 146;
+            label1.Text = "커튼월창 치수";
             // 
             // DoorSpacer_textBox
             // 
@@ -1653,11 +1676,11 @@
             label15.AutoSize = true;
             label15.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label15.ForeColor = SystemColors.ControlDark;
-            label15.Location = new Point(390, 93);
+            label15.Location = new Point(364, 93);
             label15.Name = "label15";
-            label15.Size = new Size(42, 16);
+            label15.Size = new Size(94, 16);
             label15.TabIndex = 94;
-            label15.Text = "m/t[A]";
+            label15.Text = "멀리언/트랜섬[A]";
             // 
             // CWFrame_pictureBox
             // 
@@ -2759,29 +2782,6 @@
             CWType_pictureBox.Size = new Size(178, 386);
             CWType_pictureBox.TabIndex = 97;
             CWType_pictureBox.TabStop = false;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(45, 264);
-            label1.Name = "label1";
-            label1.Size = new Size(76, 16);
-            label1.TabIndex = 146;
-            label1.Text = "커튼월창 치수";
-            // 
-            // Area_textBox2
-            // 
-            Area_textBox2.BackColor = Color.White;
-            Area_textBox2.BorderStyle = BorderStyle.None;
-            Area_textBox2.Enabled = false;
-            Area_textBox2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Area_textBox2.ForeColor = SystemColors.ControlDark;
-            Area_textBox2.Location = new Point(175, 265);
-            Area_textBox2.Name = "Area_textBox2";
-            Area_textBox2.Size = new Size(120, 15);
-            Area_textBox2.TabIndex = 148;
-            Area_textBox2.TextAlign = HorizontalAlignment.Center;
             // 
             // ConstructionCW
             // 
