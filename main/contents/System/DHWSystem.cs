@@ -148,7 +148,31 @@ namespace main.contents
                     SelectZone_nonsplit = heatingzone.SelectZone;
                     Split_Zone(heatingzone.SelectZone);
                     Calc_Pipe();
+                    ce_Pic();
                 }
+            }
+        }
+        private void ce_Pic()
+        {
+            if(radioButton1.Checked)
+            {
+                ce1_pictureBox.Visible = true;
+                ce1_pictureBox.Size = new System.Drawing.Size(260, 60);
+                ce1_pictureBox.Location = new Point(250, 10);
+                ce1_pictureBox.Load(Program.gPath + "images/HeatingSystem/Old/Wsup.png"); 
+                ce1_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                ce1_pictureBox.BackColor = Color.Transparent;
+                ce1_pictureBox.Parent = DistpictureBox;
+            }
+            else
+            {
+                ce1_pictureBox.Visible = true;
+                ce1_pictureBox.Size = new System.Drawing.Size(260, 60);
+                ce1_pictureBox.Location = new Point(250, 10);
+                ce1_pictureBox.Load(Program.gPath + "images/HeatingSystem/New/Wsup.png");
+                ce1_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                ce1_pictureBox.BackColor = Color.Transparent;
+                ce1_pictureBox.Parent = DistpictureBox;
             }
         }
         private void Split_Zone(String nonSplit)
@@ -1859,6 +1883,7 @@ namespace main.contents
 
                 SelectZone_nonsplit = Value[0][1];
                 Split_Zone(SelectZone_nonsplit);
+                ce_Pic();
             }
             Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "번호 = '" + ID + "'");
             if (Value.Length > 0)

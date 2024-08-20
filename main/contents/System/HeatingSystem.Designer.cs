@@ -1528,7 +1528,6 @@
             // 
             Qhce_tabPage.Controls.Add(ce_Remove_button);
             Qhce_tabPage.Controls.Add(ce_dataGridView);
-            Qhce_tabPage.Controls.Add(ce2Zone_textBox);
             Qhce_tabPage.Controls.Add(ce2Zone_button);
             Qhce_tabPage.Controls.Add(label7);
             Qhce_tabPage.Controls.Add(label10);
@@ -1538,6 +1537,7 @@
             Qhce_tabPage.Controls.Add(label5);
             Qhce_tabPage.Controls.Add(label4);
             Qhce_tabPage.Controls.Add(ce1Type_comboBox);
+            Qhce_tabPage.Controls.Add(ce2Zone_textBox);
             Qhce_tabPage.Location = new Point(4, 25);
             Qhce_tabPage.Name = "Qhce_tabPage";
             Qhce_tabPage.Padding = new Padding(3);
@@ -1552,7 +1552,7 @@
             ce_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce_Remove_button.FlatStyle = FlatStyle.System;
             ce_Remove_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            ce_Remove_button.Location = new Point(890, 53);
+            ce_Remove_button.Location = new Point(916, 51);
             ce_Remove_button.Margin = new Padding(0);
             ce_Remove_button.Name = "ce_Remove_button";
             ce_Remove_button.Size = new Size(23, 23);
@@ -1613,7 +1613,7 @@
             ce2Zone_textBox.ForeColor = SystemColors.ControlDark;
             ce2Zone_textBox.Location = new Point(768, 32);
             ce2Zone_textBox.Name = "ce2Zone_textBox";
-            ce2Zone_textBox.Size = new Size(120, 15);
+            ce2Zone_textBox.Size = new Size(145, 15);
             ce2Zone_textBox.TabIndex = 192;
             ce2Zone_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -1623,7 +1623,7 @@
             ce2Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce2Zone_button.FlatStyle = FlatStyle.System;
             ce2Zone_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            ce2Zone_button.Location = new Point(890, 28);
+            ce2Zone_button.Location = new Point(916, 28);
             ce2Zone_button.Margin = new Padding(0);
             ce2Zone_button.Name = "ce2Zone_button";
             ce2Zone_button.Size = new Size(23, 23);
@@ -1672,7 +1672,7 @@
             ce1Zone_textBox.ForeColor = SystemColors.ControlDark;
             ce1Zone_textBox.Location = new Point(294, 32);
             ce1Zone_textBox.Name = "ce1Zone_textBox";
-            ce1Zone_textBox.Size = new Size(120, 15);
+            ce1Zone_textBox.Size = new Size(145, 15);
             ce1Zone_textBox.TabIndex = 187;
             ce1Zone_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -1682,7 +1682,7 @@
             ce1Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce1Zone_button.FlatStyle = FlatStyle.System;
             ce1Zone_button.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            ce1Zone_button.Location = new Point(416, 28);
+            ce1Zone_button.Location = new Point(442, 28);
             ce1Zone_button.Margin = new Padding(0);
             ce1Zone_button.Name = "ce1Zone_button";
             ce1Zone_button.Size = new Size(23, 23);
