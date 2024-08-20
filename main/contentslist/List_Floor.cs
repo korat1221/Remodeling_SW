@@ -202,7 +202,7 @@ namespace main.contentslist
                             subsubMenu.Add(new { text = "존 일반정보", id = "{\\\"formID\\\":12,\\\"ID\\\":\\\"" + List_F_Zone[k] + "_1" + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                             subsubMenu.Add(new { text = "존 외피정보", id = "{\\\"formID\\\":13,\\\"ID\\\":\\\"" + List_F_Zone[k] + "_2" + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                             subsubMenu.Add(new { text = "존 조명정보", id = "{\\\"formID\\\":14,\\\"ID\\\":\\\"" + List_F_Zone[k] + "_3" + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-                            subsubMenu.Add(new { text = "존 설비정보", id = "{\\\"formID\\\":15,\\\"ID\\\":\\\"" + List_F_Zone[k] + "_4" + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                            //subsubMenu.Add(new { text = "존 설비정보", id = "{\\\"formID\\\":15,\\\"ID\\\":\\\"" + List_F_Zone[k] + "_4" + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
 
                             subMenu.Add(new { text = List_F_Zone[k].Substring(List_F[n].Length + 5, 3) + "_" + 존이름[k], id = "{\\\"formID\\\":12,\\\"ID\\\":\\\"" + List_F_Zone[k] + "\\\"}", children = subsubMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
                         }
