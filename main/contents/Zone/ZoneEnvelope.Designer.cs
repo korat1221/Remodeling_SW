@@ -328,9 +328,9 @@ namespace main.contents
             SlabCwirk_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             SlabCwirk_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             SlabCwirk_comboBox.FormattingEnabled = true;
-            SlabCwirk_comboBox.Location = new Point(153, 108);
+            SlabCwirk_comboBox.Location = new Point(98, 108);
             SlabCwirk_comboBox.Name = "SlabCwirk_comboBox";
-            SlabCwirk_comboBox.Size = new Size(120, 23);
+            SlabCwirk_comboBox.Size = new Size(175, 23);
             SlabCwirk_comboBox.TabIndex = 98;
             SlabCwirk_comboBox.SelectedIndexChanged += SlabCwirk_comboBox_SelectedIndexChanged;
             // 
@@ -338,7 +338,7 @@ namespace main.contents
             // 
             label8.AutoSize = true;
             label8.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label8.Location = new Point(96, 112);
+            label8.Location = new Point(33, 112);
             label8.Name = "label8";
             label8.Size = new Size(31, 15);
             label8.TabIndex = 97;
@@ -349,9 +349,9 @@ namespace main.contents
             InWallCwirk_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             InWallCwirk_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             InWallCwirk_comboBox.FormattingEnabled = true;
-            InWallCwirk_comboBox.Location = new Point(153, 79);
+            InWallCwirk_comboBox.Location = new Point(98, 79);
             InWallCwirk_comboBox.Name = "InWallCwirk_comboBox";
-            InWallCwirk_comboBox.Size = new Size(120, 23);
+            InWallCwirk_comboBox.Size = new Size(175, 23);
             InWallCwirk_comboBox.TabIndex = 96;
             InWallCwirk_comboBox.SelectedIndexChanged += InWallCwirk_comboBox_SelectedIndexChanged;
             // 
@@ -359,7 +359,7 @@ namespace main.contents
             // 
             label7.AutoSize = true;
             label7.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label7.Location = new Point(96, 83);
+            label7.Location = new Point(33, 83);
             label7.Name = "label7";
             label7.Size = new Size(31, 15);
             label7.TabIndex = 95;
@@ -370,9 +370,9 @@ namespace main.contents
             CeilingCwirk_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             CeilingCwirk_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             CeilingCwirk_comboBox.FormattingEnabled = true;
-            CeilingCwirk_comboBox.Location = new Point(153, 21);
+            CeilingCwirk_comboBox.Location = new Point(98, 21);
             CeilingCwirk_comboBox.Name = "CeilingCwirk_comboBox";
-            CeilingCwirk_comboBox.Size = new Size(120, 23);
+            CeilingCwirk_comboBox.Size = new Size(175, 23);
             CeilingCwirk_comboBox.TabIndex = 94;
             CeilingCwirk_comboBox.SelectedIndexChanged += CeilingCwrik_comboBox_SelectedIndexChanged;
             // 
@@ -380,7 +380,7 @@ namespace main.contents
             // 
             label6.AutoSize = true;
             label6.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label6.Location = new Point(96, 25);
+            label6.Location = new Point(33, 25);
             label6.Name = "label6";
             label6.Size = new Size(31, 15);
             label6.TabIndex = 93;
@@ -391,9 +391,9 @@ namespace main.contents
             WallCwirk_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             WallCwirk_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             WallCwirk_comboBox.FormattingEnabled = true;
-            WallCwirk_comboBox.Location = new Point(153, 50);
+            WallCwirk_comboBox.Location = new Point(98, 50);
             WallCwirk_comboBox.Name = "WallCwirk_comboBox";
-            WallCwirk_comboBox.Size = new Size(120, 23);
+            WallCwirk_comboBox.Size = new Size(175, 23);
             WallCwirk_comboBox.TabIndex = 92;
             WallCwirk_comboBox.SelectedIndexChanged += WallCwirk_comboBox_SelectedIndexChanged;
             // 
@@ -401,7 +401,7 @@ namespace main.contents
             // 
             label5.AutoSize = true;
             label5.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.Location = new Point(96, 54);
+            label5.Location = new Point(33, 54);
             label5.Name = "label5";
             label5.Size = new Size(31, 15);
             label5.TabIndex = 91;
