@@ -164,6 +164,14 @@ namespace main.contentslist
                                     순바닥면적[k] = Convert.ToDouble(Value[0][2]);
                                     천장고[k] = Convert.ToDouble(Value[0][3]);
                                 }
+                                else
+                                {
+                                    Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", " 존이름", "존번호 = '" + List_F_Zone[k] + "'");
+                                    if (Value.Length > 0)
+                                    {
+                                        존이름[k] = Value[0][0];
+                                    }
+                                }
                             }
                             catch { }
                         }
