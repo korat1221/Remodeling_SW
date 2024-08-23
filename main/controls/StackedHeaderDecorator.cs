@@ -50,7 +50,7 @@ public class StackedHeaderDecorator
 
         defCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         defCellStyle.BackColor = Color.FromArgb(251, 251, 251);
-        defCellStyle.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+        defCellStyle.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
         defCellStyle.ForeColor = SystemColors.WindowText;
         defCellStyle.SelectionBackColor = Color.White;
         defCellStyle.SelectionForeColor = Color.Black;

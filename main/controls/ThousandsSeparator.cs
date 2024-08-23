@@ -19,7 +19,7 @@ namespace main.controls
         public ThousandsSeparator(TextBox textBox, bool LoadOrNot, int NumberDecimal)
         {
             this.textBox = textBox;
-            this.textBox.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            this.textBox.Font = new System.Drawing.Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             this.textBox.TextAlign = HorizontalAlignment.Center;
             this.NumberDecimal = NumberDecimal;
 
