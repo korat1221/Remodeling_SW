@@ -143,6 +143,13 @@ namespace main.subcontents.ConstructionFloor
         {
             if (e.RowIndex >= 0)
             {
+                for (int i = 0; i < TB_dataGridView.Rows.Count; i++)
+                {
+                    if (i != e.RowIndex)
+                    {
+                        TB_dataGridView.Rows[i].Cells[0].Value = false;
+                    }
+                }
                 TB_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 SelectRow = e.RowIndex;
                 DataGridViewRow row = TB_dataGridView.Rows[SelectRow];
@@ -184,7 +191,7 @@ namespace main.subcontents.ConstructionFloor
         {
             if (LinearPoint == "점형")
             {
-                if (dx != 0 && dy != 0)
+                if (dx != 0 || dy != 0)
                 {
                     if (TB_Type == "직접고정")
                     {
@@ -204,7 +211,7 @@ namespace main.subcontents.ConstructionFloor
             }
             else
             {
-                if (dx != 0 && dy != 0)
+                if (dx != 0 || dy != 0)
                 {
                     PerArea = 1 / Math.Max(dx, dy);
                     PerArea_label1.Text = "적용길이";
