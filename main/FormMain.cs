@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -53,12 +54,19 @@ namespace main
 
         private void OnResize(object sender, EventArgs e)
         {
-            MainContents f1 = (MainContents)splitContainer1.Panel1.Controls[0];
+            try
+            {
+                MainContents f1 = (MainContents)splitContainer1.Panel1.Controls[0];
 
-            f1.Location.Offset(0, 0);
-            f1.Size = new Size(splitContainer1.Panel1.Width, splitContainer1.Panel1.Height);
+                f1.Location.Offset(0, 0);
+                f1.Size = new Size(splitContainer1.Panel1.Width, splitContainer1.Panel1.Height);
 
-            f1.DoResizeMain(new Size(splitContainer1.Panel2.Width, splitContainer1.Panel2.Height));
+                f1.DoResizeMain(new Size(splitContainer1.Panel2.Width, splitContainer1.Panel2.Height));
+            }
+            catch (Exception ex)
+            {
+//                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
