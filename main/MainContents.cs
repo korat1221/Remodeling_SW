@@ -740,9 +740,17 @@ namespace main
 
         private void OnResize(object sender, EventArgs e)
         {
-            webView21.Location.Offset(0, 0);
-            webView21.Size = this.ClientSize;
-            webView21.Height = webView21.Size.Height - 4;
+            try
+            {
+                webView21.Location.Offset(0, 0);
+                webView21.Size = this.ClientSize;
+                webView21.Height = webView21.Size.Height - 4;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
         }
 
         public void runScript(string script)
