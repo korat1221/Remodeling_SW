@@ -71,7 +71,7 @@
             FCDB_button.BackColor = SystemColors.ControlLight;
             FCDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             FCDB_button.FlatStyle = FlatStyle.System;
-            FCDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            FCDB_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
             FCDB_button.Location = new Point(327, 15);
             FCDB_button.Margin = new Padding(0);
             FCDB_button.Name = "FCDB_button";
@@ -83,7 +83,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label6.Location = new Point(17, 15);
             label6.Name = "label6";
             label6.Size = new Size(31, 15);
@@ -113,7 +113,7 @@
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Num_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Num_textBox.ForeColor = SystemColors.ControlText;
             Num_textBox.Location = new Point(75, 46);
             Num_textBox.Name = "Num_textBox";

@@ -113,7 +113,7 @@
             Frame_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -124,7 +124,7 @@
             Frame_dataGridView.Name = "Frame_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -133,7 +133,7 @@
             Frame_dataGridView.RowHeadersVisible = false;
             Frame_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -169,7 +169,7 @@
             UserDB_UfB_textBox.BackColor = SystemColors.GradientActiveCaption;
             UserDB_UfB_textBox.BorderStyle = BorderStyle.None;
             UserDB_UfB_textBox.Enabled = false;
-            UserDB_UfB_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            UserDB_UfB_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             UserDB_UfB_textBox.Location = new Point(693, 12);
             UserDB_UfB_textBox.Name = "UserDB_UfB_textBox";
             UserDB_UfB_textBox.Size = new Size(120, 16);
@@ -199,7 +199,7 @@
             UserDB_UfC_textBox.BackColor = SystemColors.GradientActiveCaption;
             UserDB_UfC_textBox.BorderStyle = BorderStyle.None;
             UserDB_UfC_textBox.Enabled = false;
-            UserDB_UfC_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            UserDB_UfC_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             UserDB_UfC_textBox.Location = new Point(917, 12);
             UserDB_UfC_textBox.Name = "UserDB_UfC_textBox";
             UserDB_UfC_textBox.Size = new Size(120, 16);
@@ -229,7 +229,7 @@
             UserDB_UfA_textBox.BackColor = SystemColors.GradientActiveCaption;
             UserDB_UfA_textBox.BorderStyle = BorderStyle.None;
             UserDB_UfA_textBox.Enabled = false;
-            UserDB_UfA_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            UserDB_UfA_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             UserDB_UfA_textBox.Location = new Point(469, 12);
             UserDB_UfA_textBox.Name = "UserDB_UfA_textBox";
             UserDB_UfA_textBox.Size = new Size(120, 16);
@@ -239,7 +239,7 @@
             // label35
             // 
             label35.AutoSize = true;
-            label35.Font = new Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label35.Font = new System.Drawing.Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label35.Location = new Point(337, 12);
             label35.Name = "label35";
             label35.Size = new Size(60, 17);
@@ -252,7 +252,7 @@
             AddUserDB_button.BackColor = SystemColors.ControlLight;
             AddUserDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AddUserDB_button.FlatStyle = FlatStyle.System;
-            AddUserDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            AddUserDB_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
             AddUserDB_button.Location = new Point(113, 9);
             AddUserDB_button.Margin = new Padding(0);
             AddUserDB_button.Name = "AddUserDB_button";
@@ -267,7 +267,7 @@
             Deletebutton.BackColor = SystemColors.ControlLight;
             Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            Deletebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
             Deletebutton.Location = new Point(140, 9);
             Deletebutton.Margin = new Padding(0);
             Deletebutton.Name = "Deletebutton";
@@ -312,7 +312,7 @@
             // label36
             // 
             label36.AutoSize = true;
-            label36.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label36.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label36.Location = new Point(34, 13);
             label36.Name = "label36";
             label36.Size = new Size(60, 15);
@@ -460,7 +460,7 @@
             // 
             // UserDBSpacer_comboBox
             // 
-            UserDBSpacer_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDBSpacer_comboBox.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDBSpacer_comboBox.FormattingEnabled = true;
             UserDBSpacer_comboBox.Location = new Point(469, 176);
             UserDBSpacer_comboBox.Name = "UserDBSpacer_comboBox";
@@ -538,7 +538,7 @@
             // 
             // UserDB_FrameType_comboBox
             // 
-            UserDB_FrameType_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDB_FrameType_comboBox.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDB_FrameType_comboBox.FormattingEnabled = true;
             UserDB_FrameType_comboBox.Location = new Point(469, 59);
             UserDB_FrameType_comboBox.Name = "UserDB_FrameType_comboBox";
@@ -547,7 +547,7 @@
             // 
             // UserDB_FrameShape_comboBox
             // 
-            UserDB_FrameShape_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDB_FrameShape_comboBox.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDB_FrameShape_comboBox.FormattingEnabled = true;
             UserDB_FrameShape_comboBox.Location = new Point(693, 59);
             UserDB_FrameShape_comboBox.Name = "UserDB_FrameShape_comboBox";
@@ -557,7 +557,7 @@
             // 
             // UserDBGlass_comboBox
             // 
-            UserDBGlass_comboBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDBGlass_comboBox.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDBGlass_comboBox.FormattingEnabled = true;
             UserDBGlass_comboBox.Location = new Point(469, 137);
             UserDBGlass_comboBox.Name = "UserDBGlass_comboBox";
@@ -568,7 +568,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.Font = new System.Drawing.Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label3.Location = new Point(344, 62);
             label3.Name = "label3";
             label3.Size = new Size(47, 17);
@@ -578,7 +578,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label5.Font = new System.Drawing.Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label5.Location = new Point(350, 140);
             label5.Name = "label5";
             label5.Size = new Size(34, 17);
@@ -588,7 +588,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label11.Font = new System.Drawing.Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label11.Location = new Point(350, 179);
             label11.Name = "label11";
             label11.Size = new Size(34, 17);
@@ -690,7 +690,7 @@
             Import_button.BackColor = SystemColors.ControlLight;
             Import_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Import_button.FlatStyle = FlatStyle.System;
-            Import_button.Font = new Font("나눔고딕", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            Import_button.Font = new System.Drawing.Font("나눔고딕", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
             Import_button.Location = new Point(22, 4);
             Import_button.Margin = new Padding(0);
             Import_button.Name = "Import_button";
@@ -705,7 +705,7 @@
             UserDB_FrameShape_textBox.BackColor = SystemColors.GradientInactiveCaption;
             UserDB_FrameShape_textBox.BorderStyle = BorderStyle.None;
             UserDB_FrameShape_textBox.Enabled = false;
-            UserDB_FrameShape_textBox.Font = new Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            UserDB_FrameShape_textBox.Font = new System.Drawing.Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             UserDB_FrameShape_textBox.Location = new Point(187, 36);
             UserDB_FrameShape_textBox.Name = "UserDB_FrameShape_textBox";
             UserDB_FrameShape_textBox.Size = new Size(120, 18);

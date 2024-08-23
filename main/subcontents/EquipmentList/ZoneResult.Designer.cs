@@ -81,7 +81,7 @@
             ZoneResult_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle7.SelectionForeColor = Color.Black;
@@ -93,7 +93,7 @@
             ZoneResult_dataGridView.Name = "ZoneResult_dataGridView";
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
@@ -102,7 +102,7 @@
             ZoneResult_dataGridView.RowHeadersVisible = false;
             ZoneResult_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle9.ForeColor = Color.Black;
             dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle9.SelectionForeColor = Color.Black;
@@ -125,7 +125,7 @@
             QmaxList_panel.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle10.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle10.SelectionForeColor = Color.Black;
@@ -137,7 +137,7 @@
             QmaxList_panel.Name = "QmaxList_panel";
             dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle11.BackColor = SystemColors.Control;
-            dataGridViewCellStyle11.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle11.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
@@ -146,7 +146,7 @@
             QmaxList_panel.RowHeadersVisible = false;
             QmaxList_panel.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle12.ForeColor = Color.Black;
             dataGridViewCellStyle12.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle12.SelectionForeColor = Color.Black;
@@ -166,7 +166,7 @@
             // label35
             // 
             label35.AutoSize = true;
-            label35.Font = new Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label35.Font = new System.Drawing.Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label35.Location = new Point(114, 11);
             label35.Name = "label35";
             label35.Size = new Size(83, 17);
@@ -179,7 +179,7 @@
             Qhb_textBox.BackColor = Color.White;
             Qhb_textBox.BorderStyle = BorderStyle.None;
             Qhb_textBox.Enabled = false;
-            Qhb_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            Qhb_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             Qhb_textBox.Location = new Point(255, 33);
             Qhb_textBox.Name = "Qhb_textBox";
             Qhb_textBox.Size = new Size(70, 16);
@@ -209,7 +209,7 @@
             Qcb_textBox.BackColor = Color.White;
             Qcb_textBox.BorderStyle = BorderStyle.None;
             Qcb_textBox.Enabled = false;
-            Qcb_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            Qcb_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             Qcb_textBox.Location = new Point(255, 58);
             Qcb_textBox.Name = "Qcb_textBox";
             Qcb_textBox.Size = new Size(70, 16);
@@ -239,7 +239,7 @@
             Qcmax_textBox.BackColor = Color.White;
             Qcmax_textBox.BorderStyle = BorderStyle.None;
             Qcmax_textBox.Enabled = false;
-            Qcmax_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            Qcmax_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             Qcmax_textBox.Location = new Point(472, 58);
             Qcmax_textBox.Name = "Qcmax_textBox";
             Qcmax_textBox.Size = new Size(70, 16);
@@ -269,7 +269,7 @@
             Qhmax_textBox.BackColor = Color.White;
             Qhmax_textBox.BorderStyle = BorderStyle.None;
             Qhmax_textBox.Enabled = false;
-            Qhmax_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            Qhmax_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             Qhmax_textBox.Location = new Point(472, 33);
             Qhmax_textBox.Name = "Qhmax_textBox";
             Qhmax_textBox.Size = new Size(70, 16);
@@ -299,7 +299,7 @@
             Qhmax_Copy_button.BackColor = SystemColors.ControlLight;
             Qhmax_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Qhmax_Copy_button.FlatStyle = FlatStyle.System;
-            Qhmax_Copy_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            Qhmax_Copy_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
             Qhmax_Copy_button.Location = new Point(575, 30);
             Qhmax_Copy_button.Margin = new Padding(0);
             Qhmax_Copy_button.Name = "Qhmax_Copy_button";
@@ -314,7 +314,7 @@
             Qcmax_Copy_button.BackColor = SystemColors.ControlLight;
             Qcmax_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Qcmax_Copy_button.FlatStyle = FlatStyle.System;
-            Qcmax_Copy_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            Qcmax_Copy_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
             Qcmax_Copy_button.Location = new Point(575, 55);
             Qcmax_Copy_button.Margin = new Padding(0);
             Qcmax_Copy_button.Name = "Qcmax_Copy_button";

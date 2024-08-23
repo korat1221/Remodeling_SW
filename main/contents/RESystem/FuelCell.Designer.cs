@@ -82,7 +82,7 @@
             FCDB_button.BackColor = SystemColors.ControlLight;
             FCDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             FCDB_button.FlatStyle = FlatStyle.System;
-            FCDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            FCDB_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
             FCDB_button.Location = new Point(326, 8);
             FCDB_button.Margin = new Padding(0);
             FCDB_button.Name = "FCDB_button";
@@ -96,7 +96,7 @@
             // 
             Batteryname.BackColor = SystemColors.Window;
             Batteryname.BorderStyle = BorderStyle.None;
-            Batteryname.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Batteryname.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Batteryname.Location = new Point(203, 63);
             Batteryname.Name = "Batteryname";
             Batteryname.ReadOnly = true;
@@ -108,7 +108,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label6.Location = new Point(16, 8);
             label6.Name = "label6";
             label6.Size = new Size(55, 15);
@@ -119,7 +119,7 @@
             // 
             Inverter.BackColor = SystemColors.Window;
             Inverter.BorderStyle = BorderStyle.None;
-            Inverter.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Inverter.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Inverter.Location = new Point(203, 34);
             Inverter.Name = "Inverter";
             Inverter.ReadOnly = true;
@@ -130,7 +130,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label7.Location = new Point(16, 36);
             label7.Name = "label7";
             label7.Size = new Size(43, 15);
@@ -141,7 +141,7 @@
             // 
             PVModuleType.BackColor = SystemColors.Window;
             PVModuleType.BorderStyle = BorderStyle.None;
-            PVModuleType.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PVModuleType.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PVModuleType.Location = new Point(203, 6);
             PVModuleType.Name = "PVModuleType";
             PVModuleType.ReadOnly = true;
@@ -152,7 +152,7 @@
             // Battery
             // 
             Battery.AutoSize = true;
-            Battery.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Battery.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Battery.Location = new Point(16, 65);
             Battery.Name = "Battery";
             Battery.Size = new Size(43, 15);
@@ -172,7 +172,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label5.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label5.Location = new Point(12, 81);
             label5.Name = "label5";
             label5.Size = new Size(79, 15);
@@ -193,7 +193,7 @@
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Num_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Num_textBox.ForeColor = SystemColors.ControlText;
             Num_textBox.Location = new Point(65, 26);
             Num_textBox.Name = "Num_textBox";

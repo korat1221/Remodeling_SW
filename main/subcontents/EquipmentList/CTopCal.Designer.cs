@@ -87,7 +87,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             label3.Location = new Point(38, 57);
             label3.Name = "label3";
             label3.Size = new Size(49, 20);
@@ -111,7 +111,7 @@
             // 
             fluid.AutoSize = true;
             fluid.BackColor = Color.Transparent;
-            fluid.Font = new Font("맑은 고딕 Semilight", 12F, FontStyle.Italic, GraphicsUnit.Point);
+            fluid.Font = new System.Drawing.Font("맑은 고딕 Semilight", 12F, FontStyle.Italic, GraphicsUnit.Point);
             fluid.Location = new Point(211, 271);
             fluid.Name = "fluid";
             fluid.Size = new Size(41, 21);
@@ -122,7 +122,7 @@
             // 
             ctpower.AutoSize = true;
             ctpower.BackColor = Color.Transparent;
-            ctpower.Font = new Font("맑은 고딕 Semilight", 12F, FontStyle.Italic, GraphicsUnit.Point);
+            ctpower.Font = new System.Drawing.Font("맑은 고딕 Semilight", 12F, FontStyle.Italic, GraphicsUnit.Point);
             ctpower.Location = new Point(211, 230);
             ctpower.Name = "ctpower";
             ctpower.Size = new Size(65, 21);
@@ -133,7 +133,7 @@
             // 
             intemp.AutoSize = true;
             intemp.BackColor = Color.Transparent;
-            intemp.Font = new Font("맑은 고딕 Semilight", 12F, FontStyle.Italic, GraphicsUnit.Point);
+            intemp.Font = new System.Drawing.Font("맑은 고딕 Semilight", 12F, FontStyle.Italic, GraphicsUnit.Point);
             intemp.Location = new Point(211, 159);
             intemp.Name = "intemp";
             intemp.Size = new Size(59, 21);
@@ -144,7 +144,7 @@
             // 
             outtemp.AutoSize = true;
             outtemp.BackColor = Color.Transparent;
-            outtemp.Font = new Font("맑은 고딕 Semilight", 12F, FontStyle.Italic, GraphicsUnit.Point);
+            outtemp.Font = new System.Drawing.Font("맑은 고딕 Semilight", 12F, FontStyle.Italic, GraphicsUnit.Point);
             outtemp.Location = new Point(211, 109);
             outtemp.Name = "outtemp";
             outtemp.Size = new Size(69, 21);
@@ -190,7 +190,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             label1.Location = new Point(276, 33);
             label1.Name = "label1";
             label1.Size = new Size(57, 20);
@@ -201,7 +201,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label2.ForeColor = SystemColors.ControlDark;
             label2.Location = new Point(444, 36);
             label2.Name = "label2";
@@ -221,7 +221,7 @@
             // dPanel_label
             // 
             dPanel_label.AutoSize = true;
-            dPanel_label.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dPanel_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             dPanel_label.Location = new Point(38, 33);
             dPanel_label.Name = "dPanel_label";
             dPanel_label.Size = new Size(73, 20);
@@ -232,7 +232,7 @@
             // dPanel_label2
             // 
             dPanel_label2.AutoSize = true;
-            dPanel_label2.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dPanel_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             dPanel_label2.ForeColor = SystemColors.ControlDark;
             dPanel_label2.Location = new Point(248, 33);
             dPanel_label2.Name = "dPanel_label2";
@@ -243,7 +243,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label4.Location = new Point(13, 10);
             label4.Name = "label4";
             label4.Size = new Size(71, 15);

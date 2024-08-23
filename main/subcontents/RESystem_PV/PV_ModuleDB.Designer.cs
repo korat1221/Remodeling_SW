@@ -140,7 +140,7 @@
             // label27
             // 
             label27.AutoSize = true;
-            label27.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label27.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label27.Location = new Point(458, 51);
             label27.Name = "label27";
             label27.Size = new Size(72, 15);
@@ -150,7 +150,7 @@
             // label26
             // 
             label26.AutoSize = true;
-            label26.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label26.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label26.Location = new Point(8, 51);
             label26.Name = "label26";
             label26.Size = new Size(88, 15);
@@ -178,7 +178,7 @@
             // label23
             // 
             label23.AutoSize = true;
-            label23.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label23.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label23.Location = new Point(809, 164);
             label23.Name = "label23";
             label23.Size = new Size(55, 15);
@@ -189,7 +189,7 @@
             // label22
             // 
             label22.AutoSize = true;
-            label22.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label22.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label22.Location = new Point(718, 135);
             label22.Name = "label22";
             label22.Size = new Size(55, 15);
@@ -210,7 +210,7 @@
             // label21
             // 
             label21.AutoSize = true;
-            label21.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label21.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label21.Location = new Point(736, 108);
             label21.Name = "label21";
             label21.Size = new Size(43, 15);
@@ -221,7 +221,7 @@
             // label20
             // 
             label20.AutoSize = true;
-            label20.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label20.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label20.Location = new Point(575, 248);
             label20.Name = "label20";
             label20.Size = new Size(55, 15);
@@ -232,7 +232,7 @@
             // label19
             // 
             label19.AutoSize = true;
-            label19.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label19.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label19.Location = new Point(490, 176);
             label19.Name = "label19";
             label19.Size = new Size(55, 15);
@@ -243,7 +243,7 @@
             // label18
             // 
             label18.AutoSize = true;
-            label18.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label18.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label18.Location = new Point(495, 108);
             label18.Name = "label18";
             label18.Size = new Size(106, 15);
@@ -264,7 +264,7 @@
             // label17
             // 
             label17.AutoSize = true;
-            label17.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label17.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label17.Location = new Point(321, 311);
             label17.Name = "label17";
             label17.Size = new Size(55, 15);
@@ -275,7 +275,7 @@
             // label16
             // 
             label16.AutoSize = true;
-            label16.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label16.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label16.Location = new Point(229, 211);
             label16.Name = "label16";
             label16.Size = new Size(55, 15);
@@ -296,7 +296,7 @@
             // label14
             // 
             label14.AutoSize = true;
-            label14.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label14.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label14.Location = new Point(229, 108);
             label14.Name = "label14";
             label14.Size = new Size(31, 15);
@@ -337,7 +337,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label12.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label12.Location = new Point(79, 306);
             label12.Name = "label12";
             label12.Size = new Size(31, 15);
@@ -348,7 +348,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label8.Location = new Point(79, 236);
             label8.Name = "label8";
             label8.Size = new Size(116, 15);
@@ -359,7 +359,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label7.Location = new Point(79, 174);
             label7.Name = "label7";
             label7.Size = new Size(126, 15);
@@ -370,7 +370,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label6.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label6.Location = new Point(12, 108);
             label6.Name = "label6";
             label6.Size = new Size(64, 15);
@@ -423,7 +423,7 @@
             AddUserDB_button.BackColor = SystemColors.ControlLight;
             AddUserDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AddUserDB_button.FlatStyle = FlatStyle.System;
-            AddUserDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            AddUserDB_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
             AddUserDB_button.Location = new Point(71, 11);
             AddUserDB_button.Margin = new Padding(0);
             AddUserDB_button.Name = "AddUserDB_button";
@@ -497,7 +497,7 @@
             // 
             // UserDB_celltype_comboBox
             // 
-            UserDB_celltype_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDB_celltype_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDB_celltype_comboBox.Location = new Point(310, 50);
             UserDB_celltype_comboBox.Name = "UserDB_celltype_comboBox";
             UserDB_celltype_comboBox.Size = new Size(120, 24);
@@ -517,7 +517,7 @@
             PVModule_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle7.SelectionForeColor = Color.Black;
@@ -528,7 +528,7 @@
             PVModule_dataGridView.Name = "PVModule_dataGridView";
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
@@ -537,7 +537,7 @@
             PVModule_dataGridView.RowHeadersVisible = false;
             PVModule_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle9.ForeColor = Color.Black;
             dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle9.SelectionForeColor = Color.Black;
@@ -558,7 +558,7 @@
             // 
             // UserDB_year_comboBox
             // 
-            UserDB_year_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDB_year_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UserDB_year_comboBox.FormattingEnabled = true;
             UserDB_year_comboBox.Location = new Point(774, 8);
             UserDB_year_comboBox.Name = "UserDB_year_comboBox";
@@ -662,7 +662,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label4.Location = new Point(8, 15);
             label4.Name = "label4";
             label4.Size = new Size(60, 15);
@@ -683,7 +683,7 @@
             Deletebutton.BackColor = SystemColors.ControlLight;
             Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            Deletebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
             Deletebutton.Location = new Point(98, 11);
             Deletebutton.Margin = new Padding(0);
             Deletebutton.Name = "Deletebutton";

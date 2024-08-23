@@ -66,7 +66,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("맑은 고딕", 21.75F, FontStyle.Italic, GraphicsUnit.Point);
+            label2.Font = new System.Drawing.Font("맑은 고딕", 21.75F, FontStyle.Italic, GraphicsUnit.Point);
             label2.Location = new Point(386, 257);
             label2.Name = "label2";
             label2.Size = new Size(452, 40);
@@ -76,7 +76,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("맑은 고딕", 21.75F, FontStyle.Italic, GraphicsUnit.Point);
+            label3.Font = new System.Drawing.Font("맑은 고딕", 21.75F, FontStyle.Italic, GraphicsUnit.Point);
             label3.Location = new Point(386, 302);
             label3.Name = "label3";
             label3.Size = new Size(246, 40);

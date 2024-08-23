@@ -61,7 +61,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label4.Location = new Point(67, 10);
             label4.Name = "label4";
             label4.Size = new Size(87, 15);
@@ -81,7 +81,7 @@
             // dPanel_label2
             // 
             dPanel_label2.AutoSize = true;
-            dPanel_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dPanel_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             dPanel_label2.ForeColor = SystemColors.ControlDark;
             dPanel_label2.Location = new Point(252, 42);
             dPanel_label2.Name = "dPanel_label2";
@@ -92,7 +92,7 @@
             // dPanel_label
             // 
             dPanel_label.AutoSize = true;
-            dPanel_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dPanel_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             dPanel_label.Location = new Point(69, 42);
             dPanel_label.Name = "dPanel_label";
             dPanel_label.Size = new Size(51, 16);
@@ -112,7 +112,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label2.ForeColor = SystemColors.ControlDark;
             label2.Location = new Point(448, 42);
             label2.Name = "label2";
@@ -123,7 +123,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label1.Location = new Point(276, 42);
             label1.Name = "label1";
             label1.Size = new Size(40, 16);
@@ -143,7 +143,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label5.ForeColor = SystemColors.ControlDark;
             label5.Location = new Point(252, 74);
             label5.Name = "label5";
@@ -154,7 +154,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label3.Location = new Point(69, 74);
             label3.Name = "label3";
             label3.Size = new Size(29, 16);
@@ -174,7 +174,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label7.ForeColor = SystemColors.ControlDark;
             label7.Location = new Point(448, 74);
             label7.Name = "label7";
@@ -185,7 +185,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label6.Location = new Point(276, 74);
             label6.Name = "label6";
             label6.Size = new Size(29, 16);
@@ -195,7 +195,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label8.Location = new Point(12, 42);
             label8.Name = "label8";
             label8.Size = new Size(51, 16);
@@ -207,7 +207,7 @@
             pictureBox1.BackColor = SystemColors.Window;
             pictureBox1.Location = new Point(-2, 106);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(510, 229);
+            pictureBox1.Size = new Size(510, 259);
             pictureBox1.TabIndex = 137;
             pictureBox1.TabStop = false;
             // 
@@ -215,7 +215,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(361, 409);
+            Save_button.Location = new Point(361, 450);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -244,14 +244,14 @@
             GeneralPanel.Controls.Add(label4);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(508, 332);
+            GeneralPanel.Size = new Size(508, 368);
             GeneralPanel.TabIndex = 18;
             // 
             // PumpNum_textBox
             // 
             PumpNum_textBox.BackColor = Color.AliceBlue;
             PumpNum_textBox.BorderStyle = BorderStyle.None;
-            PumpNum_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            PumpNum_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             PumpNum_textBox.Location = new Point(12, 9);
             PumpNum_textBox.Name = "PumpNum_textBox";
             PumpNum_textBox.Size = new Size(51, 16);
@@ -267,7 +267,7 @@
             panel1.Controls.Add(label10);
             panel1.Controls.Add(label9);
             panel1.Controls.Add(Lmax_textBox);
-            panel1.Location = new Point(-2, 331);
+            panel1.Location = new Point(-2, 366);
             panel1.Name = "panel1";
             panel1.Size = new Size(510, 72);
             panel1.TabIndex = 139;
@@ -275,7 +275,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label11.Location = new Point(137, 42);
             label11.Name = "label11";
             label11.Size = new Size(55, 16);
@@ -285,7 +285,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label12.ForeColor = SystemColors.ControlText;
             label12.Location = new Point(357, 42);
             label12.Name = "label12";
@@ -306,7 +306,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label10.Location = new Point(104, 16);
             label10.Name = "label10";
             label10.Size = new Size(99, 16);
@@ -316,7 +316,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label9.ForeColor = SystemColors.ControlText;
             label9.Location = new Point(357, 16);
             label9.Name = "label9";
@@ -339,7 +339,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(508, 444);
+            ClientSize = new Size(508, 492);
             Controls.Add(panel1);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);

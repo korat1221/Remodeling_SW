@@ -53,7 +53,7 @@
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
   !insertmacro MUI_PAGE_INSTFILES
-  !define MUI_FINISHPAGE_RUN "$INSTDIR\net6.0-windows\main.exe"
+  !define MUI_FINISHPAGE_RUN "$INSTDIR\net8.0-windows7.0\main.exe"
   !insertmacro MUI_PAGE_FINISH
 
   !insertmacro MUI_UNPAGE_CONFIRM
@@ -104,13 +104,13 @@ Section "Dummy Section" SecDummy
   File /r ..\main\bin\Release\*.*
   File /r ..\asset\*.*
 
-  CreateShortCut "$DESKTOP\$(Title).lnk" "$INSTDIR\net6.0-windows\main.exe"
+  CreateShortCut "$DESKTOP\$(Title).lnk" "$INSTDIR\net8.0-windows7.0\main.exe"
 
   ;Store installation folder
   WriteRegStr HKCU "Software\ZEROFIX" "" $INSTDIR
 
   ;Run on startup
-  ;WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "ZEROFIX" "$INSTDIR\net6.0-windows\main.exe"
+  ;WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "ZEROFIX" "$INSTDIR\net8.0-windows7.0\main.exe"
 
   ; write uninstall strings
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ZEROFIX" "DisplayName" "$(Title)"
@@ -146,13 +146,13 @@ Section "Dummy Section" SecDummy
     next2:
   ${EndIF}
 
-  ClearErrors
-	MessageBox MB_YESNO $(DotNetIns) IDYES true3 IDNO false3
-	true3:
-	  ExecWait 'windowsdesktop-runtime-6.0.16-win-x64.exe'
-	  Goto next3
-	false3:
-	next3:
+;  ClearErrors
+;	MessageBox MB_YESNO $(DotNetIns) IDYES true3 IDNO false3
+;	true3:
+;	  ExecWait 'windowsdesktop-runtime-6.0.16-win-x64.exe'
+;	  Goto next3
+;	false3:
+;	next3:
 
   ExecWait '"$INSTDIR\installer.exe" init'
 
@@ -161,7 +161,7 @@ Section "Dummy Section" SecDummy
     ;Create shortcuts
     CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
     CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(Uninstall).lnk" "$INSTDIR\Uninstall.exe"
-    CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(Title).lnk" "$INSTDIR\net6.0-windows\main.exe"
+    CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(Title).lnk" "$INSTDIR\net8.0-windows7.0\main.exe"
 
   !insertmacro MUI_STARTMENU_WRITE_END
 

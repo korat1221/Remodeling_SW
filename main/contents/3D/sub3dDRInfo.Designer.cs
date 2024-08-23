@@ -99,7 +99,7 @@
             // 
             textBox3.BackColor = Color.White;
             textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox3.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             textBox3.Location = new Point(51, 12);
             textBox3.Name = "textBox3";
             textBox3.ReadOnly = true;

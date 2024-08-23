@@ -55,7 +55,7 @@
             // 
             textBox2.BackColor = SystemColors.Window;
             textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox2.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             textBox2.Location = new Point(155, 52);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(120, 22);
@@ -64,7 +64,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label3.Location = new Point(74, 56);
             label3.Name = "label3";
             label3.Size = new Size(55, 15);
@@ -74,7 +74,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label1.Location = new Point(102, 19);
             label1.Name = "label1";
             label1.Size = new Size(19, 15);
@@ -85,7 +85,7 @@
             // 
             textBox1.BackColor = SystemColors.Window;
             textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox1.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             textBox1.Location = new Point(155, 16);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(120, 22);

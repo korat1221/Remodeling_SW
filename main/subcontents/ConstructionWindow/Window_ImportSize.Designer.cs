@@ -71,7 +71,7 @@
             Size_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -82,7 +82,7 @@
             Size_dataGridView.Name = "Size_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -91,7 +91,7 @@
             Size_dataGridView.RowHeadersVisible = false;
             Size_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -117,7 +117,7 @@
             CSVImport_button.BackColor = SystemColors.ControlLight;
             CSVImport_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             CSVImport_button.FlatStyle = FlatStyle.System;
-            CSVImport_button.Font = new Font("나눔고딕 ExtraBold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            CSVImport_button.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             CSVImport_button.Location = new Point(212, 13);
             CSVImport_button.Margin = new Padding(0);
             CSVImport_button.Name = "CSVImport_button";
@@ -270,7 +270,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label10.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label10.Location = new Point(93, 49);
             label10.Name = "label10";
             label10.Size = new Size(99, 15);
@@ -280,7 +280,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label12.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             label12.Location = new Point(93, 17);
             label12.Name = "label12";
             label12.Size = new Size(98, 15);
@@ -292,7 +292,7 @@
             Calc_button.BackColor = SystemColors.ControlLight;
             Calc_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Calc_button.FlatStyle = FlatStyle.System;
-            Calc_button.Font = new Font("나눔고딕 ExtraBold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Calc_button.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             Calc_button.Location = new Point(212, 45);
             Calc_button.Margin = new Padding(0);
             Calc_button.Name = "Calc_button";

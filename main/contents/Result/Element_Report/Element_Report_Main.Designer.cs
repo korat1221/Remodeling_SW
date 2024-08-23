@@ -50,7 +50,7 @@
             // Element_comboBox
             // 
             Element_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Element_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Element_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Element_comboBox.FormattingEnabled = true;
             Element_comboBox.Location = new Point(867, 12);
             Element_comboBox.Name = "Element_comboBox";

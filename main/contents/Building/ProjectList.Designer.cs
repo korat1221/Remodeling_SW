@@ -71,7 +71,7 @@
             // ProjectType_label
             // 
             ProjectType_label.AutoSize = true;
-            ProjectType_label.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            ProjectType_label.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             ProjectType_label.Location = new Point(207, 106);
             ProjectType_label.Name = "ProjectType_label";
             ProjectType_label.Size = new Size(58, 21);
@@ -84,7 +84,7 @@
             PreCopy_button.BackColor = SystemColors.ControlLight;
             PreCopy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             PreCopy_button.FlatStyle = FlatStyle.System;
-            PreCopy_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            PreCopy_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
             PreCopy_button.Location = new Point(797, 105);
             PreCopy_button.Margin = new Padding(0);
             PreCopy_button.Name = "PreCopy_button";
@@ -101,7 +101,7 @@
             Save_button.BackColor = SystemColors.ControlLight;
             Save_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Save_button.FlatStyle = FlatStyle.System;
-            Save_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            Save_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
             Save_button.Location = new Point(803, 500);
             Save_button.Margin = new Padding(0);
             Save_button.Name = "Save_button";
@@ -116,7 +116,7 @@
             Copy_button.BackColor = SystemColors.ControlLight;
             Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Copy_button.FlatStyle = FlatStyle.System;
-            Copy_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            Copy_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
             Copy_button.Location = new Point(730, 105);
             Copy_button.Margin = new Padding(0);
             Copy_button.Name = "Copy_button";
@@ -131,7 +131,7 @@
             Delete_button.BackColor = SystemColors.ControlLight;
             Delete_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Delete_button.FlatStyle = FlatStyle.System;
-            Delete_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            Delete_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
             Delete_button.Location = new Point(663, 105);
             Delete_button.Margin = new Padding(0);
             Delete_button.Name = "Delete_button";
@@ -146,7 +146,7 @@
             New_button.BackColor = SystemColors.ControlLight;
             New_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             New_button.FlatStyle = FlatStyle.System;
-            New_button.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
+            New_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, FontStyle.Bold, GraphicsUnit.Point);
             New_button.Location = new Point(596, 105);
             New_button.Margin = new Padding(0);
             New_button.Name = "New_button";
@@ -169,7 +169,7 @@
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -181,7 +181,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -190,7 +190,7 @@
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;

@@ -109,7 +109,7 @@
             OldBlind_textBox.BackColor = Color.White;
             OldBlind_textBox.BorderStyle = BorderStyle.None;
             OldBlind_textBox.Enabled = false;
-            OldBlind_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            OldBlind_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             OldBlind_textBox.ForeColor = SystemColors.ControlText;
             OldBlind_textBox.Location = new Point(693, 23);
             OldBlind_textBox.Name = "OldBlind_textBox";
@@ -147,7 +147,7 @@
             Type_textBox.BackColor = Color.White;
             Type_textBox.BorderStyle = BorderStyle.None;
             Type_textBox.Enabled = false;
-            Type_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Type_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Type_textBox.ForeColor = SystemColors.ControlDark;
             Type_textBox.Location = new Point(245, 54);
             Type_textBox.Name = "Type_textBox";
@@ -224,7 +224,7 @@
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Num_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Num_textBox.ForeColor = SystemColors.ControlText;
             Num_textBox.Location = new Point(76, 20);
             Num_textBox.Name = "Num_textBox";
@@ -278,7 +278,7 @@
             BlindAlpha_textBox.BackColor = Color.White;
             BlindAlpha_textBox.BorderStyle = BorderStyle.None;
             BlindAlpha_textBox.Enabled = false;
-            BlindAlpha_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindAlpha_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BlindAlpha_textBox.ForeColor = SystemColors.ControlDark;
             BlindAlpha_textBox.Location = new Point(658, 163);
             BlindAlpha_textBox.Name = "BlindAlpha_textBox";
@@ -289,7 +289,7 @@
             // label18
             // 
             label18.AutoSize = true;
-            label18.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label18.ForeColor = SystemColors.ControlDark;
             label18.Location = new Point(561, 163);
             label18.Name = "label18";
@@ -302,7 +302,7 @@
             BlindIn_textBox.BackColor = Color.White;
             BlindIn_textBox.BorderStyle = BorderStyle.None;
             BlindIn_textBox.Enabled = false;
-            BlindIn_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindIn_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BlindIn_textBox.ForeColor = SystemColors.ControlDark;
             BlindIn_textBox.Location = new Point(658, 127);
             BlindIn_textBox.Name = "BlindIn_textBox";
@@ -313,7 +313,7 @@
             // label19
             // 
             label19.AutoSize = true;
-            label19.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label19.ForeColor = SystemColors.ControlDark;
             label19.Location = new Point(561, 127);
             label19.Name = "label19";
@@ -326,7 +326,7 @@
             BlindSHGC_textBox.BackColor = Color.White;
             BlindSHGC_textBox.BorderStyle = BorderStyle.None;
             BlindSHGC_textBox.Enabled = false;
-            BlindSHGC_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindSHGC_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BlindSHGC_textBox.ForeColor = SystemColors.ControlDark;
             BlindSHGC_textBox.Location = new Point(658, 200);
             BlindSHGC_textBox.Name = "BlindSHGC_textBox";
@@ -337,7 +337,7 @@
             // label13
             // 
             label13.AutoSize = true;
-            label13.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label13.ForeColor = SystemColors.ControlDark;
             label13.Location = new Point(561, 199);
             label13.Name = "label13";
@@ -350,7 +350,7 @@
             BlindEx_textBox.BackColor = Color.White;
             BlindEx_textBox.BorderStyle = BorderStyle.None;
             BlindEx_textBox.Enabled = false;
-            BlindEx_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindEx_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BlindEx_textBox.ForeColor = SystemColors.ControlDark;
             BlindEx_textBox.Location = new Point(658, 91);
             BlindEx_textBox.Name = "BlindEx_textBox";
@@ -361,7 +361,7 @@
             // label14
             // 
             label14.AutoSize = true;
-            label14.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label14.ForeColor = SystemColors.ControlDark;
             label14.Location = new Point(561, 90);
             label14.Name = "label14";
@@ -374,7 +374,7 @@
             ControlType2_textBox.BackColor = Color.White;
             ControlType2_textBox.BorderStyle = BorderStyle.None;
             ControlType2_textBox.Enabled = false;
-            ControlType2_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ControlType2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             ControlType2_textBox.ForeColor = SystemColors.ControlDark;
             ControlType2_textBox.Location = new Point(250, 239);
             ControlType2_textBox.Name = "ControlType2_textBox";
@@ -395,7 +395,7 @@
             BlindColor_textBox.BackColor = Color.White;
             BlindColor_textBox.BorderStyle = BorderStyle.None;
             BlindColor_textBox.Enabled = false;
-            BlindColor_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindColor_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BlindColor_textBox.ForeColor = SystemColors.ControlDark;
             BlindColor_textBox.Location = new Point(124, 200);
             BlindColor_textBox.Name = "BlindColor_textBox";
@@ -406,7 +406,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label8.ForeColor = SystemColors.ControlDark;
             label8.Location = new Point(27, 199);
             label8.Name = "label8";
@@ -419,7 +419,7 @@
             BlindTrans_textBox.BackColor = Color.White;
             BlindTrans_textBox.BorderStyle = BorderStyle.None;
             BlindTrans_textBox.Enabled = false;
-            BlindTrans_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindTrans_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BlindTrans_textBox.ForeColor = SystemColors.ControlDark;
             BlindTrans_textBox.Location = new Point(124, 164);
             BlindTrans_textBox.Name = "BlindTrans_textBox";
@@ -430,7 +430,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label7.ForeColor = SystemColors.ControlDark;
             label7.Location = new Point(27, 163);
             label7.Name = "label7";
@@ -443,7 +443,7 @@
             BlindInstall_textBox.BackColor = Color.White;
             BlindInstall_textBox.BorderStyle = BorderStyle.None;
             BlindInstall_textBox.Enabled = false;
-            BlindInstall_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindInstall_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BlindInstall_textBox.ForeColor = SystemColors.ControlDark;
             BlindInstall_textBox.Location = new Point(124, 128);
             BlindInstall_textBox.Name = "BlindInstall_textBox";
@@ -454,7 +454,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label6.ForeColor = SystemColors.ControlDark;
             label6.Location = new Point(27, 127);
             label6.Name = "label6";
@@ -467,7 +467,7 @@
             BlindType_textBox.BackColor = Color.White;
             BlindType_textBox.BorderStyle = BorderStyle.None;
             BlindType_textBox.Enabled = false;
-            BlindType_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BlindType_textBox.ForeColor = SystemColors.ControlDark;
             BlindType_textBox.Location = new Point(124, 92);
             BlindType_textBox.Name = "BlindType_textBox";
@@ -478,7 +478,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label5.ForeColor = SystemColors.ControlDark;
             label5.Location = new Point(27, 91);
             label5.Name = "label5";
@@ -489,7 +489,7 @@
             // ControlType_comboBox
             // 
             ControlType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            ControlType_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ControlType_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             ControlType_comboBox.FormattingEnabled = true;
             ControlType_comboBox.Location = new Point(124, 236);
             ControlType_comboBox.Name = "ControlType_comboBox";
@@ -500,7 +500,7 @@
             // label25
             // 
             label25.AutoSize = true;
-            label25.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label25.Location = new Point(27, 239);
             label25.Name = "label25";
             label25.Size = new Size(51, 16);
@@ -512,7 +512,7 @@
             BlindName_textBox.BackColor = Color.White;
             BlindName_textBox.BorderStyle = BorderStyle.None;
             BlindName_textBox.Enabled = false;
-            BlindName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BlindName_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             BlindName_textBox.ForeColor = SystemColors.ControlDark;
             BlindName_textBox.Location = new Point(124, 56);
             BlindName_textBox.Name = "BlindName_textBox";
@@ -523,7 +523,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label11.Location = new Point(27, 55);
             label11.Name = "label11";
             label11.Size = new Size(29, 16);
@@ -535,7 +535,7 @@
             BlindDB_button.BackColor = SystemColors.ControlLight;
             BlindDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             BlindDB_button.FlatStyle = FlatStyle.System;
-            BlindDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            BlindDB_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
             BlindDB_button.Location = new Point(245, 52);
             BlindDB_button.Margin = new Padding(0);
             BlindDB_button.Name = "BlindDB_button";
@@ -595,7 +595,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label1.Location = new Point(19, 116);
             label1.Name = "label1";
             label1.Size = new Size(51, 16);

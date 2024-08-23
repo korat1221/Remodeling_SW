@@ -67,7 +67,7 @@ partial class BlowDoorTest
         Blow_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
         dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
         dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-        dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+        dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
         dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
         dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
         dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -78,7 +78,7 @@ partial class BlowDoorTest
         Blow_dataGridView.Name = "Blow_dataGridView";
         dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
         dataGridViewCellStyle2.BackColor = SystemColors.Control;
-        dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+        dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
         dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
         dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
         dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -87,7 +87,7 @@ partial class BlowDoorTest
         Blow_dataGridView.RowHeadersVisible = false;
         Blow_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
         dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+        dataGridViewCellStyle3.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
         dataGridViewCellStyle3.ForeColor = Color.Black;
         dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
         dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -103,7 +103,7 @@ partial class BlowDoorTest
         Add_button.BackColor = SystemColors.ControlLight;
         Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
         Add_button.FlatStyle = FlatStyle.System;
-        Add_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+        Add_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
         Add_button.Location = new Point(327, 6);
         Add_button.Margin = new Padding(0);
         Add_button.Name = "Add_button";
@@ -118,7 +118,7 @@ partial class BlowDoorTest
         Delete_button.BackColor = SystemColors.ControlLight;
         Delete_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
         Delete_button.FlatStyle = FlatStyle.System;
-        Delete_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+        Delete_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
         Delete_button.Location = new Point(354, 6);
         Delete_button.Margin = new Padding(0);
         Delete_button.Name = "Delete_button";
@@ -131,7 +131,7 @@ partial class BlowDoorTest
         // label4
         // 
         label4.AutoSize = true;
-        label4.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+        label4.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
         label4.Location = new Point(12, 10);
         label4.Name = "label4";
         label4.Size = new Size(99, 15);
@@ -142,7 +142,7 @@ partial class BlowDoorTest
         // 
         n50_textBox.BackColor = Color.White;
         n50_textBox.BorderStyle = BorderStyle.None;
-        n50_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+        n50_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
         n50_textBox.ForeColor = SystemColors.ControlText;
         n50_textBox.Location = new Point(232, 186);
         n50_textBox.Name = "n50_textBox";
@@ -153,7 +153,7 @@ partial class BlowDoorTest
         // n50_label1
         // 
         n50_label1.AutoSize = true;
-        n50_label1.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+        n50_label1.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
         n50_label1.ForeColor = SystemColors.ControlText;
         n50_label1.Location = new Point(175, 187);
         n50_label1.Name = "n50_label1";
@@ -164,7 +164,7 @@ partial class BlowDoorTest
         // n50_label2
         // 
         n50_label2.AutoSize = true;
-        n50_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+        n50_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
         n50_label2.ForeColor = SystemColors.ControlText;
         n50_label2.Location = new Point(352, 185);
         n50_label2.Name = "n50_label2";

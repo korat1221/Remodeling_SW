@@ -31,10 +31,10 @@ namespace main
 
             str = str.Substring(0, str.LastIndexOf('\\') + 1);
 
-            if (gPath + "net6.0-windows\\" != str)
+            if (gPath + "net8.0-windows7.0\\" != str)
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo();
-                startInfo.FileName = gPath + "net6.0-windows\\main.exe";
+                startInfo.FileName = gPath + "net8.0-windows7.0\\main.exe";
                 Process.Start(startInfo);
                 Application.Exit();
                 return;
