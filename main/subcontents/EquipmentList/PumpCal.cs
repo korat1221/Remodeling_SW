@@ -23,6 +23,8 @@ namespace main.subcontents.EquipmentList
         {
             InitializeComponent();
             PumpNum_textBox.Text = PumpNum;
+            pictureBox1.Load(Program.gPath + "images/HeatingSystem/PumpArea.png");
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
         private void L_textBox_TextChanged(object sender, EventArgs e)
