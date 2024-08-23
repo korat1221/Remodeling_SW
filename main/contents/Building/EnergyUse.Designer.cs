@@ -138,7 +138,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Bold, GraphicsUnit.Point);
             label3.Location = new Point(87, 43);
             label3.Name = "label3";
             label3.Size = new Size(73, 16);
@@ -251,7 +251,7 @@
             textBox4.BackColor = Color.White;
             textBox4.BorderStyle = BorderStyle.None;
             textBox4.Enabled = false;
-            textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox4.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             textBox4.ForeColor = SystemColors.ControlDark;
             textBox4.Location = new Point(12, 485);
             textBox4.Name = "textBox4";
@@ -265,7 +265,7 @@
             textBox3.BackColor = Color.White;
             textBox3.BorderStyle = BorderStyle.None;
             textBox3.Enabled = false;
-            textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox3.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             textBox3.ForeColor = SystemColors.ControlDark;
             textBox3.Location = new Point(12, 458);
             textBox3.Name = "textBox3";
@@ -279,7 +279,7 @@
             textBox2.BackColor = Color.White;
             textBox2.BorderStyle = BorderStyle.None;
             textBox2.Enabled = false;
-            textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             textBox2.ForeColor = SystemColors.ControlDark;
             textBox2.Location = new Point(12, 431);
             textBox2.Name = "textBox2";
@@ -293,7 +293,7 @@
             textBox1.BackColor = Color.White;
             textBox1.BorderStyle = BorderStyle.None;
             textBox1.Enabled = false;
-            textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox1.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             textBox1.ForeColor = SystemColors.ControlDark;
             textBox1.Location = new Point(12, 404);
             textBox1.Name = "textBox1";
@@ -315,7 +315,7 @@
             // Gas_EndDay_comboBox
             // 
             Gas_EndDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Gas_EndDay_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Gas_EndDay_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Gas_EndDay_comboBox.FormattingEnabled = true;
             Gas_EndDay_comboBox.Location = new Point(242, 19);
             Gas_EndDay_comboBox.Name = "Gas_EndDay_comboBox";
@@ -335,7 +335,7 @@
             // Gas_StartDay_comboBox
             // 
             Gas_StartDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Gas_StartDay_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Gas_StartDay_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Gas_StartDay_comboBox.FormattingEnabled = true;
             Gas_StartDay_comboBox.Location = new Point(133, 19);
             Gas_StartDay_comboBox.Name = "Gas_StartDay_comboBox";
@@ -513,7 +513,7 @@
             textBox8.BackColor = Color.White;
             textBox8.BorderStyle = BorderStyle.None;
             textBox8.Enabled = false;
-            textBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox8.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             textBox8.ForeColor = SystemColors.ControlDark;
             textBox8.Location = new Point(10, 473);
             textBox8.Name = "textBox8";
@@ -527,7 +527,7 @@
             textBox7.BackColor = Color.White;
             textBox7.BorderStyle = BorderStyle.None;
             textBox7.Enabled = false;
-            textBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox7.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             textBox7.ForeColor = SystemColors.ControlDark;
             textBox7.Location = new Point(10, 446);
             textBox7.Name = "textBox7";
@@ -541,7 +541,7 @@
             textBox6.BackColor = Color.White;
             textBox6.BorderStyle = BorderStyle.None;
             textBox6.Enabled = false;
-            textBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox6.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             textBox6.ForeColor = SystemColors.ControlDark;
             textBox6.Location = new Point(10, 419);
             textBox6.Name = "textBox6";
@@ -555,7 +555,7 @@
             textBox5.BackColor = Color.White;
             textBox5.BorderStyle = BorderStyle.None;
             textBox5.Enabled = false;
-            textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox5.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             textBox5.ForeColor = SystemColors.ControlDark;
             textBox5.Location = new Point(10, 392);
             textBox5.Name = "textBox5";
@@ -649,7 +649,7 @@
             // Elec_EndDay_comboBox
             // 
             Elec_EndDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Elec_EndDay_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Elec_EndDay_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Elec_EndDay_comboBox.FormattingEnabled = true;
             Elec_EndDay_comboBox.Location = new Point(244, 23);
             Elec_EndDay_comboBox.Name = "Elec_EndDay_comboBox";
@@ -669,7 +669,7 @@
             // Elec_StartDay_comboBox
             // 
             Elec_StartDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Elec_StartDay_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Elec_StartDay_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Elec_StartDay_comboBox.FormattingEnabled = true;
             Elec_StartDay_comboBox.Location = new Point(135, 23);
             Elec_StartDay_comboBox.Name = "Elec_StartDay_comboBox";
@@ -821,7 +821,7 @@
             textBox12.BackColor = Color.White;
             textBox12.BorderStyle = BorderStyle.None;
             textBox12.Enabled = false;
-            textBox12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox12.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             textBox12.ForeColor = SystemColors.ControlDark;
             textBox12.Location = new Point(19, 478);
             textBox12.Name = "textBox12";
@@ -835,7 +835,7 @@
             textBox11.BackColor = Color.White;
             textBox11.BorderStyle = BorderStyle.None;
             textBox11.Enabled = false;
-            textBox11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox11.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             textBox11.ForeColor = SystemColors.ControlDark;
             textBox11.Location = new Point(19, 451);
             textBox11.Name = "textBox11";
@@ -849,7 +849,7 @@
             textBox10.BackColor = Color.White;
             textBox10.BorderStyle = BorderStyle.None;
             textBox10.Enabled = false;
-            textBox10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox10.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             textBox10.ForeColor = SystemColors.ControlDark;
             textBox10.Location = new Point(19, 424);
             textBox10.Name = "textBox10";
@@ -863,7 +863,7 @@
             textBox9.BackColor = Color.White;
             textBox9.BorderStyle = BorderStyle.None;
             textBox9.Enabled = false;
-            textBox9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox9.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             textBox9.ForeColor = SystemColors.ControlDark;
             textBox9.Location = new Point(19, 397);
             textBox9.Name = "textBox9";
@@ -897,7 +897,7 @@
             // DH_EndDay_comboBox
             // 
             DH_EndDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            DH_EndDay_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DH_EndDay_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             DH_EndDay_comboBox.FormattingEnabled = true;
             DH_EndDay_comboBox.Location = new Point(249, 12);
             DH_EndDay_comboBox.Name = "DH_EndDay_comboBox";
@@ -930,7 +930,7 @@
             // DH_StartDay_comboBox
             // 
             DH_StartDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            DH_StartDay_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DH_StartDay_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             DH_StartDay_comboBox.FormattingEnabled = true;
             DH_StartDay_comboBox.Location = new Point(140, 12);
             DH_StartDay_comboBox.Name = "DH_StartDay_comboBox";

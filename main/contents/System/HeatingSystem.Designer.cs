@@ -242,7 +242,7 @@
             OldSystem_textBox.BackColor = Color.White;
             OldSystem_textBox.BorderStyle = BorderStyle.None;
             OldSystem_textBox.Enabled = false;
-            OldSystem_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            OldSystem_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             OldSystem_textBox.ForeColor = SystemColors.ControlText;
             OldSystem_textBox.Location = new Point(774, 36);
             OldSystem_textBox.Name = "OldSystem_textBox";
@@ -363,7 +363,7 @@
             Zone_textBox.BackColor = Color.White;
             Zone_textBox.BorderStyle = BorderStyle.None;
             Zone_textBox.Enabled = false;
-            Zone_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Zone_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Zone_textBox.ForeColor = SystemColors.ControlDark;
             Zone_textBox.Location = new Point(165, 63);
             Zone_textBox.Name = "Zone_textBox";
@@ -385,7 +385,7 @@
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Num_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Num_textBox.ForeColor = SystemColors.ControlText;
             Num_textBox.Location = new Point(66, 25);
             Num_textBox.Name = "Num_textBox";
@@ -777,7 +777,7 @@
             // Complex_comboBox
             // 
             Complex_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Complex_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Complex_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Complex_comboBox.FormattingEnabled = true;
             Complex_comboBox.Location = new Point(108, 19);
             Complex_comboBox.Name = "Complex_comboBox";
@@ -790,7 +790,7 @@
             Sub2UserList_textBox.BackColor = Color.White;
             Sub2UserList_textBox.BorderStyle = BorderStyle.None;
             Sub2UserList_textBox.Enabled = false;
-            Sub2UserList_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Sub2UserList_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Sub2UserList_textBox.ForeColor = SystemColors.ControlDark;
             Sub2UserList_textBox.Location = new Point(794, 86);
             Sub2UserList_textBox.Name = "Sub2UserList_textBox";
@@ -831,7 +831,7 @@
             Sub1UserList_textBox.BackColor = Color.White;
             Sub1UserList_textBox.BorderStyle = BorderStyle.None;
             Sub1UserList_textBox.Enabled = false;
-            Sub1UserList_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Sub1UserList_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Sub1UserList_textBox.ForeColor = SystemColors.ControlDark;
             Sub1UserList_textBox.Location = new Point(347, 86);
             Sub1UserList_textBox.Name = "Sub1UserList_textBox";
@@ -872,7 +872,7 @@
             MainUserList_textBox.BackColor = Color.White;
             MainUserList_textBox.BorderStyle = BorderStyle.None;
             MainUserList_textBox.Enabled = false;
-            MainUserList_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            MainUserList_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             MainUserList_textBox.ForeColor = SystemColors.ControlDark;
             MainUserList_textBox.Location = new Point(347, 56);
             MainUserList_textBox.Name = "MainUserList_textBox";
@@ -908,7 +908,7 @@
             // SLRL_comboBox
             // 
             SLRL_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            SLRL_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            SLRL_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             SLRL_comboBox.FormattingEnabled = true;
             SLRL_comboBox.Location = new Point(576, 19);
             SLRL_comboBox.Name = "SLRL_comboBox";
@@ -929,7 +929,7 @@
             // SystemLoacation_comboBox
             // 
             SystemLoacation_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            SystemLoacation_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            SystemLoacation_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             SystemLoacation_comboBox.FormattingEnabled = true;
             SystemLoacation_comboBox.Location = new Point(347, 19);
             SystemLoacation_comboBox.Name = "SystemLoacation_comboBox";
@@ -951,7 +951,7 @@
             // Sub2System_comboBox
             // 
             Sub2System_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Sub2System_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Sub2System_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Sub2System_comboBox.FormattingEnabled = true;
             Sub2System_comboBox.Location = new Point(576, 81);
             Sub2System_comboBox.Name = "Sub2System_comboBox";
@@ -984,7 +984,7 @@
             // Sub1System_comboBox
             // 
             Sub1System_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Sub1System_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Sub1System_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Sub1System_comboBox.FormattingEnabled = true;
             Sub1System_comboBox.Location = new Point(108, 81);
             Sub1System_comboBox.Name = "Sub1System_comboBox";
@@ -1006,7 +1006,7 @@
             // MainSystem_comboBox
             // 
             MainSystem_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            MainSystem_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            MainSystem_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             MainSystem_comboBox.FormattingEnabled = true;
             MainSystem_comboBox.Location = new Point(108, 51);
             MainSystem_comboBox.Name = "MainSystem_comboBox";
@@ -1090,7 +1090,7 @@
             // StoragePump_comboBox
             // 
             StoragePump_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            StoragePump_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            StoragePump_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             StoragePump_comboBox.FormattingEnabled = true;
             StoragePump_comboBox.Location = new Point(610, 38);
             StoragePump_comboBox.Name = "StoragePump_comboBox";
@@ -1103,7 +1103,7 @@
             StoragePump_textBox.BackColor = Color.White;
             StoragePump_textBox.BorderStyle = BorderStyle.None;
             StoragePump_textBox.Enabled = false;
-            StoragePump_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            StoragePump_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             StoragePump_textBox.ForeColor = SystemColors.ControlDark;
             StoragePump_textBox.Location = new Point(790, 43);
             StoragePump_textBox.Name = "StoragePump_textBox";
@@ -1139,7 +1139,7 @@
             // Vs_label1
             // 
             Vs_label1.AutoSize = true;
-            Vs_label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Vs_label1.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Vs_label1.Location = new Point(268, 42);
             Vs_label1.Name = "Vs_label1";
             Vs_label1.Size = new Size(76, 16);
@@ -1149,7 +1149,7 @@
             // Vs_label2
             // 
             Vs_label2.AutoSize = true;
-            Vs_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Vs_label2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Vs_label2.ForeColor = SystemColors.ControlDark;
             Vs_label2.Location = new Point(472, 42);
             Vs_label2.Name = "Vs_label2";
@@ -1179,7 +1179,7 @@
             // StorageUse_comboBox
             // 
             StorageUse_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            StorageUse_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            StorageUse_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             StorageUse_comboBox.FormattingEnabled = true;
             StorageUse_comboBox.Location = new Point(123, 38);
             StorageUse_comboBox.Name = "StorageUse_comboBox";
@@ -1234,7 +1234,7 @@
             // PipeIns_Ramda_label2
             // 
             PipeIns_Ramda_label2.AutoSize = true;
-            PipeIns_Ramda_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PipeIns_Ramda_label2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PipeIns_Ramda_label2.ForeColor = SystemColors.ControlDark;
             PipeIns_Ramda_label2.Location = new Point(889, 38);
             PipeIns_Ramda_label2.Name = "PipeIns_Ramda_label2";
@@ -1247,7 +1247,7 @@
             PipeIns_Ramda_textBox.BackColor = Color.White;
             PipeIns_Ramda_textBox.BorderStyle = BorderStyle.None;
             PipeIns_Ramda_textBox.Enabled = false;
-            PipeIns_Ramda_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PipeIns_Ramda_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PipeIns_Ramda_textBox.ForeColor = SystemColors.ControlDark;
             PipeIns_Ramda_textBox.Location = new Point(766, 39);
             PipeIns_Ramda_textBox.Name = "PipeIns_Ramda_textBox";
@@ -1259,7 +1259,7 @@
             // 
             PipeD_textBox.BackColor = Color.White;
             PipeD_textBox.BorderStyle = BorderStyle.FixedSingle;
-            PipeD_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PipeD_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PipeD_textBox.ForeColor = SystemColors.ControlText;
             PipeD_textBox.Location = new Point(94, 35);
             PipeD_textBox.Name = "PipeD_textBox";
@@ -1282,7 +1282,7 @@
             // PipeD_label2
             // 
             PipeD_label2.AutoSize = true;
-            PipeD_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PipeD_label2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PipeD_label2.ForeColor = SystemColors.ControlText;
             PipeD_label2.Location = new Point(217, 38);
             PipeD_label2.Name = "PipeD_label2";
@@ -1294,7 +1294,7 @@
             // 
             PipeInsD_textBox.BackColor = Color.White;
             PipeInsD_textBox.BorderStyle = BorderStyle.FixedSingle;
-            PipeInsD_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PipeInsD_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PipeInsD_textBox.ForeColor = SystemColors.ControlText;
             PipeInsD_textBox.Location = new Point(318, 35);
             PipeInsD_textBox.Name = "PipeInsD_textBox";
@@ -1317,7 +1317,7 @@
             // PipeInsD_label2
             // 
             PipeInsD_label2.AutoSize = true;
-            PipeInsD_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PipeInsD_label2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PipeInsD_label2.ForeColor = SystemColors.ControlText;
             PipeInsD_label2.Location = new Point(441, 38);
             PipeInsD_label2.Name = "PipeInsD_label2";
@@ -1330,7 +1330,7 @@
             PipeIns_textBox.BackColor = Color.White;
             PipeIns_textBox.BorderStyle = BorderStyle.None;
             PipeIns_textBox.Enabled = false;
-            PipeIns_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PipeIns_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PipeIns_textBox.ForeColor = SystemColors.ControlDark;
             PipeIns_textBox.Location = new Point(542, 39);
             PipeIns_textBox.Name = "PipeIns_textBox";
@@ -1411,7 +1411,7 @@
             Pump2_textBox.BackColor = Color.White;
             Pump2_textBox.BorderStyle = BorderStyle.None;
             Pump2_textBox.Enabled = false;
-            Pump2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Pump2_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Pump2_textBox.ForeColor = SystemColors.ControlDark;
             Pump2_textBox.Location = new Point(766, 74);
             Pump2_textBox.Name = "Pump2_textBox";
@@ -1457,7 +1457,7 @@
             // PumpMethod_comboBox
             // 
             PumpMethod_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            PumpMethod_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PumpMethod_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PumpMethod_comboBox.FormattingEnabled = true;
             PumpMethod_comboBox.Location = new Point(318, 69);
             PumpMethod_comboBox.Name = "PumpMethod_comboBox";
@@ -1478,7 +1478,7 @@
             // PumpUse_comboBox
             // 
             PumpUse_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            PumpUse_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PumpUse_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PumpUse_comboBox.FormattingEnabled = true;
             PumpUse_comboBox.Location = new Point(94, 69);
             PumpUse_comboBox.Name = "PumpUse_comboBox";
@@ -1491,7 +1491,7 @@
             Pump1_textBox.BackColor = Color.White;
             Pump1_textBox.BorderStyle = BorderStyle.None;
             Pump1_textBox.Enabled = false;
-            Pump1_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Pump1_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Pump1_textBox.ForeColor = SystemColors.ControlDark;
             Pump1_textBox.Location = new Point(542, 74);
             Pump1_textBox.Name = "Pump1_textBox";
@@ -1642,7 +1642,7 @@
             // ce2Type_comboBox
             // 
             ce2Type_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            ce2Type_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ce2Type_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             ce2Type_comboBox.FormattingEnabled = true;
             ce2Type_comboBox.Location = new Point(589, 27);
             ce2Type_comboBox.Name = "ce2Type_comboBox";
@@ -1655,7 +1655,7 @@
             ce1Zone_textBox.BackColor = Color.White;
             ce1Zone_textBox.BorderStyle = BorderStyle.None;
             ce1Zone_textBox.Enabled = false;
-            ce1Zone_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ce1Zone_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             ce1Zone_textBox.ForeColor = SystemColors.ControlDark;
             ce1Zone_textBox.Location = new Point(294, 32);
             ce1Zone_textBox.Name = "ce1Zone_textBox";
@@ -1701,7 +1701,7 @@
             // ce1Type_comboBox
             // 
             ce1Type_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            ce1Type_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ce1Type_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             ce1Type_comboBox.FormattingEnabled = true;
             ce1Type_comboBox.Location = new Point(115, 27);
             ce1Type_comboBox.Name = "ce1Type_comboBox";
@@ -1714,7 +1714,7 @@
             ce2Zone_textBox.BackColor = Color.White;
             ce2Zone_textBox.BorderStyle = BorderStyle.None;
             ce2Zone_textBox.Enabled = false;
-            ce2Zone_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ce2Zone_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             ce2Zone_textBox.ForeColor = SystemColors.ControlDark;
             ce2Zone_textBox.Location = new Point(768, 32);
             ce2Zone_textBox.Name = "ce2Zone_textBox";

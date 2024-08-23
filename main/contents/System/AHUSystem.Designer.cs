@@ -259,7 +259,7 @@
             HeatingLoad_textBox.BackColor = Color.White;
             HeatingLoad_textBox.BorderStyle = BorderStyle.None;
             HeatingLoad_textBox.Enabled = false;
-            HeatingLoad_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            HeatingLoad_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             HeatingLoad_textBox.ForeColor = SystemColors.ControlDark;
             HeatingLoad_textBox.Location = new Point(706, 73);
             HeatingLoad_textBox.Name = "HeatingLoad_textBox";
@@ -292,7 +292,7 @@
             Zone_textBox.BackColor = Color.White;
             Zone_textBox.BorderStyle = BorderStyle.None;
             Zone_textBox.Enabled = false;
-            Zone_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Zone_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Zone_textBox.ForeColor = SystemColors.ControlDark;
             Zone_textBox.Location = new Point(195, 72);
             Zone_textBox.Name = "Zone_textBox";
@@ -305,7 +305,7 @@
             CoolingLoad_textBox.BackColor = Color.White;
             CoolingLoad_textBox.BorderStyle = BorderStyle.None;
             CoolingLoad_textBox.Enabled = false;
-            CoolingLoad_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CoolingLoad_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             CoolingLoad_textBox.ForeColor = SystemColors.ControlDark;
             CoolingLoad_textBox.Location = new Point(642, 73);
             CoolingLoad_textBox.Name = "CoolingLoad_textBox";
@@ -318,7 +318,7 @@
             AnnualHeatingNeed_textBox.BackColor = Color.White;
             AnnualHeatingNeed_textBox.BorderStyle = BorderStyle.None;
             AnnualHeatingNeed_textBox.Enabled = false;
-            AnnualHeatingNeed_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AnnualHeatingNeed_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             AnnualHeatingNeed_textBox.ForeColor = SystemColors.ControlDark;
             AnnualHeatingNeed_textBox.Location = new Point(536, 72);
             AnnualHeatingNeed_textBox.Name = "AnnualHeatingNeed_textBox";
@@ -351,7 +351,7 @@
             AnnualCoolingNeed_textBox.BackColor = Color.White;
             AnnualCoolingNeed_textBox.BorderStyle = BorderStyle.None;
             AnnualCoolingNeed_textBox.Enabled = false;
-            AnnualCoolingNeed_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AnnualCoolingNeed_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             AnnualCoolingNeed_textBox.ForeColor = SystemColors.ControlDark;
             AnnualCoolingNeed_textBox.Location = new Point(436, 72);
             AnnualCoolingNeed_textBox.Name = "AnnualCoolingNeed_textBox";
@@ -362,7 +362,7 @@
             // AHUOptions_comboBox
             // 
             AHUOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHUOptions_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AHUOptions_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             AHUOptions_comboBox.FormattingEnabled = true;
             AHUOptions_comboBox.Location = new Point(195, 39);
             AHUOptions_comboBox.Name = "AHUOptions_comboBox";
@@ -404,7 +404,7 @@
             // 
             Name_textBox.BackColor = SystemColors.Window;
             Name_textBox.BorderStyle = BorderStyle.None;
-            Name_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Name_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Name_textBox.Location = new Point(195, 14);
             Name_textBox.Name = "Name_textBox";
             Name_textBox.Size = new Size(120, 15);
@@ -481,7 +481,7 @@
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Num_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Num_textBox.ForeColor = SystemColors.ControlText;
             Num_textBox.Location = new Point(66, 25);
             Num_textBox.Name = "Num_textBox";
@@ -631,7 +631,7 @@
             // PrehPrecOptions_comboBox
             // 
             PrehPrecOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            PrehPrecOptions_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PrehPrecOptions_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PrehPrecOptions_comboBox.FormattingEnabled = true;
             PrehPrecOptions_comboBox.Location = new Point(137, 29);
             PrehPrecOptions_comboBox.Name = "PrehPrecOptions_comboBox";
@@ -675,7 +675,7 @@
             // 
             CooltubeDiameter_textBox.BackColor = SystemColors.Window;
             CooltubeDiameter_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CooltubeDiameter_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CooltubeDiameter_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             CooltubeDiameter_textBox.Location = new Point(95, 31);
             CooltubeDiameter_textBox.Name = "CooltubeDiameter_textBox";
             CooltubeDiameter_textBox.Size = new Size(120, 22);
@@ -707,7 +707,7 @@
             // 
             CooltubeThickness_textBox.BackColor = SystemColors.Window;
             CooltubeThickness_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CooltubeThickness_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CooltubeThickness_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             CooltubeThickness_textBox.Location = new Point(95, 63);
             CooltubeThickness_textBox.Name = "CooltubeThickness_textBox";
             CooltubeThickness_textBox.Size = new Size(120, 22);
@@ -718,7 +718,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label5.ForeColor = SystemColors.ControlText;
             label5.Location = new Point(217, 66);
             label5.Name = "label5";
@@ -730,7 +730,7 @@
             // 
             CooltubeLength_textBox.BackColor = SystemColors.Window;
             CooltubeLength_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CooltubeLength_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CooltubeLength_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             CooltubeLength_textBox.Location = new Point(95, 96);
             CooltubeLength_textBox.Name = "CooltubeLength_textBox";
             CooltubeLength_textBox.Size = new Size(120, 22);
@@ -741,7 +741,7 @@
             // label36
             // 
             label36.AutoSize = true;
-            label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label36.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label36.ForeColor = SystemColors.ControlText;
             label36.Location = new Point(217, 35);
             label36.Name = "label36";
@@ -752,7 +752,7 @@
             // label37
             // 
             label37.AutoSize = true;
-            label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label37.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label37.ForeColor = SystemColors.ControlText;
             label37.Location = new Point(217, 100);
             label37.Name = "label37";
@@ -773,7 +773,7 @@
             // CooltubeMaterial_comboBox
             // 
             CooltubeMaterial_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            CooltubeMaterial_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CooltubeMaterial_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             CooltubeMaterial_comboBox.FormattingEnabled = true;
             CooltubeMaterial_comboBox.Location = new Point(95, 128);
             CooltubeMaterial_comboBox.Name = "CooltubeMaterial_comboBox";
@@ -821,7 +821,7 @@
             // 
             GroundDepth_textBox.BackColor = SystemColors.Window;
             GroundDepth_textBox.BorderStyle = BorderStyle.FixedSingle;
-            GroundDepth_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            GroundDepth_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             GroundDepth_textBox.Location = new Point(102, 64);
             GroundDepth_textBox.Name = "GroundDepth_textBox";
             GroundDepth_textBox.Size = new Size(120, 22);
@@ -832,7 +832,7 @@
             // GroundOptions_comboBox
             // 
             GroundOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            GroundOptions_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            GroundOptions_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             GroundOptions_comboBox.FormattingEnabled = true;
             GroundOptions_comboBox.Location = new Point(102, 32);
             GroundOptions_comboBox.Name = "GroundOptions_comboBox";
@@ -843,7 +843,7 @@
             // label42
             // 
             label42.AutoSize = true;
-            label42.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label42.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label42.ForeColor = SystemColors.ControlText;
             label42.Location = new Point(224, 68);
             label42.Name = "label42";
@@ -900,7 +900,7 @@
             // PrehControlOptions_comboBox
             // 
             PrehControlOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            PrehControlOptions_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PrehControlOptions_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PrehControlOptions_comboBox.FormattingEnabled = true;
             PrehControlOptions_comboBox.Location = new Point(102, 33);
             PrehControlOptions_comboBox.Name = "PrehControlOptions_comboBox";
@@ -912,7 +912,7 @@
             // 
             PrehPower_textBox.BackColor = SystemColors.Window;
             PrehPower_textBox.BorderStyle = BorderStyle.FixedSingle;
-            PrehPower_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PrehPower_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PrehPower_textBox.Location = new Point(102, 64);
             PrehPower_textBox.Name = "PrehPower_textBox";
             PrehPower_textBox.Size = new Size(120, 22);
@@ -923,7 +923,7 @@
             // label47
             // 
             label47.AutoSize = true;
-            label47.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label47.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label47.ForeColor = SystemColors.ControlText;
             label47.Location = new Point(224, 68);
             label47.Name = "label47";
@@ -1014,7 +1014,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label6.ForeColor = SystemColors.ControlDark;
             label6.Location = new Point(920, 78);
             label6.Name = "label6";
@@ -1027,7 +1027,7 @@
             PipeIns_Ramda_textBox.BackColor = Color.White;
             PipeIns_Ramda_textBox.BorderStyle = BorderStyle.None;
             PipeIns_Ramda_textBox.Enabled = false;
-            PipeIns_Ramda_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PipeIns_Ramda_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PipeIns_Ramda_textBox.ForeColor = SystemColors.ControlDark;
             PipeIns_Ramda_textBox.Location = new Point(797, 79);
             PipeIns_Ramda_textBox.Name = "PipeIns_Ramda_textBox";
@@ -1040,7 +1040,7 @@
             PipeIns_textBox.BackColor = Color.White;
             PipeIns_textBox.BorderStyle = BorderStyle.None;
             PipeIns_textBox.Enabled = false;
-            PipeIns_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PipeIns_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PipeIns_textBox.ForeColor = SystemColors.ControlDark;
             PipeIns_textBox.Location = new Point(590, 79);
             PipeIns_textBox.Name = "PipeIns_textBox";
@@ -1076,7 +1076,7 @@
             // label40
             // 
             label40.AutoSize = true;
-            label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label40.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label40.ForeColor = SystemColors.ControlText;
             label40.Location = new Point(230, 38);
             label40.Name = "label40";
@@ -1087,7 +1087,7 @@
             // label41
             // 
             label41.AutoSize = true;
-            label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label41.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label41.ForeColor = SystemColors.ControlText;
             label41.Location = new Point(485, 38);
             label41.Name = "label41";
@@ -1098,7 +1098,7 @@
             // label20
             // 
             label20.AutoSize = true;
-            label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label20.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label20.ForeColor = SystemColors.ControlText;
             label20.Location = new Point(230, 79);
             label20.Name = "label20";
@@ -1110,7 +1110,7 @@
             // 
             DuctInsulationThickness_textBox.BackColor = SystemColors.Window;
             DuctInsulationThickness_textBox.BorderStyle = BorderStyle.FixedSingle;
-            DuctInsulationThickness_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DuctInsulationThickness_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             DuctInsulationThickness_textBox.Location = new Point(359, 76);
             DuctInsulationThickness_textBox.Name = "DuctInsulationThickness_textBox";
             DuctInsulationThickness_textBox.Size = new Size(120, 22);
@@ -1122,7 +1122,7 @@
             // 
             DuctDiameter_textBox.BackColor = SystemColors.Window;
             DuctDiameter_textBox.BorderStyle = BorderStyle.FixedSingle;
-            DuctDiameter_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DuctDiameter_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             DuctDiameter_textBox.Location = new Point(108, 76);
             DuctDiameter_textBox.Name = "DuctDiameter_textBox";
             DuctDiameter_textBox.Size = new Size(120, 22);
@@ -1134,7 +1134,7 @@
             // 
             OASALength_textBox.BackColor = SystemColors.Window;
             OASALength_textBox.BorderStyle = BorderStyle.FixedSingle;
-            OASALength_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            OASALength_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             OASALength_textBox.Location = new Point(108, 35);
             OASALength_textBox.Name = "OASALength_textBox";
             OASALength_textBox.Size = new Size(120, 22);
@@ -1146,7 +1146,7 @@
             // 
             EARALength_textBox.BackColor = SystemColors.Window;
             EARALength_textBox.BorderStyle = BorderStyle.FixedSingle;
-            EARALength_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            EARALength_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             EARALength_textBox.Location = new Point(359, 35);
             EARALength_textBox.Name = "EARALength_textBox";
             EARALength_textBox.Size = new Size(120, 22);
@@ -1157,7 +1157,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label11.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label11.ForeColor = SystemColors.ControlText;
             label11.Location = new Point(481, 79);
             label11.Name = "label11";
@@ -1276,7 +1276,7 @@
             // TABOptions_comboBox
             // 
             TABOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            TABOptions_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            TABOptions_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             TABOptions_comboBox.FormattingEnabled = true;
             TABOptions_comboBox.Location = new Point(364, 56);
             TABOptions_comboBox.Name = "TABOptions_comboBox";
@@ -1309,7 +1309,7 @@
             // label18
             // 
             label18.AutoSize = true;
-            label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label18.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label18.ForeColor = SystemColors.ControlText;
             label18.Location = new Point(247, 59);
             label18.Name = "label18";
@@ -1320,7 +1320,7 @@
             // AHUInsulationThickness_comboBox
             // 
             AHUInsulationThickness_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHUInsulationThickness_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AHUInsulationThickness_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             AHUInsulationThickness_comboBox.FormattingEnabled = true;
             AHUInsulationThickness_comboBox.Location = new Point(125, 56);
             AHUInsulationThickness_comboBox.Name = "AHUInsulationThickness_comboBox";
@@ -1341,7 +1341,7 @@
             // AHULocation_comboBox
             // 
             AHULocation_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHULocation_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AHULocation_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             AHULocation_comboBox.FormattingEnabled = true;
             AHULocation_comboBox.Location = new Point(125, 22);
             AHULocation_comboBox.Name = "AHULocation_comboBox";
@@ -1362,7 +1362,7 @@
             // AHULeakageTestMethod_comboBox
             // 
             AHULeakageTestMethod_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHULeakageTestMethod_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AHULeakageTestMethod_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             AHULeakageTestMethod_comboBox.FormattingEnabled = true;
             AHULeakageTestMethod_comboBox.Location = new Point(582, 22);
             AHULeakageTestMethod_comboBox.Name = "AHULeakageTestMethod_comboBox";
@@ -1393,7 +1393,7 @@
             // AHUVolumeControl_comboBox
             // 
             AHUVolumeControl_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHUVolumeControl_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AHUVolumeControl_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             AHUVolumeControl_comboBox.FormattingEnabled = true;
             AHUVolumeControl_comboBox.Location = new Point(364, 22);
             AHUVolumeControl_comboBox.Name = "AHUVolumeControl_comboBox";

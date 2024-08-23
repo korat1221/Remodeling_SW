@@ -275,7 +275,7 @@
             Type_textBox.BackColor = Color.White;
             Type_textBox.BorderStyle = BorderStyle.None;
             Type_textBox.Enabled = false;
-            Type_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Type_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Type_textBox.ForeColor = SystemColors.ControlDark;
             Type_textBox.Location = new Point(177, 57);
             Type_textBox.Name = "Type_textBox";
@@ -297,7 +297,7 @@
             FloorNum_textBox.BackColor = Color.White;
             FloorNum_textBox.BorderStyle = BorderStyle.None;
             FloorNum_textBox.Enabled = false;
-            FloorNum_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            FloorNum_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             FloorNum_textBox.ForeColor = SystemColors.ControlText;
             FloorNum_textBox.Location = new Point(80, 19);
             FloorNum_textBox.Name = "FloorNum_textBox";
@@ -366,7 +366,7 @@
             StructureType_textBox.BackColor = Color.White;
             StructureType_textBox.BorderStyle = BorderStyle.None;
             StructureType_textBox.Enabled = false;
-            StructureType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            StructureType_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             StructureType_textBox.ForeColor = SystemColors.ControlDark;
             StructureType_textBox.Location = new Point(175, 87);
             StructureType_textBox.Name = "StructureType_textBox";
@@ -398,7 +398,7 @@
             // Uvalue_comboBox
             // 
             Uvalue_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Uvalue_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Uvalue_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Uvalue_comboBox.FormattingEnabled = true;
             Uvalue_comboBox.Location = new Point(175, 55);
             Uvalue_comboBox.Name = "Uvalue_comboBox";
@@ -458,7 +458,7 @@
             TBName_textBox.BackColor = Color.White;
             TBName_textBox.BorderStyle = BorderStyle.None;
             TBName_textBox.Enabled = false;
-            TBName_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            TBName_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             TBName_textBox.ForeColor = SystemColors.ControlDark;
             TBName_textBox.Location = new Point(309, 88);
             TBName_textBox.Name = "TBName_textBox";
@@ -472,7 +472,7 @@
             DiIndi_textBox.BackColor = Color.White;
             DiIndi_textBox.BorderStyle = BorderStyle.None;
             DiIndi_textBox.Enabled = false;
-            DiIndi_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DiIndi_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             DiIndi_textBox.ForeColor = SystemColors.ControlDark;
             DiIndi_textBox.Location = new Point(309, 59);
             DiIndi_textBox.Name = "DiIndi_textBox";
@@ -484,7 +484,7 @@
             // Ueff_label2
             // 
             Ueff_label2.AutoSize = true;
-            Ueff_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Ueff_label2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Ueff_label2.ForeColor = SystemColors.ControlDark;
             Ueff_label2.Location = new Point(824, 117);
             Ueff_label2.Name = "Ueff_label2";
@@ -495,7 +495,7 @@
             // Base_comboBox
             // 
             Base_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Base_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Base_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Base_comboBox.FormattingEnabled = true;
             Base_comboBox.Location = new Point(175, 25);
             Base_comboBox.Name = "Base_comboBox";
@@ -506,7 +506,7 @@
             // dU_label2
             // 
             dU_label2.AutoSize = true;
-            dU_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dU_label2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             dU_label2.ForeColor = SystemColors.ControlDark;
             dU_label2.Location = new Point(824, 88);
             dU_label2.Name = "dU_label2";
@@ -519,7 +519,7 @@
             Ueff_textBox.BackColor = Color.White;
             Ueff_textBox.BorderStyle = BorderStyle.None;
             Ueff_textBox.Enabled = false;
-            Ueff_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Ueff_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Ueff_textBox.ForeColor = SystemColors.ControlDark;
             Ueff_textBox.Location = new Point(699, 117);
             Ueff_textBox.Name = "Ueff_textBox";
@@ -543,7 +543,7 @@
             dU_textBox.BackColor = Color.White;
             dU_textBox.BorderStyle = BorderStyle.None;
             dU_textBox.Enabled = false;
-            dU_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dU_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             dU_textBox.ForeColor = SystemColors.ControlDark;
             dU_textBox.Location = new Point(699, 89);
             dU_textBox.Name = "dU_textBox";
@@ -565,7 +565,7 @@
             // U_label2
             // 
             U_label2.AutoSize = true;
-            U_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            U_label2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             U_label2.ForeColor = SystemColors.ControlDark;
             U_label2.Location = new Point(824, 59);
             U_label2.Name = "U_label2";
@@ -578,7 +578,7 @@
             U_textBox.BackColor = Color.White;
             U_textBox.BorderStyle = BorderStyle.None;
             U_textBox.Enabled = false;
-            U_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            U_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             U_textBox.ForeColor = SystemColors.ControlDark;
             U_textBox.Location = new Point(699, 60);
             U_textBox.Name = "U_textBox";
@@ -634,7 +634,7 @@
             dU_label4.BackColor = Color.White;
             dU_label4.BorderStyle = BorderStyle.None;
             dU_label4.Enabled = false;
-            dU_label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dU_label4.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             dU_label4.ForeColor = SystemColors.ControlDark;
             dU_label4.Location = new Point(816, 181);
             dU_label4.Name = "dU_label4";
@@ -647,7 +647,7 @@
             dU2_textBox.BackColor = Color.White;
             dU2_textBox.BorderStyle = BorderStyle.None;
             dU2_textBox.Enabled = false;
-            dU2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dU2_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             dU2_textBox.ForeColor = SystemColors.ControlDark;
             dU2_textBox.Location = new Point(696, 181);
             dU2_textBox.Name = "dU2_textBox";
@@ -672,7 +672,7 @@
             PsiKai_label2.BackColor = Color.White;
             PsiKai_label2.BorderStyle = BorderStyle.None;
             PsiKai_label2.Enabled = false;
-            PsiKai_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PsiKai_label2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PsiKai_label2.ForeColor = SystemColors.ControlDark;
             PsiKai_label2.Location = new Point(819, 148);
             PsiKai_label2.Name = "PsiKai_label2";
@@ -685,7 +685,7 @@
             PsiKai_textBox.BackColor = Color.White;
             PsiKai_textBox.BorderStyle = BorderStyle.None;
             PsiKai_textBox.Enabled = false;
-            PsiKai_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PsiKai_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PsiKai_textBox.ForeColor = SystemColors.ControlDark;
             PsiKai_textBox.Location = new Point(696, 148);
             PsiKai_textBox.Name = "PsiKai_textBox";
@@ -710,7 +710,7 @@
             PerArea_label2.BackColor = Color.White;
             PerArea_label2.BorderStyle = BorderStyle.None;
             PerArea_label2.Enabled = false;
-            PerArea_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PerArea_label2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PerArea_label2.ForeColor = SystemColors.ControlDark;
             PerArea_label2.Location = new Point(819, 115);
             PerArea_label2.Name = "PerArea_label2";
@@ -723,7 +723,7 @@
             PerArea_textBox.BackColor = Color.White;
             PerArea_textBox.BorderStyle = BorderStyle.None;
             PerArea_textBox.Enabled = false;
-            PerArea_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PerArea_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PerArea_textBox.ForeColor = SystemColors.ControlDark;
             PerArea_textBox.Location = new Point(696, 115);
             PerArea_textBox.Name = "PerArea_textBox";
@@ -748,7 +748,7 @@
             TBName2_textBox.BackColor = Color.White;
             TBName2_textBox.BorderStyle = BorderStyle.None;
             TBName2_textBox.Enabled = false;
-            TBName2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            TBName2_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Bold, GraphicsUnit.Point);
             TBName2_textBox.ForeColor = SystemColors.ControlDark;
             TBName2_textBox.Location = new Point(327, 43);
             TBName2_textBox.Name = "TBName2_textBox";
@@ -762,7 +762,7 @@
             TBType_textBox.BackColor = Color.White;
             TBType_textBox.BorderStyle = BorderStyle.None;
             TBType_textBox.Enabled = false;
-            TBType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            TBType_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Bold, GraphicsUnit.Point);
             TBType_textBox.ForeColor = SystemColors.ControlDark;
             TBType_textBox.Location = new Point(69, 43);
             TBType_textBox.Name = "TBType_textBox";
@@ -818,7 +818,7 @@
             DiIndi2_textBox.BackColor = Color.White;
             DiIndi2_textBox.BorderStyle = BorderStyle.None;
             DiIndi2_textBox.Enabled = false;
-            DiIndi2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DiIndi2_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             DiIndi2_textBox.ForeColor = SystemColors.ControlDark;
             DiIndi2_textBox.Location = new Point(305, 8);
             DiIndi2_textBox.Name = "DiIndi2_textBox";
@@ -832,7 +832,7 @@
             Rse_textBox.BackColor = Color.White;
             Rse_textBox.BorderStyle = BorderStyle.None;
             Rse_textBox.Enabled = false;
-            Rse_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Rse_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Rse_textBox.ForeColor = SystemColors.ControlDark;
             Rse_textBox.Location = new Point(474, 303);
             Rse_textBox.Name = "Rse_textBox";
@@ -856,7 +856,7 @@
             Rsi_textBox.BackColor = Color.White;
             Rsi_textBox.BorderStyle = BorderStyle.None;
             Rsi_textBox.Enabled = false;
-            Rsi_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Rsi_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Rsi_textBox.ForeColor = SystemColors.ControlDark;
             Rsi_textBox.Location = new Point(474, 40);
             Rsi_textBox.Name = "Rsi_textBox";
@@ -880,7 +880,7 @@
             Material_Rtot_textBox.BackColor = Color.White;
             Material_Rtot_textBox.BorderStyle = BorderStyle.None;
             Material_Rtot_textBox.Enabled = false;
-            Material_Rtot_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Material_Rtot_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Material_Rtot_textBox.ForeColor = SystemColors.ControlDark;
             Material_Rtot_textBox.Location = new Point(474, 330);
             Material_Rtot_textBox.Name = "Material_Rtot_textBox";
@@ -893,7 +893,7 @@
             Material_dtot_textBox.BackColor = Color.White;
             Material_dtot_textBox.BorderStyle = BorderStyle.None;
             Material_dtot_textBox.Enabled = false;
-            Material_dtot_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Material_dtot_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Material_dtot_textBox.ForeColor = SystemColors.ControlDark;
             Material_dtot_textBox.Location = new Point(390, 330);
             Material_dtot_textBox.Name = "Material_dtot_textBox";
@@ -925,7 +925,7 @@
             // ISO_KS_comboBox
             // 
             ISO_KS_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            ISO_KS_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ISO_KS_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             ISO_KS_comboBox.FormattingEnabled = true;
             ISO_KS_comboBox.Location = new Point(172, 3);
             ISO_KS_comboBox.Name = "ISO_KS_comboBox";
@@ -1080,7 +1080,7 @@
             Ueff2_textBox.BackColor = SystemColors.InactiveBorder;
             Ueff2_textBox.BorderStyle = BorderStyle.None;
             Ueff2_textBox.Enabled = false;
-            Ueff2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Ueff2_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Ueff2_textBox.ForeColor = SystemColors.ControlDark;
             Ueff2_textBox.Location = new Point(1067, 251);
             Ueff2_textBox.Name = "Ueff2_textBox";
@@ -1092,7 +1092,7 @@
             // label16
             // 
             label16.AutoSize = true;
-            label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label16.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label16.ForeColor = SystemColors.ControlDark;
             label16.Location = new Point(1133, 250);
             label16.Name = "label16";

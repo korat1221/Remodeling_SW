@@ -497,7 +497,7 @@
             // 
             // UserDB_celltype_comboBox
             // 
-            UserDB_celltype_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDB_celltype_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             UserDB_celltype_comboBox.Location = new Point(310, 50);
             UserDB_celltype_comboBox.Name = "UserDB_celltype_comboBox";
             UserDB_celltype_comboBox.Size = new Size(120, 24);
@@ -558,7 +558,7 @@
             // 
             // UserDB_year_comboBox
             // 
-            UserDB_year_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDB_year_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             UserDB_year_comboBox.FormattingEnabled = true;
             UserDB_year_comboBox.Location = new Point(774, 8);
             UserDB_year_comboBox.Name = "UserDB_year_comboBox";

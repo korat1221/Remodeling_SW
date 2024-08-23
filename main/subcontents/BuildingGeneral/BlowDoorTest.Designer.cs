@@ -142,7 +142,7 @@ partial class BlowDoorTest
         // 
         n50_textBox.BackColor = Color.White;
         n50_textBox.BorderStyle = BorderStyle.None;
-        n50_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+        n50_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
         n50_textBox.ForeColor = SystemColors.ControlText;
         n50_textBox.Location = new Point(232, 186);
         n50_textBox.Name = "n50_textBox";
@@ -164,7 +164,7 @@ partial class BlowDoorTest
         // n50_label2
         // 
         n50_label2.AutoSize = true;
-        n50_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+        n50_label2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
         n50_label2.ForeColor = SystemColors.ControlText;
         n50_label2.Location = new Point(352, 185);
         n50_label2.Name = "n50_label2";

@@ -356,7 +356,7 @@
             // UserDBType2_comboBox
             // 
             UserDBType2_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            UserDBType2_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDBType2_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             UserDBType2_comboBox.FormattingEnabled = true;
             UserDBType2_comboBox.Location = new Point(456, 35);
             UserDBType2_comboBox.Name = "UserDBType2_comboBox";
@@ -376,7 +376,7 @@
             // UserDBType1_comboBox
             // 
             UserDBType1_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            UserDBType1_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDBType1_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             UserDBType1_comboBox.FormattingEnabled = true;
             UserDBType1_comboBox.Location = new Point(202, 35);
             UserDBType1_comboBox.Name = "UserDBType1_comboBox";

@@ -269,7 +269,7 @@
             // 
             // MaterialType_comboBox
             // 
-            MaterialType_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            MaterialType_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             MaterialType_comboBox.FormattingEnabled = true;
             MaterialType_comboBox.Location = new Point(10, 39);
             MaterialType_comboBox.Name = "MaterialType_comboBox";
@@ -289,7 +289,7 @@
             // 
             // UserDB_Type1_comboBox
             // 
-            UserDB_Type1_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDB_Type1_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             UserDB_Type1_comboBox.FormattingEnabled = true;
             UserDB_Type1_comboBox.Location = new Point(558, 10);
             UserDB_Type1_comboBox.Name = "UserDB_Type1_comboBox";

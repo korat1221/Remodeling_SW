@@ -134,7 +134,7 @@
             AltNum_textBox.BackColor = Color.White;
             AltNum_textBox.BorderStyle = BorderStyle.None;
             AltNum_textBox.Enabled = false;
-            AltNum_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AltNum_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             AltNum_textBox.ForeColor = SystemColors.ControlText;
             AltNum_textBox.Location = new Point(86, 26);
             AltNum_textBox.Name = "AltNum_textBox";
@@ -155,7 +155,7 @@
             Type_textBox.BackColor = Color.White;
             Type_textBox.BorderStyle = BorderStyle.None;
             Type_textBox.Enabled = false;
-            Type_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Type_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Type_textBox.ForeColor = Color.White;
             Type_textBox.Location = new Point(177, 57);
             Type_textBox.Name = "Type_textBox";
@@ -216,7 +216,7 @@
             // 
             BalanceCost_textBox.BackColor = Color.White;
             BalanceCost_textBox.BorderStyle = BorderStyle.None;
-            BalanceCost_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BalanceCost_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             BalanceCost_textBox.ForeColor = SystemColors.ControlText;
             BalanceCost_textBox.Location = new Point(845, 133);
             BalanceCost_textBox.Name = "BalanceCost_textBox";
@@ -380,7 +380,7 @@
             // 
             CostTotal_textBox.BackColor = Color.White;
             CostTotal_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CostTotal_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CostTotal_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             CostTotal_textBox.ForeColor = SystemColors.ControlText;
             CostTotal_textBox.Location = new Point(91, 12);
             CostTotal_textBox.Name = "CostTotal_textBox";
@@ -392,7 +392,7 @@
             // q50_label2
             // 
             q50_label2.AutoSize = true;
-            q50_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            q50_label2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             q50_label2.ForeColor = SystemColors.ControlText;
             q50_label2.Location = new Point(211, 15);
             q50_label2.Name = "q50_label2";
@@ -562,7 +562,7 @@
             // 
             WallSavingPercent_textBox.BackColor = Color.White;
             WallSavingPercent_textBox.BorderStyle = BorderStyle.None;
-            WallSavingPercent_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            WallSavingPercent_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             WallSavingPercent_textBox.ForeColor = SystemColors.ControlText;
             WallSavingPercent_textBox.Location = new Point(376, 69);
             WallSavingPercent_textBox.Name = "WallSavingPercent_textBox";
@@ -584,7 +584,7 @@
             // 
             WallCost_textBox.BackColor = Color.White;
             WallCost_textBox.BorderStyle = BorderStyle.None;
-            WallCost_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            WallCost_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             WallCost_textBox.ForeColor = SystemColors.ControlText;
             WallCost_textBox.Location = new Point(376, 48);
             WallCost_textBox.Name = "WallCost_textBox";
@@ -673,7 +673,7 @@
             WallAlt_textBox.BackColor = Color.White;
             WallAlt_textBox.BorderStyle = BorderStyle.None;
             WallAlt_textBox.Enabled = false;
-            WallAlt_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            WallAlt_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             WallAlt_textBox.ForeColor = SystemColors.ControlDark;
             WallAlt_textBox.Location = new Point(475, 20);
             WallAlt_textBox.Name = "WallAlt_textBox";
@@ -756,7 +756,7 @@
             // 
             RoofSavingPercent_textBox.BackColor = Color.White;
             RoofSavingPercent_textBox.BorderStyle = BorderStyle.None;
-            RoofSavingPercent_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            RoofSavingPercent_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             RoofSavingPercent_textBox.ForeColor = SystemColors.ControlText;
             RoofSavingPercent_textBox.Location = new Point(376, 69);
             RoofSavingPercent_textBox.Name = "RoofSavingPercent_textBox";
@@ -778,7 +778,7 @@
             // 
             RoofCost_textBox.BackColor = Color.White;
             RoofCost_textBox.BorderStyle = BorderStyle.None;
-            RoofCost_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            RoofCost_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             RoofCost_textBox.ForeColor = SystemColors.ControlText;
             RoofCost_textBox.Location = new Point(376, 48);
             RoofCost_textBox.Name = "RoofCost_textBox";

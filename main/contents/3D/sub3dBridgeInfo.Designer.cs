@@ -86,7 +86,7 @@
             // TB_comboBox
             // 
             TB_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            TB_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            TB_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             TB_comboBox.FormattingEnabled = true;
             TB_comboBox.Location = new Point(328, 60);
             TB_comboBox.Name = "TB_comboBox";

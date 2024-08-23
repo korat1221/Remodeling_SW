@@ -60,7 +60,7 @@
             // Uw2_unit_label
             // 
             Uw2_unit_label.AutoSize = true;
-            Uw2_unit_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Uw2_unit_label.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Uw2_unit_label.ForeColor = SystemColors.ControlDark;
             Uw2_unit_label.Location = new Point(224, 89);
             Uw2_unit_label.Name = "Uw2_unit_label";
@@ -73,7 +73,7 @@
             length_textBox.BackColor = Color.White;
             length_textBox.BorderStyle = BorderStyle.None;
             length_textBox.Enabled = false;
-            length_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            length_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             length_textBox.ForeColor = SystemColors.ControlDark;
             length_textBox.Location = new Point(148, 89);
             length_textBox.Name = "length_textBox";

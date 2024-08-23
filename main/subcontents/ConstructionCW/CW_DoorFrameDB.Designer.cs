@@ -202,7 +202,7 @@
             // 
             // UserDB_Type_comboBox
             // 
-            UserDB_Type_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDB_Type_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             UserDB_Type_comboBox.FormattingEnabled = true;
             UserDB_Type_comboBox.Location = new Point(701, 10);
             UserDB_Type_comboBox.Name = "UserDB_Type_comboBox";

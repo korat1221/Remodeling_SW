@@ -169,7 +169,7 @@
             // WallEx_comboBox
             // 
             WallEx_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            WallEx_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            WallEx_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             WallEx_comboBox.FormattingEnabled = true;
             WallEx_comboBox.Location = new Point(336, 12);
             WallEx_comboBox.Name = "WallEx_comboBox";
@@ -192,7 +192,7 @@
             // WallRemodelingType_comboBox
             // 
             RoofRemodelingType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            RoofRemodelingType_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            RoofRemodelingType_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             RoofRemodelingType_comboBox.FormattingEnabled = true;
             RoofRemodelingType_comboBox.Location = new Point(109, 12);
             RoofRemodelingType_comboBox.Name = "WallRemodelingType_comboBox";

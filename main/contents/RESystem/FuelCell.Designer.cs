@@ -193,7 +193,7 @@
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Num_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Num_textBox.ForeColor = SystemColors.ControlText;
             Num_textBox.Location = new Point(65, 26);
             Num_textBox.Name = "Num_textBox";

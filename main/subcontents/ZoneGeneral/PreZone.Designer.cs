@@ -51,7 +51,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Bold, GraphicsUnit.Point);
             label3.Location = new Point(20, 13);
             label3.Name = "label3";
             label3.Size = new Size(70, 16);

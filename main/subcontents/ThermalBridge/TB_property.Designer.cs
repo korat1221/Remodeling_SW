@@ -99,7 +99,7 @@
             Type_Textbox.BackColor = Color.White;
             Type_Textbox.BorderStyle = BorderStyle.None;
             Type_Textbox.Enabled = false;
-            Type_Textbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Type_Textbox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Type_Textbox.ForeColor = SystemColors.ControlDark;
             Type_Textbox.Location = new Point(124, 112);
             Type_Textbox.Name = "Type_Textbox";
@@ -112,7 +112,7 @@
             Length_Textbox.BackColor = Color.White;
             Length_Textbox.BorderStyle = BorderStyle.None;
             Length_Textbox.Enabled = false;
-            Length_Textbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Length_Textbox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Length_Textbox.ForeColor = SystemColors.ControlDark;
             Length_Textbox.Location = new Point(124, 152);
             Length_Textbox.Name = "Length_Textbox";
@@ -125,7 +125,7 @@
             TB_Textbox.BackColor = Color.White;
             TB_Textbox.BorderStyle = BorderStyle.None;
             TB_Textbox.Enabled = false;
-            TB_Textbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            TB_Textbox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             TB_Textbox.ForeColor = SystemColors.ControlDark;
             TB_Textbox.Location = new Point(124, 191);
             TB_Textbox.Name = "TB_Textbox";
@@ -138,7 +138,7 @@
             Psi_textBox.BackColor = Color.White;
             Psi_textBox.BorderStyle = BorderStyle.None;
             Psi_textBox.Enabled = false;
-            Psi_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Psi_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Psi_textBox.ForeColor = SystemColors.ControlDark;
             Psi_textBox.Location = new Point(124, 231);
             Psi_textBox.Name = "Psi_textBox";
@@ -149,7 +149,7 @@
             // Spacer_label
             // 
             Spacer_label.AutoSize = true;
-            Spacer_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Spacer_label.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Spacer_label.Location = new Point(34, 230);
             Spacer_label.Name = "Spacer_label";
             Spacer_label.Size = new Size(73, 16);
@@ -160,7 +160,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label11.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label11.Location = new Point(33, 189);
             label11.Name = "label11";
             label11.Size = new Size(51, 16);
@@ -170,7 +170,7 @@
             // Frame_label
             // 
             Frame_label.AutoSize = true;
-            Frame_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Frame_label.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Frame_label.Location = new Point(34, 150);
             Frame_label.Name = "Frame_label";
             Frame_label.Size = new Size(29, 16);
@@ -180,7 +180,7 @@
             // label25
             // 
             label25.AutoSize = true;
-            label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label25.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label25.Location = new Point(34, 111);
             label25.Name = "label25";
             label25.Size = new Size(29, 16);

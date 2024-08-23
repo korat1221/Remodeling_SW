@@ -448,7 +448,7 @@ namespace main.contents
             // 
             input_textBox.BackColor = Color.White;
             input_textBox.BorderStyle = BorderStyle.FixedSingle;
-            input_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            input_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             input_textBox.ForeColor = SystemColors.ControlText;
             input_textBox.Location = new Point(964, 16);
             input_textBox.Name = "input_textBox";

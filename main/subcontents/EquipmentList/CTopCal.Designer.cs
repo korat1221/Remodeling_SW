@@ -201,7 +201,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             label2.ForeColor = SystemColors.ControlDark;
             label2.Location = new Point(444, 36);
             label2.Name = "label2";

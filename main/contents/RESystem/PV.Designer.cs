@@ -162,7 +162,7 @@
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Num_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Num_textBox.ForeColor = SystemColors.ControlText;
             Num_textBox.Location = new Point(74, 33);
             Num_textBox.Name = "Num_textBox";
@@ -316,7 +316,7 @@
             // PVsystem_combobox
             // 
             PVsystem_combobox.DrawMode = DrawMode.OwnerDrawFixed;
-            PVsystem_combobox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PVsystem_combobox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             PVsystem_combobox.FormattingEnabled = true;
             PVsystem_combobox.Location = new Point(206, 8);
             PVsystem_combobox.Name = "PVsystem_combobox";
@@ -538,7 +538,7 @@
             // VentilationType_comboBox
             // 
             VentilationType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            VentilationType_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            VentilationType_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             VentilationType_comboBox.FormattingEnabled = true;
             VentilationType_comboBox.Location = new Point(203, 177);
             VentilationType_comboBox.Name = "VentilationType_comboBox";
@@ -549,7 +549,7 @@
             // slope_comboBox
             // 
             slope_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            slope_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            slope_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             slope_comboBox.FormattingEnabled = true;
             slope_comboBox.Location = new Point(460, 90);
             slope_comboBox.Name = "slope_comboBox";
@@ -560,7 +560,7 @@
             // orientation_comboBox
             // 
             orientation_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            orientation_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            orientation_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             orientation_comboBox.FormattingEnabled = true;
             orientation_comboBox.Location = new Point(203, 90);
             orientation_comboBox.Name = "orientation_comboBox";

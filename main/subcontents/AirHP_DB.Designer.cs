@@ -90,7 +90,7 @@
             // Carrier_comboBox
             // 
             Carrier_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Carrier_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Carrier_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Carrier_comboBox.FormattingEnabled = true;
             Carrier_comboBox.Location = new Point(460, 41);
             Carrier_comboBox.Name = "Carrier_comboBox";
@@ -165,7 +165,7 @@
             // customComboBox1
             // 
             HC_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            HC_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            HC_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             HC_comboBox.FormattingEnabled = true;
             HC_comboBox.Location = new Point(297, 41);
             HC_comboBox.Name = "customComboBox1";

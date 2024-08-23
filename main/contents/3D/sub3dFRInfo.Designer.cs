@@ -101,7 +101,7 @@
             TBType2_textBox.BackColor = Color.White;
             TBType2_textBox.BorderStyle = BorderStyle.None;
             TBType2_textBox.Enabled = false;
-            TBType2_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            TBType2_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             TBType2_textBox.ForeColor = Color.Black;
             TBType2_textBox.Location = new Point(838, 298);
             TBType2_textBox.Name = "TBType2_textBox";
@@ -115,7 +115,7 @@
             TBType_textBox.BackColor = Color.White;
             TBType_textBox.BorderStyle = BorderStyle.None;
             TBType_textBox.Enabled = false;
-            TBType_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            TBType_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             TBType_textBox.ForeColor = Color.Black;
             TBType_textBox.Location = new Point(656, 298);
             TBType_textBox.Name = "TBType_textBox";
@@ -129,7 +129,7 @@
             Type_textBox.BackColor = Color.White;
             Type_textBox.BorderStyle = BorderStyle.None;
             Type_textBox.Enabled = false;
-            Type_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Type_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Type_textBox.ForeColor = Color.Black;
             Type_textBox.Location = new Point(656, 95);
             Type_textBox.Name = "Type_textBox";
@@ -154,7 +154,7 @@
             Base_textBox.BackColor = Color.White;
             Base_textBox.BorderStyle = BorderStyle.None;
             Base_textBox.Enabled = false;
-            Base_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Base_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
             Base_textBox.ForeColor = Color.Black;
             Base_textBox.Location = new Point(91, 93);
             Base_textBox.Name = "Base_textBox";
