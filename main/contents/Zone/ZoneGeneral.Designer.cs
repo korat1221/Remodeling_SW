@@ -36,6 +36,10 @@ namespace main.contents
         {
             GeneralPanel = new Panel();
             PreZone_button = new System.Windows.Forms.Button();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            label2 = new System.Windows.Forms.Label();
+            radioButton2 = new System.Windows.Forms.RadioButton();
+            radioButton1 = new System.Windows.Forms.RadioButton();
             PreZone_textBox = new System.Windows.Forms.TextBox();
             PreZone_label = new System.Windows.Forms.Label();
             AHU_label2 = new System.Windows.Forms.Label();
@@ -158,6 +162,7 @@ namespace main.contents
             Main_pictureBox = new PictureBox();
             Save_button = new System.Windows.Forms.Button();
             GeneralPanel.SuspendLayout();
+            groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
             AdditionalPanel.SuspendLayout();
@@ -170,6 +175,7 @@ namespace main.contents
             // 
             GeneralPanel.BackColor = Color.White;
             GeneralPanel.Controls.Add(PreZone_button);
+            GeneralPanel.Controls.Add(groupBox1);
             GeneralPanel.Controls.Add(PreZone_textBox);
             GeneralPanel.Controls.Add(PreZone_label);
             GeneralPanel.Controls.Add(AHU_label2);
@@ -200,8 +206,8 @@ namespace main.contents
             PreZone_button.BackColor = SystemColors.ControlLight;
             PreZone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             PreZone_button.FlatStyle = FlatStyle.System;
-            PreZone_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            PreZone_button.Location = new Point(402, 49);
+            PreZone_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            PreZone_button.Location = new Point(453, 17);
             PreZone_button.Margin = new Padding(0);
             PreZone_button.Name = "PreZone_button";
             PreZone_button.Size = new Size(23, 23);
@@ -210,14 +216,58 @@ namespace main.contents
             PreZone_button.UseVisualStyleBackColor = false;
             PreZone_button.Click += PreZone_button_Click;
             // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(radioButton2);
+            groupBox1.Controls.Add(radioButton1);
+            groupBox1.Location = new Point(276, 37);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(200, 41);
+            groupBox1.TabIndex = 189;
+            groupBox1.TabStop = false;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(6, 19);
+            label2.Name = "label2";
+            label2.Size = new Size(55, 15);
+            label2.TabIndex = 187;
+            label2.Text = "증축여부";
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(131, 17);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(51, 19);
+            radioButton2.TabIndex = 1;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "False";
+            radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(72, 17);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(48, 19);
+            radioButton1.TabIndex = 0;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "True";
+            radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
+            // 
             // PreZone_textBox
             // 
             PreZone_textBox.BackColor = Color.White;
             PreZone_textBox.BorderStyle = BorderStyle.None;
             PreZone_textBox.Enabled = false;
-            PreZone_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PreZone_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PreZone_textBox.ForeColor = SystemColors.ControlDark;
-            PreZone_textBox.Location = new Point(279, 55);
+            PreZone_textBox.Location = new Point(330, 23);
             PreZone_textBox.Name = "PreZone_textBox";
             PreZone_textBox.Size = new Size(120, 15);
             PreZone_textBox.TabIndex = 187;
@@ -226,7 +276,7 @@ namespace main.contents
             // PreZone_label
             // 
             PreZone_label.AutoSize = true;
-            PreZone_label.Location = new Point(316, 37);
+            PreZone_label.Location = new Point(282, 22);
             PreZone_label.Name = "PreZone_label";
             PreZone_label.Size = new Size(47, 15);
             PreZone_label.TabIndex = 186;
@@ -235,7 +285,7 @@ namespace main.contents
             // AHU_label2
             // 
             AHU_label2.AutoSize = true;
-            AHU_label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AHU_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AHU_label2.Location = new Point(830, 22);
             AHU_label2.Name = "AHU_label2";
             AHU_label2.Size = new Size(51, 16);
@@ -247,7 +297,7 @@ namespace main.contents
             AHU_textBox.BackColor = Color.White;
             AHU_textBox.BorderStyle = BorderStyle.None;
             AHU_textBox.Enabled = false;
-            AHU_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AHU_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AHU_textBox.ForeColor = SystemColors.ControlDark;
             AHU_textBox.Location = new Point(795, 54);
             AHU_textBox.Name = "AHU_textBox";
@@ -260,7 +310,7 @@ namespace main.contents
             AHU_button.BackColor = SystemColors.ControlLight;
             AHU_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AHU_button.FlatStyle = FlatStyle.System;
-            AHU_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            AHU_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
             AHU_button.Location = new Point(917, 50);
             AHU_button.Margin = new Padding(0);
             AHU_button.Name = "AHU_button";
@@ -273,7 +323,7 @@ namespace main.contents
             // label65
             // 
             label65.AutoSize = true;
-            label65.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label65.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label65.Location = new Point(551, 22);
             label65.Name = "label65";
             label65.Size = new Size(29, 16);
@@ -283,7 +333,7 @@ namespace main.contents
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label3.Location = new Point(101, 54);
             label3.Name = "label3";
             label3.Size = new Size(29, 16);
@@ -295,7 +345,7 @@ namespace main.contents
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Num_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             Num_textBox.ForeColor = SystemColors.ControlText;
             Num_textBox.Location = new Point(6, 76);
             Num_textBox.Name = "Num_textBox";
@@ -315,7 +365,7 @@ namespace main.contents
             // 
             ZoneName_textBox.BackColor = SystemColors.Window;
             ZoneName_textBox.BorderStyle = BorderStyle.None;
-            ZoneName_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ZoneName_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             ZoneName_textBox.Location = new Point(153, 55);
             ZoneName_textBox.Name = "ZoneName_textBox";
             ZoneName_textBox.Size = new Size(120, 15);
@@ -326,7 +376,7 @@ namespace main.contents
             // 
             Layer_textBox.BackColor = SystemColors.Window;
             Layer_textBox.BorderStyle = BorderStyle.None;
-            Layer_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Layer_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Layer_textBox.ForeColor = SystemColors.WindowText;
             Layer_textBox.Location = new Point(153, 22);
             Layer_textBox.Name = "Layer_textBox";
@@ -338,7 +388,7 @@ namespace main.contents
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label1.Location = new Point(107, 22);
             label1.Name = "label1";
             label1.Size = new Size(18, 16);
@@ -348,7 +398,7 @@ namespace main.contents
             // AHU_label
             // 
             AHU_label.AutoSize = true;
-            AHU_label.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AHU_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AHU_label.Location = new Point(677, 22);
             AHU_label.Name = "AHU_label";
             AHU_label.Size = new Size(51, 16);
@@ -358,7 +408,7 @@ namespace main.contents
             // AHU_comboBox
             // 
             AHU_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHU_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AHU_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AHU_comboBox.FormattingEnabled = true;
             AHU_comboBox.Location = new Point(646, 50);
             AHU_comboBox.Name = "AHU_comboBox";
@@ -399,7 +449,7 @@ namespace main.contents
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label6.Location = new Point(583, 22);
             label6.Name = "label6";
             label6.Size = new Size(51, 16);
@@ -409,7 +459,7 @@ namespace main.contents
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label5.Location = new Point(506, 21);
             label5.Name = "label5";
             label5.Size = new Size(29, 16);
@@ -479,7 +529,7 @@ namespace main.contents
             // label20
             // 
             label20.AutoSize = true;
-            label20.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label20.Location = new Point(468, 116);
             label20.Name = "label20";
             label20.Size = new Size(18, 16);
@@ -490,7 +540,7 @@ namespace main.contents
             // 
             PersonNum_textBox.BackColor = SystemColors.Window;
             PersonNum_textBox.BorderStyle = BorderStyle.FixedSingle;
-            PersonNum_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PersonNum_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PersonNum_textBox.Location = new Point(342, 112);
             PersonNum_textBox.Name = "PersonNum_textBox";
             PersonNum_textBox.Size = new Size(120, 22);
@@ -503,7 +553,7 @@ namespace main.contents
             OccupancyDensity_index_textBox.BackColor = Color.White;
             OccupancyDensity_index_textBox.BorderStyle = BorderStyle.None;
             OccupancyDensity_index_textBox.Enabled = false;
-            OccupancyDensity_index_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            OccupancyDensity_index_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             OccupancyDensity_index_textBox.ForeColor = SystemColors.ControlDark;
             OccupancyDensity_index_textBox.Location = new Point(346, 149);
             OccupancyDensity_index_textBox.Name = "OccupancyDensity_index_textBox";
@@ -514,7 +564,7 @@ namespace main.contents
             // label62
             // 
             label62.AutoSize = true;
-            label62.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label62.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label62.ForeColor = SystemColors.ControlDark;
             label62.Location = new Point(725, 48);
             label62.Name = "label62";
@@ -526,7 +576,7 @@ namespace main.contents
             // 
             VentilationRate_textBox.BackColor = Color.White;
             VentilationRate_textBox.BorderStyle = BorderStyle.None;
-            VentilationRate_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            VentilationRate_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             VentilationRate_textBox.ForeColor = SystemColors.ControlDark;
             VentilationRate_textBox.Location = new Point(795, 48);
             VentilationRate_textBox.Name = "VentilationRate_textBox";
@@ -537,7 +587,7 @@ namespace main.contents
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label11.ForeColor = SystemColors.ControlDark;
             label11.Location = new Point(725, 82);
             label11.Name = "label11";
@@ -548,7 +598,7 @@ namespace main.contents
             // label61
             // 
             label61.AutoSize = true;
-            label61.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label61.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label61.ForeColor = SystemColors.ControlDark;
             label61.Location = new Point(917, 48);
             label61.Name = "label61";
@@ -561,7 +611,7 @@ namespace main.contents
             HCTime_textBox.BackColor = Color.White;
             HCTime_textBox.BorderStyle = BorderStyle.None;
             HCTime_textBox.Enabled = false;
-            HCTime_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            HCTime_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             HCTime_textBox.ForeColor = SystemColors.ControlDark;
             HCTime_textBox.Location = new Point(793, 82);
             HCTime_textBox.Name = "HCTime_textBox";
@@ -572,7 +622,7 @@ namespace main.contents
             // WeekUseDay_comboBox
             // 
             WeekUseDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            WeekUseDay_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            WeekUseDay_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             WeekUseDay_comboBox.FormattingEnabled = true;
             WeekUseDay_comboBox.Location = new Point(153, 112);
             WeekUseDay_comboBox.Name = "WeekUseDay_comboBox";
@@ -583,7 +633,7 @@ namespace main.contents
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label10.ForeColor = SystemColors.ControlDark;
             label10.Location = new Point(917, 82);
             label10.Name = "label10";
@@ -594,7 +644,7 @@ namespace main.contents
             // label63
             // 
             label63.AutoSize = true;
-            label63.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label63.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label63.ForeColor = SystemColors.ControlDark;
             label63.Location = new Point(682, 48);
             label63.Name = "label63";
@@ -605,7 +655,7 @@ namespace main.contents
             // StartTime_comboBox
             // 
             StartTime_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            StartTime_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            StartTime_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             StartTime_comboBox.FormattingEnabled = true;
             StartTime_comboBox.Location = new Point(153, 78);
             StartTime_comboBox.Name = "StartTime_comboBox";
@@ -616,7 +666,7 @@ namespace main.contents
             // label19
             // 
             label19.AutoSize = true;
-            label19.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label19.Location = new Point(468, 18);
             label19.Name = "label19";
             label19.Size = new Size(18, 16);
@@ -627,7 +677,7 @@ namespace main.contents
             // 
             CeilingHeight_textBox.BackColor = SystemColors.Window;
             CeilingHeight_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CeilingHeight_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CeilingHeight_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             CeilingHeight_textBox.Location = new Point(342, 14);
             CeilingHeight_textBox.Name = "CeilingHeight_textBox";
             CeilingHeight_textBox.Size = new Size(120, 22);
@@ -639,7 +689,7 @@ namespace main.contents
             // 
             Volume_wd_textBox.BackColor = Color.White;
             Volume_wd_textBox.BorderStyle = BorderStyle.None;
-            Volume_wd_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Volume_wd_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Volume_wd_textBox.ForeColor = SystemColors.ControlDark;
             Volume_wd_textBox.Location = new Point(558, 48);
             Volume_wd_textBox.Name = "Volume_wd_textBox";
@@ -650,7 +700,7 @@ namespace main.contents
             // label31
             // 
             label31.AutoSize = true;
-            label31.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label31.ForeColor = SystemColors.ControlDark;
             label31.Location = new Point(908, 149);
             label31.Name = "label31";
@@ -663,7 +713,7 @@ namespace main.contents
             EquipIHG_textBox.BackColor = Color.White;
             EquipIHG_textBox.BorderStyle = BorderStyle.None;
             EquipIHG_textBox.Enabled = false;
-            EquipIHG_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            EquipIHG_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             EquipIHG_textBox.ForeColor = SystemColors.ControlDark;
             EquipIHG_textBox.Location = new Point(798, 149);
             EquipIHG_textBox.Name = "EquipIHG_textBox";
@@ -674,7 +724,7 @@ namespace main.contents
             // label32
             // 
             label32.AutoSize = true;
-            label32.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label32.ForeColor = SystemColors.ControlDark;
             label32.Location = new Point(725, 149);
             label32.Name = "label32";
@@ -685,7 +735,7 @@ namespace main.contents
             // label64
             // 
             label64.AutoSize = true;
-            label64.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label64.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label64.ForeColor = SystemColors.ControlDark;
             label64.Location = new Point(495, 48);
             label64.Name = "label64";
@@ -696,7 +746,7 @@ namespace main.contents
             // label54
             // 
             label54.AutoSize = true;
-            label54.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label54.ForeColor = SystemColors.ControlDark;
             label54.Location = new Point(682, 18);
             label54.Name = "label54";
@@ -707,7 +757,7 @@ namespace main.contents
             // label33
             // 
             label33.AutoSize = true;
-            label33.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label33.ForeColor = SystemColors.ControlDark;
             label33.Location = new Point(286, 149);
             label33.Name = "label33";
@@ -719,7 +769,7 @@ namespace main.contents
             // 
             NetVolume_textBox.BackColor = Color.White;
             NetVolume_textBox.BorderStyle = BorderStyle.None;
-            NetVolume_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            NetVolume_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             NetVolume_textBox.ForeColor = SystemColors.ControlDark;
             NetVolume_textBox.Location = new Point(558, 18);
             NetVolume_textBox.Name = "NetVolume_textBox";
@@ -730,7 +780,7 @@ namespace main.contents
             // label56
             // 
             label56.AutoSize = true;
-            label56.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label56.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label56.ForeColor = SystemColors.ControlDark;
             label56.Location = new Point(495, 18);
             label56.Name = "label56";
@@ -741,7 +791,7 @@ namespace main.contents
             // EquipIHG_comboBox
             // 
             EquipIHG_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            EquipIHG_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            EquipIHG_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             EquipIHG_comboBox.FormattingEnabled = true;
             EquipIHG_comboBox.Location = new Point(153, 145);
             EquipIHG_comboBox.Name = "EquipIHG_comboBox";
@@ -752,7 +802,7 @@ namespace main.contents
             // label34
             // 
             label34.AutoSize = true;
-            label34.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label34.Location = new Point(83, 149);
             label34.Name = "label34";
             label34.Size = new Size(51, 16);
@@ -762,7 +812,7 @@ namespace main.contents
             // label55
             // 
             label55.AutoSize = true;
-            label55.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label55.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label55.ForeColor = SystemColors.ControlText;
             label55.Location = new Point(276, 18);
             label55.Name = "label55";
@@ -773,7 +823,7 @@ namespace main.contents
             // label35
             // 
             label35.AutoSize = true;
-            label35.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label35.ForeColor = SystemColors.ControlDark;
             label35.Location = new Point(678, 149);
             label35.Name = "label35";
@@ -786,7 +836,7 @@ namespace main.contents
             PersonIHG_textBox.BackColor = Color.White;
             PersonIHG_textBox.BorderStyle = BorderStyle.None;
             PersonIHG_textBox.Enabled = false;
-            PersonIHG_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            PersonIHG_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             PersonIHG_textBox.ForeColor = SystemColors.ControlDark;
             PersonIHG_textBox.Location = new Point(558, 149);
             PersonIHG_textBox.Name = "PersonIHG_textBox";
@@ -797,7 +847,7 @@ namespace main.contents
             // label36
             // 
             label36.AutoSize = true;
-            label36.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label36.ForeColor = SystemColors.ControlDark;
             label36.Location = new Point(495, 149);
             label36.Name = "label36";
@@ -808,7 +858,7 @@ namespace main.contents
             // label24
             // 
             label24.AutoSize = true;
-            label24.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label24.ForeColor = SystemColors.ControlDark;
             label24.Location = new Point(917, 116);
             label24.Name = "label24";
@@ -821,7 +871,7 @@ namespace main.contents
             OccupancyDensity_textBox.BackColor = Color.White;
             OccupancyDensity_textBox.BorderStyle = BorderStyle.None;
             OccupancyDensity_textBox.Enabled = false;
-            OccupancyDensity_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            OccupancyDensity_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             OccupancyDensity_textBox.ForeColor = SystemColors.ControlDark;
             OccupancyDensity_textBox.Location = new Point(793, 116);
             OccupancyDensity_textBox.Name = "OccupancyDensity_textBox";
@@ -833,7 +883,7 @@ namespace main.contents
             // 
             NetArea_textBox.BackColor = SystemColors.Window;
             NetArea_textBox.BorderStyle = BorderStyle.FixedSingle;
-            NetArea_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            NetArea_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             NetArea_textBox.Location = new Point(153, 14);
             NetArea_textBox.Name = "NetArea_textBox";
             NetArea_textBox.Size = new Size(120, 22);
@@ -844,7 +894,7 @@ namespace main.contents
             // label23
             // 
             label23.AutoSize = true;
-            label23.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label23.Location = new Point(83, 18);
             label23.Name = "label23";
             label23.Size = new Size(62, 16);
@@ -854,7 +904,7 @@ namespace main.contents
             // label26
             // 
             label26.AutoSize = true;
-            label26.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label26.ForeColor = SystemColors.ControlDark;
             label26.Location = new Point(725, 116);
             label26.Name = "label26";
@@ -865,7 +915,7 @@ namespace main.contents
             // label27
             // 
             label27.AutoSize = true;
-            label27.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label27.Location = new Point(286, 116);
             label27.Name = "label27";
             label27.Size = new Size(51, 16);
@@ -875,7 +925,7 @@ namespace main.contents
             // label28
             // 
             label28.AutoSize = true;
-            label28.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label28.Location = new Point(83, 116);
             label28.Name = "label28";
             label28.Size = new Size(51, 16);
@@ -885,7 +935,7 @@ namespace main.contents
             // label29
             // 
             label29.AutoSize = true;
-            label29.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label29.ForeColor = SystemColors.ControlDark;
             label29.Location = new Point(682, 116);
             label29.Name = "label29";
@@ -898,7 +948,7 @@ namespace main.contents
             AnnualUseDay_textBox.BackColor = Color.White;
             AnnualUseDay_textBox.BorderStyle = BorderStyle.None;
             AnnualUseDay_textBox.Enabled = false;
-            AnnualUseDay_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AnnualUseDay_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AnnualUseDay_textBox.ForeColor = SystemColors.ControlDark;
             AnnualUseDay_textBox.Location = new Point(558, 116);
             AnnualUseDay_textBox.Name = "AnnualUseDay_textBox";
@@ -909,7 +959,7 @@ namespace main.contents
             // label30
             // 
             label30.AutoSize = true;
-            label30.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label30.ForeColor = SystemColors.ControlDark;
             label30.Location = new Point(495, 116);
             label30.Name = "label30";
@@ -920,7 +970,7 @@ namespace main.contents
             // EndTime_comboBox
             // 
             EndTime_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            EndTime_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            EndTime_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             EndTime_comboBox.FormattingEnabled = true;
             EndTime_comboBox.Location = new Point(342, 78);
             EndTime_comboBox.Name = "EndTime_comboBox";
@@ -931,7 +981,7 @@ namespace main.contents
             // label16
             // 
             label16.AutoSize = true;
-            label16.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label16.Location = new Point(286, 82);
             label16.Name = "label16";
             label16.Size = new Size(51, 16);
@@ -941,7 +991,7 @@ namespace main.contents
             // label17
             // 
             label17.AutoSize = true;
-            label17.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label17.Location = new Point(83, 82);
             label17.Name = "label17";
             label17.Size = new Size(51, 16);
@@ -951,7 +1001,7 @@ namespace main.contents
             // label18
             // 
             label18.AutoSize = true;
-            label18.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label18.ForeColor = SystemColors.ControlDark;
             label18.Location = new Point(680, 82);
             label18.Name = "label18";
@@ -964,7 +1014,7 @@ namespace main.contents
             UseTime_textBox.BackColor = Color.White;
             UseTime_textBox.BorderStyle = BorderStyle.None;
             UseTime_textBox.Enabled = false;
-            UseTime_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UseTime_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             UseTime_textBox.ForeColor = SystemColors.ControlDark;
             UseTime_textBox.Location = new Point(558, 82);
             UseTime_textBox.Name = "UseTime_textBox";
@@ -975,7 +1025,7 @@ namespace main.contents
             // label22
             // 
             label22.AutoSize = true;
-            label22.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label22.ForeColor = SystemColors.ControlDark;
             label22.Location = new Point(495, 82);
             label22.Name = "label22";
@@ -986,7 +1036,7 @@ namespace main.contents
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label7.Location = new Point(298, 18);
             label7.Name = "label7";
             label7.Size = new Size(40, 16);
@@ -996,7 +1046,7 @@ namespace main.contents
             // Usage_comboBox
             // 
             Usage_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Usage_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Usage_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Usage_comboBox.FormattingEnabled = true;
             Usage_comboBox.Location = new Point(153, 44);
             Usage_comboBox.Name = "Usage_comboBox";
@@ -1007,7 +1057,7 @@ namespace main.contents
             // label25
             // 
             label25.AutoSize = true;
-            label25.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label25.Location = new Point(83, 48);
             label25.Name = "label25";
             label25.Size = new Size(62, 16);
@@ -1017,7 +1067,7 @@ namespace main.contents
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label8.ForeColor = SystemColors.ControlDark;
             label8.Location = new Point(917, 18);
             label8.Name = "label8";
@@ -1030,7 +1080,7 @@ namespace main.contents
             DHWneed_textBox.BackColor = Color.White;
             DHWneed_textBox.BorderStyle = BorderStyle.None;
             DHWneed_textBox.Enabled = false;
-            DHWneed_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            DHWneed_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             DHWneed_textBox.ForeColor = SystemColors.ControlDark;
             DHWneed_textBox.Location = new Point(795, 18);
             DHWneed_textBox.Name = "DHWneed_textBox";
@@ -1041,7 +1091,7 @@ namespace main.contents
             // label14
             // 
             label14.AutoSize = true;
-            label14.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label14.ForeColor = SystemColors.ControlDark;
             label14.Location = new Point(725, 18);
             label14.Name = "label14";
@@ -1052,7 +1102,7 @@ namespace main.contents
             // label51
             // 
             label51.AutoSize = true;
-            label51.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label51.Location = new Point(152, 428);
             label51.Name = "label51";
             label51.Size = new Size(24, 15);
@@ -1175,7 +1225,7 @@ namespace main.contents
             // 
             textBox4.BackColor = SystemColors.Window;
             textBox4.BorderStyle = BorderStyle.FixedSingle;
-            textBox4.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             textBox4.Location = new Point(83, 18);
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(120, 22);
@@ -1184,7 +1234,7 @@ namespace main.contents
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label4.Location = new Point(437, 29);
             label4.Name = "label4";
             label4.Size = new Size(31, 15);
@@ -1208,7 +1258,7 @@ namespace main.contents
             // EquipIHG_image_Label
             // 
             EquipIHG_image_Label.BackColor = SystemColors.Control;
-            EquipIHG_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            EquipIHG_image_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
             EquipIHG_image_Label.ForeColor = SystemColors.ControlDarkDark;
             EquipIHG_image_Label.Location = new Point(473, 243);
             EquipIHG_image_Label.Name = "EquipIHG_image_Label";
@@ -1218,7 +1268,7 @@ namespace main.contents
             // DHWneed_image_Label
             // 
             DHWneed_image_Label.BackColor = SystemColors.Control;
-            DHWneed_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            DHWneed_image_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
             DHWneed_image_Label.ForeColor = SystemColors.ControlDarkDark;
             DHWneed_image_Label.Location = new Point(342, 86);
             DHWneed_image_Label.Name = "DHWneed_image_Label";
@@ -1229,7 +1279,7 @@ namespace main.contents
             // 
             Door_textBox.BackColor = SystemColors.Window;
             Door_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Door_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Door_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Door_textBox.Location = new Point(851, 262);
             Door_textBox.Name = "Door_textBox";
             Door_textBox.ReadOnly = true;
@@ -1241,7 +1291,7 @@ namespace main.contents
             // 
             InWall_textBox.BackColor = SystemColors.Window;
             InWall_textBox.BorderStyle = BorderStyle.FixedSingle;
-            InWall_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            InWall_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             InWall_textBox.Location = new Point(851, 193);
             InWall_textBox.Name = "InWall_textBox";
             InWall_textBox.ReadOnly = true;
@@ -1253,7 +1303,7 @@ namespace main.contents
             // 
             CW_textBox.BackColor = SystemColors.Window;
             CW_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CW_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            CW_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             CW_textBox.Location = new Point(851, 123);
             CW_textBox.Name = "CW_textBox";
             CW_textBox.ReadOnly = true;
@@ -1264,7 +1314,7 @@ namespace main.contents
             // PersonIHG_image_Label
             // 
             PersonIHG_image_Label.BackColor = SystemColors.Control;
-            PersonIHG_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            PersonIHG_image_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
             PersonIHG_image_Label.ForeColor = SystemColors.ControlDarkDark;
             PersonIHG_image_Label.Location = new Point(273, 243);
             PersonIHG_image_Label.Name = "PersonIHG_image_Label";
@@ -1274,7 +1324,7 @@ namespace main.contents
             // Em_Label
             // 
             Em_Label.BackColor = SystemColors.Control;
-            Em_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            Em_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
             Em_Label.ForeColor = SystemColors.ControlDarkDark;
             Em_Label.Location = new Point(199, 198);
             Em_Label.Name = "Em_Label";
@@ -1284,7 +1334,7 @@ namespace main.contents
             // theta_i_h_set_Label
             // 
             theta_i_h_set_Label.BackColor = SystemColors.Control;
-            theta_i_h_set_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            theta_i_h_set_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
             theta_i_h_set_Label.ForeColor = SystemColors.ControlDarkDark;
             theta_i_h_set_Label.Location = new Point(253, 145);
             theta_i_h_set_Label.Name = "theta_i_h_set_Label";
@@ -1294,7 +1344,7 @@ namespace main.contents
             // theta_i_c_set_Label
             // 
             theta_i_c_set_Label.BackColor = SystemColors.Control;
-            theta_i_c_set_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            theta_i_c_set_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
             theta_i_c_set_Label.ForeColor = SystemColors.ControlDarkDark;
             theta_i_c_set_Label.Location = new Point(252, 119);
             theta_i_c_set_Label.Name = "theta_i_c_set_Label";
@@ -1304,7 +1354,7 @@ namespace main.contents
             // EndTime_image_Label
             // 
             EndTime_image_Label.BackColor = SystemColors.Control;
-            EndTime_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            EndTime_image_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
             EndTime_image_Label.ForeColor = SystemColors.ControlDarkDark;
             EndTime_image_Label.Location = new Point(239, 86);
             EndTime_image_Label.Name = "EndTime_image_Label";
@@ -1314,7 +1364,7 @@ namespace main.contents
             // StartTime_image_Label
             // 
             StartTime_image_Label.BackColor = SystemColors.Control;
-            StartTime_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            StartTime_image_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
             StartTime_image_Label.ForeColor = SystemColors.ControlDarkDark;
             StartTime_image_Label.Location = new Point(199, 86);
             StartTime_image_Label.Name = "StartTime_image_Label";
@@ -1325,7 +1375,7 @@ namespace main.contents
             // 
             Floor_textBox.BackColor = SystemColors.Window;
             Floor_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Floor_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Floor_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Floor_textBox.Location = new Point(47, 275);
             Floor_textBox.Name = "Floor_textBox";
             Floor_textBox.ReadOnly = true;
@@ -1337,7 +1387,7 @@ namespace main.contents
             // 
             Window_textBox.BackColor = SystemColors.Window;
             Window_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Window_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Window_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Window_textBox.Location = new Point(46, 218);
             Window_textBox.Name = "Window_textBox";
             Window_textBox.ReadOnly = true;
@@ -1349,7 +1399,7 @@ namespace main.contents
             // 
             Wall_textBox.BackColor = SystemColors.Window;
             Wall_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Wall_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Wall_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Wall_textBox.Location = new Point(46, 149);
             Wall_textBox.Name = "Wall_textBox";
             Wall_textBox.ReadOnly = true;
@@ -1361,7 +1411,7 @@ namespace main.contents
             // 
             Roof_textBox.BackColor = SystemColors.Window;
             Roof_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Roof_textBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Roof_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Roof_textBox.Location = new Point(46, 48);
             Roof_textBox.Name = "Roof_textBox";
             Roof_textBox.ReadOnly = true;
@@ -1408,7 +1458,7 @@ namespace main.contents
             // SA_Volume_Label
             // 
             SA_Volume_Label.BackColor = SystemColors.Control;
-            SA_Volume_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            SA_Volume_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
             SA_Volume_Label.ForeColor = SystemColors.ControlDarkDark;
             SA_Volume_Label.Location = new Point(495, 198);
             SA_Volume_Label.Name = "SA_Volume_Label";
@@ -1418,7 +1468,7 @@ namespace main.contents
             // RA_Volume_Label
             // 
             RA_Volume_Label.BackColor = SystemColors.Control;
-            RA_Volume_Label.Font = new Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            RA_Volume_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
             RA_Volume_Label.ForeColor = SystemColors.ControlDarkDark;
             RA_Volume_Label.Location = new Point(416, 198);
             RA_Volume_Label.Name = "RA_Volume_Label";
@@ -1428,7 +1478,7 @@ namespace main.contents
             // label72
             // 
             label72.AutoSize = true;
-            label72.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label72.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label72.ForeColor = SystemColors.ControlDark;
             label72.Location = new Point(851, 244);
             label72.Name = "label72";
@@ -1439,7 +1489,7 @@ namespace main.contents
             // label71
             // 
             label71.AutoSize = true;
-            label71.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label71.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label71.ForeColor = SystemColors.ControlDark;
             label71.Location = new Point(851, 175);
             label71.Name = "label71";
@@ -1450,7 +1500,7 @@ namespace main.contents
             // label70
             // 
             label70.AutoSize = true;
-            label70.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label70.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label70.ForeColor = SystemColors.ControlDark;
             label70.Location = new Point(851, 105);
             label70.Name = "label70";
@@ -1461,7 +1511,7 @@ namespace main.contents
             // label69
             // 
             label69.AutoSize = true;
-            label69.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label69.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label69.ForeColor = SystemColors.ControlDark;
             label69.Location = new Point(48, 257);
             label69.Name = "label69";
@@ -1472,7 +1522,7 @@ namespace main.contents
             // label68
             // 
             label68.AutoSize = true;
-            label68.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label68.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label68.ForeColor = SystemColors.ControlDark;
             label68.Location = new Point(47, 200);
             label68.Name = "label68";
@@ -1483,7 +1533,7 @@ namespace main.contents
             // label67
             // 
             label67.AutoSize = true;
-            label67.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label67.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label67.ForeColor = SystemColors.ControlDark;
             label67.Location = new Point(46, 131);
             label67.Name = "label67";
@@ -1494,7 +1544,7 @@ namespace main.contents
             // label66
             // 
             label66.AutoSize = true;
-            label66.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label66.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label66.ForeColor = SystemColors.ControlDark;
             label66.Location = new Point(47, 30);
             label66.Name = "label66";
@@ -1558,6 +1608,8 @@ namespace main.contents
             VisibleChanged += ZoneGeneral_VisibleChanged;
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
@@ -1698,5 +1750,9 @@ namespace main.contents
         private System.Windows.Forms.Label PreZone_label;
         private PictureBox Ground_pictureBox;
         private PictureBox RoomControl_pictureBox;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.Label label2;
     }
 }

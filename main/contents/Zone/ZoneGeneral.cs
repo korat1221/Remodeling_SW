@@ -35,7 +35,7 @@ namespace main.contents
         double OccupancyDensity, OccupancyDensity_Low, OccupancyDensity_Medium, OccupancyDensity_High;
         String OccupancyDensity_index, EquipIHG_index;
         String ZoneName, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
-        string SelectHRV;
+        string SelectHRV; string 증축여부; 
         static string Layer;
         public ZoneGeneral()
         {
@@ -50,7 +50,7 @@ namespace main.contents
             Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "상위메뉴아이콘_on2", "상위메뉴명 = '결과 정보'");
 
 
-           
+
 
             //존 환기방식 콤보박스
             //Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, AHU_comboBox, "존일반", "환기방식", "");
@@ -67,14 +67,14 @@ namespace main.contents
             //기기밀도 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, EquipIHG_comboBox, "존일반", "밀도", "1");
 
-           
+
             Heating_checkBox.Checked = true;
             Cooling_checkBox.Checked = true;
             Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필이미지", "이미지", "대분류 = '냉난방환기' And 냉난방유무='냉난방' and 환기유무='none'");
             if (Image.Length > 0)
             {
                 Main_pictureBox.Load(Program.gPath + Image[0][0]);
-                Main_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;               
+                Main_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 Load_RoomControlImage();
                 Load_GroundImage();
             }
@@ -151,7 +151,7 @@ namespace main.contents
                 Ground_pictureBox.BackColor = Color.Transparent;
                 Ground_pictureBox.Location = new Point(0, 0);
             }
-          
+
         }
         private void Heating_checkBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -176,16 +176,16 @@ namespace main.contents
             else { HCType = "비냉난방"; }
             Load_MainImage(HCType, AHUType);
 
-           
+
         }
         private void Load_MainImage(string HCType, string AHUType)
         {
-            if (HCType != null && AHUType!=null)
+            if (HCType != null && AHUType != null)
             {
                 string AHUType_;
                 if (AHUType == "공조기") { AHUType_ = "열회수기"; }
                 else { AHUType_ = AHUType; }
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필이미지", "이미지", "대분류 = '냉난방환기' AND 냉난방유무 = '" + HCType + "' and 환기유무='"+AHUType_+"'");
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필이미지", "이미지", "대분류 = '냉난방환기' AND 냉난방유무 = '" + HCType + "' and 환기유무='" + AHUType_ + "'");
                 if (Image.Length > 0)
                 {
                     Main_pictureBox.Load(Program.gPath + Image[0][0]);
@@ -255,7 +255,7 @@ namespace main.contents
         {
             if (Ventilation_checkBox.Checked)
             {
-                
+
                 AHU_label.Visible = true;
                 AHU_comboBox.Visible = true;
                 AHU_comboBox.Enabled = true;
@@ -264,9 +264,9 @@ namespace main.contents
                 else { AHU_button.Visible = true; AHU_textBox.Visible = true; AHU_label2.Visible = true; AHUType = AHU_comboBox.SelectedItem.ToString(); }
 
                 if (AHUType == "공조기") { AHU_label2.Text = "공조기"; } else { AHU_label2.Text = "열회수기"; }
-                if (AHUType == "열회수기" || AHUType == "공조기") {  SA_Volume_Label.Visible = true; RA_Volume_Label.Visible = false;    }
-                else if (AHUType == "배기환기(3종)")  { SA_Volume_Label.Visible = false;  RA_Volume_Label.Visible = true;                }
-                else {  SA_Volume_Label.Visible = false; RA_Volume_Label.Visible = false; }
+                if (AHUType == "열회수기" || AHUType == "공조기") { SA_Volume_Label.Visible = true; RA_Volume_Label.Visible = false; }
+                else if (AHUType == "배기환기(3종)") { SA_Volume_Label.Visible = false; RA_Volume_Label.Visible = true; }
+                else { SA_Volume_Label.Visible = false; RA_Volume_Label.Visible = false; }
             }
             else
             {
@@ -321,8 +321,8 @@ namespace main.contents
                 {
                     WeekUseDay = Convert.ToDouble(res[0][0].ToString());
                     AnnualUseDay = Convert.ToDouble(Program.UTIL.GetValue2_BySelectComboBox(WeekUseDay_comboBox, "이용일수", "주간일수", "월='연간'", "이용일수"));
-                    AnnualUseDay_textBox.Text =  AnnualUseDay.ToString();
-                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(AnnualUseDay_textBox, true,0);
+                    AnnualUseDay_textBox.Text = AnnualUseDay.ToString();
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(AnnualUseDay_textBox, true, 0);
                 }
             }
         }
@@ -445,7 +445,7 @@ namespace main.contents
                 PersonIHG_Cal(PersonIHG, UseTime);
                 NetVolume = NetArea * CeilingHeight;
 
-                NetVolume_textBox.Text =  NetVolume.ToString();
+                NetVolume_textBox.Text = NetVolume.ToString();
                 controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(NetVolume_textBox, true, 1);
 
                 Calc_VentilationVolume(NetArea, NetVolume, VA, VA_we);
@@ -644,13 +644,13 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형,존이름,실제어방식,냉난방유무,환기유무,환기방식," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
-                "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적,선택열회수기,기존존",
+                "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적,선택열회수기,기존존,증축여부",
             "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','" + ZoneName + "','" + RoomControl + "','" + HCType + "','" + Ventilation_checkBox.Checked.ToString() + "','" + AHUType + "','"
             + Usage + "','" + CeilingHeight.ToString() + "','" + StartTime + "','" + EndTime + "','" + WeekUseDay.ToString() + "','" + PersonNum_textBox.Text + "','" + EquipIHG_index + "','"
             + DHWneed.ToString() + "','" + HCTime.ToString() + "','" + UseTime.ToString() + "','" + AHUTime.ToString() + "','" + AnnualUseDay.ToString() + "','"
             + OccupancyDensity.ToString() + "','" + OccupancyDensity_index + "','" + PersonIHG_1day.ToString() + "','" + PersonIHG.ToString() + "','" + EquipIHG_1day.ToString() + "','" + EquipIHG.ToString() + "','"
             + NetVolume.ToString() + "','" + VentilationRate.ToString() + "','" + Volume_wd.ToString() + "','" + Volume_we.ToString() + "','"
-            + NetArea.ToString() + "','" + SelectHRV + "','" + SelectPreZone_nonsplit + "'", "존번호");
+            + NetArea.ToString() + "','" + SelectHRV + "','" + SelectPreZone_nonsplit + "','" + 증축여부 + "'", "존번호");
 
             MessageBox.Show(ZoneNum + "[" + ZoneName + "] 정보를 저장하였습니다.");
             this.DialogResult = DialogResult.OK;
@@ -884,7 +884,7 @@ namespace main.contents
                 {
                     NetVolume = Convert.ToDouble(Value[0][24]);
                     NetVolume_textBox.Text = NetVolume.ToString();
-                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(NetVolume_textBox, true,1);
+                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(NetVolume_textBox, true, 1);
                 }
                 if (Value[0][25] != "")
                 {
@@ -905,11 +905,19 @@ namespace main.contents
                     RA_Volume_Label.Text = String.Format("{0:F1}", Volume_we) + "m³/h";
                 }
             }
-            Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존", "존번호 = '" + ZoneNum + "'");
+            Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존,증축여부", "존번호 = '" + ZoneNum + "'");
             if (Value.Length > 0)
             {
                 SelectPreZone_nonsplit = Value[0][0];
                 Split_Zone(SelectPreZone_nonsplit);
+                if (Value[0][0] == "true")
+                {
+                    radioButton1.Checked = true;
+                }
+                else
+                {
+                    radioButton2.Checked = true;
+                }
             }
 
             Calc_Time();
@@ -936,22 +944,50 @@ namespace main.contents
         private void Load_OtherFormData()
         {
             //건물대상,용도
-            String[][] BuildingValue = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "건물대상,건물용도,프로젝트유형", "");
+            String[][] BuildingValue = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "건물대상,건물용도,프로젝트유형번호", "");
             if (BuildingValue.Length > 0)
             {
                 BuildingCategory = BuildingValue[0][0];
                 BuildingUse = BuildingValue[0][1];
-                if (BuildingValue[0][2] == "기존")
+                if (BuildingValue[0][2] == "1")
                 {
                     PreZone_label.Visible = false;
                     PreZone_textBox.Visible = false;
                     PreZone_button.Visible = false;
+                    groupBox1.Visible = false;
+                    radioButton1.Checked = false;
+                    radioButton2.Checked = true;
+                    SelectPreZone_nonsplit = ZoneNum;
                 }
-                else
+                else if (BuildingValue[0][2] == "2")
                 {
                     PreZone_label.Visible = true;
                     PreZone_textBox.Visible = true;
                     PreZone_button.Visible = true;
+                    groupBox1.Visible = true;
+                    radioButton1.Checked = false;
+                    radioButton2.Checked = true;
+                    groupBox1.Enabled = false;
+                    SelectPreZone_nonsplit = ZoneNum;
+                }
+                else if (BuildingValue[0][2] == "3")
+                {
+                    PreZone_label.Visible = true;
+                    PreZone_textBox.Visible = true;
+                    PreZone_button.Visible = true;
+                    groupBox1.Visible = true;
+                    radioButton1.Checked = false;
+                    radioButton2.Checked = true;
+                    groupBox1.Enabled = true;
+                }
+                else
+                {
+                    PreZone_label.Visible = false;
+                    PreZone_textBox.Visible = false;
+                    PreZone_button.Visible = false;
+                    groupBox1.Visible = false;
+                    radioButton1.Checked = false;
+                    radioButton2.Checked = true;
                 }
             }
             string id = "";
@@ -1003,7 +1039,7 @@ namespace main.contents
             }
             if (General_3D.Length > 0)
             {
-                
+
 
                 ZoneName = General_3D[0][3];
                 ZoneName_textBox.Text = ZoneName;
@@ -1165,12 +1201,12 @@ namespace main.contents
                     InWall_textBox.Text = InWall_textBox.Text.ToString() + "m²";
                 }
 
-                if (Construction_AreaSum[3] >0) //최하층 바닥 존재
+                if (Construction_AreaSum[3] > 0) //최하층 바닥 존재
                 {
                     String[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.기초설치 From ConstructionFloor as a Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호 Where b.존 = '" + ZoneNum + "'");
-                    if(Value.Length > 0)
+                    if (Value.Length > 0)
                     {
-                        if (Value[0][0]== "비단열지하실" || Value[0][0] == "단열지하실"|| Value[0][0]== "지면위")
+                        if (Value[0][0] == "비단열지하실" || Value[0][0] == "단열지하실" || Value[0][0] == "지면위")
                         {
                             Ground = Value[0][0];
                         }
@@ -1184,11 +1220,34 @@ namespace main.contents
                 {
                     Ground = "층간슬라브";
                 }
-                    
+
                 Load_GroundImage();
             }
 
         }
 
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if(radioButton1.Checked)
+            {
+                증축여부 = "true";
+            }
+            else
+            {
+                증축여부 = "false";
+            }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked)
+            {
+                증축여부 = "false";
+            }
+            else
+            {
+                증축여부 = "true";
+            }
+        }
     }
 }
