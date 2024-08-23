@@ -1849,6 +1849,18 @@ namespace main.contents
                     PumpMethod_label.Visible = true;
                     PumpMethod_comboBox.Visible = true;
                     Create_Pump_Table();
+                    PipeD_label1.Visible = true;
+                    PipeD_label2.Visible = true;
+                    PipeD_textBox.Visible = true;
+                    PipeInsD_label1.Visible = true;
+                    PipeInsD_label2.Visible = true;
+                    PipeInsD_textBox.Visible = true;
+                    PipeIns_label.Visible = true;
+                    PipeIns_textBox.Visible = true;
+                    PipeIns_button.Visible = true;
+                    PipeIns_Ramda_label1.Visible = true;
+                    PipeIns_Ramda_label2.Visible = true;
+                    PipeIns_Ramda_textBox.Visible=true;
                 }
                 else
                 {
@@ -1857,6 +1869,18 @@ namespace main.contents
                     PumpMethod_comboBox.SelectedItem = null;
                     Pump_dataGridView.Columns.Clear();
                     ChangeVisble_Pump(null);
+                    PipeD_label1.Visible = false;
+                    PipeD_label2.Visible = false;
+                    PipeD_textBox.Visible = false;
+                    PipeInsD_label1.Visible = false;
+                    PipeInsD_label2.Visible = false;
+                    PipeInsD_textBox.Visible = false;
+                    PipeIns_label.Visible = false;
+                    PipeIns_textBox.Visible = false;
+                    PipeIns_button.Visible = false;
+                    PipeIns_Ramda_label1.Visible = false;
+                    PipeIns_Ramda_label2.Visible = false;
+                    PipeIns_Ramda_textBox.Visible = false;
                 }
             }
             else
