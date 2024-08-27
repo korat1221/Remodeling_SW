@@ -545,7 +545,9 @@ namespace main
                     }
                     else
                     {
-                        Program.UTIL.sendMessage(selID);
+                        int n = selID.IndexOf("$$$");
+
+                        Program.UTIL.sendMessage(n > 0 ? selID.Substring(0, n) : selID);
 
                         if (selID.IndexOf("_win2") >= 0 || selID.IndexOf("_win3") >= 0 || selID.IndexOf("_win4") >= 0 || selID.IndexOf("_CW_") >= 0)
                         {

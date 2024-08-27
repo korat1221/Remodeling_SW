@@ -115,6 +115,7 @@ class MainTree {
             if (!that.loading && that.onSelect && data.selected.length > 0) {
                 let id = data.instance.get_node(data.selected[0]).id;
                 if (id.indexOf('detail-') >= 0) id = data.instance.get_node(data.selected[0]).text;
+                else if (id.indexOf('space-') >= 0) id += "$$$" + data.instance.get_node(data.selected[0]).text;
                 that.onSelect(id);
             }
         }).on('loaded.jstree', function() {

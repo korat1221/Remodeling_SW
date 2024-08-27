@@ -2151,9 +2151,9 @@ Editor.prototype = {
       if (key == "1") {
         _getBridgeInfo("1", "1", arr, 0);
       } else if (key == "2") {
-        let m = _getBridgeInfo("11", "1", arr, 0);
+        let m = _getBridgeInfo("11", "2", arr, 0);
 
-        _getBridgeInfo("12", "1", arr, m);
+        _getBridgeInfo("12", "2", arr, m);
       } else if (key == "11") {
         _getBridgeInfo("13", "11", arr, 0);
       } else if (key == "12") {
