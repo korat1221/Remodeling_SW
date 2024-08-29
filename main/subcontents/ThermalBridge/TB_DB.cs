@@ -146,34 +146,47 @@ public partial class TB_DB : Form
   
     private void Load_Image2()
     {
-        if (TB_dataGridView.Rows[SelectRow].Cells[2].Value.ToString() != "사용자DB")
+        if (TB_dataGridView.Rows[SelectRow].Cells[2].Value != null && TB_dataGridView.Rows[SelectRow].Cells[2].Value.ToString() != "사용자DB")
         {
-            pictureBox4.Visible = false;
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교_이미지", "소분류_이미지1", "대분류 ='"+ TBType + "' and 소분류 = '" + TB_dataGridView.Rows[SelectRow].Cells[4].Value.ToString() + "'");
+
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교_이미지", "소분류_이미지1", "대분류 ='" + TBType + "' and 소분류 = '" + TB_dataGridView.Rows[SelectRow].Cells[4].Value.ToString() + "'");
             if (Image.Length > 0)
             {
                 pictureBox2.Visible = true;
                 pictureBox2.Load(Program.gPath + Image[0][0]);
                 pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             }
-            Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교_이미지", "소분류_이미지1", "대분류 ='"+ TBType + "' and 소분류 = '" + TB_dataGridView.Rows[SelectRow].Cells[4].Value.ToString() + "'");
+            Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교_이미지", "소분류_이미지2", "대분류 ='" + TBType + "' and 소분류 = '" + TB_dataGridView.Rows[SelectRow].Cells[4].Value.ToString() + "'");
             if (Image.Length > 0)
             {
                 pictureBox3.Visible = true;
                 pictureBox3.Load(Program.gPath + Image[0][0]);
                 pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             }
-
         }
         else
         {
-            pictureBox2.Visible = false;
+            if(TB_dataGridView.Rows[SelectRow].Cells[5].Value != null && TB_dataGridView.Rows[SelectRow].Cells[6].Value != null)
+            {
+                string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교", "명칭", "열교유형 ='" + TBType + "' and 구조체1_단열유형 = '" + TB_dataGridView.Rows[SelectRow].Cells[5].Value.ToString() + "' and 구조체2_단열유형 = '" + TB_dataGridView.Rows[SelectRow].Cells[6].Value.ToString() + "'");
+                if (value.Length > 0)
+                {
+                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교_이미지", "소분류_이미지1", "대분류 ='" + TBType + "' and 소분류 = '" + value[0][0] + "'");
+                    if (Image.Length > 0)
+                    {
+                        pictureBox2.Visible = true;
+                        pictureBox2.Load(Program.gPath + Image[0][0]);
+                        pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("사용자 입력값을 전부 입력한 후 선택주세요.");
+            }
             pictureBox3.Visible = false;
-
-            pictureBox4.Visible = true;
-            pictureBox4.Load(Program.gPath + "images/TB/User/" + TB_dataGridView.Rows[SelectRow].Cells[1].Value + ".jpg");
-            pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
         }
+       
     }
 
 
@@ -199,7 +212,7 @@ public partial class TB_DB : Form
     {
         int nRow = TB_dataGridView.Rows.Add();
         Create_UserNum(nRow);
-        Import_Image(nRow);
+        //Import_Image(nRow);
         TB_dataGridView.Rows[nRow].Cells[2].Value = "사용자DB";
         TB_dataGridView.Rows[nRow].Cells[3].Value = TBType;
 
@@ -226,8 +239,8 @@ public partial class TB_DB : Form
     }
     private void Create_UserNum(int nRow)
     {
-        UserTBNum = Program.UTIL.CreateNum("User_TB", "번호", "UT");
-        double splitnum = Convert.ToDouble(UserTBNum.Substring(2, 2));
+        UserTBNum = Program.UTIL.CreateNum("User_TB", "번호", "UTB");
+        double splitnum = Convert.ToDouble(UserTBNum.Substring(3, 2));
         double Count_UserDB = 0;
         for (int i = 0; i < TB_dataGridView.Rows.Count; i++)
         {
@@ -239,15 +252,15 @@ public partial class TB_DB : Form
         double num = splitnum + Count_UserDB;
 
         if (num < 10)
-        { TB_dataGridView.Rows[nRow].Cells[1].Value = "UT0" + num.ToString(); }
-        else { TB_dataGridView.Rows[nRow].Cells[1].Value = "UT" + num.ToString(); }
+        { TB_dataGridView.Rows[nRow].Cells[1].Value = "UTB0" + num.ToString(); }
+        else { TB_dataGridView.Rows[nRow].Cells[1].Value = "UTB" + num.ToString(); }
     }
     private void Deletebutton_Click(object sender, EventArgs e)
     {
         if (TB_dataGridView.Rows[SelectRow].Cells[2].Value.ToString() == "사용자DB")
         {
             pictureBox4.Load(Program.gPath + "images/TB/User/.png");
-            System.IO.File.Delete(Program.gPath + "images/TB/User/" + TB_dataGridView.Rows[SelectRow].Cells[1].Value.ToString() + ".jpg");
+           // System.IO.File.Delete(Program.gPath + "images/TB/User/" + TB_dataGridView.Rows[SelectRow].Cells[1].Value.ToString() + ".jpg");
             Program.DB.deleteValue(DB.type.ProjDB, "User_TB", "번호 ='" + TB_dataGridView.Rows[SelectRow].Cells[1].Value.ToString() + "'");
             TB_dataGridView.Rows.Remove(TB_dataGridView.Rows[SelectRow]);
         }
@@ -300,6 +313,13 @@ public partial class TB_DB : Form
 
         TBNum = TB_dataGridView.Rows[SelectRow].Cells[1].Value.ToString();
 
+        string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ThermalBridge_3D", "번호", "열교항목 ='" + TBType + "'");
+        for (int i = 0; i < Value.Length; i++)
+        {
+            Program.DB.setValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,선택열교",
+             "'" + Value[i][0] + "','" + TBNum + "'",
+             "번호");
+        }
         this.DialogResult = DialogResult.OK;
         this.Close();
     }

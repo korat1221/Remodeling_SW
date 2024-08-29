@@ -144,6 +144,7 @@ namespace main.contents
                     {
                         MessageBox.Show("같은 유형만 선택하세요.");
                         checkSame = false;
+                        break;
                     }
                 }
             }

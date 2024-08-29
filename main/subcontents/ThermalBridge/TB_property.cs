@@ -26,6 +26,7 @@ namespace main.contents
         string SelectTBType, checkTBType;
         string TBType;
         string SelectTBNum, SelectTBName;
+        string SelectTBIns1, SelectTBIns2; 
 
 
         public TB_property()
@@ -52,14 +53,16 @@ namespace main.contents
                     Type_Textbox.Text = TB_Type[0][1];
                     Length_Textbox.Text = Convert.ToDouble(TB_Type[0][2]).ToString("0.0") + " m";
                     SelectTBNum = TB_Type[0][3];
-                    string[][] tb2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교", "번호,명칭,값", "번호 ='" + SelectTBNum + "'");
+                    string[][] tb2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교", "번호,명칭,값,구조체1_단열유형, 구조체2_단열유형", "번호 ='" + SelectTBNum + "'");
 
-                    if (tb2.Length == 0) { tb2 = Program.DB.getValue(DB.type.ProjDB, "User_TB", "번호,명칭,값", "번호 ='" + SelectTBNum + "'"); }
+                    if (tb2.Length == 0) { tb2 = Program.DB.getValue(DB.type.ProjDB, "User_TB", "번호,명칭,값,구조체1_단열유형, 구조체2_단열유형", "번호 ='" + SelectTBNum + "'"); }
                     if (tb2.Length > 0)
                     {
                         SelectTBName = tb2[0][1];
                         TB_Textbox.Text = SelectTBNum + "." + " " + tb2[0][1];
                         Psi_textBox.Text = Convert.ToDouble(tb2[0][2]).ToString("0.000");
+                        SelectTBIns1 = tb2[0][3];
+                        SelectTBIns2 = tb2[0][4];
                         Load_Image2();
                     }
                     else
@@ -85,7 +88,7 @@ namespace main.contents
                     pictureBox1.Load(Program.gPath + Image[0][0]);
                     pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                 }
-                Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교_이미지", "소분류_이미지1", "대분류 ='" + TBType + "' and 소분류 = '" + SelectTBName + "'");
+                Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교_이미지", "소분류_이미지2", "대분류 ='" + TBType + "' and 소분류 = '" + SelectTBName + "'");
                 if (Image.Length > 0)
                 {
                     pictureBox2.Visible = true;
@@ -96,12 +99,23 @@ namespace main.contents
             }
             else
             {
-                pictureBox1.Visible = false;
                 pictureBox2.Visible = false;
+                //pictureBox3.Visible = true;
+                //pictureBox3.Load(Program.gPath + "images/TB/User/" + SelectTBNum + ".jpg");
+                //pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
 
-                pictureBox3.Visible = true;
-                pictureBox3.Load(Program.gPath + "images/TB/User/" + SelectTBNum + ".jpg");
-                pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+                string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교", "명칭", "열교유형 ='" + TBType + "' and 구조체1_단열유형 = '" + SelectTBIns1 +  "' and 구조체2_단열유형 = '" + SelectTBIns2 + "'");
+                if (value.Length > 0)
+                {
+                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교_이미지", "소분류_이미지1", "대분류 ='" + TBType + "' and 소분류 = '" + value[0][0] + "'");
+                    if (Image.Length > 0)
+                    {
+                        pictureBox1.Visible = true;
+                        pictureBox1.Load(Program.gPath + Image[0][0]);
+                        pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                    }
+                }
+
             }
 
         }

@@ -73,7 +73,7 @@ partial class TB_DB
         TBType_textBox.BackColor = Color.AliceBlue;
         TBType_textBox.BorderStyle = BorderStyle.None;
         TBType_textBox.Enabled = false;
-        TBType_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+        TBType_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold);
         TBType_textBox.ForeColor = SystemColors.ControlDark;
         TBType_textBox.Location = new Point(124, 27);
         TBType_textBox.Name = "TBType_textBox";
@@ -84,7 +84,7 @@ partial class TB_DB
         // label1
         // 
         label1.AutoSize = true;
-        label1.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+        label1.Font = new Font("맑은 고딕", 9F, FontStyle.Bold);
         label1.ForeColor = SystemColors.ControlText;
         label1.Location = new Point(24, 27);
         label1.Name = "label1";
@@ -115,13 +115,13 @@ partial class TB_DB
         // panel1
         // 
         panel1.BackColor = SystemColors.GradientInactiveCaption;
-        panel1.Controls.Add(pictureBox4);
         panel1.Controls.Add(result_textBox2);
         panel1.Controls.Add(TBName_textBox);
         panel1.Controls.Add(result_textBox);
         panel1.Controls.Add(pictureBox3);
         panel1.Controls.Add(label2);
         panel1.Controls.Add(pictureBox2);
+        panel1.Controls.Add(pictureBox4);
         panel1.Location = new Point(292, -2);
         panel1.Name = "panel1";
         panel1.Size = new Size(508, 297);
@@ -129,18 +129,19 @@ partial class TB_DB
         // 
         // pictureBox4
         // 
-        pictureBox4.Location = new Point(174, 49);
+        pictureBox4.Location = new Point(130, 59);
         pictureBox4.Name = "pictureBox4";
-        pictureBox4.Size = new Size(199, 245);
+        pictureBox4.Size = new Size(245, 215);
         pictureBox4.TabIndex = 137;
         pictureBox4.TabStop = false;
+        pictureBox4.Visible = false;
         // 
         // result_textBox2
         // 
         result_textBox2.BackColor = SystemColors.GradientInactiveCaption;
         result_textBox2.BorderStyle = BorderStyle.None;
         result_textBox2.Enabled = false;
-        result_textBox2.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+        result_textBox2.Font = new Font("맑은 고딕", 9F, FontStyle.Bold);
         result_textBox2.ForeColor = SystemColors.ControlDark;
         result_textBox2.Location = new Point(323, 27);
         result_textBox2.Name = "result_textBox2";
@@ -152,7 +153,7 @@ partial class TB_DB
         TBName_textBox.BackColor = SystemColors.GradientInactiveCaption;
         TBName_textBox.BorderStyle = BorderStyle.None;
         TBName_textBox.Enabled = false;
-        TBName_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+        TBName_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold);
         TBName_textBox.ForeColor = SystemColors.WindowText;
         TBName_textBox.Location = new Point(116, 27);
         TBName_textBox.Name = "TBName_textBox";
@@ -166,7 +167,7 @@ partial class TB_DB
         result_textBox.BackColor = SystemColors.GradientInactiveCaption;
         result_textBox.BorderStyle = BorderStyle.None;
         result_textBox.Enabled = false;
-        result_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+        result_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold);
         result_textBox.ForeColor = SystemColors.ControlDark;
         result_textBox.Location = new Point(242, 27);
         result_textBox.Name = "result_textBox";
@@ -185,7 +186,7 @@ partial class TB_DB
         // label2
         // 
         label2.AutoSize = true;
-        label2.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+        label2.Font = new Font("맑은 고딕", 9F, FontStyle.Bold);
         label2.ForeColor = SystemColors.ControlText;
         label2.Location = new Point(193, 8);
         label2.Name = "label2";
@@ -213,7 +214,7 @@ partial class TB_DB
         TB_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
         dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
         dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-        dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+        dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F);
         dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
         dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
         dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -224,7 +225,7 @@ partial class TB_DB
         TB_dataGridView.Name = "TB_dataGridView";
         dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
         dataGridViewCellStyle2.BackColor = SystemColors.Control;
-        dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+        dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F);
         dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
         dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
         dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -233,12 +234,11 @@ partial class TB_DB
         TB_dataGridView.RowHeadersVisible = false;
         TB_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
         dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle3.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+        dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F);
         dataGridViewCellStyle3.ForeColor = Color.Black;
         dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
         dataGridViewCellStyle3.SelectionForeColor = Color.Black;
         TB_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-        TB_dataGridView.RowTemplate.Height = 25;
         TB_dataGridView.Size = new Size(800, 208);
         TB_dataGridView.TabIndex = 19;
         TB_dataGridView.CellContentClick += TB_dataGridView_CellContentClick;
@@ -248,7 +248,7 @@ partial class TB_DB
         AddUserDB_button.BackColor = SystemColors.ControlLight;
         AddUserDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
         AddUserDB_button.FlatStyle = FlatStyle.System;
-        AddUserDB_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+        AddUserDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold);
         AddUserDB_button.Location = new Point(732, 301);
         AddUserDB_button.Margin = new Padding(0);
         AddUserDB_button.Name = "AddUserDB_button";
@@ -263,7 +263,7 @@ partial class TB_DB
         Deletebutton.BackColor = SystemColors.ControlLight;
         Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
         Deletebutton.FlatStyle = FlatStyle.System;
-        Deletebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+        Deletebutton.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold);
         Deletebutton.Location = new Point(759, 301);
         Deletebutton.Margin = new Padding(0);
         Deletebutton.Name = "Deletebutton";
@@ -276,14 +276,14 @@ partial class TB_DB
         // label36
         // 
         label36.AutoSize = true;
-        label36.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+        label36.Font = new Font("맑은 고딕", 9F, FontStyle.Bold);
         label36.Location = new Point(632, 306);
         label36.Name = "label36";
         label36.Size = new Size(60, 15);
         label36.TabIndex = 174;
         label36.Text = "사용자DB";
         // 
-        // TB
+        // TB_DB
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
@@ -297,7 +297,7 @@ partial class TB_DB
         Controls.Add(GeneralPanel);
         Controls.Add(panel1);
         FormBorderStyle = FormBorderStyle.FixedToolWindow;
-        Name = "TB";
+        Name = "TB_DB";
         Text = "TB";
         GeneralPanel.ResumeLayout(false);
         GeneralPanel.PerformLayout();
