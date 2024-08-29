@@ -378,7 +378,7 @@ namespace main.contents
             }
 
             Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
-
+            
             return pid;
         }
         private int GetSelectedIndex()
@@ -473,10 +473,9 @@ namespace main.contents
 
                 Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
                 Program.DB.initTables(DB.type.ProjDB);
+                Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트유형,프로젝트유형번호", "'" + ProjectList.CurProjID + "','" + types[ProjectType] + "','" + ProjectType + "'", "프로젝트번호");
                 Program.getMenuForm().resetAll();
                 Program.UTIL.ReloadModel();
-
-                
             }
         }
 
