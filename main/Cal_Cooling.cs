@@ -355,8 +355,8 @@ namespace main
                     CoolTop CT = new CoolTop();
                     CT._ctnum = Value[0][0];
                     CT._ctname = Value[0][1];
-                    CT._cttype = Value[0][2].Substring(0, 3);
-                    CT._ctmeth = Value[0][2].Substring(3, 2);
+                    CT._ctmeth = Value[0][2].Substring(0, 3);
+                    CT._cttype = Value[0][2].Substring(3, 2);
                     CT._power = Convert.ToDouble(Value[0][3]);
                     CT._quantity = Convert.ToDouble(Value[0][4]);
                     CT._cswin = Convert.ToDouble(Value[0][5]);
@@ -590,7 +590,7 @@ namespace main
                         CTFanType = CT._ctfan;//팬유형
                     }
                 }
-                string[][] 부분부하계수 = Program.DB.getValue(DB.type.BaseDB_Cooling, "냉각탑", "부분부하계수"," 방식 = '" + CTtype_f + "' And 유형 = '"+ CTmeth_f + "' And 팬 = '" + CTFanType + "' And 제어유형 = '" + CTControl_f + "'");
+                string[][] 부분부하계수 = Program.DB.getValue(DB.type.BaseDB_Cooling, "냉각탑", "부분부하계수"," 방식 = '" + CTmeth_f + "' And 유형 = '"+ CTtype_f + "' And 팬 = '" + CTFanType + "' And 제어유형 = '" + CTControl_f + "'");
                 CTfhrPL_f = Convert.ToDouble(부분부하계수[0][0]);
             }
 
@@ -1771,12 +1771,12 @@ namespace main
                 //        goto goto_;
                 //    }
                 //}
-
+               
                 if (CG != nameof(_TYPE.실외기12kW))
                 {
-                    int index = ce._ceNum.IndexOf("_");
-                    sum += Convert.ToInt32(ce._ceNum.Substring(index + 1)) * ce._ceElec; //개수 x 소비전력
+                    sum += ce._ceElec; //소비전력
                 }
+                else sum = 0;
 
                 for (int i = 0; i < 12; i++)
                 {
