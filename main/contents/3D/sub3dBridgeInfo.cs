@@ -67,12 +67,12 @@ namespace main.contents
             string[][] Value;
             if (SelectTBType == null || SelectTBType == "" || SelectTBType == "ALL")
             {
-                Value = Program.DB.getValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,열교항목,열교길이,선택열교");
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 번호,열교항목,열교길이,선택열교 from ThermalBridge_3D Order by 번호");
 
             }
             else
             {
-                Value = Program.DB.getValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,열교항목,열교길이,선택열교", "열교항목 ='" + SelectTBType + "'");
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 번호,열교항목,열교길이,선택열교 from ThermalBridge_3D Where 열교항목 ='" + SelectTBType + "'");
             }
 
             if(Value.Length > 0)
@@ -105,8 +105,24 @@ namespace main.contents
                     }
                 }
             }
-            
-
+            string[][] dU = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "외벽dUtb, 지붕dUtb, 바닥dUtb");
+            if(dU.Length > 0 && dU[0][0]!="")
+            {
+                dUtb_label.Visible = true;
+                dUtbWall_label.Visible = true;
+                dUtbRoof_label.Visible = true;
+                dUtbFloor_label.Visible = true;
+                dUtbWall_label.Text ="외벽 : " + Convert.ToDouble(dU[0][0]).ToString("0.00") + " W/m²·K";
+                dUtbRoof_label.Text = "지붕 : " + Convert.ToDouble(dU[0][1]).ToString("0.00") + " W/m²·K";
+                dUtbFloor_label.Text = "바닥 : " + Convert.ToDouble(dU[0][2]).ToString("0.00") + " W/m²·K";
+            }
+            else
+            {
+                dUtb_label.Visible = false; 
+                dUtbWall_label.Visible = false;
+                dUtbRoof_label.Visible = false;
+                dUtbFloor_label.Visible = false;
+            }
         }
 
         private void Check_checkBox_CheckedChanged(object sender, EventArgs e)
@@ -190,7 +206,7 @@ namespace main.contents
         private void fillFilterCombos()
         {
             int i = -1;
-            string[][] rec = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ThermalBridge_3D", "열교항목");
+            string[][] rec = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 열교항목 From ThermalBridge_3D Order by 번호");
 
             TB_comboBox.Items.Clear();
 

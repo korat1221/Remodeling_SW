@@ -28,152 +28,152 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Name_textBox1 = new System.Windows.Forms.TextBox();
-            this.Name_textBox = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.Area_textBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            Name_textBox1 = new TextBox();
+            Name_textBox = new TextBox();
+            label14 = new Label();
+            Area_textBox = new TextBox();
+            label6 = new Label();
+            label1 = new Label();
+            textBox1 = new TextBox();
+            label2 = new Label();
+            textBox2 = new TextBox();
+            label3 = new Label();
+            SuspendLayout();
             // 
             // Name_textBox1
             // 
-            this.Name_textBox1.BackColor = System.Drawing.Color.White;
-            this.Name_textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Name_textBox1.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.Name_textBox1.Location = new System.Drawing.Point(157, 38);
-            this.Name_textBox1.Name = "Name_textBox1";
-            this.Name_textBox1.ReadOnly = true;
-            this.Name_textBox1.Size = new System.Drawing.Size(100, 16);
-            this.Name_textBox1.TabIndex = 115;
-            this.Name_textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Name_textBox1.BackColor = Color.White;
+            Name_textBox1.BorderStyle = BorderStyle.None;
+            Name_textBox1.Font = new Font("맑은 고딕", 9F, FontStyle.Bold);
+            Name_textBox1.Location = new Point(157, 38);
+            Name_textBox1.Name = "Name_textBox1";
+            Name_textBox1.ReadOnly = true;
+            Name_textBox1.Size = new Size(100, 16);
+            Name_textBox1.TabIndex = 115;
+            Name_textBox1.TextAlign = HorizontalAlignment.Center;
             // 
             // Name_textBox
             // 
-            this.Name_textBox.BackColor = System.Drawing.Color.White;
-            this.Name_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Name_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.Name_textBox.Location = new System.Drawing.Point(70, 38);
-            this.Name_textBox.Name = "Name_textBox";
-            this.Name_textBox.ReadOnly = true;
-            this.Name_textBox.Size = new System.Drawing.Size(150, 16);
-            this.Name_textBox.TabIndex = 114;
-            this.Name_textBox.Text = "    ";
+            Name_textBox.BackColor = Color.White;
+            Name_textBox.BorderStyle = BorderStyle.None;
+            Name_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold);
+            Name_textBox.Location = new Point(70, 38);
+            Name_textBox.Name = "Name_textBox";
+            Name_textBox.ReadOnly = true;
+            Name_textBox.Size = new Size(150, 16);
+            Name_textBox.TabIndex = 114;
+            Name_textBox.Text = "    ";
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label14.Location = new System.Drawing.Point(243, 73);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(23, 15);
-            this.label14.TabIndex = 140;
-            this.label14.Text = "㎡ ";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label14.AutoSize = true;
+            label14.ForeColor = SystemColors.ControlDark;
+            label14.Location = new Point(243, 73);
+            label14.Name = "label14";
+            label14.Size = new Size(23, 15);
+            label14.TabIndex = 140;
+            label14.Text = "㎡ ";
+            label14.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // Area_textBox
             // 
-            this.Area_textBox.BackColor = System.Drawing.Color.White;
-            this.Area_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Area_textBox.Location = new System.Drawing.Point(157, 73);
-            this.Area_textBox.Name = "Area_textBox";
-            this.Area_textBox.ReadOnly = true;
-            this.Area_textBox.Size = new System.Drawing.Size(100, 16);
-            this.Area_textBox.TabIndex = 139;
-            this.Area_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Area_textBox.BackColor = Color.White;
+            Area_textBox.BorderStyle = BorderStyle.None;
+            Area_textBox.Location = new Point(157, 73);
+            Area_textBox.Name = "Area_textBox";
+            Area_textBox.ReadOnly = true;
+            Area_textBox.Size = new Size(100, 16);
+            Area_textBox.TabIndex = 139;
+            Area_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label6.Location = new System.Drawing.Point(70, 74);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(67, 15);
-            this.label6.TabIndex = 138;
-            this.label6.Text = "순바닥면적";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label6.AutoSize = true;
+            label6.ForeColor = SystemColors.ControlDark;
+            label6.Location = new Point(70, 74);
+            label6.Name = "label6";
+            label6.Size = new Size(67, 15);
+            label6.TabIndex = 138;
+            label6.Text = "순바닥면적";
+            label6.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label1.Location = new System.Drawing.Point(243, 104);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(23, 15);
-            this.label1.TabIndex = 143;
-            this.label1.Text = "㎡ ";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label1.AutoSize = true;
+            label1.ForeColor = SystemColors.ControlDark;
+            label1.Location = new Point(243, 104);
+            label1.Name = "label1";
+            label1.Size = new Size(18, 15);
+            label1.TabIndex = 143;
+            label1.Text = "m";
+            label1.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // textBox1
             // 
-            this.textBox1.BackColor = System.Drawing.Color.White;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Location = new System.Drawing.Point(157, 104);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(100, 16);
-            this.textBox1.TabIndex = 142;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            textBox1.BackColor = Color.White;
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Location = new Point(157, 104);
+            textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
+            textBox1.Size = new Size(100, 16);
+            textBox1.TabIndex = 142;
+            textBox1.TextAlign = HorizontalAlignment.Center;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label2.Location = new System.Drawing.Point(70, 105);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 15);
-            this.label2.TabIndex = 141;
-            this.label2.Text = "천장고";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label2.AutoSize = true;
+            label2.ForeColor = SystemColors.ControlDark;
+            label2.Location = new Point(70, 105);
+            label2.Name = "label2";
+            label2.Size = new Size(43, 15);
+            label2.TabIndex = 141;
+            label2.Text = "천장고";
+            label2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // textBox2
             // 
-            this.textBox2.BackColor = System.Drawing.Color.White;
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox2.Location = new System.Drawing.Point(157, 135);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(100, 16);
-            this.textBox2.TabIndex = 145;
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            textBox2.BackColor = Color.White;
+            textBox2.BorderStyle = BorderStyle.None;
+            textBox2.Location = new Point(157, 135);
+            textBox2.Name = "textBox2";
+            textBox2.ReadOnly = true;
+            textBox2.Size = new Size(100, 16);
+            textBox2.TabIndex = 145;
+            textBox2.TextAlign = HorizontalAlignment.Center;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label3.Location = new System.Drawing.Point(70, 136);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 15);
-            this.label3.TabIndex = 144;
-            this.label3.Text = "용도프로필";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label3.AutoSize = true;
+            label3.ForeColor = SystemColors.ControlDark;
+            label3.Location = new Point(70, 136);
+            label3.Name = "label3";
+            label3.Size = new Size(67, 15);
+            label3.TabIndex = 144;
+            label3.Text = "용도프로필";
+            label3.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // sub3dSpaceInfo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.Area_textBox);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.Name_textBox1);
-            this.Controls.Add(this.Name_textBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "sub3dSpaceInfo";
-            this.Text = "sub3dSpaceInfo";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            ClientSize = new Size(800, 450);
+            Controls.Add(textBox2);
+            Controls.Add(label3);
+            Controls.Add(label1);
+            Controls.Add(textBox1);
+            Controls.Add(label2);
+            Controls.Add(label14);
+            Controls.Add(Area_textBox);
+            Controls.Add(label6);
+            Controls.Add(Name_textBox1);
+            Controls.Add(Name_textBox);
+            FormBorderStyle = FormBorderStyle.None;
+            Name = "sub3dSpaceInfo";
+            Text = "sub3dSpaceInfo";
             VisibleChanged += onVisibleChanged;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

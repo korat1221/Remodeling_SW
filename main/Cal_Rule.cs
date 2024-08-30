@@ -52,6 +52,9 @@ namespace main
                         Load_Rule_q50(zone1);
                         Load_Rule_Ventil(zone1);
                         break;
+                    case "열교":
+                        Load_Rule_dUtb_2D(zone1);
+                        break;
                     case "조명":
                         Load_Rule_Light(zonelight1);
                         break;
@@ -267,6 +270,12 @@ namespace main
                 zone1.Wall_q50 = q50_[2];
                 zone1.Roof_q50 = q50_[3];
             }
+        }
+        private void Load_Rule_dUtb_2D(Zone zone1)
+        {
+            zone1.Utb[0] = 0.1;
+            zone1.Utb[1] = 0.1;
+            zone1.Utb[2] = 0.1;
         }
         private void Load_Rule_Ventil(Zone zone1)
         {

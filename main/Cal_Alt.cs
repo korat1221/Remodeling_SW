@@ -152,6 +152,9 @@ namespace main
                         zone1.LoadData_q50();
                         zone1.LoadData_Ventil();
                         break;
+                    case "열교":
+                        zone1.LoadData_dUtb_2D();
+                        break;
                     case "조명":
                         zonelight1.LoadData_LightSystem();
                         break;

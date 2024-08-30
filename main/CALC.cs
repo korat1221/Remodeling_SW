@@ -93,6 +93,8 @@ namespace main
                 double[] q50_ = Cal_q50(Convert.ToDouble(Value[0][0])); 
                 Save_q50(q50_);
             }
+            Save_dUtb_2D(Cal_dUtb_2D());
+
             Zone_Arrange();
             for (int k = 0; k < zone.Count; k++)
             {
@@ -336,7 +338,105 @@ namespace main
             Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,출입문q50,창호q50,외벽q50,지붕q50",
                  "'" + 번호[0][0] + "','" + q50_element[0] + "','" + q50_element[1] + "','" + q50_element[2] + "','" + q50_element[3] + "'", "프로젝트번호");
         }
-        
+
+        public static double[] Cal_dUtb_2D()
+        {
+            double[] dUtb = new double[3]; //외벽, 지붕, 바닥 
+            dUtb[0] = 0.15;
+            dUtb[1] = 0.15;
+            dUtb[2] = 0.15;
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            if(프로젝트유형.Length >0)
+            {
+                if (프로젝트유형[0][0] =="1")
+                {
+                    dUtb[0] = 0.15;
+                    dUtb[1] = 0.15;
+                    dUtb[2] = 0.15;
+                }
+                else
+                {
+                    string[][] Check = Program.DB.getValue(DB.type.ProjDB, "ThermalBridge_3D", "선택열교, 열교길이");
+                    double check_ =0; 
+                    if(Check.Length > 0)
+                    {
+                        for(int a=0; a<Check.Length; a++)
+                        {
+                            if (Check[a][0] == null || Check[a][0] =="")
+                            {
+                                check_ += Convert.ToDouble(Check[a][1]);
+                            }
+                        }
+                        if(check_ >0)
+                        {
+                            MessageBox.Show("접합부 열교를 입력하지 않아 내단열 기준 표준값 0.15로 검토됩니다.");
+                            dUtb[0] = 0.15;
+                            dUtb[1] = 0.15;
+                            dUtb[2] = 0.15;
+                        }
+                        else
+                        {
+                            dUtb[2] = 0.15;
+                            double Qwall = 0, Qroof = 0;
+
+                            //외벽
+                            string[][] WTB_Length = Program.DB.getValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,열교길이,선택열교", "substr(번호,1,3)='WTB'");
+                            if (WTB_Length.Length > 0)
+                            {
+                                for (int a = 0; a < WTB_Length.Length; a++)
+                                {
+                                    string[][] Psi = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교", "값", "번호 ='" + WTB_Length[a][2] + "'");
+                                    if (Psi.Length == 0) { Psi = Program.DB.getValue(DB.type.ProjDB, "User_TB", "값", "번호 ='" + WTB_Length[a][2] + "'"); }
+                                    if (Psi.Length > 0)
+                                    {
+                                        Qwall += Convert.ToDouble(WTB_Length[a][1]) * Convert.ToDouble(Psi[0][0]);
+                                    }
+                                }
+                            }
+                            string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "Sum(면적)", "외피유형='외벽'");
+                            if (ZoneE.Length > 0 && ZoneE[0][0] != "")
+                            {
+                                dUtb[0] = Qwall / Convert.ToDouble(ZoneE[0][0]);
+                            }
+
+                            //지붕
+                            string[][] RTB_Length = Program.DB.getValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,열교길이,선택열교", "substr(번호,1,3)='RTB'");
+                            if (RTB_Length.Length > 0)
+                            {
+                                for (int a = 0; a < RTB_Length.Length; a++)
+                                {
+                                    string[][] Psi = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교", "값", "번호 ='" + RTB_Length[a][2] + "'");
+                                    if (Psi.Length == 0) { Psi = Program.DB.getValue(DB.type.ProjDB, "User_TB", "값", "번호 ='" + RTB_Length[a][2] + "'"); }
+                                    if (Psi.Length > 0)
+                                    {
+                                        Qroof += Convert.ToDouble(RTB_Length[a][1]) * Convert.ToDouble(Psi[0][0]);
+                                    }
+                                }
+                            }
+                            ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "Sum(면적)", "외피유형='지붕'");
+                            if (ZoneE.Length > 0 && ZoneE[0][0] != "")
+                            {
+                                dUtb[1] = Qroof / Convert.ToDouble(ZoneE[0][0]);
+                            }
+                        }
+
+
+
+                    }               
+                }
+
+            }
+           
+            return dUtb;
+        }
+
+        private static void Save_dUtb_2D(double[] dUtb)
+        {
+            string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
+            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,외벽dUtb,지붕dUtb,바닥dUtb",
+                 "'" + 번호[0][0] + "','" + dUtb[0] + "','" + dUtb[1] + "','" + dUtb[2] + "'", "프로젝트번호");
+        }
+
         #endregion
 
         #region 요구량
@@ -449,6 +549,7 @@ namespace main
             zonelight1.LoadData_Renew();
             zone1.LoadData_ZoneGeneral();
             zone1.LoadData_q50();
+            zone1.LoadData_dUtb_2D();
             zone1.LoadData_Ventil();
             zone1.LoadData_InWall();
             zone1.LoadData_SL();
