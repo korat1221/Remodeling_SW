@@ -187,7 +187,7 @@ namespace main.subcontents
             if (Name != null && Name != "" && width > 0 && height > 0 && n_hori > 0 && n_ver > 0)
             {
                 double Af_open = Math.Max(((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2) * percent_open / 100 * df_open, 0);
-                double Af_fix = Math.Max(((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2) * (1 - percent_open / 100) * df_btw, 0);
+                double Af_fix = Math.Max(((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2) * (1 - percent_open / 100) * df_fix, 0);
                 double Af_btw = Math.Max(((n_hori - 1) * height + (n_ver - 1) * width) * df_btw, 0);
                 double Area = width * height;
                 double Ag_fix = Math.Max((Area - (Af_open + Af_fix + Af_btw)) * (1 - percent_open / 100), 0);
