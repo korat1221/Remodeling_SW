@@ -157,8 +157,8 @@ namespace main.contents
             if(radioButton1.Checked)
             {
                 ce1_pictureBox.Visible = true;
-                ce1_pictureBox.Size = new System.Drawing.Size(260, 60);
-                ce1_pictureBox.Location = new Point(250, 10);
+                ce1_pictureBox.Size = new System.Drawing.Size(360, 90); //260,60
+                ce1_pictureBox.Location = new Point(180, 8); //250,10
                 ce1_pictureBox.Load(Program.gPath + "images/HeatingSystem/Old/Wsup.png"); 
                 ce1_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 ce1_pictureBox.BackColor = Color.Transparent;
@@ -167,8 +167,8 @@ namespace main.contents
             else
             {
                 ce1_pictureBox.Visible = true;
-                ce1_pictureBox.Size = new System.Drawing.Size(260, 60);
-                ce1_pictureBox.Location = new Point(250, 10);
+                ce1_pictureBox.Size = new System.Drawing.Size(360, 90);
+                ce1_pictureBox.Location = new Point(180, 8);
                 ce1_pictureBox.Load(Program.gPath + "images/HeatingSystem/New/Wsup.png");
                 ce1_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 ce1_pictureBox.BackColor = Color.Transparent;
