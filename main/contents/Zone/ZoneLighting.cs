@@ -1031,7 +1031,7 @@ namespace main.contents
             {
                 Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,자연채광유형,주향,주창면적합,주창유리종류,주창아이디,차양,주광길이,주광깊이,주광면적,비주광면적",
                     "'" + Num_textBox.Text + "','" +
-                   NaturalType + "','" + direction_textBox.Text + "','" + Aca_textBox.Text + "','" + Main_glass + "','" + MainType_ID + "','" + Blind3_textBox.Text + "','" + bd + "','" + ad + "','" + AD + "','" + unAD
+                   NaturalType + "','" + direction_textBox.Text + "','" + Convert.ToDouble(Aca_textBox.Text.ToString()) + "','" + Main_glass + "','" + MainType_ID + "','" + Blind3_textBox.Text + "','" + bd + "','" + ad + "','" + AD + "','" + unAD
                     + "'", "번호");
 
 
@@ -1059,7 +1059,7 @@ namespace main.contents
             {
                 Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,집광채광번호,집광채광명칭,집광채광종류,집광채광향,집광채광각도,집광채광효율,집광채광면적",
                "'" + Num_textBox.Text + "','" +
-                 RenewNum + "','" + RenewName + "','" + RenewName2 + "','" + RenewDi_comboBox.Text + "','" + RenewSlope.ToString() + "','" + Reneweff.ToString() + "','" + R2_textBox.Text
+                 RenewNum + "','" + RenewName + "','" + RenewName2 + "','" + RenewDi_comboBox.Text + "','" + RenewSlope.ToString() + "','" + Reneweff.ToString() + "','" + Convert.ToDouble(R2_textBox.Text.ToString())
                + "'", "번호");
 
                 if (RenewNum.Contains("DL"))
