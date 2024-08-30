@@ -246,7 +246,7 @@ namespace main.contents
                     AnnualHeatingNeed_textBox.Text = AnnualHeatingNeed.ToString();
                     controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(AnnualHeatingNeed_textBox, true, 0);
 
-                    HeatingLoad += Convert.ToDouble(난방[0][1]);
+                    HeatingLoad += Convert.ToDouble(난방[0][1])/1000;
                     HeatingLoad_textBox.Text = HeatingLoad.ToString();
                     controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(HeatingLoad_textBox, true, 2);
                 }
@@ -257,7 +257,7 @@ namespace main.contents
                     AnnualCoolingNeed_textBox.Text = AnnualCoolingNeed. ToString();
                     controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(AnnualCoolingNeed_textBox, true, 0);
 
-                    CoolingLoad += Convert.ToDouble(냉방[0][1]);
+                    CoolingLoad += Convert.ToDouble(냉방[0][1])/1000;
                     CoolingLoad_textBox.Text = CoolingLoad.ToString();
                     controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(CoolingLoad_textBox, true, 2);
                 }
