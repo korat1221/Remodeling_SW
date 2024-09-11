@@ -3774,7 +3774,8 @@ namespace main.contents
             double 열교환후온도 = 외기온도 - temp_eta / 100 * (외기온도 - 실내온도);
             double 총엔탈피 = 외기엔탈피 - all_eta / 100 * (외기엔탈피 - 실내엔탈피);
             double 수증기엔탈피 = 총엔탈피 - 열교환후온도 * 1.006;
-            double eta = 외기엔탈피 - 수증기엔탈피 / (100 * (외기엔탈피 - 실내엔탈피));
+            double 교환후습도 = 수증기엔탈피 / (2500 + 1.86 * 열교환후온도);
+            double eta = (외기절대습도 - 교환후습도) / (외기절대습도 - 실내절대습도) * 100;
             return eta;
         }
         private double Calc_HumidityEta_Cooling(double temp_eta, double all_eta)
@@ -3789,7 +3790,8 @@ namespace main.contents
             double 열교환후온도 = 외기온도 - temp_eta / 100 * (외기온도 - 실내온도);
             double 총엔탈피 = 외기엔탈피 - all_eta / 100 * (외기엔탈피 - 실내엔탈피);
             double 수증기엔탈피 = 총엔탈피 - 열교환후온도 * 1.006;
-            double eta = 외기엔탈피 - 수증기엔탈피 / (100 * (외기엔탈피 - 실내엔탈피));
+            double 교환후습도 = 수증기엔탈피  / (2500 + 1.86 * 열교환후온도);
+            double eta = (외기절대습도 - 교환후습도) / (외기절대습도 - 실내절대습도) * 100;
             return eta;
         }
         private void AHU_Save_button_Click(global::System.Object sender, global::System.EventArgs e)
