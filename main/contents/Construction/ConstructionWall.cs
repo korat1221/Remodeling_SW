@@ -976,7 +976,14 @@ namespace main.contents
                     }
                     if (Value.Length > 0)
                     {
-                        Uvalue = Convert.ToDouble(Value[0][0]);
+                        if(Type == "기존외벽" && DiIndi=="지면")
+                        {
+                            Uvalue = 1 / (0.13 + 0 + 150 / 1000 / 2.3);
+                        }
+                        else
+                        {
+                            Uvalue = Convert.ToDouble(Value[0][0]);
+                        }
                         U_textBox.Text = string.Format("{0:F3}", Uvalue);
                         dins = (1 / Uvalue) * 0.04 * 1000;
                         Calc_dU();                        
