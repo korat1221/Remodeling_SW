@@ -95,7 +95,11 @@ namespace main.subcontents
                     Spacer_dataGridView.Rows[nRow].Cells[1].Value = WinSpacer[n][0];
                     Spacer_dataGridView.Rows[nRow].Cells[2].Value = WinSpacer[n][1];
                     Spacer_dataGridView.Rows[nRow].Cells[3].Value = WinSpacer[n][2];
-                    Spacer_dataGridView.Rows[nRow].Cells[4].Value = "IPAZEB";
+                    if (WinSpacer[n][1] == "표준")
+                    {
+                        Spacer_dataGridView.Rows[nRow].Cells[4].Value = "계산값";
+                    }
+                    else Spacer_dataGridView.Rows[nRow].Cells[4].Value = "(주)윈체";//추후 간봉 테이블 제조사  추가 해야함
                     for (int k = 3; k < 10; k++)
                     {
                         Spacer_dataGridView.Rows[nRow].Cells[k + 2].Value = WinSpacer[n][k];
