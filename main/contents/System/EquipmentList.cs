@@ -217,12 +217,12 @@ namespace main.contents
             Boiler_dataGridView.Rows[nRow].Cells[5] = 연료Combo;
 
 
-            //Boiler_dataGridView.Rows[nRow].Cells[3].Style.BackColor = SystemColors.Info;
-            //Boiler_dataGridView.Rows[nRow].Cells[6].Style.BackColor = SystemColors.Control;
-            //for (int k = 7; k < 13; k++)
-            //{
-            //    Boiler_dataGridView.Rows[nRow].Cells[k].Style.BackColor = SystemColors.Info;
-            //}
+            Boiler_dataGridView.Rows[nRow].Cells[3].Style.BackColor = SystemColors.Info;
+            Boiler_dataGridView.Rows[nRow].Cells[6].Style.BackColor = SystemColors.Control;
+            for (int k = 7; k < 13; k++)
+            {
+                Boiler_dataGridView.Rows[nRow].Cells[k].Style.BackColor = SystemColors.Info;
+            }
         }
 
         private void DefaultBoiler_Add_button_Click(object sender, EventArgs e)
