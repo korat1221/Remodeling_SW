@@ -12,6 +12,7 @@ using System.Drawing.Text;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,6 @@ namespace main.subcontents
 {
     public partial class Cooling_Zone : Form
     {
-
         double Count_DB;
         ArrayList SelectRow = new ArrayList(); 
         ArrayList SelectZone_split = new ArrayList();
@@ -31,10 +31,16 @@ namespace main.subcontents
         public string SelectZone;
         public string SelectAhu;
         string SelectType;
-
         public Cooling_Zone(string Num, string Select_nonsplit,string selectType)
         {
             SelectType = selectType; //Zone 와 Ahu 임
+            this.Text = null;
+            if (SelectType == "Zone")
+            {
+                this.Text = "존 선택";
+            }
+            else if (SelectType == "Ahu") this.Text = "공조기 선택";
+            
             InitializeComponent();
             load_table_DB();
             SystemNum = Num;
