@@ -688,7 +688,8 @@ namespace main
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    Qh_ce[mth] += Math.Max(zone.Qb_mth[0, 1, mth] * ce.Zone_Percent() * ce.theta_ce() / (zone.theta_i[0, 1, mth] - theta_e[mth]), 0);
+                    if ((zone.theta_i[0, 1, mth] - theta_e[mth]) > 1)
+                    { Qh_ce[mth] += Math.Max(zone.Qb_mth[0, 1, mth] * ce.Zone_Percent() * ce.theta_ce() / (zone.theta_i[0, 1, mth] - theta_e[mth]), 0); }
                     if (double.IsNaN(Qh_ce[mth]))
                     {
                         Qh_ce[mth] = 0;
