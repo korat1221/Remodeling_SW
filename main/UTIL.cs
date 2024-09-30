@@ -277,6 +277,11 @@ namespace main
 
                     if (File.Exists(path2 + "\\" + p))
                     {
+                        Program.DB.deleteValue(DB.type.ProjDB, "Blind_3D", "");
+                        Program.DB.deleteValue(DB.type.ProjDB, "Shade_3D", "");
+                        Program.DB.deleteValue(DB.type.ProjDB, "ThermalBridge_3D", "");
+                        Program.DB.deleteValue(DB.type.ProjDB, "ZoneGeneral_Form", "");
+                        Program.DB.deleteValue(DB.type.ProjDB, "ZoneLighting_form", "");
                         f.runScript("open3DModel('/models/" + ProjectList.CurProjID + "/" + p + "','" + ProjectList.CurProjID + "')");
                     }
                     return;

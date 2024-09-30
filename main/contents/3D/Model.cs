@@ -401,6 +401,11 @@ namespace main.contents
         {
             Program.DB.deleteValue(DB.type.ProjDB, "ZoneGeneral_3D", "");
             Program.DB.deleteValue(DB.type.ProjDB, "ZoneEnvelope_3D", "");
+            Program.DB.deleteValue(DB.type.ProjDB, "Blind_3D", "");
+            Program.DB.deleteValue(DB.type.ProjDB, "Shade_3D", "");
+            Program.DB.deleteValue(DB.type.ProjDB, "ThermalBridge_3D", "");
+            Program.DB.deleteValue(DB.type.ProjDB, "ZoneGeneral_Form", "");
+            Program.DB.deleteValue(DB.type.ProjDB, "ZoneLighting_form", "");
             string file = "";
             DataRow row;
             OpenFileDialog openFileDialog = new OpenFileDialog();
