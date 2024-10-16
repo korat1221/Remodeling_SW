@@ -75,9 +75,13 @@ namespace main.contentslist
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             dataGridView1.Columns.Add(checkBoxColumn);
-            dataGridView1.Columns.Add("A1", "유형");
-            dataGridView1.Columns.Add("A2", "용량.[kW]");
-            dataGridView1.Columns.Add("A3", "효율.[%]");
+
+            dataGridView1.Columns.Add("A1", "번호");
+            dataGridView1.Columns.Add("A2", "명칭");
+            dataGridView1.Columns.Add("A3", "열.용량[kW]");
+            dataGridView1.Columns.Add("A4", "열.효율[%]");
+            dataGridView1.Columns.Add("A5", "전기.용량[kW]");
+            dataGridView1.Columns.Add("A6", "전기.효율[%]");
             dataGridView1.Columns[0].Width = 40;
         }
 
@@ -102,20 +106,28 @@ namespace main.contentslist
         }
         public void load_List()
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭", "");
-            List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            List<object> subMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            for (int n = 0; n < Value.Length; n++)
+            dataGridView1.Rows.Clear();
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "FuelCell_Form", "번호,명칭,연료전지", "");
+            if (Value.Length > 0)
             {
-                subMenu.Add(new { text = Value[n][0] + "." + Value[n][1], id = "{\\\"formID\\\":22,\\\"ID\\\":\\\"" + Value[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            }
-            mainMenu.Add(new { text = "연료전지", id = "{\\\"formID\\\":22,\\\"ID\\\":\\\"SOLAR_2\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                for (int n = 0; n < Value.Length; n++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[n].Cells[1].Value = Value[n][0];
+                    dataGridView1.Rows[n].Cells[2].Value = Value[n][1];
 
-            CountDB = Value.Length;
+                    string[][] Genvalue = Program.DB.getValue(DB.type.ProjDB, "User_FC", "전기출력,전기효율,열출력,열효율", "번호 = '" + Value[n][2].ToString() +"'");
+
+                    dataGridView1.Rows[n].Cells[3].Value = Genvalue[0][0];
+                    dataGridView1.Rows[n].Cells[4].Value = Genvalue[0][1];
+                    dataGridView1.Rows[n].Cells[5].Value = Genvalue[0][2];
+                    dataGridView1.Rows[n].Cells[6].Value = Genvalue[0][3];
+                }
+            }
         }
         private void Add_button_Click(object sender, EventArgs e)
         {
-            Num = Program.UTIL.CreateNum("HeatingSystem_Form", "번호", "HS");
+            Num = Program.UTIL.CreateNum("FuelCell_Form", "번호", "FC");
 
             Program.getMenuForm().ResetForm(22);
 
@@ -130,7 +142,7 @@ namespace main.contentslist
                 if (k > -1)
                 {
                     String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                    Program.DB.deleteValue(DB.type.ProjDB, "HeatingSystem_Form", "번호 ='" + Delete_Num + "'");
+                    Program.DB.deleteValue(DB.type.ProjDB, "FuelCell_Form", "번호 ='" + Delete_Num + "'");
                     load_List();
 
                 }
@@ -149,14 +161,14 @@ namespace main.contentslist
 
         private void Copy_button_Click(object sender, EventArgs e)
         {
-            Num = Program.UTIL.CreateNum("HeatingSystem_Form", "번호", "HS");
+            Num = Program.UTIL.CreateNum("FuelCell_Form", "번호", "FC");
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
                 String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
 
-                Program.DB.CopyValue(DB.type.ProjDB, "HeatingSystem_Form", "번호 ='" + Copy_Num + "'", Num);
-                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  HeatingSystem_Form" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
+                Program.DB.CopyValue(DB.type.ProjDB, "FuelCell_Form", "번호 ='" + Copy_Num + "'", Num);
+                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  FuelCell_Form" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
                 Load_form(Num, "Copy");
 
             }
@@ -167,12 +179,5 @@ namespace main.contentslist
             load_List();
         }
 
-        private void List_FuelCell_VisibleChanged(object sender, EventArgs e)
-        {
-            if (main.MainContents.currentForm == main.MainContents.FormID.List_FuelCell)
-            {
-                MessageBox.Show("연료전지 화면은 아직 작업 중입니다.");
-            }
-        }
     }
 }
