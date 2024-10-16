@@ -396,7 +396,7 @@ namespace main.contents
             if (item != null)
             {
                 CWName = item.Row.ItemArray[0].ToString();
-                string[][] CW_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "유리부분열관류율", "명칭 = '" + CWName + "'");
+                string[][] CW_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "패널부분열관류율", "명칭 = '" + CWName + "'");
                 if(CW_U.Length > 0)
                 {
                     CW_R = 1 / Convert.ToDouble(CW_U[0][0]);
@@ -1534,7 +1534,7 @@ namespace main.contents
                             OldWall_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "열관류율", "명칭 = '" + Material[i] + "'");
                             if (OldWall_U.Length == 0)
                             {
-                                string[][] CW_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "유리부분열관류율", "명칭 = '" + Material[i] + "'");
+                                string[][] CW_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "패널부분열관류율", "명칭 = '" + Material[i] + "'");
                                 if(CW_U.Length > 0)
                                 {
                                     CW_R = 1 / Convert.ToDouble(CW_U[0][0]);
