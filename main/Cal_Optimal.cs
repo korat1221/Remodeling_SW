@@ -28,7 +28,7 @@ namespace main
         {
             Program.DB.deleteValue(DB.type.ProjDB, "FinalEnergy_Result_Optimal", "검토유형 ='외벽'");
             Program.DB.UseCaches(true);
-            string[][] Value = Program.DB.getValue_SameCheck(DB.type.BaseDB_Optimal,"외벽_최적안", "최적안,최적안구분", "");
+            string[][] Value = Program.DB.getValue_SameCheck(DB.type.BaseDB_Optimal,"불투명최적안", "최적안", "구조체='외벽'");
             if(Value.Length > 0)
             {
                 for(int a= 0; a<Value.Length; a++)
@@ -97,9 +97,6 @@ namespace main
                         Load_Optimal_q50(zone1);
                         Load_Optimal_Ventil(zone1);
                         break;
-                    case "열교":
-                        Load_Optimal_dUtb_2D(zone1);
-                        break;
                     case "조명":
                         Load_Optimal_Light(zonelight1);
                         break;
@@ -108,86 +105,34 @@ namespace main
             }
         }
         #region 외벽
-        private double Get_Wall_Utb(string 유형)
-        {
-            double dU = 0; double d_Ins = 0;
-            string[][] Value1 = Program.DB.getValue(DB.type.BaseDB_Optimal, "외벽_최적안유형", "두께", "최적안구분='" + 유형 + "' and 재료유형='단열재'");
-            if (Value1.Length > 0)
-            {
-                for (int aa = 0; aa < Value1.Length; aa++)
-                {
-                    d_Ins += Convert.ToDouble(Value1[aa][0]);
-                }
-            }
-            string[][] Value2 = Program.DB.getValue_SameCheck(DB.type.BaseDB_Optimal, "외벽_최적안", "열교유형", "최적안구분='" + 유형 + "'");
-            if (Value2.Length > 0 && Value2[0][0] != "")
-            {
-                if (Value2[0][0] == "직접고정" || Value2[0][0] == "트러스(점형)")
-                {
-                    string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교", "A,B,C,수직간격,수평간격", "열교유형 ='" + Value2[0][0] + "' and 제품명='단열앙카'");
-                    if (TB.Length > 0)
-                    {
-                        double A = Convert.ToDouble(TB[0][0]);
-                        double B = Convert.ToDouble(TB[0][1]);
-                        double C = Convert.ToDouble(TB[0][2]);
-                        double Kai = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
-                        double PerArea = 0;
-                        if (Value2[0][0] == "직접고정")
-                        {
-                            PerArea = 2 * (Convert.ToDouble(TB[0][3]) / 1000) * (Convert.ToDouble(TB[0][4]) / 1000);
-                        }
-                        else
-                        {
-                            PerArea = 1 / (Convert.ToDouble(TB[0][3]) / 1000) / (Convert.ToDouble(TB[0][4]) / 1000);
-                        }
-                        dU = Kai * PerArea;
-                    }
-                }
-                else
-                {
-                    string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교", "A,B,C,수직간격,수평간격", "제품명 = '" + Value2[0][0] + "'");
-                    if (TB.Length > 0)
-                    {
-                        double A = Convert.ToDouble(TB[0][0]);
-                        double B = Convert.ToDouble(TB[0][1]);
-                        double C = Convert.ToDouble(TB[0][2]);
-                        double Psi = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
-                        double PerArea = 0;
-                        PerArea = 1 / (Convert.ToDouble(TB[0][3]) / 1000 + Convert.ToDouble(TB[0][4]) / 1000);
-                        dU = Psi * PerArea;
-                    }
-                }
-            }
-            else { }
-            return dU;
-        }
         private void Load_Optimal_Wall(Zone zone1,string 리모델링안)
         {
             zone1.zoneWall.Clear();
             zone1.zoneGWall.Clear();
+            double dU = 0; double dR = 0;
+            string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 리모델링유형,열교가산치,열저항합계 From 불투명최적안 where 최적안='" + 리모델링안 + "'");
+            if (Value.Length > 0)
+            {
+                dU = Convert.ToDouble((Value[0][1]));
+                dR = Convert.ToDouble(Value[0][2]);
+            }
             String[][] ZoneW = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "' And  NOT b.직접간접 = '지면'");
             if (ZoneW.Length > 0)
             {
                 int i = -1;
                 while (++i < ZoneW.Length)
                 {
-                    double U = Convert.ToDouble(ZoneW[i][3]); double dU = 0; double dR = 0;
-                    string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,a.최적안구분,b.열저항합계 From 외벽_최적안 as a Inner Join 외벽_최적안유형 as b  on a.최적안구분 = b.최적안구분 where a.최적안='" + 리모델링안 + "'");
-                    if (Value.Length > 0)
+                    double U = Convert.ToDouble(ZoneW[i][3]);
+                    if (Value[0][0] == "철거 후 신규")
                     {
-                        dU = Get_Wall_Utb(Value[0][1]);
-                        dR = Convert.ToDouble(Value[0][2]);
-                        if (Value[0][0] == "신규")
-                        {
-                            U = 1 / dR + dU;
-                        }
-                        else
-                        {
-                            U = 1 / (1 / Convert.ToDouble(ZoneW[i][3]) + dR) + dU;
-                        }
+                        U = 1 / dR + dU;
 
                     }
-                    Wall wall = new Wall(ZoneW[i][0], ZoneW[i][2], Convert.ToDouble(ZoneW[i][1]),U, Convert.ToDouble(ZoneW[i][4]), ZoneW[i][5], ZoneW[i][6], ZoneW[i][7]);
+                    else
+                    {
+                        U = 1 / (1 / Convert.ToDouble(ZoneW[i][3]) + dR) + dU;
+                    }
+                    Wall wall = new Wall(ZoneW[i][0], ZoneW[i][2], Convert.ToDouble(ZoneW[i][1]), U, Convert.ToDouble(ZoneW[i][4]), ZoneW[i][5], ZoneW[i][6], ZoneW[i][7]);
                     zone1.zoneWall.Add(wall);
                 }
             }
@@ -197,16 +142,10 @@ namespace main
                 int i = -1;
                 while (++i < ZoneG.Length)
                 {
-                    double U = Convert.ToDouble(ZoneG[i][3]); double dU = 0; double dR = 0;
-                    string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,a.최적안구분,b.열저항합계 From 외벽_최적안 as a Inner Join 외벽_최적안유형 as b  on a.최적안구분 = b.최적안구분 where a.최적안='" + 리모델링안 + "'");
-                    if (Value.Length > 0)
+                    double U = Convert.ToDouble(ZoneG[i][3]); 
+                    if (Value[0][0] == "내부덧댐")
                     {
-                        dU = Get_Wall_Utb(Value[0][1]);
-                        dR = Convert.ToDouble(Value[0][2]);
-                        if (Value[0][0] == "내부덧댐")
-                        {
-                            U = 1 / (1 / Convert.ToDouble(ZoneG[i][3]) + dR) + dU;
-                        }
+                        U = 1 / (1 / Convert.ToDouble(ZoneG[i][3]) + dR) + dU;
                     }
                     double fx_f = 1;
                     if (U >= 3)
@@ -222,6 +161,9 @@ namespace main
                     zone1.zoneGWall.Add(gwall);
                 }
             }
+            double Utb_2D;
+            if (Value[0][0] == "내부덧댐") { Utb_2D = 0.15; } else { Utb_2D = 0.1; }
+            Load_Optimal_dUtb_2D(zone1,"외벽", Utb_2D);
         }
         #endregion
 
@@ -464,11 +406,18 @@ namespace main
                 zone1.Roof_q50 = q50_[3];
             }
         }
-        private void Load_Optimal_dUtb_2D(Zone zone1)
+        private void Load_Optimal_dUtb_2D(Zone zone1,string 검토유형, double Utb)
         {
-            zone1.Utb[0] = 0.1;
-            zone1.Utb[1] = 0.1;
-            zone1.Utb[2] = 0.1;
+            string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "외벽dUtb,지붕dUtb,바닥dUtb", "");
+            if (Value2.Length > 0)
+            {
+                zone1.Utb[0] = Convert.ToDouble(Value2[0][0]);
+                zone1.Utb[1] = Convert.ToDouble(Value2[0][1]);
+                zone1.Utb[2] = Convert.ToDouble(Value2[0][2]);
+            }
+            if (검토유형 == "외벽") { zone1.Utb[0] = Math.Min(Utb, zone1.Utb[0]); }
+            else if (검토유형 == "지붕") { zone1.Utb[1] = Math.Min(Utb, zone1.Utb[1]); }
+            else if (검토유형 == "최하층바닥") { zone1.Utb[2] = Math.Min(Utb, zone1.Utb[2]); }
         }
         private void Load_Optimal_Ventil(Zone zone1)
         {
