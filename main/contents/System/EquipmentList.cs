@@ -1148,7 +1148,7 @@ namespace main.contents
         #region 5.연료전지
         public void Create_FC_Table()
         {
-            new StackedHeaderDecorator(FC_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, FC_datagridviewDesign);
+            new StackedHeaderDecorator(FC_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
             FC_dataGridView.Columns.Clear();
             FC_checkBoxColumn.HeaderText = "선택";
             FC_checkBoxColumn.Name = "check";
@@ -1156,50 +1156,20 @@ namespace main.contents
 
             FC_dataGridView.Columns.Add("A1", "번호");
             FC_dataGridView.Columns.Add("A2", "DB유형");
-            FC_dataGridView.Columns.Add("A3", "제품명");
-            FC_dataGridView.Columns.Add("A4", "제조사");
-            FC_dataGridView.Columns.Add("A5", "연료전지종류");
-            FC_dataGridView.Columns.Add("A6", "시스템출력(전기).[kW]");
-            FC_dataGridView.Columns.Add("A7", "정격효율.[%]");
-            FC_dataGridView.Columns.Add("A8", "발전효율.[%]");
-            FC_dataGridView.Columns.Add("A9", "축열탱크");
-            FC_dataGridView.Columns[0].Width = 40;
-
+            FC_dataGridView.Columns.Add("A3", "명칭");
+            FC_dataGridView.Columns.Add("A4", "연료");
+            FC_dataGridView.Columns.Add("A5", "전기.출력[kW]");
+            FC_dataGridView.Columns.Add("A6", "전기.효율[%]]");
+            FC_dataGridView.Columns.Add("A7", "열.출력[kW]");
+            FC_dataGridView.Columns.Add("A8", "열.효율[%]");
+            FC_dataGridView.Columns.Add("A9", "대수");
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
             설치유형Combo.HeaderText = "설치";
             설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
             FC_dataGridView.Columns.Add(설치유형Combo);
+
+            FC_dataGridView.Columns[0].Width = 40;
             FC_dataGridView.Columns[10].Width = 100;
-        }
-
-        private Boolean FC_datagridviewDesign(DataGridViewCell cell, int column, int row)
-        {
-            if (FC_dataGridView.Rows[row].Cells[2].Value != null && FC_dataGridView.Rows[row].Cells[2].Value.ToString() == "도면")
-            {
-                if (column == 10)
-                {
-                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
-                    cell.Style.ForeColor = Color.Black;
-                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
-                    cell.Style.SelectionForeColor = Color.Black;
-                    return true;
-                }
-                else { return false; }
-            }
-
-            if (FC_dataGridView.Rows[row].Cells[2].Value != null && FC_dataGridView.Rows[row].Cells[2].Value.ToString() == "기본")
-            {
-                if (column == 11)
-                {
-                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
-                    cell.Style.ForeColor = Color.Black;
-                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
-                    cell.Style.SelectionForeColor = Color.Black;
-                    return true;
-                }
-                else { return false; }
-            }
-            else return false;
         }
 
         private void UserFC_Add_button_Click(object sender, EventArgs e)
@@ -1207,43 +1177,42 @@ namespace main.contents
             int nRow = FC_dataGridView.Rows.Add();
             Load_FC_Num();
             FC_dataGridView.Rows[nRow].Cells[2].Value = "도면";
-            DataGridViewComboBoxCell 연로전지종류Combo = new DataGridViewComboBoxCell();
-            연로전지종류Combo.Items.Add("PEMFC");
-            연로전지종류Combo.Items.Add("DMFC");
-            연로전지종류Combo.Items.Add("SOFC");
-            FC_dataGridView.Rows[nRow].Cells[5] = 연로전지종류Combo;
 
-            DataGridViewComboBoxCell 축열탱크Combo = new DataGridViewComboBoxCell();
-            축열탱크Combo.Items.Add("외장형");
-            축열탱크Combo.Items.Add("내장형");
-            FC_dataGridView.Rows[nRow].Cells[9] = 축열탱크Combo;
+            DataGridViewComboBoxCell 연료 = new DataGridViewComboBoxCell();
+            연료.Items.AddRange(new string[] { "가스", "수소" });
+            FC_dataGridView.Rows[nRow].Cells[4] = 연료;
         }
 
-        private void DefaultFC_Add_button_Click(object sender, EventArgs e)
+        private void DefaultFC_Add_button_Click(object sender, EventArgs e) //기본DB를 바탕으로 작성됨
         {
             ArrayList SelectFC = new ArrayList();
             int nRow = FC_dataGridView.Rows.Add();
             Load_FC_Num();
             FC_dataGridView.Rows[nRow].Cells[2].Value = "기본";
 
-            FC_DB fc_DB = new FC_DB("기본DB 적용");
+            subcontents.FC fc_DB = new subcontents.FC("기본DB 적용");
             DialogResult result = fc_DB.ShowDialog();
             if (result == DialogResult.OK)
             {
-                if (fc_DB.Select_FC[0] != null)
+                if (fc_DB.SelectFC != null)
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "연료전지DB", "제조사,연료전지종류,정격효율,발전효율", "번호 = '" + fc_DB.Select_FC[0].ToString() + "'");
+                    string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "연료전지DB", "전기출력,전기효율,열출력,열효율", "번호 = '" + fc_DB.SelectFC + "'");
                     if (Value.Length > 0)
                     {
-                        FC_dataGridView.Rows[nRow].Cells[4].Value = Value[0][0];
-                        FC_dataGridView.Rows[nRow].Cells[5].Value = Value[0][1];
-                        FC_dataGridView.Rows[nRow].Cells[7].Value = Value[0][2];
-                        FC_dataGridView.Rows[nRow].Cells[8].Value = Value[0][3];
-
-                        DataGridViewComboBoxCell 축열탱크Combo = new DataGridViewComboBoxCell();
-                        축열탱크Combo.Items.Add("외장형");
-                        축열탱크Combo.Items.Add("내장형");
-                        FC_dataGridView.Rows[nRow].Cells[9] = 축열탱크Combo;
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (Value[0][i] == null)
+                            {
+                                FC_dataGridView.Rows[nRow].Cells[5 + i].Value = null;
+                            }
+                            else
+                            {
+                                FC_dataGridView.Rows[nRow].Cells[5 + i].Value = Value[0][i];
+                            }
+                        }
+                        DataGridViewComboBoxCell 연료 = new DataGridViewComboBoxCell();
+                        연료.Items.AddRange(new string[] { "가스", "수소" });
+                        FC_dataGridView.Rows[nRow].Cells[4] = 연료;
                     }
                 }
             }
@@ -1318,7 +1287,7 @@ namespace main.contents
                     { Value[i - 1] = FC_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_FC", "번호,프로젝트유형,DB유형,제품명,제조사,연료전지종류,시스템출력,정격효율,발전효율,축열탱크,신규기존",
+                Program.DB.setValue(DB.type.ProjDB, "User_FC", "번호,프로젝트유형,DB유형,명칭,연료,전기출력,전기효율,열출력,열효율,대수,설치",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "'", "번호");
             }
@@ -1327,7 +1296,7 @@ namespace main.contents
 
         private void Load_FC()
         {
-            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_FC", "번호,DB유형,제품명,제조사,연료전지종류,시스템출력,정격효율,발전효율,축열탱크,신규기존", "");
+            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_FC", "번호,DB유형,명칭,연료,전기출력,전기효율,열출력,열효율,대수,설치", "");
             if (User_Value.Length > 0)
             {
                 for (int n = 0; n < User_Value.Length; n++)
