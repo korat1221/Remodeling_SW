@@ -81,18 +81,27 @@ namespace main.contentslist
         {
             List<object> mainMenu = new List<object>();
             List<object> subMenu = new List<object>();
-            List<object> subsubMenu = new List<object>();
+            List<object> pvsubMenu = new List<object>();
+            List<object> fuelcellsubMenu = new List<object>();
 
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "번호,명칭", "");
             if(Value.Length >0)
             {
                 for (int n = 0; n < Value.Length; n++)
                 {
-                    subsubMenu.Add(new { text = Value[n][0] + "." + Value[n][1], id = "{\\\"formID\\\":21,\\\"ID\\\":\\\"" + Value[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당  
+                    pvsubMenu.Add(new { text = Value[n][0] + "." + Value[n][1], id = "{\\\"formID\\\":21,\\\"ID\\\":\\\"" + Value[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당  
                 }
             }
-            subMenu.Add(new { text = "태양광시스템", id = "{\\\"formID\\\":53,\\\"ID\\\":\\\"SOLAR_1\\\"}", children = subsubMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
-            subMenu.Add(new { text = "연료전지", id = "{\\\"formID\\\":54,\\\"ID\\\":\\\"SOLAR_2\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            Value = Program.DB.getValue(DB.type.ProjDB, "FuelCell_Form", "번호,명칭", "");
+            if (Value.Length > 0)
+            {
+                for (int n = 0; n < Value.Length; n++)
+                {
+                    fuelcellsubMenu.Add(new { text = Value[n][0] + "." + Value[n][1], id = "{\\\"formID\\\":22,\\\"ID\\\":\\\"" + Value[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당  
+                }
+            }
+            subMenu.Add(new { text = "태양광시스템", id = "{\\\"formID\\\":53,\\\"ID\\\":\\\"SOLAR_1\\\"}", children = pvsubMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
+            subMenu.Add(new { text = "연료전지", id = "{\\\"formID\\\":54,\\\"ID\\\":\\\"SOLAR_2\\\"}", children = fuelcellsubMenu.ToArray() });  // 예시 코드: 메인 메뉴 동적 할당
             subMenu.Add(new { text = "풍력시스템", id = "{\\\"formID\\\":55,\\\"ID\\\":\\\"SOLAR_3\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             subMenu.Add(new { text = "공급의무비율", id = "{\\\"formID\\\":24,\\\"ID\\\":\\\"SOLAR_4\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             subMenu.Add(new { text = "에너지자립률", id = "{\\\"formID\\\":25,\\\"ID\\\":\\\"SOLAR_5\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
