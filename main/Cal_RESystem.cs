@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -133,6 +134,25 @@ namespace main
                 }
             }
         }
+        #region//연료전지
+        public double[] FC_Ele = new double[12], FC_Heat = new double[12];
+        private double[] UseHour = new double[12];
+        public void Cal_FCdata()
+        {
+            //월사용시간 UseHour
+            //전기 및 열 출력과 시간
+        }
+        public void Cal_FC_Heat() 
+        {
+            //급탕설비 열공급량, 난방설비 열공급량
+            //열생산량
+        }
+        public void Cal_FC_Elec() 
+        {
+            //전기생산량
+        }
+               
+        #endregion
 
-    }  
+    }
 }
