@@ -51,7 +51,6 @@ namespace main
         string CTControl_f, CTtype_f, CTmeth_f, CTFanType;
         int CTNum_f;
 
-
         //기후데이터 작성
         public double[] OutdoorTemperature = new double[12], Humidity = new double[12], WetTemperature = new double[12];
         string[] mth = new string[12];
