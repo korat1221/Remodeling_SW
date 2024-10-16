@@ -40,7 +40,7 @@ namespace main.contents
 
         string SelectZone_nonsplit, SelectAHU_nonsplit, SelectCG_nonsplit, SelectCGC_nonsplit, SelectCGE_nonsplit, SelectCGN_nonsplit;//저장항목설비,제어,외기냉방,
         List<string> SelectCG_split = new List<string>(), SelectCGC_split = new List<string>(), SelectCGE_split = new List<string>(), SelectCGN_split = new List<string>();
-
+        double PowerTotal = 0, EERTotal = 0; 
         //냉각탑관련
         List<string> SelectCT_split = new List<string>(), SelectCTN_split = new List<string>();
         string SelectCT_nonsplit, SelectCTN_nonsplit; //냉각탑부분
@@ -886,6 +886,8 @@ namespace main.contents
 
             EER_f = EER_f / Power_f;
 
+            PowerTotal = Power_f;
+            EERTotal = EER_f;
             PowerTotal_textBox.Text = Power_f.ToString();
             controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PowerTotal_textBox, true, 1);
             EERTotal_textBox.Text = EER_f.ToString();
@@ -1182,6 +1184,9 @@ namespace main.contents
                 Cwin_f = Cwin_f / Number_f;
                 Cwout_f = Cwout_f / Number_f;
             }
+
+            PowerTotal = Power_f;
+            EERTotal = EER_f;
             PowerTotal_textBox.Text = Power_f.ToString();
             controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PowerTotal_textBox, true, 1);
             EERTotal_textBox.Text = EER_f.ToString();
@@ -1434,6 +1439,8 @@ namespace main.contents
             Cwin_f = Cwin_f / Number_f;
             Cwout_f = Cwout_f / Number_f;
 
+            PowerTotal = Power_f;
+            EERTotal = EER_f;
             PowerTotal_textBox.Text = Power_f.ToString();
             controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PowerTotal_textBox, true, 1);
             EERTotal_textBox.Text = EER_f.ToString();
@@ -1681,6 +1688,8 @@ namespace main.contents
             Cwin_f = Cwin_f / Number_f;
             Cwout_f = Cwout_f / Number_f;
 
+            PowerTotal = Power_f;
+            EERTotal = EER_f;
             PowerTotal_textBox.Text = Power_f.ToString();
             controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PowerTotal_textBox, true, 1);
             EERTotal_textBox.Text = EER_f.ToString();
@@ -1939,6 +1948,8 @@ namespace main.contents
             Cwin_f = Cwin_f / Number_f;
             Cwout_f = Cwout_f / Number_f;
 
+            PowerTotal = Power_f;
+            EERTotal = EER_f;
             PowerTotal_textBox.Text = Power_f.ToString();
             controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PowerTotal_textBox, true, 1);
             EERTotal_textBox.Text = EER_f.ToString();
@@ -2177,6 +2188,8 @@ namespace main.contents
             Cwin_f = Cwin_f / Number_f;
             Cwout_f = Cwout_f / Number_f;
 
+            PowerTotal = Power_f;
+            EERTotal = EER_f;
             PowerTotal_textBox.Text = Power_f.ToString();
             controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PowerTotal_textBox, true, 1);
             EERTotal_textBox.Text = EER_f.ToString();
@@ -3162,7 +3175,7 @@ namespace main.contents
 
             Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Form", "번호,프로젝트유형,명칭,공급존,공급AHU,냉방설비,열원설비,냉방유닛,제어유형,외기냉방시스템,설치대수,저장탱크,저장유형,냉방출력,냉방성능",
             "'" + Num + "','" + 프로젝트유형 + "','" + Name_f + "','" + SelectZone_nonsplit + "','" + SelectAHU_nonsplit + "', '" + CG + "','" + CSource +
-             "', '" + SelectCG_nonsplit + "', '" + SelectCGC_nonsplit + "', '" + SelectCGE_nonsplit + "','" + SelectCGN_nonsplit + "','" + Stotype + "','" + StoSource + "','" + PowerTotal_textBox.Text + "','" + EERTotal_textBox.Text + "'", "번호");
+             "', '" + SelectCG_nonsplit + "', '" + SelectCGC_nonsplit + "', '" + SelectCGE_nonsplit + "','" + SelectCGN_nonsplit + "','" + Stotype + "','" + StoSource + "','" + PowerTotal.ToString() + "','" + EERTotal.ToString() + "'", "번호");
             //분배설비
             Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Form", "번호,펌프유무,냉수펌프방식,냉수펌프1,냉수펌프2,냉각수펌프방식,냉각수펌프1,냉각수펌프2",
                "'" + Num + "','" + PumpUse + "','" + PumpMethod + "','" + Pump1_nonsplit + "','" + Pump2_nonsplit + "','" + CPumpMethod + "','" + CPump1_nonsplit + "','" + CPump2_nonsplit + "'", "번호");
