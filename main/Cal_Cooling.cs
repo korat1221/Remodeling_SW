@@ -51,7 +51,6 @@ namespace main
         string CTControl_f, CTtype_f, CTmeth_f, CTFanType;
         int CTNum_f;
 
-
         //기후데이터 작성
         public double[] OutdoorTemperature = new double[12], Humidity = new double[12], WetTemperature = new double[12];
         string[] mth = new string[12];
@@ -558,8 +557,8 @@ namespace main
             EER_f = EER_f / Power_f;
             if (CWin >0)
             {
-                CWin = CWin / Power_f /Number_f;
-                CWout = CWout / Power_f / Number_f;
+                CWin = CWin / Power_f ;
+                CWout = CWout / Power_f ;
             }
 
             //냉각탑 적용시
@@ -578,8 +577,8 @@ namespace main
                     CTNum_f += CT._number;
                     pow.Add(CT._power);
                 }
-                CSWin = CSWin / CTPower_f * CTNum_f;
-                CSWout = CSWout / CTPower_f * CTNum_f;
+                CSWin = CSWin / CTPower_f ;
+                CSWout = CSWout / CTPower_f ;
                 foreach (CoolTop CT in CT_Sum)
                 {
                     if (pow.Max() == CT._power)

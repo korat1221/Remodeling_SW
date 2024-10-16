@@ -143,7 +143,8 @@ namespace main
             {"Light_Result_Element" ,"CREATE TABLE IF NOT EXISTS Light_Result_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,검토유형 VARCHAR (32),존번호 VARCHAR (32),조명번호 VARCHAR (32),조명소요량 VARCHAR (32))"},
             //Optimal
             {"FinalEnergy_Result_Optimal", "CREATE TABLE IF NOT EXISTS FinalEnergy_Result_Optimal (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),검토유형 VARCHAR (32),리모델링안 VARCHAR (32),리모델링값 REAL,월 VARCHAR (32),연료 VARCHAR (32),난방 REAL,냉방 REAL,급탕 REAL,조명 REAL,공조 REAL,기저에너지 REAL,신재생에너지 REAL,총에너지소요량 REAL)"},
-            {"OptimalForm", "CREATE TABLE IF NOT EXISTS OptimalForm (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32))"}
+            {"OptimalForm", "CREATE TABLE IF NOT EXISTS OptimalForm (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32))"},
+            {"Optimal_PreResult", "CREATE TABLE IF NOT EXISTS Optimal_PreResult (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),검토유형 VARCHAR (32),리모델링안 VARCHAR (32),리모델링값유형 VARCHAR (32),리모델링값 VARCHAR (32),순공사비 VARCHAR (32),재료비 VARCHAR (32),노무비 VARCHAR (32),경비 VARCHAR (32),에너지절감량 VARCHAR (32),에너지절감률 VARCHAR (32),에너지점수 VARCHAR (32),쾌적성점수 VARCHAR (32),적법성점수 VARCHAR (32),경제성점수 VARCHAR (32),종합점수 REAL)"}
         };
 
         private SQLiteConnection? baseDB_hcneed, baseDB_lighting, baseDB_heating, baseDB_cooling, baseDB_ahu, baseDB_resystem, baseDB_optimal, projDB, calcDB, proj_listDB;

@@ -2402,10 +2402,10 @@ namespace main
             double[,] H_Theta_G = new double[2, 12]; //지하벽 관류 *온도 누적
 
             double[] HT_z = new double[2]; //난방/냉방
+            double[] HT_zu = new double[2]; //난방/냉방
             double[,,] Qsource_h = new double[2, 2, 12];
-            double HT_Di_tot, HT_Indi_tot, HV_u;
-
-
+            double HT_Di_tot, HV_u;
+            double[] HT_Indi_tot = new double[2];
             if (zoneHC == "냉방" || zoneHC == "비냉난방") //비난방이면 
             {
                 HT_z[0] = 0;
@@ -2419,6 +2419,10 @@ namespace main
                         if (Value[0][0] == "냉난방" || Value[0][0] == "난방") //인접한 난방존 
                         {
                             HT_z[0] += (zoneInwall.Area() * zoneInwall.U());
+                        }
+                        else
+                        {
+                            HT_zu[0] += (zoneInwall.Area() * zoneInwall.U());
                         }
                     }
 
@@ -2434,6 +2438,10 @@ namespace main
                         if (Value_s[0][0] == "냉난방" || Value_s[0][0] == "난방") //인접한 난방존
                         {
                             HT_z[0] += (zoneslab.Area() * zoneslab.U());
+                        }
+                        else
+                        {
+                            HT_zu[0] += (zoneslab.Area() * zoneslab.U());
                         }
                     }
                 }
@@ -2452,6 +2460,10 @@ namespace main
                         {
                             HT_z[1] += (zoneInwall.Area() * zoneInwall.U());
                         }
+                        else
+                        {
+                            HT_zu[1] += (zoneInwall.Area() * zoneInwall.U());
+                        }
                     }
                 }
 
@@ -2464,6 +2476,10 @@ namespace main
                         if (Value_s[0][0] == "냉난방" || Value_s[0][0] == "냉방") //인접한 냉방존
                         {
                             HT_z[1] += (zoneslab.Area() * zoneslab.U());
+                        }
+                        else
+                        {
+                            HT_zu[1] += (zoneslab.Area() * zoneslab.U());
                         }
                     }
                 }
@@ -2512,16 +2528,15 @@ namespace main
                     {
                         Qsource_h[hc, wewd, mth] = (QSopsource_tot[hc, wewd, mth] + QStr_tot[hc, wewd, mth] + QI_tot[hc, wewd, mth]) / 24;
                         HT_Di_tot = (Zone_HT_Di_Wall + Zone_HT_Di_Roof + Zone_HT_Di_Win + Zone_HT_Di_Door + Zone_HT_CW + Zone_HT_TB_tot); //직접외기 바닥 포함시켜야 함 
-                        HT_Indi_tot = (Zone_HT_Indi_Wall + Zone_HT_Indi_Roof + Zone_HT_Indi_Win + Zone_HT_Indi_Door); //간접외기 
+                        HT_Indi_tot[hc] = (Zone_HT_Indi_Wall + Zone_HT_Indi_Roof + Zone_HT_Indi_Win + Zone_HT_Indi_Door + HT_zu[hc]); //간접외기 
                         HV_u = 0.6 * (zoneArea * zoneHeight) * 0.34;
-                        
-                            Theta_U[hc, wewd, mth] = (Qsource_h[hc, wewd, mth] + HT_Di_tot * theta_e[hc, mth] + HT_Indi_tot * Theta_Indi[hc, mth] + H_Theta_F[hc, mth] + H_Theta_G[hc, mth] + HT_z[hc] * Theta_set[hc] + HV_u * theta_e[hc, mth]) / (HT_Di_tot + HT_Indi_tot + Zone_HT_Floor + Zone_HT_GWall + HT_z[hc] + HV_u);
-                       if(Double.IsInfinity(Theta_U[hc, wewd, mth]))
+                        Theta_U[hc, wewd, mth] = (Qsource_h[hc, wewd, mth] + HT_Di_tot * theta_e[hc, mth] + HT_Indi_tot[hc] * Theta_Indi[hc, mth] + H_Theta_F[hc, mth] + H_Theta_G[hc, mth] + HT_z[hc] * Theta_set[hc] + HV_u * theta_e[hc, mth]) / (HT_Di_tot + HT_Indi_tot[hc] + Zone_HT_Floor + Zone_HT_GWall + HT_z[hc] + HV_u);
+                        if (Double.IsInfinity(Theta_U[hc, wewd, mth]))
                         {
                             Theta_U[0, wewd, mth] = theta_i_h_set;
                             Theta_U[1, wewd, mth] = theta_i_c_set;
                         }
-                                                   
+
 
                     }
                 }
@@ -2530,17 +2545,17 @@ namespace main
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    if (zoneHC =="냉난방")
+                    if (zoneHC == "냉난방")
                     {
-                         for (int hc = 0; hc < 2; hc++)
-                         {
+                        for (int hc = 0; hc < 2; hc++)
+                        {
                             Theta_U[hc, wewd, mth] = theta_i[hc, wewd, mth];
-                         }
+                        }
                     }
                     else if (zoneHC == "난방")
                     {
-                            Theta_U[0, wewd, mth] = theta_i[0, wewd, mth];
-                      
+                        Theta_U[0, wewd, mth] = theta_i[0, wewd, mth];
+
                     }
                     else if (zoneHC == "냉방")
                     {
@@ -2551,6 +2566,7 @@ namespace main
                 }
             }
         }
+
 
 
         public void Zoneeta()//이용계수 계산

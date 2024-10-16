@@ -1245,49 +1245,91 @@ namespace main
 
                 Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "프로젝트유형,프로젝트번호, 번호, 명칭, 냉방설비, 냉방출력, 냉방성능, 대기전력, 설치대수, Fuel,월,열원설비",
                 "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + cc1.CoolingNum + "','" + cc1.CoolingName + "','" + cc1.CG + "','" + cc1.Power_f + "','" + cc1.EER_f + "','" + cc1.Pctrl_f + "','" + cc1.Number_f + "','" + cc1.Carrier + "','" + mth[i] + "','" + cc1.CSource + "'", "번호,월");
+                if (double.IsNaN(cc1.QCa_nd)) { cc1.QCa_nd = 0; }
+                if (double.IsNaN(cc1.QCa_ce)) { cc1.QCa_ce = 0; }
+                if (double.IsNaN(cc1.QCa_d)) { cc1.QCa_d = 0; }
+                if (double.IsNaN(cc1.QCa_s)) { cc1.QCa_s = 0; }
+                if (double.IsNaN(cc1.QCa_out)) { cc1.QCa_out = 0; }
+                if (double.IsNaN(cc1.QCa_f)) { cc1.QCa_f = 0; }
                 Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,QCb_a,QCa_ce,QCa_d,QCa_s,QCa_out,QCa_f,Sto_Tank,Sto_Type",
                           "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.QCa_nd + "','" + cc1.QCa_ce + "','" + cc1.QCa_d + "','" + cc1.QCa_s + "','" + cc1.QCa_out + "','" + cc1.QCa_f + "','" + cc1.Sto_Tank + "','" + cc1.Sto_Type + "'", "번호,월");
-
-
+                if (double.IsNaN(cc1.QC_f[i])) { cc1.QC_f[i] = 0; }
+                if (double.IsNaN(cc1.SEER_c[i])) { cc1.SEER_c[i] = 0; }
+                if (double.IsNaN(cc1.EER_c[i])) { cc1.EER_c[i] = 0; }
+                if (double.IsNaN(cc1.QC_out[i])) { cc1.QC_out[i] = 0; }
+                if (double.IsNaN(cc1.QC_ce[i])) { cc1.QC_ce[i] = 0; }
+                if (double.IsNaN(cc1.QC_d[i])) { cc1.QC_d[i] = 0; }
+                if (double.IsNaN(cc1.QC_s[i])) { cc1.QC_s[i] = 0; }
+                if (double.IsNaN(cc1.QC_nd[i])) { cc1.QC_nd[i] = 0; }
                 Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,QC_f, SEER_c, EER_c,QC_out,QC_ce,QC_d,QC_s,QC_nd",
                            "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.QC_f[i] + "', '" + cc1.SEER_c[i] + "','" + cc1.EER_c[i] + "','" + cc1.QC_out[i] + "','" + cc1.QC_ce[i] + "','" + cc1.QC_d[i] + "','" + cc1.QC_s[i] + "','" + cc1.QC_nd[i] + "'", "번호,월");
-
+                if (double.IsNaN(cc1.W[i])) { cc1.W[i] = 0; }
+                if (double.IsNaN(cc1.W_ce[i])) { cc1.W_ce[i] = 0; }
+                if (double.IsNaN(cc1.W_d[i])) { cc1.W_d[i] = 0; }
+                if (double.IsNaN(cc1.W_s[i])) { cc1.W_s[i] = 0; }
+                if (double.IsNaN(cc1.W_g[i])) { cc1.W_g[i] = 0; }
                 Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,W,W_g,W_ce,W_d,W_s",
                            "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.W[i] + "', '" + cc1.W_g[i] + "','" + cc1.W_ce[i] + "','" + cc1.W_d[i] + "','" + cc1.W_s[i] + "'", "번호,월");
 
 
                 if (cc1.ZoneNameList.Count > 0)
                 {
+
+                    if (double.IsNaN(cc1.ZoneNumber_f)) { cc1.ZoneNumber_f = 0; }
+                    if (double.IsNaN(cc1.QC_a_z)) { cc1.QC_a_z = 0; }
+                    if (double.IsNaN(cc1.Qc_max_z)) { cc1.Qc_max_z = 0; }
+                    if (double.IsNaN(cc1.A_z)) { cc1.A_z = 0; }
                     Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,개수_z,QCb_a_z,QC_Max_z,공급설비1_z,공급설비2_z,A_z",
                            "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.ZoneNumber_f + "','" + cc1.QC_a_z + "','" + cc1.Qc_max_z + "','" + cc1.CE1_z + "','" + cc1.CE2_z + "','" + cc1.A_z + "'", "번호,월");
 
+                    if (double.IsNaN(cc1.QC_out_z[i])) { cc1.QC_out_z[i] = 0; }
+                    if (double.IsNaN(cc1.QC_ce_z[i])) { cc1.QC_ce_z[i] = 0; }
+                    if (double.IsNaN(cc1.QC_d_z[i])) { cc1.QC_d_z[i] = 0; }
+                    if (double.IsNaN(cc1.QC_s_z[i])) { cc1.QC_s_z[i] = 0; }
+                    if (double.IsNaN(cc1.QC_nd_z[i])) { cc1.QC_nd_z[i] = 0; }
                     Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,QC_out_z, QC_ce_z, QC_d_z, QC_s_z, QC_nd_z",
                                "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.QC_out_z[i] + "','" + cc1.QC_ce_z[i] + "','" + cc1.QC_d_z[i] + "','" + cc1.QC_s_z[i] + "','" + cc1.QC_nd_z[i] + "'", "번호,월");
 
                 }
                 if (cc1.AhuNameList.Count > 0)
                 {
+                    if (double.IsNaN(cc1.AhuNumber_f)) { cc1.AhuNumber_f = 0; }
+                    if (double.IsNaN(cc1.QC_a_ahu)) { cc1.QC_a_ahu = 0; }
+                    if (double.IsNaN(cc1.Qc_max_ahu)) { cc1.Qc_max_ahu = 0; }
+                    if (double.IsNaN(cc1.A_ahu)) { cc1.A_ahu = 0; }
                     Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,개수_ahu,QCb_a_ahu,QC_Max_ahu,공급설비1_ahu,공급설비2_ahu,A_ahu",
                            "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.AhuNumber_f + "','" + cc1.QC_a_ahu + "','" + cc1.Qc_max_ahu + "','" + cc1.CE1_ahu + "','" + cc1.CE2_ahu + "','" + cc1.A_ahu + "'", "번호,월");
 
-
+                    if (double.IsNaN(cc1.QC_out_ahu[i])) { cc1.QC_out_ahu[i] = 0; }
+                    if (double.IsNaN(cc1.QC_ce_ahu[i])) { cc1.QC_ce_ahu[i] = 0; }
+                    if (double.IsNaN(cc1.QC_d_ahu[i])) { cc1.QC_d_ahu[i] = 0; }
+                    if (double.IsNaN(cc1.QC_s_ahu[i])) { cc1.QC_s_ahu[i] = 0; }
+                    if (double.IsNaN(cc1.QC_nd_ahu[i])) { cc1.QC_nd_ahu[i] = 0; }
                     Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,QC_out_ahu, QC_ce_ahu, QC_d_ahu, QC_s_ahu, QC_nd_ahu",
                               "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.QC_out_ahu[i] + "','" + cc1.QC_ce_ahu[i] + "','" + cc1.QC_d_ahu[i] + "','" + cc1.QC_s_ahu[i] + "','" + cc1.QC_nd_ahu[i] + "'", "번호,월");
 
                 }
                 if (cc1.CG != "실외기12kW")
                 {
+
                     Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,압축기종류",
                                                "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.Comp_f + "','" + cc1.CWout + "'", "번호,월");
-
                 }
                 if (cc1.펌프유무 == "펌프 있음") //펌프유무
                 {
+                    if (double.IsNaN(cc1.CSWin)) { cc1.CSWin = 0; }
+                    if (double.IsNaN(cc1.CSWout)) { cc1.CSWout = 0; }
+                    if (double.IsNaN(cc1.P1power)) { cc1.P1power = 0; }
+                    if (double.IsNaN(cc1.P2power)) { cc1.P2power = 0; }
+                    if (double.IsNaN(cc1.SP1power)) { cc1.SP1power = 0; }
+                    if (double.IsNaN(cc1.SP2power)) { cc1.SP2power = 0; }
+                    if (double.IsNaN(cc1.CWout)) { cc1.CWout = 0; }
                     Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,CSWin,CSWout,P1power,P2power,Pump1Valve,SP1power,SP2power,SPValve,냉수출구온도",
                                                "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.CSWin + "','" + cc1.CSWout + "','" + cc1.P1power + "','" + cc1.P2power + "','" + cc1.PumpControl + "','" + cc1.SP1power + "','" + cc1.SP2power + "','" + cc1.SPumpControl + "','" + cc1.CWout + "'", "번호,월");
                 }
                 if (cc1.CG == "수냉식냉동기" || cc1.CG == "흡수식냉동기")
                 {
+                    if (double.IsNaN(cc1.CTPower_f)) { cc1.CTPower_f = 0; }
                     Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,CTPower",
                                                "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.CTPower_f + "'", "번호,월");
                 }

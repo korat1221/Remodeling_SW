@@ -1811,7 +1811,7 @@ Editor.prototype = {
       let tree = this.getTreeInfo();
 
       sql +=
-        "DELETE FROM ZoneGeneral_3D;DELETE FROM ZoneEnvelope_3D;DELETE FROM ZoneEnvelope_3D;DELETE FROM ThermalBridge_3D;";
+        "DELETE FROM ZoneGeneral_3D;DELETE FROM ZoneEnvelope_3D;DELETE FROM ThermalBridge_3D;DELETE FROM Blind_3D;DELETE FROM ZoneGeneral_Form;DELETE FROM ZoneLighting_Form;DELETE FROM Shade_3D;";
 
       while (++i < this.spaces.length) {
         let space = this.spaces[i];
