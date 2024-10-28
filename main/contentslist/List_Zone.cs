@@ -160,12 +160,12 @@ namespace main.contentslist
 
         private void dataGridView1_DoubleClick(object sender, EventArgs e)
         {
-            int k = dataGridView1.CurrentCell.RowIndex;
-            if (k > -1)
-            {
-                Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
+            //int k = dataGridView1.CurrentCell.RowIndex;
+            //if (k > -1)
+            //{
+            //    Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
 
-            }
+            //}
 
         }
 
