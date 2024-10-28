@@ -634,10 +634,64 @@ namespace main.contents
             f.load_List(Layer);
             return true;
         }
+        private void Save_Image()
+        {
+            try
+            {
+                // 캡쳐할 영역의 위치와 크기 설정
+                Rectangle captureRectangle = Ground_pictureBox.RectangleToScreen(Ground_pictureBox.ClientRectangle); //RectangleToScree는 화면 상 좌표를 읽음, ClientRectangle는 그림의 크기를 읽음 
+
+                // 비트맵 생성
+                Bitmap bmp = new Bitmap(captureRectangle.Width, captureRectangle.Height);
+
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    // 특정 영역을 캡쳐
+                    g.CopyFromScreen(captureRectangle.Location, Point.Empty, captureRectangle.Size);
+                }
+
+                string pid = "0000-00-00";
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
+                if (Value.Length > 0)
+                {
+                    pid = Value[0][0];
+                }
+                Directory.CreateDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid);
+                // 저장할 파일 경로 설정
+                string ImageName = "/threejs/public/print/img/" + pid + "/" + ZoneNum + ".png";
+                string imagePath = Program.gPath + ImageName; // 최종 경로
+
+
+                //----------이건 파일번호 숫자저장--------------------
+                // 파일 이름 설정
+                // string baseFileName = "캡쳐";
+                //string fileExtension = ".png";
+                //string imagePath;
+                //int fileIndex = 1;
+
+                // 파일이 존재할 경우 숫자 증가
+                //do
+                //{
+                //    imagePath = System.IO.Path.Combine(desktopPath, $"{baseFileName}{fileIndex}{fileExtension}");
+                //    fileIndex++;
+                //} while (System.IO.File.Exists(imagePath));
+                //------------------------------------------------------
+
+
+                // 비트맵을 파일로 저장
+                bmp.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
+
+                MessageBox.Show("캡쳐 성공: " + imagePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("오류 발생: " + ex.Message);
+            }
+        }
 
         private void save()
         {
-            //Save_Image();
+            Save_Image();
             //존일반정보 폼에 해당하는 정보만 저장 
             //건물정보, 3D정보는 저장 안함
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
@@ -660,10 +714,10 @@ namespace main.contents
         //private void Save_Image()
         //{
         //    MemoryStream ms = new MemoryStream();
-        //    string ImageName = "/threejs/public/img/"+ZoneNum+".png";
+        //    string ImageName = "/threejs/public/print/img/" + ZoneNum + ".png";
         //    Bitmap bmp = new Bitmap(AdditionalPanel.Width, AdditionalPanel.Height);
         //    AdditionalPanel.DrawToBitmap(bmp, new System.Drawing.Rectangle(0, 0, AdditionalPanel.Width, AdditionalPanel.Height));
-        //   // bmp.Save(ms ,System.Drawing.Imaging.ImageFormat.Png); //you could ave in BPM, PNG  etc format.
+        //    // bmp.Save(ms ,System.Drawing.Imaging.ImageFormat.Png); //you could ave in BPM, PNG  etc format.
         //    bmp.Save(Program.gPath + ImageName, System.Drawing.Imaging.ImageFormat.Png); //you could ave in BPM, PNG  etc format.
         //    byte[] Pic_arr = new byte[ms.Length];
         //    ms.Position = 0;

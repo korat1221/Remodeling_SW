@@ -24,7 +24,7 @@ using main.contents;
 using System.Diagnostics;
 using Microsoft.Win32;
 using Excel = Microsoft.Office.Interop.Excel;
-using Microsoft.Office.Interop.Excel;
+//using Microsoft.Office.Interop.Excel;
 using System.Runtime.InteropServices;
 using static System.Net.WebRequestMethods;
 using System.Reflection;
@@ -33,7 +33,9 @@ using Microsoft.VisualBasic.Logging;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Security.Policy;
 using System.Timers;
+using System.Drawing.Imaging;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
+using System.Security.Cryptography;
 
 namespace main.contents
 {
@@ -207,7 +209,55 @@ namespace main.contents
                 webView21.CoreWebView2.ExecuteScriptAsync(script);
             }
         }
+        private void Save_Image()
+        {
+            try
+            {
+                // 캡쳐할 영역의 크기 설정
+                int captureWidth = (int)(splitContainer1.Panel1.Width * 0.52);
+                int captureHeight = (int)(splitContainer1.Panel1.Height * 0.55);
 
+                // Panel1의 가운데를 기준으로 캡쳐할 영역의 위치 계산
+                int centerX = splitContainer1.Panel1.Width / 2;
+                int centerY = splitContainer1.Panel1.Height / 2;
+
+                // 캡쳐할 영역의 좌표 설정
+                int captureX = centerX - captureWidth / 2;
+                int captureY = centerY - captureHeight / 2;
+
+                // 캡쳐할 영역을 Rectangle로 설정
+                Rectangle captureRectangle = new Rectangle(captureX, captureY, captureWidth, captureHeight);
+
+                // 비트맵 생성
+                Bitmap bmp = new Bitmap(captureRectangle.Width, captureRectangle.Height);
+
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    // 특정 영역을 캡쳐
+                    g.CopyFromScreen(splitContainer1.Panel1.PointToScreen(captureRectangle.Location), Point.Empty, captureRectangle.Size);
+                }
+                string pid = "0000-00-00";
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
+                if(Value.Length > 0)
+                {
+                    pid = Value[0][0];
+                }
+                Directory.CreateDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid);
+                // 저장할 파일 경로 설정
+                string ImageName = "/threejs/public/print/img/"+pid+ "/Building.png";
+                string imagePath = Program.gPath + ImageName; // 최종 경로
+
+                // 비트맵을 파일로 저장
+                bmp.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
+
+                // MessageBox.Show("캡쳐 성공: " + imagePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("오류 발생: " + ex.Message);
+            }
+
+        }
         private void Save_button_Click(object sender, EventArgs e)
         {
             foreach (Form form in splitContainer1.Panel2.Controls)
@@ -215,8 +265,8 @@ namespace main.contents
                 if (form.Name == "sub3dZoneInfo")
                 {
                     sub3dZoneInfo f = (sub3dZoneInfo)form;
+                    Save_Image();
                     string s = f.Save();
-
                     runScript("updateObjInfo(" + s + ")");
                     return;
                 }
