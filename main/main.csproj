@@ -91,6 +91,9 @@
     <Compile Update="contents\Building\ProjectCopy.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\Alt\AltFloor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\Alt\AltRoof.cs">
       <SubType>Form</SubType>
     </Compile>
