@@ -628,6 +628,7 @@ namespace main.contents
                 string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
                 string[][] res1;
                 string[][] res2;
+                double max1=0, max2=0; 
                 for (int mth = 0; mth < 11; mth++)
                 {
                     s += PVEelpvoutm_kWh[mth] + ",";
@@ -641,7 +642,19 @@ namespace main.contents
                 if (res2.Length > 0)
                 { s2 += Convert.ToDouble(res2[0][0]); }
 
-                runScript("drawChart4([{type:\"line\",label:\"전기생산량\",data:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:150},{type:\"bar\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:300,barPercentage:0.7}])");
+                res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT Max(일사량) From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Orientation + "' And 각도='" + Slope + "'and not 기간='연간값'");
+                
+                
+                if (res2.Length > 0)
+                {
+                    int n2 =( (int)Convert.ToDouble(res2[0][0])).ToString().Length;
+                    max2 = Convert.ToInt64(Convert.ToDouble(res2[0][0]) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1)/2; 
+                
+                }
+                int n1 = ((int)PVEelpvoutm_kWh.Max()).ToString().Length;
+                max1 = Convert.ToInt64((PVEelpvoutm_kWh.Max())/ Math.Pow(10, n1 - 1)) * Math.Pow(10, n1 - 1) + Math.Pow(10, n1 - 1)/2;
+                
+                runScript("drawChart_pv([{type:\"line\",label:\"전기생산량\",data:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:"+max1+"},{type:\"bar\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:"+max2+",dash:false,barPercentage:0.7}])");
             }
             catch { }
         }
