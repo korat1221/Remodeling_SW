@@ -25,15 +25,7 @@ namespace main.contents
 
             InitializeComponent();
             InitializeAsync();
-            Element_comboBox.Items.Clear();
-            Element_comboBox.Items.Add("외벽_지붕_바닥");
-            Element_comboBox.Items.Add("창호_커튼월창_출입문");
-            Element_comboBox.Items.Add("조명_기밀_환기");
-            Element_comboBox.Items.Add("전기 히트펌프");
-            Element_comboBox.Items.Add("보일러_태양열_급탕HP");
-            Element_comboBox.Items.Add("공냉식냉동기_수냉식냉동기");
-            Element_comboBox.Items.Add("가스HP_흡수식냉온수기");
-            Element_comboBox.Items.Add("태양광_풍력_연료전지");
+           
         }
         async void InitializeAsync()
         {
@@ -63,52 +55,68 @@ namespace main.contents
                 webView21.CoreWebView2.ExecuteScriptAsync(script);
             }
         }
-        private void Element_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        public void load_List()
         {
-            if (Element_comboBox.SelectedItem != null && Element_comboBox.SelectedItem.ToString() != "")
+            List<object> MainMenu = new List<object>();
+
+            MainMenu.Add(new { text = "불투명구조체", id = "{\\\"formID\\\":26,\\\"ID\\\":\\\"Element_Structure\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            MainMenu.Add(new { text = "투명구조체", id = "{\\\"formID\\\":26,\\\"ID\\\":\\\"Element_Win\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            MainMenu.Add(new { text = "조명_기밀_환기", id = "{\\\"formID\\\":26,\\\"ID\\\":\\\"Element_Lighting\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            MainMenu.Add(new { text = "전기HP", id = "{\\\"formID\\\":26,\\\"ID\\\":\\\"Element_ElecHP\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            MainMenu.Add(new { text = "가스HP", id = "{\\\"formID\\\":26,\\\"ID\\\":\\\"Element_GasHP\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            MainMenu.Add(new { text = "보일러_태양열", id = "{\\\"formID\\\":26,\\\"ID\\\":\\\"Element_Boiler\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            MainMenu.Add(new { text = "냉동기", id = "{\\\"formID\\\":26,\\\"ID\\\":\\\"Element_Chiler\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            MainMenu.Add(new { text = "신재생시스템", id = "{\\\"formID\\\":26,\\\"ID\\\":\\\"Element_RESystem\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+
+            Program.UTIL.resetMainTree(5, 1, MainMenu.ToArray(), "26"); // 예시 코드: 메인 메뉴 동적 할당
+        }
+        public void LoadData(string ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
+        {
+            load_List();
+            string[][] 프로젝트유형 = Program.DB.querySQL(DB.type.ProjListDB, "Select type from projects where current = '1'");
+            if(ID !="0")
             {
-                string[][] 프로젝트유형 = Program.DB.querySQL(DB.type.ProjListDB, "Select type from projects where current = '1'");
                 if (프로젝트유형[0][0] == "1")
                 {
                     MessageBox.Show("리모델링 전 요소기술 레포트는 아직 준비 중입니다.");
-                    if (Element_comboBox.SelectedItem.ToString() == "외벽_지붕_바닥")
+                    if (ID == "Element_Structure")
                     {
                         Element_Structure Structure = new Element_Structure();
                         Structure.Report_Before();
                     }
-                    else if (Element_comboBox.SelectedItem.ToString() == "창호_커튼월창_출입문")
+                    else if (ID == "Element_Win")
                     {
                         Element_Win win = new Element_Win();
                         win.Report_Before();
                     }
-                    else if (Element_comboBox.SelectedItem.ToString() == "전기 히트펌프")
-                    {
-                        Element_ElecHP ehp = new Element_ElecHP();
-                        ehp.Report_Before();
-                    }
-                    else if (Element_comboBox.SelectedItem.ToString() == "공냉식냉동기_수냉식냉동기")
-                    {
-                        Element_Chiler chiler = new Element_Chiler();
-                        chiler.Report_Before();
-                    }
-                    else if (Element_comboBox.SelectedItem.ToString() == "보일러_태양열_급탕HP")
-                    {
-                        Element_Boiler boiler = new Element_Boiler();
-                        boiler.Report_Before();
-                    }
-                    else if (Element_comboBox.SelectedItem.ToString() == "조명_기밀_환기")
+                    else if (ID == "Element_Lighting")
                     {
                         Element_Lighting light = new Element_Lighting();
                         light.Report_Before();
                     }
-                    else if (Element_comboBox.SelectedItem.ToString() == "태양광_풍력_연료전지")
+                    else if (ID == "Element_ElecHP")
                     {
-                        Element_RESystem re = new Element_RESystem();
-                        re.Report_Before();
+                        Element_ElecHP ehp = new Element_ElecHP();
+                        ehp.Report_Before();
                     }
-                    else if (Element_comboBox.SelectedItem.ToString() == "가스HP_흡수식냉온수기")
+                    else if (ID == "Element_GasHP")
                     {
                         Element_GasHP re = new Element_GasHP();
+                        re.Report_Before();
+                    }
+                    else if (ID == "Element_Boiler")
+                    {
+                        Element_Boiler boiler = new Element_Boiler();
+                        boiler.Report_Before();
+                    }
+                    else if (ID == "Element_Chiler")
+                    {
+                        Element_Chiler chiler = new Element_Chiler();
+                        chiler.Report_Before();
+                    }
+                    else if (ID == "Element_RESystem")
+                    {
+                        Element_RESystem re = new Element_RESystem();
                         re.Report_Before();
                     }
                     else
@@ -120,58 +128,55 @@ namespace main.contents
                 else
                 {
                     string script = null;
-                    if (Element_comboBox.SelectedItem.ToString() == "외벽_지붕_바닥")
+                    if (ID == "Element_Structure")
                     {
                         Element_Structure Structure = new Element_Structure();
                         script = Structure.Report_After();
                     }
-                    else if (Element_comboBox.SelectedItem.ToString() == "창호_커튼월창_출입문")
+                    else if (ID == "Element_Win")
                     {
                         Element_Win win = new Element_Win();
                         script = win.Report_After();
                     }
-                    else if (Element_comboBox.SelectedItem.ToString() == "전기 히트펌프")
-                    {
-                        Element_ElecHP ehp = new Element_ElecHP();
-                        script = ehp.Report_After();
-                    }
-                    else if (Element_comboBox.SelectedItem.ToString() == "공냉식냉동기_수냉식냉동기")
-                    {
-                        Element_Chiler chiler = new Element_Chiler();
-                        script = chiler.Report_After();
-                    }
-                    else if (Element_comboBox.SelectedItem.ToString() == "보일러_태양열_급탕HP")
-                    {
-                        Element_Boiler boiler = new Element_Boiler();
-                        script = boiler.Report_After();
-                    }
-                    else if (Element_comboBox.SelectedItem.ToString() == "조명_기밀_환기")
+                    else if (ID == "Element_Lighting")
                     {
                         Element_Lighting light = new Element_Lighting();
                         script = light.Report_After();
                     }
-                    else if (Element_comboBox.SelectedItem.ToString() == "태양광_풍력_연료전지")
+                    else if (ID == "Element_ElecHP")
                     {
-                        Element_RESystem re = new Element_RESystem();
-                        script = re.Report_After();
+                        Element_ElecHP ehp = new Element_ElecHP();
+                        script = ehp.Report_After();
                     }
-                    else if (Element_comboBox.SelectedItem.ToString() == "가스HP_흡수식냉온수기")
+                    else if (ID == "Element_GasHP")
                     {
                         Element_GasHP re = new Element_GasHP();
+                        script = re.Report_After();
+                    }
+                    else if (ID == "Element_Chiler")
+                    {
+                        Element_Chiler chiler = new Element_Chiler();
+                        script = chiler.Report_After();
+                    }
+                    else if (ID == "Element_Boiler")
+                    {
+                        Element_Boiler boiler = new Element_Boiler();
+                        script = boiler.Report_After();
+                    }
+                    else if (ID == "Element_RESystem")
+                    {
+                        Element_RESystem re = new Element_RESystem();
                         script = re.Report_After();
                     }
                     else
                     {
                         Element_Structure Structure = new Element_Structure();
-                       script = Structure.Report_After();
+                        script = Structure.Report_After();
                     }
                     runScript(script);
                 }
             }
-        }
-        public void LoadData(string ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
-        {
-            Element_comboBox.SelectedIndex = 0;
+           
         }
 
 

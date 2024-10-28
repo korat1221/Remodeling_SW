@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
-            Element_comboBox = new CustomComboBox();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
@@ -47,28 +46,16 @@
             webView21.TabIndex = 2;
             webView21.ZoomFactor = 1D;
             // 
-            // Element_comboBox
-            // 
-            Element_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Element_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
-            Element_comboBox.FormattingEnabled = true;
-            Element_comboBox.Location = new Point(867, 12);
-            Element_comboBox.Name = "Element_comboBox";
-            Element_comboBox.Size = new Size(165, 23);
-            Element_comboBox.TabIndex = 122;
-            Element_comboBox.SelectedIndexChanged += Element_comboBox_SelectedIndexChanged;
-            // 
-            // Element_Report
+            // Element_Report_Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(Element_comboBox);
             Controls.Add(webView21);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Element_Report";
+            Name = "Element_Report_Main";
             Text = "Form3";
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
@@ -77,6 +64,5 @@
         #endregion
 
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
-        private CustomComboBox Element_comboBox;
     }
 }
