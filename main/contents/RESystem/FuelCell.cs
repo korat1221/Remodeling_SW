@@ -1,6 +1,8 @@
 ﻿using Eagle._Components.Public;
+using Eagle._Interfaces.Public;
 using main.contentslist;
 using main.subcontents;
+using main.subcontents.RESystem_FC;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace main.contents
@@ -19,7 +22,7 @@ namespace main.contents
     {
         String[][] 지역;
 
-        string Num, 프로젝트유형, Name, GenNum, SupplyType, StartTime, EndTime, Usehour, Useday, InstallNumber; //연료전지번호, 명칭, 연료전지,생산유형,시작시간,종료시간,사용시간,주이용일,설치대수
+        string Num, 프로젝트유형, Name, GenNumnonsplit, SupplyType, StartTime, EndTime, Usehour, Useday, InstallNumbernonsplit; //연료전지번호, 명칭, 연료전지,생산유형,시작시간,종료시간,사용시간,주이용일,설치대수
         string WListNonsplit, HListNonsplit; //급탕, 난방설비 리스트
 
 
@@ -54,23 +57,6 @@ namespace main.contents
             HLabel.Visible = false;
         }
 
-        private void GeneralPanel_Paint(object sender, PaintEventArgs e)
-        {
-            Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
-        }
-
-        //private void FuelCell_Load(object sender, EventArgs e)
-        //{
-
-        //}
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-            Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
-        }
-
         private void FCDB_button_Click(object sender, EventArgs e)
         {
 
@@ -80,46 +66,45 @@ namespace main.contents
             }
             else
             {
-                string install;
+                string install = null;
                 Name = Name_textBox.Text;
                 subcontents.FC FC_DB_form = new subcontents.FC("장비일람표 DB");
                 DialogResult result = FC_DB_form.ShowDialog();
                 if (result == DialogResult.OK)
                 {
                     tableMake();
-                    string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_FC", "번호,명칭,연료,전기출력,전기효율,열출력,열효율,설치", "번호 =  '" + FC_DB_form.SelectFC + "'");
-                    if (value.Length > 0)
+                    string[] token = FC_DB_form.SelectFCnonsplit.Split('+');
+                    FCNameText.Text = token[0] + "외" + (token.Length - 1).ToString() + "개";
+
+                    for (int i = 0; i < token.Length; i++)
                     {
-                        install = value[0][7].ToString();
-                        GenNum = value[0][0].ToString();
-                        FCNameText.Text = FC_DB_form.SelectFC;
+                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_FC", "번호,명칭,연료,전기출력,전기효율,열출력,열효율,설치", "번호 =  '" + token[i] + "'");
 
-
-                        for (int i = 0; i < value.Length; i++)
+                        if (value.Length > 0)
                         {
+                            install = value[0][7].ToString();
                             FC_dataGridView.Rows.Add();
-                            int n = FC_dataGridView.Rows.Count - 1;
-                            FC_dataGridView.Rows[n].Cells[1].Value = value[i][0];
-                            FC_dataGridView.Rows[n].Cells[2].Value = value[i][1];
-                            FC_dataGridView.Rows[n].Cells[3].Value = value[i][2];
-                            FC_dataGridView.Rows[n].Cells[5].Value = value[i][3];
-                            FC_dataGridView.Rows[n].Cells[6].Value = value[i][4];
-                            FC_dataGridView.Rows[n].Cells[7].Value = value[i][5];
-                            FC_dataGridView.Rows[n].Cells[8].Value = value[i][6];
-                            FC_dataGridView.Rows[n].Cells[9].Value = value[i][7];
+                            FC_dataGridView.Rows[i].Cells[1].Value = value[0][0];
+                            FC_dataGridView.Rows[i].Cells[2].Value = value[0][1];
+                            FC_dataGridView.Rows[i].Cells[3].Value = value[0][2];
+                            FC_dataGridView.Rows[i].Cells[5].Value = value[0][3];
+                            FC_dataGridView.Rows[i].Cells[6].Value = value[0][4];
+                            FC_dataGridView.Rows[i].Cells[7].Value = value[0][5];
+                            FC_dataGridView.Rows[i].Cells[8].Value = value[0][6];
+                            FC_dataGridView.Rows[i].Cells[9].Value = value[0][7];
                         }
-
-                        SourceImageMake(install); //연료 이미지
-                        GenImageMake(install); //생산설비 이미지
                     }
+                    SourceImageMake(install); //연료 이미지
+                    GenImageMake(install); //생산설비 이미지
                 }
             }
         }
 
+
         private void tableMake()
         {
             FC_dataGridView.Visible = true;
-            
+
             new StackedHeaderDecorator(FC_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             FC_dataGridView.Columns.Clear();
@@ -216,23 +201,45 @@ namespace main.contents
                 return;
             }
         }
-   
+
         public bool Save_FC()
         {
+
+            for (int j = 0; j < FC_dataGridView.RowCount; j++)
+            {
+                if (FC_dataGridView.Rows[j].Cells[4].Value == null || FC_dataGridView.Rows[j].Cells[4].Value == "")
+                {
+                    MessageBox.Show("대수입력을 완료해주세요.");
+                    return false;
+                }
+            }
+
             if (UseTime_TextBox.Text == null || Useday == null)
             {
                 MessageBox.Show("입력을 완료해주세요.");
                 return false;
             }
-            else if (InstallNumber == null || InstallNumber == "")
-            {
-                MessageBox.Show("대수입력을 완료해주세요.");
-                return false;
-            }
+
             else
             {
+                GenNumnonsplit = null;
+                InstallNumbernonsplit = null;
+                for (int k = 0; k < FC_dataGridView.RowCount; k++)
+                {
+                    if (k == FC_dataGridView.RowCount - 1)
+                    {
+                        this.GenNumnonsplit += FC_dataGridView.Rows[k].Cells[1].Value.ToString();
+                        this.InstallNumbernonsplit += FC_dataGridView.Rows[k].Cells[4].Value.ToString();
+                    }
+                    else
+                    {
+                        this.GenNumnonsplit += FC_dataGridView.Rows[k].Cells[1].Value.ToString() + "+";
+                        this.InstallNumbernonsplit += FC_dataGridView.Rows[k].Cells[4].Value.ToString() + "+";
+                    }
+                }
+
                 Program.DB.setValue(DB.type.ProjDB, "FuelCell_Form", "번호,프로젝트유형,명칭,연료전지,생산유형,시작시간,종료시간,사용시간,주이용일,설치대수,급탕설비,난방설비",
-                "'" + Num + "','" + 프로젝트유형 + "','" + Name + "','" + GenNum + "','" + SupplyType + "', '" + StartTime + "','" + EndTime + "','" + Usehour + "', '" + Useday + "', '" + InstallNumber + "', '" + WListNonsplit + "','" + HListNonsplit + "'", "번호");
+                "'" + Num + "','" + 프로젝트유형 + "','" + Name + "','" + GenNumnonsplit + "','" + SupplyType + "', '" + StartTime + "','" + EndTime + "','" + Usehour + "', '" + Useday + "', '" + InstallNumbernonsplit + "', '" + WListNonsplit + "','" + HListNonsplit + "'", "번호");
                 return true;
             }
 
@@ -242,7 +249,7 @@ namespace main.contents
 
         private void Reset()
         {
-            Num = null; Name = null; GenNum = null; SupplyType = null; StartTime = null; EndTime = null; Usehour = null; Useday = null; InstallNumber = null;
+            Num = null; Name = null; GenNumnonsplit = null; SupplyType = null; StartTime = null; EndTime = null; Usehour = null; Useday = null; InstallNumbernonsplit = null;
             WListNonsplit = null; HListNonsplit = null;
 
             W_textBox.Visible = false;
@@ -267,44 +274,56 @@ namespace main.contents
             Num_textBox.Text = ID;
             Num = ID;
             string[][] value = Program.DB.getValue(DB.type.ProjDB, "FuelCell_Form", "프로젝트유형,명칭,연료전지,생산유형,시작시간,종료시간,사용시간,주이용일,설치대수,급탕설비,난방설비", "번호='" + Num + "'");
+
+
+
             if (value.Length > 0)
             {
                 Name = value[0][1];
                 Name_textBox.Text = Name;
-                GenNum = value[0][2];
+                GenNumnonsplit = value[0][2];
                 SupplyType = value[0][3];
                 StartTime = value[0][4];
                 EndTime = value[0][5];
                 Usehour = value[0][6];
                 Useday = value[0][7];
-                InstallNumber = value[0][8];
+                InstallNumbernonsplit = value[0][8];
+
+
                 WListNonsplit = value[0][9];
                 HListNonsplit = value[0][10];
             }
             tableMake();
-            string[][] datavalue = Program.DB.getValue(DB.type.ProjDB, "User_FC", "번호,명칭,연료,전기출력,전기효율,열출력,열효율,설치", "번호 =  '" + GenNum + "'");
-            if (datavalue.Length > 0)
-            {
-                string install = datavalue[0][7].ToString();
-                FCNameText.Text = GenNum;
+            string install = null;
+            string[] token_name = GenNumnonsplit.Split('+');
+            FCNameText.Text = token_name[0] + "외" + (token_name.Length - 1).ToString() + "개";
 
-                for (int i = 0; i < datavalue.Length; i++)
+            string[] token_instNum = InstallNumbernonsplit.Split('+');
+
+            for (int i = 0; i < token_name.Length; i++)
+            {
+                string[][] datavalue = Program.DB.getValue(DB.type.ProjDB, "User_FC", "번호,명칭,연료,전기출력,전기효율,열출력,열효율,설치", "번호 =  '" + token_name[i] + "'");
+                if (datavalue.Length > 0)
                 {
+                    install = datavalue[0][7].ToString();
                     FC_dataGridView.Rows.Add();
                     int n = FC_dataGridView.Rows.Count - 1;
-                    FC_dataGridView.Rows[n].Cells[1].Value = datavalue[i][0];
-                    FC_dataGridView.Rows[n].Cells[2].Value = datavalue[i][1];
-                    FC_dataGridView.Rows[n].Cells[3].Value = datavalue[i][2];
-                    FC_dataGridView.Rows[n].Cells[4].Value = InstallNumber;
-                    FC_dataGridView.Rows[n].Cells[5].Value = datavalue[i][3];
-                    FC_dataGridView.Rows[n].Cells[6].Value = datavalue[i][4];
-                    FC_dataGridView.Rows[n].Cells[7].Value = datavalue[i][5];
-                    FC_dataGridView.Rows[n].Cells[8].Value = datavalue[i][6];
-                    FC_dataGridView.Rows[n].Cells[9].Value = datavalue[i][7];
+                    FC_dataGridView.Rows[n].Cells[1].Value = datavalue[0][0];
+                    FC_dataGridView.Rows[n].Cells[2].Value = datavalue[0][1];
+                    FC_dataGridView.Rows[n].Cells[3].Value = datavalue[0][2];
+                    FC_dataGridView.Rows[n].Cells[4].Value = token_instNum[i];
+                    FC_dataGridView.Rows[n].Cells[5].Value = datavalue[0][3];
+                    FC_dataGridView.Rows[n].Cells[6].Value = datavalue[0][4];
+                    FC_dataGridView.Rows[n].Cells[7].Value = datavalue[0][5];
+                    FC_dataGridView.Rows[n].Cells[8].Value = datavalue[0][6];
+                    FC_dataGridView.Rows[n].Cells[9].Value = datavalue[0][7];
                 }
-                SourceImageMake(install); //연료 이미지
-                GenImageMake(install); //생산설비 이미지
             }
+            SourceImageMake(install); //연료 이미지
+            GenImageMake(install); //생산설비 이미지
+
+
+
             FCTypeComboBox.Text = SupplyType;
             string _supply = TypeCombo(SupplyType);
             SupplyTypeImage(_supply);
@@ -313,6 +332,16 @@ namespace main.contents
             End_comboBox.Text = EndTime;
             UseTime_TextBox.Text = Usehour;
             Week_comboBox.Text = Useday;
+            if (WListNonsplit != null)
+            {
+                string[] token = WListNonsplit.Split();
+                W_textBox.Text = token[0] + "외" + (token.Length - 1).ToString() + "개";
+            }
+            if (HListNonsplit != null)
+            {
+                string[] token = HListNonsplit.Split();
+                H_textBox.Text = token[0] + "외" + (token.Length - 1).ToString() + "개";
+            }
         }
         public static bool OnLoadListProc(Form form)
         {
@@ -338,10 +367,15 @@ namespace main.contents
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_RESystem, "연료전지이미지", "이미지", "세부항목 = '" + _SupplyType + "'");
             if (Image.Length > 0)
             {
+                SupplypictureBox.Visible = true;
                 SupplypictureBox.Size = new System.Drawing.Size(350, 220);
                 SupplypictureBox.Location = new Point(0, 0);
                 SupplypictureBox.Load(Program.gPath + Image[0][0]);
                 SupplypictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            else
+            {
+                SupplypictureBox.Visible = false;
             }
         }
 
@@ -412,38 +446,48 @@ namespace main.contents
         private void W_button_Click(object sender, EventArgs e)
         {
             W_textBox.Text = null;
-            //작성필요함
+            FCSList namelist = new FCSList("급탕", Num);
+            DialogResult result = namelist.ShowDialog();
+            if (result == DialogResult.OK && namelist.SelectFCList != null)
+            {
+                WListNonsplit = namelist.SelectFCList;
+                string[] token = WListNonsplit.Split();
+                W_textBox.Text = token[0] + "외" + (token.Length - 1).ToString() + "개";
+            }
         }
 
         private void H_button_Click(object sender, EventArgs e)
         {
             H_textBox.Text = null;
-            //작성필요함
+            FCSList namelist = new FCSList("난방", Num);
+            DialogResult result = namelist.ShowDialog();
+            if (result == DialogResult.OK && namelist.SelectFCList != null)
+            {
+                HListNonsplit = namelist.SelectFCList;
+                string[] token = HListNonsplit.Split();
+                H_textBox.Text = token[0] + "외" + (token.Length - 1).ToString() + "개";
+            }
         }
 
-        private void FC_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void deletebutton_Click(object sender, EventArgs e)
         {
-            if (e.RowIndex >= 0)
+            int SelectRow;
+            for (int i = 0; i < FC_dataGridView.Rows.Count; i++)
             {
-                if (e.ColumnIndex == 4)
+                if (Convert.ToBoolean(FC_dataGridView.Rows[i].Cells[0].Value))
                 {
-                    InstallNumber = FC_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString();
+                    SelectRow = i;
+                    FC_dataGridView.Rows.Remove(FC_dataGridView.Rows[SelectRow]);
                 }
             }
         }
-        private void Split(string nonSplit, List<string> type)
-        {
-            type.Clear();
 
-            if (nonSplit != null)
-            {
-                string[] token = nonSplit.Split('+');
-                foreach (string item in token)
-                {
-                    string _item = item.Trim();
-                    type.Add(_item);
-                }
-            }
+        private void GeneralPanel_Paint(object sender, PaintEventArgs e)
+        {
+            GeneralPanel.Location = new Point(1, 3);
+            //Panel p = (Panel)sender;
+            //ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(32, 77, 112), ButtonBorderStyle.Solid);
         }
+
     }
 }

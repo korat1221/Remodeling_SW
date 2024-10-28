@@ -15,7 +15,8 @@ namespace main.subcontents
     public partial class FC : Form
     {
         String DefaultUse;
-        public string SelectFC;
+        public string SelectFCnonsplit;
+        List<int> SelectRow = new List<int>();
 
         public FC(string defaultUse)
         {
@@ -142,30 +143,46 @@ namespace main.subcontents
 
         }
 
-        private void SelectCheckBox()
+        private bool SelectCheckBox()
         {
+            SelectRow.Clear();
             foreach (DataGridViewRow row in FC_dataGridView.Rows)
             {
                 if (Convert.ToBoolean(row.Cells["check"].Value))
                 {
                     row.DefaultCellStyle.SelectionBackColor = SystemColors.GradientInactiveCaption;
-                    SelectFC = row.Cells[1].Value.ToString();
+                    SelectRow.Add(row.Index);
                 }
             }
+            return true;
         }
 
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            SelectFC = null;
-            SelectCheckBox();
+            if (SelectCheckBox() == false)
+            {
+                return;
+            }
+            for(int k = 0; k<SelectRow.Count;k++)
+            {
+                if (k == SelectRow.Count - 1)
+                {
+                    this.SelectFCnonsplit += FC_dataGridView.Rows[SelectRow[k]].Cells[1].Value.ToString();
+                }
+                else
+                {
+                    this.SelectFCnonsplit += FC_dataGridView.Rows[SelectRow[k]].Cells[1].Value.ToString() + "+";
+                }
+            }
+            
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
         public void reset()
         {
-            SelectFC = null;
+            SelectFCnonsplit = null;
 
             for (int n = 0; n < FC_dataGridView.Rows.Count; n++)
             {

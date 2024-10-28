@@ -106,22 +106,36 @@ namespace main.contentslist
         }
         public void load_List()
         {
+            
             dataGridView1.Rows.Clear();
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "FuelCell_Form", "번호,명칭,연료전지", "");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "FuelCell_Form", "번호,명칭,연료전지,설치대수", "");
+
             if (Value.Length > 0)
             {
-                for (int n = 0; n < Value.Length; n++)
+                for (int n = 0; n < Value.Length; n++) //연료전지별
                 {
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[n].Cells[1].Value = Value[n][0];
                     dataGridView1.Rows[n].Cells[2].Value = Value[n][1];
-
-                    string[][] Genvalue = Program.DB.getValue(DB.type.ProjDB, "User_FC", "전기출력,전기효율,열출력,열효율", "번호 = '" + Value[n][2].ToString() +"'");
-
-                    dataGridView1.Rows[n].Cells[3].Value = Genvalue[0][0];
-                    dataGridView1.Rows[n].Cells[4].Value = Genvalue[0][1];
-                    dataGridView1.Rows[n].Cells[5].Value = Genvalue[0][2];
-                    dataGridView1.Rows[n].Cells[6].Value = Genvalue[0][3];
+                    string[] token_name = Value[n][2].Split('+'); 
+                    string[] token_number = Value[n][3].Split('+');
+                    double elepower = 0, eleeff=0, heatpower = 0, heateff = 0, in_number = 0;
+                    for(int i=0; i < token_name.Length; i++)
+                    {
+                        string[][] Genvalue = Program.DB.getValue(DB.type.ProjDB, "User_FC", "전기출력,전기효율,열출력,열효율", "번호 = '" + token_name[i] + "'");
+                        elepower += Convert.ToDouble(Genvalue[0][0]) * Convert.ToDouble(token_number[i]);
+                        eleeff += Convert.ToDouble(Genvalue[0][1]) * Convert.ToDouble(token_number[i]) * Convert.ToDouble(Genvalue[0][0]);
+                        heatpower += Convert.ToDouble(Genvalue[0][2]) * Convert.ToDouble(token_number[i]);
+                        heateff += Convert.ToDouble(Genvalue[0][3]) * Convert.ToDouble(token_number[i] ) * Convert.ToDouble(Genvalue[0][2]);
+                        in_number += Convert.ToDouble(token_number[i]);
+                    }
+                    eleeff = eleeff / elepower;
+                    heateff = heateff / heatpower;
+                    
+                    dataGridView1.Rows[n].Cells[3].Value = string.Format("{0:F1}",heatpower);
+                    dataGridView1.Rows[n].Cells[4].Value = string.Format("{0:F1}",heateff);
+                    dataGridView1.Rows[n].Cells[5].Value = string.Format("{0:F1}",elepower);
+                    dataGridView1.Rows[n].Cells[6].Value = string.Format("{0:F1}",eleeff);
                 }
             }
         }

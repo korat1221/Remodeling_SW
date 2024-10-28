@@ -1111,7 +1111,7 @@ namespace main.contents
                     { Value[i - 1] = PV_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_PVModule", "번호,프로젝트유형,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk,신규기존",
+                Program.DB.setValue(DB.type.ProjDB, "User_PVModule", "번호,프로젝트유형,DB유형,제품명,제조사,CELLTYPE,길이,높이,정격출력,Kpk,설치",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','"
                  + Value[10]
@@ -1122,7 +1122,7 @@ namespace main.contents
 
         private void Load_PV()
         {
-            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk,신규기존", "");
+            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,CELLTYPE,길이,높이,정격출력,Kpk,설치", "");
             if (User_Value.Length > 0)
             {
                 for (int n = 0; n < User_Value.Length; n++)
@@ -1194,9 +1194,10 @@ namespace main.contents
             DialogResult result = fc_DB.ShowDialog();
             if (result == DialogResult.OK)
             {
-                if (fc_DB.SelectFC != null)
+                string[] token = fc_DB.SelectFCnonsplit.Split('+');
+                if (token[0] != null)
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "연료전지DB", "전기출력,전기효율,열출력,열효율", "번호 = '" + fc_DB.SelectFC + "'");
+                    string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "연료전지DB", "전기출력,전기효율,열출력,열효율", "번호 = '" + token[0] + "'");
                     if (Value.Length > 0)
                     {
                         for (int i = 0; i < 4; i++)
