@@ -85,6 +85,9 @@ class MainTree {
                 "CoolingSystem" : {
                     "icon" : "cls-CoolingSystem-icon"
                 },
+                "RENSystem" : {
+                    "icon" : "cls-RENSystem-icon"
+                },
                 "PVSystem" : {
                     "icon" : "cls-PVSystem-icon"
                 },
