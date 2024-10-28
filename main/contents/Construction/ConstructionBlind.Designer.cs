@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConstructionBlind));
             GeneralPanel = new Panel();
             OldBlind_textBox = new TextBox();
             OldBlind_comboBox = new CustomComboBox();
@@ -67,14 +66,10 @@
             BlindName_textBox = new TextBox();
             label11 = new Label();
             BlindDB_button = new Button();
-            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
-            label2 = new Label();
-            pictureBox1 = new PictureBox();
-            pictureBox2 = new PictureBox();
-            label4 = new Label();
             label1 = new Label();
             Previous_button = new Button();
             Save_button = new Button();
+            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -82,8 +77,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -109,11 +102,11 @@
             OldBlind_textBox.BackColor = Color.White;
             OldBlind_textBox.BorderStyle = BorderStyle.None;
             OldBlind_textBox.Enabled = false;
-            OldBlind_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            OldBlind_textBox.Font = new Font("맑은 고딕", 9F);
             OldBlind_textBox.ForeColor = SystemColors.ControlText;
             OldBlind_textBox.Location = new Point(693, 23);
             OldBlind_textBox.Name = "OldBlind_textBox";
-            OldBlind_textBox.Size = new Size(67, 15);
+            OldBlind_textBox.Size = new Size(67, 16);
             OldBlind_textBox.TabIndex = 104;
             OldBlind_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -147,11 +140,11 @@
             Type_textBox.BackColor = Color.White;
             Type_textBox.BorderStyle = BorderStyle.None;
             Type_textBox.Enabled = false;
-            Type_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Type_textBox.Font = new Font("맑은 고딕", 9F);
             Type_textBox.ForeColor = SystemColors.ControlDark;
             Type_textBox.Location = new Point(245, 54);
             Type_textBox.Name = "Type_textBox";
-            Type_textBox.Size = new Size(120, 15);
+            Type_textBox.Size = new Size(120, 16);
             Type_textBox.TabIndex = 99;
             Type_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -224,11 +217,11 @@
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Num_textBox.Font = new Font("맑은 고딕", 9F);
             Num_textBox.ForeColor = SystemColors.ControlText;
             Num_textBox.Location = new Point(76, 20);
             Num_textBox.Name = "Num_textBox";
-            Num_textBox.Size = new Size(67, 15);
+            Num_textBox.Size = new Size(67, 16);
             Num_textBox.TabIndex = 102;
             Num_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -236,6 +229,7 @@
             // 
             panel2.BackColor = Color.White;
             panel2.BorderStyle = BorderStyle.Fixed3D;
+            panel2.Controls.Add(webView21);
             panel2.Controls.Add(pictureBox4);
             panel2.Controls.Add(BlindAlpha_textBox);
             panel2.Controls.Add(label18);
@@ -262,7 +256,7 @@
             panel2.Controls.Add(BlindDB_button);
             panel2.Location = new Point(12, 136);
             panel2.Name = "panel2";
-            panel2.Size = new Size(977, 350);
+            panel2.Size = new Size(977, 589);
             panel2.TabIndex = 18;
             // 
             // pictureBox4
@@ -278,22 +272,22 @@
             BlindAlpha_textBox.BackColor = Color.White;
             BlindAlpha_textBox.BorderStyle = BorderStyle.None;
             BlindAlpha_textBox.Enabled = false;
-            BlindAlpha_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindAlpha_textBox.Font = new Font("맑은 고딕", 9F);
             BlindAlpha_textBox.ForeColor = SystemColors.ControlDark;
             BlindAlpha_textBox.Location = new Point(658, 163);
             BlindAlpha_textBox.Name = "BlindAlpha_textBox";
-            BlindAlpha_textBox.Size = new Size(120, 15);
+            BlindAlpha_textBox.Size = new Size(120, 16);
             BlindAlpha_textBox.TabIndex = 125;
             BlindAlpha_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label18
             // 
             label18.AutoSize = true;
-            label18.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label18.Font = new Font("맑은 고딕", 9F);
             label18.ForeColor = SystemColors.ControlDark;
             label18.Location = new Point(561, 163);
             label18.Name = "label18";
-            label18.Size = new Size(40, 16);
+            label18.Size = new Size(43, 15);
             label18.TabIndex = 124;
             label18.Text = "흡수율";
             // 
@@ -302,22 +296,22 @@
             BlindIn_textBox.BackColor = Color.White;
             BlindIn_textBox.BorderStyle = BorderStyle.None;
             BlindIn_textBox.Enabled = false;
-            BlindIn_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindIn_textBox.Font = new Font("맑은 고딕", 9F);
             BlindIn_textBox.ForeColor = SystemColors.ControlDark;
             BlindIn_textBox.Location = new Point(658, 127);
             BlindIn_textBox.Name = "BlindIn_textBox";
-            BlindIn_textBox.Size = new Size(120, 15);
+            BlindIn_textBox.Size = new Size(120, 16);
             BlindIn_textBox.TabIndex = 123;
             BlindIn_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label19
             // 
             label19.AutoSize = true;
-            label19.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label19.Font = new Font("맑은 고딕", 9F);
             label19.ForeColor = SystemColors.ControlDark;
             label19.Location = new Point(561, 127);
             label19.Name = "label19";
-            label19.Size = new Size(62, 16);
+            label19.Size = new Size(67, 15);
             label19.TabIndex = 122;
             label19.Text = "내부반사율";
             // 
@@ -326,22 +320,22 @@
             BlindSHGC_textBox.BackColor = Color.White;
             BlindSHGC_textBox.BorderStyle = BorderStyle.None;
             BlindSHGC_textBox.Enabled = false;
-            BlindSHGC_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindSHGC_textBox.Font = new Font("맑은 고딕", 9F);
             BlindSHGC_textBox.ForeColor = SystemColors.ControlDark;
             BlindSHGC_textBox.Location = new Point(658, 200);
             BlindSHGC_textBox.Name = "BlindSHGC_textBox";
-            BlindSHGC_textBox.Size = new Size(120, 15);
+            BlindSHGC_textBox.Size = new Size(120, 16);
             BlindSHGC_textBox.TabIndex = 110;
             BlindSHGC_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label13
             // 
             label13.AutoSize = true;
-            label13.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label13.Font = new Font("맑은 고딕", 9F);
             label13.ForeColor = SystemColors.ControlDark;
             label13.Location = new Point(561, 199);
             label13.Name = "label13";
-            label13.Size = new Size(40, 16);
+            label13.Size = new Size(43, 15);
             label13.TabIndex = 109;
             label13.Text = "투과율";
             // 
@@ -350,22 +344,22 @@
             BlindEx_textBox.BackColor = Color.White;
             BlindEx_textBox.BorderStyle = BorderStyle.None;
             BlindEx_textBox.Enabled = false;
-            BlindEx_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindEx_textBox.Font = new Font("맑은 고딕", 9F);
             BlindEx_textBox.ForeColor = SystemColors.ControlDark;
             BlindEx_textBox.Location = new Point(658, 91);
             BlindEx_textBox.Name = "BlindEx_textBox";
-            BlindEx_textBox.Size = new Size(120, 15);
+            BlindEx_textBox.Size = new Size(120, 16);
             BlindEx_textBox.TabIndex = 108;
             BlindEx_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label14
             // 
             label14.AutoSize = true;
-            label14.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label14.Font = new Font("맑은 고딕", 9F);
             label14.ForeColor = SystemColors.ControlDark;
             label14.Location = new Point(561, 90);
             label14.Name = "label14";
-            label14.Size = new Size(62, 16);
+            label14.Size = new Size(67, 15);
             label14.TabIndex = 107;
             label14.Text = "외부반사율";
             // 
@@ -374,11 +368,11 @@
             ControlType2_textBox.BackColor = Color.White;
             ControlType2_textBox.BorderStyle = BorderStyle.None;
             ControlType2_textBox.Enabled = false;
-            ControlType2_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            ControlType2_textBox.Font = new Font("맑은 고딕", 9F);
             ControlType2_textBox.ForeColor = SystemColors.ControlDark;
             ControlType2_textBox.Location = new Point(250, 239);
             ControlType2_textBox.Name = "ControlType2_textBox";
-            ControlType2_textBox.Size = new Size(120, 15);
+            ControlType2_textBox.Size = new Size(120, 16);
             ControlType2_textBox.TabIndex = 106;
             ControlType2_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -395,22 +389,22 @@
             BlindColor_textBox.BackColor = Color.White;
             BlindColor_textBox.BorderStyle = BorderStyle.None;
             BlindColor_textBox.Enabled = false;
-            BlindColor_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindColor_textBox.Font = new Font("맑은 고딕", 9F);
             BlindColor_textBox.ForeColor = SystemColors.ControlDark;
             BlindColor_textBox.Location = new Point(124, 200);
             BlindColor_textBox.Name = "BlindColor_textBox";
-            BlindColor_textBox.Size = new Size(120, 15);
+            BlindColor_textBox.Size = new Size(120, 16);
             BlindColor_textBox.TabIndex = 104;
             BlindColor_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label8.Font = new Font("맑은 고딕", 9F);
             label8.ForeColor = SystemColors.ControlDark;
             label8.Location = new Point(27, 199);
             label8.Name = "label8";
-            label8.Size = new Size(29, 16);
+            label8.Size = new Size(31, 15);
             label8.TabIndex = 103;
             label8.Text = "색깔";
             // 
@@ -419,22 +413,22 @@
             BlindTrans_textBox.BackColor = Color.White;
             BlindTrans_textBox.BorderStyle = BorderStyle.None;
             BlindTrans_textBox.Enabled = false;
-            BlindTrans_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindTrans_textBox.Font = new Font("맑은 고딕", 9F);
             BlindTrans_textBox.ForeColor = SystemColors.ControlDark;
             BlindTrans_textBox.Location = new Point(124, 164);
             BlindTrans_textBox.Name = "BlindTrans_textBox";
-            BlindTrans_textBox.Size = new Size(120, 15);
+            BlindTrans_textBox.Size = new Size(120, 16);
             BlindTrans_textBox.TabIndex = 102;
             BlindTrans_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label7.Font = new Font("맑은 고딕", 9F);
             label7.ForeColor = SystemColors.ControlDark;
             label7.Location = new Point(27, 163);
             label7.Name = "label7";
-            label7.Size = new Size(51, 16);
+            label7.Size = new Size(55, 15);
             label7.TabIndex = 101;
             label7.Text = "투과수준";
             // 
@@ -443,22 +437,22 @@
             BlindInstall_textBox.BackColor = Color.White;
             BlindInstall_textBox.BorderStyle = BorderStyle.None;
             BlindInstall_textBox.Enabled = false;
-            BlindInstall_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindInstall_textBox.Font = new Font("맑은 고딕", 9F);
             BlindInstall_textBox.ForeColor = SystemColors.ControlDark;
             BlindInstall_textBox.Location = new Point(124, 128);
             BlindInstall_textBox.Name = "BlindInstall_textBox";
-            BlindInstall_textBox.Size = new Size(120, 15);
+            BlindInstall_textBox.Size = new Size(120, 16);
             BlindInstall_textBox.TabIndex = 100;
             BlindInstall_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label6.Font = new Font("맑은 고딕", 9F);
             label6.ForeColor = SystemColors.ControlDark;
             label6.Location = new Point(27, 127);
             label6.Name = "label6";
-            label6.Size = new Size(29, 16);
+            label6.Size = new Size(31, 15);
             label6.TabIndex = 99;
             label6.Text = "설치";
             // 
@@ -467,43 +461,43 @@
             BlindType_textBox.BackColor = Color.White;
             BlindType_textBox.BorderStyle = BorderStyle.None;
             BlindType_textBox.Enabled = false;
-            BlindType_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindType_textBox.Font = new Font("맑은 고딕", 9F);
             BlindType_textBox.ForeColor = SystemColors.ControlDark;
             BlindType_textBox.Location = new Point(124, 92);
             BlindType_textBox.Name = "BlindType_textBox";
-            BlindType_textBox.Size = new Size(120, 15);
+            BlindType_textBox.Size = new Size(120, 16);
             BlindType_textBox.TabIndex = 98;
             BlindType_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label5.Font = new Font("맑은 고딕", 9F);
             label5.ForeColor = SystemColors.ControlDark;
             label5.Location = new Point(27, 91);
             label5.Name = "label5";
-            label5.Size = new Size(29, 16);
+            label5.Size = new Size(31, 15);
             label5.TabIndex = 97;
             label5.Text = "종류";
             // 
             // ControlType_comboBox
             // 
             ControlType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            ControlType_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            ControlType_comboBox.Font = new Font("맑은 고딕", 9F);
             ControlType_comboBox.FormattingEnabled = true;
             ControlType_comboBox.Location = new Point(124, 236);
             ControlType_comboBox.Name = "ControlType_comboBox";
-            ControlType_comboBox.Size = new Size(120, 23);
+            ControlType_comboBox.Size = new Size(120, 24);
             ControlType_comboBox.TabIndex = 96;
             ControlType_comboBox.SelectedIndexChanged += ControlType_comboBox_SelectedIndexChanged;
             // 
             // label25
             // 
             label25.AutoSize = true;
-            label25.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label25.Font = new Font("맑은 고딕", 9F);
             label25.Location = new Point(27, 239);
             label25.Name = "label25";
-            label25.Size = new Size(51, 16);
+            label25.Size = new Size(55, 15);
             label25.TabIndex = 95;
             label25.Text = "제어방법";
             // 
@@ -512,21 +506,21 @@
             BlindName_textBox.BackColor = Color.White;
             BlindName_textBox.BorderStyle = BorderStyle.None;
             BlindName_textBox.Enabled = false;
-            BlindName_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindName_textBox.Font = new Font("맑은 고딕", 9F);
             BlindName_textBox.ForeColor = SystemColors.ControlDark;
             BlindName_textBox.Location = new Point(124, 56);
             BlindName_textBox.Name = "BlindName_textBox";
-            BlindName_textBox.Size = new Size(120, 15);
+            BlindName_textBox.Size = new Size(120, 16);
             BlindName_textBox.TabIndex = 94;
             BlindName_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label11.Font = new Font("맑은 고딕", 9F);
             label11.Location = new Point(27, 55);
             label11.Name = "label11";
-            label11.Size = new Size(29, 16);
+            label11.Size = new Size(31, 15);
             label11.TabIndex = 92;
             label11.Text = "제품";
             // 
@@ -535,7 +529,7 @@
             BlindDB_button.BackColor = SystemColors.ControlLight;
             BlindDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             BlindDB_button.FlatStyle = FlatStyle.System;
-            BlindDB_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            BlindDB_button.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold);
             BlindDB_button.Location = new Point(245, 52);
             BlindDB_button.Margin = new Padding(0);
             BlindDB_button.Name = "BlindDB_button";
@@ -545,60 +539,13 @@
             BlindDB_button.UseVisualStyleBackColor = false;
             BlindDB_button.Click += BlindDB_button_Click;
             // 
-            // webView21
-            // 
-            webView21.AllowExternalDrop = true;
-            webView21.CreationProperties = null;
-            webView21.DefaultBackgroundColor = Color.White;
-            webView21.Location = new Point(182, 492);
-            webView21.Name = "webView21";
-            webView21.Size = new Size(781, 235);
-            webView21.TabIndex = 0;
-            webView21.ZoomFactor = 1D;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 668);
-            label2.Name = "label2";
-            label2.Size = new Size(99, 15);
-            label2.TabIndex = 19;
-            label2.Text = "차양가동율(남향)";
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(114, 668);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(51, 19);
-            pictureBox1.TabIndex = 20;
-            pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(137, 697);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(28, 26);
-            pictureBox2.TabIndex = 21;
-            pictureBox2.TabStop = false;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(11, 703);
-            label4.Name = "label4";
-            label4.Size = new Size(120, 15);
-            label4.TabIndex = 22;
-            label4.Text = "일사량(kWh/m²·mth)";
-            // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Bold, GraphicsUnit.Point);
+            label1.Font = new Font("맑은 고딕", 9F, FontStyle.Bold);
             label1.Location = new Point(19, 116);
             label1.Name = "label1";
-            label1.Size = new Size(51, 16);
+            label1.Size = new Size(55, 15);
             label1.TabIndex = 23;
             label1.Text = "차양정보";
             // 
@@ -606,7 +553,7 @@
             // 
             Previous_button.BackColor = SystemColors.ButtonHighlight;
             Previous_button.ForeColor = Color.Black;
-            Previous_button.Location = new Point(979, 702);
+            Previous_button.Location = new Point(995, 700);
             Previous_button.Name = "Previous_button";
             Previous_button.Size = new Size(88, 25);
             Previous_button.TabIndex = 95;
@@ -617,13 +564,25 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1073, 702);
+            Save_button.Location = new Point(1089, 700);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 94;
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
+            // 
+            // webView21
+            // 
+            webView21.AllowExternalDrop = true;
+            webView21.BackColor = Color.White;
+            webView21.CreationProperties = null;
+            webView21.DefaultBackgroundColor = Color.White;
+            webView21.Location = new Point(3, 327);
+            webView21.Name = "webView21";
+            webView21.Size = new Size(952, 253);
+            webView21.TabIndex = 126;
+            webView21.ZoomFactor = 1D;
             // 
             // ConstructionBlind
             // 
@@ -635,11 +594,6 @@
             Controls.Add(Previous_button);
             Controls.Add(Save_button);
             Controls.Add(label1);
-            Controls.Add(label4);
-            Controls.Add(pictureBox2);
-            Controls.Add(pictureBox1);
-            Controls.Add(label2);
-            Controls.Add(webView21);
             Controls.Add(panel2);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.None;
@@ -655,8 +609,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -665,11 +617,6 @@
 
         private Panel GeneralPanel;
         private Panel panel2;
-        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
-        private Label label2;
-        private PictureBox pictureBox1;
-        private PictureBox pictureBox2;
-        private Label label4;
         private PictureBox Icon_pictureBox;
         private Label label1;
         private TextBox BlindName_textBox;
@@ -714,5 +661,6 @@
         private TextBox Num_textBox;
         private TextBox OldBlind_textBox;
         private CustomComboBox OldBlind_comboBox;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
     }
 }

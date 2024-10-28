@@ -28,7 +28,7 @@ namespace main.contents
         {
             InitializeComponent();
             InitializeAsync();
-            webView21.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);
+            webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '차양정보'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -299,8 +299,16 @@ namespace main.contents
                         }
                     }
                 }
+                res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT Max(일사량) From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='남' And 각도='90˚'and not 기간='연간값'");
+                double max = 0;
+                if (res2.Length > 0)
+                {
+                    int n2 = ((int)Convert.ToDouble(res2[0][0])).ToString().Length;
+                    max = Convert.ToInt64(Convert.ToDouble(res2[0][0]) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1) ;
 
-                runScript("drawChart3([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150}])");
+                }
+                runScript("drawChart_blind([{type:\"line\",label:\"차양가동율(남향)\",data:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:" + max + ",dash:false,barPercentage:0.7}])");
+               // runScript("drawChart_blind([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150}])");
             }
             else
             {

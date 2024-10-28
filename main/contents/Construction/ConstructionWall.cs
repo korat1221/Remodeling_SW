@@ -90,7 +90,7 @@ namespace main.contents
         {
             scriptable = true;
 
-            runScript("drawWall([{\"cate\":-1,\"width\": 80,\"temper\": 18.660557954943386},{\"cate\":2,\"width\": 80,\"temper\": -4.684837165869034},{\"cate\":-1,\"width\": 80,\"temper\": -5.000000000000002}])");
+            runScript("drawWall([{\"cate\":-1,\"width\": 80,\"temper\": 20},{\"cate\":2,\"width\": 80,\"temper\":-5},{\"cate\":-1,\"width\": 80,\"temper\": -5.000000000000002}])");
 
         }
         public void runScript(string script)
@@ -1081,12 +1081,15 @@ namespace main.contents
                 Rtot = Rsi + Rse + Rtot;
                 double Q = (20 - (-5)) / Rtot;
 
-                Material_T[0] = (20 - Q * Rsi);
+                Material_T[0] = 20;
+                //  Material_T[0] = (20 - Q * Rsi);
                 for (int k = 1; k < Ucalc_dataGridView.RowCount + 1; k++)
                 {
                     Material_T[k] = (Material_T[k - 1] - Q * Material_R[k - 1]);
                 }
-                Material_T[Ucalc_dataGridView.RowCount + 1] = Material_T[Ucalc_dataGridView.RowCount] - Q * Rse;
+                Material_T[Ucalc_dataGridView.RowCount] = -5;
+                Material_T[Ucalc_dataGridView.RowCount + 1] = -5;
+                //Material_T[Ucalc_dataGridView.RowCount + 1] = Material_T[Ucalc_dataGridView.RowCount] - Q * Rse;
 
                 Material_dtot_textBox.Text = String.Format("{0:F0}", dtot);
                 Material_Rtot_textBox.Text = String.Format("{0:F2}", Rtot);
@@ -1095,7 +1098,7 @@ namespace main.contents
 
                 int i = 0;
                 int count = Ucalc_dataGridView.RowCount + 1;
-                string s = "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 80,\"temper\":  " + Material_T[0] + "},";
+                string s = "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 50,\"temper\":  " + Material_T[0] + "},";
 
                 while (++i < count)
                 {
@@ -1104,7 +1107,7 @@ namespace main.contents
                     s += "{\"cate\":\"" + cate + "\",\"bgcolor\":\"" + color + "\",\"width\": " + Material_d[i - 1] + ",\"temper\":  " + Material_T[i] + "},";
                 }
 
-                s += "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 80,\"temper\":  " + Material_T[i] + "},";
+                s += "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 50,\"temper\":  " + Material_T[i] + "},";
 
                 runScript("drawWall([" + s + "])");
 

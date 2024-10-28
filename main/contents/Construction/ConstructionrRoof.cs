@@ -957,12 +957,15 @@ namespace main.contents
                 Rtot = Rsi + Rse + Rtot;
                 double Q = (20 - (-5)) / Rtot;
 
-                Material_T[0] = (20 - Q * Rsi);
+                //Material_T[0] = (20 - Q * Rsi)
+                Material_T[0] = 20;
                 for (int k = 1; k < Ucalc_dataGridView.RowCount + 1; k++)
                 {
                     Material_T[k] = (Material_T[k - 1] - Q * Material_R[k - 1]);
                 }
-                Material_T[Ucalc_dataGridView.RowCount + 1] = Material_T[Ucalc_dataGridView.RowCount ] - Q * Rse;
+                //Material_T[Ucalc_dataGridView.RowCount + 1] = Material_T[Ucalc_dataGridView.RowCount ] - Q * Rse
+                Material_T[Ucalc_dataGridView.RowCount] = -5;
+                Material_T[Ucalc_dataGridView.RowCount + 1] = -5;
 
 
 
@@ -973,7 +976,7 @@ namespace main.contents
 
                 int i = 0;
                 int count = Ucalc_dataGridView.RowCount + 1;
-                string s = "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 80,\"temper\":  " + Material_T[0] + "},";
+                string s = "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 50,\"temper\":  " + Material_T[0] + "},";
 
                 while (++i < count)
                 {
@@ -982,7 +985,7 @@ namespace main.contents
                     s += "{\"cate\":\"" + cate + "\",\"bgcolor\":\"" + color + "\",\"width\": " + Material_d[i - 1] + ",\"temper\":  " + Material_T[i] + "},";
                 }
 
-                s += "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 80,\"temper\":  " + Material_T[i] + "},";
+                s += "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 50,\"temper\":  " + Material_T[i] + "},";
 
                 runScript("drawWall([" + s + "])");
 
