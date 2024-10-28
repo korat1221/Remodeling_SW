@@ -348,6 +348,11 @@ input, select {
     margin-right: 6px !important;
     background-size: contain;
 }
+.cls-RENSystem-icon {
+    background-image: url(../images/1sticon/6.RESystem_on.png) !important;
+    margin-right: 6px !important;
+    background-size: contain;
+}
 .cls-PVSystem-icon {
     background-image: url(../images/2ndicon/6_1PVSystem.png) !important;
     margin-right: 6px !important;
