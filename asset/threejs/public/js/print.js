@@ -29,6 +29,22 @@ window.addEventListener("message", async (event) => {
             .html(el.val);
         }
       }
+   
+        let projectNumValue = o.items.find(item => item.cname === "projectnum");
+        console.log("projectNumValue : ",projectNumValue );
+        if (projectNumValue) {
+            let projectNum = projectNumValue.data[0].val; 
+            $("#buildingImage").attr("src", "img/" + projectNum + "/Building.png"); 
+        }
+
+        let zoneNumValue = o.items.find(item => item.cname === "zonenum");
+        console.log("zoneNumValue : ",zoneNumValue );
+        if (zoneNumValue) {
+            let projectNum = projectNumValue.data[0].val; 
+            let zoneNum = zoneNumValue.data[0].val; 
+            $("#zoneImage").attr("src", "img/" + projectNum + "/"+ zoneNum + ".png"); 
+        }
+
 
       setTimeout(() => {
         const ifrms = document.querySelectorAll('.ifrm-chart1');
