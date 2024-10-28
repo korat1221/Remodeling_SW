@@ -43,12 +43,27 @@ namespace main
         {
             Program.DB.deleteValue(DB.type.ProjDB, "FinalEnergy_Result_Optimal", "검토유형 ='지붕'");
             Program.DB.UseCaches(true);
-            string[][] Value = Program.DB.getValue_SameCheck(DB.type.BaseDB_Optimal, "지붕_최적안", "최적안,최적안구분", "");
+            string[][] Value = Program.DB.getValue_SameCheck(DB.type.BaseDB_Optimal, "불투명최적안", "최적안", "구조체='지붕'");
             if (Value.Length > 0)
             {
                 for (int a = 0; a < Value.Length; a++)
                 {
                     Calc_Optimal("지붕", Value[a][0]);
+                }
+            }
+            Program.DB.UseCaches(false);
+            return true;
+        }
+        public bool Calc_Optimal_Floor()
+        {
+            Program.DB.deleteValue(DB.type.ProjDB, "FinalEnergy_Result_Optimal", "검토유형 ='최하층바닥'");
+            Program.DB.UseCaches(true);
+            string[][] Value = Program.DB.getValue_SameCheck(DB.type.BaseDB_Optimal, "불투명최적안", "최적안", "구조체='최하층바닥'");
+            if (Value.Length > 0)
+            {
+                for (int a = 0; a < Value.Length; a++)
+                {
+                    Calc_Optimal("최하층바닥", Value[a][0]);
                 }
             }
             Program.DB.UseCaches(false);
@@ -79,7 +94,7 @@ namespace main
                         Load_Optimal_Roof(zone1, 리모델링안);
                         break;
                     case "최하층바닥":
-                        Load_Optimal_Floor(zone1);
+                        Load_Optimal_Floor(zone1, 리모델링안);
                         break;
                     case "창호":
                         Load_Optimal_Win(zone1);
@@ -168,138 +183,123 @@ namespace main
         #endregion
 
         #region 지붕
-        private double Get_Roof_Utb(string 유형)
-        {
-            double dU = 0; double d_Ins = 0;
-            string[][] Value1 = Program.DB.getValue(DB.type.BaseDB_Optimal, "지붕_최적안유형", "두께", "최적안구분='" + 유형 + "' and 재료유형='단열재'");
-            if (Value1.Length > 0)
-            {
-                for (int aa = 0; aa < Value1.Length; aa++)
-                {
-                    d_Ins += Convert.ToDouble(Value1[aa][0]);
-                }
-            }
-            string[][] Value2 = Program.DB.getValue_SameCheck(DB.type.BaseDB_Optimal, "지붕_최적안", "열교유형", "최적안구분='" + 유형 + "'");
-            if (Value2.Length > 0 && Value2[0][0] != "")
-            {
-                if (Value2[0][0] == "STS 브라켓" )
-                {
-                    string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕점형열교", "A,B,C,수직간격,수평간격", "열교유형 ='" + Value2[0][0] + "' and 제품명='단열앙카'");
-                    if (TB.Length > 0)
-                    {
-                        double A = Convert.ToDouble(TB[0][0]);
-                        double B = Convert.ToDouble(TB[0][1]);
-                        double C = Convert.ToDouble(TB[0][2]);
-                        double Kai = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
-                        double PerArea = 0;
-                        PerArea = 1 / (Convert.ToDouble(TB[0][3]) / 1000) / (Convert.ToDouble(TB[0][4]) / 1000);
-                        dU = Kai * PerArea;
-                    }
-                }
-                else
-                {
-                    string[][] TB;
-                    if (Value2[0][0] == ">T50덧댐형")
-                    { TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕선형열교", "A,B,C,수직간격,수평간격", "제품명 = '" + Value2[0][0] + "' and 구조유형='목구조'"); }
-                    else { TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "지붕선형열교", "A,B,C,수직간격,수평간격", "제품명 = '" + Value2[0][0] + "'"); }
-                    if (TB.Length > 0)
-                    {
-                        double A = Convert.ToDouble(TB[0][0]);
-                        double B = Convert.ToDouble(TB[0][1]);
-                        double C = Convert.ToDouble(TB[0][2]);
-                        double Psi = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
-                        double PerArea = 0;
-                        PerArea = 1 / (Convert.ToDouble(TB[0][3]) / 1000 + Convert.ToDouble(TB[0][4]) / 1000);
-                        dU = Psi * PerArea;
-                    }
-                }
-            }
-            else { }
-            return dU;
-        }
         private void Load_Optimal_Roof(Zone zone1, string 리모델링안)
         {
             zone1.zoneRoof.Clear();
-            String[][] ZoneR = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionRoof AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
+            double dU = 0; double dR = 0;
+            string 철거유형="";//내장재철거 : 수평/경사, 외장재철거 : 경사, 철거없음 : 수평  
+            string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 리모델링유형,열교가산치,열저항합계,철거유형 From 불투명최적안 where 최적안='" + 리모델링안 + "'");
+            if (Value.Length > 0)
+            {
+                dU = Convert.ToDouble((Value[0][1]));
+                dR = Convert.ToDouble(Value[0][2]);
+                철거유형 = Value[0][3];
+            }
+            String[][] ZoneR = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.유효열관류율,b.흡수율,b.직접간접,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionRoof AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
             if (ZoneR.Length > 0)
             {
                 int i = -1;
                 while (++i < ZoneR.Length)
                 {
-                    double U = Convert.ToDouble(ZoneR[i][3]); double dU = 0; double dR = 0; 
-                    string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,a.최적안구분,b.열저항합계,a.평지붕시공 From 지붕_최적안 as a Inner Join 지붕_최적안유형 as b  on a.최적안구분 = b.최적안구분 where a.최적안='" + 리모델링안 + "'");
-                    if (Value.Length > 0)
+                    double U = Convert.ToDouble(ZoneR[i][3]);
+                    if(리모델링안.Contains("알루미늄") || 리모델링안.Contains("징크"))
                     {
-                        dU = Get_Roof_Utb(Value[0][1]);
-                        dR = Convert.ToDouble(Value[0][2]);
-                        if (Value[0][0] == "신규")
-                        {
-                            U = 1 / dR + dU;
-                        }
-                        else
+                        U = 1 / (1 / Convert.ToDouble(ZoneR[i][3]) + dR) + dU;
+                    }
+                    else if (ZoneR[i][6] == "수평")
+                    {
+                        if (철거유형 == "내장재철거"||철거유형=="철거없음")
                         {
                             U = 1 / (1 / Convert.ToDouble(ZoneR[i][3]) + dR) + dU;
                         }
-
                     }
+                    else
+                    {
+                        if (철거유형 == "내장재철거" || 철거유형 == "외장재철거")
+                        {
+                            U = 1 / (1 / Convert.ToDouble(ZoneR[i][3]) + dR) + dU;
+                        }
+                    }
+                    
                     Roof roof = new Roof(ZoneR[i][0], ZoneR[i][2], Convert.ToDouble(ZoneR[i][1]), U, Convert.ToDouble(ZoneR[i][4]), ZoneR[i][5], ZoneR[i][6], ZoneR[i][7]);
                     zone1.zoneRoof.Add(roof);
                 }
-            }         
+            }
+            double Utb_2D;
+            if (Value[0][0] == "내부덧댐") { Utb_2D = 0.15; } else { Utb_2D = 0.1; }
+            Load_Optimal_dUtb_2D(zone1, "지붕", Utb_2D);
         }
-
         #endregion
-        private void Load_Optimal_Floor(Zone zone1)
+
+        #region 최하층바닥
+        private void Load_Optimal_Floor(Zone zone1, string 리모델링안)
         {
             zone1.zoneFloor.Clear();
-            String[][] ZoneF = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.직접간접,b.기초설치 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionFloor AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
+            double dU = 0; double dR = 0; string 리모델링유형 = "";
+            string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 리모델링유형,열교가산치,열저항합계,철거유형 From 불투명최적안 where 최적안='" + 리모델링안 + "'");
+            if (Value.Length > 0)
+            {
+                dU = Convert.ToDouble((Value[0][1]));
+                dR = Convert.ToDouble(Value[0][2]);
+                리모델링유형 = Value[0][0];
+            }
+
+            String[][] ZoneF = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.유효열관류율,b.직접간접,b.기초설치 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionFloor AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
             if (ZoneF.Length > 0)
             {
                 int i = -1;
                 while (++i < ZoneF.Length)
                 {
-                    double fx_f = 1;
+                    double fx_f = 0.8;
+                    double U = Convert.ToDouble(ZoneF[i][3]);
+                    if (리모델링유형 =="내부덧댐" ||(리모델링유형 == "외부덧댐" && ZoneF[i][5] == "바닥(외기)"))
+                    {
+                        U = 1 / (1 / Convert.ToDouble(ZoneF[i][3]) + dR) + dU;
+                    }
+
                     switch (ZoneF[i][5].ToString())
                     {
                         case "지면위":
                             {
-                                if (Convert.ToDouble(ZoneF[i][3]) >= 3)
+                                if (U >= 3)
                                 { fx_f = 0.3; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) >= 1)
+                                else if (U >= 1)
                                 { fx_f = 0.55; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) > 0.3)
+                                else if (U > 0.3)
                                 { fx_f = 0.7; }
                                 else { fx_f = 0.8; }
                                 break;
                             }
                         case "단열지하":
                             {
-                                if (Convert.ToDouble(ZoneF[i][3]) >= 3)
+                                if (U >= 3)
                                 { fx_f = 0.2; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) >= 1)
+                                else if (U >= 1)
                                 { fx_f = 0.45; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) > 0.3)
+                                else if (U > 0.3)
                                 { fx_f = 0.55; }
                                 else { fx_f = 0.7; }
                                 break;
                             }
                         case "비단열지하":
                             {
-                                if (Convert.ToDouble(ZoneF[i][3]) >= 3)
+                                if (U >= 3)
                                 { fx_f = 0.45; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) >= 1)
+                                else if (U >= 1)
                                 { fx_f = 0.75; }
-                                else if (Convert.ToDouble(ZoneF[i][3]) > 0.3)
+                                else if (U > 0.3)
                                 { fx_f = 0.8; }
                                 else { fx_f = 0.85; }
                                 break;
                             }
                     }
-                    Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Convert.ToDouble(ZoneF[i][1]), Convert.ToDouble(ZoneF[i][3]), ZoneF[i][5], fx_f);
-                    zone1.zoneFloor.Add(floor);
+
+                    Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Convert.ToDouble(ZoneF[i][1]), U, ZoneF[i][5], fx_f);
+                   zone1. zoneFloor.Add(floor);
                 }
             }
         }
+        #endregion
         private void Load_Optimal_Win(Zone zone1)
         {
             zone1.zoneWin.Clear();
@@ -417,7 +417,6 @@ namespace main
             }
             if (검토유형 == "외벽") { zone1.Utb[0] = Math.Min(Utb, zone1.Utb[0]); }
             else if (검토유형 == "지붕") { zone1.Utb[1] = Math.Min(Utb, zone1.Utb[1]); }
-            else if (검토유형 == "최하층바닥") { zone1.Utb[2] = Math.Min(Utb, zone1.Utb[2]); }
         }
         private void Load_Optimal_Ventil(Zone zone1)
         {

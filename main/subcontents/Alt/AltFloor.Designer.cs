@@ -1,6 +1,6 @@
 ﻿namespace main.subcontents.Alt
 {
-    partial class AltRoof
+    partial class AltFloor
     {
         /// <summary>
         /// Required designer variable.
@@ -38,9 +38,7 @@
             Ucalc_dataGridView = new DataGridView();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             Alt_dataGridView = new DataGridView();
-            RoofEx_comboBox = new CustomComboBox();
-            RoofEx_label = new Label();
-            RoofRemodelingType_comboBox = new CustomComboBox();
+            FloorRemodelingType_comboBox = new CustomComboBox();
             label11 = new Label();
             Graph_label = new Label();
             pictureBox2 = new PictureBox();
@@ -116,7 +114,7 @@
             webView21.Location = new Point(687, 50);
             webView21.Name = "webView21";
             webView21.Size = new Size(366, 284);
-            webView21.Source = new Uri("http://localhost:3000/transmit.html?type=roof", UriKind.Absolute);
+            webView21.Source = new Uri("http://localhost:3000/transmit.html?type=floor", UriKind.Absolute);
             webView21.TabIndex = 100;
             webView21.Visible = false;
             webView21.ZoomFactor = 1D;
@@ -164,39 +162,16 @@
             Alt_dataGridView.TabIndex = 101;
             Alt_dataGridView.CellContentClick += Alt_dataGridView_CellContentClick;
             // 
-            // RoofEx_comboBox
+            // FloorRemodelingType_comboBox
             // 
-            RoofEx_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            RoofEx_comboBox.Font = new Font("맑은 고딕", 9F);
-            RoofEx_comboBox.FormattingEnabled = true;
-            RoofEx_comboBox.Location = new Point(336, 12);
-            RoofEx_comboBox.Name = "RoofEx_comboBox";
-            RoofEx_comboBox.Size = new Size(120, 24);
-            RoofEx_comboBox.TabIndex = 155;
-            RoofEx_comboBox.Visible = false;
-            RoofEx_comboBox.SelectedIndexChanged += RoofEx_comboBox_SelectedIndexChanged;
-            // 
-            // RoofEx_label
-            // 
-            RoofEx_label.AutoSize = true;
-            RoofEx_label.Font = new Font("맑은 고딕", 9F);
-            RoofEx_label.Location = new Point(245, 16);
-            RoofEx_label.Name = "RoofEx_label";
-            RoofEx_label.Size = new Size(67, 15);
-            RoofEx_label.TabIndex = 154;
-            RoofEx_label.Text = "외장재유형";
-            RoofEx_label.Visible = false;
-            // 
-            // RoofRemodelingType_comboBox
-            // 
-            RoofRemodelingType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            RoofRemodelingType_comboBox.Font = new Font("맑은 고딕", 9F);
-            RoofRemodelingType_comboBox.FormattingEnabled = true;
-            RoofRemodelingType_comboBox.Location = new Point(109, 12);
-            RoofRemodelingType_comboBox.Name = "RoofRemodelingType_comboBox";
-            RoofRemodelingType_comboBox.Size = new Size(120, 24);
-            RoofRemodelingType_comboBox.TabIndex = 153;
-            RoofRemodelingType_comboBox.SelectedIndexChanged += RoofRemodelingType_comboBox_SelectedIndexChanged;
+            FloorRemodelingType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            FloorRemodelingType_comboBox.Font = new Font("맑은 고딕", 9F);
+            FloorRemodelingType_comboBox.FormattingEnabled = true;
+            FloorRemodelingType_comboBox.Location = new Point(109, 12);
+            FloorRemodelingType_comboBox.Name = "FloorRemodelingType_comboBox";
+            FloorRemodelingType_comboBox.Size = new Size(120, 24);
+            FloorRemodelingType_comboBox.TabIndex = 153;
+            FloorRemodelingType_comboBox.SelectedIndexChanged += FloorRemodelingType_comboBox_SelectedIndexChanged;
             // 
             // label11
             // 
@@ -275,7 +250,7 @@
             label1.TabIndex = 164;
             label1.Text = "* 리모델링안의 평균 점수는 100점 입니다.";
             // 
-            // AltRoof
+            // AltFloor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -287,16 +262,14 @@
             Controls.Add(TB_textBox);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
-            Controls.Add(RoofEx_comboBox);
-            Controls.Add(RoofEx_label);
-            Controls.Add(RoofRemodelingType_comboBox);
+            Controls.Add(FloorRemodelingType_comboBox);
             Controls.Add(label11);
             Controls.Add(Ucalc_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(Alt_dataGridView);
             Controls.Add(webView21);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            Name = "AltRoof";
+            Name = "AltFloor";
             Text = "Review of Alternatives";
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
@@ -320,9 +293,7 @@
         private Label label6;
         private TextBox textBox7;
         private Label label9;
-        private CustomComboBox RoofEx_comboBox;
-        private Label RoofEx_label;
-        private CustomComboBox RoofRemodelingType_comboBox;
+        private CustomComboBox FloorRemodelingType_comboBox;
         private Label label11;
         private Label Graph_label;
         private PictureBox pictureBox2;

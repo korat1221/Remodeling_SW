@@ -1,4 +1,5 @@
-﻿using main.contents.Alt;
+﻿using Eagle._Constants;
+using main.contents.Alt;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections;
@@ -18,44 +19,41 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.subcontents.Alt
 {
-    public partial class AltWall : Form
+    public partial class AltFloor : Form
     {
-        string WallRemodelingType, WallEx;
+        string FloorRemodelingType;
         int SelectRow;
         public string SelectName;
 
         bool scriptable = false;
-        public AltWall(String SelectValue)
+        public AltFloor(String SelectValue)
         {
             InitializeComponent();            
-            WallRemodelingType_comboBox.Items.Clear();
-            WallRemodelingType_comboBox.Items.Add("외부덧댐");
-            WallRemodelingType_comboBox.Items.Add("내부덧댐");
-            WallRemodelingType_comboBox.Items.Add("철거 후 신규");
+            FloorRemodelingType_comboBox.Items.Clear();
+            FloorRemodelingType_comboBox.Items.Add("외부덧댐");
+            FloorRemodelingType_comboBox.Items.Add("내부덧댐");
             create_table_DB();
             InitializeAsync();
 
-            WallRemodelingType_comboBox.SelectedIndex = 0;
-            WallEx_comboBox.SelectedIndex = 1;
+            FloorRemodelingType_comboBox.SelectedIndex = 0;
             if (SelectValue == null || SelectValue == "")
             {
-                if ((MessageBox.Show("외벽 리모델링안을 검토합니다", "외벽 리모델링안 검토", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                if ((MessageBox.Show("최하층바닥 리모델링안을 검토합니다", "최하층바닥 리모델링안 검토", MessageBoxButtons.YesNo) == DialogResult.Yes))
                 {
                     Cal_Optimal cal = new Cal_Optimal();
-                    cal.Calc_Optimal_Wall();
+                    cal.Calc_Optimal_Floor();
                     MessageBox.Show("리모델링안 검토가 완료되었습니다.");
-                    Save_WallOptimal();
-                    load_table_DB(WallRemodelingType, WallEx);
+                    Save_FloorOptimal();
+                    load_table_DB(FloorRemodelingType);
                 }
             }
             else
             {
-                string[][] Value2 = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,b.마감재분류 From 불투명최적안 as a Inner Join 마감재 as b on a.마감재=b.마감재 where a.구조체='외벽' and a.최적안='" + SelectValue + "'");
+                string[][] Value2 = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,b.마감재분류 From 불투명최적안 as a Inner Join 마감재 as b on a.마감재=b.마감재 where a.구조체='최하층바닥' and a.최적안='" + SelectValue + "'");
                 if (Value2.Length > 0)
                 {
-                    WallRemodelingType_comboBox.SelectedItem = Value2[0][0];
-                    WallEx_comboBox.SelectedItem = Value2[0][1];
-                    load_table_DB(WallRemodelingType, WallEx);
+                    FloorRemodelingType_comboBox.SelectedItem = Value2[0][0];
+                    load_table_DB(FloorRemodelingType);
                     for (int i = 0; i < Alt_dataGridView.Rows.Count; i++)
                     {
                         Alt_dataGridView.Rows[i].Cells[0].Value = false;
@@ -87,40 +85,15 @@ namespace main.subcontents.Alt
         }
 
         #region 최적안 자재 리스트
-        private void change_comboBox_WallEx()
+       
+        private void FloorRemodelingType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string[][] value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select Distinct a.마감재분류 From 마감재 as a Inner Join 불투명최적안 as b on a.마감재= b.마감재  Where b.구조체='외벽' and b.리모델링유형='" + WallRemodelingType + "'");
-            if(value.Length > 0)
+            if (FloorRemodelingType_comboBox.SelectedItem != null)
             {
-                WallEx_label.Visible = true;
-                WallEx_comboBox.Visible = true;
-                WallEx_comboBox.Items.Clear();
-                for(int a = 0; a < value.Length; a++)
+                FloorRemodelingType = FloorRemodelingType_comboBox.SelectedItem.ToString();
+                if (FloorRemodelingType != null && FloorRemodelingType != "" )
                 {
-                    WallEx_comboBox.Items.Add(value[a][0]);
-                }
-            }
-        }
-        private void WallRemodelingType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (WallRemodelingType_comboBox.SelectedItem != null)
-            {
-                WallRemodelingType = WallRemodelingType_comboBox.SelectedItem.ToString();
-                change_comboBox_WallEx();
-                if (WallRemodelingType != null && WallRemodelingType != "" && WallEx != null && WallEx != "")
-                {
-                    load_table_DB(WallRemodelingType, WallEx);
-                }
-            }
-        }
-        private void WallEx_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (WallEx_comboBox.SelectedItem != null)
-            {
-                WallEx = WallEx_comboBox.SelectedItem.ToString();
-                if (WallRemodelingType != null && WallRemodelingType != "" && WallEx != null && WallEx != "")
-                {
-                    load_table_DB(WallRemodelingType, WallEx);
+                    load_table_DB(FloorRemodelingType);
                 }
             }
         }
@@ -151,16 +124,16 @@ namespace main.subcontents.Alt
             Alt_dataGridView.Columns[8].Width = 70;
             Alt_dataGridView.Columns[9].Width = 110;
         }
-        void load_table_DB(string WallRemodelingType, string WallEx)
+        void load_table_DB(string FloorRemodelingType)
         {
             Alt_dataGridView.Rows.Clear();
-            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 리모델링안,리모델링값,순공사비,재료비,노무비,경비,에너지절감량,에너지절감률,에너지점수,쾌적성점수,적법성점수,경제성점수,종합점수 From Optimal_PreResult Where 검토유형='외벽' ORDER BY 종합점수 DESC");          
+            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 리모델링안,리모델링값,순공사비,재료비,노무비,경비,에너지절감량,에너지절감률,에너지점수,쾌적성점수,적법성점수,경제성점수,종합점수 From Optimal_PreResult Where 검토유형='최하층바닥'ORDER BY 종합점수 DESC");          
             if (Value.Length > 0)
             {
                 for (int a = 0; a < Value.Length; a++)
                 {
-                    string[][] Value2 = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,b.마감재분류 From 불투명최적안 as a Inner Join 마감재 as b on a.마감재=b.마감재 where a.구조체='외벽' and a.최적안='" + Value[a][0] + "'");
-                    if(Value2.Length > 0 && WallRemodelingType ==Value2[0][0] && WallEx == Value2[0][1])
+                    string[][] Value2 = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 리모델링유형 From 불투명최적안  where 구조체='최하층바닥' and 최적안='" + Value[a][0] + "'");
+                    if (Value2.Length > 0 && FloorRemodelingType == Value2[0][0])
                     {
                         int nRow = Alt_dataGridView.Rows.Add();
                         Alt_dataGridView.Rows[nRow].Cells[1].Value = Value[a][0];
@@ -262,7 +235,7 @@ namespace main.subcontents.Alt
             {
                 for (int a = 0; a < Value.Length; a++)
                 {
-                    if (Value[a][0] == "기존 외벽") { Add_OldWall(); }
+                    if (Value[a][0] == "기존 바닥") { Add_OldFloor(); }
                     else
                     {
                         int nRow = Ucalc_dataGridView.Rows.Add();
@@ -277,7 +250,7 @@ namespace main.subcontents.Alt
                     }
 
                 }
-                Load_Graph(리모델링안);
+               Load_Graph(리모델링안);
             }
         }
         async void InitializeAsync()
@@ -288,7 +261,7 @@ namespace main.subcontents.Alt
         private void Load_Graph(string 리모델링안)
         {
             string SelectNum = "";
-            string[][] WList = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호", "");
+            string[][] WList = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호", "");
             if (WList.Length > 0)
             {
                 SelectNum = WList[0][0];
@@ -311,7 +284,7 @@ namespace main.subcontents.Alt
                 }
             }
 
-            List<Material_Wall> Materials_Wall = new List<Material_Wall>();
+            List<Material_Floor> Materials_Floor = new List<Material_Floor>();
 
             if (SelectNum != "" && SelectNum != null)
             {
@@ -321,71 +294,65 @@ namespace main.subcontents.Alt
                 double[] Material_T = new double[12]; //온도
                 double Rsi = 0.13, Rse = 0.04;
                 double dtot = 0; double Rtot = 0;
-                string 직접간접 = "";
-                string[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호 = '" + SelectNum + "'");
-                if (Load.Length > 0)
-                {
-                    직접간접 = Load[0][0];
-                }
+               
 
                 string[][] Alt = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 리모델링유형,재료유형,재료,열전도율,두께 from 불투명자재 Where 최적안='" + 리모델링안 + "' Order by ID");
                 if (Alt.Length > 0)
                 {
-                    if (Alt[0][0] == "내부덧댐" || (Alt[0][0] == "외부덧댐" && 직접간접 != "지면") || (Alt[0][0] == "철거 후 신규" && 직접간접 != "지면"))
+                    for (int a = 0; a < Alt.Length; a++)
                     {
-                        for (int a = 0; a < Alt.Length; a++)
+                        if (Alt[a][1] == "기존 바닥") { Materials_Floor.AddRange(Load_Material_OldFloor(SelectNum)); }
+                        else
                         {
-                            if (Alt[a][1] == "기존 외벽") { Materials_Wall.AddRange(Load_Material_OldWall(SelectNum)); }
-                            else
+                            string Material_main = Alt[a][1];
+                            string Material_sub = Alt[a][2];
+                            double Material_d = 0;
+                            double Material_R = 0;
+                            if (Alt[a][4] != "")
                             {
-                                string Material_main = Alt[a][1];
-                                string Material_sub = Alt[a][2];
-                                double Material_d = 0;
-                                double Material_R = 0;
-                                if (Alt[a][4] != "")
-                                {
-                                    Material_d = Convert.ToDouble(Alt[a][4]);
-                                    if ((Convert.ToDouble(Alt[a][3]) != 0) && Alt[a][1] != "외부마감재")
-                                    { Material_R = Convert.ToDouble(Alt[a][4]) / 1000 / Convert.ToDouble(Alt[a][3]); }
-                                }
-                                string Material_Color = "e1dfdf";
-                                if (Alt[a][1] == "단열재") { Material_Color = "FFDB58"; }
-                                else if (Alt[a][1] == "공기층") { Material_Color = "DDEBF7"; }
-                                Material_Wall w = new Material_Wall(Material_main, Material_sub, Material_d, Material_R, Material_Color);
-                                Materials_Wall.Add(w);
+                                Material_d = Convert.ToDouble(Alt[a][4]);
+                                if ((Convert.ToDouble(Alt[a][3]) != 0) && Alt[a][1] != "외부마감재")
+                                { Material_R = Convert.ToDouble(Alt[a][4]) / 1000 / Convert.ToDouble(Alt[a][3]); }
                             }
+                            string Material_Color = "e1dfdf";
+                            if (Alt[a][1] == "단열재") { Material_Color = "FFDB58"; }
+                            else if (Alt[a][1] == "공기층") { Material_Color = "DDEBF7"; }
+                            Material_Floor w = new Material_Floor(Material_main, Material_sub, Material_d, Material_R, Material_Color);
+                            Materials_Floor.Add(w);
                         }
                     }
                 }
-                for (int k = 0; k < Materials_Wall.Count; k++)
+                for (int k = 0; k < Materials_Floor.Count; k++)
                 {
-                    Material_Wall w = (Material_Wall)Materials_Wall[k];
+                    Material_Floor w = (Material_Floor)Materials_Floor[k];
                     dtot += w.Material_d();
                     Rtot += w.Material_R();
                 }
                 Rtot = Rsi + Rse + Rtot;
                 double Q = (20 - (-5)) / Rtot;
-                //Material_T[0] = (20 - Q * Rsi);
+                // Material_T[0] = (20 - Q * Rsi);
                 Material_T[0] = 20;
-                for (int k = 1; k < Materials_Wall.Count + 1; k++)
+                for (int k = 1; k < Materials_Floor.Count + 1; k++)
                 {
-                    Material_Wall w = (Material_Wall)Materials_Wall[k - 1];
+                    Material_Floor w = (Material_Floor)Materials_Floor[k - 1];
                     Material_T[k] = (Material_T[k - 1] - Q * w.Material_R());
                 }
-                //  Material_T[Materials_Wall.Count + 1] = Material_T[Materials_Wall.Count] - Q * Rse
-                Material_T[Materials_Wall.Count ] = -5;
-                Material_T[Materials_Wall.Count + 1] = -5;
+                // Material_T[Materials_Floor.Count + 1] = Material_T[Materials_Floor.Count] - Q * Rse;
+                Material_T[Materials_Floor.Count ] = -5;
+                Material_T[Materials_Floor.Count + 1] = -5;
+
                 int i = 0;
-                string s = "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 50,\"temper\":  " + Material_T[0] + "},";
-                while (++i < Materials_Wall.Count + 1)
+                int count = Materials_Floor.Count + 1;
+                string s = "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 50,\"temper\":  " + Material_T[count] + "},";
+                while (++i < count)
                 {
-                    Material_Wall w = (Material_Wall)Materials_Wall[i - 1];
+                    Material_Floor w = (Material_Floor)Materials_Floor[-i + count - 1];
                     var cate = w.Material_main() != null ? w.Material_main() : "---";
                     var color = w.Material_Color() != null ? w.Material_Color() : "DCDCDC";
-                    s += "{\"cate\":\"" + cate + "\",\"bgcolor\":\"" + color + "\",\"width\": " + w.Material_d() + ",\"temper\":  " + Material_T[i] + "},";
+                    s += "{\"cate\":\"" + cate + "\",\"bgcolor\":\"" + color + "\",\"width\": " + w.Material_d() + ",\"temper\":  " + Material_T[-i + count - 1] + "},";
                 }
 
-                s += "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 50,\"temper\":  " + Material_T[i] + "},";
+                s += "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 50,\"temper\":  " + "20" + "},";
 
                 runScript("drawWall([" + s + "])");
             }
@@ -394,16 +361,16 @@ namespace main.subcontents.Alt
                 webView21.Visible = false;
             }
         }
-        public List<Material_Wall> Load_Material_OldWall(string SelectNum)
+        public List<Material_Floor> Load_Material_OldFloor(string SelectNum)
         {
-            List<Material_Wall> Materials_OldWall = new List<Material_Wall>();
+            List<Material_Floor> Materials_OldFloor = new List<Material_Floor>();
             String[] Material_main = new String[10];
             String[] Material_sub = new String[10];
             String[] Material_Color = new String[10];
             double[] Material_d = new double[10];//두께
             double[] Material_R = new double[10];
             double[] Material_T = new double[12]; //온도
-            string[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall",
+            string[][] Load = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor",
                      "재료1종류,재료1두께," +
                      "재료2종류,재료2두께," +
                      "재료3종류,재료3두께," +
@@ -428,7 +395,7 @@ namespace main.subcontents.Alt
                 if (Material_sub[a] != "")
                 {
                     string[][] Value;
-                    string[][] OldWall_U;
+                    string[][] OldFloor_U;
                     Value = Program.DB.getValue(DB.type.ProjDB, "User_Material", "구분,열전도율", "재료명 = '" + Material_sub[a] + "'");
                     if (Value.Length == 0)
                     {
@@ -443,17 +410,17 @@ namespace main.subcontents.Alt
                         { Material_Color[a] = Value[0][2]; }
                         catch { Material_Color[a] = "FFFFFF"; }
                     };
-                    Material_Wall w = new Material_Wall(Material_main[a], Material_sub[a], Material_d[a], Material_R[a], Material_Color[a]);
-                    Materials_OldWall.Add(w);
+                    Material_Floor w = new Material_Floor(Material_main[a], Material_sub[a], Material_d[a], Material_R[a], Material_Color[a]);
+                    Materials_OldFloor.Add(w);
                 }
             }
-            return Materials_OldWall;
+            return Materials_OldFloor;
         }
         void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             scriptable = true;
 
-           // runScript("drawWall([{\"cate\":-1,\"width\": 80,\"temper\": 18.660557954943386},{\"cate\":2,\"width\": 80,\"temper\": -4.684837165869034},{\"cate\":-1,\"width\": 80,\"temper\": -5.000000000000002}])");
+            //runScript("drawFloor([{\"cate\":-1,\"width\": 80,\"temper\": 18.660557954943386},{\"cate\":2,\"width\": 80,\"temper\": -4.684837165869034},{\"cate\":-1,\"width\": 80,\"temper\": -5.000000000000002}])");
 
         }
         public void runScript(string script)
@@ -463,18 +430,18 @@ namespace main.subcontents.Alt
                 webView21.CoreWebView2.ExecuteScriptAsync(script);
             }
         }
-        private void Add_OldWall()
+        private void Add_OldFloor()
         {
             int nRow = Ucalc_dataGridView.Rows.Add();
             Ucalc_dataGridView.Rows[nRow].Cells[0].Value = nRow + 1;
-            Ucalc_dataGridView.Rows[nRow].Cells[1].Value = "기존외벽";
+            Ucalc_dataGridView.Rows[nRow].Cells[1].Value = "기존바닥";
             Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "Var";
             Ucalc_dataGridView.Rows[nRow].Cells[3].Value = "Var";
             Ucalc_dataGridView.Rows[nRow].Cells[4].Value = "Var";
         }
         private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {
-            if (Ucalc_dataGridView.Rows[row].Cells[1].Value != null && Ucalc_dataGridView.Rows[row].Cells[1].Value.ToString() == "기존외벽")
+            if (Ucalc_dataGridView.Rows[row].Cells[1].Value != null && Ucalc_dataGridView.Rows[row].Cells[1].Value.ToString() == "기존바닥")
             {
                 if (column == 4)
                 {
@@ -505,44 +472,25 @@ namespace main.subcontents.Alt
             if (Value.Length > 0 && Value[0][0] != "")
             {
                 string TB_Type = null; string TBName = null;
-
-                if (Value[0][0] == "직접고정" || Value[0][0] == "트러스(점형)")
+                TBName = Value[0][0];
+                string[][] TValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥선형열교", "열교유형", "제품명='" + TBName + "'");
+                if (TValue.Length > 0)
+                { TB_Type = TValue[0][0]; }
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥선형열교이미지", "이미지_구조유형,이미지_고정유형", "제품명 = '" + TBName + "'  And 열교유형 = '" + TB_Type + "'");
+                if (Image.Length > 0)
                 {
-                    TB_Type = Value[0][0];
-                    TBName = "단열앙카";
-                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_구조유형, 이미지_고정유형", "제품명 = '" + TBName + "' And 열교유형 = '" + TB_Type + "'");
-                    if (Image.Length > 0)
-                    {
-                        pictureBox1.Visible = true;
-                        pictureBox1.Load(Program.gPath + Image[0][0]);
-                        pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-                        pictureBox2.Visible = true;
-                        pictureBox2.Load(Program.gPath + Image[0][1]);
-                        pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-                    }
-                }
-                else
-                {
-                    TBName = Value[0][0];
-                    string[][] TValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교", "열교유형", "제품명='" + TBName + "'");
-                    if (TValue.Length > 0)
-                    { TB_Type = TValue[0][0]; }
-                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽선형열교이미지", "이미지_구조유형, 이미지_고정유형", "제품명 = '" + TBName + "' And 열교유형 = '" + TB_Type + "'");
-                    if (Image.Length > 0)
-                    {
-                        pictureBox1.Visible = true;
-                        pictureBox1.Load(Program.gPath + Image[0][0]);
-                        pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-                        pictureBox2.Visible = true;
-                        pictureBox2.Load(Program.gPath + Image[0][1]);
-                        pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-                    }
+                    pictureBox1.Visible = true;
+                    pictureBox1.Load(Program.gPath + Image[0][0]);
+                    pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                    pictureBox2.Visible = true;
+                    pictureBox2.Load(Program.gPath + Image[0][1]);
+                    pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
                 }
 
                 double dU = Convert.ToDouble(Value[0][1]);
                 TB_textBox.Visible = true;
                 dU_textBox.Visible = true;
-                if (TBName == "외단열미장")
+                if (TBName == "열교없음")
                 {
                     TB_textBox.Text = "열교없음";
                     pictureBox1.Visible = false;
@@ -557,10 +505,10 @@ namespace main.subcontents.Alt
 
         #region 비용 및 절감량 계산
 
-        private void Save_WallOptimal()
+        private void Save_FloorOptimal()
         {
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
-            string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 최적안 From 불투명최적안  where 구조체='외벽'");
+            string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 최적안 From 불투명최적안  where 구조체='최하층바닥'");
             if(Value.Length > 0)
             {
                 for(int a=0; a<Value.Length; a++)
@@ -582,21 +530,23 @@ namespace main.subcontents.Alt
                     Program.DB.setValue(DB.type.ProjDB, "Optimal_PreResult", "프로젝트번호,프로젝트유형,검토유형,리모델링안," +
                    "리모델링값유형,리모델링값,순공사비,재료비,노무비,경비,에너지절감량,에너지절감률," +
                    "에너지점수,쾌적성점수,적법성점수,경제성점수,종합점수",
-                   "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','외벽','" + 리모델링안 + "','유효열관류율','" + ueff.ToString() + "','" +
+                   "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','최하층바닥','" + 리모델링안 + "','유효열관류율','" + ueff.ToString() + "','" +
                    cost[0].ToString() + "','" + cost[1].ToString() + "','" + cost[2].ToString() + "','" + cost[3].ToString() + "','" +
                    Saving.ToString() + "','" + SavingPercent.ToString() + "','" +
                    point[0].ToString() + "','" + point[1].ToString() + "','" + point[2].ToString() + "','" + point[3].ToString() + "','" + point[4].ToString() 
                    + "'", "검토유형,리모델링안");
                 }
-                string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select 리모델링안,에너지점수,쾌적성점수,적법성점수,경제성점수 From Optimal_PreResult  where 검토유형='외벽'");
-                if(Value2.Length  > 0)
+
+                Program.DB.deleteValue(DB.type.ProjDB, "Optimal_PreResult", "순공사비='0'");
+                string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select 리모델링안,에너지점수,쾌적성점수,적법성점수,경제성점수 From Optimal_PreResult  where 검토유형='최하층바닥'");
+                if (Value2.Length > 0)
                 {
                     double[] Point1 = new double[Value2.Length]; //에너지
                     double[] Point2 = new double[Value2.Length]; //쾌적성
                     double[] Point3 = new double[Value2.Length]; //적법성
                     double[] Point4 = new double[Value2.Length]; //경제성
                     double[] Point5 = new double[Value2.Length]; //종합
-                    for (int a=0 ; a<Value2.Length; a++)
+                    for (int a = 0; a < Value2.Length; a++)
                     {
                         Point1[a] = Convert.ToDouble(Value2[a][1]);
                         Point2[a] = Convert.ToDouble(Value2[a][2]);
@@ -618,41 +568,40 @@ namespace main.subcontents.Alt
                         Point5[a] = (Point1[a] + Point2[a] + Point3[a] + Point4[a]) / 4; //종합
                         Program.DB.setValue(DB.type.ProjDB, "Optimal_PreResult", "프로젝트번호,프로젝트유형,검토유형,리모델링안," +
                         "에너지점수,쾌적성점수,적법성점수,경제성점수,종합점수",
-                        "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','외벽','" + Value2[a][0] + "','" +
+                        "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','최하층바닥','" + Value2[a][0] + "','" +
                          Point1[a].ToString() + "','" + Point2[a].ToString() + "','" + Point3[a].ToString() + "','" + Point4[a].ToString() + "','" + Point5[a].ToString()
                          + "'", "검토유형,리모델링안");
                     }
                 }
+
             }
         }
         private double[] Cal_Cost(string 리모델링안)
         {
             double[] cost = new double[4];//직접공사비, 재료비, 노무비, 경비 순 
-            double Area = 0;
+            double Area_수평 = 0; 
             string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 리모델링유형,직접공사비,재료비,노무비,경비 from 불투명최적안 Where 최적안='" + 리모델링안 + "'");
+            string[][] ar = null;
+                   
             if (Value.Length > 0)
             {
-                if (Value[0][0] == "내부덧댐")
+                if (Value[0][0]=="내부덧댐")
                 {
-                    string[][] ar = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(a.면적) From ZoneEnvelope_3D as a Inner JoIn ConstructionWall as b on a.구조체번호=b.번호  where a.외피유형='외벽'");
-                    if (ar.Length > 0)
-                    {
-                        Area = Convert.ToDouble(ar[0][0]);
-                    }
+                    ar = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(a.면적) From ZoneEnvelope_3D as a Inner JoIn ConstructionFloor as b on a.구조체번호=b.번호  where a.외피유형='최하층바닥'");
                 }
                 else
                 {
-                    string[][] ar = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(a.면적) From ZoneEnvelope_3D as a Inner JoIn ConstructionWall as b on a.구조체번호=b.번호 where a.외피유형='외벽'and Not b.직접간접 ='지면'");
-                    if (ar.Length > 0)
-                    {
-                        Area = Convert.ToDouble(ar[0][0]);
-                    }
+                    ar = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(a.면적) From ZoneEnvelope_3D as a Inner JoIn ConstructionFloor as b on a.구조체번호=b.번호  where a.외피유형='최하층바닥' and b.기초설치='바닥(외기)'");
                 }
-                cost[0] = Convert.ToDouble(Value[0][1]) * Area;
-                cost[1] = Convert.ToDouble(Value[0][2]) * Area;
-                cost[2] = Convert.ToDouble(Value[0][3]) * Area;
-                cost[3] = Convert.ToDouble(Value[0][4]) * Area;
 
+                if (ar.Length > 0 && ar[0][0] != "")
+                {
+                    Area_수평 = Convert.ToDouble(ar[0][0]);
+                }
+                cost[0] = Convert.ToDouble(Value[0][1]) * Area_수평;
+                cost[1] = Convert.ToDouble(Value[0][2]) * Area_수평;
+                cost[2] = Convert.ToDouble(Value[0][3]) * Area_수평;
+                cost[3] = Convert.ToDouble(Value[0][4]) * Area_수평;
             }
             return cost;
         }
@@ -660,7 +609,7 @@ namespace main.subcontents.Alt
         {
             double SavingPercent = 0;
             string[][] PreValue = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량,기저에너지 from FinalEnergy_Result Where 연료='전체'and 월='연간'");
-            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result_Optimal Where 리모델링안='" + 리모델링안 + "' and 검토유형='외벽' and 연료='전체'");
+            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result_Optimal Where 리모델링안='" + 리모델링안 + "' and 검토유형='최하층바닥' and 연료='전체'");
             if (Value.Length > 0 && PreValue.Length > 0)
             {
                 double pre = Convert.ToDouble(PreValue[0][0]) - Convert.ToDouble(PreValue[0][1]);
@@ -672,7 +621,7 @@ namespace main.subcontents.Alt
         {
             double Saving = 0;
             string[][] PreValue = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량,기저에너지 from FinalEnergy_Result Where 연료='전체'and 월='연간'");
-            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result_Optimal Where 리모델링안='" + 리모델링안 + "' and 검토유형='외벽' and 연료='전체'");
+            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result_Optimal Where 리모델링안='" + 리모델링안 + "' and 검토유형='최하층바닥' and 연료='전체'");
             if (Value.Length > 0 && PreValue.Length > 0)
             {
                 Saving = Math.Max((Convert.ToDouble(PreValue[0][0]) - Convert.ToDouble(Value[0][0])), 0);
@@ -682,7 +631,7 @@ namespace main.subcontents.Alt
         #endregion
 
         #region 점수계산
-        private double Cal_Ueff(string 리모델링안)
+        private double Cal_Ueff(string 리모델링안) //내장재철거 : 수평/경사, 외장재철거 : 경사, 철거없음 : 수평  
         {
             double R = 0; double dU = 0; string 리모델링유형 = "";
             string[][] Alt = Program.DB.getValue(DB.type.BaseDB_Optimal, "불투명최적안", "열저항합계,열교가산치,리모델링유형", "최적안='" + 리모델링안 + "'");
@@ -693,34 +642,17 @@ namespace main.subcontents.Alt
                 리모델링유형 = Alt[0][2];
             }
             double Total_Area = 0, Ueff_avg = 0;
-            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "select a.면적,b.열관류율,b.직접간접 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호");
+            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "select a.면적,b.열관류율,b.기초설치,a.방위 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionFloor AS b ON a.구조체번호 = b.번호");
             if (Value.Length > 0)
             {
                 for (int k = 0; k < Value.Length; k++)
                 {
-                    double Ueff = 0;
+                    double Ueff = Convert.ToDouble(Value[k][1]);
                     Total_Area += Convert.ToDouble(Value[k][0]);
-                    if (Value[k][2] == "지면")
+                    
+                    if (리모델링유형 == "내부덧댐" || (리모델링유형 == "외부덧댐" && Value[k][2] == "바닥(외기)"))
                     {
-                        if (리모델링유형 == "내부덧댐")
-                        {
-                            Ueff = 1 / (1 / Convert.ToDouble(Value[k][1]) + R) + dU;
-                        }
-                        else
-                        {
-                            Ueff = Convert.ToDouble(Value[k][1]);
-                        }
-                    }
-                    else
-                    {
-                        if (리모델링유형 == "철거 후 신규")
-                        {
-                            Ueff = 1 / R + dU;
-                        }
-                        else
-                        {
-                            Ueff = 1 / (1 / Convert.ToDouble(Value[k][1]) + R) + dU;
-                        }
+                        Ueff = 1 / (1 / Convert.ToDouble(Value[k][1]) + R) + dU;
                     }
 
                     Ueff_avg += Convert.ToDouble(Value[k][0]) * Ueff;
@@ -733,7 +665,7 @@ namespace main.subcontents.Alt
         {
             double point = 0;
             double Total_Area = 0, RuleValue = 0;
-            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "select a.면적,b.유효열관류율,b.법규열관류율 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionWall AS b ON a.구조체번호 = b.번호");
+            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "select a.면적,b.유효열관류율,b.법규열관류율 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionFloor AS b ON a.구조체번호 = b.번호");
             if (Value.Length > 0)
             {
                 for (int k = 0; k < Value.Length; k++)
@@ -750,7 +682,7 @@ namespace main.subcontents.Alt
         {
             double point = 0; double RuleSaving = 0;
             string[][] PreValue = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량,기저에너지 from FinalEnergy_Result Where 연료='전체'and 월='연간'");
-            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result_Rule Where 검토유형='외벽' and 연료='전체'");
+            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result_Rule Where 검토유형='최하층바닥' and 연료='전체'");
             if (Value.Length > 0 && PreValue.Length > 0)
             {
                 RuleSaving = Math.Max((Convert.ToDouble(PreValue[0][0]) - Convert.ToDouble(Value[0][0])), 0);
@@ -779,7 +711,7 @@ namespace main.subcontents.Alt
             double point = 0;
             double CostAVG = 0;
 
-            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 순공사비 From Optimal_PreResult Where 검토유형='외벽'");
+            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 순공사비 From Optimal_PreResult Where 검토유형='최하층바닥'");
             if (Value.Length > 0)
             {
                 for (int a = 0; a < Value.Length; a++)
@@ -805,7 +737,7 @@ namespace main.subcontents.Alt
             }
             else
             {
-                MessageBox.Show("외벽 리모델링안을 선택해주세요.");
+                MessageBox.Show("최하층바닥 리모델링안을 선택해주세요.");
             }
         }
 
