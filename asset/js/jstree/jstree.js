@@ -2666,6 +2666,15 @@
 				return false;
 			}
 			animation = animation === undefined ? this.settings.core.animation : animation;
+			
+				// **여기서 추가: 선택된 노드의 형제 노드를 닫기**
+				var siblings = this.get_node(obj.parent).children; // 부모의 자식 노드 가져오기
+				for (var i = 0; i < siblings.length; i++) {
+					if (siblings[i] !== obj.id) { // 현재 노드가 아닌 형제 노드에 대해
+						this.close_node(siblings[i], animation); // 형제 노드 닫기
+					}
+				}
+			
 			if(!this.is_closed(obj)) {
 				if(callback) {
 					callback.call(this, obj, false);
