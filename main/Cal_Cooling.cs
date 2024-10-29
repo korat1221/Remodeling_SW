@@ -1,7 +1,5 @@
-﻿using main
-    ;
+﻿using main    ;
 using main.subcontents;
-using Microsoft.Office.Interop.Excel;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections;
