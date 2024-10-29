@@ -68,7 +68,7 @@
             webView21.DefaultBackgroundColor = Color.White;
             webView21.Location = new Point(0, 2);
             webView21.Name = "webView21";
-            webView21.Size = new Size(255, 754);
+            webView21.Size = new Size(270, 754);
             webView21.TabIndex = 15;
             webView21.ZoomFactor = 1D;
             // 
@@ -77,7 +77,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(566, 800);
+            ClientSize = new Size(700, 800);
             Controls.Add(webView21);
             Controls.Add(pictureBox7);
             FormBorderStyle = FormBorderStyle.None;
