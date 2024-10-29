@@ -17,7 +17,7 @@ using static main.DB;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Security.Cryptography;
 using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
+
 using System.Data.SQLite;
 using main.subcontents.HeatingSystem;
 
@@ -29,7 +29,7 @@ namespace main.contents
 
         public OpenProject()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
 
             new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
 
@@ -43,7 +43,7 @@ namespace main.contents
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
 
         }
 

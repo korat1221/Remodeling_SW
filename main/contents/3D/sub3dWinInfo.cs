@@ -1,5 +1,5 @@
 ﻿using main.subcontents.ConstructionRoof;
-using Microsoft.Office.Interop.Excel;
+
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace main.contents
         double shgc, light, Ug, Glass_Ex, Glass_In;
         public sub3dWINInfo()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             InitializeAsync();
             webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
             webView22.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);

@@ -21,7 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static main.DB;
-using static System.Net.Mime.MediaTypeNames;
+
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.contents
@@ -40,7 +40,7 @@ namespace main.contents
 
         string SelectZone_nonsplit, SelectAHU_nonsplit, SelectCG_nonsplit, SelectCGC_nonsplit, SelectCGE_nonsplit, SelectCGN_nonsplit;//저장항목설비,제어,외기냉방,
         List<string> SelectCG_split = new List<string>(), SelectCGC_split = new List<string>(), SelectCGE_split = new List<string>(), SelectCGN_split = new List<string>();
-        double PowerTotal = 0, EERTotal = 0; 
+        double PowerTotal = 0, EERTotal = 0;
         //냉각탑관련
         List<string> SelectCT_split = new List<string>(), SelectCTN_split = new List<string>();
         string SelectCT_nonsplit, SelectCTN_nonsplit; //냉각탑부분
@@ -97,7 +97,7 @@ namespace main.contents
 
         public CoolingSystem()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '냉방시스템'");
             if (Image.Length > 0)
             {
@@ -106,7 +106,7 @@ namespace main.contents
             }
 
             string[][] 프로젝트 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-            if(프로젝트.Length > 0)
+            if (프로젝트.Length > 0)
             {
                 프로젝트유형 = 프로젝트[0][0];
             }
@@ -332,7 +332,12 @@ namespace main.contents
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+        }
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+            Panel p = (Panel)sender;
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
         #region 4. 설비 선택
@@ -3952,6 +3957,7 @@ namespace main.contents
                 }
             }
         }
+
     }
 
 }

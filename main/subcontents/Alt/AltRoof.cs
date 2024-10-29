@@ -27,7 +27,7 @@ namespace main.subcontents.Alt
         bool scriptable = false;
         public AltRoof(String SelectValue)
         {
-            InitializeComponent();            
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);            
             RoofRemodelingType_comboBox.Items.Clear();
             RoofRemodelingType_comboBox.Items.Add("외부덧댐");
             RoofRemodelingType_comboBox.Items.Add("내부덧댐");

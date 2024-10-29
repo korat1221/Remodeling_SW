@@ -29,7 +29,7 @@ namespace main.subcontents.ZoneLighting
 
         public LightingNatural_facade(string NaturalType, string ZoneNum)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             this.ZoneNum = ZoneNum;
             this.NaturalType = NaturalType;
             NaturalType_textBox.Text = NaturalType;

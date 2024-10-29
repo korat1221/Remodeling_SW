@@ -54,7 +54,7 @@ namespace main.contents
 
         public EquipmentList()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");//User_GWHP
             Program.DB.initTable(DB.type.ProjDB, "User_Boiler");
             Program.DB.initTable(DB.type.ProjDB, "User_ABS");
@@ -133,7 +133,7 @@ namespace main.contents
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
         private void Load_Qmax()
         {
@@ -1122,26 +1122,26 @@ namespace main.contents
 
         private void Load_PV()
         {
-            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,CELLTYPE,길이,높이,정격출력,Kpk,설치", "");
-            if (User_Value.Length > 0)
-            {
-                for (int n = 0; n < User_Value.Length; n++)
-                {
-                    PV_dataGridView.Rows.Add();
-                    int nRow = PV_dataGridView.Rows.Count - 1;
-                    PV_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
-                    PV_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
-                    PV_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
-                    PV_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-                    PV_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
-                    PV_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
-                    PV_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
-                    PV_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
-                    PV_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
-                    PV_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
-                    PV_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][10];
-                }
-            }
+        //    string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,CELLTYPE,길이,높이,정격출력,Kpk,설치", "");
+        //    if (User_Value.Length > 0)
+        //    {
+        //        for (int n = 0; n < User_Value.Length; n++)
+        //        {
+        //            PV_dataGridView.Rows.Add();
+        //            int nRow = PV_dataGridView.Rows.Count - 1;
+        //            PV_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+        //            PV_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+        //            PV_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+        //            PV_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+        //            PV_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+        //            PV_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
+        //            PV_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
+        //            PV_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+        //            PV_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
+        //            PV_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
+        //            PV_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][10];
+        //        }
+        //    }
         }
         #endregion
         ///////////////////////////////////////////////////연료전지/////////////////////////////////////////////////////////////////
@@ -3553,18 +3553,18 @@ namespace main.contents
             AHU_dataGridView.Columns[11].Width = 40;
             AHU_dataGridView.Columns[12].Width = 40;
             AHU_dataGridView.Columns[13].Width = 50;
-            AHU_dataGridView.Columns[14].Width = 50;
+            AHU_dataGridView.Columns[14].Width = 55;
             AHU_dataGridView.Columns[15].Width = 50;
-            AHU_dataGridView.Columns[16].Width = 50;
+            AHU_dataGridView.Columns[16].Width = 55;
             AHU_dataGridView.Columns[17].Width = 40;
-            AHU_dataGridView.Columns[18].Width = 50;
-            AHU_dataGridView.Columns[19].Width = 50;
+            AHU_dataGridView.Columns[18].Width = 55;
+            AHU_dataGridView.Columns[19].Width = 55;
             AHU_dataGridView.Columns[20].Width = 100;
             AHU_dataGridView.Columns[21].Width = 80;
             AHU_dataGridView.Columns[22].Width = 80;
-            AHU_dataGridView.Columns[23].Width = 40;
-            AHU_dataGridView.Columns[24].Width = 40;
-            AHU_dataGridView.Columns[25].Width = 40;
+            AHU_dataGridView.Columns[23].Width = 45;
+            AHU_dataGridView.Columns[24].Width = 45;
+            AHU_dataGridView.Columns[25].Width = 45;
             AHU_dataGridView.Columns[26].Width = 40;
             AHU_dataGridView.Columns[27].Width = 40;
             AHU_dataGridView.Columns[28].Width = 40;

@@ -101,7 +101,7 @@
             // glaassinfo_label
             // 
             glaassinfo_label.AutoSize = true;
-            glaassinfo_label.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            glaassinfo_label.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             glaassinfo_label.Location = new Point(37, 86);
             glaassinfo_label.Name = "glaassinfo_label";
             glaassinfo_label.Size = new Size(59, 15);
@@ -111,7 +111,7 @@
             // Dim_label
             // 
             Dim_label.AutoSize = true;
-            Dim_label.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            Dim_label.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             Dim_label.Location = new Point(306, 86);
             Dim_label.Name = "Dim_label";
             Dim_label.Size = new Size(59, 15);
@@ -141,7 +141,7 @@
             // label28
             // 
             label28.AutoSize = true;
-            label28.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label28.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label28.Location = new Point(37, 17);
             label28.Name = "label28";
             label28.Size = new Size(99, 15);

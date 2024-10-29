@@ -5,7 +5,7 @@
         string sid = "";
         public sub3dSpaceInfo()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {

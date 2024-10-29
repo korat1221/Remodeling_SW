@@ -24,7 +24,7 @@ namespace main.subcontents
 
         public MaterialDB()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             
 
             //재료유형 리스트 생성 

@@ -56,8 +56,8 @@
             // 
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
-            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
-            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.Control;
+            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.Control;
             tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
             tabControl1.DisplayStyleProvider.FocusTrack = true;
             tabControl1.DisplayStyleProvider.HotTrack = true;
@@ -102,7 +102,7 @@
             dataGridView2.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -113,7 +113,7 @@
             dataGridView2.Name = "dataGridView2";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font =  new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -122,7 +122,7 @@
             dataGridView2.RowHeadersVisible = false;
             dataGridView2.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font =  new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -154,7 +154,7 @@
             comboBox4.CheckOnClick = true;
             comboBox4.DrawMode = DrawMode.OwnerDrawVariable;
             comboBox4.DropDownHeight = 1;
-            comboBox4.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            comboBox4.Font = new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             comboBox4.FormattingEnabled = true;
             comboBox4.IntegralHeight = false;
             comboBox4.Location = new Point(389, 25);
@@ -193,7 +193,7 @@
             comboBox3.CheckOnClick = true;
             comboBox3.DrawMode = DrawMode.OwnerDrawVariable;
             comboBox3.DropDownHeight = 1;
-            comboBox3.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            comboBox3.Font = new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             comboBox3.FormattingEnabled = true;
             comboBox3.IntegralHeight = false;
             comboBox3.Location = new Point(262, 25);
@@ -210,7 +210,7 @@
             comboBox2.CheckOnClick = true;
             comboBox2.DrawMode = DrawMode.OwnerDrawVariable;
             comboBox2.DropDownHeight = 1;
-            comboBox2.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            comboBox2.Font = new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             comboBox2.FormattingEnabled = true;
             comboBox2.IntegralHeight = false;
             comboBox2.Location = new Point(135, 25);
@@ -227,7 +227,7 @@
             comboBox1.CheckOnClick = true;
             comboBox1.DrawMode = DrawMode.OwnerDrawVariable;
             comboBox1.DropDownHeight = 1;
-            comboBox1.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            comboBox1.Font = new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             comboBox1.FormattingEnabled = true;
             comboBox1.IntegralHeight = false;
             comboBox1.Location = new Point(8, 25);
@@ -251,7 +251,7 @@
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.Font = new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle4.SelectionForeColor = Color.Black;
@@ -263,7 +263,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle5.Font =  new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
@@ -272,7 +272,7 @@
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle6.Font =  new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle6.ForeColor = Color.Black;
             dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle6.SelectionForeColor = Color.Black;

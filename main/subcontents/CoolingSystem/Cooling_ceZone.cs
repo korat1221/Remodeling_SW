@@ -19,7 +19,7 @@ namespace main.subcontents.CoolingSystem
 
         public Cooling_ceZone(string _SystemNum, string Select_nonsplit, string CEType) //Zone 또는 Ahu  항목을 가져옴
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             this.SystemNum = _SystemNum;
             ceType = CEType;
             ceType_textBox.Text = ceType;

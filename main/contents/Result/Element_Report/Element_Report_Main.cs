@@ -1,6 +1,6 @@
 ﻿using Eagle._Components.Public;
 using Eagle._Interfaces.Public;
-using Microsoft.Office.Interop.Excel;
+
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace main.contents
         public Element_Report_Main()
         {
 
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             InitializeAsync();
            
         }

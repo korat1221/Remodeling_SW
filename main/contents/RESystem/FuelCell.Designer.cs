@@ -98,7 +98,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("맑은 고딕", 10F);
+            label9.Font = new Font("나눔고딕", 9.75F);
             label9.ForeColor = Color.White;
             label9.Location = new Point(106, 14);
             label9.Name = "label9";
@@ -117,7 +117,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("맑은 고딕", 10F);
+            label1.Font = new Font("나눔고딕", 9.75F);
             label1.ForeColor = Color.White;
             label1.Location = new Point(106, 37);
             label1.Name = "label1";
@@ -130,7 +130,7 @@
             Num_textBox.BackColor = Color.FromArgb(32, 77, 112);
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new Font("맑은 고딕", 10F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            Num_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
             Num_textBox.ForeColor = Color.White;
             Num_textBox.Location = new Point(158, 14);
             Num_textBox.Name = "Num_textBox";
@@ -142,7 +142,7 @@
             // 
             Name_textBox.BackColor = Color.White;
             Name_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Name_textBox.Font = new Font("맑은 고딕", 10F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            Name_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             Name_textBox.Location = new Point(158, 35);
             Name_textBox.Name = "Name_textBox";
             Name_textBox.Size = new Size(120, 25);
@@ -182,7 +182,7 @@
             // dellabel
             // 
             dellabel.AutoSize = true;
-            dellabel.Font = new Font("맑은 고딕", 10F);
+            dellabel.Font = new Font("나눔고딕", 9.75F);
             dellabel.ForeColor = SystemColors.ActiveCaptionText;
             dellabel.Location = new Point(904, 172);
             dellabel.Name = "dellabel";
@@ -196,7 +196,7 @@
             deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             deletebutton.FlatAppearance.MouseOverBackColor = Color.LightYellow;
             deletebutton.FlatStyle = FlatStyle.System;
-            deletebutton.Font = new Font("맑은 고딕", 10F, FontStyle.Bold);
+            deletebutton.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             deletebutton.Location = new Point(941, 170);
             deletebutton.Margin = new Padding(0);
             deletebutton.Name = "deletebutton";
@@ -212,7 +212,7 @@
             W_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             W_button.FlatAppearance.MouseOverBackColor = Color.LightYellow;
             W_button.FlatStyle = FlatStyle.System;
-            W_button.Font = new Font("맑은 고딕", 10F, FontStyle.Bold);
+            W_button.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             W_button.Location = new Point(357, 65);
             W_button.Margin = new Padding(0);
             W_button.Name = "W_button";
@@ -228,7 +228,7 @@
             FCDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             FCDB_button.FlatAppearance.MouseOverBackColor = Color.LightYellow;
             FCDB_button.FlatStyle = FlatStyle.System;
-            FCDB_button.Font = new Font("맑은 고딕", 10F, FontStyle.Bold);
+            FCDB_button.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             FCDB_button.Location = new Point(158, 37);
             FCDB_button.Margin = new Padding(0);
             FCDB_button.Name = "FCDB_button";
@@ -241,7 +241,7 @@
             // HLabel
             // 
             HLabel.AutoSize = true;
-            HLabel.Font = new Font("맑은 고딕", 10F);
+            HLabel.Font = new Font("나눔고딕", 9.75F);
             HLabel.Location = new Point(543, 68);
             HLabel.Name = "HLabel";
             HLabel.Size = new Size(65, 19);
@@ -251,7 +251,7 @@
             // WLabel
             // 
             WLabel.AutoSize = true;
-            WLabel.Font = new Font("맑은 고딕", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            WLabel.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             WLabel.Location = new Point(293, 68);
             WLabel.Name = "WLabel";
             WLabel.Size = new Size(65, 19);
@@ -271,7 +271,7 @@
             FC_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 9F);
+            dataGridViewCellStyle1.Font =  new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -283,7 +283,7 @@
             FC_dataGridView.Name = "FC_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F);
+            dataGridViewCellStyle2.Font =  new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -292,7 +292,7 @@
             FC_dataGridView.RowHeadersVisible = false;
             FC_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F);
+            dataGridViewCellStyle3.Font =  new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -313,7 +313,7 @@
             // UseTime_TextBox
             // 
             UseTime_TextBox.AutoSize = true;
-            UseTime_TextBox.Font = new Font("맑은 고딕", 10F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            UseTime_TextBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             UseTime_TextBox.ForeColor = SystemColors.WindowFrame;
             UseTime_TextBox.Location = new Point(609, 119);
             UseTime_TextBox.Name = "UseTime_TextBox";
@@ -323,7 +323,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("맑은 고딕", 10F);
+            label8.Font = new Font("나눔고딕", 9.75F);
             label8.ForeColor = SystemColors.ActiveCaptionText;
             label8.Location = new Point(543, 117);
             label8.Name = "label8";
@@ -354,7 +354,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("맑은 고딕", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label7.Location = new Point(293, 117);
             label7.Name = "label7";
             label7.Size = new Size(65, 19);
@@ -364,7 +364,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("맑은 고딕", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.Location = new Point(93, 145);
             label4.Name = "label4";
             label4.Size = new Size(65, 19);
@@ -374,7 +374,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("맑은 고딕", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.Location = new Point(93, 117);
             label3.Name = "label3";
             label3.Size = new Size(65, 19);
@@ -411,7 +411,7 @@
             H_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             H_button.FlatAppearance.MouseOverBackColor = Color.LightYellow;
             H_button.FlatStyle = FlatStyle.System;
-            H_button.Font = new Font("맑은 고딕", 10F, FontStyle.Bold);
+            H_button.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             H_button.Location = new Point(609, 65);
             H_button.Margin = new Padding(0);
             H_button.Name = "H_button";
@@ -434,7 +434,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("맑은 고딕", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.Location = new Point(93, 68);
             label2.Name = "label2";
             label2.Size = new Size(65, 19);
@@ -445,7 +445,7 @@
             // 
             FCNameText.BackColor = Color.White;
             FCNameText.BorderStyle = BorderStyle.None;
-            FCNameText.Font = new Font("맑은 고딕", 10F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            FCNameText.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             FCNameText.ForeColor = SystemColors.WindowFrame;
             FCNameText.Location = new Point(190, 39);
             FCNameText.Name = "FCNameText";
@@ -457,7 +457,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("맑은 고딕", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label6.Location = new Point(93, 41);
             label6.Name = "label6";
             label6.Size = new Size(65, 19);
@@ -530,7 +530,7 @@
             // 
             // Save_button
             // 
-            Save_button.Font = new Font("맑은 고딕", 10F, FontStyle.Bold);
+            Save_button.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             Save_button.Location = new Point(1007, 659);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(78, 23);

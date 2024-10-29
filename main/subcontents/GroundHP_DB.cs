@@ -25,7 +25,7 @@ namespace main.subcontents.HeatingSystem
 
         public GroundHP_DB(String DefaultUse, String SelectHP_nonsplit, String HeatSource, String HC)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             this.DefaultUse = DefaultUse;
             this.HeatSource = HeatSource;
             this.HC = HC;

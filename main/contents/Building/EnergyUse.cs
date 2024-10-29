@@ -29,7 +29,7 @@ namespace main.contents.Building
         int Elec_SelectRow; int Gas_SelectRow, Gas_SelectColumn; int DH_SelectRow, DH_SelectColumn;
         public EnergyUse()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             InitializeAsync();
 
             Elec_StartDay_comboBox.Items.Clear();
@@ -66,7 +66,7 @@ namespace main.contents.Building
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
        
         

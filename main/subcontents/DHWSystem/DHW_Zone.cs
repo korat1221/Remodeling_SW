@@ -23,7 +23,7 @@ namespace main.subcontents.DHWSystem
 
         public DHW_Zone(String Num, String SelectZone_nonsplit)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             load_table_DB();
             SystemNum = Num;
             if(SelectZone_nonsplit != null)

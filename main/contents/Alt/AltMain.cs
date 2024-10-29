@@ -18,13 +18,13 @@ using static main.DB;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Security.Cryptography;
 using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
+
 using Eagle._Components.Public;
 using System.Drawing.Text;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.Web.WebView2.Core;
 using System.Collections;
-using Microsoft.Office.Interop.Excel;
+
 using Eagle._Interfaces.Public;
 using System.Runtime.Intrinsics.X86;
 using main.subcontents.EquipmentList;
@@ -43,7 +43,7 @@ namespace main.contents.Alt
         string SelectAlt_Floor;
         public AltMain()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             InitializeAsync();
             webView22.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);
 
@@ -199,14 +199,14 @@ namespace main.contents.Alt
         private void AltMainPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
 
         }
 
         private void panel5_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
         private void Name_textBox_TextChanged(object sender, EventArgs e)

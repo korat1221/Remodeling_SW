@@ -1,6 +1,5 @@
 ﻿using main.contents.Result.Element_Report;
 using main.subcontents.CoolingSystem;
-using Microsoft.Office.Interop.Excel;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections;
@@ -23,7 +22,7 @@ namespace main.contents.Result.Building_Report
         bool scriptable = false;
         public Building_Report()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
 
             InitializeAsync();
         }
@@ -109,7 +108,7 @@ namespace main.contents.Result.Building_Report
             while (++i < 번호.Length)
             {
                 #region 건물정보
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,주소,지역,지역구분,준공시기,연면적,건축면적,지상층수,지하층수,작성자회사,작성자,작성시기");
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,주소,지역,지역구분,준공시기,연면적,건축면적,지상층수,지하층수,작성자회사,작성자,작성시기,프로젝트번호");
                 if (Value.Length > 0)
                 {
                     __data[0].Add(new { idx = i, val = Value[0][0] }); //프로젝트명
@@ -123,7 +122,9 @@ namespace main.contents.Result.Building_Report
                     __data[8].Add(new { idx = i, val = Value[0][8] }); //지하층수
                     __data[9].Add(new { idx = i, val = Value[0][9] }); //작성자회사
                     __data[10].Add(new { idx = i, val = Value[0][10] }); //작성자
-                    __data[11].Add(new { idx = i, val = Value[0][11] }); //작성시기
+                    __data[11].Add(new { idx = i, val = Value[0][11] }); //작성시기      
+                    __data[136].Add(new { idx = i, val = Value[0][12] }); //프로젝트번호
+                    __data[137].Add(new { idx = i, val = "1F_Zone002" }); //프로젝트번호
                 }
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "projectName", data = __data[0] });
@@ -138,6 +139,8 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "reviewercompany", data = __data[9] });
                 data.Add(new { cname = "reviewername", data = __data[10] });
                 data.Add(new { cname = "reviewdate", data = __data[11] });
+                data.Add(new { cname = "projectnum", data = __data[136] });
+                data.Add(new { cname = "zonenum", data = __data[137] });
                 #endregion
 
                 #region 외벽정보
@@ -886,7 +889,7 @@ namespace main.contents.Result.Building_Report
                 if (res.Length > 0)
                 {
                     #region 건물정보
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,주소,지역,지역구분,준공시기,연면적,건축면적,지상층수,지하층수,작성자회사,작성자,작성시기");
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,주소,지역,지역구분,준공시기,연면적,건축면적,지상층수,지하층수,작성자회사,작성자,작성시기,프로젝트번호");
                     if (Value.Length > 0)
                     {
                         __data[0].Add(new { idx = i, val = Value[0][0] }); //프로젝트명
@@ -901,11 +904,14 @@ namespace main.contents.Result.Building_Report
                         __data[9].Add(new { idx = i, val = Value[0][9] }); //작성자회사
                         __data[10].Add(new { idx = i, val = Value[0][10] }); //작성자
                         __data[11].Add(new { idx = i, val = Value[0][11] }); //작성시기
+                        __data[136].Add(new { idx = i, val = Value[0][12] }); //프로젝트번호
+                        __data[137].Add(new { idx = i, val = "1F_Zone002" }); //프로젝트번호
+
                     }
                     ////////////////////////////////////////////////////////////////////
                     data.Add(new { cname = "projectName", data = __data[0] });
                     data.Add(new { cname = "buildinglocation", data = __data[1] });
-                    data.Add(new { cname = "climate", data = __data[2] });
+                    data.Add(new { cname = "climate", data = __data[2] }); 
                     data.Add(new { cname = "bylawclimate", data = __data[3] });
                     data.Add(new { cname = "construcitondate", data = __data[4] });
                     data.Add(new { cname = "grossarea", data = __data[5] });
@@ -915,6 +921,8 @@ namespace main.contents.Result.Building_Report
                     data.Add(new { cname = "reviewercompany", data = __data[9] });
                     data.Add(new { cname = "reviewername", data = __data[10] });
                     data.Add(new { cname = "reviewdate", data = __data[11] });
+                    data.Add(new { cname = "projectnum", data = __data[136] });
+                    data.Add(new { cname = "zonenum", data = __data[137] });
                     #endregion
 
                     #region 외벽정보
@@ -1411,7 +1419,9 @@ namespace main.contents.Result.Building_Report
                     __data[71].Add(new { idx = i, val = (후_1차 ).ToString("0") });
                     __data[72].Add(new { idx = i, val = (전_1차 / Area).ToString("0.0") });
                     __data[73].Add(new { idx = i, val = (후_1차 / Area).ToString("0.0") });
-
+                    //double m = (연간소요량_전 - 연간소요량_후) / 연간소요량_전 * 100;
+                    //charts += "{donut:" + m + ",size:120,fontSize:'21px'},"; // size를 100으로 설정
+                   
                     ////////////////////////////////////////////////////////////////////
                     data.Add(new { cname = "qh_mth", data = __data[54] });
                     data.Add(new { cname = "qc_mth", data = __data[55] });

@@ -44,7 +44,7 @@
             // 
             Name_textBox1.BackColor = Color.White;
             Name_textBox1.BorderStyle = BorderStyle.None;
-            Name_textBox1.Font = new Font("맑은 고딕", 9F, FontStyle.Bold);
+            Name_textBox1.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             Name_textBox1.Location = new Point(157, 38);
             Name_textBox1.Name = "Name_textBox1";
             Name_textBox1.ReadOnly = true;
@@ -56,7 +56,7 @@
             // 
             Name_textBox.BackColor = Color.White;
             Name_textBox.BorderStyle = BorderStyle.None;
-            Name_textBox.Font = new Font("맑은 고딕", 9F, FontStyle.Bold);
+            Name_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             Name_textBox.Location = new Point(70, 38);
             Name_textBox.Name = "Name_textBox";
             Name_textBox.ReadOnly = true;

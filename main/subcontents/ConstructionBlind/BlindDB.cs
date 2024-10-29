@@ -25,7 +25,7 @@ namespace main.subcontents.ConstructionBlind
         public BlindDB(String Num)
         {
             this.SelectNum = Num;
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             //heatingSystem = system;
             load_table_DB();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '차양정보'");

@@ -14,7 +14,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace main.subcontents.HeatingSystem
 {
@@ -24,7 +24,7 @@ namespace main.subcontents.HeatingSystem
         ArrayList SelectZone_split = new ArrayList();
         public Heating_ceZone(String SystemNum, String SelectZone_nonsplit, String CEType)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             this.SystemNum = SystemNum;
             ceType = CEType;
             ceType_textBox.Text = ceType;

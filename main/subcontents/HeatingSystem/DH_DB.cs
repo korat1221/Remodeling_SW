@@ -26,7 +26,7 @@ namespace main.subcontents.HeatingSystem
         // public DH_DB(HeatingSystem system)
         public DH_DB(String DefaultUse, String SelectDH_nonsplit)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             //heatingSystem = system;
             this.DefaultUse = DefaultUse;
             load_table_DB();

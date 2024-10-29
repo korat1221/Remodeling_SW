@@ -26,7 +26,7 @@ namespace main.subcontents.ZoneLighting
 
         public LightingRenewDB()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             load_table_RenewDB();
 
             //집광채광 종류 콤보박스

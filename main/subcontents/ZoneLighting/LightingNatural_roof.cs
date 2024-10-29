@@ -27,7 +27,7 @@ namespace main.subcontents.ZoneLighting
 
         public LightingNatural_roof(string NaturalType, string ZoneNum)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
 
             this.NaturalType = NaturalType;
             this.ZoneNum = ZoneNum;

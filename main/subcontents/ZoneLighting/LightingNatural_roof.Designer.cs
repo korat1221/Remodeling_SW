@@ -73,7 +73,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label27.Font =  new Font("나눔고딕", 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label27.Location = new System.Drawing.Point(37, 17);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(87, 15);
@@ -83,7 +83,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label26.Font =  new Font("나눔고딕", 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label26.Location = new System.Drawing.Point(37, 90);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(59, 15);
@@ -93,7 +93,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label15.Font =  new Font("나눔고딕", 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label15.Location = new System.Drawing.Point(306, 90);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(59, 15);

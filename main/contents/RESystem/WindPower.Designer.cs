@@ -58,7 +58,7 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.BorderStyle = BorderStyle.Fixed3D;
+            panel2.BorderStyle = BorderStyle.None;
             panel2.Controls.Add(FCDB_button);
             panel2.Controls.Add(label6);
             panel2.Location = new Point(12, 136);
@@ -71,7 +71,7 @@
             FCDB_button.BackColor = SystemColors.ControlLight;
             FCDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             FCDB_button.FlatStyle = FlatStyle.System;
-            FCDB_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            FCDB_button.Font = new System.Drawing.Font("나눔고딕", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
             FCDB_button.Location = new Point(327, 15);
             FCDB_button.Margin = new Padding(0);
             FCDB_button.Name = "FCDB_button";
@@ -93,7 +93,7 @@
             // AdditionalPanel
             // 
             AdditionalPanel.BackColor = Color.White;
-            AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
+            AdditionalPanel.BorderStyle = BorderStyle.None;
             AdditionalPanel.Location = new Point(12, 303);
             AdditionalPanel.Name = "AdditionalPanel";
             AdditionalPanel.Size = new Size(977, 390);
@@ -113,7 +113,7 @@
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Num_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             Num_textBox.ForeColor = SystemColors.ControlText;
             Num_textBox.Location = new Point(75, 46);
             Num_textBox.Name = "Num_textBox";

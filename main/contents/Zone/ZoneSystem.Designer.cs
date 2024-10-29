@@ -95,7 +95,7 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.BorderStyle = BorderStyle.Fixed3D;
+            panel2.BorderStyle = BorderStyle.None;
             panel2.Location = new Point(12, 136);
             panel2.Name = "panel2";
             panel2.Size = new Size(977, 149);
@@ -104,7 +104,7 @@
             // AdditionalPanel
             // 
             AdditionalPanel.BackColor = Color.White;
-            AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
+            AdditionalPanel.BorderStyle = BorderStyle.None;
             AdditionalPanel.Location = new Point(12, 303);
             AdditionalPanel.Name = "AdditionalPanel";
             AdditionalPanel.Size = new Size(977, 390);

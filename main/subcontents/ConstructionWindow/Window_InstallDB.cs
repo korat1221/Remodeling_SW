@@ -25,7 +25,7 @@ namespace main.subcontents
 
         public Window_InstallDB(String InstallType, String SingleDoubleType, String FrameMaterial)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             this.InstallType = InstallType;
             this.SingleDoubleType = SingleDoubleType;
             this.FrameMaterial = FrameMaterial;
@@ -54,7 +54,7 @@ namespace main.subcontents
         }
         public Window_InstallDB(String InstallType)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             this.InstallType = InstallType;
             load_table_InstallDB();
             //사용자DB 구분1 콤보박스

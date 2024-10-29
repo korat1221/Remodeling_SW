@@ -41,7 +41,7 @@
             // 
             this.Name_textBox1.BackColor = System.Drawing.Color.White;
             this.Name_textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Name_textBox1.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Name_textBox1.Font =  new Font("나눔고딕", 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.Name_textBox1.Location = new System.Drawing.Point(250, 32);
             this.Name_textBox1.Name = "Name_textBox1";
             this.Name_textBox1.ReadOnly = true;
@@ -52,7 +52,7 @@
             // 
             this.Name_textBox.BackColor = System.Drawing.Color.White;
             this.Name_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Name_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Name_textBox.Font =  new Font("나눔고딕", 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.Name_textBox.Location = new System.Drawing.Point(35, 32);
             this.Name_textBox.Name = "Name_textBox";
             this.Name_textBox.ReadOnly = true;

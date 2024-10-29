@@ -25,7 +25,7 @@ namespace main.subcontents.ConstructionWall
 
         public Wall_TB(String WallType, String StructureType, double dins)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             this.WallType = WallType;
             WallType_textBox.Text = WallType;
             this.StructureType = StructureType;

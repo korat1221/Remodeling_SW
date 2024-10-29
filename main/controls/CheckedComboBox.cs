@@ -121,7 +121,7 @@ public class CheckedComboBox : System.Windows.Forms.ComboBox {
 
         public Dropdown(CheckedComboBox ccbParent) {
             this.ccbParent = ccbParent;
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("³ª´®°íµñ", 9.75F, FontStyle.Regular);
             this.ShowInTaskbar = false;
             // Add a handler to notify our parent of ItemCheck events.
             this.cclb.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.cclb_ItemCheck);

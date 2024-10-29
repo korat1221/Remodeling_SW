@@ -20,7 +20,7 @@ namespace main.contents.Result
         bool scriptable = false;
         public PrintReport_HCneed()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
 
             InitializeAsync();
         }

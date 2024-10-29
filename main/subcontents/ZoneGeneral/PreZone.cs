@@ -23,7 +23,7 @@ namespace main.subcontents.ZoneGeneral
         string[][] PreProjNum = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기존프로젝트", "");
         public PreZone(String Num, String SelectZone_nonsplit, string Layer)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             ZoneNum = Num;
             this.Layer = Layer;
             load_table_DB();

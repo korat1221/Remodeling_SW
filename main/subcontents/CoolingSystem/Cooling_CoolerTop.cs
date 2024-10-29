@@ -14,7 +14,7 @@ namespace main.subcontents.CoolingSystem
     {
         public Cooling_CoolerTop()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
         }
     }
 }

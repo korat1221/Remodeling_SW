@@ -27,13 +27,13 @@ namespace main.subcontents.ConstructionWindow
 
         public SubWindow()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '창호'");
-            if(Image.Length >0 )
+            if (Image.Length > 0)
             {
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }          
+            }
 
             //직접간접 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi_comboBox, "창호", "실외조건", "1");
@@ -46,9 +46,14 @@ namespace main.subcontents.ConstructionWindow
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+            Panel p = (Panel)sender;
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+        }
         private void Name_textBox_TextChanged(object sender, EventArgs e)
         {
             if (Name_textBox.Text != null)
@@ -170,7 +175,7 @@ namespace main.subcontents.ConstructionWindow
                 def_value = "Type = ''";
                 Table = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "창호명칭", def_value);
             }
-            if(Table.Length > 0)
+            if (Table.Length > 0)
             {
                 int i = -1;
                 DataTable sources = new DataTable();
@@ -216,7 +221,7 @@ namespace main.subcontents.ConstructionWindow
                 if (OldWindow != null && GlassName != null)
                 {
                     Old = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,LE_CL_V,유리열관류율,태양열취득률,빛투과율,창호열관류율", "창호명칭 = '" + OldWindow + "'");
-                    if(Old.Length > 0)
+                    if (Old.Length > 0)
                     {
                         String 조합구성 = LE_CL_V + "+" + Old[0][3];
                         f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
@@ -234,7 +239,7 @@ namespace main.subcontents.ConstructionWindow
                 if (OldWindow != null && GlassName != null)
                 {
                     Old = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,LE_CL_V,유리열관류율,태양열취득률,빛투과율,창호열관류율", "창호명칭 = '" + OldWindow + "'");
-                    if(Old.Length > 0)
+                    if (Old.Length > 0)
                     {
                         String 조합구성 = LE_CL_V + "+" + Old[0][3];
                         f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
@@ -244,7 +249,7 @@ namespace main.subcontents.ConstructionWindow
                         if (f_τ.Length > 0)
                         { τD65_SNA = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Old[0][6]) * τD65_SNA; }
                         Uw = 1 / (0.019 + 1 / Convert.ToDouble(Old[0][7]) + 1 / Uw);
-                    }                    
+                    }
                 }
             }
             else
@@ -272,7 +277,7 @@ namespace main.subcontents.ConstructionWindow
         {
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
-            if(Image.Length > 0)
+            if (Image.Length > 0)
             {
                 WindowType_pictureBox.Visible = true;
                 WindowType_pictureBox.Load(Program.gPath + Image[0][0]);
@@ -395,32 +400,32 @@ namespace main.subcontents.ConstructionWindow
                         SingleDoubleType = "이중창";
                         break;
                 }
-         
-                    if (check_FrameType != null)
+
+                if (check_FrameType != null)
+                {
+                    if (FrameType != check_FrameType)
                     {
-                        if (FrameType != check_FrameType)
-                        {
-                            MessageBox.Show("프레임, 유리, 간봉, 설치열교를 다시 선택하세요.");
-                            FrameName = "";
-                            FrameMaterial = "";
-                            FrameName_textBox.Text = "";
-                            GlassName = "";
-                            GlassName_textBox.Text = "";
-                            GlassName_textBox2.Text = "";
-                            SpacerName = "";
-                            SpacerName_textBox.Text = "";
-                            SpacerName_textBox2.Text = "";
-                            InstallName = "";
-                            Install_textBox.Text = "";
-                            Uf_open_textBox.Text = "";
-                            Uf_fix_textBox.Text = "";
-                            Uf_btw_textBox.Text = "";
-                            df_open_textBox.Text = "";
-                            df_fix_textBox.Text = "";
-                            df_btw_textBox.Text = "";
-                        }
+                        MessageBox.Show("프레임, 유리, 간봉, 설치열교를 다시 선택하세요.");
+                        FrameName = "";
+                        FrameMaterial = "";
+                        FrameName_textBox.Text = "";
+                        GlassName = "";
+                        GlassName_textBox.Text = "";
+                        GlassName_textBox2.Text = "";
+                        SpacerName = "";
+                        SpacerName_textBox.Text = "";
+                        SpacerName_textBox2.Text = "";
+                        InstallName = "";
+                        Install_textBox.Text = "";
+                        Uf_open_textBox.Text = "";
+                        Uf_fix_textBox.Text = "";
+                        Uf_btw_textBox.Text = "";
+                        df_open_textBox.Text = "";
+                        df_fix_textBox.Text = "";
+                        df_btw_textBox.Text = "";
                     }
-              
+                }
+
             }
         }
 
@@ -431,17 +436,17 @@ namespace main.subcontents.ConstructionWindow
             {
                 InstallType = Install_comboBox.SelectedItem.ToString();
 
-                
-                    if (check_InstallType != null)
+
+                if (check_InstallType != null)
+                {
+                    if (InstallType != check_InstallType)
                     {
-                        if (InstallType != check_InstallType)
-                        {
-                            MessageBox.Show("설치 위치를 다시 선택하세요.");
-                            InstallName = "";
-                            Install_textBox.Text = "";
-                        }
+                        MessageBox.Show("설치 위치를 다시 선택하세요.");
+                        InstallName = "";
+                        Install_textBox.Text = "";
                     }
-             
+                }
+
             }
         }
 
@@ -464,12 +469,12 @@ namespace main.subcontents.ConstructionWindow
             if (UwMethod == "법규")
             {
                 String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율", "구조체 = '창호' And 시기 = '2018.09' AND  지역 = '중부1' AND 직접간접 =  '" + DiIndi + "'");
-                if(Uvalue.Length  > 0)
+                if (Uvalue.Length > 0)
                 {
                     Uw = Convert.ToDouble(Uvalue[0][0]);
-                    Uw_textBox.Text =  Uw.ToString();
+                    Uw_textBox.Text = Uw.ToString();
                     controls.ThousandsSeparator textboxa = new controls.ThousandsSeparator(Uw_textBox, true, 3);
-                }                
+                }
             }
         }
         public void Calc_dUinst()
@@ -636,13 +641,13 @@ namespace main.subcontents.ConstructionWindow
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             reset();
-           
-                WinNum_textBox.Text = ID;
-                WinNum = ID;
 
-                String[][] SubLoad = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭,상위창호번호,창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이," +
-                    "창호열관류율,설치열교가산치,창호유효열관류율"
-                    , "번호 = '" + ID + "'");
+            WinNum_textBox.Text = ID;
+            WinNum = ID;
+
+            String[][] SubLoad = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭,상위창호번호,창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이," +
+                "창호열관류율,설치열교가산치,창호유효열관류율"
+                , "번호 = '" + ID + "'");
             if (SubLoad.Length > 0)
             {
                 String[][] MainLoad = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,기존창호,Uw적용방법,직접간접,프레임유형,이중단창,프레임재료,프레임종류,유리종류,간봉종류,설치유형,설치종류,LE_CL_V," +
@@ -758,9 +763,9 @@ namespace main.subcontents.ConstructionWindow
                     dUinst_textBox.Text = dUinst.ToString();
                     controls.ThousandsSeparator textboxa = new controls.ThousandsSeparator(dUinst_textBox, true, 3);
                     Uw_inst = Convert.ToDouble(SubLoad[0][15]);
-                    Uw_inst_textBox.Text =  Uw_inst.ToString();
+                    Uw_inst_textBox.Text = Uw_inst.ToString();
                     controls.ThousandsSeparator textboxb = new controls.ThousandsSeparator(Uw_inst_textBox, true, 3);
-                    Uw_inst2_textBox.Text =  Uw_inst.ToString();
+                    Uw_inst2_textBox.Text = Uw_inst.ToString();
                     controls.ThousandsSeparator textboxc = new controls.ThousandsSeparator(Uw_inst2_textBox, true, 3);
 
                     Uf_open = Convert.ToDouble(MainLoad[0][24]);
@@ -819,7 +824,7 @@ namespace main.subcontents.ConstructionWindow
                     controls.ThousandsSeparator textbox118 = new controls.ThousandsSeparator(Af_btw_textBox, true, 2);
                     controls.ThousandsSeparator textbox119 = new controls.ThousandsSeparator(Lg_fix_textBox, true, 2);
                     controls.ThousandsSeparator textbox120 = new controls.ThousandsSeparator(Lg_open_textBox, true, 2);
-                    
+
                     d_InstallTop_textBox.Text = Width.ToString();
                     controls.ThousandsSeparator textbox31 = new controls.ThousandsSeparator(d_InstallTop_textBox, true, 2);
                     d_InstallButtom_textBox.Text = Width.ToString();
@@ -828,26 +833,26 @@ namespace main.subcontents.ConstructionWindow
                     controls.ThousandsSeparator textbox33 = new controls.ThousandsSeparator(d_InstallSide_textBox, true, 2);
 
                     string[][] Image1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");
-                    if(Image1.Length > 0 )
+                    if (Image1.Length > 0)
                     {
                         WindowType_pictureBox.Visible = true;
                         WindowType_pictureBox.Load(Program.gPath + Image1[0][0]);
                         WindowType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                    }                    
+                    }
                     string[][] Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호프레임이미지", "이미지", "유형1 = '" + FrameType + "' AND 유형2 = '기본형' AND 재료 = '" + FrameMaterial + "'");
-                    if(Image2.Length > 0 )
+                    if (Image2.Length > 0)
                     {
                         WindowFrame_pictureBox.Visible = true;
                         WindowFrame_pictureBox.Load(Program.gPath + Image2[0][0]);
                         WindowFrame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                    }                    
+                    }
                     string[][] Image3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");
-                    if(Image3.Length > 0 ) 
+                    if (Image3.Length > 0)
                     {
                         WindowInstall_pictureBox.Visible = true;
                         WindowInstall_pictureBox.Load(Program.gPath + Image3[0][0]);
                         WindowInstall_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                    }                    
+                    }
                 }
             }
         }
@@ -856,7 +861,6 @@ namespace main.subcontents.ConstructionWindow
             WinNum_textBox.Text = ID;
             WinNum = ID;
         }
-
 
     }
 }

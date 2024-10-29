@@ -100,7 +100,7 @@
             // 
             this.textBox3.BackColor = System.Drawing.Color.White;
             this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox3.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.textBox3.Font =  new Font("나눔고딕", 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.textBox3.Location = new System.Drawing.Point(51, 12);
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;

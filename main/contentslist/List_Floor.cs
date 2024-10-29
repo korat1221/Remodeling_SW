@@ -24,7 +24,7 @@ namespace main.contentslist
 
         public List_Floor()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
 
             Icon_pictureBox.Load(Program.gPath + "images/1sticon/4.Zone_on3.png");
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -34,7 +34,7 @@ namespace main.contentslist
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
         public static bool OnLoadProc(Form form)

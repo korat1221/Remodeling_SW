@@ -50,14 +50,14 @@ public class StackedHeaderDecorator
 
         defCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         defCellStyle.BackColor = Color.FromArgb(251, 251, 251);
-        defCellStyle.Font = new System.Drawing.Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+        defCellStyle.Font = new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
         defCellStyle.ForeColor = SystemColors.WindowText;
         defCellStyle.SelectionBackColor = Color.White;
         defCellStyle.SelectionForeColor = Color.Black;
         defCellStyle.WrapMode = DataGridViewTriState.False;
         objDataGrid.ColumnHeadersDefaultCellStyle = defCellStyle;
 
-        objDataGrid.GridColor = Color.FromArgb(220, 220, 220);//Row 선 색
+        objDataGrid.GridColor = SystemColors.Control;//Row 선 색
         objDataGrid.CellBorderStyle = DataGridViewCellBorderStyle.Single;
         objDataGrid.CellPainting += dataGridView1_CellPainting;
 
@@ -279,7 +279,7 @@ void objDataGrid_Paint(object sender, PaintEventArgs e)
         }
         else
         {
-            objDataGrid.ColumnHeadersHeight = iNoOfLevels * 20;
+            objDataGrid.ColumnHeadersHeight = iNoOfLevels * 23;
         }
         if (null != objHeaderTree)
         {
@@ -353,11 +353,11 @@ public void Render(Header objHeader)
 
                 r2.Height = objHeader.Height;
                 objGraphics.SetClip(r2);
-                objGraphics.DrawRectangle(new Pen(Color.FromArgb(220, 220, 220), 1), r2);
+                objGraphics.DrawRectangle(new Pen(SystemColors.Control, 1), r2);
                 objGraphics.SetClip(r0);
             }
             else {
-                objGraphics.DrawRectangle(new Pen(Color.FromArgb(220, 220, 220), 1), r1);
+                objGraphics.DrawRectangle(new Pen(SystemColors.Control, 1), r1);
             }
             objGraphics.DrawString(objHeader.Name,
                                     objDataGrid.ColumnHeadersDefaultCellStyle.Font,
@@ -395,7 +395,7 @@ public void Render(Header objHeader)
             objGraphics.SetClip(r1);
         //      r1.X = x - objDataGrid.HorizontalScrollingOffset;
         //     r1.Width -= 1;
-            objGraphics.DrawRectangle(new Pen(Color.FromArgb(220, 220, 220), 1), r1);
+            objGraphics.DrawRectangle(new Pen(SystemColors.Control, 1), r1);
             r1.X -= 1;
             objGraphics.DrawString(objHeader.Name, objDataGrid.ColumnHeadersDefaultCellStyle.Font,
                                     new SolidBrush(objDataGrid.ColumnHeadersDefaultCellStyle.ForeColor),

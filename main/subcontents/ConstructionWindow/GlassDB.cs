@@ -20,7 +20,7 @@ namespace main.subcontents
         Double UserDB_Ug, UserDB_g, UserDB_Tao, UserDB_RExternal, UserDB_RInternal;
         public GlassDB()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             load_table_GlassDB();
 
             //복층/삼중/단창 콤보박스

@@ -20,7 +20,7 @@ namespace main.subcontents.RESystem_WP
 
         public WP_DB(string defaultUse)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             DefaultUse = defaultUse;
             load_table_WPDB();
 

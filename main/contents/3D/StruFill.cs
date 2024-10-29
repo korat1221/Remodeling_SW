@@ -16,7 +16,7 @@ namespace main.contents._3D
         sub3dZoneInfo pform;
         public StruFill(sub3dZoneInfo parent)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
 
             pform = parent;
 

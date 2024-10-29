@@ -17,7 +17,7 @@ namespace main.contents._3D
         public int rotation = 0;
         public Cardinal()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
 
             string cardi = "";
             int i = -1, n = 0, max = -1;

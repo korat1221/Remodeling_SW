@@ -26,7 +26,7 @@ namespace main.subcontents.ConstructionFloor
 
         public Floor_TB(String FloorType, String StructureType, double dins)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             this.FloorType = FloorType;
             WallType_textBox.Text = FloorType;
             this.StructureType = StructureType;

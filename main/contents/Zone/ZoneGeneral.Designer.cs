@@ -206,7 +206,7 @@ namespace main.contents
             PreZone_button.BackColor = SystemColors.ControlLight;
             PreZone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             PreZone_button.FlatStyle = FlatStyle.System;
-            PreZone_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            PreZone_button.Font = new Font("나눔고딕", 9.75F);
             PreZone_button.Location = new Point(453, 17);
             PreZone_button.Margin = new Padding(0);
             PreZone_button.Name = "PreZone_button";
@@ -265,11 +265,11 @@ namespace main.contents
             PreZone_textBox.BackColor = Color.White;
             PreZone_textBox.BorderStyle = BorderStyle.None;
             PreZone_textBox.Enabled = false;
-            PreZone_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            PreZone_textBox.Font =  new Font("나눔고딕", 9.75F);
             PreZone_textBox.ForeColor = SystemColors.ControlDark;
             PreZone_textBox.Location = new Point(330, 23);
             PreZone_textBox.Name = "PreZone_textBox";
-            PreZone_textBox.Size = new Size(120, 15);
+            PreZone_textBox.Size = new Size(120, 16);
             PreZone_textBox.TabIndex = 187;
             PreZone_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -285,10 +285,10 @@ namespace main.contents
             // AHU_label2
             // 
             AHU_label2.AutoSize = true;
-            AHU_label2.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            AHU_label2.Font =  new Font("나눔고딕", 9.75F);
             AHU_label2.Location = new Point(830, 22);
             AHU_label2.Name = "AHU_label2";
-            AHU_label2.Size = new Size(51, 16);
+            AHU_label2.Size = new Size(55, 15);
             AHU_label2.TabIndex = 185;
             AHU_label2.Text = "열회수기";
             // 
@@ -297,11 +297,11 @@ namespace main.contents
             AHU_textBox.BackColor = Color.White;
             AHU_textBox.BorderStyle = BorderStyle.None;
             AHU_textBox.Enabled = false;
-            AHU_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            AHU_textBox.Font =  new Font("나눔고딕", 9.75F);
             AHU_textBox.ForeColor = SystemColors.ControlDark;
             AHU_textBox.Location = new Point(795, 54);
             AHU_textBox.Name = "AHU_textBox";
-            AHU_textBox.Size = new Size(120, 15);
+            AHU_textBox.Size = new Size(120, 16);
             AHU_textBox.TabIndex = 184;
             AHU_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -310,7 +310,7 @@ namespace main.contents
             AHU_button.BackColor = SystemColors.ControlLight;
             AHU_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AHU_button.FlatStyle = FlatStyle.System;
-            AHU_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            AHU_button.Font = new Font("나눔고딕", 9.75F);
             AHU_button.Location = new Point(917, 50);
             AHU_button.Margin = new Padding(0);
             AHU_button.Name = "AHU_button";
@@ -323,20 +323,20 @@ namespace main.contents
             // label65
             // 
             label65.AutoSize = true;
-            label65.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label65.Font =  new Font("나눔고딕", 9.75F);
             label65.Location = new Point(551, 22);
             label65.Name = "label65";
-            label65.Size = new Size(29, 16);
+            label65.Size = new Size(31, 15);
             label65.TabIndex = 103;
             label65.Text = "냉방";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label3.Font =  new Font("나눔고딕", 9.75F);
             label3.Location = new Point(101, 54);
             label3.Name = "label3";
-            label3.Size = new Size(29, 16);
+            label3.Size = new Size(31, 15);
             label3.TabIndex = 102;
             label3.Text = "명칭";
             // 
@@ -345,11 +345,11 @@ namespace main.contents
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Bold, GraphicsUnit.Point);
+            Num_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             Num_textBox.ForeColor = SystemColors.ControlText;
             Num_textBox.Location = new Point(6, 76);
             Num_textBox.Name = "Num_textBox";
-            Num_textBox.Size = new Size(90, 15);
+            Num_textBox.Size = new Size(90, 16);
             Num_textBox.TabIndex = 100;
             Num_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -365,10 +365,10 @@ namespace main.contents
             // 
             ZoneName_textBox.BackColor = SystemColors.Window;
             ZoneName_textBox.BorderStyle = BorderStyle.None;
-            ZoneName_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            ZoneName_textBox.Font =  new Font("나눔고딕", 9.75F);
             ZoneName_textBox.Location = new Point(153, 55);
             ZoneName_textBox.Name = "ZoneName_textBox";
-            ZoneName_textBox.Size = new Size(120, 15);
+            ZoneName_textBox.Size = new Size(120, 16);
             ZoneName_textBox.TabIndex = 99;
             ZoneName_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -376,11 +376,11 @@ namespace main.contents
             // 
             Layer_textBox.BackColor = SystemColors.Window;
             Layer_textBox.BorderStyle = BorderStyle.None;
-            Layer_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Layer_textBox.Font =  new Font("나눔고딕", 9.75F);
             Layer_textBox.ForeColor = SystemColors.WindowText;
             Layer_textBox.Location = new Point(153, 22);
             Layer_textBox.Name = "Layer_textBox";
-            Layer_textBox.Size = new Size(120, 15);
+            Layer_textBox.Size = new Size(120, 16);
             Layer_textBox.TabIndex = 88;
             Layer_textBox.TextAlign = HorizontalAlignment.Center;
             Layer_textBox.TextChanged += Floor_textBox_TextChanged;
@@ -388,31 +388,31 @@ namespace main.contents
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label1.Font =  new Font("나눔고딕", 9.75F);
             label1.Location = new Point(107, 22);
             label1.Name = "label1";
-            label1.Size = new Size(18, 16);
+            label1.Size = new Size(19, 15);
             label1.TabIndex = 1;
             label1.Text = "층";
             // 
             // AHU_label
             // 
             AHU_label.AutoSize = true;
-            AHU_label.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            AHU_label.Font =  new Font("나눔고딕", 9.75F);
             AHU_label.Location = new Point(677, 22);
             AHU_label.Name = "AHU_label";
-            AHU_label.Size = new Size(51, 16);
+            AHU_label.Size = new Size(55, 15);
             AHU_label.TabIndex = 38;
             AHU_label.Text = "환기방식";
             // 
             // AHU_comboBox
             // 
             AHU_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHU_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            AHU_comboBox.Font =  new Font("나눔고딕", 9.75F);
             AHU_comboBox.FormattingEnabled = true;
             AHU_comboBox.Location = new Point(646, 50);
             AHU_comboBox.Name = "AHU_comboBox";
-            AHU_comboBox.Size = new Size(120, 23);
+            AHU_comboBox.Size = new Size(120, 24);
             AHU_comboBox.TabIndex = 37;
             AHU_comboBox.SelectedIndexChanged += AHU_comboBox_SelectedIndexChanged;
             // 
@@ -449,27 +449,26 @@ namespace main.contents
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label6.Font =  new Font("나눔고딕", 9.75F);
             label6.Location = new Point(583, 22);
             label6.Name = "label6";
-            label6.Size = new Size(51, 16);
+            label6.Size = new Size(55, 15);
             label6.TabIndex = 14;
             label6.Text = "기계환기";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label5.Font =  new Font("나눔고딕", 9.75F);
             label5.Location = new Point(506, 21);
             label5.Name = "label5";
-            label5.Size = new Size(29, 16);
+            label5.Size = new Size(31, 15);
             label5.TabIndex = 13;
             label5.Text = "난방";
             // 
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.BorderStyle = BorderStyle.Fixed3D;
             panel2.Controls.Add(label20);
             panel2.Controls.Add(PersonNum_textBox);
             panel2.Controls.Add(OccupancyDensity_index_textBox);
@@ -525,14 +524,15 @@ namespace main.contents
             panel2.Name = "panel2";
             panel2.Size = new Size(977, 181);
             panel2.TabIndex = 18;
+            panel2.Paint += panel2_Paint;
             // 
             // label20
             // 
             label20.AutoSize = true;
-            label20.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label20.Font =  new Font("나눔고딕", 9.75F);
             label20.Location = new Point(468, 116);
             label20.Name = "label20";
-            label20.Size = new Size(18, 16);
+            label20.Size = new Size(19, 15);
             label20.TabIndex = 84;
             label20.Text = "명";
             // 
@@ -540,10 +540,10 @@ namespace main.contents
             // 
             PersonNum_textBox.BackColor = SystemColors.Window;
             PersonNum_textBox.BorderStyle = BorderStyle.FixedSingle;
-            PersonNum_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            PersonNum_textBox.Font =  new Font("나눔고딕", 9.75F);
             PersonNum_textBox.Location = new Point(342, 112);
             PersonNum_textBox.Name = "PersonNum_textBox";
-            PersonNum_textBox.Size = new Size(120, 22);
+            PersonNum_textBox.Size = new Size(120, 23);
             PersonNum_textBox.TabIndex = 83;
             PersonNum_textBox.TextAlign = HorizontalAlignment.Center;
             PersonNum_textBox.TextChanged += PersonNum_textBox_TextChanged;
@@ -553,22 +553,22 @@ namespace main.contents
             OccupancyDensity_index_textBox.BackColor = Color.White;
             OccupancyDensity_index_textBox.BorderStyle = BorderStyle.None;
             OccupancyDensity_index_textBox.Enabled = false;
-            OccupancyDensity_index_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            OccupancyDensity_index_textBox.Font =  new Font("나눔고딕", 9.75F);
             OccupancyDensity_index_textBox.ForeColor = SystemColors.ControlDark;
             OccupancyDensity_index_textBox.Location = new Point(346, 149);
             OccupancyDensity_index_textBox.Name = "OccupancyDensity_index_textBox";
-            OccupancyDensity_index_textBox.Size = new Size(120, 15);
+            OccupancyDensity_index_textBox.Size = new Size(120, 16);
             OccupancyDensity_index_textBox.TabIndex = 82;
             OccupancyDensity_index_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label62
             // 
             label62.AutoSize = true;
-            label62.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label62.Font =  new Font("나눔고딕", 9.75F);
             label62.ForeColor = SystemColors.ControlDark;
             label62.Location = new Point(725, 48);
             label62.Name = "label62";
-            label62.Size = new Size(51, 16);
+            label62.Size = new Size(55, 15);
             label62.TabIndex = 101;
             label62.Text = "환기횟수";
             // 
@@ -576,33 +576,33 @@ namespace main.contents
             // 
             VentilationRate_textBox.BackColor = Color.White;
             VentilationRate_textBox.BorderStyle = BorderStyle.None;
-            VentilationRate_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            VentilationRate_textBox.Font =  new Font("나눔고딕", 9.75F);
             VentilationRate_textBox.ForeColor = SystemColors.ControlDark;
             VentilationRate_textBox.Location = new Point(795, 48);
             VentilationRate_textBox.Name = "VentilationRate_textBox";
-            VentilationRate_textBox.Size = new Size(117, 15);
+            VentilationRate_textBox.Size = new Size(117, 16);
             VentilationRate_textBox.TabIndex = 102;
             VentilationRate_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label11.Font =  new Font("나눔고딕", 9.75F);
             label11.ForeColor = SystemColors.ControlDark;
             label11.Location = new Point(725, 82);
             label11.Name = "label11";
-            label11.Size = new Size(62, 16);
+            label11.Size = new Size(67, 15);
             label11.TabIndex = 43;
             label11.Text = "냉난방시간";
             // 
             // label61
             // 
             label61.AutoSize = true;
-            label61.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label61.Font =  new Font("나눔고딕", 9.75F);
             label61.ForeColor = SystemColors.ControlDark;
             label61.Location = new Point(917, 48);
             label61.Name = "label61";
-            label61.Size = new Size(25, 16);
+            label61.Size = new Size(26, 15);
             label61.TabIndex = 103;
             label61.Text = "1/h";
             // 
@@ -611,65 +611,65 @@ namespace main.contents
             HCTime_textBox.BackColor = Color.White;
             HCTime_textBox.BorderStyle = BorderStyle.None;
             HCTime_textBox.Enabled = false;
-            HCTime_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            HCTime_textBox.Font =  new Font("나눔고딕", 9.75F);
             HCTime_textBox.ForeColor = SystemColors.ControlDark;
             HCTime_textBox.Location = new Point(793, 82);
             HCTime_textBox.Name = "HCTime_textBox";
-            HCTime_textBox.Size = new Size(120, 15);
+            HCTime_textBox.Size = new Size(120, 16);
             HCTime_textBox.TabIndex = 44;
             HCTime_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // WeekUseDay_comboBox
             // 
             WeekUseDay_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            WeekUseDay_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            WeekUseDay_comboBox.Font =  new Font("나눔고딕", 9.75F);
             WeekUseDay_comboBox.FormattingEnabled = true;
             WeekUseDay_comboBox.Location = new Point(153, 112);
             WeekUseDay_comboBox.Name = "WeekUseDay_comboBox";
-            WeekUseDay_comboBox.Size = new Size(120, 23);
+            WeekUseDay_comboBox.Size = new Size(120, 24);
             WeekUseDay_comboBox.TabIndex = 79;
             WeekUseDay_comboBox.SelectedIndexChanged += WeekUseDay_comboBox_SelectedIndexChanged;
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label10.Font =  new Font("나눔고딕", 9.75F);
             label10.ForeColor = SystemColors.ControlDark;
             label10.Location = new Point(917, 82);
             label10.Name = "label10";
-            label10.Size = new Size(26, 16);
+            label10.Size = new Size(26, 15);
             label10.TabIndex = 42;
             label10.Text = "h/d";
             // 
             // label63
             // 
             label63.AutoSize = true;
-            label63.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label63.Font =  new Font("나눔고딕", 9.75F);
             label63.ForeColor = SystemColors.ControlDark;
             label63.Location = new Point(682, 48);
             label63.Name = "label63";
-            label63.Size = new Size(33, 16);
+            label63.Size = new Size(34, 15);
             label63.TabIndex = 106;
             label63.Text = "m³/h";
             // 
             // StartTime_comboBox
             // 
             StartTime_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            StartTime_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            StartTime_comboBox.Font =  new Font("나눔고딕", 9.75F);
             StartTime_comboBox.FormattingEnabled = true;
             StartTime_comboBox.Location = new Point(153, 78);
             StartTime_comboBox.Name = "StartTime_comboBox";
-            StartTime_comboBox.Size = new Size(120, 23);
+            StartTime_comboBox.Size = new Size(120, 24);
             StartTime_comboBox.TabIndex = 78;
             StartTime_comboBox.SelectedIndexChanged += StartTime_comboBox_SelectedIndexChanged;
             // 
             // label19
             // 
             label19.AutoSize = true;
-            label19.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label19.Font =  new Font("나눔고딕", 9.75F);
             label19.Location = new Point(468, 18);
             label19.Name = "label19";
-            label19.Size = new Size(18, 16);
+            label19.Size = new Size(18, 15);
             label19.TabIndex = 77;
             label19.Text = "m";
             // 
@@ -677,10 +677,10 @@ namespace main.contents
             // 
             CeilingHeight_textBox.BackColor = SystemColors.Window;
             CeilingHeight_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CeilingHeight_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            CeilingHeight_textBox.Font =  new Font("나눔고딕", 9.75F);
             CeilingHeight_textBox.Location = new Point(342, 14);
             CeilingHeight_textBox.Name = "CeilingHeight_textBox";
-            CeilingHeight_textBox.Size = new Size(120, 22);
+            CeilingHeight_textBox.Size = new Size(120, 23);
             CeilingHeight_textBox.TabIndex = 76;
             CeilingHeight_textBox.TextAlign = HorizontalAlignment.Center;
             CeilingHeight_textBox.TextChanged += CeilingHeight_textBox_TextChanged;
@@ -689,22 +689,22 @@ namespace main.contents
             // 
             Volume_wd_textBox.BackColor = Color.White;
             Volume_wd_textBox.BorderStyle = BorderStyle.None;
-            Volume_wd_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Volume_wd_textBox.Font =  new Font("나눔고딕", 9.75F);
             Volume_wd_textBox.ForeColor = SystemColors.ControlDark;
             Volume_wd_textBox.Location = new Point(558, 48);
             Volume_wd_textBox.Name = "Volume_wd_textBox";
-            Volume_wd_textBox.Size = new Size(117, 15);
+            Volume_wd_textBox.Size = new Size(117, 16);
             Volume_wd_textBox.TabIndex = 105;
             Volume_wd_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label31
             // 
             label31.AutoSize = true;
-            label31.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label31.Font =  new Font("나눔고딕", 9.75F);
             label31.ForeColor = SystemColors.ControlDark;
             label31.Location = new Point(908, 149);
             label31.Name = "label31";
-            label31.Size = new Size(57, 16);
+            label31.Size = new Size(55, 15);
             label31.TabIndex = 72;
             label31.Text = "Wh/m²·d";
             // 
@@ -713,55 +713,55 @@ namespace main.contents
             EquipIHG_textBox.BackColor = Color.White;
             EquipIHG_textBox.BorderStyle = BorderStyle.None;
             EquipIHG_textBox.Enabled = false;
-            EquipIHG_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            EquipIHG_textBox.Font =  new Font("나눔고딕", 9.75F);
             EquipIHG_textBox.ForeColor = SystemColors.ControlDark;
             EquipIHG_textBox.Location = new Point(798, 149);
             EquipIHG_textBox.Name = "EquipIHG_textBox";
-            EquipIHG_textBox.Size = new Size(110, 15);
+            EquipIHG_textBox.Size = new Size(110, 16);
             EquipIHG_textBox.TabIndex = 74;
             EquipIHG_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label32
             // 
             label32.AutoSize = true;
-            label32.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label32.Font =  new Font("나눔고딕", 9.75F);
             label32.ForeColor = SystemColors.ControlDark;
             label32.Location = new Point(725, 149);
             label32.Name = "label32";
-            label32.Size = new Size(51, 16);
+            label32.Size = new Size(55, 15);
             label32.TabIndex = 73;
             label32.Text = "기기발열";
             // 
             // label64
             // 
             label64.AutoSize = true;
-            label64.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label64.Font =  new Font("나눔고딕", 9.75F);
             label64.ForeColor = SystemColors.ControlDark;
             label64.Location = new Point(495, 48);
             label64.Name = "label64";
-            label64.Size = new Size(62, 16);
+            label64.Size = new Size(67, 15);
             label64.TabIndex = 104;
             label64.Text = "필요환기량";
             // 
             // label54
             // 
             label54.AutoSize = true;
-            label54.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label54.Font =  new Font("나눔고딕", 9.75F);
             label54.ForeColor = SystemColors.ControlDark;
             label54.Location = new Point(682, 18);
             label54.Name = "label54";
-            label54.Size = new Size(22, 16);
+            label54.Size = new Size(22, 15);
             label54.TabIndex = 94;
             label54.Text = "m³";
             // 
             // label33
             // 
             label33.AutoSize = true;
-            label33.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label33.Font =  new Font("나눔고딕", 9.75F);
             label33.ForeColor = SystemColors.ControlDark;
             label33.Location = new Point(286, 149);
             label33.Name = "label33";
-            label33.Size = new Size(51, 16);
+            label33.Size = new Size(55, 15);
             label33.TabIndex = 70;
             label33.Text = "재실수준";
             // 
@@ -769,65 +769,65 @@ namespace main.contents
             // 
             NetVolume_textBox.BackColor = Color.White;
             NetVolume_textBox.BorderStyle = BorderStyle.None;
-            NetVolume_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            NetVolume_textBox.Font =  new Font("나눔고딕", 9.75F);
             NetVolume_textBox.ForeColor = SystemColors.ControlDark;
             NetVolume_textBox.Location = new Point(558, 18);
             NetVolume_textBox.Name = "NetVolume_textBox";
-            NetVolume_textBox.Size = new Size(116, 15);
+            NetVolume_textBox.Size = new Size(116, 16);
             NetVolume_textBox.TabIndex = 93;
             NetVolume_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label56
             // 
             label56.AutoSize = true;
-            label56.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label56.Font =  new Font("나눔고딕", 9.75F);
             label56.ForeColor = SystemColors.ControlDark;
             label56.Location = new Point(495, 18);
             label56.Name = "label56";
-            label56.Size = new Size(40, 16);
+            label56.Size = new Size(43, 15);
             label56.TabIndex = 92;
             label56.Text = "순체적";
             // 
             // EquipIHG_comboBox
             // 
             EquipIHG_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            EquipIHG_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            EquipIHG_comboBox.Font =  new Font("나눔고딕", 9.75F);
             EquipIHG_comboBox.FormattingEnabled = true;
             EquipIHG_comboBox.Location = new Point(153, 145);
             EquipIHG_comboBox.Name = "EquipIHG_comboBox";
-            EquipIHG_comboBox.Size = new Size(120, 23);
+            EquipIHG_comboBox.Size = new Size(120, 24);
             EquipIHG_comboBox.TabIndex = 69;
             EquipIHG_comboBox.SelectedIndexChanged += EquipIHG_comboBox_SelectedIndexChanged;
             // 
             // label34
             // 
             label34.AutoSize = true;
-            label34.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label34.Font =  new Font("나눔고딕", 9.75F);
             label34.Location = new Point(83, 149);
             label34.Name = "label34";
-            label34.Size = new Size(51, 16);
+            label34.Size = new Size(55, 15);
             label34.TabIndex = 68;
             label34.Text = "기기발열";
             // 
             // label55
             // 
             label55.AutoSize = true;
-            label55.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label55.Font =  new Font("나눔고딕", 9.75F);
             label55.ForeColor = SystemColors.ControlText;
             label55.Location = new Point(276, 18);
             label55.Name = "label55";
-            label55.Size = new Size(22, 16);
+            label55.Size = new Size(22, 15);
             label55.TabIndex = 91;
             label55.Text = "m²";
             // 
             // label35
             // 
             label35.AutoSize = true;
-            label35.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label35.Font =  new Font("나눔고딕", 9.75F);
             label35.ForeColor = SystemColors.ControlDark;
             label35.Location = new Point(678, 149);
             label35.Name = "label35";
-            label35.Size = new Size(57, 16);
+            label35.Size = new Size(55, 15);
             label35.TabIndex = 65;
             label35.Text = "Wh/m²·d";
             // 
@@ -836,33 +836,33 @@ namespace main.contents
             PersonIHG_textBox.BackColor = Color.White;
             PersonIHG_textBox.BorderStyle = BorderStyle.None;
             PersonIHG_textBox.Enabled = false;
-            PersonIHG_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            PersonIHG_textBox.Font =  new Font("나눔고딕", 9.75F);
             PersonIHG_textBox.ForeColor = SystemColors.ControlDark;
             PersonIHG_textBox.Location = new Point(558, 149);
             PersonIHG_textBox.Name = "PersonIHG_textBox";
-            PersonIHG_textBox.Size = new Size(117, 15);
+            PersonIHG_textBox.Size = new Size(117, 16);
             PersonIHG_textBox.TabIndex = 67;
             PersonIHG_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label36
             // 
             label36.AutoSize = true;
-            label36.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label36.Font =  new Font("나눔고딕", 9.75F);
             label36.ForeColor = SystemColors.ControlDark;
             label36.Location = new Point(495, 149);
             label36.Name = "label36";
-            label36.Size = new Size(51, 16);
+            label36.Size = new Size(55, 15);
             label36.TabIndex = 66;
             label36.Text = "인체발열";
             // 
             // label24
             // 
             label24.AutoSize = true;
-            label24.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label24.Font =  new Font("나눔고딕", 9.75F);
             label24.ForeColor = SystemColors.ControlDark;
             label24.Location = new Point(917, 116);
             label24.Name = "label24";
-            label24.Size = new Size(37, 16);
+            label24.Size = new Size(39, 15);
             label24.TabIndex = 62;
             label24.Text = "m²/인";
             // 
@@ -871,11 +871,11 @@ namespace main.contents
             OccupancyDensity_textBox.BackColor = Color.White;
             OccupancyDensity_textBox.BorderStyle = BorderStyle.None;
             OccupancyDensity_textBox.Enabled = false;
-            OccupancyDensity_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            OccupancyDensity_textBox.Font =  new Font("나눔고딕", 9.75F);
             OccupancyDensity_textBox.ForeColor = SystemColors.ControlDark;
             OccupancyDensity_textBox.Location = new Point(793, 116);
             OccupancyDensity_textBox.Name = "OccupancyDensity_textBox";
-            OccupancyDensity_textBox.Size = new Size(120, 15);
+            OccupancyDensity_textBox.Size = new Size(120, 16);
             OccupancyDensity_textBox.TabIndex = 64;
             OccupancyDensity_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -883,10 +883,10 @@ namespace main.contents
             // 
             NetArea_textBox.BackColor = SystemColors.Window;
             NetArea_textBox.BorderStyle = BorderStyle.FixedSingle;
-            NetArea_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            NetArea_textBox.Font =  new Font("나눔고딕", 9.75F);
             NetArea_textBox.Location = new Point(153, 14);
             NetArea_textBox.Name = "NetArea_textBox";
-            NetArea_textBox.Size = new Size(120, 22);
+            NetArea_textBox.Size = new Size(120, 23);
             NetArea_textBox.TabIndex = 82;
             NetArea_textBox.TextAlign = HorizontalAlignment.Center;
             NetArea_textBox.TextChanged += NetArea_textBox_TextChanged;
@@ -894,52 +894,52 @@ namespace main.contents
             // label23
             // 
             label23.AutoSize = true;
-            label23.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label23.Font =  new Font("나눔고딕", 9.75F);
             label23.Location = new Point(83, 18);
             label23.Name = "label23";
-            label23.Size = new Size(62, 16);
+            label23.Size = new Size(67, 15);
             label23.TabIndex = 81;
             label23.Text = "순바닥면적";
             // 
             // label26
             // 
             label26.AutoSize = true;
-            label26.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label26.Font =  new Font("나눔고딕", 9.75F);
             label26.ForeColor = SystemColors.ControlDark;
             label26.Location = new Point(725, 116);
             label26.Name = "label26";
-            label26.Size = new Size(51, 16);
+            label26.Size = new Size(55, 15);
             label26.TabIndex = 63;
             label26.Text = "재실밀도";
             // 
             // label27
             // 
             label27.AutoSize = true;
-            label27.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label27.Font =  new Font("나눔고딕", 9.75F);
             label27.Location = new Point(286, 116);
             label27.Name = "label27";
-            label27.Size = new Size(51, 16);
+            label27.Size = new Size(55, 15);
             label27.TabIndex = 60;
             label27.Text = "재실자수";
             // 
             // label28
             // 
             label28.AutoSize = true;
-            label28.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label28.Font =  new Font("나눔고딕", 9.75F);
             label28.Location = new Point(83, 116);
             label28.Name = "label28";
-            label28.Size = new Size(51, 16);
+            label28.Size = new Size(55, 15);
             label28.TabIndex = 58;
             label28.Text = "주이용일";
             // 
             // label29
             // 
             label29.AutoSize = true;
-            label29.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label29.Font =  new Font("나눔고딕", 9.75F);
             label29.ForeColor = SystemColors.ControlDark;
             label29.Location = new Point(682, 116);
             label29.Name = "label29";
-            label29.Size = new Size(37, 16);
+            label29.Size = new Size(31, 15);
             label29.TabIndex = 55;
             label29.Text = "days";
             // 
@@ -948,64 +948,64 @@ namespace main.contents
             AnnualUseDay_textBox.BackColor = Color.White;
             AnnualUseDay_textBox.BorderStyle = BorderStyle.None;
             AnnualUseDay_textBox.Enabled = false;
-            AnnualUseDay_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            AnnualUseDay_textBox.Font =  new Font("나눔고딕", 9.75F);
             AnnualUseDay_textBox.ForeColor = SystemColors.ControlDark;
             AnnualUseDay_textBox.Location = new Point(558, 116);
             AnnualUseDay_textBox.Name = "AnnualUseDay_textBox";
-            AnnualUseDay_textBox.Size = new Size(120, 15);
+            AnnualUseDay_textBox.Size = new Size(120, 16);
             AnnualUseDay_textBox.TabIndex = 57;
             AnnualUseDay_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label30
             // 
             label30.AutoSize = true;
-            label30.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label30.Font =  new Font("나눔고딕", 9.75F);
             label30.ForeColor = SystemColors.ControlDark;
             label30.Location = new Point(495, 116);
             label30.Name = "label30";
-            label30.Size = new Size(62, 16);
+            label30.Size = new Size(67, 15);
             label30.TabIndex = 56;
             label30.Text = "연이용일수";
             // 
             // EndTime_comboBox
             // 
             EndTime_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            EndTime_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            EndTime_comboBox.Font =  new Font("나눔고딕", 9.75F);
             EndTime_comboBox.FormattingEnabled = true;
             EndTime_comboBox.Location = new Point(342, 78);
             EndTime_comboBox.Name = "EndTime_comboBox";
-            EndTime_comboBox.Size = new Size(120, 23);
+            EndTime_comboBox.Size = new Size(120, 24);
             EndTime_comboBox.TabIndex = 51;
             EndTime_comboBox.SelectedIndexChanged += EndTime_comboBox_SelectedIndexChanged;
             // 
             // label16
             // 
             label16.AutoSize = true;
-            label16.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label16.Font =  new Font("나눔고딕", 9.75F);
             label16.Location = new Point(286, 82);
             label16.Name = "label16";
-            label16.Size = new Size(51, 16);
+            label16.Size = new Size(55, 15);
             label16.TabIndex = 50;
             label16.Text = "종료시간";
             // 
             // label17
             // 
             label17.AutoSize = true;
-            label17.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label17.Font =  new Font("나눔고딕", 9.75F);
             label17.Location = new Point(83, 82);
             label17.Name = "label17";
-            label17.Size = new Size(51, 16);
+            label17.Size = new Size(55, 15);
             label17.TabIndex = 48;
             label17.Text = "사용시간";
             // 
             // label18
             // 
             label18.AutoSize = true;
-            label18.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label18.Font =  new Font("나눔고딕", 9.75F);
             label18.ForeColor = SystemColors.ControlDark;
             label18.Location = new Point(680, 82);
             label18.Name = "label18";
-            label18.Size = new Size(26, 16);
+            label18.Size = new Size(26, 15);
             label18.TabIndex = 45;
             label18.Text = "h/d";
             // 
@@ -1014,64 +1014,64 @@ namespace main.contents
             UseTime_textBox.BackColor = Color.White;
             UseTime_textBox.BorderStyle = BorderStyle.None;
             UseTime_textBox.Enabled = false;
-            UseTime_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            UseTime_textBox.Font =  new Font("나눔고딕", 9.75F);
             UseTime_textBox.ForeColor = SystemColors.ControlDark;
             UseTime_textBox.Location = new Point(558, 82);
             UseTime_textBox.Name = "UseTime_textBox";
-            UseTime_textBox.Size = new Size(120, 15);
+            UseTime_textBox.Size = new Size(120, 16);
             UseTime_textBox.TabIndex = 47;
             UseTime_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label22
             // 
             label22.AutoSize = true;
-            label22.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label22.Font =  new Font("나눔고딕", 9.75F);
             label22.ForeColor = SystemColors.ControlDark;
             label22.Location = new Point(495, 82);
             label22.Name = "label22";
-            label22.Size = new Size(51, 16);
+            label22.Size = new Size(55, 15);
             label22.TabIndex = 46;
             label22.Text = "사용시간";
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label7.Font =  new Font("나눔고딕", 9.75F);
             label7.Location = new Point(298, 18);
             label7.Name = "label7";
-            label7.Size = new Size(40, 16);
+            label7.Size = new Size(43, 15);
             label7.TabIndex = 40;
             label7.Text = "천장고";
             // 
             // Usage_comboBox
             // 
             Usage_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Usage_comboBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Usage_comboBox.Font =  new Font("나눔고딕", 9.75F);
             Usage_comboBox.FormattingEnabled = true;
             Usage_comboBox.Location = new Point(153, 44);
             Usage_comboBox.Name = "Usage_comboBox";
-            Usage_comboBox.Size = new Size(120, 23);
+            Usage_comboBox.Size = new Size(120, 24);
             Usage_comboBox.TabIndex = 36;
             Usage_comboBox.SelectedIndexChanged += Usage_comboBox_SelectedIndexChanged;
             // 
             // label25
             // 
             label25.AutoSize = true;
-            label25.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label25.Font =  new Font("나눔고딕", 9.75F);
             label25.Location = new Point(83, 48);
             label25.Name = "label25";
-            label25.Size = new Size(62, 16);
+            label25.Size = new Size(67, 15);
             label25.TabIndex = 32;
             label25.Text = "용도프로필";
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label8.Font =  new Font("나눔고딕", 9.75F);
             label8.ForeColor = SystemColors.ControlDark;
             label8.Location = new Point(917, 18);
             label8.Name = "label8";
-            label8.Size = new Size(46, 16);
+            label8.Size = new Size(43, 15);
             label8.TabIndex = 22;
             label8.Text = "kWh/d";
             // 
@@ -1080,29 +1080,29 @@ namespace main.contents
             DHWneed_textBox.BackColor = Color.White;
             DHWneed_textBox.BorderStyle = BorderStyle.None;
             DHWneed_textBox.Enabled = false;
-            DHWneed_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            DHWneed_textBox.Font =  new Font("나눔고딕", 9.75F);
             DHWneed_textBox.ForeColor = SystemColors.ControlDark;
             DHWneed_textBox.Location = new Point(795, 18);
             DHWneed_textBox.Name = "DHWneed_textBox";
-            DHWneed_textBox.Size = new Size(116, 15);
+            DHWneed_textBox.Size = new Size(116, 16);
             DHWneed_textBox.TabIndex = 29;
             DHWneed_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label14
             // 
             label14.AutoSize = true;
-            label14.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label14.Font =  new Font("나눔고딕", 9.75F);
             label14.ForeColor = SystemColors.ControlDark;
             label14.Location = new Point(725, 18);
             label14.Name = "label14";
-            label14.Size = new Size(62, 16);
+            label14.Size = new Size(67, 15);
             label14.TabIndex = 26;
             label14.Text = "급탕요구량";
             // 
             // label51
             // 
             label51.AutoSize = true;
-            label51.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label51.Font =  new Font("나눔고딕", 9.75F);
             label51.Location = new Point(152, 428);
             label51.Name = "label51";
             label51.Size = new Size(24, 15);
@@ -1225,16 +1225,16 @@ namespace main.contents
             // 
             textBox4.BackColor = SystemColors.Window;
             textBox4.BorderStyle = BorderStyle.FixedSingle;
-            textBox4.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            textBox4.Font =  new Font("나눔고딕", 9.75F);
             textBox4.Location = new Point(83, 18);
             textBox4.Name = "textBox4";
-            textBox4.Size = new Size(120, 22);
+            textBox4.Size = new Size(120, 23);
             textBox4.TabIndex = 87;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label4.Font =  new Font("나눔고딕", 9.75F);
             label4.Location = new Point(437, 29);
             label4.Name = "label4";
             label4.Size = new Size(31, 15);
@@ -1258,7 +1258,7 @@ namespace main.contents
             // EquipIHG_image_Label
             // 
             EquipIHG_image_Label.BackColor = SystemColors.Control;
-            EquipIHG_image_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            EquipIHG_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold);
             EquipIHG_image_Label.ForeColor = SystemColors.ControlDarkDark;
             EquipIHG_image_Label.Location = new Point(473, 243);
             EquipIHG_image_Label.Name = "EquipIHG_image_Label";
@@ -1268,7 +1268,7 @@ namespace main.contents
             // DHWneed_image_Label
             // 
             DHWneed_image_Label.BackColor = SystemColors.Control;
-            DHWneed_image_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            DHWneed_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold);
             DHWneed_image_Label.ForeColor = SystemColors.ControlDarkDark;
             DHWneed_image_Label.Location = new Point(342, 86);
             DHWneed_image_Label.Name = "DHWneed_image_Label";
@@ -1279,11 +1279,11 @@ namespace main.contents
             // 
             Door_textBox.BackColor = SystemColors.Window;
             Door_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Door_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Door_textBox.Font =  new Font("나눔고딕", 9.75F);
             Door_textBox.Location = new Point(851, 262);
             Door_textBox.Name = "Door_textBox";
             Door_textBox.ReadOnly = true;
-            Door_textBox.Size = new Size(75, 22);
+            Door_textBox.Size = new Size(75, 23);
             Door_textBox.TabIndex = 101;
             Door_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -1291,11 +1291,11 @@ namespace main.contents
             // 
             InWall_textBox.BackColor = SystemColors.Window;
             InWall_textBox.BorderStyle = BorderStyle.FixedSingle;
-            InWall_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            InWall_textBox.Font =  new Font("나눔고딕", 9.75F);
             InWall_textBox.Location = new Point(851, 193);
             InWall_textBox.Name = "InWall_textBox";
             InWall_textBox.ReadOnly = true;
-            InWall_textBox.Size = new Size(75, 22);
+            InWall_textBox.Size = new Size(75, 23);
             InWall_textBox.TabIndex = 100;
             InWall_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -1303,18 +1303,18 @@ namespace main.contents
             // 
             CW_textBox.BackColor = SystemColors.Window;
             CW_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CW_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            CW_textBox.Font =  new Font("나눔고딕", 9.75F);
             CW_textBox.Location = new Point(851, 123);
             CW_textBox.Name = "CW_textBox";
             CW_textBox.ReadOnly = true;
-            CW_textBox.Size = new Size(75, 22);
+            CW_textBox.Size = new Size(75, 23);
             CW_textBox.TabIndex = 99;
             CW_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // PersonIHG_image_Label
             // 
             PersonIHG_image_Label.BackColor = SystemColors.Control;
-            PersonIHG_image_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            PersonIHG_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold);
             PersonIHG_image_Label.ForeColor = SystemColors.ControlDarkDark;
             PersonIHG_image_Label.Location = new Point(273, 243);
             PersonIHG_image_Label.Name = "PersonIHG_image_Label";
@@ -1324,7 +1324,7 @@ namespace main.contents
             // Em_Label
             // 
             Em_Label.BackColor = SystemColors.Control;
-            Em_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            Em_Label.Font = new Font("굴림", 9F, FontStyle.Bold);
             Em_Label.ForeColor = SystemColors.ControlDarkDark;
             Em_Label.Location = new Point(199, 198);
             Em_Label.Name = "Em_Label";
@@ -1334,7 +1334,7 @@ namespace main.contents
             // theta_i_h_set_Label
             // 
             theta_i_h_set_Label.BackColor = SystemColors.Control;
-            theta_i_h_set_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            theta_i_h_set_Label.Font = new Font("굴림", 9F, FontStyle.Bold);
             theta_i_h_set_Label.ForeColor = SystemColors.ControlDarkDark;
             theta_i_h_set_Label.Location = new Point(253, 145);
             theta_i_h_set_Label.Name = "theta_i_h_set_Label";
@@ -1344,7 +1344,7 @@ namespace main.contents
             // theta_i_c_set_Label
             // 
             theta_i_c_set_Label.BackColor = SystemColors.Control;
-            theta_i_c_set_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            theta_i_c_set_Label.Font = new Font("굴림", 9F, FontStyle.Bold);
             theta_i_c_set_Label.ForeColor = SystemColors.ControlDarkDark;
             theta_i_c_set_Label.Location = new Point(252, 119);
             theta_i_c_set_Label.Name = "theta_i_c_set_Label";
@@ -1354,7 +1354,7 @@ namespace main.contents
             // EndTime_image_Label
             // 
             EndTime_image_Label.BackColor = SystemColors.Control;
-            EndTime_image_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            EndTime_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold);
             EndTime_image_Label.ForeColor = SystemColors.ControlDarkDark;
             EndTime_image_Label.Location = new Point(239, 86);
             EndTime_image_Label.Name = "EndTime_image_Label";
@@ -1364,7 +1364,7 @@ namespace main.contents
             // StartTime_image_Label
             // 
             StartTime_image_Label.BackColor = SystemColors.Control;
-            StartTime_image_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            StartTime_image_Label.Font = new Font("굴림", 9F, FontStyle.Bold);
             StartTime_image_Label.ForeColor = SystemColors.ControlDarkDark;
             StartTime_image_Label.Location = new Point(199, 86);
             StartTime_image_Label.Name = "StartTime_image_Label";
@@ -1375,11 +1375,11 @@ namespace main.contents
             // 
             Floor_textBox.BackColor = SystemColors.Window;
             Floor_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Floor_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Floor_textBox.Font =  new Font("나눔고딕", 9.75F);
             Floor_textBox.Location = new Point(47, 275);
             Floor_textBox.Name = "Floor_textBox";
             Floor_textBox.ReadOnly = true;
-            Floor_textBox.Size = new Size(74, 22);
+            Floor_textBox.Size = new Size(74, 23);
             Floor_textBox.TabIndex = 88;
             Floor_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -1387,11 +1387,11 @@ namespace main.contents
             // 
             Window_textBox.BackColor = SystemColors.Window;
             Window_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Window_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Window_textBox.Font =  new Font("나눔고딕", 9.75F);
             Window_textBox.Location = new Point(46, 218);
             Window_textBox.Name = "Window_textBox";
             Window_textBox.ReadOnly = true;
-            Window_textBox.Size = new Size(74, 22);
+            Window_textBox.Size = new Size(74, 23);
             Window_textBox.TabIndex = 87;
             Window_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -1399,11 +1399,11 @@ namespace main.contents
             // 
             Wall_textBox.BackColor = SystemColors.Window;
             Wall_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Wall_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Wall_textBox.Font =  new Font("나눔고딕", 9.75F);
             Wall_textBox.Location = new Point(46, 149);
             Wall_textBox.Name = "Wall_textBox";
             Wall_textBox.ReadOnly = true;
-            Wall_textBox.Size = new Size(74, 22);
+            Wall_textBox.Size = new Size(74, 23);
             Wall_textBox.TabIndex = 86;
             Wall_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -1411,18 +1411,17 @@ namespace main.contents
             // 
             Roof_textBox.BackColor = SystemColors.Window;
             Roof_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Roof_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Roof_textBox.Font =  new Font("나눔고딕", 9.75F);
             Roof_textBox.Location = new Point(46, 48);
             Roof_textBox.Name = "Roof_textBox";
             Roof_textBox.ReadOnly = true;
-            Roof_textBox.Size = new Size(74, 22);
+            Roof_textBox.Size = new Size(74, 23);
             Roof_textBox.TabIndex = 85;
             Roof_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // AdditionalPanel
             // 
             AdditionalPanel.BackColor = Color.White;
-            AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
             AdditionalPanel.Controls.Add(SA_Volume_Label);
             AdditionalPanel.Controls.Add(RA_Volume_Label);
             AdditionalPanel.Controls.Add(label72);
@@ -1454,11 +1453,12 @@ namespace main.contents
             AdditionalPanel.Name = "AdditionalPanel";
             AdditionalPanel.Size = new Size(977, 430);
             AdditionalPanel.TabIndex = 18;
+            AdditionalPanel.Paint += AdditionalPanel_Paint;
             // 
             // SA_Volume_Label
             // 
             SA_Volume_Label.BackColor = SystemColors.Control;
-            SA_Volume_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            SA_Volume_Label.Font = new Font("굴림", 9F, FontStyle.Bold);
             SA_Volume_Label.ForeColor = SystemColors.ControlDarkDark;
             SA_Volume_Label.Location = new Point(495, 198);
             SA_Volume_Label.Name = "SA_Volume_Label";
@@ -1468,7 +1468,7 @@ namespace main.contents
             // RA_Volume_Label
             // 
             RA_Volume_Label.BackColor = SystemColors.Control;
-            RA_Volume_Label.Font = new System.Drawing.Font("굴림", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            RA_Volume_Label.Font = new Font("굴림", 9F, FontStyle.Bold);
             RA_Volume_Label.ForeColor = SystemColors.ControlDarkDark;
             RA_Volume_Label.Location = new Point(416, 198);
             RA_Volume_Label.Name = "RA_Volume_Label";
@@ -1478,77 +1478,77 @@ namespace main.contents
             // label72
             // 
             label72.AutoSize = true;
-            label72.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label72.Font =  new Font("나눔고딕", 9.75F);
             label72.ForeColor = SystemColors.ControlDark;
             label72.Location = new Point(851, 244);
             label72.Name = "label72";
-            label72.Size = new Size(62, 16);
+            label72.Size = new Size(67, 15);
             label72.TabIndex = 113;
             label72.Text = "외부출입문";
             // 
             // label71
             // 
             label71.AutoSize = true;
-            label71.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label71.Font =  new Font("나눔고딕", 9.75F);
             label71.ForeColor = SystemColors.ControlDark;
             label71.Location = new Point(851, 175);
             label71.Name = "label71";
-            label71.Size = new Size(29, 16);
+            label71.Size = new Size(31, 15);
             label71.TabIndex = 112;
             label71.Text = "내벽";
             // 
             // label70
             // 
             label70.AutoSize = true;
-            label70.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label70.Font =  new Font("나눔고딕", 9.75F);
             label70.ForeColor = SystemColors.ControlDark;
             label70.Location = new Point(851, 105);
             label70.Name = "label70";
-            label70.Size = new Size(51, 16);
+            label70.Size = new Size(55, 15);
             label70.TabIndex = 111;
             label70.Text = "커튼월창";
             // 
             // label69
             // 
             label69.AutoSize = true;
-            label69.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label69.Font =  new Font("나눔고딕", 9.75F);
             label69.ForeColor = SystemColors.ControlDark;
             label69.Location = new Point(48, 257);
             label69.Name = "label69";
-            label69.Size = new Size(29, 16);
+            label69.Size = new Size(31, 15);
             label69.TabIndex = 110;
             label69.Text = "바닥";
             // 
             // label68
             // 
             label68.AutoSize = true;
-            label68.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label68.Font =  new Font("나눔고딕", 9.75F);
             label68.ForeColor = SystemColors.ControlDark;
             label68.Location = new Point(47, 200);
             label68.Name = "label68";
-            label68.Size = new Size(29, 16);
+            label68.Size = new Size(31, 15);
             label68.TabIndex = 109;
             label68.Text = "창호";
             // 
             // label67
             // 
             label67.AutoSize = true;
-            label67.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label67.Font =  new Font("나눔고딕", 9.75F);
             label67.ForeColor = SystemColors.ControlDark;
             label67.Location = new Point(46, 131);
             label67.Name = "label67";
-            label67.Size = new Size(29, 16);
+            label67.Size = new Size(31, 15);
             label67.TabIndex = 108;
             label67.Text = "외벽";
             // 
             // label66
             // 
             label66.AutoSize = true;
-            label66.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label66.Font =  new Font("나눔고딕", 9.75F);
             label66.ForeColor = SystemColors.ControlDark;
             label66.Location = new Point(47, 30);
             label66.Name = "label66";
-            label66.Size = new Size(29, 16);
+            label66.Size = new Size(31, 15);
             label66.TabIndex = 107;
             label66.Text = "지붕";
             // 

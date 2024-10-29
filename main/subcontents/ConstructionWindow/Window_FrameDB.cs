@@ -27,7 +27,7 @@ namespace main.subcontents
 
         public Window_FrameDB(String FrameType, String SingleDoubleType)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             UserNum = Program.UTIL.CreateNum("User_WindowFrame", "번호", "UWF_0");
             UserNum_textBox.Text = UserNum;
             this.FrameType = FrameType;

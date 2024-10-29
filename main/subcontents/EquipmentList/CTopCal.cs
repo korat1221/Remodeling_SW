@@ -18,7 +18,7 @@ namespace main.subcontents.EquipmentList
         string TYP;
         public CTopCal(string Typ)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             TYP = Typ; //개방형건식,개방형습식,밀폐형건식,밀폐형습식
             //건식은 0.045kW/kW
             //개방형습식 0.033kW/kW

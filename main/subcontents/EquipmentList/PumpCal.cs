@@ -21,7 +21,7 @@ namespace main.subcontents.EquipmentList
 
         public PumpCal(String PumpNum)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             PumpNum_textBox.Text = PumpNum;
             pictureBox1.Load(Program.gPath + "images/HeatingSystem/PumpArea.png");
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;

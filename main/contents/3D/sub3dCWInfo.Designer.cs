@@ -128,8 +128,8 @@
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(Blind_tabPage);
-            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
-            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.Control;
+            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.Control;
             tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
             tabControl1.DisplayStyleProvider.FocusTrack = true;
             tabControl1.DisplayStyleProvider.HotTrack = true;
@@ -208,7 +208,7 @@
             shgc_textBox.BackColor = Color.White;
             shgc_textBox.BorderStyle = BorderStyle.None;
             shgc_textBox.Enabled = false;
-            shgc_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            shgc_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             shgc_textBox.ForeColor = SystemColors.ControlDark;
             shgc_textBox.Location = new Point(480, 105);
             shgc_textBox.Name = "shgc_textBox";
@@ -457,7 +457,7 @@
             // 
             Name_textBox1.BackColor = Color.White;
             Name_textBox1.BorderStyle = BorderStyle.None;
-            Name_textBox1.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            Name_textBox1.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             Name_textBox1.Location = new Point(257, 34);
             Name_textBox1.Name = "Name_textBox1";
             Name_textBox1.ReadOnly = true;
@@ -490,7 +490,7 @@
             // 
             Name_textBox.BackColor = Color.White;
             Name_textBox.BorderStyle = BorderStyle.None;
-            Name_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            Name_textBox.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             Name_textBox.Location = new Point(42, 34);
             Name_textBox.Name = "Name_textBox";
             Name_textBox.ReadOnly = true;
@@ -561,7 +561,7 @@
             L1_textBox.BackColor = Color.White;
             L1_textBox.BorderStyle = BorderStyle.None;
             L1_textBox.Enabled = false;
-            L1_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            L1_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             L1_textBox.ForeColor = SystemColors.ControlDark;
             L1_textBox.Location = new Point(381, 217);
             L1_textBox.Name = "L1_textBox";
@@ -574,7 +574,7 @@
             T2_textBox.BackColor = Color.White;
             T2_textBox.BorderStyle = BorderStyle.None;
             T2_textBox.Enabled = false;
-            T2_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            T2_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             T2_textBox.ForeColor = SystemColors.ControlDark;
             T2_textBox.Location = new Point(721, 105);
             T2_textBox.Name = "T2_textBox";
@@ -587,7 +587,7 @@
             T1_textBox.BackColor = Color.White;
             T1_textBox.BorderStyle = BorderStyle.None;
             T1_textBox.Enabled = false;
-            T1_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            T1_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             T1_textBox.ForeColor = SystemColors.ControlDark;
             T1_textBox.Location = new Point(651, 91);
             T1_textBox.Name = "T1_textBox";
@@ -600,7 +600,7 @@
             S2_textBox.BackColor = Color.White;
             S2_textBox.BorderStyle = BorderStyle.None;
             S2_textBox.Enabled = false;
-            S2_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            S2_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             S2_textBox.ForeColor = SystemColors.ControlDark;
             S2_textBox.Location = new Point(683, 217);
             S2_textBox.Name = "S2_textBox";
@@ -613,7 +613,7 @@
             S1_textBox.BackColor = Color.White;
             S1_textBox.BorderStyle = BorderStyle.None;
             S1_textBox.Enabled = false;
-            S1_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            S1_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             S1_textBox.ForeColor = SystemColors.ControlDark;
             S1_textBox.Location = new Point(603, 192);
             S1_textBox.Name = "S1_textBox";
@@ -626,7 +626,7 @@
             L2_textBox.BackColor = Color.White;
             L2_textBox.BorderStyle = BorderStyle.None;
             L2_textBox.Enabled = false;
-            L2_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            L2_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             L2_textBox.ForeColor = SystemColors.ControlDark;
             L2_textBox.Location = new Point(269, 187);
             L2_textBox.Name = "L2_textBox";
@@ -639,7 +639,7 @@
             R2_textBox.BackColor = Color.White;
             R2_textBox.BorderStyle = BorderStyle.None;
             R2_textBox.Enabled = false;
-            R2_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            R2_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             R2_textBox.ForeColor = SystemColors.ControlDark;
             R2_textBox.Location = new Point(125, 187);
             R2_textBox.Name = "R2_textBox";
@@ -682,7 +682,7 @@
             R1_textBox.BackColor = Color.White;
             R1_textBox.BorderStyle = BorderStyle.None;
             R1_textBox.Enabled = false;
-            R1_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            R1_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             R1_textBox.ForeColor = SystemColors.ControlDark;
             R1_textBox.Location = new Point(14, 217);
             R1_textBox.Name = "R1_textBox";
@@ -773,7 +773,7 @@
             // label30
             // 
             label30.AutoSize = true;
-            label30.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label30.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label30.ForeColor = SystemColors.ControlDark;
             label30.Location = new Point(785, 31);
             label30.Name = "label30";
@@ -784,7 +784,7 @@
             // label24
             // 
             label24.AutoSize = true;
-            label24.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label24.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label24.ForeColor = SystemColors.ControlDark;
             label24.Location = new Point(604, 31);
             label24.Name = "label24";
@@ -795,7 +795,7 @@
             // label23
             // 
             label23.AutoSize = true;
-            label23.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label23.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label23.ForeColor = SystemColors.ControlDark;
             label23.Location = new Point(873, 64);
             label23.Name = "label23";
@@ -806,7 +806,7 @@
             // label28
             // 
             label28.AutoSize = true;
-            label28.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label28.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label28.ForeColor = SystemColors.ControlDark;
             label28.Location = new Point(691, 64);
             label28.Name = "label28";
@@ -819,7 +819,7 @@
             Tao_on_textBox.BackColor = Color.White;
             Tao_on_textBox.BorderStyle = BorderStyle.None;
             Tao_on_textBox.Enabled = false;
-            Tao_on_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Tao_on_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             Tao_on_textBox.ForeColor = SystemColors.ControlDark;
             Tao_on_textBox.Location = new Point(747, 141);
             Tao_on_textBox.Name = "Tao_on_textBox";
@@ -832,7 +832,7 @@
             SHGC_on_textBox.BackColor = Color.White;
             SHGC_on_textBox.BorderStyle = BorderStyle.None;
             SHGC_on_textBox.Enabled = false;
-            SHGC_on_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            SHGC_on_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             SHGC_on_textBox.ForeColor = SystemColors.ControlDark;
             SHGC_on_textBox.Location = new Point(747, 101);
             SHGC_on_textBox.Name = "SHGC_on_textBox";
@@ -845,7 +845,7 @@
             Ug_on_textBox.BackColor = Color.White;
             Ug_on_textBox.BorderStyle = BorderStyle.None;
             Ug_on_textBox.Enabled = false;
-            Ug_on_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Ug_on_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             Ug_on_textBox.ForeColor = SystemColors.ControlDark;
             Ug_on_textBox.Location = new Point(747, 65);
             Ug_on_textBox.Name = "Ug_on_textBox";
@@ -858,7 +858,7 @@
             Tao_off_textBox.BackColor = Color.White;
             Tao_off_textBox.BorderStyle = BorderStyle.None;
             Tao_off_textBox.Enabled = false;
-            Tao_off_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Tao_off_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             Tao_off_textBox.ForeColor = SystemColors.ControlDark;
             Tao_off_textBox.Location = new Point(565, 138);
             Tao_off_textBox.Name = "Tao_off_textBox";
@@ -869,7 +869,7 @@
             // label26
             // 
             label26.AutoSize = true;
-            label26.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label26.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label26.ForeColor = SystemColors.ControlDark;
             label26.Location = new Point(468, 137);
             label26.Name = "label26";
@@ -882,7 +882,7 @@
             SHGC_off_textBox.BackColor = Color.White;
             SHGC_off_textBox.BorderStyle = BorderStyle.None;
             SHGC_off_textBox.Enabled = false;
-            SHGC_off_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            SHGC_off_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             SHGC_off_textBox.ForeColor = SystemColors.ControlDark;
             SHGC_off_textBox.Location = new Point(565, 102);
             SHGC_off_textBox.Name = "SHGC_off_textBox";
@@ -893,7 +893,7 @@
             // label27
             // 
             label27.AutoSize = true;
-            label27.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label27.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label27.ForeColor = SystemColors.ControlDark;
             label27.Location = new Point(468, 101);
             label27.Name = "label27";
@@ -906,7 +906,7 @@
             Ug_off_textBox.BackColor = Color.White;
             Ug_off_textBox.BorderStyle = BorderStyle.None;
             Ug_off_textBox.Enabled = false;
-            Ug_off_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            Ug_off_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             Ug_off_textBox.ForeColor = SystemColors.ControlDark;
             Ug_off_textBox.Location = new Point(565, 66);
             Ug_off_textBox.Name = "Ug_off_textBox";
@@ -917,7 +917,7 @@
             // label29
             // 
             label29.AutoSize = true;
-            label29.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label29.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label29.ForeColor = SystemColors.ControlDark;
             label29.Location = new Point(468, 65);
             label29.Name = "label29";
@@ -930,7 +930,7 @@
             BlindControl_textBox.BackColor = Color.White;
             BlindControl_textBox.BorderStyle = BorderStyle.None;
             BlindControl_textBox.Enabled = false;
-            BlindControl_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindControl_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             BlindControl_textBox.ForeColor = SystemColors.ControlDark;
             BlindControl_textBox.Location = new Point(275, 143);
             BlindControl_textBox.Name = "BlindControl_textBox";
@@ -990,7 +990,7 @@
             BlindColor_textBox.BackColor = Color.White;
             BlindColor_textBox.BorderStyle = BorderStyle.None;
             BlindColor_textBox.Enabled = false;
-            BlindColor_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindColor_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             BlindColor_textBox.ForeColor = SystemColors.ControlDark;
             BlindColor_textBox.Location = new Point(275, 103);
             BlindColor_textBox.Name = "BlindColor_textBox";
@@ -1001,7 +1001,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label12.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label12.ForeColor = SystemColors.ControlDark;
             label12.Location = new Point(218, 101);
             label12.Name = "label12";
@@ -1014,7 +1014,7 @@
             BlindTrans_textBox.BackColor = Color.White;
             BlindTrans_textBox.BorderStyle = BorderStyle.None;
             BlindTrans_textBox.Enabled = false;
-            BlindTrans_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindTrans_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             BlindTrans_textBox.ForeColor = SystemColors.ControlDark;
             BlindTrans_textBox.Location = new Point(275, 67);
             BlindTrans_textBox.Name = "BlindTrans_textBox";
@@ -1025,7 +1025,7 @@
             // label17
             // 
             label17.AutoSize = true;
-            label17.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label17.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label17.ForeColor = SystemColors.ControlDark;
             label17.Location = new Point(218, 65);
             label17.Name = "label17";
@@ -1038,7 +1038,7 @@
             BlindInstall_textBox.BackColor = Color.White;
             BlindInstall_textBox.BorderStyle = BorderStyle.None;
             BlindInstall_textBox.Enabled = false;
-            BlindInstall_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindInstall_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             BlindInstall_textBox.ForeColor = SystemColors.ControlDark;
             BlindInstall_textBox.Location = new Point(93, 139);
             BlindInstall_textBox.Name = "BlindInstall_textBox";
@@ -1049,7 +1049,7 @@
             // label18
             // 
             label18.AutoSize = true;
-            label18.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label18.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label18.ForeColor = SystemColors.ControlDark;
             label18.Location = new Point(48, 138);
             label18.Name = "label18";
@@ -1062,7 +1062,7 @@
             BlindType_textBox.BackColor = Color.White;
             BlindType_textBox.BorderStyle = BorderStyle.None;
             BlindType_textBox.Enabled = false;
-            BlindType_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindType_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             BlindType_textBox.ForeColor = SystemColors.ControlDark;
             BlindType_textBox.Location = new Point(93, 103);
             BlindType_textBox.Name = "BlindType_textBox";
@@ -1073,7 +1073,7 @@
             // label19
             // 
             label19.AutoSize = true;
-            label19.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label19.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label19.ForeColor = SystemColors.ControlDark;
             label19.Location = new Point(48, 102);
             label19.Name = "label19";
@@ -1084,7 +1084,7 @@
             // label25
             // 
             label25.AutoSize = true;
-            label25.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label25.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label25.ForeColor = SystemColors.ControlDark;
             label25.Location = new Point(218, 141);
             label25.Name = "label25";
@@ -1097,7 +1097,7 @@
             BlindName_textBox.BackColor = Color.White;
             BlindName_textBox.BorderStyle = BorderStyle.None;
             BlindName_textBox.Enabled = false;
-            BlindName_textBox.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            BlindName_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             BlindName_textBox.ForeColor = SystemColors.ControlDark;
             BlindName_textBox.Location = new Point(93, 67);
             BlindName_textBox.Name = "BlindName_textBox";
@@ -1108,7 +1108,7 @@
             // label20
             // 
             label20.AutoSize = true;
-            label20.Font = new System.Drawing.Font("맑은 고딕", 9F,FontStyle.Regular, GraphicsUnit.Point);
+            label20.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label20.ForeColor = SystemColors.ControlDark;
             label20.Location = new Point(48, 66);
             label20.Name = "label20";

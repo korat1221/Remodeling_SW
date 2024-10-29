@@ -21,7 +21,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using static main.DB;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
-using static System.Net.Mime.MediaTypeNames;
+
 using main.subcontents.HeatingSystem;
 
 namespace main.contents
@@ -36,7 +36,7 @@ namespace main.contents
         String SelectDH_nonsplit;
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Num, Pump2Num;
         String StorageUse, StoragePumpUse, StoragePump, StorageType; double Vs;
-        String[] SystemType = { "보일러", "지역난방", "태양열시스템","외기 히트펌프" };
+        String[] SystemType = { "보일러", "지역난방", "태양열시스템", "외기 히트펌프" };
         double PipeD, PipeInsD, PipeIns_Ramda;
         String PipeIns;
         double ZoneArea;
@@ -44,7 +44,7 @@ namespace main.contents
         string[][] 프로젝트유형;
         public DHWSystem()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '급탕시스템'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -121,13 +121,13 @@ namespace main.contents
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
+        private void panel4_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
         private void Name_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -154,12 +154,12 @@ namespace main.contents
         }
         private void ce_Pic()
         {
-            if(radioButton1.Checked)
+            if (radioButton1.Checked)
             {
                 ce1_pictureBox.Visible = true;
                 ce1_pictureBox.Size = new System.Drawing.Size(360, 90); //260,60
                 ce1_pictureBox.Location = new Point(180, 8); //250,10
-                ce1_pictureBox.Load(Program.gPath + "images/HeatingSystem/Old/Wsup.png"); 
+                ce1_pictureBox.Load(Program.gPath + "images/HeatingSystem/Old/Wsup.png");
                 ce1_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 ce1_pictureBox.BackColor = Color.Transparent;
                 ce1_pictureBox.Parent = DistpictureBox;
@@ -363,7 +363,7 @@ namespace main.contents
             }
             else if (MainSystem == "외기 히트펌프")
             {
-              Load_HPForm();
+                Load_HPForm();
             }
             else if (MainSystem == "태양열시스템")
             {
@@ -646,9 +646,9 @@ namespace main.contents
                     }
 
                     string[][] SolarName = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "명칭", "번호 = '" + SelectSolar_split[0].ToString() + "'");
-                    if(SolarName.Length > 0)
+                    if (SolarName.Length > 0)
                     { 내용 = SolarName[0][0] + " 외 " + (SelectSolar_split.Count - 1).ToString() + "개"; }
-                   
+
                 }
                 else
                 {
@@ -872,7 +872,7 @@ namespace main.contents
 
         private void Split_DH(String nonSplit)
         {
-            String 내용 =null;
+            String 내용 = null;
             if (nonSplit != null)
             {
                 if (nonSplit.Contains('+'))
@@ -885,7 +885,7 @@ namespace main.contents
                     }
 
                     string[][] DHName = Program.DB.getValue(DB.type.ProjDB, "User_DH", "명칭", "번호 = '" + SelectDH_split[0].ToString() + "'");
-                    if(DHName.Length > 0)
+                    if (DHName.Length > 0)
                     {
                         내용 = DHName[0][0] + " 외 " + (SelectDH_split.Count - 1).ToString() + "개";
                     }
@@ -960,7 +960,7 @@ namespace main.contents
         {
             String nonsplit;
             nonsplit = SelectHP_nonsplit;
-            DHWHP_DB heating_HP = new DHWHP_DB( nonsplit);
+            DHWHP_DB heating_HP = new DHWHP_DB(nonsplit);
             DialogResult result = heating_HP.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -972,7 +972,7 @@ namespace main.contents
                 }
             }
         }
-        private void Split_HP(String nonSplit,String HeatSource)
+        private void Split_HP(String nonSplit, String HeatSource)
         {
             String 내용 = "";
             if (nonSplit != null)
@@ -1067,7 +1067,7 @@ namespace main.contents
                         HP_dataGridView.Rows[nRow].Cells[3].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][2]));
                         HP_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][3]));
                         HP_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
-                       
+
                         DataGridViewComboBoxCell 제어방식comboBox = new DataGridViewComboBoxCell();
                         제어방식comboBox.Items.Add("ON/OFF제어");
                         제어방식comboBox.Items.Add("인버터제어");
@@ -1077,7 +1077,7 @@ namespace main.contents
             }
         }
         private void NonSplit_HP()
-        { 
+        {
 
             for (int k = 0; k < HP_dataGridView.Rows.Count; k++)
             {
@@ -1245,7 +1245,7 @@ namespace main.contents
             }
             else
             {
-                StorageType = null; 
+                StorageType = null;
             }
         }
         private void Create_StoragePump_Table()
@@ -1286,7 +1286,7 @@ namespace main.contents
         private void Load_StoragePump(String StoragePump)
         {
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "번호 = '" + StoragePump.ToString() + "'");
-            if(Value.Length >0)
+            if (Value.Length > 0)
             {
                 StoragePump_textBox.Text = Value[0][0];
                 string A효율 = "", B효율 = "", 유량 = "", 동력 = "", 양정 = "";
@@ -1689,13 +1689,13 @@ namespace main.contents
         private void LoadImage() // 1.분배설비 그림넣기
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형 = '분배설비'");
-            if(Image.Length > 0)
+            if (Image.Length > 0)
             {
                 DistpictureBox.Size = new System.Drawing.Size(610, 254);
                 DistpictureBox.Location = new Point(0, 25);
                 DistpictureBox.Load(Program.gPath + Image[0][0]);
                 DistpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }            
+            }
         }
 
 
@@ -1704,13 +1704,13 @@ namespace main.contents
 
             string[][] image1 = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지",
                 "설비유형='" + type + "' And 설치유형='" + install + "'");
-            if(image1.Length > 0) 
+            if (image1.Length > 0)
             {
                 SyspictureBox.Size = new System.Drawing.Size(110, 170);
                 SyspictureBox.Location = new Point(0, 90);
                 SyspictureBox.Load(Program.gPath + image1[0][0]);
                 SyspictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }            
+            }
         }
 
         private void StorageImage(string install)//2.난방설비 그림
@@ -1722,7 +1722,7 @@ namespace main.contents
             else
             {
                 string[][] stoimage = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형='저장설비' And 설치유형='" + install + "'");
-                if(stoimage.Length > 0)
+                if (stoimage.Length > 0)
                 {
                     StopictureBox.Visible = true;
                     StopictureBox.Size = new System.Drawing.Size(135, 135);
@@ -1731,7 +1731,7 @@ namespace main.contents
                     StopictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     StopictureBox.BackColor = Color.Transparent;
                     StopictureBox.Parent = DistpictureBox;
-                }                
+                }
             }
         }
         private void HeatSourceImage(string HeatSource, string Install_f)  // 지열 그림
@@ -1876,7 +1876,7 @@ namespace main.contents
 
 
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "명칭,존", "번호 = '" + ID + "'");
-            if (Value.Length > 0 )
+            if (Value.Length > 0)
             {
                 Name_textBox.Text = Value[0][0];
                 Name = Value[0][0];
@@ -1939,7 +1939,7 @@ namespace main.contents
             if (Value.Length > 0)
             {
                 SelectHP_nonsplit = Value[0][0];
-                Split_HP(SelectHP_nonsplit,"외기 히트펌프");
+                Split_HP(SelectHP_nonsplit, "외기 히트펌프");
 
                 HPControl_nonsplit = Value[0][1];
                 Split_HPControl(HPControl_nonsplit);
@@ -2056,7 +2056,7 @@ namespace main.contents
 
                 PipeInsD = Convert.ToDouble(Value[0][1]);
                 PipeInsD_textBox.Text = PipeInsD.ToString();
-                controls.ThousandsSeparator textbox2= new controls.ThousandsSeparator(PipeInsD_textBox, true, 1);
+                controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(PipeInsD_textBox, true, 1);
 
                 PipeInsD = Convert.ToDouble(Value[0][2]);
                 PipeIns_Ramda_textBox.Text = PipeInsD.ToString();

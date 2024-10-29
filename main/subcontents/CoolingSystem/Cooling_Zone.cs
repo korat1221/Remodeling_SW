@@ -41,7 +41,7 @@ namespace main.subcontents
             }
             else if (SelectType == "Ahu") this.Text = "공조기 선택";
             
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             load_table_DB();
             SystemNum = Num;
 

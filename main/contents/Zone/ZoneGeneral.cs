@@ -35,11 +35,11 @@ namespace main.contents
         double OccupancyDensity, OccupancyDensity_Low, OccupancyDensity_Medium, OccupancyDensity_High;
         String OccupancyDensity_index, EquipIHG_index;
         String ZoneName, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
-        string SelectHRV; string 증축여부; 
+        string SelectHRV; string 증축여부;
         static string Layer;
         public ZoneGeneral()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '존 일반정보'");
             if (Image.Length > 0)
             {
@@ -111,10 +111,22 @@ namespace main.contents
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
 
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+            Panel p = (Panel)sender;
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+        }
+
+        private void AdditionalPanel_Paint(object sender, PaintEventArgs e)
+        {
+            Panel p = (Panel)sender;
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+        }
         private void Floor_textBox_TextChanged(object sender, EventArgs e)
         {
             if (Layer_textBox.Text != null)
@@ -1282,7 +1294,7 @@ namespace main.contents
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            if(radioButton1.Checked)
+            if (radioButton1.Checked)
             {
                 증축여부 = "true";
             }

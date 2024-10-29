@@ -1,5 +1,4 @@
-﻿using Microsoft.Office.Interop.Excel;
-using Microsoft.Web.WebView2.Core;
+﻿using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,7 +19,7 @@ namespace main.contents.Result.Building_Report
         bool scriptable = false;
         public PrintReport_Final()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
 
             InitializeAsync();
         }

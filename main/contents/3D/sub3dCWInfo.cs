@@ -20,7 +20,7 @@ namespace main.contents
 
         public sub3dCWInfo()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             InitializeAsync();
 
             webView22.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);

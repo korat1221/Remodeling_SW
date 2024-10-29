@@ -27,7 +27,7 @@ namespace main.subcontents.Alt
         bool scriptable = false;
         public AltWall(String SelectValue)
         {
-            InitializeComponent();            
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);            
             WallRemodelingType_comboBox.Items.Clear();
             WallRemodelingType_comboBox.Items.Add("외부덧댐");
             WallRemodelingType_comboBox.Items.Add("내부덧댐");

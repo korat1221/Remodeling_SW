@@ -24,7 +24,7 @@ using main.contents;
 using System.Diagnostics;
 using Microsoft.Win32;
 using Excel = Microsoft.Office.Interop.Excel;
-//using Microsoft.Office.Interop.Excel;
+//
 using System.Runtime.InteropServices;
 using static System.Net.WebRequestMethods;
 using System.Reflection;
@@ -66,7 +66,7 @@ namespace main.contents
 
         public Model()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
 
             int i = -1;
             while (++i < forms.Length)

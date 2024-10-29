@@ -238,7 +238,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label12.Font =  new Font("나눔고딕", 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label12.Location = new System.Drawing.Point(11, 17);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(60, 15);
@@ -250,7 +250,7 @@
             this.Deletebutton.BackColor = System.Drawing.SystemColors.ControlLight;
             this.Deletebutton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
             this.Deletebutton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.Deletebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Deletebutton.Font = new System.Drawing.Font("나눔고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.Deletebutton.Location = new System.Drawing.Point(106, 13);
             this.Deletebutton.Margin = new System.Windows.Forms.Padding(0);
             this.Deletebutton.Name = "Deletebutton";
@@ -265,7 +265,7 @@
             this.AddUserDB_button.BackColor = System.Drawing.SystemColors.ControlLight;
             this.AddUserDB_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
             this.AddUserDB_button.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.AddUserDB_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.AddUserDB_button.Font = new System.Drawing.Font("나눔고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.AddUserDB_button.Location = new System.Drawing.Point(79, 13);
             this.AddUserDB_button.Margin = new System.Windows.Forms.Padding(0);
             this.AddUserDB_button.Name = "AddUserDB_button";
@@ -334,7 +334,7 @@
             this.Renew_dataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new Font("나눔고딕", 9.75F,System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
@@ -345,7 +345,7 @@
             this.Renew_dataGridView.Name = "Renew_dataGridView";
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font =  new Font("나눔고딕", 9.75F,System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -354,7 +354,7 @@
             this.Renew_dataGridView.RowHeadersVisible = false;
             this.Renew_dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font =  new Font("나눔고딕", 9.75F,System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;

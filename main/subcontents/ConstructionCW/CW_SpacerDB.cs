@@ -23,7 +23,7 @@ namespace main.subcontents.ConstructionCW
 
         public CW_SpacerDB(String FrameType, String LE_CL_V)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             load_table_SpacerDB(FrameType);
             this.LE_CL_V = LE_CL_V;
             //사용자DB 구분1 콤보박스

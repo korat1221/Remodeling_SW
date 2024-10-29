@@ -14,7 +14,6 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.MonthCalendar;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
@@ -39,7 +38,7 @@ namespace main.contents
         public ZoneEnvelope()
         {
 
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '존 외피정보'");
             if (Image.Length > 0)
             {
@@ -94,9 +93,21 @@ namespace main.contents
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
+
+        private void AdditionalPanel_Paint(object sender, PaintEventArgs e)
+        {
+            Panel p = (Panel)sender;
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            Panel p = (Panel)sender;
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+        }
         //천장 축열정보 선택 시 
         private void CeilingCwrik_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -469,7 +480,7 @@ namespace main.contents
                 ExternalZone_radioButton.Checked = true;
             }
         }
-       
+
 
         private void Save_button_Click(object sender, EventArgs e)
         {
@@ -624,8 +635,8 @@ namespace main.contents
 
             }
 
-        }    
-        
+        }
+
         private void ZoneEnvelope_VisibleChanged(object sender, EventArgs e)
         {
             if (main.MainContents.currentForm == main.MainContents.FormID.ZoneEnvelope)
@@ -670,8 +681,8 @@ namespace main.contents
                     load_table_ZoneEnvelopeInfo(ZoneNum);
                 }
             }
-            catch { }               
-           
+            catch { }
+
         }
 
         private void Calc_Cwirk_all()

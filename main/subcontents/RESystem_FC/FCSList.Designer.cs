@@ -58,7 +58,7 @@
             // 
             // Save_button
             // 
-            Save_button.Font = new Font("맑은 고딕", 9F, FontStyle.Bold);
+            Save_button.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             Save_button.Location = new Point(303, 435);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(78, 23);
@@ -80,7 +80,7 @@
             HW_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("맑은 고딕", 8.25F);
+            dataGridViewCellStyle1.Font =  new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -91,7 +91,7 @@
             HW_dataGridView.Name = "HW_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("맑은 고딕", 9F);
+            dataGridViewCellStyle2.Font =  new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -100,7 +100,7 @@
             HW_dataGridView.RowHeadersVisible = false;
             HW_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("맑은 고딕", 9F);
+            dataGridViewCellStyle3.Font =  new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -119,7 +119,7 @@
             // titleText
             // 
             titleText.AutoSize = true;
-            titleText.Font = new Font("맑은 고딕", 10F);
+            titleText.Font = new Font("나눔고딕", 9.75F);
             titleText.Location = new Point(67, 25);
             titleText.Name = "titleText";
             titleText.Size = new Size(37, 19);

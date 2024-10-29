@@ -25,7 +25,7 @@ namespace main.contentslist
 
         public List_Alt()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외벽'");
             if (Image.Length > 0)
@@ -39,14 +39,14 @@ namespace main.contentslist
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
 
         private void Add_button_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows.Add();
-            Num = Program.UTIL.CreateNum("OptimalForm", "번호", "Alt");
+            Num = Program.UTIL.CreateNum("Optimal_Form", "번호", "Alt");
 
             Program.getMenuForm().ResetForm(59);
 
@@ -160,14 +160,14 @@ namespace main.contentslist
 
         private void Copy_button_Click(object sender, EventArgs e)
         {
-            Num = Program.UTIL.CreateNum("OptimalForm", "번호", "WL");
+            Num = Program.UTIL.CreateNum("Optimal_Form", "번호", "Alt");
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
                 String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
 
-                Program.DB.CopyValue(DB.type.ProjDB, "OptimalForm", "번호 ='" + Copy_Num + "'", Num);
-                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  OptimalForm" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
+                Program.DB.CopyValue(DB.type.ProjDB, "Optimal_Form", "번호 ='" + Copy_Num + "'", Num);
+                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  Optimal_Form" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
                 Load_form(Num, "Copy");
 
             }

@@ -21,7 +21,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using static main.DB;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
-using static System.Net.Mime.MediaTypeNames;
+
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace main.contents
@@ -46,9 +46,9 @@ namespace main.contents
         string[][] 프로젝트유형;
         public HeatingSystem()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '난방시스템'");
-            if(Image.Length > 0)
+            if (Image.Length > 0)
             {
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -134,13 +134,13 @@ namespace main.contents
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
+        private void panel4_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
         private void Name_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -882,7 +882,7 @@ namespace main.contents
 
         private void Split_AS(String nonSplit)
         {
-            String 내용 =null;
+            String 내용 = null;
             if (nonSplit != null)
             {
                 if (nonSplit.Contains('+'))
@@ -1036,7 +1036,7 @@ namespace main.contents
 
         private void Split_DH(String nonSplit)
         {
-            String 내용 =null;
+            String 내용 = null;
             if (nonSplit != null)
             {
                 if (nonSplit.Contains('+'))
@@ -1124,7 +1124,7 @@ namespace main.contents
         {
             // Heating_HP heating_HP = new Heating_HP(this);
             String nonsplit;
-            if (HeatSource == "외기 히트펌프"|| HeatSource == "태양열 융합 히트펌프")
+            if (HeatSource == "외기 히트펌프" || HeatSource == "태양열 융합 히트펌프")
             {
                 nonsplit = SelectHP_nonsplit[0];
                 AirHP_DB heating_HP = new AirHP_DB("장비일람표 적용", nonsplit);
@@ -1176,7 +1176,7 @@ namespace main.contents
         }
         private void Split_HP(String nonSplit, String HeatSource)
         {
-            String 내용 ="";
+            String 내용 = "";
             if (nonSplit != null)
             {
                 if (nonSplit.Contains('+'))
@@ -1343,7 +1343,7 @@ namespace main.contents
             else if (HeatSource == "지열 히트펌프") { source = "지열"; }
             else { source = "지하수"; }
 
-           
+
             if (HeatSource == "지하수 히트펌프")
             {
                 for (int k = 0; k < SelectGWHP_split.Count; k++)
@@ -1577,7 +1577,8 @@ namespace main.contents
                     }
                 }
                 else
-                {if (HP_dataGridView.Rows.Count > 0)
+                {
+                    if (HP_dataGridView.Rows.Count > 0)
                     { HP_dataGridView.Rows[0].Cells[14].Value = nonSplit; }
                 }
             }
@@ -1774,7 +1775,7 @@ namespace main.contents
                     { ZoneArea += Convert.ToDouble(Value[0][0]); }
                 }
                 string[][] Value_PipeIns = Program.DB.getValue(DB.type.BaseDB_Heating, "배관단열", "순바닥면적,배관관경,단열두께,열전도율", "");
-                if(Value_PipeIns.Length > 0)
+                if (Value_PipeIns.Length > 0)
                 {
                     if (ZoneArea < Convert.ToDouble(Value_PipeIns[0][0]))
                     {
@@ -1860,7 +1861,7 @@ namespace main.contents
                     PipeIns_button.Visible = true;
                     PipeIns_Ramda_label1.Visible = true;
                     PipeIns_Ramda_label2.Visible = true;
-                    PipeIns_Ramda_textBox.Visible=true;
+                    PipeIns_Ramda_textBox.Visible = true;
                 }
                 else
                 {
@@ -2327,7 +2328,7 @@ namespace main.contents
         {
             if (ce_dataGridView.Rows[row].Cells[2].Value != null && ce_dataGridView.Rows[row].Cells[2].Value.ToString() == "복사난방")
             {
-                if (column == 4 || column == 5 )
+                if (column == 4 || column == 5)
                 {
                     cell.Style.BackColor = Color.FromArgb(255, 255, 255);
                     cell.Style.ForeColor = Color.Black;
@@ -2492,7 +2493,7 @@ namespace main.contents
             BoilerNum_nonsplit = "";
             SolarNum_nonsplit = ""; SolarDirection_nonsplit = ""; SolarDegree_nonsplit = "";
             ASNum_nonsplit = ""; SelectDH_nonsplit = "";
-            HPNum_nonsplit[0] = ""; HPNum_nonsplit[1] = ""; HPNum_nonsplit[2] = ""; 
+            HPNum_nonsplit[0] = ""; HPNum_nonsplit[1] = ""; HPNum_nonsplit[2] = "";
             HPSupply_nonsplit[0] = ""; HPSupply_nonsplit[1] = ""; HPSupply_nonsplit[2] = "";
             HPControl_nonsplit[0] = ""; HPControl_nonsplit[1] = ""; HPControl_nonsplit[2] = ""; //외기/지열/지하수 순 
             NonSplit_BoilerNum();
@@ -2613,7 +2614,7 @@ namespace main.contents
             Num = ID;
 
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "명칭,존", "번호 = '" + ID + "'");
-            if(Value.Length > 0)
+            if (Value.Length > 0)
             {
                 Name_textBox.Text = Value[0][0];
                 Name = Value[0][0];
@@ -2621,7 +2622,7 @@ namespace main.contents
                 SelectZone_nonsplit = Value[0][1];
                 Split_Zone(SelectZone_nonsplit);
             }
-            
+
             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
@@ -2652,8 +2653,8 @@ namespace main.contents
                 Split_BoilerNum(BoilerNum_nonsplit);
             }
 
-            
-             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "태양열번호,모듈개수,모듈방위,모듈기울기", "번호 = '" + ID + "'");
+
+            Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "태양열번호,모듈개수,모듈방위,모듈기울기", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
                 SelectSolar_nonsplit = Value[0][0];
@@ -2695,7 +2696,7 @@ namespace main.contents
                 }
             }
 
-           Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "흡수식온수기번호,흡수식온수기대수", "번호 = '" + ID + "'");
+            Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "흡수식온수기번호,흡수식온수기대수", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
                 SelectAS_nonsplit = Value[0][0];
@@ -2712,7 +2713,7 @@ namespace main.contents
 
             }
 
-           Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "번호 = '" + ID + "'");
+            Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
                 PumpUse_comboBox.SelectedItem = Value[0][0];
@@ -2856,7 +2857,7 @@ namespace main.contents
                     controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Vs_textBox, true, 3);
                 }
             }
-                 Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재", "번호 = '" + ID + "'");
+            Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
                 PipeD = Convert.ToDouble(Value[0][0]);
@@ -2886,7 +2887,5 @@ namespace main.contents
         }
 
         #endregion
-
-
     }
 }

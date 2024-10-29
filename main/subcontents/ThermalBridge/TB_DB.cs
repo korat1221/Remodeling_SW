@@ -23,7 +23,7 @@ public partial class TB_DB : Form
 
     public TB_DB(String TBType)
     {
-        InitializeComponent();
+        InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
         this.TBType = TBType;
         TBType_textBox.Text = TBType;
         load_table_DB();

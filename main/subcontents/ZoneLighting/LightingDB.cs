@@ -25,7 +25,7 @@ namespace main.subcontents.ZoneLighting
        
         public LightingDB()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             load_table_LightDB();
 
             //램프유형 콤보박스

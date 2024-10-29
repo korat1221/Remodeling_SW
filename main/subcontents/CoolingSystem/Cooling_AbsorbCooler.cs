@@ -22,7 +22,7 @@ namespace main.subcontents.CoolingSystem
 
         public Cooling_AbsorbCooler(string _Num, string _SelectCG_nonsplit, string _SelectCGN_nonsplit)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;

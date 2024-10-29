@@ -25,7 +25,7 @@ namespace main.subcontents.ConstructionRoof
 
         public Roof_TB(String RoofType, String StructureType, double dins)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             this.RoofType = RoofType;
             RoofType_textBox.Text = RoofType;//신규 이런거
             this.StructureType = StructureType;

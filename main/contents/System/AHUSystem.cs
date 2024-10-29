@@ -25,7 +25,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using static main.DB;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
-using static System.Net.Mime.MediaTypeNames;
+
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.contents
@@ -53,7 +53,7 @@ namespace main.contents
         public AHUSystem()
         {
 
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '공조시스템'");
             if (Image.Length > 0)
             {
@@ -135,7 +135,12 @@ namespace main.contents
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+        }
+        private void ImagePanel_Paint(object sender, PaintEventArgs e)
+        {
+            Panel p = (Panel)sender;
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)

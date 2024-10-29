@@ -26,7 +26,7 @@ namespace main.contents
 
         public ConstructionBlind()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             InitializeAsync();
             webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '차양정보'");
@@ -77,10 +77,14 @@ namespace main.contents
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
-
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+            Panel p = (Panel)sender;
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+        }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             Type = "기존 차양";
@@ -141,7 +145,7 @@ namespace main.contents
                 Table = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "명칭", def_value);
             }
 
-            if(Table.Length>0)
+            if (Table.Length > 0)
             {
                 int i = -1;
                 DataTable sources = new DataTable();
@@ -213,22 +217,22 @@ namespace main.contents
 
         private void Load_Image()
         {
-          
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "차양이미지", "이미지", "제품종류 = '" + BlindType + "'  AND 설치유형 ='제품'");
-                if(Image.Length > 0)
-                {
-                    pictureBox3.Load(Program.gPath + Image[0][0]);
-                    pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-                }
-                
 
-                Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "차양이미지", "이미지", "제품종류 = '" + BlindType + "'  AND 설치유형 ='" + BlindInstall + "'");
-                if (Image.Length > 0)
-                {
-                    pictureBox4.Load(Program.gPath + Image[0][0]);
-                    pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
-                }
-          
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "차양이미지", "이미지", "제품종류 = '" + BlindType + "'  AND 설치유형 ='제품'");
+            if (Image.Length > 0)
+            {
+                pictureBox3.Load(Program.gPath + Image[0][0]);
+                pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+
+
+            Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "차양이미지", "이미지", "제품종류 = '" + BlindType + "'  AND 설치유형 ='" + BlindInstall + "'");
+            if (Image.Length > 0)
+            {
+                pictureBox4.Load(Program.gPath + Image[0][0]);
+                pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+
         }
         private void ControlType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -266,7 +270,7 @@ namespace main.contents
 
         private void LoadGraph()
         {
-            if(ControlType2 != null)
+            if (ControlType2 != null)
             {
                 webView21.Visible = true;
                 string s = "", s2 = "";
@@ -304,18 +308,18 @@ namespace main.contents
                 if (res2.Length > 0)
                 {
                     int n2 = ((int)Convert.ToDouble(res2[0][0])).ToString().Length;
-                    max = Convert.ToInt64(Convert.ToDouble(res2[0][0]) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1) ;
+                    max = Convert.ToInt64(Convert.ToDouble(res2[0][0]) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1);
 
                 }
                 runScript("drawChart_blind([{type:\"line\",label:\"차양가동율(남향)\",data:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:" + max + ",dash:false,barPercentage:0.7}])");
-               // runScript("drawChart_blind([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150}])");
+                // runScript("drawChart_blind([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150}])");
             }
             else
             {
                 webView21.Visible = false;
             }
-                
-          
+
+
         }
         public static bool OnLoadListProc(Form form)
         {
@@ -378,43 +382,43 @@ namespace main.contents
         {
             reset();
 
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "번호,프로젝트유형,명칭,제품번호,제품명,종류,설치,투과수준,색깔,외부반사율,내부반사율,투과율,흡수율,제어방식1,제어방식2", "번호 ='" + ID + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "번호,프로젝트유형,명칭,제품번호,제품명,종류,설치,투과수준,색깔,외부반사율,내부반사율,투과율,흡수율,제어방식1,제어방식2", "번호 ='" + ID + "'");
 
-                if(Value.Length >0)
-                {
-                    Num_textBox.Text = ID;
-                    Num = ID;
+            if (Value.Length > 0)
+            {
+                Num_textBox.Text = ID;
+                Num = ID;
 
-                    Name_textBox.Text = Value[0][2];
-                    Type_textBox.Text = null;
+                Name_textBox.Text = Value[0][2];
+                Type_textBox.Text = null;
 
-                    BlindDBNum = Value[0][3];
-                    BlindName_textBox.Text = Value[0][4];
-                    BlindName = Value[0][4];
-                    BlindType_textBox.Text = Value[0][5];
-                    BlindType = Value[0][5];
-                    BlindInstall_textBox.Text = Value[0][6];
-                    BlindInstall = Value[0][6];
-                    BlindTrans_textBox.Text = Value[0][7];
-                    BlindTrans = Value[0][7];
-                    BlindColor_textBox.Text = Value[0][8];
-                    BlindColor = Value[0][8];
-                    ControlType_comboBox.SelectedItem = Value[0][13];
-                    ControlType = Value[0][13];
+                BlindDBNum = Value[0][3];
+                BlindName_textBox.Text = Value[0][4];
+                BlindName = Value[0][4];
+                BlindType_textBox.Text = Value[0][5];
+                BlindType = Value[0][5];
+                BlindInstall_textBox.Text = Value[0][6];
+                BlindInstall = Value[0][6];
+                BlindTrans_textBox.Text = Value[0][7];
+                BlindTrans = Value[0][7];
+                BlindColor_textBox.Text = Value[0][8];
+                BlindColor = Value[0][8];
+                ControlType_comboBox.SelectedItem = Value[0][13];
+                ControlType = Value[0][13];
 
-                    BlindEx_textBox.Text = Value[0][9];
-                    BlindEx = Convert.ToDouble(Value[0][9]);
-                    BlindIn_textBox.Text = Value[0][10];
-                    BlindIn = Convert.ToDouble(Value[0][10]);
-                    BlindSHGC_textBox.Text = Value[0][11];
-                    BlindSHGC = Convert.ToDouble(Value[0][11]);
-                    BlindAlpha_textBox.Text = Value[0][12];
-                    BlindAlpha = Convert.ToDouble(Value[0][12]);
-                    Load_Image();
+                BlindEx_textBox.Text = Value[0][9];
+                BlindEx = Convert.ToDouble(Value[0][9]);
+                BlindIn_textBox.Text = Value[0][10];
+                BlindIn = Convert.ToDouble(Value[0][10]);
+                BlindSHGC_textBox.Text = Value[0][11];
+                BlindSHGC = Convert.ToDouble(Value[0][11]);
+                BlindAlpha_textBox.Text = Value[0][12];
+                BlindAlpha = Convert.ToDouble(Value[0][12]);
+                Load_Image();
 
-                }
-                
-         
+            }
+
+
         }
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {

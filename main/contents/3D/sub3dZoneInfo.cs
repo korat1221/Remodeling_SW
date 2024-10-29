@@ -36,7 +36,7 @@ namespace main.contents
         public sub3dZoneInfo()
         {
             Program.DB.initTables(DB.type.ProjDB);
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             create_datagridview1();
             create_datagridview2();
         }

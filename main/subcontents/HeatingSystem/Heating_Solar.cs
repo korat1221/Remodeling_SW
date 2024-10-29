@@ -26,7 +26,7 @@ namespace main.subcontents.HeatingSystem
         // public Heating_Solar(HeatingSystem system)
         public Heating_Solar(String DefaultUse, String SelectSolar_nonsplit)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             //heatingSystem = system;
             this.DefaultUse = DefaultUse;
             load_table_DB();

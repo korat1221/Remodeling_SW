@@ -27,7 +27,7 @@ namespace main.subcontents
         
         public DoorDB(String DoorNum, String Select0, String Select1, String Select2, String Select3, String Select4, String Select5, String Select6, String Select7, String Select8, String Select9, String Select10, String Select11, String Select12, String Select13)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             Create_Table();
             if (Select0 != null)
             {
@@ -55,7 +55,7 @@ namespace main.subcontents
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, Color.FromArgb(153, 180, 209), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
         private bool Design_dataGridView(DataGridViewCell cell, int column, int row)
         {

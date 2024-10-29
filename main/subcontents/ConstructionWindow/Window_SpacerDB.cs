@@ -24,7 +24,7 @@ namespace main.subcontents
 
         public Window_SpacerDB(String SingleDoubleType, String FrameMaterial, String LE_CL_V)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             new StackedHeaderDecorator(Spacer_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             load_table_SpacerDB(SingleDoubleType, FrameMaterial);
             this.LE_CL_V = LE_CL_V;

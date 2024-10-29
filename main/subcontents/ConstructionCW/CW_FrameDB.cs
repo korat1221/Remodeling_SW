@@ -24,7 +24,7 @@ namespace main.subcontents.ConstructionCW
 
         public CW_FrameDB(String FrameType)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             UserNum = Program.UTIL.CreateNum("User_CWFrame", "번호", "UCW_0");
             UserNum_textBox.Text = UserNum;
             this.FrameType = FrameType;

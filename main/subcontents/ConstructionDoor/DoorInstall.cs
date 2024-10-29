@@ -26,7 +26,7 @@ namespace main.subcontents.ConstructionDoor
 
         public DoorInstall(String InstallType, String installlocation)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             this.InstallType = InstallType;
             this.InstallLocation = installlocation;
 
@@ -55,7 +55,7 @@ namespace main.subcontents.ConstructionDoor
 
         public DoorInstall(String InstallType)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             this.InstallType = InstallType;
             load_table_DB();
             //구분1콤보박스

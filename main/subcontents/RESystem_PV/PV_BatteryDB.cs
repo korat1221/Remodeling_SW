@@ -23,7 +23,7 @@ namespace main.subcontents.RESystem_PV
 
         public PV_BatteryDB()
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             Create_PVBattery_Table();
             load_table_PVbatteryeDB();
 

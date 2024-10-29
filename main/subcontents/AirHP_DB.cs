@@ -25,7 +25,7 @@ namespace main.subcontents.HeatingSystem
 
         public AirHP_DB(String DefaultUse, String SelectHP_nonsplit)
         {
-            InitializeComponent();
+            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
             this.DefaultUse = DefaultUse;
             visible_Carrier_ComboBox(DefaultUse);
 
