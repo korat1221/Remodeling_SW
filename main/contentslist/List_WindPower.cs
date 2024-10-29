@@ -170,7 +170,7 @@ namespace main.contentslist
         {
             if (main.MainContents.currentForm == main.MainContents.FormID.List_WindPower)
             {
-                MessageBox.Show("풍력시스템 화면은 아직 작업 중입니다.");
+                //MessageBox.Show("풍력시스템 화면은 아직 작업 중입니다.");
             }
         }
     }
