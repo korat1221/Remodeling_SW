@@ -56,7 +56,7 @@
             DataGridViewCellStyle dataGridViewCellStyle26 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle27 = new DataGridViewCellStyle();
             panel2 = new Panel();
-            tabControl1 = new TabControl();
+            tabControl1 = new CustomTabControl();
             Generator_tabpage = new TabPage();
             CoolerTop_button = new Button();
             label29 = new Label();
@@ -65,7 +65,7 @@
             Install_comboBox = new ComboBox();
             CoolingGeneratorSelect_comboBox = new ComboBox();
             label4 = new Label();
-            tabControl2 = new TabControl();
+            tabControl2 = new CustomTabControl();
             AirCon_tabPage = new TabPage();
             AirCon_dataGridView = new DataGridView();
             AirCooler_tabPage = new TabPage();
@@ -128,7 +128,6 @@
             label17 = new Label();
             ce1Type_comboBox = new CustomComboBox();
             ZoneS_label = new Label();
-            label7 = new Label();
             ImagePanel = new Panel();
             panel4 = new Panel();
             AhuS_label = new Label();
@@ -234,11 +233,10 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.BorderStyle = BorderStyle.None;
             panel2.Controls.Add(tabControl1);
-            panel2.Location = new Point(12, 136);
+            panel2.Location = new Point(12, 108);
             panel2.Name = "panel2";
-            panel2.Size = new Size(977, 287);
+            panel2.Size = new Size(977, 324);
             panel2.TabIndex = 18;
             // 
             // tabControl1
@@ -247,15 +245,32 @@
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
             tabControl1.Controls.Add(tabPage4);
+            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.Control;
+            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.Control;
+            tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
+            tabControl1.DisplayStyleProvider.FocusTrack = true;
+            tabControl1.DisplayStyleProvider.HotTrack = true;
+            tabControl1.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
+            tabControl1.DisplayStyleProvider.Opacity = 1F;
+            tabControl1.DisplayStyleProvider.Overlap = 0;
+            tabControl1.DisplayStyleProvider.Padding = new Point(6, 3);
+            tabControl1.DisplayStyleProvider.ShowTabCloser = false;
+            tabControl1.DisplayStyleProvider.TextColor = SystemColors.ControlText;
+            tabControl1.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
             tabControl1.Dock = DockStyle.Fill;
+            tabControl1.HotTrack = true;
+            tabControl1.ItemSize = new Size(128, 20);
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(973, 283);
+            tabControl1.Size = new Size(977, 324);
+            tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.TabIndex = 0;
             // 
             // Generator_tabpage
             // 
+            Generator_tabpage.BackColor = Color.White;
             Generator_tabpage.Controls.Add(CoolerTop_button);
             Generator_tabpage.Controls.Add(label29);
             Generator_tabpage.Controls.Add(CoolingTop_dataGridView);
@@ -264,13 +279,12 @@
             Generator_tabpage.Controls.Add(CoolingGeneratorSelect_comboBox);
             Generator_tabpage.Controls.Add(label4);
             Generator_tabpage.Controls.Add(tabControl2);
-            Generator_tabpage.Location = new Point(4, 24);
+            Generator_tabpage.Location = new Point(4, 25);
             Generator_tabpage.Name = "Generator_tabpage";
             Generator_tabpage.Padding = new Padding(3);
-            Generator_tabpage.Size = new Size(965, 255);
+            Generator_tabpage.Size = new Size(969, 295);
             Generator_tabpage.TabIndex = 0;
             Generator_tabpage.Text = "생산";
-            Generator_tabpage.UseVisualStyleBackColor = true;
             // 
             // CoolerTop_button
             // 
@@ -294,7 +308,7 @@
             label29.Font = new Font("나눔고딕", 9.75F);
             label29.Location = new Point(10, 38);
             label29.Name = "label29";
-            label29.Size = new Size(60, 17);
+            label29.Size = new Size(55, 15);
             label29.TabIndex = 158;
             label29.Text = "열원설비";
             // 
@@ -311,18 +325,19 @@
             CoolingTop_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle1.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             CoolingTop_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             CoolingTop_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            CoolingTop_dataGridView.Location = new Point(226, 12);
+            CoolingTop_dataGridView.Dock = DockStyle.Right;
+            CoolingTop_dataGridView.Location = new Point(238, 3);
             CoolingTop_dataGridView.Name = "CoolingTop_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle2.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -331,12 +346,12 @@
             CoolingTop_dataGridView.RowHeadersVisible = false;
             CoolingTop_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle3.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             CoolingTop_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            CoolingTop_dataGridView.Size = new Size(728, 78);
+            CoolingTop_dataGridView.Size = new Size(728, 133);
             CoolingTop_dataGridView.TabIndex = 157;
             CoolingTop_dataGridView.Visible = false;
             // 
@@ -379,7 +394,7 @@
             label4.Font = new Font("나눔고딕", 9.75F);
             label4.Location = new Point(10, 12);
             label4.Name = "label4";
-            label4.Size = new Size(60, 17);
+            label4.Size = new Size(55, 15);
             label4.TabIndex = 146;
             label4.Text = "냉방설비";
             // 
@@ -391,23 +406,39 @@
             tabControl2.Controls.Add(AbsorbCooler_tabPage);
             tabControl2.Controls.Add(SoilCooler_tabPage);
             tabControl2.Controls.Add(SoilWaterCooler_tabPage);
+            tabControl2.DisplayStyleProvider.BorderColor = SystemColors.Control;
+            tabControl2.DisplayStyleProvider.BorderColorHot = SystemColors.Control;
+            tabControl2.DisplayStyleProvider.CloserColor = Color.Empty;
+            tabControl2.DisplayStyleProvider.FocusTrack = true;
+            tabControl2.DisplayStyleProvider.HotTrack = true;
+            tabControl2.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
+            tabControl2.DisplayStyleProvider.Opacity = 1F;
+            tabControl2.DisplayStyleProvider.Overlap = 0;
+            tabControl2.DisplayStyleProvider.Padding = new Point(6, 3);
+            tabControl2.DisplayStyleProvider.ShowTabCloser = false;
+            tabControl2.DisplayStyleProvider.TextColor = SystemColors.ControlText;
+            tabControl2.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
+            tabControl2.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
             tabControl2.Dock = DockStyle.Bottom;
-            tabControl2.Location = new Point(3, 96);
+            tabControl2.HotTrack = true;
+            tabControl2.ItemSize = new Size(128, 20);
+            tabControl2.Location = new Point(3, 136);
             tabControl2.Name = "tabControl2";
             tabControl2.SelectedIndex = 0;
-            tabControl2.Size = new Size(959, 156);
+            tabControl2.Size = new Size(963, 156);
+            tabControl2.SizeMode = TabSizeMode.Fixed;
             tabControl2.TabIndex = 145;
             // 
             // AirCon_tabPage
             // 
+            AirCon_tabPage.BackColor = Color.White;
             AirCon_tabPage.Controls.Add(AirCon_dataGridView);
-            AirCon_tabPage.Location = new Point(4, 24);
+            AirCon_tabPage.Location = new Point(4, 25);
             AirCon_tabPage.Name = "AirCon_tabPage";
             AirCon_tabPage.Padding = new Padding(3);
-            AirCon_tabPage.Size = new Size(951, 128);
+            AirCon_tabPage.Size = new Size(955, 127);
             AirCon_tabPage.TabIndex = 6;
             AirCon_tabPage.Text = "실외기12kW";
-            AirCon_tabPage.UseVisualStyleBackColor = true;
             // 
             // AirCon_dataGridView
             // 
@@ -422,18 +453,19 @@
             AirCon_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle4.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle4.SelectionForeColor = Color.Black;
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
             AirCon_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             AirCon_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            AirCon_dataGridView.Location = new Point(6, 26);
+            AirCon_dataGridView.Dock = DockStyle.Fill;
+            AirCon_dataGridView.Location = new Point(3, 3);
             AirCon_dataGridView.Name = "AirCon_dataGridView";
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle5.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
@@ -442,22 +474,22 @@
             AirCon_dataGridView.RowHeadersVisible = false;
             AirCon_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle6.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle6.ForeColor = Color.Black;
             dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle6.SelectionForeColor = Color.Black;
             AirCon_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            AirCon_dataGridView.Size = new Size(943, 96);
+            AirCon_dataGridView.Size = new Size(949, 121);
             AirCon_dataGridView.TabIndex = 22;
             // 
             // AirCooler_tabPage
             // 
             AirCooler_tabPage.BackColor = Color.White;
             AirCooler_tabPage.Controls.Add(AirCooler_dataGridView);
-            AirCooler_tabPage.Location = new Point(4, 24);
+            AirCooler_tabPage.Location = new Point(4, 25);
             AirCooler_tabPage.Name = "AirCooler_tabPage";
             AirCooler_tabPage.Padding = new Padding(3);
-            AirCooler_tabPage.Size = new Size(951, 128);
+            AirCooler_tabPage.Size = new Size(955, 127);
             AirCooler_tabPage.TabIndex = 2;
             AirCooler_tabPage.Text = "공냉식냉동기";
             // 
@@ -474,18 +506,19 @@
             AirCooler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle7.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle7.SelectionForeColor = Color.Black;
             dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
             AirCooler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             AirCooler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            AirCooler_dataGridView.Location = new Point(4, 28);
+            AirCooler_dataGridView.Dock = DockStyle.Fill;
+            AirCooler_dataGridView.Location = new Point(3, 3);
             AirCooler_dataGridView.Name = "AirCooler_dataGridView";
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle8.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
@@ -494,21 +527,22 @@
             AirCooler_dataGridView.RowHeadersVisible = false;
             AirCooler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle9.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle9.ForeColor = Color.Black;
             dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle9.SelectionForeColor = Color.Black;
             AirCooler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
-            AirCooler_dataGridView.Size = new Size(943, 96);
+            AirCooler_dataGridView.Size = new Size(949, 121);
             AirCooler_dataGridView.TabIndex = 156;
             // 
             // WaterCooler_tabPage
             // 
+            WaterCooler_tabPage.BackColor = Color.White;
             WaterCooler_tabPage.Controls.Add(WaterCooler_dataGridView);
-            WaterCooler_tabPage.Location = new Point(4, 24);
+            WaterCooler_tabPage.Location = new Point(4, 25);
             WaterCooler_tabPage.Name = "WaterCooler_tabPage";
             WaterCooler_tabPage.Padding = new Padding(3);
-            WaterCooler_tabPage.Size = new Size(951, 128);
+            WaterCooler_tabPage.Size = new Size(955, 127);
             WaterCooler_tabPage.TabIndex = 3;
             WaterCooler_tabPage.Text = "수냉식냉동기";
             WaterCooler_tabPage.UseVisualStyleBackColor = true;
@@ -526,18 +560,19 @@
             WaterCooler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle10.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle10.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle10.SelectionForeColor = Color.Black;
             dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
             WaterCooler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             WaterCooler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            WaterCooler_dataGridView.Location = new Point(4, 28);
+            WaterCooler_dataGridView.Dock = DockStyle.Fill;
+            WaterCooler_dataGridView.Location = new Point(3, 3);
             WaterCooler_dataGridView.Name = "WaterCooler_dataGridView";
             dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle11.BackColor = SystemColors.Control;
-            dataGridViewCellStyle11.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle11.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle11.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
@@ -546,21 +581,22 @@
             WaterCooler_dataGridView.RowHeadersVisible = false;
             WaterCooler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle12.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle12.ForeColor = Color.Black;
             dataGridViewCellStyle12.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle12.SelectionForeColor = Color.Black;
             WaterCooler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
-            WaterCooler_dataGridView.Size = new Size(943, 96);
+            WaterCooler_dataGridView.Size = new Size(949, 121);
             WaterCooler_dataGridView.TabIndex = 156;
             // 
             // AbsorbCooler_tabPage
             // 
+            AbsorbCooler_tabPage.BackColor = Color.White;
             AbsorbCooler_tabPage.Controls.Add(AbsorbCooler_dataGridView);
-            AbsorbCooler_tabPage.Location = new Point(4, 24);
+            AbsorbCooler_tabPage.Location = new Point(4, 25);
             AbsorbCooler_tabPage.Name = "AbsorbCooler_tabPage";
             AbsorbCooler_tabPage.Padding = new Padding(3);
-            AbsorbCooler_tabPage.Size = new Size(951, 128);
+            AbsorbCooler_tabPage.Size = new Size(955, 127);
             AbsorbCooler_tabPage.TabIndex = 4;
             AbsorbCooler_tabPage.Text = "흡수식냉동기";
             AbsorbCooler_tabPage.UseVisualStyleBackColor = true;
@@ -578,18 +614,19 @@
             AbsorbCooler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle13.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle13.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle13.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle13.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle13.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle13.SelectionForeColor = Color.Black;
             dataGridViewCellStyle13.WrapMode = DataGridViewTriState.True;
             AbsorbCooler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             AbsorbCooler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            AbsorbCooler_dataGridView.Location = new Point(4, 28);
+            AbsorbCooler_dataGridView.Dock = DockStyle.Fill;
+            AbsorbCooler_dataGridView.Location = new Point(3, 3);
             AbsorbCooler_dataGridView.Name = "AbsorbCooler_dataGridView";
             dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle14.BackColor = SystemColors.Control;
-            dataGridViewCellStyle14.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle14.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle14.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle14.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle14.SelectionForeColor = SystemColors.HighlightText;
@@ -598,21 +635,22 @@
             AbsorbCooler_dataGridView.RowHeadersVisible = false;
             AbsorbCooler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle15.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle15.ForeColor = Color.Black;
             dataGridViewCellStyle15.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle15.SelectionForeColor = Color.Black;
             AbsorbCooler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
-            AbsorbCooler_dataGridView.Size = new Size(943, 96);
+            AbsorbCooler_dataGridView.Size = new Size(949, 121);
             AbsorbCooler_dataGridView.TabIndex = 156;
             // 
             // SoilCooler_tabPage
             // 
+            SoilCooler_tabPage.BackColor = Color.White;
             SoilCooler_tabPage.Controls.Add(SoilCooler_dataGridView);
-            SoilCooler_tabPage.Location = new Point(4, 24);
+            SoilCooler_tabPage.Location = new Point(4, 25);
             SoilCooler_tabPage.Name = "SoilCooler_tabPage";
             SoilCooler_tabPage.Padding = new Padding(3);
-            SoilCooler_tabPage.Size = new Size(951, 128);
+            SoilCooler_tabPage.Size = new Size(955, 127);
             SoilCooler_tabPage.TabIndex = 7;
             SoilCooler_tabPage.Text = "지열히트펌프";
             SoilCooler_tabPage.UseVisualStyleBackColor = true;
@@ -630,18 +668,19 @@
             SoilCooler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle16.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle16.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle16.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle16.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle16.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle16.SelectionForeColor = Color.Black;
             dataGridViewCellStyle16.WrapMode = DataGridViewTriState.True;
             SoilCooler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             SoilCooler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            SoilCooler_dataGridView.Location = new Point(4, 28);
+            SoilCooler_dataGridView.Dock = DockStyle.Fill;
+            SoilCooler_dataGridView.Location = new Point(3, 3);
             SoilCooler_dataGridView.Name = "SoilCooler_dataGridView";
             dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle17.BackColor = SystemColors.Control;
-            dataGridViewCellStyle17.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle17.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle17.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle17.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle17.SelectionForeColor = SystemColors.HighlightText;
@@ -650,21 +689,22 @@
             SoilCooler_dataGridView.RowHeadersVisible = false;
             SoilCooler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle18.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle18.ForeColor = Color.Black;
             dataGridViewCellStyle18.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle18.SelectionForeColor = Color.Black;
             SoilCooler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle18;
-            SoilCooler_dataGridView.Size = new Size(943, 96);
+            SoilCooler_dataGridView.Size = new Size(949, 121);
             SoilCooler_dataGridView.TabIndex = 156;
             // 
             // SoilWaterCooler_tabPage
             // 
+            SoilWaterCooler_tabPage.BackColor = Color.White;
             SoilWaterCooler_tabPage.Controls.Add(SoilWaterCooler_dataGridView);
-            SoilWaterCooler_tabPage.Location = new Point(4, 24);
+            SoilWaterCooler_tabPage.Location = new Point(4, 25);
             SoilWaterCooler_tabPage.Name = "SoilWaterCooler_tabPage";
             SoilWaterCooler_tabPage.Padding = new Padding(3);
-            SoilWaterCooler_tabPage.Size = new Size(951, 128);
+            SoilWaterCooler_tabPage.Size = new Size(955, 127);
             SoilWaterCooler_tabPage.TabIndex = 8;
             SoilWaterCooler_tabPage.Text = "지하수히트펌프";
             SoilWaterCooler_tabPage.UseVisualStyleBackColor = true;
@@ -682,18 +722,19 @@
             SoilWaterCooler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle19.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle19.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle19.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle19.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle19.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle19.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle19.SelectionForeColor = Color.Black;
             dataGridViewCellStyle19.WrapMode = DataGridViewTriState.True;
             SoilWaterCooler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
             SoilWaterCooler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            SoilWaterCooler_dataGridView.Location = new Point(4, 16);
+            SoilWaterCooler_dataGridView.Dock = DockStyle.Fill;
+            SoilWaterCooler_dataGridView.Location = new Point(3, 3);
             SoilWaterCooler_dataGridView.Name = "SoilWaterCooler_dataGridView";
             dataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle20.BackColor = SystemColors.Control;
-            dataGridViewCellStyle20.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle20.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle20.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle20.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle20.SelectionForeColor = SystemColors.HighlightText;
@@ -702,27 +743,27 @@
             SoilWaterCooler_dataGridView.RowHeadersVisible = false;
             SoilWaterCooler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle21.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle21.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle21.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle21.ForeColor = Color.Black;
             dataGridViewCellStyle21.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle21.SelectionForeColor = Color.Black;
             SoilWaterCooler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle21;
-            SoilWaterCooler_dataGridView.Size = new Size(943, 96);
+            SoilWaterCooler_dataGridView.Size = new Size(949, 121);
             SoilWaterCooler_dataGridView.TabIndex = 157;
             // 
             // tabPage2
             // 
+            tabPage2.BackColor = Color.White;
             tabPage2.Controls.Add(StorageType_comboBox);
             tabPage2.Controls.Add(label12);
             tabPage2.Controls.Add(StorageList_comboBox);
             tabPage2.Controls.Add(label11);
-            tabPage2.Location = new Point(4, 24);
+            tabPage2.Location = new Point(4, 25);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(965, 255);
+            tabPage2.Size = new Size(969, 295);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "저장";
-            tabPage2.UseVisualStyleBackColor = true;
             // 
             // StorageType_comboBox
             // 
@@ -739,7 +780,7 @@
             label12.Font = new Font("나눔고딕", 9.75F);
             label12.Location = new Point(11, 43);
             label12.Name = "label12";
-            label12.Size = new Size(60, 17);
+            label12.Size = new Size(55, 15);
             label12.TabIndex = 153;
             label12.Text = "저장유형";
             // 
@@ -758,12 +799,13 @@
             label11.Font = new Font("나눔고딕", 9.75F);
             label11.Location = new Point(11, 14);
             label11.Name = "label11";
-            label11.Size = new Size(60, 17);
+            label11.Size = new Size(55, 15);
             label11.TabIndex = 151;
             label11.Text = "저장탱크";
             // 
             // tabPage3
             // 
+            tabPage3.BackColor = Color.White;
             tabPage3.Controls.Add(pump_removeBuutton);
             tabPage3.Controls.Add(CPump2_textBox);
             tabPage3.Controls.Add(CPump1_label);
@@ -784,13 +826,12 @@
             tabPage3.Controls.Add(PumpUse_comboBox);
             tabPage3.Controls.Add(PumpMethod_comboBox);
             tabPage3.Controls.Add(label13);
-            tabPage3.Location = new Point(4, 24);
+            tabPage3.Location = new Point(4, 25);
             tabPage3.Name = "tabPage3";
             tabPage3.Padding = new Padding(3);
-            tabPage3.Size = new Size(965, 255);
+            tabPage3.Size = new Size(969, 295);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "분배";
-            tabPage3.UseVisualStyleBackColor = true;
             // 
             // pump_removeBuutton
             // 
@@ -824,10 +865,10 @@
             // CPump1_label
             // 
             CPump1_label.AutoSize = true;
-            CPump1_label.Font =  new Font("나눔고딕", 9.75F);
+            CPump1_label.Font = new Font("나눔고딕", 9.75F);
             CPump1_label.Location = new Point(467, 36);
             CPump1_label.Name = "CPump1_label";
-            CPump1_label.Size = new Size(50, 15);
+            CPump1_label.Size = new Size(51, 15);
             CPump1_label.TabIndex = 199;
             CPump1_label.Text = "1차펌프";
             CPump1_label.Visible = false;
@@ -867,10 +908,10 @@
             // CPump2_label
             // 
             CPump2_label.AutoSize = true;
-            CPump2_label.Font =  new Font("나눔고딕", 9.75F);
+            CPump2_label.Font = new Font("나눔고딕", 9.75F);
             CPump2_label.Location = new Point(705, 37);
             CPump2_label.Name = "CPump2_label";
-            CPump2_label.Size = new Size(50, 15);
+            CPump2_label.Size = new Size(51, 15);
             CPump2_label.TabIndex = 202;
             CPump2_label.Text = "2차펌프";
             CPump2_label.Visible = false;
@@ -905,7 +946,7 @@
             // 
             CPumpMethod_label.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             CPumpMethod_label.AutoSize = true;
-            CPumpMethod_label.Font =  new Font("나눔고딕", 9.75F);
+            CPumpMethod_label.Font = new Font("나눔고딕", 9.75F);
             CPumpMethod_label.Location = new Point(211, 38);
             CPumpMethod_label.Name = "CPumpMethod_label";
             CPumpMethod_label.Size = new Size(99, 15);
@@ -927,18 +968,19 @@
             Pump_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle22.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle22.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle22.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle22.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle22.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle22.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle22.SelectionForeColor = Color.Black;
             dataGridViewCellStyle22.WrapMode = DataGridViewTriState.True;
             Pump_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
             Pump_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Pump_dataGridView.Location = new Point(6, 75);
+            Pump_dataGridView.Dock = DockStyle.Bottom;
+            Pump_dataGridView.Location = new Point(3, 75);
             Pump_dataGridView.Name = "Pump_dataGridView";
             dataGridViewCellStyle23.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle23.BackColor = SystemColors.Control;
-            dataGridViewCellStyle23.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle23.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle23.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle23.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle23.SelectionForeColor = SystemColors.HighlightText;
@@ -947,12 +989,12 @@
             Pump_dataGridView.RowHeadersVisible = false;
             Pump_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle24.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle24.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle24.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle24.ForeColor = Color.Black;
             dataGridViewCellStyle24.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle24.SelectionForeColor = Color.Black;
             Pump_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle24;
-            Pump_dataGridView.Size = new Size(949, 174);
+            Pump_dataGridView.Size = new Size(963, 217);
             Pump_dataGridView.TabIndex = 196;
             // 
             // Pump2_textBox
@@ -971,10 +1013,10 @@
             // Pump1_label
             // 
             Pump1_label.AutoSize = true;
-            Pump1_label.Font =  new Font("나눔고딕", 9.75F);
+            Pump1_label.Font = new Font("나눔고딕", 9.75F);
             Pump1_label.Location = new Point(468, 10);
             Pump1_label.Name = "Pump1_label";
-            Pump1_label.Size = new Size(50, 15);
+            Pump1_label.Size = new Size(51, 15);
             Pump1_label.TabIndex = 186;
             Pump1_label.Text = "1차펌프";
             // 
@@ -1011,10 +1053,10 @@
             // Pump2_label
             // 
             Pump2_label.AutoSize = true;
-            Pump2_label.Font =  new Font("나눔고딕", 9.75F);
+            Pump2_label.Font = new Font("나눔고딕", 9.75F);
             Pump2_label.Location = new Point(705, 11);
             Pump2_label.Name = "Pump2_label";
-            Pump2_label.Size = new Size(50, 15);
+            Pump2_label.Size = new Size(51, 15);
             Pump2_label.TabIndex = 193;
             Pump2_label.Text = "2차펌프";
             // 
@@ -1034,7 +1076,7 @@
             // PumpMethod_label
             // 
             PumpMethod_label.AutoSize = true;
-            PumpMethod_label.Font =  new Font("나눔고딕", 9.75F);
+            PumpMethod_label.Font = new Font("나눔고딕", 9.75F);
             PumpMethod_label.Location = new Point(220, 10);
             PumpMethod_label.Name = "PumpMethod_label";
             PumpMethod_label.Size = new Size(87, 15);
@@ -1066,7 +1108,7 @@
             // label13
             // 
             label13.AutoSize = true;
-            label13.Font =  new Font("나눔고딕", 9.75F);
+            label13.Font = new Font("나눔고딕", 9.75F);
             label13.Location = new Point(27, 11);
             label13.Name = "label13";
             label13.Size = new Size(59, 15);
@@ -1075,6 +1117,7 @@
             // 
             // tabPage4
             // 
+            tabPage4.BackColor = Color.White;
             tabPage4.Controls.Add(ce2Ahu_textBox);
             tabPage4.Controls.Add(ce2Ahu_button);
             tabPage4.Controls.Add(ce2AhuText2);
@@ -1097,13 +1140,12 @@
             tabPage4.Controls.Add(ce1ZoneText);
             tabPage4.Controls.Add(label17);
             tabPage4.Controls.Add(ce1Type_comboBox);
-            tabPage4.Location = new Point(4, 24);
+            tabPage4.Location = new Point(4, 25);
             tabPage4.Name = "tabPage4";
             tabPage4.Padding = new Padding(3);
-            tabPage4.Size = new Size(965, 255);
+            tabPage4.Size = new Size(969, 295);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "공급";
-            tabPage4.UseVisualStyleBackColor = true;
             // 
             // ce2Ahu_textBox
             // 
@@ -1138,10 +1180,10 @@
             // ce2AhuText2
             // 
             ce2AhuText2.AutoSize = true;
-            ce2AhuText2.Font =  new Font("나눔고딕", 9.75F);
+            ce2AhuText2.Font = new Font("나눔고딕", 9.75F);
             ce2AhuText2.Location = new Point(679, 30);
             ce2AhuText2.Name = "ce2AhuText2";
-            ce2AhuText2.Size = new Size(60, 15);
+            ce2AhuText2.Size = new Size(62, 15);
             ce2AhuText2.TabIndex = 214;
             ce2AhuText2.Text = "공급 AHU";
             ce2AhuText2.Visible = false;
@@ -1149,7 +1191,7 @@
             // ce2AhuText
             // 
             ce2AhuText.AutoSize = true;
-            ce2AhuText.Font =  new Font("나눔고딕", 9.75F);
+            ce2AhuText.Font = new Font("나눔고딕", 9.75F);
             ce2AhuText.Location = new Point(461, 30);
             ce2AhuText.Name = "ce2AhuText";
             ce2AhuText.Size = new Size(95, 15);
@@ -1201,10 +1243,10 @@
             // ce1AhuText2
             // 
             ce1AhuText2.AutoSize = true;
-            ce1AhuText2.Font =  new Font("나눔고딕", 9.75F);
+            ce1AhuText2.Font = new Font("나눔고딕", 9.75F);
             ce1AhuText2.Location = new Point(679, 6);
             ce1AhuText2.Name = "ce1AhuText2";
-            ce1AhuText2.Size = new Size(60, 15);
+            ce1AhuText2.Size = new Size(62, 15);
             ce1AhuText2.TabIndex = 209;
             ce1AhuText2.Text = "공급 AHU";
             ce1AhuText2.Visible = false;
@@ -1212,7 +1254,7 @@
             // ce1AhuText
             // 
             ce1AhuText.AutoSize = true;
-            ce1AhuText.Font =  new Font("나눔고딕", 9.75F);
+            ce1AhuText.Font = new Font("나눔고딕", 9.75F);
             ce1AhuText.Location = new Point(461, 6);
             ce1AhuText.Name = "ce1AhuText";
             ce1AhuText.Size = new Size(95, 15);
@@ -1259,18 +1301,19 @@
             ce_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle25.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle25.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle25.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle25.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle25.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle25.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle25.SelectionForeColor = Color.Black;
             dataGridViewCellStyle25.WrapMode = DataGridViewTriState.True;
             ce_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle25;
             ce_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            ce_dataGridView.Location = new Point(6, 53);
+            ce_dataGridView.Dock = DockStyle.Bottom;
+            ce_dataGridView.Location = new Point(3, 56);
             ce_dataGridView.Name = "ce_dataGridView";
             dataGridViewCellStyle26.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle26.BackColor = SystemColors.Control;
-            dataGridViewCellStyle26.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle26.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle26.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle26.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle26.SelectionForeColor = SystemColors.HighlightText;
@@ -1279,12 +1322,12 @@
             ce_dataGridView.RowHeadersVisible = false;
             ce_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle27.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle27.Font =  new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle27.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle27.ForeColor = Color.Black;
             dataGridViewCellStyle27.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle27.SelectionForeColor = Color.Black;
             ce_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle27;
-            ce_dataGridView.Size = new Size(953, 201);
+            ce_dataGridView.Size = new Size(963, 236);
             ce_dataGridView.TabIndex = 205;
             ce_dataGridView.CellContentClick += ce_dataGridView_CellContentClick;
             // 
@@ -1319,7 +1362,7 @@
             // ce2ZoneText
             // 
             ce2ZoneText.AutoSize = true;
-            ce2ZoneText.Font =  new Font("나눔고딕", 9.75F);
+            ce2ZoneText.Font = new Font("나눔고딕", 9.75F);
             ce2ZoneText.Location = new Point(257, 32);
             ce2ZoneText.Name = "ce2ZoneText";
             ce2ZoneText.Size = new Size(47, 15);
@@ -1329,10 +1372,10 @@
             // label15
             // 
             label15.AutoSize = true;
-            label15.Font =  new Font("나눔고딕", 9.75F);
+            label15.Font = new Font("나눔고딕", 9.75F);
             label15.Location = new Point(35, 32);
             label15.Name = "label15";
-            label15.Size = new Size(90, 15);
+            label15.Size = new Size(91, 15);
             label15.TabIndex = 201;
             label15.Text = "공급설비2 종류";
             // 
@@ -1378,7 +1421,7 @@
             // ce1ZoneText
             // 
             ce1ZoneText.AutoSize = true;
-            ce1ZoneText.Font =  new Font("나눔고딕", 9.75F);
+            ce1ZoneText.Font = new Font("나눔고딕", 9.75F);
             ce1ZoneText.Location = new Point(257, 6);
             ce1ZoneText.Name = "ce1ZoneText";
             ce1ZoneText.Size = new Size(47, 15);
@@ -1388,10 +1431,10 @@
             // label17
             // 
             label17.AutoSize = true;
-            label17.Font =  new Font("나눔고딕", 9.75F);
+            label17.Font = new Font("나눔고딕", 9.75F);
             label17.Location = new Point(35, 6);
             label17.Name = "label17";
-            label17.Size = new Size(90, 15);
+            label17.Size = new Size(91, 15);
             label17.TabIndex = 196;
             label17.Text = "공급설비1 종류";
             // 
@@ -1417,16 +1460,6 @@
             ZoneS_label.TabIndex = 155;
             ZoneS_label.Text = "ｔｔｅｅ";
             ZoneS_label.Visible = false;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("나눔고딕", 9.75F);
-            label7.Location = new Point(24, 118);
-            label7.Name = "label7";
-            label7.Size = new Size(73, 16);
-            label7.TabIndex = 98;
-            label7.Text = "냉방설비유형";
             // 
             // ImagePanel
             // 
@@ -1601,7 +1634,7 @@
             CT_cwin.Font = new Font("나눔고딕", 10F);
             CT_cwin.Location = new Point(48, 114);
             CT_cwin.Name = "CT_cwin";
-            CT_cwin.Size = new Size(56, 17);
+            CT_cwin.Size = new Size(59, 16);
             CT_cwin.TabIndex = 145;
             CT_cwin.Text = "입구온도";
             CT_cwin.Visible = false;
@@ -1613,7 +1646,7 @@
             CT_cwout.Font = new Font("나눔고딕", 10F);
             CT_cwout.Location = new Point(48, 80);
             CT_cwout.Name = "CT_cwout";
-            CT_cwout.Size = new Size(56, 17);
+            CT_cwout.Size = new Size(59, 16);
             CT_cwout.TabIndex = 145;
             CT_cwout.Text = "출구온도";
             CT_cwout.Visible = false;
@@ -1654,7 +1687,7 @@
             label1.Font = new Font("나눔고딕", 9.75F);
             label1.Location = new Point(125, 18);
             label1.Name = "label1";
-            label1.Size = new Size(34, 17);
+            label1.Size = new Size(31, 15);
             label1.TabIndex = 1;
             label1.Text = "명칭";
             // 
@@ -1664,7 +1697,7 @@
             label2.Font = new Font("나눔고딕", 10F);
             label2.Location = new Point(367, 12);
             label2.Name = "label2";
-            label2.Size = new Size(128, 17);
+            label2.Size = new Size(137, 16);
             label2.TabIndex = 90;
             label2.Text = "연간냉방에너지요구량";
             // 
@@ -1674,7 +1707,7 @@
             label5.Font = new Font("나눔고딕", 10F);
             label5.Location = new Point(538, 12);
             label5.Name = "label5";
-            label5.Size = new Size(80, 17);
+            label5.Size = new Size(85, 16);
             label5.TabIndex = 92;
             label5.Text = "최대냉방부하";
             // 
@@ -1733,7 +1766,7 @@
             label10.Font = new Font("나눔고딕", 9.75F);
             label10.Location = new Point(789, 67);
             label10.Name = "label10";
-            label10.Size = new Size(34, 17);
+            label10.Size = new Size(31, 15);
             label10.TabIndex = 143;
             label10.Text = "보수";
             // 
@@ -1743,7 +1776,7 @@
             NumTextBox.Font = new Font("나눔고딕", 9.75F);
             NumTextBox.Location = new Point(77, 16);
             NumTextBox.Name = "NumTextBox";
-            NumTextBox.Size = new Size(0, 16);
+            NumTextBox.Size = new Size(0, 15);
             NumTextBox.TabIndex = 142;
             // 
             // radioButton2
@@ -1774,7 +1807,7 @@
             label9.Font = new Font("나눔고딕", 9.75F);
             label9.Location = new Point(789, 41);
             label9.Name = "label9";
-            label9.Size = new Size(34, 17);
+            label9.Size = new Size(31, 15);
             label9.TabIndex = 139;
             label9.Text = "신규";
             // 
@@ -1784,7 +1817,7 @@
             label8.Font = new Font("나눔고딕", 9.75F);
             label8.Location = new Point(789, 13);
             label8.Name = "label8";
-            label8.Size = new Size(34, 17);
+            label8.Size = new Size(31, 15);
             label8.TabIndex = 138;
             label8.Text = "기존";
             // 
@@ -1885,7 +1918,7 @@
             label24.Font = new Font("나눔고딕", 8.999999F);
             label24.Location = new Point(688, 30);
             label24.Name = "label24";
-            label24.Size = new Size(25, 15);
+            label24.Size = new Size(26, 14);
             label24.TabIndex = 130;
             label24.Text = "[㎡]";
             // 
@@ -1895,7 +1928,7 @@
             label25.Font = new Font("나눔고딕", 8.999999F);
             label25.Location = new Point(561, 30);
             label25.Name = "label25";
-            label25.Size = new Size(30, 15);
+            label25.Size = new Size(33, 14);
             label25.TabIndex = 129;
             label25.Text = "[kW]";
             // 
@@ -1905,7 +1938,7 @@
             label26.Font = new Font("나눔고딕", 8.999999F);
             label26.Location = new Point(404, 30);
             label26.Name = "label26";
-            label26.Size = new Size(47, 15);
+            label26.Size = new Size(52, 14);
             label26.TabIndex = 128;
             label26.Text = "[kWh/a]";
             // 
@@ -1915,7 +1948,7 @@
             label23.Font = new Font("나눔고딕", 10F);
             label23.Location = new Point(674, 12);
             label23.Name = "label23";
-            label23.Size = new Size(56, 17);
+            label23.Size = new Size(59, 16);
             label23.TabIndex = 127;
             label23.Text = "바닥면적";
             // 
@@ -1940,7 +1973,7 @@
             label6.Font = new Font("나눔고딕", 9.75F);
             label6.Location = new Point(124, 73);
             label6.Name = "label6";
-            label6.Size = new Size(66, 17);
+            label6.Size = new Size(62, 15);
             label6.TabIndex = 124;
             label6.Text = "공급 AHU";
             // 
@@ -1978,7 +2011,7 @@
             label3.Font = new Font("나눔고딕", 9.75F);
             label3.Location = new Point(124, 50);
             label3.Name = "label3";
-            label3.Size = new Size(52, 17);
+            label3.Size = new Size(47, 15);
             label3.TabIndex = 121;
             label3.Text = "공급 존";
             // 
@@ -1996,7 +2029,7 @@
             label30.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             label30.Location = new Point(997, 19);
             label30.Name = "label30";
-            label30.Size = new Size(63, 17);
+            label30.Size = new Size(59, 15);
             label30.TabIndex = 148;
             label30.Text = "냉방출력:";
             // 
@@ -2007,27 +2040,27 @@
             PowerTotal_textBox.Location = new Point(1064, 14);
             PowerTotal_textBox.Name = "PowerTotal_textBox";
             PowerTotal_textBox.ReadOnly = true;
-            PowerTotal_textBox.Size = new Size(77, 25);
+            PowerTotal_textBox.Size = new Size(77, 22);
             PowerTotal_textBox.TabIndex = 149;
             PowerTotal_textBox.TextAlign = HorizontalAlignment.Right;
             // 
             // label31
             // 
             label31.AutoSize = true;
-            label31.Font =  new Font("나눔고딕", 9.75F);
+            label31.Font = new Font("나눔고딕", 9.75F);
             label31.Location = new Point(1147, 20);
             label31.Name = "label31";
-            label31.Size = new Size(24, 15);
+            label31.Size = new Size(27, 15);
             label31.TabIndex = 150;
             label31.Text = "kW";
             // 
             // label32
             // 
             label32.AutoSize = true;
-            label32.Font =  new Font("나눔고딕", 9.75F);
+            label32.Font = new Font("나눔고딕", 9.75F);
             label32.Location = new Point(1147, 49);
             label32.Name = "label32";
-            label32.Size = new Size(34, 15);
+            label32.Size = new Size(38, 15);
             label32.TabIndex = 153;
             label32.Text = "W/W";
             // 
@@ -2038,7 +2071,7 @@
             EERTotal_textBox.Location = new Point(1064, 45);
             EERTotal_textBox.Name = "EERTotal_textBox";
             EERTotal_textBox.ReadOnly = true;
-            EERTotal_textBox.Size = new Size(77, 25);
+            EERTotal_textBox.Size = new Size(77, 22);
             EERTotal_textBox.TabIndex = 152;
             EERTotal_textBox.TextAlign = HorizontalAlignment.Right;
             // 
@@ -2048,14 +2081,14 @@
             label33.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             label33.Location = new Point(997, 48);
             label33.Name = "label33";
-            label33.Size = new Size(63, 17);
+            label33.Size = new Size(59, 15);
             label33.TabIndex = 151;
             label33.Text = "냉방성능:";
             // 
             // label34
             // 
             label34.AutoSize = true;
-            label34.Font =  new Font("나눔고딕", 9.75F);
+            label34.Font = new Font("나눔고딕", 9.75F);
             label34.Location = new Point(1147, 83);
             label34.Name = "label34";
             label34.Size = new Size(19, 15);
@@ -2069,7 +2102,7 @@
             InstallTotal_textBox.Location = new Point(1064, 77);
             InstallTotal_textBox.Name = "InstallTotal_textBox";
             InstallTotal_textBox.ReadOnly = true;
-            InstallTotal_textBox.Size = new Size(77, 25);
+            InstallTotal_textBox.Size = new Size(77, 22);
             InstallTotal_textBox.TabIndex = 155;
             InstallTotal_textBox.TextAlign = HorizontalAlignment.Right;
             // 
@@ -2079,17 +2112,17 @@
             label35.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             label35.Location = new Point(997, 82);
             label35.Name = "label35";
-            label35.Size = new Size(63, 17);
+            label35.Size = new Size(59, 15);
             label35.TabIndex = 154;
             label35.Text = "설치대수:";
             // 
             // CT_2
             // 
             CT_2.AutoSize = true;
-            CT_2.Font =  new Font("나눔고딕", 9.75F);
+            CT_2.Font = new Font("나눔고딕", 9.75F);
             CT_2.Location = new Point(1147, 120);
             CT_2.Name = "CT_2";
-            CT_2.Size = new Size(24, 15);
+            CT_2.Size = new Size(27, 15);
             CT_2.TabIndex = 159;
             CT_2.Text = "kW";
             CT_2.Visible = false;
@@ -2101,7 +2134,7 @@
             CTPower_Text.Location = new Point(1064, 114);
             CTPower_Text.Name = "CTPower_Text";
             CTPower_Text.ReadOnly = true;
-            CTPower_Text.Size = new Size(77, 25);
+            CTPower_Text.Size = new Size(77, 22);
             CTPower_Text.TabIndex = 158;
             CTPower_Text.TextAlign = HorizontalAlignment.Right;
             CTPower_Text.Visible = false;
@@ -2112,7 +2145,7 @@
             CT_1.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             CT_1.Location = new Point(997, 119);
             CT_1.Name = "CT_1";
-            CT_1.Size = new Size(63, 17);
+            CT_1.Size = new Size(59, 15);
             CT_1.TabIndex = 157;
             CT_1.Text = "냉각능력:";
             CT_1.Visible = false;
@@ -2135,7 +2168,6 @@
             Controls.Add(label31);
             Controls.Add(PowerTotal_textBox);
             Controls.Add(label30);
-            Controls.Add(label7);
             Controls.Add(Save_button);
             Controls.Add(panel2);
             Controls.Add(GeneralPanel);
@@ -2197,9 +2229,8 @@
         #endregion
         private Panel panel2;
         private Panel ImagePanel;
-        private Label label7;
         private Button Save_button;
-        private TabControl tabControl1;
+        private CustomTabControl tabControl1;
         private TabPage Generator_tabpage;
         private TabPage tabPage2;
         private TabPage tabPage3;
@@ -2226,7 +2257,7 @@
         private TextBox CZ_FloorArea_Textbox;
         private Label label3;
         private PictureBox Icon_pictureBox;
-        private TabControl tabControl2;
+        private CustomTabControl tabControl2;
         private TabPage AirCon_tabPage;
         private DataGridView AirCon_dataGridView;
         private TabPage AirCooler_tabPage;
