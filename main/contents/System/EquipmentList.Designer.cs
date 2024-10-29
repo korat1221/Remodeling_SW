@@ -166,6 +166,9 @@ namespace main.contents
             ce_Remove_button = new Button();
             ce_Add_button = new Button();
             tabPage6 = new TabPage();
+            label25 = new System.Windows.Forms.Label();
+            DefaultWP_ADD_button = new Button();
+            label24 = new System.Windows.Forms.Label();
             WP_dataGridView = new DataGridView();
             WP_Save_button = new Button();
             WP_Copy_button = new Button();
@@ -1651,6 +1654,9 @@ namespace main.contents
             // tabPage6
             // 
             tabPage6.BackColor = Color.White;
+            tabPage6.Controls.Add(label25);
+            tabPage6.Controls.Add(DefaultWP_ADD_button);
+            tabPage6.Controls.Add(label24);
             tabPage6.Controls.Add(WP_dataGridView);
             tabPage6.Controls.Add(WP_Save_button);
             tabPage6.Controls.Add(WP_Copy_button);
@@ -1663,6 +1669,41 @@ namespace main.contents
             tabPage6.Size = new Size(1253, 226);
             tabPage6.TabIndex = 7;
             tabPage6.Text = "소형풍력";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            label25.Location = new Point(912, 11);
+            label25.Name = "label25";
+            label25.Size = new Size(87, 15);
+            label25.TabIndex = 134;
+            label25.Text = "도면 기반 입력";
+            // 
+            // DefaultWP_ADD_button
+            // 
+            DefaultWP_ADD_button.BackColor = SystemColors.ControlLight;
+            DefaultWP_ADD_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DefaultWP_ADD_button.FlatStyle = FlatStyle.System;
+            DefaultWP_ADD_button.Font = new Font("나눔고딕", 9.75F,FontStyle.Bold);
+            DefaultWP_ADD_button.Location = new Point(875, 7);
+            DefaultWP_ADD_button.Margin = new Padding(0);
+            DefaultWP_ADD_button.Name = "DefaultWP_ADD_button";
+            DefaultWP_ADD_button.Size = new Size(23, 23);
+            DefaultWP_ADD_button.TabIndex = 133;
+            DefaultWP_ADD_button.Text = "+";
+            DefaultWP_ADD_button.UseVisualStyleBackColor = false;
+            DefaultWP_ADD_button.Click += DefaultWP_ADD_button_Click;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            label24.Location = new Point(768, 11);
+            label24.Name = "label24";
+            label24.Size = new Size(104, 15);
+            label24.TabIndex = 132;
+            label24.Text = "기본 DB기반 입력";
             // 
             // WP_dataGridView
             // 
@@ -3193,5 +3234,8 @@ namespace main.contents
         private System.Windows.Forms.Label label22;
         private Button Qmax_button;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label25;
+        private Button DefaultWP_ADD_button;
+        private System.Windows.Forms.Label label24;
     }
 }

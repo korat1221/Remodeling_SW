@@ -24,6 +24,7 @@ using main.subcontents;
 using Microsoft.VisualBasic;
 using main.subcontents.CoolingSystem;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using main.subcontents.RESystem_WP;
 
 namespace main.contents
 {
@@ -1338,8 +1339,8 @@ namespace main.contents
             WP_dataGridView.Columns.Add("A8", "허브면적.[㎡]");
             WP_dataGridView.Columns.Add("A9", "허브높이.[m]");
             WP_dataGridView.Columns.Add("A10", "풍속.시동.[m/s]");
-            WP_dataGridView.Columns.Add("A11", "풍속.종단.[m/s]");
-            WP_dataGridView.Columns.Add("A12", "풍속.최적.[m/s]");
+            WP_dataGridView.Columns.Add("A11", "풍속.최적.[m/s]");
+            WP_dataGridView.Columns.Add("A12", "풍속.종단.[m/s]");
             WP_dataGridView.Columns.Add("A13", "전력계수.시동풍속.Cp,min");
             WP_dataGridView.Columns.Add("A14", "전력계수.최적풍속.Cp,op");
             WP_dataGridView.Columns.Add("A15", "전력계수.종단풍속.Cp,max");
@@ -1365,6 +1366,45 @@ namespace main.contents
             }
             else return false;
         }
+
+
+
+        private void DefaultWP_ADD_button_Click(object sender, EventArgs e)
+        {
+            ArrayList SelectWP = new ArrayList();
+            int nRow = WP_dataGridView.Rows.Add();
+            Load_WP_Num();
+            WP_dataGridView.Rows[nRow].Cells[2].Value = "기본";
+
+            //subcontents.WP_DB wp_DB = new subcontents.WP_DB("기본DB 적용");
+            subcontents.RESystem_WP.WP_DB wp_DB = new subcontents.RESystem_WP.WP_DB("기본DB 적용");
+            DialogResult result = wp_DB.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                if (wp_DB.Select_WP[0] != null)
+                {
+                    string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "풍력DB", "제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,최적풍속,종단풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수", "번호 = '" + wp_DB.Select_WP[0].ToString() + "'");
+                    if (Value.Length > 0)
+                    {
+                        WP_dataGridView.Rows[nRow].Cells[3].Value = Value[0][0];
+                        WP_dataGridView.Rows[nRow].Cells[4].Value = Value[0][1];
+                        WP_dataGridView.Rows[nRow].Cells[5].Value = Value[0][2];
+                        WP_dataGridView.Rows[nRow].Cells[6].Value = Value[0][3];
+                        WP_dataGridView.Rows[nRow].Cells[7].Value = Value[0][4];
+                        WP_dataGridView.Rows[nRow].Cells[8].Value = Value[0][5];
+                        WP_dataGridView.Rows[nRow].Cells[9].Value = Value[0][6];
+                        WP_dataGridView.Rows[nRow].Cells[10].Value = Value[0][7];
+                        WP_dataGridView.Rows[nRow].Cells[11].Value = Value[0][8];
+                        WP_dataGridView.Rows[nRow].Cells[12].Value = Value[0][9];
+                        WP_dataGridView.Rows[nRow].Cells[13].Value = Value[0][10];
+                        WP_dataGridView.Rows[nRow].Cells[14].Value = Value[0][11];
+                        WP_dataGridView.Rows[nRow].Cells[15].Value = Value[0][12];
+                    }
+                }
+            }
+        }
+
+
 
         private void UserWP_Add_button_Click(object sender, EventArgs e)
         {
@@ -1469,7 +1509,7 @@ namespace main.contents
                     { Value[i - 1] = WP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_WP", "번호,프로젝트유형,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,종단풍속,최적풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수,신규기존",
+                Program.DB.setValue(DB.type.ProjDB, "User_WP", "번호,프로젝트유형,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,최적풍속,종단풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수,신규기존",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "'", "번호");
             }
@@ -1478,7 +1518,7 @@ namespace main.contents
 
         private void Load_WP()
         {
-            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_WP", "번호, DB유형, 제품명, 제조사, 타입, 세부타입, 정격출력, 회전면적, 허브높이, 시동풍속, 종단풍속, 최적풍속, 시동풍속전력계수, 최적풍속전력계수, 종단풍속전력계수,신규기존", "");
+            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_WP", "번호, DB유형, 제품명, 제조사, 타입, 세부타입, 정격출력, 회전면적, 허브높이, 시동풍속, 최적풍속, 종단풍속, 시동풍속전력계수, 최적풍속전력계수, 종단풍속전력계수,신규기존", "");
             if (User_Value.Length > 0)
             {
                 for (int n = 0; n < User_Value.Length; n++)
