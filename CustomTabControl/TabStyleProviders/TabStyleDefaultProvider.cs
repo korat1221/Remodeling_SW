@@ -10,9 +10,9 @@ namespace System.Windows.Forms
 		{
 			_FocusTrack = true;
 			_Radius = 2;
-            BorderColor = System.Drawing.SystemColors.ControlDark;
-            BorderColorHot = System.Drawing.SystemColors.ControlDark;
-			BorderColorSelected = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(157)))), ((int)(((byte)(185)))));
+            BorderColor = System.Drawing.SystemColors.Control;
+            BorderColorHot = System.Drawing.SystemColors.Control;
+			BorderColorSelected = System.Drawing.SystemColors.Control;
         }
 
         public override void AddTabBorder(GraphicsPath path, Rectangle tabBounds)
