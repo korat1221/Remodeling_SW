@@ -253,6 +253,9 @@
     <Compile Update="subcontents\RESystem_WP\WP_DB.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\RESystem_WP\WP_DB_Default.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\CoolingSystem\WaterCooler_DB.cs">
       <SubType>Form</SubType>
     </Compile>

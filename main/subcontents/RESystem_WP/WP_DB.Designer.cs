@@ -1,4 +1,6 @@
-﻿namespace main.subcontents.RESystem_WP
+﻿using main.subcontents.RESystem_PV;
+
+namespace main.subcontents
 {
     partial class WP_DB
     {
@@ -28,21 +30,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             WP_dataGridView = new DataGridView();
             GeneralPanel = new Panel();
+            label2 = new Label();
+            Icon_pictureBox = new PictureBox();
             panel1 = new Panel();
-            label15 = new Label();
             UserNum_textBox = new TextBox();
             label4 = new Label();
-            Deletebutton = new Button();
-            AddUserDB_button = new Button();
-            label1 = new Label();
             Save_button = new Button();
             ((System.ComponentModel.ISupportInitialize)WP_dataGridView).BeginInit();
             GeneralPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -57,70 +58,75 @@
             WP_dataGridView.BorderStyle = BorderStyle.None;
             WP_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             WP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            WP_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            WP_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             WP_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             WP_dataGridView.Location = new Point(0, 45);
             WP_dataGridView.Name = "WP_dataGridView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            WP_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            WP_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             WP_dataGridView.RowHeadersVisible = false;
             WP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            WP_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            WP_dataGridView.RowTemplate.Height = 25;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            WP_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
             WP_dataGridView.Size = new Size(932, 296);
             WP_dataGridView.TabIndex = 19;
-            WP_dataGridView.CellContentClick += WP_dataGridView_CellContentClick;
             // 
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(label2);
+            GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Controls.Add(panel1);
-            GeneralPanel.Controls.Add(label1);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(932, 401);
             GeneralPanel.TabIndex = 18;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            label2.Location = new Point(64, 21);
+            label2.Name = "label2";
+            label2.Size = new Size(95, 15);
+            label2.TabIndex = 105;
+            label2.Text = "풍력 장비일람표";
+            // 
+            // Icon_pictureBox
+            // 
+            Icon_pictureBox.Location = new Point(8, 3);
+            Icon_pictureBox.Name = "Icon_pictureBox";
+            Icon_pictureBox.Size = new Size(50, 50);
+            Icon_pictureBox.TabIndex = 104;
+            Icon_pictureBox.TabStop = false;
+            // 
             // panel1
             // 
             panel1.BackColor = SystemColors.GradientInactiveCaption;
             panel1.Controls.Add(WP_dataGridView);
-            panel1.Controls.Add(label15);
             panel1.Controls.Add(UserNum_textBox);
             panel1.Controls.Add(label4);
-            panel1.Controls.Add(Deletebutton);
-            panel1.Controls.Add(AddUserDB_button);
             panel1.Location = new Point(0, 58);
             panel1.Name = "panel1";
             panel1.Size = new Size(932, 343);
             panel1.TabIndex = 27;
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Location = new Point(130, 16);
-            label15.Name = "label15";
-            label15.Size = new Size(31, 15);
-            label15.TabIndex = 106;
-            label15.Text = "번호";
             // 
             // UserNum_textBox
             // 
@@ -135,49 +141,12 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             label4.Location = new Point(8, 15);
             label4.Name = "label4";
-            label4.Size = new Size(60, 15);
+            label4.Size = new Size(117, 15);
             label4.TabIndex = 96;
-            label4.Text = "사용자DB";
-            // 
-            // Deletebutton
-            // 
-            Deletebutton.BackColor = SystemColors.ControlLight;
-            Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new System.Drawing.Font("나눔고딕", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Deletebutton.Location = new Point(98, 11);
-            Deletebutton.Margin = new Padding(0);
-            Deletebutton.Name = "Deletebutton";
-            Deletebutton.Size = new Size(23, 23);
-            Deletebutton.TabIndex = 95;
-            Deletebutton.Text = "-";
-            Deletebutton.UseVisualStyleBackColor = false;
-            // 
-            // AddUserDB_button
-            // 
-            AddUserDB_button.BackColor = SystemColors.ControlLight;
-            AddUserDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            AddUserDB_button.FlatStyle = FlatStyle.System;
-            AddUserDB_button.Font = new System.Drawing.Font("나눔고딕", 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            AddUserDB_button.Location = new Point(71, 11);
-            AddUserDB_button.Margin = new Padding(0);
-            AddUserDB_button.Name = "AddUserDB_button";
-            AddUserDB_button.Size = new Size(23, 23);
-            AddUserDB_button.TabIndex = 89;
-            AddUserDB_button.Text = "+";
-            AddUserDB_button.UseVisualStyleBackColor = false;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(12, 11);
-            label1.Name = "label1";
-            label1.Size = new Size(410, 15);
-            label1.TabIndex = 0;
-            label1.Text = "- DB를 추가하고자 하는 경우 각 항목의 값을 입력하고, + 버튼을 누르세요.\r\n";
+            label4.Text = "기준 DB 및 인증 DB";
             // 
             // Save_button
             // 
@@ -189,8 +158,9 @@
             Save_button.TabIndex = 20;
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
+            Save_button.Click += Save_button_Click;
             // 
-            // WP_DB
+            // WP2_DB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -198,12 +168,12 @@
             ClientSize = new Size(932, 437);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
-            Name = "WP_DB";
+            Name = "WP2_DB";
             Text = "WP_DB";
-            Load += WP_DB_Load;
             ((System.ComponentModel.ISupportInitialize)WP_dataGridView).EndInit();
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -221,5 +191,7 @@
         private Label label15;
         private TextBox UserNum_textBox;
         private DataGridView WP_dataGridView;
+        private Label label2;
+        private PictureBox Icon_pictureBox;
     }
 }
