@@ -33,14 +33,14 @@
             toolStripContainer1 = new ToolStripContainer();
             toolStrip1 = new ToolStrip();
             Home = new ToolStripButton();
-            ProjectOpen = new ToolStripButton();
-            EnergyNeed_Sim = new ToolStripButton();
-            FinalEnergy_Sim = new ToolStripButton();
-            Element_Sim = new ToolStripButton();
-            toolStripSeparator1 = new ToolStripSeparator();
             toolStripSeparator2 = new ToolStripSeparator();
+            ProjectOpen = new ToolStripButton();
+            toolStripSeparator1 = new ToolStripSeparator();
+            EnergyNeed_Sim = new ToolStripButton();
             toolStripSeparator3 = new ToolStripSeparator();
+            FinalEnergy_Sim = new ToolStripButton();
             toolStripSeparator4 = new ToolStripSeparator();
+            Element_Sim = new ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.SuspendLayout();
             toolStripContainer1.ContentPanel.SuspendLayout();
@@ -61,8 +61,8 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.AutoScroll = true;
-            splitContainer1.Size = new Size(1259, 811);
-            splitContainer1.SplitterDistance = 325;
+            splitContainer1.Size = new Size(1664, 709);
+            splitContainer1.SplitterDistance = 360;
             splitContainer1.TabIndex = 0;
             splitContainer1.Resize += OnResize;
             // 
@@ -73,32 +73,31 @@
             // toolStripContainer1.ContentPanel
             // 
             toolStripContainer1.ContentPanel.Controls.Add(splitContainer1);
-            toolStripContainer1.ContentPanel.Size = new Size(1259, 811);
+            toolStripContainer1.ContentPanel.Size = new Size(1664, 709);
             toolStripContainer1.Dock = DockStyle.Fill;
             toolStripContainer1.LeftToolStripPanelVisible = false;
             toolStripContainer1.Location = new Point(0, 0);
             toolStripContainer1.Name = "toolStripContainer1";
             toolStripContainer1.RightToolStripPanelVisible = false;
-            toolStripContainer1.Size = new Size(1259, 861);
+            toolStripContainer1.Size = new Size(1664, 771);
             toolStripContainer1.TabIndex = 0;
             toolStripContainer1.Text = "toolStripContainer1";
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
-            toolStripContainer1.TopToolStripPanel.BackColor = Color.FromArgb(166, 201, 232);
+            toolStripContainer1.TopToolStripPanel.BackColor = Color.FromArgb(39, 97, 143);
             toolStripContainer1.TopToolStripPanel.Controls.Add(toolStrip1);
             toolStripContainer1.TopToolStripPanel.MinimumSize = new Size(0, 32);
             // 
             // toolStrip1
             // 
-            toolStrip1.BackColor = Color.FromArgb(166, 201, 232);
+            toolStrip1.BackColor = Color.Transparent;
             toolStrip1.Dock = DockStyle.None;
             toolStrip1.ImageScalingSize = new Size(35, 35);
             toolStrip1.Items.AddRange(new ToolStripItem[] { Home, toolStripSeparator2, ProjectOpen, toolStripSeparator1, EnergyNeed_Sim, toolStripSeparator3, FinalEnergy_Sim, toolStripSeparator4, Element_Sim });
             toolStrip1.Location = new Point(3, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Padding = new Padding(4);
-            toolStrip1.Size = new Size(238, 50);
+            toolStrip1.Size = new Size(331, 62);
             toolStrip1.TabIndex = 0;
             // 
             // Home
@@ -107,9 +106,15 @@
             Home.Image = (Image)resources.GetObject("Home.Image");
             Home.ImageTransparentColor = Color.Magenta;
             Home.Name = "Home";
-            Home.Size = new Size(39, 39);
+            Home.Padding = new Padding(0, 0, 20, 20);
+            Home.Size = new Size(59, 59);
             Home.Text = "Home";
             Home.Click += toolStripButton1_Click;
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(6, 62);
             // 
             // ProjectOpen
             // 
@@ -117,10 +122,16 @@
             ProjectOpen.Image = (Image)resources.GetObject("ProjectOpen.Image");
             ProjectOpen.ImageTransparentColor = Color.Magenta;
             ProjectOpen.Name = "ProjectOpen";
-            ProjectOpen.Size = new Size(39, 39);
+            ProjectOpen.Padding = new Padding(0, 0, 20, 20);
+            ProjectOpen.Size = new Size(59, 59);
             ProjectOpen.Text = "ProjectOpen";
             ProjectOpen.ToolTipText = "ProjectOpen";
             ProjectOpen.Click += ProjectOpen_Click;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(6, 62);
             // 
             // EnergyNeed_Sim
             // 
@@ -128,9 +139,15 @@
             EnergyNeed_Sim.Image = (Image)resources.GetObject("EnergyNeed_Sim.Image");
             EnergyNeed_Sim.ImageTransparentColor = Color.Magenta;
             EnergyNeed_Sim.Name = "EnergyNeed_Sim";
-            EnergyNeed_Sim.Size = new Size(39, 39);
+            EnergyNeed_Sim.Padding = new Padding(0, 0, 20, 20);
+            EnergyNeed_Sim.Size = new Size(59, 59);
             EnergyNeed_Sim.Text = "Energy needs";
             EnergyNeed_Sim.Click += EnergyNeed_Sim_Click;
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(6, 62);
             // 
             // FinalEnergy_Sim
             // 
@@ -138,9 +155,15 @@
             FinalEnergy_Sim.Image = (Image)resources.GetObject("FinalEnergy_Sim.Image");
             FinalEnergy_Sim.ImageTransparentColor = Color.Magenta;
             FinalEnergy_Sim.Name = "FinalEnergy_Sim";
-            FinalEnergy_Sim.Size = new Size(39, 39);
+            FinalEnergy_Sim.Padding = new Padding(0, 0, 20, 20);
+            FinalEnergy_Sim.Size = new Size(59, 59);
             FinalEnergy_Sim.Text = "Final Energy";
             FinalEnergy_Sim.Click += FinalEnergy_Sim_Click;
+            // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new Size(6, 62);
             // 
             // Element_Sim
             // 
@@ -148,35 +171,16 @@
             Element_Sim.Image = (Image)resources.GetObject("Element_Sim.Image");
             Element_Sim.ImageTransparentColor = Color.Magenta;
             Element_Sim.Name = "Element_Sim";
-            Element_Sim.Size = new Size(39, 39);
+            Element_Sim.Padding = new Padding(0, 0, 20, 20);
+            Element_Sim.Size = new Size(59, 59);
             Element_Sim.Text = "Components result";
             Element_Sim.Click += Element_Sim_Click;
-            // 
-            // toolStripSeparator1
-            // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 42);
-            // 
-            // toolStripSeparator2
-            // 
-            toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(6, 42);
-            // 
-            // toolStripSeparator3
-            // 
-            toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(6, 42);
-            // 
-            // toolStripSeparator4
-            // 
-            toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(6, 42);
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1259, 861);
+            ClientSize = new Size(1664, 771);
             Controls.Add(toolStripContainer1);
             Name = "FormMain";
             Text = "FormMain";
