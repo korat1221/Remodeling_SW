@@ -92,7 +92,6 @@
             // 
             // pictureBox8
             // 
-            pictureBox8.Image = Properties.Resources.그림8;
             pictureBox8.Location = new Point(379, 395);
             pictureBox8.Name = "pictureBox8";
             pictureBox8.Size = new Size(299, 175);
@@ -102,7 +101,6 @@
             // 
             // pictureBox7
             // 
-            pictureBox7.Image = Properties.Resources.그림7;
             pictureBox7.Location = new Point(36, 366);
             pictureBox7.Name = "pictureBox7";
             pictureBox7.Size = new Size(250, 204);
@@ -130,7 +128,6 @@
             // 
             // pictureBox6
             // 
-            pictureBox6.Image = Properties.Resources.그림6;
             pictureBox6.Location = new Point(919, 88);
             pictureBox6.Name = "pictureBox6";
             pictureBox6.Size = new Size(100, 167);
@@ -140,7 +137,6 @@
             // 
             // pictureBox5
             // 
-            pictureBox5.Image = Properties.Resources.그림2;
             pictureBox5.Location = new Point(344, 88);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(192, 167);
@@ -150,7 +146,6 @@
             // 
             // pictureBox4
             // 
-            pictureBox4.Image = Properties.Resources.그림5;
             pictureBox4.Location = new Point(795, 88);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(100, 167);
@@ -160,7 +155,6 @@
             // 
             // pictureBox3
             // 
-            pictureBox3.Image = Properties.Resources.그림4;
             pictureBox3.Location = new Point(667, 88);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(100, 167);
@@ -170,7 +164,6 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = Properties.Resources.그림3;
             pictureBox2.Location = new Point(549, 88);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(100, 167);
@@ -180,7 +173,6 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = Properties.Resources.그림12;
             pictureBox1.Location = new Point(21, 70);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(291, 196);
