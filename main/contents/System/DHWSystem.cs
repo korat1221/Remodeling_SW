@@ -22,6 +22,7 @@ using System.Xml.Linq;
 using static main.DB;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 
+
 using main.subcontents.HeatingSystem;
 
 namespace main.contents
@@ -44,7 +45,7 @@ namespace main.contents
         string[][] 프로젝트유형;
         public DHWSystem()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '급탕시스템'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;

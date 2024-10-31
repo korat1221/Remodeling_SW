@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 
+
 namespace main.subcontents.RESystem_FC
 {
     public partial class FCSList : Form
@@ -18,7 +19,7 @@ namespace main.subcontents.RESystem_FC
         ArrayList SelectRow = new ArrayList();
         public FCSList(string System, string Systemnum)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '연료전지'");
             Icon_pictureBox.Load(Program.gPath + Image[0][0]);
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;

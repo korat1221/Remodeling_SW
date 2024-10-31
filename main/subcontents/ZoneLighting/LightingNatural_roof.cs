@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
+
 namespace main.subcontents.ZoneLighting
 {
     public partial class LightingNatural_roof : Form
@@ -27,7 +28,7 @@ namespace main.subcontents.ZoneLighting
 
         public LightingNatural_roof(string NaturalType, string ZoneNum)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
 
             this.NaturalType = NaturalType;
             this.ZoneNum = ZoneNum;

@@ -24,7 +24,7 @@ namespace main.subcontents.ConstructionCW
 
         public CW_InstallDB(String InstallType)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             this.InstallType = InstallType;
             load_table_InstallDB();
             //사용자DB 구분1 콤보박스
@@ -48,7 +48,7 @@ namespace main.subcontents.ConstructionCW
 
         public CW_InstallDB(String InstallType, String FrameType)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             this.InstallType = InstallType;
             this.FrameType = FrameType;
             load_table_InstallDB();

@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace main.subcontents.CoolingSystem
 {
     public partial class Cooling_CoolerTop : Form
     {
         public Cooling_CoolerTop()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace main.subcontents
 
         public CW_ImportSize(String CWNum, String Name, double df_mt, double df_open, double df_door)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             this.CWNum = CWNum;
             this.CWName = Name;
             Name_textBox.Text = CWName;

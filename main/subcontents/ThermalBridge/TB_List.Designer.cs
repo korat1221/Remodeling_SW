@@ -1,4 +1,5 @@
-﻿namespace main.contents
+﻿
+namespace main.contents
 {
     partial class TB_List
     {
@@ -60,7 +61,7 @@
             // Uw2_unit_label
             // 
             Uw2_unit_label.AutoSize = true;
-            Uw2_unit_label.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            Uw2_unit_label.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             Uw2_unit_label.ForeColor = SystemColors.ControlDark;
             Uw2_unit_label.Location = new Point(224, 89);
             Uw2_unit_label.Name = "Uw2_unit_label";
@@ -73,7 +74,7 @@
             length_textBox.BackColor = Color.White;
             length_textBox.BorderStyle = BorderStyle.None;
             length_textBox.Enabled = false;
-            length_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            length_textBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             length_textBox.ForeColor = SystemColors.ControlDark;
             length_textBox.Location = new Point(148, 89);
             length_textBox.Name = "length_textBox";
@@ -84,7 +85,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label1.Location = new Point(95, 89);
             label1.Name = "label1";
             label1.Size = new Size(47, 15);
@@ -94,7 +95,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label4.Location = new Point(95, 51);
             label4.Name = "label4";
             label4.Size = new Size(40, 15);
@@ -121,7 +122,7 @@
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -132,7 +133,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -141,7 +142,7 @@
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;

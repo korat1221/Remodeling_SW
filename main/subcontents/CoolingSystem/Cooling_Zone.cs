@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 
+
 namespace main.subcontents
 {
     public partial class Cooling_Zone : Form
@@ -41,7 +42,7 @@ namespace main.subcontents
             }
             else if (SelectType == "Ahu") this.Text = "공조기 선택";
             
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             load_table_DB();
             SystemNum = Num;
 

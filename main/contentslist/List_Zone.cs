@@ -25,7 +25,7 @@ namespace main.contentslist
 
         public List_Zone()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
 
             Icon_pictureBox.Load(Program.gPath + "images/1sticon/4.Zone_on3.png");
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;

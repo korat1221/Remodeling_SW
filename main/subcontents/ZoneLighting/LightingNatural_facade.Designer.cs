@@ -1,4 +1,5 @@
-﻿namespace main.subcontents.ZoneLighting
+﻿
+namespace main.subcontents.ZoneLighting
 {
     partial class LightingNatural_facade
     {
@@ -101,7 +102,7 @@
             // glaassinfo_label
             // 
             glaassinfo_label.AutoSize = true;
-            glaassinfo_label.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            glaassinfo_label.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             glaassinfo_label.Location = new Point(37, 86);
             glaassinfo_label.Name = "glaassinfo_label";
             glaassinfo_label.Size = new Size(59, 15);
@@ -111,7 +112,7 @@
             // Dim_label
             // 
             Dim_label.AutoSize = true;
-            Dim_label.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Dim_label.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             Dim_label.Location = new Point(306, 86);
             Dim_label.Name = "Dim_label";
             Dim_label.Size = new Size(59, 15);
@@ -141,7 +142,7 @@
             // label28
             // 
             label28.AutoSize = true;
-            label28.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label28.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label28.Location = new Point(37, 17);
             label28.Name = "label28";
             label28.Size = new Size(99, 15);
@@ -234,7 +235,7 @@
             // 
             // glass1_comboBox
             // 
-            glass1_comboBox.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            glass1_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             glass1_comboBox.FormattingEnabled = true;
             glass1_comboBox.Location = new Point(139, 109);
             glass1_comboBox.Name = "glass1_comboBox";
@@ -282,7 +283,7 @@
             // 
             // NaturalLight_comboBox
             // 
-            NaturalLight_comboBox.Font = new System.Drawing.Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            NaturalLight_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             NaturalLight_comboBox.FormattingEnabled = true;
             NaturalLight_comboBox.Location = new Point(407, 47);
             NaturalLight_comboBox.Name = "NaturalLight_comboBox";

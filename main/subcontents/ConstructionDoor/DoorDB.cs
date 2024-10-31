@@ -27,7 +27,7 @@ namespace main.subcontents
         
         public DoorDB(String DoorNum, String Select0, String Select1, String Select2, String Select3, String Select4, String Select5, String Select6, String Select7, String Select8, String Select9, String Select10, String Select11, String Select12, String Select13)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             Create_Table();
             if (Select0 != null)
             {

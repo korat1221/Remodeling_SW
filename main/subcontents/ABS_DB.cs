@@ -27,7 +27,7 @@ namespace main.subcontents.HeatingSystem
         // public ABS_DB(HeatingSystem system)
         public ABS_DB(String DefaultUse, String SelectAS_nonsplit, String HC)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             //heatingSystem = system;
             this.DefaultUse = DefaultUse;
             this.HC = HC;

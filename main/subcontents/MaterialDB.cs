@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace main.subcontents
 {
     public partial class MaterialDB : Form
@@ -24,7 +25,7 @@ namespace main.subcontents
 
         public MaterialDB()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             
 
             //재료유형 리스트 생성 

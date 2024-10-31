@@ -61,6 +61,46 @@ namespace main.Properties {
         }
         
         /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] NANUMGOTHIC {
+            get {
+                object obj = ResourceManager.GetObject("NANUMGOTHIC", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] NANUMGOTHICBOLD {
+            get {
+                object obj = ResourceManager.GetObject("NANUMGOTHICBOLD", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] NANUMGOTHICEXTRABOLD {
+            get {
+                object obj = ResourceManager.GetObject("NANUMGOTHICEXTRABOLD", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] NANUMGOTHICLIGHT {
+            get {
+                object obj = ResourceManager.GetObject("NANUMGOTHICLIGHT", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
         internal static System.Drawing.Bitmap 그림1 {

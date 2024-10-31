@@ -26,7 +26,7 @@ namespace main.contents
     {
         public Intro()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             Logo_pictureBox.Load(Program.gPath + "images/1sticon/0.Logo.png");
             Logo_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 

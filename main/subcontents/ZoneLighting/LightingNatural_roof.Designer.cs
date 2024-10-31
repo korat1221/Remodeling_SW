@@ -1,4 +1,5 @@
-﻿namespace main.subcontents.ZoneLighting
+﻿
+namespace main.subcontents.ZoneLighting
 {
     partial class LightingNatural_roof
     {
@@ -73,7 +74,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Font =  new Font("나눔고딕", 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label27.Font =  new Font(UTIL.Families[0], 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label27.Location = new System.Drawing.Point(37, 17);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(87, 15);
@@ -83,7 +84,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Font =  new Font("나눔고딕", 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label26.Font =  new Font(UTIL.Families[0], 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label26.Location = new System.Drawing.Point(37, 90);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(59, 15);
@@ -93,7 +94,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Font =  new Font("나눔고딕", 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label15.Font =  new Font(UTIL.Families[0], 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label15.Location = new System.Drawing.Point(306, 90);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(59, 15);
@@ -216,7 +217,7 @@
             // 
             // roofangle2_comboBox
             // 
-            this.roofangle2_comboBox.Font = new System.Drawing.Font("나눔고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.roofangle2_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.roofangle2_comboBox.FormattingEnabled = true;
             this.roofangle2_comboBox.Location = new System.Drawing.Point(139, 149);
             this.roofangle2_comboBox.Name = "roofangle2_comboBox";
@@ -225,7 +226,7 @@
             // 
             // roofangle1_comboBox
             // 
-            this.roofangle1_comboBox.Font = new System.Drawing.Font("나눔고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.roofangle1_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.roofangle1_comboBox.FormattingEnabled = true;
             this.roofangle1_comboBox.Location = new System.Drawing.Point(139, 113);
             this.roofangle1_comboBox.Name = "roofangle1_comboBox";
@@ -282,7 +283,7 @@
             // 
             // NaturalLight2_comboBox
             // 
-            this.NaturalLight2_comboBox.Font = new System.Drawing.Font("나눔고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.NaturalLight2_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.NaturalLight2_comboBox.FormattingEnabled = true;
             this.NaturalLight2_comboBox.Location = new System.Drawing.Point(407, 47);
             this.NaturalLight2_comboBox.Name = "NaturalLight2_comboBox";

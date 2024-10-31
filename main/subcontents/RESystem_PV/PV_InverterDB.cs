@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 
+
 namespace main.subcontents.RESystem_PV
 {
     public partial class PV_InverterDB : Form
@@ -21,7 +22,7 @@ namespace main.subcontents.RESystem_PV
 
         public PV_InverterDB()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             load_table_PVInverterDB();
 
             //번호

@@ -61,7 +61,7 @@ namespace main.contents
         {
 
             // 화면 뜨자마자 있었으면 하는거 전부 콤보박스로 몰아 넣기 
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
 
             //조명 이미지 로드 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '존 조명정보'");

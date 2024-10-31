@@ -1,4 +1,5 @@
-﻿namespace main.contents
+﻿
+namespace main.contents
 {
     partial class HeatingSystem
     {
@@ -244,7 +245,7 @@
             OldSystem_textBox.BackColor = Color.White;
             OldSystem_textBox.BorderStyle = BorderStyle.None;
             OldSystem_textBox.Enabled = false;
-            OldSystem_textBox.Font = new Font("나눔고딕", 9.75F);
+            OldSystem_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             OldSystem_textBox.ForeColor = SystemColors.ControlText;
             OldSystem_textBox.Location = new Point(774, 36);
             OldSystem_textBox.Name = "OldSystem_textBox";
@@ -341,7 +342,7 @@
             Zone_button.BackColor = SystemColors.ControlLight;
             Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Zone_button.FlatStyle = FlatStyle.System;
-            Zone_button.Font = new Font("나눔고딕", 9.75F);
+            Zone_button.Font = new Font(UTIL.Families[0], 9.75F);
             Zone_button.Location = new Point(288, 59);
             Zone_button.Margin = new Padding(0);
             Zone_button.Name = "Zone_button";
@@ -365,7 +366,7 @@
             Zone_textBox.BackColor = Color.White;
             Zone_textBox.BorderStyle = BorderStyle.None;
             Zone_textBox.Enabled = false;
-            Zone_textBox.Font = new Font("나눔고딕", 9.75F);
+            Zone_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             Zone_textBox.ForeColor = SystemColors.ControlDark;
             Zone_textBox.Location = new Point(165, 63);
             Zone_textBox.Name = "Zone_textBox";
@@ -387,7 +388,7 @@
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new Font("나눔고딕", 9.75F);
+            Num_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             Num_textBox.ForeColor = SystemColors.ControlText;
             Num_textBox.Location = new Point(66, 25);
             Num_textBox.Name = "Num_textBox";
@@ -527,7 +528,7 @@
             Boiler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -539,7 +540,7 @@
             Boiler_dataGridView.Name = "Boiler_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle2.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -548,7 +549,7 @@
             Boiler_dataGridView.RowHeadersVisible = false;
             Boiler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle3.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -580,7 +581,7 @@
             HP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle4.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle4.SelectionForeColor = Color.Black;
@@ -592,7 +593,7 @@
             HP_dataGridView.Name = "HP_dataGridView";
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle5.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
@@ -601,7 +602,7 @@
             HP_dataGridView.RowHeadersVisible = false;
             HP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle6.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle6.ForeColor = Color.Black;
             dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle6.SelectionForeColor = Color.Black;
@@ -633,7 +634,7 @@
             AS_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle7.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle7.SelectionForeColor = Color.Black;
@@ -645,7 +646,7 @@
             AS_dataGridView.Name = "AS_dataGridView";
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle8.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
@@ -654,7 +655,7 @@
             AS_dataGridView.RowHeadersVisible = false;
             AS_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle9.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle9.ForeColor = Color.Black;
             dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle9.SelectionForeColor = Color.Black;
@@ -686,7 +687,7 @@
             DH_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle10.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle10.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle10.SelectionForeColor = Color.Black;
@@ -698,7 +699,7 @@
             DH_dataGridView.Name = "DH_dataGridView";
             dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle11.BackColor = SystemColors.Control;
-            dataGridViewCellStyle11.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle11.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle11.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
@@ -707,7 +708,7 @@
             DH_dataGridView.RowHeadersVisible = false;
             DH_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle12.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle12.ForeColor = Color.Black;
             dataGridViewCellStyle12.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle12.SelectionForeColor = Color.Black;
@@ -739,7 +740,7 @@
             Solar_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle13.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle13.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle13.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle13.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle13.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle13.SelectionForeColor = Color.Black;
@@ -751,7 +752,7 @@
             Solar_dataGridView.Name = "Solar_dataGridView";
             dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle14.BackColor = SystemColors.Control;
-            dataGridViewCellStyle14.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle14.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle14.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle14.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle14.SelectionForeColor = SystemColors.HighlightText;
@@ -760,7 +761,7 @@
             Solar_dataGridView.RowHeadersVisible = false;
             Solar_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle15.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle15.ForeColor = Color.Black;
             dataGridViewCellStyle15.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle15.SelectionForeColor = Color.Black;
@@ -771,7 +772,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("나눔고딕", 9.75F);
+            label9.Font = new Font(UTIL.Families[0], 9.75F);
             label9.Location = new Point(19, 24);
             label9.Name = "label9";
             label9.Size = new Size(79, 15);
@@ -781,7 +782,7 @@
             // Complex_comboBox
             // 
             Complex_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Complex_comboBox.Font = new Font("나눔고딕", 9.75F);
+            Complex_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             Complex_comboBox.FormattingEnabled = true;
             Complex_comboBox.Location = new Point(108, 19);
             Complex_comboBox.Name = "Complex_comboBox";
@@ -794,7 +795,7 @@
             Sub2UserList_textBox.BackColor = Color.White;
             Sub2UserList_textBox.BorderStyle = BorderStyle.None;
             Sub2UserList_textBox.Enabled = false;
-            Sub2UserList_textBox.Font = new Font("나눔고딕", 9.75F);
+            Sub2UserList_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             Sub2UserList_textBox.ForeColor = SystemColors.ControlDark;
             Sub2UserList_textBox.Location = new Point(794, 86);
             Sub2UserList_textBox.Name = "Sub2UserList_textBox";
@@ -808,7 +809,7 @@
             Sub2UserList_button.BackColor = SystemColors.ControlLight;
             Sub2UserList_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Sub2UserList_button.FlatStyle = FlatStyle.System;
-            Sub2UserList_button.Font = new Font("나눔고딕", 12F, FontStyle.Bold);
+            Sub2UserList_button.Font = new Font(UTIL.Families[0], 12F, FontStyle.Bold);
             Sub2UserList_button.Location = new Point(917, 82);
             Sub2UserList_button.Margin = new Padding(0);
             Sub2UserList_button.Name = "Sub2UserList_button";
@@ -822,7 +823,7 @@
             // Sub2UserList_Label
             // 
             Sub2UserList_Label.AutoSize = true;
-            Sub2UserList_Label.Font = new Font("나눔고딕", 9.75F);
+            Sub2UserList_Label.Font = new Font(UTIL.Families[0], 9.75F);
             Sub2UserList_Label.Location = new Point(703, 86);
             Sub2UserList_Label.Name = "Sub2UserList_Label";
             Sub2UserList_Label.Size = new Size(74, 15);
@@ -835,7 +836,7 @@
             Sub1UserList_textBox.BackColor = Color.White;
             Sub1UserList_textBox.BorderStyle = BorderStyle.None;
             Sub1UserList_textBox.Enabled = false;
-            Sub1UserList_textBox.Font = new Font("나눔고딕", 9.75F);
+            Sub1UserList_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             Sub1UserList_textBox.ForeColor = SystemColors.ControlDark;
             Sub1UserList_textBox.Location = new Point(347, 86);
             Sub1UserList_textBox.Name = "Sub1UserList_textBox";
@@ -849,7 +850,7 @@
             Sub1UserList_button.BackColor = SystemColors.ControlLight;
             Sub1UserList_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Sub1UserList_button.FlatStyle = FlatStyle.System;
-            Sub1UserList_button.Font = new Font("나눔고딕", 12F, FontStyle.Bold);
+            Sub1UserList_button.Font = new Font(UTIL.Families[0], 12F, FontStyle.Bold);
             Sub1UserList_button.Location = new Point(469, 82);
             Sub1UserList_button.Margin = new Padding(0);
             Sub1UserList_button.Name = "Sub1UserList_button";
@@ -863,7 +864,7 @@
             // Sub1UserList_Label
             // 
             Sub1UserList_Label.AutoSize = true;
-            Sub1UserList_Label.Font = new Font("나눔고딕", 9.75F);
+            Sub1UserList_Label.Font = new Font(UTIL.Families[0], 9.75F);
             Sub1UserList_Label.Location = new Point(256, 86);
             Sub1UserList_Label.Name = "Sub1UserList_Label";
             Sub1UserList_Label.Size = new Size(75, 15);
@@ -876,7 +877,7 @@
             MainUserList_textBox.BackColor = Color.White;
             MainUserList_textBox.BorderStyle = BorderStyle.None;
             MainUserList_textBox.Enabled = false;
-            MainUserList_textBox.Font = new Font("나눔고딕", 9.75F);
+            MainUserList_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             MainUserList_textBox.ForeColor = SystemColors.ControlDark;
             MainUserList_textBox.Location = new Point(347, 56);
             MainUserList_textBox.Name = "MainUserList_textBox";
@@ -889,7 +890,7 @@
             MainUserList_button.BackColor = SystemColors.ControlLight;
             MainUserList_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             MainUserList_button.FlatStyle = FlatStyle.System;
-            MainUserList_button.Font = new Font("나눔고딕", 12F, FontStyle.Bold);
+            MainUserList_button.Font = new Font(UTIL.Families[0], 12F, FontStyle.Bold);
             MainUserList_button.Location = new Point(469, 52);
             MainUserList_button.Margin = new Padding(0);
             MainUserList_button.Name = "MainUserList_button";
@@ -902,7 +903,7 @@
             // MainUserList_Label
             // 
             MainUserList_Label.AutoSize = true;
-            MainUserList_Label.Font = new Font("나눔고딕", 9.75F);
+            MainUserList_Label.Font = new Font(UTIL.Families[0], 9.75F);
             MainUserList_Label.Location = new Point(256, 56);
             MainUserList_Label.Name = "MainUserList_Label";
             MainUserList_Label.Size = new Size(74, 15);
@@ -912,7 +913,7 @@
             // SLRL_comboBox
             // 
             SLRL_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            SLRL_comboBox.Font = new Font("나눔고딕", 9.75F);
+            SLRL_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             SLRL_comboBox.FormattingEnabled = true;
             SLRL_comboBox.Location = new Point(576, 19);
             SLRL_comboBox.Name = "SLRL_comboBox";
@@ -923,7 +924,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("나눔고딕", 9.75F);
+            label8.Font = new Font(UTIL.Families[0], 9.75F);
             label8.Location = new Point(491, 24);
             label8.Name = "label8";
             label8.Size = new Size(84, 15);
@@ -933,7 +934,7 @@
             // SystemLoacation_comboBox
             // 
             SystemLoacation_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            SystemLoacation_comboBox.Font = new Font("나눔고딕", 9.75F);
+            SystemLoacation_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             SystemLoacation_comboBox.FormattingEnabled = true;
             SystemLoacation_comboBox.Location = new Point(347, 19);
             SystemLoacation_comboBox.Name = "SystemLoacation_comboBox";
@@ -944,7 +945,7 @@
             // Sub2System_label
             // 
             Sub2System_label.AutoSize = true;
-            Sub2System_label.Font = new Font("나눔고딕", 9.75F);
+            Sub2System_label.Font = new Font(UTIL.Families[0], 9.75F);
             Sub2System_label.Location = new Point(497, 86);
             Sub2System_label.Name = "Sub2System_label";
             Sub2System_label.Size = new Size(62, 15);
@@ -955,7 +956,7 @@
             // Sub2System_comboBox
             // 
             Sub2System_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Sub2System_comboBox.Font = new Font("나눔고딕", 9.75F);
+            Sub2System_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             Sub2System_comboBox.FormattingEnabled = true;
             Sub2System_comboBox.Location = new Point(576, 81);
             Sub2System_comboBox.Name = "Sub2System_comboBox";
@@ -967,7 +968,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("나눔고딕", 9.75F);
+            label6.Font = new Font(UTIL.Families[0], 9.75F);
             label6.Location = new Point(256, 24);
             label6.Name = "label6";
             label6.Size = new Size(55, 15);
@@ -977,7 +978,7 @@
             // Sub1System_label
             // 
             Sub1System_label.AutoSize = true;
-            Sub1System_label.Font = new Font("나눔고딕", 9.75F);
+            Sub1System_label.Font = new Font(UTIL.Families[0], 9.75F);
             Sub1System_label.Location = new Point(19, 86);
             Sub1System_label.Name = "Sub1System_label";
             Sub1System_label.Size = new Size(62, 15);
@@ -988,7 +989,7 @@
             // Sub1System_comboBox
             // 
             Sub1System_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Sub1System_comboBox.Font = new Font("나눔고딕", 9.75F);
+            Sub1System_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             Sub1System_comboBox.FormattingEnabled = true;
             Sub1System_comboBox.Location = new Point(108, 81);
             Sub1System_comboBox.Name = "Sub1System_comboBox";
@@ -1000,7 +1001,7 @@
             // MainSystem_label
             // 
             MainSystem_label.AutoSize = true;
-            MainSystem_label.Font = new Font("나눔고딕", 9.75F);
+            MainSystem_label.Font = new Font(UTIL.Families[0], 9.75F);
             MainSystem_label.Location = new Point(19, 56);
             MainSystem_label.Name = "MainSystem_label";
             MainSystem_label.Size = new Size(62, 15);
@@ -1010,7 +1011,7 @@
             // MainSystem_comboBox
             // 
             MainSystem_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            MainSystem_comboBox.Font = new Font("나눔고딕", 9.75F);
+            MainSystem_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             MainSystem_comboBox.FormattingEnabled = true;
             MainSystem_comboBox.Location = new Point(108, 51);
             MainSystem_comboBox.Name = "MainSystem_comboBox";
@@ -1052,7 +1053,7 @@
             StoragePump_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle16.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle16.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle16.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle16.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle16.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle16.SelectionForeColor = Color.Black;
@@ -1064,7 +1065,7 @@
             StoragePump_dataGridView.Name = "StoragePump_dataGridView";
             dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle17.BackColor = SystemColors.Control;
-            dataGridViewCellStyle17.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle17.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle17.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle17.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle17.SelectionForeColor = SystemColors.HighlightText;
@@ -1073,7 +1074,7 @@
             StoragePump_dataGridView.RowHeadersVisible = false;
             StoragePump_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle18.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle18.ForeColor = Color.Black;
             dataGridViewCellStyle18.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle18.SelectionForeColor = Color.Black;
@@ -1084,7 +1085,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font("나눔고딕", 9.75F);
+            label12.Font = new Font(UTIL.Families[0], 9.75F);
             label12.Location = new Point(521, 41);
             label12.Name = "label12";
             label12.Size = new Size(83, 15);
@@ -1094,7 +1095,7 @@
             // StoragePump_comboBox
             // 
             StoragePump_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            StoragePump_comboBox.Font = new Font("나눔고딕", 9.75F);
+            StoragePump_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             StoragePump_comboBox.FormattingEnabled = true;
             StoragePump_comboBox.Location = new Point(610, 38);
             StoragePump_comboBox.Name = "StoragePump_comboBox";
@@ -1107,7 +1108,7 @@
             StoragePump_textBox.BackColor = Color.White;
             StoragePump_textBox.BorderStyle = BorderStyle.None;
             StoragePump_textBox.Enabled = false;
-            StoragePump_textBox.Font = new Font("나눔고딕", 9.75F);
+            StoragePump_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             StoragePump_textBox.ForeColor = SystemColors.ControlDark;
             StoragePump_textBox.Location = new Point(790, 43);
             StoragePump_textBox.Name = "StoragePump_textBox";
@@ -1120,7 +1121,7 @@
             StoragePump_button.BackColor = SystemColors.ControlLight;
             StoragePump_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             StoragePump_button.FlatStyle = FlatStyle.System;
-            StoragePump_button.Font = new Font("나눔고딕", 12F, FontStyle.Bold);
+            StoragePump_button.Font = new Font(UTIL.Families[0], 12F, FontStyle.Bold);
             StoragePump_button.Location = new Point(912, 39);
             StoragePump_button.Margin = new Padding(0);
             StoragePump_button.Name = "StoragePump_button";
@@ -1133,7 +1134,7 @@
             // StoragePump_label
             // 
             StoragePump_label.AutoSize = true;
-            StoragePump_label.Font = new Font("나눔고딕", 9.75F);
+            StoragePump_label.Font = new Font(UTIL.Families[0], 9.75F);
             StoragePump_label.Location = new Point(753, 43);
             StoragePump_label.Name = "StoragePump_label";
             StoragePump_label.Size = new Size(31, 15);
@@ -1143,7 +1144,7 @@
             // Vs_label1
             // 
             Vs_label1.AutoSize = true;
-            Vs_label1.Font = new Font("나눔고딕", 9.75F);
+            Vs_label1.Font = new Font(UTIL.Families[0], 9.75F);
             Vs_label1.Location = new Point(268, 42);
             Vs_label1.Name = "Vs_label1";
             Vs_label1.Size = new Size(83, 15);
@@ -1153,7 +1154,7 @@
             // Vs_label2
             // 
             Vs_label2.AutoSize = true;
-            Vs_label2.Font = new Font("나눔고딕", 9.75F);
+            Vs_label2.Font = new Font(UTIL.Families[0], 9.75F);
             Vs_label2.ForeColor = SystemColors.ControlDark;
             Vs_label2.Location = new Point(472, 42);
             Vs_label2.Name = "Vs_label2";
@@ -1173,7 +1174,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("나눔고딕", 9.75F);
+            label11.Font = new Font(UTIL.Families[0], 9.75F);
             label11.Location = new Point(34, 43);
             label11.Name = "label11";
             label11.Size = new Size(83, 15);
@@ -1183,7 +1184,7 @@
             // StorageUse_comboBox
             // 
             StorageUse_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            StorageUse_comboBox.Font = new Font("나눔고딕", 9.75F);
+            StorageUse_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             StorageUse_comboBox.FormattingEnabled = true;
             StorageUse_comboBox.Location = new Point(123, 38);
             StorageUse_comboBox.Name = "StorageUse_comboBox";
@@ -1227,7 +1228,7 @@
             // PipeIns_Ramda_label1
             // 
             PipeIns_Ramda_label1.AutoSize = true;
-            PipeIns_Ramda_label1.Font = new Font("나눔고딕", 9.75F);
+            PipeIns_Ramda_label1.Font = new Font(UTIL.Families[0], 9.75F);
             PipeIns_Ramda_label1.ForeColor = SystemColors.ControlDark;
             PipeIns_Ramda_label1.Location = new Point(708, 39);
             PipeIns_Ramda_label1.Name = "PipeIns_Ramda_label1";
@@ -1238,7 +1239,7 @@
             // PipeIns_Ramda_label2
             // 
             PipeIns_Ramda_label2.AutoSize = true;
-            PipeIns_Ramda_label2.Font = new Font("나눔고딕", 9.75F);
+            PipeIns_Ramda_label2.Font = new Font(UTIL.Families[0], 9.75F);
             PipeIns_Ramda_label2.ForeColor = SystemColors.ControlDark;
             PipeIns_Ramda_label2.Location = new Point(889, 38);
             PipeIns_Ramda_label2.Name = "PipeIns_Ramda_label2";
@@ -1251,7 +1252,7 @@
             PipeIns_Ramda_textBox.BackColor = Color.White;
             PipeIns_Ramda_textBox.BorderStyle = BorderStyle.None;
             PipeIns_Ramda_textBox.Enabled = false;
-            PipeIns_Ramda_textBox.Font = new Font("나눔고딕", 9.75F);
+            PipeIns_Ramda_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             PipeIns_Ramda_textBox.ForeColor = SystemColors.ControlDark;
             PipeIns_Ramda_textBox.Location = new Point(766, 39);
             PipeIns_Ramda_textBox.Name = "PipeIns_Ramda_textBox";
@@ -1263,7 +1264,7 @@
             // 
             PipeD_textBox.BackColor = Color.White;
             PipeD_textBox.BorderStyle = BorderStyle.FixedSingle;
-            PipeD_textBox.Font = new Font("나눔고딕", 9.75F);
+            PipeD_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             PipeD_textBox.ForeColor = SystemColors.ControlText;
             PipeD_textBox.Location = new Point(94, 35);
             PipeD_textBox.Name = "PipeD_textBox";
@@ -1275,7 +1276,7 @@
             // PipeD_label1
             // 
             PipeD_label1.AutoSize = true;
-            PipeD_label1.Font = new Font("나눔고딕", 9.75F);
+            PipeD_label1.Font = new Font(UTIL.Families[0], 9.75F);
             PipeD_label1.ForeColor = SystemColors.ControlText;
             PipeD_label1.Location = new Point(32, 39);
             PipeD_label1.Name = "PipeD_label1";
@@ -1286,7 +1287,7 @@
             // PipeD_label2
             // 
             PipeD_label2.AutoSize = true;
-            PipeD_label2.Font = new Font("나눔고딕", 9.75F);
+            PipeD_label2.Font = new Font(UTIL.Families[0], 9.75F);
             PipeD_label2.ForeColor = SystemColors.ControlText;
             PipeD_label2.Location = new Point(217, 38);
             PipeD_label2.Name = "PipeD_label2";
@@ -1298,7 +1299,7 @@
             // 
             PipeInsD_textBox.BackColor = Color.White;
             PipeInsD_textBox.BorderStyle = BorderStyle.FixedSingle;
-            PipeInsD_textBox.Font = new Font("나눔고딕", 9.75F);
+            PipeInsD_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             PipeInsD_textBox.ForeColor = SystemColors.ControlText;
             PipeInsD_textBox.Location = new Point(318, 35);
             PipeInsD_textBox.Name = "PipeInsD_textBox";
@@ -1310,7 +1311,7 @@
             // PipeInsD_label1
             // 
             PipeInsD_label1.AutoSize = true;
-            PipeInsD_label1.Font = new Font("나눔고딕", 9.75F);
+            PipeInsD_label1.Font = new Font(UTIL.Families[0], 9.75F);
             PipeInsD_label1.ForeColor = SystemColors.ControlText;
             PipeInsD_label1.Location = new Point(260, 39);
             PipeInsD_label1.Name = "PipeInsD_label1";
@@ -1321,7 +1322,7 @@
             // PipeInsD_label2
             // 
             PipeInsD_label2.AutoSize = true;
-            PipeInsD_label2.Font = new Font("나눔고딕", 9.75F);
+            PipeInsD_label2.Font = new Font(UTIL.Families[0], 9.75F);
             PipeInsD_label2.ForeColor = SystemColors.ControlText;
             PipeInsD_label2.Location = new Point(441, 38);
             PipeInsD_label2.Name = "PipeInsD_label2";
@@ -1334,7 +1335,7 @@
             PipeIns_textBox.BackColor = Color.White;
             PipeIns_textBox.BorderStyle = BorderStyle.None;
             PipeIns_textBox.Enabled = false;
-            PipeIns_textBox.Font = new Font("나눔고딕", 9.75F);
+            PipeIns_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             PipeIns_textBox.ForeColor = SystemColors.ControlDark;
             PipeIns_textBox.Location = new Point(542, 39);
             PipeIns_textBox.Name = "PipeIns_textBox";
@@ -1348,7 +1349,7 @@
             PipeIns_button.BackColor = SystemColors.ControlLight;
             PipeIns_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             PipeIns_button.FlatStyle = FlatStyle.System;
-            PipeIns_button.Font = new Font("나눔고딕", 12F, FontStyle.Bold);
+            PipeIns_button.Font = new Font(UTIL.Families[0], 12F, FontStyle.Bold);
             PipeIns_button.Location = new Point(664, 35);
             PipeIns_button.Margin = new Padding(0);
             PipeIns_button.Name = "PipeIns_button";
@@ -1361,7 +1362,7 @@
             // PipeIns_label
             // 
             PipeIns_label.AutoSize = true;
-            PipeIns_label.Font = new Font("나눔고딕", 9.75F);
+            PipeIns_label.Font = new Font(UTIL.Families[0], 9.75F);
             PipeIns_label.Location = new Point(473, 38);
             PipeIns_label.Name = "PipeIns_label";
             PipeIns_label.Size = new Size(67, 15);
@@ -1381,7 +1382,7 @@
             Pump_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle19.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle19.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle19.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle19.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle19.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle19.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle19.SelectionForeColor = Color.Black;
@@ -1393,7 +1394,7 @@
             Pump_dataGridView.Name = "Pump_dataGridView";
             dataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle20.BackColor = SystemColors.Control;
-            dataGridViewCellStyle20.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle20.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle20.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle20.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle20.SelectionForeColor = SystemColors.HighlightText;
@@ -1402,7 +1403,7 @@
             Pump_dataGridView.RowHeadersVisible = false;
             Pump_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle21.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle21.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle21.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle21.ForeColor = Color.Black;
             dataGridViewCellStyle21.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle21.SelectionForeColor = Color.Black;
@@ -1415,7 +1416,7 @@
             Pump2_textBox.BackColor = Color.White;
             Pump2_textBox.BorderStyle = BorderStyle.None;
             Pump2_textBox.Enabled = false;
-            Pump2_textBox.Font = new Font("나눔고딕", 9.75F);
+            Pump2_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             Pump2_textBox.ForeColor = SystemColors.ControlDark;
             Pump2_textBox.Location = new Point(766, 74);
             Pump2_textBox.Name = "Pump2_textBox";
@@ -1428,7 +1429,7 @@
             Pump2_button.BackColor = SystemColors.ControlLight;
             Pump2_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Pump2_button.FlatStyle = FlatStyle.System;
-            Pump2_button.Font = new Font("나눔고딕", 12F, FontStyle.Bold);
+            Pump2_button.Font = new Font(UTIL.Families[0], 12F, FontStyle.Bold);
             Pump2_button.Location = new Point(889, 70);
             Pump2_button.Margin = new Padding(0);
             Pump2_button.Name = "Pump2_button";
@@ -1441,7 +1442,7 @@
             // Pump2_label
             // 
             Pump2_label.AutoSize = true;
-            Pump2_label.Font = new Font("나눔고딕", 9.75F);
+            Pump2_label.Font = new Font(UTIL.Families[0], 9.75F);
             Pump2_label.Location = new Point(710, 74);
             Pump2_label.Name = "Pump2_label";
             Pump2_label.Size = new Size(51, 15);
@@ -1451,7 +1452,7 @@
             // PumpMethod_label
             // 
             PumpMethod_label.AutoSize = true;
-            PumpMethod_label.Font = new Font("나눔고딕", 9.75F);
+            PumpMethod_label.Font = new Font(UTIL.Families[0], 9.75F);
             PumpMethod_label.Location = new Point(256, 74);
             PumpMethod_label.Name = "PumpMethod_label";
             PumpMethod_label.Size = new Size(59, 15);
@@ -1461,7 +1462,7 @@
             // PumpMethod_comboBox
             // 
             PumpMethod_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            PumpMethod_comboBox.Font = new Font("나눔고딕", 9.75F);
+            PumpMethod_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             PumpMethod_comboBox.FormattingEnabled = true;
             PumpMethod_comboBox.Location = new Point(318, 69);
             PumpMethod_comboBox.Name = "PumpMethod_comboBox";
@@ -1472,7 +1473,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("나눔고딕", 9.75F);
+            label2.Font = new Font(UTIL.Families[0], 9.75F);
             label2.Location = new Point(32, 74);
             label2.Name = "label2";
             label2.Size = new Size(59, 15);
@@ -1482,7 +1483,7 @@
             // PumpUse_comboBox
             // 
             PumpUse_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            PumpUse_comboBox.Font = new Font("나눔고딕", 9.75F);
+            PumpUse_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             PumpUse_comboBox.FormattingEnabled = true;
             PumpUse_comboBox.Location = new Point(94, 69);
             PumpUse_comboBox.Name = "PumpUse_comboBox";
@@ -1495,7 +1496,7 @@
             Pump1_textBox.BackColor = Color.White;
             Pump1_textBox.BorderStyle = BorderStyle.None;
             Pump1_textBox.Enabled = false;
-            Pump1_textBox.Font = new Font("나눔고딕", 9.75F);
+            Pump1_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             Pump1_textBox.ForeColor = SystemColors.ControlDark;
             Pump1_textBox.Location = new Point(542, 74);
             Pump1_textBox.Name = "Pump1_textBox";
@@ -1508,7 +1509,7 @@
             Pump1_button.BackColor = SystemColors.ControlLight;
             Pump1_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Pump1_button.FlatStyle = FlatStyle.System;
-            Pump1_button.Font = new Font("나눔고딕", 12F, FontStyle.Bold);
+            Pump1_button.Font = new Font(UTIL.Families[0], 12F, FontStyle.Bold);
             Pump1_button.Location = new Point(664, 70);
             Pump1_button.Margin = new Padding(0);
             Pump1_button.Name = "Pump1_button";
@@ -1521,7 +1522,7 @@
             // Pump1_label
             // 
             Pump1_label.AutoSize = true;
-            Pump1_label.Font = new Font("나눔고딕", 9.75F);
+            Pump1_label.Font = new Font(UTIL.Families[0], 9.75F);
             Pump1_label.Location = new Point(473, 73);
             Pump1_label.Name = "Pump1_label";
             Pump1_label.Size = new Size(51, 15);
@@ -1555,7 +1556,7 @@
             ce_Remove_button.BackColor = SystemColors.ControlLight;
             ce_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce_Remove_button.FlatStyle = FlatStyle.System;
-            ce_Remove_button.Font = new Font("나눔고딕", 9.75F);
+            ce_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             ce_Remove_button.Location = new Point(916, 51);
             ce_Remove_button.Margin = new Padding(0);
             ce_Remove_button.Name = "ce_Remove_button";
@@ -1578,7 +1579,7 @@
             ce_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle22.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle22.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle22.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle22.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle22.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle22.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle22.SelectionForeColor = Color.Black;
@@ -1590,7 +1591,7 @@
             ce_dataGridView.Name = "ce_dataGridView";
             dataGridViewCellStyle23.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle23.BackColor = SystemColors.Control;
-            dataGridViewCellStyle23.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle23.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle23.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle23.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle23.SelectionForeColor = SystemColors.HighlightText;
@@ -1599,7 +1600,7 @@
             ce_dataGridView.RowHeadersVisible = false;
             ce_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle24.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle24.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle24.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle24.ForeColor = Color.Black;
             dataGridViewCellStyle24.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle24.SelectionForeColor = Color.Black;
@@ -1613,7 +1614,7 @@
             ce2Zone_button.BackColor = SystemColors.ControlLight;
             ce2Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce2Zone_button.FlatStyle = FlatStyle.System;
-            ce2Zone_button.Font = new Font("나눔고딕", 12F, FontStyle.Bold);
+            ce2Zone_button.Font = new Font(UTIL.Families[0], 12F, FontStyle.Bold);
             ce2Zone_button.Location = new Point(916, 28);
             ce2Zone_button.Margin = new Padding(0);
             ce2Zone_button.Name = "ce2Zone_button";
@@ -1626,7 +1627,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("나눔고딕", 9.75F);
+            label7.Font = new Font(UTIL.Families[0], 9.75F);
             label7.Location = new Point(715, 32);
             label7.Name = "label7";
             label7.Size = new Size(47, 15);
@@ -1636,7 +1637,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font("나눔고딕", 9.75F);
+            label10.Font = new Font(UTIL.Families[0], 9.75F);
             label10.Location = new Point(493, 32);
             label10.Name = "label10";
             label10.Size = new Size(91, 15);
@@ -1646,7 +1647,7 @@
             // ce2Type_comboBox
             // 
             ce2Type_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            ce2Type_comboBox.Font = new Font("나눔고딕", 9.75F);
+            ce2Type_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             ce2Type_comboBox.FormattingEnabled = true;
             ce2Type_comboBox.Location = new Point(589, 27);
             ce2Type_comboBox.Name = "ce2Type_comboBox";
@@ -1659,7 +1660,7 @@
             ce1Zone_textBox.BackColor = Color.White;
             ce1Zone_textBox.BorderStyle = BorderStyle.None;
             ce1Zone_textBox.Enabled = false;
-            ce1Zone_textBox.Font = new Font("나눔고딕", 9.75F);
+            ce1Zone_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             ce1Zone_textBox.ForeColor = SystemColors.ControlDark;
             ce1Zone_textBox.Location = new Point(294, 32);
             ce1Zone_textBox.Name = "ce1Zone_textBox";
@@ -1672,7 +1673,7 @@
             ce1Zone_button.BackColor = SystemColors.ControlLight;
             ce1Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce1Zone_button.FlatStyle = FlatStyle.System;
-            ce1Zone_button.Font = new Font("나눔고딕", 12F, FontStyle.Bold);
+            ce1Zone_button.Font = new Font(UTIL.Families[0], 12F, FontStyle.Bold);
             ce1Zone_button.Location = new Point(442, 28);
             ce1Zone_button.Margin = new Padding(0);
             ce1Zone_button.Name = "ce1Zone_button";
@@ -1685,7 +1686,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("나눔고딕", 9.75F);
+            label5.Font = new Font(UTIL.Families[0], 9.75F);
             label5.Location = new Point(241, 32);
             label5.Name = "label5";
             label5.Size = new Size(47, 15);
@@ -1695,7 +1696,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("나눔고딕", 9.75F);
+            label4.Font = new Font(UTIL.Families[0], 9.75F);
             label4.Location = new Point(19, 32);
             label4.Name = "label4";
             label4.Size = new Size(91, 15);
@@ -1705,7 +1706,7 @@
             // ce1Type_comboBox
             // 
             ce1Type_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            ce1Type_comboBox.Font = new Font("나눔고딕", 9.75F);
+            ce1Type_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             ce1Type_comboBox.FormattingEnabled = true;
             ce1Type_comboBox.Location = new Point(115, 27);
             ce1Type_comboBox.Name = "ce1Type_comboBox";
@@ -1718,7 +1719,7 @@
             ce2Zone_textBox.BackColor = Color.White;
             ce2Zone_textBox.BorderStyle = BorderStyle.None;
             ce2Zone_textBox.Enabled = false;
-            ce2Zone_textBox.Font = new Font("나눔고딕", 9.75F);
+            ce2Zone_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             ce2Zone_textBox.ForeColor = SystemColors.ControlDark;
             ce2Zone_textBox.Location = new Point(768, 32);
             ce2Zone_textBox.Name = "ce2Zone_textBox";
@@ -1833,7 +1834,7 @@
             // ZoneS_label
             // 
             ZoneS_label.AutoSize = true;
-            ZoneS_label.Font = new Font("나눔고딕", 9.75F, FontStyle.Italic);
+            ZoneS_label.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Italic);
             ZoneS_label.ForeColor = SystemColors.ControlDarkDark;
             ZoneS_label.Location = new Point(477, 9);
             ZoneS_label.Name = "ZoneS_label";

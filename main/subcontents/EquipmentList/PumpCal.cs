@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace main.subcontents.EquipmentList
 {
     public partial class PumpCal : Form
@@ -21,7 +22,7 @@ namespace main.subcontents.EquipmentList
 
         public PumpCal(String PumpNum)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             PumpNum_textBox.Text = PumpNum;
             pictureBox1.Load(Program.gPath + "images/HeatingSystem/PumpArea.png");
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;

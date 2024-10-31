@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace main.subcontents.DHWSystem
 {
     public partial class DHWHP_DB : Form
@@ -24,7 +25,7 @@ namespace main.subcontents.DHWSystem
 
         public DHWHP_DB( String SelectHP_nonsplit)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
             if (Image.Length > 0)

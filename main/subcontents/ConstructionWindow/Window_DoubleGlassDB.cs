@@ -29,7 +29,7 @@ namespace main.subcontents
 
         public Window_DoubleGlassDB()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             load_table_GlassDB();
             load_Glass_comboBox();
             load_table_DoubleGlassDB();

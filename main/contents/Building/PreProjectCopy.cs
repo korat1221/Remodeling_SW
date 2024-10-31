@@ -34,7 +34,7 @@ namespace main.contents
 
         public PreProjectCopy()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             Building_pictureBox.Load(Program.gPath + "images/1sticon/1.Building_on.png");
             Building_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             Construction_pictureBox.Load(Program.gPath + "images/1sticon/2.Construction_on.png");

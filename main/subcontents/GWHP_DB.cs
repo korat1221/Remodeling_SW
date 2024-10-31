@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace main.subcontents.HeatingSystem
 {
     public partial class GWHP_DB : Form
@@ -25,7 +26,7 @@ namespace main.subcontents.HeatingSystem
 
         public GWHP_DB(String DefaultUse, String SelectHP_nonsplit, String HeatSource)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             this.DefaultUse = DefaultUse;
             this.HeatSource = HeatSource;
 

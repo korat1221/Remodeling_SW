@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 
+
 namespace main.subcontents.ZoneLighting
 {
     public partial class LightingRenewDB : Form
@@ -26,7 +27,7 @@ namespace main.subcontents.ZoneLighting
 
         public LightingRenewDB()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             load_table_RenewDB();
 
             //집광채광 종류 콤보박스

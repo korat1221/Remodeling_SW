@@ -1,4 +1,5 @@
-﻿namespace main.contents
+﻿
+namespace main.contents
 {
     partial class ProjectCopy
     {
@@ -72,7 +73,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            label4.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
             label4.Location = new Point(53, 29);
             label4.Name = "label4";
             label4.Size = new Size(89, 14);
@@ -83,7 +84,7 @@
             // 
             System_checkBox.AutoSize = true;
             System_checkBox.Enabled = false;
-            System_checkBox.Font = new Font("나눔고딕", 9.75F);
+            System_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
             System_checkBox.Location = new Point(520, 155);
             System_checkBox.Name = "System_checkBox";
             System_checkBox.Size = new Size(77, 18);
@@ -104,7 +105,7 @@
             // 
             Zone_checkBox.AutoSize = true;
             Zone_checkBox.Enabled = false;
-            Zone_checkBox.Font = new Font("나눔고딕", 9.75F);
+            Zone_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
             Zone_checkBox.Location = new Point(422, 155);
             Zone_checkBox.Name = "Zone_checkBox";
             Zone_checkBox.Size = new Size(65, 18);
@@ -125,7 +126,7 @@
             // 
             Model_checkBox.AutoSize = true;
             Model_checkBox.Enabled = false;
-            Model_checkBox.Font = new Font("나눔고딕", 9.75F);
+            Model_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
             Model_checkBox.Location = new Point(316, 155);
             Model_checkBox.Name = "Model_checkBox";
             Model_checkBox.Size = new Size(70, 18);
@@ -146,7 +147,7 @@
             // 
             Construction_checkBox.AutoSize = true;
             Construction_checkBox.Enabled = false;
-            Construction_checkBox.Font = new Font("나눔고딕", 9.75F);
+            Construction_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
             Construction_checkBox.Location = new Point(202, 155);
             Construction_checkBox.Name = "Construction_checkBox";
             Construction_checkBox.Size = new Size(89, 18);
@@ -160,7 +161,7 @@
             Building_checkBox.AutoSize = true;
             Building_checkBox.Checked = true;
             Building_checkBox.CheckState = CheckState.Checked;
-            Building_checkBox.Font = new Font("나눔고딕", 9.75F);
+            Building_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
             Building_checkBox.Location = new Point(104, 155);
             Building_checkBox.Name = "Building_checkBox";
             Building_checkBox.Size = new Size(77, 18);
@@ -180,7 +181,7 @@
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            Save_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             Save_button.ForeColor = Color.Black;
             Save_button.Location = new Point(524, 203);
             Save_button.Name = "Save_button";

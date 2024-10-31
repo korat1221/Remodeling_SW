@@ -24,7 +24,7 @@ namespace main.subcontents.AHUSystem
         public string SelectSystem;
         public AHU_HRV(string AHUOptions, String SelectSystem)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             if (AHUOptions == "공조기")
             {
                 load_table_AHU();

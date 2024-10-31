@@ -28,7 +28,7 @@ namespace main.contents
 
         public FuelCell()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
 
             지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
 

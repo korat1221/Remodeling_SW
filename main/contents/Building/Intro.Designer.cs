@@ -46,7 +46,7 @@
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            Save_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             Save_button.ForeColor = Color.Black;
             Save_button.Location = new Point(590, 480);
             Save_button.Name = "Save_button";
@@ -67,7 +67,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("나눔고딕", 21.75F, FontStyle.Italic);
+            label2.Font = new Font(UTIL.Families[0], 21.75F, FontStyle.Italic);
             label2.Location = new Point(533, 275);
             label2.Name = "label2";
             label2.Size = new Size(452, 32);
@@ -77,7 +77,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("나눔고딕", 21.75F, FontStyle.Italic);
+            label3.Font = new Font(UTIL.Families[0], 21.75F, FontStyle.Italic);
             label3.Location = new Point(533, 320);
             label3.Name = "label3";
             label3.Size = new Size(242, 32);
@@ -90,7 +90,7 @@
             groupBox1.Controls.Add(radioButton3);
             groupBox1.Controls.Add(radioButton2);
             groupBox1.Controls.Add(radioButton1);
-            groupBox1.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            groupBox1.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             groupBox1.Location = new Point(332, 404);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(605, 40);

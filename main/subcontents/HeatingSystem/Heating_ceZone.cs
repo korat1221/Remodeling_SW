@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
+
 namespace main.subcontents.HeatingSystem
 {
     public partial class Heating_ceZone : Form
@@ -24,7 +25,7 @@ namespace main.subcontents.HeatingSystem
         ArrayList SelectZone_split = new ArrayList();
         public Heating_ceZone(String SystemNum, String SelectZone_nonsplit, String CEType)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             this.SystemNum = SystemNum;
             ceType = CEType;
             ceType_textBox.Text = ceType;

@@ -1,6 +1,8 @@
 ﻿using main.contents;
 using System;
 using System.Data;
+using System.Drawing.Text;
+using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using System.Xml.Schema;
 
@@ -10,6 +12,12 @@ namespace main
     {
         public bool fromCode = false;
         public bool ffCode = false;
+        private static UTIL inst = new UTIL();
+        public PrivateFontCollection privateFont = new PrivateFontCollection();
+        public UTIL()
+        {
+            AddFontFromMemory();
+        }
         public void trim(string[] arr)
         {
             int i = -1;
@@ -380,6 +388,26 @@ namespace main
             catch { ItemNum = 기호 + "01" ; }
 
             return ItemNum;
+        }
+        public static FontFamily[] Families
+        {
+            get
+            {
+                return inst.privateFont.Families;
+            }
+        }
+
+        private void AddFontFromMemory()
+        {
+            List<byte[]> fonts = new List<byte[]>();
+            fonts.Add(Properties.Resources.NANUMGOTHIC);
+
+            foreach (byte[] font in fonts)
+            {
+                IntPtr fontBuffer = Marshal.AllocCoTaskMem(font.Length);
+                Marshal.Copy(font, 0, fontBuffer, font.Length);
+                privateFont.AddMemoryFont(fontBuffer, font.Length);
+            }
         }
     }
 }

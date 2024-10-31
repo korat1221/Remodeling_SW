@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace main.subcontents.DHWSystem
 {
     public partial class DHW_Zone : Form
@@ -23,7 +24,7 @@ namespace main.subcontents.DHWSystem
 
         public DHW_Zone(String Num, String SelectZone_nonsplit)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             load_table_DB();
             SystemNum = Num;
             if(SelectZone_nonsplit != null)

@@ -25,8 +25,8 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using static main.DB;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
-
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
 
 namespace main.contents
 {
@@ -53,7 +53,7 @@ namespace main.contents
         public AHUSystem()
         {
 
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '공조시스템'");
             if (Image.Length > 0)
             {

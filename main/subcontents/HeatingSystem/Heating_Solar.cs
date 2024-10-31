@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace main.subcontents.HeatingSystem
 {
     public partial class Heating_Solar : Form
@@ -26,7 +27,7 @@ namespace main.subcontents.HeatingSystem
         // public Heating_Solar(HeatingSystem system)
         public Heating_Solar(String DefaultUse, String SelectSolar_nonsplit)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             //heatingSystem = system;
             this.DefaultUse = DefaultUse;
             load_table_DB();

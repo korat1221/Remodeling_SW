@@ -19,7 +19,7 @@ public partial class BlowDoorTest : Form
     public double n50;
     public BlowDoorTest()
     {
-        InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+        InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
         create_table();
         Load_Value();
     }

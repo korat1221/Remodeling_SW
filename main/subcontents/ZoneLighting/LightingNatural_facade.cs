@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace main.subcontents.ZoneLighting
 {
     public partial class LightingNatural_facade : Form
@@ -29,7 +30,7 @@ namespace main.subcontents.ZoneLighting
 
         public LightingNatural_facade(string NaturalType, string ZoneNum)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             this.ZoneNum = ZoneNum;
             this.NaturalType = NaturalType;
             NaturalType_textBox.Text = NaturalType;

@@ -82,7 +82,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label7.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label7.Location = new Point(526, 16);
             label7.Name = "label7";
             label7.Size = new Size(91, 15);
@@ -91,7 +91,7 @@
             // 
             // TB_Type_comboBox
             // 
-            TB_Type_comboBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            TB_Type_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             TB_Type_comboBox.FormattingEnabled = true;
             TB_Type_comboBox.Location = new Point(642, 11);
             TB_Type_comboBox.Name = "TB_Type_comboBox";
@@ -104,7 +104,7 @@
             StructureType_textBox.BackColor = Color.AliceBlue;
             StructureType_textBox.BorderStyle = BorderStyle.None;
             StructureType_textBox.Enabled = false;
-            StructureType_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            StructureType_textBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             StructureType_textBox.ForeColor = SystemColors.ControlDark;
             StructureType_textBox.Location = new Point(381, 15);
             StructureType_textBox.Name = "StructureType_textBox";
@@ -115,7 +115,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label6.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label6.ForeColor = SystemColors.ControlText;
             label6.Location = new Point(301, 15);
             label6.Name = "label6";
@@ -128,7 +128,7 @@
             RoofType_textBox.BackColor = Color.AliceBlue;
             RoofType_textBox.BorderStyle = BorderStyle.None;
             RoofType_textBox.Enabled = false;
-            RoofType_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            RoofType_textBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             RoofType_textBox.ForeColor = SystemColors.ControlDark;
             RoofType_textBox.Location = new Point(124, 15);
             RoofType_textBox.Name = "RoofType_textBox";
@@ -139,7 +139,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = SystemColors.ControlText;
             label1.Location = new Point(24, 15);
             label1.Name = "label1";
@@ -177,7 +177,7 @@
             TBName_textBox.BackColor = SystemColors.GradientInactiveCaption;
             TBName_textBox.BorderStyle = BorderStyle.None;
             TBName_textBox.Enabled = false;
-            TBName_textBox.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            TBName_textBox.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             TBName_textBox.ForeColor = SystemColors.ControlDark;
             TBName_textBox.Location = new Point(309, 7);
             TBName_textBox.Name = "TBName_textBox";
@@ -191,7 +191,7 @@
             dU_textBox.BackColor = SystemColors.GradientInactiveCaption;
             dU_textBox.BorderStyle = BorderStyle.None;
             dU_textBox.Enabled = false;
-            dU_textBox.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            dU_textBox.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             dU_textBox.ForeColor = Color.Black;
             dU_textBox.Location = new Point(458, 7);
             dU_textBox.Name = "dU_textBox";
@@ -202,7 +202,7 @@
             // Ueff_label2
             // 
             Ueff_label2.AutoSize = true;
-            Ueff_label2.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Ueff_label2.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             Ueff_label2.ForeColor = SystemColors.ControlDark;
             Ueff_label2.Location = new Point(549, 8);
             Ueff_label2.Name = "Ueff_label2";
@@ -213,7 +213,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font =  new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label2.ForeColor = SystemColors.ControlText;
             label2.Location = new Point(193, 8);
             label2.Name = "label2";
@@ -226,7 +226,7 @@
             PerArea_label2.BackColor = Color.White;
             PerArea_label2.BorderStyle = BorderStyle.None;
             PerArea_label2.Enabled = false;
-            PerArea_label2.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            PerArea_label2.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             PerArea_label2.ForeColor = SystemColors.ControlDark;
             PerArea_label2.Location = new Point(250, 180);
             PerArea_label2.Name = "PerArea_label2";
@@ -239,7 +239,7 @@
             PerArea_textBox.BackColor = Color.White;
             PerArea_textBox.BorderStyle = BorderStyle.None;
             PerArea_textBox.Enabled = false;
-            PerArea_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            PerArea_textBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             PerArea_textBox.ForeColor = SystemColors.ControlDark;
             PerArea_textBox.Location = new Point(124, 180);
             PerArea_textBox.Name = "PerArea_textBox";
@@ -252,7 +252,7 @@
             PerArea_label1.BackColor = Color.White;
             PerArea_label1.BorderStyle = BorderStyle.None;
             PerArea_label1.Enabled = false;
-            PerArea_label1.Font =  new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            PerArea_label1.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             PerArea_label1.ForeColor = SystemColors.ControlDark;
             PerArea_label1.Location = new Point(24, 179);
             PerArea_label1.Name = "PerArea_label1";
@@ -262,7 +262,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            label8.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label8.ForeColor = SystemColors.ControlText;
             label8.Location = new Point(250, 62);
             label8.Name = "label8";
@@ -273,7 +273,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font =  new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            label9.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label9.ForeColor = SystemColors.ControlText;
             label9.Location = new Point(24, 63);
             label9.Name = "label9";
@@ -285,7 +285,7 @@
             // 
             dy_textBox.BackColor = Color.White;
             dy_textBox.BorderStyle = BorderStyle.FixedSingle;
-            dy_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dy_textBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dy_textBox.ForeColor = SystemColors.ControlText;
             dy_textBox.Location = new Point(124, 60);
             dy_textBox.Name = "dy_textBox";
@@ -297,7 +297,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            label5.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label5.ForeColor = SystemColors.ControlText;
             label5.Location = new Point(250, 35);
             label5.Name = "label5";
@@ -308,7 +308,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font =  new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            label4.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             label4.ForeColor = SystemColors.ControlText;
             label4.Location = new Point(24, 36);
             label4.Name = "label4";
@@ -320,7 +320,7 @@
             // 
             dx_textBox.BackColor = Color.White;
             dx_textBox.BorderStyle = BorderStyle.FixedSingle;
-            dx_textBox.Font = new System.Drawing.Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dx_textBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dx_textBox.ForeColor = SystemColors.ControlText;
             dx_textBox.Location = new Point(124, 32);
             dx_textBox.Name = "dx_textBox";
@@ -342,7 +342,7 @@
             TB_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle4.SelectionForeColor = Color.Black;
@@ -353,7 +353,7 @@
             TB_dataGridView.Name = "TB_dataGridView";
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font =  new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle5.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
@@ -362,7 +362,7 @@
             TB_dataGridView.RowHeadersVisible = false;
             TB_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font =  new Font("나눔고딕", 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle6.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle6.ForeColor = Color.Black;
             dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle6.SelectionForeColor = Color.Black;

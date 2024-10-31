@@ -26,6 +26,7 @@ using main.subcontents.CoolingSystem;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using main.subcontents.RESystem_WP;
 
+
 namespace main.contents
 {
     public partial class EquipmentList : Form
@@ -55,7 +56,7 @@ namespace main.contents
 
         public EquipmentList()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");//User_GWHP
             Program.DB.initTable(DB.type.ProjDB, "User_Boiler");
             Program.DB.initTable(DB.type.ProjDB, "User_ABS");

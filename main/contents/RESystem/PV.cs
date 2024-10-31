@@ -94,7 +94,7 @@ namespace main.contents
 
         public PV()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             InitializeAsync();
             webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
             지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");

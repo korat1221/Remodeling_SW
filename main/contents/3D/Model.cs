@@ -37,6 +37,7 @@ using System.Drawing.Imaging;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 using System.Security.Cryptography;
 
+
 namespace main.contents
 {
     public partial class Model : Form
@@ -66,7 +67,7 @@ namespace main.contents
 
         public Model()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
 
             int i = -1;
             while (++i < forms.Length)

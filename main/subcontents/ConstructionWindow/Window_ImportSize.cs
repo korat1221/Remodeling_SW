@@ -20,7 +20,7 @@ namespace main.subcontents
         double df_open; double df_fix; double df_btw;
         public Window_ImportSize(String WinNum, String Name, double df_open, double df_fix, double df_btw)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             this.상위창호기호 = WinNum;
             this.상위창호명칭 = Name;
             this.df_open = df_open;

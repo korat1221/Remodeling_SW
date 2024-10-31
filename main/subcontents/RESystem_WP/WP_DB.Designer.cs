@@ -1,5 +1,6 @@
 ﻿using main.subcontents.RESystem_PV;
 
+
 namespace main.subcontents
 {
     partial class WP_DB
@@ -60,7 +61,7 @@ namespace main.subcontents
             WP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle4.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle4.SelectionForeColor = Color.Black;
@@ -71,7 +72,7 @@ namespace main.subcontents
             WP_dataGridView.Name = "WP_dataGridView";
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle5.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
@@ -80,7 +81,7 @@ namespace main.subcontents
             WP_dataGridView.RowHeadersVisible = false;
             WP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle6.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle6.ForeColor = Color.Black;
             dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle6.SelectionForeColor = Color.Black;
@@ -102,7 +103,7 @@ namespace main.subcontents
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            label2.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label2.Location = new Point(64, 21);
             label2.Name = "label2";
             label2.Size = new Size(95, 15);
@@ -141,7 +142,7 @@ namespace main.subcontents
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            label4.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label4.Location = new Point(8, 15);
             label4.Name = "label4";
             label4.Size = new Size(117, 15);

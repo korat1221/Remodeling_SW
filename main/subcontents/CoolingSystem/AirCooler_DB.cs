@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace main.subcontents
 {
     public partial class AirCooler_DB : Form
@@ -18,7 +19,7 @@ namespace main.subcontents
 
         public AirCooler_DB(String DefaultUse) //, String SelectHP_nonsplit, String CoolSource, String HC)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             this.DefaultUse = DefaultUse;
             
             AC_textBox.Text += "▣ DIN V 18599-7: 2018 표23에 제시된 표준값 \r\n";

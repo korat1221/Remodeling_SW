@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace main.subcontents.DHWSystem
 {
     public partial class DHW_SolarDB : Form
@@ -26,7 +27,7 @@ namespace main.subcontents.DHWSystem
         // public DHW_SolarDB(HeatingSystem system)
         public DHW_SolarDB(String DefaultUse, String SelectSolar_nonsplit)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             //heatingSystem = system;
             this.DefaultUse = DefaultUse;
             load_table_DB();

@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 
+
+
 namespace main.subcontents.RESystem_WP
 {
     public partial class WP_DB : Form
@@ -24,7 +26,7 @@ namespace main.subcontents.RESystem_WP
 
         public WP_DB(string defaultUse)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             DefaultUse = defaultUse;
             load_table_WPDB();
 

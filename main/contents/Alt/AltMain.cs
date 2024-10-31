@@ -43,7 +43,7 @@ namespace main.contents.Alt
         string SelectAlt_Floor;
         public AltMain()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             InitializeAsync();
             webView22.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);
 

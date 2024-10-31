@@ -19,7 +19,7 @@ namespace main.contents.Result.Building_Report
         bool scriptable = false;
         public PrintReport_Final()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
 
             InitializeAsync();
         }

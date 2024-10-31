@@ -13,6 +13,7 @@ using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
+
 namespace main.contents
 {
     public partial class sub3dZoneInfo : Form
@@ -36,7 +37,7 @@ namespace main.contents
         public sub3dZoneInfo()
         {
             Program.DB.initTables(DB.type.ProjDB);
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             create_datagridview1();
             create_datagridview2();
         }
@@ -70,10 +71,10 @@ namespace main.contents
             dataGridView1.Columns[6].Width = 50;
             dataGridView1.Columns[7].Width = 60;
             dataGridView1.Columns[8].Width = 60;
-            dataGridView1.Columns[9].Width = 40;
+            dataGridView1.Columns[9].Width = 45;
             dataGridView1.Columns[10].Width = 100;
-            dataGridView1.Columns[11].Width = 50;
-            dataGridView1.Columns[12].Width = 50;
+            dataGridView1.Columns[11].Width = 55;
+            dataGridView1.Columns[12].Width = 55;
 
             fillFilterCombos();
 

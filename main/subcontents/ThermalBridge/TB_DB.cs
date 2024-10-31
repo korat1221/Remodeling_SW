@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace main.subcontents.ThermalBridge;
 
 public partial class TB_DB : Form
@@ -23,7 +24,7 @@ public partial class TB_DB : Form
 
     public TB_DB(String TBType)
     {
-        InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+        InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
         this.TBType = TBType;
         TBType_textBox.Text = TBType;
         load_table_DB();

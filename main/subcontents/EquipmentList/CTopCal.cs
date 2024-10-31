@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
 
+
 namespace main.subcontents.EquipmentList
 {
     public partial class CTopCal : Form
@@ -18,7 +19,7 @@ namespace main.subcontents.EquipmentList
         string TYP;
         public CTopCal(string Typ)
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             TYP = Typ; //개방형건식,개방형습식,밀폐형건식,밀폐형습식
             //건식은 0.045kW/kW
             //개방형습식 0.033kW/kW

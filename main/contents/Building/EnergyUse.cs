@@ -29,7 +29,7 @@ namespace main.contents.Building
         int Elec_SelectRow; int Gas_SelectRow, Gas_SelectColumn; int DH_SelectRow, DH_SelectColumn;
         public EnergyUse()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             InitializeAsync();
 
             Elec_StartDay_comboBox.Items.Clear();

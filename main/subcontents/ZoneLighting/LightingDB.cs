@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace main.subcontents.ZoneLighting
 {
     public partial class LightingDB : Form
@@ -25,7 +26,7 @@ namespace main.subcontents.ZoneLighting
        
         public LightingDB()
         {
-            InitializeComponent(); this.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular);
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             load_table_LightDB();
 
             //램프유형 콤보박스
