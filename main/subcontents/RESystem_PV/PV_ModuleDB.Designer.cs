@@ -1,5 +1,4 @@
-﻿
-namespace main.subcontents.RESystem_PV
+﻿namespace main.subcontents.RESystem_PV
 {
     partial class PV_ModuleDB
     {
@@ -56,6 +55,7 @@ namespace main.subcontents.RESystem_PV
             button2 = new Button();
             button1 = new Button();
             panel2 = new Panel();
+            Save_button = new Button();
             AddUserDB_button = new Button();
             Deletebutton = new Button();
             PVModule_dataGridView = new DataGridView();
@@ -78,7 +78,7 @@ namespace main.subcontents.RESystem_PV
             PVtext_label.Font = new Font(UTIL.Families[0], 9.75F);
             PVtext_label.Location = new Point(156, 9);
             PVtext_label.Name = "PVtext_label";
-            PVtext_label.Size = new Size(133, 19);
+            PVtext_label.Size = new Size(121, 15);
             PVtext_label.TabIndex = 0;
             PVtext_label.Text = "EN 15316-4-3 기준";
             // 
@@ -88,7 +88,7 @@ namespace main.subcontents.RESystem_PV
             label6.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label6.Location = new Point(158, 71);
             label6.Name = "label6";
-            label6.Size = new Size(60, 15);
+            label6.Size = new Size(61, 15);
             label6.TabIndex = 1;
             label6.Text = "Cell Type\r\n";
             label6.TextAlign = ContentAlignment.MiddleCenter;
@@ -100,7 +100,7 @@ namespace main.subcontents.RESystem_PV
             label7.Font = new Font(UTIL.Families[0], 9.75F);
             label7.Location = new Point(273, 130);
             label7.Name = "label7";
-            label7.Size = new Size(51, 19);
+            label7.Size = new Size(43, 15);
             label7.TabIndex = 2;
             label7.Text = "단결정";
             label7.TextAlign = ContentAlignment.MiddleCenter;
@@ -112,7 +112,7 @@ namespace main.subcontents.RESystem_PV
             label8.Font = new Font(UTIL.Families[0], 9.75F);
             label8.Location = new Point(406, 130);
             label8.Name = "label8";
-            label8.Size = new Size(51, 19);
+            label8.Size = new Size(43, 15);
             label8.TabIndex = 3;
             label8.Text = "다결정";
             label8.TextAlign = ContentAlignment.MiddleCenter;
@@ -124,7 +124,7 @@ namespace main.subcontents.RESystem_PV
             label12.Font = new Font(UTIL.Families[0], 9.75F);
             label12.Location = new Point(530, 130);
             label12.Name = "label12";
-            label12.Size = new Size(75, 19);
+            label12.Size = new Size(65, 15);
             label12.TabIndex = 4;
             label12.Text = "a-Si박막형";
             label12.TextAlign = ContentAlignment.MiddleCenter;
@@ -200,7 +200,7 @@ namespace main.subcontents.RESystem_PV
             label9.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             label9.Location = new Point(664, 34);
             label9.Name = "label9";
-            label9.Size = new Size(229, 13);
+            label9.Size = new Size(254, 15);
             label9.TabIndex = 39;
             label9.Text = "자료:EG-TIPS 에너지온실가스종합정보플랫폼";
             label9.TextAlign = ContentAlignment.MiddleCenter;
@@ -212,7 +212,7 @@ namespace main.subcontents.RESystem_PV
             label5.Font = new Font(UTIL.Families[0], 9.75F);
             label5.Location = new Point(779, 148);
             label5.Name = "label5";
-            label5.Size = new Size(116, 19);
+            label5.Size = new Size(108, 15);
             label5.TabIndex = 38;
             label5.Text = "(변환효율 ~15%)";
             label5.TextAlign = ContentAlignment.MiddleCenter;
@@ -224,7 +224,7 @@ namespace main.subcontents.RESystem_PV
             label4.Font = new Font(UTIL.Families[0], 9.75F);
             label4.Location = new Point(642, 148);
             label4.Name = "label4";
-            label4.Size = new Size(116, 19);
+            label4.Size = new Size(108, 15);
             label4.TabIndex = 37;
             label4.Text = "(변환효율 ~16%)";
             label4.TextAlign = ContentAlignment.MiddleCenter;
@@ -236,7 +236,7 @@ namespace main.subcontents.RESystem_PV
             label3.Font = new Font(UTIL.Families[0], 9.75F);
             label3.Location = new Point(520, 148);
             label3.Name = "label3";
-            label3.Size = new Size(108, 19);
+            label3.Size = new Size(100, 15);
             label3.TabIndex = 36;
             label3.Text = "(변환효율 ~9%)";
             label3.TextAlign = ContentAlignment.MiddleCenter;
@@ -248,7 +248,7 @@ namespace main.subcontents.RESystem_PV
             label1.Font = new Font(UTIL.Families[0], 9.75F);
             label1.Location = new Point(379, 148);
             label1.Name = "label1";
-            label1.Size = new Size(116, 19);
+            label1.Size = new Size(108, 15);
             label1.TabIndex = 35;
             label1.Text = "(변환효율 ~18%)";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -260,7 +260,7 @@ namespace main.subcontents.RESystem_PV
             label2.Font = new Font(UTIL.Families[0], 9.75F);
             label2.Location = new Point(242, 148);
             label2.Name = "label2";
-            label2.Size = new Size(116, 19);
+            label2.Size = new Size(108, 15);
             label2.TabIndex = 34;
             label2.Text = "(변환효율 ~20%)";
             label2.TextAlign = ContentAlignment.MiddleCenter;
@@ -271,7 +271,7 @@ namespace main.subcontents.RESystem_PV
             label16.Font = new Font(UTIL.Families[0], 9.75F);
             label16.Location = new Point(156, 28);
             label16.Name = "label16";
-            label16.Size = new Size(400, 19);
+            label16.Size = new Size(355, 15);
             label16.TabIndex = 33;
             label16.Text = "Kpk: 모듈 표면온도 25℃에서의 단위면적당 최대출력 [kW/m2]";
             // 
@@ -282,7 +282,7 @@ namespace main.subcontents.RESystem_PV
             label14.Font = new Font(UTIL.Families[0], 9.75F);
             label14.Location = new Point(793, 130);
             label14.Name = "label14";
-            label14.Size = new Size(82, 19);
+            label14.Size = new Size(74, 15);
             label14.TabIndex = 32;
             label14.Text = "CdTe박막형";
             label14.TextAlign = ContentAlignment.MiddleCenter;
@@ -294,7 +294,7 @@ namespace main.subcontents.RESystem_PV
             label10.Font = new Font(UTIL.Families[0], 9.75F);
             label10.Location = new Point(659, 130);
             label10.Name = "label10";
-            label10.Size = new Size(82, 19);
+            label10.Size = new Size(72, 15);
             label10.TabIndex = 31;
             label10.Text = "CIGS박막형";
             label10.TextAlign = ContentAlignment.MiddleCenter;
@@ -348,6 +348,7 @@ namespace main.subcontents.RESystem_PV
             // panel2
             // 
             panel2.BackColor = SystemColors.GradientInactiveCaption;
+            panel2.Controls.Add(Save_button);
             panel2.Controls.Add(button1);
             panel2.Controls.Add(button2);
             panel2.Dock = DockStyle.Fill;
@@ -355,6 +356,18 @@ namespace main.subcontents.RESystem_PV
             panel2.Name = "panel2";
             panel2.Size = new Size(934, 439);
             panel2.TabIndex = 108;
+            // 
+            // Save_button
+            // 
+            Save_button.BackColor = SystemColors.ButtonHighlight;
+            Save_button.ForeColor = Color.Black;
+            Save_button.Location = new Point(793, 400);
+            Save_button.Name = "Save_button";
+            Save_button.Size = new Size(135, 25);
+            Save_button.TabIndex = 109;
+            Save_button.Text = "SAVE";
+            Save_button.UseVisualStyleBackColor = true;
+            Save_button.Click += Save_button_Click_1;
             // 
             // AddUserDB_button
             // 
@@ -427,6 +440,8 @@ namespace main.subcontents.RESystem_PV
             PVModule_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             PVModule_dataGridView.Size = new Size(934, 385);
             PVModule_dataGridView.TabIndex = 19;
+            PVModule_dataGridView.CellContentClick += PVModule_dataGridView_CellContentClick;
+            PVModule_dataGridView.CellValueChanged += PVModule_dataGridView_CellValueChanged;
             // 
             // panel1
             // 
@@ -494,5 +509,6 @@ namespace main.subcontents.RESystem_PV
         private Label label3;
         private Label label1;
         private PictureBox pictureBox4;
+        private Button Save_button;
     }
 }

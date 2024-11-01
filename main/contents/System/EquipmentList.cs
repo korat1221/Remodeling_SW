@@ -928,20 +928,20 @@ namespace main.contents
 
             PV_dataGridView.Columns.Add("A1", "번호");
             PV_dataGridView.Columns.Add("A2", "DB유형");
-            PV_dataGridView.Columns.Add("A3", "제품명");
-            PV_dataGridView.Columns.Add("A4", "제조사");
-            PV_dataGridView.Columns.Add("A5", "제작년도");
-            PV_dataGridView.Columns.Add("A6", "Cell Type");
-            PV_dataGridView.Columns.Add("A7", "모듈.가로길이.[m]");
-            PV_dataGridView.Columns.Add("A8", "모듈.세로길이.[m]");
-            PV_dataGridView.Columns.Add("A9", "모듈.정격출력.[W]");
-            PV_dataGridView.Columns.Add("A10", "K" + "\u209A" + "\u2096" + ".[kW/m²]");
-            PV_dataGridView.Columns[0].Width = 40;
+            PV_dataGridView.Columns.Add("A3", "명칭");
+            PV_dataGridView.Columns.Add("A4", "Cell Type");
+            PV_dataGridView.Columns.Add("A5", "모듈.길이.[m]");
+            PV_dataGridView.Columns.Add("A6", "모듈.높이.[m]");
+            PV_dataGridView.Columns.Add("A7", "모듈.정격출력.[W]");
+            PV_dataGridView.Columns.Add("A8", "Kpk.[kW/m²]");
+           
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
             설치유형Combo.HeaderText = "설치";
             설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
             PV_dataGridView.Columns.Add(설치유형Combo);
-            PV_dataGridView.Columns[11].Width = 100;
+
+            PV_dataGridView.Columns[0].Width = 40;
+            
         }
 
 
@@ -979,20 +979,10 @@ namespace main.contents
             int nRow = PV_dataGridView.Rows.Add();
             Load_PV_Num();
             PV_dataGridView.Rows[nRow].Cells[2].Value = "도면";
-            DataGridViewComboBoxCell 제작년도Combo = new DataGridViewComboBoxCell();
-            제작년도Combo.Items.Add("25년 이내");
-            제작년도Combo.Items.Add("25년 이상");
-            PV_dataGridView.Rows[nRow].Cells[5] = 제작년도Combo;
 
-            DataGridViewComboBoxCell 셀타입Combo = new DataGridViewComboBoxCell();
-            셀타입Combo.Items.Add("단결정(Single Cry. Si.)");
-            셀타입Combo.Items.Add("다결정(Poly Cry. Si.)");
-            셀타입Combo.Items.Add("비결정질 Si 박막");
-            셀타입Combo.Items.Add("그외 Si 박막");
-            셀타입Combo.Items.Add("CIGS 박막");
-            셀타입Combo.Items.Add("CdTe 박막");
-            PV_dataGridView.Rows[nRow].Cells[6] = 셀타입Combo;
-
+            DataGridViewComboBoxCell Cell = new DataGridViewComboBoxCell();
+            Cell.Items.AddRange(new string[] { "단결정", "다결정", "a_Si박막형", "화합물CIGS박막형", "화합물CdTe박막형" });
+            PV_dataGridView.Rows[nRow].Cells[4] = Cell;
         }
 
         private void DefaultPV_Add_button_Click(object sender, EventArgs e)
@@ -1006,17 +996,29 @@ namespace main.contents
             DialogResult result = pv_DB.ShowDialog();
             if (result == DialogResult.OK)
             {
-                if (pv_DB.Select_PVModule[0] != null)
+                if (pv_DB.SelectPV != null)
                 {
-
-                    string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광모듈DB", "제조사,제작년도,CELLTYPE,Kpk", "번호 = '" + pv_DB.Select_PVModule[0].ToString() + "'");
+                    string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광모듈DB", "CELLTYPE,길이,높이,정격출력,Kpk", "번호 = '" + pv_DB.SelectPV + "'");
                     if (Value.Length > 0)
                     {
-                        PV_dataGridView.Rows[nRow].Cells[4].Value = Value[0][0];
-                        PV_dataGridView.Rows[nRow].Cells[5].Value = Value[0][1];
-                        PV_dataGridView.Rows[nRow].Cells[6].Value = Value[0][2];
-                        PV_dataGridView.Rows[nRow].Cells[10].Value = Value[0][3];
+                       
+                        PV_dataGridView.Rows[nRow].Cells[4].Value = Value[0][0].ToString();
+                        PV_dataGridView.Rows[nRow].Cells[5].Value = Value[0][1].ToString();
+                        PV_dataGridView.Rows[nRow].Cells[6].Value = Value[0][2].ToString();
+                        PV_dataGridView.Rows[nRow].Cells[7].Value = Value[0][3].ToString();
+                        PV_dataGridView.Rows[nRow].Cells[8].Value = Value[0][4].ToString();
                     }
+                    string[][] Ualue = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "CELLTYPE,길이,높이,정격출력,Kpk", "번호 = '" + pv_DB.SelectPV + "'");
+                    if (Ualue.Length > 0)
+                    {
+                        
+                        PV_dataGridView.Rows[nRow].Cells[4].Value = Ualue[0][0].ToString();
+                        PV_dataGridView.Rows[nRow].Cells[5].Value = Ualue[0][1].ToString();
+                        PV_dataGridView.Rows[nRow].Cells[6].Value = Ualue[0][2].ToString();
+                        PV_dataGridView.Rows[nRow].Cells[7].Value = Ualue[0][3].ToString();
+                        PV_dataGridView.Rows[nRow].Cells[8].Value = Ualue[0][4].ToString();
+                    }
+
                 }
             }
         }
@@ -1072,22 +1074,7 @@ namespace main.contents
 
         private void PV_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                if (e.ColumnIndex == 7 || e.ColumnIndex == 8 || e.ColumnIndex == 9)
-                {
-                    if (PV_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && PV_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && PV_dataGridView.Rows[e.RowIndex].Cells[9].Value != null)
-                    { PV_dataGridView.Rows[e.RowIndex].Cells[10].Value = string.Format("{0:F2}", Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString()) / Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()) / 1000); }
-                    // UserDB_Kpk = UserDB_output / (UserDB_height * UserDB_width) / 1000;
-                }
-                if (e.ColumnIndex == 7 || e.ColumnIndex == 8 || e.ColumnIndex == 10)
-                {
-                    if (PV_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && PV_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && PV_dataGridView.Rows[e.RowIndex].Cells[10].Value != null)
-                    { PV_dataGridView.Rows[e.RowIndex].Cells[9].Value = string.Format("{0:F2}", Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) * Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) * Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()) * 1000); }
-                }
-
-            }
-
+            
         }
 
         private void Load_PV_Num()
@@ -1102,48 +1089,45 @@ namespace main.contents
 
         private void PV_Save_button_Click(object sender, EventArgs e)
         {
-            Program.DB.deleteValue(DB.type.ProjDB, "User_PVModule", "");
+            Program.DB.deleteValue(DB.type.ProjDB, "User_PV", "");
 
             for (int k = 0; k < PV_dataGridView.RowCount; k++)
             {
                 String[] Value = new String[11];
-                for (int i = 1; i < 12; i++)
+                for (int i = 1; i < 10; i++)
                 {
                     if (PV_dataGridView.Rows[k].Cells[i].Value != null)
                     { Value[i - 1] = PV_dataGridView.Rows[k].Cells[i].Value.ToString(); }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_PVModule", "번호,프로젝트유형,DB유형,제품명,제조사,CELLTYPE,길이,높이,정격출력,Kpk,설치",
+                Program.DB.setValue(DB.type.ProjDB, "User_PV", "번호,프로젝트유형,DB유형,명칭,CELLTYPE,길이,높이,정격출력,Kpk,설치",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','"
-                 + Value[10]
-                 + "'", "번호");
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "'", "번호");
             }
             MessageBox.Show("저장되었습니다.");
         }
 
         private void Load_PV()
         {
-        //    string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,CELLTYPE,길이,높이,정격출력,Kpk,설치", "");
-        //    if (User_Value.Length > 0)
-        //    {
-        //        for (int n = 0; n < User_Value.Length; n++)
-        //        {
-        //            PV_dataGridView.Rows.Add();
-        //            int nRow = PV_dataGridView.Rows.Count - 1;
-        //            PV_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
-        //            PV_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
-        //            PV_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
-        //            PV_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-        //            PV_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
-        //            PV_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
-        //            PV_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
-        //            PV_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
-        //            PV_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
-        //            PV_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
-        //            PV_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][10];
-        //        }
-        //    }
+            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PV", "번호,DB유형,명칭,CELLTYPE,길이,높이,정격출력,Kpk,설치", "");
+            if (User_Value.Length > 0)
+            {
+                for (int n = 0; n < User_Value.Length; n++)
+                {
+                    PV_dataGridView.Rows.Add();
+                    int nRow = PV_dataGridView.Rows.Count - 1;
+                    PV_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                    PV_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                    PV_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                    PV_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                    PV_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                    PV_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
+                    PV_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
+                    PV_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
+                    PV_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
+
+                }
+            }
         }
         #endregion
         ///////////////////////////////////////////////////연료전지/////////////////////////////////////////////////////////////////

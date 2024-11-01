@@ -2,6 +2,7 @@
 using main.subcontents.RESystem_PV;
 using Microsoft.Web.WebView2.Core;
 using System;
+using System.Windows.Forms;
 
 namespace main.contents
 {
@@ -12,26 +13,20 @@ namespace main.contents
 
         //double a;
 
-        #region Main Form Variable
+
         bool scriptable = false;
         //설치정보
-        String Num, Name;
-        string VentilationType, PVsystem;
-        double width_n, height_n; //가로, 세로 개수
-        double PVcapacity_Kw; // 설치용량
-        double PVArea_m2; //총면적
-        string Orientation, Slope; //방위, 경사
-        double PVLshobst_m, PVHshobst_m; //지형물까지의 거리, 지형물의 높이
-        string[][] 프로젝트유형;
+        string Num, PVname;
+        string 프로젝트유형;
         //태양광 계통도
 
-        #endregion //Main Form Variable
 
-        #region DB Variable
+
+
 
         //PVModuleDB
         string PVModuleNumber, PVModule, PVmanu_year;
-        double PVKpk_kW_m2, PVwidth_m, PVheight_m, PVPn_W;
+        double PVarea, PVtotalarea, PVpower, PVtotal, PVwidth, PVheight; //전체출력(kW)
         //index
         public double PVmanuyearfa;
 
@@ -43,7 +38,7 @@ namespace main.contents
         String PVBatteryNumber, Battery;
         double PVV_V, PVAH_Ah, Batterycapacity;
 
-        #endregion / DB Variable
+
 
         #region Input Variable
 
@@ -54,8 +49,6 @@ namespace main.contents
         //database
         public double[] PVIs_W_m2 = new double[12];
         public double[] PVdmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-        public double PVIref_kW_m2 = 1;
-
 
         //음영계수
         public double PVLPVwid_m, PVLPVlen_m;
@@ -106,12 +99,10 @@ namespace main.contents
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
 
-            프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-           
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            프로젝트유형 = value[0][0].ToString();
 
-
-            //PVsystem_combobox.Items.Clear();
-            //PVsystem_combobox.Items.AddRange(new string[] { "독립형", "계통연계형" });
+            PVType_ComboBox.Items.AddRange(new string[] { "독립형", "계통연계형" });
 
             Battery_label.Visible = false;
             Battery_textBox.Visible = false;
@@ -119,15 +110,20 @@ namespace main.contents
             Batterycapacity_n.Visible = false;
             Batterycapacity_textBox.Visible = false;
             Batterycapacity_s.Visible = false;
+
+
+            pvname.Visible = false;
+            pvsize.Visible = false;
+            pvpower.Visible = false;
+            pvtotal.Visible = false;
         }
         private void PV_Table()
         {
             new StackedHeaderDecorator(PV_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
             PV_dataGridView.Columns.Clear();
             PV_dataGridView.Columns.Add("A0", "번호");
-            PV_dataGridView.Columns.Add("A1", "명칭");
-            PV_dataGridView.Columns.Add("A2", "개수");
-            PV_dataGridView.Columns.Add("A3", "면적.[m2]");
+            PV_dataGridView.Columns.Add("A1", "개수");
+            PV_dataGridView.Columns.Add("A2", "면적.[m2]");
 
             DataGridViewComboBoxColumn direction = new DataGridViewComboBoxColumn();
             direction.HeaderText = "설치정보.방위";
@@ -136,21 +132,18 @@ namespace main.contents
 
             DataGridViewComboBoxColumn slope = new DataGridViewComboBoxColumn();
             slope.HeaderText = "설치정보.기울기";
-            slope.Items.AddRange(new string[] { "0˚", "30˚", "45˚", "60˚", "90˚" });
+            slope.Items.AddRange(new string[] { "0", "30", "45", "60", "90" });
             PV_dataGridView.Columns.Add(slope);
 
             DataGridViewComboBoxColumn type = new DataGridViewComboBoxColumn();
             type.HeaderText = "설치정보.후면유형";
             type.Items.AddRange(new string[] { "통기없음", "미세통기층", "통기층" }); // PVfperf = 0.76 , 0.8, 0.82
-            PV_dataGridView.Columns.Add(slope);
+            PV_dataGridView.Columns.Add(type);
 
-            PV_dataGridView.Columns.Add("A7", "음영정보.거리[m]"); //width_combo
-            PV_dataGridView.Columns.Add("A8", "음영정보.높이[m]"); //height_combo
-            PV_dataGridView.Columns.Add("A9", "제품정보.길이[m2]");
-            PV_dataGridView.Columns.Add("A10", "제품정보.높이[m2]");
-            PV_dataGridView.Columns.Add("A11", "제품정보.정격출력[W]");
-            PV_dataGridView.Columns.Add("A12", "제품정보.성능[Kpk]");
-            PV_dataGridView.Columns.Add("A13", "설치");
+            PV_dataGridView.Columns.Add("A6", "음영정보.거리[m]"); //width_combo
+            PV_dataGridView.Columns.Add("A7", "음영정보.높이[m]"); //height_combo
+
+            PV_dataGridView.Columns[0].Width = 60;
         }
         async void InitializeAsync()
         {
@@ -178,6 +171,7 @@ namespace main.contents
                 Batterycapacity_n.Visible = false;
                 Batterycapacity_textBox.Visible = false;
                 Batterycapacity_s.Visible = false;
+                MainPVimage("계통연계형");
             }
             else if (PVType_ComboBox.Text == "독립형")
             {
@@ -187,8 +181,58 @@ namespace main.contents
                 Batterycapacity_n.Visible = true;
                 Batterycapacity_textBox.Visible = true;
                 Batterycapacity_s.Visible = true;
-
+                MainPVimage("독립형");
             }
+
+        }
+        void MainPVimage(string type)
+        {
+            tabload();
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광타입별이미지", "이미지", "종류 = '" + type + "'");
+            if (Image.Length > 0)
+            {
+                PVpictureBox.Size = new System.Drawing.Size(610, 300);
+                PVpictureBox.Location = new Point(0, 28);
+                PVpictureBox.Load(Program.gPath + Image[0][0]);
+                PVpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                PVpictureBox.BackColor = Color.Transparent;
+            }
+            pvsize.Location = new Point(210, 95);
+            pvpower.Location = new Point(210, 142);
+            pvtotal.Location = new Point(210, 292);
+            pvname.Location = new Point(537, 44);
+        }
+
+        void PVimage(string type)
+        {
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광타입별이미지", "이미지", "종류 = '" + type + "'");
+            if (Image.Length > 0)
+            {
+                PVTypepictureBox.Size = new System.Drawing.Size(305, 245);
+                PVTypepictureBox.Location = new Point(343, 13);
+                PVTypepictureBox.Load(Program.gPath + Image[0][0]);
+                PVTypepictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                PVTypepictureBox.BackColor = Color.Transparent;
+                PVTypepictureBox.Parent = PVpictureBox;
+            }
+        }
+
+        void shadingimage()
+        {
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광타입별이미지", "이미지", "종류 = '음영'");
+            if (Image.Length > 0)
+            {
+                ShpictureBox.Size = new System.Drawing.Size(360, 310);
+                ShpictureBox.Location = new Point(0, 15);
+                ShpictureBox.Load(Program.gPath + Image[0][0]);
+                ShpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                ShpictureBox.BackColor = Color.Transparent;
+            }
+        }
+
+        void tabload()
+        {
+            tabControl1.SelectedTab = tabControl1.TabPages["PVinstall_tabPage"];
         }
 
         private void PVModuleDB_button_Click(object sender, EventArgs e)
@@ -197,116 +241,39 @@ namespace main.contents
             DialogResult result = PV_ModuleDB_form.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Load_PV_Table();
-                //
-
-                PVModuleNumber = PV_ModuleDB_form.Select_PVModule[0];
-                PVModule = PV_ModuleDB_form.Select_PVModule[2];
-                PVmanu_year = PV_ModuleDB_form.Select_PVModule[4];
-
-                PVKpk_kW_m2 = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[6]);
-                PVwidth_m = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[7]);
-                PVheight_m = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[8]);
-                PVPn_W = Convert.ToDouble(PV_ModuleDB_form.Select_PVModule[9]);
-
-                if (PVmanu_year == "25년 이내")
+                string num = PV_ModuleDB_form.SelectPV;
+                PV_Table();
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PV", "번호,명칭,길이,높이,정격출력", "번호 = '" + num + "'");
+                if (User_Value.Length > 0)
                 {
-                    PVmanuyearfa = 1;
-                }
-                if (PVmanu_year == "25년 이상")
-                {
-                    PVmanuyearfa = 0.9;
+                    int nRow = PV_dataGridView.Rows.Add();
+                    PV_dataGridView.Rows[nRow].Cells[0].Value = User_Value[0][0];
+                    PVname = User_Value[0][1];
+                    PVpower = Convert.ToDouble(User_Value[0][4]);
+                    PVwidth = Convert.ToDouble(User_Value[0][2]);
+                    PVheight = Convert.ToDouble(User_Value[0][3]);
+                    PVarea = PVwidth * PVheight;
+                    PVMoudle_textBox.Text = num;
+
+                    shadingimage();
                 }
             }
-
-            PVModule_textBox.Text = PVModule;
         }
 
-        //private void PVHshobst_m_textBox_TextChanged(object sender, EventArgs e)
-        //{
-        //    int result;
-        //    if (PVHshobst_m_textBox == null || PVHshobst_m_textBox.Text == "")
-        //    {
-        //    }
-        //    else if (int.TryParse(PVHshobst_m_textBox.Text, out result) == true)
-        //    {
-        //        PVHshobst_m = Convert.ToDouble(PVHshobst_m_textBox.Text);
-        //        PVHshobst_m_imge_textBox.Text = PVHshobst_m_textBox.Text.ToString();
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("숫자를 입력하세요.");
-        //    }
-
-        //    PVShading_getvalue();
-
-        //}
-
-        //private void PVLshobst_m_textBox_TextChanged(object sender, EventArgs e)
-        //{
-        //    int result;
-        //    if (PVLshobst_m_textBox.Text == null || PVLshobst_m_textBox.Text == "") { }
-        //    else if (int.TryParse(PVLshobst_m_textBox.Text, out result) == true)
-        //    {
-        //        PVLshobst_m = Convert.ToDouble(PVLshobst_m_textBox.Text);
-        //        PVLshobst_m_image_textBox.Text = PVLshobst_m_textBox.Text.ToString();
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("숫자를 입력하세요.");
-        //    }
-
-        //    PVShading_getvalue();
-
-        //}
-
-       
-        private void Load_PV_Table()
+        private void InverterDB_button_Click_1(object sender, EventArgs e)
         {
+            PV_InverterDB PV_InverterDB_form = new PV_InverterDB();
 
-            PV_Table();
-            PV_dataGridView.Rows.Clear();
-            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,가로길이,세로길이,정격출력,Kpk,신규기존", "번호 = '" + PVModuleNumber + "'");
-            if (User_Value.Length > 0)
+            DialogResult result = PV_InverterDB_form.ShowDialog();
+            if (result == DialogResult.OK)
             {
-                int nRow = PV_dataGridView.Rows.Add();
-                PV_dataGridView.Rows[nRow].Cells[0].Value = User_Value[0][0];
-                PV_dataGridView.Rows[nRow].Cells[1].Value = User_Value[0][1];
-                PV_dataGridView.Rows[nRow].Cells[2].Value = User_Value[0][2];
-                PV_dataGridView.Rows[nRow].Cells[3].Value = User_Value[0][3];
-                PV_dataGridView.Rows[nRow].Cells[4].Value = User_Value[0][4];
-                PV_dataGridView.Rows[nRow].Cells[5].Value = User_Value[0][5];
-                PV_dataGridView.Rows[nRow].Cells[6].Value = User_Value[0][6];
-                PV_dataGridView.Rows[nRow].Cells[7].Value = User_Value[0][7];
-                PV_dataGridView.Rows[nRow].Cells[8].Value = User_Value[0][8];
-                PV_dataGridView.Rows[nRow].Cells[9].Value = User_Value[0][9];
+               
             }
+
+            Inverter_textBox.Text = Inverter;
+            InverterEfficiency_textBox.Text = string.Format("{0:F2}", InverterEfficiency);
         }
-
-        //private void slope_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    if (slope_comboBox.SelectedItem != null)
-        //    {
-        //        Slope = slope_comboBox.SelectedItem.ToString();
-        //        PVIs_W_m2_getvalue();
-        //    }
-        //}
-
-        //private void InverterDB_button_Click(object sender, EventArgs e)
-        //{
-        //    PV_InverterDB PV_InverterDB_form = new PV_InverterDB();
-
-        //    DialogResult result = PV_InverterDB_form.ShowDialog();
-        //    if (result == DialogResult.OK)
-        //    {
-        //        PVInverterNumber = PV_InverterDB_form.Select_PVInverter[0];
-        //        Inverter = PV_InverterDB_form.Select_PVInverter[2];
-        //        InverterEfficiency = Convert.ToDouble(PV_InverterDB_form.Select_PVInverter[4]);
-        //    }
-
-        //    Inverter_textBox.Text = Inverter;
-        //    InverterEfficiency_textBox.Text = string.Format("{0:F2}", InverterEfficiency);
-        //}
+       
 
         //private void BatteryDB_button_Click(object sender, EventArgs e)
         //{
@@ -496,7 +463,7 @@ namespace main.contents
                 string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
                 string[][] res1;
                 string[][] res2;
-                double max1=0, max2=0; 
+                double max1 = 0, max2 = 0;
                 for (int mth = 0; mth < 11; mth++)
                 {
                     s += PVEelpvoutm_kWh[mth] + ",";
@@ -511,18 +478,18 @@ namespace main.contents
                 { s2 += Convert.ToDouble(res2[0][0]); }
 
                 res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT Max(일사량) From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Orientation + "' And 각도='" + Slope + "'and not 기간='연간값'");
-                
-                
+
+
                 if (res2.Length > 0)
                 {
-                    int n2 =( (int)Convert.ToDouble(res2[0][0])).ToString().Length;
-                    max2 = Convert.ToInt64(Convert.ToDouble(res2[0][0]) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1)/2; 
-                
+                    int n2 = ((int)Convert.ToDouble(res2[0][0])).ToString().Length;
+                    max2 = Convert.ToInt64(Convert.ToDouble(res2[0][0]) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1) / 2;
+
                 }
                 int n1 = ((int)PVEelpvoutm_kWh.Max()).ToString().Length;
-                max1 = Convert.ToInt64((PVEelpvoutm_kWh.Max())/ Math.Pow(10, n1 - 1)) * Math.Pow(10, n1 - 1) + Math.Pow(10, n1 - 1)/2;
-                
-                runScript("drawChart_pv([{type:\"line\",label:\"전기생산량\",data:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:"+max1+"},{type:\"bar\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:"+max2+",dash:false,barPercentage:0.7}])");
+                max1 = Convert.ToInt64((PVEelpvoutm_kWh.Max()) / Math.Pow(10, n1 - 1)) * Math.Pow(10, n1 - 1) + Math.Pow(10, n1 - 1) / 2;
+
+                runScript("drawChart_pv([{type:\"line\",label:\"전기생산량\",data:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:" + max1 + "},{type:\"bar\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:" + max2 + ",dash:false,barPercentage:0.7}])");
             }
             catch { }
         }
@@ -644,10 +611,7 @@ namespace main.contents
                     PVModule_textBox.Text = module[0][0];
                     PVModule = module[0][0];
                     PVmanu_year = module[0][1];
-                    PVwidth_m = Convert.ToDouble(module[0][2]);
-                    PVheight_m = Convert.ToDouble(module[0][3]);
-                    PVPn_W = Convert.ToDouble(module[0][4]);
-                    PVKpk_kW_m2 = Convert.ToDouble(module[0][5]);
+
 
                     if (PVmanu_year == "25년 이내")
                     {
@@ -697,6 +661,46 @@ namespace main.contents
             averagecpacity_textBox.Text = string.Format("{0:F2}", PVefficiency * 100);
             //LoadGraph(Orientation, Slope);
         }
+
+        private void Load_PV_Table()
+        {
+
+            PV_Table();
+            PV_dataGridView.Rows.Clear();
+            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_PV", "번호,DB유형,명칭,CELLTYPE,길이,높이,정격출력,Kpk,설치", "번호 = '" + PVModuleNumber + "'");
+            if (User_Value.Length > 0)
+            {
+                int nRow = PV_dataGridView.Rows.Add();
+                PV_dataGridView.Rows[nRow].Cells[0].Value = User_Value[0][0];
+
+                pvname.Visible = true;
+                pvname.Text = string.Format("{0}", User_Value[0][1]);
+                pvname.Location = new Point(537, 44);
+                pvname.BackColor = Color.Transparent;
+
+                pvsize.Visible = true;
+                pvsize.Text = string.Format("{0}x{1}", User_Value[0][2], User_Value[0][3]);
+                pvsize.Location = new Point(210, 95);
+                pvsize.BackColor = Color.Transparent;
+
+                pvpower.Visible = true;
+                pvpower.Text = string.Format("{0}W", User_Value[0][4]);
+                pvpower.Location = new Point(210, 142);
+                pvpower.BackColor = Color.Transparent;
+
+                pvsize.Location = new Point(210, 95);
+                pvpower.Location = new Point(210, 142);
+                pvtotal.Location = new Point(210, 292);
+                pvname.Location = new Point(537, 44);
+
+
+                PV_dataGridView.Rows[nRow].Cells[1].Value = User_Value[0][1];
+                PV_dataGridView.Rows[nRow].Cells[9].Value = User_Value[0][2];
+                PV_dataGridView.Rows[nRow].Cells[10].Value = User_Value[0][3];
+                PV_dataGridView.Rows[nRow].Cells[11].Value = User_Value[0][4];
+                PVMoudle_textBox.Text = PVModuleNumber;
+            }
+        }
         public static bool OnLoadListProc(Form form)
         {
             List_PV f = (List_PV)form;
@@ -717,6 +721,45 @@ namespace main.contents
                 this.Hide();
                 Program.getMenuForm().DoLoadForm(53, OnLoadListProc);
             }
+        }
+
+        private void PV_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 1 && PV_dataGridView.Rows[e.RowIndex].Cells[1].Value != null)
+            {
+                double val = 0;
+                val = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[1].Value);
+                PVtotal = val * PVpower / 1000; //kW
+
+                pvtotal.Visible = true;
+                pvtotal.Text = string.Format("{0:F1} kW", PVtotal);
+                pvtotal.Location = new Point(210, 292);
+                pvtotal.BackColor = Color.Transparent;
+
+                pvname.Visible = true;
+                pvname.Text = string.Format("명칭: {0}", PVname);
+                pvname.Location = new Point(537, 44);
+                pvname.BackColor = Color.Transparent;
+
+                pvsize.Visible = true;
+                pvsize.Text = string.Format("{0}m X {1}m", PVwidth, PVheight);
+                pvsize.Location = new Point(210, 95);
+                pvsize.BackColor = Color.Transparent;
+
+                pvpower.Visible = true;
+                pvpower.Text = string.Format("{0} W", PVpower);
+                pvpower.Location = new Point(210, 142);
+                pvpower.BackColor = Color.Transparent;
+
+                PVtotalarea = PVarea * val;
+
+                PV_dataGridView.Rows[e.RowIndex].Cells[2].Value = string.Format("{0:F2}", PVtotalarea);
+            }
+            if (e.ColumnIndex == 4 && PV_dataGridView.Rows[e.RowIndex].Cells[4].Value != null)
+            {
+                PVimage(PV_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString());
+            }
+
         }
 
     }

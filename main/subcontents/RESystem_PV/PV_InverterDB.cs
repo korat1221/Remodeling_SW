@@ -9,20 +9,32 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 
-
 namespace main.subcontents.RESystem_PV
 {
     public partial class PV_InverterDB : Form
     {
         double Count_PVInverterDB;
         int SelectRow;
-        public String[] Select_PVInverter = new string[5];
+        
         String UserNum, UserDB_Name, UserDB_Manufacture;
         double UserDB_EURO;
+        string 프로젝트유형;
+        //int PVInverter_SelectRow;
 
         public PV_InverterDB()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '태양광시스템'");
+            if (Image.Length > 0)
+            {
+                pictureBox1.Load(Program.gPath + Image[0][0]);
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            프로젝트유형 = value[0][0];
+
             load_table_PVInverterDB();
 
             //번호
@@ -32,141 +44,72 @@ namespace main.subcontents.RESystem_PV
 
         void load_table_PVInverterDB()
         {
-            //데이터 그리드뷰 만들기
-            DataTable table_PVInverter = new DataTable();
-            DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
-            PVInverter_dataGridView.Columns.Clear();
-            checkBoxColumn.HeaderText = "선택";
-            checkBoxColumn.Name = "check";
-            PVInverter_dataGridView.Columns.Add(checkBoxColumn);
-            table_PVInverter.Columns.Add("번호", typeof(string));
-            table_PVInverter.Columns.Add("DB유형", typeof(string));
-            table_PVInverter.Columns.Add("제품명", typeof(string));
-            table_PVInverter.Columns.Add("제조사", typeof(string));
-            table_PVInverter.Columns.Add("EURO효율" + Environment.NewLine + "%", typeof(string));
 
-            //사용자 DB 추가
+            new StackedHeaderDecorator(PVInverter_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            DataGridViewCheckBoxColumn checkBox = new DataGridViewCheckBoxColumn();
+            PVInverter_dataGridView.Columns.Clear();
+
+            checkBox.HeaderText = "선택";
+            checkBox.Name = "check";
+            PVInverter_dataGridView.Columns.Add(checkBox);
+
+
+            PVInverter_dataGridView.Columns.Add("A1", "번호");
+            PVInverter_dataGridView.Columns.Add("A2","DB유형");
+            PVInverter_dataGridView.Columns.Add("A3","제품명");
+            PVInverter_dataGridView.Columns.Add("A4", "제조사");
+            PVInverter_dataGridView.Columns.Add("A5","EURO효율");
+
+            //사용자 DB
             string[][] User_PVInverter = Program.DB.getValue(DB.type.ProjDB, "User_PVInverter", "번호,DB유형,제품명,제조사,EURO효율", "");
             if (User_PVInverter.Length > 0)
             {
                 for (int n = 0; n < User_PVInverter.Length; n++)
                 {
-                    table_PVInverter.Rows.Add(User_PVInverter[n][0], User_PVInverter[n][1], User_PVInverter[n][2], User_PVInverter[n][3], User_PVInverter[n][4]);
+                    PVInverter_dataGridView.Rows.Add();
+                    int nRow = PVInverter_dataGridView.Rows.Count - 1;
+                    PVInverter_dataGridView.Rows[nRow].Cells[1].Value = User_PVInverter[n][0];
+                    PVInverter_dataGridView.Rows[nRow].Cells[2].Value = User_PVInverter[n][1];
+                    PVInverter_dataGridView.Rows[nRow].Cells[3].Value = User_PVInverter[n][2];
+                    PVInverter_dataGridView.Rows[nRow].Cells[4].Value = User_PVInverter[n][3];
+                    PVInverter_dataGridView.Rows[nRow].Cells[5].Value = User_PVInverter[n][4];
                 }
             }
 
-
-            //표준 DB 불러오기
+            //표준 DB 
             string[][] PVInverter = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광인버터DB", "번호,DB유형,제품명,제조사,EURO효율", "");
             if (PVInverter.Length > 0)
             {
                 for (int n = 0; n < PVInverter.Length; n++)
                 {
-                    table_PVInverter.Rows.Add(PVInverter[n][0], PVInverter[n][1], PVInverter[n][2], PVInverter[n][3], String.Format("{0:F2}", Convert.ToDouble(PVInverter[n][4])));
-                }
-            }
-
-            PVInverter_dataGridView.DataSource = table_PVInverter;
-            Count_PVInverterDB = PVInverter.Length;
-        }
-
-        private void PVInverter_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                PVInverter_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                SelectRow = e.RowIndex;
-                DataGridViewRow row = PVInverter_dataGridView.Rows[SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < Count_PVInverterDB; k++)
-                {
-                    if (k != row.Index)
-                    {
-                        PVInverter_dataGridView.Rows[k].Cells[0].Value = false;
-                        row2 = PVInverter_dataGridView.Rows[k];
-                        row2.DefaultCellStyle.BackColor = Color.White;
-                        row2.DefaultCellStyle.ForeColor = Color.Black;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = Color.Black;
-                        row = PVInverter_dataGridView.Rows[e.RowIndex];
-                    }
+                    PVInverter_dataGridView.Rows.Add();
+                    int nRow = PVInverter_dataGridView.Rows.Count - 1;
+                    PVInverter_dataGridView.Rows[nRow].Cells[1].Value = User_PVInverter[n][0];
+                    PVInverter_dataGridView.Rows[nRow].Cells[2].Value = User_PVInverter[n][1];
+                    PVInverter_dataGridView.Rows[nRow].Cells[3].Value = User_PVInverter[n][2];
+                    PVInverter_dataGridView.Rows[nRow].Cells[4].Value = User_PVInverter[n][3];
+                    PVInverter_dataGridView.Rows[nRow].Cells[5].Value = User_PVInverter[n][4];
                 }
             }
         }
 
-        private void UserDBName_textBox_TextChanged(object sender, EventArgs e)
-        {
-            UserDB_Name = UserDBName_textBox.Text;
-        }
-
-        private void UserDB_Manufacture_textBox_TextChanged(object sender, EventArgs e)
-        {
-            UserDB_Manufacture = UserDB_Manufacture_textBox.Text;
-        }
-
-        private void UserDB_Euro_TextBox_TextChanged(object sender, EventArgs e)
-        {
-            int result;
-
-            if (int.TryParse(UserDB_Euro_TextBox.Text, out result) == true)
-            {
-                UserDB_EURO = Convert.ToDouble(UserDB_Euro_TextBox.Text);
-            }
-            else
-            {
-                MessageBox.Show("숫자를 입력하세요.");
-            }
-        }
-
-        //SetValue
         private void AddUserDB_button_Click(object sender, EventArgs e)
         {
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-            if (UserDB_Name != null && UserDB_Manufacture != null && UserDB_EURO != 0)
-            {
-                Program.DB.setValue(DB.type.ProjDB, "User_PVInverter", "번호,프로젝트유형,DB유형,제품명,제조사,EURO효율",
-                    "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDB_Name + "','" + UserDB_Manufacture + "','" + UserDB_EURO.ToString() + "'", "번호");
-                load_table_PVInverterDB();
-            }
-            else
-            {
-                MessageBox.Show("모든 값을 입력해주세요.");
-            }
+            string UserNum = Program.UTIL.CreateNum("User_PVInverter", "번호", "VI_0");
+            Program.DB.setValue(DB.type.ProjDB, "User_PVInverter", "번호,프로젝트유형,DB유형",
+                    "'" + UserNum + "','" + 프로젝트유형 + "','" + "사용자" + "'", "번호");
+            load_table_PVInverterDB();
         }
 
         private void Deletebutton_Click(object sender, EventArgs e)
         {
-            int k = PVInverter_dataGridView.CurrentCell.RowIndex;
-            if (k > -1)
-            {
-                if (PVInverter_dataGridView.Rows[k].Cells[2].Value.ToString() == "사용자")
-                {
-                    if ((MessageBox.Show(PVInverter_dataGridView.Rows[k].Cells[3].Value.ToString() + "을 삭제하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
-                    {
-                        String Delete_Num = PVInverter_dataGridView.Rows[k].Cells[1].Value.ToString();
-                        Program.DB.deleteValue(DB.type.ProjDB, "User_PVInverter", "번호 ='" + Delete_Num + "'");
-                        load_table_PVInverterDB();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("기본 DB는 삭제할 수 없습니다.");
-                }
-            }
+            string DeletNum = PVInverter_dataGridView.Rows[SelectRow].Cells[1].Value.ToString();
+            Program.DB.deleteValue(DB.type.ProjDB, "User_PVModule", "번호 ='" + DeletNum + "'");
+            PVInverter_dataGridView.Rows.Remove(PVInverter_dataGridView.Rows[SelectRow]);
         }
         private void Save_button_Click(object sender, EventArgs e)
         {
-            // 번호,DB유형,제품명,제조사,EURO효율
-            DataGridViewRow row = PVInverter_dataGridView.Rows[SelectRow];
-            Select_PVInverter[0] = row.Cells[1].Value.ToString(); //번호
-            Select_PVInverter[1] = row.Cells[2].Value.ToString(); //DB유형
-            Select_PVInverter[2] = row.Cells[3].Value.ToString(); //제품명
-            Select_PVInverter[3] = row.Cells[4].Value.ToString(); //제조사
-            Select_PVInverter[4] = row.Cells[5].Value.ToString(); //EURO효율
-
+            
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -174,6 +117,23 @@ namespace main.subcontents.RESystem_PV
         private void UserDB_Kpk_textbox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void GeneralPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        private bool SelectCheckBox()
+        {
+            foreach (DataGridViewRow row in PVInverter_dataGridView.Rows)
+            {
+                if (Convert.ToBoolean(row.Cells["check"].Value))
+                {
+                    row.DefaultCellStyle.SelectionBackColor = SystemColors.GradientInactiveCaption;
+                    SelectRow = row.Index;
+                }
+            }
+            return true;
         }
     }
 }
