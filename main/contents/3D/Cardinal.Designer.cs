@@ -32,9 +32,8 @@
             label1 = new Label();
             label2 = new Label();
             comboBox2 = new ComboBox();
-            pictureBox1 = new PictureBox();
             button1 = new Button();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            label3 = new Label();
             SuspendLayout();
             // 
             // comboBox1
@@ -73,15 +72,6 @@
             comboBox2.Size = new Size(121, 23);
             comboBox2.TabIndex = 2;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.그림11;
-            pictureBox1.Location = new Point(174, 54);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(71, 25);
-            pictureBox1.TabIndex = 4;
-            pictureBox1.TabStop = false;
-            // 
             // button1
             // 
             button1.Location = new Point(292, 116);
@@ -92,20 +82,30 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("맑은 고딕", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            label3.Location = new Point(197, 55);
+            label3.Name = "label3";
+            label3.Size = new Size(30, 25);
+            label3.TabIndex = 6;
+            label3.Text = "→";
+            label3.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // Cardinal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(427, 173);
+            Controls.Add(label3);
             Controls.Add(button1);
-            Controls.Add(pictureBox1);
             Controls.Add(label2);
             Controls.Add(comboBox2);
             Controls.Add(label1);
             Controls.Add(comboBox1);
             Name = "Cardinal";
             Text = "주향(방위) 변경";
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -116,8 +116,8 @@
         private Button button2;
         private ComboBox comboBox1;
         private ComboBox comboBox2;
-        private PictureBox pictureBox1;
         private Label label1;
         private Label label2;
+        private Label label3;
     }
 }
