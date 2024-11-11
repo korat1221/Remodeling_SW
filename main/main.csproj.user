@@ -73,7 +73,10 @@
     <Compile Update="contents\Construction\ConstructionWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\Algorithm_Report\PrintReport_Heating.cs">
+    <Compile Update="contents\Result\Algorithm_Report\Algorithm_Cooling.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Result\Algorithm_Report\Algorithm_Heating.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="contents\Result\Element_Report\Element_Report_Main.cs">

@@ -28,17 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            GeneralPanel = new Panel();
             SuspendLayout();
-            // 
-            // GeneralPanel
-            // 
-            GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Location = new Point(12, 12);
-            GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(977, 601);
-            GeneralPanel.TabIndex = 17;
-            GeneralPanel.Paint += GeneralPanel_Paint;
             // 
             // Algorithm_Report
             // 
@@ -47,7 +37,6 @@
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Algorithm_Report";
             Text = "Form3";
@@ -55,7 +44,5 @@
         }
 
         #endregion
-
-        private Panel GeneralPanel;
     }
 }

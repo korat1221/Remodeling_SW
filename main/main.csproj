@@ -91,6 +91,30 @@
     <Compile Update="contents\Building\ProjectCopy.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="contents\Result\Element_Report\Element_Chiler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Result\Element_Report\Element_RESystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Result\Element_Report\Element_Win.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Result\Element_Report\Element_ElecHP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Result\Element_Report\Element_GasHP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Result\Element_Report\Element_Lighting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Result\Element_Report\Element_Structure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="contents\Result\Element_Report\Element_Boiler.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\Alt\AltFloor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,19 +154,17 @@
     <Compile Update="contents\Result\Building_Report\PrintReport_Final.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\Algorithm_Report\PrintReport_Cooling.cs">
+    <Compile Update="contents\Result\Algorithm_Report\Algorithm_Cooling.cs" />
+    <Compile Update="contents\Result\Algorithm_Report\Algorithm_DHW.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\Algorithm_Report\PrintReport_DHWSystem.cs">
+    <Compile Update="contents\Result\Algorithm_Report\Algorithm_AHU.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\Algorithm_Report\PrintReport_AHUSystem.cs">
+    <Compile Update="contents\Result\Algorithm_Report\Algorithm_Lighting.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\Algorithm_Report\PrintReport_Lighting.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="contents\Result\Algorithm_Report\PrintReport_HCneed.cs">
+    <Compile Update="contents\Result\Algorithm_Report\Algorithm_EnergyNeed.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="contents\System\DHWSystem.cs">

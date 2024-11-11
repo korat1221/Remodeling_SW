@@ -48,7 +48,7 @@ namespace main
             SupplyRate,
             EIndependenceRatio,
             Element_Report,
-            ReportRemodeling,
+            Algorithm_Report,
             FormDebug,
             List_ConstructionWindow,
             List_ConstructionCW,
@@ -65,11 +65,11 @@ namespace main
             ProjectList,
             OpenProject,
             List_RESystem,
-            PrintReport_Lighting,
-            PrintReport_Heating,
-            PrintReport_Cooling,
-            PrintReport_DHSystem,
-            PrintReport_AHUSystem,
+            Algorithm_Lighting,
+            Algorithm_Heating,
+            Algorithm_Cooling,
+            Algorithm_DHSystem,
+            Algorithm_AHUSystem,
             List_DHWSystem,
             List_ConstructionBlind,
             List_ConstructionDoor,
@@ -81,6 +81,14 @@ namespace main
             List_AHUSystem,
             List_Alt,
             AltMain,
+            Element_Structure,
+            Element_Win,
+            Element_Lighting,
+            Element_ElecHP,
+            Element_GasHP,
+            Element_Boiler,
+            Element_Chielr,
+            Element_RESystem,
             None
 
         }
@@ -94,15 +102,16 @@ namespace main
             new FormDebug(),
             new List_ConstructionWindow(),new List_ConstructionCW(),new SubWindow(),
             new List_Floor(), new List_Zone(),
-            new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor(), new PrintReport_HCneed(),new List_CoolingSystem(), new List_HeatingSystem(),
+            new List_ConstructionWall(), new List_ConstructionRoof(), new List_ConstructionFloor(), new Algorithm_EnergyNeed(),new List_CoolingSystem(), new List_HeatingSystem(),
             new Intro(), new ProjectList(), new OpenProject(), new List_RESystem(),
-            new PrintReport_Lighting(),new PrintReport_Heating(),new PrintReport_Cooling(),new PrintReport_DHWSystem(),new PrintReport_AHUSystem(),
+            new Algorithm_Lighting(),new Algorithm_Heating(),new Algorithm_Cooling(),new Algorithm_DHW(),new Algorithm_AHU(),
             new List_DHWSystem(),new List_ConstructionBlind(),new List_ConstructionDoor(),
             new PrintReport_Final(), 
             new List_PV(),new List_FuelCell(),new List_WindPower(),
             new Building_Report(),
             new List_AHUSystem(),
-            new List_Alt(), new AltMain()
+            new List_Alt(), new AltMain(),
+            new Element_Structure(),new Element_Win(),new Element_Lighting(),new Element_ElecHP(),new Element_GasHP(),new Element_Boiler(),new Element_Chiler(),new Element_RESystem()
         }; 
         bool scriptable = false;
         public class FormParam
@@ -269,6 +278,12 @@ namespace main
 
                 f.LoadData(formParam.ID);
             }
+            else if (formParam.formID == 27)
+            {
+                Algorithm_Report f = (Algorithm_Report)form;
+
+                f.LoadData(formParam.ID);
+            }
             else if (formParam.formID == 29)
             {
                 List_ConstructionWindow f = (List_ConstructionWindow)form;
@@ -319,7 +334,7 @@ namespace main
             }
             else if (formParam.formID == 37)
             {
-                PrintReport_HCneed f = (PrintReport_HCneed)form;
+                Algorithm_EnergyNeed f = (Algorithm_EnergyNeed)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -361,31 +376,31 @@ namespace main
             }
             else if (formParam.formID == 44)
             {
-                PrintReport_Lighting f = (PrintReport_Lighting)form;
+                Algorithm_Lighting f = (Algorithm_Lighting)form;
 
                 f.LoadData(formParam.ID);
             }
             else if (formParam.formID == 45)
             {
-                PrintReport_Heating f = (PrintReport_Heating)form;
+                Algorithm_Heating f = (Algorithm_Heating)form;
 
                 f.LoadData(formParam.ID);
             }
             else if (formParam.formID == 46)
             {
-                PrintReport_Cooling f = (PrintReport_Cooling)form;
+                Algorithm_Cooling f = (Algorithm_Cooling)form;
 
                 f.LoadData(formParam.ID);
             }
             else if (formParam.formID == 47)
             {
-                PrintReport_DHWSystem f = (PrintReport_DHWSystem)form;
+                Algorithm_DHW f = (Algorithm_DHW)form;
 
                 f.LoadData(formParam.ID);
             }
             else if (formParam.formID == 48)
             {
-                PrintReport_AHUSystem f = (PrintReport_AHUSystem)form;
+                Algorithm_AHU f = (Algorithm_AHU)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -452,6 +467,54 @@ namespace main
             else if (formParam.formID == 59)
             {
                 AltMain f = (AltMain)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 60)
+            {
+                Element_Structure f = (Element_Structure)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 61)
+            {
+                Element_Win f = (Element_Win)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 62)
+            {
+                Element_Lighting f = (Element_Lighting)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 63)
+            {
+                Element_ElecHP f = (Element_ElecHP)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 64)
+            {
+                Element_GasHP f = (Element_GasHP)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 65)
+            {
+                Element_Boiler f = (Element_Boiler)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 66)
+            {
+                Element_Chiler f = (Element_Chiler)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 67)
+            {
+                Element_RESystem f = (Element_RESystem)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -617,6 +680,18 @@ namespace main
 
                     f.LoadData("");
                 }
+                else if (i == 26)
+                {
+                    Element_Report_Main f = (Element_Report_Main)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 27)
+                {
+                    Algorithm_Report f = (Algorithm_Report)forms[i];
+
+                    f.LoadData("");
+                }
                 else if (i == 30)
                 {
                     List_ConstructionCW f = (List_ConstructionCW)forms[i];
@@ -665,6 +740,12 @@ namespace main
 
                     f.LoadData("");
                 }
+                else if (i == 46)
+                {
+                    Algorithm_Cooling f = (Algorithm_Cooling)forms[i];
+
+                    f.LoadData("");
+                }
                 else if (i == 49)
                 {
                     List_DHWSystem f = (List_DHWSystem)forms[i];
@@ -704,6 +785,54 @@ namespace main
                 else if (i == 57)
                 {
                     List_AHUSystem f = (List_AHUSystem)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 60)
+                {
+                    Element_Structure f = (Element_Structure)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 61)
+                {
+                    Element_Win f = (Element_Win)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 62)
+                {
+                    Element_Lighting f = (Element_Lighting)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 63)
+                {
+                    Element_ElecHP f = (Element_ElecHP)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 64)
+                {
+                    Element_GasHP f = (Element_GasHP)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 65)
+                {
+                    Element_Boiler f = (Element_Boiler)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 66)
+                {
+                    Element_Chiler f = (Element_Chiler)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 67)
+                {
+                    Element_RESystem f = (Element_RESystem)forms[i];
 
                     f.LoadData("");
                 }
@@ -814,18 +943,18 @@ namespace main
                     forms[34] = new List_ConstructionWall();
                     forms[35] = new List_ConstructionRoof();
                     forms[36] = new List_ConstructionFloor();
-                    forms[37] = new PrintReport_HCneed();
+                    forms[37] = new Algorithm_EnergyNeed();
                     forms[38] = new List_CoolingSystem();
                     forms[39] = new List_HeatingSystem();
                     forms[40] = new Intro();
                     //forms[41] = new ProjectList();
                     forms[42] = new OpenProject();
                     forms[43] = new List_RESystem();
-                    forms[44] = new PrintReport_Lighting();
-                    forms[45] = new PrintReport_Heating();
-                    forms[46] = new PrintReport_Cooling();
-                    forms[47] = new PrintReport_DHWSystem();
-                    forms[48] = new PrintReport_AHUSystem();
+                    forms[44] = new Algorithm_Lighting();
+                    forms[45] = new Algorithm_Heating();
+                    forms[46] = new Algorithm_Cooling();
+                    forms[47] = new Algorithm_DHW();
+                    forms[48] = new Algorithm_AHU();
                     forms[49] = new List_DHWSystem();
                     forms[50] = new List_ConstructionBlind();
                     forms[51] = new List_ConstructionDoor();
@@ -837,6 +966,14 @@ namespace main
                     forms[57] = new List_AHUSystem();
                     forms[58] = new List_Alt();
                     forms[59] = new AltMain();
+                    forms[60] = new Element_Structure();
+                    forms[61] = new Element_Win();
+                    forms[62] = new Element_Lighting();
+                    forms[63] = new Element_ElecHP();
+                    forms[64] = new Element_GasHP();
+                    forms[65] = new Element_Boiler();
+                    forms[66] = new Element_Chiler();
+                    forms[67] = new Element_RESystem();
 
                     i = -1;
                     while (++i < forms.Length)
