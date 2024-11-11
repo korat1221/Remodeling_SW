@@ -749,6 +749,7 @@ namespace main
         {
             double Optimal = 5.5;
             Cooling1.Cal_feerCorr();
+            Cooling1.Cal_fhr_PL();
             Cooling1.Cal_MultiFactor(); //fC_M 작성
 
             //저장제어운영계수중 운영계수 반영
