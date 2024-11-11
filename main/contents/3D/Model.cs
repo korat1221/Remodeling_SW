@@ -250,8 +250,6 @@ namespace main.contents
 
                 // 비트맵을 파일로 저장
                 bmp.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
-
-                // MessageBox.Show("캡쳐 성공: " + imagePath);
             }
             catch (Exception ex)
             {

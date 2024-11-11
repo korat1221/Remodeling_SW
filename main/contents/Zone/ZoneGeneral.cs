@@ -674,26 +674,8 @@ namespace main.contents
                 string imagePath = Program.gPath + ImageName; // 최종 경로
 
 
-                //----------이건 파일번호 숫자저장--------------------
-                // 파일 이름 설정
-                // string baseFileName = "캡쳐";
-                //string fileExtension = ".png";
-                //string imagePath;
-                //int fileIndex = 1;
-
-                // 파일이 존재할 경우 숫자 증가
-                //do
-                //{
-                //    imagePath = System.IO.Path.Combine(desktopPath, $"{baseFileName}{fileIndex}{fileExtension}");
-                //    fileIndex++;
-                //} while (System.IO.File.Exists(imagePath));
-                //------------------------------------------------------
-
-
                 // 비트맵을 파일로 저장
                 bmp.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
-
-                MessageBox.Show("캡쳐 성공: " + imagePath);
             }
             catch (Exception ex)
             {
@@ -723,20 +705,6 @@ namespace main.contents
             this.Hide();
             Program.getMenuForm().DoLoadForm(33, OnLoadListProc);
         }
-        //private void Save_Image()
-        //{
-        //    MemoryStream ms = new MemoryStream();
-        //    string ImageName = "/threejs/public/print/img/" + ZoneNum + ".png";
-        //    Bitmap bmp = new Bitmap(AdditionalPanel.Width, AdditionalPanel.Height);
-        //    AdditionalPanel.DrawToBitmap(bmp, new System.Drawing.Rectangle(0, 0, AdditionalPanel.Width, AdditionalPanel.Height));
-        //    // bmp.Save(ms ,System.Drawing.Imaging.ImageFormat.Png); //you could ave in BPM, PNG  etc format.
-        //    bmp.Save(Program.gPath + ImageName, System.Drawing.Imaging.ImageFormat.Png); //you could ave in BPM, PNG  etc format.
-        //    byte[] Pic_arr = new byte[ms.Length];
-        //    ms.Position = 0;
-        //    ms.Read(Pic_arr, 0, Pic_arr.Length);
-        //    ms.Close();
-
-        //}
         private void reset()
         {
             ZoneName_textBox.Text = "";

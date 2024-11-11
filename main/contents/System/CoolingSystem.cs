@@ -3114,7 +3114,42 @@ namespace main.contents
         }
 
         #endregion
+        private void Save_Image()
+        {
+            try
+            {
+                // 캡쳐할 영역의 위치와 크기 설정
+                Rectangle captureRectangle = ImagePanel.RectangleToScreen(ImagePanel.ClientRectangle); //RectangleToScree는 화면 상 좌표를 읽음, ClientRectangle는 그림의 크기를 읽음 
 
+                // 비트맵 생성
+                Bitmap bmp = new Bitmap(captureRectangle.Width, captureRectangle.Height);
+
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    // 특정 영역을 캡쳐
+                    g.CopyFromScreen(captureRectangle.Location, Point.Empty, captureRectangle.Size);
+                }
+
+                string pid = "0000-00-00";
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
+                if (Value.Length > 0)
+                {
+                    pid = Value[0][0];
+                }
+                Directory.CreateDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid);
+                // 저장할 파일 경로 설정
+                string ImageName = "/threejs/public/print/img/" + pid + "/" + Num + ".png";
+                string imagePath = Program.gPath + ImageName; // 최종 경로
+
+
+                // 비트맵을 파일로 저장
+                bmp.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("오류 발생: " + ex.Message);
+            }
+        }
         private void Save_button_Click(object sender, EventArgs e)
         {
             if (Name_f == null || Name_f.Length == 0)
@@ -3124,6 +3159,7 @@ namespace main.contents
             else if (CSource == null || CSource.Length == 0) MessageBox.Show(" 냉방 열원을 선택해 주세요.");
             else
             {
+                Save_Image();
                 Save();
             }
 
