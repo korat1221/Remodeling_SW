@@ -608,7 +608,6 @@ namespace main.contents
                 }
                 else
                 {
-                    Boiler_dataGridView.Rows[0].Cells[10].Value = nonSplit;
                 }
             }
             else { return; }
