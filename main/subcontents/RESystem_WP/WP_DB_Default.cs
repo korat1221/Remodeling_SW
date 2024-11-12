@@ -10,13 +10,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 
-
-
 namespace main.subcontents.RESystem_WP
 {
     public partial class WP_DB : Form
     {
-
+        
         double Count_WPDB;
         public string SelectWP;
         int SelectRow;
@@ -27,6 +25,17 @@ namespace main.subcontents.RESystem_WP
         public WP_DB(string defaultUse)
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+
+            
+            //pictureBox1.Load(Program.gPath + @"\images\" + @"\WindPower\" + @"image (6)" + @".png");
+            pictureBox5.Load(Program.gPath + @"\images\" + @"\WindPower\" + @"image (8)" + @".png");
+            pictureBox2.Load(Program.gPath + @"\images\" + @"\WindPower\" + @"image (7)" + @".png");
+            pictureBox3.Load(Program.gPath + @"\images\" + @"\WindPower\" + @"image (1)" + @".png");
+            pictureBox4.Load(Program.gPath + @"\images\" + @"\WindPower\" + @"image (2)" + @".png");
+            pictureBox6.Load(Program.gPath + @"\images\" + @"\WindPower\" + @"image (3)" + @".png");
+            pictureBox7.Load(Program.gPath + @"\images\" + @"\WindPower\" + @"image (4)" + @".png");
+            pictureBox8.Load(Program.gPath + @"\images\" + @"\WindPower\" + @"image (5)" + @".png");
+
             DefaultUse = defaultUse;
             load_table_WPDB();
 
@@ -47,74 +56,38 @@ namespace main.subcontents.RESystem_WP
             WP_dataGridView.Columns.Add("A4", "제조사");
             WP_dataGridView.Columns.Add("A5", "타입");
             WP_dataGridView.Columns.Add("A6", "세부타입");
-            WP_dataGridView.Columns.Add("A7", "정격출력");
-            WP_dataGridView.Columns.Add("A8", "회전면적");
-            WP_dataGridView.Columns.Add("A9", "허브높이");
-            WP_dataGridView.Columns.Add("A10", "시동풍속");
-            WP_dataGridView.Columns.Add("A11", "종단풍속");
-            WP_dataGridView.Columns.Add("A12", "최적풍속");
-            WP_dataGridView.Columns.Add("A13", "전력계수.시동풍속.Cp,min");
-            WP_dataGridView.Columns.Add("A14", "전력계수.최적풍속.Cp,op");
-            WP_dataGridView.Columns.Add("A15", "전력계수.종단풍속.Cp,max");
+            WP_dataGridView.Columns.Add("A7", "정격출력.[Kw]");
+            WP_dataGridView.Columns.Add("A8", "회전면적.[㎡]");
+            WP_dataGridView.Columns.Add("A9", "허브높이.[m]");
+            WP_dataGridView.Columns.Add("A10", "시동풍속.[m/s]");
+            WP_dataGridView.Columns.Add("A11", "최적풍속.[m/s]");
+            WP_dataGridView.Columns.Add("A12", "종단풍속.[m/s]");
+            WP_dataGridView.Columns.Add("A13", "전력계수.시동풍속.[-]");
+            WP_dataGridView.Columns.Add("A14", "전력계수.최적풍속.[-]");
+            WP_dataGridView.Columns.Add("A15", "전력계수.종단풍속.[-]");
 
 
-            if (DefaultUse == "기본DB 적용")
+
+            string[][] WP = Program.DB.getValue(DB.type.BaseDB_RESystem, "풍력DB", "번호,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,최적풍속,종단풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수", "");
+            for (int n = 0; n < WP.Length; n++)
             {
-                string[][] WP = Program.DB.getValue(DB.type.BaseDB_RESystem, "풍력DB", "번호,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,최적풍속,종단풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수", "");
-                for (int n = 0; n < WP.Length; n++)
-                {
-                    WP_dataGridView.Rows.Add();
-                    WP_dataGridView.Rows[n].Cells[1].Value = WP[n][0];
-                    WP_dataGridView.Rows[n].Cells[2].Value = WP[n][1];
-                    WP_dataGridView.Rows[n].Cells[3].Value = WP[n][2];
-                    WP_dataGridView.Rows[n].Cells[4].Value = WP[n][3];
-                    WP_dataGridView.Rows[n].Cells[5].Value = WP[n][4];
-                    WP_dataGridView.Rows[n].Cells[6].Value = WP[n][5];
-                    WP_dataGridView.Rows[n].Cells[7].Value = WP[n][6];
-                    WP_dataGridView.Rows[n].Cells[8].Value = WP[n][7];
-                    WP_dataGridView.Rows[n].Cells[9].Value = WP[n][8];
-                    WP_dataGridView.Rows[n].Cells[10].Value = WP[n][9];
-                    WP_dataGridView.Rows[n].Cells[11].Value = WP[n][10];
-                    WP_dataGridView.Rows[n].Cells[12].Value = WP[n][11];
-                    WP_dataGridView.Rows[n].Cells[13].Value = WP[n][12];
-                    WP_dataGridView.Rows[n].Cells[14].Value = WP[n][13];
-                    WP_dataGridView.Rows[n].Cells[15].Value = WP[n][14];
-                }
+                WP_dataGridView.Rows.Add();
+                WP_dataGridView.Rows[n].Cells[1].Value = WP[n][0];
+                WP_dataGridView.Rows[n].Cells[2].Value = WP[n][1];
+                WP_dataGridView.Rows[n].Cells[3].Value = WP[n][2];
+                WP_dataGridView.Rows[n].Cells[4].Value = WP[n][3];
+                WP_dataGridView.Rows[n].Cells[5].Value = WP[n][4];
+                WP_dataGridView.Rows[n].Cells[6].Value = WP[n][5];
+                WP_dataGridView.Rows[n].Cells[7].Value = WP[n][6];
+                WP_dataGridView.Rows[n].Cells[8].Value = WP[n][7];
+                WP_dataGridView.Rows[n].Cells[9].Value = WP[n][8];
+                WP_dataGridView.Rows[n].Cells[10].Value = WP[n][9];
+                WP_dataGridView.Rows[n].Cells[11].Value = WP[n][10];
+                WP_dataGridView.Rows[n].Cells[12].Value = WP[n][11];
+                WP_dataGridView.Rows[n].Cells[13].Value = WP[n][12];
+                WP_dataGridView.Rows[n].Cells[14].Value = WP[n][13];
+                WP_dataGridView.Rows[n].Cells[15].Value = WP[n][14];
             }
-            else
-            {
-                //사용자 DB 추가
-                try
-                {
-                    //string[][] User_WP = Program.DB.getValue(DB.type.ProjDB, "User_WP", "번호,DB유형,제품명,제조사,제작년도,CELLTYPE,Kpk,가로길이,세로길이,정격출력", "");
-                    string[][] User_WP = Program.DB.getValue(DB.type.ProjDB, "User_WP", "번호,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,최적풍속,종단풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수", "");
-                    for (int n = 0; n < User_WP.Length; n++)
-                    {
-                        WP_dataGridView.Rows.Add();
-                        WP_dataGridView.Rows[n].Cells[1].Value = User_WP[n][0];
-                        WP_dataGridView.Rows[n].Cells[2].Value = User_WP[n][1];
-                        WP_dataGridView.Rows[n].Cells[3].Value = User_WP[n][2];
-                        WP_dataGridView.Rows[n].Cells[4].Value = User_WP[n][3];
-                        WP_dataGridView.Rows[n].Cells[5].Value = User_WP[n][4];
-                        WP_dataGridView.Rows[n].Cells[6].Value = User_WP[n][5];
-                        WP_dataGridView.Rows[n].Cells[7].Value = User_WP[n][6];
-                        WP_dataGridView.Rows[n].Cells[8].Value = User_WP[n][7];
-                        WP_dataGridView.Rows[n].Cells[9].Value = User_WP[n][8];
-                        WP_dataGridView.Rows[n].Cells[10].Value = User_WP[n][9];
-                        WP_dataGridView.Rows[n].Cells[11].Value = User_WP[n][10];
-                        WP_dataGridView.Rows[n].Cells[12].Value = User_WP[n][11];
-                        WP_dataGridView.Rows[n].Cells[13].Value = User_WP[n][12];
-                        WP_dataGridView.Rows[n].Cells[14].Value = User_WP[n][13];
-                        WP_dataGridView.Rows[n].Cells[15].Value = User_WP[n][14];
-                    }
-                }
-                catch { }
-            }
-
-        }
-        private void WP_DB_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void WP_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -144,8 +117,6 @@ namespace main.subcontents.RESystem_WP
             }
 
         }
-
-
 
         private void Save_button_Click(object sender, EventArgs e)
         {

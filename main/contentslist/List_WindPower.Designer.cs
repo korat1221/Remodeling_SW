@@ -163,7 +163,6 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "List_WindPower";
             Text = "Form3";
-            VisibleChanged += List_WindPower_VisibleChanged;
             GeneralPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();

@@ -20,7 +20,6 @@ namespace main.contentslist
         String Num;
         double CountDB;
         int SelectRow;
-        // DataTable ListTable = new DataTable();
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
 
         public List_WindPower()
@@ -74,9 +73,12 @@ namespace main.contentslist
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             dataGridView1.Columns.Add(checkBoxColumn);
+            dataGridView1.Columns.Add("A1", "번호");
+            dataGridView1.Columns.Add("A2", "명칭");
             dataGridView1.Columns.Add("A1", "유형");
-            dataGridView1.Columns.Add("A2", "용량.[kW]");
-            dataGridView1.Columns.Add("A3", "효율.[%]");
+            dataGridView1.Columns.Add("A2", "정격풍력.[kW]");
+            dataGridView1.Columns.Add("A2", "최적풍속.[m/s]");
+            dataGridView1.Columns.Add("A3", "인버터효율.[%]");
             dataGridView1.Columns[0].Width = 40;
         }
 
@@ -99,22 +101,75 @@ namespace main.contentslist
                 return true;
             }
         }
+        public void load_table()
+        {
+            dataGridView1.Rows.Clear();
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "WindPower_Form", "번호,명칭", "");
+            if (Value.Length > 0)
+            {
+                for (int n = 0; n < Value.Length; n++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[n].Cells[1].Value = Value[n][0];
+                    dataGridView1.Rows[n].Cells[2].Value = Value[n][1];
+                }        
+            }
+        }
         public void load_List()
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭", "");
-            List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            List<object> subMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            for (int n = 0; n < Value.Length; n++)
-            {
-                subMenu.Add(new { text = Value[n][0] + "." + Value[n][1], id = "{\\\"formID\\\":23,\\\"ID\\\":\\\"" + Value[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            }
-            mainMenu.Add(new { text = "풍력시스템", id = "{\\\"formID\\\":23,\\\"ID\\\":\\\"SOLAR_3\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            load_table();
+            List<object> subMenu = new List<object>();
+            List<object> pvsubMenu = new List<object>();
+            List<object> fuelcellsubMenu = new List<object>();
+            List<object> wpsubMenu = new List<object>();
 
-            CountDB = Value.Length;
+            dataGridView1.Rows.Clear();
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "WindPower_Form", "번호,명칭", "");
+            if (Value.Length > 0)
+            {
+                for (int n = 0; n < Value.Length; n++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[n].Cells[1].Value = Value[n][0];
+                    dataGridView1.Rows[n].Cells[2].Value = Value[n][1];
+                }
+                Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "번호,명칭", "");
+                if (Value.Length > 0)
+                {
+                    for (int n = 0; n < Value.Length; n++)
+                    {
+                        pvsubMenu.Add(new { text = Value[n][0] + "." + Value[n][1], id = "{\\\"formID\\\":21,\\\"ID\\\":\\\"" + Value[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당  
+                    }
+                }
+                Value = Program.DB.getValue(DB.type.ProjDB, "FuelCell_Form", "번호,명칭", "");
+                if (Value.Length > 0)
+                {
+                    for (int n = 0; n < Value.Length; n++)
+                    {
+                        fuelcellsubMenu.Add(new { text = Value[n][0] + "." + Value[n][1], id = "{\\\"formID\\\":22,\\\"ID\\\":\\\"" + Value[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당  
+                    }
+                }
+                Value = Program.DB.getValue(DB.type.ProjDB, "WindPower_Form", "번호,명칭", "");
+                if (Value.Length > 0)
+                {
+                    for (int n = 0; n < Value.Length; n++)
+                    {
+                        wpsubMenu.Add(new { text = Value[n][0] + "." + Value[n][1], id = "{\\\"formID\\\":23,\\\"ID\\\":\\\"" + Value[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당  
+                    }
+                }
+                subMenu.Add(new { text = "태양광시스템", id = "{\\\"formID\\\":53,\\\"ID\\\":\\\"SOLAR_1\\\"}", children = pvsubMenu.ToArray() }); // 예시 코드: 메인 메뉴 동적 할당
+                subMenu.Add(new { text = "연료전지", id = "{\\\"formID\\\":54,\\\"ID\\\":\\\"SOLAR_2\\\"}", children = fuelcellsubMenu.ToArray() });  // 예시 코드: 메인 메뉴 동적 할당
+                subMenu.Add(new { text = "풍력시스템", id = "{\\\"formID\\\":55,\\\"ID\\\":\\\"SOLAR_3\\\"}", children = wpsubMenu.ToArray() });  // 예시 코드: 메인 메뉴 동적 할당
+                subMenu.Add(new { text = "공급의무비율", id = "{\\\"formID\\\":24,\\\"ID\\\":\\\"SOLAR_4\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                subMenu.Add(new { text = "에너지자립률", id = "{\\\"formID\\\":25,\\\"ID\\\":\\\"SOLAR_5\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+           
+                Program.UTIL.resetMainTree(4, 4, subMenu.ToArray(), "55"); // 예시 코드: 메인 메뉴 동적 할당
+
+            }
         }
         private void Add_button_Click(object sender, EventArgs e)
         {
-            Num = Program.UTIL.CreateNum("HeatingSystem_Form", "번호", "HS");
+            Num = Program.UTIL.CreateNum("WindPower_Form", "번호", "WP");
 
             Program.getMenuForm().ResetForm(23);
 
@@ -129,9 +184,8 @@ namespace main.contentslist
                 if (k > -1)
                 {
                     String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                    Program.DB.deleteValue(DB.type.ProjDB, "HeatingSystem_Form", "번호 ='" + Delete_Num + "'");
-                    load_List();
-
+                    Program.DB.deleteValue(DB.type.ProjDB, "WindPower_Form", "번호 ='" + Delete_Num + "'");
+                    load_List(); 
                 }
             }
         }
@@ -148,14 +202,14 @@ namespace main.contentslist
 
         private void Copy_button_Click(object sender, EventArgs e)
         {
-            Num = Program.UTIL.CreateNum("HeatingSystem_Form", "번호", "HS");
+            Num = Program.UTIL.CreateNum("WindPower_Form", "번호", "WP");
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
                 String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
 
-                Program.DB.CopyValue(DB.type.ProjDB, "HeatingSystem_Form", "번호 ='" + Copy_Num + "'", Num);
-                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  HeatingSystem_Form" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
+                Program.DB.CopyValue(DB.type.ProjDB, "WindPower_Form", "번호 ='" + Copy_Num + "'", Num);
+                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  WindPower_Form" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
                 Load_form(Num, "Copy");
 
             }
@@ -164,14 +218,6 @@ namespace main.contentslist
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
-        }
-
-        private void List_WindPower_VisibleChanged(object sender, EventArgs e)
-        {
-            if (main.MainContents.currentForm == main.MainContents.FormID.List_WindPower)
-            {
-                //MessageBox.Show("풍력시스템 화면은 아직 작업 중입니다.");
-            }
         }
     }
 }
