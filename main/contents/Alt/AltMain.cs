@@ -151,7 +151,8 @@ namespace main.contents.Alt
                 AltName = Load[0][0];
                 Cost_Total = Convert.ToDouble(Load[0][1]);
                 CostTotal_textBox.Text = Cost_Total.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(CostTotal_textBox, true, 0);
+                Program.UTIL.textBox_doubleComa(CostTotal_textBox, true, 0);
+                Program.UTIL.textBox_doubleComa(CostTotal_textBox, true, 0);
                 if (Cost_Total > 0)
                 {
                     Calc_NetCost(Cost_Total);
@@ -462,8 +463,7 @@ namespace main.contents.Alt
         }
         private void CostTotal_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(CostTotal_textBox, false, 0);
-            Cost_Total = textbox.text;
+            Cost_Total =  Program.UTIL.textBox_doubleComa(CostTotal_textBox, false, 0);
         }
         private void Calc_NetCost(double CostTotal)
         {

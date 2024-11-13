@@ -436,7 +436,7 @@ namespace main.contents
                     Cwirk_total = 150;
                 }
                 Cwirk_textBox.Text = Cwirk_total.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Cwirk_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Cwirk_textBox, true, 2);
             }
             else
             {
@@ -631,7 +631,7 @@ namespace main.contents
                 }
                 Calc_Cwirk_all();
                 Cwirk_textBox.Text = Cwirk_total.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Cwirk_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Cwirk_textBox, true, 2);
 
             }
 

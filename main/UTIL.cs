@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.Schema;
 
@@ -10,6 +11,10 @@ namespace main
 {
     internal class UTIL
     {
+        int NumberDecimal = 0;
+        private TextBox textBox;
+        private DataGridView dataGridView;
+        public double textdouble = 0;
         public bool fromCode = false;
         public bool ffCode = false;
         private static UTIL inst = new UTIL();
@@ -347,7 +352,195 @@ namespace main
             File.Delete(path2 + "\\" + fname);
             File.WriteAllText(path2 + "\\" + fname, data);
         }
+        public string doubleComa(string s)
+        {
+            s = s.Trim();
+            return s != "" ? Convert.ToDouble(s).ToString("#,###0") : "0";
+        }
+        private string NumberDecimalPlaces(int a, double Value)
+        {
+            string code = "";
+            if (Value < 1)
+            {
+                if (a == 0)
+                {
+                    code = "0";
+                }
+                else if (a == 1)
+                {
+                    code = "0.0";
+                }
+                else if (a == 2)
+                {
+                    code = "0.00";
+                }
+                else
+                {
+                    code = "0.000";
+                }
+            }
+            else
+            {
+                if (a == 0)
+                {
+                    code = "#,##0";
+                }
+                else if (a == 1)
+                {
+                    code = "#,#.#";
+                }
+                else if (a == 2)
+                {
+                    code = "#,#.##";
+                }
+                else
+                {
+                    code = "#,#.###";
+                }
 
+            }
+
+            return code;
+        }
+
+        #region textBox 숫자 입력 오류 
+        private void textBox_Leave(object sender, EventArgs e)
+        {
+            double value;
+            if (double.TryParse(textBox.Text, out value))
+            {
+                string code_N = NumberDecimalPlaces(NumberDecimal, value);
+                try
+                {
+                    textBox.Text = value.ToString(code_N);
+                }
+                catch
+                {
+                    textBox.Text = value.ToString();
+                }
+            }
+            else
+                textBox.Text = String.Empty;
+        }
+        public double textBox_doubleComa(TextBox textBox, bool LoadOrNot, int NumberDecimal)
+        {
+            this.textBox = textBox;
+            this.textBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            this.textBox.TextAlign = HorizontalAlignment.Center;
+            this.NumberDecimal = NumberDecimal;
+            this.textdouble = 0;
+
+            //Load일 경우 true,아니고 입력일 경우 false
+            if (LoadOrNot)
+            {
+                double value;
+                if (textBox.Text != null && textBox.Text.ToString() != "")
+                {
+                    if (double.TryParse(textBox.Text, out value) == true)
+                    {
+                        string code_N = NumberDecimalPlaces(NumberDecimal, value);
+                        textBox.Text = value.ToString(code_N);
+                        this.textdouble = Convert.ToDouble(textBox.Text.ToString());
+                    }
+                    else
+                    {
+                        textBox.Text = String.Empty;
+                    }
+                }
+            }
+            else
+            {
+                this.textBox.Leave += textBox_Leave;
+                double value;
+                if (textBox.Text != null && textBox.Text.ToString() != "")
+                {
+                    if (double.TryParse(textBox.Text, out value) == true)
+                    {
+                        this.textdouble = Convert.ToDouble(textBox.Text.ToString());
+                    }
+                    else
+                    {
+                        MessageBox.Show("숫자를 입력하세요.");
+                        textBox.Text = String.Empty;
+                    }
+                }
+            }
+            return this.textdouble;
+        }
+        #endregion
+        #region textBox 숫자 입력 오류 
+        public double dataGridView_doubleComa(DataGridView dataGridView, int row, int column, bool LoadOrNot, int NumberDecimal)
+        {
+            var cellValue = dataGridView.Rows[row].Cells[column].Value;
+            this.dataGridView = dataGridView;
+            this.NumberDecimal = NumberDecimal;
+            this.textdouble = 0;
+
+            //Load일 경우 true,아니고 입력일 경우 false
+            if (LoadOrNot)
+            {
+                if (cellValue != null && cellValue.ToString() != "")
+                {
+                    double parsedValue;
+                    if (double.TryParse(cellValue.ToString(), out parsedValue))
+                    {
+                        string code_N = NumberDecimalPlaces(NumberDecimal, parsedValue);
+                        dataGridView.Rows[row].Cells[column].Value = parsedValue.ToString(code_N);
+                        this.textdouble = Convert.ToDouble(cellValue.ToString());
+                    }
+                    else
+                    {
+                        dataGridView.Rows[row].Cells[column].Value = String.Empty;
+                    }
+                }
+            }
+            else
+            {
+                this.dataGridView.CellLeave += dataGridView_CellLeave;
+                double result;
+                if (cellValue != null && cellValue.ToString() != "")
+                {
+                    double parsedValue;
+                    if (double.TryParse(cellValue.ToString(), out parsedValue))
+                    {
+                        this.textdouble = Convert.ToDouble(cellValue.ToString());
+                    }
+                    else
+                    {
+                        MessageBox.Show("숫자를 입력하세요.");
+                        dataGridView.Rows[row].Cells[column].Value = String.Empty;
+                    }
+                }
+            }
+            return this.textdouble;
+        }
+        private void dataGridView_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            var cellValue = dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+
+            if (cellValue != null && cellValue.ToString() != "")
+            {
+                // cellValue가 숫자 형식인지 먼저 확인
+                double parsedValue;
+                if (double.TryParse(cellValue.ToString(), out parsedValue))
+                {
+                    string code_N = NumberDecimalPlaces(NumberDecimal, parsedValue);
+                    try
+                    {
+                        dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedValue.ToString(code_N);
+                    }
+                    catch
+                    {
+                        dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedValue.ToString();
+                    }
+                }
+                else
+                {
+                    dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = String.Empty;
+                }                   
+            }
+        }
+        #endregion 
         public string asFixed(string s)
         {
             s = s.Trim();

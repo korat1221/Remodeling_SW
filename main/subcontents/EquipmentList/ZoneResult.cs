@@ -130,22 +130,22 @@ namespace main.subcontents
             if(Qhb > 0) 
             {  
                 Qhb_textBox.Text = Qhb.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Qhb_textBox, true, 0);
+                Program.UTIL.textBox_doubleComa(Qhb_textBox, true, 0);
             }
             if (Qcb > 0)
             {
                 Qcb_textBox.Text = Qcb.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Qcb_textBox, true, 0);
+                Program.UTIL.textBox_doubleComa(Qcb_textBox, true, 0);
             }
             if (Qhmax > 0)
             {
                 Qhmax_textBox.Text = Qhmax.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Qhmax_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Qhmax_textBox, true, 2);
             }
             if (Qcmax > 0)
             {
                 Qcmax_textBox.Text = Qcmax.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Qcmax_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Qcmax_textBox, true, 2);
             }
         }
 

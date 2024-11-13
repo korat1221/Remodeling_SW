@@ -243,20 +243,17 @@ namespace main.subcontents
 
         private void width_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(width_textBox, false, 2);
-            width = textbox.text;
+            width = Program.UTIL.textBox_doubleComa(width_textBox, false, 2);
         }
 
         private void height_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(height_textBox, false, 2);
-            height = textbox.text;
+            height = Program.UTIL.textBox_doubleComa(height_textBox, false, 2);
         }
 
         private void percent_open_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(percent_open_textBox, false, 1);
-            percent_open = textbox.text;
+            percent_open = Program.UTIL.textBox_doubleComa(percent_open_textBox, false, 1);
             if (percent_open!= 0 && percent_open < 1)
             {
                 MessageBox.Show("퍼센트 단위로 입력하세요.(Ex : 90.1% ⇒ 90.1)");
@@ -265,20 +262,17 @@ namespace main.subcontents
 
         private void n_hori_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(n_hori_textBox, false, 0);
-            n_hori = textbox.text;
+            n_hori = Program.UTIL.textBox_doubleComa(n_hori_textBox, false, 0);
         }
 
         private void n_ver_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(n_ver_textBox, false, 0);
-            n_ver = textbox.text;
+            n_ver = Program.UTIL.textBox_doubleComa(n_ver_textBox, false, 0);
         }
 
         private void percent_panel_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(percent_panel_textBox, false, 1);
-            percent_panel = textbox.text;
+            percent_panel = Program.UTIL.textBox_doubleComa(percent_panel_textBox, false, 1);
             if (percent_panel != 0 && percent_panel < 1)
             {
                 MessageBox.Show("퍼센트 단위로 입력하세요.(Ex : 90.1% ⇒ 90.1)");
@@ -287,14 +281,12 @@ namespace main.subcontents
 
         private void door_width_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(door_width_textBox, false, 2);
-            door_width = textbox.text;
+            door_width = Program.UTIL.textBox_doubleComa(door_width_textBox, false, 2);
         }
 
         private void door_height_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(door_height_textBox, false, 2);
-            door_height = textbox.text;
+            door_height = Program.UTIL.textBox_doubleComa(door_height_textBox, false, 2);
         }
 
     }

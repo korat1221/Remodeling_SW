@@ -452,22 +452,19 @@ namespace main.subcontents
 
         private void UserDBFramedA_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(UserDBFramedA_textBox, false, 2);
-            UserDB_FramedA = textbox.text;
+            UserDB_FramedA = Program.UTIL.textBox_doubleComa(UserDBFramedA_textBox, false, 2);
             Calc_Uf();
         }
 
         private void UserDBFramedB_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(UserDBFramedB_textBox, false, 2);
-            UserDB_FramedB = textbox.text;
+            UserDB_FramedB = Program.UTIL.textBox_doubleComa(UserDBFramedB_textBox, false, 2);
             Calc_Uf();
         }
 
         private void UserDBFramedC_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(UserDBFramedC_textBox, false, 2);
-            UserDB_FramedC = textbox.text;
+            UserDB_FramedC = Program.UTIL.textBox_doubleComa(UserDBFramedC_textBox, false, 2);
             Calc_Uf();
         }
     }

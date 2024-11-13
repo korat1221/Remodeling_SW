@@ -44,7 +44,7 @@ namespace main.contents
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             InitializeAsync();
-           // webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);     /////////////////////////////////////그래프수정
+            // webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);     /////////////////////////////////////그래프수정
 
 
             지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
@@ -159,7 +159,7 @@ namespace main.contents
             }
         }
 
-        private void Load_WPDB(string SelectWPnonsplit )
+        private void Load_WPDB(string SelectWPnonsplit)
         {
             string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_WP", "번호,DB유형,제품명,제조사,정격출력,시동풍속,최적풍속,종단풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수,신규기존,타입,세부타입,회전면적,허브높이", "번호 =  '" + SelectWPnonsplit + "'");
             if (value.Length > 0)
@@ -225,7 +225,7 @@ namespace main.contents
             }
         }
 
-        private void Load_WPType_image(string Type,string SubType)
+        private void Load_WPType_image(string Type, string SubType)
         {
             if (Type == "수평형")
             {
@@ -279,7 +279,7 @@ namespace main.contents
             {
                 MessageBox.Show("풍력발전 시스템을 선택하세요.");
             }
-            else if(Inverter_textBox.Text == "")
+            else if (Inverter_textBox.Text == "")
             {
                 MessageBox.Show("인버터 제품을 선택하세요.");
             }
@@ -302,7 +302,7 @@ namespace main.contents
             }
             else
             {
-                Install = Convert.ToDouble(WP_dataGridView.Rows[0].Cells[13].Value);
+                Install = Program.UTIL.dataGridView_doubleComa(WP_dataGridView, 0, 13, true, 0);
                 h2 = Convert.ToDouble(h2_textBox.Text);
                 Condition = Condition_ComboBox.SelectedItem.ToString();
 
@@ -352,7 +352,7 @@ namespace main.contents
                 if (WP_dataGridView.Rows.Count > 0)
                 {
                     WP_dataGridView.Rows[0].Cells[13].Value = value[0][7];
-                }               
+                }
             }
 
             //인버터 null 아니면 효율 매치해서 불러오기 
@@ -363,8 +363,8 @@ namespace main.contents
                     string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "User_WPInverter", "EURO효율", "제품명='" + Inverter + "'");
                     if (value2.Length > 0)
                     {
-                        EURO_textBox.Text = value2[0][0];  
-                        Euro =  Convert.ToDouble(value2[0][0]);
+                        EURO_textBox.Text = value2[0][0];
+                        Euro = Convert.ToDouble(value2[0][0]);
                     }
                 }
                 else
@@ -386,7 +386,7 @@ namespace main.contents
             Num = null; Name = null; Inverter = null; Inverter_num = null;
             Euro = 0; h2 = 0;
             WP = null; Type = null; SubType = null; Condition = null;
-            RotateArea = 0; HerbHeight = 0; 
+            RotateArea = 0; HerbHeight = 0;
             Install = 0;
 
             WP_dataGridView.Rows.Clear();
@@ -402,7 +402,7 @@ namespace main.contents
             Typesub_textBox.Text = null;
             RotateArea_textBox.Text = null;
             HerbHeight_textBox.Text = null;
-         
+
         }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
@@ -473,6 +473,5 @@ namespace main.contents
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         #endregion
-
     }
 }

@@ -326,16 +326,16 @@ namespace main.contents
             }
 
             g_textBox.Text = g.ToString();
-            controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(g_textBox, true, 3);
+            Program.UTIL.textBox_doubleComa(g_textBox, true, 3);
             g2_textBox.Text = g.ToString();
-            controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(g2_textBox, true, 3);
+            Program.UTIL.textBox_doubleComa(g2_textBox, true, 3);
             g3_textBox.Text = g.ToString();
-            controls.ThousandsSeparator textbox4 = new controls.ThousandsSeparator(g3_textBox, true, 3);
+            Program.UTIL.textBox_doubleComa(g3_textBox, true, 3);
 
             τD65_SNA_textBox.Text = τD65_SNA.ToString();
-            controls.ThousandsSeparator textbox5 = new controls.ThousandsSeparator(τD65_SNA_textBox, true, 3);
+            Program.UTIL.textBox_doubleComa(τD65_SNA_textBox, true, 3);
             τD65_SNA2_textBox.Text = τD65_SNA.ToString();
-            controls.ThousandsSeparator textbox6 = new controls.ThousandsSeparator(τD65_SNA2_textBox, true, 3);
+            Program.UTIL.textBox_doubleComa(τD65_SNA2_textBox, true, 3);
         }
 
         private void Load_WindowType_image(String Type)
@@ -663,27 +663,27 @@ namespace main.contents
 
                     Uf_open = Convert.ToDouble(window_frameDB_form.Select_WindowFrame[5]);
                     Uf_open_textBox.Text = Uf_open.ToString();
-                    controls.ThousandsSeparator textbox11 = new controls.ThousandsSeparator(Uf_open_textBox, true, 2);
+                    Program.UTIL.textBox_doubleComa(Uf_open_textBox, true, 2);
 
                     Uf_fix = Convert.ToDouble(window_frameDB_form.Select_WindowFrame[6]);
                     Uf_fix_textBox.Text = Uf_fix.ToString();
-                    controls.ThousandsSeparator textbox12 = new controls.ThousandsSeparator(Uf_fix_textBox, true, 2);
+                    Program.UTIL.textBox_doubleComa(Uf_fix_textBox, true, 2);
 
                     Uf_btw = Convert.ToDouble(window_frameDB_form.Select_WindowFrame[7]);
                     Uf_btw_textBox.Text = Uf_btw.ToString();
-                    controls.ThousandsSeparator textbox13 = new controls.ThousandsSeparator(Uf_btw_textBox, true, 2);
+                    Program.UTIL.textBox_doubleComa(Uf_btw_textBox, true, 2);
 
                     df_open = Convert.ToDouble(window_frameDB_form.Select_WindowFrame[8]);
                     df_open_textBox.Text = df_open.ToString();
-                    controls.ThousandsSeparator textbox14 = new controls.ThousandsSeparator(df_open_textBox, true, 2);
+                    Program.UTIL.textBox_doubleComa(df_open_textBox, true, 2);
 
                     df_fix = Convert.ToDouble(window_frameDB_form.Select_WindowFrame[9]);
                     df_fix_textBox.Text = df_fix.ToString();
-                    controls.ThousandsSeparator textbox15 = new controls.ThousandsSeparator(df_fix_textBox, true, 2);
+                    Program.UTIL.textBox_doubleComa(df_fix_textBox, true, 2);
 
                     df_btw = Convert.ToDouble(window_frameDB_form.Select_WindowFrame[10]);
                     df_btw_textBox.Text = df_btw.ToString();
-                    controls.ThousandsSeparator textbox16 = new controls.ThousandsSeparator(df_btw_textBox, true, 2);
+                    Program.UTIL.textBox_doubleComa(df_btw_textBox, true, 2);
 
                     Calc_Uw2by2();
 
@@ -734,21 +734,21 @@ namespace main.contents
 
                     Ug = Convert.ToDouble(window_doubleglassDB_form.Select_WindowGlass[6]);
                     Ug_textBox.Text = Ug.ToString();
-                    controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Ug_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(Ug_textBox, true, 3);
 
                     g = Convert.ToDouble(window_doubleglassDB_form.Select_WindowGlass[7]);
                     g_textBox.Text = g.ToString();
-                    controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(g_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(g_textBox, true, 3);
                     g2_textBox.Text = g.ToString();
-                    controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(g2_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(g2_textBox, true, 3);
                     g3_textBox.Text = g.ToString();
-                    controls.ThousandsSeparator textbox4 = new controls.ThousandsSeparator(g3_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(g3_textBox, true, 3);
 
                     τD65_SNA = Convert.ToDouble(window_doubleglassDB_form.Select_WindowGlass[8]);
                     τD65_SNA_textBox.Text = τD65_SNA.ToString();
-                    controls.ThousandsSeparator textbox5 = new controls.ThousandsSeparator(τD65_SNA_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(τD65_SNA_textBox, true, 3);
                     τD65_SNA2_textBox.Text = τD65_SNA.ToString();
-                    controls.ThousandsSeparator textbox6 = new controls.ThousandsSeparator(τD65_SNA2_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(τD65_SNA2_textBox, true, 3);
 
                     Calc_g_AdditionalWindow(); //덧댐일 경우 
                     Calc_Uw2by2();
@@ -785,17 +785,17 @@ namespace main.contents
                     τD65_SNA = Convert.ToDouble(window_glassDB_form.Select_Glass[8]);
 
                     Ug_textBox.Text = Ug.ToString();
-                    controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Ug_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(Ug_textBox, true, 3);
                     g_textBox.Text = g.ToString();
-                    controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(g_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(g_textBox, true, 3);
                     g2_textBox.Text = g.ToString();
-                    controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(g2_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(g2_textBox, true, 3);
                     g3_textBox.Text = g.ToString();
-                    controls.ThousandsSeparator textbox4 = new controls.ThousandsSeparator(g3_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(g3_textBox, true, 3);
                     τD65_SNA_textBox.Text = τD65_SNA.ToString();
-                    controls.ThousandsSeparator textbox5 = new controls.ThousandsSeparator(τD65_SNA_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(τD65_SNA_textBox, true, 3);
                     τD65_SNA2_textBox.Text = τD65_SNA.ToString();
-                    controls.ThousandsSeparator textbox6 = new controls.ThousandsSeparator(τD65_SNA2_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(τD65_SNA2_textBox, true, 3);
 
                     Calc_g_AdditionalWindow();
                     Calc_Uw2by2();
@@ -853,10 +853,10 @@ namespace main.contents
                         Psi_g_open = Convert.ToDouble(form.Select_WindowSpacer[7]);
                     }
                     Psi_g_fix_textBox.Text =  Psi_g_fix.ToString();
-                    controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Psi_g_fix_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(Psi_g_fix_textBox, true, 3);
 
                     Psi_g_open_textBox.Text = Psi_g_open.ToString();
-                    controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(Psi_g_open_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(Psi_g_open_textBox, true, 3);
                     Calc_Uw2by2();
                 }
             }
@@ -911,11 +911,11 @@ namespace main.contents
                         Psi_InstallButtom = Convert.ToDouble(window_installDB_form.Select_WindowInstall[8]);
 
                         Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
-                        controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Psi_InstallTop_textBox, true, 3);
+                        Program.UTIL.textBox_doubleComa(Psi_InstallTop_textBox, true, 3);
                         Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
-                        controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(Psi_InstallSide_textBox, true, 3);
+                        Program.UTIL.textBox_doubleComa(Psi_InstallSide_textBox, true, 3);
                         Psi_InstallButtom_textBox.Text = Psi_InstallButtom.ToString();
-                        controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(Psi_InstallButtom_textBox, true, 3);
+                        Program.UTIL.textBox_doubleComa(Psi_InstallButtom_textBox, true, 3);
 
 
                         string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");
@@ -950,11 +950,11 @@ namespace main.contents
                         Psi_InstallButtom = Convert.ToDouble(window_installDB_form.Select_WindowInstall[8]);
 
                         Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
-                        controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Psi_InstallTop_textBox, true, 3);
+                        Program.UTIL.textBox_doubleComa(Psi_InstallTop_textBox, true, 3);
                         Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
-                        controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(Psi_InstallSide_textBox, true, 3);
+                        Program.UTIL.textBox_doubleComa(Psi_InstallSide_textBox, true, 3);
                         Psi_InstallButtom_textBox.Text = Psi_InstallButtom.ToString();
-                        controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(Psi_InstallButtom_textBox, true, 3);
+                        Program.UTIL.textBox_doubleComa(Psi_InstallButtom_textBox, true, 3);
 
 
                         string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");
@@ -990,9 +990,9 @@ namespace main.contents
                     {
                         Uw = Convert.ToDouble(Uvalue[0][0]);
                         Uw2_textBox.Text = Uw.ToString();
-                        controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Uw2_textBox, true, 3);
+                        Program.UTIL.textBox_doubleComa(Uw2_textBox, true, 3);
                         Uw3_textBox.Text = Uw.ToString();
-                        controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(Uw3_textBox, true, 3);
+                        Program.UTIL.textBox_doubleComa(Uw3_textBox, true, 3);
                     }
                 }
                 SingleDoubleType = "단창";
@@ -1020,9 +1020,9 @@ namespace main.contents
             {
                 Uw = Uwcalc;
                 Uw2_textBox.Text = Uw.ToString();
-                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Uw2_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(Uw2_textBox, true, 3);
                 Uw3_textBox.Text = Uw.ToString();
-                controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(Uw3_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(Uw3_textBox, true, 3);
             }
         }
         public double Calc_Uw(double Area, double Width, double Height, double Ag_fix, double Ag_open, double Af_open, double Af_fix, double Af_btw, double Lg_fix, double Lg_open)
@@ -1318,76 +1318,76 @@ namespace main.contents
 
                 g = Convert.ToDouble(Load[0][16]);
                 g_textBox.Text = g.ToString();
-                controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(g_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(g_textBox, true, 3);
                 g2_textBox.Text = g.ToString();
-                controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(g2_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(g2_textBox, true, 3);
                 g3_textBox.Text = g.ToString();
-                controls.ThousandsSeparator textbox4 = new controls.ThousandsSeparator(g3_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(g3_textBox, true, 3);
 
                 τD65_SNA = Convert.ToDouble(Load[0][17]);
                 τD65_SNA_textBox.Text = τD65_SNA.ToString();
-                controls.ThousandsSeparator textbox5 = new controls.ThousandsSeparator(τD65_SNA_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(τD65_SNA_textBox, true, 3);
                 τD65_SNA2_textBox.Text = τD65_SNA.ToString();
-                controls.ThousandsSeparator textbox6 = new controls.ThousandsSeparator(τD65_SNA2_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(τD65_SNA2_textBox, true, 3);
 
                 Psi_g_fix = Convert.ToDouble(Load[0][18]);
                 Psi_g_fix_textBox.Text = Psi_g_fix.ToString();
-                controls.ThousandsSeparator textbox21 = new controls.ThousandsSeparator(Psi_g_fix_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(Psi_g_fix_textBox, true, 3);
 
                 Psi_g_open = Convert.ToDouble(Load[0][19]);
                 Psi_g_open_textBox.Text = Psi_g_open.ToString();
-                controls.ThousandsSeparator textbox22 = new controls.ThousandsSeparator(Psi_g_open_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(Psi_g_open_textBox, true, 3);
 
                 Psi_InstallTop = Convert.ToDouble(Load[0][20]);
                 Psi_InstallSide = Convert.ToDouble(Load[0][21]);
                 Psi_InstallButtom = Convert.ToDouble(Load[0][22]);
                 Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
-                controls.ThousandsSeparator textbox23 = new controls.ThousandsSeparator(Psi_InstallTop_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(Psi_InstallTop_textBox, true, 3);
                 Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
-                controls.ThousandsSeparator textbox24 = new controls.ThousandsSeparator(Psi_InstallSide_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(Psi_InstallSide_textBox, true, 3);
                 Psi_InstallButtom_textBox.Text = Psi_InstallButtom.ToString();
-                controls.ThousandsSeparator textbox25 = new controls.ThousandsSeparator(Psi_InstallButtom_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(Psi_InstallButtom_textBox, true, 3);
 
                 Uw = Convert.ToDouble(Load[0][23]);
                 if (UwMethod == "계산")
                 {
                     Uw2_textBox.Text = Uw.ToString();
-                    controls.ThousandsSeparator textbox111 = new controls.ThousandsSeparator(Uw2_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(Uw2_textBox, true, 3);
 
                     Uw3_textBox.Text = Uw.ToString();
-                    controls.ThousandsSeparator textbox112 = new controls.ThousandsSeparator(Uw3_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(Uw3_textBox, true, 3);
                 }
                 else
                 {
                     Uw2_textBox.Text = Uw.ToString();
-                    controls.ThousandsSeparator textbox111 = new controls.ThousandsSeparator(Uw2_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(Uw2_textBox, true, 3);
 
                     Uw3_textBox.Text =  Uw.ToString();
-                    controls.ThousandsSeparator textbox112 = new controls.ThousandsSeparator(Uw3_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(Uw3_textBox, true, 3);
                 }
                 Uf_open = Convert.ToDouble(Load[0][24]);
                 Uf_open_textBox.Text =  Uf_open.ToString();
-                controls.ThousandsSeparator textbox11 = new controls.ThousandsSeparator(Uf_open_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Uf_open_textBox, true, 2);
 
                 Uf_fix = Convert.ToDouble(Load[0][25]);
                 Uf_fix_textBox.Text =  Uf_fix.ToString();
-                controls.ThousandsSeparator textbox12 = new controls.ThousandsSeparator(Uf_fix_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Uf_fix_textBox, true, 2);
 
                 Uf_btw = Convert.ToDouble(Load[0][26]);
                 Uf_btw_textBox.Text =  Uf_btw.ToString();
-                controls.ThousandsSeparator textbox13 = new controls.ThousandsSeparator(Uf_btw_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Uf_btw_textBox, true, 2);
 
                 df_open = Convert.ToDouble(Load[0][27]);
                 df_open_textBox.Text =  df_open.ToString();
-                controls.ThousandsSeparator textbox14 = new controls.ThousandsSeparator(df_open_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(df_open_textBox, true, 2);
 
                 df_fix = Convert.ToDouble(Load[0][28]);
                 df_fix_textBox.Text =  df_fix.ToString();
-                controls.ThousandsSeparator textbox15 = new controls.ThousandsSeparator(df_fix_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(df_fix_textBox, true, 2);
 
                 df_btw = Convert.ToDouble(Load[0][29]);
                 df_btw_textBox.Text =  df_btw.ToString();
-                controls.ThousandsSeparator textbox16 = new controls.ThousandsSeparator(df_btw_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(df_btw_textBox, true, 2);
 
                 ImportSize();
                 Calc_Uw2by2();

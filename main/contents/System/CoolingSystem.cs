@@ -278,11 +278,11 @@ namespace main.contents
             CZ_MaxCoolingLoad_Textbox.Visible = true;
 
             CZ_AnnualCoolingNeed_Textbox.Text = QC_a_z.ToString();
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(CZ_AnnualCoolingNeed_Textbox, true, 0);
+            Program.UTIL.textBox_doubleComa(CZ_AnnualCoolingNeed_Textbox, true, 0);
             CZ_FloorArea_Textbox.Text = A_z.ToString();
-            controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(CZ_FloorArea_Textbox, true, 2);
+            Program.UTIL.textBox_doubleComa(CZ_FloorArea_Textbox, true, 2);
             CZ_MaxCoolingLoad_Textbox.Text = QC_max_z.ToString();
-            controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(CZ_MaxCoolingLoad_Textbox, true, 2);
+            Program.UTIL.textBox_doubleComa(CZ_MaxCoolingLoad_Textbox, true, 2);
         }
 
         private void Ahumainwrite()
@@ -323,11 +323,11 @@ namespace main.contents
             CA_MaxCoolingLoad_Textbox.Visible = true;
 
             CA_AnnualCoolingNeed_Textbox.Text = QC_a_Ahu.ToString();
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(CA_AnnualCoolingNeed_Textbox, true, 0);
+            Program.UTIL.textBox_doubleComa(CA_AnnualCoolingNeed_Textbox, true, 0);
             CA_FloorArea_Textbox.Text = A_Ahu.ToString();
-            controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(CA_FloorArea_Textbox, true, 2);
+            Program.UTIL.textBox_doubleComa(CA_FloorArea_Textbox, true, 2);
             CA_MaxCoolingLoad_Textbox.Text = QC_max_Ahu.ToString();
-            controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(CA_MaxCoolingLoad_Textbox, true, 2);
+            Program.UTIL.textBox_doubleComa(CA_MaxCoolingLoad_Textbox, true, 2);
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -894,11 +894,11 @@ namespace main.contents
             PowerTotal = Power_f;
             EERTotal = EER_f;
             PowerTotal_textBox.Text = Power_f.ToString();
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PowerTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(PowerTotal_textBox, true, 1);
             EERTotal_textBox.Text = EER_f.ToString();
-            controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(EERTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(EERTotal_textBox, true, 1);
             InstallTotal_textBox.Text = Number_f.ToString();
-            controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(InstallTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(InstallTotal_textBox, true, 1);
 
             G_label.Visible = true;
             G_label.Text = string.Format("설치대수: {0}", Number_f);
@@ -1193,11 +1193,11 @@ namespace main.contents
             PowerTotal = Power_f;
             EERTotal = EER_f;
             PowerTotal_textBox.Text = Power_f.ToString();
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PowerTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(PowerTotal_textBox, true, 1);
             EERTotal_textBox.Text = EER_f.ToString();
-            controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(EERTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(EERTotal_textBox, true, 1);
             InstallTotal_textBox.Text = Number_f.ToString();
-            controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(InstallTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(InstallTotal_textBox, true, 1);
         }
 
         private void AirCooler_ReList()//로드시리스트작성하기
@@ -1447,11 +1447,11 @@ namespace main.contents
             PowerTotal = Power_f;
             EERTotal = EER_f;
             PowerTotal_textBox.Text = Power_f.ToString();
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PowerTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(PowerTotal_textBox, true, 1);
             EERTotal_textBox.Text = EER_f.ToString();
-            controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(EERTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(EERTotal_textBox, true, 1);
             InstallTotal_textBox.Text = Number_f.ToString();
-            controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(InstallTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(InstallTotal_textBox, true, 1);
             //냉수입구온도, 출구온도 글씨 작성
         }
 
@@ -1696,11 +1696,11 @@ namespace main.contents
             PowerTotal = Power_f;
             EERTotal = EER_f;
             PowerTotal_textBox.Text = Power_f.ToString();
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PowerTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(PowerTotal_textBox, true, 1);
             EERTotal_textBox.Text = EER_f.ToString();
-            controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(EERTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(EERTotal_textBox, true, 1);
             InstallTotal_textBox.Text = Number_f.ToString();
-            controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(InstallTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(InstallTotal_textBox, true, 1);
             //냉수입구온도, 출구온도 글씨 작성
             if (source == "수평형")
             {
@@ -1956,11 +1956,11 @@ namespace main.contents
             PowerTotal = Power_f;
             EERTotal = EER_f;
             PowerTotal_textBox.Text = Power_f.ToString();
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PowerTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(PowerTotal_textBox, true, 1);
             EERTotal_textBox.Text = EER_f.ToString();
-            controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(EERTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(EERTotal_textBox, true, 1);
             InstallTotal_textBox.Text = Number_f.ToString();
-            controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(InstallTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(InstallTotal_textBox, true, 1);
             //냉수입구온도, 출구온도 글씨 작성
             if (source == "수평형")
             {
@@ -2196,11 +2196,11 @@ namespace main.contents
             PowerTotal = Power_f;
             EERTotal = EER_f;
             PowerTotal_textBox.Text = Power_f.ToString();
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PowerTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(PowerTotal_textBox, true, 1);
             EERTotal_textBox.Text = EER_f.ToString();
-            controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(EERTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(EERTotal_textBox, true, 1);
             InstallTotal_textBox.Text = Number_f.ToString();
-            controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(InstallTotal_textBox, true, 1);
+            Program.UTIL.textBox_doubleComa(InstallTotal_textBox, true, 1);
             //냉수입구온도, 출구온도 글씨 작성
         }
 

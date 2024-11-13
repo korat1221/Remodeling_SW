@@ -216,8 +216,7 @@ namespace main.contents
         {
             Pci_textBox.ForeColor = Color.Gray;
             //Pci_Value();
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Pci_textBox, false, 1);
-            Pci = textbox.text;
+            Pci = Program.UTIL.textBox_doubleComa(Pci_textBox, false, 1);
         }
 
 
@@ -372,7 +371,7 @@ namespace main.contents
                     Pj = Pn / A;
                 }
                 Pj_textbox.Text = Pj.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Pj_textbox, true, 2);
+                Program.UTIL.textBox_doubleComa(Pj_textbox, true, 2);
             }
             else
             {
@@ -384,7 +383,7 @@ namespace main.contents
         public void Pci_Value()
         {
             Pci_textBox.Text = Pci.ToString();
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Pj_textbox, true, 2);
+            Program.UTIL.textBox_doubleComa(Pj_textbox, true, 2);
             if (control == "일반제어")
             {
                 Pci = 0;
@@ -444,7 +443,7 @@ namespace main.contents
                     Fc = 1;
                 }
                 fc_textBox.Text = (Fc * Fo).ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(fc_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(fc_textBox, true, 2);
             }
             else
             {
@@ -458,7 +457,7 @@ namespace main.contents
         {
             LightType_textBox.Text = LightType;
             FL_textBox.Text = LightFL.ToString();
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(FL_textBox, true, 2);
+            Program.UTIL.textBox_doubleComa(FL_textBox, true, 2);
             L1_textBox.Text = LightType;
             L2_textBox.Text = LightType2;
             L4_textBox.Text = LightConverter;
@@ -616,42 +615,42 @@ namespace main.contents
             {
                 Window1_textBox.Text = facade_di;
                 WindowA_textBox.Text = Zone_f_Aca.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(WindowA_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(WindowA_textBox, true, 2);
 
                 Window_glass_textBox.Text = Main_glass;
                 Window_Tao_textBox.Text = f_τD65_SNA.ToString();
-                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Window_Tao_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(Window_Tao_textBox, true, 3);
 
                 bbd_textBox.Text = bd.ToString();
-                controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(bbd_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(bbd_textBox, true, 2);
 
                 aad_textBox.Text = ad.ToString();
-                controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(aad_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(aad_textBox, true, 2);
 
                 AD_textBox.Text = AD.ToString();
-                controls.ThousandsSeparator textbox4 = new controls.ThousandsSeparator(AD_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(AD_textBox, true, 2);
 
                 NA_textBox.Text = unAD.ToString();
-                controls.ThousandsSeparator textbox5 = new controls.ThousandsSeparator(NA_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(NA_textBox, true, 2);
             }
             else if (NaturalType == "천창")
             {
                 Window1_textBox.Text = roof_di;
                 WindowA_textBox.Text = r_Aca.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(WindowA_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(WindowA_textBox, true, 2);
 
                 Window_glass_textBox.Text = Main_glass;
                 Window_Tao_textBox.Text = r_τD65_SNA.ToString();
-                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Window_Tao_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(Window_Tao_textBox, true, 3);
 
                 bbd_textBox.Text = bd.ToString();
-                controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(bbd_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(bbd_textBox, true, 2);
                 aad_textBox.Text = ad.ToString();
-                controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(aad_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(aad_textBox, true, 2);
                 AD_textBox.Text = AD.ToString();
-                controls.ThousandsSeparator textbox4 = new controls.ThousandsSeparator(AD_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(AD_textBox, true, 2);
                 NA_textBox.Text = unAD.ToString();
-                controls.ThousandsSeparator textbox5 = new controls.ThousandsSeparator(NA_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(NA_textBox, true, 2);
             }
             else;
 
@@ -822,14 +821,14 @@ namespace main.contents
             {
                 direction_textBox.Text = facade_di;
                 Aca_textBox.Text = Zone_f_Aca.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Aca_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Aca_textBox, true, 2);
 
             }
             else if (NaturalType == "천창")
             {
                 direction_textBox.Text = roof_di;
                 Aca_textBox.Text = r_Aca.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Aca_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Aca_textBox, true, 2);
             }
             else
             {
@@ -1159,17 +1158,17 @@ namespace main.contents
 
                 Pj = Convert.ToDouble(Load[0][4]);
                 Pj_textbox.Text = Pj.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Pj_textbox, true, 2);
+                Program.UTIL.textBox_doubleComa(Pj_textbox, true, 2);
 
                 Pci = Convert.ToDouble(Load[0][5]);
                 Pci_textBox.Text = Pci.ToString();
-                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Pci_textBox, true, 1);
+                Program.UTIL.textBox_doubleComa(Pci_textBox, true, 1);
 
                 Fo = Convert.ToDouble(Load[0][6]);
 
                 Fc = Convert.ToDouble(Load[0][7]);
                 fc_textBox.Text = (Fc * Fo).ToString();
-                controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(fc_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(fc_textBox, true, 2);
 
                 String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "주이용일", "존번호='" + ZoneNum + "'");
                 dayofuse = Convert.ToDouble(Value[0][0]);
@@ -1280,9 +1279,9 @@ namespace main.contents
                 LightW = Load[0][5];
                 LightFL = Convert.ToDouble(Load[0][6]);
                 L8_textBox.Text = LightFL.ToString();
-                controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(L8_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(L8_textBox, true, 2);
                 FL_textBox.Text = LightFL.ToString();
-                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(FL_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(FL_textBox, true, 2);
 
                 if (LightNumber.Contains("LP"))
                 {
@@ -1342,7 +1341,7 @@ namespace main.contents
                 {
                     A = Convert.ToDouble(Value[0][3]); //순바닥면적
                     A_textBox.Text = A.ToString();
-                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(A_textBox, true, 2);
+                    Program.UTIL.textBox_doubleComa(A_textBox, true, 2);
                 }
 
 

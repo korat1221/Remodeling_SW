@@ -1208,8 +1208,7 @@ namespace main.contents
 
         private void Vs_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(Vs_textBox, false, 3);
-            Vs = textbox.text;
+            Vs = Program.UTIL.textBox_doubleComa(Vs_textBox, false, 3);
         }
         private void StoragePump_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1329,13 +1328,11 @@ namespace main.contents
         ///
         private void PipeD_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PipeD_textBox, false, 1);
-            PipeD = textbox.text;
+            PipeD = Program.UTIL.textBox_doubleComa(PipeD_textBox, false, 1);
         }
         private void PipeInsD_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PipeInsD_textBox, false, 1);
-            PipeInsD = textbox.text;
+            PipeInsD = Program.UTIL.textBox_doubleComa(PipeInsD_textBox, false, 1);
         }
         private void Calc_Pipe()
         {
@@ -1379,14 +1376,14 @@ namespace main.contents
                         PipeInsD = Convert.ToDouble(Value_PipeIns[4][2]);
                     }
                     PipeD_textBox.Text = PipeD.ToString();
-                    controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(PipeD_textBox, true, 1);
+                    Program.UTIL.textBox_doubleComa(PipeD_textBox, true, 1);
 
                     PipeInsD_textBox.Text = PipeInsD.ToString();
-                    controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(PipeInsD_textBox, true, 1);
+                    Program.UTIL.textBox_doubleComa(PipeInsD_textBox, true, 1);
 
                     PipeIns_Ramda = 0.035;
                     PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
-                    controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(PipeIns_Ramda_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
 
                     PipeIns_textBox.Text = "일반 보온재";
                 }
@@ -1405,7 +1402,7 @@ namespace main.contents
 
                 PipeIns_Ramda = Convert.ToDouble(InsDB_form.Select_CWPanel[4]);
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
-                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(PipeIns_Ramda_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
             }
         }
         private void PumpUse_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -2044,7 +2041,7 @@ namespace main.contents
                 {
                     Vs = Convert.ToDouble(Value[0][3]);
                     Vs_textBox.Text = Vs.ToString();
-                    controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(Vs_textBox, true, 3);
+                    Program.UTIL.textBox_doubleComa(Vs_textBox, true, 3);
                 }
             }
             Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재", "번호 = '" + ID + "'");
@@ -2052,15 +2049,15 @@ namespace main.contents
             {
                 PipeD = Convert.ToDouble(Value[0][0]);
                 PipeD_textBox.Text = PipeD.ToString();
-                controls.ThousandsSeparator textbox1 = new controls.ThousandsSeparator(PipeD_textBox, true, 1);
+                Program.UTIL.textBox_doubleComa(PipeD_textBox, true, 1);
 
                 PipeInsD = Convert.ToDouble(Value[0][1]);
                 PipeInsD_textBox.Text = PipeInsD.ToString();
-                controls.ThousandsSeparator textbox2 = new controls.ThousandsSeparator(PipeInsD_textBox, true, 1);
+                Program.UTIL.textBox_doubleComa(PipeInsD_textBox, true, 1);
 
                 PipeInsD = Convert.ToDouble(Value[0][2]);
                 PipeIns_Ramda_textBox.Text = PipeInsD.ToString();
-                controls.ThousandsSeparator textbox3 = new controls.ThousandsSeparator(PipeIns_Ramda_textBox, true, 3);
+                Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
 
                 PipeIns = Value[0][3];
                 PipeIns_textBox.Text = PipeIns;

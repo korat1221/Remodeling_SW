@@ -266,15 +266,13 @@ namespace main.subcontents.ConstructionFloor
         }
         private void dx_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(dx_textBox, false, 1);
-            dx = textbox.text;
+            dx = Program.UTIL.textBox_doubleComa(dx_textBox, false, 1);
             Calc_PerArea();
         }
 
         private void dy_textBox_TextChanged(object sender, EventArgs e)
         {
-            controls.ThousandsSeparator textbox = new controls.ThousandsSeparator(dy_textBox, false, 1);
-            dy = textbox.text;
+            dy = Program.UTIL.textBox_doubleComa(dy_textBox, false, 1);
             Calc_PerArea();
         }
     }
