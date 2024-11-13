@@ -23,29 +23,36 @@ window.addEventListener("message", async (event) => {
 
         j = -1;
         while (++j < item.data.length) {
-          let el = item.data[j];
+          let el = item.data[j]; 
+
+            // 'cname'이 'projectnum'인 값을 찾아 projectNum 변수에 저장
+            if (item.cname === 'projectnum') {
+              projectNum = el.val;
+            }         
           $("." + item.cname)
             .eq(el.idx)
-            .html(el.val);
-        }
-      }
-   
+            .html(el.val); 
+        } 
+
         let projectNumValue = o.items.find(item => item.cname === "projectnum");
-        console.log("projectNumValue : ",projectNumValue );
-        if (projectNumValue) {
-            let projectNum = projectNumValue.data[0].val; 
-            $("#buildingImage").attr("src", "img/" + projectNum + "/Building.png"); 
-        }
-
         let zoneNumValue = o.items.find(item => item.cname === "zonenum");
-        console.log("zoneNumValue : ",zoneNumValue );
-        if (zoneNumValue) {
-            let projectNum = projectNumValue.data[0].val; 
-            let zoneNum = zoneNumValue.data[0].val; 
-            $("#zoneImage").attr("src", "img/" + projectNum + "/"+ zoneNum + ".png"); 
-        }
-
-
+        let coolingNumValue = o.items.find(item => item.cname === "coolingnum");
+        $(".buildingImage").each((idx,al) => {
+          let projectNum = projectNumValue.data[idx].val; 
+          al.setAttribute("src", "img/" + projectNum + "/Building.png");
+        });
+        $(".zoneImage").each((idx,al) => {
+          let projectNum = projectNumValue.data[idx].val; 
+          let zoneNum = zoneNumValue.data[idx].val; 
+          al.setAttribute("src", "img/" + projectNum + "/"+ zoneNum + ".png"); 
+        });
+        $(".coolingImage").each((idx,al) => {
+          let projectNum = projectNumValue.data[idx].val; 
+          let coolingNum = coolingNumValue.data[idx].val; 
+          al.setAttribute("src", "img/" + projectNum + "/"+ coolingNum + ".png"); 
+        });
+      }
+ 
       setTimeout(() => {
         const ifrms = document.querySelectorAll('.ifrm-chart1');
 
