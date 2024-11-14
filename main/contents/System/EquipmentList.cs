@@ -290,7 +290,7 @@ namespace main.contents
                 {
                     if (Boiler_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                     {
-                        if (Convert.ToDouble(Boiler_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) < 1)
+                        if (Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, e.RowIndex, e.ColumnIndex, false, 1) < 1 && Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, e.RowIndex, e.ColumnIndex, false, 1)!=0)
                         {
                             MessageBox.Show("퍼센트 단위로 입력하세요.(Ex : 90.1% ⇒ 90.1)");
                             Boiler_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
