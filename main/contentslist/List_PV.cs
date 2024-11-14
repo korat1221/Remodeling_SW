@@ -78,7 +78,7 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A2", "명칭");
             dataGridView1.Columns.Add("A3", "면적.[m²]");
             dataGridView1.Columns.Add("A4", "용량.[kW]");
-            dataGridView1.Columns.Add("A5", "효율 Kpk.[-]");
+            dataGridView1.Columns.Add("A5", "인버터효율.[%]");
             dataGridView1.Columns[0].Width = 40;
         }
 
@@ -104,21 +104,17 @@ namespace main.contentslist
         public void load_List()
         {
             dataGridView1.Rows.Clear();
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "번호,명칭,면적,용량,모듈번호", "");
-           if(Value.Length > 0) 
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "번호,명칭,면적,용량,인버터효율", "");
+            if(Value.Length > 0) 
             {
                 for(int n=0; n<Value.Length; n++)
                 {
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[n].Cells[1].Value = Value[n][0];
                     dataGridView1.Rows[n].Cells[2].Value = Value[n][1];
-                    dataGridView1.Rows[n].Cells[3].Value = Convert.ToDouble(Value[n][2]).ToString("0.0");
-                    dataGridView1.Rows[n].Cells[4].Value = Convert.ToDouble(Value[n][3]).ToString("0.0");
-                    string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "Kpk", "번호='"+ Value[n][4] + "'");
-                    if(value2.Length > 0)
-                    {
-                        dataGridView1.Rows[n].Cells[5].Value = Convert.ToDouble(value2[0][0]).ToString("0.00");
-                    }
+                    dataGridView1.Rows[n].Cells[3].Value = Value[n][2];
+                    dataGridView1.Rows[n].Cells[4].Value = Value[n][3];
+                    dataGridView1.Rows[n].Cells[5].Value = Value[n][4];
                 }
             }
              
