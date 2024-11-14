@@ -243,7 +243,9 @@ xmlns="http://www.w3.org/TR/REC-html40">
 	border:.5pt solid #A6A6A6;
 	background:#ECF4FA;
 	mso-pattern:black none;
-	white-space:nowrap;}
+	white-space:nowrap;
+  overflow: hidden;
+  }
 .xl8916821
 	{padding-top:1px;
 	padding-right:1px;
@@ -479,8 +481,7 @@ rt
  416;width:8pt'>
  <tr height=18 style='mso-height-source:userset;height:14pt'>
   <td height=18 class=xl8116821 width=11 style='height:14pt;width:8pt'>　</td>
-  <td colspan=8 rowspan=2 class=xl9816821 width=500 style='width:375pt'>CS01.
-  냉방 에너지소요량 검토 보고서</td>
+  <td colspan=8 rowspan=2 class="xl9816821 title"width=500 style='width:375pt'></td>
   <td class=xl8016821 width=60 style='width:45pt'>　</td>
   <td class=xl8016821 width=60 style='width:45pt'>　</td>
   <td class=xl8016821 width=60 style='width:45pt'>　</td>
@@ -591,34 +592,34 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>시스템 번호</td>
-  <td class="xl8816821 coolingnum">  </td>
+  <td class="xl8816821 coolingnum2">  </td>
   <td class=xl9216821>　</td>
   <td class=xl9316821>존개수</td>
   <td class=xl9216821>　</td>
-  <td class=xl8816821>개수_z</td>
+  <td class="xl8816821 zone_count"></td>
   <td class=xl9316821>EA</td>
   <td class=xl9316821>공조기개수</td>
   <td class=xl9316821>　</td>
-  <td class=xl8816821>개수_ahu</td>
+  <td class="xl8816821 zahu_count"></td>
   <td class=xl9316821>EA</td>
   <td class=xl9316821 colspan=2>에너지요구량</td>
-  <td class=xl8816821>　</td>
+  <td class="xl8816821 annual_nd">　</td>
   <td class=xl9316821>kwh/a</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>시스템 이름</td>
-  <td class=xl8816821 style='border-top:none'>명칭</td>
+  <td class="xl8816821 coolingname"></td>
   <td class=xl9216821>　</td>
   <td class=xl9316821 colspan=2>에너지요구량</td>
-  <td class=xl8816821 style='border-top:none'>QCb_a_z</td>
+  <td class="xl8816821 zone_qcba"></td>
   <td class=xl9316821>kWh/a</td>
   <td class=xl9316821 colspan=2>에너지요구량</td>
-  <td class=xl8816821 style='border-top:none'>QCb_a_ahu</td>
+  <td class="xl8816821 zahu_qcba"></td>
   <td class=xl9316821>kWh/a</td>
   <td class=xl9316821 colspan=2>공급 열손실</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
+  <td class="xl8816821 annual_ce">　</td>
   <td class=xl9316821>kwh/a</td>
   <td class=xl8116821>　</td>
  </tr>
@@ -626,48 +627,48 @@ rt
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821>설비유형</td>
   <td class=xl9316821>　</td>
-  <td class=xl8816821 style='border-top:none'>냉방 설비</td>
+  <td class="xl8816821 coolingtype"></td>
   <td class=xl9216821>　</td>
   <td class=xl9316821 colspan=2>최대 냉방 부하</td>
-  <td class=xl8816821 style='border-top:none'>QC_Max_z</td>
+  <td class="xl8816821 zone_qcmax"></td>
   <td class=xl9316821>kW</td>
   <td class=xl9316821 colspan=2>최대 냉방 부하</td>
-  <td class=xl8816821 style='border-top:none'>QC_Max_ahu</td>
+  <td class="xl8816821 zahu_qcmax"></td>
   <td class=xl9316821>kW</td>
   <td class=xl9316821 colspan=2>분배 열손실</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
+  <td class="xl8816821 annual_d">　</td>
   <td class=xl9316821>kwh/a</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>정격 냉방능력</td>
-  <td class=xl8816821 style='border-top:none'>냉방출력</td>
+  <td class="xl8816821 power"></td>
   <td class=xl9316821>kW</td>
   <td class=xl9316821 colspan=2>공급설비종류1</td>
-  <td class=xl8816821 style='border-top:none'>공급설비1_z</td>
+  <td class="xl8816821 zone_ce1"></td>
   <td class=xl9316821>　</td>
   <td class=xl9316821 colspan=2>공급설비종류1</td>
-  <td class=xl8816821 style='border-top:none'>공급설비1_ahu</td>
+  <td class="xl8816821 zahu_ce1"></td>
   <td class=xl9316821>　</td>
   <td class=xl9316821 colspan=2>저장 열손실</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
+  <td class="xl8816821 annual_s">　</td>
   <td class=xl9316821>kwh/a</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>정격 냉방성능</td>
-  <td class=xl8816821 style='border-top:none'>냉방성능</td>
+  <td class="xl8816821 cop"></td>
   <td class=xl9316821>W/W</td>
   <td class=xl9316821 colspan=2>공급설비종류2</td>
-  <td class=xl8816821 style='border-top:none'>공급설비2_z</td>
+  <td class="xl8816821 zone_ce2"></td>
   <td class=xl9316821>　</td>
   <td class=xl9316821 colspan=2>공급설비종류2</td>
-  <td class=xl8816821 style='border-top:none'>공급설비2_ahu</td>
+  <td class="xl8816821 zahu_ce2"></td>
   <td class=xl9316821>　</td>
   <td class=xl9316821 colspan=2>에너지공급량</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
+  <td class="xl8816821 annual_outg">　</td>
   <td class=xl9316821>kwh/a</td>
   <td class=xl8116821>　</td>
  </tr>
@@ -675,7 +676,7 @@ rt
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821>압축기</td>
   <td class=xl9216821>　</td>
-  <td class=xl8816821 style='border-top:none'>압축기종류</td>
+  <td class="xl8816821 compressor"></td>
   <td class=xl9216821>　</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
@@ -685,16 +686,16 @@ rt
   <td class=xl9316821>　</td>
   <td class=xl9516821>　</td>
   <td class=xl9316821>　</td>
-  <td class=xl9316821 colspan=2>생산 열손실</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
+  <td class=xl9316821 colspan=2>에너지소요량</td>
+  <td class="xl8816821 annual_f">　</td>
   <td class=xl9316821>kwh/a</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
-  <td class=xl9316821 colspan=2>냉수출구온도</td>
-  <td class=xl8816821 style='border-top:none'>냉수출구온도</td>
-  <td class=xl9316821>℃</td>
+  <td class=xl9316821 colspan=2>제어유형</td>
+  <td class="xl8816821 control" ></td>
+  <td class=xl9316821></td>
   <td class=xl8916821 colspan=2>열원설비 정보</td>
   <td class=xl8916821>　</td>
   <td class=xl8916821>　</td>
@@ -702,25 +703,25 @@ rt
   <td class=xl8916821>　</td>
   <td class=xl8916821>　</td>
   <td class=xl8916821>　</td>
-  <td class=xl8616821 colspan=2>에너지소요량</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
-  <td class=xl8616821>kwh/a</td>
+  <td class=xl8616821 colspan=2>보조에너지</td>
+  <td class="xl8816821 annual_w">　</td>
+  <td class=xl8616821>kwh/a</td> 
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
-  <td class=xl9316821>대기전력</td>
+  <td class=xl9316821>외기냉방</td>
   <td class=xl9216821>　</td>
-  <td class=xl8816821 style='border-top:none'>대기전력</td>
+  <td class="xl8816821 freecooling" ></td>
   <td class=xl9216821>　</td>
   <td class=xl9316821 colspan=2>설치위치 또는 종류</td>
-  <td class=xl8816821>열원설비</td>
+  <td class="xl8816821 heatsource"></td>
   <td class=xl9316821>　</td>
   <td class=xl9316821 colspan=2>냉각수입구온도</td>
-  <td class=xl8816821>냉수입구온도</td>
+  <td class="xl8816821 top_in"></td>
   <td class=xl9316821>℃</td>
   <td class=xl9316821 colspan=2>1차 에너지소요량</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
+  <td class="xl8816821 annual_p">　</td>
   <td class=xl9316821>kwh/a</td>
   <td class=xl8116821>　</td>
  </tr>
@@ -728,18 +729,18 @@ rt
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821>설치대수</td>
   <td class=xl9216821>　</td>
-  <td class=xl8816821 style='border-top:none'>설치대수</td>
+  <td class="xl8816821 coolingcount" ></td>
   <td class=xl9316821>EA</td>
   <td class=xl9316821>냉각능력</td>
-  <td class=xl9316821>　</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
+  <td class="xl9316821 top_power">　</td>
+  <td class=xl8816821 >　</td>
   <td class=xl9316821>kW</td>
   <td class=xl9316821 colspan=2>냉각수출구온도</td>
-  <td class=xl8816821 style='border-top:none'>냉수출구온도</td>
+  <td class="xl8816821 top_out"></td>
   <td class=xl9316821>℃</td>
   <td class=xl9316821>CO2배출량</td>
   <td class=xl9316821>　</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
+  <td class="xl8816821 annual_tco2">　</td>
   <td class=xl9316821>tCO<font class="font816821"><sub>2</sub></font><font
   class="font716821">/a</font></td>
   <td class=xl8116821>　</td>
@@ -805,7 +806,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
-  <td colspan=12 rowspan=11 class=xl9716821>　<img id="coolingImage" src="img/Building.png" alt="Image" style="max-width: 100%; max-height: 270px; height: auto;"> </td>
+  <td colspan=12 rowspan=11 class=xl9716821>　<img class="coolingImage" src="" alt="Image" style="max-width: 100%; max-height: 270px; height: auto;"> </td>
   <td class=xl9316821>축열탱크</td>
   <td class=xl8316821>　</td>
   <td class=xl8816821>　</td>
@@ -816,7 +817,7 @@ rt
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821>저장유형</td>
   <td class=xl8316821>　</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
+  <td class=xl8816821 >　</td>
   <td class=xl8316821>　</td>
   <td class=xl8116821>　</td>
  </tr>
@@ -838,7 +839,7 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>부하측 펌프2동력</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
+  <td class=xl8816821 >　</td>
   <td class=xl8616821>W</td>
   <td class=xl8116821>　</td>
  </tr>
@@ -846,7 +847,7 @@ rt
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821>제어</td>
   <td class=xl8316821>　</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
+  <td class=xl8816821 >　</td>
   <td class=xl8316821>　</td>
   <td class=xl8116821>　</td>
  </tr>
@@ -868,7 +869,7 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>열원측 펌프2동력</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
+  <td class=xl8816821 >　</td>
   <td class=xl8616821>W</td>
   <td class=xl8116821>　</td>
  </tr>
@@ -876,7 +877,7 @@ rt
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821>제어</td>
   <td class=xl8316821>　</td>
-  <td class=xl8816821 style='border-top:none'>　</td>
+  <td class=xl8816821 >　</td>
   <td class=xl8316821>　</td>
   <td class=xl8116821>　</td>
  </tr>
@@ -930,96 +931,96 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>에너지공급량</td>
-  <td class=xl9516821>kWh/a</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
+  <td class=xl9516821>kWh/mth</td>
+  <td class="xl9616821 zone_mth_outg">　</td>
+  <td class="xl9616821 zone_mth_outg">　</td>
+  <td class="xl9616821 zone_mth_outg">　</td>
+  <td class="xl9616821 zone_mth_outg">　</td>
+  <td class="xl9616821 zone_mth_outg">　</td>
+  <td class="xl9616821 zone_mth_outg">　</td>
+  <td class="xl9616821 zone_mth_outg">　</td>
+  <td class="xl9616821 zone_mth_outg">　</td>
+  <td class="xl9616821 zone_mth_outg">　</td>
+  <td class="xl9616821 zone_mth_outg">　</td>
+  <td class="xl9616821 zone_mth_outg">　</td>
+  <td class="xl9616821 zone_mth_outg">　</td>
+  <td class="xl9616821 zone_mth_outg">　</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>공급 열손실</td>
-  <td class=xl9516821>kWh/a</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
+  <td class=xl9516821>kWh/mth</td>
+  <td class="xl9616821 zone_mth_ce">　</td>
+  <td class="xl9616821 zone_mth_ce">　</td>
+  <td class="xl9616821 zone_mth_ce">　</td>
+  <td class="xl9616821 zone_mth_ce">　</td>
+  <td class="xl9616821 zone_mth_ce">　</td>
+  <td class="xl9616821 zone_mth_ce">　</td>
+  <td class="xl9616821 zone_mth_ce">　</td>
+  <td class="xl9616821 zone_mth_ce">　</td>
+  <td class="xl9616821 zone_mth_ce">　</td>
+  <td class="xl9616821 zone_mth_ce">　</td>
+  <td class="xl9616821 zone_mth_ce">　</td>
+  <td class="xl9616821 zone_mth_ce">　</td>
+  <td class="xl9616821 zone_mth_ce">　</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>분배 열손실</td>
-  <td class=xl9516821>kWh/a</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
+  <td class=xl9516821>kWh/mth</td>
+  <td class="xl9616821 zone_mth_d">　</td>
+  <td class="xl9616821 zone_mth_d">　</td>
+  <td class="xl9616821 zone_mth_d">　</td>
+  <td class="xl9616821 zone_mth_d">　</td>
+  <td class="xl9616821 zone_mth_d">　</td>
+  <td class="xl9616821 zone_mth_d">　</td>
+  <td class="xl9616821 zone_mth_d">　</td>
+  <td class="xl9616821 zone_mth_d">　</td>
+  <td class="xl9616821 zone_mth_d">　</td>
+  <td class="xl9616821 zone_mth_d">　</td>
+  <td class="xl9616821 zone_mth_d">　</td>
+  <td class="xl9616821 zone_mth_d">　</td>
+  <td class="xl9616821 zone_mth_d">　</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>저장 열손실</td>
-  <td class=xl9516821>kWh/a</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
+  <td class=xl9516821>kWh/mth</td>
+  <td class="xl9616821 zone_mth_s">　</td>
+  <td class="xl9616821 zone_mth_s">　</td>
+  <td class="xl9616821 zone_mth_s">　</td>
+  <td class="xl9616821 zone_mth_s">　</td>
+  <td class="xl9616821 zone_mth_s">　</td>
+  <td class="xl9616821 zone_mth_s">　</td>
+  <td class="xl9616821 zone_mth_s">　</td>
+  <td class="xl9616821 zone_mth_s">　</td>
+  <td class="xl9616821 zone_mth_s">　</td>
+  <td class="xl9616821 zone_mth_s">　</td>
+  <td class="xl9616821 zone_mth_s">　</td>
+  <td class="xl9616821 zone_mth_s">　</td>
+  <td class="xl9616821 zone_mth_s">　</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>에너지요구량</td>
-  <td class=xl9516821>kWh/a</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
-  <td class=xl9616821>　</td>
+  <td class=xl9516821>kWh/mth</td>
+  <td class="xl9616821 zone_mth_nd">　</td>
+  <td class="xl9616821 zone_mth_nd">　</td>
+  <td class="xl9616821 zone_mth_nd">　</td>
+  <td class="xl9616821 zone_mth_nd">　</td>
+  <td class="xl9616821 zone_mth_nd">　</td>
+  <td class="xl9616821 zone_mth_nd">　</td>
+  <td class="xl9616821 zone_mth_nd">　</td>
+  <td class="xl9616821 zone_mth_nd">　</td>
+  <td class="xl9616821 zone_mth_nd">　</td>
+  <td class="xl9616821 zone_mth_nd">　</td>
+  <td class="xl9616821 zone_mth_nd">　</td>
+  <td class="xl9616821 zone_mth_nd">　</td>
+  <td class="xl9616821 zone_mth_nd">　</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
@@ -1045,96 +1046,96 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>에너지공급량</td>
-  <td class=xl9516821>kWh/a</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
+  <td class=xl9516821>kWh/mth</td>
+  <td class="xl9316821 zahu_mth_outg">　</td>
+  <td class="xl9316821 zahu_mth_outg">　</td>
+  <td class="xl9316821 zahu_mth_outg">　</td>
+  <td class="xl9316821 zahu_mth_outg">　</td>
+  <td class="xl9316821 zahu_mth_outg">　</td>
+  <td class="xl9316821 zahu_mth_outg">　</td>
+  <td class="xl9316821 zahu_mth_outg">　</td>
+  <td class="xl9316821 zahu_mth_outg">　</td>
+  <td class="xl9316821 zahu_mth_outg">　</td>
+  <td class="xl9316821 zahu_mth_outg">　</td>
+  <td class="xl9316821 zahu_mth_outg">　</td>
+  <td class="xl9316821 zahu_mth_outg">　</td>
+  <td class="xl9316821 zahu_mth_outg">　</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>공급 열손실</td>
-  <td class=xl9516821>kWh/a</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
+  <td class=xl9516821>kWh/mth</td>
+  <td class="xl9316821 zahu_mth_ce">　</td>
+  <td class="xl9316821 zahu_mth_ce">　</td>
+  <td class="xl9316821 zahu_mth_ce">　</td>
+  <td class="xl9316821 zahu_mth_ce">　</td>
+  <td class="xl9316821 zahu_mth_ce">　</td>
+  <td class="xl9316821 zahu_mth_ce">　</td>
+  <td class="xl9316821 zahu_mth_ce">　</td>
+  <td class="xl9316821 zahu_mth_ce">　</td>
+  <td class="xl9316821 zahu_mth_ce">　</td>
+  <td class="xl9316821 zahu_mth_ce">　</td>
+  <td class="xl9316821 zahu_mth_ce">　</td>
+  <td class="xl9316821 zahu_mth_ce">　</td>
+  <td class="xl9316821 zahu_mth_ce">　</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>분배 열손실</td>
-  <td class=xl9516821>kWh/a</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
+  <td class=xl9516821>kWh/mth</td>
+  <td class="xl9316821 zahu_mth_d">　</td>
+  <td class="xl9316821 zahu_mth_d">　</td>
+  <td class="xl9316821 zahu_mth_d">　</td>
+  <td class="xl9316821 zahu_mth_d">　</td>
+  <td class="xl9316821 zahu_mth_d">　</td>
+  <td class="xl9316821 zahu_mth_d">　</td>
+  <td class="xl9316821 zahu_mth_d">　</td>
+  <td class="xl9316821 zahu_mth_d">　</td>
+  <td class="xl9316821 zahu_mth_d">　</td>
+  <td class="xl9316821 zahu_mth_d">　</td>
+  <td class="xl9316821 zahu_mth_d">　</td>
+  <td class="xl9316821 zahu_mth_d">　</td>
+  <td class="xl9316821 zahu_mth_d">　</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>저장 열손실</td>
-  <td class=xl9516821>kWh/a</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
+  <td class=xl9516821>kWh/mth</td>
+  <td class="xl9316821 zahu_mth_s">　</td>
+  <td class="xl9316821 zahu_mth_s">　</td>
+  <td class="xl9316821 zahu_mth_s">　</td>
+  <td class="xl9316821 zahu_mth_s">　</td>
+  <td class="xl9316821 zahu_mth_s">　</td>
+  <td class="xl9316821 zahu_mth_s">　</td>
+  <td class="xl9316821 zahu_mth_s">　</td>
+  <td class="xl9316821 zahu_mth_s">　</td>
+  <td class="xl9316821 zahu_mth_s">　</td>
+  <td class="xl9316821 zahu_mth_s">　</td>
+  <td class="xl9316821 zahu_mth_s">　</td>
+  <td class="xl9316821 zahu_mth_s">　</td>
+  <td class="xl9316821 zahu_mth_s">　</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>에너지요구량</td>
-  <td class=xl9516821>kWh/a</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
-  <td class=xl9316821>　</td>
+  <td class=xl9516821>kWh/mth</td>
+  <td class="xl9316821 zahu_mth_nd">　</td>
+  <td class="xl9316821 zahu_mth_nd">　</td>
+  <td class="xl9316821 zahu_mth_nd">　</td>
+  <td class="xl9316821 zahu_mth_nd">　</td>
+  <td class="xl9316821 zahu_mth_nd">　</td>
+  <td class="xl9316821 zahu_mth_nd">　</td>
+  <td class="xl9316821 zahu_mth_nd">　</td>
+  <td class="xl9316821 zahu_mth_nd">　</td>
+  <td class="xl9316821 zahu_mth_nd">　</td>
+  <td class="xl9316821 zahu_mth_nd">　</td>
+  <td class="xl9316821 zahu_mth_nd">　</td>
+  <td class="xl9316821 zahu_mth_nd">　</td>
+  <td class="xl9316821 zahu_mth_nd">　</td>
   <td class=xl8116821>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
@@ -1160,7 +1161,7 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>에너지소요량</td>
-  <td class=xl9516821>kWh/a</td>
+  <td class=xl9516821>kWh/mth</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
@@ -1217,7 +1218,7 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>에너지공급량</td>
-  <td class=xl9516821>kWh/a</td>
+  <td class=xl9516821>kWh/mth</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
@@ -1236,7 +1237,7 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>공급 열손실</td>
-  <td class=xl9516821>kWh/a</td>
+  <td class=xl9516821>kWh/mth</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
@@ -1255,7 +1256,7 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>분배 열손실</td>
-  <td class=xl9516821>kWh/a</td>
+  <td class=xl9516821>kWh/mth</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
@@ -1274,7 +1275,7 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>저장 열손실</td>
-  <td class=xl9516821>kWh/a</td>
+  <td class=xl9516821>kWh/mth</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
@@ -1293,7 +1294,7 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>생산 열손실</td>
-  <td class=xl9516821>kWh/a</td>
+  <td class=xl9516821>kWh/mth</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
@@ -1332,7 +1333,7 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>총 보조에너지</td>
-  <td class=xl9516821>kWh/a</td>
+  <td class=xl9516821>kWh/mth</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
@@ -1351,7 +1352,7 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>생산 보조에너지</td>
-  <td class=xl9516821>kWh/a</td>
+  <td class=xl9516821>kWh/mth</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
@@ -1370,7 +1371,7 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>공급 보조에너지</td>
-  <td class=xl9516821>kWh/a</td>
+  <td class=xl9516821>kWh/mth</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
@@ -1389,7 +1390,7 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>분배 보조에너지</td>
-  <td class=xl9516821>kWh/a</td>
+  <td class=xl9516821>kWh/mth</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
@@ -1408,7 +1409,7 @@ rt
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl8116821 style='height:14pt'>　</td>
   <td class=xl9316821 colspan=2>저장 보조에너지</td>
-  <td class=xl9516821>kWh/a</td>
+  <td class=xl9516821>kWh/mth</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
   <td class=xl9316821>　</td>
