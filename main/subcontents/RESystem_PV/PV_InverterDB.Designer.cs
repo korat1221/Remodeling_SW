@@ -29,33 +29,54 @@ namespace main.subcontents.RESystem_PV
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            label6 = new Label();
+            pictureBox1 = new PictureBox();
             Save_button = new Button();
             AddUserDB_button = new Button();
             panel1 = new Panel();
             PVInverter_dataGridView = new DataGridView();
             UserNum_textBox = new TextBox();
             Deletebutton = new Button();
-            pictureBox1 = new PictureBox();
             GeneralPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PVInverter_dataGridView).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(label6);
             GeneralPanel.Controls.Add(pictureBox1);
             GeneralPanel.Dock = DockStyle.Top;
             GeneralPanel.Location = new Point(0, 0);
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(678, 76);
             GeneralPanel.TabIndex = 18;
-            GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
+            label6.Location = new Point(82, 53);
+            label6.Name = "label6";
+            label6.Size = new Size(64, 15);
+            label6.TabIndex = 28;
+            label6.Text = "인버터 DB";
+            label6.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(9, 9);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(67, 59);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 6;
+            pictureBox1.TabStop = false;
             // 
             // Save_button
             // 
@@ -108,37 +129,37 @@ namespace main.subcontents.RESystem_PV
             PVInverter_dataGridView.BorderStyle = BorderStyle.None;
             PVInverter_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             PVInverter_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            PVInverter_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            PVInverter_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             PVInverter_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             PVInverter_dataGridView.Dock = DockStyle.Bottom;
             PVInverter_dataGridView.Location = new Point(0, 29);
             PVInverter_dataGridView.Name = "PVInverter_dataGridView";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            PVInverter_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            PVInverter_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             PVInverter_dataGridView.RowHeadersVisible = false;
             PVInverter_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            PVInverter_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            PVInverter_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             PVInverter_dataGridView.Size = new Size(678, 209);
             PVInverter_dataGridView.TabIndex = 19;
-       
+            PVInverter_dataGridView.CellContentClick += PVInverter_dataGridView_CellContentClick;
             // 
             // UserNum_textBox
             // 
@@ -165,15 +186,6 @@ namespace main.subcontents.RESystem_PV
             Deletebutton.UseVisualStyleBackColor = false;
             Deletebutton.Click += Deletebutton_Click;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(9, 9);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(67, 59);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 6;
-            pictureBox1.TabStop = false;
-            // 
             // PV_InverterDB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -186,10 +198,11 @@ namespace main.subcontents.RESystem_PV
             Name = "PV_InverterDB";
             Text = "PV_InverterDB";
             GeneralPanel.ResumeLayout(false);
+            GeneralPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)PVInverter_dataGridView).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -215,5 +228,6 @@ namespace main.subcontents.RESystem_PV
         private Label label32;
         private Label label5;
         private PictureBox pictureBox1;
+        private Label label6;
     }
 }

@@ -48,19 +48,13 @@
             Name_textBox = new TextBox();
             pictureBox1 = new PictureBox();
             계통유형 = new Label();
-            label4 = new Label();
-            Batterycapacity_s = new Label();
-            Batterycapacity_textBox = new TextBox();
-            InverterEfficiency_textBox = new TextBox();
-            Batterycapacity_n = new Label();
-            label10 = new Label();
             Battery_textBox = new TextBox();
             Inverter_textBox = new TextBox();
             Battery_label = new Label();
             label7 = new Label();
             label6 = new Label();
-            Previous_button = new Button();
             Save_button = new Button();
+            Calc_button = new Button();
             label12 = new Label();
             averagecpacity_textBox = new TextBox();
             label29 = new Label();
@@ -79,6 +73,9 @@
             panel5 = new Panel();
             ShpictureBox = new PictureBox();
             panel3 = new Panel();
+            batterypower = new Label();
+            BatteryEff_textbox = new Label();
+            InverterEff_textbox = new Label();
             pvname = new Label();
             pvtotal = new Label();
             pvpower = new Label();
@@ -159,6 +156,7 @@
             OldPVSystem_ComboBox.Name = "OldPVSystem_ComboBox";
             OldPVSystem_ComboBox.Size = new Size(120, 24);
             OldPVSystem_ComboBox.TabIndex = 144;
+            OldPVSystem_ComboBox.SelectedIndexChanged += OldPVSystem_ComboBox_SelectedIndexChanged;
             // 
             // radioButton4
             // 
@@ -185,6 +183,7 @@
             radioButton2.TabStop = true;
             radioButton2.Text = "보수";
             radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
             // 
             // radioButton3
             // 
@@ -310,80 +309,6 @@
             계통유형.TabIndex = 91;
             계통유형.Text = "계통  유형";
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font(UTIL.Families[0], 10F);
-            label4.ForeColor = SystemColors.ActiveCaptionText;
-            label4.Location = new Point(598, 83);
-            label4.Name = "label4";
-            label4.Size = new Size(22, 16);
-            label4.TabIndex = 129;
-            label4.Text = "%";
-            // 
-            // Batterycapacity_s
-            // 
-            Batterycapacity_s.AutoSize = true;
-            Batterycapacity_s.Font = new Font(UTIL.Families[0], 10F);
-            Batterycapacity_s.ForeColor = SystemColors.ActiveCaptionText;
-            Batterycapacity_s.Location = new Point(598, 113);
-            Batterycapacity_s.Name = "Batterycapacity_s";
-            Batterycapacity_s.Size = new Size(28, 16);
-            Batterycapacity_s.TabIndex = 106;
-            Batterycapacity_s.Text = "kW";
-            Batterycapacity_s.Visible = false;
-            // 
-            // Batterycapacity_textBox
-            // 
-            Batterycapacity_textBox.BackColor = Color.White;
-            Batterycapacity_textBox.BorderStyle = BorderStyle.None;
-            Batterycapacity_textBox.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Batterycapacity_textBox.ForeColor = SystemColors.WindowFrame;
-            Batterycapacity_textBox.Location = new Point(530, 112);
-            Batterycapacity_textBox.Name = "Batterycapacity_textBox";
-            Batterycapacity_textBox.ReadOnly = true;
-            Batterycapacity_textBox.Size = new Size(64, 15);
-            Batterycapacity_textBox.TabIndex = 105;
-            Batterycapacity_textBox.TextAlign = HorizontalAlignment.Center;
-            Batterycapacity_textBox.Visible = false;
-            // 
-            // InverterEfficiency_textBox
-            // 
-            InverterEfficiency_textBox.BackColor = Color.White;
-            InverterEfficiency_textBox.BorderStyle = BorderStyle.None;
-            InverterEfficiency_textBox.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            InverterEfficiency_textBox.ForeColor = SystemColors.WindowFrame;
-            InverterEfficiency_textBox.Location = new Point(530, 82);
-            InverterEfficiency_textBox.Name = "InverterEfficiency_textBox";
-            InverterEfficiency_textBox.ReadOnly = true;
-            InverterEfficiency_textBox.Size = new Size(64, 15);
-            InverterEfficiency_textBox.TabIndex = 104;
-            InverterEfficiency_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // Batterycapacity_n
-            // 
-            Batterycapacity_n.AutoSize = true;
-            Batterycapacity_n.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Batterycapacity_n.ForeColor = SystemColors.ActiveCaptionText;
-            Batterycapacity_n.Location = new Point(441, 112);
-            Batterycapacity_n.Name = "Batterycapacity_n";
-            Batterycapacity_n.Size = new Size(71, 15);
-            Batterycapacity_n.TabIndex = 103;
-            Batterycapacity_n.Text = "배터리 용량";
-            Batterycapacity_n.Visible = false;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.BackColor = Color.White;
-            label10.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label10.ForeColor = SystemColors.ActiveCaptionText;
-            label10.Location = new Point(441, 82);
-            label10.Name = "label10";
-            label10.Size = new Size(71, 15);
-            label10.TabIndex = 102;
-            label10.Text = "인버터 효율";
-            // 
             // Battery_textBox
             // 
             Battery_textBox.BackColor = Color.White;
@@ -442,28 +367,29 @@
             label6.TabIndex = 95;
             label6.Text = "태양광 모듈";
             // 
-            // Previous_button
-            // 
-            Previous_button.BackColor = SystemColors.ButtonHighlight;
-            Previous_button.ForeColor = Color.Black;
-            Previous_button.Location = new Point(995, 818);
-            Previous_button.Name = "Previous_button";
-            Previous_button.Size = new Size(88, 25);
-            Previous_button.TabIndex = 99;
-            Previous_button.Text = "<<PREVIOUS";
-            Previous_button.UseVisualStyleBackColor = true;
-            Previous_button.Click += Previous_button_Click;
-            // 
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1089, 818);
+            Save_button.Location = new Point(912, 669);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
-            Save_button.TabIndex = 98;
+            Save_button.TabIndex = 99;
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
+            Save_button.Click += Save_button_Click;
+            // 
+            // Calc_button
+            // 
+            Calc_button.BackColor = SystemColors.ButtonHighlight;
+            Calc_button.ForeColor = Color.Black;
+            Calc_button.Location = new Point(818, 669);
+            Calc_button.Name = "Calc_button";
+            Calc_button.Size = new Size(88, 25);
+            Calc_button.TabIndex = 98;
+            Calc_button.Text = "계 산";
+            Calc_button.UseVisualStyleBackColor = true;
+            Calc_button.Click += Calc_button_Click;
             // 
             // label12
             // 
@@ -538,15 +464,9 @@
             panel2.Controls.Add(PVType_ComboBox);
             panel2.Controls.Add(BatteryDB_button);
             panel2.Controls.Add(InverterDB_button);
-            panel2.Controls.Add(Batterycapacity_s);
             panel2.Controls.Add(PVModuleDB_button);
-            panel2.Controls.Add(label4);
-            panel2.Controls.Add(Batterycapacity_textBox);
-            panel2.Controls.Add(Batterycapacity_n);
             panel2.Controls.Add(PV_dataGridView);
-            panel2.Controls.Add(InverterEfficiency_textBox);
             panel2.Controls.Add(label6);
-            panel2.Controls.Add(label10);
             panel2.Controls.Add(PVModule_textBox);
             panel2.Controls.Add(계통유형);
             panel2.Controls.Add(Battery_textBox);
@@ -594,6 +514,7 @@
             BatteryDB_button.TabIndex = 143;
             BatteryDB_button.Text = "+";
             BatteryDB_button.UseVisualStyleBackColor = false;
+            BatteryDB_button.Click += BatteryDB_button_Click_1;
             // 
             // InverterDB_button
             // 
@@ -729,6 +650,9 @@
             // 
             // panel3
             // 
+            panel3.Controls.Add(batterypower);
+            panel3.Controls.Add(BatteryEff_textbox);
+            panel3.Controls.Add(InverterEff_textbox);
             panel3.Controls.Add(pvname);
             panel3.Controls.Add(pvtotal);
             panel3.Controls.Add(pvpower);
@@ -740,6 +664,36 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(619, 315);
             panel3.TabIndex = 189;
+            // 
+            // batterypower
+            // 
+            batterypower.AutoSize = true;
+            batterypower.Location = new Point(380, 287);
+            batterypower.Name = "batterypower";
+            batterypower.Size = new Size(77, 15);
+            batterypower.TabIndex = 195;
+            batterypower.Text = "batterypower";
+            batterypower.Visible = false;
+            // 
+            // BatteryEff_textbox
+            // 
+            BatteryEff_textbox.AutoSize = true;
+            BatteryEff_textbox.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            BatteryEff_textbox.Location = new Point(53, 87);
+            BatteryEff_textbox.Name = "BatteryEff_textbox";
+            BatteryEff_textbox.Size = new Size(0, 15);
+            BatteryEff_textbox.TabIndex = 194;
+            BatteryEff_textbox.Visible = false;
+            // 
+            // InverterEff_textbox
+            // 
+            InverterEff_textbox.AutoSize = true;
+            InverterEff_textbox.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            InverterEff_textbox.Location = new Point(47, 73);
+            InverterEff_textbox.Name = "InverterEff_textbox";
+            InverterEff_textbox.Size = new Size(0, 15);
+            InverterEff_textbox.TabIndex = 146;
+            InverterEff_textbox.Visible = false;
             // 
             // pvname
             // 
@@ -787,7 +741,7 @@
             // 
             // PVpictureBox
             // 
-            PVpictureBox.Location = new Point(55, 22);
+            PVpictureBox.Location = new Point(47, 121);
             PVpictureBox.Name = "PVpictureBox";
             PVpictureBox.Size = new Size(109, 108);
             PVpictureBox.TabIndex = 188;
@@ -874,8 +828,8 @@
             Controls.Add(label28);
             Controls.Add(allcapacity_textBox);
             Controls.Add(label27);
-            Controls.Add(Previous_button);
             Controls.Add(Save_button);
+            Controls.Add(Calc_button);
             Controls.Add(PVMainPanel);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
@@ -917,15 +871,9 @@
         private TextBox Battery_textBox;
         private TextBox Inverter_textBox;
         private TextBox PVModule_textBox;
-        private TextBox Batterycapacity_textBox;
-        private TextBox InverterEfficiency_textBox;
-        private Label Batterycapacity_n;
-        private Label label10;
-        private Label Batterycapacity_s;
         private Button InverterDB1_button;
-        private Button Previous_button;
         private Button Save_button;
-        private Label label4;
+        private Button Calc_button;
         private TextBox averagecpacity_textBox;
         private Label label29;
         private Label label28;
@@ -971,5 +919,8 @@
         private Label pvsize;
         private Panel panel5;
         private PictureBox ShpictureBox;
+        private Label InverterEff_textbox;
+        private Label BatteryEff_textbox;
+        private Label batterypower;
     }
 }

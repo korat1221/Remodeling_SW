@@ -73,6 +73,9 @@ namespace main.subcontents.RESystem_PV
 
         private void PV_table()
         {
+            AddUserDB_button.Visible = true;
+            Deletebutton.Visible = true;
+
             if (DefaultUse == "기본DB 적용")
             {
                 new StackedHeaderDecorator(PVModule_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
@@ -103,6 +106,9 @@ namespace main.subcontents.RESystem_PV
             }
             else if(DefaultUse == "장비일람표 DB")
             {
+                AddUserDB_button.Visible = false;
+                Deletebutton.Visible = false;
+
                 new StackedHeaderDecorator(PVModule_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
                 DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
                 PVModule_dataGridView.Columns.Clear();
