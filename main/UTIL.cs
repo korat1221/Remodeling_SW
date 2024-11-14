@@ -479,7 +479,7 @@ namespace main
             //Load일 경우 true,아니고 입력일 경우 false
             if (LoadOrNot)
             {
-                if (cellValue != null && cellValue.ToString() != "")
+                if (cellValue != null && cellValue.ToString() != "" && cellValue.ToString() != "-")
                 {
                     double parsedValue;
                     if (double.TryParse(cellValue.ToString(), out parsedValue))
@@ -498,7 +498,7 @@ namespace main
             {
                 this.dataGridView.CellLeave += dataGridView_CellLeave;
                 double result;
-                if (cellValue != null && cellValue.ToString() != "")
+                if (cellValue != null && cellValue.ToString() != "" && cellValue.ToString() != "-")
                 {
                     double parsedValue;
                     if (double.TryParse(cellValue.ToString(), out parsedValue))
@@ -518,7 +518,7 @@ namespace main
         {
             var cellValue = dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
 
-            if (cellValue != null && cellValue.ToString() != "")
+            if (cellValue != null && cellValue.ToString() != "" && cellValue.ToString() != "-")
             {
                 // cellValue가 숫자 형식인지 먼저 확인
                 double parsedValue;

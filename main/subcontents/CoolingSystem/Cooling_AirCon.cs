@@ -145,13 +145,13 @@ namespace main.subcontents.CoolingSystem
             {
                 if(k == SelectRow.Count - 1)
                 {
-                    this.SelectCGN += AirCon_dataGridView.Rows[Convert.ToInt32(SelectRow[k])].Cells[1].Value.ToString();
+                    this.SelectCGN += Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, Convert.ToInt32(SelectRow[k]), 1, true, 0).ToString();
                     this.SelectCG += AirCon_dataGridView.Rows[Convert.ToInt32(SelectRow[k])].Cells[2].Value.ToString();
 
                 }
                 else
                 {
-                    this.SelectCGN += AirCon_dataGridView.Rows[Convert.ToInt32(SelectRow[k])].Cells[1].Value.ToString() + "+";
+                    this.SelectCGN += Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, Convert.ToInt32(SelectRow[k]), 1, true, 0).ToString() + "+";
                     this.SelectCG += AirCon_dataGridView.Rows[Convert.ToInt32(SelectRow[k])].Cells[2].Value.ToString() + "+";
                 }
             }

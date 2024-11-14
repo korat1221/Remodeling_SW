@@ -411,7 +411,17 @@ namespace main.contents
                 for (int i = 1; i < 14; i++)
                 {
                     if (Boiler_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = Boiler_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    {
+                        double parsedValue;
+                        if (double.TryParse(Boiler_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = Boiler_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_Boiler", "번호,프로젝트유형,DB유형,명칭,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력,대수,신규기존",
@@ -675,7 +685,17 @@ namespace main.contents
                 for (int i = 1; i < 18; i++) //18개 항목중 17개만 작성함
                 {
                     if (ABS_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = ABS_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    {
+                        double parsedValue;
+                        if (double.TryParse(ABS_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = ABS_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_ABS", "번호,프로젝트유형,DB유형,명칭,난방냉방,연료,냉방용량,냉방성능,난방용량,난방성능,냉수입구온도,냉수출구온도,온수입구온도,온수출구온도,대기전력,통합성능,대수,설치",
@@ -879,7 +899,17 @@ namespace main.contents
                 for (int i = 1; i < 12; i++)
                 {
                     if (DH_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = DH_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    {
+                        double parsedValue;
+                        if (double.TryParse(DH_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = DH_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_DH", "번호,프로젝트유형,DB유형,명칭,용도,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차,대수,신규기존",
@@ -1097,7 +1127,17 @@ namespace main.contents
                 for (int i = 1; i < 10; i++)
                 {
                     if (PV_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = PV_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    {
+                        double parsedValue;
+                        if (double.TryParse(PV_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = PV_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_PV", "번호,프로젝트유형,DB유형,명칭,CELLTYPE,길이,높이,정격출력,Kpk,설치",
@@ -1271,7 +1311,17 @@ namespace main.contents
                 for (int i = 1; i < 11; i++)
                 {
                     if (FC_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = FC_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    {
+                        double parsedValue;
+                        if (double.TryParse(FC_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = FC_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_FC", "번호,프로젝트유형,DB유형,명칭,연료,전기출력,전기효율,열출력,열효율,대수,설치",
@@ -1491,7 +1541,17 @@ namespace main.contents
                 for (int i = 1; i < 17; i++)
                 {
                     if (WP_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = WP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    {
+                        double parsedValue;
+                        if (double.TryParse(WP_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = WP_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_WP", "번호,프로젝트유형,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,최적풍속,종단풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수,신규기존",
@@ -1649,7 +1709,7 @@ namespace main.contents
                         {
                             if (AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
                             {
-                                AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                                AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 7, false, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 8, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -1659,7 +1719,7 @@ namespace main.contents
                         {
                             if (AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
                             {
-                                AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                                AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 7, false, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 8, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -1667,14 +1727,20 @@ namespace main.contents
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "")
                         {
-                            AirHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString())).ToString("0.00");
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
+                            {
+                                AirHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 10, false, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 11, false, 1)).ToString("0.00");
+                            }
                         }
                     }
                     if (e.ColumnIndex == 11)
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "")
                         {
-                            AirHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString())).ToString("0.00");
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
+                            {
+                                AirHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 10, false, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 11, false, 1)).ToString("0.00");
+                            }
                         }
                     }
                     if (e.ColumnIndex == 13)
@@ -1683,7 +1749,7 @@ namespace main.contents
                         {
                             if (AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
                             {
-                                AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                                AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 13, false, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 14, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -1693,7 +1759,7 @@ namespace main.contents
                         {
                             if (AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
                             {
-                                AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                                AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 13, false, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 14, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -1781,7 +1847,15 @@ namespace main.contents
                 {
                     if (AirHP_dataGridView.Rows[k].Cells[i + 1].Value != null)
                     {
-                        Value[i] = AirHP_dataGridView.Rows[k].Cells[i + 1].Value.ToString();
+                        double parsedValue;
+                        if (double.TryParse(AirHP_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = AirHP_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
                     }
                     else { Value[i] = ""; }
                 }
@@ -1931,7 +2005,7 @@ namespace main.contents
                         {
                             if (GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
                             {
-                                GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                                GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Program.UTIL.dataGridView_doubleComa(GWHP_dataGridView, e.RowIndex, 7, false, 1) / Program.UTIL.dataGridView_doubleComa(GWHP_dataGridView, e.RowIndex, 8, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -1941,7 +2015,7 @@ namespace main.contents
                         {
                             if (GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
                             {
-                                GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                                GWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Program.UTIL.dataGridView_doubleComa(GWHP_dataGridView, e.RowIndex, 7, false, 1) / Program.UTIL.dataGridView_doubleComa(GWHP_dataGridView, e.RowIndex, 8, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -1949,14 +2023,20 @@ namespace main.contents
                     {
                         if (GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "")
                         {
-                            GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString())).ToString("0.00");
+                            if (GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "-" && GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
+                            {
+                                GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Program.UTIL.dataGridView_doubleComa(GWHP_dataGridView, e.RowIndex, 10, false, 1) / Program.UTIL.dataGridView_doubleComa(GWHP_dataGridView, e.RowIndex, 11, false, 1)).ToString("0.00");
+                            }
                         }
                     }
                     if (e.ColumnIndex == 11)
                     {
                         if (GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "")
                         {
-                            GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString())).ToString("0.00");
+                            if (GWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "-" && GWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
+                            {
+                                GWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Program.UTIL.dataGridView_doubleComa(GWHP_dataGridView, e.RowIndex, 10, false, 1) / Program.UTIL.dataGridView_doubleComa(GWHP_dataGridView, e.RowIndex, 11, false, 1)).ToString("0.00");
+                            }
                         }
                     }
                     if (e.ColumnIndex == 13)
@@ -1965,7 +2045,7 @@ namespace main.contents
                         {
                             if (GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
                             {
-                                GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                                GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Program.UTIL.dataGridView_doubleComa(GWHP_dataGridView, e.RowIndex, 13, false, 1) / Program.UTIL.dataGridView_doubleComa(GWHP_dataGridView, e.RowIndex, 14, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -1975,7 +2055,7 @@ namespace main.contents
                         {
                             if (GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
                             {
-                                GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(GWHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                                GWHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Program.UTIL.dataGridView_doubleComa(GWHP_dataGridView, e.RowIndex, 13, false, 1) / Program.UTIL.dataGridView_doubleComa(GWHP_dataGridView, e.RowIndex, 14, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -2054,7 +2134,17 @@ namespace main.contents
                 for (int i = 1; i < 23; i++)
                 {
                     if (GWHP_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = GWHP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    {
+                        double parsedValue;
+                        if (double.TryParse(GWHP_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = GWHP_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_GWHP", "번호,프로젝트유형,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,설치,대기전력",
@@ -2186,7 +2276,7 @@ namespace main.contents
                         {
                             if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
                             {
-                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Program.UTIL.dataGridView_doubleComa(GroundHP_dataGridView, e.RowIndex, 7, false, 1) / Program.UTIL.dataGridView_doubleComa(GroundHP_dataGridView, e.RowIndex, 8, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -2196,7 +2286,7 @@ namespace main.contents
                         {
                             if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
                             {
-                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString())).ToString("0.00");
+                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Program.UTIL.dataGridView_doubleComa(GroundHP_dataGridView, e.RowIndex, 7, false, 1) / Program.UTIL.dataGridView_doubleComa(GroundHP_dataGridView, e.RowIndex, 8, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -2204,14 +2294,20 @@ namespace main.contents
                     {
                         if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "")
                         {
-                            GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString())).ToString("0.00");
+                            if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "-" && GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
+                            {
+                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Program.UTIL.dataGridView_doubleComa(GroundHP_dataGridView, e.RowIndex, 10, false, 1) / Program.UTIL.dataGridView_doubleComa(GroundHP_dataGridView, e.RowIndex, 11, false, 1)).ToString("0.00");
+                            }
                         }
                     }
                     if (e.ColumnIndex == 11)
                     {
                         if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "")
                         {
-                            GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString())).ToString("0.00");
+                            if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "-" && GroundHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
+                            {
+                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Program.UTIL.dataGridView_doubleComa(GroundHP_dataGridView, e.RowIndex, 10, false, 1) / Program.UTIL.dataGridView_doubleComa(GroundHP_dataGridView, e.RowIndex, 11, false, 1)).ToString("0.00");
+                            }
                         }
                     }
                     if (e.ColumnIndex == 13)
@@ -2220,7 +2316,7 @@ namespace main.contents
                         {
                             if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
                             {
-                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Program.UTIL.dataGridView_doubleComa(GroundHP_dataGridView, e.RowIndex, 13, false, 1) / Program.UTIL.dataGridView_doubleComa(GroundHP_dataGridView, e.RowIndex, 14, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -2230,7 +2326,7 @@ namespace main.contents
                         {
                             if (GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
                             {
-                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString()) / Convert.ToDouble(GroundHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString())).ToString("0.00");
+                                GroundHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Program.UTIL.dataGridView_doubleComa(GroundHP_dataGridView, e.RowIndex, 13, false, 1) / Program.UTIL.dataGridView_doubleComa(GroundHP_dataGridView, e.RowIndex, 14, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -2307,7 +2403,17 @@ namespace main.contents
                 for (int i = 1; i < 23; i++)
                 {
                     if (GroundHP_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = GroundHP_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    {
+                        double parsedValue;
+                        if (double.TryParse(GroundHP_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = GroundHP_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_GroundHP", "번호,프로젝트유형,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,설치,대기전력",
@@ -2551,24 +2657,34 @@ namespace main.contents
                 for (int i = 1; i < 7; i++)
                 {
                     if (Pump_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = Pump_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    {
+                        double parsedValue;
+                        if (double.TryParse(Pump_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = Pump_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
                     else { Value[i - 1] = ""; }
                 }
                 //동력
                 if (Pump_dataGridView.Rows[k].Cells[9].Value != null)
-                { Value[6] = Pump_dataGridView.Rows[k].Cells[9].Value.ToString(); }
+                { Value[6] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView,k,9,true,0).ToString(); }
                 else { Value[6] = ""; }
                 //양정
                 if (Pump_dataGridView.Rows[k].Cells[7].Value != null)
-                { Value[7] = Pump_dataGridView.Rows[k].Cells[7].Value.ToString(); }
+                { Value[7] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, k, 7, true, 0).ToString(); }
                 else { Value[7] = ""; }
                 //대수
                 if (Pump_dataGridView.Rows[k].Cells[11].Value != null)
-                { Value[8] = Pump_dataGridView.Rows[k].Cells[11].Value.ToString(); }
+                { Value[8] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, k, 11, true, 0).ToString(); }
                 else { Value[8] = ""; }
                 //신규기존
                 if (Pump_dataGridView.Rows[k].Cells[12].Value != null)
-                { Value[9] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString(); }
+                { Value[9] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, k, 12, true, 0).ToString(); }
                 else { Value[9] = ""; }
 
                 Program.DB.setValue(DB.type.ProjDB, "User_Pump", "번호,프로젝트유형,명칭,종류,A효율,B효율,유량,동력,양정,대수,신규기존",
@@ -2850,7 +2966,17 @@ namespace main.contents
                 for (int i = 1; i < 12; i++)
                 {
                     if (ce_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = ce_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    {
+                        double parsedValue;
+                        if (double.TryParse(ce_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = ce_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_ce", "번호,프로젝트유형,명칭,난방냉방,종류,용량_냉방,소비전력_냉방,용량_난방,소비전력_난방,온도제어방식,대수,신규기존",
@@ -3038,14 +3164,20 @@ namespace main.contents
             {
                 if (AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "")
                 {
-                    AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()) / Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())).ToString("0.00");
+                    if (AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() != "-" && AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "-")
+                    {
+                        AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, e.RowIndex, 4, false, 1) / Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, e.RowIndex, 6, false, 1)).ToString("0.00");
+                    }
                 }
             }
             if (e.ColumnIndex == 6)
             {
                 if (AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() != "")
                 {
-                    AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()) / Convert.ToDouble(AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())).ToString("0.00");
+                    if (AirCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() != "-" && AirCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "-")
+                    {
+                        AirCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, e.RowIndex, 4, false, 1) / Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, e.RowIndex, 6, false, 1)).ToString("0.00");
+                    }
                 }
             }
             if (e.ColumnIndex == 12)
@@ -3083,7 +3215,15 @@ namespace main.contents
                 {
                     if (AirCooler_dataGridView.Rows[k].Cells[i + 1].Value != null && AirCooler_dataGridView.Rows[k].Cells[i + 1].Value != "")
                     {
-                        Value[i] = AirCooler_dataGridView.Rows[k].Cells[i + 1].Value.ToString();
+                        double parsedValue;
+                        if (double.TryParse(AirCooler_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = AirCooler_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
                     }
                     else if (i == 12 || i == 13 || i == 14)
                     {
@@ -3271,14 +3411,17 @@ namespace main.contents
             {
                 if (WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "")
                 {
-                    WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()) / Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())).ToString("0.00");
+                    if (WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() != "-" && WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "-")
+                    {
+                        WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, e.RowIndex, 4, false, 1) / Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, e.RowIndex, 6, false, 1)).ToString("0.00");
+                    }                        
                 }
             }
             if (e.ColumnIndex == 6)
             {
                 if (WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() != "")
                 {
-                    WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()) / Convert.ToDouble(WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())).ToString("0.00");
+                    WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, e.RowIndex, 4, false, 1) / Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, e.RowIndex, 6, false, 1)).ToString("0.00");
                 }
             }
         }
@@ -3294,7 +3437,15 @@ namespace main.contents
                 {
                     if (WaterCooler_dataGridView.Rows[k].Cells[i + 1].Value != null)
                     {
-                        Value[i] = WaterCooler_dataGridView.Rows[k].Cells[i + 1].Value.ToString();
+                        double parsedValue;
+                        if (double.TryParse(WaterCooler_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = WaterCooler_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
                     }
                     else { Value[i] = ""; }
                 }
@@ -3478,7 +3629,17 @@ namespace main.contents
                 for (int i = 1; i < 12; i++)
                 {
                     if (Solar_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = Solar_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    {
+                        double parsedValue;
+                        if (double.TryParse(Solar_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = Solar_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_Solar", "번호,프로젝트유형,DB유형,명칭,난방급탕,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량,신규기존",
@@ -3799,7 +3960,17 @@ namespace main.contents
                 for (int i = 1; i < 31; i++)
                 {
                     if (AHU_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = AHU_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    {
+                        double parsedValue;
+                        if (double.TryParse(AHU_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = AHU_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호,프로젝트유형," +
@@ -4012,7 +4183,17 @@ namespace main.contents
                 for (int i = 1; i < 15; i++)
                 {
                     if (HRV_dataGridView.Rows[k].Cells[i].Value != null)
-                    { Value[i - 1] = HRV_dataGridView.Rows[k].Cells[i].Value.ToString(); }
+                    {
+                        double parsedValue;
+                        if (double.TryParse(HRV_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = HRV_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
                     else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_HRV", "번호,프로젝트유형," +
@@ -4292,7 +4473,15 @@ namespace main.contents
                 {
                     if (CoolingTop_dataGridView.Rows[k].Cells[i + 1].Value != null)
                     {
-                        Value[i] = CoolingTop_dataGridView.Rows[k].Cells[i + 1].Value.ToString();
+                        double parsedValue;
+                        if (double.TryParse(CoolingTop_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = CoolingTop_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
                     }
                     else { Value[i] = ""; }
                 }
@@ -4307,29 +4496,35 @@ namespace main.contents
         }
         private void CoolingTop_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            double 냉각용량 = 0, 냉각소비전력 = 0, 전력소비계수 = 0, 냉각수용량 = 0;
 
-            if (CoolingTop_dataGridView.Rows[e.RowIndex].Cells[5].Value != null && Information.IsNumeric(CoolingTop_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()))
+            if (e.RowIndex >= 0)
             {
-                냉각용량 = Convert.ToDouble(CoolingTop_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
-
-            }
-            else return;
-            if (CoolingTop_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && Information.IsNumeric(CoolingTop_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString()))
-            {
-                냉각소비전력 = Convert.ToDouble(CoolingTop_dataGridView.Rows[e.RowIndex].Cells[11].Value);
-            }
-            else return;
-
-            if (e.ColumnIndex == 5 || e.ColumnIndex == 11)
-            {
-                if (냉각용량 > 0 && 냉각소비전력 > 0)
+                try
                 {
-                    전력소비계수 = 냉각소비전력 / 냉각용량;
-                    CoolingTop_dataGridView.Rows[e.RowIndex].Cells[15].Value = string.Format("{0:F3}", 전력소비계수);
+                    if (e.ColumnIndex == 5)
+                    {
+                        if (CoolingTop_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && CoolingTop_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "")
+                        {
+                            if (CoolingTop_dataGridView.Rows[e.RowIndex].Cells[5].ToString() != "-" && CoolingTop_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
+                            {
+                                CoolingTop_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Program.UTIL.dataGridView_doubleComa(CoolingTop_dataGridView, e.RowIndex, 5, false, 1) / Program.UTIL.dataGridView_doubleComa(CoolingTop_dataGridView, e.RowIndex, 11, false, 1)).ToString("0.00");
+                            }
+                        }
+                    }
+                    if (e.ColumnIndex == 11)
+                    {
+                        if (CoolingTop_dataGridView.Rows[e.RowIndex].Cells[5].Value != null && CoolingTop_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString() != "")
+                        {
+                            if (CoolingTop_dataGridView.Rows[e.RowIndex].Cells[5].ToString() != "-" && CoolingTop_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
+                            {
+                                CoolingTop_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Program.UTIL.dataGridView_doubleComa(CoolingTop_dataGridView, e.RowIndex, 5, false, 1) / Program.UTIL.dataGridView_doubleComa(CoolingTop_dataGridView, e.RowIndex, 11, false, 1)).ToString("0.00");
+                            }
+                        }
+                    }
                 }
-
+                catch { }
             }
+                  
         }
         private void Load_CoolingTop()
         {
@@ -4425,7 +4620,7 @@ namespace main.contents
                         {
                             if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString() != "-" && DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "-")
                             {
-                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value = (Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()) / Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())).ToString("0.00");
+                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value = (Program.UTIL.dataGridView_doubleComa(DHWHP_dataGridView, e.RowIndex, 5, false, 1) / Program.UTIL.dataGridView_doubleComa(DHWHP_dataGridView, e.RowIndex, 6, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -4435,7 +4630,7 @@ namespace main.contents
                         {
                             if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString() != "-" && DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "-")
                             {
-                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value = (Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()) / Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString())).ToString("0.00");
+                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[7].Value = (Program.UTIL.dataGridView_doubleComa(DHWHP_dataGridView, e.RowIndex, 5, false, 1) / Program.UTIL.dataGridView_doubleComa(DHWHP_dataGridView, e.RowIndex, 6, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -4443,14 +4638,20 @@ namespace main.contents
                     {
                         if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null && DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString() != "")
                         {
-                            DHWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value = (Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()) / Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString())).ToString("0.00");
+                            if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-" && DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString() != "-")
+                            {
+                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value = (Program.UTIL.dataGridView_doubleComa(DHWHP_dataGridView, e.RowIndex, 8, false, 1) / Program.UTIL.dataGridView_doubleComa(DHWHP_dataGridView, e.RowIndex, 9, false, 1)).ToString("0.00");
+                            }
                         }
                     }
                     if (e.ColumnIndex == 9)
                     {
                         if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "")
                         {
-                            DHWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value = (Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString()) / Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString())).ToString("0.00");
+                            if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-" && DHWHP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString() != "-")
+                            {
+                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[10].Value = (Program.UTIL.dataGridView_doubleComa(DHWHP_dataGridView, e.RowIndex, 8, false, 1) / Program.UTIL.dataGridView_doubleComa(DHWHP_dataGridView, e.RowIndex, 9, false, 1)).ToString("0.00");
+                            }
                         }
                     }
                     if (e.ColumnIndex == 11)
@@ -4459,7 +4660,7 @@ namespace main.contents
                         {
                             if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-" && DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString() != "-")
                             {
-                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value = (Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString()) / Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString())).ToString("0.00");
+                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value = (Program.UTIL.dataGridView_doubleComa(DHWHP_dataGridView, e.RowIndex, 11, false, 1) / Program.UTIL.dataGridView_doubleComa(DHWHP_dataGridView, e.RowIndex, 12, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -4469,7 +4670,7 @@ namespace main.contents
                         {
                             if (DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-" && DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString() != "-")
                             {
-                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value = (Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString()) / Convert.ToDouble(DHWHP_dataGridView.Rows[e.RowIndex].Cells[12].Value.ToString())).ToString("0.00");
+                                DHWHP_dataGridView.Rows[e.RowIndex].Cells[13].Value = (Program.UTIL.dataGridView_doubleComa(DHWHP_dataGridView, e.RowIndex, 11, false, 1) / Program.UTIL.dataGridView_doubleComa(DHWHP_dataGridView, e.RowIndex, 12, false, 1)).ToString("0.00");
                             }
                         }
                     }
@@ -4544,7 +4745,15 @@ namespace main.contents
                 {
                     if (DHWHP_dataGridView.Rows[k].Cells[i + 1].Value != null)
                     {
-                        Value[i] = DHWHP_dataGridView.Rows[k].Cells[i + 1].Value.ToString();
+                        double parsedValue;
+                        if (double.TryParse(DHWHP_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = DHWHP_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
                     }
                     else { Value[i] = ""; }
                 }

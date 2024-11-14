@@ -856,15 +856,20 @@ namespace main.contents
                 AirCon_dataGridView.Rows[i].Cells[2].Value = Value[0][1];
                 AirCon_dataGridView.Rows[i].Cells[3].Value = Value[0][2];
                 AirCon_dataGridView.Rows[i].Cells[6].Value = SelectCGN_split[i];
-                AirCon_dataGridView.Rows[i].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(Value[0][3])); // 냉방출력
-                AirCon_dataGridView.Rows[i].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(Value[0][4])); //소비전력
-                AirCon_dataGridView.Rows[i].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(Value[0][5])); //COP
-                AirCon_dataGridView.Rows[i].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(Value[0][6])); //대기전력
+                AirCon_dataGridView.Rows[i].Cells[7].Value = Value[0][3]; // 냉방출력
+                AirCon_dataGridView.Rows[i].Cells[8].Value = Value[0][4]; //소비전력
+                AirCon_dataGridView.Rows[i].Cells[9].Value = Value[0][5]; //COP
+                AirCon_dataGridView.Rows[i].Cells[10].Value = Value[0][6]; //대기전력
                 AirCon_dataGridView.Rows[i].Cells[11].Value = Value[0][7]; //연료
                 AirCon_dataGridView.Rows[i].Cells[12].Value = Value[0][8]; //설치
+                Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, i, 6, true, 0);
+                Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, i, 7, true, 1);
+                Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, i, 8, true, 1);
+                Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, i, 9, true, 1);
+                Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, i, 10, true, 1);
                 check.Add(Value[0][8].ToString());
-                Power.Add(Convert.ToDouble(AirCon_dataGridView.Rows[i].Cells[7].Value));
-                EER.Add(Convert.ToDouble(AirCon_dataGridView.Rows[i].Cells[9].Value)); // +변경함
+                Power.Add(Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, i, 7, true, 1));
+                EER.Add(Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, i, 9, true, 1)); // +변경함
             }
 
             for (int h = 0; h < check.Count; h++)
@@ -973,14 +978,14 @@ namespace main.contents
                     SelectCG_nonsplit += AirCon_dataGridView.Rows[k].Cells[1].Value.ToString();
                     SelectCGC_nonsplit += AirCon_dataGridView.Rows[k].Cells[4].Value.ToString();
                     SelectCGE_nonsplit += AirCon_dataGridView.Rows[k].Cells[5].Value.ToString();
-                    SelectCGN_nonsplit += AirCon_dataGridView.Rows[k].Cells[6].Value.ToString();
+                    SelectCGN_nonsplit += (Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, k, 6, true, 0)).ToString(); 
                 }
                 else
                 {
                     SelectCG_nonsplit += AirCon_dataGridView.Rows[k].Cells[1].Value.ToString() + " + ";
                     SelectCGC_nonsplit += AirCon_dataGridView.Rows[k].Cells[4].Value.ToString() + " + ";
                     SelectCGE_nonsplit += AirCon_dataGridView.Rows[k].Cells[5].Value.ToString() + " + ";
-                    SelectCGN_nonsplit += AirCon_dataGridView.Rows[k].Cells[6].Value.ToString() + " + ";
+                    SelectCGN_nonsplit += (Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, k, 6, true, 0)).ToString() + " + ";
                 }
             }
         }
@@ -1106,19 +1111,24 @@ namespace main.contents
                     AirCooler_dataGridView.Rows[i].Cells[2].Value = Value[0][1];
                     AirCooler_dataGridView.Rows[i].Cells[3].Value = Value[0][2];
                     AirCooler_dataGridView.Rows[i].Cells[6].Value = SelectCGN_split[i];
-                    AirCooler_dataGridView.Rows[i].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(Value[0][3])); // 냉방출력
-                    AirCooler_dataGridView.Rows[i].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(Value[0][4])); //소비전력
-                    AirCooler_dataGridView.Rows[i].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(Value[0][5])); //COP
-                    AirCooler_dataGridView.Rows[i].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(Value[0][6])); //대기전력
+                    AirCooler_dataGridView.Rows[i].Cells[7].Value = Value[0][3]; // 냉방출력
+                    AirCooler_dataGridView.Rows[i].Cells[8].Value = Value[0][4]; //소비전력
+                    AirCooler_dataGridView.Rows[i].Cells[9].Value = Value[0][5]; //COP
+                    AirCooler_dataGridView.Rows[i].Cells[10].Value = Value[0][6]; //대기전력
                     AirCooler_dataGridView.Rows[i].Cells[11].Value = Value[0][7]; //연료
                     AirCooler_dataGridView.Rows[i].Cells[12].Value = SelectCGComp_split[i]; //압축기
                     AirCooler_dataGridView.Rows[i].Cells[13].Value = "직팽식";
                     AirCooler_dataGridView.Rows[i].Cells[14].Value = null;
                     AirCooler_dataGridView.Rows[i].Cells[15].Value = null;
                     AirCooler_dataGridView.Rows[i].Cells[16].Value = Value[0][8]; //설치
+                    Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 6, true, 0);
+                    Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 7, true, 1);
+                    Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 8, true, 1);
+                    Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 9, true, 1);
+                    Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 10, true, 1);
                     check.Add(Value[0][8].ToString());
-                    Power.Add(Convert.ToDouble(AirCooler_dataGridView.Rows[i].Cells[7].Value));
-                    EER.Add(Convert.ToDouble(AirCooler_dataGridView.Rows[i].Cells[9].Value));
+                    Power.Add(Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 7, true, 1));
+                    EER.Add(Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 9, true, 1));
 
                 }
                 else if (Val.Length > 0)
@@ -1128,19 +1138,25 @@ namespace main.contents
                     AirCooler_dataGridView.Rows[i].Cells[2].Value = Val[0][1];
                     AirCooler_dataGridView.Rows[i].Cells[3].Value = Val[0][2];
                     AirCooler_dataGridView.Rows[i].Cells[6].Value = SelectCGN_split[i];
-                    AirCooler_dataGridView.Rows[i].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][3])); // 냉방출력
-                    AirCooler_dataGridView.Rows[i].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][4])); //소비전력
-                    AirCooler_dataGridView.Rows[i].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][5])); //COP
-                    AirCooler_dataGridView.Rows[i].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][6])); //대기전력
+                    AirCooler_dataGridView.Rows[i].Cells[7].Value =Val[0][3]; // 냉방출력
+                    AirCooler_dataGridView.Rows[i].Cells[8].Value = Val[0][4]; //소비전력
+                    AirCooler_dataGridView.Rows[i].Cells[9].Value = Val[0][5]; //COP
+                    AirCooler_dataGridView.Rows[i].Cells[10].Value = Val[0][6]; //대기전력
                     AirCooler_dataGridView.Rows[i].Cells[11].Value = Val[0][7]; //연료
                     AirCooler_dataGridView.Rows[i].Cells[12].Value = SelectCGComp_split[i];//압축기
                     AirCooler_dataGridView.Rows[i].Cells[13].Value = Val[0][8]; //부하측공급형식
                     AirCooler_dataGridView.Rows[i].Cells[14].Value = Val[0][9]; //증발기
                     AirCooler_dataGridView.Rows[i].Cells[15].Value = Val[0][10]; //냉수출구온도
                     AirCooler_dataGridView.Rows[i].Cells[16].Value = Val[0][11]; //설치
+                    Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 6, true, 0);
+                    Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 7, true, 1);
+                    Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 8, true, 1);
+                    Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 9, true, 1);
+                    Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 10, true, 1);
+
                     check.Add(Val[0][11].ToString()); //수정
-                    Power.Add(Convert.ToDouble(AirCooler_dataGridView.Rows[i].Cells[7].Value));
-                    EER.Add(Convert.ToDouble(AirCooler_dataGridView.Rows[i].Cells[9].Value));
+                    Power.Add(Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 7, true, 1));
+                    EER.Add(Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 9, true, 1));
                     if (Val[0][8] == "수방식")  //수정
                     {
                         cwin.Add(Convert.ToDouble(Val[0][10]));
@@ -1271,7 +1287,7 @@ namespace main.contents
                     SelectCG_nonsplit += AirCooler_dataGridView.Rows[k].Cells[1].Value.ToString();
                     SelectCGC_nonsplit += AirCooler_dataGridView.Rows[k].Cells[4].Value.ToString();
                     SelectCGE_nonsplit += AirCooler_dataGridView.Rows[k].Cells[5].Value.ToString();
-                    SelectCGN_nonsplit += AirCooler_dataGridView.Rows[k].Cells[6].Value.ToString();
+                    SelectCGN_nonsplit += (Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, k, 6, true, 0)).ToString();
                     SelectCGComp_nonsplit += AirCooler_dataGridView.Rows[k].Cells[12].Value.ToString();
                 }
                 else
@@ -1279,7 +1295,7 @@ namespace main.contents
                     SelectCG_nonsplit += AirCooler_dataGridView.Rows[k].Cells[1].Value.ToString() + " + ";
                     SelectCGC_nonsplit += AirCooler_dataGridView.Rows[k].Cells[4].Value.ToString() + " + ";
                     SelectCGE_nonsplit += AirCooler_dataGridView.Rows[k].Cells[5].Value.ToString() + " + ";
-                    SelectCGN_nonsplit += AirCooler_dataGridView.Rows[k].Cells[6].Value.ToString() + " + ";
+                    SelectCGN_nonsplit += (Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, k, 6, true, 0)) + " + ";
                     SelectCGComp_nonsplit += AirCooler_dataGridView.Rows[k].Cells[12].Value.ToString() + " + ";
                 }
             }
@@ -1395,21 +1411,26 @@ namespace main.contents
                 WaterCooler_dataGridView.Rows[i].Cells[4] = 제어comboBox;
 
                 WaterCooler_dataGridView.Rows[i].Cells[6].Value = SelectCGN_split[i];
-                WaterCooler_dataGridView.Rows[i].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][3])); // 냉방출력
-                WaterCooler_dataGridView.Rows[i].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][4])); //소비전력
-                WaterCooler_dataGridView.Rows[i].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][5])); //COP
-                WaterCooler_dataGridView.Rows[i].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][6])); //대기전력
+                WaterCooler_dataGridView.Rows[i].Cells[7].Value = Val[0][3]; // 냉방출력
+                WaterCooler_dataGridView.Rows[i].Cells[8].Value = Val[0][4]; //소비전력
+                WaterCooler_dataGridView.Rows[i].Cells[9].Value = Val[0][5]; //COP
+                WaterCooler_dataGridView.Rows[i].Cells[10].Value = Val[0][6]; //대기전력
                 WaterCooler_dataGridView.Rows[i].Cells[11].Value = Val[0][7]; //연료
                 WaterCooler_dataGridView.Rows[i].Cells[12].Value = Val[0][8]; //압축기
                 WaterCooler_dataGridView.Rows[i].Cells[13].Value = Val[0][9]; //증발기
                 WaterCooler_dataGridView.Rows[i].Cells[14].Value = Val[0][10]; //냉수출구온도
                 WaterCooler_dataGridView.Rows[i].Cells[15].Value = Val[0][11]; //냉수입구온도
                 WaterCooler_dataGridView.Rows[i].Cells[16].Value = Val[0][12]; //설치
+                Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, i, 6, true, 0);
+                Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, i, 7, true, 1);
+                Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, i, 8, true, 1);
+                Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, i, 9, true, 1);
+                Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, i, 10, true, 1);
                 check.Add(Val[0][12].ToString());
-                Power.Add(Convert.ToDouble(WaterCooler_dataGridView.Rows[i].Cells[7].Value));
-                EER.Add(Convert.ToDouble(WaterCooler_dataGridView.Rows[i].Cells[9].Value));
-                cwout.Add(Convert.ToDouble(WaterCooler_dataGridView.Rows[i].Cells[14].Value)); //수정
-                cwin.Add(Convert.ToDouble(WaterCooler_dataGridView.Rows[i].Cells[15].Value)); //수정
+                Power.Add(Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, i, 7, true, 1));
+                EER.Add(Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, i, 9, true, 1));
+                cwout.Add(Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, i, 14, true, 1)); //수정
+                cwin.Add(Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, i, 15, true, 1)); //수정
 
                 //압축기를 작성해야함
             }
@@ -1521,15 +1542,14 @@ namespace main.contents
                     SelectCG_nonsplit += WaterCooler_dataGridView.Rows[k].Cells[1].Value.ToString();
                     SelectCGC_nonsplit += WaterCooler_dataGridView.Rows[k].Cells[4].Value.ToString();
                     SelectCGE_nonsplit += WaterCooler_dataGridView.Rows[k].Cells[5].Value.ToString();
-                    SelectCGN_nonsplit += WaterCooler_dataGridView.Rows[k].Cells[6].Value.ToString();
-
+                    SelectCGN_nonsplit += (Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, k, 6, true, 0)).ToString();
                 }
                 else
                 {
                     SelectCG_nonsplit += WaterCooler_dataGridView.Rows[k].Cells[1].Value.ToString() + " + ";
                     SelectCGC_nonsplit += WaterCooler_dataGridView.Rows[k].Cells[4].Value.ToString() + " + ";
                     SelectCGE_nonsplit += WaterCooler_dataGridView.Rows[k].Cells[5].Value.ToString() + " + ";
-                    SelectCGN_nonsplit += WaterCooler_dataGridView.Rows[k].Cells[6].Value.ToString() + " + ";
+                    SelectCGN_nonsplit += (Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, k, 6, true, 0)).ToString() + " + ";
                 }
             }
         }
@@ -1643,9 +1663,9 @@ namespace main.contents
                 SoilCooler_dataGridView.Rows[i].Cells[4] = 제어comboBox;
 
                 SoilCooler_dataGridView.Rows[i].Cells[6].Value = SelectCGN_split[i];
-                SoilCooler_dataGridView.Rows[i].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][3])); // 냉방출력
-                SoilCooler_dataGridView.Rows[i].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][4])); //소비전력`
-                SoilCooler_dataGridView.Rows[i].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][5])); //COP
+                SoilCooler_dataGridView.Rows[i].Cells[7].Value = Val[0][3]; // 냉방출력
+                SoilCooler_dataGridView.Rows[i].Cells[8].Value = Val[0][4]; //소비전력`
+                SoilCooler_dataGridView.Rows[i].Cells[9].Value = Val[0][5]; //COP
                 SoilCooler_dataGridView.Rows[i].Cells[10].Value = Val[0][6]; //대기전력
                 SoilCooler_dataGridView.Rows[i].Cells[11].Value = Val[0][7]; //연료
                 SoilCooler_dataGridView.Rows[i].Cells[12].Value = Val[0][8]; //압축기
@@ -1653,12 +1673,17 @@ namespace main.contents
                 SoilCooler_dataGridView.Rows[i].Cells[14].Value = Val[0][10]; //냉수출구온도
                 SoilCooler_dataGridView.Rows[i].Cells[15].Value = Val[0][11]; //냉수입구온도
                 SoilCooler_dataGridView.Rows[i].Cells[16].Value = Val[0][12]; //설치
+                Program.UTIL.dataGridView_doubleComa(SoilCooler_dataGridView, i, 6, true, 0);
+                Program.UTIL.dataGridView_doubleComa(SoilCooler_dataGridView, i, 7, true, 1);
+                Program.UTIL.dataGridView_doubleComa(SoilCooler_dataGridView, i, 8, true, 1);
+                Program.UTIL.dataGridView_doubleComa(SoilCooler_dataGridView, i, 9, true, 1);
+                Program.UTIL.dataGridView_doubleComa(SoilCooler_dataGridView, i, 10, true, 1);
                 check.Add(Val[0][12].ToString());
                 type.Add(Val[0][13].ToString());
-                Power.Add(Convert.ToDouble(SoilCooler_dataGridView.Rows[i].Cells[7].Value));
-                EER.Add(Convert.ToDouble(SoilCooler_dataGridView.Rows[i].Cells[9].Value));
-                cwout.Add(Convert.ToDouble(SoilCooler_dataGridView.Rows[i].Cells[14].Value));
-                cwin.Add(Convert.ToDouble(SoilCooler_dataGridView.Rows[i].Cells[15].Value));
+                Power.Add(Program.UTIL.dataGridView_doubleComa(SoilCooler_dataGridView, i, 7, true, 1));
+                EER.Add(Program.UTIL.dataGridView_doubleComa(SoilCooler_dataGridView, i, 9, true, 1));
+                cwout.Add(Program.UTIL.dataGridView_doubleComa(SoilCooler_dataGridView, i, 14, true, 1));
+                cwin.Add(Program.UTIL.dataGridView_doubleComa(SoilCooler_dataGridView, i, 15, true, 1));
 
             }
             for (int h = 0; h < check.Count; h++)
@@ -1778,6 +1803,7 @@ namespace main.contents
                     SelectCGC_nonsplit += SoilCooler_dataGridView.Rows[k].Cells[4].Value.ToString();
                     SelectCGE_nonsplit += SoilCooler_dataGridView.Rows[k].Cells[5].Value.ToString();
                     SelectCGN_nonsplit += SoilCooler_dataGridView.Rows[k].Cells[6].Value.ToString();
+                    Program.UTIL.dataGridView_doubleComa(SoilCooler_dataGridView, k, 6, true, 0);
                 }
                 else
                 {
@@ -1785,6 +1811,7 @@ namespace main.contents
                     SelectCGC_nonsplit += SoilCooler_dataGridView.Rows[k].Cells[4].Value.ToString() + " + ";
                     SelectCGE_nonsplit += SoilCooler_dataGridView.Rows[k].Cells[5].Value.ToString() + " + ";
                     SelectCGN_nonsplit += SoilCooler_dataGridView.Rows[k].Cells[6].Value.ToString() + " + ";
+                    Program.UTIL.dataGridView_doubleComa(SoilCooler_dataGridView, k, 6, true, 0);
                 }
             }
         }
@@ -1903,9 +1930,9 @@ namespace main.contents
                 SoilWaterCooler_dataGridView.Rows[i].Cells[4] = 제어comboBox;
 
                 SoilWaterCooler_dataGridView.Rows[i].Cells[6].Value = SelectCGN_split[i];
-                SoilWaterCooler_dataGridView.Rows[i].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][3])); // 냉방출력
-                SoilWaterCooler_dataGridView.Rows[i].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][4])); //소비전력`
-                SoilWaterCooler_dataGridView.Rows[i].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][5])); //COP
+                SoilWaterCooler_dataGridView.Rows[i].Cells[7].Value = Val[0][3]; // 냉방출력
+                SoilWaterCooler_dataGridView.Rows[i].Cells[8].Value = Val[0][4]; //소비전력`
+                SoilWaterCooler_dataGridView.Rows[i].Cells[9].Value = Val[0][5]; //COP
                 SoilWaterCooler_dataGridView.Rows[i].Cells[10].Value = Val[0][6]; //대기전력
                 SoilWaterCooler_dataGridView.Rows[i].Cells[11].Value = Val[0][7]; //연료
                 SoilWaterCooler_dataGridView.Rows[i].Cells[12].Value = Val[0][8]; //압축기
@@ -1915,10 +1942,15 @@ namespace main.contents
                 SoilWaterCooler_dataGridView.Rows[i].Cells[16].Value = Val[0][12]; //설치
                 check.Add(Val[0][12].ToString());
                 type.Add(Val[0][13].ToString());
-                Power.Add(Convert.ToDouble(SoilWaterCooler_dataGridView.Rows[i].Cells[7].Value));
-                EER.Add(Convert.ToDouble(SoilWaterCooler_dataGridView.Rows[i].Cells[9].Value));
-                cwout.Add(Convert.ToDouble(SoilWaterCooler_dataGridView.Rows[i].Cells[14].Value));
-                cwin.Add(Convert.ToDouble(SoilWaterCooler_dataGridView.Rows[i].Cells[15].Value));
+                Program.UTIL.dataGridView_doubleComa(SoilWaterCooler_dataGridView, i, 6, true, 0);
+                Program.UTIL.dataGridView_doubleComa(SoilWaterCooler_dataGridView, i, 7, true, 1);
+                Program.UTIL.dataGridView_doubleComa(SoilWaterCooler_dataGridView, i, 8, true, 1);
+                Program.UTIL.dataGridView_doubleComa(SoilWaterCooler_dataGridView, i, 9, true, 1);
+                Program.UTIL.dataGridView_doubleComa(SoilWaterCooler_dataGridView, i, 10, true, 1);
+                Power.Add(Program.UTIL.dataGridView_doubleComa(SoilWaterCooler_dataGridView, i, 7, true, 1));
+                EER.Add(Program.UTIL.dataGridView_doubleComa(SoilWaterCooler_dataGridView, i, 9, true, 1));
+                cwout.Add(Program.UTIL.dataGridView_doubleComa(SoilWaterCooler_dataGridView, i, 14, true, 1));
+                cwin.Add(Program.UTIL.dataGridView_doubleComa(SoilWaterCooler_dataGridView, i, 15, true, 1));
 
             }
             for (int h = 0; h < check.Count; h++)
@@ -2039,14 +2071,15 @@ namespace main.contents
                     SelectCG_nonsplit += SoilWaterCooler_dataGridView.Rows[k].Cells[1].Value.ToString();
                     SelectCGC_nonsplit += SoilWaterCooler_dataGridView.Rows[k].Cells[4].Value.ToString();
                     SelectCGE_nonsplit += SoilWaterCooler_dataGridView.Rows[k].Cells[5].Value.ToString();
-                    SelectCGN_nonsplit += SoilWaterCooler_dataGridView.Rows[k].Cells[6].Value.ToString();
+                    SelectCGN_nonsplit += (Program.UTIL.dataGridView_doubleComa(SoilWaterCooler_dataGridView, 0, 6, true, 0)).ToString();
+                    Program.UTIL.dataGridView_doubleComa(SoilWaterCooler_dataGridView, 0, 6, true, 0);
                 }
                 else
                 {
                     SelectCG_nonsplit += SoilWaterCooler_dataGridView.Rows[k].Cells[1].Value.ToString() + " + ";
                     SelectCGC_nonsplit += SoilWaterCooler_dataGridView.Rows[k].Cells[4].Value.ToString() + " + ";
                     SelectCGE_nonsplit += SoilWaterCooler_dataGridView.Rows[k].Cells[5].Value.ToString() + " + ";
-                    SelectCGN_nonsplit += SoilWaterCooler_dataGridView.Rows[k].Cells[6].Value.ToString() + " + ";
+                    SelectCGN_nonsplit += (Program.UTIL.dataGridView_doubleComa(SoilWaterCooler_dataGridView, 0, 6, true, 0)).ToString() + " + ";
                 }
             }
         }
@@ -2147,21 +2180,26 @@ namespace main.contents
                 AbsorbCooler_dataGridView.Rows[i].Cells[2].Value = Val[0][1];
                 AbsorbCooler_dataGridView.Rows[i].Cells[3].Value = Val[0][2];
                 AbsorbCooler_dataGridView.Rows[i].Cells[5].Value = SelectCGN_split[i];
-                AbsorbCooler_dataGridView.Rows[i].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][3])); //냉방출력
-                AbsorbCooler_dataGridView.Rows[i].Cells[7].Value = string.Format("{0:F2}", Convert.ToDouble(Val[0][4])); //통합성능
-                AbsorbCooler_dataGridView.Rows[i].Cells[8].Value = string.Format("{0:F2}", Convert.ToDouble(Val[0][5])); //EER
-                AbsorbCooler_dataGridView.Rows[i].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][6])); //대기전력
+                AbsorbCooler_dataGridView.Rows[i].Cells[6].Value = Val[0][3]; //냉방출력
+                AbsorbCooler_dataGridView.Rows[i].Cells[7].Value = Val[0][4]; //통합성능
+                AbsorbCooler_dataGridView.Rows[i].Cells[8].Value = Val[0][5]; //EER
+                AbsorbCooler_dataGridView.Rows[i].Cells[9].Value = Val[0][6]; //대기전력
                 AbsorbCooler_dataGridView.Rows[i].Cells[10].Value = Val[0][7]; //연료
                 AbsorbCooler_dataGridView.Rows[i].Cells[11].Value = Val[0][8]; //냉수출구온도
                 AbsorbCooler_dataGridView.Rows[i].Cells[12].Value = Val[0][9]; //냉수입구온도
                 AbsorbCooler_dataGridView.Rows[i].Cells[13].Value = Val[0][10]; //설치
+                Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, i, 5, true, 0);
+                Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, i, 6, true, 1);
+                Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, i, 7, true, 1);
+                Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, i, 8, true, 1);
+                Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, i, 9, true, 1);
 
                 check.Add(Val[0][10].ToString());
-                Power.Add(Convert.ToDouble(AbsorbCooler_dataGridView.Rows[i].Cells[6].Value));
-                SEER.Add(Convert.ToDouble(AbsorbCooler_dataGridView.Rows[i].Cells[7].Value));
-                EER.Add(Convert.ToDouble(AbsorbCooler_dataGridView.Rows[i].Cells[8].Value));
-                cwout.Add(Convert.ToDouble(AbsorbCooler_dataGridView.Rows[i].Cells[11].Value)); //수정
-                cwin.Add(Convert.ToDouble(AbsorbCooler_dataGridView.Rows[i].Cells[12].Value)); //수정
+                Power.Add(Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, i, 6, true, 1));
+                SEER.Add(Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, i, 7, true, 1));
+                EER.Add(Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, i, 8, true, 1));
+                cwout.Add(Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, i, 11, true, 1)); //수정
+                cwin.Add(Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, i, 12, true, 1)); //수정
 
                 //압축기를 작성해야함
             }
@@ -2262,14 +2300,14 @@ namespace main.contents
                 {
                     SelectCG_nonsplit += AbsorbCooler_dataGridView.Rows[k].Cells[1].Value.ToString();
                     SelectCGE_nonsplit += AbsorbCooler_dataGridView.Rows[k].Cells[4].Value.ToString();
-                    SelectCGN_nonsplit += AbsorbCooler_dataGridView.Rows[k].Cells[5].Value.ToString();
+                    SelectCGN_nonsplit += (Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, k, 5, true, 0)).ToString();
 
                 }
                 else
                 {
                     SelectCG_nonsplit += AbsorbCooler_dataGridView.Rows[k].Cells[1].Value.ToString() + " + ";
                     SelectCGE_nonsplit += AbsorbCooler_dataGridView.Rows[k].Cells[4].Value.ToString() + " + ";
-                    SelectCGN_nonsplit += AbsorbCooler_dataGridView.Rows[k].Cells[5].Value.ToString() + " + ";
+                    SelectCGN_nonsplit +=(Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, 0, 5, true, 0)).ToString() + " + ";
                 }
             }
         }
@@ -2589,37 +2627,16 @@ namespace main.contents
             {
                 for (int n = 0; n < Value.Length; n++)
                 {
-                    string A효율 = "", B효율 = "", 유량 = "", 동력 = "", 양정 = "";
-                    if (Value[n][3] != null && Value[n][3] != "")
-                    {
-                        A효율 = string.Format("{0:F1}", Convert.ToDouble(Value[n][3]));
-                    }
-                    if (Value[n][4] != null && Value[n][4] != "")
-                    {
-                        B효율 = string.Format("{0:F1}", Convert.ToDouble(Value[n][4]));
-                    }
-                    if (Value[n][5] != null && Value[n][5] != "")
-                    {
-                        유량 = string.Format("{0:F0}", Convert.ToDouble(Value[n][5]));
-                    }
-                    if (Value[n][6] != null && Value[n][6] != "")
-                    {
-                        동력 = string.Format("{0:F0}", Convert.ToDouble(Value[n][6]));
-                    }
-                    if (Value[n][7] != null && Value[n][7] != "")
-                    {
-                        양정 = string.Format("{0:F0}", Convert.ToDouble(Value[n][7]));
-                    }
-
                     Pump_dataGridView.Rows[nRow].Cells[1].Value = PT;
-                    Pump_dataGridView.Rows[nRow].Cells[2].Value = P;
-                    Pump_dataGridView.Rows[nRow].Cells[3].Value = Value[0][1];
-                    Pump_dataGridView.Rows[nRow].Cells[4].Value = Value[0][2];
-                    Pump_dataGridView.Rows[nRow].Cells[5].Value = A효율;
-                    Pump_dataGridView.Rows[nRow].Cells[6].Value = B효율;
-                    Pump_dataGridView.Rows[nRow].Cells[7].Value = 유량;
-                    Pump_dataGridView.Rows[nRow].Cells[8].Value = 동력;
-                    Pump_dataGridView.Rows[nRow].Cells[9].Value = 양정;
+                    for (int a = 0; a < Value[0].Length; a++)
+                    {
+                        Pump_dataGridView.Rows[nRow].Cells[a + 2].Value = Value[0][a];
+                    }
+                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, true, 1);
+                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, true, 1);
+                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 7, true, 0);
+                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 8, true, 0);
+                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 9, true, 0);
                     Pump_dataGridView.Rows[nRow].Cells[12].Value = PN;
                 }
             }
@@ -3809,11 +3826,14 @@ namespace main.contents
                 CoolingTop_dataGridView.Rows[i].Cells[0].Value = Val[0][0];//번호
                 CoolingTop_dataGridView.Rows[i].Cells[1].Value = Val[0][1];//명칭
                 CoolingTop_dataGridView.Rows[i].Cells[2].Value = SelectCTN_split[i];//설치대수
-                CoolingTop_dataGridView.Rows[i].Cells[3].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][2]));//냉각능력
-                CoolingTop_dataGridView.Rows[i].Cells[4].Value = string.Format("{0:F1}", Convert.ToDouble(Val[0][3])); //냉방전력소비계수
+                CoolingTop_dataGridView.Rows[i].Cells[3].Value = Val[0][2];//냉각능력
+                CoolingTop_dataGridView.Rows[i].Cells[4].Value = Val[0][3]; //냉방전력소비계수
                 CoolingTop_dataGridView.Rows[i].Cells[5].Value = Val[0][4]; //제어유형
                 CoolingTop_dataGridView.Rows[i].Cells[6].Value = Val[0][5]; //팬유형
                 CoolingTop_dataGridView.Rows[i].Cells[7].Value = Val[0][6]; //설치
+                Program.UTIL.dataGridView_doubleComa(CoolingTop_dataGridView, i, 2, true, 0);
+                Program.UTIL.dataGridView_doubleComa(CoolingTop_dataGridView, i, 3, true, 1);
+                Program.UTIL.dataGridView_doubleComa(CoolingTop_dataGridView, i, 4, true, 1);
 
                 CTPower.Add(Convert.ToDouble(Val[0][2]));
                 check.Add(Val[0][6]);
@@ -3880,13 +3900,13 @@ namespace main.contents
                     if (k == CoolingTop_dataGridView.Rows.Count - 1)
                     {
                         SelectCT_nonsplit += CoolingTop_dataGridView.Rows[k].Cells[0].Value.ToString();
-                        SelectCTN_nonsplit += CoolingTop_dataGridView.Rows[k].Cells[2].Value.ToString();
+                        SelectCTN_nonsplit += (Program.UTIL.dataGridView_doubleComa(CoolingTop_dataGridView, k, 2, true, 0)).ToString();
 
                     }
                     else
                     {
                         SelectCT_nonsplit += CoolingTop_dataGridView.Rows[k].Cells[0].Value.ToString() + " + ";
-                        SelectCTN_nonsplit += CoolingTop_dataGridView.Rows[k].Cells[2].Value.ToString() + " + ";
+                        SelectCTN_nonsplit += (Program.UTIL.dataGridView_doubleComa(CoolingTop_dataGridView, k, 2, true, 0)).ToString() + " + ";
                     }
                 }
             }
