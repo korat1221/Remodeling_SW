@@ -90,38 +90,16 @@ namespace main.subcontents.CoolingSystem
                 {
                     for (int n = 0; n < User_Value.Length; n++)
                     {
-                        string A효율 = "", B효율 = "", 유량 = "", 동력 = "", 양정 = "";
-                        if (User_Value[n][3] != null && User_Value[n][3] != "")
-                        {
-                            A효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][3]));
-                        }
-                        if (User_Value[n][4] != null && User_Value[n][4] != "")
-                        {
-                            B효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
-                        }
-                        if (User_Value[n][5] != null && User_Value[n][5] != "")
-                        {
-                            유량 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][5]));
-                        }
-                        if (User_Value[n][6] != null && User_Value[n][6] != "")
-                        {
-                            동력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][6]));
-                        }
-                        if (User_Value[n][7] != null && User_Value[n][7] != "")
-                        {
-                            양정 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][7]));
-                        }
-
                         int nRow = Pump_dataGridView.Rows.Add();
-
-                        Pump_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][0];
-                        Pump_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][1];
-                        Pump_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][2];
-                        Pump_dataGridView.Rows[nRow].Cells[5].Value = A효율;
-                        Pump_dataGridView.Rows[nRow].Cells[6].Value = B효율;
-                        Pump_dataGridView.Rows[nRow].Cells[7].Value = 유량;
-                        Pump_dataGridView.Rows[nRow].Cells[8].Value = 동력;
-                        Pump_dataGridView.Rows[nRow].Cells[9].Value = 양정;
+                        for (int a = 0; a < User_Value[0].Length; a++)
+                        {
+                            Pump_dataGridView.Rows[nRow].Cells[a + 2].Value = User_Value[0][a];
+                        }
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, true, 1);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, true, 1);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 7, true, 0);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 8, true, 0);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 9, true, 0);
                     }
                 }
                 else MessageBox.Show("장비일람표에서 펌프를 작성해 주세요.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -206,7 +184,7 @@ namespace main.subcontents.CoolingSystem
                 return;
             }
 
-            SelectPN = Pump_dataGridView.Rows[SelectRow].Cells[1].Value.ToString() ;
+            SelectPN = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, SelectRow, 1, true, 0).ToString() ;
             SelectP = Pump_dataGridView.Rows[SelectRow].Cells[2].Value.ToString();               
                                                     
             this.DialogResult = DialogResult.OK;
