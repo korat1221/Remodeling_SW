@@ -140,7 +140,7 @@ namespace main.contents.Building
                     string s3 = null;
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        s3 += Elec_dataGridView.Rows[a].Cells[mth + 2].Value + ",";
+                        s3 +=  Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, a, mth + 2, true, 0) + ",";
                     }
                     string s2 = "[" + s3 + "]";
                     s += "{label:\"" + label + "\",type:\"line\",data:" + s2 + ",yAxisTitle:\"전기 에너지사용량[kWh]\",pointStyle:\"circle\",pointRadius:\"2.5\",borderWidth:\"0.5\",borderColor:\"" + randomGrayColor + "\",backgroundColor:\"" + randomGrayColor + "\",dash:true,tension: 0.4},";
@@ -154,7 +154,7 @@ namespace main.contents.Building
                 {
                     for (int row = 0; row < Elec_dataGridView.Rows.Count; row++)
                     {
-                        if (Elec_dataGridView.Rows[row].Cells[mth + 2].Value != null)
+                        if (Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, row, mth + 2, true, 0) != null)
                         { average[mth] += Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, row, mth + 2, true, 0); }
                     }
                     average[mth] = average[mth] / Elec_dataGridView.Rows.Count;
@@ -282,7 +282,7 @@ namespace main.contents.Building
                     string s3 = null;
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        s3 += Gas_kWh_dataGridView.Rows[a].Cells[mth + 2].Value + ",";
+                        s3 += Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, a, mth + 2, true, 0) + ",";
                     }
                     string s2 = "[" + s3 + "]";
                     s += "{label:\"" + label + "\",type:\"line\",data:" + s2 + ",yAxisTitle:\"가스 에너지사용량[kWh]\",pointStyle:\"circle\",pointRadius:\"2.5\",borderWidth:\"0.5\",borderColor:\"" + randomGrayColor + "\",backgroundColor:\"" + randomGrayColor + "\",dash:true,tension: 0.4},";
@@ -296,7 +296,7 @@ namespace main.contents.Building
                 {
                     for (int row = 0; row < Gas_kWh_dataGridView.Rows.Count; row++)
                     {
-                        if (Gas_kWh_dataGridView.Rows[row].Cells[mth + 2].Value != null)
+                        if (Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, row, mth + 2, true, 0) != null)
                         { average[mth] += Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, row, mth + 2, true, 0); }
                     }
                     average[mth] = average[mth] / Gas_kWh_dataGridView.Rows.Count;
@@ -426,7 +426,7 @@ namespace main.contents.Building
                     string s3 = null;
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        s3 += DH_kWh_dataGridView.Rows[a].Cells[mth + 2].Value + ",";
+                        s3 += Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, a, mth + 2, true, 0) + ",";
                     }
                     string s2 = "[" + s3 + "]";
                     s += "{label:\"" + label + "\",type:\"line\",data:" + s2 + ",yAxisTitle:\"지역난방 에너지사용량[kWh]\",pointStyle:\"circle\",pointRadius:\"2.5\",borderWidth:\"0.5\",borderColor:\"" + randomGrayColor + "\",backgroundColor:\"" + randomGrayColor + "\",dash:true,tension: 0.4},";
@@ -440,7 +440,7 @@ namespace main.contents.Building
                 {
                     for (int row = 0; row < DH_kWh_dataGridView.Rows.Count; row++)
                     {
-                        if (DH_kWh_dataGridView.Rows[row].Cells[mth + 2].Value != null)
+                        if (Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, row, mth + 2, true, 0) != null)
                         { average[mth] += Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, row, mth + 2, true, 0); }
                     }
                     average[mth] = average[mth] / DH_kWh_dataGridView.Rows.Count;
