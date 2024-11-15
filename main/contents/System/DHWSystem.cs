@@ -1726,7 +1726,6 @@ namespace main.contents
         {
             BoilerNum_nonsplit = "";
             SolarNum_nonsplit = ""; SolarDirection_nonsplit = ""; SolarDegree_nonsplit = "";
-            SelectDH_nonsplit = "";
             HPNum_nonsplit = ""; HPControl_nonsplit = "";
             NonSplit_BoilerNum();
             NonSplit_Solar();
