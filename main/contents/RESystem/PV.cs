@@ -34,24 +34,8 @@ namespace main.contents
         //계산
         public double fperf;
 
-        public double[] Esol = new double[12]; //일사량(kWh/m2)
-        public double[] PVαsol = new double[12]; //일사고도각
-
-        public double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-
-        //음영계수
-        double Arrayheight, shHeight, shLength;
-        double[] hshobst = new double[12], hshobstwi = new double[12], hsh = new double[12]; //수직길이, 수평길이, 어레이내 실제음영길이
-        double[] AreaC = new double[12]; //음영반영 면적   
-
-
-        //생성된 전기에너지
-        public double[] Qfpvm_kWh = new double[12]; //월별
-        public double[] Qfpvm_kWh_m2 = new double[12]; //단위당
-        public double Qfpva_kWh_a; //연간
-        public double PVeff; //평균효율
-
-        public PV()
+               
+        public PV( )
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             InitializeAsync();
@@ -268,6 +252,7 @@ namespace main.contents
                 string[][] value = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광배터리계수", "시스템효율", "배터리타입 = '" + BatteryType + "'");
                 BatteryEff = Convert.ToDouble(value[0][0]) * 100;
             }
+            
             Battery_textBox.Text = Battery;
             BatteryEff_textbox.Visible = true;
             BatteryEff_textbox.Location = new Point(433, 180);
@@ -278,61 +263,7 @@ namespace main.contents
             batterypower.Location = new Point(430, 294);
             batterypower.Text = string.Format("{0:F0} kW", BatteryCa);
         }
-        void PVCalc()
-        {      
-            
-            if (PV_dataGridView.Rows[0].Cells[5] == null)
-            {
-                MessageBox.Show("설치 관련 정보를 입력해 주세요.");
-            }
-            else if (Inverter == null)
-            {
-                MessageBox.Show("인버터를 지정해 주세요.");
-            }
-            else
-            {
-                fperf = fperf - (1 - InverterEff / 100);
-            }
-            //Power 설정
-            for (int a = 6; a < 9; a++)
-            {
-                if (PV_dataGridView.Rows[0].Cells[a] == null)
-                {
-                    MessageBox.Show("음영관련 정보를 입력해 주세요.");
-                }
-            }
-            shHeight = Convert.ToDouble(PV_dataGridView.Rows[0].Cells[6].Value);
-            shLength = Convert.ToDouble(PV_dataGridView.Rows[0].Cells[7].Value);
-            Arrayheight = Convert.ToDouble(PV_dataGridView.Rows[0].Cells[8].Value);
-
-            Qfpva_kWh_a = 0;
-
-            double tan = Math.Tan(Convert.ToDouble(PV_dataGridView.Rows[0].Cells[4].Value.ToString()) * Math.PI / 180.0);
-            for (int b = 0; b < 12; b++)
-            {
-                double x = 0, y = 0;
-                hshobst[b] = Math.Min(Arrayheight, Math.Max(0, shHeight - shLength * Math.Tan(PVαsol[b] * Math.PI / 180.0))); //수지길이  a
-                hshobstwi[b] = hshobst[b] / Math.Tan(PVαsol[b] * Math.PI / 180.0); //수평길이  b
-                x = hshobst[b] / (tan + hshobst[b] / hshobstwi[b]);
-                y = tan * x;
-
-                if (Math.Sqrt(Math.Pow(hshobst[b], 2) + Math.Pow(hshobstwi[b], 2)) <= 0)
-                {
-                    hsh[b] = 0;
-                }
-                else hsh[b] = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
-
-                AreaC[b] = (PVtotalarea / Arrayheight) * (Arrayheight - hsh[b]);
-
-                Qfpvm_kWh[b] = Esol[b] * (Kpk / 1000) * AreaC[b] * 0.9 * fperf;
-                Qfpva_kWh_a += Qfpvm_kWh[b];
-                Qfpvm_kWh_m2[b] = Esol[b] * (Kpk / 1000) * AreaC[b] * 0.9 * fperf / PVtotalarea;
-            }
-            //평균효율, 최대출력
-            double PVefficiency = Qfpvm_kWh_m2.Average() / Esol.Average();
-            averagecpacity_textBox.Text = string.Format("{0:F2}", PVefficiency * 100);
-        }
-
+        
         private void Save_button_Click(object sender, EventArgs e)
         {
             if (Save())
@@ -395,30 +326,36 @@ namespace main.contents
                 "'" + val[3] + "','" + val[4] + "','" + val[5] + "','" + val[6] + "','" + val[7] + "','" + val[8] + "','" + Ins + "','" + beforePV + "','"+fperf+"'", "번호");
             return true;
         }
-        private void LoadGraph(String Orientation, String Slope)
+        private void LoadGraph(double[] Qfpvm, double[] Esolm )
         {
+            double[] PVm2_kWh = new double[12], Solm2_kWh = new double[12];
             try
             {
+                for(int j=0; j < 12; j++)
+                {
+                    PVm2_kWh[j] = Qfpvm[j] / PVtotalarea;
+                    Solm2_kWh[j] = Esolm[j];
+                }
+                
                 string s = "", s2 = "";
-                string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
-                string[][] res1;
-                string[][] res2;
+                                
                 double max1 = 0, max2 = 0;
                 for (int mth = 0; mth < 11; mth++)
                 {
-                    s += Qfpvm_kWh_m2[mth] + ",";
-                    s2 += Esol[mth] + ",";
+                    
+                    s += PVm2_kWh[mth] + ",";
+                    s2 += Solm2_kWh[mth] + ",";
                 }
 
-                s += Qfpvm_kWh_m2[11];
-                s2 += Esol[11];
+                s += PVm2_kWh[11];
+                s2 += Solm2_kWh[11];
 
-                int n2 = ((int)Esol.Max()).ToString().Length;
-                max2 = Convert.ToInt64((Esol.Max()) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1) / 2;
-                int n1 = ((int)Qfpvm_kWh_m2.Max()).ToString().Length;
-                max1 = Convert.ToInt64((Qfpvm_kWh_m2.Max()) / Math.Pow(10, n1 - 1)) * Math.Pow(10, n1 - 1) + Math.Pow(10, n1 - 1) / 2;
+                int n2 = ((int)Solm2_kWh.Max()).ToString().Length;
+                max2 = Convert.ToInt64((Solm2_kWh.Max()) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1) / 2;
+                int n1 = ((int)PVm2_kWh.Max()).ToString().Length;
+                max1 = Convert.ToInt64((PVm2_kWh.Max()) / Math.Pow(10, n1 - 1)) * Math.Pow(10, n1 - 1) + Math.Pow(10, n1 - 1) / 2;
 
-                runScript("drawChart_pv([{type:\"line\",label:\"생산량(kWh/m²·mth)\",PVdata:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:" + max2 + "},{type:\"bar\",label:\"일사량(kWh/m²·mth)\",PVdata:[" + s2 + "],borderColor:\"#ffffee0\",backgroundColor:\"#F2F2F2\",min:0,max:" + max2 + ",dash:false,barPercentage:0.4}])");
+                runScript("drawChart_pv([{type:\"line\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:" + max2 + "},{type:\"bar\",label:\"생산량(kWh/m²·mth)\",data:[" + s + "],borderColor:\"#ffffee0\",backgroundColor:\"#FFF6A3\",min:0,max:" + max2 + ",dash:false,barPercentage:0.4}])");
             }
             catch { }
         }
@@ -437,12 +374,7 @@ namespace main.contents
             //방위와 향
             orientation = null; slope = null; installType = null; connect = null;
             fperf = 0;
-            Esol = null; PVαsol = null; dmth = null;
-
-            Arrayheight = 0; shHeight = 0; shLength = 0;
-            hshobst = null; hshobstwi = null; hsh = null;
-            AreaC = null; Qfpvm_kWh = null; Qfpvm_kWh_m2 = null; Qfpva_kWh_a = 0; PVeff = 0;
-
+           
             Name_textBox.Text = null;
             PVType_ComboBox.Items.Clear();
 
@@ -461,8 +393,10 @@ namespace main.contents
             PV_dataGridView.Columns.Clear();
             PV_dataGridView.Rows.Clear();
 
-
             Inverter_textBox.Text = null;
+
+            averagecpacity_textBox.Text = null;
+            allcapacity_textBox.Text = null;
         }
 
         public void LoadData(String ID)      // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
@@ -559,6 +493,19 @@ namespace main.contents
                 {
                     OldPVSystem_ComboBox.Text = Value[0][17].ToString();
                 }
+
+                Cal_RESystem cal = new Cal_RESystem(Num);
+                cal.PVcalReady();
+                cal.PVcal();
+                LoadGraph(cal.Qfpvm_kWh, cal.Esol);  
+
+                allcapacity_textBox.Text = string.Format("{0:n0}", cal.Qfpva_kWh);
+                double[] Qeff = new double[12];
+                for (int i = 0; i < 12; i++)
+                {
+                    Qeff[i] = cal.Qfpvm_m2_kWh[i] / cal.Esol[i];
+                }
+                averagecpacity_textBox.Text = string.Format("{0:F1}", Qeff.Average() * 100);
             }
         }
 
@@ -641,29 +588,20 @@ namespace main.contents
 
         private void Calc_button_Click(object sender, EventArgs e)
         {
+            Save( );
             tabload("output");
+            Cal_RESystem cal = new Cal_RESystem(Num);
+            cal.PVcalReady( );
+            cal.PVcal();
+            LoadGraph(cal.Qfpvm_kWh, cal.Esol);
 
-            
-            if (slope == null || orientation == null)
+            allcapacity_textBox.Text = string.Format("{0:n0}",cal.Qfpva_kWh);
+            double[] Qeff = new double[12]; 
+            for(int i=0;i<12 ; i++)
             {
-                MessageBox.Show("방위 또는 향을 선택해 주세요.");
-                return;
+                Qeff[i] = cal.Qfpvm_m2_kWh[i] / cal.Esol[i];
             }
-            else
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    //전일사량불러오기
-                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역 + "' AND 방향 ='" + orientation + "' AND  각도 = '" + slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
-                    //태양고도각 불러오기
-                    string[][] token3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명 ='" + 지역 + "' AND 방향 ='" + orientation + "' AND  각도 = '" + slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
-
-                    Esol[mth] = Convert.ToDouble(token[0][0]) * 0.024 * dmth[mth];
-                    PVαsol[mth] = Convert.ToDouble(token3[0][0]);
-                }
-            }
-            PVCalc();
-            LoadGraph(orientation, slope);
+            averagecpacity_textBox.Text = string.Format("{0:F1}", Qeff.Average( )*100); 
         }
 
         private void OldPVSystem_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
