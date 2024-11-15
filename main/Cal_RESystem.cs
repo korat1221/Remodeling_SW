@@ -1,11 +1,14 @@
 ﻿using Eagle._Components.Public;
+using Eagle._Constants;
 using main.subcontents;
 using main.subcontents.ConstructionBlind;
 using main.subcontents.ConstructionFloor;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections;
 using System.Security.AccessControl;
 using System.Security.Policy;
+using System.Windows.Forms;
 using static System.Windows.Forms.MonthCalendar;
 
 
@@ -14,14 +17,20 @@ namespace main
 
     internal class Cal_RESystem
     {
-        public string Num;
+        public string Num,  프로젝트유형, 프로젝트번호;
+
         #region 태양광시스템
         public double PVPpk_kW; //태양광 최대출력 
         public double[] Qf_elec = new double[12]; //월별 전기소요량 
-        public double[] PVEelpvoutm_kWh = new double[12]; //월별 전기생산량 
-        public string PVType; //계통연계유형 
+        public double[] Qfpvm_kWh = new double[12]; //월별 전기생산량 
+        public double[] Qfpvm_m2_kWh = new double[12]; //월별 단위면적당 전기생산량 
+        public double Qfpva_kWh ; //연간 전기생산량 
+        public double[] Qf_nutz_grid = new double[12]; //그리드망공급
+        public double[] Qf_nutz_build = new double[12]; //건물내 이용
+        public string PVType;
+        public List<string> PVdata = new List<string>();
 
-        private string PVBatteryNumber, BatteryType;
+        private string PVBatteryNumber;
         private double Cnenm; //배터리 정격 용량 
         private double ηDoD, ηBatt; //배터리 최대 방전 깊이, 배터리 시스템효율
         private double[] γQ = new double[12];//배터리 규격에 대한 지수(소요량 대비 최대성능 계수)
@@ -31,75 +40,133 @@ namespace main
         private double[] fBatt = new double[12]; //배터리 수정계수 
         public double[] Qbatt_loss = new double[12];// 배터리 손실
 
-        public double[] Qf_nutz_linked = new double[12];//계통연계형 월별 태양광사용량 
-        public double[] Qf_nutz_nonlinked = new double[12]; //독립형 월별 태양광사용량 
-        public double[] Qf_nutz_PV = new double[12]; //최종 월별 태양광사용량 
-    
+       
+        public double[] Esol = new double[12];//일사량
+        public double[] PVαsol = new double[12];//고도각
+
+
         public Cal_RESystem(string Num) { this.Num = Num; }
 
-        public void Load_PVdata()
+
+        public void PVcalReady( )
         {
-            string[][] Value;
-            for (int mth = 0; mth < 12; mth++)
-            {
-                Value = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "최대성능,전기생산량", "번호='" + Num + "' And 월 ='" + (mth + 1).ToString() + "월'");
-                if (Value.Length > 0)
-                {
-                    PVPpk_kW = Convert.ToDouble(Value[0][0]);
-                    PVEelpvoutm_kWh[mth] = Convert.ToDouble(Value[0][1]);
-                }
-            }
-            Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "계통유형", "번호='" + Num + "'");
-            if (Value.Length > 0)
-            {
-                PVType = Value[0][0];
-            }
-            String[][] Battery = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "배터리번호,배터리용량", "번호='" + Num + "'");
-            if (Battery.Length > 0)
-            {
-                PVBatteryNumber = Battery[0][0];
-                Cnenm = Convert.ToDouble(Battery[0][1]);
-            }
+            string[][] buildinginfo = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트유형번호,지역", "");
+            프로젝트번호 = buildinginfo[0][0].ToString();
+            프로젝트유형 = buildinginfo[0][1].ToString();
+            string ort = buildinginfo[0][2].ToString();
+            string[][] PVdata = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "방위,기울기,fperf,인버터효율,지형물거리,지형물높이,어레이높이,계통유형,면적,용량,배터리번호", "번호='" + Num +"'");
+            string orientation, slope;
+            orientation = PVdata[0][0].ToString();
+            slope = PVdata[0][1].ToString() + "˚";
+            double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-            Battery = Program.DB.getValue(DB.type.ProjDB, "User_PVBattery", "배터리타입", "번호 ='" + PVBatteryNumber + "'");
-            if (Battery.Length > 0)
+            for (int mth=0 ; mth < 12 ; mth++)
             {
-                BatteryType = Battery[0][0];
-            }
-            Battery = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광배터리계수", "최대방전깊이,시스템효율", "배터리타입 ='" + BatteryType + "'");
-            if (Battery.Length > 0)
-            {
-                ηDoD = Convert.ToDouble(Battery[0][0]);
-                ηBatt = Convert.ToDouble(Battery[0][1]);
-            }
+                string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + ort + "' AND 방향 ='" + orientation + "' AND  각도 = '" + slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
+                //태양고도각 불러오기
+                string[][] token3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명 ='" + ort + "' AND 방향 ='" + orientation + "' AND  각도 = '" + slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
 
+                Esol[mth] = Convert.ToDouble(token[0][0]) * 0.024 * dmth[mth];
+                PVαsol[mth] = Convert.ToDouble(token3[0][0]);
+            }
+            for(int k = 0; k < 10; k++)
+            {
+                this.PVdata.Add(PVdata[0][k + 1]);
+            }
         }
 
-        public void Cal_Qf_elec()
+        public void PVcal()
         {
-            string[][] Final;
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "최대성능", "월 ='1월'");
-            double PVPpk_kW_total = 0;
-            if (Value.Length > 0)
+            double Slope, fPerf, InverterEff, shLength, shHeight, Arrayheight, tan, totalArea, Kpk;
+            
+            Slope = Convert.ToDouble(PVdata[0]);
+            fPerf = Convert.ToDouble(PVdata[1]);
+            InverterEff = Convert.ToDouble(PVdata[2])/100;
+            shLength = Convert.ToDouble(PVdata[3]);
+            shHeight = Convert.ToDouble(PVdata[4]);
+            Arrayheight = Convert.ToDouble(PVdata[5]);
+
+            double[] hshobst = new double[12], hshobstwi = new double[12], hsh = new double[12], AreaC = new double[12];
+
+            PVType = PVdata[6];
+            totalArea = Convert.ToDouble(PVdata[7]);
+            Kpk = Convert.ToDouble(PVdata[8]) / totalArea;
+
+            fPerf = fPerf - (1-InverterEff);
+
+            tan = Math.Tan(Slope * Math.PI / 180.0);
+
+
+            for(int c = 0; c < 12; c++)
             {
-                for (int n = 0; n < Value.Length; n++)
+                double x = 0, y = 0;
+                hshobst[c] = 0;
+                hshobstwi[c] = 0;
+                hsh[c] = 0;
+                AreaC[c] = 0;
+                hshobst[c] = Math.Min(Arrayheight, Math.Max(0, shHeight - shLength * Math.Tan(PVαsol[c] * Math.PI / 180.0))); //수지길이  a
+                hshobstwi[c] = hshobst[c] / Math.Tan(PVαsol[c] * Math.PI / 180.0); //수평길이  b
+                x = hshobst[c] / (tan + hshobst[c] / hshobstwi[c]);
+                y = tan * x;
+
+                if (Math.Sqrt(Math.Pow(hshobst[c], 2) + Math.Pow(hshobstwi[c], 2)) <= 0)
                 {
-                    PVPpk_kW_total += Convert.ToDouble(Value[n][0]);
+                    hsh[c] = 0;
                 }
-            }
-            for (int mth = 0; mth < 12; mth++)
-            {
-                Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "연료='전기' And 월 ='" + (mth + 1).ToString() + "월'");
-                if (Final.Length > 0)
-                {
-                    Qf_elec[mth] = Convert.ToDouble(Final[0][0]) * PVPpk_kW / PVPpk_kW_total;
-                }
+                else hsh[c] = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
+
+                AreaC[c] = (totalArea / Arrayheight) * (Arrayheight - hsh[c]);
             }
 
+            if(PVType == "계통연계형")
+            {
+                for (int b = 0; b < 12; b++)
+                {
+                    Qfpvm_kWh[b] = 0;
+                    Qfpvm_m2_kWh[b] = 0;
+                    Qfpvm_kWh[b] = Esol[b] * Kpk * AreaC[b] * 0.9 * fPerf;
+                    Qfpva_kWh += Qfpvm_kWh[b];
+                    Qfpvm_m2_kWh[b] = Esol[b] * Kpk * AreaC[b] * 0.9 * fPerf / totalArea;                    
+                }
+            }
+            else if(PVType == "독립형")
+            {
+                string batteryType;
+                double Cnenm, ηDoD, ηBatt;
+                PVBatteryNumber = PVdata[9];
+                string[][] battery = Program.DB.getValue(DB.type.ProjDB, "User_PVBattery", "정격전력,배터리타입", "번호='" + PVBatteryNumber + "'");
+
+                Cnenm = Convert.ToDouble(battery[0][0]);
+                batteryType = battery[0][1].ToString();
+                
+                string[][] Binfo = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광배터리계수", "최대방전깊이,시스템효율", "배터리타입 ='" + batteryType + "'");
+
+                ηDoD = Convert.ToDouble(Binfo[0][0]);
+                ηBatt = Convert.ToDouble(Binfo[0][1]);
+                            
+                Cal_Battery();
+
+                for (int b = 0; b < 12; b++)
+                {
+                    Qfpvm_kWh[b] = 0;
+                    Qfpvm_m2_kWh[b] = 0;
+                    Qfpvm_kWh[b] = Esol[b] * Kpk * AreaC[b] * 0.9 * fPerf * fBatt[b];
+                    Qfpva_kWh += Qfpvm_kWh[b];
+                    Qfpvm_m2_kWh[b] = Esol[b] * Kpk * AreaC[b] * 0.9 * fPerf / totalArea;
+                }
+            }
         }
 
         public void Cal_Battery()
         {
+            for(int j=0; j < 12; j++)
+            {
+                Qf_elec[j] = 0;
+                string k = (j + 1).ToString() + "월";
+                string[][] value = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지사용량", "연료='전기' And 월='"+k+"'");
+                Qf_elec[j] = Convert.ToDouble(value[0][0]);
+            }
+            
             Ceff = Cnenm * ηDoD;
             for (int mth = 0; mth < 12; mth++)
             {
@@ -109,33 +176,55 @@ namespace main
             }
         }
 
-        public void Cal_fmatch()
+        public void Cal_fmatch( ) //ISO인경우 
         {
             double[] x = new double[12];
             for (int mth = 0; mth < 12; mth++)
             {
-                x[mth] = PVEelpvoutm_kWh[mth] / Qf_elec[mth];
+                x[mth] = Qfpvm_kWh[mth] / Qf_elec[mth];
                 fmatch[mth] = (x[mth] + 1 / x[mth] - 1) / (x[mth] + 1 / x[mth]);
             }
         }
 
-        public void Cal_Qf_pv()
+        public void Cal_Qf_pv()//ISO인경우 
         {
+           
             for (int mth = 0; mth < 12; mth++)
             {
-                Qf_nutz_linked[mth] = fmatch[mth] * PVEelpvoutm_kWh[mth];
-                Qbatt_loss[mth] = Qf_nutz_linked[mth] * (1 - ηBatt) * (fBatt[mth] - 1);
-                Qf_nutz_nonlinked[mth] = Math.Max(Qf_nutz_linked[mth], Math.Min(PVEelpvoutm_kWh[mth], Qf_nutz_linked[mth] * fBatt[mth]) - Qbatt_loss[mth]);
+                Qf_nutz_grid[mth] = 0;
+                Qbatt_loss[mth] = 0;
+                Qf_nutz_build[mth] = 0;
+
                 if (PVType == "독립형")
                 {
-                    Qf_nutz_PV[mth] = Qf_nutz_nonlinked[mth];
+                    Qf_nutz_grid[mth] =  Qfpvm_kWh[mth];
+                    Qbatt_loss[mth] = Qf_nutz_grid[mth] * (1 - ηBatt) * (fBatt[mth] - 1);
+                    Qf_nutz_build[mth] = Math.Max(Qf_nutz_grid[mth], Math.Min(Qfpvm_kWh[mth], Qf_nutz_grid[mth] * fBatt[mth]) - Qbatt_loss[mth]);
                 }
-                else //계통연계형 
+                else
                 {
-                    Qf_nutz_PV[mth] = Qf_nutz_linked[mth];
+                    Qf_nutz_grid[mth] = fmatch[mth] * Qfpvm_kWh[mth];
+                    Qf_nutz_build[mth] =  Math.Max(0,Qfpvm_kWh[mth] - Qf_nutz_grid[mth]) ;
                 }
             }
         }
+        public void PVsave()
+        {
+            string[] month = new string[12];
+            for (int a = 0; a < 12; a++)
+            {
+                month[a] = (a + 1).ToString() + "월";
+                Program.DB.setValue(DB.type.ProjDB, "PV_Result", "프로젝트번호,프로젝트유형,번호,월,일사량,PV생산량", "'" + 프로젝트번호 + "','" + 프로젝트유형 + "','" + Num + "','" +
+               month[a] + "','" + Esol[a] + "','" + Qfpvm_kWh[a] + "'", "번호, 월");
+            }
+           
+        }
+
+        public void PVtotalsave()
+        {
+
+        }
+
         #endregion
 
         #region//연료전지
