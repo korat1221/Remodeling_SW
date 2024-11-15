@@ -587,6 +587,11 @@ namespace main.contents
                 }
                 else
                 {
+                    if (Boiler_dataGridView.Rows.Count > 0)
+                    {
+                        Boiler_dataGridView.Rows[0].Cells[10].Value = nonSplit;
+                        Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, 0, 10, 0);
+                    }
                 }
             }
             else { return; }
