@@ -287,7 +287,7 @@ namespace main.contents.Result.Building_Report
                         조명전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Final[0][3])), 3) + 0);
                         공조전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Final[0][4])), 3) + 0);
                         기저전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Final[0][5])), 3) + 0);
-                        string[][] PV = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "최종사용량", "월 ='" + (mth + 1).ToString() + "월'");
+                        string[][] PV = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "PV생산량", "월 ='" + (mth + 1).ToString() + "월'");
                         
                         __data[101].Add(new { idx = i * 12 + mth, val = Convert.ToDouble(Final[0][7]).ToString("0.0") }); //월별 신재생 
                         Qtot_mth_전기[mth] = Convert.ToDouble(Final[0][8]);
