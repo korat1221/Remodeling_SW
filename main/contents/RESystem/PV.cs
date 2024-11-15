@@ -331,14 +331,12 @@ namespace main.contents
             {
                 Calc();
                 MessageBox.Show("태양광시스템" + "[" + Num + "]을 저장하였습니다.");
-                List_PV f = new List_PV();
-                f.load_List();
             }
         }
         public static bool OnLoadListProc(Form form)
         {
             List_PV f = (List_PV)form;
-            f.load_List();
+            f.load_List(true);
             return true;
         }
         private bool Save()

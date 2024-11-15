@@ -325,8 +325,6 @@ namespace main.contents
 
                 //this.DialogResult = DialogResult.OK;
                 //this.Hide();
-                List_WindPower f =  new List_WindPower();
-                f.load_List();
             }
         }
 
