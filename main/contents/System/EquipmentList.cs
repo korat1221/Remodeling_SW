@@ -1833,9 +1833,9 @@ namespace main.contents
             for (int k = 0; k < AirHP_dataGridView.RowCount; k++)
             {
                 String[] Value = new String[18];
-                for (int i = 0; i < 18; i++)
+                for (int i = 1; i < 19; i++)
                 {
-                    if (AirHP_dataGridView.Rows[k].Cells[i + 1].Value != null)
+                    if (AirHP_dataGridView.Rows[k].Cells[i].Value != null)
                     {
                         double parsedValue;
                         if (double.TryParse(AirHP_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
@@ -1847,7 +1847,7 @@ namespace main.contents
                             Value[i - 1] = AirHP_dataGridView.Rows[k].Cells[i].Value.ToString();
                         }
                     }
-                    else { Value[i] = ""; }
+                    else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_AirHP", "번호,프로젝트유형,DB유형,명칭,난방냉방,연료,공급유형,냉방정격용량,냉방정격COP,냉방정격소비전력,난방정격용량,난방정격COP,난방정격소비전력,한랭지용량,한랭지COP,한랭지소비전력,대기전력,대수,설치",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
@@ -3201,9 +3201,9 @@ namespace main.contents
             {
                 String[] Value = new String[16];
 
-                for (int i = 0; i < 15; i++)
+                for (int i = 1; i< 16; i++)
                 {
-                    if (AirCooler_dataGridView.Rows[k].Cells[i + 1].Value != null && AirCooler_dataGridView.Rows[k].Cells[i + 1].Value != "")
+                    if (AirCooler_dataGridView.Rows[k].Cells[i].Value != null && AirCooler_dataGridView.Rows[k].Cells[i].Value != "")
                     {
                         double parsedValue;
                         if (double.TryParse(AirCooler_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
@@ -3215,9 +3215,9 @@ namespace main.contents
                             Value[i - 1] = AirCooler_dataGridView.Rows[k].Cells[i].Value.ToString();
                         }
                     }
-                    else if (i == 12 || i == 13 || i == 14)
+                    else if (i == 13 || i == 14 || i == 15)
                     {
-                        Value[i] = null;
+                        Value[i - 1] = null;
                     }
                     else
                     {
@@ -3423,9 +3423,9 @@ namespace main.contents
             for (int k = 0; k < WaterCooler_dataGridView.RowCount; k++)
             {
                 String[] Value = new String[14];
-                for (int i = 0; i < 14; i++)
+                for (int i = 1; i < 15; i++)
                 {
-                    if (WaterCooler_dataGridView.Rows[k].Cells[i + 1].Value != null)
+                    if (WaterCooler_dataGridView.Rows[k].Cells[i].Value != null)
                     {
                         double parsedValue;
                         if (double.TryParse(WaterCooler_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
@@ -3437,7 +3437,7 @@ namespace main.contents
                             Value[i - 1] = WaterCooler_dataGridView.Rows[k].Cells[i].Value.ToString();
                         }
                     }
-                    else { Value[i] = ""; }
+                    else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_WaterCooler", "번호,DB유형,명칭,냉방출력,냉방소비전력,EER,압축기,연료,대기전력,대수,설치,증발기,냉수입구온도,냉수출구온도",
                 "'" + Value[0] + "','"
@@ -4459,9 +4459,9 @@ namespace main.contents
             {
                 string[] Value = new string[16];
 
-                for (int i = 0; i < 16; i++)
+                for (int i = 1; i < 17; i++)
                 {
-                    if (CoolingTop_dataGridView.Rows[k].Cells[i + 1].Value != null)
+                    if (CoolingTop_dataGridView.Rows[k].Cells[i].Value != null)
                     {
                         double parsedValue;
                         if (double.TryParse(CoolingTop_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
@@ -4473,7 +4473,7 @@ namespace main.contents
                             Value[i - 1] = CoolingTop_dataGridView.Rows[k].Cells[i].Value.ToString();
                         }
                     }
-                    else { Value[i] = ""; }
+                    else { Value[i - 1] = ""; }
                 }
                 //버튼 추가수정함
                 Program.DB.setValue(DB.type.ProjDB, "User_CoolingTop", "번호,DB유형,명칭,형식,냉각능력,냉각수량,입구온도,출구온도,대기전력,소비전력,제어유형,팬유형,대수,냉방전력소비계수,설치",
@@ -4731,9 +4731,9 @@ namespace main.contents
             for (int k = 0; k < DHWHP_dataGridView.RowCount; k++)
             {
                 String[] Value = new String[16];
-                for (int i = 0; i < 16; i++)
+                for (int i = 1; i < 17; i++)
                 {
-                    if (DHWHP_dataGridView.Rows[k].Cells[i + 1].Value != null)
+                    if (DHWHP_dataGridView.Rows[k].Cells[i].Value != null)
                     {
                         double parsedValue;
                         if (double.TryParse(DHWHP_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
@@ -4745,7 +4745,7 @@ namespace main.contents
                             Value[i - 1] = DHWHP_dataGridView.Rows[k].Cells[i].Value.ToString();
                         }
                     }
-                    else { Value[i] = ""; }
+                    else { Value[i - 1] = ""; }
                 }
                 Program.DB.setValue(DB.type.ProjDB, "User_DHWHP", "번호,프로젝트유형,DB유형,명칭,난방급탕,급탕정격용량,급탕정격COP,급탕정격소비전력,난방정격용량,난방정격COP,난방정격소비전력,한랭지용량,한랭지COP,한랭지소비전력,대기전력,대수,설치",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
