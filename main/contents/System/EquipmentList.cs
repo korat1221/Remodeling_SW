@@ -2675,7 +2675,7 @@ namespace main.contents
                 else { Value[8] = ""; }
                 //신규기존
                 if (Pump_dataGridView.Rows[k].Cells[12].Value != null)
-                { Value[9] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, k, 12, 0).ToString(); }
+                { Value[9] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString(); }
                 else { Value[9] = ""; }
 
                 Program.DB.setValue(DB.type.ProjDB, "User_Pump", "번호,프로젝트유형,명칭,종류,A효율,B효율,유량,동력,양정,대수,신규기존",
