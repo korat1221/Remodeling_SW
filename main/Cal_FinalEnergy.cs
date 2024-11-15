@@ -9,6 +9,7 @@
         public double[] Qlf_elec = new double[12];
         public double[] Qvf_elec = new double[12]; //공조
         public double[] Qreg_elec = new double[12];//신재생
+        public double[] Qfwps = new double[12]; //풍력
         public double[] Qbase_gas = new double[12], Qbase_elec = new double[12];
         public double[] Qf_gas_tot1 = new double[12], Qf_elec_tot1 = new double[12];
         public double[] Qf_gas_tot_mth = new double[12], Qf_elec_tot_mth = new double[12];
@@ -231,12 +232,20 @@
         {
             for (int mth = 0; mth < 12; mth++)
             {
-                string[][] Value = Program.DB.getValue(ProjNum, "PV_Result", "전기생산량", "월 ='" + (mth + 1).ToString() + "월'");
+                string[][] Value = Program.DB.getValue(ProjNum, "PV_Result", "최종사용량", "월 ='" + (mth + 1).ToString() + "월'");
                 if (Value.Length > 0)
                 {
                     for (int i = 0; i < Value.Length; i++)
                     {
                         Qreg_elec[mth] += Convert.ToDouble(Value[i][0]);
+                    }
+                }
+                Value = Program.DB.getValue(ProjNum, "WindPower_Result", "Qfwps", "월 ='" + (mth + 1).ToString() + "월'");
+                if (Value.Length > 0)
+                {
+                    for (int i = 0; i < Value.Length; i++)
+                    {
+                        Qfwps[mth] += Convert.ToDouble(Value[i][0]);
                     }
                 }
             }

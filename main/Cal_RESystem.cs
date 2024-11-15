@@ -448,24 +448,33 @@ namespace main
         string Num_WP; // 풍력번호 ID
 
         public string WP, condition, Inverter, Inverter_num; //풍력  UWP , 인버터제품명, 인버터 UIV
-        public double V1, V2, h1, h2, a, Euro;
+        public double[] h = new double[33];
+        public double[] h_mth = new double[12]; //월별 가동시간
+        public double[] V1 = new double[33];
+        public double[] V2 = new double[33];
+        //public double[] V2_near = new double[33];
+        public double h1, h2, a, Euro;
         public string[][] 지역;
         public double p = 1.225; //kg/m3
-
+        //V1
         public double Arotor, P;
         public double[] vwk = new double[33];
         public double[] Pwindwk_sub = new double[33];
         public double[] Pwindwk = new double[33];
+        public double[] Pwindwk_mth = new double[12]; //월별 풍속 구간별 풍력 출력 합
 
         public double Vsvk, Vmvk, Vlvk, Cpmin, Cpop, Cpmax;
         public double[] Cp = new double[33];
 
         public double[] Pwps = new double[33];
+        public double[] Pwps_mth = new double[12];//월별 풍속 구간별 풍력발전 시스템 출력
 
         public double[,] twk = new double[33, 12];
 
         public double[,] Qfwps = new double[33, 12];
         public double[] Qfwps_mth = new double[12];
+
+        public double install;
 
         //풍속 구하기
         //V2 구하기 
@@ -474,17 +483,29 @@ namespace main
         public void Cal_WF(string number) //풍력번호
         {
             Num_WP = number;
-            WF_LoadData();
-            WF_Calc_V2();
-            WF_Calc_Pwind();
-            WF_Calc_Cp();
-            WF_Calc_Pwps();
-            WF_Calc_Qfwps();
-
         }
-        private void WF_LoadData()
+        public void WF_LoadData()
         {
-            string[][] ValueB = Program.DB.getValue(DB.type.ProjDB, "WindPower_Form", "풍력, 설치높이, 주변환경, 인버터제품, 인버터", "번호 ='" + Num_WP + "'");
+
+            지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
+
+            //지역, 풍속 33구간별, 월별 가동시간 가져오기 
+            for (int mth = 0; mth < 12; mth++)
+            {
+                for (int k = 0; k < 33; k++)
+                {
+                    string[][] Valueaaa = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 시간 From 기후데이터_풍력가동시간 where 지역명 = '" + 지역[0][0] + "' and 기간 = '" + (mth + 1) + "월'");
+                    if (Valueaaa.Length > 0)
+                    {
+                        h[k] = Convert.ToDouble(Valueaaa[k][0]);
+                    }
+
+                    h_mth[mth] += h[k];  //월별 가동시간 합산 (레포트)
+
+                }
+            }
+
+            string[][] ValueB = Program.DB.getValue(DB.type.ProjDB, "WindPower_Form", "풍력, 설치높이, 주변환경, 인버터제품, 인버터, 설치대수", "번호 ='" + Num + "'");
             // 풍속고도분포지수가 아니라 주변환경 가져와서 풍속고도분포지수 값 DB에서 찾기
             if (ValueB.Length > 0)
             {
@@ -493,15 +514,17 @@ namespace main
                 condition = ValueB[0][2].ToString();
                 Inverter = ValueB[0][3].ToString();
                 Inverter_num = ValueB[0][4].ToString();
+                install = Convert.ToDouble(ValueB[0][5].ToString());
             }
-            string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "User_WP", "회전면적, 정격출력", "풍력 ='" + WP + "'");
+
+            string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "User_WP", "회전면적, 정격출력", "번호 ='" + WP + "'");
 
             if (ValueA.Length > 0)
             {
                 Arotor = Convert.ToDouble(ValueA[0][0]);
                 P = Convert.ToDouble(ValueA[0][1]);
             }
-            string[][] ValueC = Program.DB.getValue(DB.type.ProjDB, "User_WP", "시동풍속, 최적풍속, 종단풍속, 시동풍속전력계수, 최적풍속전력계수, 종단풍속전력계수", "풍력 ='" + WP + "'");
+            string[][] ValueC = Program.DB.getValue(DB.type.ProjDB, "User_WP", "시동풍속, 최적풍속, 종단풍속, 시동풍속전력계수, 최적풍속전력계수, 종단풍속전력계수", "번호 ='" + WP + "'");
 
             if (ValueC.Length > 0)
             {
@@ -531,18 +554,23 @@ namespace main
             }
         }
 
-
-
         public void WF_Calc_V2()
         {
             //허브높이는 계산에 영향 X 
             //h1 = 관측장비 높이 = 지역에 따른 값
             //h2 = 설치 높이 = 폼 직접입력값
             //a = 풍속고도분포지수 = 폼 콤보박스 선택 
+            string[][] ValueB = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select Distinct CAST(풍속 AS FLOAT) AS 풍속 from 기후데이터_풍력가동시간 Order by 풍속");
+            int i = -1;
+            if (ValueB.Length > 0)
+            {
+                while (++i < ValueB.Length)
+                {
+                    V1[i] = Convert.ToDouble(ValueB[i][0]);
+                }
+            }
 
-            지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
-
-            string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_RESystem, "풍력관측소높이", "높이", " 지역명 = '" + 지역[0][0] + "'");
+            string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_RESystem, "풍력관측소높이", "높이", " 지역 = '" + 지역[0][0] + "'");
 
             if (ValueA.Length > 0)
             {
@@ -555,39 +583,60 @@ namespace main
                 a = Convert.ToDouble(ValueC[0][0]);
             }
 
-            V2 = V1 * Math.Pow(h2 / h1, a);
-
+            for (int k = 0; k < 33; k++)
+            {
+                V2[k] = V1[k] * Math.Pow(h2 / h1, a);
+            }
         }
+
+        //public void WF_Search_V2_near()
+        //{
+
+        //    for (int k = 0; k < 33; k++)
+        //    {
+        //        double target = V2[k];
+        //        double closet = V1[k];
+        //        double min = Math.Abs(target - closet);
+
+        //        foreach (double num in V1) 
+        //        {
+        //            double difference = Math.Abs(target - num);
+        //            if (difference < min)
+        //            {
+        //                min = difference;
+        //                closet = num;
+        //            }
+        //        }
+        //        V2_near[k] = closet;
+        //    }
+        //}
 
 
         //풍속 구간별 풍력 출력
-        public void WF_Calc_Pwind() 
+        public void WF_Calc_Pwind()
         {
             //Arotor = 회전면적
-            //vwk = 지정풍속 (0~16 / 0.5단위), P = 정격출력
+            //vwk = v1 = 지정풍속 (0~16 / 0.5단위), P = 정격출력
             //풍속구간 배열 중복 제거하기
-            string[][] ValueB = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select Distinct 풍속 from 기후데이터_풍력가동시간 Order by 풍속");
-         
-
-            int i = -1;
-            if (ValueB.Length > 0)
+            for (int mth = 0; mth < 12; mth++)
             {
-                while (++i < ValueB.Length)
+                for (int i = 0; i < 33; i++)
                 {
-                    vwk[i] = Convert.ToDouble(ValueB[0][0]);
-                }
+                    Pwindwk_sub[i] = 0.5 * p * Arotor * Math.Pow(V2[i], 3); //W 단위로 환산
 
-                Pwindwk_sub[i] = 0.5 * p * Arotor * Math.Pow(vwk[i], 3);
+                    if (Pwindwk_sub[i] > P)
+                    {
+                        Pwindwk[i] = P * 1000;
+                    }
+                    else
+                    {
+                        Pwindwk[i] = Pwindwk_sub[i];
+                    }
 
-                if (Pwindwk_sub[i] > P)
-                {
-                    Pwindwk[i] = P * 1000;
-                }
-                else
-                {
-                    Pwindwk[i] = Pwindwk_sub[i];
+                    Pwindwk_mth[mth] += Pwindwk[i]/1000;
                 }
             }
+
         }
 
 
@@ -600,17 +649,17 @@ namespace main
 
             for (int k = 0; k < 33; k++)
             {
-                if (Vsvk > vwk[k] || Vlvk < vwk[k]) // 시동풍속(Vsvk)이 구간별 풍속(vwk)보다 크거나, 종단풍속(Vlvk)이 구간별 풍속(vwk)보다 작을 때
+                if (Vsvk > V1[k] || Vlvk < V1[k]) // 시동풍속(Vsvk)이 구간별 풍속(vwk)보다 크거나, 종단풍속(Vlvk)이 구간별 풍속(vwk)보다 작을 때
                 {
                     Cp[k] = 0;
                 }
-                else if (Vmvk >= vwk[k]) // 최적풍속(Vmvk)이 구간별 풍속(vwk)보다 크거나 같을 때 
+                else if (Vmvk >= V1[k]) // 최적풍속(Vmvk)이 구간별 풍속(vwk)보다 크거나 같을 때 
                 {
-                    Cp[k] = Cpmin + (Cpop - Cpmin) * ((vwk[k] - Vsvk) / (Vmvk - Vsvk));
+                    Cp[k] = Cpmin + (Cpop - Cpmin) * ((V1[k] - Vsvk) / (Vmvk - Vsvk));
                 }
-                else if (Vmvk < vwk[k]) // 최적풍속(Vmvk)이 구간별 풍속(vwk)보다 작을 때
+                else if (Vmvk < V1[k]) // 최적풍속(Vmvk)이 구간별 풍속(vwk)보다 작을 때
                 {
-                    Cp[k] = Cpop + (Cpmax - Cpop) * ((vwk[k] - Vmvk) / (Vlvk - Vmvk));
+                    Cp[k] = Cpop + (Cpmax - Cpop) * ((V1[k] - Vmvk) / (Vlvk - Vmvk));
                 }
             }
         }
@@ -618,14 +667,20 @@ namespace main
         //풍속 구간별 풍력발전 시스템 출력
         public void WF_Calc_Pwps()
         {
-            for (int k = 0; k < 33; k++)
+            for (int mth = 0; mth < 12; mth++)
             {
-                Pwps[k] = Pwindwk[k] * Cp[k]; 
+                for (int k = 0; k < 33; k++)
+                {
+                    Pwps[k] = Pwindwk[k] * Cp[k];
+
+                    Pwps_mth[mth] += Pwps[k]/1000;
+                }
             }
         }
+    
 
         //월별 풍력발전 에너지 생산량 
-        //인버터 효율 곱해주기 
+        //인버터 효율 곱해주기 //대수 곱해주기
         public void WF_Calc_Qfwps()
         {
             //twk(가동시간)
@@ -636,13 +691,14 @@ namespace main
 
                 for (int k = 0; k < 33; k++)
                 {
-                    if (4 <= vwk[k] || 16 > vwk[k])
+                    if (4 <= V1[k] || 16 > V1[k])
                     {
-                        String[][] ValueA = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 시간 From 기후데이터_풍력가동시간 where 지역명 = '" + 지역[0][0] + "' and 기간 = '" + (mth + 1) + "월' and 풍속='"+vwk[k]+"'");
+                        string[][] ValueA = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 시간 From 기후데이터_풍력가동시간 where 지역명 = '" + 지역[0][0] + "' and 기간 = '" + (mth + 1) + "월'");
+                        //string[][] ValueA = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 시간 From 기후데이터_풍력가동시간 where 지역명 = '" + 지역[0][0] + "' and 기간 = '" + (mth + 1) + "월' and 풍속='" + V1[k] + "'");
                         if (ValueA.Length > 0)
                         {
                             twk[k, mth] = Convert.ToDouble(ValueA[0][0]);
-                            Qfwps[k, mth] = twk[k, mth] * Pwps[k] * (Euro / 100);
+                            Qfwps[k, mth] = ((twk[k, mth] * Pwps[k] * (Euro / 100))/1000) * install ;
                         }
                     }
                     else
