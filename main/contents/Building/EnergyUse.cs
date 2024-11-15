@@ -140,7 +140,7 @@ namespace main.contents.Building
                     string s3 = null;
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        s3 +=  Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, a, mth + 2, true, 0) + ",";
+                        s3 +=  Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, a, mth + 2, 0) + ",";
                     }
                     string s2 = "[" + s3 + "]";
                     s += "{label:\"" + label + "\",type:\"line\",data:" + s2 + ",yAxisTitle:\"전기 에너지사용량[kWh]\",pointStyle:\"circle\",pointRadius:\"2.5\",borderWidth:\"0.5\",borderColor:\"" + randomGrayColor + "\",backgroundColor:\"" + randomGrayColor + "\",dash:true,tension: 0.4},";
@@ -154,8 +154,8 @@ namespace main.contents.Building
                 {
                     for (int row = 0; row < Elec_dataGridView.Rows.Count; row++)
                     {
-                        if (Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, row, mth + 2, true, 0) != null)
-                        { average[mth] += Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, row, mth + 2, true, 0); }
+                        if (Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, row, mth + 2, 0) != null)
+                        { average[mth] += Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, row, mth + 2, 0); }
                     }
                     average[mth] = average[mth] / Elec_dataGridView.Rows.Count;
                 }
@@ -175,9 +175,9 @@ namespace main.contents.Building
                 {
                     if (Elec_dataGridView.Rows[row].Cells[column].Value != null)
                     {
-                        if (Elec_max < Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, row, column, true, 0))
+                        if (Elec_max < Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, row, column, 0))
                         {
-                            Elec_max = Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, row, column, true, 0);
+                            Elec_max = Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, row, column, 0);
                         }
                         else
                         {
@@ -282,7 +282,7 @@ namespace main.contents.Building
                     string s3 = null;
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        s3 += Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, a, mth + 2, true, 0) + ",";
+                        s3 += Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, a, mth + 2, 0) + ",";
                     }
                     string s2 = "[" + s3 + "]";
                     s += "{label:\"" + label + "\",type:\"line\",data:" + s2 + ",yAxisTitle:\"가스 에너지사용량[kWh]\",pointStyle:\"circle\",pointRadius:\"2.5\",borderWidth:\"0.5\",borderColor:\"" + randomGrayColor + "\",backgroundColor:\"" + randomGrayColor + "\",dash:true,tension: 0.4},";
@@ -296,8 +296,8 @@ namespace main.contents.Building
                 {
                     for (int row = 0; row < Gas_kWh_dataGridView.Rows.Count; row++)
                     {
-                        if (Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, row, mth + 2, true, 0) != null)
-                        { average[mth] += Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, row, mth + 2, true, 0); }
+                        if (Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, row, mth + 2, 0) != null)
+                        { average[mth] += Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, row, mth + 2, 0); }
                     }
                     average[mth] = average[mth] / Gas_kWh_dataGridView.Rows.Count;
                 }
@@ -317,9 +317,9 @@ namespace main.contents.Building
                 {
                     if (Gas_kWh_dataGridView.Rows[row].Cells[column].Value != null)
                     {
-                        if (Gas_max < Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, row, column, true, 0))
+                        if (Gas_max < Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, row, column, 0))
                         {
-                            Gas_max = Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, row, column, true, 0);
+                            Gas_max = Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, row, column, 0);
                         }
                         else
                         {
@@ -426,7 +426,7 @@ namespace main.contents.Building
                     string s3 = null;
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        s3 += Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, a, mth + 2, true, 0) + ",";
+                        s3 += Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, a, mth + 2, 0) + ",";
                     }
                     string s2 = "[" + s3 + "]";
                     s += "{label:\"" + label + "\",type:\"line\",data:" + s2 + ",yAxisTitle:\"지역난방 에너지사용량[kWh]\",pointStyle:\"circle\",pointRadius:\"2.5\",borderWidth:\"0.5\",borderColor:\"" + randomGrayColor + "\",backgroundColor:\"" + randomGrayColor + "\",dash:true,tension: 0.4},";
@@ -440,8 +440,8 @@ namespace main.contents.Building
                 {
                     for (int row = 0; row < DH_kWh_dataGridView.Rows.Count; row++)
                     {
-                        if (Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, row, mth + 2, true, 0) != null)
-                        { average[mth] += Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, row, mth + 2, true, 0); }
+                        if (Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, row, mth + 2, 0) != null)
+                        { average[mth] += Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, row, mth + 2, 0); }
                     }
                     average[mth] = average[mth] / DH_kWh_dataGridView.Rows.Count;
                 }
@@ -461,9 +461,9 @@ namespace main.contents.Building
                 {
                     if (DH_kWh_dataGridView.Rows[row].Cells[column].Value != null)
                     {
-                        if (DH_max < Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, row, column, true, 0))
+                        if (DH_max < Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, row, column, 0))
                         {
-                            DH_max = Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, row, column, true, 0);
+                            DH_max = Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, row, column, 0);
                         }
                         else
                         {
@@ -489,7 +489,7 @@ namespace main.contents.Building
             {
                 for (int mth = 1; mth < 13; mth++)
                 {
-                    double energy = Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, n, mth + 1, true, 0);
+                    double energy = Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, n, mth + 1, 0);
                     Program.DB.setValue(DB.type.ProjDB, "BuildingEnergyUse", "프로젝트유형,연료,연도,월,단위,에너지사용량,사용시작일,사용종료일",
                           "'" + 프로젝트유형[0][0] + "','전기','" + Elec_dataGridView.Rows[n].Cells[1].Value + "','" + mth + "월','kWh','" + energy + "','" +
                           Elec_StartDay_comboBox.Text + "','" + Elec_EndDay_comboBox.Text
@@ -500,7 +500,7 @@ namespace main.contents.Building
             {
                 for (int mth = 1; mth < 13; mth++)
                 {
-                    double energy = Program.UTIL.dataGridView_doubleComa(Gas_m3_dataGridView, n, mth + 1, true, 0);
+                    double energy = Program.UTIL.dataGridView_doubleComa(Gas_m3_dataGridView, n, mth + 1, 0);
                     Program.DB.setValue(DB.type.ProjDB, "BuildingEnergyUse", "프로젝트유형,연료,연도,월,단위,에너지사용량,사용시작일,사용종료일",
                           "'" + 프로젝트유형[0][0] + "','가스','" + Gas_m3_dataGridView.Rows[n].Cells[1].Value + "','" + mth + "월','m3','" + energy+ "','" +
                           Gas_StartDay_comboBox.Text + "','" + Gas_EndDay_comboBox.Text
@@ -511,7 +511,7 @@ namespace main.contents.Building
             {
                 for (int mth = 1; mth < 13; mth++)
                 {
-                    double energy = Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, n, mth + 1, true, 0);
+                    double energy = Program.UTIL.dataGridView_doubleComa(Gas_kWh_dataGridView, n, mth + 1, 0);
                     Program.DB.setValue(DB.type.ProjDB, "BuildingEnergyUse", "프로젝트유형,연료,연도,월,단위,에너지사용량,사용시작일,사용종료일",
                           "'" + 프로젝트유형[0][0] + "','가스','" + Gas_kWh_dataGridView.Rows[n].Cells[1].Value + "','" + mth + "월','kWh','" + energy + "','" +
                           Gas_StartDay_comboBox.Text + "','" + Gas_EndDay_comboBox.Text
@@ -522,7 +522,7 @@ namespace main.contents.Building
             {
                 for (int mth = 1; mth < 13; mth++)
                 {
-                    double energy = Program.UTIL.dataGridView_doubleComa(DH_Mcal_dataGridView, n, mth + 1, true, 0);
+                    double energy = Program.UTIL.dataGridView_doubleComa(DH_Mcal_dataGridView, n, mth + 1, 0);
                     Program.DB.setValue(DB.type.ProjDB, "BuildingEnergyUse", "프로젝트유형,연료,연도,월,단위,에너지사용량,사용시작일,사용종료일",
                           "'" + 프로젝트유형[0][0] + "','지역난방','" + DH_Mcal_dataGridView.Rows[n].Cells[1].Value + "','" + mth + "월','Mcal','" + energy + "','" +
                           DH_StartDay_comboBox.Text + "','" + DH_EndDay_comboBox.Text
@@ -533,7 +533,7 @@ namespace main.contents.Building
             {
                 for (int mth = 1; mth < 13; mth++)
                 {
-                    double energy = Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, n, mth + 1, true, 0);
+                    double energy = Program.UTIL.dataGridView_doubleComa(DH_kWh_dataGridView, n, mth + 1, 0);
                     Program.DB.setValue(DB.type.ProjDB, "BuildingEnergyUse", "프로젝트유형,연료,연도,월,단위,에너지사용량,사용시작일,사용종료일",
                           "'" + 프로젝트유형[0][0] + "','지역난방','" + DH_kWh_dataGridView.Rows[n].Cells[1].Value + "','" + mth + "월','kWh','" + energy + "','" +
                           DH_StartDay_comboBox.Text + "','" + DH_EndDay_comboBox.Text

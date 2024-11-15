@@ -206,7 +206,7 @@ namespace main.subcontents.CoolingSystem
                     }
                     else 
                     {
-                        this.SelectCGN += Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, SelectRow[k], 1, true, 0).ToString();
+                        this.SelectCGN += Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, SelectRow[k], 1, 0).ToString();
                         this.SelectCG += AirCooler_dataGridView.Rows[SelectRow[k]].Cells[2].Value.ToString();
                         this.SelectCGComp += AirCooler_dataGridView.Rows[SelectRow[k]].Cells[7].Value.ToString(); //수정함
                         
@@ -221,7 +221,7 @@ namespace main.subcontents.CoolingSystem
                     }
                     else 
                     {
-                        this.SelectCGN += Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, SelectRow[k], 1, true, 0).ToString() + "+";
+                        this.SelectCGN += Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, SelectRow[k], 1, 0).ToString() + "+";
                         this.SelectCG += AirCooler_dataGridView.Rows[SelectRow[k]].Cells[2].Value.ToString() + "+";
                         this.SelectCGComp += AirCooler_dataGridView.Rows[SelectRow[k]].Cells[7].Value.ToString() + "+";
                     }

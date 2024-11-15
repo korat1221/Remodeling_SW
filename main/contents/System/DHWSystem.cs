@@ -527,11 +527,11 @@ namespace main.contents
                     {
                         Boiler_dataGridView.Rows[nRow].Cells[k + 1].Value = User_Value[0][k];
                     }
-                    Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, nRow, 5, true, 1);
-                    Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, nRow, 6, true, 1);
-                    Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, nRow, 7, true, 1);
-                    Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, nRow, 8, true, 0);
-                    Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, nRow, 9, true, 0);
+                    Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, nRow, 5, 1);
+                    Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, nRow, 6, 1);
+                    Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, nRow, 7, 1);
+                    Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, nRow, 8, 0);
+                    Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, nRow, 9, 0);
                 }
              }
         }
@@ -541,13 +541,13 @@ namespace main.contents
             if (Boiler_dataGridView.Rows.Count == 0)
             { BoilerNum_nonsplit = null; }
             else if (Boiler_dataGridView.Rows.Count == 1 && Boiler_dataGridView.Rows[0].Cells[10] != null)
-            { BoilerNum_nonsplit += (Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, 0, 10, true, 0)).ToString(); }
+            { BoilerNum_nonsplit += (Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, 0, 10, 0)).ToString(); }
             else
             {
                 int CheckNull = 0;
                 for (int k = 0; k < Boiler_dataGridView.RowCount; k++)
                 {
-                    if (Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, k, 10, true, 0) == null)
+                    if (Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, k, 10, 0) == null)
                     {
                         CheckNull = CheckNull + 1;
                     }
@@ -556,7 +556,7 @@ namespace main.contents
                 {
                     for (int k = 0; k < Boiler_dataGridView.RowCount; k++)
                     {
-                        BoilerNum_nonsplit += (Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, k, 10, true, 0)).ToString() + "+";
+                        BoilerNum_nonsplit += (Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, k, 10, 0)).ToString() + "+";
                     }
                 }
                 else
@@ -582,7 +582,7 @@ namespace main.contents
                     for (int k = 0; k < Boiler_dataGridView.Rows.Count; k++)
                     {
                         Boiler_dataGridView.Rows[k].Cells[10].Value = BoilerNum_split[k];
-                        Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, k, 10, true, 0);
+                        Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, k, 10, 0);
                     }
                 }
                 else
@@ -730,13 +730,13 @@ namespace main.contents
             {
                 if (k == Solar_dataGridView.Rows.Count - 1 && Solar_dataGridView.Rows[k].Cells[9].Value != null && Solar_dataGridView.Rows[k].Cells[10].Value != null && Solar_dataGridView.Rows[k].Cells[11].Value != null)
                 {
-                    SolarNum_nonsplit += (Program.UTIL.dataGridView_doubleComa(Solar_dataGridView, k, 9, true, 0)).ToString();
+                    SolarNum_nonsplit += (Program.UTIL.dataGridView_doubleComa(Solar_dataGridView, k, 9, 0)).ToString();
                     SolarDirection_nonsplit += Solar_dataGridView.Rows[k].Cells[10].Value.ToString();
                     SolarDegree_nonsplit += Solar_dataGridView.Rows[k].Cells[11].Value.ToString();
                 }
                 else if (Solar_dataGridView.Rows[k].Cells[9].Value != null && Solar_dataGridView.Rows[k].Cells[10].Value != null && Solar_dataGridView.Rows[k].Cells[11].Value != null)
                 {
-                    SolarNum_nonsplit += (Program.UTIL.dataGridView_doubleComa(Solar_dataGridView, k, 9, true, 0)).ToString() + "+";
+                    SolarNum_nonsplit += (Program.UTIL.dataGridView_doubleComa(Solar_dataGridView, k, 9, 0)).ToString() + "+";
                     SolarDirection_nonsplit += Solar_dataGridView.Rows[k].Cells[10].Value.ToString() + "+";
                     SolarDegree_nonsplit += Solar_dataGridView.Rows[k].Cells[11].Value.ToString() + "+";
                 }
@@ -759,7 +759,7 @@ namespace main.contents
                     for (int k = 0; k < Solar_dataGridView.Rows.Count; k++)
                     {
                         Solar_dataGridView.Rows[k].Cells[9].Value = Solar_split[k];
-                        Program.UTIL.dataGridView_doubleComa(Solar_dataGridView, k, 9, true, 0);
+                        Program.UTIL.dataGridView_doubleComa(Solar_dataGridView, k, 9, 0);
                     }
                 }
                 else
@@ -767,7 +767,7 @@ namespace main.contents
                     if (Solar_dataGridView.Rows.Count > 0)
                     { 
                         Solar_dataGridView.Rows[0].Cells[9].Value = nonSplit;
-                        Program.UTIL.dataGridView_doubleComa(Solar_dataGridView, 0, 9, true, 0);
+                        Program.UTIL.dataGridView_doubleComa(Solar_dataGridView, 0, 9, 0);
                     }
                 }
             }
@@ -1049,9 +1049,9 @@ namespace main.contents
                         {
                             HP_dataGridView.Rows[nRow].Cells[a + 1].Value = User_Value[n][a];
                         }
-                        Program.UTIL.dataGridView_doubleComa(HP_dataGridView, nRow, 3, true, 1);
-                        Program.UTIL.dataGridView_doubleComa(HP_dataGridView, nRow, 4, true, 1);
-                        Program.UTIL.dataGridView_doubleComa(HP_dataGridView, nRow, 5, true, 1);
+                        Program.UTIL.dataGridView_doubleComa(HP_dataGridView, nRow, 3, 1);
+                        Program.UTIL.dataGridView_doubleComa(HP_dataGridView, nRow, 4, 1);
+                        Program.UTIL.dataGridView_doubleComa(HP_dataGridView, nRow, 5, 1);
 
                         DataGridViewComboBoxCell 제어방식comboBox = new DataGridViewComboBoxCell();
                         제어방식comboBox.Items.Add("ON/OFF제어");
@@ -1069,12 +1069,12 @@ namespace main.contents
                 if (k == HP_dataGridView.Rows.Count - 1 && HP_dataGridView.Rows[k].Cells[6].Value != null && HP_dataGridView.Rows[k].Cells[7].Value != null)
                 {
                     HPControl_nonsplit += HP_dataGridView.Rows[k].Cells[6].Value.ToString();
-                    HPNum_nonsplit += (Program.UTIL.dataGridView_doubleComa(HP_dataGridView, k, 7, true, 0)).ToString();
+                    HPNum_nonsplit += (Program.UTIL.dataGridView_doubleComa(HP_dataGridView, k, 7, 0)).ToString();
                 }
                 else if (HP_dataGridView.Rows[k].Cells[6].Value != null && HP_dataGridView.Rows[k].Cells[7].Value != null)
                 {
                     HPControl_nonsplit += HP_dataGridView.Rows[k].Cells[6].Value.ToString() + "+";
-                    HPNum_nonsplit += (Program.UTIL.dataGridView_doubleComa(HP_dataGridView, k, 7, true, 0)).ToString() + "+";
+                    HPNum_nonsplit += (Program.UTIL.dataGridView_doubleComa(HP_dataGridView, k, 7, 0)).ToString() + "+";
                 }
             }
         }
@@ -1123,7 +1123,7 @@ namespace main.contents
                     for (int k = 0; k < HP_dataGridView.Rows.Count; k++)
                     {
                         HP_dataGridView.Rows[k].Cells[7].Value = HP_split[k];
-                        Program.UTIL.dataGridView_doubleComa(HP_dataGridView, k, 7, true, 0);
+                        Program.UTIL.dataGridView_doubleComa(HP_dataGridView, k, 7, 0);
                     }
                 }
                 else
@@ -1131,7 +1131,7 @@ namespace main.contents
                     if (HP_dataGridView.Rows.Count > 0)
                     { 
                         HP_dataGridView.Rows[0].Cells[7].Value = nonSplit;
-                        Program.UTIL.dataGridView_doubleComa(HP_dataGridView, 0, 7, true, 0);
+                        Program.UTIL.dataGridView_doubleComa(HP_dataGridView, 0, 7, 0);
                     }
                 }
             }
@@ -1282,11 +1282,11 @@ namespace main.contents
                 {
                     StoragePump_dataGridView.Rows[0].Cells[a + 1].Value = Value[0][a];
                 }
-                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 4, true, 1);
-                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 5, true, 1);
-                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 6, true, 0);
-                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 7, true, 0);
-                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 8, true, 0);
+                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 4, 1);
+                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 5, 1);
+                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 6, 0);
+                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 7, 0);
+                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 8, 0);
             }
         }
 
@@ -1582,11 +1582,11 @@ namespace main.contents
                 {
                     Pump_dataGridView.Rows[nRow].Cells[a + 1].Value = Value[0][a];
                 }
-                Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 4, true, 1);
-                Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, true, 1);
-                Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, true, 0);
-                Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 7, true, 0);
-                Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 8, true, 0);
+                Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 4, 1);
+                Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, 1);
+                Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, 0);
+                Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 7, 0);
+                Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 8, 0);
             }
         }
 
@@ -1605,7 +1605,7 @@ namespace main.contents
                     else { MessageBox.Show("펌프 제어를 선택하세요."); }
                     if (Pump_dataGridView.Rows[0].Cells[11].Value != null)
                     {
-                        Pump1Num = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 11, true, 0);
+                        Pump1Num = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 11, 0);
                     }
                     else { MessageBox.Show("펌프 대수를 입력하세요."); }
                 }
@@ -1619,7 +1619,7 @@ namespace main.contents
                     else { MessageBox.Show("펌프 제어를 선택하세요."); }
                     if (Pump_dataGridView.Rows[1].Cells[11].Value != null)
                     {
-                        Pump2Num = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 11, true, 0);
+                        Pump2Num = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 11, 0);
                     }
                     else { MessageBox.Show("펌프 대수를 입력하세요."); }
                 }
@@ -1948,18 +1948,18 @@ namespace main.contents
                         Pump_dataGridView.Rows[0].Cells[9].Value = Pump1Valve;
                         Pump_dataGridView.Rows[0].Cells[10].Value = Pump1Control;
                         Pump_dataGridView.Rows[0].Cells[11].Value = Pump1Num;
-                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 11, true, 0);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 11, 0);
                     }
                     else if (Pump_dataGridView.Rows.Count > 1)
                     {
                         Pump_dataGridView.Rows[0].Cells[9].Value = Pump1Valve;
                         Pump_dataGridView.Rows[0].Cells[10].Value = Pump1Control;
                         Pump_dataGridView.Rows[0].Cells[11].Value = Pump1Num;
-                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 11, true, 0);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 11, 0);
                         Pump_dataGridView.Rows[1].Cells[9].Value = Pump2Valve;
                         Pump_dataGridView.Rows[1].Cells[10].Value = Pump2Control;
                         Pump_dataGridView.Rows[1].Cells[11].Value = Pump2Num;
-                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 11, true, 0);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 11, 0);
                     }
                 }
                 else { Pump_dataGridView.Visible = false; }

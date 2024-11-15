@@ -306,7 +306,7 @@ namespace main.contents
             }
             else
             {
-                Install = Program.UTIL.dataGridView_doubleComa(WP_dataGridView, 0, 13, true, 0);
+                Install = Program.UTIL.dataGridView_doubleComa(WP_dataGridView, 0, 13, 0);
                 h2 = Convert.ToDouble(h2_textBox.Text);
                 Condition = Condition_ComboBox.SelectedItem.ToString();
 
