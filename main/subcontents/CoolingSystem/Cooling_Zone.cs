@@ -188,12 +188,17 @@ namespace main.subcontents
                         CoolingZone_dataGridView.Rows[nRow].Cells[4].Value = Value[n][2]; //유형
 
                         string[][] 공조기정보 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "공조요구량,Qmax_tot", " 번호 ='" + Value[n][0] + "' And 난방_냉방 = '냉방'");
-                        for(int k  =0; k < 12; k++)
+                        if(공조기정보.Length >0)
                         {
-                            연간요구량 += Convert.ToDouble(공조기정보[k][0]);
+                            for (int k = 0; k < 12; k++)
+                            {
+                                연간요구량 += Convert.ToDouble(공조기정보[k][0]);
+                            }
+                            CoolingZone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F0}", 연간요구량); //연간냉방요구량
+                            CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F0}", Convert.ToDouble(공조기정보[7][1]) / 1000); //최대냉방부하
                         }
-                        CoolingZone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F0}", 연간요구량); //연간냉방요구량
-                        CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F0}", Convert.ToDouble(공조기정보[7][1])/1000); //최대냉방부하
+                        
+                        
                         CoolingZone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F2}", 바닥면적); //면적
                         List<string> 공조기 = new List<string>();
                         foreach(ahu설비 ahu in val_sum)
