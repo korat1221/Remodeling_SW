@@ -57,7 +57,7 @@ namespace main.contents
         public EquipmentList()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
-            프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");//User_GWHP
+            프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");//User_GroundWHP
             Program.DB.initTable(DB.type.ProjDB, "User_Boiler");
             Program.DB.initTable(DB.type.ProjDB, "User_ABS");
             Program.DB.initTable(DB.type.ProjDB, "User_ DH");
@@ -2117,7 +2117,7 @@ namespace main.contents
         private void GWHP_Save_button_Click(object sender, EventArgs e)
         {
 
-            Program.DB.deleteValue(DB.type.ProjDB, "User_GWHP", "");
+            Program.DB.deleteValue(DB.type.ProjDB, "User_GroundWHP", "");
 
             for (int k = 0; k < GWHP_dataGridView.RowCount; k++)
             {
@@ -2138,7 +2138,7 @@ namespace main.contents
                     }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_GWHP", "번호,프로젝트유형,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,설치,대기전력",
+                Program.DB.setValue(DB.type.ProjDB, "User_GroundWHP", "번호,프로젝트유형,DB유형,명칭,연료,공급유형,수직수평,냉방용량,냉방EER,냉방소비전력,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대수,냉수입구온도,냉수출구온도,압축기,증발기,설치,대기전력",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" +
                  Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "','" + Value[18] + "','" + Value[19] + "','" + Value[20]
