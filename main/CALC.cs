@@ -1532,31 +1532,23 @@ namespace main
         #region 신재생
         public static bool RESystemCalc(string ProjNum)
         {
+            PVCalc(ProjNum);
+            WPCalc(ProjNum);
+            return true;
+        }
+        public static bool PVCalc(string ProjNum)
+        {
+            string[][] PVNum = Program.DB.getValue(ProjNum, "PV_Form", "번호");
             string[][] 프로젝트유형 = Program.DB.getValue(ProjNum, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             int i = -1;
             String MTH;
-            //string[][] PVNum = Program.DB.getValue(ProjNum, "PV_Form", "번호");
-            //while (++i < PVNum.Length)
-            //{
-            //    Cal_RESystem PV = new Cal_RESystem(PVNum[i][0]);
-            //    PV.Load_PVdata();
-            //    PV.Cal_Qf_elec();
-            //    PV.Cal_Battery();
-            //    PV.Cal_fmatch();
-            //    PV.Cal_Qf_pv();
-
-            //    for (int mth = 0; mth <= 11; mth++)
-            //    {
-            //        MTH = (mth + 1).ToString() + "월";
-            //        Program.DB.setValue(DB.type.ProjDB, "PV_Result", "프로젝트번호,프로젝트유형,번호," +
-            //                 "월," +
-            //                 "매칭계수,배터리손실,계통연계형사용량,독립형사용량,최종사용량",
-            //                 "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PVNum[i][0] + "','" + MTH + "','" +
-            //                 PV.V2 + "','" + PV.Qbatt_loss[mth] + "','" + PV.Qf_nutz_linked[mth] + "','" + PV.Qf_nutz_nonlinked[mth] + "','" + PV.Qf_nutz_PV[mth]
-            //                  + "'", "번호,월"); ;
-            //    }
-            //}
-            WPCalc(ProjNum);
+            while (++i < PVNum.Length)
+            {
+                Cal_RESystem PV = new Cal_RESystem(PVNum[i][0]);
+                PV.PVcalReady();
+                PV.PVcal();
+                PV.PVsave();
+            }
             return true;
         }
         public static bool WPCalc(string ProjNum)

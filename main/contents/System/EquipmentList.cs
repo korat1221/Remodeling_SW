@@ -61,7 +61,7 @@ namespace main.contents
             Program.DB.initTable(DB.type.ProjDB, "User_Boiler");
             Program.DB.initTable(DB.type.ProjDB, "User_ABS");
             Program.DB.initTable(DB.type.ProjDB, "User_ DH");
-            Program.DB.initTable(DB.type.ProjDB, "User_PVModule");
+            Program.DB.initTable(DB.type.ProjDB, "User_PV");
             Program.DB.initTable(DB.type.ProjDB, "User_FC");
             Program.DB.initTable(DB.type.ProjDB, "User_WP");
             Program.DB.initTable(DB.type.ProjDB, "User_AirHP");
@@ -1037,17 +1037,7 @@ namespace main.contents
                         PV_dataGridView.Rows[nRow].Cells[6].Value = Value[0][2].ToString();
                         PV_dataGridView.Rows[nRow].Cells[7].Value = Value[0][3].ToString();
                         PV_dataGridView.Rows[nRow].Cells[8].Value = Value[0][4].ToString();
-                    }
-                    string[][] Ualue = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "CELLTYPE,길이,높이,정격출력,Kpk", "번호 = '" + pv_DB.SelectPV + "'");
-                    if (Ualue.Length > 0)
-                    {
-                        
-                        PV_dataGridView.Rows[nRow].Cells[4].Value = Ualue[0][0].ToString();
-                        PV_dataGridView.Rows[nRow].Cells[5].Value = Ualue[0][1].ToString();
-                        PV_dataGridView.Rows[nRow].Cells[6].Value = Ualue[0][2].ToString();
-                        PV_dataGridView.Rows[nRow].Cells[7].Value = Ualue[0][3].ToString();
-                        PV_dataGridView.Rows[nRow].Cells[8].Value = Ualue[0][4].ToString();
-                    }
+                    }                  
 
                 }
             }

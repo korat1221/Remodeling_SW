@@ -54,7 +54,6 @@
             label7 = new Label();
             label6 = new Label();
             Save_button = new Button();
-            Calc_button = new Button();
             label12 = new Label();
             averagecpacity_textBox = new TextBox();
             label29 = new Label();
@@ -371,25 +370,13 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(912, 669);
+            Save_button.Location = new Point(1033, 638);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 99;
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
-            // 
-            // Calc_button
-            // 
-            Calc_button.BackColor = SystemColors.ButtonHighlight;
-            Calc_button.ForeColor = Color.Black;
-            Calc_button.Location = new Point(818, 669);
-            Calc_button.Name = "Calc_button";
-            Calc_button.Size = new Size(88, 25);
-            Calc_button.TabIndex = 98;
-            Calc_button.Text = "계 산";
-            Calc_button.UseVisualStyleBackColor = true;
-            Calc_button.Click += Calc_button_Click;
             // 
             // label12
             // 
@@ -829,7 +816,6 @@
             Controls.Add(allcapacity_textBox);
             Controls.Add(label27);
             Controls.Add(Save_button);
-            Controls.Add(Calc_button);
             Controls.Add(PVMainPanel);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
@@ -873,7 +859,6 @@
         private TextBox PVModule_textBox;
         private Button InverterDB1_button;
         private Button Save_button;
-        private Button Calc_button;
         private TextBox averagecpacity_textBox;
         private Label label29;
         private Label label28;

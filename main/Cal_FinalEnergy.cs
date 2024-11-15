@@ -232,7 +232,7 @@
         {
             for (int mth = 0; mth < 12; mth++)
             {
-                string[][] Value = Program.DB.getValue(ProjNum, "PV_Result", "최종사용량", "월 ='" + (mth + 1).ToString() + "월'");
+                string[][] Value = Program.DB.getValue(ProjNum, "PV_Result", "PV생산량", "월 ='" + (mth + 1).ToString() + "월'");
                 if (Value.Length > 0)
                 {
                     for (int i = 0; i < Value.Length; i++)

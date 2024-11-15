@@ -33,9 +33,8 @@ namespace main.contents
 
         //계산
         public double fperf;
-
-               
-        public PV( )
+        #region 폼
+        public PV()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             InitializeAsync();
@@ -70,6 +69,7 @@ namespace main.contents
             BatteryEff_textbox.Visible = false;
             batterypower.Visible = false;
         }
+
         private void PV_Table()
         {
             new StackedHeaderDecorator(PV_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
@@ -98,22 +98,6 @@ namespace main.contents
             PV_dataGridView.Columns.Add("A8", "음영정보.Array높이[m]"); //Arrayheight_combo
 
             PV_dataGridView.Columns[0].Width = 60;
-        }
-        async void InitializeAsync()
-        {
-            await webView21.EnsureCoreWebView2Async(null);
-            webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
-        }
-        void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
-        {
-            scriptable = true;
-        }
-        public void runScript(string script)
-        {
-            if (scriptable)
-            {
-                webView21.CoreWebView2.ExecuteScriptAsync(script);
-            }
         }
         private void PVType_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -152,7 +136,6 @@ namespace main.contents
             pvtotal.Location = new Point(210, 292);
             pvname.Location = new Point(537, 44);
         }
-
         void PVimage(string type)
         {
             tabload("input");
@@ -180,6 +163,12 @@ namespace main.contents
                 ShpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 ShpictureBox.BackColor = Color.Transparent;
             }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "기존PV", "설치 = '기존'");
+            OldPVSystem_ComboBox.Items.AddRange(Value);
         }
 
         void tabload(string oper)
@@ -252,7 +241,7 @@ namespace main.contents
                 string[][] value = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광배터리계수", "시스템효율", "배터리타입 = '" + BatteryType + "'");
                 BatteryEff = Convert.ToDouble(value[0][0]) * 100;
             }
-            
+
             Battery_textBox.Text = Battery;
             BatteryEff_textbox.Visible = true;
             BatteryEff_textbox.Location = new Point(433, 180);
@@ -263,15 +252,94 @@ namespace main.contents
             batterypower.Location = new Point(430, 294);
             batterypower.Text = string.Format("{0:F0} kW", BatteryCa);
         }
-        
+        private void PV_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 1 && PV_dataGridView.Rows[e.RowIndex].Cells[1].Value != null)
+            {
+                double val = 0;
+                val = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[1].Value);
+                Ppk = val * PVpower / 1000; //kW 25년후 성능저하를 반영함
+
+                pvtotal.Visible = true;
+                pvtotal.Text = string.Format("{0:F1} kW", Ppk);
+                pvtotal.Location = new Point(210, 292);
+                pvtotal.BackColor = Color.Transparent;
+
+                pvname.Visible = true;
+                pvname.Text = string.Format("명칭: {0}", PVModuleName);
+                pvname.Location = new Point(537, 44);
+                pvname.BackColor = Color.Transparent;
+
+                pvsize.Visible = true;
+                pvsize.Text = string.Format("{0}m X {1}m", PVwidth, PVheight);
+                pvsize.Location = new Point(210, 95);
+                pvsize.BackColor = Color.Transparent;
+
+                pvpower.Visible = true;
+                pvpower.Text = string.Format("{0} W", PVpower);
+                pvpower.Location = new Point(210, 142);
+                pvpower.BackColor = Color.Transparent;
+
+                PVtotalarea = PVarea * val;
+
+                PV_dataGridView.Rows[e.RowIndex].Cells[2].Value = string.Format("{0:F2}", PVtotalarea);
+            }
+
+            if (e.ColumnIndex == 4 && PV_dataGridView.Rows[e.RowIndex].Cells[4].Value != null)
+            {
+                slope = PV_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() + "˚";
+                PVimage(PV_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString());
+            }
+
+            if (e.ColumnIndex == 3 && PV_dataGridView.Rows[e.RowIndex].Cells[3].Value != null)
+            {
+                orientation = PV_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString();
+            }
+
+            if (e.ColumnIndex == 5 && PV_dataGridView.Rows[e.RowIndex].Cells[5].Value != null)
+            {
+                installType = PV_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString();
+
+                switch (installType)
+                {
+                    case "통기없음":
+                        fperf = 0.76 + 0.1; //인버터 효율 0.9반영함
+                        break;
+                    case "미세통기층":
+                        fperf = 0.8 + 0.1;
+                        break;
+                    case "통기층":
+                        fperf = 0.82 + 0.1;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        private void OldPVSystem_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            beforePV = OldPVSystem_ComboBox.Text;
+        }
+
+        #endregion
+
+        #region 세이브
+
         private void Save_button_Click(object sender, EventArgs e)
         {
             if (Save())
             {
-                this.DialogResult = DialogResult.OK;
-                this.Hide();
-                Program.getMenuForm().DoLoadForm(53, OnLoadListProc);
+                Calc();
+                MessageBox.Show("태양광시스템" + "[" + Num + "]을 저장하였습니다.");
+                List_PV f = new List_PV();
+                f.load_List();
             }
+        }
+        public static bool OnLoadListProc(Form form)
+        {
+            List_PV f = (List_PV)form;
+            f.load_List();
+            return true;
         }
         private bool Save()
         {
@@ -302,7 +370,7 @@ namespace main.contents
             {
                 MessageBox.Show("설치정보를 선택하세요!");
                 return false;
-                
+
             }
             else if (Ins == "보수" && beforePV == null)
             {
@@ -323,81 +391,29 @@ namespace main.contents
                 val[k] = PV_dataGridView.Rows[0].Cells[k].Value.ToString();
             }
             Program.DB.setValue(DB.type.ProjDB, "PV_Form", "번호,개수,면적, 방위,기울기,통풍유무,지형물거리,지형물높이,어레이높이,설치,기존PV,fperf", "'" + Num + "','" + val[1] + "','" + val[2] + "'," +
-                "'" + val[3] + "','" + val[4] + "','" + val[5] + "','" + val[6] + "','" + val[7] + "','" + val[8] + "','" + Ins + "','" + beforePV + "','"+fperf+"'", "번호");
+                "'" + val[3] + "','" + val[4] + "','" + val[5] + "','" + val[6] + "','" + val[7] + "','" + val[8] + "','" + Ins + "','" + beforePV + "','" + fperf + "'", "번호");
             return true;
         }
-        private void LoadGraph(double[] Qfpvm, double[] Esolm )
+
+        private void Calc()
         {
-            double[] PVm2_kWh = new double[12], Solm2_kWh = new double[12];
-            try
+            tabload("output");
+            Cal_RESystem cal = new Cal_RESystem(Num);
+            cal.PVcalReady();
+            cal.PVcal();
+            LoadGraph(cal.Qfpvm_kWh, cal.Esol);
+
+            allcapacity_textBox.Text = string.Format("{0:n0}", cal.Qfpva_kWh);
+            double[] Qeff = new double[12];
+            for (int i = 0; i < 12; i++)
             {
-                for(int j=0; j < 12; j++)
-                {
-                    PVm2_kWh[j] = Qfpvm[j] / PVtotalarea;
-                    Solm2_kWh[j] = Esolm[j];
-                }
-                
-                string s = "", s2 = "";
-                                
-                double max1 = 0, max2 = 0;
-                for (int mth = 0; mth < 11; mth++)
-                {
-                    
-                    s += PVm2_kWh[mth] + ",";
-                    s2 += Solm2_kWh[mth] + ",";
-                }
-
-                s += PVm2_kWh[11];
-                s2 += Solm2_kWh[11];
-
-                int n2 = ((int)Solm2_kWh.Max()).ToString().Length;
-                max2 = Convert.ToInt64((Solm2_kWh.Max()) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1) / 2;
-                int n1 = ((int)PVm2_kWh.Max()).ToString().Length;
-                max1 = Convert.ToInt64((PVm2_kWh.Max()) / Math.Pow(10, n1 - 1)) * Math.Pow(10, n1 - 1) + Math.Pow(10, n1 - 1) / 2;
-
-                runScript("drawChart_pv([{type:\"line\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:" + max2 + "},{type:\"bar\",label:\"생산량(kWh/m²·mth)\",data:[" + s + "],borderColor:\"#ffffee0\",backgroundColor:\"#FFF6A3\",min:0,max:" + max2 + ",dash:false,barPercentage:0.4}])");
+                Qeff[i] = cal.Qfpvm_m2_kWh[i] / cal.Esol[i];
             }
-            catch { }
+            averagecpacity_textBox.Text = string.Format("{0:F1}", Qeff.Average() * 100);
         }
-        private void Reset()
-        {
-            Num = null; Name = null;
-            지역 = null; 프로젝트유형 = null;
+        #endregion
 
-            PVModuleNumber = null; PVModuleName = null;
-            PVarea = 0; PVtotalarea = 0; PVpower = 0; Kpk = 0; Ppk = 0; PVwidth = 0; PVheight = 0;
-
-            Inverter = null; InverterEff = 0;
-            Battery = null; BatteryType = null;
-            BatteryCa = 0; BatteryEff = 0;
-
-            //방위와 향
-            orientation = null; slope = null; installType = null; connect = null;
-            fperf = 0;
-           
-            Name_textBox.Text = null;
-            PVType_ComboBox.Items.Clear();
-
-            Battery_label.Text = null;
-            Battery_textBox.Text = null;
-
-            pvname.Text = null;
-            pvsize.Text = null;
-            pvpower.Text = null;
-            pvtotal.Text = null;
-
-            InverterEff_textbox.Text = null;
-            BatteryEff_textbox.Text = null;
-            batterypower.Text = null;
-
-            PV_dataGridView.Columns.Clear();
-            PV_dataGridView.Rows.Clear();
-
-            Inverter_textBox.Text = null;
-
-            averagecpacity_textBox.Text = null;
-            allcapacity_textBox.Text = null;
-        }
+        #region 로드
 
         public void LoadData(String ID)      // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
@@ -482,14 +498,14 @@ namespace main.contents
                 }
 
                 RadioButton[] rB = { radioButton1, radioButton2, radioButton3, radioButton4 };
-                foreach(var a in rB)
+                foreach (var a in rB)
                 {
                     if (a.Text == Value[0][16].ToString())
                     {
                         a.Checked = true;
                     }
                 }
-                if (Value[0][16]=="보수"|| Value[0][16] == "철거 후 신규")
+                if (Value[0][16] == "보수" || Value[0][16] == "철거 후 신규")
                 {
                     OldPVSystem_ComboBox.Text = Value[0][17].ToString();
                 }
@@ -497,7 +513,7 @@ namespace main.contents
                 Cal_RESystem cal = new Cal_RESystem(Num);
                 cal.PVcalReady();
                 cal.PVcal();
-                LoadGraph(cal.Qfpvm_kWh, cal.Esol);  
+                LoadGraph(cal.Qfpvm_kWh, cal.Esol);
 
                 allcapacity_textBox.Text = string.Format("{0:n0}", cal.Qfpva_kWh);
                 double[] Qeff = new double[12];
@@ -509,110 +525,113 @@ namespace main.contents
             }
         }
 
-        public static bool OnLoadListProc(Form form)
-        {
-            List_PV f = (List_PV)form;
-            f.load_List();
-            return true;
-        }
+        #endregion
+
+        #region 리셋
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {
             Num_textBox.Text = ID;
             Num = ID;
         }
-
-        private void PV_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void Reset()
         {
-            if (e.ColumnIndex == 1 && PV_dataGridView.Rows[e.RowIndex].Cells[1].Value != null)
+            Num = null; Name = null;
+            지역 = null; 프로젝트유형 = null;
+
+            PVModuleNumber = null; PVModuleName = null;
+            PVarea = 0; PVtotalarea = 0; PVpower = 0; Kpk = 0; Ppk = 0; PVwidth = 0; PVheight = 0;
+
+            Inverter = null; InverterEff = 0;
+            Battery = null; BatteryType = null;
+            BatteryCa = 0; BatteryEff = 0;
+
+            //방위와 향
+            orientation = null; slope = null; installType = null; connect = null;
+            fperf = 0;
+
+            Name_textBox.Text = null;
+            PVType_ComboBox.Items.Clear();
+
+            Battery_label.Text = null;
+            Battery_textBox.Text = null;
+
+            pvname.Text = null;
+            pvsize.Text = null;
+            pvpower.Text = null;
+            pvtotal.Text = null;
+
+            InverterEff_textbox.Text = null;
+            BatteryEff_textbox.Text = null;
+            batterypower.Text = null;
+
+            PV_dataGridView.Columns.Clear();
+            PV_dataGridView.Rows.Clear();
+
+            Inverter_textBox.Text = null;
+
+            averagecpacity_textBox.Text = null;
+            allcapacity_textBox.Text = null;
+        }
+
+        #endregion
+
+        #region 그래프
+        async void InitializeAsync()
+        {
+            await webView21.EnsureCoreWebView2Async(null);
+            webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
+        }
+        void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            scriptable = true;
+        }
+        public void runScript(string script)
+        {
+            if (scriptable)
             {
-                double val = 0;
-                val = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[1].Value);
-                Ppk = val * PVpower / 1000; //kW 25년후 성능저하를 반영함
-
-                pvtotal.Visible = true;
-                pvtotal.Text = string.Format("{0:F1} kW", Ppk);
-                pvtotal.Location = new Point(210, 292);
-                pvtotal.BackColor = Color.Transparent;
-
-                pvname.Visible = true;
-                pvname.Text = string.Format("명칭: {0}", PVModuleName);
-                pvname.Location = new Point(537, 44);
-                pvname.BackColor = Color.Transparent;
-
-                pvsize.Visible = true;
-                pvsize.Text = string.Format("{0}m X {1}m", PVwidth, PVheight);
-                pvsize.Location = new Point(210, 95);
-                pvsize.BackColor = Color.Transparent;
-
-                pvpower.Visible = true;
-                pvpower.Text = string.Format("{0} W", PVpower);
-                pvpower.Location = new Point(210, 142);
-                pvpower.BackColor = Color.Transparent;
-
-                PVtotalarea = PVarea * val;
-
-                PV_dataGridView.Rows[e.RowIndex].Cells[2].Value = string.Format("{0:F2}", PVtotalarea);
+                webView21.CoreWebView2.ExecuteScriptAsync(script);
             }
-
-            if (e.ColumnIndex == 4 && PV_dataGridView.Rows[e.RowIndex].Cells[4].Value != null)
+        }
+        private void LoadGraph(double[] Qfpvm, double[] Esolm)
+        {
+            double[] PVm2_kWh = new double[12], Solm2_kWh = new double[12];
+            try
             {
-                slope = PV_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() + "˚";
-                PVimage(PV_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString());
-            }
-
-            if (e.ColumnIndex == 3 && PV_dataGridView.Rows[e.RowIndex].Cells[3].Value != null)
-            {
-                orientation = PV_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString();
-            }
-
-            if (e.ColumnIndex == 5 && PV_dataGridView.Rows[e.RowIndex].Cells[5].Value != null)
-            {
-                installType = PV_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString();
-
-                switch (installType)
+                for (int j = 0; j < 12; j++)
                 {
-                    case "통기없음":
-                        fperf = 0.76 + 0.1; //인버터 효율 0.9반영함
-                        break;
-                    case "미세통기층":
-                        fperf = 0.8 + 0.1;
-                        break;
-                    case "통기층":
-                        fperf = 0.82 + 0.1;
-                        break;
-                    default:
-                        break;
+                    PVm2_kWh[j] = Qfpvm[j] / PVtotalarea;
+                    Solm2_kWh[j] = Esolm[j];
                 }
+
+                string s = "", s2 = "";
+
+                double max1 = 0, max2 = 0;
+                for (int mth = 0; mth < 11; mth++)
+                {
+
+                    s += PVm2_kWh[mth] + ",";
+                    s2 += Solm2_kWh[mth] + ",";
+                }
+
+                s += PVm2_kWh[11];
+                s2 += Solm2_kWh[11];
+
+                int n2 = ((int)Solm2_kWh.Max()).ToString().Length;
+                max2 = Convert.ToInt64((Solm2_kWh.Max()) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1) / 2;
+                int n1 = ((int)PVm2_kWh.Max()).ToString().Length;
+                max1 = Convert.ToInt64((PVm2_kWh.Max()) / Math.Pow(10, n1 - 1)) * Math.Pow(10, n1 - 1) + Math.Pow(10, n1 - 1) / 2;
+
+                runScript("drawChart_pv([{type:\"line\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:" + max2 + "},{type:\"bar\",label:\"생산량(kWh/m²·mth)\",data:[" + s + "],borderColor:\"#ffffee0\",backgroundColor:\"#FFF6A3\",min:0,max:" + max2 + ",dash:false,barPercentage:0.4}])");
             }
+            catch { }
         }
 
-        private void Calc_button_Click(object sender, EventArgs e)
-        {
-            Save( );
-            tabload("output");
-            Cal_RESystem cal = new Cal_RESystem(Num);
-            cal.PVcalReady( );
-            cal.PVcal();
-            LoadGraph(cal.Qfpvm_kWh, cal.Esol);
 
-            allcapacity_textBox.Text = string.Format("{0:n0}",cal.Qfpva_kWh);
-            double[] Qeff = new double[12]; 
-            for(int i=0;i<12 ; i++)
-            {
-                Qeff[i] = cal.Qfpvm_m2_kWh[i] / cal.Esol[i];
-            }
-            averagecpacity_textBox.Text = string.Format("{0:F1}", Qeff.Average( )*100); 
-        }
 
-        private void OldPVSystem_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            beforePV = OldPVSystem_ComboBox.Text;
-        }
+        #endregion
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "기존PV", "설치 = '기존'");
-            OldPVSystem_ComboBox.Items.AddRange(Value);
-        }
+
+
+   
     }
 }
