@@ -75,10 +75,10 @@ namespace main.contentslist
             dataGridView1.Columns.Add(checkBoxColumn);
             dataGridView1.Columns.Add("A1", "번호");
             dataGridView1.Columns.Add("A2", "명칭");
-            dataGridView1.Columns.Add("A1", "유형");
-            dataGridView1.Columns.Add("A2", "정격풍력.[kW]");
-            dataGridView1.Columns.Add("A2", "최적풍속.[m/s]");
-            dataGridView1.Columns.Add("A3", "인버터효율.[%]");
+            dataGridView1.Columns.Add("A3", "유형");
+            dataGridView1.Columns.Add("A4", "정격출력.[kW]");
+            dataGridView1.Columns.Add("A5", "최적풍속.[m/s]");
+            dataGridView1.Columns.Add("A6", "인버터효율.[%]");
             dataGridView1.Columns[0].Width = 40;
         }
 
@@ -103,17 +103,51 @@ namespace main.contentslist
         }
         public void load_table()
         {
+          
+
             dataGridView1.Rows.Clear();
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "WindPower_Form", "번호,명칭", "");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "WindPower_Form", "번호,풍력,명칭,인버터제품, 인버터", "");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
-                {
+                {  string UWP, Inverter, Inverter_num;
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[n].Cells[1].Value = Value[n][0];
-                    dataGridView1.Rows[n].Cells[2].Value = Value[n][1];
+                    dataGridView1.Rows[n].Cells[2].Value = Value[n][2];
+                    UWP = Value[n][1];
+                    Inverter = Value[n][3];
+                    Inverter_num = Value[n][4];
+
+
+                    string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "User_WP", "세부타입, 정격출력, 최적풍속", "번호 ='" + UWP + "'");
+                    if (ValueA.Length > 0)
+                    {
+                        dataGridView1.Rows[n].Cells[3].Value = ValueA[0][0];
+                        dataGridView1.Rows[n].Cells[4].Value = ValueA[0][1];
+                        dataGridView1.Rows[n].Cells[5].Value = ValueA[0][2];
+                    }
+
+                    //인버터 효율 
+                    if (Inverter_num.Contains("U"))
+                    {
+                        string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "User_WPInverter", "EURO효율", "제품명='" + Inverter + "'");
+                        if (value2.Length > 0)
+                        {
+                            dataGridView1.Rows[n].Cells[6].Value = value2[0][0];
+                        }
+                    }
+                    else
+                    {
+                        string[][] value3 = Program.DB.getValue(DB.type.BaseDB_RESystem, "풍력인버터DB", "EURO효율", "제품명='" + Inverter + "'");
+                        if (value3.Length > 0)
+                        {
+                            dataGridView1.Rows[n].Cells[6].Value = value3[0][0];
+                        }
+                    }
+
                 }        
             }
+           
         }
         public void load_List()
         {
@@ -123,16 +157,9 @@ namespace main.contentslist
             List<object> fuelcellsubMenu = new List<object>();
             List<object> wpsubMenu = new List<object>();
 
-            dataGridView1.Rows.Clear();
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "WindPower_Form", "번호,명칭", "");
             if (Value.Length > 0)
             {
-                for (int n = 0; n < Value.Length; n++)
-                {
-                    dataGridView1.Rows.Add();
-                    dataGridView1.Rows[n].Cells[1].Value = Value[n][0];
-                    dataGridView1.Rows[n].Cells[2].Value = Value[n][1];
-                }
                 Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "번호,명칭", "");
                 if (Value.Length > 0)
                 {

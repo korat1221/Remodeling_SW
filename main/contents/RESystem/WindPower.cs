@@ -29,13 +29,17 @@ namespace main.contents
     {
 
         String[][] 지역;
-        String Num, Name, Inverter, Inverter_num;
+        String Num, Inverter, Inverter_num;
         double Euro, h2;
         String WP, Type, SubType;
         double RotateArea, HerbHeight, Install;
         string Condition, 프로젝트유형;
         bool scriptable = false;
 
+        public double[] h_mth = new double[12];
+        public double[] Pwind_mth = new double[12];
+        public double[] Pwps_mth = new double[12];
+        public double[] Qfwps_mth = new double[12];
 
 
         #region 폼
@@ -44,7 +48,7 @@ namespace main.contents
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             InitializeAsync();
-            // webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);     /////////////////////////////////////그래프수정
+            webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);     /////////////////////////////////////그래프수정
 
 
             지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
@@ -56,7 +60,7 @@ namespace main.contents
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
 
-            string[][] 프로젝트 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            string[][] 프로젝트 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             if (프로젝트.Length > 0)
             {
                 프로젝트유형 = 프로젝트[0][0];
@@ -134,7 +138,6 @@ namespace main.contents
             }
             else
             {
-                Name = Name_textBox.Text;
                 subcontents.WP_DB wp_DB = new subcontents.WP_DB();
                 DialogResult result = wp_DB.ShowDialog();
                 if (result == DialogResult.OK)
@@ -159,7 +162,7 @@ namespace main.contents
             }
         }
 
-        private void Load_WPDB(string SelectWPnonsplit)
+        private void Load_WPDB(string SelectWPnonsplit )
         {
             string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_WP", "번호,DB유형,제품명,제조사,정격출력,시동풍속,최적풍속,종단풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수,신규기존,타입,세부타입,회전면적,허브높이", "번호 =  '" + SelectWPnonsplit + "'");
             if (value.Length > 0)
@@ -225,7 +228,7 @@ namespace main.contents
             }
         }
 
-        private void Load_WPType_image(string Type, string SubType)
+        private void Load_WPType_image(string Type,string SubType)
         {
             if (Type == "수평형")
             {
@@ -279,7 +282,7 @@ namespace main.contents
             {
                 MessageBox.Show("풍력발전 시스템을 선택하세요.");
             }
-            else if (Inverter_textBox.Text == "")
+            else if(Inverter_textBox.Text == "")
             {
                 MessageBox.Show("인버터 제품을 선택하세요.");
             }
@@ -290,6 +293,7 @@ namespace main.contents
             else
             {
                 Save();
+                
             }
 
         }
@@ -302,20 +306,27 @@ namespace main.contents
             }
             else
             {
-                Install = Program.UTIL.dataGridView_doubleComa(WP_dataGridView, 0, 13, true, 0);
+                Install = Program.UTIL.dataGridView_doubleComa(WP_dataGridView, 0, 13, 0);
                 h2 = Convert.ToDouble(h2_textBox.Text);
                 Condition = Condition_ComboBox.SelectedItem.ToString();
 
                 Program.DB.setValue(DB.type.ProjDB, "WindPower_Form", "번호,프로젝트유형,명칭,풍력,주변환경,설치높이,인버터제품,인버터,설치대수",
-                   "'" + Num + "','" + 프로젝트유형 + "','" + Name + "','" + WP + "','" +
+                   "'" + Num + "','" + 프로젝트유형 + "','" + Name_textBox.Text + "','" + WP + "','" +
                    Condition + "','" + h2 + "','" +
                    Inverter + "','" + Inverter_num + "','" + Install + "'", "번호");
 
-
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
+                if (Value.Length > 0)
+                {
+                    CALC.WPCalc(Value[0][0]);
+                    LoadGraph();
+                }
                 MessageBox.Show("풍력시스템" + "[" + Num + "] 정보를 저장하였습니다.");
-                this.DialogResult = DialogResult.OK;
-                this.Hide();
-                Program.getMenuForm().DoLoadForm(55, OnLoadListProc);
+
+                //this.DialogResult = DialogResult.OK;
+                //this.Hide();
+                List_WindPower f =  new List_WindPower();
+                f.load_List();
             }
         }
 
@@ -352,7 +363,7 @@ namespace main.contents
                 if (WP_dataGridView.Rows.Count > 0)
                 {
                     WP_dataGridView.Rows[0].Cells[13].Value = value[0][7];
-                }
+                }               
             }
 
             //인버터 null 아니면 효율 매치해서 불러오기 
@@ -363,8 +374,8 @@ namespace main.contents
                     string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "User_WPInverter", "EURO효율", "제품명='" + Inverter + "'");
                     if (value2.Length > 0)
                     {
-                        EURO_textBox.Text = value2[0][0];
-                        Euro = Convert.ToDouble(value2[0][0]);
+                        EURO_textBox.Text = value2[0][0];  
+                        Euro =  Convert.ToDouble(value2[0][0]);
                     }
                 }
                 else
@@ -377,16 +388,17 @@ namespace main.contents
                     }
                 }
             }
+            LoadGraph();
         }
         #endregion
 
         #region 리셋
         private void Reset()
         {
-            Num = null; Name = null; Inverter = null; Inverter_num = null;
+            Num = null;  Inverter = null; Inverter_num = null;
             Euro = 0; h2 = 0;
             WP = null; Type = null; SubType = null; Condition = null;
-            RotateArea = 0; HerbHeight = 0;
+            RotateArea = 0; HerbHeight = 0; 
             Install = 0;
 
             WP_dataGridView.Rows.Clear();
@@ -402,7 +414,7 @@ namespace main.contents
             Typesub_textBox.Text = null;
             RotateArea_textBox.Text = null;
             HerbHeight_textBox.Text = null;
-
+         
         }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
@@ -431,47 +443,44 @@ namespace main.contents
             }
         }
 
-        //private void LoadGraph(String Orientation, String Slope)
-        //{
-        //    try
-        //    {
-        //        string s = "", s2 = "";
-        //        string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
-        //        string[][] res1;
-        //        string[][] res2;
-        //        double max1 = 0, max2 = 0;
-        //        for (int mth = 0; mth < 11; mth++)
-        //        {
-        //            s += PVEelpvoutm_kWh[mth] + ",";
-        //            res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Orientation + "' And 각도='" + Slope + "'And 기간 ='" + (mth + 1) + "월'");
-        //            if (res2.Length > 0)
-        //            { s2 += Convert.ToDouble(res2[0][0]) + ","; }
-        //        }
+        private void LoadGraph()
+        {
+            if (Name_textBox.Text != null)
+            {
+                string s = "", s2 = "";
+                string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
+                string[][] res1;
+                string[][] res2;
+                double max1 = 0;
+                double max2 = 0;
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "WindPower_Result", "h, Pwind, Pwps, Qfwps", "번호='" + Num + "' And 월 ='" + (mth + 1).ToString() + "월'");
+                    if (Value.Length > 0)
+                    {
+                        h_mth[mth] = Convert.ToDouble(Value[0][0]);
+                        Pwind_mth[mth] = Convert.ToDouble(Value[0][1]);
+                        Pwps_mth[mth] = Convert.ToDouble(Value[0][2]);
+                        Qfwps_mth[mth] = Convert.ToDouble(Value[0][3]);
+                        s += Qfwps_mth[mth] + ",";
+                    }
+                }
+               
+                int n1 = ((int)Qfwps_mth.Max()).ToString().Length;
+                max1 = Convert.ToInt64((Qfwps_mth.Max()) / Math.Pow(10, n1 - 1)) * Math.Pow(10, n1 - 1) + Math.Pow(10, n1 - 1) ;    
+                if(s!="")
+                {
+                    runScript("drawChart_wp([{type:\"line\",label:\"전기생산량\",data:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:" + max1 + "}])");
+                }                
+            }
+            else
+            {
+                webView21.Visible = false;
+            }
 
-        //        s += PVEelpvoutm_kWh[11];
-        //        res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Orientation + "' And 각도='" + Slope + "'And 기간 ='" + (12) + "월'");
-        //        if (res2.Length > 0)
-        //        { s2 += Convert.ToDouble(res2[0][0]); }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            #endregion
 
-        //        res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT Max(일사량) From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Orientation + "' And 각도='" + Slope + "'and not 기간='연간값'");
-
-
-        //        if (res2.Length > 0)
-        //        {
-        //            int n2 = ((int)Convert.ToDouble(res2[0][0])).ToString().Length;
-        //            max2 = Convert.ToInt64(Convert.ToDouble(res2[0][0]) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1) / 2;
-
-        //        }
-        //        int n1 = ((int)PVEelpvoutm_kWh.Max()).ToString().Length;
-        //        max1 = Convert.ToInt64((PVEelpvoutm_kWh.Max()) / Math.Pow(10, n1 - 1)) * Math.Pow(10, n1 - 1) + Math.Pow(10, n1 - 1) / 2;
-
-        //        runScript("drawChart_pv([{type:\"line\",label:\"전기생산량\",data:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:" + max1 + "},{type:\"bar\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:" + max2 + ",dash:false,barPercentage:0.7}])");
-        //    }
-        //    catch { }
-        //}
-
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        #endregion
+        }
     }
 }

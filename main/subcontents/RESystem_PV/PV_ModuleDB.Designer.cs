@@ -56,8 +56,6 @@
             button1 = new Button();
             panel2 = new Panel();
             Save_button = new Button();
-            AddUserDB_button = new Button();
-            Deletebutton = new Button();
             PVModule_dataGridView = new DataGridView();
             panel1 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -69,13 +67,12 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PVModule_dataGridView).BeginInit();
-            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // PVtext_label
             // 
             PVtext_label.AutoSize = true;
-            PVtext_label.Font = new Font(UTIL.Families[0], 9.75F);
+            PVtext_label.Font = new Font("나눔고딕", 9.75F);
             PVtext_label.Location = new Point(156, 9);
             PVtext_label.Name = "PVtext_label";
             PVtext_label.Size = new Size(121, 15);
@@ -85,7 +82,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label6.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             label6.Location = new Point(158, 71);
             label6.Name = "label6";
             label6.Size = new Size(61, 15);
@@ -97,7 +94,7 @@
             // 
             label7.AutoSize = true;
             label7.BackColor = Color.Transparent;
-            label7.Font = new Font(UTIL.Families[0], 9.75F);
+            label7.Font = new Font("나눔고딕", 9.75F);
             label7.Location = new Point(273, 130);
             label7.Name = "label7";
             label7.Size = new Size(43, 15);
@@ -109,7 +106,7 @@
             // 
             label8.AutoSize = true;
             label8.BackColor = Color.Transparent;
-            label8.Font = new Font(UTIL.Families[0], 9.75F);
+            label8.Font = new Font("나눔고딕", 9.75F);
             label8.Location = new Point(406, 130);
             label8.Name = "label8";
             label8.Size = new Size(43, 15);
@@ -121,7 +118,7 @@
             // 
             label12.AutoSize = true;
             label12.BackColor = Color.Transparent;
-            label12.Font = new Font(UTIL.Families[0], 9.75F);
+            label12.Font = new Font("나눔고딕", 9.75F);
             label12.Location = new Point(530, 130);
             label12.Name = "label12";
             label12.Size = new Size(65, 15);
@@ -197,7 +194,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            label9.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             label9.Location = new Point(664, 34);
             label9.Name = "label9";
             label9.Size = new Size(254, 15);
@@ -209,7 +206,7 @@
             // 
             label5.AutoSize = true;
             label5.BackColor = Color.Transparent;
-            label5.Font = new Font(UTIL.Families[0], 9.75F);
+            label5.Font = new Font("나눔고딕", 9.75F);
             label5.Location = new Point(779, 148);
             label5.Name = "label5";
             label5.Size = new Size(108, 15);
@@ -221,7 +218,7 @@
             // 
             label4.AutoSize = true;
             label4.BackColor = Color.Transparent;
-            label4.Font = new Font(UTIL.Families[0], 9.75F);
+            label4.Font = new Font("나눔고딕", 9.75F);
             label4.Location = new Point(642, 148);
             label4.Name = "label4";
             label4.Size = new Size(108, 15);
@@ -233,7 +230,7 @@
             // 
             label3.AutoSize = true;
             label3.BackColor = Color.Transparent;
-            label3.Font = new Font(UTIL.Families[0], 9.75F);
+            label3.Font = new Font("나눔고딕", 9.75F);
             label3.Location = new Point(520, 148);
             label3.Name = "label3";
             label3.Size = new Size(100, 15);
@@ -245,7 +242,7 @@
             // 
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
-            label1.Font = new Font(UTIL.Families[0], 9.75F);
+            label1.Font = new Font("나눔고딕", 9.75F);
             label1.Location = new Point(379, 148);
             label1.Name = "label1";
             label1.Size = new Size(108, 15);
@@ -257,7 +254,7 @@
             // 
             label2.AutoSize = true;
             label2.BackColor = Color.Transparent;
-            label2.Font = new Font(UTIL.Families[0], 9.75F);
+            label2.Font = new Font("나눔고딕", 9.75F);
             label2.Location = new Point(242, 148);
             label2.Name = "label2";
             label2.Size = new Size(108, 15);
@@ -268,7 +265,7 @@
             // label16
             // 
             label16.AutoSize = true;
-            label16.Font = new Font(UTIL.Families[0], 9.75F);
+            label16.Font = new Font("나눔고딕", 9.75F);
             label16.Location = new Point(156, 28);
             label16.Name = "label16";
             label16.Size = new Size(355, 15);
@@ -279,7 +276,7 @@
             // 
             label14.AutoSize = true;
             label14.BackColor = Color.Transparent;
-            label14.Font = new Font(UTIL.Families[0], 9.75F);
+            label14.Font = new Font("나눔고딕", 9.75F);
             label14.Location = new Point(793, 130);
             label14.Name = "label14";
             label14.Size = new Size(74, 15);
@@ -291,7 +288,7 @@
             // 
             label10.AutoSize = true;
             label10.BackColor = Color.Transparent;
-            label10.Font = new Font(UTIL.Families[0], 9.75F);
+            label10.Font = new Font("나눔고딕", 9.75F);
             label10.Location = new Point(659, 130);
             label10.Name = "label10";
             label10.Size = new Size(72, 15);
@@ -322,7 +319,7 @@
             button2.BackColor = SystemColors.ControlLight;
             button2.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             button2.FlatStyle = FlatStyle.System;
-            button2.Font = new Font(UTIL.Families[0], 9.75F);
+            button2.Font = new Font("나눔고딕", 9.75F);
             button2.Location = new Point(870, 15);
             button2.Margin = new Padding(0);
             button2.Name = "button2";
@@ -336,7 +333,7 @@
             button1.BackColor = SystemColors.ControlLight;
             button1.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             button1.FlatStyle = FlatStyle.System;
-            button1.Font = new Font(UTIL.Families[0], 9.75F);
+            button1.Font = new Font("나눔고딕", 9.75F);
             button1.Location = new Point(897, 15);
             button1.Margin = new Padding(0);
             button1.Name = "button1";
@@ -369,36 +366,6 @@
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click_1;
             // 
-            // AddUserDB_button
-            // 
-            AddUserDB_button.BackColor = SystemColors.ControlLight;
-            AddUserDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            AddUserDB_button.FlatStyle = FlatStyle.System;
-            AddUserDB_button.Font = new Font(UTIL.Families[0], 9.75F);
-            AddUserDB_button.Location = new Point(870, 15);
-            AddUserDB_button.Margin = new Padding(0);
-            AddUserDB_button.Name = "AddUserDB_button";
-            AddUserDB_button.Size = new Size(23, 23);
-            AddUserDB_button.TabIndex = 89;
-            AddUserDB_button.Text = "+";
-            AddUserDB_button.UseVisualStyleBackColor = false;
-            AddUserDB_button.Click += AddUserDB_button_Click;
-            // 
-            // Deletebutton
-            // 
-            Deletebutton.BackColor = SystemColors.ControlLight;
-            Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new Font(UTIL.Families[0], 9.75F);
-            Deletebutton.Location = new Point(897, 15);
-            Deletebutton.Margin = new Padding(0);
-            Deletebutton.Name = "Deletebutton";
-            Deletebutton.Size = new Size(23, 23);
-            Deletebutton.TabIndex = 95;
-            Deletebutton.Text = "-";
-            Deletebutton.UseVisualStyleBackColor = false;
-            Deletebutton.Click += Deletebutton_Click;
-            // 
             // PVModule_dataGridView
             // 
             PVModule_dataGridView.AllowUserToAddRows = false;
@@ -412,7 +379,7 @@
             PVModule_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle1.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -424,7 +391,7 @@
             PVModule_dataGridView.Name = "PVModule_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle2.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -433,7 +400,7 @@
             PVModule_dataGridView.RowHeadersVisible = false;
             PVModule_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle3.Font = new Font("나눔고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -446,8 +413,6 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.GradientInactiveCaption;
-            panel1.Controls.Add(Deletebutton);
-            panel1.Controls.Add(AddUserDB_button);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 170);
             panel1.Name = "panel1";
@@ -476,7 +441,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)PVModule_dataGridView).EndInit();
-            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -498,8 +462,6 @@
         private Button button2;
         private Button button1;
         private Panel panel2;
-        private Button AddUserDB_button;
-        private Button Deletebutton;
         private DataGridView PVModule_dataGridView;
         private Panel panel1;
         private Label label2;

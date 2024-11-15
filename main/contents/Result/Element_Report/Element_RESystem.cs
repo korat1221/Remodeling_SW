@@ -151,7 +151,7 @@ namespace main.contents.Result
                     double[] solar_power = new double[8]; double[] solar_area_old = new double[8]; double[] solar_area_new = new double[8];
                     double[] solar_saving_element = new double[8]; double[] solar_point = new double[8];
                     double sum_old = 0; double sum_new = 0;
-                    string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.명칭,a.모듈번호,a.가로개수,a.세로개수,a.용량,a.면적,b.CELLTYPE,b.Kpk From PV_Form as a inner Join User_PVModule as b on a.모듈번호=b.번호");
+                    string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.명칭,a.모듈번호,a.개수,a.개수,a.용량,a.면적,b.CELLTYPE,b.Kpk From PV_Form as a inner Join User_PV as b on a.모듈번호=b.번호");
                     if (Value.Length > 0)
                     {
                         for (int a = 0; a < Value.Length; a++)
@@ -159,7 +159,7 @@ namespace main.contents.Result
                             solar_name[a] = Value[a][1];
                             solar_cell[a] = Value[a][7];
                             solar_eta[a] = Convert.ToDouble(Value[a][8]);
-                            solar_count[a] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][4]);
+                            solar_count[a] = Convert.ToDouble(Value[a][3]);
                             solar_power[a] = Convert.ToDouble(Value[a][5]);
                             solar_area_new[a] = Convert.ToDouble(Value[a][6]);
                             sum_new += Convert.ToDouble(Value[a][6]);

@@ -95,11 +95,11 @@ namespace main.subcontents.CoolingSystem
                         {
                             Pump_dataGridView.Rows[nRow].Cells[a + 2].Value = User_Value[0][a];
                         }
-                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, true, 1);
-                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, true, 1);
-                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 7, true, 0);
-                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 8, true, 0);
-                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 9, true, 0);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, 1);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, 1);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 7, 0);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 8, 0);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 9, 0);
                     }
                 }
                 else MessageBox.Show("장비일람표에서 펌프를 작성해 주세요.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -184,7 +184,7 @@ namespace main.subcontents.CoolingSystem
                 return;
             }
 
-            SelectPN = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, SelectRow, 1, true, 0).ToString() ;
+            SelectPN = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, SelectRow, 1, 0).ToString() ;
             SelectP = Pump_dataGridView.Rows[SelectRow].Cells[2].Value.ToString();               
                                                     
             this.DialogResult = DialogResult.OK;

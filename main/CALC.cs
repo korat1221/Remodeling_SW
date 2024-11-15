@@ -67,8 +67,10 @@ namespace main
            Program.DB.deleteTable(DB.type.ProjDB, "CoolingSystem_Result");
            Program.DB.initTable(DB.type.ProjDB, "CoolingSystem_Result");
 
+            Program.DB.deleteTable(DB.type.ProjDB, "WindPower_Result");
+            Program.DB.initTable(DB.type.ProjDB, "WindPower_Result");
 
-           Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result");
+            Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result");
            Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result");
       
             string[][] NowProjNum = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
@@ -1530,6 +1532,12 @@ namespace main
         #region 신재생
         public static bool RESystemCalc(string ProjNum)
         {
+            PVCalc(ProjNum);
+            WPCalc(ProjNum);
+            return true;
+        }
+        public static bool PVCalc(string ProjNum)
+        {
             string[][] PVNum = Program.DB.getValue(ProjNum, "PV_Form", "번호");
             string[][] 프로젝트유형 = Program.DB.getValue(ProjNum, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             int i = -1;
@@ -1537,23 +1545,41 @@ namespace main
             while (++i < PVNum.Length)
             {
                 Cal_RESystem PV = new Cal_RESystem(PVNum[i][0]);
-                PV.Load_PVdata();
-                PV.Cal_Qf_elec();
-                PV.Cal_Battery();
-                PV.Cal_fmatch();
-                PV.Cal_Qf_pv();
+                PV.PVcalReady();
+                PV.PVcal();
+                PV.PVsave();
+            }
+            return true;
+        }
+        public static bool WPCalc(string ProjNum)
+        {
+            string[][] 프로젝트유형 = Program.DB.getValue(ProjNum, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
+            int i = -1;
+            String MTH;
+            string[][] WPNum = Program.DB.getValue(ProjNum, "WindPower_Form", "번호");
+            while (++i < WPNum.Length)
+            {
+                Cal_RESystem WP = new Cal_RESystem(WPNum[i][0]);
+                WP.WF_LoadData();
+                WP.WF_Calc_V2();
+                WP.WF_Calc_Pwind();
+                WP.WF_Calc_Cp();
+                WP.WF_Calc_Pwps();
+                WP.WF_Calc_Qfwps();
 
                 for (int mth = 0; mth <= 11; mth++)
                 {
-                    MTH = (mth + 1).ToString() + "월";
-                    Program.DB.setValue(DB.type.ProjDB, "PV_Result", "프로젝트번호,프로젝트유형,번호," +
-                             "월," +
-                             "매칭계수,배터리손실,계통연계형사용량,독립형사용량,최종사용량",
-                             "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PVNum[i][0] + "','" + MTH + "','" +
-                             PV.fmatch[mth] + "','" + PV.Qbatt_loss[mth] + "','" + PV.Qf_nutz_linked[mth] + "','" + PV.Qf_nutz_nonlinked[mth] + "','" + PV.Qf_nutz_PV[mth]
-                              + "'", "번호,월"); ;
+                        MTH = (mth + 1).ToString() + "월";
+                        Program.DB.setValue(DB.type.ProjDB, "WindPower_Result", "프로젝트번호,프로젝트유형,번호," +
+                                 "월," +
+                                 "h, Pwind, Pwps, Qfwps",
+                                 "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + WPNum[i][0] + "','" + MTH + "','" +
+                                 WP.h_mth[mth] + "','" + WP.Pwindwk_mth[mth] + "','" + WP.Pwps_mth[mth] + "','" + WP.Qfwps_mth[mth]
+                                  + "'", "번호,월"); ;
+                    
                 }
             }
+
             return true;
         }
         #endregion

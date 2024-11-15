@@ -165,7 +165,7 @@ namespace main.subcontents.HeatingSystem
                         else { return; }
                     }
 
-                    int 대수 = Convert.ToInt16(Program.UTIL.dataGridView_doubleComa(ceZone_dataGridView, e.RowIndex, 5, true, 0));
+                    int 대수 = Convert.ToInt16(Program.UTIL.dataGridView_doubleComa(ceZone_dataGridView, e.RowIndex, 5, 0));
                     for (int k = (대수 - 1); k > -1; k--)
                     {
                         ceZone_dataGridView.Rows.Add();

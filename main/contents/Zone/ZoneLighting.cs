@@ -688,25 +688,25 @@ namespace main.contents
             if (this.facade == "중정")
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광대분류이미지", "이미지", "자연채광대분류 = '" + "중정" + "'");
-                //  Main_pictureBox.Load(Program.gPath + Image[0][0]);
+                Main_pictureBox.Load(Program.gPath + Image[0][0]);
             }
 
             else if (this.facade == "아트리움")
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광대분류이미지", "이미지", "자연채광대분류 = '" + "아트리움" + "'");
-                //  Main_pictureBox.Load(Program.gPath + Image[0][0]);
+                Main_pictureBox.Load(Program.gPath + Image[0][0]);
             }
 
             else if (this.facade == "이중외피")
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광대분류이미지", "이미지", "자연채광대분류 = '" + "이중외피" + "'");
-                //  Main_pictureBox.Load(Program.gPath + Image[0][0]);
+                Main_pictureBox.Load(Program.gPath + Image[0][0]);
             }
 
             else if (this.facade == "일반 파사드")
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광대분류이미지", "이미지", "자연채광대분류 = '" + "파사드" + "'");
-                //   Main_pictureBox.Load(Program.gPath + Image[0][0]);
+                 Main_pictureBox.Load(Program.gPath + Image[0][0]);
             }
             else;
             // this.Main_pictureBox.Location = new Point(0, 0);
@@ -877,35 +877,35 @@ namespace main.contents
         //상세 선택에 따른 변화 (체크박스에 걸기)
         private void Load_AD2_image()
         {
-            if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "파사드" && facade == "일반 파사드")
+            if (facadeButton.Checked == true && NaturalType == "파사드" && facade == "일반 파사드")
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "일반 파사드" + "'");
                 type_pictureBox.Load(Program.gPath + Image[0][0]);
                 type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
 
-            else if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "파사드" && facade == "이중외피")
+            else if (facadeButton.Checked == true && NaturalType == "파사드" && facade == "이중외피")
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "이중외피" + "'");
                 type_pictureBox.Load(Program.gPath + Image[0][0]);
                 type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
 
-            else if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "파사드" && facade == "중정")
+            else if (facadeButton.Checked == true && NaturalType == "파사드" && facade == "중정")
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "중정" + "'");
                 type_pictureBox.Load(Program.gPath + Image[0][0]);
                 type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
 
-            else if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "파사드" && facade == "아트리움")
+            else if (facadeButton.Checked == true && NaturalType == "파사드" && facade == "아트리움")
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "아트리움" + "'");
                 type_pictureBox.Load(Program.gPath + Image[0][0]);
                 type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
 
-            else if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "천창")
+            else if (roofButton.Checked == true && NaturalType == "천창")
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "천창" + "'");
                 type_pictureBox.Load(Program.gPath + Image[0][0]);

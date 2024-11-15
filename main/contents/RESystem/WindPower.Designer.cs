@@ -32,8 +32,9 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
-            label1 = new Label();
             Num_textBox = new TextBox();
+            label14 = new Label();
+            label1 = new Label();
             Name_textBox = new TextBox();
             pictureBox1 = new PictureBox();
             panel2 = new Panel();
@@ -81,8 +82,9 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(label1);
             GeneralPanel.Controls.Add(Num_textBox);
+            GeneralPanel.Controls.Add(label14);
+            GeneralPanel.Controls.Add(label1);
             GeneralPanel.Controls.Add(Name_textBox);
             GeneralPanel.Controls.Add(pictureBox1);
             GeneralPanel.Location = new Point(12, 12);
@@ -91,33 +93,44 @@
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("나눔고딕", 9.75F);
-            label1.Location = new Point(127, 25);
-            label1.Name = "label1";
-            label1.Size = new Size(31, 15);
-            label1.TabIndex = 137;
-            label1.Text = "명칭";
-            // 
             // Num_textBox
             // 
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new Font("나눔고딕", 9.75F);
-            Num_textBox.ForeColor = SystemColors.ControlText;
-            Num_textBox.Location = new Point(75, 46);
+            Num_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            Num_textBox.ForeColor = Color.White;
+            Num_textBox.Location = new Point(173, 26);
             Num_textBox.Name = "Num_textBox";
-            Num_textBox.Size = new Size(56, 15);
-            Num_textBox.TabIndex = 136;
+            Num_textBox.Size = new Size(120, 15);
+            Num_textBox.TabIndex = 141;
             Num_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("나눔고딕", 9.75F);
+            label14.ForeColor = SystemColors.ControlText;
+            label14.Location = new Point(108, 25);
+            label14.Name = "label14";
+            label14.Size = new Size(35, 15);
+            label14.TabIndex = 140;
+            label14.Text = "번 호";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("나눔고딕", 9.75F);
+            label1.Location = new Point(108, 54);
+            label1.Name = "label1";
+            label1.Size = new Size(35, 15);
+            label1.TabIndex = 137;
+            label1.Text = "명 칭";
             // 
             // Name_textBox
             // 
             Name_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Name_textBox.Location = new Point(164, 23);
+            Name_textBox.Location = new Point(173, 51);
             Name_textBox.Name = "Name_textBox";
             Name_textBox.Size = new Size(120, 23);
             Name_textBox.TabIndex = 135;
@@ -125,7 +138,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(11, 8);
+            pictureBox1.Location = new Point(11, 18);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(50, 50);
             pictureBox1.TabIndex = 134;
@@ -440,6 +453,7 @@
             webView21.Size = new Size(977, 206);
             webView21.TabIndex = 155;
             webView21.ZoomFactor = 1D;
+         //   webView21.NavigationCompleted += OnNaviCompleted;
             // 
             // Save_button
             // 
@@ -584,7 +598,6 @@
         private Button FCDB_button;
         private Label label6;
         private Label label1;
-        private TextBox Num_textBox;
         private TextBox Name_textBox;
         private PictureBox pictureBox1;
         private Panel AdditionalPanel;
@@ -617,5 +630,7 @@
         private Label label11;
         private Label label12;
         private Label label13;
+        private Label label14;
+        private TextBox Num_textBox;
     }
 }

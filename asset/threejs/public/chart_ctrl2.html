@@ -733,6 +733,116 @@ function drawChart_energyuse(arr, max, step = 500, legend = true, stacked = fals
 }
 
 
+
+function drawChart_wp(arr) {
+    
+    if (arr) {
+        let datasets = [], i = -1;
+        let line_max = 100;
+
+        while(++i < arr.length) {
+            let el = arr[i];
+
+            datasets.push({
+                label:el.label,
+                type: el.type,
+                borderWidth: 1,
+                data: el.data, 
+                borderColor: el.borderColor,
+                backgroundColor: el.backgroundColor,
+                pointStyle: 'circle',
+                min:el.min,
+                max:el.max,
+                pointRadius: 3,
+                borderDash: el.dash ? [2, 2] : [0, 0],
+                yAxisID: (i==0 ? 'y' : 'y1'),
+                tension: el.tension ? el.tension : 0,
+            });
+            if (el.type === 'line' && el.max) {
+                line_max = el.max;
+            }
+        }
+
+        document.getElementById("cont").innerHTML = '<canvas id="myChart" style="width: 100%;height: 100%;"></canvas>';
+
+        new Chart(document.getElementById("myChart").getContext("2d"), {
+            data: {
+                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                datasets: datasets
+            },
+            showTooltips: false,
+            options: {
+                    animation:{
+                    onComplete : function(){
+                        var ctx = this.ctx;
+                        let height = this.canvas.clientHeight;
+                        ctx.fillStyle = "#aaa";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "bottom";
+
+                        let el = this._metasets[0];
+
+                        el.data.forEach(function (el2, idx) {
+                            let val = el._dataset.data[idx];
+                            ctx.fillText(val.toFixed(1) , el2.x, el2.y -5);
+                        });
+                    }
+                },
+                responsive: false,
+                scales: {
+                    x: {
+                        grid: {
+                            color:"rgba(0,0,0,0)"
+                        },
+                        display: true,
+                        title: {
+                        display: false,
+                        },
+                        ticks: {
+                            autoSkip: true
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:line_max,
+                        position:'left',
+                        ticks: {
+                            stepSize: 20,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, ticks) {
+                                return value ;
+                            }
+                        }
+                    },
+                    
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position:"left",
+                        labels: {
+                            usePointStyle: true,
+                            boxHeight: 6
+                        }  
+                    },
+                    title: {
+                        display: false,
+                    },
+                },
+                events: ["touchstart", "touchmove", "touchend"],
+            },
+        });
+    }
+}
+
+
 function drawChart_pv(arr) {
     
     if (arr) {
@@ -771,7 +881,7 @@ function drawChart_pv(arr) {
 
         new Chart(document.getElementById("myChart").getContext("2d"), {
             data: {
-                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                labels: ['1월', '2월', '4월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
                 datasets: datasets
             },
             showTooltips: false,
@@ -782,27 +892,27 @@ function drawChart_pv(arr) {
                         let height = this.canvas.clientHeight;
                         ctx.fillStyle = "#aaa";
                         ctx.textAlign = "center";
-                        ctx.textBaseline = "bottom";
+                        ctx.textBaseline = "top";
 
-                        let el = this._metasets[0];
+                        let el = this._metasets[0]; //라인
 
                         el.data.forEach(function (el2, idx) {
                             let val = el._dataset.data[idx];
-                            ctx.fillText(val.toFixed(1) , el2.x, el2.y -5);
+                            ctx.fillText(val.toFixed(1) , el2.x, el2.y -20);
                         });
 
 
-                        el = this._metasets[1];
+                        el = this._metasets[1]; //막대그래프
                         
                         el.data.forEach(function (el2, idx) {
                             let val = el._dataset.data[idx];
-                            ctx.fillText(val.toFixed(1), el2.x, height - 32);
+                            ctx.fillText(val.toFixed(1), el2.x, el2.y -20);
                         });
 
                     }
                 },
                 responsive: false,
-                scales: {
+                    scales: {
                     x: {
                         grid: {
                             color:"rgba(0,0,0,0)"
@@ -816,7 +926,7 @@ function drawChart_pv(arr) {
                         }
                     },
                     y: {
-                        display: true,
+                        display: false,
                         title: {
                             display: false,
                         },
@@ -827,7 +937,8 @@ function drawChart_pv(arr) {
                         max:line_max,
                         position:'left',
                         ticks: {
-                            stepSize: 20,
+                            display: false,
+                            stepSize: 40,
                             // Include a dollar sign in the ticks
                             callback: function(value, index, ticks) {
                                 return value ;
@@ -846,7 +957,8 @@ function drawChart_pv(arr) {
                         max:bar_max,
                         position:'right',
                         ticks: {
-                            stepSize: 40,
+                            display:true,
+                            stepSize: 30,
                             // Include a dollar sign in the ticks
                             callback: function(value, index, ticks) {
                                 return value;

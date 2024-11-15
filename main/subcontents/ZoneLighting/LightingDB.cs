@@ -14,7 +14,7 @@ namespace main.subcontents.ZoneLighting
 {
     public partial class LightingDB : Form
     {
-        
+
         double Count_LightDB;
         int SelectRow;
         public String[] Select_Light = new string[10];
@@ -23,12 +23,12 @@ namespace main.subcontents.ZoneLighting
 
 
 
-       
+
         public LightingDB()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            
             load_table_LightDB();
-
             //램프유형 콤보박스
             LampType_comboBox.Items.Clear();
             LampType_comboBox.Items.Add("할로겐램프");
@@ -134,9 +134,24 @@ namespace main.subcontents.ZoneLighting
             UserDB_Manufacture = UserDB_Manufacture_textBox.Text;
         }
 
+        private void Converter_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserDB_Converter = Converter_comboBox.SelectedItem.ToString();
+            Calc_eff_FL();
+        }
+
+
         private void UserDB_lm_textBox_TextChanged(object sender, EventArgs e)
         {
             UserDB_lm = Convert.ToDouble(UserDB_lm_textBox.Text);
+            Calc_eff_FL();
+        }
+
+
+        private void UserDB_W_textBox_TextChanged(object sender, EventArgs e)
+        {
+            UserDB_W = Convert.ToDouble(UserDB_W_textBox.Text);
+            Calc_eff_FL();
         }
 
         private void UserDB_eff_textBox_TextChanged(object sender, EventArgs e)
@@ -144,22 +159,11 @@ namespace main.subcontents.ZoneLighting
             UserDB_eff = Convert.ToDouble(UserDB_eff_textBox.Text);
         }
 
-        private void Converter_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UserDB_Converter = Converter_comboBox.SelectedItem.ToString();
-        }
-
-
-        private void UserDB_W_textBox_TextChanged(object sender, EventArgs e)
-        {
-            UserDB_W = Convert.ToDouble(UserDB_W_textBox.Text);
-        }
-
         private void UserDB_FL_textBox_TextChanged(object sender, EventArgs e)
         {
             UserDB_FL = Convert.ToDouble(UserDB_FL_textBox.Text);
         }
-         
+
         private void LampType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UserDB_LampType = LampType_comboBox.SelectedItem.ToString();
@@ -181,6 +185,35 @@ namespace main.subcontents.ZoneLighting
                 MessageBox.Show("모든 값을 입력해주세요.");
             }
         }
+        
+        public void Calc_eff_FL()
+        {
+            if (UserDB_lm_textBox.Text != "" && UserDB_W_textBox.Text != "")
+            {
+                UserDB_eff = Math.Round(UserDB_lm / UserDB_W, 2); 
+                UserDB_eff_textBox.Text = Convert.ToString(UserDB_eff);
+
+                if (Converter_comboBox.SelectedItem == "있음")
+                {
+                    UserDB_FL = Math.Round((64 * (UserDB_lm / UserDB_W)) / (1 / 0.89),2 );
+                    UserDB_FL_textBox.Text = Convert.ToString(UserDB_FL);
+                }
+                else
+                {
+                    UserDB_FL = Math.Round(64 * (UserDB_lm / UserDB_W), 2);
+                    UserDB_FL_textBox.Text = Convert.ToString(UserDB_FL);
+                }
+            }
+            else
+            {
+                UserDB_eff_textBox.Text = "";
+                UserDB_FL_textBox.Text = "";
+            }
+        }
+
+
+
+
         private void Deletebutton_Click(object sender, EventArgs e)
         {
             int k = Light_dataGridView.CurrentCell.RowIndex;

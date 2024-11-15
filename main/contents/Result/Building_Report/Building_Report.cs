@@ -792,13 +792,13 @@ namespace main.contents.Result.Building_Report
                 #endregion
                 #region 태양광정보   
                 double pv_count = 0; double pv_power = 0; double pv_eta_avg = 0; string pv_eta_rule = "-"; double pv_point = 0;
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.명칭,a.모듈번호,a.가로개수,a.세로개수,a.용량,a.면적,b.CELLTYPE,b.Kpk From PV_Form as a inner Join User_PVModule as b on a.모듈번호=b.번호");
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.명칭,a.모듈번호,a.개수,a.개수,a.용량,a.면적,b.CELLTYPE,b.Kpk From PV_Form as a inner Join User_PV as b on a.모듈번호=b.번호");
                 if (Value.Length > 0)
                 {
                    
                     for (int a = 0; a < Value.Length; a++)
                     {
-                        pv_count += Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][4]) ;
+                        pv_count += Convert.ToDouble(Value[a][3]) ;
                         pv_power += Convert.ToDouble(Value[a][5]);
                         pv_eta_avg += Convert.ToDouble(Value[a][8]) * Convert.ToDouble(Value[a][5]);
                     }
@@ -2001,12 +2001,12 @@ namespace main.contents.Result.Building_Report
                     #endregion
                     #region 태양광정보   
                     double pv_count_post = 0; double pv_power_post = 0; double pv_eta_post = 0; string pv_eta_rule = "-"; double pv_point = 0;
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.명칭,a.모듈번호,a.가로개수,a.세로개수,a.용량,a.면적,b.CELLTYPE,b.Kpk From PV_Form as a inner Join User_PVModule as b on a.모듈번호=b.번호");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.명칭,a.모듈번호,a.개수,a.개수,a.용량,a.면적,b.CELLTYPE,b.Kpk From PV_Form as a inner Join User_PV as b on a.모듈번호=b.번호");
                     if (Value.Length > 0)
                     {
                         for (int a = 0; a < Value.Length; a++)
                         {
-                            pv_count_post += Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][4]);
+                            pv_count_post += Convert.ToDouble(Value[a][3]);
                             pv_power_post += Convert.ToDouble(Value[a][5]);
                             pv_eta_post += Convert.ToDouble(Value[a][8]) * Convert.ToDouble(Value[a][5]);
                         }
@@ -2038,12 +2038,12 @@ namespace main.contents.Result.Building_Report
                     data.Add(new { cname = "pv_point", data = __data[132] });
                     //리모델링전
                     double pv_count_pre = 0; double pv_power_pre = 0; double pv_eta_pre = 0;
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.명칭,a.모듈번호,a.가로개수,a.세로개수,a.용량,a.면적,b.CELLTYPE,b.Kpk From PV_Form as a inner Join User_PVModule as b on a.모듈번호=b.번호");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.명칭,a.모듈번호,a.개수,a.개수,a.용량,a.면적,b.CELLTYPE,b.Kpk From PV_Form as a inner Join User_PV as b on a.모듈번호=b.번호");
                     if (Value.Length > 0)
                     {
                         for (int a = 0; a < Value.Length; a++)
                         {
-                            pv_count_pre += Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][4]);
+                            pv_count_pre += Convert.ToDouble(Value[a][3]);
                             pv_power_pre += Convert.ToDouble(Value[a][5]);
                             pv_eta_pre += Convert.ToDouble(Value[a][8]) * Convert.ToDouble(Value[a][5]);
                         }

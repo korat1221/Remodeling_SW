@@ -452,7 +452,7 @@ namespace main
             }
             else
             {
-                this.textBox.Leave += textBox_Leave;
+               textBox.Leave += textBox_Leave;
                 double value;
                 if (textBox.Text != null && textBox.Text.ToString() != "")
                 {
@@ -471,7 +471,7 @@ namespace main
         }
         #endregion
         #region textBox 숫자 입력 오류 
-        public double dataGridView_doubleComa(DataGridView dataGridView, int row, int column, bool LoadOrNot, int NumberDecimal)
+        public double dataGridView_doubleComa(DataGridView dataGridView, int row, int column, int NumberDecimal)
         {
             var cellValue = dataGridView.Rows[row].Cells[column].Value;
             this.dataGridView = dataGridView;
@@ -479,68 +479,21 @@ namespace main
             this.textdouble = 0;
 
             //Load일 경우 true,아니고 입력일 경우 false
-            if (LoadOrNot)
-            {
-                if (cellValue != null && cellValue.ToString() != "" && cellValue.ToString() != "-")
-                {
-                    double parsedValue;
-                    if (double.TryParse(cellValue.ToString(), out parsedValue))
-                    {
-                        string code_N = NumberDecimalPlaces(NumberDecimal, parsedValue);
-                        dataGridView.Rows[row].Cells[column].Value = parsedValue.ToString(code_N);
-                        this.textdouble = Convert.ToDouble(cellValue.ToString());
-                    }
-                    else
-                    {
-                        dataGridView.Rows[row].Cells[column].Value = String.Empty;
-                    }
-                }
-            }
-            else
-            {
-                this.dataGridView.CellLeave += dataGridView_CellLeave;
-                double result;
-                if (cellValue != null && cellValue.ToString() != "" && cellValue.ToString() != "-")
-                {
-                    double parsedValue;
-                    if (double.TryParse(cellValue.ToString(), out parsedValue))
-                    {
-                        this.textdouble = Convert.ToDouble(cellValue.ToString());
-                    }
-                    else
-                    {
-                        MessageBox.Show("숫자를 입력하세요.");
-                        dataGridView.Rows[row].Cells[column].Value = String.Empty;
-                    }
-                }
-            }
-            return this.textdouble;
-        }
-        private void dataGridView_CellLeave(object sender, DataGridViewCellEventArgs e)
-        {
-            var cellValue = dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-
             if (cellValue != null && cellValue.ToString() != "" && cellValue.ToString() != "-")
             {
-                // cellValue가 숫자 형식인지 먼저 확인
                 double parsedValue;
                 if (double.TryParse(cellValue.ToString(), out parsedValue))
                 {
                     string code_N = NumberDecimalPlaces(NumberDecimal, parsedValue);
-                    try
-                    {
-                        dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedValue.ToString(code_N);
-                    }
-                    catch
-                    {
-                        dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedValue.ToString();
-                    }
+                    dataGridView.Rows[row].Cells[column].Value = parsedValue.ToString(code_N);
+                    this.textdouble = Convert.ToDouble(cellValue.ToString());
                 }
                 else
                 {
-                    dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = String.Empty;
-                }                   
+                    dataGridView.Rows[row].Cells[column].Value = String.Empty;
+                }
             }
+            return this.textdouble;
         }
         #endregion 
         public string asFixed(string s)

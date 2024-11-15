@@ -73,9 +73,7 @@ namespace main.subcontents.RESystem_PV
 
         private void PV_table()
         {
-            AddUserDB_button.Visible = true;
-            Deletebutton.Visible = true;
-
+            
             if (DefaultUse == "기본DB 적용")
             {
                 new StackedHeaderDecorator(PVModule_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
@@ -106,9 +104,7 @@ namespace main.subcontents.RESystem_PV
             }
             else if(DefaultUse == "장비일람표 DB")
             {
-                AddUserDB_button.Visible = false;
-                Deletebutton.Visible = false;
-
+                
                 new StackedHeaderDecorator(PVModule_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
                 DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
                 PVModule_dataGridView.Columns.Clear();
@@ -134,31 +130,6 @@ namespace main.subcontents.RESystem_PV
         {
             if (DefaultUse == "기본DB 적용")
             {
-                string[][] UserModule = Program.DB.getValue(DB.type.ProjDB, "User_PVModule", "번호,DB유형,제품명,제조사,CELLTYPE,정격출력,길이,높이,Kpk", "");
-                if (UserModule.Length > 0)
-                {
-                    for (int n = 0; n < UserModule.Length; n++)
-                    {
-
-                        PVModule_dataGridView.Rows.Add();
-                        int nRow = PVModule_dataGridView.Rows.Count - 1;
-                        PVModule_dataGridView.Rows[nRow].Cells[1].Value = UserModule[n][0];
-                        PVModule_dataGridView.Rows[nRow].Cells[2].Value = UserModule[n][1];
-                        PVModule_dataGridView.Rows[nRow].Cells[3].Value = UserModule[n][2];
-                        PVModule_dataGridView.Rows[nRow].Cells[4].Value = UserModule[n][3];
-
-                        DataGridViewComboBoxCell Cell = new DataGridViewComboBoxCell();
-                        Cell.Items.AddRange(new string[] { "단결정", "다결정", "a_Si박막형", "화합물CIGS박막형", "화합물CdTe박막형" });
-                        PVModule_dataGridView.Rows[nRow].Cells[5] = Cell;
-
-                        PVModule_dataGridView.Rows[nRow].Cells[5].Value = UserModule[n][4];
-                        PVModule_dataGridView.Rows[nRow].Cells[6].Value = UserModule[n][5];
-                        PVModule_dataGridView.Rows[nRow].Cells[7].Value = UserModule[n][6];
-                        PVModule_dataGridView.Rows[nRow].Cells[8].Value = UserModule[n][7];
-                        PVModule_dataGridView.Rows[nRow].Cells[9].Value = UserModule[n][8];
-                    }
-                }
-
                 string[][] PVModule = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광모듈DB", "번호,DB유형,제품명,제조사,CELLTYPE,정격출력,길이,높이,Kpk", "");
                 if (PVModule.Length > 0)
                 {
@@ -200,30 +171,7 @@ namespace main.subcontents.RESystem_PV
             }
         }
 
-        //SetValue
-        private void AddUserDB_button_Click(object sender, EventArgs e)
-        {
-            if (DefaultUse == "기본DB 적용")
-            {
-                string UserNum = Program.UTIL.CreateNum("User_PVModule", "번호", "UPV_0");
-                Program.DB.setValue(DB.type.ProjDB, "User_PVModule", "번호,프로젝트유형,DB유형",
-                       "'" + UserNum + "','" + 프로젝트유형 + "','사용자'", "번호");
-                PV_table();
-                load_PV_table();
-            }
-        }
 
-        private void Deletebutton_Click(object sender, EventArgs e)
-        {
-            if (DefaultUse == "기본DB 적용")
-            {
-                string DeletNum = PVModule_dataGridView.Rows[PVModule_SelectRow].Cells[1].Value.ToString();
-                Program.DB.deleteValue(DB.type.ProjDB, "User_PVModule", "번호 ='" + DeletNum + "'");
-                PVModule_dataGridView.Rows.Remove(PVModule_dataGridView.Rows[PVModule_SelectRow]);
-                PV_table();
-                load_PV_table();
-            }
-        }
 
         void Save()
         {
@@ -248,8 +196,7 @@ namespace main.subcontents.RESystem_PV
                                 value[k - 1] = PVModule_dataGridView.Rows[i].Cells[k].Value.ToString();
                             }
                         }
-                        Program.DB.setValue(DB.type.ProjDB, "User_PVModule", "번호,프로젝트유형,DB유형,제품명,제조사,CELLTYPE,정격출력,길이,높이,Kpk",
-                            "'" + value[0] + "','" + 프로젝트유형 + "','" + value[1] + "','" + value[2] + "','" + value[3] + "','" + value[4] + "','" + value[5] + "','" + value[6] + "','" + value[7] + "','" + value[8] + "'", "번호");
+                       
                     }
 
                     if (SelectCheckBox())

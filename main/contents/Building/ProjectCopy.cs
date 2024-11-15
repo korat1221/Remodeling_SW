@@ -53,7 +53,7 @@ namespace main.contents
                 tables.Add("BuildingGeneral");
                 tables.Add("BuildingEnergyUse");
                 tables.Add("BlowDoorTest");
-                tables.Add("User_PVModule");
+                tables.Add("User_PV");
                 tables.Add("User_PVInverter");
                 tables.Add("User_PVBattery");
                 tables.Add("User_FC");
