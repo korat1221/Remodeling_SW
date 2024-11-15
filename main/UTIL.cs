@@ -1,4 +1,6 @@
-﻿using main.contents;
+﻿using Eagle._Components.Public;
+using Eagle._Interfaces.Public;
+using main.contents;
 using System;
 using System.Data;
 using System.Drawing.Text;
@@ -352,10 +354,10 @@ namespace main
             File.Delete(path2 + "\\" + fname);
             File.WriteAllText(path2 + "\\" + fname, data);
         }
-        public string doubleComa(string s)
+        public string doubleComa(string s, int NumberDecimal)
         {
             s = s.Trim();
-            return s != "" ? Convert.ToDouble(s).ToString("#,###0") : "0";
+            return s != "" ? Convert.ToDouble(s).ToString(NumberDecimalPlaces(NumberDecimal, Convert.ToDouble(s))) : "0";
         }
         private string NumberDecimalPlaces(int a, double Value)
         {
