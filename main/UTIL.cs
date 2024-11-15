@@ -450,7 +450,7 @@ namespace main
             }
             else
             {
-                this.textBox.Leave += textBox_Leave;
+               textBox.Leave += textBox_Leave;
                 double value;
                 if (textBox.Text != null && textBox.Text.ToString() != "")
                 {
@@ -496,7 +496,8 @@ namespace main
             }
             else
             {
-                this.dataGridView.CellLeave += dataGridView_CellLeave;
+                this.dataGridView = dataGridView;
+                dataGridView.CellLeave += dataGridView_CellLeave;
                 double result;
                 if (cellValue != null && cellValue.ToString() != "" && cellValue.ToString() != "-")
                 {
@@ -516,29 +517,32 @@ namespace main
         }
         private void dataGridView_CellLeave(object sender, DataGridViewCellEventArgs e)
         {
-            var cellValue = dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-
-            if (cellValue != null && cellValue.ToString() != "" && cellValue.ToString() != "-")
+            if(e.RowIndex < dataGridView.Rows.Count && e.ColumnIndex < dataGridView.Columns.Count)
             {
-                // cellValue가 숫자 형식인지 먼저 확인
-                double parsedValue;
-                if (double.TryParse(cellValue.ToString(), out parsedValue))
+                var cellValue = dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+
+                if (cellValue != null && cellValue.ToString() != "" && cellValue.ToString() != "-")
                 {
-                    string code_N = NumberDecimalPlaces(NumberDecimal, parsedValue);
-                    try
+                    // cellValue가 숫자 형식인지 먼저 확인
+                    double parsedValue;
+                    if (double.TryParse(cellValue.ToString(), out parsedValue))
                     {
-                        dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedValue.ToString(code_N);
+                        string code_N = NumberDecimalPlaces(NumberDecimal, parsedValue);
+                        try
+                        {
+                            dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedValue.ToString(code_N);
+                        }
+                        catch
+                        {
+                            dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedValue.ToString();
+                        }
                     }
-                    catch
+                    else
                     {
-                        dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedValue.ToString();
+                        dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = String.Empty;
                     }
                 }
-                else
-                {
-                    dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = String.Empty;
-                }                   
-            }
+            }         
         }
         #endregion 
         public string asFixed(string s)
