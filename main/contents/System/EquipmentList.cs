@@ -287,7 +287,7 @@ namespace main.contents
                     if (Boiler_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString() == "도면")
                     { Load_Boiler_Type(e.RowIndex); }
                 }
-                else if (e.ColumnIndex == 7 || e.ColumnIndex == 8)
+                else if (e.ColumnIndex == 8 || e.ColumnIndex == 9)
                 {
                     if (Boiler_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                     {
@@ -3891,8 +3891,8 @@ namespace main.contents
                 {
                     if (AHU_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && AHU_dataGridView.Rows[e.RowIndex].Cells[8].Value != null)
                     {
-                        temp_eta = Convert.ToDouble(AHU_dataGridView.Rows[e.RowIndex].Cells[6].Value);
-                        all_eta = Convert.ToDouble(AHU_dataGridView.Rows[e.RowIndex].Cells[8].Value);
+                        temp_eta = Program.UTIL.dataGridView_doubleComa(AHU_dataGridView, e.RowIndex, 6, 0);
+                        all_eta = Program.UTIL.dataGridView_doubleComa(AHU_dataGridView, e.RowIndex, 8, 0);
                         Humidity_eta = Calc_HumidityEta_Cooling(temp_eta, all_eta);
                         AHU_dataGridView.Rows[e.RowIndex].Cells[10].Value = Humidity_eta.ToString("0.0");
                     }
@@ -3901,8 +3901,8 @@ namespace main.contents
                 {
                     if (AHU_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && AHU_dataGridView.Rows[e.RowIndex].Cells[9].Value != null)
                     {
-                        temp_eta = Convert.ToDouble(AHU_dataGridView.Rows[e.RowIndex].Cells[7].Value);
-                        all_eta = Convert.ToDouble(AHU_dataGridView.Rows[e.RowIndex].Cells[9].Value);
+                        temp_eta = Program.UTIL.dataGridView_doubleComa(AHU_dataGridView, e.RowIndex, 7, 0);
+                        all_eta = Program.UTIL.dataGridView_doubleComa(AHU_dataGridView, e.RowIndex, 9, 0);
                         Humidity_eta = Calc_HumidityEta_Heating(temp_eta, all_eta);
                         AHU_dataGridView.Rows[e.RowIndex].Cells[11].Value = Humidity_eta.ToString("0.0");
                     }
@@ -4229,8 +4229,8 @@ namespace main.contents
                     {
                         if (HRV_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString() != "" && HRV_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "")
                         {
-                            temp_eta = Convert.ToDouble(HRV_dataGridView.Rows[e.RowIndex].Cells[5].Value);
-                            all_eta = Convert.ToDouble(HRV_dataGridView.Rows[e.RowIndex].Cells[7].Value);
+                            temp_eta = Program.UTIL.dataGridView_doubleComa(HRV_dataGridView, e.RowIndex, 5, 0);
+                            all_eta = Program.UTIL.dataGridView_doubleComa(HRV_dataGridView, e.RowIndex, 7, 0);
                             Humidity_eta = Calc_HumidityEta_Cooling(temp_eta, all_eta);
                             HRV_dataGridView.Rows[e.RowIndex].Cells[9].Value = Humidity_eta.ToString("0.0");
                         }
@@ -4242,8 +4242,8 @@ namespace main.contents
                     {
                         if (HRV_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "" && HRV_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "")
                         {
-                            temp_eta = Convert.ToDouble(HRV_dataGridView.Rows[e.RowIndex].Cells[6].Value);
-                            all_eta = Convert.ToDouble(HRV_dataGridView.Rows[e.RowIndex].Cells[8].Value);
+                            temp_eta = Program.UTIL.dataGridView_doubleComa(HRV_dataGridView, e.RowIndex, 6, 0);
+                            all_eta = Program.UTIL.dataGridView_doubleComa(HRV_dataGridView, e.RowIndex, 8, 0);
                             Humidity_eta = Calc_HumidityEta_Heating(temp_eta, all_eta);
                             HRV_dataGridView.Rows[e.RowIndex].Cells[10].Value = Humidity_eta.ToString("0.0");
                         }
