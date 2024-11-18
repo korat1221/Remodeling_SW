@@ -1,0 +1,2094 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Excel.Sheet>
+<meta name=Generator content="Microsoft Excel 15">
+<link rel=File-List href="Algorithm_EnergyNeed.files/filelist.xml">
+<style id="Algorithm_EnergyNeed_22063_Styles"><!--table
+	{mso-displayed-decimal-separator:"\.";
+	mso-displayed-thousand-separator:"\,";}
+    @font-face {
+		font-family: 'Nanum Gothic';
+    	src: url('./NANUMGOTHIC.ttf') format('truetype'); 
+		font-weight: normal;
+		font-style: normal;
+	}
+.font522063
+	{color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;}
+.font622063
+	{color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;}
+.font722063
+	{color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;}
+.font822063
+	{color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;}
+.font922063
+	{color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;}
+.font1022063
+	{color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;}
+.xl8222063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl8322063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border:.5pt solid #A6A6A6;
+	background:#ECF4FA;
+	mso-pattern:black none;
+	white-space:nowrap;
+  overflow: hidden;}
+.xl8422063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;
+  overflow: hidden;
+}
+.xl8522064
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl8522063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl8622063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl8722063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:black;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:italic;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	background:white;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl8822063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid #A6A6A6;
+	border-right:.5pt solid #A6A6A6;
+	border-bottom:none;
+	border-left:.5pt solid #A6A6A6;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl8922063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid #A6A6A6;
+	border-left:none;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl9022063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl9122063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid #A6A6A6;
+	border-left:none;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl9222063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid #A6A6A6;
+	border-left:none;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl9322063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid #A6A6A6;
+	border-left:none;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl9422063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid #A6A6A6;
+	border-left:none;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl9522063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	border-top:.5pt solid #A6A6A6;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl9622063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid #A6A6A6;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl9722063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid #A6A6A6;
+	background:#ECF4FA;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl9822063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid #A6A6A6;
+	border-bottom:none;
+	border-left:none;
+	background:#ECF4FA;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl9922063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid #A6A6A6;
+	border-bottom:none;
+	border-left:.5pt solid #A6A6A6;
+	background:#ECF4FA;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl10022063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid #A6A6A6;
+	border-left:.5pt solid #A6A6A6;
+	background:#ECF4FA;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl10122063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid #A6A6A6;
+	border-bottom:.5pt solid #A6A6A6;
+	border-left:none;
+	background:#ECF4FA;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl10222063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid #A6A6A6;
+	border-bottom:.5pt solid #A6A6A6;
+	border-left:.5pt solid #A6A6A6;
+	background:#ECF4FA;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl10322063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid #A6A6A6;
+	border-bottom:none;
+	border-left:none;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl10422063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid #A6A6A6;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid #A6A6A6;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl10522063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid #A6A6A6;
+	border-right:.5pt solid #A6A6A6;
+	border-bottom:none;
+	border-left:none;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl10622063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid #A6A6A6;
+	border-bottom:.5pt solid #A6A6A6;
+	border-left:none;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl10722063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid #A6A6A6;
+	border-left:.5pt solid #A6A6A6;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl10822063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid #A6A6A6;
+	border-bottom:.5pt solid #A6A6A6;
+	border-left:.5pt solid #A6A6A6;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl10922063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:white;
+	font-size:22.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	background:#44546A;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl11022063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	background:#44546A;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl11122063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:black;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	background:#44546A;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl11222063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:white;
+	font-size:11.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	background:#333F4F;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl11322063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:white;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	background:#8497B0;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl11422063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:white;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	background:#8497B0;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl11522063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:white;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:right;
+	vertical-align:middle;
+	background:#8497B0;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl11622063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:right;
+	vertical-align:middle;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl11722063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:right;
+	vertical-align:middle;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl11822063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:right;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid #A6A6A6;
+	border-left:none;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl11922063
+	{padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-number-format:General;
+	text-align:right;
+	vertical-align:middle;
+	border-top:.5pt solid #A6A6A6;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	background:white;
+	mso-pattern:black none;
+	white-space:nowrap;}
+ruby
+	{ruby-align:left;}
+rt
+	{color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:'Nanum Gothic', sans-serif;
+	mso-font-charset:129;
+	mso-char-type:none;}
+--></style>
+</head>
+
+<body>
+<!--[if !excel]>　　<![endif]-->
+<!--다음 내용은 Microsoft Excel의 웹 페이지로 게시 마법사를 사용하여 작성되었습니다.-->
+<!--같은 내용의 항목이 다시 게시되면 DIV 태그 사이에 있는 내용이 변경됩니다.-->
+<!----------------------------->
+<!--Excel의 웹 페이지 마법사로 게시해서 나온 결과의 시작 -->
+<!----------------------------->
+
+<div id="Algorithm_EnergyNeed_22063" align=center x:publishsource="Excel">
+
+<table border=0 cellpadding=0 cellspacing=0 width=1002 class=xl6553522063
+ style='border-collapse:collapse;table-layout:fixed;width:752pt'>
+ <col class=xl6553522063 width=11 style='mso-width-source:userset;mso-width-alt:
+ 416;width:8pt'>
+ <col class=xl6553522063 width=60 style='width:45pt'>
+ <col class=xl6553522063 width=80 style='mso-width-source:userset;mso-width-alt:
+ 3072;width:72pt'>
+ <col class=xl6553522063 width=60 span=14 style='width:45pt'>
+ <col class=xl6553522063 width=11 style='mso-width-source:userset;mso-width-alt:
+ 416;width:8pt'>
+ <tr height=18 style='mso-height-source:userset;height:14pt'>
+  <td height=18 class=xl11022063 width=11 style='height:14pt;width:8pt'>　</td>
+  <td colspan=16 rowspan=2 class="xl10922063 title" width=980 style='width:735pt'></td>
+  <td class=xl11022063 width=11 style='width:8pt'>　</td>
+ </tr>
+ <tr height=18 style='mso-height-source:userset;height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td> 
+ </tr>
+ <tr height=5 style='mso-height-source:userset;height:4pt'>
+  <td height=5 class=xl11022063 style='height:4pt'>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9222063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl11022063>　</td>
+</tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11222063 colspan=2>존 일반정보</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063 colspan=2>존 설비정보</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063 colspan=2>존 환기 정보</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063 colspan=2>연간 결과 정보</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=5 style='mso-height-source:userset;height:4pt'>
+  <td height=5 class=xl11022063 style='height:4pt'>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>존 번호</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 zonenum2" style="font-size: 7.5pt;">　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8522063>난방설비</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 heating">　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8522063>필요환기량</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 vwd">　</td>
+  <td class=xl8422063>m<font class="font1022063"><sup>3</sup></font><font
+  class="font922063">/h</font></td>
+  <td class=xl8522063 colspan=2>난방 에너지요구량</td>
+  <td class="xl8322063 qhb_a">　</td>
+  <td class=xl8522064>kWh/m<font class="font822063"><sup>2</sup></font><font
+  class="font722063">·</font><font class="font622063">a</font></td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>존 명칭</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 zonename" style='border-top:none'>　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8522063>냉방설비</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 cooling" style='border-top:none'>　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8522063>기밀 n50</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 n50"style='border-top:none'>　</td>
+  <td class=xl8422063>1/h</td>
+  <td class=xl8522063 colspan=2>냉방 에너지요구량</td>
+  <td class="xl8322063 qcb_a" style='border-top:none'>　</td>
+  <td class=xl8522064>kWh/m<font class="font822063"><sup>2</sup></font><font
+  class="font722063">·</font><font class="font622063">a</font></td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>순바닥면적</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 area" style='border-top:none'>　</td>
+  <td class=xl8522063>m<font class="font822063"><sup>2</sup></font></td>
+  <td class=xl8522063>급탕설비</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 dhw" style='border-top:none'>　</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8522063>침기 횟수</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 ninf" style='border-top:none'>　</td>
+  <td class=xl8422063>1/h</td>
+  <td class=xl8522063 colspan=2>급탕 에너지요구량</td>
+  <td class="xl8322063 qwb_a" style='border-top:none'>　</td>
+  <td class=xl8522064>kWh/m<font class="font822063"><sup>2</sup></font><font
+  class="font722063">·</font><font class="font622063">a</font></td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>순체적</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 volume" style='border-top:none'>　</td>
+  <td class=xl8522063>m<font class="font822063"><sup>3</sup></font></td>
+  <td class=xl8522063>조명설비</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 lighting" style='border-top:none'>　</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8522063 colspan=2>기계환기 횟수</td>
+  <td class="xl8322063 nmech" style='border-top:none'>　</td>
+  <td class=xl8422063>1/h</td>
+  <td class=xl8522063 colspan=2>조명 에너지요구량</td>
+  <td class="xl8322063 qlb_a" style='border-top:none'>　</td>
+  <td class=xl8522064>kWh/m<font class="font822063"><sup>2</sup></font><font
+  class="font722063">·</font><font class="font622063">a</font></td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>천장고</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 height" style='border-top:none'>　</td>
+  <td class=xl8422063>m</td>
+  <td class=xl8522063>공조설비</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 ahu" style='border-top:none'>　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8522063 colspan=2>자연환기 횟수</td>
+  <td class="xl8322063 nwin" style='border-top:none'>　</td>
+  <td class=xl8422063>1/h</td>
+  <td class=xl8522063>난방부하</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 qhmax" style='border-top:none'>　</td>
+  <td class=xl8522064>W/m<font class="font822063"><sup>2</sup></font></td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8522063>환기장치</td>
+  <td class=xl8422063>　</td>
+  <td class="xl8322063 hrv" style='border-top:none'>　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8422063>　</td>
+  <td class=xl8522063>냉방부하</td>
+  <td class=xl8422063 >　</td>
+  <td class="xl8322063 qcmax" style='border-top:none'>　</td>
+  <td class=xl8522064>W/m<font class="font822063"><sup>2</sup></font></td>
+  <td class=xl11022063>　</td>
+</tr>
+<tr height=5 style='mso-height-source:userset;height:4pt'>
+  <td height=5 class=xl11022063 style='height:4pt'>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl9222063>　</td>
+  <td class=xl9122063>　</td>
+  <td class=xl11022063>　</td>
+</tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11222063 colspan=2>존 성능 정보<span style='mso-spacerun:yes'> </span></td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl9022063>　</td>
+  <td class=xl10322063>　</td>
+  <td colspan=2 class=xl10422063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>면적</td>
+  <td colspan=2 class=xl10422063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>열관류율</td>
+  <td colspan=2 class=xl10422063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>1D열교</td>
+  <td colspan=2 class=xl10422063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>유효 열관류율</td>
+  <td colspan=2 class=xl10422063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>열전달계수</td>
+  <td colspan=2 class=xl10422063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>SHGC</td>
+  <td colspan=2 class=xl10422063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>흡수율</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8922063>　</td>
+  <td class=xl10622063>　</td>
+  <td colspan=2 class=xl10722063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>[m<font class="font822063"><sup>2</sup></font><font
+  class="font622063">]</font></td>
+  <td colspan=2 class=xl10722063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>[W/m<font class="font822063"><sup>2</sup></font><font
+  class="font622063">·K]</td>
+  <td colspan=2 class=xl10722063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>[W/m<font class="font822063"><sup>2</sup></font><font
+  class="font622063">·K]</td>
+  <td colspan=2 class=xl10722063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>[W/m<font class="font822063"><sup>2</sup></font><font
+  class="font622063">·K]</td>
+  <td colspan=2 class=xl10722063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>[W/K]</td>
+  <td colspan=2 class=xl10722063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>[-]</td>
+  <td colspan=2 class=xl10722063 style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>[-]</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td colspan=2 class=xl8622063 style='border-right:.5pt solid #A6A6A6'>외벽</td>
+  <td colspan=2 class="xl9722063 wall_area" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 wall_u" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 wall_du"style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 wall_ueff" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 wall_ht" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 wall_shgc" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 wall_alpha" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td colspan=2 class=xl8622063 style='border-right:.5pt solid #A6A6A6'>지붕</td>
+  <td colspan=2 class="xl9722063 roof_area" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 roof_u" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 roof_du" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 roof_ueff" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 roof_ht" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 roof_shgc" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 roof_alpha" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td colspan=2 class=xl8622063 style='border-right:.5pt solid #A6A6A6'>최하층바닥</td>
+  <td colspan=2 class="xl9722063 floor_area" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 floor_u" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 floor_du" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 floor_ueff" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 floor_ht" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 floor_shgc" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 floor_alpha" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td colspan=2 class=xl8622063 style='border-right:.5pt solid #A6A6A6'>창호</td>
+  <td colspan=2 class="xl9722063 win_area" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 win_u" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 win_du" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 win_ueff" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 win_ht" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 win_shgc" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 win_alpha" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td colspan=2 class=xl8622063 style='border-right:.5pt solid #A6A6A6'>커튼월창</td>
+  <td colspan=2 class="xl9722063 cw_area" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 cw_u" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 cw_du" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 cw_ueff" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 cw_ht" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 cw_shgc" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl9722063 cw_alpha" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td colspan=2 class=xl9422063 style='border-right:.5pt solid #A6A6A6'>외부출입문</td>
+  <td colspan=2 class="xl10022063 door_area" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl10222063 door_u" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl10022063 door_du" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl10022063 door_ueff" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl10022063 door_ht" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl10022063 door_shgc" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td colspan=2 class="xl10022063 door_alpha" style='border-right:.5pt solid #A6A6A6;
+  border-left:none'>　</td>
+  <td class=xl11022063>　</td>
+</tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td colspan="16" rowspan="17"class=xl8222063 style='text-align: center'> <img class="zoneImage" src="path_to_image.jpg" alt="Image" style="width: 85%; max-height: 300px; height: auto;"></td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+</tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11122063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11022063>　</td>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11222063 colspan=2>월별 결과 정보</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11222063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11322063>　</td>
+  <td class=xl11422063>　</td>
+  <td class=xl11422063>단위</td>
+  <td class=xl11522063>1월</td>
+  <td class=xl11522063>2월</td>
+  <td class=xl11522063>3월</td>
+  <td class=xl11522063>4월</td>
+  <td class=xl11522063>5월</td>
+  <td class=xl11522063>6월</td>
+  <td class=xl11522063>7월</td>
+  <td class=xl11522063>8월</td>
+  <td class=xl11522063>9월</td>
+  <td class=xl11522063>10월</td>
+  <td class=xl11522063>11월</td>
+  <td class=xl11522063>12월</td>
+  <td class=xl11522063></td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063 colspan=2>단위면적당 난방요구량</td>
+  <td class=xl8622063>kWh/m<font class="font822063"><sup>2</sup></font><font
+  class="font722063">·mth</font></td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063 colspan=2>단위면적당 냉방요구량</td>
+  <td class=xl8622063>kWh/m<font class="font822063"><sup>2</sup></font><font
+  class="font722063">·mth</font></td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>난방요구량</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>냉방요구량</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>급탕요구량</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>조명요구량</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11322063 colspan=2>난방요구량</td>
+  <td class=xl11422063>단위</td>
+  <td class=xl11522063>1월</td>
+  <td class=xl11522063>2월</td>
+  <td class=xl11522063>3월</td>
+  <td class=xl11522063>4월</td>
+  <td class=xl11522063>5월</td>
+  <td class=xl11522063>6월</td>
+  <td class=xl11522063>7월</td>
+  <td class=xl11522063>8월</td>
+  <td class=xl11522063>9월</td>
+  <td class=xl11522063>10월</td>
+  <td class=xl11522063>11월</td>
+  <td class=xl11522063>12월</td>
+  <td class=xl11522063></td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>난방요구량</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qb_h">　</td>
+  <td class="xl11722063 qb_h">　</td>
+  <td class="xl11722063 qb_h">　</td>
+  <td class="xl11722063 qb_h">　</td>
+  <td class="xl11722063 qb_h">　</td>
+  <td class="xl11722063 qb_h">　</td>
+  <td class="xl11722063 qb_h">　</td>
+  <td class="xl11722063 qb_h">　</td>
+  <td class="xl11722063 qb_h">　</td>
+  <td class="xl11722063 qb_h">　</td>
+  <td class="xl11722063 qb_h">　</td>
+  <td class="xl11722063 qb_h">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>이용계수</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>-</td>
+  <td class="xl11722063 eta_h">　</td>
+  <td class="xl11722063 eta_h">　</td>
+  <td class="xl11722063 eta_h">　</td>
+  <td class="xl11722063 eta_h">　</td>
+  <td class="xl11722063 eta_h">　</td>
+  <td class="xl11722063 eta_h">　</td>
+  <td class="xl11722063 eta_h">　</td>
+  <td class="xl11722063 eta_h">　</td>
+  <td class="xl11722063 eta_h">　</td>
+  <td class="xl11722063 eta_h">　</td>
+  <td class="xl11722063 eta_h">　</td>
+  <td class="xl11722063 eta_h">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl9322063>대차축열량</td>
+  <td class=xl9322063>　</td>
+  <td class=xl9422063>kWh/mth</td>
+  <td class="xl11822063 dqc_b">　</td>
+  <td class="xl11822063 dqc_b">　</td>
+  <td class="xl11822063 dqc_b">　</td>
+  <td class="xl11822063 dqc_b">　</td>
+  <td class="xl11822063 dqc_b">　</td>
+  <td class="xl11822063 dqc_b">　</td>
+  <td class="xl11822063 dqc_b">　</td>
+  <td class="xl11822063 dqc_b">　</td>
+  <td class="xl11822063 dqc_b">　</td>
+  <td class="xl11822063 dqc_b">　</td>
+  <td class="xl11822063 dqc_b">　</td>
+  <td class="xl11822063 dqc_b">　</td>
+  <td class=xl11822063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>열손실량</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qsink_tot_h">　</td>
+  <td class="xl11722063 qsink_tot_h">　</td>
+  <td class="xl11722063 qsink_tot_h">　</td>
+  <td class="xl11722063 qsink_tot_h">　</td>
+  <td class="xl11722063 qsink_tot_h">　</td>
+  <td class="xl11722063 qsink_tot_h">　</td>
+  <td class="xl11722063 qsink_tot_h">　</td>
+  <td class="xl11722063 qsink_tot_h">　</td>
+  <td class="xl11722063 qsink_tot_h">　</td>
+  <td class="xl11722063 qsink_tot_h">　</td>
+  <td class="xl11722063 qsink_tot_h">　</td>
+  <td class="xl11722063 qsink_tot_h">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>관류</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qt_sink_h">　</td>
+  <td class="xl11722063 qt_sink_h">　</td>
+  <td class="xl11722063 qt_sink_h">　</td>
+  <td class="xl11722063 qt_sink_h">　</td>
+  <td class="xl11722063 qt_sink_h">　</td>
+  <td class="xl11722063 qt_sink_h">　</td>
+  <td class="xl11722063 qt_sink_h">　</td>
+  <td class="xl11722063 qt_sink_h">　</td>
+  <td class="xl11722063 qt_sink_h">　</td>
+  <td class="xl11722063 qt_sink_h">　</td>
+  <td class="xl11722063 qt_sink_h">　</td>
+  <td class="xl11722063 qt_sink_h">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>환기</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qv_sink_h">　</td>
+  <td class="xl11722063 qv_sink_h">　</td>
+  <td class="xl11722063 qv_sink_h">　</td>
+  <td class="xl11722063 qv_sink_h">　</td>
+  <td class="xl11722063 qv_sink_h">　</td>
+  <td class="xl11722063 qv_sink_h">　</td>
+  <td class="xl11722063 qv_sink_h">　</td>
+  <td class="xl11722063 qv_sink_h">　</td>
+  <td class="xl11722063 qv_sink_h">　</td>
+  <td class="xl11722063 qv_sink_h">　</td>
+  <td class="xl11722063 qv_sink_h">　</td>
+  <td class="xl11722063 qv_sink_h">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl9322063>일사</td>
+  <td class=xl9322063>　</td>
+  <td class=xl9422063>kWh/mth</td>
+  <td class="xl11822063 qs_sink_h">　</td>
+  <td class="xl11822063 qs_sink_h">　</td>
+  <td class="xl11822063 qs_sink_h">　</td>
+  <td class="xl11822063 qs_sink_h">　</td>
+  <td class="xl11822063 qs_sink_h">　</td>
+  <td class="xl11822063 qs_sink_h">　</td>
+  <td class="xl11822063 qs_sink_h">　</td>
+  <td class="xl11822063 qs_sink_h">　</td>
+  <td class="xl11822063 qs_sink_h">　</td>
+  <td class="xl11822063 qs_sink_h">　</td>
+  <td class="xl11822063 qs_sink_h">　</td>
+  <td class="xl11822063 qs_sink_h">　</td>
+  <td class=xl11822063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>열획득량</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qsource_tot_h">　</td>
+  <td class="xl11722063 qsource_tot_h">　</td>
+  <td class="xl11722063 qsource_tot_h">　</td>
+  <td class="xl11722063 qsource_tot_h">　</td>
+  <td class="xl11722063 qsource_tot_h">　</td>
+  <td class="xl11722063 qsource_tot_h">　</td>
+  <td class="xl11722063 qsource_tot_h">　</td>
+  <td class="xl11722063 qsource_tot_h">　</td>
+  <td class="xl11722063 qsource_tot_h">　</td>
+  <td class="xl11722063 qsource_tot_h">　</td>
+  <td class="xl11722063 qsource_tot_h">　</td>
+  <td class="xl11722063 qsource_tot_h">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>관류</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qt_source_h">　</td>
+  <td class="xl11722063 qt_source_h">　</td>
+  <td class="xl11722063 qt_source_h">　</td>
+  <td class="xl11722063 qt_source_h">　</td>
+  <td class="xl11722063 qt_source_h">　</td>
+  <td class="xl11722063 qt_source_h">　</td>
+  <td class="xl11722063 qt_source_h">　</td>
+  <td class="xl11722063 qt_source_h">　</td>
+  <td class="xl11722063 qt_source_h">　</td>
+  <td class="xl11722063 qt_source_h">　</td>
+  <td class="xl11722063 qt_source_h">　</td>
+  <td class="xl11722063 qt_source_h">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>환기</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qv_source_h">　</td>
+  <td class="xl11722063 qv_source_h">　</td>
+  <td class="xl11722063 qv_source_h">　</td>
+  <td class="xl11722063 qv_source_h">　</td>
+  <td class="xl11722063 qv_source_h">　</td>
+  <td class="xl11722063 qv_source_h">　</td>
+  <td class="xl11722063 qv_source_h">　</td>
+  <td class="xl11722063 qv_source_h">　</td>
+  <td class="xl11722063 qv_source_h">　</td>
+  <td class="xl11722063 qv_source_h">　</td>
+  <td class="xl11722063 qv_source_h">　</td>
+  <td class="xl11722063 qv_source_h">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>일사</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qs_source_h">　</td>
+  <td class="xl11722063 qs_source_h">　</td>
+  <td class="xl11722063 qs_source_h">　</td>
+  <td class="xl11722063 qs_source_h">　</td>
+  <td class="xl11722063 qs_source_h">　</td>
+  <td class="xl11722063 qs_source_h">　</td>
+  <td class="xl11722063 qs_source_h">　</td>
+  <td class="xl11722063 qs_source_h">　</td>
+  <td class="xl11722063 qs_source_h">　</td>
+  <td class="xl11722063 qs_source_h">　</td>
+  <td class="xl11722063 qs_source_h">　</td>
+  <td class="xl11722063 qs_source_h">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl9322063>내부발열</td>
+  <td class=xl9322063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11822063 qi_source_h">　</td>
+  <td class="xl11822063 qi_source_h">　</td>
+  <td class="xl11822063 qi_source_h">　</td>
+  <td class="xl11822063 qi_source_h">　</td>
+  <td class="xl11822063 qi_source_h">　</td>
+  <td class="xl11822063 qi_source_h">　</td>
+  <td class="xl11822063 qi_source_h">　</td>
+  <td class="xl11822063 qi_source_h">　</td>
+  <td class="xl11822063 qi_source_h">　</td>
+  <td class="xl11822063 qi_source_h">　</td>
+  <td class="xl11822063 qi_source_h">　</td>
+  <td class="xl11822063 qi_source_h">　</td>
+  <td class=xl11822063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl11322063 colspan=2>냉방요구량</td>
+  <td class=xl11422063>단위</td>
+  <td class=xl11522063>1월</td>
+  <td class=xl11522063>2월</td>
+  <td class=xl11522063>3월</td>
+  <td class=xl11522063>4월</td>
+  <td class=xl11522063>5월</td>
+  <td class=xl11522063>6월</td>
+  <td class=xl11522063>7월</td>
+  <td class=xl11522063>8월</td>
+  <td class=xl11522063>9월</td>
+  <td class=xl11522063>10월</td>
+  <td class=xl11522063>11월</td>
+  <td class=xl11522063>12월</td>
+  <td class=xl11522063></td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>냉방요구량</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qb_c">　</td>
+  <td class="xl11722063 qb_c">　</td>
+  <td class="xl11722063 qb_c">　</td>
+  <td class="xl11722063 qb_c">　</td>
+  <td class="xl11722063 qb_c">　</td>
+  <td class="xl11722063 qb_c">　</td>
+  <td class="xl11722063 qb_c">　</td>
+  <td class="xl11722063 qb_c">　</td>
+  <td class="xl11722063 qb_c">　</td>
+  <td class="xl11722063 qb_c">　</td>
+  <td class="xl11722063 qb_c">　</td>
+  <td class="xl11722063 qb_c">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>제습요구량</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qdhu">　</td>
+  <td class="xl11722063 qdhu">　</td>
+  <td class="xl11722063 qdhu">　</td>
+  <td class="xl11722063 qdhu">　</td>
+  <td class="xl11722063 qdhu">　</td>
+  <td class="xl11722063 qdhu">　</td>
+  <td class="xl11722063 qdhu">　</td>
+  <td class="xl11722063 qdhu">　</td>
+  <td class="xl11722063 qdhu">　</td>
+  <td class="xl11722063 qdhu">　</td>
+  <td class="xl11722063 qdhu">　</td>
+  <td class="xl11722063 qdhu">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl9322063>이용계수</td>
+  <td class=xl9322063>　</td>
+  <td class=xl9422063>-</td>
+  <td class="xl11822063 eta_c">　</td>
+  <td class="xl11822063 eta_c">　</td>
+  <td class="xl11822063 eta_c">　</td>
+  <td class="xl11822063 eta_c">　</td>
+  <td class="xl11822063 eta_c">　</td>
+  <td class="xl11822063 eta_c">　</td>
+  <td class="xl11822063 eta_c">　</td>
+  <td class="xl11822063 eta_c">　</td>
+  <td class="xl11822063 eta_c">　</td>
+  <td class="xl11822063 eta_c">　</td>
+  <td class="xl11822063 eta_c">　</td>
+  <td class="xl11822063 eta_c">　</td>
+  <td class=xl11822063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>열손실량</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qsink_tot_c">　</td>
+  <td class="xl11722063 qsink_tot_c">　</td>
+  <td class="xl11722063 qsink_tot_c">　</td>
+  <td class="xl11722063 qsink_tot_c">　</td>
+  <td class="xl11722063 qsink_tot_c">　</td>
+  <td class="xl11722063 qsink_tot_c">　</td>
+  <td class="xl11722063 qsink_tot_c">　</td>
+  <td class="xl11722063 qsink_tot_c">　</td>
+  <td class="xl11722063 qsink_tot_c">　</td>
+  <td class="xl11722063 qsink_tot_c">　</td>
+  <td class="xl11722063 qsink_tot_c">　</td>
+  <td class="xl11722063 qsink_tot_c">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>관류</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qt_sink_c">　</td>
+  <td class="xl11722063 qt_sink_c">　</td>
+  <td class="xl11722063 qt_sink_c">　</td>
+  <td class="xl11722063 qt_sink_c">　</td>
+  <td class="xl11722063 qt_sink_c">　</td>
+  <td class="xl11722063 qt_sink_c">　</td>
+  <td class="xl11722063 qt_sink_c">　</td>
+  <td class="xl11722063 qt_sink_c">　</td>
+  <td class="xl11722063 qt_sink_c">　</td>
+  <td class="xl11722063 qt_sink_c">　</td>
+  <td class="xl11722063 qt_sink_c">　</td>
+  <td class="xl11722063 qt_sink_c">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>환기</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qv_sink_c">　</td>
+  <td class="xl11722063 qv_sink_c">　</td>
+  <td class="xl11722063 qv_sink_c">　</td>
+  <td class="xl11722063 qv_sink_c">　</td>
+  <td class="xl11722063 qv_sink_c">　</td>
+  <td class="xl11722063 qv_sink_c">　</td>
+  <td class="xl11722063 qv_sink_c">　</td>
+  <td class="xl11722063 qv_sink_c">　</td>
+  <td class="xl11722063 qv_sink_c">　</td>
+  <td class="xl11722063 qv_sink_c">　</td>
+  <td class="xl11722063 qv_sink_c">　</td>
+  <td class="xl11722063 qv_sink_c">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl9322063>일사</td>
+  <td class=xl9322063>　</td>
+  <td class=xl9422063>kWh/mth</td>
+  <td class="xl11822063 qs_sink_c">　</td>
+  <td class="xl11822063 qs_sink_c">　</td>
+  <td class="xl11822063 qs_sink_c">　</td>
+  <td class="xl11822063 qs_sink_c">　</td>
+  <td class="xl11822063 qs_sink_c">　</td>
+  <td class="xl11822063 qs_sink_c">　</td>
+  <td class="xl11822063 qs_sink_c">　</td>
+  <td class="xl11822063 qs_sink_c">　</td>
+  <td class="xl11822063 qs_sink_c">　</td>
+  <td class="xl11822063 qs_sink_c">　</td>
+  <td class="xl11822063 qs_sink_c">　</td>
+  <td class="xl11822063 qs_sink_c">　</td>
+  <td class=xl11822063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>열획득량</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qsource_tot_c">　</td>
+  <td class="xl11722063 qsource_tot_c">　</td>
+  <td class="xl11722063 qsource_tot_c">　</td>
+  <td class="xl11722063 qsource_tot_c">　</td>
+  <td class="xl11722063 qsource_tot_c">　</td>
+  <td class="xl11722063 qsource_tot_c">　</td>
+  <td class="xl11722063 qsource_tot_c">　</td>
+  <td class="xl11722063 qsource_tot_c">　</td>
+  <td class="xl11722063 qsource_tot_c">　</td>
+  <td class="xl11722063 qsource_tot_c">　</td>
+  <td class="xl11722063 qsource_tot_c">　</td>
+  <td class="xl11722063 qsource_tot_c">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>관류</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qt_source_c">　</td>
+  <td class="xl11722063 qt_source_c">　</td>
+  <td class="xl11722063 qt_source_c">　</td>
+  <td class="xl11722063 qt_source_c">　</td>
+  <td class="xl11722063 qt_source_c">　</td>
+  <td class="xl11722063 qt_source_c">　</td>
+  <td class="xl11722063 qt_source_c">　</td>
+  <td class="xl11722063 qt_source_c">　</td>
+  <td class="xl11722063 qt_source_c">　</td>
+  <td class="xl11722063 qt_source_c">　</td>
+  <td class="xl11722063 qt_source_c">　</td>
+  <td class="xl11722063 qt_source_c">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>환기</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qv_source_c">　</td>
+  <td class="xl11722063 qv_source_c">　</td>
+  <td class="xl11722063 qv_source_c">　</td>
+  <td class="xl11722063 qv_source_c">　</td>
+  <td class="xl11722063 qv_source_c">　</td>
+  <td class="xl11722063 qv_source_c">　</td>
+  <td class="xl11722063 qv_source_c">　</td>
+  <td class="xl11722063 qv_source_c">　</td>
+  <td class="xl11722063 qv_source_c">　</td>
+  <td class="xl11722063 qv_source_c">　</td>
+  <td class="xl11722063 qv_source_c">　</td>
+  <td class="xl11722063 qv_source_c">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>일사</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11722063 qs_source_c">　</td>
+  <td class="xl11722063 qs_source_c">　</td>
+  <td class="xl11722063 qs_source_c">　</td>
+  <td class="xl11722063 qs_source_c">　</td>
+  <td class="xl11722063 qs_source_c">　</td>
+  <td class="xl11722063 qs_source_c">　</td>
+  <td class="xl11722063 qs_source_c">　</td>
+  <td class="xl11722063 qs_source_c">　</td>
+  <td class="xl11722063 qs_source_c">　</td>
+  <td class="xl11722063 qs_source_c">　</td>
+  <td class="xl11722063 qs_source_c">　</td>
+  <td class="xl11722063 qs_source_c">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl9322063>내부발열</td>
+  <td class=xl9322063>　</td>
+  <td class=xl9322063>kWh/mth</td>
+  <td class="xl11822063 qi_source_c">　</td>
+  <td class="xl11822063 qi_source_c">　</td>
+  <td class="xl11822063 qi_source_c">　</td>
+  <td class="xl11822063 qi_source_c">　</td>
+  <td class="xl11822063 qi_source_c">　</td>
+  <td class="xl11822063 qi_source_c">　</td>
+  <td class="xl11822063 qi_source_c">　</td>
+  <td class="xl11822063 qi_source_c">　</td>
+  <td class="xl11822063 qi_source_c">　</td>
+  <td class="xl11822063 qi_source_c">　</td>
+  <td class="xl11822063 qi_source_c">　</td>
+  <td class="xl11822063 qi_source_c">　</td>
+  <td class=xl11822063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=5 style='mso-height-source:userset;height:4pt'>
+  <td height=5 class=xl11022063 style='height:4pt'>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl8222063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=13 style='mso-height-source:userset;height:9.95pt'>
+  <td height=13 class=xl11022063 style='height:9.95pt'>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <![if supportMisalignedColumns]>
+ <tr height=0 style='display:none'>
+  <td width=11 style='width:8pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=80 style='width:72pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=60 style='width:45pt'></td>
+  <td width=11 style='width:8pt'></td>
+ </tr>
+ <![endif]>
+</table>
+
+</div>
+
+
+<!----------------------------->
+<!--Excel의 웹 페이지 마법사로 게시해서 나온 결과의 끝-->
+<!----------------------------->
+</body>
+
+</html>
+
