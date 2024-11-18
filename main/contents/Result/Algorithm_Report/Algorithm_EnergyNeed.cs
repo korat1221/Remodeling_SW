@@ -108,28 +108,20 @@ namespace main.contents.Result
                 if (Value.Length > 0)
                 {
                     GeneralData[0].Add(new { idx = i, val = Value[0][0] }); //프로젝트번호
-                    data.Add(new { cname = "projectnum", data = GeneralData[0] });
                 }
                 GeneralData[1].Add(new { idx = i, val = Num }); //그림번호
-                data.Add(new { cname = "zonenum", data = GeneralData[1] });
                 GeneralData[2].Add(new { idx = i, val = Num }); //번호
-                data.Add(new { cname = "zonenum2", data = GeneralData[2] });
                 Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,순바닥면적,천장고","존번호='"+Num+"'");
                 if(Value.Length > 0)
                 {
                     GeneralData[3].Add(new { idx = i, val = Num + ". "+ Value[0][0]+" 존 에너지요구량 검토 보고서" }); //title
-                    data.Add(new { cname = "title", data = GeneralData[3] });
                     GeneralData[4].Add(new { idx = i, val = Value[0][0] }); //명칭
-                    data.Add(new { cname = "zonename", data = GeneralData[4] });
                     area = Convert.ToDouble(Value[0][1]);
                     height = Convert.ToDouble(Value[0][2]);
                     volume = area * height;
                     GeneralData[5].Add(new { idx = i, val = Program.UTIL.doubleComa(area.ToString(), 1) }); //면적
-                    data.Add(new { cname = "area", data = GeneralData[5] });
                     GeneralData[6].Add(new { idx = i, val = Program.UTIL.doubleComa(volume.ToString(), 1) }); //체적
-                    data.Add(new { cname = "volume", data = GeneralData[6] });
                     GeneralData[7].Add(new { idx = i, val = Program.UTIL.doubleComa(height.ToString(), 1) }); //천장고
-                    data.Add(new { cname = "height", data = GeneralData[7] });
                 }
                 #endregion
                 #region 설비정보
@@ -143,7 +135,6 @@ namespace main.contents.Result
                 {
                     SystemData[0].Add(new { idx = i, val = "-" }); //난방
                 }
-                data.Add(new { cname = "heating", data = SystemData[0] });
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.냉방시스템,b.명칭 From Cooling_ce_Form as a Inner Join CoolingSystem_Form as b on a.냉방시스템=b.번호 where a.존번호='" + Num + "'");
                 if (Value.Length > 0)
                 {
@@ -153,7 +144,6 @@ namespace main.contents.Result
                 {
                     SystemData[1].Add(new { idx = i, val = "-" }); //냉방
                 }
-                data.Add(new { cname = "cooling", data = SystemData[1] });
 
                 string dhw = "-";
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select 존,명칭 From DHWSystem_Form");
@@ -174,7 +164,6 @@ namespace main.contents.Result
                     }
                 }
                 SystemData[2].Add(new { idx = i, val = dhw }); //급탕
-                data.Add(new { cname = "dhw", data = SystemData[2] });
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select 등기구명칭 From ZoneLighting_form where 번호='" + Num + "'");
                 if (Value.Length > 0)
                 {
@@ -184,7 +173,6 @@ namespace main.contents.Result
                 {
                     SystemData[3].Add(new { idx = i, val = "-" }); //조명
                 }
-                data.Add(new { cname = "lighting", data = SystemData[3] });
 
                 string ahu = "-";
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.선택열회수기, b.명칭 From ZoneGeneral_Form as a Inner Join AHUSystem_Form as b on a.선택열회수기=b.번호 where a.존번호='" + Num + "'");
@@ -194,7 +182,6 @@ namespace main.contents.Result
                     { ahu = Value[0][1]; }
                 }
                 SystemData[4].Add(new { idx = i, val = ahu }); //공조
-                data.Add(new { cname = "ahu", data = SystemData[4] });
                 string hrv = "-";
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.선택열회수기, b.명칭 From ZoneGeneral_Form as a Inner Join AHUSystem_Form as b on a.선택열회수기=b.번호 where a.존번호='" + Num + "'");
                 if (Value.Length > 0)
@@ -203,7 +190,6 @@ namespace main.contents.Result
                     { hrv = Value[0][1]; }
                 }
                 SystemData[5].Add(new { idx = i, val = hrv }); //환기
-                data.Add(new { cname = "hrv", data = SystemData[5] });
                 #endregion
 
                 #region 환기정보
@@ -211,15 +197,10 @@ namespace main.contents.Result
                 if (Value.Length > 0)
                 {
                     VentilData[0].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][0], 1) }); //필요환기량
-                    data.Add(new { cname = "vwd", data = VentilData[0] });
                     VentilData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][1], 1) }); //침기
-                    data.Add(new { cname = "ninf", data = VentilData[1] });
                     VentilData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][2], 1) }); //기계환기
-                    data.Add(new { cname = "nmech", data = VentilData[2] });
                     VentilData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][3], 1) }); //자연환기
-                    data.Add(new { cname = "nwin", data = VentilData[3] });
                     VentilData[4].Add(new { idx = i, val = (Convert.ToDouble(Value[0][1]) /0.05).ToString("0.0")}); //n50
-                    data.Add(new { cname = "n50", data = VentilData[4] });
                 }
                 #endregion
 
@@ -230,10 +211,8 @@ namespace main.contents.Result
                 {
                     annual = Convert.ToDouble(Value[0][0]) / area;
                     AnnualData[0].Add(new { idx = i, val = Program.UTIL.doubleComa(annual.ToString(), 1) }); //난방
-                    data.Add(new { cname = "qhb_a", data = AnnualData[0] });
                     annual = Convert.ToDouble(Value[0][1]) / area;
                     AnnualData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(annual.ToString(), 1) }); //난방부하
-                    data.Add(new { cname = "qhmax", data = AnnualData[1] });
                 }
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct Qb_a, Q_max From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일='이용일' and 난방_냉방='냉방'");
                 annual = 0;
@@ -241,10 +220,8 @@ namespace main.contents.Result
                 {
                     annual = Convert.ToDouble(Value[0][0]) / area;
                     AnnualData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(annual.ToString(), 1) }); //냉방
-                    data.Add(new { cname = "qcb_a", data = AnnualData[2] });
                     annual = Convert.ToDouble(Value[0][1]) / area;
                     AnnualData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(annual.ToString(), 1) }); //냉방부하
-                    data.Add(new { cname = "qcmax", data = AnnualData[3] });
                 }
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select sum(Final_kWh) From Zone_LightResult Where 번호='" + Num + "'");
                 annual = 0;
@@ -252,7 +229,6 @@ namespace main.contents.Result
                 {
                     annual = Convert.ToDouble(Value[0][0]) / area;
                     AnnualData[4].Add(new { idx = i, val = Program.UTIL.doubleComa(annual.ToString(), 1) }); //조명
-                    data.Add(new { cname = "qlb_a", data = AnnualData[4] });
                 }
                 annual = 0; double dwd_a = 0; 
                 double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -271,7 +247,6 @@ namespace main.contents.Result
                 }
                 annual = annual / area;
                 AnnualData[5].Add(new { idx = i, val = Program.UTIL.doubleComa(annual.ToString(), 1) }); //급탕
-                data.Add(new { cname = "qwb_a", data = AnnualData[5] });
 
                 #endregion
 
@@ -293,19 +268,12 @@ namespace main.contents.Result
                     wall_흡수율 = wall_흡수율 / wall_면적;
                 }
                 WallData[0].Add(new { idx = i, val = Program.UTIL.doubleComa(wall_면적.ToString(), 1) });
-                data.Add(new { cname = "wall_area", data = WallData[0] });
                 WallData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(wall_열관류율.ToString(), 2) });
-                data.Add(new { cname = "wall_u", data = WallData[1] });
                 WallData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(wall_열교가산치.ToString(), 2) });
-                data.Add(new { cname = "wall_du", data = WallData[2] });
                 WallData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(wall_유효열관류율.ToString(), 2) });
-                data.Add(new { cname = "wall_ueff", data = WallData[3] });
                 WallData[4].Add(new { idx = i, val = Program.UTIL.doubleComa((wall_면적 * wall_유효열관류율).ToString(), 2) });
-                data.Add(new { cname = "wall_ht", data = WallData[4] });
                 WallData[5].Add(new { idx = i, val = "-" });
-                data.Add(new { cname = "wall_shgc", data = WallData[5] });
                 WallData[6].Add(new { idx = i, val = Program.UTIL.doubleComa(wall_흡수율.ToString(), 1) });
-                data.Add(new { cname = "wall_alpha", data = WallData[6] });
                 #endregion
 
                 #region 지붕 성능정보
@@ -326,19 +294,12 @@ namespace main.contents.Result
                     roof_흡수율 = roof_흡수율 / roof_면적;
                 }
                 RoofData[0].Add(new { idx = i, val = Program.UTIL.doubleComa(roof_면적.ToString(), 1) });
-                data.Add(new { cname = "roof_area", data = RoofData[0] });
                 RoofData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(roof_열관류율.ToString(), 2) });
-                data.Add(new { cname = "roof_u", data = RoofData[1] });
                 RoofData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(roof_열교가산치.ToString(), 2) });
-                data.Add(new { cname = "roof_du", data = RoofData[2] });
                 RoofData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(roof_유효열관류율.ToString(), 2) });
-                data.Add(new { cname = "roof_ueff", data = RoofData[3] });
                 RoofData[4].Add(new { idx = i, val = Program.UTIL.doubleComa((roof_면적 * roof_유효열관류율).ToString(), 2) });
-                data.Add(new { cname = "roof_ht", data = RoofData[4] });
                 RoofData[5].Add(new { idx = i, val = "-" });
-                data.Add(new { cname = "roof_shgc", data = RoofData[5] });
                 RoofData[6].Add(new { idx = i, val = Program.UTIL.doubleComa(roof_흡수율.ToString(), 1) });
-                data.Add(new { cname = "roof_alpha", data = RoofData[6] });
                 #endregion
 
                 #region 최하층바닥 성능정보
@@ -357,19 +318,12 @@ namespace main.contents.Result
                     floor_열교가산치 = Math.Max(0, floor_유효열관류율 - floor_열관류율);
                 }
                 FloorData[0].Add(new { idx = i, val = Program.UTIL.doubleComa(floor_면적.ToString(), 1) });
-                data.Add(new { cname = "floor_area", data = FloorData[0] });
                 FloorData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(floor_열관류율.ToString(), 2) });
-                data.Add(new { cname = "floor_u", data = FloorData[1] });
                 FloorData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(floor_열교가산치.ToString(), 2) });
-                data.Add(new { cname = "floor_du", data = FloorData[2] });
                 FloorData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(floor_유효열관류율.ToString(), 2) });
-                data.Add(new { cname = "floor_ueff", data = FloorData[3] });
                 FloorData[4].Add(new { idx = i, val = Program.UTIL.doubleComa((floor_면적 * floor_유효열관류율).ToString(), 2) });
-                data.Add(new { cname = "floor_ht", data = FloorData[4] });
                 FloorData[5].Add(new { idx = i, val = "-" });
-                data.Add(new { cname = "floor_shgc", data = FloorData[5] });
                 FloorData[6].Add(new { idx = i, val = "-" });
-                data.Add(new { cname = "floor_alpha", data = FloorData[6] });
                 #endregion
 
                 #region 창호 성능정보
@@ -394,19 +348,12 @@ namespace main.contents.Result
                     win_shgc = win_shgc / win_면적;
                 }
                 WinData[0].Add(new { idx = i, val = Program.UTIL.doubleComa(win_면적.ToString(), 1) });
-                data.Add(new { cname = "win_area", data = WinData[0] });
                 WinData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(win_열관류율.ToString(), 2) });
-                data.Add(new { cname = "win_u", data = WinData[1] });
                 WinData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(win_열교가산치.ToString(), 2) });
-                data.Add(new { cname = "win_du", data = WinData[2] });
                 WinData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(win_유효열관류율.ToString(), 2) });
-                data.Add(new { cname = "win_ueff", data = WinData[3] });
                 WinData[4].Add(new { idx = i, val = Program.UTIL.doubleComa((win_면적 * win_유효열관류율).ToString(), 2) });
-                data.Add(new { cname = "win_ht", data = WinData[4] });
                 WinData[5].Add(new { idx = i, val = Program.UTIL.doubleComa(win_shgc.ToString(), 2) });
-                data.Add(new { cname = "win_shgc", data = WinData[5] });
                 WinData[6].Add(new { idx = i, val = "-" });
-                data.Add(new { cname = "win_alpha", data = WinData[6] });
                 #endregion
 
                 #region 커튼월창 성능정보
@@ -440,19 +387,12 @@ namespace main.contents.Result
                     cw_shgc = cw_shgc / cw_면적;
                 }
                 CWData[0].Add(new { idx = i, val = Program.UTIL.doubleComa(cw_면적.ToString(), 1) });
-                data.Add(new { cname = "cw_area", data = CWData[0] });
                 CWData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(cw_열관류율.ToString(), 2) });
-                data.Add(new { cname = "cw_u", data = CWData[1] });
                 CWData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(cw_열교가산치.ToString(), 2) });
-                data.Add(new { cname = "cw_du", data = CWData[2] });
                 CWData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(cw_유효열관류율.ToString(), 2) });
-                data.Add(new { cname = "cw_ueff", data = CWData[3] });
                 CWData[4].Add(new { idx = i, val = Program.UTIL.doubleComa((cw_면적 * cw_유효열관류율).ToString(), 2) });
-                data.Add(new { cname = "cw_ht", data = CWData[4] });
                 CWData[5].Add(new { idx = i, val = Program.UTIL.doubleComa(cw_shgc.ToString(), 2) });
-                data.Add(new { cname = "cw_shgc", data = CWData[5] });
                 CWData[6].Add(new { idx = i, val = "-" });
-                data.Add(new { cname = "cw_alpha", data = CWData[6] });
                 #endregion
 
                 #region 외부출입문 성능정보
@@ -473,19 +413,12 @@ namespace main.contents.Result
                     door_흡수율 = door_흡수율 / door_면적;
                 }
                 DoorData[0].Add(new { idx = i, val = Program.UTIL.doubleComa(door_면적.ToString(), 1) });
-                data.Add(new { cname = "door_area", data = DoorData[0] });
                 DoorData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(door_열관류율.ToString(), 2) });
-                data.Add(new { cname = "door_u", data = DoorData[1] });
                 DoorData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(door_열교가산치.ToString(), 2) });
-                data.Add(new { cname = "door_du", data = DoorData[2] });
                 DoorData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(door_유효열관류율.ToString(), 2) });
-                data.Add(new { cname = "door_ueff", data = DoorData[3] });
                 DoorData[4].Add(new { idx = i, val = Program.UTIL.doubleComa((door_면적 * door_유효열관류율).ToString(), 2) });
-                data.Add(new { cname = "door_ht", data = DoorData[4] });
                 DoorData[5].Add(new { idx = i, val = "-" });
-                data.Add(new { cname = "door_shgc", data = DoorData[5] });
                 DoorData[6].Add(new { idx = i, val = Program.UTIL.doubleComa(door_흡수율.ToString(), 1) });
-                data.Add(new { cname = "door_alpha", data = DoorData[6] });
                 #endregion
 
                 #region 난방 월간
@@ -548,13 +481,9 @@ namespace main.contents.Result
                         if (Value.Length > 0)
                         {
                             CoolingMthData[0].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            data.Add(new { cname = "qt_sink_c", data = CoolingMthData[0] });
                             CoolingMthData[1].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                            data.Add(new { cname = "qv_sink_c", data = CoolingMthData[1] });
                             CoolingMthData[2].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
-                            data.Add(new { cname = "qs_sink_c", data = CoolingMthData[2] });
                             CoolingMthData[3].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][3], 0) });
-                            data.Add(new { cname = "qsink_tot_c", data = CoolingMthData[3] });
                         }
 
                     }
@@ -564,16 +493,11 @@ namespace main.contents.Result
                         if (Value.Length > 0)
                         {
                             CoolingMthData[8].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            data.Add(new { cname = "qt_source_c", data = CoolingMthData[8] });
                             CoolingMthData[9].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                            data.Add(new { cname = "qv_source_c", data = CoolingMthData[9] });
                             double qs = Convert.ToDouble(Value[0][2]) + Convert.ToDouble(Value[0][3]) + Convert.ToDouble(Value[0][4]);
                             CoolingMthData[10].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(qs.ToString(), 0) });
-                            data.Add(new { cname = "qs_source_c", data = CoolingMthData[10] });
                             CoolingMthData[11].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][5], 0) });
-                            data.Add(new { cname = "qi_source_c", data = CoolingMthData[11] });
                             CoolingMthData[12].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][6], 0) });
-                            data.Add(new { cname = "qsource_tot_c", data = CoolingMthData[12] });
                         }
                     }
                     for (int mth = 0; mth < 12; mth++)
@@ -583,16 +507,93 @@ namespace main.contents.Result
                         if (Value.Length > 0)
                         {
                             CoolingMthData[13].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            data.Add(new { cname = "qb_c", data = CoolingMthData[13] });
                             CoolingMthData[14].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 2) });
-                            data.Add(new { cname = "eta_c", data = CoolingMthData[14] });
                             CoolingMthData[15].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
-                            data.Add(new { cname = "qdhu", data = CoolingMthData[15] });
                         }
                     }
                 }
                 #endregion
             }
+            data.Add(new { cname = "projectnum", data = GeneralData[0] });
+            data.Add(new { cname = "zonenum", data = GeneralData[1] });
+            data.Add(new { cname = "zonenum2", data = GeneralData[2] });
+            data.Add(new { cname = "title", data = GeneralData[3] });
+            data.Add(new { cname = "zonename", data = GeneralData[4] });
+            data.Add(new { cname = "area", data = GeneralData[5] });
+            data.Add(new { cname = "volume", data = GeneralData[6] });
+            data.Add(new { cname = "height", data = GeneralData[7] });
+            data.Add(new { cname = "heating", data = SystemData[0] });
+            data.Add(new { cname = "cooling", data = SystemData[1] });
+            data.Add(new { cname = "dhw", data = SystemData[2] });
+            data.Add(new { cname = "lighting", data = SystemData[3] });
+            data.Add(new { cname = "ahu", data = SystemData[4] });
+            data.Add(new { cname = "hrv", data = SystemData[5] });
+            data.Add(new { cname = "vwd", data = VentilData[0] });
+            data.Add(new { cname = "ninf", data = VentilData[1] });
+            data.Add(new { cname = "nmech", data = VentilData[2] });
+            data.Add(new { cname = "nwin", data = VentilData[3] });
+            data.Add(new { cname = "n50", data = VentilData[4] });
+            data.Add(new { cname = "qhb_a", data = AnnualData[0] });
+            data.Add(new { cname = "qhmax", data = AnnualData[1] });
+            data.Add(new { cname = "qcb_a", data = AnnualData[2] });
+            data.Add(new { cname = "qcmax", data = AnnualData[3] });
+            data.Add(new { cname = "qlb_a", data = AnnualData[4] });
+            data.Add(new { cname = "qwb_a", data = AnnualData[5] });
+            data.Add(new { cname = "wall_area", data = WallData[0] });
+            data.Add(new { cname = "wall_u", data = WallData[1] });
+            data.Add(new { cname = "wall_du", data = WallData[2] });
+            data.Add(new { cname = "wall_ueff", data = WallData[3] });
+            data.Add(new { cname = "wall_ht", data = WallData[4] });
+            data.Add(new { cname = "wall_shgc", data = WallData[5] });
+            data.Add(new { cname = "wall_alpha", data = WallData[6] });
+            data.Add(new { cname = "roof_area", data = RoofData[0] });
+            data.Add(new { cname = "roof_u", data = RoofData[1] });
+            data.Add(new { cname = "roof_du", data = RoofData[2] });
+            data.Add(new { cname = "roof_ueff", data = RoofData[3] });
+            data.Add(new { cname = "roof_ht", data = RoofData[4] });
+            data.Add(new { cname = "roof_shgc", data = RoofData[5] });
+            data.Add(new { cname = "roof_alpha", data = RoofData[6] });
+            data.Add(new { cname = "floor_area", data = FloorData[0] });
+            data.Add(new { cname = "floor_u", data = FloorData[1] });
+            data.Add(new { cname = "floor_du", data = FloorData[2] });
+            data.Add(new { cname = "floor_ueff", data = FloorData[3] });
+            data.Add(new { cname = "floor_ht", data = FloorData[4] });
+            data.Add(new { cname = "floor_shgc", data = FloorData[5] });
+            data.Add(new { cname = "floor_alpha", data = FloorData[6] });
+            data.Add(new { cname = "win_area", data = WinData[0] });
+            data.Add(new { cname = "win_u", data = WinData[1] });
+            data.Add(new { cname = "win_du", data = WinData[2] });
+            data.Add(new { cname = "win_ueff", data = WinData[3] });
+            data.Add(new { cname = "win_ht", data = WinData[4] });
+            data.Add(new { cname = "win_shgc", data = WinData[5] });
+            data.Add(new { cname = "win_alpha", data = WinData[6] });
+            data.Add(new { cname = "cw_area", data = CWData[0] });
+            data.Add(new { cname = "cw_u", data = CWData[1] });
+            data.Add(new { cname = "cw_du", data = CWData[2] });
+            data.Add(new { cname = "cw_ueff", data = CWData[3] });
+            data.Add(new { cname = "cw_ht", data = CWData[4] });
+            data.Add(new { cname = "cw_shgc", data = CWData[5] });
+            data.Add(new { cname = "cw_alpha", data = CWData[6] });
+            data.Add(new { cname = "door_area", data = DoorData[0] });
+            data.Add(new { cname = "door_u", data = DoorData[1] });
+            data.Add(new { cname = "door_du", data = DoorData[2] });
+            data.Add(new { cname = "door_ueff", data = DoorData[3] });
+            data.Add(new { cname = "door_ht", data = DoorData[4] });
+            data.Add(new { cname = "door_shgc", data = DoorData[5] });
+            data.Add(new { cname = "door_alpha", data = DoorData[6] });
+            data.Add(new { cname = "qt_sink_c", data = CoolingMthData[0] });
+            data.Add(new { cname = "qv_sink_c", data = CoolingMthData[1] });
+            data.Add(new { cname = "qs_sink_c", data = CoolingMthData[2] });
+            data.Add(new { cname = "qsink_tot_c", data = CoolingMthData[3] });
+            data.Add(new { cname = "qt_source_c", data = CoolingMthData[8] });
+            data.Add(new { cname = "qv_source_c", data = CoolingMthData[9] });
+            data.Add(new { cname = "qs_source_c", data = CoolingMthData[10] });
+            data.Add(new { cname = "qi_source_c", data = CoolingMthData[11] });
+            data.Add(new { cname = "qsource_tot_c", data = CoolingMthData[12] });
+            data.Add(new { cname = "qb_c", data = CoolingMthData[13] });
+            data.Add(new { cname = "eta_c", data = CoolingMthData[14] });
+            data.Add(new { cname = "qdhu", data = CoolingMthData[15] });
+            
             s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
             s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
 
