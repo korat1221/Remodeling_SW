@@ -61,15 +61,20 @@ namespace main
             slope = PVdata[0][1].ToString() + "˚";
             double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-            for (int mth=0 ; mth < 12 ; mth++)
+            if (slope == "0˚" || orientation == "수평")
             {
-                string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + ort + "' AND 방향 ='" + orientation + "' AND  각도 = '" + slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
-                //태양고도각 불러오기
-                string[][] token3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명 ='" + ort + "' AND 방향 ='" + orientation + "' AND  각도 = '" + slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
-
-                Esol[mth] = Convert.ToDouble(token[0][0]) * 0.024 * dmth[mth];
-                PVαsol[mth] = Convert.ToDouble(token3[0][0]);
+                orientation = "수평";
+                slope = "0˚";
             }
+            for (int mth = 0; mth < 12; mth++)
+            {
+                 string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + ort + "' AND 방향 ='" + orientation + "' AND  각도 = '" + slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
+                //태양고도각 불러오기
+                 string[][] token3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명 ='" + ort + "' AND 방향 ='" + orientation + "' AND  각도 = '" + slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
+                 Esol[mth] = Convert.ToDouble(token[0][0]) * 0.024 * dmth[mth];
+                 PVαsol[mth] = Convert.ToDouble(token3[0][0]);
+            }
+           
             for(int k = 0; k < 10; k++)
             {
                 this.PVdata.Add(PVdata[0][k + 1]);
