@@ -71,15 +71,15 @@ namespace main.subcontents.CoolingSystem
             SoilWaterCooler_dataGridView.Columns.Add("A1", "설치대수");
             SoilWaterCooler_dataGridView.Columns.Add("A2", "번호");
             SoilWaterCooler_dataGridView.Columns.Add("A3", "명칭");
-            SoilWaterCooler_dataGridView.Columns.Add("A4", "냉방성능.출력[kW]");
-            SoilWaterCooler_dataGridView.Columns.Add("A5", "냉방성능.소비전력[kW]");
-            SoilWaterCooler_dataGridView.Columns.Add("A6", "냉방성능.EER[W/w]");
-            SoilWaterCooler_dataGridView.Columns.Add("A7", "대기전력[W]");
+            SoilWaterCooler_dataGridView.Columns.Add("A4", "냉방성능.출력.[kW]");
+            SoilWaterCooler_dataGridView.Columns.Add("A5", "냉방성능.소비전력.[kW]");
+            SoilWaterCooler_dataGridView.Columns.Add("A6", "냉방성능.EER.[W/W]");
+            SoilWaterCooler_dataGridView.Columns.Add("A7", "대기전력.[W]");
             SoilWaterCooler_dataGridView.Columns.Add("A8", "연료");
             SoilWaterCooler_dataGridView.Columns.Add("A9", "압축기");
             SoilWaterCooler_dataGridView.Columns.Add("A10", "설치");
-            SoilWaterCooler_dataGridView.Columns.Add("A11", "냉수온도.입구[℃]");
-            SoilWaterCooler_dataGridView.Columns.Add("A12", "냉수온도.출구[℃]");
+            SoilWaterCooler_dataGridView.Columns.Add("A11", "냉수온도.입구.[℃]");
+            SoilWaterCooler_dataGridView.Columns.Add("A12", "냉수온도.출구.[℃]");
         }
 
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)

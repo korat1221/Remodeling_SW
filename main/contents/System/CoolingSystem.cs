@@ -1084,9 +1084,9 @@ namespace main.contents
             AirCooler_dataGridView.Columns.Add(EconomcomboBox);
 
             AirCooler_dataGridView.Columns.Add("A6", "설치대수");
-            AirCooler_dataGridView.Columns.Add("A7", "냉방.출력[kW]");
-            AirCooler_dataGridView.Columns.Add("A8", "냉방.전력[kW]");
-            AirCooler_dataGridView.Columns.Add("A9", "냉방.EER[W/W]");
+            AirCooler_dataGridView.Columns.Add("A7", "냉방.출력.[kW]");
+            AirCooler_dataGridView.Columns.Add("A8", "냉방.전력.[kW]");
+            AirCooler_dataGridView.Columns.Add("A9", "냉방.EER.[W/W]");
 
             AirCooler_dataGridView.Columns.Add("A10", "대기전력");
             AirCooler_dataGridView.Columns.Add("A11", "연료");
@@ -1380,16 +1380,16 @@ namespace main.contents
             WaterCooler_dataGridView.Columns.Add(EconomcomboBox);
 
             WaterCooler_dataGridView.Columns.Add("A6", "설치대수");
-            WaterCooler_dataGridView.Columns.Add("A7", "냉방.출력[kW]");
-            WaterCooler_dataGridView.Columns.Add("A8", "냉방.전력[kW]");
-            WaterCooler_dataGridView.Columns.Add("A9", "냉방.EER[W/W]");
+            WaterCooler_dataGridView.Columns.Add("A7", "냉방.출력.[kW]");
+            WaterCooler_dataGridView.Columns.Add("A8", "냉방.전력.[kW]");
+            WaterCooler_dataGridView.Columns.Add("A9", "냉방.EER.[W/W]");
 
             WaterCooler_dataGridView.Columns.Add("A10", "대기전력");
             WaterCooler_dataGridView.Columns.Add("A11", "연료");
             WaterCooler_dataGridView.Columns.Add("A12", "압축기");
             WaterCooler_dataGridView.Columns.Add("A13", "부하측.증발기");
-            WaterCooler_dataGridView.Columns.Add("A14", "냉수온도[℃].출구");
-            WaterCooler_dataGridView.Columns.Add("A15", "냉수온도[℃].입구");
+            WaterCooler_dataGridView.Columns.Add("A14", "냉수온도.출구.[℃]");
+            WaterCooler_dataGridView.Columns.Add("A15", "냉수온도.입구.[℃]");
             WaterCooler_dataGridView.Columns.Add("A16", "설치");
 
             WaterCooler_dataGridView.Columns[0].Width = 40;
@@ -1631,16 +1631,16 @@ namespace main.contents
             EconomcomboBox.Items.AddRange(new string[] { "있음", "없음" });
             SoilCooler_dataGridView.Columns.Add(EconomcomboBox);
             SoilCooler_dataGridView.Columns.Add("A6", "설치대수");
-            SoilCooler_dataGridView.Columns.Add("A7", "냉방.출력[kW]");
-            SoilCooler_dataGridView.Columns.Add("A8", "냉방.전력[kW]");
-            SoilCooler_dataGridView.Columns.Add("A9", "냉방.EER[W/W]");
+            SoilCooler_dataGridView.Columns.Add("A7", "냉방.출력.[kW]");
+            SoilCooler_dataGridView.Columns.Add("A8", "냉방.전력.[kW]");
+            SoilCooler_dataGridView.Columns.Add("A9", "냉방.EER.[W/W]");
 
             SoilCooler_dataGridView.Columns.Add("A10", "대기전력");
             SoilCooler_dataGridView.Columns.Add("A11", "연료");
             SoilCooler_dataGridView.Columns.Add("A12", "압축기");
             SoilCooler_dataGridView.Columns.Add("A13", "부하측.증발기");
-            SoilCooler_dataGridView.Columns.Add("A14", "냉수온도[℃].출구");
-            SoilCooler_dataGridView.Columns.Add("A15", "냉수온도[℃].입구");
+            SoilCooler_dataGridView.Columns.Add("A14", "냉수온도.출구.[℃]");
+            SoilCooler_dataGridView.Columns.Add("A15", "냉수온도.입구.[℃]");
             SoilCooler_dataGridView.Columns.Add("A16", "설치");
 
             SoilCooler_dataGridView.Columns[0].Width = 40;
@@ -1899,16 +1899,16 @@ namespace main.contents
             EconomcomboBox.Items.AddRange(new string[] { "있음", "없음" });
             SoilWaterCooler_dataGridView.Columns.Add(EconomcomboBox);
             SoilWaterCooler_dataGridView.Columns.Add("A6", "설치대수");
-            SoilWaterCooler_dataGridView.Columns.Add("A7", "냉방.출력[kW]");
-            SoilWaterCooler_dataGridView.Columns.Add("A8", "냉방.전력[kW]");
-            SoilWaterCooler_dataGridView.Columns.Add("A9", "냉방.EER[W/W]");
+            SoilWaterCooler_dataGridView.Columns.Add("A7", "냉방.출력.[kW]");
+            SoilWaterCooler_dataGridView.Columns.Add("A8", "냉방.전력.[kW]");
+            SoilWaterCooler_dataGridView.Columns.Add("A9", "냉방.EER.[W/W]");
 
             SoilWaterCooler_dataGridView.Columns.Add("A10", "대기전력");
             SoilWaterCooler_dataGridView.Columns.Add("A11", "연료");
             SoilWaterCooler_dataGridView.Columns.Add("A12", "압축기");
             SoilWaterCooler_dataGridView.Columns.Add("A13", "부하측.증발기");
-            SoilWaterCooler_dataGridView.Columns.Add("A14", "냉수온도[℃].출구");
-            SoilWaterCooler_dataGridView.Columns.Add("A15", "냉수온도[℃].입구");
+            SoilWaterCooler_dataGridView.Columns.Add("A14", "냉수온도.출구.[℃]");
+            SoilWaterCooler_dataGridView.Columns.Add("A15", "냉수온도.입구.[℃]");
             SoilWaterCooler_dataGridView.Columns.Add("A16", "설치");
 
             SoilWaterCooler_dataGridView.Columns[0].Width = 40;
@@ -2161,13 +2161,13 @@ namespace main.contents
             AbsorbCooler_dataGridView.Columns.Add(EconomcomboBox);
             AbsorbCooler_dataGridView.Columns.Add("A5", "설치대수");
 
-            AbsorbCooler_dataGridView.Columns.Add("A6", "냉방.출력[kW]");
-            AbsorbCooler_dataGridView.Columns.Add("A7", "냉방.통합성능[W/W]");
-            AbsorbCooler_dataGridView.Columns.Add("A8", "냉방.냉방성능[W/W]");
+            AbsorbCooler_dataGridView.Columns.Add("A6", "냉방.출력.[kW]");
+            AbsorbCooler_dataGridView.Columns.Add("A7", "냉방.통합성능.[W/W]");
+            AbsorbCooler_dataGridView.Columns.Add("A8", "냉방.정격성능.[W/W]");
             AbsorbCooler_dataGridView.Columns.Add("A9", "대기전력");
             AbsorbCooler_dataGridView.Columns.Add("A10", "연료");
-            AbsorbCooler_dataGridView.Columns.Add("A11", "냉수온도[℃].출구");
-            AbsorbCooler_dataGridView.Columns.Add("A12", "냉수온도[℃].입구");
+            AbsorbCooler_dataGridView.Columns.Add("A11", "냉수온도.출구.[℃]");
+            AbsorbCooler_dataGridView.Columns.Add("A12", "냉수온도.입구.[℃]");
             AbsorbCooler_dataGridView.Columns.Add("A13", "설치");
 
             AbsorbCooler_dataGridView.Columns[0].Width = 40;
