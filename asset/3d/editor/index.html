@@ -135,48 +135,107 @@
 				} );
 */
 				//
+				var loader = new THREE.FileLoader();
+				let _getParam = (sname) => {
+					var params = location.search.substr(location.search.indexOf("?") + 1);
+					var sval = "", temp;
 
-				let timeout;
-
-				function saveState() {
-
-					if ( editor.config.getKey( 'autosave' ) === false ) {
-
-						return;
-
+					params = params.split("&");
+					for (var i = 0; i < params.length; i++) {
+						temp = params[i].split("=");
+						if ([temp[0]] == sname) { sval = temp[1]; }
 					}
+					return sval && sval !== 'null' ? sval : '';
+				};
+				let pid = _getParam("pid");
+				let objFile = "/projects/" + pid + ".obj";				
+				let jsonFile = "/projects/" + pid + ".json";				
 
-					clearTimeout( timeout );
+				loader.load(
+					"app.json",
+					function (text) {
+						editor.fromJSON(JSON.parse(text));
+						editor.cardinalMark.draw();
 
-					timeout = setTimeout( function () {
+						loader.load(
+							objFile,
+							function (text) {
+								let _getFileBlobUsingURL = function (url, convertBlob) {
+									var xhr = new XMLHttpRequest();
+									xhr.open("GET", url);
+									xhr.responseType = "blob";
+									xhr.addEventListener('load', function() {
+										convertBlob(xhr.response);
+									});
+									xhr.send();
+								};
 
-						editor.signals.savingStarted.dispatch();
+								let _blobToFile = function (blob, name) {
+										blob.lastModifiedDate = new Date();
+										blob.name = name;
+										return blob;
+								};
+								let _getFileObjectFromURL = function(filePathOrUrl, convertBlob) {
+									_getFileBlobUsingURL(filePathOrUrl, function (blob) {
+										convertBlob(_blobToFile(blob, 'model.obj'));
+									});
+								};
+								_getFileObjectFromURL(objFile, function (fileObject) {
+									editor.loader.loadFile(fileObject);
+									editor.cardinalMark.draw();
+								});
+							},null, function () {
+								loader.load(
+									jsonFile,
+									function (text) {
+										editor.fromJSON(JSON.parse(text));
+										editor.cardinalMark.draw();
+									},null, function () {
+									});
+							});
+					});
 
-						timeout = setTimeout( function () {
+				// let timeout;
 
-							editor.storage.set( editor.toJSON() );
+				// function saveState() {
 
-							editor.signals.savingFinished.dispatch();
+				// 	if ( editor.config.getKey( 'autosave' ) === false ) {
 
-						}, 100 );
+				// 		return;
 
-					}, 1000 );
+				// 	}
 
-				}
+				// 	clearTimeout( timeout );
 
-				const signals = editor.signals;
+				// 	timeout = setTimeout( function () {
 
-				signals.geometryChanged.add( saveState );
-				signals.objectAdded.add( saveState );
-				signals.objectChanged.add( saveState );
-				signals.objectRemoved.add( saveState );
-				signals.materialChanged.add( saveState );
-				signals.sceneBackgroundChanged.add( saveState );
-				signals.sceneEnvironmentChanged.add( saveState );
-				signals.sceneFogChanged.add( saveState );
-				signals.sceneGraphChanged.add( saveState );
-				signals.scriptChanged.add( saveState );
-				signals.historyChanged.add( saveState );
+				// 		editor.signals.savingStarted.dispatch();
+
+				// 		timeout = setTimeout( function () {
+
+				// 			editor.storage.set( editor.toJSON() );
+
+				// 			editor.signals.savingFinished.dispatch();
+
+				// 		}, 100 );
+
+				// 	}, 1000 );
+
+				// }
+
+				// const signals = editor.signals;
+
+				// signals.geometryChanged.add( saveState );
+				// signals.objectAdded.add( saveState );
+				// signals.objectChanged.add( saveState );
+				// signals.objectRemoved.add( saveState );
+				// signals.materialChanged.add( saveState );
+				// signals.sceneBackgroundChanged.add( saveState );
+				// signals.sceneEnvironmentChanged.add( saveState );
+				// signals.sceneFogChanged.add( saveState );
+				// signals.sceneGraphChanged.add( saveState );
+				// signals.scriptChanged.add( saveState );
+				// signals.historyChanged.add( saveState );
 
 			} );
 
@@ -247,17 +306,17 @@
 */
 			// ServiceWorker
 
-			if ( 'serviceWorker' in navigator ) {
+			// if ( 'serviceWorker' in navigator ) {
 
-				try {
+			// 	try {
 
-					navigator.serviceWorker.register( 'sw.js' );
+			// 		navigator.serviceWorker.register( 'sw.js' );
 
-				} catch ( error ) {
+			// 	} catch ( error ) {
 
-				}
+			// 	}
 
-			}
+			// }
 
 		</script>
 	</body>
