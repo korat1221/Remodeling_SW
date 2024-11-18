@@ -3690,13 +3690,13 @@ namespace main.contents
             공조방식Combo.Items.AddRange("변풍량", "정풍량");
             AHU_dataGridView.Columns.Add(공조방식Combo);
 
-            AHU_dataGridView.Columns.Add("A5", "열회수 유형 및 효율.유형");
-            AHU_dataGridView.Columns.Add("A6", "열회수 유형 및 효율.온도.냉방.[%]");
-            AHU_dataGridView.Columns.Add("A7", "열회수 유형 및 효율.온도.난방.[%]");
-            AHU_dataGridView.Columns.Add("A8", "열회수 유형 및 효율.유효전열.냉방.[%]");
-            AHU_dataGridView.Columns.Add("A9", "열회수 유형 및 효율.유효전열.난방.[%]");
-            AHU_dataGridView.Columns.Add("A10", "열회수 유형 및 효율.습도.냉방.[%]");
-            AHU_dataGridView.Columns.Add("A11", "열회수 유형 및 효율.습도.난방.[%]");
+            AHU_dataGridView.Columns.Add("A5", "열회수기.유형");
+            AHU_dataGridView.Columns.Add("A6", "회수 효율.온도.냉방.[%]");
+            AHU_dataGridView.Columns.Add("A7", "회수 효율.온도.난방.[%]");
+            AHU_dataGridView.Columns.Add("A8", "회수 효율.유효전열.냉방.[%]");
+            AHU_dataGridView.Columns.Add("A9", "회수 효율.유효전열.난방.[%]");
+            AHU_dataGridView.Columns.Add("A10", "회수 효율.절대습도.냉방.[%]");
+            AHU_dataGridView.Columns.Add("A11", "회수 효율.절대습도.난방.[%]");
             AHU_dataGridView.Columns.Add("A12", "냉각코일.출력.[kW]");
             AHU_dataGridView.Columns.Add("A13", "냉각코일.입구온도.[℃_DB]");
             AHU_dataGridView.Columns.Add("A14", "냉각코일.입구온도.[℃_WB]");
@@ -4068,13 +4068,13 @@ namespace main.contents
             설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
             HRV_dataGridView.Columns.Add(설치유형Combo);
 
-            HRV_dataGridView.Columns.Add("A4", "열회수 유형 및 효율.유형");
-            HRV_dataGridView.Columns.Add("A5", "열회수 유형 및 효율.온도.냉방.[%]");
-            HRV_dataGridView.Columns.Add("A6", "열회수 유형 및 효율.온도.난방.[%]");
-            HRV_dataGridView.Columns.Add("A7", "열회수 유형 및 효율.유효전열.냉방.[%]");
-            HRV_dataGridView.Columns.Add("A8", "열회수 유형 및 효율.유효전열.난방.[%]");
-            HRV_dataGridView.Columns.Add("A9", "열회수 유형 및 효율.습도.냉방.[%]");
-            HRV_dataGridView.Columns.Add("A10", "열회수 유형 및 효율.습도.난방.[%]");
+            HRV_dataGridView.Columns.Add("A4", "열회수기.유형");
+            HRV_dataGridView.Columns.Add("A5", "회수 효율.온도.냉방.[%]");
+            HRV_dataGridView.Columns.Add("A6", "회수 효율.온도.난방.[%]");
+            HRV_dataGridView.Columns.Add("A7", "회수 효율.유효전열.냉방.[%]");
+            HRV_dataGridView.Columns.Add("A8", "회수 효율.유효전열.난방.[%]");
+            HRV_dataGridView.Columns.Add("A9", "회수 효율.절대습도.냉방.[%]");
+            HRV_dataGridView.Columns.Add("A10", "회수 효율.절대습도.난방.[%]");
             HRV_dataGridView.Columns.Add("A11", "팬.풍량.[CMH]");
             HRV_dataGridView.Columns.Add("A12", "팬.정압.[Pa]");
             HRV_dataGridView.Columns.Add("A13", "팬.모터제어");
@@ -4315,15 +4315,15 @@ namespace main.contents
             }
             CoolingTop_dataGridView.Columns.Add(TypecomboBox);
 
-            CoolingTop_dataGridView.Columns.Add("A5", "성능.냉각능력[kW]");
+            CoolingTop_dataGridView.Columns.Add("A5", "성능.냉각용량.[kW]");
             //버튼 추가
             CoolingTop_dataGridView.Columns.Add("A6", "");
-            CoolingTop_dataGridView.Columns.Add("A7", "성능.냉각수량[CMH]");
+            CoolingTop_dataGridView.Columns.Add("A7", "성능.냉각수량.[CMH]");
 
-            CoolingTop_dataGridView.Columns.Add("A8", "온도.입구[℃]");
-            CoolingTop_dataGridView.Columns.Add("A9", "온도.출구[℃]");
-            CoolingTop_dataGridView.Columns.Add("A10", "대기전력[W]");
-            CoolingTop_dataGridView.Columns.Add("A11", "소비전력[kW]");
+            CoolingTop_dataGridView.Columns.Add("A8", "온도.입구.[℃]");
+            CoolingTop_dataGridView.Columns.Add("A9", "온도.출구.[℃]");
+            CoolingTop_dataGridView.Columns.Add("A10", "대기전력.[W]");
+            CoolingTop_dataGridView.Columns.Add("A11", "소비전력.[kW]");
 
 
 
@@ -4339,7 +4339,7 @@ namespace main.contents
             CoolingTop_dataGridView.Columns.Add(FanTypecomboBox);
 
             CoolingTop_dataGridView.Columns.Add("A14", "대수.[EA]");
-            CoolingTop_dataGridView.Columns.Add("A15", "전력소비계수[kW/kW]");
+            CoolingTop_dataGridView.Columns.Add("A15", "전력소비계수.[kW/kW]");
 
 
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
