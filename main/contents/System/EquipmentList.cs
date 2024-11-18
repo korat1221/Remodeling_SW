@@ -2180,8 +2180,8 @@ namespace main.contents
             GroundHP_dataGridView.Columns.Add("A5", "공급유형");
             GroundHP_dataGridView.Columns.Add("A6", "수직/수평");
             GroundHP_dataGridView.Columns.Add("A7", "냉방정격.용량.[kW]");
-            GroundHP_dataGridView.Columns.Add("A8", "냉방정격.EER.[W/W]");
-            GroundHP_dataGridView.Columns.Add("A9", "냉방.소비전력.[kW]");
+            GroundHP_dataGridView.Columns.Add("A8", "냉방정격.COP.[W/W]");
+            GroundHP_dataGridView.Columns.Add("A9", "냉방정격.소비전력.[kW]");
             GroundHP_dataGridView.Columns.Add("A10", "난방정격(0℃).용량.[kW]");
             GroundHP_dataGridView.Columns.Add("A11", "난방정격(0℃).COP.[W/W]");
             GroundHP_dataGridView.Columns.Add("A12", "난방정격(0℃).소비전력.[kW]");
@@ -3027,9 +3027,9 @@ namespace main.contents
             AirCooler_dataGridView.Columns.Add("A1", "번호");
             AirCooler_dataGridView.Columns.Add("A2", "DB유형");
             AirCooler_dataGridView.Columns.Add("A3", "명칭");
-            AirCooler_dataGridView.Columns.Add("A4", "냉방성능.출력[kW]");
-            AirCooler_dataGridView.Columns.Add("A5", "냉방성능.소비전력[kW]");
-            AirCooler_dataGridView.Columns.Add("A6", "냉방성능.EER");
+            AirCooler_dataGridView.Columns.Add("A4", "냉방성능.출력.[kW]");
+            AirCooler_dataGridView.Columns.Add("A5", "냉방성능.소비전력.[kW]");
+            AirCooler_dataGridView.Columns.Add("A6", "냉방성능.EER.[W/W]");
 
             DataGridViewComboBoxColumn PressCombo = new DataGridViewComboBoxColumn();
             PressCombo.HeaderText = "압축기";
@@ -3041,7 +3041,7 @@ namespace main.contents
             연료Combo.Items.AddRange(new string[] { "가스", "전기" });
             AirCooler_dataGridView.Columns.Add(연료Combo);
 
-            AirCooler_dataGridView.Columns.Add("A9", "대기전력[W]");
+            AirCooler_dataGridView.Columns.Add("A9", "대기전력.[W]");
             AirCooler_dataGridView.Columns.Add("A10", "대수.[EA]");
 
             DataGridViewComboBoxColumn 설치Combo = new DataGridViewComboBoxColumn();
@@ -3054,9 +3054,9 @@ namespace main.contents
             SupplycomboBox.Items.AddRange(new string[] { "직팽식", "수방식" });
             AirCooler_dataGridView.Columns.Add(SupplycomboBox);
 
-            AirCooler_dataGridView.Columns.Add("A13", "송풍기.소비전력[kW]");
-            AirCooler_dataGridView.Columns.Add("A14", "냉수온도.입구[℃]");
-            AirCooler_dataGridView.Columns.Add("A15", "냉수온도.출구[℃]");
+            AirCooler_dataGridView.Columns.Add("A13", "송풍기.소비전력.[kW]");
+            AirCooler_dataGridView.Columns.Add("A14", "냉수온도.입구.[℃]");
+            AirCooler_dataGridView.Columns.Add("A15", "냉수온도.출구.[℃]");
 
             AirCooler_dataGridView.Columns[0].Width = 40;
             AirCooler_dataGridView.Columns[1].Width = 60;
