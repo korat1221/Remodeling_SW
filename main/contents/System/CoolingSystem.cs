@@ -307,19 +307,29 @@ namespace main.contents
             QC_a_Ahu = 0;
             QC_max_Ahu = 0;
 
-            foreach (string ahu in AHUNameList) //3개가 잡혔다. 각설비별 값을 입력해서 더해야함
+            if(AHUNameList.Count > 0)
             {
-                string[][] 면적 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "선택열회수기 ='" + ahu + "'");
-                for (int i = 0; i < 면적.Length; i++)
+
+                foreach (string ahu in AHUNameList) //3개가 잡혔다. 각설비별 값을 입력해서 더해야함
                 {
-                    A_Ahu += Convert.ToDouble(면적[i][0]); //해당설비 면적 다 더하기
+                    string[][] 면적 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "선택열회수기 ='" + ahu + "'");
+                    for (int i = 0; i < 면적.Length; i++)
+                    {
+                        A_Ahu += Convert.ToDouble(면적[i][0]); //해당설비 면적 다 더하기
+                    }
+                    string[][] 부하 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "공조요구량,Qmax_tot", " 번호 = '" + ahu + "' And 난방_냉방 ='냉방'");
+                    for (int k = 0; k < 12; k++)
+                    {
+                        QC_a_Ahu += Convert.ToDouble(부하[k][0]);
+                    }
+                    QC_max_Ahu += Convert.ToDouble(부하[7][1]) / 1000; //7월로 한정함
                 }
-                string[][] 부하 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "공조요구량,Qmax_tot", " 번호 = '" + ahu + "' And 난방_냉방 ='냉방'");
-                for (int k = 0; k < 12; k++)
-                {
-                    QC_a_Ahu += Convert.ToDouble(부하[k][0]);
-                }
-                QC_max_Ahu += Convert.ToDouble(부하[7][1]) / 1000; //7월로 한정함
+            }
+            else
+            {
+                A_Ahu = 0;
+                QC_a_Ahu = 0;
+                QC_max_Ahu = 0;
             }
 
             if (AHUNameList.Count > 1)
@@ -3946,7 +3956,16 @@ namespace main.contents
                     {
                         SelectAHU_nonsplit = Ahu.SelectAhu;
                         Split(SelectAHU_nonsplit, AHUNameList);
-                        SelectedAhuText.Text = AHUNameList[0].ToString() + " 외 " + (AHUNameList.Count - 1).ToString() + "개 공조기";
+                        SelectedAhuText.Visible = true;
+                        SelectedAhuText.Text = AHUNameList[0].ToString() + " 외 " + (AHUNameList.Count - 1).ToString() + "개";
+                        Ahumainwrite();
+                    }
+                    else
+                    {
+                        SelectAHU_nonsplit = null;
+                        AHUNameList.Clear();
+                        SelectedAhuText.Visible = true;
+                        SelectedAhuText.Text = null;
                         Ahumainwrite();
                     }
                 }

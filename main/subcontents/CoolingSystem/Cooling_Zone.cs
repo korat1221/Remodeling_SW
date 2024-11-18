@@ -146,10 +146,21 @@ namespace main.subcontents
                     {
                         double load = 0;
                         double area = 0;
-                        string[][] 부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "AHUSystem_Result", "공조요구량,Qmax_tot", " 번호 ='" + Value[n][0] + "' And 난방_냉방 = '냉방'");
+                        double Power = 0;
                         for (int j = 0; j < 12; j++)
                         {
-                            load += Convert.ToDouble(부하[j][0]);
+                            string mth = string.Format("{0}월", j+1);
+                            string[][] 부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "AHUSystem_Result", "공조요구량,Qmax_tot", " 번호 ='" + Value[n][0] + "' And 난방_냉방 = '냉방' And 월 = '"+mth+"'");
+                            double v = 0;
+                            if (double.TryParse(부하[0][0], out v))
+                            {
+                                load += v;
+                            }
+                            else
+                            {
+                                load += 0;
+                            }
+                            Power = Convert.ToDouble(부하[0][0]);
                         }
                         string[][] 존 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,순바닥면적", "선택열회수기 = '" + Value[n][0] + "'");
                         for(int h= 0;h<존.Length ; h++)
@@ -165,7 +176,7 @@ namespace main.subcontents
                         CoolingZone_dataGridView.Rows[nRow].Cells[3].Value = Value[n][1]; //공조기명칭
                         CoolingZone_dataGridView.Rows[nRow].Cells[4].Value = Value[n][2]; //유형
                         CoolingZone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F0}", load);
-                        CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Convert.ToDouble(부하[0][1]) / 1000);
+                        CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Power / 1000);
                         CoolingZone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F2}", area); //면적
                     }
                 } 
