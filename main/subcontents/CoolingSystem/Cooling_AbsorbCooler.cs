@@ -69,12 +69,12 @@ namespace main.subcontents.CoolingSystem
             AbsorbCooler_dataGridView.Columns.Add("A1", "설치대수");
             AbsorbCooler_dataGridView.Columns.Add("A2", "번호");
             AbsorbCooler_dataGridView.Columns.Add("A3", "명칭");
-            AbsorbCooler_dataGridView.Columns.Add("A4", "냉방성능.출력[kW]");
-            AbsorbCooler_dataGridView.Columns.Add("A5", "냉방성능.통합성능[kW/kW]");
-            AbsorbCooler_dataGridView.Columns.Add("A6", "냉방성능.냉방성능[kW/kW]");
-            AbsorbCooler_dataGridView.Columns.Add("A7", "대기전력[W]");
-            AbsorbCooler_dataGridView.Columns.Add("A8", "냉수온도.입구[℃]");
-            AbsorbCooler_dataGridView.Columns.Add("A9", "냉수온도.출구[℃]");
+            AbsorbCooler_dataGridView.Columns.Add("A4", "냉방성능.출력.[kW]");
+            AbsorbCooler_dataGridView.Columns.Add("A5", "냉방성능.통합성능.[W/W]");
+            AbsorbCooler_dataGridView.Columns.Add("A6", "냉방성능.냉방성능.[W/W]");
+            AbsorbCooler_dataGridView.Columns.Add("A7", "대기전력.[W]");
+            AbsorbCooler_dataGridView.Columns.Add("A8", "냉수온도.입구.[℃]");
+            AbsorbCooler_dataGridView.Columns.Add("A9", "냉수온도.출구.[℃]");
             AbsorbCooler_dataGridView.Columns.Add("A10", "연료");
             AbsorbCooler_dataGridView.Columns.Add("A11", "설치");
         }

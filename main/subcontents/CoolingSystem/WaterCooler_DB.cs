@@ -50,10 +50,10 @@ namespace main.subcontents
                 WaterCooler_dataGridView.Columns.Add("A1", "번호");
                 WaterCooler_dataGridView.Columns.Add("A2", "압축기");
                 WaterCooler_dataGridView.Columns.Add("A3", "냉매");
-                WaterCooler_dataGridView.Columns.Add("A4", "냉수온도.출구[℃]");
-                WaterCooler_dataGridView.Columns.Add("A5", "냉각수온도.입구[℃]");
-                WaterCooler_dataGridView.Columns.Add("A6", "냉각수온도.출구[℃]");
-                WaterCooler_dataGridView.Columns.Add("A7", "냉방성능.EER[W/W]");
+                WaterCooler_dataGridView.Columns.Add("A4", "냉수온도.출구.[℃]");
+                WaterCooler_dataGridView.Columns.Add("A5", "냉각수온도.입구.[℃]");
+                WaterCooler_dataGridView.Columns.Add("A6", "냉각수온도.출구.[℃]");
+                WaterCooler_dataGridView.Columns.Add("A7", "냉방성능.EER.[W/W]");
                 WaterCooler_dataGridView.Columns.Add("A8", "비고");
             }
             else

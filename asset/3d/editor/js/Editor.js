@@ -6,6 +6,7 @@ import { History as _History } from './History.js';
 import { Strings } from './Strings.js';
 import { Storage as _Storage } from './Storage.js';
 import { Selector } from './Selector.js';
+import { CardinalMark } from './CardinalMark.js';
 
 var _DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.01, 1000 );
 _DEFAULT_CAMERA.name = 'Camera';
@@ -101,6 +102,7 @@ function Editor() {
 	this.selector = new Selector( this );
 	this.storage = new _Storage();
 	this.strings = new Strings( this.config );
+	this.cardinalMark = new CardinalMark(this);
 
 	this.loader = new Loader( this );
 
@@ -131,7 +133,7 @@ function Editor() {
 	this.viewportShading = 'default';
 
 	this.addCamera( this.camera );
-
+	
 }
 
 Editor.prototype = {
@@ -176,7 +178,7 @@ Editor.prototype = {
 			if ( child.material !== undefined ) scope.addMaterial( child.material );
 
 			scope.addCamera( child );
-			scope.addHelper( child );
+		//	scope.addHelper( child );
 
 		} );
 

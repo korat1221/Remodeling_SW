@@ -81,7 +81,7 @@ namespace main.subcontents.CoolingSystem
             AirCon_dataGridView.Columns.Add("A3", "명칭");
             AirCon_dataGridView.Columns.Add("A4", "냉방성능.출력[kW]");
             AirCon_dataGridView.Columns.Add("A5", "냉방성능.소비전력[kW]");
-            AirCon_dataGridView.Columns.Add("A6", "냉방성능.EER[W/w]");
+            AirCon_dataGridView.Columns.Add("A6", "냉방성능.EER[W/W]");
             AirCon_dataGridView.Columns.Add("A7", "대기전력[W]");
             AirCon_dataGridView.Columns.Add("A8", "연료");
 

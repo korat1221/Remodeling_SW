@@ -204,7 +204,6 @@ namespace main.contents
 
                 Cooling_Zone ZC = new Cooling_Zone(Num, SelectZone_nonsplit, select);
 
-
                 DialogResult result = ZC.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -213,6 +212,13 @@ namespace main.contents
                         SelectZone_nonsplit = ZC.SelectZone;
                         Split(ZC.SelectZone, ZoneNameList);
                         SelectedZoneText.Text = ZoneNameList[0].ToString() + " 외 " + (ZoneNameList.Count - 1).ToString() + "개";
+                        Zonemainwrite();
+                    }
+                    else
+                    {
+                        SelectZone_nonsplit = null;
+                        ZoneNameList.Clear();
+                        SelectedZoneText.Text = null;
                         Zonemainwrite();
                     }
 
@@ -245,22 +251,32 @@ namespace main.contents
             A_z = 0;
             QC_a_z = 0;
             QC_max_z = 0;
-            foreach (string zone in ZoneNameList)
+            if (ZoneNameList.Count > 0)
             {
-                string[][] 면적 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호 ='" + zone + "'");
-                string[][] 부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + zone + "' And 난방_냉방 ='냉방'");
-                if (부하.Length == null || 부하.Length == 0)
+                foreach (string zone in ZoneNameList)
                 {
-                    MessageBox.Show("요구량계산을 해주세요!");
-                    return;
-                }
-                else
-                {
-                    A_z += Convert.ToDouble(면적[0][0]);
-                    QC_a_z += Convert.ToDouble(부하[0][0]);
-                    QC_max_z += Convert.ToDouble(부하[0][1]) / 1000;
+                    string[][] 면적 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호 ='" + zone + "'");
+                    string[][] 부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + zone + "' And 난방_냉방 ='냉방'");
+                    if (부하.Length == null || 부하.Length == 0)
+                    {
+                        MessageBox.Show("요구량계산을 해주세요!");
+                        return;
+                    }
+                    else
+                    {
+                        A_z += Convert.ToDouble(면적[0][0]);
+                        QC_a_z += Convert.ToDouble(부하[0][0]);
+                        QC_max_z += Convert.ToDouble(부하[0][1]) / 1000;
+                    }
                 }
             }
+            else
+            {
+                A_z = 0;
+                QC_a_z = 0;
+                QC_max_z = 0;
+            }
+           
             if (ZoneNameList.Count > 1)
             {
                 ZoneS_label.Visible = true;
@@ -821,15 +837,15 @@ namespace main.contents
 
 
             DataGridViewComboBoxColumn EconomcomboBox = new DataGridViewComboBoxColumn();
-            EconomcomboBox.HeaderText = "외기냉방유무";
+            EconomcomboBox.HeaderText = "외기냉방";
             EconomcomboBox.Name = "Economizer";
             EconomcomboBox.Items.AddRange(new string[] { "있음", "없음" });
             AirCon_dataGridView.Columns.Add(EconomcomboBox);
 
             AirCon_dataGridView.Columns.Add("A6", "설치대수");
-            AirCon_dataGridView.Columns.Add("A7", "냉방출력[kW]");
-            AirCon_dataGridView.Columns.Add("A8", "소비전력[kW]");
-            AirCon_dataGridView.Columns.Add("A9", "냉방성능[EER]");
+            AirCon_dataGridView.Columns.Add("A7", "냉방출력.[kW]");
+            AirCon_dataGridView.Columns.Add("A8", "소비전력.[kW]");
+            AirCon_dataGridView.Columns.Add("A9", "냉방성능.[EER]");
             AirCon_dataGridView.Columns.Add("A10", "대기전력");
             AirCon_dataGridView.Columns.Add("A11", "연료");
             AirCon_dataGridView.Columns.Add("A12", "설치");
@@ -1062,15 +1078,15 @@ namespace main.contents
             AirCooler_dataGridView.Columns.Add(ControlcomboBox);
 
             DataGridViewComboBoxColumn EconomcomboBox = new DataGridViewComboBoxColumn();
-            EconomcomboBox.HeaderText = "외기냉방유무";
+            EconomcomboBox.HeaderText = "외기냉방";
             EconomcomboBox.Name = "Economizer";
             EconomcomboBox.Items.AddRange(new string[] { "있음", "없음" });
             AirCooler_dataGridView.Columns.Add(EconomcomboBox);
 
             AirCooler_dataGridView.Columns.Add("A6", "설치대수");
-            AirCooler_dataGridView.Columns.Add("A7", "냉방.출력[kW]");
-            AirCooler_dataGridView.Columns.Add("A8", "냉방.전력[kW]");
-            AirCooler_dataGridView.Columns.Add("A9", "냉방.EER[W/W]");
+            AirCooler_dataGridView.Columns.Add("A7", "냉방.출력.[kW]");
+            AirCooler_dataGridView.Columns.Add("A8", "냉방.전력.[kW]");
+            AirCooler_dataGridView.Columns.Add("A9", "냉방.EER.[W/W]");
 
             AirCooler_dataGridView.Columns.Add("A10", "대기전력");
             AirCooler_dataGridView.Columns.Add("A11", "연료");
@@ -1358,22 +1374,22 @@ namespace main.contents
             WaterCooler_dataGridView.Columns.Add("A4", "제어유형");
 
             DataGridViewComboBoxColumn EconomcomboBox = new DataGridViewComboBoxColumn();
-            EconomcomboBox.HeaderText = "외기냉방유무";
+            EconomcomboBox.HeaderText = "외기냉방";
             EconomcomboBox.Name = "Economizer";
             EconomcomboBox.Items.AddRange(new string[] { "있음", "없음" });
             WaterCooler_dataGridView.Columns.Add(EconomcomboBox);
 
             WaterCooler_dataGridView.Columns.Add("A6", "설치대수");
-            WaterCooler_dataGridView.Columns.Add("A7", "냉방.출력[kW]");
-            WaterCooler_dataGridView.Columns.Add("A8", "냉방.전력[kW]");
-            WaterCooler_dataGridView.Columns.Add("A9", "냉방.EER[W/W]");
+            WaterCooler_dataGridView.Columns.Add("A7", "냉방.출력.[kW]");
+            WaterCooler_dataGridView.Columns.Add("A8", "냉방.전력.[kW]");
+            WaterCooler_dataGridView.Columns.Add("A9", "냉방.EER.[W/W]");
 
             WaterCooler_dataGridView.Columns.Add("A10", "대기전력");
             WaterCooler_dataGridView.Columns.Add("A11", "연료");
             WaterCooler_dataGridView.Columns.Add("A12", "압축기");
             WaterCooler_dataGridView.Columns.Add("A13", "부하측.증발기");
-            WaterCooler_dataGridView.Columns.Add("A14", "냉수온도[℃].출구");
-            WaterCooler_dataGridView.Columns.Add("A15", "냉수온도[℃].입구");
+            WaterCooler_dataGridView.Columns.Add("A14", "냉수온도.출구.[℃]");
+            WaterCooler_dataGridView.Columns.Add("A15", "냉수온도.입구.[℃]");
             WaterCooler_dataGridView.Columns.Add("A16", "설치");
 
             WaterCooler_dataGridView.Columns[0].Width = 40;
@@ -1610,21 +1626,21 @@ namespace main.contents
             SoilCooler_dataGridView.Columns.Add("A4", "제어유형");
 
             DataGridViewComboBoxColumn EconomcomboBox = new DataGridViewComboBoxColumn();
-            EconomcomboBox.HeaderText = "외기냉방유무";
+            EconomcomboBox.HeaderText = "외기냉방";
             EconomcomboBox.Name = "Economizer";
             EconomcomboBox.Items.AddRange(new string[] { "있음", "없음" });
             SoilCooler_dataGridView.Columns.Add(EconomcomboBox);
             SoilCooler_dataGridView.Columns.Add("A6", "설치대수");
-            SoilCooler_dataGridView.Columns.Add("A7", "냉방.출력[kW]");
-            SoilCooler_dataGridView.Columns.Add("A8", "냉방.전력[kW]");
-            SoilCooler_dataGridView.Columns.Add("A9", "냉방.EER[W/W]");
+            SoilCooler_dataGridView.Columns.Add("A7", "냉방.출력.[kW]");
+            SoilCooler_dataGridView.Columns.Add("A8", "냉방.전력.[kW]");
+            SoilCooler_dataGridView.Columns.Add("A9", "냉방.EER.[W/W]");
 
             SoilCooler_dataGridView.Columns.Add("A10", "대기전력");
             SoilCooler_dataGridView.Columns.Add("A11", "연료");
             SoilCooler_dataGridView.Columns.Add("A12", "압축기");
             SoilCooler_dataGridView.Columns.Add("A13", "부하측.증발기");
-            SoilCooler_dataGridView.Columns.Add("A14", "냉수온도[℃].출구");
-            SoilCooler_dataGridView.Columns.Add("A15", "냉수온도[℃].입구");
+            SoilCooler_dataGridView.Columns.Add("A14", "냉수온도.출구.[℃]");
+            SoilCooler_dataGridView.Columns.Add("A15", "냉수온도.입구.[℃]");
             SoilCooler_dataGridView.Columns.Add("A16", "설치");
 
             SoilCooler_dataGridView.Columns[0].Width = 40;
@@ -1878,21 +1894,21 @@ namespace main.contents
             SoilWaterCooler_dataGridView.Columns.Add("A4", "제어유형");
 
             DataGridViewComboBoxColumn EconomcomboBox = new DataGridViewComboBoxColumn();
-            EconomcomboBox.HeaderText = "외기냉방유무";
+            EconomcomboBox.HeaderText = "외기냉방";
             EconomcomboBox.Name = "Economizer";
             EconomcomboBox.Items.AddRange(new string[] { "있음", "없음" });
             SoilWaterCooler_dataGridView.Columns.Add(EconomcomboBox);
             SoilWaterCooler_dataGridView.Columns.Add("A6", "설치대수");
-            SoilWaterCooler_dataGridView.Columns.Add("A7", "냉방.출력[kW]");
-            SoilWaterCooler_dataGridView.Columns.Add("A8", "냉방.전력[kW]");
-            SoilWaterCooler_dataGridView.Columns.Add("A9", "냉방.EER[W/W]");
+            SoilWaterCooler_dataGridView.Columns.Add("A7", "냉방.출력.[kW]");
+            SoilWaterCooler_dataGridView.Columns.Add("A8", "냉방.전력.[kW]");
+            SoilWaterCooler_dataGridView.Columns.Add("A9", "냉방.EER.[W/W]");
 
             SoilWaterCooler_dataGridView.Columns.Add("A10", "대기전력");
             SoilWaterCooler_dataGridView.Columns.Add("A11", "연료");
             SoilWaterCooler_dataGridView.Columns.Add("A12", "압축기");
             SoilWaterCooler_dataGridView.Columns.Add("A13", "부하측.증발기");
-            SoilWaterCooler_dataGridView.Columns.Add("A14", "냉수온도[℃].출구");
-            SoilWaterCooler_dataGridView.Columns.Add("A15", "냉수온도[℃].입구");
+            SoilWaterCooler_dataGridView.Columns.Add("A14", "냉수온도.출구.[℃]");
+            SoilWaterCooler_dataGridView.Columns.Add("A15", "냉수온도.입구.[℃]");
             SoilWaterCooler_dataGridView.Columns.Add("A16", "설치");
 
             SoilWaterCooler_dataGridView.Columns[0].Width = 40;
@@ -2139,19 +2155,19 @@ namespace main.contents
 
 
             DataGridViewComboBoxColumn EconomcomboBox = new DataGridViewComboBoxColumn();
-            EconomcomboBox.HeaderText = "외기냉방유무";
+            EconomcomboBox.HeaderText = "외기냉방";
             EconomcomboBox.Name = "Economizer";
             EconomcomboBox.Items.AddRange(new string[] { "있음", "없음" });
             AbsorbCooler_dataGridView.Columns.Add(EconomcomboBox);
             AbsorbCooler_dataGridView.Columns.Add("A5", "설치대수");
 
-            AbsorbCooler_dataGridView.Columns.Add("A6", "냉방.출력[kW]");
-            AbsorbCooler_dataGridView.Columns.Add("A7", "냉방.통합성능[W/W]");
-            AbsorbCooler_dataGridView.Columns.Add("A8", "냉방.냉방성능[W/W]");
+            AbsorbCooler_dataGridView.Columns.Add("A6", "냉방.출력.[kW]");
+            AbsorbCooler_dataGridView.Columns.Add("A7", "냉방.통합성능.[W/W]");
+            AbsorbCooler_dataGridView.Columns.Add("A8", "냉방.정격성능.[W/W]");
             AbsorbCooler_dataGridView.Columns.Add("A9", "대기전력");
             AbsorbCooler_dataGridView.Columns.Add("A10", "연료");
-            AbsorbCooler_dataGridView.Columns.Add("A11", "냉수온도[℃].출구");
-            AbsorbCooler_dataGridView.Columns.Add("A12", "냉수온도[℃].입구");
+            AbsorbCooler_dataGridView.Columns.Add("A11", "냉수온도.출구.[℃]");
+            AbsorbCooler_dataGridView.Columns.Add("A12", "냉수온도.입구.[℃]");
             AbsorbCooler_dataGridView.Columns.Add("A13", "설치");
 
             AbsorbCooler_dataGridView.Columns[0].Width = 40;

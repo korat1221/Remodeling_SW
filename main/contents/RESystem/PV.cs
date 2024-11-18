@@ -336,7 +336,7 @@ namespace main.contents
         public static bool OnLoadListProc(Form form)
         {
             List_PV f = (List_PV)form;
-            f.load_List(true);
+            f.load_List();
             return true;
         }
         private bool Save()
