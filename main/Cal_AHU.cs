@@ -671,10 +671,24 @@ namespace main
                     for (int mth = 0; mth < 12; mth++)
                     {
                         Vvmech[0, mth] = Math.Min(AHU_SA_Volume, Math.Max(Vmin_tot, Qmax_tot[0] / (0.34 * (theta_vmech[0, mth] - theta_iset_avg[0]))));
-                        theta_vmech[0, mth] = theta_iset_avg[0] + Qb_mth_tot[0, mth] / (0.34 * Vvmech_leak[0, mth] * tvmech_avg * dvmechmth_avg[mth] / 1000);
-
+                        if(Vvmech_leak[0, mth] == 0)
+                        {
+                            theta_vmech[0, mth] = theta_iset_avg[0];
+                        }
+                        else
+                        {
+                            theta_vmech[0, mth] = theta_iset_avg[0] + Qb_mth_tot[0, mth] / (0.34 * Vvmech_leak[0, mth] * tvmech_avg * dvmechmth_avg[mth] / 1000);
+                        }
+                                              
                         Vvmech[1, mth] = Math.Min(AHU_SA_Volume, Math.Max(Vmin_tot, Qmax_tot[1] / (0.34 * (theta_iset_avg[1] - theta_vmech[1, mth]))));
-                        theta_vmech[1, mth] = theta_iset_avg[1] - Qb_mth_tot[1, mth] / (0.34 * Vvmech_leak[1, mth] * tvmech_avg * dvmechmth_avg[mth] / 1000);
+                        if (Vvmech_leak[1, mth] == 0)
+                        {
+                            theta_vmech[1, mth] = theta_iset_avg[1];
+                        }
+                        else
+                        {
+                            theta_vmech[1, mth] = theta_iset_avg[1] - Qb_mth_tot[1, mth] / (0.34 * Vvmech_leak[1, mth] * tvmech_avg * dvmechmth_avg[mth] / 1000);
+                        }
                     }
                 }
             }
