@@ -14,12 +14,10 @@ using static System.Windows.Forms.MonthCalendar;
 
 namespace main
 {
-
     internal class Cal_RESystem
     {
         public string Num,  프로젝트유형, 프로젝트번호;
 
-        #region 태양광시스템
         public double PVPpk_kW; //태양광 최대출력 
         public double[] Qf_elec = new double[12]; //월별 전기소요량 
         public double[] Qfpvm_kWh = new double[12]; //월별 전기생산량 
@@ -37,17 +35,20 @@ namespace main
         private double Ceff; //배터리 용량(배터리 타입에 따른 방전 깊이 고려) 
         private double[] CQ = new double[12];//배터리 규격에 대한 지수 (소요량 대비 배터리 용량 계수)
         public double[] fmatch = new double[12];//매칭계수
-        private double[] fBatt = new double[12]; //배터리 수정계수 
-        public double[] Qbatt_loss = new double[12];// 배터리 손실
+        private double[] fBatt = new double[12]; //배터리 손실 
+        public double[] Qbatt_loss = new double[12];// 배터리 손실량
 
-       
+        //전체PV계산
+        double[] Qfkwh_totalBattery = new double[12], Qfkwh_totalGrid = new double[12]; //계통연계형합계, 독립형합계
+
+        //기후데이터
         public double[] Esol = new double[12];//일사량
         public double[] PVαsol = new double[12];//고도각
 
 
         public Cal_RESystem(string Num) { this.Num = Num; }
 
-
+        #region PV별 계산
         public void PVcalReady( )
         {
             string[][] buildinginfo = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트유형번호,지역", "");
@@ -163,7 +164,7 @@ namespace main
             {
                 Qf_elec[j] = 0;
                 string k = (j + 1).ToString() + "월";
-                string[][] value = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지사용량", "연료='전기' And 월='"+k+"'");
+                string[][] value = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "연료='전기' And 월='"+k+"'");
                 Qf_elec[j] = Convert.ToDouble(value[0][0]);
             }
             
@@ -176,50 +177,155 @@ namespace main
             }
         }
 
-        public void Cal_fmatch( ) //ISO인경우 
+        #endregion
+
+        #region PV별 저장
+        public void PVsave()
+        {
+            string[] month = new string[12];
+
+            if (PVType == "계통연계형")
+            {
+                for (int a = 0; a < 12; a++)
+                {
+                    month[a] = (a + 1).ToString() + "월";
+                    Program.DB.setValue(DB.type.ProjDB, "PV_Result", "프로젝트번호,프로젝트유형,번호,월,일사량,PV생산량", "'" + 프로젝트번호 + "','" + 프로젝트유형 + "','" + Num + "','" +
+                   month[a] + "','" + Esol[a] + "','" + Qfpvm_kWh[a] + "'", "번호, 월");
+                }
+            }
+            else if (PVType == "독립형") 
+            { 
+                for (int a = 0; a < 12; a++)
+                {
+                    month[a] = (a + 1).ToString() + "월";
+                    Program.DB.setValue(DB.type.ProjDB, "PV_Result", "프로젝트번호,프로젝트유형,번호,월,일사량,PV생산량,배터리손실", "'" + 프로젝트번호 + "','" + 프로젝트유형 + "','" + Num + "','" +
+                   month[a] + "','" + Esol[a] + "','" + Qfpvm_kWh[a] + "','" + fBatt[a] +"'", "번호, 월");
+                }
+            }           
+        }
+        #endregion
+
+        #region PV전체 계산 및 저장
+       
+        public void Cal_totalPV()
+        {
+            string[][] valuecount = Program.DB.getValue_SameCheck(DB.type.ProjDB, "PV_Result", "번호", "프로젝트유형 = '" + 프로젝트유형 + "' And 프로젝트번호 = '" + 프로젝트번호 + "'");
+            List<string> va = new List<string>();
+            for (int j = 0; j < valuecount.Length; j++)
+            {
+                va.Add(valuecount[j][0]);
+            }
+            Cal_totalQfkWh(va);
+            Cal_totalBattery(va);
+        }
+
+        public void Cal_totalQfkWh(List<string> _pvname )//ISO인경우 
+        {
+            for(int k = 0; k < 12; k++)
+            {
+                Qfkwh_totalBattery[k] = 0;
+                Qfkwh_totalGrid[k] = 0;
+                int a = k;
+                string m = a.ToString()+"월";
+                for(int j=0; j < _pvname.Count; j++)
+                {
+                    string[][] value = Program.DB.querySQL(DB.type.ProjDB, "select a.PV생산량, b.계통유형 from PV_Result as a Inner Join PV_Form as b on a.번호= b.번호 where a.번호='" + _pvname[j] + "' And 월 ='" + m + "'");
+                    if (value[0][1] == "계통연계형")
+                    {
+                        Qfkwh_totalGrid[k] = Convert.ToDouble(value[0][0]);
+                    }
+                    else
+                    {
+                        Qfkwh_totalBattery[k] = Convert.ToDouble(value[0][0]);
+                    }
+                }
+            }
+        }
+
+        public void Cal_totalBattery(List<string> _pvname)
+        {
+            for (int j = 0; j < 12; j++)
+            {
+                Qf_elec[j] = 0;
+                string k = (j + 1).ToString() + "월";
+                string[][] value = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "연료='전기' And 월='" + k + "'");
+                Qf_elec[j] = Convert.ToDouble(value[0][0]);
+            }
+            //배터리 방전깊이와 용량 그리고 효율
+            //대표타입에 따른 방전깊이 지정
+            //용량합 그리고 용량가중 효율 지정
+            
+            List<string> names = new List<string>();
+            List<double> capacity = new List<double>();
+            ηDoD = 0; //방전깊이
+            Cnenm = 0; //총용량
+            ηBatt = 0; //배터리효율
+
+            for(int a=0; a<_pvname.Count; a++)
+            {
+                string[][] batt = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "배터리번호,배터리용량", "번호='" + _pvname[a] + "'");
+                if (batt[0][0] != null || batt[0][0] != "")
+                {
+                    string[][] typ = Program.DB.getValue(DB.type.ProjDB, "User_PVBattery", "배터리타입,정격전력", "번호 = '" + batt[0][0] +"'");
+                    names.Add(typ[0][0]);
+                    capacity.Add(Convert.ToDouble(typ[0][1]));
+                }
+            }
+
+            if (names.Count > 0)
+            {
+                string type = names[capacity.IndexOf(capacity.Max())];
+                string[][] va = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광배터리계수", "최대방전깊이,시스템효율,방전시간", "배터리타입 = '" + type + "'");
+                ηDoD = Convert.ToDouble(va[0][0]);
+                ηBatt = Convert.ToDouble(va[0][1]);
+
+                for (int b = 0; b < capacity.Count; b++)
+                {
+                    Cnenm += capacity[b];
+                }
+
+                Ceff = Cnenm * ηDoD;
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    CQ[mth] = Ceff / Qf_elec[mth] * 100;
+                    γQ[mth] = PVPpk_kW / Qf_elec[mth] * 100;
+                    fBatt[mth] = Math.Max(1, (0.2 * Math.Log(γQ[mth], Math.E) + 1.85) * Math.Pow(CQ[mth], (0.1 * Math.Log(γQ[mth], Math.E) + 0.25)));
+                }
+            }
+            else
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    fBatt[mth] = 1;
+                }
+                ηBatt = 1;
+            }
+        }
+
+        public void Cal_fmatch() //ISO인경우 
         {
             double[] x = new double[12];
             for (int mth = 0; mth < 12; mth++)
             {
-                x[mth] = Qfpvm_kWh[mth] / Qf_elec[mth];
+                x[mth] = (Qfkwh_totalBattery[mth] + Qfkwh_totalGrid[mth]) / Qf_elec[mth];
                 fmatch[mth] = (x[mth] + 1 / x[mth] - 1) / (x[mth] + 1 / x[mth]);
             }
         }
 
-        public void Cal_Qf_pv()//ISO인경우 
+        public void Cal_totalQf( )
         {
-           
             for (int mth = 0; mth < 12; mth++)
             {
                 Qf_nutz_grid[mth] = 0;
                 Qbatt_loss[mth] = 0;
                 Qf_nutz_build[mth] = 0;
 
-                if (PVType == "독립형")
-                {
-                    Qf_nutz_grid[mth] =  Qfpvm_kWh[mth];
-                    Qbatt_loss[mth] = Qf_nutz_grid[mth] * (1 - ηBatt) * (fBatt[mth] - 1);
-                    Qf_nutz_build[mth] = Math.Max(Qf_nutz_grid[mth], Math.Min(Qfpvm_kWh[mth], Qf_nutz_grid[mth] * fBatt[mth]) - Qbatt_loss[mth]);
-                }
-                else
-                {
-                    Qf_nutz_grid[mth] = fmatch[mth] * Qfpvm_kWh[mth];
-                    Qf_nutz_build[mth] =  Math.Max(0,Qfpvm_kWh[mth] - Qf_nutz_grid[mth]) ;
-                }
+                Qf_nutz_grid[mth] = fmatch[mth] * (Qfkwh_totalBattery[mth] + Qfkwh_totalGrid[mth]); //송전량
+                Qbatt_loss[mth] = Qf_nutz_grid[mth] * (1 - ηBatt) * (fBatt[mth] - 1);
+                Qf_nutz_build[mth] = (Qfkwh_totalBattery[mth] + Qfkwh_totalGrid[mth] - Qf_nutz_grid[mth] ) * fBatt[mth] - Qbatt_loss[mth]; //건물사용량
             }
-        }
-        public void PVsave()
-        {
-            string[] month = new string[12];
-            for (int a = 0; a < 12; a++)
-            {
-                month[a] = (a + 1).ToString() + "월";
-                Program.DB.setValue(DB.type.ProjDB, "PV_Result", "프로젝트번호,프로젝트유형,번호,월,일사량,PV생산량", "'" + 프로젝트번호 + "','" + 프로젝트유형 + "','" + Num + "','" +
-               month[a] + "','" + Esol[a] + "','" + Qfpvm_kWh[a] + "'", "번호, 월");
-            }
-           
-        }
 
+        }
         public void PVtotalsave()
         {
 
@@ -715,12 +821,4 @@ namespace main
 
         #endregion
     }
-
-
-
-
-
-
-
 }
-
