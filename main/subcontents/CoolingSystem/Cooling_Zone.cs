@@ -160,7 +160,7 @@ namespace main.subcontents
                             {
                                 load += 0;
                             }
-                            Power = Convert.ToDouble(부하[0][0]);
+                            Power = Convert.ToDouble(부하[0][1]);
                         }
                         string[][] 존 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,순바닥면적", "선택열회수기 = '" + Value[n][0] + "'");
                         for(int h= 0;h<존.Length ; h++)
