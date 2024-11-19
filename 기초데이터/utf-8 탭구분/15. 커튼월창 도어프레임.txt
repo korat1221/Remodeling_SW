@@ -1,9 +1,0 @@
-번호	DB유형	제품명	제조사	"프레임
-열관류율"	"fr
-프레임두께"
-기호				Umt	dB
-단위				[W/m2?K]	[m]
-CWD_01	표준	단열ALU	IPAZEB	3.10	0.06
-CWD_02	표준	일반ALU	IPAZEB	4.50	0.06
-CWD_03	표준	STS	IPAZEB	6.70	0.06
-CWD_04	표준	none	IPAZEB	0.00	0.00
