@@ -557,5 +557,23 @@ namespace main
                 privateFont.AddMemoryFont(fontBuffer, font.Length);
             }
         }
+
+        public bool data_inputcheck(DataGridView db, int row, int column)
+        {
+            double a;
+            if (db.Rows[row].Cells[column].Value != "" && db.Rows[row].Cells[column].Value != null)
+            {
+                if (double.TryParse(db.Rows[row].Cells[column].Value.ToString(), out a))
+                {
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show("숫자를 입력해 주세요.");
+                    return false;
+                }
+            }
+            else return false;
+        }
     }
 }

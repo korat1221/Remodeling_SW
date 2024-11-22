@@ -961,9 +961,9 @@ namespace main.contents
             PV_dataGridView.Columns.Add("A2", "DB유형");
             PV_dataGridView.Columns.Add("A3", "명칭");
             PV_dataGridView.Columns.Add("A4", "Cell Type");
-            PV_dataGridView.Columns.Add("A5", "모듈.길이.[m]");
-            PV_dataGridView.Columns.Add("A6", "모듈.높이.[m]");
-            PV_dataGridView.Columns.Add("A7", "모듈.정격출력.[W]");
+            PV_dataGridView.Columns.Add("A5", "모듈(변경가능).길이.[m]");
+            PV_dataGridView.Columns.Add("A6", "모듈(변경가능).높이.[m]");
+            PV_dataGridView.Columns.Add("A7", "모듈(변경가능).정격출력.[W]");
             PV_dataGridView.Columns.Add("A8", "Kpk.[kW/m²]");
            
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
@@ -1095,7 +1095,18 @@ namespace main.contents
 
         private void PV_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            
+            double Length, Height, Power;
+            if(e.ColumnIndex == 5|| e.ColumnIndex == 6|| e.ColumnIndex == 7)
+            {
+                if(Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 5)&& Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 6)&& Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 7))
+                {
+                    Length = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
+                    Height = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
+                    Power = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString());
+                    double Power_m2 = Power / Length * Height / 1000;
+                    PV_dataGridView.Rows[e.RowIndex].Cells[8].Value = string.Format("{0:F3}", Power_m2);
+                }
+            }
         }
 
         private void Load_PV_Num()
@@ -1124,13 +1135,23 @@ namespace main.contents
                         {
                             Value[i - 1] = parsedValue.ToString();
                         }
-                        else
+                        else if(PV_dataGridView.Rows[k].Cells[i].Value !="")
                         {
                             Value[i - 1] = PV_dataGridView.Rows[k].Cells[i].Value.ToString();
                         }
+                        else 
+                        { 
+                            MessageBox.Show(string.Format("⚠️ {0}에서 {1}항목의 빈칸을 채워주세요", PV_dataGridView.Rows[k].Cells[i].Value.ToString(), PV_dataGridView.Columns[i].HeaderText), "주의", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
+                            return; 
+                        }
                     }
-                    else { Value[i - 1] = ""; }
+                    else 
+                    { 
+                        MessageBox.Show(string.Format("⚠️ {0}에서 '{1}'항목의 빈칸을 채워주세요", PV_dataGridView.Rows[k].Cells[1].Value.ToString(), PV_dataGridView.Columns[i].HeaderText), "주의", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
+                        return; 
+                    }
                 }
+
                 Program.DB.setValue(DB.type.ProjDB, "User_PV", "번호,프로젝트유형,DB유형,명칭,CELLTYPE,길이,높이,정격출력,Kpk,설치",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "'", "번호");
