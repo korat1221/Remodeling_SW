@@ -119,14 +119,14 @@
             // 
             // PVMainPanel
             // 
-            PVMainPanel.BackColor = Color.FromArgb(32, 77, 112);
+            PVMainPanel.BackColor = SystemColors.GradientActiveCaption;
             PVMainPanel.Controls.Add(panel4);
             PVMainPanel.Controls.Add(label3);
             PVMainPanel.Controls.Add(label1);
             PVMainPanel.Controls.Add(Num_textBox);
             PVMainPanel.Controls.Add(Name_textBox);
             PVMainPanel.Controls.Add(pictureBox1);
-            PVMainPanel.Location = new Point(0, 0);
+            PVMainPanel.Location = new Point(0, 4);
             PVMainPanel.Name = "PVMainPanel";
             PVMainPanel.Size = new Size(1000, 80);
             PVMainPanel.TabIndex = 17;
@@ -268,7 +268,7 @@
             // 
             // Num_textBox
             // 
-            Num_textBox.BackColor = Color.FromArgb(32, 77, 112);
+            Num_textBox.BackColor = SystemColors.GradientActiveCaption;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
             Num_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
@@ -460,9 +460,9 @@
             panel2.Controls.Add(label7);
             panel2.Controls.Add(Battery_label);
             panel2.Controls.Add(Inverter_textBox);
-            panel2.Location = new Point(0, 79);
+            panel2.Location = new Point(0, 84);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1000, 235);
+            panel2.Size = new Size(1000, 230);
             panel2.TabIndex = 139;
             // 
             // PVMoudle_textBox
@@ -554,7 +554,7 @@
             PV_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             PV_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             PV_dataGridView.Dock = DockStyle.Bottom;
-            PV_dataGridView.Location = new Point(0, 147);
+            PV_dataGridView.Location = new Point(0, 142);
             PV_dataGridView.Name = "PV_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;

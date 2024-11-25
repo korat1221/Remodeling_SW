@@ -1141,13 +1141,13 @@ namespace main.contents
                         }
                         else 
                         { 
-                            MessageBox.Show(string.Format("⚠️ {0}에서 {1}항목의 빈칸을 채워주세요", PV_dataGridView.Rows[k].Cells[i].Value.ToString(), PV_dataGridView.Columns[i].HeaderText), "주의", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
+                            MessageBox.Show(string.Format("{0}에서 {1}항목의 빈칸을 채워주세요", PV_dataGridView.Rows[k].Cells[i].Value.ToString(), PV_dataGridView.Columns[i].HeaderText), "주의", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
                             return; 
                         }
                     }
                     else 
                     { 
-                        MessageBox.Show(string.Format("⚠️ {0}에서 '{1}'항목의 빈칸을 채워주세요", PV_dataGridView.Rows[k].Cells[1].Value.ToString(), PV_dataGridView.Columns[i].HeaderText), "주의", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
+                        MessageBox.Show(string.Format("{0}에서 '{1}'항목의 빈칸을 채워주세요", PV_dataGridView.Rows[k].Cells[1].Value.ToString(), PV_dataGridView.Columns[i].HeaderText), "주의", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
                         return; 
                     }
                 }
