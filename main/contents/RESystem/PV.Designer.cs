@@ -666,20 +666,22 @@
             // 
             BatteryEff_textbox.AutoSize = true;
             BatteryEff_textbox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            BatteryEff_textbox.Location = new Point(53, 87);
+            BatteryEff_textbox.Location = new Point(59, 152);
             BatteryEff_textbox.Name = "BatteryEff_textbox";
-            BatteryEff_textbox.Size = new Size(0, 15);
+            BatteryEff_textbox.Size = new Size(67, 15);
             BatteryEff_textbox.TabIndex = 194;
+            BatteryEff_textbox.Text = "batteryeff";
             BatteryEff_textbox.Visible = false;
             // 
             // InverterEff_textbox
             // 
             InverterEff_textbox.AutoSize = true;
             InverterEff_textbox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            InverterEff_textbox.Location = new Point(47, 73);
+            InverterEff_textbox.Location = new Point(59, 136);
             InverterEff_textbox.Name = "InverterEff_textbox";
-            InverterEff_textbox.Size = new Size(0, 15);
+            InverterEff_textbox.Size = new Size(70, 15);
             InverterEff_textbox.TabIndex = 146;
+            InverterEff_textbox.Text = "InverterEff";
             InverterEff_textbox.Visible = false;
             // 
             // pvname

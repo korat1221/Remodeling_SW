@@ -170,7 +170,10 @@ namespace main
                 Qf_elec[j] = 0;
                 string k = (j + 1).ToString() + "월";
                 string[][] value = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "연료='전기' And 월='"+k+"'");
-                Qf_elec[j] = Convert.ToDouble(value[0][0]);
+                if (value.Length > 0)
+                {
+                    Qf_elec[j] = Convert.ToDouble(value[0][0]);
+                }
             }
             
             Ceff = Cnenm * ηDoD;

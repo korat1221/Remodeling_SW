@@ -1098,7 +1098,7 @@ namespace main.contents
             double Length, Height, Power;
             if(e.ColumnIndex == 5|| e.ColumnIndex == 6|| e.ColumnIndex == 7)
             {
-                if(Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 5)&& Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 6)&& Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 7))
+                if(Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 5,1)&& Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 6,1)&& Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 7, 1))
                 {
                     Length = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
                     Height = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());

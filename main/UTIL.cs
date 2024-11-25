@@ -558,7 +558,7 @@ namespace main
             }
         }
 
-        public bool data_inputcheck(DataGridView db, int row, int column)
+        public bool data_inputcheck(DataGridView db, int row, int column, int title) //datagridview, 행번호, 열번호, 항목번호
         {
             double a;
             if (db.Rows[row].Cells[column].Value != "" && db.Rows[row].Cells[column].Value != null)
@@ -569,7 +569,7 @@ namespace main
                 }
                 else
                 {
-                    MessageBox.Show("숫자를 입력해 주세요.");
+                    MessageBox.Show(string.Format("{0}에서 {1}항목에 숫자를 입력해 주세요", db.Rows[row].Cells[title].Value.ToString(), db.Columns[column].HeaderText), "주의", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
             }
