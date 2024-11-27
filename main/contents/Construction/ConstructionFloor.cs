@@ -334,14 +334,14 @@ namespace main.contents.Construction
             }
             else if (UMethod == "법규")
             {
-                if(Type=="기존바닥")
-                {
-                    Frost_comboBox.Visible = true;
-                }
-                else
-                {
-                    Frost_comboBox.Visible = false;
-                }
+                //if(Type=="기존바닥")
+                //{
+                //    Frost_comboBox.Visible = true;
+                //}
+                //else
+                //{
+                //    Frost_comboBox.Visible = false;
+                //}
 
                 Rule_U();
                 U_textBox.Enabled = false;
