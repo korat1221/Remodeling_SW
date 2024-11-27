@@ -80,7 +80,7 @@
             Size_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle7.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle7.SelectionForeColor = Color.Black;
@@ -91,7 +91,7 @@
             Size_dataGridView.Name = "Size_dataGridView";
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle8.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
@@ -100,7 +100,7 @@
             Size_dataGridView.RowHeadersVisible = false;
             Size_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle9.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle9.ForeColor = Color.Black;
             dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle9.SelectionForeColor = Color.Black;
@@ -173,7 +173,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            label12.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label12.Location = new Point(87, 13);
             label12.Name = "label12";
             label12.Size = new Size(100, 15);
@@ -183,7 +183,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            label10.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label10.Location = new Point(87, 51);
             label10.Name = "label10";
             label10.Size = new Size(99, 15);

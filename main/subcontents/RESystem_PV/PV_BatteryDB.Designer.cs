@@ -61,7 +61,7 @@ namespace main.subcontents.RESystem_PV
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("나눔고딕", 9.75F);
+            label6.Font = new Font(UTIL.Families[0], 9.75F);
             label6.Location = new Point(85, 53);
             label6.Name = "label6";
             label6.Size = new Size(97, 15);
@@ -95,7 +95,7 @@ namespace main.subcontents.RESystem_PV
             AddUserDB_button.BackColor = SystemColors.ControlLight;
             AddUserDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AddUserDB_button.FlatStyle = FlatStyle.System;
-            AddUserDB_button.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            AddUserDB_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             AddUserDB_button.Location = new Point(647, 8);
             AddUserDB_button.Margin = new Padding(0);
             AddUserDB_button.Name = "AddUserDB_button";
@@ -110,7 +110,7 @@ namespace main.subcontents.RESystem_PV
             Deletebutton.BackColor = SystemColors.ControlLight;
             Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            Deletebutton.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             Deletebutton.Location = new Point(674, 8);
             Deletebutton.Margin = new Padding(0);
             Deletebutton.Name = "Deletebutton";
@@ -143,7 +143,7 @@ namespace main.subcontents.RESystem_PV
             PVBattery_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -155,7 +155,7 @@ namespace main.subcontents.RESystem_PV
             PVBattery_dataGridView.Name = "PVBattery_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle2.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -164,7 +164,7 @@ namespace main.subcontents.RESystem_PV
             PVBattery_dataGridView.RowHeadersVisible = false;
             PVBattery_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle3.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;

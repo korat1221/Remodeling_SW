@@ -162,7 +162,7 @@ namespace main.subcontents.ZoneLighting
             // 
             // Converter_comboBox
             // 
-            Converter_comboBox.Font = new Font("나눔고딕", 9.75F);
+            Converter_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             Converter_comboBox.FormattingEnabled = true;
             Converter_comboBox.Location = new Point(234, 74);
             Converter_comboBox.Name = "Converter_comboBox";
@@ -245,7 +245,7 @@ namespace main.subcontents.ZoneLighting
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            label12.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label12.Location = new Point(11, 10);
             label12.Name = "label12";
             label12.Size = new Size(60, 15);
@@ -257,7 +257,7 @@ namespace main.subcontents.ZoneLighting
             Deletebutton.BackColor = SystemColors.ControlLight;
             Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new Font("나눔고딕", 12F);
+            Deletebutton.Font = new Font(UTIL.Families[0], 12F);
             Deletebutton.Location = new Point(106, 6);
             Deletebutton.Margin = new Padding(0);
             Deletebutton.Name = "Deletebutton";
@@ -272,7 +272,7 @@ namespace main.subcontents.ZoneLighting
             AddUserDB_button.BackColor = SystemColors.ControlLight;
             AddUserDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AddUserDB_button.FlatStyle = FlatStyle.System;
-            AddUserDB_button.Font = new Font("나눔고딕", 12F);
+            AddUserDB_button.Font = new Font(UTIL.Families[0], 12F);
             AddUserDB_button.Location = new Point(79, 6);
             AddUserDB_button.Margin = new Padding(0);
             AddUserDB_button.Name = "AddUserDB_button";
@@ -311,7 +311,7 @@ namespace main.subcontents.ZoneLighting
             // 
             // LampType_comboBox
             // 
-            LampType_comboBox.Font = new Font("나눔고딕", 9.75F);
+            LampType_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             LampType_comboBox.FormattingEnabled = true;
             LampType_comboBox.Location = new Point(234, 45);
             LampType_comboBox.Name = "LampType_comboBox";
@@ -341,7 +341,7 @@ namespace main.subcontents.ZoneLighting
             Light_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle4.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle4.SelectionForeColor = Color.Black;
@@ -352,7 +352,7 @@ namespace main.subcontents.ZoneLighting
             Light_dataGridView.Name = "Light_dataGridView";
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle5.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
@@ -361,7 +361,7 @@ namespace main.subcontents.ZoneLighting
             Light_dataGridView.RowHeadersVisible = false;
             Light_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle6.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle6.ForeColor = Color.Black;
             dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle6.SelectionForeColor = Color.Black;

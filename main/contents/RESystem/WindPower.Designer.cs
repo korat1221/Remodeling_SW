@@ -98,7 +98,7 @@
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            Num_textBox.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
             Num_textBox.ForeColor = Color.White;
             Num_textBox.Location = new Point(173, 26);
             Num_textBox.Name = "Num_textBox";
@@ -109,7 +109,7 @@
             // label14
             // 
             label14.AutoSize = true;
-            label14.Font = new Font("나눔고딕", 9.75F);
+            label14.Font = new Font(UTIL.Families[0], 9.75F);
             label14.ForeColor = SystemColors.ControlText;
             label14.Location = new Point(108, 25);
             label14.Name = "label14";
@@ -120,7 +120,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("나눔고딕", 9.75F);
+            label1.Font = new Font(UTIL.Families[0], 9.75F);
             label1.Location = new Point(108, 54);
             label1.Name = "label1";
             label1.Size = new Size(35, 15);
@@ -171,7 +171,7 @@
             // Condition_ComboBox
             // 
             Condition_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Condition_ComboBox.Font = new Font("나눔고딕", 9.75F);
+            Condition_ComboBox.Font = new Font(UTIL.Families[0], 9.75F);
             Condition_ComboBox.FormattingEnabled = true;
             Condition_ComboBox.Location = new Point(173, 44);
             Condition_ComboBox.Name = "Condition_ComboBox";
@@ -183,7 +183,7 @@
             WPInverter_button.BackColor = SystemColors.ControlLight;
             WPInverter_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             WPInverter_button.FlatStyle = FlatStyle.System;
-            WPInverter_button.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            WPInverter_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             WPInverter_button.Location = new Point(173, 78);
             WPInverter_button.Margin = new Padding(0);
             WPInverter_button.Name = "WPInverter_button";
@@ -196,7 +196,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("나눔고딕", 9.75F);
+            label9.Font = new Font(UTIL.Families[0], 9.75F);
             label9.ForeColor = SystemColors.ControlDark;
             label9.Location = new Point(660, 85);
             label9.Name = "label9";
@@ -218,7 +218,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("나눔고딕", 9.75F);
+            label7.Font = new Font(UTIL.Families[0], 9.75F);
             label7.Location = new Point(444, 82);
             label7.Name = "label7";
             label7.Size = new Size(31, 15);
@@ -239,7 +239,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("나눔고딕", 9.75F);
+            label4.Font = new Font(UTIL.Families[0], 9.75F);
             label4.Location = new Point(99, 82);
             label4.Name = "label4";
             label4.Size = new Size(71, 15);
@@ -249,7 +249,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("나눔고딕", 9.75F);
+            label8.Font = new Font(UTIL.Families[0], 9.75F);
             label8.ForeColor = SystemColors.ControlDark;
             label8.Location = new Point(660, 48);
             label8.Name = "label8";
@@ -269,7 +269,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("나눔고딕", 9.75F);
+            label3.Font = new Font(UTIL.Families[0], 9.75F);
             label3.Location = new Point(435, 49);
             label3.Name = "label3";
             label3.Size = new Size(55, 15);
@@ -279,7 +279,7 @@
             // 주변환경
             // 
             주변환경.AutoSize = true;
-            주변환경.Font = new Font("나눔고딕", 9.75F);
+            주변환경.Font = new Font(UTIL.Families[0], 9.75F);
             주변환경.Location = new Point(99, 48);
             주변환경.Name = "주변환경";
             주변환경.Size = new Size(55, 15);
@@ -299,7 +299,7 @@
             WP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -311,7 +311,7 @@
             WP_dataGridView.Name = "WP_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle2.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -320,7 +320,7 @@
             WP_dataGridView.RowHeadersVisible = false;
             WP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle3.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -333,7 +333,7 @@
             WPDB_button.BackColor = SystemColors.ControlLight;
             WPDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             WPDB_button.FlatStyle = FlatStyle.System;
-            WPDB_button.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            WPDB_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             WPDB_button.Location = new Point(173, 9);
             WPDB_button.Margin = new Padding(0);
             WPDB_button.Name = "WPDB_button";
@@ -357,7 +357,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("나눔고딕", 9.75F);
+            label2.Font = new Font(UTIL.Families[0], 9.75F);
             label2.Location = new Point(99, 12);
             label2.Name = "label2";
             label2.Size = new Size(55, 15);
@@ -413,7 +413,7 @@
             FCDB_button.BackColor = SystemColors.ControlLight;
             FCDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             FCDB_button.FlatStyle = FlatStyle.System;
-            FCDB_button.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            FCDB_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             FCDB_button.Location = new Point(327, 15);
             FCDB_button.Margin = new Padding(0);
             FCDB_button.Name = "FCDB_button";
@@ -425,7 +425,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("나눔고딕", 9.75F);
+            label6.Font = new Font(UTIL.Families[0], 9.75F);
             label6.Location = new Point(17, 15);
             label6.Name = "label6";
             label6.Size = new Size(31, 15);
@@ -457,7 +457,7 @@
             // 
             // Save_button
             // 
-            Save_button.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
+            Save_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             Save_button.Location = new Point(1064, 629);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(78, 23);
@@ -489,7 +489,7 @@
             // label18
             // 
             label18.AutoSize = true;
-            label18.Font = new Font("나눔고딕", 9.75F);
+            label18.Font = new Font(UTIL.Families[0], 9.75F);
             label18.ForeColor = SystemColors.ControlDark;
             label18.Location = new Point(1013, 287);
             label18.Name = "label18";
@@ -500,7 +500,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("나눔고딕", 9.75F);
+            label5.Font = new Font(UTIL.Families[0], 9.75F);
             label5.ForeColor = SystemColors.ControlDark;
             label5.Location = new Point(1003, 313);
             label5.Name = "label5";
@@ -511,7 +511,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font("나눔고딕", 9.75F);
+            label10.Font = new Font(UTIL.Families[0], 9.75F);
             label10.ForeColor = SystemColors.ControlDark;
             label10.Location = new Point(1115, 20);
             label10.Name = "label10";
@@ -522,7 +522,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("나눔고딕", 9.75F);
+            label11.Font = new Font(UTIL.Families[0], 9.75F);
             label11.ForeColor = SystemColors.ControlDark;
             label11.Location = new Point(1133, 164);
             label11.Name = "label11";
@@ -533,7 +533,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font("나눔고딕", 9.75F);
+            label12.Font = new Font(UTIL.Families[0], 9.75F);
             label12.ForeColor = SystemColors.ControlDark;
             label12.Location = new Point(1151, 38);
             label12.Name = "label12";
@@ -544,7 +544,7 @@
             // label13
             // 
             label13.AutoSize = true;
-            label13.Font = new Font("나눔고딕", 9.75F);
+            label13.Font = new Font(UTIL.Families[0], 9.75F);
             label13.ForeColor = SystemColors.ControlDark;
             label13.Location = new Point(1175, 183);
             label13.Name = "label13";
