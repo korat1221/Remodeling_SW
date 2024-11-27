@@ -148,7 +148,7 @@ namespace main.contents
             GeneralPanel.Controls.Add(Name_textBox);
             GeneralPanel.Location = new Point(0, 4);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(1000, 101);
+            GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
             // 
@@ -156,7 +156,7 @@ namespace main.contents
             // 
             label1.AutoSize = true;
             label1.ForeColor = Color.Black;
-            label1.Location = new Point(142, 19);
+            label1.Location = new Point(142, 12);
             label1.Name = "label1";
             label1.Size = new Size(31, 15);
             label1.TabIndex = 112;
@@ -166,7 +166,7 @@ namespace main.contents
             // 
             CW_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             CW_comboBox.FormattingEnabled = true;
-            CW_comboBox.Location = new Point(837, 67);
+            CW_comboBox.Location = new Point(837, 45);
             CW_comboBox.Name = "CW_comboBox";
             CW_comboBox.Size = new Size(120, 24);
             CW_comboBox.TabIndex = 108;
@@ -176,7 +176,7 @@ namespace main.contents
             // 
             OldWall_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             OldWall_comboBox.FormattingEnabled = true;
-            OldWall_comboBox.Location = new Point(699, 67);
+            OldWall_comboBox.Location = new Point(699, 45);
             OldWall_comboBox.Name = "OldWall_comboBox";
             OldWall_comboBox.Size = new Size(120, 24);
             OldWall_comboBox.TabIndex = 109;
@@ -186,7 +186,7 @@ namespace main.contents
             // 
             CW_label.AutoSize = true;
             CW_label.ForeColor = Color.Black;
-            CW_label.Location = new Point(836, 45);
+            CW_label.Location = new Point(836, 28);
             CW_label.Name = "CW_label";
             CW_label.Size = new Size(46, 15);
             CW_label.TabIndex = 111;
@@ -196,7 +196,7 @@ namespace main.contents
             // 
             OldWall_label.AutoSize = true;
             OldWall_label.ForeColor = Color.Black;
-            OldWall_label.Location = new Point(699, 45);
+            OldWall_label.Location = new Point(699, 28);
             OldWall_label.Name = "OldWall_label";
             OldWall_label.Size = new Size(58, 15);
             OldWall_label.TabIndex = 110;
@@ -210,9 +210,9 @@ namespace main.contents
             groupBox1.Controls.Add(radioButton3);
             groupBox1.Controls.Add(radioButton2);
             groupBox1.Controls.Add(radioButton1);
-            groupBox1.Location = new Point(378, 1);
+            groupBox1.Location = new Point(378, -3);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(283, 95);
+            groupBox1.Size = new Size(283, 82);
             groupBox1.TabIndex = 107;
             groupBox1.TabStop = false;
             // 
@@ -220,7 +220,7 @@ namespace main.contents
             // 
             radioButton6.AutoSize = true;
             radioButton6.ForeColor = Color.Black;
-            radioButton6.Location = new Point(195, 69);
+            radioButton6.Location = new Point(195, 58);
             radioButton6.Name = "radioButton6";
             radioButton6.Size = new Size(85, 19);
             radioButton6.TabIndex = 5;
@@ -233,7 +233,7 @@ namespace main.contents
             // 
             radioButton5.AutoSize = true;
             radioButton5.ForeColor = Color.Black;
-            radioButton5.Location = new Point(108, 69);
+            radioButton5.Location = new Point(108, 58);
             radioButton5.Name = "radioButton5";
             radioButton5.Size = new Size(73, 19);
             radioButton5.TabIndex = 4;
@@ -246,7 +246,7 @@ namespace main.contents
             // 
             radioButton4.AutoSize = true;
             radioButton4.ForeColor = Color.Black;
-            radioButton4.Location = new Point(17, 69);
+            radioButton4.Location = new Point(17, 58);
             radioButton4.Name = "radioButton4";
             radioButton4.Size = new Size(73, 19);
             radioButton4.TabIndex = 3;
@@ -259,7 +259,7 @@ namespace main.contents
             // 
             radioButton3.AutoSize = true;
             radioButton3.ForeColor = Color.Black;
-            radioButton3.Location = new Point(108, 43);
+            radioButton3.Location = new Point(108, 34);
             radioButton3.Name = "radioButton3";
             radioButton3.Size = new Size(93, 19);
             radioButton3.TabIndex = 2;
@@ -272,7 +272,7 @@ namespace main.contents
             // 
             radioButton2.AutoSize = true;
             radioButton2.ForeColor = Color.Black;
-            radioButton2.Location = new Point(17, 43);
+            radioButton2.Location = new Point(17, 34);
             radioButton2.Name = "radioButton2";
             radioButton2.Size = new Size(49, 19);
             radioButton2.TabIndex = 1;
@@ -285,7 +285,7 @@ namespace main.contents
             // 
             radioButton1.AutoSize = true;
             radioButton1.ForeColor = Color.Black;
-            radioButton1.Location = new Point(17, 17);
+            radioButton1.Location = new Point(17, 10);
             radioButton1.Name = "radioButton1";
             radioButton1.Size = new Size(73, 19);
             radioButton1.TabIndex = 0;
@@ -298,7 +298,7 @@ namespace main.contents
             // 
             label7.AutoSize = true;
             label7.ForeColor = Color.Black;
-            label7.Location = new Point(341, 71);
+            label7.Location = new Point(341, 60);
             label7.Name = "label7";
             label7.Size = new Size(31, 15);
             label7.TabIndex = 106;
@@ -308,7 +308,7 @@ namespace main.contents
             // 
             label6.AutoSize = true;
             label6.ForeColor = Color.Black;
-            label6.Location = new Point(341, 45);
+            label6.Location = new Point(341, 36);
             label6.Name = "label6";
             label6.Size = new Size(31, 15);
             label6.TabIndex = 105;
@@ -318,7 +318,7 @@ namespace main.contents
             // 
             label5.AutoSize = true;
             label5.ForeColor = Color.Black;
-            label5.Location = new Point(340, 19);
+            label5.Location = new Point(340, 12);
             label5.Name = "label5";
             label5.Size = new Size(31, 15);
             label5.TabIndex = 104;
@@ -330,7 +330,7 @@ namespace main.contents
             Type_textBox.BorderStyle = BorderStyle.None;
             Type_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Type_textBox.ForeColor = Color.Black;
-            Type_textBox.Location = new Point(177, 57);
+            Type_textBox.Location = new Point(177, 50);
             Type_textBox.Name = "Type_textBox";
             Type_textBox.ReadOnly = true;
             Type_textBox.Size = new Size(120, 15);
@@ -341,7 +341,7 @@ namespace main.contents
             // 
             label3.AutoSize = true;
             label3.ForeColor = Color.Black;
-            label3.Location = new Point(141, 57);
+            label3.Location = new Point(141, 50);
             label3.Name = "label3";
             label3.Size = new Size(33, 15);
             label3.TabIndex = 92;
@@ -372,7 +372,7 @@ namespace main.contents
             // 
             Name_textBox.BorderStyle = BorderStyle.FixedSingle;
             Name_textBox.ForeColor = Color.Black;
-            Name_textBox.Location = new Point(177, 16);
+            Name_textBox.Location = new Point(177, 9);
             Name_textBox.Name = "Name_textBox";
             Name_textBox.Size = new Size(120, 23);
             Name_textBox.TabIndex = 4;
@@ -508,7 +508,7 @@ namespace main.contents
             panel2.Controls.Add(UMethod_label);
             panel2.Controls.Add(Uvalue_comboBox);
             panel2.Controls.Add(label25);
-            panel2.Location = new Point(0, 105);
+            panel2.Location = new Point(0, 84);
             panel2.Name = "panel2";
             panel2.Size = new Size(1000, 532);
             panel2.TabIndex = 95;
