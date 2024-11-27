@@ -383,7 +383,7 @@ namespace main.contents
             // 
             Previous_button.BackColor = SystemColors.ButtonHighlight;
             Previous_button.ForeColor = Color.Black;
-            Previous_button.Location = new Point(1006, 612);
+            Previous_button.Location = new Point(1006, 591);
             Previous_button.Name = "Previous_button";
             Previous_button.Size = new Size(88, 25);
             Previous_button.TabIndex = 93;
@@ -395,7 +395,7 @@ namespace main.contents
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1100, 612);
+            Save_button.Location = new Point(1100, 591);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 92;
