@@ -25,12 +25,12 @@ namespace main.contents
             List<object> MainMenu = new List<object>();
 
             MainMenu.Add(new { text = "에너요구량", id = "{\\\"formID\\\":37,\\\"ID\\\":\\\"Algorithm_EnergyNeed\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            MainMenu.Add(new { text = "난방 에너지소요량", id = "{\\\"formID\\\":45,\\\"ID\\\":\\\"Algorithm_Heating\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+          //  MainMenu.Add(new { text = "난방 에너지소요량", id = "{\\\"formID\\\":45,\\\"ID\\\":\\\"Algorithm_Heating\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             MainMenu.Add(new { text = "냉방 에너지소요량", id = "{\\\"formID\\\":46,\\\"ID\\\":\\\"Algorithm_Cooling\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            MainMenu.Add(new { text = "급탕 에너지소요량", id = "{\\\"formID\\\":47,\\\"ID\\\":\\\"Algorithm_DHW\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            MainMenu.Add(new { text = "조명 에너지소요량", id = "{\\\"formID\\\":44,\\\"ID\\\":\\\"Algorithm_Lighting\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            MainMenu.Add(new { text = "공조 에너지소요량", id = "{\\\"formID\\\":48,\\\"ID\\\":\\\"Algorithm_AHU\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            MainMenu.Add(new { text = "신재생 에너지생산량", id = "{\\\"formID\\\":37,\\\"ID\\\":\\\"Algorithm_RESystem\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+          //  MainMenu.Add(new { text = "급탕 에너지소요량", id = "{\\\"formID\\\":47,\\\"ID\\\":\\\"Algorithm_DHW\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+          //  MainMenu.Add(new { text = "조명 에너지소요량", id = "{\\\"formID\\\":44,\\\"ID\\\":\\\"Algorithm_Lighting\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+          //  MainMenu.Add(new { text = "공조 에너지소요량", id = "{\\\"formID\\\":48,\\\"ID\\\":\\\"Algorithm_AHU\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+          //  MainMenu.Add(new { text = "신재생 에너지생산량", id = "{\\\"formID\\\":37,\\\"ID\\\":\\\"Algorithm_RESystem\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
 
             Program.UTIL.resetMainTree(5, 2, MainMenu.ToArray(), "37"); // 예시 코드: 메인 메뉴 동적 할당
         }

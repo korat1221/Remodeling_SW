@@ -396,7 +396,7 @@ namespace main.contents.Result
                 #endregion
 
                 #region 외부출입문 성능정보
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.면적,b.문짝열관류율,b.문유효열관류율,b.흡수율 From ZoneEnvelope_3D  as a Inner Join ConstructionDoor as b on a.구조체번호=b.번호 Where a.존='" + Num + "' and a.외피유형='외부출입문'");
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.면적,b.문열관류율,b.문유효열관류율,b.흡수율 From ZoneEnvelope_3D  as a Inner Join ConstructionDoor as b on a.구조체번호=b.번호 Where a.존='" + Num + "' and a.외피유형='외부출입문'");
                 double door_면적 = 0, door_열관류율 = 0, door_유효열관류율 = 0, door_열교가산치 = 0, door_흡수율 = 0;
                 if (Value.Length > 0)
                 {
@@ -429,13 +429,9 @@ namespace main.contents.Result
                        if(Value.Length >0)
                         {
                             HeatingMthData[0].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            data.Add(new { cname = "qt_sink_h", data = HeatingMthData[0] });
                             HeatingMthData[1].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                            data.Add(new { cname = "qv_sink_h", data = HeatingMthData[1] });
                             HeatingMthData[2].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
-                            data.Add(new { cname = "qs_sink_h", data = HeatingMthData[2] });
                             HeatingMthData[3].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][3], 0) });
-                            data.Add(new { cname = "qsink_tot_h", data = HeatingMthData[3] });
                         }
                         
                     }
@@ -445,29 +441,21 @@ namespace main.contents.Result
                         if (Value.Length > 0)
                         {
                             HeatingMthData[8].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            data.Add(new { cname = "qt_source_h", data = HeatingMthData[8] });
                             HeatingMthData[9].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                            data.Add(new { cname = "qv_source_h", data = HeatingMthData[9] });
                             double qs = Convert.ToDouble(Value[0][2]) + Convert.ToDouble(Value[0][3]) + Convert.ToDouble(Value[0][4]);
                             HeatingMthData[10].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(qs.ToString(), 0) });
-                            data.Add(new { cname = "qs_source_h", data = HeatingMthData[10] });
                             HeatingMthData[11].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][5], 0) });
-                            data.Add(new { cname = "qi_source_h", data = HeatingMthData[11] });
                             HeatingMthData[12].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][6], 0) });
-                            data.Add(new { cname = "qsource_tot_h", data = HeatingMthData[12] });
                         }
                     }
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth /1000, eta, dQc_b From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth, eta, dQc_b From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
                             HeatingMthData[13].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            data.Add(new { cname = "qb_h", data = HeatingMthData[13] });
                             HeatingMthData[14].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 2) });
-                            data.Add(new { cname = "eta_h", data = HeatingMthData[14] });
                             HeatingMthData[15].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
-                            data.Add(new { cname = "dqc_b", data = HeatingMthData[15] });
                         }
                     }
                 }
@@ -503,13 +491,49 @@ namespace main.contents.Result
                     for (int mth = 0; mth < 12; mth++)
                     {
 
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth /1000, eta, Q_DHU_tot * dwd_mth /1000 as total_1 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth, eta, Q_DHU_tot * dwd_mth /1000 as total_1 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
                             CoolingMthData[13].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
                             CoolingMthData[14].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 2) });
                             CoolingMthData[15].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
                         }
+                    }
+                }
+                #endregion
+
+                #region 월간종합
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
+                    if (Value.Length > 0)
+                    {
+                        MthData[0].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) }); //난방
+                        MthData[1].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa((Convert.ToDouble(Value[0][0]) / area).ToString(), 1) }); //단위면적당 난방
+                    }
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
+                    if (Value.Length > 0)
+                    {
+                        MthData[2].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) }); //냉방
+                        MthData[3].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa((Convert.ToDouble(Value[0][0]) / area).ToString(), 1) }); //단위면적당 냉방
+                    }
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select Final_kWh From Zone_LightResult Where 번호='" + Num + "'and 월='" + (mth + 1).ToString() + "월'");
+                    if (Value.Length > 0)
+                    {
+                        MthData[4].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) }); //조명
+                    }
+
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select sum(dwd_mth) From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일='이용일' and 난방_냉방='난방'");
+                    if (Value.Length > 0)
+                    {
+                        dwd_a = Convert.ToDouble(Value[0][0]);
+                    }
+
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.일일급탕요구량,b.theta_e From ZoneGeneral_Form as a Inner Join Zone_HCneed_Result as b on a.존번호=b.번호 Where b.번호='" + Num + "' and b.비이용일_이용일='이용일' and b.난방_냉방='난방' and b.월='" + (mth + 1) + "월'");
+                    if (Value.Length > 0)
+                    {
+                        double DHW  = Convert.ToDouble(Value[0][0]) * dwd_a * dmth[mth] / 365 * (-0.02 * Convert.ToDouble(Value[0][1]) + 1.25);
+                        MthData[5].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(DHW.ToString(), 0) }); //급탕
                     }
                 }
                 #endregion
@@ -581,6 +605,18 @@ namespace main.contents.Result
             data.Add(new { cname = "door_ht", data = DoorData[4] });
             data.Add(new { cname = "door_shgc", data = DoorData[5] });
             data.Add(new { cname = "door_alpha", data = DoorData[6] });
+            data.Add(new { cname = "qt_sink_h", data = HeatingMthData[0] });
+            data.Add(new { cname = "qv_sink_h", data = HeatingMthData[1] });
+            data.Add(new { cname = "qs_sink_h", data = HeatingMthData[2] });
+            data.Add(new { cname = "qsink_tot_h", data = HeatingMthData[3] });
+            data.Add(new { cname = "qt_source_h", data = HeatingMthData[8] });
+            data.Add(new { cname = "qv_source_h", data = HeatingMthData[9] });
+            data.Add(new { cname = "qs_source_h", data = HeatingMthData[10] });
+            data.Add(new { cname = "qi_source_h", data = HeatingMthData[11] });
+            data.Add(new { cname = "qsource_tot_h", data = HeatingMthData[12] });
+            data.Add(new { cname = "qb_h", data = HeatingMthData[13] });
+            data.Add(new { cname = "eta_h", data = HeatingMthData[14] });
+            data.Add(new { cname = "dqc_b", data = HeatingMthData[15] });
             data.Add(new { cname = "qt_sink_c", data = CoolingMthData[0] });
             data.Add(new { cname = "qv_sink_c", data = CoolingMthData[1] });
             data.Add(new { cname = "qs_sink_c", data = CoolingMthData[2] });
@@ -593,7 +629,13 @@ namespace main.contents.Result
             data.Add(new { cname = "qb_c", data = CoolingMthData[13] });
             data.Add(new { cname = "eta_c", data = CoolingMthData[14] });
             data.Add(new { cname = "qdhu", data = CoolingMthData[15] });
-            
+            data.Add(new { cname = "heating_mth", data = MthData[0] });
+            data.Add(new { cname = "heating_mth_area", data = MthData[1] });
+            data.Add(new { cname = "cooling_mth", data = MthData[2] });
+            data.Add(new { cname = "cooling_mth_area", data = MthData[3] });
+            data.Add(new { cname = "lighting_mth", data = MthData[4] });
+            data.Add(new { cname = "dhw_mth", data = MthData[5] });
+
             s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
             s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
 
