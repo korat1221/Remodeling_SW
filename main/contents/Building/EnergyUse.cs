@@ -31,7 +31,12 @@ namespace main.contents.Building
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             InitializeAsync();
-
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '에너지사용량정보'");
+            if (Image.Length > 0)
+            {
+                pictureBox1.Load(Program.gPath + Image[0][0]);
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            }
             Elec_StartDay_comboBox.Items.Clear();
             Elec_EndDay_comboBox.Items.Clear();
             Gas_StartDay_comboBox.Items.Clear();
