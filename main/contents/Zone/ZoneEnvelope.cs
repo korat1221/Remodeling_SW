@@ -642,7 +642,9 @@ namespace main.contents
             if (main.MainContents.currentForm == main.MainContents.FormID.ZoneEnvelope)
             {
                 String ID = main.MainContents.selID;
-                ID = ID.Substring(19, 10);
+                int v1 = ID.IndexOf("Zone") + 4; //Zone 번호 위치 
+                int v2 = ID.IndexOf("_", v1); //Zone 다음 "_"의 위치 
+                ID = ID.Substring(19, v2 - 19);
                 Num_textBox.Text = ID;
                 ZoneNum = ID;
                 LoadData(ZoneNum);

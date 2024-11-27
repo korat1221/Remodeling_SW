@@ -86,12 +86,6 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A4", "순바닥면적.[m²]");
             dataGridView1.Columns.Add("A5", "천장고.[m]");
             dataGridView1.Columns[0].Width = 40;
-            //ListTable.Columns.Add("번호", typeof(string));
-            //ListTable.Columns.Add("명칭", typeof(string));
-            //ListTable.Columns.Add("용도프로필", typeof(string));
-            //ListTable.Columns.Add("순바닥면적" + Environment.NewLine + "[m²]", typeof(string));
-            //ListTable.Columns.Add("천장고" + Environment.NewLine + "[-]", typeof(string));
-            //dataGridView1.DataSource = ListTable;
         }
 
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
@@ -115,7 +109,7 @@ namespace main.contentslist
         }
         public void load_List(String Num)
         {
-            string[][] List = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "존", "층 ='" + Num + "'");
+            string[][] List = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 존 From ZoneEnvelope_3D where 층 ='" + Num + "' Order by 존 ");
             String[][] Value;
             String Blank = "";
             //ListTable.Rows.Clear();
@@ -160,13 +154,6 @@ namespace main.contentslist
 
         private void dataGridView1_DoubleClick(object sender, EventArgs e)
         {
-            //int k = dataGridView1.CurrentCell.RowIndex;
-            //if (k > -1)
-            //{
-            //    Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
-
-            //}
-
         }
 
         private void Copy_button_Click(object sender, EventArgs e)

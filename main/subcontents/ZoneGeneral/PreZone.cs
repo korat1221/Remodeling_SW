@@ -58,45 +58,31 @@ namespace main.subcontents.ZoneGeneral
             Zone_dataGridView.Columns[6].Width = 70;
             Zone_dataGridView.Columns[7].Width = 60;
 
-            string[][] Value = Program.DB.querySQL(PreProjNum[0][0], "Select DISTINCT a.존번호 From ZoneGeneral_Form as a Inner Join ZoneEnvelope_3D as b on a.존번호 = b.존 where b.층 ='" + Layer + "'");
+            string[][] Value = Program.DB.querySQL(PreProjNum[0][0], "Select DISTINCT a.존번호 From ZoneGeneral_Form as a Inner Join ZoneEnvelope_3D as b on a.존번호 = b.존 where b.층 ='" + Layer + "' Order by a.존번호");
             if (Value.Length > 0)
             {
-                int[] Zone_순서 = new int[Value.Length]; string[] Zone_순서2 = new string[Value.Length];
                 for (int n = 0; n < Value.Length; n++)
                 {
-                    Zone_순서[n] = Convert.ToInt32(Value[n][0].Substring(Value[n][0].Length - 3, 3));
-                }
-                Array.Sort(Zone_순서);
-                for (int n = 0; n < Zone_순서.Length; n++)
-                {
-                    for (int k = 0; k < Value.Length; k++)
-                    { 
-                        if (Zone_순서[n] == Convert.ToInt32(Value[k][0].Substring(Value[k][0].Length - 3, 3)))
-                        {
-                            Zone_순서2[n] = Value[k][0];
-                        }
-                    }
-                }
-                for (int n = 0; n < Zone_순서2.Length; n++)
-                {
-                    Value = Program.DB.querySQL(PreProjNum[0][0], "Select 존번호,존이름,용도프로필,순바닥면적,냉난방유무 From ZoneGeneral_Form where 존번호='" + Zone_순서2[n] + "'");
+                    string[][] Value2 = Program.DB.querySQL(PreProjNum[0][0], "Select 존번호,존이름,용도프로필,순바닥면적,냉난방유무 From ZoneGeneral_Form where 존번호='" + Value[n][0] + "'");
 
-                    string[][] 요구량 = Program.DB.getValue(PreProjNum[0][0], "Zone_HCneed_Result", "Qb_a", "번호 ='" + Zone_순서2[n] + "' AND 난방_냉방 = '난방'");
-                    string[][] 요구량2 = Program.DB.getValue(PreProjNum[0][0], "Zone_HCneed_Result", "Qb_a", "번호 ='" + Zone_순서2[n] + "' AND 난방_냉방 = '냉방'");
-
-                    Zone_dataGridView.Rows.Add();
-                    int nRow = Zone_dataGridView.Rows.Count - 1;
-                    Zone_dataGridView.Rows[nRow].Cells[1].Value = Value[0][0];
-
-                    Zone_dataGridView.Rows[nRow].Cells[2].Value = Value[0][1];
-                    Zone_dataGridView.Rows[nRow].Cells[3].Value = Value[0][2];
-                    Zone_dataGridView.Rows[nRow].Cells[4].Value = Value[0][4];
-                    if (요구량.Length > 0)
+                    string[][] 요구량 = Program.DB.getValue(PreProjNum[0][0], "Zone_HCneed_Result", "Qb_a", "번호 ='" + Value[n][0] + "' AND 난방_냉방 = '난방'");
+                    string[][] 요구량2 = Program.DB.getValue(PreProjNum[0][0], "Zone_HCneed_Result", "Qb_a", "번호 ='" + Value[n][0] + "' AND 난방_냉방 = '냉방'");
+                    if (Value2.Length > 0)
                     {
-                        Zone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", Convert.ToDouble(요구량[0][0]));
-                        Zone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Convert.ToDouble(요구량2[0][0]));
+                        Zone_dataGridView.Rows.Add();
+                        int nRow = Zone_dataGridView.Rows.Count - 1;
+                        Zone_dataGridView.Rows[nRow].Cells[1].Value = Value2[0][0];
+
+                        Zone_dataGridView.Rows[nRow].Cells[2].Value = Value2[0][1];
+                        Zone_dataGridView.Rows[nRow].Cells[3].Value = Value2[0][2];
+                        Zone_dataGridView.Rows[nRow].Cells[4].Value = Value2[0][4];
+                        if (요구량.Length > 0)
+                        {
+                            Zone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", Convert.ToDouble(요구량[0][0]));
+                            Zone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Convert.ToDouble(요구량2[0][0]));
+                        }
+                        Zone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(Value2[0][3]));
                     }
-                    Zone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(Value[0][3]));
 
                 }
             }
