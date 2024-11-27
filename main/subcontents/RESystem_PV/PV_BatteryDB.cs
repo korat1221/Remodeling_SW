@@ -18,7 +18,7 @@ namespace main.subcontents.RESystem_PV
         int PVBattery_SelectRow, SelectRow;
         string 프로젝트유형;
         public string SelectBattery, SelectBatteryCa, SelectBatteryType;
-        
+
         public PV_BatteryDB()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
@@ -34,9 +34,9 @@ namespace main.subcontents.RESystem_PV
             string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             프로젝트유형 = value[0][0];
 
-            load_PVbatteryeDB();   
+            load_PVbatteryeDB();
         }
-       
+
         void load_PVbatteryeDB()
         {
             new StackedHeaderDecorator(PVBattery_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
@@ -55,11 +55,12 @@ namespace main.subcontents.RESystem_PV
 
             DataGridViewComboBoxColumn BaT = new DataGridViewComboBoxColumn();
             BaT.HeaderText = "장치유형";
-            BaT.Items.AddRange(new string[] {"리튬이온배터리", "니켈배터리","납축배터리"});
+            BaT.Items.AddRange(new string[] { "리튬이온배터리", "니켈배터리", "납축배터리" });
             PVBattery_dataGridView.Columns.Add(BaT);
-            
+
             PVBattery_dataGridView.Columns[0].Width = 40;
-            
+            PVBattery_dataGridView.Columns[6].Width = 140;
+
 
             //사용자 DB 추가
             string[][] User_PVBattery = Program.DB.getValue(DB.type.ProjDB, "User_PVBattery", "번호,DB유형,제품명,제조사,정격전력,배터리타입", "");
@@ -78,7 +79,7 @@ namespace main.subcontents.RESystem_PV
             }
         }
 
- 
+
         private void PVBattery_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -102,51 +103,60 @@ namespace main.subcontents.RESystem_PV
             Program.DB.deleteValue(DB.type.ProjDB, "User_PVBattery", "번호 ='" + DeletNum + "'");
             PVBattery_dataGridView.Rows.Remove(PVBattery_dataGridView.Rows[PVBattery_SelectRow]);
         }
-        
+
+
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            Save();
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            if (Save())
+            {
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
         }
 
-        void Save()
+        bool Save()
         {
-            for (int i = 0; i < PVBattery_dataGridView.RowCount; i++)
+            if (SelectCheckBox())
             {
-                if (PVBattery_dataGridView.Rows[i].Cells[2].Value.ToString() == "사용자")
-                {
-                    string[] value = new string[6];
+                SelectBattery = PVBattery_dataGridView.Rows[SelectRow].Cells[1].Value.ToString();
+                SelectBatteryCa = PVBattery_dataGridView.Rows[SelectRow].Cells[5].Value.ToString();
+                SelectBatteryType = PVBattery_dataGridView.Rows[SelectRow].Cells[6].Value.ToString();
 
-                    for (int k = 0; k < 6; k++)
+                for (int i = 0; i < PVBattery_dataGridView.RowCount; i++)
+                {
+                    if (PVBattery_dataGridView.Rows[i].Cells[2].Value.ToString() == "사용자")
                     {
+                        string[] value = new string[6];
 
-                        if (PVBattery_dataGridView.Rows[i].Cells[k].Value == null || PVBattery_dataGridView.Rows[i].Cells[k].Value == "")
+                        for (int k = 0; k < 6; k++)
                         {
-                            MessageBox.Show("빈칸을 채워주세요");
-                            return;
+
+                            if (PVBattery_dataGridView.Rows[i].Cells[k+1].Value == null || PVBattery_dataGridView.Rows[i].Cells[k+1].Value == "")
+                            {
+                                MessageBox.Show("빈칸을 채워 주세요.", "경고", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return false;
+                            }
+                            else
+                            {
+                                value[k] = PVBattery_dataGridView.Rows[i].Cells[k + 1].Value.ToString();
+                            }
                         }
-                        else
-                        {
-                            value[k] = PVBattery_dataGridView.Rows[i].Cells[k+1].Value.ToString();
-                        }
+                        Program.DB.setValue(DB.type.ProjDB, "User_PVBattery", "번호,프로젝트유형,DB유형,제품명,제조사,정격전력,배터리타입",
+                            "'" + value[0] + "','" + 프로젝트유형 + "','" + value[1] + "','" + value[2] + "','" + value[3] + "','" + value[4] + "','" + value[5] + "'", "번호");
                     }
-                    Program.DB.setValue(DB.type.ProjDB, "User_PVBattery", "번호,프로젝트유형,DB유형,제품명,제조사,정격전력,배터리타입",
-                        "'" + value[0] + "','" + 프로젝트유형 + "','" + value[1] + "','" + value[2] + "','" + value[3] + "','" + value[4] + "','"+ value[5] + "'", "번호");
                 }
-
-                if (SelectCheckBox())
-                {
-                    SelectBattery = PVBattery_dataGridView.Rows[SelectRow].Cells[1].Value.ToString();
-                    SelectBatteryCa = PVBattery_dataGridView.Rows[SelectRow].Cells[5].Value.ToString();
-                    SelectBatteryType = PVBattery_dataGridView.Rows[SelectRow].Cells[6].Value.ToString();
-                }
-                else return;
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("배터리를 선택해 주세요.", "경고", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
             }
         }
         private bool SelectCheckBox()
         {
+            SelectRow = 100;
             foreach (DataGridViewRow row in PVBattery_dataGridView.Rows)
             {
                 if (Convert.ToBoolean(row.Cells["check"].Value))
@@ -155,8 +165,23 @@ namespace main.subcontents.RESystem_PV
                     SelectRow = row.Index;
                 }
             }
-            return true;
+            if (SelectRow == 100)
+            {
+                return false;
+            }
+            else return true;
         }
 
+        private void PVBattery_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            double k = 0;
+            if (e.ColumnIndex == 5) 
+            {
+                if(Program.UTIL.data_inputcheck(PVBattery_dataGridView, e.RowIndex, 5, 1))
+                {
+                    k = 1;
+                }
+            }
+        }
     }
 }

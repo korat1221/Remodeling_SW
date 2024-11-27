@@ -19,6 +19,7 @@ namespace main.contents
         //PVModuleDB
         string PVModuleNumber, PVModuleName;
         double PVarea, PVtotalarea, PVpower, Kpk, Ppk, PVwidth, PVheight; //단위면적당 출력(kW), 총출력
+        double check;
 
         //PVInverterDB 
         string Inverter;
@@ -53,7 +54,7 @@ namespace main.contents
             프로젝트유형 = value[0][0].ToString();
             Num = Num_textBox.Text;
 
-            PVType_ComboBox.Items.AddRange(new string[] { "독립형", "계통연계형" });
+            PVType_ComboBox.Items.Clear();
 
             Battery_label.Visible = false;
             Battery_textBox.Visible = false;
@@ -106,6 +107,8 @@ namespace main.contents
                 Battery_label.Visible = false;
                 Battery_textBox.Visible = false;
                 BatteryDB_button.Visible = false;
+                BatteryEff_textbox.Visible = false;
+                batterypower.Visible = false;
                 connect = "계통연계형";
                 MainPVimage(connect);
             }
@@ -114,10 +117,11 @@ namespace main.contents
                 Battery_label.Visible = true;
                 Battery_textBox.Visible = true;
                 BatteryDB_button.Visible = true;
+                Battery_textBox.Text = null;
+
                 connect = "독립형";
                 MainPVimage(connect);
             }
-
         }
         void MainPVimage(string type)
         {
@@ -135,6 +139,17 @@ namespace main.contents
             pvpower.Location = new Point(210, 142);
             pvtotal.Location = new Point(210, 292);
             pvname.Location = new Point(537, 44);
+           
+            string[][] Ima = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광타입별이미지", "이미지", "종류 = '기본'");
+            if (Ima.Length > 0)
+            {
+                PVTypepictureBox.Size = new System.Drawing.Size(305, 245);
+                PVTypepictureBox.Location = new Point(343, 13);
+                PVTypepictureBox.Load(Program.gPath + Ima[0][0]);
+                PVTypepictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                PVTypepictureBox.BackColor = Color.Transparent;
+                PVTypepictureBox.Parent = PVpictureBox;
+            }
         }
         void PVimage(string type)
         {
@@ -223,9 +238,9 @@ namespace main.contents
             }
             Inverter_textBox.Text = Inverter;
             InverterEff_textbox.Visible = true;
-            InverterEff_textbox.Location = new Point(382, 180);
+            InverterEff_textbox.Location = new Point(382,207); //382,180
             InverterEff_textbox.Text = string.Format("{0:F0}%", InverterEff);
-            InverterEff_textbox.Parent = PVpictureBox;
+            //InverterEff_textbox.Parent = PVpictureBox;
         }
 
         private void BatteryDB_button_Click_1(object sender, EventArgs e)
@@ -242,11 +257,12 @@ namespace main.contents
                 BatteryEff = Convert.ToDouble(value[0][0]) * 100;
             }
 
+            Battery_label.Visible = true;
             Battery_textBox.Text = Battery;
             BatteryEff_textbox.Visible = true;
-            BatteryEff_textbox.Location = new Point(433, 180);
+            BatteryEff_textbox.Location = new Point(433, 207);
             BatteryEff_textbox.Text = string.Format("{0:F0}%", BatteryEff);
-            BatteryEff_textbox.Parent = PVpictureBox;
+            //BatteryEff_textbox.Parent = PVpictureBox;
 
             batterypower.Visible = true;
             batterypower.Location = new Point(430, 294);
@@ -256,33 +272,36 @@ namespace main.contents
         {
             if (e.ColumnIndex == 1 && PV_dataGridView.Rows[e.RowIndex].Cells[1].Value != null)
             {
-                double val = 0;
-                val = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[1].Value);
-                Ppk = val * PVpower / 1000; //kW 25년후 성능저하를 반영함
+                if(Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 1,1))
+                {
+                    double val = 0;
+                    val = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[1].Value);
+                    Ppk = val * PVpower / 1000; //kW 25년후 성능저하를 반영함
 
-                pvtotal.Visible = true;
-                pvtotal.Text = string.Format("{0:F1} kW", Ppk);
-                pvtotal.Location = new Point(210, 292);
-                pvtotal.BackColor = Color.Transparent;
+                    pvtotal.Visible = true;
+                    pvtotal.Text = string.Format("{0:F1} kW", Ppk);
+                    pvtotal.Location = new Point(210, 292);
+                    pvtotal.BackColor = Color.Transparent;
 
-                pvname.Visible = true;
-                pvname.Text = string.Format("명칭: {0}", PVModuleName);
-                pvname.Location = new Point(537, 44);
-                pvname.BackColor = Color.Transparent;
+                    pvname.Visible = true;
+                    pvname.Text = string.Format("명칭: {0}", PVModuleName);
+                    pvname.Location = new Point(537, 44);
+                    pvname.BackColor = Color.Transparent;
 
-                pvsize.Visible = true;
-                pvsize.Text = string.Format("{0}m X {1}m", PVwidth, PVheight);
-                pvsize.Location = new Point(210, 95);
-                pvsize.BackColor = Color.Transparent;
+                    pvsize.Visible = true;
+                    pvsize.Text = string.Format("{0}m X {1}m", PVwidth, PVheight);
+                    pvsize.Location = new Point(210, 95);
+                    pvsize.BackColor = Color.Transparent;
 
-                pvpower.Visible = true;
-                pvpower.Text = string.Format("{0} W", PVpower);
-                pvpower.Location = new Point(210, 142);
-                pvpower.BackColor = Color.Transparent;
+                    pvpower.Visible = true;
+                    pvpower.Text = string.Format("{0} W", PVpower);
+                    pvpower.Location = new Point(210, 142);
+                    pvpower.BackColor = Color.Transparent;
 
-                PVtotalarea = PVarea * val;
+                    PVtotalarea = PVarea * val;
 
-                PV_dataGridView.Rows[e.RowIndex].Cells[2].Value = string.Format("{0:F2}", PVtotalarea);
+                    PV_dataGridView.Rows[e.RowIndex].Cells[2].Value = string.Format("{0:F2}", PVtotalarea);
+                }
             }
 
             if (e.ColumnIndex == 4 && PV_dataGridView.Rows[e.RowIndex].Cells[4].Value != null)
@@ -313,6 +332,14 @@ namespace main.contents
                         break;
                     default:
                         break;
+                }
+            }
+
+            if (e.ColumnIndex == 6 || e.ColumnIndex == 7 || e.ColumnIndex == 8)
+            {
+                if (Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, e.ColumnIndex,0))
+                {
+                    check = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
                 }
             }
         }
@@ -428,8 +455,8 @@ namespace main.contents
                 Name = Value[0][1];
                 Name_textBox.Text = Name;
 
-                PVType_ComboBox.Text = Value[0][7];
-                if (PVType_ComboBox.Text == "계통연계형")
+                PVType_ComboBox.SelectedItem = Value[0][7].ToString();
+                if (PVType_ComboBox.SelectedItem.ToString() == "계통연계형")
                 {
                     Battery_label.Visible = false;
                     Battery_textBox.Visible = false;
@@ -437,7 +464,7 @@ namespace main.contents
                     connect = "계통연계형";
                     MainPVimage(connect);
                 }
-                else if (PVType_ComboBox.Text == "독립형")
+                else if (PVType_ComboBox.SelectedItem.ToString() == "독립형")
                 {
                     Battery_label.Visible = true;
                     Battery_textBox.Visible = true;
@@ -455,9 +482,9 @@ namespace main.contents
 
                     Battery_textBox.Text = Battery;
                     BatteryEff_textbox.Visible = true;
-                    BatteryEff_textbox.Location = new Point(433, 180);
+                    BatteryEff_textbox.Location = new Point(433, 207);
                     BatteryEff_textbox.Text = string.Format("{0:F0}%", BatteryEff);
-                    BatteryEff_textbox.Parent = PVpictureBox;
+                    //BatteryEff_textbox.Parent = PVpictureBox;
 
                     batterypower.Visible = true;
                     batterypower.Location = new Point(430, 294);
@@ -486,9 +513,9 @@ namespace main.contents
                 InverterEff = Convert.ToDouble(Value[0][4]);
                 Inverter_textBox.Text = Inverter;
                 InverterEff_textbox.Visible = true;
-                InverterEff_textbox.Location = new Point(382, 180);
+                InverterEff_textbox.Location = new Point(382, 207);
                 InverterEff_textbox.Text = string.Format("{0:F0}%", InverterEff);
-                InverterEff_textbox.Parent = PVpictureBox;
+               // InverterEff_textbox.Parent = PVpictureBox;
 
                 for (int i = 1; i < 9; i++)
                 {
@@ -623,13 +650,6 @@ namespace main.contents
             }
             catch { }
         }
-
-
-
-        #endregion
-
-
-
-   
+        #endregion   
     }
 }

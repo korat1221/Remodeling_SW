@@ -8,7 +8,7 @@ import { LoaderUtils } from './LoaderUtils.js';
 
 import { unzipSync, strFromU8 } from 'three/addons/libs/fflate.module.js';
 
-import { Zoning } from './Zoning.js';
+import { OBJLoader } from './OBJLoader.js';
 
 function Loader( editor ) {
 
@@ -462,13 +462,7 @@ function Loader( editor ) {
 
 					const contents = event.target.result;
 
-					const { OBJLoader } = await import( 'three/addons/loaders/OBJLoader.js' );
-
-					let object = new OBJLoader().parse( contents );
-
-					const zoning = new Zoning(editor);
-
-					zoning.calc(object);
+					let object = new OBJLoader().parse( editor, contents );
 
 					object.name = filename;
 

@@ -29,22 +29,22 @@ namespace main.subcontents.RESystem_PV
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            label6 = new Label();
+            pictureBox1 = new PictureBox();
             Save_button = new Button();
             AddUserDB_button = new Button();
             Deletebutton = new Button();
             UserNum_textBox = new TextBox();
             PVBattery_dataGridView = new DataGridView();
             panel1 = new Panel();
-            label6 = new Label();
-            pictureBox1 = new PictureBox();
             GeneralPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PVBattery_dataGridView).BeginInit();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -57,6 +57,26 @@ namespace main.subcontents.RESystem_PV
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(709, 76);
             GeneralPanel.TabIndex = 18;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("나눔고딕", 9.75F);
+            label6.Location = new Point(85, 53);
+            label6.Name = "label6";
+            label6.Size = new Size(97, 15);
+            label6.TabIndex = 30;
+            label6.Text = "PV 저장장치 DB";
+            label6.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(12, 9);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(67, 59);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 29;
+            pictureBox1.TabStop = false;
             // 
             // Save_button
             // 
@@ -75,7 +95,7 @@ namespace main.subcontents.RESystem_PV
             AddUserDB_button.BackColor = SystemColors.ControlLight;
             AddUserDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AddUserDB_button.FlatStyle = FlatStyle.System;
-            AddUserDB_button.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Bold, GraphicsUnit.Point);
+            AddUserDB_button.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             AddUserDB_button.Location = new Point(647, 8);
             AddUserDB_button.Margin = new Padding(0);
             AddUserDB_button.Name = "AddUserDB_button";
@@ -90,7 +110,7 @@ namespace main.subcontents.RESystem_PV
             Deletebutton.BackColor = SystemColors.ControlLight;
             Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Bold, GraphicsUnit.Point);
+            Deletebutton.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             Deletebutton.Location = new Point(674, 8);
             Deletebutton.Margin = new Padding(0);
             Deletebutton.Name = "Deletebutton";
@@ -121,37 +141,38 @@ namespace main.subcontents.RESystem_PV
             PVBattery_dataGridView.BorderStyle = BorderStyle.None;
             PVBattery_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             PVBattery_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            PVBattery_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            PVBattery_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             PVBattery_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             PVBattery_dataGridView.Dock = DockStyle.Bottom;
             PVBattery_dataGridView.Location = new Point(0, 37);
             PVBattery_dataGridView.Name = "PVBattery_dataGridView";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            PVBattery_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            PVBattery_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             PVBattery_dataGridView.RowHeadersVisible = false;
             PVBattery_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            PVBattery_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            PVBattery_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             PVBattery_dataGridView.Size = new Size(709, 205);
             PVBattery_dataGridView.TabIndex = 19;
             PVBattery_dataGridView.CellContentClick += PVBattery_dataGridView_CellContentClick;
+            PVBattery_dataGridView.CellValueChanged += PVBattery_dataGridView_CellValueChanged;
             // 
             // panel1
             // 
@@ -166,26 +187,6 @@ namespace main.subcontents.RESystem_PV
             panel1.Size = new Size(709, 242);
             panel1.TabIndex = 27;
             // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            label6.Location = new Point(85, 53);
-            label6.Name = "label6";
-            label6.Size = new Size(97, 15);
-            label6.TabIndex = 30;
-            label6.Text = "PV 저장장치 DB";
-            label6.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(12, 9);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(67, 59);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 29;
-            pictureBox1.TabStop = false;
-            // 
             // PV_BatteryDB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -199,10 +200,10 @@ namespace main.subcontents.RESystem_PV
             Text = "PV_BatteryDB";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)PVBattery_dataGridView).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 

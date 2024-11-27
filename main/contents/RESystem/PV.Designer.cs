@@ -119,14 +119,14 @@
             // 
             // PVMainPanel
             // 
-            PVMainPanel.BackColor = Color.FromArgb(32, 77, 112);
+            PVMainPanel.BackColor = SystemColors.GradientActiveCaption;
             PVMainPanel.Controls.Add(panel4);
             PVMainPanel.Controls.Add(label3);
             PVMainPanel.Controls.Add(label1);
             PVMainPanel.Controls.Add(Num_textBox);
             PVMainPanel.Controls.Add(Name_textBox);
             PVMainPanel.Controls.Add(pictureBox1);
-            PVMainPanel.Location = new Point(0, 0);
+            PVMainPanel.Location = new Point(0, 4);
             PVMainPanel.Name = "PVMainPanel";
             PVMainPanel.Size = new Size(1000, 80);
             PVMainPanel.TabIndex = 17;
@@ -268,7 +268,7 @@
             // 
             // Num_textBox
             // 
-            Num_textBox.BackColor = Color.FromArgb(32, 77, 112);
+            Num_textBox.BackColor = SystemColors.GradientActiveCaption;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
             Num_textBox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
@@ -370,7 +370,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1033, 638);
+            Save_button.Location = new Point(1006, 638);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 99;
@@ -460,9 +460,9 @@
             panel2.Controls.Add(label7);
             panel2.Controls.Add(Battery_label);
             panel2.Controls.Add(Inverter_textBox);
-            panel2.Location = new Point(0, 79);
+            panel2.Location = new Point(0, 84);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1000, 235);
+            panel2.Size = new Size(1000, 230);
             panel2.TabIndex = 139;
             // 
             // PVMoudle_textBox
@@ -554,7 +554,7 @@
             PV_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             PV_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             PV_dataGridView.Dock = DockStyle.Bottom;
-            PV_dataGridView.Location = new Point(0, 147);
+            PV_dataGridView.Location = new Point(0, 142);
             PV_dataGridView.Name = "PV_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
@@ -666,20 +666,22 @@
             // 
             BatteryEff_textbox.AutoSize = true;
             BatteryEff_textbox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            BatteryEff_textbox.Location = new Point(53, 87);
+            BatteryEff_textbox.Location = new Point(59, 152);
             BatteryEff_textbox.Name = "BatteryEff_textbox";
-            BatteryEff_textbox.Size = new Size(0, 15);
+            BatteryEff_textbox.Size = new Size(67, 15);
             BatteryEff_textbox.TabIndex = 194;
+            BatteryEff_textbox.Text = "batteryeff";
             BatteryEff_textbox.Visible = false;
             // 
             // InverterEff_textbox
             // 
             InverterEff_textbox.AutoSize = true;
             InverterEff_textbox.Font = new Font("나눔고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            InverterEff_textbox.Location = new Point(47, 73);
+            InverterEff_textbox.Location = new Point(59, 136);
             InverterEff_textbox.Name = "InverterEff_textbox";
-            InverterEff_textbox.Size = new Size(0, 15);
+            InverterEff_textbox.Size = new Size(70, 15);
             InverterEff_textbox.TabIndex = 146;
+            InverterEff_textbox.Text = "InverterEff";
             InverterEff_textbox.Visible = false;
             // 
             // pvname

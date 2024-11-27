@@ -94,7 +94,7 @@ namespace main.subcontents.ConstructionDoor
             Install_dataGridView.Columns.Add("A7", "설치선형열관류율.하부.Ψg,buttom.[W/m·K]");
             Install_dataGridView.Columns[0].Width = 50;
 
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_DoorInstall", "번호,DB유형,제품명,구분1,구분2,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_DoorInstall", "번호,제품명,구분1,구분2,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
             if(Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
@@ -196,9 +196,9 @@ namespace main.subcontents.ConstructionDoor
             int k = Install_dataGridView.CurrentCell.RowIndex;
             if (k > -1)
             {
-                if (Install_dataGridView.Rows[k].Cells[2].Value.ToString() == "사용자")
+                if (Install_dataGridView.Rows[k].Cells[1].Value.ToString().Contains("U"))
                 {
-                    if ((MessageBox.Show(Install_dataGridView.Rows[k].Cells[3].Value.ToString() + "을 삭제하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                    if ((MessageBox.Show(Install_dataGridView.Rows[k].Cells[2].Value.ToString() + "을 삭제하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
                     {
                         String Delete_Num = Install_dataGridView.Rows[k].Cells[1].Value.ToString();
                         Program.DB.deleteValue(DB.type.ProjDB, "User_DoorInstall", "번호 ='" + Delete_Num + "'");

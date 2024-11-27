@@ -29,9 +29,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             Size_dataGridView = new DataGridView();
             Save_button = new Button();
             CSVImport_button = new Button();
@@ -78,34 +78,33 @@
             Size_dataGridView.BorderStyle = BorderStyle.None;
             Size_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Size_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            Size_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            Size_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             Size_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Size_dataGridView.Location = new Point(3, 154);
             Size_dataGridView.Name = "Size_dataGridView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            Size_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = SystemColors.Control;
+            dataGridViewCellStyle8.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
+            Size_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             Size_dataGridView.RowHeadersVisible = false;
             Size_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            Size_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Size_dataGridView.RowTemplate.Height = 25;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new Font("나눔고딕", 9.75F);
+            dataGridViewCellStyle9.ForeColor = Color.Black;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
+            Size_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
             Size_dataGridView.Size = new Size(1144, 259);
             Size_dataGridView.TabIndex = 19;
             Size_dataGridView.CellContentClick += Size_dataGridView_CellContentClick_1;
@@ -127,7 +126,7 @@
             CSVImport_button.BackColor = SystemColors.ControlLight;
             CSVImport_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             CSVImport_button.FlatStyle = FlatStyle.System;
-            CSVImport_button.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            CSVImport_button.Font = new Font("나눔고딕 ExtraBold", 9.75F, FontStyle.Bold);
             CSVImport_button.Location = new Point(206, 9);
             CSVImport_button.Margin = new Padding(0);
             CSVImport_button.Name = "CSVImport_button";
@@ -161,7 +160,7 @@
             Calc_button.BackColor = SystemColors.ControlLight;
             Calc_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Calc_button.FlatStyle = FlatStyle.System;
-            Calc_button.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Calc_button.Font = new Font("나눔고딕 ExtraBold", 9.75F, FontStyle.Bold);
             Calc_button.Location = new Point(206, 47);
             Calc_button.Margin = new Padding(0);
             Calc_button.Name = "Calc_button";
@@ -174,17 +173,17 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label12.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             label12.Location = new Point(87, 13);
             label12.Name = "label12";
-            label12.Size = new Size(98, 15);
+            label12.Size = new Size(100, 15);
             label12.TabIndex = 135;
             label12.Text = "CSV를 통한 입력";
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label10.Font = new Font("나눔고딕", 9.75F, FontStyle.Bold);
             label10.Location = new Point(87, 51);
             label10.Name = "label10";
             label10.Size = new Size(99, 15);
