@@ -31,13 +31,11 @@ namespace main.contents
         /// </summary>
         private void InitializeComponent()
         {
-            GeneralPanel = new Panel();
+            Panel10 = new Panel();
             label21 = new Label();
             label15 = new Label();
             label12 = new Label();
             label2 = new Label();
-            label1 = new Label();
-            Icon_pictureBox = new PictureBox();
             label33 = new Label();
             label28 = new Label();
             label3 = new Label();
@@ -123,8 +121,10 @@ namespace main.contents
             BlowDoorTest_comboBox = new CustomComboBox();
             textBox3 = new TextBox();
             label40 = new Label();
-            GeneralPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
+            GeneralPanel = new Panel();
+            Icon_pictureBox = new PictureBox();
+            label22 = new Label();
+            Panel10.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -134,33 +134,33 @@ namespace main.contents
             ElecWiring_groupBox.SuspendLayout();
             Win_groupBox.SuspendLayout();
             Door_groupBox.SuspendLayout();
+            GeneralPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             SuspendLayout();
             // 
-            // GeneralPanel
+            // Panel10
             // 
-            GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(label21);
-            GeneralPanel.Controls.Add(label15);
-            GeneralPanel.Controls.Add(label12);
-            GeneralPanel.Controls.Add(label2);
-            GeneralPanel.Controls.Add(label1);
-            GeneralPanel.Controls.Add(Icon_pictureBox);
-            GeneralPanel.Controls.Add(label33);
-            GeneralPanel.Controls.Add(label28);
-            GeneralPanel.Controls.Add(label3);
-            GeneralPanel.Controls.Add(label5);
-            GeneralPanel.Controls.Add(label4);
-            GeneralPanel.Location = new Point(12, 12);
-            GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(977, 638);
-            GeneralPanel.TabIndex = 17;
-            GeneralPanel.Paint += GeneralPanel_Paint;
+            Panel10.BackColor = Color.White;
+            Panel10.Controls.Add(label21);
+            Panel10.Controls.Add(label15);
+            Panel10.Controls.Add(label12);
+            Panel10.Controls.Add(label2);
+            Panel10.Controls.Add(label33);
+            Panel10.Controls.Add(label28);
+            Panel10.Controls.Add(label3);
+            Panel10.Controls.Add(label5);
+            Panel10.Controls.Add(label4);
+            Panel10.Location = new Point(0, 84);
+            Panel10.Name = "Panel10";
+            Panel10.Size = new Size(1000, 560);
+            Panel10.TabIndex = 17;
+            Panel10.Paint += GeneralPanel_Paint;
             // 
             // label21
             // 
             label21.BorderStyle = BorderStyle.Fixed3D;
-            label21.Font = new Font("Rix모던고딕 B", 9.75F);
-            label21.Location = new Point(12, 536);
+            label21.Font = new Font(UTIL.Families[0], 9.75F);
+            label21.Location = new Point(12, 465);
             label21.Name = "label21";
             label21.Size = new Size(956, 2);
             label21.TabIndex = 145;
@@ -168,8 +168,8 @@ namespace main.contents
             // label15
             // 
             label15.BorderStyle = BorderStyle.Fixed3D;
-            label15.Font = new Font("Rix모던고딕 B", 9.75F);
-            label15.Location = new Point(12, 394);
+            label15.Font = new Font(UTIL.Families[0], 9.75F);
+            label15.Location = new Point(12, 325);
             label15.Name = "label15";
             label15.Size = new Size(956, 2);
             label15.TabIndex = 144;
@@ -177,8 +177,8 @@ namespace main.contents
             // label12
             // 
             label12.BorderStyle = BorderStyle.Fixed3D;
-            label12.Font = new Font("Rix모던고딕 B", 9.75F);
-            label12.Location = new Point(12, 276);
+            label12.Font = new Font(UTIL.Families[0], 9.75F);
+            label12.Location = new Point(12, 26);
             label12.Name = "label12";
             label12.Size = new Size(956, 2);
             label12.TabIndex = 143;
@@ -186,77 +186,59 @@ namespace main.contents
             // label2
             // 
             label2.BorderStyle = BorderStyle.Fixed3D;
-            label2.Font = new Font("Rix모던고딕 B", 9.75F);
-            label2.Location = new Point(12, 95);
+            label2.Font = new Font(UTIL.Families[0], 9.75F);
+            label2.Location = new Point(12, 207);
             label2.Name = "label2";
             label2.Size = new Size(956, 2);
             label2.TabIndex = 142;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Rix모던고딕 B", 9.75F);
-            label1.Location = new Point(116, 27);
-            label1.Name = "label1";
-            label1.Size = new Size(55, 14);
-            label1.TabIndex = 112;
-            label1.Text = "일반사항";
-            // 
-            // Icon_pictureBox
-            // 
-            Icon_pictureBox.Location = new Point(30, 9);
-            Icon_pictureBox.Name = "Icon_pictureBox";
-            Icon_pictureBox.Size = new Size(50, 50);
-            Icon_pictureBox.TabIndex = 91;
-            Icon_pictureBox.TabStop = false;
-            // 
             // label33
             // 
             label33.AutoSize = true;
-            label33.Font = new Font("Rix모던고딕 B", 9.75F);
-            label33.Location = new Point(12, 378);
+            label33.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label33.Location = new Point(12, 310);
             label33.Name = "label33";
-            label33.Size = new Size(58, 14);
+            label33.Size = new Size(58, 15);
             label33.TabIndex = 107;
             label33.Text = "기밀 정보";
             // 
             // label28
             // 
             label28.AutoSize = true;
-            label28.Font = new Font("Rix모던고딕 B", 9.75F);
-            label28.Location = new Point(12, 520);
+            label28.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label28.Location = new Point(12, 450);
             label28.Name = "label28";
-            label28.Size = new Size(70, 14);
+            label28.Size = new Size(70, 15);
             label28.TabIndex = 104;
             label28.Text = "작성자 정보";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Rix모던고딕 B", 9.75F);
-            label3.Location = new Point(12, 260);
+            label3.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label3.Location = new Point(12, 192);
             label3.Name = "label3";
-            label3.Size = new Size(97, 14);
+            label3.Size = new Size(97, 15);
             label3.TabIndex = 100;
             label3.Text = "건축물 대장 정보";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Rix모던고딕 B", 9.75F);
-            label5.Location = new Point(500, 79);
+            label5.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label5.Location = new Point(500, 11);
             label5.Name = "label5";
-            label5.Size = new Size(58, 14);
+            label5.Size = new Size(58, 15);
             label5.TabIndex = 97;
             label5.Text = "건물 정보";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Rix모던고딕 B", 9.75F);
-            label4.Location = new Point(12, 79);
+            label4.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label4.Location = new Point(12, 11);
             label4.Name = "label4";
-            label4.Size = new Size(55, 14);
+            label4.Size = new Size(55, 15);
             label4.TabIndex = 94;
             label4.Text = "프로젝트";
             // 
@@ -264,7 +246,7 @@ namespace main.contents
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1025, 615);
+            Save_button.Location = new Point(1013, 619);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 92;
@@ -286,9 +268,9 @@ namespace main.contents
             panel1.Controls.Add(label7);
             panel1.Controls.Add(label13);
             panel1.Controls.Add(label14);
-            panel1.Location = new Point(506, 109);
+            panel1.Location = new Point(494, 113);
             panel1.Name = "panel1";
-            panel1.Size = new Size(479, 158);
+            panel1.Size = new Size(503, 158);
             panel1.TabIndex = 98;
             panel1.Paint += panel1_Paint;
             // 
@@ -348,7 +330,7 @@ namespace main.contents
             BuildingUse_label.Font = new Font(UTIL.Families[0], 9.75F);
             BuildingUse_label.Location = new Point(220, 23);
             BuildingUse_label.Name = "BuildingUse_label";
-            BuildingUse_label.Size = new Size(58, 14);
+            BuildingUse_label.Size = new Size(58, 15);
             BuildingUse_label.TabIndex = 124;
             BuildingUse_label.Text = "건물 용도";
             // 
@@ -369,7 +351,7 @@ namespace main.contents
             label6.Font = new Font(UTIL.Families[0], 9.75F);
             label6.Location = new Point(20, 120);
             label6.Name = "label6";
-            label6.Size = new Size(67, 14);
+            label6.Size = new Size(67, 15);
             label6.TabIndex = 122;
             label6.Text = "기후데이터";
             // 
@@ -390,7 +372,7 @@ namespace main.contents
             label7.Font = new Font(UTIL.Families[0], 9.75F);
             label7.Location = new Point(20, 88);
             label7.Name = "label7";
-            label7.Size = new Size(31, 14);
+            label7.Size = new Size(31, 15);
             label7.TabIndex = 41;
             label7.Text = "주소";
             // 
@@ -400,7 +382,7 @@ namespace main.contents
             label13.Font = new Font(UTIL.Families[0], 9.75F);
             label13.Location = new Point(20, 56);
             label13.Name = "label13";
-            label13.Size = new Size(43, 14);
+            label13.Size = new Size(43, 15);
             label13.TabIndex = 39;
             label13.Text = "건물명";
             // 
@@ -410,7 +392,7 @@ namespace main.contents
             label14.Font = new Font(UTIL.Families[0], 9.75F);
             label14.Location = new Point(20, 24);
             label14.Name = "label14";
-            label14.Size = new Size(58, 14);
+            label14.Size = new Size(58, 15);
             label14.TabIndex = 37;
             label14.Text = "건물 유형";
             // 
@@ -425,7 +407,7 @@ namespace main.contents
             panel2.Controls.Add(ProjectName_textBox);
             panel2.Controls.Add(label16);
             panel2.Controls.Add(label17);
-            panel2.Location = new Point(19, 109);
+            panel2.Location = new Point(7, 113);
             panel2.Name = "panel2";
             panel2.Size = new Size(489, 158);
             panel2.TabIndex = 99;
@@ -464,7 +446,7 @@ namespace main.contents
             label11.ForeColor = SystemColors.ControlDark;
             label11.Location = new Point(21, 24);
             label11.Name = "label11";
-            label11.Size = new Size(79, 14);
+            label11.Size = new Size(79, 15);
             label11.TabIndex = 138;
             label11.Text = "프로젝트번호";
             // 
@@ -475,7 +457,7 @@ namespace main.contents
             OldProject_label.ForeColor = SystemColors.ControlDark;
             OldProject_label.Location = new Point(20, 119);
             OldProject_label.Name = "OldProject_label";
-            OldProject_label.Size = new Size(82, 14);
+            OldProject_label.Size = new Size(82, 15);
             OldProject_label.TabIndex = 137;
             OldProject_label.Text = "기존 프로젝트";
             // 
@@ -512,7 +494,7 @@ namespace main.contents
             label16.ForeColor = SystemColors.ControlDark;
             label16.Location = new Point(20, 88);
             label16.Name = "label16";
-            label16.Size = new Size(82, 14);
+            label16.Size = new Size(82, 15);
             label16.TabIndex = 39;
             label16.Text = "프로젝트 유형";
             // 
@@ -523,7 +505,7 @@ namespace main.contents
             label17.ForeColor = SystemColors.ControlDark;
             label17.Location = new Point(20, 56);
             label17.Name = "label17";
-            label17.Size = new Size(67, 14);
+            label17.Size = new Size(67, 15);
             label17.TabIndex = 37;
             label17.Text = "프로젝트명";
             // 
@@ -550,9 +532,9 @@ namespace main.contents
             panel3.Controls.Add(GrossArea_textBox);
             panel3.Controls.Add(label23);
             panel3.Controls.Add(label30);
-            panel3.Location = new Point(15, 290);
+            panel3.Location = new Point(3, 294);
             panel3.Name = "panel3";
-            panel3.Size = new Size(970, 94);
+            panel3.Size = new Size(994, 94);
             panel3.TabIndex = 101;
             panel3.Paint += panel3_Paint;
             // 
@@ -562,7 +544,7 @@ namespace main.contents
             label27.Font = new Font(UTIL.Families[0], 9.75F);
             label27.Location = new Point(726, 61);
             label27.Name = "label27";
-            label27.Size = new Size(31, 14);
+            label27.Size = new Size(31, 15);
             label27.TabIndex = 140;
             label27.Text = "지하";
             // 
@@ -630,7 +612,7 @@ namespace main.contents
             label8.ForeColor = SystemColors.ControlText;
             label8.Location = new Point(703, 60);
             label8.Name = "label8";
-            label8.Size = new Size(19, 14);
+            label8.Size = new Size(19, 15);
             label8.TabIndex = 138;
             label8.Text = "층";
             // 
@@ -641,7 +623,7 @@ namespace main.contents
             label10.ForeColor = SystemColors.ControlText;
             label10.Location = new Point(232, 23);
             label10.Name = "label10";
-            label10.Size = new Size(19, 14);
+            label10.Size = new Size(19, 15);
             label10.TabIndex = 128;
             label10.Text = "년";
             // 
@@ -652,7 +634,7 @@ namespace main.contents
             label9.ForeColor = SystemColors.ControlText;
             label9.Location = new Point(906, 60);
             label9.Name = "label9";
-            label9.Size = new Size(19, 14);
+            label9.Size = new Size(19, 15);
             label9.TabIndex = 136;
             label9.Text = "층";
             // 
@@ -675,7 +657,7 @@ namespace main.contents
             label26.Font = new Font(UTIL.Families[0], 9.75F);
             label26.Location = new Point(503, 61);
             label26.Name = "label26";
-            label26.Size = new Size(31, 14);
+            label26.Size = new Size(31, 15);
             label26.TabIndex = 135;
             label26.Text = "지상";
             // 
@@ -686,7 +668,7 @@ namespace main.contents
             label18.ForeColor = SystemColors.ControlText;
             label18.Location = new Point(432, 23);
             label18.Name = "label18";
-            label18.Size = new Size(19, 14);
+            label18.Size = new Size(19, 15);
             label18.TabIndex = 96;
             label18.Text = "월";
             // 
@@ -697,7 +679,7 @@ namespace main.contents
             label24.ForeColor = SystemColors.ControlText;
             label24.Location = new Point(906, 22);
             label24.Name = "label24";
-            label24.Size = new Size(30, 14);
+            label24.Size = new Size(25, 15);
             label24.TabIndex = 132;
             label24.Text = "m²";
             // 
@@ -708,7 +690,7 @@ namespace main.contents
             label19.ForeColor = SystemColors.ControlDark;
             label19.Location = new Point(20, 61);
             label19.Name = "label19";
-            label19.Size = new Size(79, 14);
+            label19.Size = new Size(79, 15);
             label19.TabIndex = 122;
             label19.Text = "법규기준연월";
             // 
@@ -731,7 +713,7 @@ namespace main.contents
             label20.Font = new Font(UTIL.Families[0], 9.75F);
             label20.Location = new Point(20, 24);
             label20.Name = "label20";
-            label20.Size = new Size(55, 14);
+            label20.Size = new Size(55, 15);
             label20.TabIndex = 41;
             label20.Text = "준공연월";
             // 
@@ -741,7 +723,7 @@ namespace main.contents
             label25.Font = new Font(UTIL.Families[0], 9.75F);
             label25.Location = new Point(725, 23);
             label25.Name = "label25";
-            label25.Size = new Size(55, 14);
+            label25.Size = new Size(55, 15);
             label25.TabIndex = 130;
             label25.Text = "건축면적";
             // 
@@ -765,7 +747,7 @@ namespace main.contents
             label23.ForeColor = SystemColors.ControlText;
             label23.Location = new Point(703, 22);
             label23.Name = "label23";
-            label23.Size = new Size(30, 14);
+            label23.Size = new Size(25, 15);
             label23.TabIndex = 129;
             label23.Text = "m²";
             // 
@@ -775,7 +757,7 @@ namespace main.contents
             label30.Font = new Font(UTIL.Families[0], 9.75F);
             label30.Location = new Point(503, 23);
             label30.Name = "label30";
-            label30.Size = new Size(43, 14);
+            label30.Size = new Size(43, 15);
             label30.TabIndex = 37;
             label30.Text = "연면적";
             // 
@@ -794,9 +776,9 @@ namespace main.contents
             panel5.Controls.Add(label31);
             panel5.Controls.Add(label36);
             panel5.Controls.Add(label32);
-            panel5.Location = new Point(15, 550);
+            panel5.Location = new Point(3, 551);
             panel5.Name = "panel5";
-            panel5.Size = new Size(970, 90);
+            panel5.Size = new Size(994, 90);
             panel5.TabIndex = 105;
             panel5.Paint += panel5_Paint;
             // 
@@ -868,7 +850,7 @@ namespace main.contents
             label29.ForeColor = SystemColors.ControlText;
             label29.Location = new Point(703, 52);
             label29.Name = "label29";
-            label29.Size = new Size(19, 14);
+            label29.Size = new Size(19, 15);
             label29.TabIndex = 134;
             label29.Text = "년";
             // 
@@ -891,7 +873,7 @@ namespace main.contents
             label39.Font = new Font(UTIL.Families[0], 9.75F);
             label39.Location = new Point(503, 24);
             label39.Name = "label39";
-            label39.Size = new Size(31, 14);
+            label39.Size = new Size(31, 15);
             label39.TabIndex = 37;
             label39.Text = "소속";
             // 
@@ -901,7 +883,7 @@ namespace main.contents
             label34.Font = new Font(UTIL.Families[0], 9.75F);
             label34.Location = new Point(20, 53);
             label34.Name = "label34";
-            label34.Size = new Size(31, 14);
+            label34.Size = new Size(31, 15);
             label34.TabIndex = 41;
             label34.Text = "주소";
             // 
@@ -912,7 +894,7 @@ namespace main.contents
             label31.ForeColor = SystemColors.ControlText;
             label31.Location = new Point(906, 52);
             label31.Name = "label31";
-            label31.Size = new Size(19, 14);
+            label31.Size = new Size(19, 15);
             label31.TabIndex = 133;
             label31.Text = "월";
             // 
@@ -922,7 +904,7 @@ namespace main.contents
             label36.Font = new Font(UTIL.Families[0], 9.75F);
             label36.Location = new Point(20, 24);
             label36.Name = "label36";
-            label36.Size = new Size(43, 14);
+            label36.Size = new Size(43, 15);
             label36.TabIndex = 37;
             label36.Text = "작성자";
             // 
@@ -932,7 +914,7 @@ namespace main.contents
             label32.Font = new Font(UTIL.Families[0], 9.75F);
             label32.Location = new Point(503, 53);
             label32.Name = "label32";
-            label32.Size = new Size(55, 14);
+            label32.Size = new Size(55, 15);
             label32.TabIndex = 132;
             label32.Text = "작성시기";
             // 
@@ -954,9 +936,9 @@ namespace main.contents
             panel7.Controls.Add(BlowDoorTest_comboBox);
             panel7.Controls.Add(textBox3);
             panel7.Controls.Add(label40);
-            panel7.Location = new Point(15, 408);
+            panel7.Location = new Point(3, 412);
             panel7.Name = "panel7";
-            panel7.Size = new Size(970, 120);
+            panel7.Size = new Size(994, 120);
             panel7.TabIndex = 108;
             panel7.Paint += panel7_Paint;
             // 
@@ -994,7 +976,7 @@ namespace main.contents
             n50_label2.ForeColor = SystemColors.ControlText;
             n50_label2.Location = new Point(428, 23);
             n50_label2.Name = "n50_label2";
-            n50_label2.Size = new Size(29, 14);
+            n50_label2.Size = new Size(29, 15);
             n50_label2.TabIndex = 150;
             n50_label2.Text = "1/h";
             // 
@@ -1005,7 +987,7 @@ namespace main.contents
             n50_label1.ForeColor = SystemColors.ControlText;
             n50_label1.Location = new Point(251, 24);
             n50_label1.Name = "n50_label1";
-            n50_label1.Size = new Size(30, 14);
+            n50_label1.Size = new Size(31, 15);
             n50_label1.TabIndex = 148;
             n50_label1.Text = "n50";
             // 
@@ -1015,7 +997,7 @@ namespace main.contents
             Pipe_label.Font = new Font(UTIL.Families[0], 9.75F);
             Pipe_label.Location = new Point(673, 65);
             Pipe_label.Name = "Pipe_label";
-            Pipe_label.Size = new Size(112, 14);
+            Pipe_label.Size = new Size(112, 15);
             Pipe_label.TabIndex = 147;
             Pipe_label.Text = "덕트/배관 기밀시공";
             // 
@@ -1059,7 +1041,7 @@ namespace main.contents
             ElecWiring_label.Font = new Font(UTIL.Families[0], 9.75F);
             ElecWiring_label.Location = new Point(454, 65);
             ElecWiring_label.Name = "ElecWiring_label";
-            ElecWiring_label.Size = new Size(82, 14);
+            ElecWiring_label.Size = new Size(82, 15);
             ElecWiring_label.TabIndex = 145;
             ElecWiring_label.Text = "배선 기밀시공";
             // 
@@ -1069,7 +1051,7 @@ namespace main.contents
             Win_label.Font = new Font(UTIL.Families[0], 9.75F);
             Win_label.Location = new Point(243, 65);
             Win_label.Name = "Win_label";
-            Win_label.Size = new Size(58, 14);
+            Win_label.Size = new Size(58, 15);
             Win_label.TabIndex = 143;
             Win_label.Text = "창호 기밀";
             // 
@@ -1147,7 +1129,7 @@ namespace main.contents
             Door_label.Font = new Font(UTIL.Families[0], 9.75F);
             Door_label.Location = new Point(21, 65);
             Door_label.Name = "Door_label";
-            Door_label.Size = new Size(70, 14);
+            Door_label.Size = new Size(70, 15);
             Door_label.TabIndex = 141;
             Door_label.Text = "방풍 출입문";
             // 
@@ -1215,9 +1197,38 @@ namespace main.contents
             label40.Font = new Font(UTIL.Families[0], 9.75F);
             label40.Location = new Point(20, 24);
             label40.Name = "label40";
-            label40.Size = new Size(79, 14);
+            label40.Size = new Size(79, 15);
             label40.TabIndex = 41;
             label40.Text = "기밀측정여부";
+            // 
+            // GeneralPanel
+            // 
+            GeneralPanel.BackColor = SystemColors.GradientActiveCaption;
+            GeneralPanel.Controls.Add(Icon_pictureBox);
+            GeneralPanel.Controls.Add(label22);
+            GeneralPanel.Location = new Point(0, 4);
+            GeneralPanel.Name = "GeneralPanel";
+            GeneralPanel.Size = new Size(1000, 80);
+            GeneralPanel.TabIndex = 146;
+            // 
+            // Icon_pictureBox
+            // 
+            Icon_pictureBox.Location = new Point(18, 14);
+            Icon_pictureBox.Name = "Icon_pictureBox";
+            Icon_pictureBox.Size = new Size(50, 50);
+            Icon_pictureBox.TabIndex = 91;
+            Icon_pictureBox.TabStop = false;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            label22.ForeColor = Color.White;
+            label22.Location = new Point(80, 32);
+            label22.Name = "label22";
+            label22.Size = new Size(55, 15);
+            label22.TabIndex = 3;
+            label22.Text = "일반정보";
             // 
             // General
             // 
@@ -1226,19 +1237,19 @@ namespace main.contents
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(Save_button);
             Controls.Add(panel7);
-            Controls.Add(panel5);
             Controls.Add(panel2);
             Controls.Add(panel1);
-            Controls.Add(Save_button);
             Controls.Add(panel3);
             Controls.Add(GeneralPanel);
+            Controls.Add(panel5);
+            Controls.Add(Panel10);
             FormBorderStyle = FormBorderStyle.None;
             Name = "General";
             Text = "Form3";
-            GeneralPanel.ResumeLayout(false);
-            GeneralPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
+            Panel10.ResumeLayout(false);
+            Panel10.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
@@ -1257,20 +1268,18 @@ namespace main.contents
             Win_groupBox.PerformLayout();
             Door_groupBox.ResumeLayout(false);
             Door_groupBox.PerformLayout();
+            GeneralPanel.ResumeLayout(false);
+            GeneralPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
             ResumeLayout(false);
         }
 
-
-
         #endregion
-        private Panel GeneralPanel;
-        private PictureBox Icon_pictureBox;
         private Button Previous_button;
         private Button Save_button;
         private Label label4;
         private Label label14;
         private Label label13;
-        private Label label1;
         private Panel panel1;
         private Label label6;
         private Label label7;
@@ -1360,5 +1369,9 @@ namespace main.contents
         private Label label21;
         private Label label15;
         private Label label12;
+        private Panel GeneralPanel;
+        private PictureBox Icon_pictureBox;
+        private Label label22;
+        private Panel Panel10;
     }
 }
