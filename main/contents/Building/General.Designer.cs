@@ -1223,7 +1223,7 @@ namespace main.contents
             // 
             label22.AutoSize = true;
             label22.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            label22.ForeColor = Color.White;
+            label22.ForeColor = Color.Black;
             label22.Location = new Point(80, 32);
             label22.Name = "label22";
             label22.Size = new Size(55, 15);
