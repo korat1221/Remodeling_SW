@@ -63,6 +63,16 @@ namespace main.Properties {
         /// <summary>
         ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static byte[] NanumBarunGothic {
+            get {
+                object obj = ResourceManager.GetObject("NanumBarunGothic", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static byte[] NANUMGOTHIC {
             get {
                 object obj = ResourceManager.GetObject("NANUMGOTHIC", resourceCulture);
