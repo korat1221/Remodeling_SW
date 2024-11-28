@@ -55,14 +55,12 @@ namespace main.contents
                 if (프로젝트유형[0][0] == "1")
                 {
                     radioButton1.Checked = true;
-                    radioButton2.Enabled = false;
                     radioButton3.Enabled = false;
                     radioButton4.Enabled = false;
                 }
                 else if (프로젝트유형[0][0] == "4")
                 {
                     radioButton1.Enabled = false;
-                    radioButton2.Checked = false;
                     radioButton3.Enabled = true;
                     radioButton4.Enabled = false;
                 }
