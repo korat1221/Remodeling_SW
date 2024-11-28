@@ -112,7 +112,7 @@ namespace main.contentslist
                 dataGridView1.Rows.Clear();
                 for (int n = 0; n < List.Length; n++)
                 {
-                    string[][] Zone = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 존 From ZoneEnvelope_3D where 층 ='" + List[n][0] + "' Order by 존 ");
+                    string[][] Zone = Program.DB.querySQL(DB.type.ProjDB, "SELECT Distinct 존 FROM ZoneEnvelope_3D where 층 ='" + List[n][0] + "' ORDER BY CAST(SUBSTR(존, INSTR(존, 'Zone') + 4) AS INTEGER)");
                     String[] 존이름 = new String[Zone.Length];
                     String[] 용도프로필 = new String[Zone.Length];
                     double[] 순바닥면적 = new double[Zone.Length];
