@@ -33,8 +33,6 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
-            label12 = new Label();
-            label26 = new Label();
             label19 = new Label();
             label23 = new Label();
             Icon_pictureBox = new PictureBox();
@@ -138,6 +136,7 @@ namespace main.contents
             AHUVolumeControl_comboBox = new CustomComboBox();
             tabControl1 = new CustomTabControl();
             panel1 = new Panel();
+            panel7 = new Panel();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             ImagePanel.SuspendLayout();
@@ -156,13 +155,12 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)HRV_dataGridView).BeginInit();
             tabControl1.SuspendLayout();
             panel1.SuspendLayout();
+            panel7.SuspendLayout();
             SuspendLayout();
             // 
             // GeneralPanel
             // 
-            GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(label12);
-            GeneralPanel.Controls.Add(label26);
+            GeneralPanel.BackColor = SystemColors.GradientActiveCaption;
             GeneralPanel.Controls.Add(label19);
             GeneralPanel.Controls.Add(label23);
             GeneralPanel.Controls.Add(Icon_pictureBox);
@@ -188,55 +186,35 @@ namespace main.contents
             GeneralPanel.Controls.Add(label13);
             GeneralPanel.Controls.Add(label14);
             GeneralPanel.Controls.Add(Num_textBox);
-            GeneralPanel.Location = new Point(12, 12);
+            GeneralPanel.Location = new Point(0, 4);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(977, 101);
+            GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Font = new Font(UTIL.Families[0], 9.75F);
-            label12.Location = new Point(688, 31);
-            label12.Name = "label12";
-            label12.Size = new Size(37, 15);
-            label12.TabIndex = 185;
-            label12.Text = "[kW]";
-            // 
-            // label26
-            // 
-            label26.AutoSize = true;
-            label26.Font = new Font(UTIL.Families[0], 9.75F);
-            label26.Location = new Point(489, 31);
-            label26.Name = "label26";
-            label26.Size = new Size(57, 15);
-            label26.TabIndex = 184;
-            label26.Text = "[kWh/a]";
             // 
             // label19
             // 
             label19.AutoSize = true;
-            label19.Font = new Font(UTIL.Families[0], 10F);
-            label19.Location = new Point(675, 13);
+            label19.Font = new Font("나눔바른고딕", 10F);
+            label19.Location = new Point(648, 11);
             label19.Name = "label19";
-            label19.Size = new Size(59, 16);
+            label19.Size = new Size(90, 16);
             label19.TabIndex = 183;
-            label19.Text = "최대부하";
+            label19.Text = "최대부하 [kW]";
             // 
             // label23
             // 
             label23.AutoSize = true;
-            label23.Font = new Font(UTIL.Families[0], 10F);
-            label23.Location = new Point(458, 13);
+            label23.Font = new Font("나눔바른고딕", 10F);
+            label23.Location = new Point(430, 11);
             label23.Name = "label23";
-            label23.Size = new Size(115, 16);
+            label23.Size = new Size(163, 16);
             label23.TabIndex = 182;
-            label23.Text = "연간 에너지요구량";
+            label23.Text = "연간 에너지요구량 [kWh/a]";
             // 
             // Icon_pictureBox
             // 
-            Icon_pictureBox.Location = new Point(18, 20);
+            Icon_pictureBox.Location = new Point(18, 14);
             Icon_pictureBox.Name = "Icon_pictureBox";
             Icon_pictureBox.Size = new Size(51, 50);
             Icon_pictureBox.TabIndex = 115;
@@ -247,8 +225,8 @@ namespace main.contents
             AHUoptions_button.BackColor = SystemColors.ControlLight;
             AHUoptions_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AHUoptions_button.FlatStyle = FlatStyle.System;
-            AHUoptions_button.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
-            AHUoptions_button.Location = new Point(323, 39);
+            AHUoptions_button.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
+            AHUoptions_button.Location = new Point(300, 32);
             AHUoptions_button.Margin = new Padding(0);
             AHUoptions_button.Name = "AHUoptions_button";
             AHUoptions_button.Size = new Size(23, 23);
@@ -259,12 +237,12 @@ namespace main.contents
             // 
             // HeatingLoad_textBox
             // 
-            HeatingLoad_textBox.BackColor = Color.White;
+            HeatingLoad_textBox.BackColor = SystemColors.GradientActiveCaption;
             HeatingLoad_textBox.BorderStyle = BorderStyle.None;
             HeatingLoad_textBox.Enabled = false;
-            HeatingLoad_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            HeatingLoad_textBox.Font = new Font("나눔바른고딕", 9.75F);
             HeatingLoad_textBox.ForeColor = SystemColors.ControlDark;
-            HeatingLoad_textBox.Location = new Point(706, 73);
+            HeatingLoad_textBox.Location = new Point(706, 60);
             HeatingLoad_textBox.Name = "HeatingLoad_textBox";
             HeatingLoad_textBox.Size = new Size(52, 15);
             HeatingLoad_textBox.TabIndex = 171;
@@ -273,8 +251,8 @@ namespace main.contents
             // label28
             // 
             label28.AutoSize = true;
-            label28.Font = new Font(UTIL.Families[0], 9.75F);
-            label28.Location = new Point(715, 51);
+            label28.Font = new Font("나눔바른고딕", 9.75F);
+            label28.Location = new Point(715, 36);
             label28.Name = "label28";
             label28.Size = new Size(31, 15);
             label28.TabIndex = 170;
@@ -283,8 +261,8 @@ namespace main.contents
             // label29
             // 
             label29.AutoSize = true;
-            label29.Font = new Font(UTIL.Families[0], 9.75F);
-            label29.Location = new Point(655, 51);
+            label29.Font = new Font("나눔바른고딕", 9.75F);
+            label29.Location = new Point(655, 36);
             label29.Name = "label29";
             label29.Size = new Size(31, 15);
             label29.TabIndex = 169;
@@ -292,12 +270,12 @@ namespace main.contents
             // 
             // Zone_textBox
             // 
-            Zone_textBox.BackColor = Color.White;
+            Zone_textBox.BackColor = SystemColors.GradientActiveCaption;
             Zone_textBox.BorderStyle = BorderStyle.None;
             Zone_textBox.Enabled = false;
-            Zone_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Zone_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Zone_textBox.ForeColor = SystemColors.ControlDark;
-            Zone_textBox.Location = new Point(195, 72);
+            Zone_textBox.Location = new Point(177, 60);
             Zone_textBox.Name = "Zone_textBox";
             Zone_textBox.Size = new Size(120, 15);
             Zone_textBox.TabIndex = 156;
@@ -305,12 +283,12 @@ namespace main.contents
             // 
             // CoolingLoad_textBox
             // 
-            CoolingLoad_textBox.BackColor = Color.White;
+            CoolingLoad_textBox.BackColor = SystemColors.GradientActiveCaption;
             CoolingLoad_textBox.BorderStyle = BorderStyle.None;
             CoolingLoad_textBox.Enabled = false;
-            CoolingLoad_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            CoolingLoad_textBox.Font = new Font("나눔바른고딕", 9.75F);
             CoolingLoad_textBox.ForeColor = SystemColors.ControlDark;
-            CoolingLoad_textBox.Location = new Point(642, 73);
+            CoolingLoad_textBox.Location = new Point(642, 60);
             CoolingLoad_textBox.Name = "CoolingLoad_textBox";
             CoolingLoad_textBox.Size = new Size(52, 15);
             CoolingLoad_textBox.TabIndex = 168;
@@ -318,12 +296,12 @@ namespace main.contents
             // 
             // AnnualHeatingNeed_textBox
             // 
-            AnnualHeatingNeed_textBox.BackColor = Color.White;
+            AnnualHeatingNeed_textBox.BackColor = SystemColors.GradientActiveCaption;
             AnnualHeatingNeed_textBox.BorderStyle = BorderStyle.None;
             AnnualHeatingNeed_textBox.Enabled = false;
-            AnnualHeatingNeed_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            AnnualHeatingNeed_textBox.Font = new Font("나눔바른고딕", 9.75F);
             AnnualHeatingNeed_textBox.ForeColor = SystemColors.ControlDark;
-            AnnualHeatingNeed_textBox.Location = new Point(536, 72);
+            AnnualHeatingNeed_textBox.Location = new Point(536, 60);
             AnnualHeatingNeed_textBox.Name = "AnnualHeatingNeed_textBox";
             AnnualHeatingNeed_textBox.Size = new Size(52, 15);
             AnnualHeatingNeed_textBox.TabIndex = 164;
@@ -332,8 +310,8 @@ namespace main.contents
             // label25
             // 
             label25.AutoSize = true;
-            label25.Font = new Font(UTIL.Families[0], 9.75F);
-            label25.Location = new Point(545, 50);
+            label25.Font = new Font("나눔바른고딕", 9.75F);
+            label25.Location = new Point(545, 36);
             label25.Name = "label25";
             label25.Size = new Size(31, 15);
             label25.TabIndex = 162;
@@ -342,8 +320,8 @@ namespace main.contents
             // label24
             // 
             label24.AutoSize = true;
-            label24.Font = new Font(UTIL.Families[0], 9.75F);
-            label24.Location = new Point(449, 50);
+            label24.Font = new Font("나눔바른고딕", 9.75F);
+            label24.Location = new Point(449, 36);
             label24.Name = "label24";
             label24.Size = new Size(31, 15);
             label24.TabIndex = 161;
@@ -351,12 +329,12 @@ namespace main.contents
             // 
             // AnnualCoolingNeed_textBox
             // 
-            AnnualCoolingNeed_textBox.BackColor = Color.White;
+            AnnualCoolingNeed_textBox.BackColor = SystemColors.GradientActiveCaption;
             AnnualCoolingNeed_textBox.BorderStyle = BorderStyle.None;
             AnnualCoolingNeed_textBox.Enabled = false;
-            AnnualCoolingNeed_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            AnnualCoolingNeed_textBox.Font = new Font("나눔바른고딕", 9.75F);
             AnnualCoolingNeed_textBox.ForeColor = SystemColors.ControlDark;
-            AnnualCoolingNeed_textBox.Location = new Point(436, 72);
+            AnnualCoolingNeed_textBox.Location = new Point(436, 60);
             AnnualCoolingNeed_textBox.Name = "AnnualCoolingNeed_textBox";
             AnnualCoolingNeed_textBox.Size = new Size(52, 15);
             AnnualCoolingNeed_textBox.TabIndex = 160;
@@ -365,9 +343,9 @@ namespace main.contents
             // AHUOptions_comboBox
             // 
             AHUOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHUOptions_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            AHUOptions_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             AHUOptions_comboBox.FormattingEnabled = true;
-            AHUOptions_comboBox.Location = new Point(195, 39);
+            AHUOptions_comboBox.Location = new Point(177, 32);
             AHUOptions_comboBox.Name = "AHUOptions_comboBox";
             AHUOptions_comboBox.Size = new Size(120, 23);
             AHUOptions_comboBox.TabIndex = 156;
@@ -376,18 +354,18 @@ namespace main.contents
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font(UTIL.Families[0], 9.75F);
-            label1.Location = new Point(128, 71);
+            label1.Font = new Font("나눔바른고딕", 9.75F);
+            label1.Location = new Point(133, 60);
             label1.Name = "label1";
-            label1.Size = new Size(47, 15);
+            label1.Size = new Size(46, 15);
             label1.TabIndex = 155;
             label1.Text = "공급 존";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font(UTIL.Families[0], 9.75F);
-            label3.Location = new Point(128, 42);
+            label3.Font = new Font("나눔바른고딕", 9.75F);
+            label3.Location = new Point(133, 36);
             label3.Name = "label3";
             label3.Size = new Size(31, 15);
             label3.TabIndex = 153;
@@ -396,8 +374,8 @@ namespace main.contents
             // label15
             // 
             label15.AutoSize = true;
-            label15.Font = new Font(UTIL.Families[0], 9.75F);
-            label15.Location = new Point(129, 13);
+            label15.Font = new Font("나눔바른고딕", 9.75F);
+            label15.Location = new Point(133, 12);
             label15.Name = "label15";
             label15.Size = new Size(31, 15);
             label15.TabIndex = 151;
@@ -405,10 +383,10 @@ namespace main.contents
             // 
             // Name_textBox
             // 
-            Name_textBox.BackColor = SystemColors.Window;
+            Name_textBox.BackColor = SystemColors.GradientActiveCaption;
             Name_textBox.BorderStyle = BorderStyle.None;
-            Name_textBox.Font = new Font(UTIL.Families[0], 9.75F);
-            Name_textBox.Location = new Point(195, 14);
+            Name_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            Name_textBox.Location = new Point(177, 12);
             Name_textBox.Name = "Name_textBox";
             Name_textBox.Size = new Size(120, 15);
             Name_textBox.TabIndex = 152;
@@ -418,7 +396,7 @@ namespace main.contents
             // 
             radioButton3.AutoSize = true;
             radioButton3.Enabled = false;
-            radioButton3.Location = new Point(919, 72);
+            radioButton3.Location = new Point(919, 60);
             radioButton3.Name = "radioButton3";
             radioButton3.Size = new Size(14, 13);
             radioButton3.TabIndex = 150;
@@ -428,10 +406,10 @@ namespace main.contents
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font(UTIL.Families[0], 9.75F);
-            label8.Location = new Point(821, 70);
+            label8.Font = new Font("나눔바른고딕", 9.75F);
+            label8.Location = new Point(821, 60);
             label8.Name = "label8";
-            label8.Size = new Size(75, 15);
+            label8.Size = new Size(73, 15);
             label8.TabIndex = 149;
             label8.Text = "철거 후 신규";
             // 
@@ -439,7 +417,7 @@ namespace main.contents
             // 
             radioButton2.AutoSize = true;
             radioButton2.Enabled = false;
-            radioButton2.Location = new Point(919, 45);
+            radioButton2.Location = new Point(919, 37);
             radioButton2.Name = "radioButton2";
             radioButton2.Size = new Size(14, 13);
             radioButton2.TabIndex = 148;
@@ -451,7 +429,7 @@ namespace main.contents
             radioButton1.AutoSize = true;
             radioButton1.Checked = true;
             radioButton1.Enabled = false;
-            radioButton1.Location = new Point(919, 17);
+            radioButton1.Location = new Point(919, 13);
             radioButton1.Name = "radioButton1";
             radioButton1.Size = new Size(14, 13);
             radioButton1.TabIndex = 147;
@@ -462,8 +440,8 @@ namespace main.contents
             // label13
             // 
             label13.AutoSize = true;
-            label13.Font = new Font(UTIL.Families[0], 9.75F);
-            label13.Location = new Point(845, 44);
+            label13.Font = new Font("나눔바른고딕", 9.75F);
+            label13.Location = new Point(845, 36);
             label13.Name = "label13";
             label13.Size = new Size(31, 15);
             label13.TabIndex = 146;
@@ -472,8 +450,8 @@ namespace main.contents
             // label14
             // 
             label14.AutoSize = true;
-            label14.Font = new Font(UTIL.Families[0], 9.75F);
-            label14.Location = new Point(845, 16);
+            label14.Font = new Font("나눔바른고딕", 9.75F);
+            label14.Location = new Point(845, 12);
             label14.Name = "label14";
             label14.Size = new Size(31, 15);
             label14.TabIndex = 145;
@@ -481,12 +459,12 @@ namespace main.contents
             // 
             // Num_textBox
             // 
-            Num_textBox.BackColor = Color.White;
+            Num_textBox.BackColor = SystemColors.GradientActiveCaption;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Num_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Num_textBox.ForeColor = SystemColors.ControlText;
-            Num_textBox.Location = new Point(66, 25);
+            Num_textBox.Location = new Point(72, 32);
             Num_textBox.Name = "Num_textBox";
             Num_textBox.Size = new Size(56, 15);
             Num_textBox.TabIndex = 114;
@@ -496,7 +474,7 @@ namespace main.contents
             // 
             Previous_button.BackColor = SystemColors.ButtonHighlight;
             Previous_button.ForeColor = Color.Black;
-            Previous_button.Location = new Point(1005, 650);
+            Previous_button.Location = new Point(1006, 666);
             Previous_button.Name = "Previous_button";
             Previous_button.Size = new Size(88, 25);
             Previous_button.TabIndex = 145;
@@ -507,7 +485,7 @@ namespace main.contents
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1099, 650);
+            Save_button.Location = new Point(1100, 666);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 144;
@@ -525,16 +503,16 @@ namespace main.contents
             ImagePanel.Controls.Add(MainpictureBox);
             ImagePanel.Controls.Add(ZoneS_label);
             ImagePanel.Controls.Add(LocationpictureBox);
-            ImagePanel.Location = new Point(12, 441);
+            ImagePanel.Location = new Point(0, 431);
             ImagePanel.Name = "ImagePanel";
-            ImagePanel.Size = new Size(977, 260);
+            ImagePanel.Size = new Size(1000, 260);
             ImagePanel.TabIndex = 146;
             ImagePanel.Paint += ImagePanel_Paint;
             // 
             // VAVpictureBox
             // 
             VAVpictureBox.BackColor = Color.Transparent;
-            VAVpictureBox.Location = new Point(0, 0);
+            VAVpictureBox.Location = new Point(22, 0);
             VAVpictureBox.Name = "VAVpictureBox";
             VAVpictureBox.Size = new Size(967, 260);
             VAVpictureBox.TabIndex = 161;
@@ -544,7 +522,7 @@ namespace main.contents
             // HumidifierpictureBox
             // 
             HumidifierpictureBox.BackColor = Color.Transparent;
-            HumidifierpictureBox.Location = new Point(0, 0);
+            HumidifierpictureBox.Location = new Point(22, 0);
             HumidifierpictureBox.Name = "HumidifierpictureBox";
             HumidifierpictureBox.Size = new Size(967, 260);
             HumidifierpictureBox.TabIndex = 160;
@@ -554,7 +532,7 @@ namespace main.contents
             // PrehPrecpictureBox
             // 
             PrehPrecpictureBox.BackColor = Color.Transparent;
-            PrehPrecpictureBox.Location = new Point(0, 0);
+            PrehPrecpictureBox.Location = new Point(22, 0);
             PrehPrecpictureBox.Name = "PrehPrecpictureBox";
             PrehPrecpictureBox.Size = new Size(967, 260);
             PrehPrecpictureBox.TabIndex = 158;
@@ -564,7 +542,7 @@ namespace main.contents
             // CoilpictureBox
             // 
             CoilpictureBox.BackColor = Color.Transparent;
-            CoilpictureBox.Location = new Point(0, 0);
+            CoilpictureBox.Location = new Point(22, 0);
             CoilpictureBox.Name = "CoilpictureBox";
             CoilpictureBox.Size = new Size(967, 260);
             CoilpictureBox.TabIndex = 159;
@@ -574,7 +552,7 @@ namespace main.contents
             // MainpictureBox
             // 
             MainpictureBox.BackColor = Color.Transparent;
-            MainpictureBox.Location = new Point(0, 0);
+            MainpictureBox.Location = new Point(22, 0);
             MainpictureBox.Name = "MainpictureBox";
             MainpictureBox.Size = new Size(967, 260);
             MainpictureBox.TabIndex = 156;
@@ -583,7 +561,7 @@ namespace main.contents
             // ZoneS_label
             // 
             ZoneS_label.AutoSize = true;
-            ZoneS_label.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Italic);
+            ZoneS_label.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Italic);
             ZoneS_label.ForeColor = SystemColors.ControlDarkDark;
             ZoneS_label.Location = new Point(477, 9);
             ZoneS_label.Name = "ZoneS_label";
@@ -593,7 +571,7 @@ namespace main.contents
             // LocationpictureBox
             // 
             LocationpictureBox.BackColor = Color.Transparent;
-            LocationpictureBox.Location = new Point(0, 0);
+            LocationpictureBox.Location = new Point(22, 0);
             LocationpictureBox.Name = "LocationpictureBox";
             LocationpictureBox.Size = new Size(967, 260);
             LocationpictureBox.TabIndex = 157;
@@ -616,7 +594,7 @@ namespace main.contents
             PrehPrec_tabPage.Location = new Point(4, 25);
             PrehPrec_tabPage.Name = "PrehPrec_tabPage";
             PrehPrec_tabPage.Padding = new Padding(3);
-            PrehPrec_tabPage.Size = new Size(969, 310);
+            PrehPrec_tabPage.Size = new Size(992, 322);
             PrehPrec_tabPage.TabIndex = 4;
             PrehPrec_tabPage.Text = "예열/예냉";
             PrehPrec_tabPage.UseVisualStyleBackColor = true;
@@ -624,17 +602,17 @@ namespace main.contents
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font(UTIL.Families[0], 9.75F);
+            label4.Font = new Font("나눔바른고딕", 9.75F);
             label4.Location = new Point(35, 33);
             label4.Name = "label4";
-            label4.Size = new Size(84, 15);
+            label4.Size = new Size(85, 15);
             label4.TabIndex = 195;
             label4.Text = "예열/예냉유형";
             // 
             // PrehPrecOptions_comboBox
             // 
             PrehPrecOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            PrehPrecOptions_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            PrehPrecOptions_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             PrehPrecOptions_comboBox.FormattingEnabled = true;
             PrehPrecOptions_comboBox.Location = new Point(137, 29);
             PrehPrecOptions_comboBox.Name = "PrehPrecOptions_comboBox";
@@ -667,7 +645,7 @@ namespace main.contents
             // 
             label44.AutoSize = true;
             label44.BackColor = Color.White;
-            label44.Font = new Font(UTIL.Families[0], 9.75F);
+            label44.Font = new Font("나눔바른고딕", 9.75F);
             label44.Location = new Point(19, 0);
             label44.Name = "label44";
             label44.Size = new Size(67, 15);
@@ -678,7 +656,7 @@ namespace main.contents
             // 
             CooltubeDiameter_textBox.BackColor = SystemColors.Window;
             CooltubeDiameter_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CooltubeDiameter_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            CooltubeDiameter_textBox.Font = new Font("나눔바른고딕", 9.75F);
             CooltubeDiameter_textBox.Location = new Point(95, 31);
             CooltubeDiameter_textBox.Name = "CooltubeDiameter_textBox";
             CooltubeDiameter_textBox.Size = new Size(120, 22);
@@ -689,7 +667,7 @@ namespace main.contents
             // label21
             // 
             label21.AutoSize = true;
-            label21.Font = new Font(UTIL.Families[0], 9.75F);
+            label21.Font = new Font("나눔바른고딕", 9.75F);
             label21.Location = new Point(36, 34);
             label21.Name = "label21";
             label21.Size = new Size(31, 15);
@@ -699,7 +677,7 @@ namespace main.contents
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font(UTIL.Families[0], 9.75F);
+            label10.Font = new Font("나눔바른고딕", 9.75F);
             label10.Location = new Point(36, 66);
             label10.Name = "label10";
             label10.Size = new Size(31, 15);
@@ -710,7 +688,7 @@ namespace main.contents
             // 
             CooltubeThickness_textBox.BackColor = SystemColors.Window;
             CooltubeThickness_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CooltubeThickness_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            CooltubeThickness_textBox.Font = new Font("나눔바른고딕", 9.75F);
             CooltubeThickness_textBox.Location = new Point(95, 63);
             CooltubeThickness_textBox.Name = "CooltubeThickness_textBox";
             CooltubeThickness_textBox.Size = new Size(120, 22);
@@ -721,7 +699,7 @@ namespace main.contents
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font(UTIL.Families[0], 9.75F);
+            label5.Font = new Font("나눔바른고딕", 9.75F);
             label5.ForeColor = SystemColors.ControlText;
             label5.Location = new Point(217, 66);
             label5.Name = "label5";
@@ -733,7 +711,7 @@ namespace main.contents
             // 
             CooltubeLength_textBox.BackColor = SystemColors.Window;
             CooltubeLength_textBox.BorderStyle = BorderStyle.FixedSingle;
-            CooltubeLength_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            CooltubeLength_textBox.Font = new Font("나눔바른고딕", 9.75F);
             CooltubeLength_textBox.Location = new Point(95, 96);
             CooltubeLength_textBox.Name = "CooltubeLength_textBox";
             CooltubeLength_textBox.Size = new Size(120, 22);
@@ -744,7 +722,7 @@ namespace main.contents
             // label36
             // 
             label36.AutoSize = true;
-            label36.Font = new Font(UTIL.Families[0], 9.75F);
+            label36.Font = new Font("나눔바른고딕", 9.75F);
             label36.ForeColor = SystemColors.ControlText;
             label36.Location = new Point(217, 35);
             label36.Name = "label36";
@@ -755,7 +733,7 @@ namespace main.contents
             // label37
             // 
             label37.AutoSize = true;
-            label37.Font = new Font(UTIL.Families[0], 9.75F);
+            label37.Font = new Font("나눔바른고딕", 9.75F);
             label37.ForeColor = SystemColors.ControlText;
             label37.Location = new Point(217, 100);
             label37.Name = "label37";
@@ -766,7 +744,7 @@ namespace main.contents
             // label39
             // 
             label39.AutoSize = true;
-            label39.Font = new Font(UTIL.Families[0], 9.75F);
+            label39.Font = new Font("나눔바른고딕", 9.75F);
             label39.Location = new Point(36, 99);
             label39.Name = "label39";
             label39.Size = new Size(31, 15);
@@ -776,7 +754,7 @@ namespace main.contents
             // CooltubeMaterial_comboBox
             // 
             CooltubeMaterial_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            CooltubeMaterial_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            CooltubeMaterial_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             CooltubeMaterial_comboBox.FormattingEnabled = true;
             CooltubeMaterial_comboBox.Location = new Point(95, 128);
             CooltubeMaterial_comboBox.Name = "CooltubeMaterial_comboBox";
@@ -787,7 +765,7 @@ namespace main.contents
             // label38
             // 
             label38.AutoSize = true;
-            label38.Font = new Font(UTIL.Families[0], 9.75F);
+            label38.Font = new Font("나눔바른고딕", 9.75F);
             label38.Location = new Point(36, 131);
             label38.Name = "label38";
             label38.Size = new Size(31, 15);
@@ -813,7 +791,7 @@ namespace main.contents
             // 
             label43.AutoSize = true;
             label43.BackColor = Color.White;
-            label43.Font = new Font(UTIL.Families[0], 9.75F);
+            label43.Font = new Font("나눔바른고딕", 9.75F);
             label43.Location = new Point(17, 0);
             label43.Name = "label43";
             label43.Size = new Size(55, 15);
@@ -824,7 +802,7 @@ namespace main.contents
             // 
             GroundDepth_textBox.BackColor = SystemColors.Window;
             GroundDepth_textBox.BorderStyle = BorderStyle.FixedSingle;
-            GroundDepth_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            GroundDepth_textBox.Font = new Font("나눔바른고딕", 9.75F);
             GroundDepth_textBox.Location = new Point(102, 64);
             GroundDepth_textBox.Name = "GroundDepth_textBox";
             GroundDepth_textBox.Size = new Size(120, 22);
@@ -835,7 +813,7 @@ namespace main.contents
             // GroundOptions_comboBox
             // 
             GroundOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            GroundOptions_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            GroundOptions_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             GroundOptions_comboBox.FormattingEnabled = true;
             GroundOptions_comboBox.Location = new Point(102, 32);
             GroundOptions_comboBox.Name = "GroundOptions_comboBox";
@@ -846,7 +824,7 @@ namespace main.contents
             // label42
             // 
             label42.AutoSize = true;
-            label42.Font = new Font(UTIL.Families[0], 9.75F);
+            label42.Font = new Font("나눔바른고딕", 9.75F);
             label42.ForeColor = SystemColors.ControlText;
             label42.Location = new Point(224, 68);
             label42.Name = "label42";
@@ -857,7 +835,7 @@ namespace main.contents
             // label22
             // 
             label22.AutoSize = true;
-            label22.Font = new Font(UTIL.Families[0], 9.75F);
+            label22.Font = new Font("나눔바른고딕", 9.75F);
             label22.Location = new Point(27, 69);
             label22.Name = "label22";
             label22.Size = new Size(55, 15);
@@ -867,7 +845,7 @@ namespace main.contents
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font(UTIL.Families[0], 9.75F);
+            label7.Font = new Font("나눔바른고딕", 9.75F);
             label7.Location = new Point(27, 37);
             label7.Name = "label7";
             label7.Size = new Size(55, 15);
@@ -893,7 +871,7 @@ namespace main.contents
             // 
             label46.AutoSize = true;
             label46.BackColor = Color.White;
-            label46.Font = new Font(UTIL.Families[0], 9.75F);
+            label46.Font = new Font("나눔바른고딕", 9.75F);
             label46.Location = new Point(17, 0);
             label46.Name = "label46";
             label46.Size = new Size(79, 15);
@@ -903,7 +881,7 @@ namespace main.contents
             // PrehControlOptions_comboBox
             // 
             PrehControlOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            PrehControlOptions_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            PrehControlOptions_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             PrehControlOptions_comboBox.FormattingEnabled = true;
             PrehControlOptions_comboBox.Location = new Point(102, 33);
             PrehControlOptions_comboBox.Name = "PrehControlOptions_comboBox";
@@ -915,7 +893,7 @@ namespace main.contents
             // 
             PrehPower_textBox.BackColor = SystemColors.Window;
             PrehPower_textBox.BorderStyle = BorderStyle.FixedSingle;
-            PrehPower_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            PrehPower_textBox.Font = new Font("나눔바른고딕", 9.75F);
             PrehPower_textBox.Location = new Point(102, 64);
             PrehPower_textBox.Name = "PrehPower_textBox";
             PrehPower_textBox.Size = new Size(120, 22);
@@ -926,7 +904,7 @@ namespace main.contents
             // label47
             // 
             label47.AutoSize = true;
-            label47.Font = new Font(UTIL.Families[0], 9.75F);
+            label47.Font = new Font("나눔바른고딕", 9.75F);
             label47.ForeColor = SystemColors.ControlText;
             label47.Location = new Point(224, 68);
             label47.Name = "label47";
@@ -937,7 +915,7 @@ namespace main.contents
             // label48
             // 
             label48.AutoSize = true;
-            label48.Font = new Font(UTIL.Families[0], 9.75F);
+            label48.Font = new Font("나눔바른고딕", 9.75F);
             label48.Location = new Point(27, 69);
             label48.Name = "label48";
             label48.Size = new Size(31, 15);
@@ -947,7 +925,7 @@ namespace main.contents
             // label49
             // 
             label49.AutoSize = true;
-            label49.Font = new Font(UTIL.Families[0], 9.75F);
+            label49.Font = new Font("나눔바른고딕", 9.75F);
             label49.Location = new Point(27, 37);
             label49.Name = "label49";
             label49.Size = new Size(55, 15);
@@ -978,7 +956,7 @@ namespace main.contents
             Duct_tabPage.Location = new Point(4, 25);
             Duct_tabPage.Name = "Duct_tabPage";
             Duct_tabPage.Padding = new Padding(3);
-            Duct_tabPage.Size = new Size(969, 310);
+            Duct_tabPage.Size = new Size(992, 322);
             Duct_tabPage.TabIndex = 3;
             Duct_tabPage.Text = "덕트";
             Duct_tabPage.UseVisualStyleBackColor = true;
@@ -986,27 +964,27 @@ namespace main.contents
             // OASALength_label
             // 
             OASALength_label.AutoSize = true;
-            OASALength_label.Font = new Font(UTIL.Families[0], 9.75F);
+            OASALength_label.Font = new Font("나눔바른고딕", 9.75F);
             OASALength_label.Location = new Point(28, 39);
             OASALength_label.Name = "OASALength_label";
-            OASALength_label.Size = new Size(75, 15);
+            OASALength_label.Size = new Size(74, 15);
             OASALength_label.TabIndex = 221;
             OASALength_label.Text = "SA 덕트길이";
             // 
             // EARALength_label
             // 
             EARALength_label.AutoSize = true;
-            EARALength_label.Font = new Font(UTIL.Families[0], 9.75F);
+            EARALength_label.Font = new Font("나눔바른고딕", 9.75F);
             EARALength_label.Location = new Point(279, 39);
             EARALength_label.Name = "EARALength_label";
-            EARALength_label.Size = new Size(76, 15);
+            EARALength_label.Size = new Size(74, 15);
             EARALength_label.TabIndex = 218;
             EARALength_label.Text = "RA 덕트길이";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font(UTIL.Families[0], 9.75F);
+            label2.Font = new Font("나눔바른고딕", 9.75F);
             label2.ForeColor = SystemColors.ControlDark;
             label2.Location = new Point(739, 79);
             label2.Name = "label2";
@@ -1017,11 +995,11 @@ namespace main.contents
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font(UTIL.Families[0], 9.75F);
+            label6.Font = new Font("나눔바른고딕", 9.75F);
             label6.ForeColor = SystemColors.ControlDark;
             label6.Location = new Point(920, 78);
             label6.Name = "label6";
-            label6.Size = new Size(45, 15);
+            label6.Size = new Size(46, 15);
             label6.TabIndex = 216;
             label6.Text = "W/mK";
             // 
@@ -1030,7 +1008,7 @@ namespace main.contents
             PipeIns_Ramda_textBox.BackColor = Color.White;
             PipeIns_Ramda_textBox.BorderStyle = BorderStyle.None;
             PipeIns_Ramda_textBox.Enabled = false;
-            PipeIns_Ramda_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            PipeIns_Ramda_textBox.Font = new Font("나눔바른고딕", 9.75F);
             PipeIns_Ramda_textBox.ForeColor = SystemColors.ControlDark;
             PipeIns_Ramda_textBox.Location = new Point(797, 79);
             PipeIns_Ramda_textBox.Name = "PipeIns_Ramda_textBox";
@@ -1043,7 +1021,7 @@ namespace main.contents
             PipeIns_textBox.BackColor = Color.White;
             PipeIns_textBox.BorderStyle = BorderStyle.None;
             PipeIns_textBox.Enabled = false;
-            PipeIns_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            PipeIns_textBox.Font = new Font("나눔바른고딕", 9.75F);
             PipeIns_textBox.ForeColor = SystemColors.ControlDark;
             PipeIns_textBox.Location = new Point(590, 79);
             PipeIns_textBox.Name = "PipeIns_textBox";
@@ -1056,7 +1034,7 @@ namespace main.contents
             PipeIns_button.BackColor = SystemColors.ControlLight;
             PipeIns_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             PipeIns_button.FlatStyle = FlatStyle.System;
-            PipeIns_button.Font = new Font(UTIL.Families[0], 12F);
+            PipeIns_button.Font = new Font("나눔바른고딕", 12F);
             PipeIns_button.Location = new Point(712, 75);
             PipeIns_button.Margin = new Padding(0);
             PipeIns_button.Name = "PipeIns_button";
@@ -1069,7 +1047,7 @@ namespace main.contents
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font(UTIL.Families[0], 9.75F);
+            label9.Font = new Font("나눔바른고딕", 9.75F);
             label9.Location = new Point(513, 78);
             label9.Name = "label9";
             label9.Size = new Size(55, 15);
@@ -1079,7 +1057,7 @@ namespace main.contents
             // label40
             // 
             label40.AutoSize = true;
-            label40.Font = new Font(UTIL.Families[0], 9.75F);
+            label40.Font = new Font("나눔바른고딕", 9.75F);
             label40.ForeColor = SystemColors.ControlText;
             label40.Location = new Point(230, 38);
             label40.Name = "label40";
@@ -1090,7 +1068,7 @@ namespace main.contents
             // label41
             // 
             label41.AutoSize = true;
-            label41.Font = new Font(UTIL.Families[0], 9.75F);
+            label41.Font = new Font("나눔바른고딕", 9.75F);
             label41.ForeColor = SystemColors.ControlText;
             label41.Location = new Point(485, 38);
             label41.Name = "label41";
@@ -1101,7 +1079,7 @@ namespace main.contents
             // label20
             // 
             label20.AutoSize = true;
-            label20.Font = new Font(UTIL.Families[0], 9.75F);
+            label20.Font = new Font("나눔바른고딕", 9.75F);
             label20.ForeColor = SystemColors.ControlText;
             label20.Location = new Point(230, 79);
             label20.Name = "label20";
@@ -1113,7 +1091,7 @@ namespace main.contents
             // 
             DuctInsulationThickness_textBox.BackColor = SystemColors.Window;
             DuctInsulationThickness_textBox.BorderStyle = BorderStyle.FixedSingle;
-            DuctInsulationThickness_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            DuctInsulationThickness_textBox.Font = new Font("나눔바른고딕", 9.75F);
             DuctInsulationThickness_textBox.Location = new Point(359, 76);
             DuctInsulationThickness_textBox.Name = "DuctInsulationThickness_textBox";
             DuctInsulationThickness_textBox.Size = new Size(120, 22);
@@ -1125,7 +1103,7 @@ namespace main.contents
             // 
             DuctDiameter_textBox.BackColor = SystemColors.Window;
             DuctDiameter_textBox.BorderStyle = BorderStyle.FixedSingle;
-            DuctDiameter_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            DuctDiameter_textBox.Font = new Font("나눔바른고딕", 9.75F);
             DuctDiameter_textBox.Location = new Point(108, 76);
             DuctDiameter_textBox.Name = "DuctDiameter_textBox";
             DuctDiameter_textBox.Size = new Size(120, 22);
@@ -1137,7 +1115,7 @@ namespace main.contents
             // 
             OASALength_textBox.BackColor = SystemColors.Window;
             OASALength_textBox.BorderStyle = BorderStyle.FixedSingle;
-            OASALength_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            OASALength_textBox.Font = new Font("나눔바른고딕", 9.75F);
             OASALength_textBox.Location = new Point(108, 35);
             OASALength_textBox.Name = "OASALength_textBox";
             OASALength_textBox.Size = new Size(120, 22);
@@ -1149,7 +1127,7 @@ namespace main.contents
             // 
             EARALength_textBox.BackColor = SystemColors.Window;
             EARALength_textBox.BorderStyle = BorderStyle.FixedSingle;
-            EARALength_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            EARALength_textBox.Font = new Font("나눔바른고딕", 9.75F);
             EARALength_textBox.Location = new Point(359, 35);
             EARALength_textBox.Name = "EARALength_textBox";
             EARALength_textBox.Size = new Size(120, 22);
@@ -1160,7 +1138,7 @@ namespace main.contents
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font(UTIL.Families[0], 9.75F);
+            label11.Font = new Font("나눔바른고딕", 9.75F);
             label11.ForeColor = SystemColors.ControlText;
             label11.Location = new Point(481, 79);
             label11.Name = "label11";
@@ -1171,10 +1149,10 @@ namespace main.contents
             // DuctLength_label
             // 
             DuctLength_label.AutoSize = true;
-            DuctLength_label.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            DuctLength_label.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             DuctLength_label.Location = new Point(31, 12);
             DuctLength_label.Name = "DuctLength_label";
-            DuctLength_label.Size = new Size(155, 20);
+            DuctLength_label.Size = new Size(151, 20);
             DuctLength_label.TabIndex = 197;
             DuctLength_label.Text = "공조기부터 외피라인까지\r\n";
             DuctLength_label.UseCompatibleTextRendering = true;
@@ -1182,7 +1160,7 @@ namespace main.contents
             // label16
             // 
             label16.AutoSize = true;
-            label16.Font = new Font(UTIL.Families[0], 9.75F);
+            label16.Font = new Font("나눔바른고딕", 9.75F);
             label16.Location = new Point(279, 79);
             label16.Name = "label16";
             label16.Size = new Size(55, 15);
@@ -1192,7 +1170,7 @@ namespace main.contents
             // label17
             // 
             label17.AutoSize = true;
-            label17.Font = new Font(UTIL.Families[0], 9.75F);
+            label17.Font = new Font("나눔바른고딕", 9.75F);
             label17.Location = new Point(28, 82);
             label17.Name = "label17";
             label17.Size = new Size(55, 15);
@@ -1219,7 +1197,7 @@ namespace main.contents
             AHU_tabPage.Location = new Point(4, 25);
             AHU_tabPage.Name = "AHU_tabPage";
             AHU_tabPage.Padding = new Padding(3);
-            AHU_tabPage.Size = new Size(969, 310);
+            AHU_tabPage.Size = new Size(992, 322);
             AHU_tabPage.TabIndex = 2;
             AHU_tabPage.Text = "공조기";
             // 
@@ -1236,7 +1214,7 @@ namespace main.contents
             HRV_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -1244,11 +1222,11 @@ namespace main.contents
             HRV_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             HRV_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             HRV_dataGridView.Dock = DockStyle.Bottom;
-            HRV_dataGridView.Location = new Point(3, 97);
+            HRV_dataGridView.Location = new Point(3, 109);
             HRV_dataGridView.Name = "HRV_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -1257,21 +1235,21 @@ namespace main.contents
             HRV_dataGridView.RowHeadersVisible = false;
             HRV_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             HRV_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            HRV_dataGridView.Size = new Size(963, 210);
+            HRV_dataGridView.Size = new Size(986, 210);
             HRV_dataGridView.TabIndex = 181;
             // 
             // TABOptions_label
             // 
             TABOptions_label.AutoSize = true;
-            TABOptions_label.Font = new Font(UTIL.Families[0], 9.75F);
+            TABOptions_label.Font = new Font("나눔바른고딕", 9.75F);
             TABOptions_label.Location = new Point(283, 60);
             TABOptions_label.Name = "TABOptions_label";
-            TABOptions_label.Size = new Size(79, 15);
+            TABOptions_label.Size = new Size(78, 15);
             TABOptions_label.TabIndex = 225;
             TABOptions_label.Text = "TAB실시유무";
             TABOptions_label.Visible = false;
@@ -1279,7 +1257,7 @@ namespace main.contents
             // TABOptions_comboBox
             // 
             TABOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            TABOptions_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            TABOptions_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             TABOptions_comboBox.FormattingEnabled = true;
             TABOptions_comboBox.Location = new Point(364, 56);
             TABOptions_comboBox.Name = "TABOptions_comboBox";
@@ -1291,7 +1269,7 @@ namespace main.contents
             // AHULeakageLevel_comboBox
             // 
             AHULeakageLevel_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHULeakageLevel_comboBox.Font = new Font(UTIL.Families[0], 8.25F);
+            AHULeakageLevel_comboBox.Font = new Font("나눔바른고딕", 8.25F);
             AHULeakageLevel_comboBox.FormattingEnabled = true;
             AHULeakageLevel_comboBox.Location = new Point(792, 22);
             AHULeakageLevel_comboBox.Name = "AHULeakageLevel_comboBox";
@@ -1302,7 +1280,7 @@ namespace main.contents
             // AHULeakageLevel_label
             // 
             AHULeakageLevel_label.AutoSize = true;
-            AHULeakageLevel_label.Font = new Font(UTIL.Families[0], 9.75F);
+            AHULeakageLevel_label.Font = new Font("나눔바른고딕", 9.75F);
             AHULeakageLevel_label.Location = new Point(711, 26);
             AHULeakageLevel_label.Name = "AHULeakageLevel_label";
             AHULeakageLevel_label.Size = new Size(55, 15);
@@ -1312,7 +1290,7 @@ namespace main.contents
             // label18
             // 
             label18.AutoSize = true;
-            label18.Font = new Font(UTIL.Families[0], 9.75F);
+            label18.Font = new Font("나눔바른고딕", 9.75F);
             label18.ForeColor = SystemColors.ControlText;
             label18.Location = new Point(247, 59);
             label18.Name = "label18";
@@ -1323,7 +1301,7 @@ namespace main.contents
             // AHUInsulationThickness_comboBox
             // 
             AHUInsulationThickness_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHUInsulationThickness_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            AHUInsulationThickness_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             AHUInsulationThickness_comboBox.FormattingEnabled = true;
             AHUInsulationThickness_comboBox.Location = new Point(125, 56);
             AHUInsulationThickness_comboBox.Name = "AHUInsulationThickness_comboBox";
@@ -1334,7 +1312,7 @@ namespace main.contents
             // AHULocation_label
             // 
             AHULocation_label.AutoSize = true;
-            AHULocation_label.Font = new Font(UTIL.Families[0], 9.75F);
+            AHULocation_label.Font = new Font("나눔바른고딕", 9.75F);
             AHULocation_label.Location = new Point(36, 26);
             AHULocation_label.Name = "AHULocation_label";
             AHULocation_label.Size = new Size(55, 15);
@@ -1344,7 +1322,7 @@ namespace main.contents
             // AHULocation_comboBox
             // 
             AHULocation_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHULocation_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            AHULocation_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             AHULocation_comboBox.FormattingEnabled = true;
             AHULocation_comboBox.Location = new Point(125, 22);
             AHULocation_comboBox.Name = "AHULocation_comboBox";
@@ -1355,7 +1333,7 @@ namespace main.contents
             // AHUInsulationThickness_label
             // 
             AHUInsulationThickness_label.AutoSize = true;
-            AHUInsulationThickness_label.Font = new Font(UTIL.Families[0], 9.75F);
+            AHUInsulationThickness_label.Font = new Font("나눔바른고딕", 9.75F);
             AHUInsulationThickness_label.Location = new Point(34, 60);
             AHUInsulationThickness_label.Name = "AHUInsulationThickness_label";
             AHUInsulationThickness_label.Size = new Size(55, 15);
@@ -1365,7 +1343,7 @@ namespace main.contents
             // AHULeakageTestMethod_comboBox
             // 
             AHULeakageTestMethod_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHULeakageTestMethod_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            AHULeakageTestMethod_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             AHULeakageTestMethod_comboBox.FormattingEnabled = true;
             AHULeakageTestMethod_comboBox.Location = new Point(582, 22);
             AHULeakageTestMethod_comboBox.Name = "AHULeakageTestMethod_comboBox";
@@ -1376,17 +1354,17 @@ namespace main.contents
             // AHULeakageTestMethod_label
             // 
             AHULeakageTestMethod_label.AutoSize = true;
-            AHULeakageTestMethod_label.Font = new Font(UTIL.Families[0], 9.75F);
+            AHULeakageTestMethod_label.Font = new Font("나눔바른고딕", 9.75F);
             AHULeakageTestMethod_label.Location = new Point(493, 26);
             AHULeakageTestMethod_label.Name = "AHULeakageTestMethod_label";
-            AHULeakageTestMethod_label.Size = new Size(83, 15);
+            AHULeakageTestMethod_label.Size = new Size(82, 15);
             AHULeakageTestMethod_label.TabIndex = 184;
             AHULeakageTestMethod_label.Text = "누기 시험방법";
             // 
             // AHUVolumeControl_label
             // 
             AHUVolumeControl_label.AutoSize = true;
-            AHUVolumeControl_label.Font = new Font(UTIL.Families[0], 9.75F);
+            AHUVolumeControl_label.Font = new Font("나눔바른고딕", 9.75F);
             AHUVolumeControl_label.Location = new Point(283, 26);
             AHUVolumeControl_label.Name = "AHUVolumeControl_label";
             AHUVolumeControl_label.Size = new Size(55, 15);
@@ -1396,7 +1374,7 @@ namespace main.contents
             // AHUVolumeControl_comboBox
             // 
             AHUVolumeControl_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            AHUVolumeControl_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            AHUVolumeControl_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             AHUVolumeControl_comboBox.FormattingEnabled = true;
             AHUVolumeControl_comboBox.Location = new Point(364, 22);
             AHUVolumeControl_comboBox.Name = "AHUVolumeControl_comboBox";
@@ -1428,7 +1406,7 @@ namespace main.contents
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(977, 339);
+            tabControl1.Size = new Size(1000, 351);
             tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.TabIndex = 97;
             // 
@@ -1436,10 +1414,20 @@ namespace main.contents
             // 
             panel1.BackColor = Color.White;
             panel1.Controls.Add(tabControl1);
-            panel1.Location = new Point(12, 112);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(977, 339);
+            panel1.Size = new Size(1000, 351);
             panel1.TabIndex = 186;
+            // 
+            // panel7
+            // 
+            panel7.BackColor = Color.White;
+            panel7.Controls.Add(panel1);
+            panel7.Location = new Point(0, 84);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(1000, 351);
+            panel7.TabIndex = 187;
             // 
             // AHUSystem
             // 
@@ -1448,11 +1436,11 @@ namespace main.contents
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(panel1);
             Controls.Add(ImagePanel);
             Controls.Add(Previous_button);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
+            Controls.Add(panel7);
             FormBorderStyle = FormBorderStyle.None;
             Name = "AHUSystem";
             Text = "Form3";
@@ -1482,6 +1470,7 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)HRV_dataGridView).EndInit();
             tabControl1.ResumeLayout(false);
             panel1.ResumeLayout(false);
+            panel7.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -1579,8 +1568,6 @@ namespace main.contents
         private Label label9;
         private Label OASALength_label;
         private Label EARALength_label;
-        private Label label12;
-        private Label label26;
         private Label label19;
         private Label label23;
         public TextBox PrehPower_textBox;
@@ -1595,5 +1582,6 @@ namespace main.contents
         private PictureBox HumidifierpictureBox;
         private PictureBox CoilpictureBox;
         private Panel panel1;
+        private Panel panel7;
     }
 }
