@@ -30,9 +30,8 @@ namespace main.contents
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
-            ZoneName_textBox = new TextBox();
-            Layer_textBox = new TextBox();
             Num_textBox = new TextBox();
+            ZoneName_textBox = new TextBox();
             Icon_pictureBox = new PictureBox();
             floor_label = new Label();
             FloorName_label = new Label();
@@ -67,16 +66,6 @@ namespace main.contents
             direction_textBox = new TextBox();
             NaturalDB_button = new Button();
             Aca_textBox = new TextBox();
-            panel1 = new Panel();
-            label1 = new Label();
-            RenewType_textBox = new TextBox();
-            Slope_label = new Label();
-            RenewDi_label = new Label();
-            Renew_checkBox = new CheckBox();
-            RenewDB_button = new Button();
-            RenewDi_comboBox = new CustomComboBox();
-            Slope_comboBox = new CustomComboBox();
-            type_pictureBox = new PictureBox();
             tabControl1 = new CustomTabControl();
             주창정보 = new TabPage();
             Blind3_textBox = new TextBox();
@@ -121,10 +110,20 @@ namespace main.contents
             R2_textBox = new TextBox();
             R1_label = new Label();
             R1_textBox = new TextBox();
+            panel1 = new Panel();
+            label1 = new Label();
+            RenewType_textBox = new TextBox();
+            Slope_label = new Label();
+            RenewDi_label = new Label();
+            Renew_checkBox = new CheckBox();
+            RenewDB_button = new Button();
+            RenewDi_comboBox = new CustomComboBox();
+            Slope_comboBox = new CustomComboBox();
             panel4 = new Panel();
             Main_pictureBox3 = new PictureBox();
             Main_pictureBox2 = new PictureBox();
             Main_pictureBox = new PictureBox();
+            type_pictureBox = new PictureBox();
             bbd_label = new Label();
             aad_label = new Label();
             A_label = new Label();
@@ -141,79 +140,68 @@ namespace main.contents
             label14 = new Label();
             label10 = new Label();
             Save_button = new Button();
+            panel5 = new Panel();
+            panel6 = new Panel();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)type_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
             주창정보.SuspendLayout();
             조명정보.SuspendLayout();
             집광채광정보.SuspendLayout();
+            panel1.SuspendLayout();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)type_pictureBox).BeginInit();
+            panel5.SuspendLayout();
+            panel6.SuspendLayout();
             SuspendLayout();
             // 
             // GeneralPanel
             // 
-            GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(ZoneName_textBox);
-            GeneralPanel.Controls.Add(Layer_textBox);
+            GeneralPanel.BackColor = SystemColors.GradientActiveCaption;
             GeneralPanel.Controls.Add(Num_textBox);
+            GeneralPanel.Controls.Add(ZoneName_textBox);
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Controls.Add(floor_label);
             GeneralPanel.Controls.Add(FloorName_label);
-            GeneralPanel.Location = new Point(12, 12);
+            GeneralPanel.Location = new Point(0, 4);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(977, 101);
+            GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
             // 
+            // Num_textBox
+            // 
+            Num_textBox.BackColor = SystemColors.GradientActiveCaption;
+            Num_textBox.BorderStyle = BorderStyle.None;
+            Num_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Num_textBox.ForeColor = Color.Black;
+            Num_textBox.Location = new Point(153, 9);
+            Num_textBox.Name = "Num_textBox";
+            Num_textBox.Size = new Size(120, 15);
+            Num_textBox.TabIndex = 192;
+            Num_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
             // ZoneName_textBox
             // 
-            ZoneName_textBox.BackColor = Color.White;
+            ZoneName_textBox.BackColor = SystemColors.GradientActiveCaption;
             ZoneName_textBox.BorderStyle = BorderStyle.None;
             ZoneName_textBox.Enabled = false;
             ZoneName_textBox.Font = new Font(UTIL.Families[0], 9.75F);
-            ZoneName_textBox.ForeColor = SystemColors.ControlDark;
-            ZoneName_textBox.Location = new Point(205, 57);
+            ZoneName_textBox.ForeColor = Color.Black;
+            ZoneName_textBox.Location = new Point(153, 50);
             ZoneName_textBox.Name = "ZoneName_textBox";
             ZoneName_textBox.Size = new Size(120, 15);
             ZoneName_textBox.TabIndex = 105;
             ZoneName_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Layer_textBox
-            // 
-            Layer_textBox.BackColor = Color.White;
-            Layer_textBox.BorderStyle = BorderStyle.None;
-            Layer_textBox.Enabled = false;
-            Layer_textBox.Font = new Font(UTIL.Families[0], 9.75F);
-            Layer_textBox.ForeColor = SystemColors.ControlDark;
-            Layer_textBox.Location = new Point(205, 19);
-            Layer_textBox.Name = "Layer_textBox";
-            Layer_textBox.Size = new Size(120, 15);
-            Layer_textBox.TabIndex = 104;
-            Layer_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // Num_textBox
-            // 
-            Num_textBox.BackColor = Color.White;
-            Num_textBox.BorderStyle = BorderStyle.None;
-            Num_textBox.Enabled = false;
-            Num_textBox.Font = new Font(UTIL.Families[0], 9.75F);
-            Num_textBox.ForeColor = SystemColors.ControlText;
-            Num_textBox.Location = new Point(80, 19);
-            Num_textBox.Name = "Num_textBox";
-            Num_textBox.Size = new Size(80, 15);
-            Num_textBox.TabIndex = 102;
-            Num_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
             // Icon_pictureBox
             // 
-            Icon_pictureBox.Location = new Point(30, 14);
+            Icon_pictureBox.Location = new Point(18, 14);
             Icon_pictureBox.Name = "Icon_pictureBox";
             Icon_pictureBox.Size = new Size(50, 50);
             Icon_pictureBox.TabIndex = 96;
@@ -222,16 +210,20 @@ namespace main.contents
             // floor_label
             // 
             floor_label.AutoSize = true;
-            floor_label.Location = new Point(172, 19);
+            floor_label.Font = new Font(UTIL.Families[0], 9.75F);
+            floor_label.ForeColor = Color.Black;
+            floor_label.Location = new Point(111, 12);
             floor_label.Name = "floor_label";
-            floor_label.Size = new Size(19, 15);
+            floor_label.Size = new Size(31, 15);
             floor_label.TabIndex = 92;
-            floor_label.Text = "층";
+            floor_label.Text = "번호";
             // 
             // FloorName_label
             // 
             FloorName_label.AutoSize = true;
-            FloorName_label.Location = new Point(170, 57);
+            FloorName_label.Font = new Font(UTIL.Families[0], 9.75F);
+            FloorName_label.ForeColor = Color.Black;
+            FloorName_label.Location = new Point(111, 50);
             FloorName_label.Name = "FloorName_label";
             FloorName_label.Size = new Size(31, 15);
             FloorName_label.TabIndex = 93;
@@ -258,9 +250,10 @@ namespace main.contents
             panel2.Controls.Add(LightType_label);
             panel2.Controls.Add(ControlType_label);
             panel2.Controls.Add(ControlType_comboBox);
-            panel2.Location = new Point(12, 138);
+            panel2.Controls.Add(light_label);
+            panel2.Location = new Point(0, 84);
             panel2.Name = "panel2";
-            panel2.Size = new Size(977, 136);
+            panel2.Size = new Size(1000, 173);
             panel2.TabIndex = 18;
             panel2.Paint += panel2_Paint;
             // 
@@ -270,7 +263,7 @@ namespace main.contents
             Pci_textBox.BorderStyle = BorderStyle.FixedSingle;
             Pci_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             Pci_textBox.ForeColor = SystemColors.ControlText;
-            Pci_textBox.Location = new Point(717, 99);
+            Pci_textBox.Location = new Point(712, 130);
             Pci_textBox.Name = "Pci_textBox";
             Pci_textBox.Size = new Size(120, 22);
             Pci_textBox.TabIndex = 215;
@@ -281,7 +274,7 @@ namespace main.contents
             // 
             label15.AutoSize = true;
             label15.Font = new Font(UTIL.Families[0], 9.75F);
-            label15.Location = new Point(850, 101);
+            label15.Location = new Point(845, 134);
             label15.Name = "label15";
             label15.Size = new Size(20, 15);
             label15.TabIndex = 214;
@@ -292,7 +285,7 @@ namespace main.contents
             // 
             label4.AutoSize = true;
             label4.Font = new Font(UTIL.Families[0], 9.75F);
-            label4.Location = new Point(545, 101);
+            label4.Location = new Point(540, 134);
             label4.Name = "label4";
             label4.Size = new Size(55, 15);
             label4.TabIndex = 102;
@@ -306,7 +299,7 @@ namespace main.contents
             LightType_textBox.Enabled = false;
             LightType_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             LightType_textBox.ForeColor = SystemColors.ControlDark;
-            LightType_textBox.Location = new Point(205, 12);
+            LightType_textBox.Location = new Point(200, 45);
             LightType_textBox.Name = "LightType_textBox";
             LightType_textBox.Size = new Size(120, 15);
             LightType_textBox.TabIndex = 100;
@@ -318,7 +311,7 @@ namespace main.contents
             LightDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             LightDB_button.FlatStyle = FlatStyle.System;
             LightDB_button.Font = new Font(UTIL.Families[0], 12F, FontStyle.Bold);
-            LightDB_button.Location = new Point(332, 9);
+            LightDB_button.Location = new Point(327, 41);
             LightDB_button.Margin = new Padding(0);
             LightDB_button.Name = "LightDB_button";
             LightDB_button.Size = new Size(23, 23);
@@ -334,7 +327,7 @@ namespace main.contents
             fc_textBox.Enabled = false;
             fc_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             fc_textBox.ForeColor = SystemColors.ControlDark;
-            fc_textBox.Location = new Point(717, 69);
+            fc_textBox.Location = new Point(712, 104);
             fc_textBox.Name = "fc_textBox";
             fc_textBox.Size = new Size(120, 15);
             fc_textBox.TabIndex = 92;
@@ -347,7 +340,7 @@ namespace main.contents
             Pj_textbox.Enabled = false;
             Pj_textbox.Font = new Font(UTIL.Families[0], 9.75F);
             Pj_textbox.ForeColor = SystemColors.ControlDark;
-            Pj_textbox.Location = new Point(717, 37);
+            Pj_textbox.Location = new Point(712, 73);
             Pj_textbox.Name = "Pj_textbox";
             Pj_textbox.Size = new Size(120, 15);
             Pj_textbox.TabIndex = 91;
@@ -360,7 +353,7 @@ namespace main.contents
             FL_textBox.Enabled = false;
             FL_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             FL_textBox.ForeColor = SystemColors.ControlDark;
-            FL_textBox.Location = new Point(717, 12);
+            FL_textBox.Location = new Point(712, 45);
             FL_textBox.Name = "FL_textBox";
             FL_textBox.Size = new Size(120, 15);
             FL_textBox.TabIndex = 90;
@@ -370,9 +363,9 @@ namespace main.contents
             // 
             fc_label.AutoSize = true;
             fc_label.Font = new Font(UTIL.Families[0], 9.75F);
-            fc_label.Location = new Point(545, 71);
+            fc_label.Location = new Point(540, 104);
             fc_label.Name = "fc_label";
-            fc_label.Size = new Size(87, 15);
+            fc_label.Size = new Size(85, 15);
             fc_label.TabIndex = 49;
             fc_label.Text = "조명 제어 계수";
             // 
@@ -380,9 +373,9 @@ namespace main.contents
             // 
             Pj_label.AutoSize = true;
             Pj_label.Font = new Font(UTIL.Families[0], 9.75F);
-            Pj_label.Location = new Point(545, 40);
+            Pj_label.Location = new Point(540, 73);
             Pj_label.Name = "Pj_label";
-            Pj_label.Size = new Size(59, 15);
+            Pj_label.Size = new Size(58, 15);
             Pj_label.TabIndex = 48;
             Pj_label.Text = "조명 밀도";
             // 
@@ -390,9 +383,9 @@ namespace main.contents
             // 
             FL_label.AutoSize = true;
             FL_label.Font = new Font(UTIL.Families[0], 9.75F);
-            FL_label.Location = new Point(545, 12);
+            FL_label.Location = new Point(540, 45);
             FL_label.Name = "FL_label";
-            FL_label.Size = new Size(59, 15);
+            FL_label.Size = new Size(58, 15);
             FL_label.TabIndex = 47;
             FL_label.Text = "조명 계수";
             // 
@@ -401,7 +394,7 @@ namespace main.contents
             DimmingType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             DimmingType_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             DimmingType_comboBox.FormattingEnabled = true;
-            DimmingType_comboBox.Location = new Point(205, 99);
+            DimmingType_comboBox.Location = new Point(200, 128);
             DimmingType_comboBox.Name = "DimmingType_comboBox";
             DimmingType_comboBox.Size = new Size(120, 23);
             DimmingType_comboBox.TabIndex = 46;
@@ -411,9 +404,9 @@ namespace main.contents
             // 
             DimmingType_label.AutoSize = true;
             DimmingType_label.Font = new Font(UTIL.Families[0], 9.75F);
-            DimmingType_label.Location = new Point(33, 101);
+            DimmingType_label.Location = new Point(28, 134);
             DimmingType_label.Name = "DimmingType_label";
-            DimmingType_label.Size = new Size(59, 15);
+            DimmingType_label.Size = new Size(58, 15);
             DimmingType_label.TabIndex = 44;
             DimmingType_label.Text = "디밍 유형";
             // 
@@ -422,7 +415,7 @@ namespace main.contents
             LightMethod_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             LightMethod_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             LightMethod_comboBox.FormattingEnabled = true;
-            LightMethod_comboBox.Location = new Point(205, 37);
+            LightMethod_comboBox.Location = new Point(200, 67);
             LightMethod_comboBox.Name = "LightMethod_comboBox";
             LightMethod_comboBox.Size = new Size(120, 23);
             LightMethod_comboBox.TabIndex = 41;
@@ -432,9 +425,9 @@ namespace main.contents
             // 
             LightMethod_label.AutoSize = true;
             LightMethod_label.Font = new Font(UTIL.Families[0], 9.75F);
-            LightMethod_label.Location = new Point(33, 40);
+            LightMethod_label.Location = new Point(28, 73);
             LightMethod_label.Name = "LightMethod_label";
-            LightMethod_label.Size = new Size(59, 15);
+            LightMethod_label.Size = new Size(58, 15);
             LightMethod_label.TabIndex = 39;
             LightMethod_label.Text = "조명 방식";
             // 
@@ -442,9 +435,9 @@ namespace main.contents
             // 
             LightType_label.AutoSize = true;
             LightType_label.Font = new Font(UTIL.Families[0], 9.75F);
-            LightType_label.Location = new Point(33, 12);
+            LightType_label.Location = new Point(28, 45);
             LightType_label.Name = "LightType_label";
-            LightType_label.Size = new Size(59, 15);
+            LightType_label.Size = new Size(58, 15);
             LightType_label.TabIndex = 43;
             LightType_label.Text = "조명 종류";
             // 
@@ -452,16 +445,16 @@ namespace main.contents
             // 
             ControlType_label.AutoSize = true;
             ControlType_label.Font = new Font(UTIL.Families[0], 9.75F);
-            ControlType_label.Location = new Point(32, 71);
+            ControlType_label.Location = new Point(27, 104);
             ControlType_label.Name = "ControlType_label";
-            ControlType_label.Size = new Size(59, 15);
+            ControlType_label.Size = new Size(58, 15);
             ControlType_label.TabIndex = 42;
             ControlType_label.Text = "제어 방식";
             // 
             // ControlType_comboBox
             // 
             ControlType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            ControlType_comboBox.Location = new Point(205, 69);
+            ControlType_comboBox.Location = new Point(200, 97);
             ControlType_comboBox.Name = "ControlType_comboBox";
             ControlType_comboBox.Size = new Size(121, 24);
             ControlType_comboBox.TabIndex = 101;
@@ -471,9 +464,9 @@ namespace main.contents
             // 
             light_label.AutoSize = true;
             light_label.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
-            light_label.Location = new Point(42, 120);
+            light_label.Location = new Point(27, 12);
             light_label.Name = "light_label";
-            light_label.Size = new Size(59, 15);
+            light_label.Size = new Size(58, 15);
             light_label.TabIndex = 99;
             light_label.Text = "인공 조명";
             // 
@@ -481,9 +474,9 @@ namespace main.contents
             // 
             natural_label.AutoSize = true;
             natural_label.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
-            natural_label.Location = new Point(47, 277);
+            natural_label.Location = new Point(28, 8);
             natural_label.Name = "natural_label";
-            natural_label.Size = new Size(59, 15);
+            natural_label.Size = new Size(58, 15);
             natural_label.TabIndex = 100;
             natural_label.Text = "자연 채광";
             // 
@@ -491,9 +484,9 @@ namespace main.contents
             // 
             NaturalType_label.AutoSize = true;
             NaturalType_label.Font = new Font(UTIL.Families[0], 9.75F);
-            NaturalType_label.Location = new Point(34, 9);
+            NaturalType_label.Location = new Point(28, 37);
             NaturalType_label.Name = "NaturalType_label";
-            NaturalType_label.Size = new Size(83, 15);
+            NaturalType_label.Size = new Size(82, 15);
             NaturalType_label.TabIndex = 39;
             NaturalType_label.Text = "자연채광 유형";
             // 
@@ -501,7 +494,7 @@ namespace main.contents
             // 
             Direction_label.AutoSize = true;
             Direction_label.Font = new Font(UTIL.Families[0], 9.75F);
-            Direction_label.Location = new Point(33, 37);
+            Direction_label.Location = new Point(28, 65);
             Direction_label.Name = "Direction_label";
             Direction_label.Size = new Size(31, 15);
             Direction_label.TabIndex = 42;
@@ -512,9 +505,9 @@ namespace main.contents
             // 
             Aca_label.AutoSize = true;
             Aca_label.Font = new Font(UTIL.Families[0], 9.75F);
-            Aca_label.Location = new Point(32, 70);
+            Aca_label.Location = new Point(28, 98);
             Aca_label.Name = "Aca_label";
-            Aca_label.Size = new Size(87, 15);
+            Aca_label.Size = new Size(85, 15);
             Aca_label.TabIndex = 43;
             Aca_label.Text = "주향 창호 면적";
             Aca_label.Visible = false;
@@ -531,9 +524,10 @@ namespace main.contents
             panel3.Controls.Add(NaturalType_label);
             panel3.Controls.Add(Aca_textBox);
             panel3.Controls.Add(Aca_label);
-            panel3.Location = new Point(12, 295);
+            panel3.Dock = DockStyle.Left;
+            panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(518, 136);
+            panel3.Size = new Size(500, 143);
             panel3.TabIndex = 93;
             panel3.Paint += panel3_Paint;
             // 
@@ -541,7 +535,7 @@ namespace main.contents
             // 
             roofButton.AutoSize = true;
             roofButton.Enabled = false;
-            roofButton.Location = new Point(275, 8);
+            roofButton.Location = new Point(275, 36);
             roofButton.Name = "roofButton";
             roofButton.Size = new Size(49, 19);
             roofButton.TabIndex = 127;
@@ -553,7 +547,7 @@ namespace main.contents
             // 
             Acam2_label.AutoSize = true;
             Acam2_label.Font = new Font(UTIL.Families[0], 9.75F);
-            Acam2_label.Location = new Point(332, 72);
+            Acam2_label.Location = new Point(327, 100);
             Acam2_label.Name = "Acam2_label";
             Acam2_label.Size = new Size(19, 15);
             Acam2_label.TabIndex = 125;
@@ -564,7 +558,7 @@ namespace main.contents
             // 
             facadeButton.AutoSize = true;
             facadeButton.Enabled = false;
-            facadeButton.Location = new Point(204, 8);
+            facadeButton.Location = new Point(204, 36);
             facadeButton.Name = "facadeButton";
             facadeButton.Size = new Size(61, 19);
             facadeButton.TabIndex = 126;
@@ -579,7 +573,7 @@ namespace main.contents
             direction_textBox.Enabled = false;
             direction_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             direction_textBox.ForeColor = Color.Black;
-            direction_textBox.Location = new Point(206, 40);
+            direction_textBox.Location = new Point(200, 70);
             direction_textBox.Name = "direction_textBox";
             direction_textBox.Size = new Size(120, 15);
             direction_textBox.TabIndex = 93;
@@ -591,7 +585,7 @@ namespace main.contents
             NaturalDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             NaturalDB_button.FlatStyle = FlatStyle.System;
             NaturalDB_button.Font = new Font(UTIL.Families[0], 12F, FontStyle.Bold);
-            NaturalDB_button.Location = new Point(334, 5);
+            NaturalDB_button.Location = new Point(327, 34);
             NaturalDB_button.Margin = new Padding(0);
             NaturalDB_button.Name = "NaturalDB_button";
             NaturalDB_button.Size = new Size(23, 23);
@@ -608,131 +602,11 @@ namespace main.contents
             Aca_textBox.Enabled = false;
             Aca_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             Aca_textBox.ForeColor = Color.Black;
-            Aca_textBox.Location = new Point(206, 73);
+            Aca_textBox.Location = new Point(200, 100);
             Aca_textBox.Name = "Aca_textBox";
             Aca_textBox.Size = new Size(120, 15);
             Aca_textBox.TabIndex = 94;
             Aca_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(label1);
-            panel1.Controls.Add(RenewType_textBox);
-            panel1.Controls.Add(Slope_label);
-            panel1.Controls.Add(RenewDi_label);
-            panel1.Controls.Add(Renew_checkBox);
-            panel1.Controls.Add(RenewDB_button);
-            panel1.Controls.Add(RenewDi_comboBox);
-            panel1.Controls.Add(Slope_comboBox);
-            panel1.Location = new Point(501, 295);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(488, 136);
-            panel1.TabIndex = 128;
-            panel1.Paint += panel1_Paint;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font(UTIL.Families[0], 9.75F);
-            label1.Location = new Point(55, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(83, 15);
-            label1.TabIndex = 133;
-            label1.Text = "집광채광 유형";
-            // 
-            // RenewType_textBox
-            // 
-            RenewType_textBox.BackColor = Color.White;
-            RenewType_textBox.BorderStyle = BorderStyle.None;
-            RenewType_textBox.Enabled = false;
-            RenewType_textBox.Font = new Font(UTIL.Families[0], 9.75F);
-            RenewType_textBox.ForeColor = Color.Black;
-            RenewType_textBox.Location = new Point(225, 10);
-            RenewType_textBox.Name = "RenewType_textBox";
-            RenewType_textBox.Size = new Size(120, 15);
-            RenewType_textBox.TabIndex = 132;
-            RenewType_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // Slope_label
-            // 
-            Slope_label.AutoSize = true;
-            Slope_label.Font = new Font(UTIL.Families[0], 9.75F);
-            Slope_label.Location = new Point(63, 70);
-            Slope_label.Name = "Slope_label";
-            Slope_label.Size = new Size(43, 15);
-            Slope_label.TabIndex = 131;
-            Slope_label.Text = "기울기";
-            Slope_label.Visible = false;
-            // 
-            // RenewDi_label
-            // 
-            RenewDi_label.AutoSize = true;
-            RenewDi_label.Font = new Font(UTIL.Families[0], 9.75F);
-            RenewDi_label.Location = new Point(63, 37);
-            RenewDi_label.Name = "RenewDi_label";
-            RenewDi_label.Size = new Size(19, 15);
-            RenewDi_label.TabIndex = 130;
-            RenewDi_label.Text = "향";
-            RenewDi_label.Visible = false;
-            // 
-            // Renew_checkBox
-            // 
-            Renew_checkBox.AutoSize = true;
-            Renew_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
-            Renew_checkBox.Location = new Point(146, 9);
-            Renew_checkBox.Name = "Renew_checkBox";
-            Renew_checkBox.Size = new Size(50, 19);
-            Renew_checkBox.TabIndex = 129;
-            Renew_checkBox.Text = "적용";
-            Renew_checkBox.UseVisualStyleBackColor = true;
-            Renew_checkBox.CheckedChanged += Renew_checkBox_CheckedChanged;
-            // 
-            // RenewDB_button
-            // 
-            RenewDB_button.BackColor = SystemColors.ControlLight;
-            RenewDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            RenewDB_button.FlatStyle = FlatStyle.System;
-            RenewDB_button.Font = new Font(UTIL.Families[0], 12F, FontStyle.Bold);
-            RenewDB_button.Location = new Point(360, 6);
-            RenewDB_button.Margin = new Padding(0);
-            RenewDB_button.Name = "RenewDB_button";
-            RenewDB_button.Size = new Size(23, 23);
-            RenewDB_button.TabIndex = 128;
-            RenewDB_button.Text = "+";
-            RenewDB_button.UseVisualStyleBackColor = false;
-            RenewDB_button.Visible = false;
-            RenewDB_button.Click += RenewDB_button_Click;
-            // 
-            // RenewDi_comboBox
-            // 
-            RenewDi_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            RenewDi_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
-            RenewDi_comboBox.FormattingEnabled = true;
-            RenewDi_comboBox.Location = new Point(225, 33);
-            RenewDi_comboBox.Name = "RenewDi_comboBox";
-            RenewDi_comboBox.Size = new Size(120, 23);
-            RenewDi_comboBox.TabIndex = 126;
-            RenewDi_comboBox.Visible = false;
-            // 
-            // Slope_comboBox
-            // 
-            Slope_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Slope_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
-            Slope_comboBox.FormattingEnabled = true;
-            Slope_comboBox.Location = new Point(225, 66);
-            Slope_comboBox.Name = "Slope_comboBox";
-            Slope_comboBox.Size = new Size(120, 23);
-            Slope_comboBox.TabIndex = 127;
-            Slope_comboBox.Visible = false;
-            // 
-            // type_pictureBox
-            // 
-            type_pictureBox.Location = new Point(1006, 11);
-            type_pictureBox.Name = "type_pictureBox";
-            type_pictureBox.Size = new Size(182, 246);
-            type_pictureBox.TabIndex = 100;
-            type_pictureBox.TabStop = false;
             // 
             // tabControl1
             // 
@@ -752,12 +626,13 @@ namespace main.contents
             tabControl1.DisplayStyleProvider.TextColor = SystemColors.ControlText;
             tabControl1.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
             tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
+            tabControl1.Dock = DockStyle.Left;
             tabControl1.HotTrack = true;
             tabControl1.ItemSize = new Size(128, 20);
-            tabControl1.Location = new Point(12, 437);
+            tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(488, 272);
+            tabControl1.Size = new Size(500, 272);
             tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.TabIndex = 102;
             // 
@@ -784,7 +659,7 @@ namespace main.contents
             주창정보.Controls.Add(Window1_textBox);
             주창정보.Location = new Point(4, 25);
             주창정보.Name = "주창정보";
-            주창정보.Size = new Size(480, 243);
+            주창정보.Size = new Size(492, 243);
             주창정보.TabIndex = 2;
             주창정보.Text = "채광 정보";
             // 
@@ -908,7 +783,7 @@ namespace main.contents
             Shade4_label.Font = new Font(UTIL.Families[0], 9.75F);
             Shade4_label.Location = new Point(63, 209);
             Shade4_label.Name = "Shade4_label";
-            Shade4_label.Size = new Size(103, 15);
+            Shade4_label.Size = new Size(101, 15);
             Shade4_label.TabIndex = 153;
             Shade4_label.Text = "차양 on 빛투과율";
             Shade4_label.Visible = false;
@@ -945,7 +820,7 @@ namespace main.contents
             label3.ForeColor = SystemColors.ActiveCaptionText;
             label3.Location = new Point(55, 145);
             label3.Name = "label3";
-            label3.Size = new Size(59, 15);
+            label3.Size = new Size(58, 15);
             label3.TabIndex = 148;
             label3.Text = "차양 정보";
             label3.Visible = false;
@@ -957,7 +832,7 @@ namespace main.contents
             label2.ForeColor = SystemColors.ActiveCaptionText;
             label2.Location = new Point(55, 17);
             label2.Name = "label2";
-            label2.Size = new Size(59, 15);
+            label2.Size = new Size(58, 15);
             label2.TabIndex = 147;
             label2.Text = "일반 정보";
             label2.Visible = false;
@@ -968,7 +843,7 @@ namespace main.contents
             Shade7_label.Font = new Font(UTIL.Families[0], 9.75F);
             Shade7_label.Location = new Point(108, 62);
             Shade7_label.Name = "Shade7_label";
-            Shade7_label.Size = new Size(59, 15);
+            Shade7_label.Size = new Size(58, 15);
             Shade7_label.TabIndex = 146;
             Shade7_label.Text = "창호 면적";
             Shade7_label.Visible = false;
@@ -1029,7 +904,7 @@ namespace main.contents
             조명정보.Location = new Point(4, 25);
             조명정보.Name = "조명정보";
             조명정보.Padding = new Padding(3);
-            조명정보.Size = new Size(480, 243);
+            조명정보.Size = new Size(492, 243);
             조명정보.TabIndex = 0;
             조명정보.Text = "조명 정보";
             // 
@@ -1114,7 +989,7 @@ namespace main.contents
             L6_label.Font = new Font(UTIL.Families[0], 9.75F);
             L6_label.Location = new Point(63, 176);
             L6_label.Name = "L6_label";
-            L6_label.Size = new Size(82, 15);
+            L6_label.Size = new Size(83, 15);
             L6_label.TabIndex = 144;
             L6_label.Text = "소비전력 [W]";
             // 
@@ -1124,7 +999,7 @@ namespace main.contents
             L5_label.Font = new Font(UTIL.Families[0], 9.75F);
             L5_label.Location = new Point(63, 152);
             L5_label.Name = "L5_label";
-            L5_label.Size = new Size(60, 15);
+            L5_label.Size = new Size(61, 15);
             L5_label.TabIndex = 143;
             L5_label.Text = "광속 [lm]";
             // 
@@ -1135,7 +1010,7 @@ namespace main.contents
             label6.ForeColor = SystemColors.ActiveCaptionText;
             label6.Location = new Point(55, 130);
             label6.Name = "label6";
-            label6.Size = new Size(59, 15);
+            label6.Size = new Size(58, 15);
             label6.TabIndex = 142;
             label6.Text = "성능 정보";
             // 
@@ -1146,7 +1021,7 @@ namespace main.contents
             label5.ForeColor = SystemColors.ActiveCaptionText;
             label5.Location = new Point(55, 17);
             label5.Name = "label5";
-            label5.Size = new Size(59, 15);
+            label5.Size = new Size(58, 15);
             label5.TabIndex = 141;
             label5.Text = "일반 정보";
             // 
@@ -1156,7 +1031,7 @@ namespace main.contents
             L4_label.Font = new Font(UTIL.Families[0], 9.75F);
             L4_label.Location = new Point(63, 90);
             L4_label.Name = "L4_label";
-            L4_label.Size = new Size(84, 15);
+            L4_label.Size = new Size(85, 15);
             L4_label.TabIndex = 140;
             L4_label.Text = "안정기/컨버터";
             // 
@@ -1166,7 +1041,7 @@ namespace main.contents
             L1_label.Font = new Font(UTIL.Families[0], 9.75F);
             L1_label.Location = new Point(63, 46);
             L1_label.Name = "L1_label";
-            L1_label.Size = new Size(71, 15);
+            L1_label.Size = new Size(70, 15);
             L1_label.TabIndex = 139;
             L1_label.Text = "등기구 종류";
             // 
@@ -1189,7 +1064,7 @@ namespace main.contents
             L2_label.Font = new Font(UTIL.Families[0], 9.75F);
             L2_label.Location = new Point(63, 69);
             L2_label.Name = "L2_label";
-            L2_label.Size = new Size(59, 15);
+            L2_label.Size = new Size(58, 15);
             L2_label.TabIndex = 137;
             L2_label.Text = "램프 유형";
             // 
@@ -1207,7 +1082,7 @@ namespace main.contents
             집광채광정보.Location = new Point(4, 25);
             집광채광정보.Name = "집광채광정보";
             집광채광정보.Padding = new Padding(3);
-            집광채광정보.Size = new Size(480, 243);
+            집광채광정보.Size = new Size(492, 243);
             집광채광정보.TabIndex = 1;
             집광채광정보.Text = "집광채광 정보";
             // 
@@ -1218,7 +1093,7 @@ namespace main.contents
             label9.ForeColor = SystemColors.ActiveCaptionText;
             label9.Location = new Point(55, 118);
             label9.Name = "label9";
-            label9.Size = new Size(59, 15);
+            label9.Size = new Size(58, 15);
             label9.TabIndex = 150;
             label9.Text = "성능 정보";
             label9.Visible = false;
@@ -1230,7 +1105,7 @@ namespace main.contents
             label8.ForeColor = SystemColors.ActiveCaptionText;
             label8.Location = new Point(55, 17);
             label8.Name = "label8";
-            label8.Size = new Size(59, 15);
+            label8.Size = new Size(58, 15);
             label8.TabIndex = 149;
             label8.Text = "일반 정보";
             label8.Visible = false;
@@ -1241,7 +1116,7 @@ namespace main.contents
             R3_label.Font = new Font(UTIL.Families[0], 9.75F);
             R3_label.Location = new Point(63, 145);
             R3_label.Name = "R3_label";
-            R3_label.Size = new Size(111, 15);
+            R3_label.Size = new Size(109, 15);
             R3_label.TabIndex = 148;
             R3_label.Text = "집광채광 효율 [%]";
             R3_label.Visible = false;
@@ -1289,7 +1164,7 @@ namespace main.contents
             R1_label.Font = new Font(UTIL.Families[0], 9.75F);
             R1_label.Location = new Point(63, 44);
             R1_label.Name = "R1_label";
-            R1_label.Size = new Size(83, 15);
+            R1_label.Size = new Size(82, 15);
             R1_label.TabIndex = 144;
             R1_label.Text = "집광채광 종류";
             R1_label.Visible = false;
@@ -1307,21 +1182,135 @@ namespace main.contents
             R1_textBox.TabIndex = 143;
             R1_textBox.TextAlign = HorizontalAlignment.Center;
             // 
+            // panel1
+            // 
+            panel1.BackColor = Color.White;
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(RenewType_textBox);
+            panel1.Controls.Add(Slope_label);
+            panel1.Controls.Add(RenewDi_label);
+            panel1.Controls.Add(Renew_checkBox);
+            panel1.Controls.Add(RenewDB_button);
+            panel1.Controls.Add(RenewDi_comboBox);
+            panel1.Controls.Add(Slope_comboBox);
+            panel1.Dock = DockStyle.Right;
+            panel1.Location = new Point(500, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(500, 143);
+            panel1.TabIndex = 128;
+            panel1.Paint += panel1_Paint;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font(UTIL.Families[0], 9.75F);
+            label1.Location = new Point(50, 38);
+            label1.Name = "label1";
+            label1.Size = new Size(82, 15);
+            label1.TabIndex = 133;
+            label1.Text = "집광채광 유형";
+            // 
+            // RenewType_textBox
+            // 
+            RenewType_textBox.BackColor = Color.White;
+            RenewType_textBox.BorderStyle = BorderStyle.None;
+            RenewType_textBox.Enabled = false;
+            RenewType_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            RenewType_textBox.ForeColor = Color.Black;
+            RenewType_textBox.Location = new Point(219, 38);
+            RenewType_textBox.Name = "RenewType_textBox";
+            RenewType_textBox.Size = new Size(120, 15);
+            RenewType_textBox.TabIndex = 132;
+            RenewType_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Slope_label
+            // 
+            Slope_label.AutoSize = true;
+            Slope_label.Font = new Font(UTIL.Families[0], 9.75F);
+            Slope_label.Location = new Point(50, 100);
+            Slope_label.Name = "Slope_label";
+            Slope_label.Size = new Size(43, 15);
+            Slope_label.TabIndex = 131;
+            Slope_label.Text = "기울기";
+            Slope_label.Visible = false;
+            // 
+            // RenewDi_label
+            // 
+            RenewDi_label.AutoSize = true;
+            RenewDi_label.Font = new Font(UTIL.Families[0], 9.75F);
+            RenewDi_label.Location = new Point(50, 70);
+            RenewDi_label.Name = "RenewDi_label";
+            RenewDi_label.Size = new Size(19, 15);
+            RenewDi_label.TabIndex = 130;
+            RenewDi_label.Text = "향";
+            RenewDi_label.Visible = false;
+            // 
+            // Renew_checkBox
+            // 
+            Renew_checkBox.AutoSize = true;
+            Renew_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Renew_checkBox.Location = new Point(146, 36);
+            Renew_checkBox.Name = "Renew_checkBox";
+            Renew_checkBox.Size = new Size(50, 19);
+            Renew_checkBox.TabIndex = 129;
+            Renew_checkBox.Text = "적용";
+            Renew_checkBox.UseVisualStyleBackColor = true;
+            Renew_checkBox.CheckedChanged += Renew_checkBox_CheckedChanged;
+            // 
+            // RenewDB_button
+            // 
+            RenewDB_button.BackColor = SystemColors.ControlLight;
+            RenewDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            RenewDB_button.FlatStyle = FlatStyle.System;
+            RenewDB_button.Font = new Font(UTIL.Families[0], 12F, FontStyle.Bold);
+            RenewDB_button.Location = new Point(351, 34);
+            RenewDB_button.Margin = new Padding(0);
+            RenewDB_button.Name = "RenewDB_button";
+            RenewDB_button.Size = new Size(23, 23);
+            RenewDB_button.TabIndex = 128;
+            RenewDB_button.Text = "+";
+            RenewDB_button.UseVisualStyleBackColor = false;
+            RenewDB_button.Visible = false;
+            RenewDB_button.Click += RenewDB_button_Click;
+            // 
+            // RenewDi_comboBox
+            // 
+            RenewDi_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            RenewDi_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            RenewDi_comboBox.FormattingEnabled = true;
+            RenewDi_comboBox.Location = new Point(219, 66);
+            RenewDi_comboBox.Name = "RenewDi_comboBox";
+            RenewDi_comboBox.Size = new Size(120, 23);
+            RenewDi_comboBox.TabIndex = 126;
+            RenewDi_comboBox.Visible = false;
+            // 
+            // Slope_comboBox
+            // 
+            Slope_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            Slope_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Slope_comboBox.FormattingEnabled = true;
+            Slope_comboBox.Location = new Point(219, 96);
+            Slope_comboBox.Name = "Slope_comboBox";
+            Slope_comboBox.Size = new Size(120, 23);
+            Slope_comboBox.TabIndex = 127;
+            Slope_comboBox.Visible = false;
+            // 
             // panel4
             // 
             panel4.BackColor = Color.White;
             panel4.Controls.Add(Main_pictureBox3);
             panel4.Controls.Add(Main_pictureBox2);
             panel4.Controls.Add(Main_pictureBox);
-            panel4.Location = new Point(501, 461);
+            panel4.Dock = DockStyle.Right;
+            panel4.Location = new Point(500, 0);
             panel4.Name = "panel4";
-            panel4.Size = new Size(488, 248);
+            panel4.Size = new Size(500, 272);
             panel4.TabIndex = 104;
             panel4.Paint += panel4_Paint;
             // 
             // Main_pictureBox3
             // 
-            Main_pictureBox3.Location = new Point(7, 4);
+            Main_pictureBox3.Location = new Point(14, 20);
             Main_pictureBox3.Name = "Main_pictureBox3";
             Main_pictureBox3.Size = new Size(473, 239);
             Main_pictureBox3.TabIndex = 2;
@@ -1329,7 +1318,7 @@ namespace main.contents
             // 
             // Main_pictureBox2
             // 
-            Main_pictureBox2.Location = new Point(8, 5);
+            Main_pictureBox2.Location = new Point(14, 20);
             Main_pictureBox2.Name = "Main_pictureBox2";
             Main_pictureBox2.Size = new Size(473, 239);
             Main_pictureBox2.TabIndex = 1;
@@ -1337,11 +1326,19 @@ namespace main.contents
             // 
             // Main_pictureBox
             // 
-            Main_pictureBox.Location = new Point(7, 4);
+            Main_pictureBox.Location = new Point(14, 20);
             Main_pictureBox.Name = "Main_pictureBox";
             Main_pictureBox.Size = new Size(473, 239);
             Main_pictureBox.TabIndex = 0;
             Main_pictureBox.TabStop = false;
+            // 
+            // type_pictureBox
+            // 
+            type_pictureBox.Location = new Point(1006, 11);
+            type_pictureBox.Name = "type_pictureBox";
+            type_pictureBox.Size = new Size(182, 246);
+            type_pictureBox.TabIndex = 100;
+            type_pictureBox.TabStop = false;
             // 
             // bbd_label
             // 
@@ -1522,13 +1519,35 @@ namespace main.contents
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1099, 682);
+            Save_button.Location = new Point(1022, 647);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 215;
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.White;
+            panel5.Controls.Add(natural_label);
+            panel5.Controls.Add(panel3);
+            panel5.Controls.Add(panel1);
+            panel5.Location = new Point(0, 257);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(1000, 143);
+            panel5.TabIndex = 218;
+            // 
+            // panel6
+            // 
+            panel6.BackColor = Color.White;
+            panel6.Controls.Add(tabControl1);
+            panel6.Controls.Add(panel4);
+            panel6.Location = new Point(0, 400);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(1000, 272);
+            panel6.TabIndex = 219;
+            panel6.Paint += panel6_Paint;
             // 
             // ZoneLighting
             // 
@@ -1537,9 +1556,9 @@ namespace main.contents
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(panel6);
             Controls.Add(Save_button);
             Controls.Add(label10);
-            Controls.Add(tabControl1);
             Controls.Add(label14);
             Controls.Add(label13);
             Controls.Add(label12);
@@ -1554,14 +1573,10 @@ namespace main.contents
             Controls.Add(A_label);
             Controls.Add(aad_label);
             Controls.Add(bbd_label);
-            Controls.Add(panel1);
-            Controls.Add(panel4);
             Controls.Add(type_pictureBox);
-            Controls.Add(panel3);
-            Controls.Add(natural_label);
-            Controls.Add(light_label);
             Controls.Add(panel2);
             Controls.Add(GeneralPanel);
+            Controls.Add(panel5);
             FormBorderStyle = FormBorderStyle.None;
             Name = "ZoneLighting";
             Text = "Form3";
@@ -1573,9 +1588,6 @@ namespace main.contents
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)type_pictureBox).EndInit();
             tabControl1.ResumeLayout(false);
             주창정보.ResumeLayout(false);
             주창정보.PerformLayout();
@@ -1583,10 +1595,16 @@ namespace main.contents
             조명정보.PerformLayout();
             집광채광정보.ResumeLayout(false);
             집광채광정보.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)Main_pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)type_pictureBox).EndInit();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
+            panel6.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1656,7 +1674,6 @@ namespace main.contents
         private Label Shade4_label;
         private TextBox Blind2_textBox;
         private Label label7;
-        private TextBox Num_textBox;
         private Label label8;
         private Label label9;
         private Label bbd_label;
@@ -1675,7 +1692,6 @@ namespace main.contents
         private Label label14;
         private Label label10;
         private Button Save_button;
-        private TextBox Layer_textBox;
         private TextBox ZoneName_textBox;
         private Label Window_Tao_label;
         private TextBox Window_Tao_textBox;
@@ -1707,5 +1723,8 @@ namespace main.contents
         private PictureBox Main_pictureBox3;
         private Label label15;
         private TextBox Pci_textBox;
+        private TextBox Num_textBox;
+        private Panel panel5;
+        private Panel panel6;
     }
 }

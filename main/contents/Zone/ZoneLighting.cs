@@ -124,6 +124,11 @@ namespace main.contents
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
+        private void panel6_Paint(object sender, PaintEventArgs e)
+        {
+            Panel p = (Panel)sender;
+            ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+        }
         private void LightDB_button_Click(object sender, EventArgs e)
         {
             LightType = null;
@@ -706,7 +711,7 @@ namespace main.contents
             else if (this.facade == "일반 파사드")
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광대분류이미지", "이미지", "자연채광대분류 = '" + "파사드" + "'");
-                 Main_pictureBox.Load(Program.gPath + Image[0][0]);
+                Main_pictureBox.Load(Program.gPath + Image[0][0]);
             }
             else;
             // this.Main_pictureBox.Location = new Point(0, 0);
@@ -1087,7 +1092,6 @@ namespace main.contents
         private void reset()
         {
             Num_textBox.Text = "";
-            Layer_textBox.Text = "";
             ZoneName_textBox.Text = "";
             FL_textBox.Text = "";
             Pj_textbox.Text = "";
@@ -1351,7 +1355,6 @@ namespace main.contents
                 String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,상인방높이", "존번호 = '" + ZoneNum + "'");
 
                 Layer = General_3D[0][0] + "F";
-                Layer_textBox.Text = Layer;
                 if (General_3D[0][1] != "")
                 {
                     hLi = Convert.ToDouble(General_3D[0][1]);

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
@@ -14,6 +15,7 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Windows.Forms.MonthCalendar;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
@@ -177,18 +179,18 @@ namespace main.contents
         //존외피 왼쪽테이블 정보 만들기 
         void load_table_ZoneEnvelopeInfo(String ZoneNum)
         {
-            DataTable table_ZoneEnvelopeNum = new DataTable();
-            // 체크박스 추가
+            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.Fill);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             dataGridView1.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             dataGridView1.Columns.Add(checkBoxColumn);
             // 컬럼 추가
-            table_ZoneEnvelopeNum.Columns.Add("구조체", typeof(string));
-            table_ZoneEnvelopeNum.Columns.Add("개수", typeof(string));
-            table_ZoneEnvelopeNum.Columns.Add("A" + Environment.NewLine + "[m2]", typeof(string));
-            table_ZoneEnvelopeNum.Columns.Add("Ueff" + Environment.NewLine + "[W/m2K]", typeof(string));
+            dataGridView1.Columns.Add("A1", "구조체");
+            dataGridView1.Columns.Add("A2", "개수");
+            dataGridView1.Columns.Add("A3", "A.[m2]");
+            dataGridView1.Columns.Add("A4", "Ueff.[W/m2K]");
+            dataGridView1.Columns[0].Width = 40;
 
             for (int k = 0; k < ConstructionType.Length; k++)
             {
@@ -266,58 +268,56 @@ namespace main.contents
             //존별 구조체별 종합정보 테이블 만들기
             for (int k = 0; k < ConstructionType.Length; k++)
             {
-                table_ZoneEnvelopeNum.Rows.Add(ConstructionType[k], Construction_Count[k], string.Format("{0:F2}", Construction_AreaSum[k]), string.Format("{0:F2}", Construction_UeffAvg[k]));
+                int nRow = dataGridView1.Rows.Add();
+                dataGridView1.Rows[nRow].Cells[1].Value = ConstructionType[k];
+                dataGridView1.Rows[nRow].Cells[2].Value = Construction_Count[k];
+                dataGridView1.Rows[nRow].Cells[3].Value = Construction_AreaSum[k].ToString("0.00");
+                dataGridView1.Rows[nRow].Cells[4].Value = Construction_UeffAvg[k].ToString("0.00");
             }
-            dataGridView1.DataSource = table_ZoneEnvelopeNum;
-
         }
-
-        // 왼쪽테이블 중 체크박스 선택 시 오른쪽 테이블 생성됨 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-                DataGridViewRow row2 = dataGridView1.Rows[e.RowIndex];
-                SelectConstruction = row.Cells["구조체"].Value.ToString();
-                load_table_ZoneEnvelopeSelect(SelectConstruction);
-                for (int k = 0; k < ConstructionType.Length; k++)
+                for (int k = 0; k < dataGridView1.Rows.Count; k++)
                 {
-                    if (k != row.Index)
+                    if (k != dataGridView1.CurrentCell.RowIndex)
                     {
                         dataGridView1.Rows[k].Cells[0].Value = false;
-                        row2 = dataGridView1.Rows[k];
-                        row2.DefaultCellStyle.BackColor = Color.White;
-                        row2.DefaultCellStyle.ForeColor = Color.Black;
                     }
                     else
                     {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = Color.Black;
-                        row = dataGridView1.Rows[e.RowIndex];
+                        dataGridView1.Rows[k].Cells[0].Value = true;
                     }
 
                 }
+                dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                load_table_ZoneEnvelopeSelect(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());
             }
         }
-
         // 존외피 오른쪽테이블 정보 만들기 : 선택된 구조체에 대한 정보 
         void load_table_ZoneEnvelopeSelect(String 선택구조체)
         {
-            DataTable table_ZoneEnvelopeSelect = new DataTable();
-            table_ZoneEnvelopeSelect.Columns.Add("번호", typeof(string));
-            table_ZoneEnvelopeSelect.Columns.Add("기호", typeof(string));
-            table_ZoneEnvelopeSelect.Columns.Add("구조체종류", typeof(string));
-            table_ZoneEnvelopeSelect.Columns.Add("A" + Environment.NewLine + "[m2]", typeof(string));
-            table_ZoneEnvelopeSelect.Columns.Add("방위", typeof(string));
-            table_ZoneEnvelopeSelect.Columns.Add("기울기" + Environment.NewLine + "[˚]", typeof(string));
-            table_ZoneEnvelopeSelect.Columns.Add("Ueff" + Environment.NewLine + "[W/m2K]", typeof(string));
+            dataGridView2.Columns.Clear();
+            dataGridView2.Rows.Clear();
+            new StackedHeaderDecorator(dataGridView2, DataGridViewAutoSizeColumnsMode.Fill, dataGridView_RowHandle);
+            dataGridView2.Columns.Add("A0", "구분");
+            dataGridView2.Columns.Add("A1", "번호");
+            dataGridView2.Columns.Add("A2", "명칭");
+            dataGridView2.Columns.Add("A3", "A.[m2]");
+            dataGridView2.Columns.Add("A4", "방위");
+            dataGridView2.Columns.Add("A5", "기울기");
+            dataGridView2.Columns.Add("A6", "Ueff.[W/m2K]");
             if (선택구조체 == "커튼월창" || 선택구조체 == "창호")
-                table_ZoneEnvelopeSelect.Columns.Add("g", typeof(string));
-            else { table_ZoneEnvelopeSelect.Columns.Add("α", typeof(string)); }
-
-
+            {
+                dataGridView2.Columns.Add("A7", "g.[-]");
+            }
+            else
+            {
+                dataGridView2.Columns.Add("A7", "α.[-]");
+            }
+            dataGridView2.Columns[0].Width = 30;
+            dataGridView2.Columns[2].Width = 100;
             string[][] Value;
 
             string[][] ZoneE_Select = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,면적,방위,기울기,구조체,구조체번호", "존='" + ZoneNum + "' AND 외피유형='" + 선택구조체 + "'");
@@ -358,36 +358,60 @@ namespace main.contents
                     {
                         String 면적 = string.Format("{0:F2}", Convert.ToDouble(ZoneE_Select[n][2]));
                         String Ueff = string.Format("{0:F2}", Convert.ToDouble(Value[0][0]));
-
+                        String g = "";
+                        int nRow = dataGridView2.Rows.Add();
+                        dataGridView2.Rows[nRow].Cells[0].Value = (n + 1).ToString();
+                        dataGridView2.Rows[nRow].Cells[1].Value = ZoneE_Select[n][6];
+                        dataGridView2.Rows[nRow].Cells[2].Value = ZoneE_Select[n][5];
+                        dataGridView2.Rows[nRow].Cells[3].Value = 면적;
+                        dataGridView2.Rows[nRow].Cells[4].Value = ZoneE_Select[n][3];
+                        dataGridView2.Rows[nRow].Cells[5].Value = ZoneE_Select[n][4];
+                        dataGridView2.Rows[nRow].Cells[6].Value = Ueff;
                         if (선택구조체 == "커튼월창")
                         {
-                            String g = string.Format("{0:F2}", Convert.ToDouble(Value[0][1]));
-                            table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE_Select[n][1], ZoneE_Select[n][5], 면적, ZoneE_Select[n][3], ZoneE_Select[n][4], Ueff, g);
+                            g = string.Format("{0:F2}", Convert.ToDouble(Value[0][1]));
                         }
                         else if (선택구조체 == "창호")
                         {
                             string[][] gValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "태양열취득률", "번호='" + Value[0][1] + "'");
                             if (gValue.Length > 0)
                             {
-                                String g = string.Format("{0:F2}", Convert.ToDouble(gValue[0][0]));
-                                table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE_Select[n][1], ZoneE_Select[n][5], 면적, ZoneE_Select[n][3], ZoneE_Select[n][4], Ueff, g);
+                                g = string.Format("{0:F2}", Convert.ToDouble(gValue[0][0]));
                             }
                         }
                         else if (선택구조체 == "외벽" || 선택구조체 == "지붕" || 선택구조체 == "외부출입문")
                         {
-                            String α = string.Format("{0:F2}", Convert.ToDouble(Value[0][1]));
-                            table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE_Select[n][1], ZoneE_Select[n][5], 면적, ZoneE_Select[n][3], ZoneE_Select[n][4], Ueff, α);
+                            g = string.Format("{0:F2}", Convert.ToDouble(Value[0][1]));
                         }
-                        else if (선택구조체 == "최하층바닥")
-                        {
-                            table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE_Select[n][1], ZoneE_Select[n][5], 면적, ZoneE_Select[n][3], ZoneE_Select[n][4], Ueff, "");
-                        }
+                        dataGridView2.Rows[nRow].Cells[7].Value = g;
                     }
-                    else { table_ZoneEnvelopeSelect.Rows.Add((n + 1).ToString(), ZoneE_Select[n][1], ZoneE_Select[n][5], string.Format("{0:F2}", Convert.ToDouble(ZoneE_Select[n][2])), ZoneE_Select[n][3], ZoneE_Select[n][4], "", ""); }
+                    else
+                    {
+                        String 면적 = string.Format("{0:F2}", Convert.ToDouble(ZoneE_Select[n][2]));
+                        String Ueff = "";
+                        String g = "";
+                        int nRow = dataGridView2.Rows.Add();
+                        dataGridView2.Rows[nRow].Cells[0].Value = (n + 1).ToString();
+                        dataGridView2.Rows[nRow].Cells[1].Value = ZoneE_Select[n][6];
+                        dataGridView2.Rows[nRow].Cells[2].Value = ZoneE_Select[n][5];
+                        dataGridView2.Rows[nRow].Cells[3].Value = 면적;
+                        dataGridView2.Rows[nRow].Cells[4].Value = ZoneE_Select[n][3];
+                        dataGridView2.Rows[nRow].Cells[5].Value = ZoneE_Select[n][4];
+                        dataGridView2.Rows[nRow].Cells[6].Value = Ueff;
+                        dataGridView2.Rows[nRow].Cells[7].Value = g;
+                    }
 
                 }
             }
-            dataGridView2.DataSource = table_ZoneEnvelopeSelect;
+        }
+
+        private bool dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
+        {
+            cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+            cell.Style.ForeColor = Color.Black;
+            cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+            cell.Style.SelectionForeColor = Color.Black;
+            return true;
         }
 
         //축열 계산을 위한 면적 계산 
@@ -541,7 +565,6 @@ namespace main.contents
         private void reset()
         {
             ZoneName_textBox.Text = "";
-            Layer_textBox.Text = "";
 
             for (int k = 0; k < 8; k++)
             {
@@ -679,7 +702,6 @@ namespace main.contents
                 if (ZoneE.Length > 0)
                 {
                     Layer = ZoneE[0][6];
-                    Layer_textBox.Text = Layer;
                     load_table_ZoneEnvelopeInfo(ZoneNum);
                 }
             }
