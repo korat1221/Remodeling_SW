@@ -305,7 +305,7 @@ namespace main.contents
             PV_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle54.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle54.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle54.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle54.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle54.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle54.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle54.SelectionForeColor = Color.Black;
@@ -316,7 +316,7 @@ namespace main.contents
             PV_dataGridView.Name = "PV_dataGridView";
             dataGridViewCellStyle55.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle55.BackColor = SystemColors.Control;
-            dataGridViewCellStyle55.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle55.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle55.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle55.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle55.SelectionForeColor = SystemColors.HighlightText;
@@ -325,7 +325,7 @@ namespace main.contents
             PV_dataGridView.RowHeadersVisible = false;
             PV_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle56.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle56.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle56.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle56.ForeColor = Color.Black;
             dataGridViewCellStyle56.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle56.SelectionForeColor = Color.Black;
@@ -363,7 +363,7 @@ namespace main.contents
             Qmax_button.BackColor = SystemColors.ControlLight;
             Qmax_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Qmax_button.FlatStyle = FlatStyle.System;
-            Qmax_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            Qmax_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             Qmax_button.Location = new Point(203, 28);
             Qmax_button.Margin = new Padding(0);
             Qmax_button.Name = "Qmax_button";
@@ -376,7 +376,7 @@ namespace main.contents
             // label23
             // 
             label23.AutoSize = true;
-            label23.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label23.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label23.Location = new Point(475, 32);
             label23.Name = "label23";
             label23.Size = new Size(58, 15);
@@ -386,7 +386,7 @@ namespace main.contents
             // label22
             // 
             label22.AutoSize = true;
-            label22.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label22.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label22.Location = new Point(290, 32);
             label22.Name = "label22";
             label22.Size = new Size(58, 15);
@@ -396,7 +396,7 @@ namespace main.contents
             // Qcmax_label
             // 
             Qcmax_label.AutoSize = true;
-            Qcmax_label.Font = new Font("나눔바른고딕", 9F);
+            Qcmax_label.Font = new Font(UTIL.Families[0], 9F);
             Qcmax_label.ForeColor = SystemColors.ControlText;
             Qcmax_label.Location = new Point(604, 32);
             Qcmax_label.Name = "Qcmax_label";
@@ -409,7 +409,7 @@ namespace main.contents
             Qcmax_textBox.BackColor = Color.White;
             Qcmax_textBox.BorderStyle = BorderStyle.None;
             Qcmax_textBox.Enabled = false;
-            Qcmax_textBox.Font = new Font("나눔바른고딕", 9F);
+            Qcmax_textBox.Font = new Font(UTIL.Families[0], 9F);
             Qcmax_textBox.ForeColor = SystemColors.ControlText;
             Qcmax_textBox.Location = new Point(539, 32);
             Qcmax_textBox.Name = "Qcmax_textBox";
@@ -421,7 +421,7 @@ namespace main.contents
             // Qhmax_label
             // 
             Qhmax_label.AutoSize = true;
-            Qhmax_label.Font = new Font("나눔바른고딕", 9F);
+            Qhmax_label.Font = new Font(UTIL.Families[0], 9F);
             Qhmax_label.ForeColor = SystemColors.ControlText;
             Qhmax_label.Location = new Point(419, 32);
             Qhmax_label.Name = "Qhmax_label";
@@ -434,7 +434,7 @@ namespace main.contents
             Qhmax_textBox.BackColor = Color.White;
             Qhmax_textBox.BorderStyle = BorderStyle.None;
             Qhmax_textBox.Enabled = false;
-            Qhmax_textBox.Font = new Font("나눔바른고딕", 9F);
+            Qhmax_textBox.Font = new Font(UTIL.Families[0], 9F);
             Qhmax_textBox.ForeColor = SystemColors.ControlText;
             Qhmax_textBox.Location = new Point(354, 32);
             Qhmax_textBox.Name = "Qhmax_textBox";
@@ -457,7 +457,7 @@ namespace main.contents
             // 
             input_textBox.BackColor = Color.White;
             input_textBox.BorderStyle = BorderStyle.FixedSingle;
-            input_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            input_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             input_textBox.ForeColor = SystemColors.ControlText;
             input_textBox.Location = new Point(1102, 28);
             input_textBox.Name = "input_textBox";
@@ -479,7 +479,7 @@ namespace main.contents
             // label19
             // 
             label19.AutoSize = true;
-            label19.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label19.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label19.Location = new Point(791, 32);
             label19.Name = "label19";
             label19.Size = new Size(55, 15);
@@ -489,7 +489,7 @@ namespace main.contents
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label4.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label4.Location = new Point(80, 32);
             label4.Name = "label4";
             label4.Size = new Size(67, 15);
@@ -566,7 +566,7 @@ namespace main.contents
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label3.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label3.Location = new Point(1027, 14);
             label3.Name = "label3";
             label3.Size = new Size(85, 15);
@@ -576,7 +576,7 @@ namespace main.contents
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label5.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label5.Location = new Point(883, 14);
             label5.Name = "label5";
             label5.Size = new Size(102, 15);
@@ -596,7 +596,7 @@ namespace main.contents
             AirHP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle57.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle57.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle57.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle57.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle57.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle57.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle57.SelectionForeColor = Color.Black;
@@ -607,7 +607,7 @@ namespace main.contents
             AirHP_dataGridView.Name = "AirHP_dataGridView";
             dataGridViewCellStyle58.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle58.BackColor = SystemColors.Control;
-            dataGridViewCellStyle58.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle58.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle58.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle58.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle58.SelectionForeColor = SystemColors.HighlightText;
@@ -616,7 +616,7 @@ namespace main.contents
             AirHP_dataGridView.RowHeadersVisible = false;
             AirHP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle59.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle59.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle59.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle59.ForeColor = Color.Black;
             dataGridViewCellStyle59.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle59.SelectionForeColor = Color.Black;
@@ -643,7 +643,7 @@ namespace main.contents
             DefaultAirHP_Add_button.BackColor = SystemColors.ControlLight;
             DefaultAirHP_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DefaultAirHP_Add_button.FlatStyle = FlatStyle.System;
-            DefaultAirHP_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            DefaultAirHP_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             DefaultAirHP_Add_button.Location = new Point(990, 10);
             DefaultAirHP_Add_button.Margin = new Padding(0);
             DefaultAirHP_Add_button.Name = "DefaultAirHP_Add_button";
@@ -658,7 +658,7 @@ namespace main.contents
             AirHP_Copy_button.BackColor = SystemColors.ControlLight;
             AirHP_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AirHP_Copy_button.FlatStyle = FlatStyle.System;
-            AirHP_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            AirHP_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             AirHP_Copy_button.Location = new Point(1191, 10);
             AirHP_Copy_button.Margin = new Padding(0);
             AirHP_Copy_button.Name = "AirHP_Copy_button";
@@ -673,7 +673,7 @@ namespace main.contents
             AirHP_Remove_button.BackColor = SystemColors.ControlLight;
             AirHP_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AirHP_Remove_button.FlatStyle = FlatStyle.System;
-            AirHP_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            AirHP_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             AirHP_Remove_button.Location = new Point(1154, 10);
             AirHP_Remove_button.Margin = new Padding(0);
             AirHP_Remove_button.Name = "AirHP_Remove_button";
@@ -688,7 +688,7 @@ namespace main.contents
             UserAirHP_Add_button.BackColor = SystemColors.ControlLight;
             UserAirHP_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserAirHP_Add_button.FlatStyle = FlatStyle.System;
-            UserAirHP_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserAirHP_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserAirHP_Add_button.Location = new Point(1117, 10);
             UserAirHP_Add_button.Margin = new Padding(0);
             UserAirHP_Add_button.Name = "UserAirHP_Add_button";
@@ -719,7 +719,7 @@ namespace main.contents
             // label18
             // 
             label18.AutoSize = true;
-            label18.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label18.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label18.Location = new Point(883, 9);
             label18.Name = "label18";
             label18.Size = new Size(102, 15);
@@ -729,7 +729,7 @@ namespace main.contents
             // label20
             // 
             label20.AutoSize = true;
-            label20.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label20.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label20.Location = new Point(1027, 9);
             label20.Name = "label20";
             label20.Size = new Size(85, 15);
@@ -741,7 +741,7 @@ namespace main.contents
             DefaultBoiler_Add_button.BackColor = SystemColors.ControlLight;
             DefaultBoiler_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DefaultBoiler_Add_button.FlatStyle = FlatStyle.System;
-            DefaultBoiler_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            DefaultBoiler_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             DefaultBoiler_Add_button.Location = new Point(990, 7);
             DefaultBoiler_Add_button.Margin = new Padding(0);
             DefaultBoiler_Add_button.Name = "DefaultBoiler_Add_button";
@@ -776,7 +776,7 @@ namespace main.contents
             Boiler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle60.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle60.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle60.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle60.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle60.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle60.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle60.SelectionForeColor = Color.Black;
@@ -787,7 +787,7 @@ namespace main.contents
             Boiler_dataGridView.Name = "Boiler_dataGridView";
             dataGridViewCellStyle61.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle61.BackColor = SystemColors.Control;
-            dataGridViewCellStyle61.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle61.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle61.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle61.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle61.SelectionForeColor = SystemColors.HighlightText;
@@ -796,7 +796,7 @@ namespace main.contents
             Boiler_dataGridView.RowHeadersVisible = false;
             Boiler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle62.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle62.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle62.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle62.ForeColor = Color.Black;
             dataGridViewCellStyle62.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle62.SelectionForeColor = Color.Black;
@@ -811,7 +811,7 @@ namespace main.contents
             Boiler_Copy_button.BackColor = SystemColors.ControlLight;
             Boiler_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Boiler_Copy_button.FlatStyle = FlatStyle.System;
-            Boiler_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            Boiler_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             Boiler_Copy_button.Location = new Point(1191, 5);
             Boiler_Copy_button.Margin = new Padding(0);
             Boiler_Copy_button.Name = "Boiler_Copy_button";
@@ -826,7 +826,7 @@ namespace main.contents
             Boiler_Remove_button.BackColor = SystemColors.ControlLight;
             Boiler_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Boiler_Remove_button.FlatStyle = FlatStyle.System;
-            Boiler_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            Boiler_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             Boiler_Remove_button.Location = new Point(1154, 5);
             Boiler_Remove_button.Margin = new Padding(0);
             Boiler_Remove_button.Name = "Boiler_Remove_button";
@@ -841,7 +841,7 @@ namespace main.contents
             UserBoiler_Add_button.BackColor = SystemColors.ControlLight;
             UserBoiler_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserBoiler_Add_button.FlatStyle = FlatStyle.System;
-            UserBoiler_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserBoiler_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserBoiler_Add_button.Location = new Point(1117, 5);
             UserBoiler_Add_button.Margin = new Padding(0);
             UserBoiler_Add_button.Name = "UserBoiler_Add_button";
@@ -872,7 +872,7 @@ namespace main.contents
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label8.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label8.Location = new Point(1027, 11);
             label8.Name = "label8";
             label8.Size = new Size(85, 15);
@@ -882,7 +882,7 @@ namespace main.contents
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label9.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label9.Location = new Point(883, 11);
             label9.Name = "label9";
             label9.Size = new Size(102, 15);
@@ -902,7 +902,7 @@ namespace main.contents
             ABS_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle63.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle63.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle63.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle63.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle63.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle63.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle63.SelectionForeColor = Color.Black;
@@ -913,7 +913,7 @@ namespace main.contents
             ABS_dataGridView.Name = "ABS_dataGridView";
             dataGridViewCellStyle64.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle64.BackColor = SystemColors.Control;
-            dataGridViewCellStyle64.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle64.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle64.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle64.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle64.SelectionForeColor = SystemColors.HighlightText;
@@ -922,7 +922,7 @@ namespace main.contents
             ABS_dataGridView.RowHeadersVisible = false;
             ABS_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle65.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle65.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle65.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle65.ForeColor = Color.Black;
             dataGridViewCellStyle65.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle65.SelectionForeColor = Color.Black;
@@ -949,7 +949,7 @@ namespace main.contents
             DefaultABS_Add_button.BackColor = SystemColors.ControlLight;
             DefaultABS_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DefaultABS_Add_button.FlatStyle = FlatStyle.System;
-            DefaultABS_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            DefaultABS_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             DefaultABS_Add_button.Location = new Point(990, 7);
             DefaultABS_Add_button.Margin = new Padding(0);
             DefaultABS_Add_button.Name = "DefaultABS_Add_button";
@@ -964,7 +964,7 @@ namespace main.contents
             ABS_Copy_button.BackColor = SystemColors.ControlLight;
             ABS_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ABS_Copy_button.FlatStyle = FlatStyle.System;
-            ABS_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            ABS_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             ABS_Copy_button.Location = new Point(1191, 7);
             ABS_Copy_button.Margin = new Padding(0);
             ABS_Copy_button.Name = "ABS_Copy_button";
@@ -979,7 +979,7 @@ namespace main.contents
             ABS_Remove_button.BackColor = SystemColors.ControlLight;
             ABS_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ABS_Remove_button.FlatStyle = FlatStyle.System;
-            ABS_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            ABS_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             ABS_Remove_button.Location = new Point(1154, 7);
             ABS_Remove_button.Margin = new Padding(0);
             ABS_Remove_button.Name = "ABS_Remove_button";
@@ -994,7 +994,7 @@ namespace main.contents
             UserABS_Add_button.BackColor = SystemColors.ControlLight;
             UserABS_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserABS_Add_button.FlatStyle = FlatStyle.System;
-            UserABS_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserABS_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserABS_Add_button.Location = new Point(1117, 7);
             UserABS_Add_button.Margin = new Padding(0);
             UserABS_Add_button.Name = "UserABS_Add_button";
@@ -1035,7 +1035,7 @@ namespace main.contents
             DH_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle66.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle66.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle66.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle66.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle66.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle66.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle66.SelectionForeColor = Color.Black;
@@ -1046,7 +1046,7 @@ namespace main.contents
             DH_dataGridView.Name = "DH_dataGridView";
             dataGridViewCellStyle67.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle67.BackColor = SystemColors.Control;
-            dataGridViewCellStyle67.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle67.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle67.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle67.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle67.SelectionForeColor = SystemColors.HighlightText;
@@ -1055,7 +1055,7 @@ namespace main.contents
             DH_dataGridView.RowHeadersVisible = false;
             DH_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle68.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle68.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle68.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle68.ForeColor = Color.Black;
             dataGridViewCellStyle68.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle68.SelectionForeColor = Color.Black;
@@ -1067,7 +1067,7 @@ namespace main.contents
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label10.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label10.Location = new Point(1027, 16);
             label10.Name = "label10";
             label10.Size = new Size(85, 15);
@@ -1077,7 +1077,7 @@ namespace main.contents
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label11.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label11.Location = new Point(883, 16);
             label11.Name = "label11";
             label11.Size = new Size(102, 15);
@@ -1101,7 +1101,7 @@ namespace main.contents
             DefaultDH_Add_button.BackColor = SystemColors.ControlLight;
             DefaultDH_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DefaultDH_Add_button.FlatStyle = FlatStyle.System;
-            DefaultDH_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            DefaultDH_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             DefaultDH_Add_button.Location = new Point(990, 12);
             DefaultDH_Add_button.Margin = new Padding(0);
             DefaultDH_Add_button.Name = "DefaultDH_Add_button";
@@ -1116,7 +1116,7 @@ namespace main.contents
             DH_Copy_button.BackColor = SystemColors.ControlLight;
             DH_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DH_Copy_button.FlatStyle = FlatStyle.System;
-            DH_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            DH_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             DH_Copy_button.Location = new Point(1191, 12);
             DH_Copy_button.Margin = new Padding(0);
             DH_Copy_button.Name = "DH_Copy_button";
@@ -1131,7 +1131,7 @@ namespace main.contents
             DH_Remove_button.BackColor = SystemColors.ControlLight;
             DH_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DH_Remove_button.FlatStyle = FlatStyle.System;
-            DH_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            DH_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             DH_Remove_button.Location = new Point(1154, 12);
             DH_Remove_button.Margin = new Padding(0);
             DH_Remove_button.Name = "DH_Remove_button";
@@ -1146,7 +1146,7 @@ namespace main.contents
             UserDH_Add_button.BackColor = SystemColors.ControlLight;
             UserDH_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserDH_Add_button.FlatStyle = FlatStyle.System;
-            UserDH_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserDH_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserDH_Add_button.Location = new Point(1117, 12);
             UserDH_Add_button.Margin = new Padding(0);
             UserDH_Add_button.Name = "UserDH_Add_button";
@@ -1177,7 +1177,7 @@ namespace main.contents
             // label14
             // 
             label14.AutoSize = true;
-            label14.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label14.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label14.Location = new Point(1027, 11);
             label14.Name = "label14";
             label14.Size = new Size(85, 15);
@@ -1187,7 +1187,7 @@ namespace main.contents
             // label15
             // 
             label15.AutoSize = true;
-            label15.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label15.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label15.Location = new Point(883, 11);
             label15.Name = "label15";
             label15.Size = new Size(102, 15);
@@ -1207,7 +1207,7 @@ namespace main.contents
             AirCooler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle69.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle69.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle69.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle69.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle69.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle69.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle69.SelectionForeColor = Color.Black;
@@ -1218,7 +1218,7 @@ namespace main.contents
             AirCooler_dataGridView.Name = "AirCooler_dataGridView";
             dataGridViewCellStyle70.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle70.BackColor = SystemColors.Control;
-            dataGridViewCellStyle70.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle70.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle70.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle70.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle70.SelectionForeColor = SystemColors.HighlightText;
@@ -1227,7 +1227,7 @@ namespace main.contents
             AirCooler_dataGridView.RowHeadersVisible = false;
             AirCooler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle71.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle71.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle71.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle71.ForeColor = Color.Black;
             dataGridViewCellStyle71.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle71.SelectionForeColor = Color.Black;
@@ -1253,7 +1253,7 @@ namespace main.contents
             DefaultAirCooler_Add_button.BackColor = SystemColors.ControlLight;
             DefaultAirCooler_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DefaultAirCooler_Add_button.FlatStyle = FlatStyle.System;
-            DefaultAirCooler_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            DefaultAirCooler_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             DefaultAirCooler_Add_button.Location = new Point(990, 7);
             DefaultAirCooler_Add_button.Margin = new Padding(0);
             DefaultAirCooler_Add_button.Name = "DefaultAirCooler_Add_button";
@@ -1268,7 +1268,7 @@ namespace main.contents
             AirCooler_Copy_button.BackColor = SystemColors.ControlLight;
             AirCooler_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AirCooler_Copy_button.FlatStyle = FlatStyle.System;
-            AirCooler_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            AirCooler_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             AirCooler_Copy_button.Location = new Point(1191, 7);
             AirCooler_Copy_button.Margin = new Padding(0);
             AirCooler_Copy_button.Name = "AirCooler_Copy_button";
@@ -1283,7 +1283,7 @@ namespace main.contents
             AirCooler_Remove_button.BackColor = SystemColors.ControlLight;
             AirCooler_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AirCooler_Remove_button.FlatStyle = FlatStyle.System;
-            AirCooler_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            AirCooler_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             AirCooler_Remove_button.Location = new Point(1154, 7);
             AirCooler_Remove_button.Margin = new Padding(0);
             AirCooler_Remove_button.Name = "AirCooler_Remove_button";
@@ -1298,7 +1298,7 @@ namespace main.contents
             UserAirCooler_Add_button.BackColor = SystemColors.ControlLight;
             UserAirCooler_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserAirCooler_Add_button.FlatStyle = FlatStyle.System;
-            UserAirCooler_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserAirCooler_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserAirCooler_Add_button.Location = new Point(1117, 7);
             UserAirCooler_Add_button.Margin = new Padding(0);
             UserAirCooler_Add_button.Name = "UserAirCooler_Add_button";
@@ -1329,7 +1329,7 @@ namespace main.contents
             // label16
             // 
             label16.AutoSize = true;
-            label16.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label16.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label16.Location = new Point(1027, 16);
             label16.Name = "label16";
             label16.Size = new Size(85, 15);
@@ -1339,7 +1339,7 @@ namespace main.contents
             // label17
             // 
             label17.AutoSize = true;
-            label17.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label17.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label17.Location = new Point(883, 16);
             label17.Name = "label17";
             label17.Size = new Size(102, 15);
@@ -1359,7 +1359,7 @@ namespace main.contents
             WaterCooler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle72.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle72.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle72.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle72.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle72.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle72.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle72.SelectionForeColor = Color.Black;
@@ -1370,7 +1370,7 @@ namespace main.contents
             WaterCooler_dataGridView.Name = "WaterCooler_dataGridView";
             dataGridViewCellStyle73.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle73.BackColor = SystemColors.Control;
-            dataGridViewCellStyle73.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle73.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle73.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle73.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle73.SelectionForeColor = SystemColors.HighlightText;
@@ -1379,7 +1379,7 @@ namespace main.contents
             WaterCooler_dataGridView.RowHeadersVisible = false;
             WaterCooler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle74.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle74.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle74.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle74.ForeColor = Color.Black;
             dataGridViewCellStyle74.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle74.SelectionForeColor = Color.Black;
@@ -1405,7 +1405,7 @@ namespace main.contents
             DefaultWaterCooler_Add_button.BackColor = SystemColors.ControlLight;
             DefaultWaterCooler_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DefaultWaterCooler_Add_button.FlatStyle = FlatStyle.System;
-            DefaultWaterCooler_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            DefaultWaterCooler_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             DefaultWaterCooler_Add_button.Location = new Point(990, 12);
             DefaultWaterCooler_Add_button.Margin = new Padding(0);
             DefaultWaterCooler_Add_button.Name = "DefaultWaterCooler_Add_button";
@@ -1420,7 +1420,7 @@ namespace main.contents
             WaterCooler_Copy_button.BackColor = SystemColors.ControlLight;
             WaterCooler_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             WaterCooler_Copy_button.FlatStyle = FlatStyle.System;
-            WaterCooler_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            WaterCooler_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             WaterCooler_Copy_button.Location = new Point(1191, 12);
             WaterCooler_Copy_button.Margin = new Padding(0);
             WaterCooler_Copy_button.Name = "WaterCooler_Copy_button";
@@ -1435,7 +1435,7 @@ namespace main.contents
             WaterCooler_Remove_button.BackColor = SystemColors.ControlLight;
             WaterCooler_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             WaterCooler_Remove_button.FlatStyle = FlatStyle.System;
-            WaterCooler_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            WaterCooler_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             WaterCooler_Remove_button.Location = new Point(1154, 12);
             WaterCooler_Remove_button.Margin = new Padding(0);
             WaterCooler_Remove_button.Name = "WaterCooler_Remove_button";
@@ -1450,7 +1450,7 @@ namespace main.contents
             UserWaterCooler_Add_button.BackColor = SystemColors.ControlLight;
             UserWaterCooler_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserWaterCooler_Add_button.FlatStyle = FlatStyle.System;
-            UserWaterCooler_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserWaterCooler_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserWaterCooler_Add_button.Location = new Point(1117, 12);
             UserWaterCooler_Add_button.Margin = new Padding(0);
             UserWaterCooler_Add_button.Name = "UserWaterCooler_Add_button";
@@ -1485,7 +1485,7 @@ namespace main.contents
             Pump_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle75.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle75.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle75.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle75.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle75.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle75.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle75.SelectionForeColor = Color.Black;
@@ -1496,7 +1496,7 @@ namespace main.contents
             Pump_dataGridView.Name = "Pump_dataGridView";
             dataGridViewCellStyle76.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle76.BackColor = SystemColors.Control;
-            dataGridViewCellStyle76.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle76.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle76.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle76.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle76.SelectionForeColor = SystemColors.HighlightText;
@@ -1505,7 +1505,7 @@ namespace main.contents
             Pump_dataGridView.RowHeadersVisible = false;
             Pump_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle77.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle77.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle77.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle77.ForeColor = Color.Black;
             dataGridViewCellStyle77.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle77.SelectionForeColor = Color.Black;
@@ -1520,7 +1520,7 @@ namespace main.contents
             Pump_Copy_button.BackColor = SystemColors.ControlLight;
             Pump_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Pump_Copy_button.FlatStyle = FlatStyle.System;
-            Pump_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            Pump_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             Pump_Copy_button.Location = new Point(1191, 13);
             Pump_Copy_button.Margin = new Padding(0);
             Pump_Copy_button.Name = "Pump_Copy_button";
@@ -1535,7 +1535,7 @@ namespace main.contents
             Pump_Remove_button.BackColor = SystemColors.ControlLight;
             Pump_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Pump_Remove_button.FlatStyle = FlatStyle.System;
-            Pump_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            Pump_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             Pump_Remove_button.Location = new Point(1154, 13);
             Pump_Remove_button.Margin = new Padding(0);
             Pump_Remove_button.Name = "Pump_Remove_button";
@@ -1550,7 +1550,7 @@ namespace main.contents
             Pump_Add_button.BackColor = SystemColors.ControlLight;
             Pump_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Pump_Add_button.FlatStyle = FlatStyle.System;
-            Pump_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            Pump_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             Pump_Add_button.Location = new Point(1117, 13);
             Pump_Add_button.Margin = new Padding(0);
             Pump_Add_button.Name = "Pump_Add_button";
@@ -1585,7 +1585,7 @@ namespace main.contents
             ce_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle78.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle78.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle78.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle78.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle78.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle78.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle78.SelectionForeColor = Color.Black;
@@ -1596,7 +1596,7 @@ namespace main.contents
             ce_dataGridView.Name = "ce_dataGridView";
             dataGridViewCellStyle79.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle79.BackColor = SystemColors.Control;
-            dataGridViewCellStyle79.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle79.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle79.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle79.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle79.SelectionForeColor = SystemColors.HighlightText;
@@ -1605,7 +1605,7 @@ namespace main.contents
             ce_dataGridView.RowHeadersVisible = false;
             ce_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle80.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle80.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle80.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle80.ForeColor = Color.Black;
             dataGridViewCellStyle80.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle80.SelectionForeColor = Color.Black;
@@ -1619,7 +1619,7 @@ namespace main.contents
             ce_Copy_button.BackColor = SystemColors.ControlLight;
             ce_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce_Copy_button.FlatStyle = FlatStyle.System;
-            ce_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            ce_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             ce_Copy_button.Location = new Point(1191, 14);
             ce_Copy_button.Margin = new Padding(0);
             ce_Copy_button.Name = "ce_Copy_button";
@@ -1634,7 +1634,7 @@ namespace main.contents
             ce_Remove_button.BackColor = SystemColors.ControlLight;
             ce_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce_Remove_button.FlatStyle = FlatStyle.System;
-            ce_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            ce_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             ce_Remove_button.Location = new Point(1154, 14);
             ce_Remove_button.Margin = new Padding(0);
             ce_Remove_button.Name = "ce_Remove_button";
@@ -1649,7 +1649,7 @@ namespace main.contents
             ce_Add_button.BackColor = SystemColors.ControlLight;
             ce_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce_Add_button.FlatStyle = FlatStyle.System;
-            ce_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            ce_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             ce_Add_button.Location = new Point(1117, 14);
             ce_Add_button.Margin = new Padding(0);
             ce_Add_button.Name = "ce_Add_button";
@@ -1681,7 +1681,7 @@ namespace main.contents
             // label25
             // 
             label25.AutoSize = true;
-            label25.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label25.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label25.Location = new Point(1027, 16);
             label25.Name = "label25";
             label25.Size = new Size(85, 15);
@@ -1693,7 +1693,7 @@ namespace main.contents
             DefaultWP_ADD_button.BackColor = SystemColors.ControlLight;
             DefaultWP_ADD_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DefaultWP_ADD_button.FlatStyle = FlatStyle.System;
-            DefaultWP_ADD_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            DefaultWP_ADD_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             DefaultWP_ADD_button.Location = new Point(990, 12);
             DefaultWP_ADD_button.Margin = new Padding(0);
             DefaultWP_ADD_button.Name = "DefaultWP_ADD_button";
@@ -1706,7 +1706,7 @@ namespace main.contents
             // label24
             // 
             label24.AutoSize = true;
-            label24.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label24.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label24.Location = new Point(883, 16);
             label24.Name = "label24";
             label24.Size = new Size(102, 15);
@@ -1726,7 +1726,7 @@ namespace main.contents
             WP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle81.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle81.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle81.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle81.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle81.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle81.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle81.SelectionForeColor = Color.Black;
@@ -1737,7 +1737,7 @@ namespace main.contents
             WP_dataGridView.Name = "WP_dataGridView";
             dataGridViewCellStyle82.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle82.BackColor = SystemColors.Control;
-            dataGridViewCellStyle82.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle82.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle82.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle82.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle82.SelectionForeColor = SystemColors.HighlightText;
@@ -1746,7 +1746,7 @@ namespace main.contents
             WP_dataGridView.RowHeadersVisible = false;
             WP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle83.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle83.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle83.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle83.ForeColor = Color.Black;
             dataGridViewCellStyle83.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle83.SelectionForeColor = Color.Black;
@@ -1773,7 +1773,7 @@ namespace main.contents
             WP_Copy_button.BackColor = SystemColors.ControlLight;
             WP_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             WP_Copy_button.FlatStyle = FlatStyle.System;
-            WP_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            WP_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             WP_Copy_button.Location = new Point(1191, 12);
             WP_Copy_button.Margin = new Padding(0);
             WP_Copy_button.Name = "WP_Copy_button";
@@ -1788,7 +1788,7 @@ namespace main.contents
             WP_Remove_button.BackColor = SystemColors.ControlLight;
             WP_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             WP_Remove_button.FlatStyle = FlatStyle.System;
-            WP_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            WP_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             WP_Remove_button.Location = new Point(1154, 12);
             WP_Remove_button.Margin = new Padding(0);
             WP_Remove_button.Name = "WP_Remove_button";
@@ -1803,7 +1803,7 @@ namespace main.contents
             UserWP_Add_button.BackColor = SystemColors.ControlLight;
             UserWP_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserWP_Add_button.FlatStyle = FlatStyle.System;
-            UserWP_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserWP_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserWP_Add_button.Location = new Point(1117, 12);
             UserWP_Add_button.Margin = new Padding(0);
             UserWP_Add_button.Name = "UserWP_Add_button";
@@ -1845,7 +1845,7 @@ namespace main.contents
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label12.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label12.Location = new Point(1017, 11);
             label12.Name = "label12";
             label12.Size = new Size(85, 15);
@@ -1855,7 +1855,7 @@ namespace main.contents
             // label13
             // 
             label13.AutoSize = true;
-            label13.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label13.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label13.Location = new Point(873, 11);
             label13.Name = "label13";
             label13.Size = new Size(102, 15);
@@ -1875,7 +1875,7 @@ namespace main.contents
             FC_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle84.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle84.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle84.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle84.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle84.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle84.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle84.SelectionForeColor = Color.Black;
@@ -1886,7 +1886,7 @@ namespace main.contents
             FC_dataGridView.Name = "FC_dataGridView";
             dataGridViewCellStyle85.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle85.BackColor = SystemColors.Control;
-            dataGridViewCellStyle85.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle85.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle85.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle85.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle85.SelectionForeColor = SystemColors.HighlightText;
@@ -1895,7 +1895,7 @@ namespace main.contents
             FC_dataGridView.RowHeadersVisible = false;
             FC_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle86.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle86.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle86.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle86.ForeColor = Color.Black;
             dataGridViewCellStyle86.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle86.SelectionForeColor = Color.Black;
@@ -1921,7 +1921,7 @@ namespace main.contents
             DefaultFC_Add_button.BackColor = SystemColors.ControlLight;
             DefaultFC_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DefaultFC_Add_button.FlatStyle = FlatStyle.System;
-            DefaultFC_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            DefaultFC_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             DefaultFC_Add_button.Location = new Point(980, 7);
             DefaultFC_Add_button.Margin = new Padding(0);
             DefaultFC_Add_button.Name = "DefaultFC_Add_button";
@@ -1936,7 +1936,7 @@ namespace main.contents
             FC_Copy_button.BackColor = SystemColors.ControlLight;
             FC_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             FC_Copy_button.FlatStyle = FlatStyle.System;
-            FC_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            FC_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             FC_Copy_button.Location = new Point(1181, 7);
             FC_Copy_button.Margin = new Padding(0);
             FC_Copy_button.Name = "FC_Copy_button";
@@ -1951,7 +1951,7 @@ namespace main.contents
             FC_Remove_button.BackColor = SystemColors.ControlLight;
             FC_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             FC_Remove_button.FlatStyle = FlatStyle.System;
-            FC_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            FC_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             FC_Remove_button.Location = new Point(1144, 7);
             FC_Remove_button.Margin = new Padding(0);
             FC_Remove_button.Name = "FC_Remove_button";
@@ -1966,7 +1966,7 @@ namespace main.contents
             UserFC_Add_button.BackColor = SystemColors.ControlLight;
             UserFC_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserFC_Add_button.FlatStyle = FlatStyle.System;
-            UserFC_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserFC_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserFC_Add_button.Location = new Point(1107, 7);
             UserFC_Add_button.Margin = new Padding(0);
             UserFC_Add_button.Name = "UserFC_Add_button";
@@ -2016,7 +2016,7 @@ namespace main.contents
             GWHP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle87.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle87.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle87.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle87.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle87.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle87.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle87.SelectionForeColor = Color.Black;
@@ -2027,7 +2027,7 @@ namespace main.contents
             GWHP_dataGridView.Name = "GWHP_dataGridView";
             dataGridViewCellStyle88.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle88.BackColor = SystemColors.Control;
-            dataGridViewCellStyle88.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle88.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle88.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle88.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle88.SelectionForeColor = SystemColors.HighlightText;
@@ -2036,7 +2036,7 @@ namespace main.contents
             GWHP_dataGridView.RowHeadersVisible = false;
             GWHP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle89.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle89.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle89.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle89.ForeColor = Color.Black;
             dataGridViewCellStyle89.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle89.SelectionForeColor = Color.Black;
@@ -2051,7 +2051,7 @@ namespace main.contents
             UserGWHP_Add_button.BackColor = SystemColors.ControlLight;
             UserGWHP_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserGWHP_Add_button.FlatStyle = FlatStyle.System;
-            UserGWHP_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserGWHP_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserGWHP_Add_button.Location = new Point(1117, 13);
             UserGWHP_Add_button.Margin = new Padding(0);
             UserGWHP_Add_button.Name = "UserGWHP_Add_button";
@@ -2066,7 +2066,7 @@ namespace main.contents
             GWHP_Remove_button.BackColor = SystemColors.ControlLight;
             GWHP_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             GWHP_Remove_button.FlatStyle = FlatStyle.System;
-            GWHP_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            GWHP_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             GWHP_Remove_button.Location = new Point(1154, 13);
             GWHP_Remove_button.Margin = new Padding(0);
             GWHP_Remove_button.Name = "GWHP_Remove_button";
@@ -2081,7 +2081,7 @@ namespace main.contents
             GWHP_Copy_button.BackColor = SystemColors.ControlLight;
             GWHP_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             GWHP_Copy_button.FlatStyle = FlatStyle.System;
-            GWHP_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            GWHP_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             GWHP_Copy_button.Location = new Point(1191, 13);
             GWHP_Copy_button.Margin = new Padding(0);
             GWHP_Copy_button.Name = "GWHP_Copy_button";
@@ -2131,7 +2131,7 @@ namespace main.contents
             GroundHP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle90.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle90.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle90.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle90.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle90.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle90.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle90.SelectionForeColor = Color.Black;
@@ -2142,7 +2142,7 @@ namespace main.contents
             GroundHP_dataGridView.Name = "GroundHP_dataGridView";
             dataGridViewCellStyle91.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle91.BackColor = SystemColors.Control;
-            dataGridViewCellStyle91.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle91.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle91.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle91.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle91.SelectionForeColor = SystemColors.HighlightText;
@@ -2151,7 +2151,7 @@ namespace main.contents
             GroundHP_dataGridView.RowHeadersVisible = false;
             GroundHP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle92.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle92.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle92.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle92.ForeColor = Color.Black;
             dataGridViewCellStyle92.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle92.SelectionForeColor = Color.Black;
@@ -2166,7 +2166,7 @@ namespace main.contents
             GroundHP_Copy_button.BackColor = SystemColors.ControlLight;
             GroundHP_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             GroundHP_Copy_button.FlatStyle = FlatStyle.System;
-            GroundHP_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            GroundHP_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             GroundHP_Copy_button.Location = new Point(1180, 11);
             GroundHP_Copy_button.Margin = new Padding(0);
             GroundHP_Copy_button.Name = "GroundHP_Copy_button";
@@ -2181,7 +2181,7 @@ namespace main.contents
             GroundHP_Remove_button.BackColor = SystemColors.ControlLight;
             GroundHP_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             GroundHP_Remove_button.FlatStyle = FlatStyle.System;
-            GroundHP_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            GroundHP_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             GroundHP_Remove_button.Location = new Point(1143, 11);
             GroundHP_Remove_button.Margin = new Padding(0);
             GroundHP_Remove_button.Name = "GroundHP_Remove_button";
@@ -2196,7 +2196,7 @@ namespace main.contents
             UserGroundHP_Add_button.BackColor = SystemColors.ControlLight;
             UserGroundHP_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserGroundHP_Add_button.FlatStyle = FlatStyle.System;
-            UserGroundHP_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserGroundHP_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserGroundHP_Add_button.Location = new Point(1106, 11);
             UserGroundHP_Add_button.Margin = new Padding(0);
             UserGroundHP_Add_button.Name = "UserGroundHP_Add_button";
@@ -2239,7 +2239,7 @@ namespace main.contents
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label6.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label6.Location = new Point(1027, 11);
             label6.Name = "label6";
             label6.Size = new Size(85, 15);
@@ -2249,7 +2249,7 @@ namespace main.contents
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label7.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label7.Location = new Point(883, 11);
             label7.Name = "label7";
             label7.Size = new Size(102, 15);
@@ -2261,7 +2261,7 @@ namespace main.contents
             DefaultSolar_Add_button.BackColor = SystemColors.ControlLight;
             DefaultSolar_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DefaultSolar_Add_button.FlatStyle = FlatStyle.System;
-            DefaultSolar_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            DefaultSolar_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             DefaultSolar_Add_button.Location = new Point(990, 7);
             DefaultSolar_Add_button.Margin = new Padding(0);
             DefaultSolar_Add_button.Name = "DefaultSolar_Add_button";
@@ -2276,7 +2276,7 @@ namespace main.contents
             UserSolar_Add_button.BackColor = SystemColors.ControlLight;
             UserSolar_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserSolar_Add_button.FlatStyle = FlatStyle.System;
-            UserSolar_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserSolar_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserSolar_Add_button.Location = new Point(1117, 7);
             UserSolar_Add_button.Margin = new Padding(0);
             UserSolar_Add_button.Name = "UserSolar_Add_button";
@@ -2291,7 +2291,7 @@ namespace main.contents
             Solar_Remove_button.BackColor = SystemColors.ControlLight;
             Solar_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Solar_Remove_button.FlatStyle = FlatStyle.System;
-            Solar_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            Solar_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             Solar_Remove_button.Location = new Point(1154, 7);
             Solar_Remove_button.Margin = new Padding(0);
             Solar_Remove_button.Name = "Solar_Remove_button";
@@ -2314,7 +2314,7 @@ namespace main.contents
             Solar_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle93.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle93.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle93.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle93.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle93.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle93.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle93.SelectionForeColor = Color.Black;
@@ -2325,7 +2325,7 @@ namespace main.contents
             Solar_dataGridView.Name = "Solar_dataGridView";
             dataGridViewCellStyle94.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle94.BackColor = SystemColors.Control;
-            dataGridViewCellStyle94.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle94.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle94.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle94.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle94.SelectionForeColor = SystemColors.HighlightText;
@@ -2334,7 +2334,7 @@ namespace main.contents
             Solar_dataGridView.RowHeadersVisible = false;
             Solar_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle95.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle95.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle95.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle95.ForeColor = Color.Black;
             dataGridViewCellStyle95.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle95.SelectionForeColor = Color.Black;
@@ -2348,7 +2348,7 @@ namespace main.contents
             Solar_Copy_button.BackColor = SystemColors.ControlLight;
             Solar_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Solar_Copy_button.FlatStyle = FlatStyle.System;
-            Solar_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            Solar_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             Solar_Copy_button.Location = new Point(1191, 7);
             Solar_Copy_button.Margin = new Padding(0);
             Solar_Copy_button.Name = "Solar_Copy_button";
@@ -2379,7 +2379,7 @@ namespace main.contents
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label1.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label1.Location = new Point(1027, 10);
             label1.Name = "label1";
             label1.Size = new Size(85, 15);
@@ -2389,7 +2389,7 @@ namespace main.contents
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label2.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             label2.Location = new Point(883, 10);
             label2.Name = "label2";
             label2.Size = new Size(102, 15);
@@ -2413,7 +2413,7 @@ namespace main.contents
             DefaultPV_Add_button.BackColor = SystemColors.ControlLight;
             DefaultPV_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DefaultPV_Add_button.FlatStyle = FlatStyle.System;
-            DefaultPV_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            DefaultPV_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             DefaultPV_Add_button.Location = new Point(990, 6);
             DefaultPV_Add_button.Margin = new Padding(0);
             DefaultPV_Add_button.Name = "DefaultPV_Add_button";
@@ -2428,7 +2428,7 @@ namespace main.contents
             PV_Copy_button.BackColor = SystemColors.ControlLight;
             PV_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             PV_Copy_button.FlatStyle = FlatStyle.System;
-            PV_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            PV_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             PV_Copy_button.Location = new Point(1191, 6);
             PV_Copy_button.Margin = new Padding(0);
             PV_Copy_button.Name = "PV_Copy_button";
@@ -2443,7 +2443,7 @@ namespace main.contents
             PV_Remove_button.BackColor = SystemColors.ControlLight;
             PV_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             PV_Remove_button.FlatStyle = FlatStyle.System;
-            PV_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            PV_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             PV_Remove_button.Location = new Point(1154, 6);
             PV_Remove_button.Margin = new Padding(0);
             PV_Remove_button.Name = "PV_Remove_button";
@@ -2458,7 +2458,7 @@ namespace main.contents
             UserPV_Add_button.BackColor = SystemColors.ControlLight;
             UserPV_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserPV_Add_button.FlatStyle = FlatStyle.System;
-            UserPV_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserPV_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserPV_Add_button.Location = new Point(1117, 6);
             UserPV_Add_button.Margin = new Padding(0);
             UserPV_Add_button.Name = "UserPV_Add_button";
@@ -2528,7 +2528,7 @@ namespace main.contents
             DHWHP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle96.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle96.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle96.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle96.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle96.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle96.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle96.SelectionForeColor = Color.Black;
@@ -2539,7 +2539,7 @@ namespace main.contents
             DHWHP_dataGridView.Name = "DHWHP_dataGridView";
             dataGridViewCellStyle97.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle97.BackColor = SystemColors.Control;
-            dataGridViewCellStyle97.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle97.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle97.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle97.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle97.SelectionForeColor = SystemColors.HighlightText;
@@ -2548,7 +2548,7 @@ namespace main.contents
             DHWHP_dataGridView.RowHeadersVisible = false;
             DHWHP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle98.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle98.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle98.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle98.ForeColor = Color.Black;
             dataGridViewCellStyle98.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle98.SelectionForeColor = Color.Black;
@@ -2575,7 +2575,7 @@ namespace main.contents
             DHWHP_Copy_button.BackColor = SystemColors.ControlLight;
             DHWHP_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DHWHP_Copy_button.FlatStyle = FlatStyle.System;
-            DHWHP_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            DHWHP_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             DHWHP_Copy_button.Location = new Point(1191, 10);
             DHWHP_Copy_button.Margin = new Padding(0);
             DHWHP_Copy_button.Name = "DHWHP_Copy_button";
@@ -2590,7 +2590,7 @@ namespace main.contents
             DHWHP_Remove_button.BackColor = SystemColors.ControlLight;
             DHWHP_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DHWHP_Remove_button.FlatStyle = FlatStyle.System;
-            DHWHP_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            DHWHP_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             DHWHP_Remove_button.Location = new Point(1154, 10);
             DHWHP_Remove_button.Margin = new Padding(0);
             DHWHP_Remove_button.Name = "DHWHP_Remove_button";
@@ -2605,7 +2605,7 @@ namespace main.contents
             UserDHWHP_Add_button.BackColor = SystemColors.ControlLight;
             UserDHWHP_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserDHWHP_Add_button.FlatStyle = FlatStyle.System;
-            UserDHWHP_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserDHWHP_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserDHWHP_Add_button.Location = new Point(1117, 10);
             UserDHWHP_Add_button.Margin = new Padding(0);
             UserDHWHP_Add_button.Name = "UserDHWHP_Add_button";
@@ -2643,7 +2643,7 @@ namespace main.contents
             AHU_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle99.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle99.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle99.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle99.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle99.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle99.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle99.SelectionForeColor = Color.Black;
@@ -2654,7 +2654,7 @@ namespace main.contents
             AHU_dataGridView.Name = "AHU_dataGridView";
             dataGridViewCellStyle100.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle100.BackColor = SystemColors.Control;
-            dataGridViewCellStyle100.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle100.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle100.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle100.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle100.SelectionForeColor = SystemColors.HighlightText;
@@ -2663,7 +2663,7 @@ namespace main.contents
             AHU_dataGridView.RowHeadersVisible = false;
             AHU_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle101.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle101.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle101.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle101.ForeColor = Color.Black;
             dataGridViewCellStyle101.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle101.SelectionForeColor = Color.Black;
@@ -2690,7 +2690,7 @@ namespace main.contents
             AHU_Copy_button.BackColor = SystemColors.ControlLight;
             AHU_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AHU_Copy_button.FlatStyle = FlatStyle.System;
-            AHU_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            AHU_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             AHU_Copy_button.Location = new Point(1191, 10);
             AHU_Copy_button.Margin = new Padding(0);
             AHU_Copy_button.Name = "AHU_Copy_button";
@@ -2705,7 +2705,7 @@ namespace main.contents
             AHU_Remove_button.BackColor = SystemColors.ControlLight;
             AHU_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AHU_Remove_button.FlatStyle = FlatStyle.System;
-            AHU_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            AHU_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             AHU_Remove_button.Location = new Point(1154, 10);
             AHU_Remove_button.Margin = new Padding(0);
             AHU_Remove_button.Name = "AHU_Remove_button";
@@ -2720,7 +2720,7 @@ namespace main.contents
             UserAHU_Add_button.BackColor = SystemColors.ControlLight;
             UserAHU_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserAHU_Add_button.FlatStyle = FlatStyle.System;
-            UserAHU_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserAHU_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserAHU_Add_button.Location = new Point(1117, 10);
             UserAHU_Add_button.Margin = new Padding(0);
             UserAHU_Add_button.Name = "UserAHU_Add_button";
@@ -2749,7 +2749,7 @@ namespace main.contents
             // label21
             // 
             label21.AutoSize = true;
-            label21.Font = new Font("나눔바른고딕", 9.75F);
+            label21.Font = new Font(UTIL.Families[0], 9.75F);
             label21.Location = new Point(18, 200);
             label21.Name = "label21";
             label21.Size = new Size(413, 15);
@@ -2829,7 +2829,7 @@ namespace main.contents
             HRV_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle102.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle102.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle102.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle102.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle102.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle102.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle102.SelectionForeColor = Color.Black;
@@ -2840,7 +2840,7 @@ namespace main.contents
             HRV_dataGridView.Name = "HRV_dataGridView";
             dataGridViewCellStyle103.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle103.BackColor = SystemColors.Control;
-            dataGridViewCellStyle103.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle103.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle103.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle103.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle103.SelectionForeColor = SystemColors.HighlightText;
@@ -2849,7 +2849,7 @@ namespace main.contents
             HRV_dataGridView.RowHeadersVisible = false;
             HRV_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle104.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle104.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle104.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle104.ForeColor = Color.Black;
             dataGridViewCellStyle104.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle104.SelectionForeColor = Color.Black;
@@ -2876,7 +2876,7 @@ namespace main.contents
             HRV_Copy_button.BackColor = SystemColors.ControlLight;
             HRV_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             HRV_Copy_button.FlatStyle = FlatStyle.System;
-            HRV_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            HRV_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             HRV_Copy_button.Location = new Point(1191, 11);
             HRV_Copy_button.Margin = new Padding(0);
             HRV_Copy_button.Name = "HRV_Copy_button";
@@ -2891,7 +2891,7 @@ namespace main.contents
             HRV_Remove_button.BackColor = SystemColors.ControlLight;
             HRV_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             HRV_Remove_button.FlatStyle = FlatStyle.System;
-            HRV_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            HRV_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             HRV_Remove_button.Location = new Point(1154, 11);
             HRV_Remove_button.Margin = new Padding(0);
             HRV_Remove_button.Name = "HRV_Remove_button";
@@ -2906,7 +2906,7 @@ namespace main.contents
             UserHRV_Add_button.BackColor = SystemColors.ControlLight;
             UserHRV_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             UserHRV_Add_button.FlatStyle = FlatStyle.System;
-            UserHRV_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            UserHRV_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             UserHRV_Add_button.Location = new Point(1117, 11);
             UserHRV_Add_button.Margin = new Padding(0);
             UserHRV_Add_button.Name = "UserHRV_Add_button";
@@ -2956,7 +2956,7 @@ namespace main.contents
             CoolingTop_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle105.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle105.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle105.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle105.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle105.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle105.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle105.SelectionForeColor = Color.Black;
@@ -2978,7 +2978,7 @@ namespace main.contents
             CoolerTop_Add_button.BackColor = SystemColors.ControlLight;
             CoolerTop_Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             CoolerTop_Add_button.FlatStyle = FlatStyle.System;
-            CoolerTop_Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            CoolerTop_Add_button.Font = new Font(UTIL.Families[0], 9.75F);
             CoolerTop_Add_button.Location = new Point(1114, 13);
             CoolerTop_Add_button.Margin = new Padding(0);
             CoolerTop_Add_button.Name = "CoolerTop_Add_button";
@@ -2993,7 +2993,7 @@ namespace main.contents
             CoolerTop_Copy_button.BackColor = SystemColors.ControlLight;
             CoolerTop_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             CoolerTop_Copy_button.FlatStyle = FlatStyle.System;
-            CoolerTop_Copy_button.Font = new Font("나눔바른고딕", 8.999999F, FontStyle.Bold);
+            CoolerTop_Copy_button.Font = new Font(UTIL.Families[0], 8.999999F, FontStyle.Bold);
             CoolerTop_Copy_button.Location = new Point(1188, 13);
             CoolerTop_Copy_button.Margin = new Padding(0);
             CoolerTop_Copy_button.Name = "CoolerTop_Copy_button";
@@ -3008,7 +3008,7 @@ namespace main.contents
             CoolerTop_Remove_button.BackColor = SystemColors.ControlLight;
             CoolerTop_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             CoolerTop_Remove_button.FlatStyle = FlatStyle.System;
-            CoolerTop_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            CoolerTop_Remove_button.Font = new Font(UTIL.Families[0], 9.75F);
             CoolerTop_Remove_button.Location = new Point(1151, 13);
             CoolerTop_Remove_button.Margin = new Padding(0);
             CoolerTop_Remove_button.Name = "CoolerTop_Remove_button";
