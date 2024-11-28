@@ -127,15 +127,6 @@ namespace main.contents
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
-        private void Floor_textBox_TextChanged(object sender, EventArgs e)
-        {
-            if (Layer_textBox.Text != null)
-            {
-                Layer = Layer_textBox.Text;
-                GetValue_ZoneEnvelope();
-            }
-        }
-
         private void Load_RoomControlImage()
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필이미지", "이미지", "대분류 = '제어' AND 소분류 = '" + RoomControl + "'");
@@ -1068,7 +1059,6 @@ namespace main.contents
             if (층.Length > 0)
             {
                 Layer = 층[0][0];
-                Layer_textBox.Text = Layer;
             }
             if (General_3D.Length > 0)
             {
