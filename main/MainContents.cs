@@ -230,6 +230,24 @@ namespace main
 
                 f.LoadData(formParam.ID);
             }
+            else if (formParam.formID == 12)
+            {
+                ZoneGeneral f = (ZoneGeneral)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 13)
+            {
+                ZoneEnvelope f = (ZoneEnvelope)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 14)
+            {
+                ZoneLighting f = (ZoneLighting)form;
+
+                f.LoadData(formParam.ID);
+            }
             else if (formParam.formID == 17)
             {
                 AHUSystem f = (AHUSystem)form;

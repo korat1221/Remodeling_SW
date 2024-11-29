@@ -543,7 +543,7 @@ namespace main.contents
 
             PersonIHG_1day = PersonIHG * UseTime * 사람일일이용시간 / 일일이용시간;
             PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day);
-            PersonIHG_image_Label.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m²d";
+            PersonIHG_image_Label.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m2d";
         }
 
         //기기밀도수준 및 용도프로필 선택에 따라 기기발열 계산 
@@ -573,7 +573,7 @@ namespace main.contents
 
                 EquipIHG_textBox.Text = EquipIHG_1day.ToString();
                 Program.UTIL.textBox_doubleComa(EquipIHG_textBox, true, 1);
-                EquipIHG_image_Label.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m²d";
+                EquipIHG_image_Label.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m2d";
             }
         }
         private void Calc_VentilationVolume(double Area, double NetVolume, double VA, double VA_we)
@@ -582,10 +582,10 @@ namespace main.contents
             Volume_wd = Area * VA;
             Volume_wd_textBox.Text = Volume_wd.ToString();
             Program.UTIL.textBox_doubleComa(Volume_wd_textBox, true, 1);
-            SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m³/h";
+            SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m3/h";
 
             Volume_we = Area * VA_we;
-            RA_Volume_Label.Text = String.Format("{0:F1}", Volume_we) + "m³/h";
+            RA_Volume_Label.Text = String.Format("{0:F1}", Volume_we) + "m3/h";
 
             if (NetVolume != null && NetVolume != 0)
             { VentilationRate = Volume_wd / NetVolume; }
@@ -780,7 +780,7 @@ namespace main.contents
                 else if (HCType == "냉방")
                 {
                     Heating_checkBox.Checked = false;
-                    Cooling_checkBox.Checked = false;
+                    Cooling_checkBox.Checked = true;
                 }
                 else
                 {
@@ -892,7 +892,7 @@ namespace main.contents
                     PersonIHG = Convert.ToDouble(Value[0][21]);
                     PersonIHG_textBox.Text = PersonIHG_1day.ToString();
                     Program.UTIL.textBox_doubleComa(PersonIHG_textBox, true, 1);
-                    PersonIHG_image_Label.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m²d";
+                    PersonIHG_image_Label.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m2d";
                 }
                 if (Value[0][22] != "")
                 {
@@ -900,7 +900,7 @@ namespace main.contents
                     EquipIHG = Convert.ToDouble(Value[0][22]);
                     EquipIHG_textBox.Text = EquipIHG_1day.ToString();
                     Program.UTIL.textBox_doubleComa(EquipIHG_textBox, true, 1);
-                    EquipIHG_image_Label.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m²d";
+                    EquipIHG_image_Label.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m2d";
                 }
                 if (Value[0][24] != "")
                 {
@@ -919,12 +919,12 @@ namespace main.contents
                     Volume_wd = Convert.ToDouble(Value[0][26]);
                     Volume_wd_textBox.Text = Volume_wd.ToString();
                     Program.UTIL.textBox_doubleComa(Volume_wd_textBox, true, 1);
-                    SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m³/h";
+                    SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m3/h";
                 }
                 if (Value[0][27] != "")
                 {
                     Volume_we = Convert.ToDouble(Value[0][27]);
-                    RA_Volume_Label.Text = String.Format("{0:F1}", Volume_we) + "m³/h";
+                    RA_Volume_Label.Text = String.Format("{0:F1}", Volume_we) + "m3/h";
                 }
             }
             Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존,증축여부", "존번호 = '" + ZoneNum + "'");
@@ -959,6 +959,10 @@ namespace main.contents
                 String ID = main.MainContents.selID;
                 int v1 = ID.IndexOf("Zone") + 4; //Zone 번호 위치 
                 int v2 = ID.IndexOf("_", v1); //Zone 다음 "_"의 위치 
+                if(v2 <0)
+                {
+                    v2 = ID.IndexOf("\"", v1); //Zone 다음 "_"의 위치 
+                }
                 ID = ID.Substring(19, v2 - 19);
                 Num_textBox.Text = ID;
                 ZoneNum = ID;
@@ -1180,48 +1184,48 @@ namespace main.contents
                 {
                     CW_textBox.Text = Construction_AreaSum[0].ToString();
                     Program.UTIL.textBox_doubleComa(CW_textBox, true, 1);
-                    CW_textBox.Text = CW_textBox.Text.ToString() + "m²";
+                    CW_textBox.Text = CW_textBox.Text.ToString() + "m2";
                 }
                 if (Construction_AreaSum[1] != 0)
                 {
                     Wall_textBox.Text = Construction_AreaSum[1].ToString();
                     Program.UTIL.textBox_doubleComa(Wall_textBox, true, 1);
-                    Wall_textBox.Text = Wall_textBox.Text.ToString() + "m²";
+                    Wall_textBox.Text = Wall_textBox.Text.ToString() + "m2";
                 }
 
                 if (Construction_AreaSum[2] != 0)
                 {
                     Roof_textBox.Text = Construction_AreaSum[2].ToString();
                     Program.UTIL.textBox_doubleComa(Roof_textBox, true, 1);
-                    Roof_textBox.Text = Roof_textBox.Text.ToString() + "m²";
+                    Roof_textBox.Text = Roof_textBox.Text.ToString() + "m2";
                 }
 
                 if (Construction_AreaSum[3] != 0)
                 {
                     Floor_textBox.Text = Construction_AreaSum[3].ToString();
                     Program.UTIL.textBox_doubleComa(Floor_textBox, true, 1);
-                    Floor_textBox.Text = Floor_textBox.Text.ToString() + "m²";
+                    Floor_textBox.Text = Floor_textBox.Text.ToString() + "m2";
                 }
 
                 if (Construction_AreaSum[4] != 0)
                 {
                     Window_textBox.Text = Construction_AreaSum[4].ToString();
                     Program.UTIL.textBox_doubleComa(Window_textBox, true, 1);
-                    Window_textBox.Text = Window_textBox.Text.ToString() + "m²";
+                    Window_textBox.Text = Window_textBox.Text.ToString() + "m2";
                 }
 
                 if (Construction_AreaSum[5] != 0)
                 {
                     Door_textBox.Text = Construction_AreaSum[5].ToString();
                     Program.UTIL.textBox_doubleComa(Door_textBox, true, 1);
-                    Door_textBox.Text = Door_textBox.Text.ToString() + "m²";
+                    Door_textBox.Text = Door_textBox.Text.ToString() + "m2";
                 }
 
                 if (Construction_AreaSum[6] != 0)
                 {
                     InWall_textBox.Text = Construction_AreaSum[6].ToString();
                     Program.UTIL.textBox_doubleComa(InWall_textBox, true, 1);
-                    InWall_textBox.Text = InWall_textBox.Text.ToString() + "m²";
+                    InWall_textBox.Text = InWall_textBox.Text.ToString() + "m2";
                 }
 
                 if (Construction_AreaSum[3] > 0) //최하층 바닥 존재
