@@ -4,7 +4,9 @@ using main.contents;
 using System;
 using System.Data;
 using System.Drawing.Text;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.Schema;
@@ -46,6 +48,70 @@ namespace main
             }
 
             return Value;
+        }
+        public String Subscript(int num, bool SuperSub)
+        {
+            //SuperSub 위첨자 : true, 아래첨자 : false
+            String[][] Uni;
+            string superscript = "";
+            if (SuperSub)
+            {
+                Uni = Program.DB.getValue(DB.type.BaseDB_HCneed, "첨자유니코드", "숫자_위첨자", "숫자 = '" + num.ToString() + "'");
+                if (Uni.Length > 0)
+                {
+                    superscript = Regex.Unescape(Uni[0][0]);
+                }
+            }
+            else
+            {
+                Uni = Program.DB.getValue(DB.type.BaseDB_HCneed, "첨자유니코드", "숫자_아래첨자", "숫자 = '" + num.ToString() + "'");
+                if (Uni.Length > 0)
+                {
+                    superscript = Regex.Unescape(Uni[0][0]);
+                }
+            }
+
+            return superscript;           
+        }
+        public String Subscript(string alphabet, bool SuperSub)
+        {
+            //SuperSub 위첨자 : true, 아래첨자 : false
+            String[][] Uni;
+            string superscript = "";
+            if (SuperSub)
+            {
+                Uni = Program.DB.getValue(DB.type.BaseDB_HCneed, "첨자유니코드", "소문자_위첨자", "소문자 = '" + alphabet.ToString() + "'");
+                if (Uni.Length > 0)
+                {
+                    superscript = Regex.Unescape(Uni[0][0]);
+                }
+                else
+                {
+                    Uni = Program.DB.getValue(DB.type.BaseDB_HCneed, "첨자유니코드", "대문자_위첨자", "대문자 = '" + alphabet.ToString() + "'");
+                    if (Uni.Length > 0)
+                    {
+                        superscript = Regex.Unescape(Uni[0][0]);
+                    }
+                }
+            }
+            else
+            {
+                Uni = Program.DB.getValue(DB.type.BaseDB_HCneed, "첨자유니코드", "소문자_아래첨자", "소문자 = '" + alphabet.ToString() + "'");
+                if (Uni.Length > 0)
+                {
+                    superscript = Regex.Unescape(Uni[0][0]);
+                }
+                else
+                {
+                    Uni = Program.DB.getValue(DB.type.BaseDB_HCneed, "첨자유니코드", "대문자_아래첨자", "대문자 = '" + alphabet.ToString() + "'");
+                    if (Uni.Length > 0)
+                    {
+                        superscript = Regex.Unescape(Uni[0][0]);
+                    }
+                }
+            }
+
+            return superscript;
         }
         public String GetValue_BySelectComboBox(ComboBox comboBox, String 테이블명, String 선택컬럼명, String 찾는컬럼명)
         {
