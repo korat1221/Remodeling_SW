@@ -26,7 +26,7 @@ namespace main.contents
         public sub3dFRInfo()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
-            new StackedHeaderDecorator(Ucalc_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, Ucalc_dataGridView_RowHandle);
+            new StackedHeaderDecorator(Ucalc_dataGridView, DataGridViewAutoSizeColumnsMode.None, Ucalc_dataGridView_RowHandle);
         }
         private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {
@@ -92,19 +92,19 @@ namespace main.contents
                         //데이터그리드뷰 생성
                         Ucalc_dataGridView.Columns.Clear();
 
-                        Ucalc_dataGridView.Columns.Add("A1", "번호");
-                        Ucalc_dataGridView.Columns.Add("A2", "구분");
-                        Ucalc_dataGridView.Columns.Add("A3", "재료명         ");
-                        Ucalc_dataGridView.Columns.Add("A4", "열전도율.[W/m·K]");
-                        Ucalc_dataGridView.Columns.Add("A5", "두께.[mm]");
-                        Ucalc_dataGridView.Columns.Add("A6", "열저항.[m²·K/W]");
-
-                        Ucalc_dataGridView.Columns[0].Width = 20;
-                        Ucalc_dataGridView.Columns[1].Width = 40;
-                        Ucalc_dataGridView.Columns[2].Width = 100;
-                        Ucalc_dataGridView.Columns[3].Width = 50;
-                        Ucalc_dataGridView.Columns[4].Width = 50;
-                        Ucalc_dataGridView.Columns[5].Width = 50;
+                        Ucalc_dataGridView.Columns.Add("A0", "번호");
+                        Ucalc_dataGridView.Columns.Add("A1", "구분");
+                        Ucalc_dataGridView.Columns.Add("A2", "재료명");
+                        Ucalc_dataGridView.Columns.Add("A3", "열전도율.[W/m·K]");
+                        Ucalc_dataGridView.Columns.Add("A4", "두께.[mm]");
+                        string Uni = "[m" + Program.UTIL.Subscript(2, true) + "·K / W]";
+                        Ucalc_dataGridView.Columns.Add("A5", "열저항." + Uni);
+                        Ucalc_dataGridView.Columns[0].Width = 50;
+                        Ucalc_dataGridView.Columns[1].Width = 60;
+                        Ucalc_dataGridView.Columns[2].Width = 150;
+                        Ucalc_dataGridView.Columns[3].Width = 80;
+                        Ucalc_dataGridView.Columns[4].Width = 80;
+                        Ucalc_dataGridView.Columns[5].Width = 80;
 
 
 
