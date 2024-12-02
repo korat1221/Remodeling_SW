@@ -42,6 +42,7 @@ namespace main.contents
             webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
             string[][] val = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
             지역 = val[0][0].ToString();
+            
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '태양광시스템'");
             if (Image.Length > 0)
@@ -49,7 +50,7 @@ namespace main.contents
                 pictureBox1.Load(Program.gPath + Image[0][0]);
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
-
+            label24.Text = "kWh/m"+ Program.UTIL.Subscript(2, true);
             string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             프로젝트유형 = value[0][0].ToString();
             Num = Num_textBox.Text;
@@ -645,8 +646,8 @@ namespace main.contents
                 max2 = Convert.ToInt64((Solm2_kWh.Max()) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1) / 2;
                 int n1 = ((int)PVm2_kWh.Max()).ToString().Length;
                 max1 = Convert.ToInt64((PVm2_kWh.Max()) / Math.Pow(10, n1 - 1)) * Math.Pow(10, n1 - 1) + Math.Pow(10, n1 - 1) / 2;
-
-                runScript("drawChart_pv([{type:\"line\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:" + max2 + "},{type:\"bar\",label:\"생산량(kWh/m²·mth)\",data:[" + s + "],borderColor:\"#ffffee0\",backgroundColor:\"#FFF6A3\",min:0,max:" + max2 + ",dash:false,barPercentage:0.4}])");
+                string unit = "kWh/m"+ Program.UTIL.Subscript(2, true)+"·mth";
+                runScript("drawChart_pv([{type:\"line\",label:\"일사량(" + unit + ")\",data:[" + s2 + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:" + max2 + "},{type:\"bar\",label:\"생산량(kWh/m2·mth)\",data:[" + s + "],borderColor:\"#ffffee0\",backgroundColor:\"#FFF6A3\",min:0,max:" + max2 + ",dash:false,barPercentage:0.4}])");
             }
             catch { }
         }

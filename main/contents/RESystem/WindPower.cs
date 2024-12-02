@@ -59,7 +59,7 @@ namespace main.contents
                 pictureBox1.Load(Program.gPath + Image[0][0]);
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
-
+            label12.Text = "m" + Program.UTIL.Subscript(2, true);
             string[][] 프로젝트 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             if (프로젝트.Length > 0)
             {
