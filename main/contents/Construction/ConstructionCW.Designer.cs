@@ -1,4 +1,6 @@
 ﻿
+using Eagle._Components.Public;
+
 namespace main.contents
 {
     partial class ConstructionCW
@@ -878,7 +880,7 @@ namespace main.contents
             label35.Name = "label35";
             label35.Size = new Size(58, 15);
             label35.TabIndex = 129;
-            label35.Text = "W/m2·K";
+            label35.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label32
             // 
@@ -889,7 +891,7 @@ namespace main.contents
             label32.Name = "label32";
             label32.Size = new Size(58, 15);
             label32.TabIndex = 127;
-            label32.Text = "W/m2·K";
+            label32.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label34
             // 
@@ -900,7 +902,7 @@ namespace main.contents
             label34.Name = "label34";
             label34.Size = new Size(58, 15);
             label34.TabIndex = 126;
-            label34.Text = "W/m2·K";
+            label34.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // Uf_door_textBox
             // 
@@ -1062,7 +1064,7 @@ namespace main.contents
             label21.Name = "label21";
             label21.Size = new Size(58, 15);
             label21.TabIndex = 144;
-            label21.Text = "W/m2·K";
+            label21.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label43
             // 
@@ -1191,7 +1193,7 @@ namespace main.contents
             label28.Name = "label28";
             label28.Size = new Size(58, 15);
             label28.TabIndex = 143;
-            label28.Text = "W/m2·K";
+            label28.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label30
             // 
@@ -1202,7 +1204,7 @@ namespace main.contents
             label30.Name = "label30";
             label30.Size = new Size(58, 15);
             label30.TabIndex = 142;
-            label30.Text = "W/m2·K";
+            label30.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // Ug_Door_textBox
             // 
@@ -1671,7 +1673,7 @@ namespace main.contents
             label68.Name = "label68";
             label68.Size = new Size(25, 15);
             label68.TabIndex = 174;
-            label68.Text = "m2";
+            label68.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // Lg_d_textBox
             // 
@@ -1741,7 +1743,7 @@ namespace main.contents
             label72.Name = "label72";
             label72.Size = new Size(25, 15);
             label72.TabIndex = 168;
-            label72.Text = "m2";
+            label72.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // Lp_textBox
             // 
@@ -1905,7 +1907,7 @@ namespace main.contents
             label10.Name = "label10";
             label10.Size = new Size(25, 15);
             label10.TabIndex = 154;
-            label10.Text = "m2";
+            label10.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // label14
             // 
@@ -1916,7 +1918,7 @@ namespace main.contents
             label14.Name = "label14";
             label14.Size = new Size(25, 15);
             label14.TabIndex = 153;
-            label14.Text = "m2";
+            label14.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // Af_d_textBox
             // 
@@ -1975,7 +1977,7 @@ namespace main.contents
             label57.Name = "label57";
             label57.Size = new Size(25, 15);
             label57.TabIndex = 148;
-            label57.Text = "m2";
+            label57.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // label58
             // 
@@ -1986,7 +1988,7 @@ namespace main.contents
             label58.Name = "label58";
             label58.Size = new Size(25, 15);
             label58.TabIndex = 147;
-            label58.Text = "m2";
+            label58.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // Af_mt_textBox
             // 
@@ -2023,7 +2025,7 @@ namespace main.contents
             label59.Name = "label59";
             label59.Size = new Size(25, 15);
             label59.TabIndex = 144;
-            label59.Text = "m2";
+            label59.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // label61
             // 
@@ -2080,7 +2082,7 @@ namespace main.contents
             label65.Name = "label65";
             label65.Size = new Size(25, 15);
             label65.TabIndex = 134;
-            label65.Text = "m2";
+            label65.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // Area_textBox
             // 
@@ -2269,7 +2271,7 @@ namespace main.contents
             UCW_d_label2.Name = "UCW_d_label2";
             UCW_d_label2.Size = new Size(58, 15);
             UCW_d_label2.TabIndex = 132;
-            UCW_d_label2.Text = "W/m2·K";
+            UCW_d_label2.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // DoorFrame_textBox
             // 
@@ -2489,7 +2491,7 @@ namespace main.contents
             UCW_p_label2.Name = "UCW_p_label2";
             UCW_p_label2.Size = new Size(58, 15);
             UCW_p_label2.TabIndex = 113;
-            UCW_p_label2.Text = "W/m2·K";
+            UCW_p_label2.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // Panel_textBox
             // 
@@ -2761,7 +2763,7 @@ namespace main.contents
             Ug_unit_label.Name = "Ug_unit_label";
             Ug_unit_label.Size = new Size(60, 15);
             Ug_unit_label.TabIndex = 64;
-            Ug_unit_label.Text = "W/m2·K";
+            Ug_unit_label.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // UCW_g_textBox
             // 

@@ -1,4 +1,6 @@
 ﻿
+using Eagle._Components.Public;
+
 namespace main.contents
 {
     partial class ConstructionDoor
@@ -573,7 +575,7 @@ namespace main.contents
             label23.Name = "label23";
             label23.Size = new Size(60, 15);
             label23.TabIndex = 188;
-            label23.Text = "W/m2·K";
+            label23.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label26
             // 
@@ -608,7 +610,7 @@ namespace main.contents
             label9.Name = "label9";
             label9.Size = new Size(60, 15);
             label9.TabIndex = 185;
-            label9.Text = "W/m2·K";
+            label9.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label12
             // 
@@ -863,7 +865,7 @@ namespace main.contents
             label2.Name = "label2";
             label2.Size = new Size(25, 15);
             label2.TabIndex = 184;
-            label2.Text = "m2";
+            label2.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // label8
             // 
@@ -885,7 +887,7 @@ namespace main.contents
             label34.Name = "label34";
             label34.Size = new Size(25, 15);
             label34.TabIndex = 181;
-            label34.Text = "m2";
+            label34.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // GlassArea2_textBox
             // 
@@ -1008,7 +1010,7 @@ namespace main.contents
             label15.Name = "label15";
             label15.Size = new Size(60, 15);
             label15.TabIndex = 163;
-            label15.Text = "W/m2·K";
+            label15.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // pictureBox3
             // 
@@ -1384,7 +1386,7 @@ namespace main.contents
             label86.Name = "label86";
             label86.Size = new Size(60, 15);
             label86.TabIndex = 168;
-            label86.Text = "W/m2·K";
+            label86.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // UD2_textBox
             // 
@@ -1433,7 +1435,7 @@ namespace main.contents
             label84.Name = "label84";
             label84.Size = new Size(60, 15);
             label84.TabIndex = 163;
-            label84.Text = "W/m2·K";
+            label84.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             label84.Visible = false;
             // 
             // label85
@@ -1457,7 +1459,7 @@ namespace main.contents
             label83.Name = "label83";
             label83.Size = new Size(60, 15);
             label83.TabIndex = 162;
-            label83.Text = "W/m2·K";
+            label83.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label29
             // 
@@ -1708,7 +1710,7 @@ namespace main.contents
             Ug_unit_label.Name = "Ug_unit_label";
             Ug_unit_label.Size = new Size(60, 15);
             Ug_unit_label.TabIndex = 64;
-            Ug_unit_label.Text = "W/m2·K";
+            Ug_unit_label.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // abs_textBox
             // 

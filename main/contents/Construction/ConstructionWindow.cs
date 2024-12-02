@@ -44,11 +44,6 @@ namespace main.contents
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-            string script = Program.UTIL.Subscript(2, true);
-            Uw2_unit_label.Text = "W/m"+ script + "·K";
-            Ug_unit_label.Text = "W/m" + script + "·K";
-            label8.Text = "W/m" + script + "·K";
-            Uw3_unit_label.Text = "W/m" + script + "·K";
             //직접간접 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi_comboBox, "창호", "실외조건", "1");
             //프레임종류 콤보박스

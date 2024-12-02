@@ -507,7 +507,7 @@ namespace main.contents
             Uw2_unit_label.Name = "Uw2_unit_label";
             Uw2_unit_label.Size = new Size(58, 15);
             Uw2_unit_label.TabIndex = 98;
-            Uw2_unit_label.Text = "W/m2·K";
+            Uw2_unit_label.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             Uw2_unit_label.Visible = false;
             // 
             // Uw2_textBox
@@ -636,7 +636,7 @@ namespace main.contents
             Ug_unit_label.Name = "Ug_unit_label";
             Ug_unit_label.Size = new Size(58, 15);
             Ug_unit_label.TabIndex = 64;
-            Ug_unit_label.Text = "W/m2·K";
+            Ug_unit_label.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label23
             // 
@@ -824,7 +824,7 @@ namespace main.contents
             label8.Name = "label8";
             label8.Size = new Size(58, 15);
             label8.TabIndex = 105;
-            label8.Text = "W/m2·K";
+            label8.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label22
             // 
@@ -1422,7 +1422,7 @@ namespace main.contents
             Uw3_unit_label.Name = "Uw3_unit_label";
             Uw3_unit_label.Size = new Size(58, 15);
             Uw3_unit_label.TabIndex = 143;
-            Uw3_unit_label.Text = "W/m2·K";
+            Uw3_unit_label.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // Uw3_label
             // 

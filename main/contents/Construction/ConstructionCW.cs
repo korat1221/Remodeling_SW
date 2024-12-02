@@ -46,24 +46,6 @@ namespace main.contents
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-            string script = Program.UTIL.Subscript(2, true);
-            Ug_unit_label.Text = "W/m" + script + "·K";
-            UCW_p_label2.Text = "W/m" + script + "·K";
-            UCW_d_label2.Text = "W/m" + script + "·K";
-            label34.Text = "W/m" + script + "·K";
-            label32.Text = "W/m" + script + "·K";
-            label35.Text = "W/m" + script + "·K";
-            label21.Text = "W/m" + script + "·K";
-            label28.Text = "W/m" + script + "·K";
-            label30.Text = "W/m" + script + "·K";
-            label65.Text = "m" + script;
-            label59.Text = "m" + script;
-            label58.Text = "m" + script;
-            label57.Text = "m" + script;
-            label14.Text = "m" + script;
-            label10.Text = "m" + script;
-            label72.Text = "m" + script;
-            label68.Text = "m" + script;
 
             //직접간접 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi_comboBox, "커튼월", "실외조건", "1");

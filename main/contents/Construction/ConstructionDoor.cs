@@ -45,19 +45,6 @@ namespace main.contents
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
 
-            string script = Program.UTIL.Subscript(2, true);
-            Ug_unit_label.Text = "W/m" + script + "·K";
-            label84.Text = "W/m" + script + "·K";
-            label86.Text = "W/m" + script + "·K";
-            label83.Text = "W/m" + script + "·K";
-            label9.Text = "W/m" + script + "·K";
-            label23.Text = "W/m" + script + "·K";
-            label9.Text = "W/m" + script + "·K";
-            label23.Text = "W/m" + script + "·K";
-            label15.Text = "W/m" + script + "·K";
-            label2.Text = "m" + script;
-            label34.Text = "m" + script;
-
             //직접간접 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi_comboBox, "출입문", "실외조건", "1");
             //설치위치 콤보박스
