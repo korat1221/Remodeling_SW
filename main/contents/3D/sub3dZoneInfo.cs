@@ -56,7 +56,8 @@ namespace main.contents
             dataGridView1.Columns.Add("A4", "외피유형");
             dataGridView1.Columns.Add("A5", "커튼월부위");
             dataGridView1.Columns.Add("A6", "인접존");
-            dataGridView1.Columns.Add("A7", "면적[m²]");
+            string unit =  "m" +  Program.UTIL.Subscript(2, true);
+            dataGridView1.Columns.Add("A7", "면적["+ unit +"]");
             dataGridView1.Columns.Add("A8", "방위");
             dataGridView1.Columns.Add("A9", "기울기");
             dataGridView1.Columns.Add("A10", "구조체");

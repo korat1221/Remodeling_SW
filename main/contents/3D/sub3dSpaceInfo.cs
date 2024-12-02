@@ -12,6 +12,7 @@
             if (main.MainContents.selID != sid)
             {
                 sid = main.MainContents.selID;
+                label14.Text = "m" + Program.UTIL.Subscript(2, true);
 
                 int n = main.MainContents.selID.IndexOf("_Zone");
 

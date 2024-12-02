@@ -27,6 +27,12 @@ namespace main.contents
             InitializeAsync();
             webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
             webView22.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
+            string script = Program.UTIL.Subscript(2, true);
+            label12.Text = "W/m" + script + "·K";
+            label10.Text = "W/m" + script + "·K";
+            label14.Text = "m" + script;
+            label23.Text = "W/m" + script + "·K";
+            label28.Text = "W/m" + script + "·K";
         }
         async void InitializeAsync()
         {
@@ -282,8 +288,8 @@ namespace main.contents
                 }
                 res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Direction + "' And 각도='" + Slope + "˚'And 기간 ='" + (12) + "월'");
                 s2 += Convert.ToDouble(res2[0][0]);
-
-                runScript("drawChart4([{type:\"line\",label:\"차양가동율\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100,tension: 0.4},{type:\"bar\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:300,barPercentage:0.7}])");
+                string unit = "kWh/m" + Program.UTIL.Subscript(2, true) + "·mth";
+                runScript("drawChart4([{type:\"line\",label:\"차양가동율\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100,tension: 0.4},{type:\"bar\",label:\"일사량("+ unit +")\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:300,barPercentage:0.7}])");
 
             }
             catch { }

@@ -112,9 +112,11 @@ namespace main.contents
                 dUtbWall_label.Visible = true;
                 dUtbRoof_label.Visible = true;
                 dUtbFloor_label.Visible = true;
-                dUtbWall_label.Text ="외벽 : " + Convert.ToDouble(dU[0][0]).ToString("0.00") + " W/m²·K";
-                dUtbRoof_label.Text = "지붕 : " + Convert.ToDouble(dU[0][1]).ToString("0.00") + " W/m²·K";
-                dUtbFloor_label.Text = "바닥 : " + Convert.ToDouble(dU[0][2]).ToString("0.00") + " W/m²·K";
+                
+            string script = Program.UTIL.Subscript(2, true);
+                dUtbWall_label.Text ="외벽 : " + Convert.ToDouble(dU[0][0]).ToString("0.00") + " W/m" + script + "·K";
+                dUtbRoof_label.Text = "지붕 : " + Convert.ToDouble(dU[0][1]).ToString("0.00") + " W/m" + script + "·K";
+                dUtbFloor_label.Text = "바닥 : " + Convert.ToDouble(dU[0][2]).ToString("0.00") + " W/m" + script + "·K";
             }
             else
             {

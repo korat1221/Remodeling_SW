@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -31,6 +32,7 @@ namespace main.contents
                 String key = sid.IndexOf("F_Zone") > 0 ? "번호" : "아이디";
                 String ID = main.MainContents.selID.Replace("board-", "");
                 string[][] value1 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호,면적,번호,인접존,방위", key + " = '" + ID + "'");
+                label3.Text = "m" + Program.UTIL.Subscript(2, true);
 
                 if (value1.Length > 0)
                 {

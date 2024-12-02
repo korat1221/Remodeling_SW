@@ -72,7 +72,7 @@
             label14.Name = "label14";
             label14.Size = new Size(23, 15);
             label14.TabIndex = 140;
-            label14.Text = "㎡ ";
+            label14.Text = "m2 ";
             label14.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // Area_textBox

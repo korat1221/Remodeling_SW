@@ -1,4 +1,5 @@
-﻿using Microsoft.Web.WebView2.Core;
+﻿using Eagle._Components.Public;
+using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,7 +25,11 @@ namespace main.contents
             InitializeAsync();
 
             webView22.Source = new Uri(Program.gPath + "chart_ctrl2.html", true);
-
+            string script = Program.UTIL.Subscript(2, true);
+            label14.Text = "m" + script;
+            label23.Text = "W/m" + script + "·K";
+            label28.Text = "W/m" + script + "·K";
+            label21.Text = "일사량(kWh/m" + script + "·mth";
         }
         async void InitializeAsync()
         {

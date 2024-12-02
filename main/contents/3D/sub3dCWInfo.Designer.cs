@@ -351,7 +351,7 @@
             label14.Name = "label14";
             label14.Size = new Size(23, 15);
             label14.TabIndex = 131;
-            label14.Text = "㎡ ";
+            label14.Text = "m2 ";
             label14.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // Spacer_textBox
@@ -801,7 +801,7 @@
             label23.Name = "label23";
             label23.Size = new Size(50, 16);
             label23.TabIndex = 135;
-            label23.Text = "W/m²·K";
+            label23.Text = "W/m2·K";
             // 
             // label28
             // 
@@ -812,7 +812,7 @@
             label28.Name = "label28";
             label28.Size = new Size(50, 16);
             label28.TabIndex = 134;
-            label28.Text = "W/m²·K";
+            label28.Text = "W/m2·K";
             // 
             // Tao_on_textBox
             // 
@@ -945,7 +945,7 @@
             label21.Name = "label21";
             label21.Size = new Size(120, 15);
             label21.TabIndex = 120;
-            label21.Text = "일사량(kWh/m²·mth)";
+            label21.Text = "일사량(kWh/m2·mth)";
             // 
             // pictureBox3
             // 
