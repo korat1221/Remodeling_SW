@@ -339,13 +339,13 @@ namespace main.contents.Result
                                 north_p = north * 100 / Convert.ToDouble(area[0][0]);
                             }
 
-                            Win_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m²" });
+                            Win_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                             data.Add(new { cname = "win_east", data = Win_data[98] });
-                            Win_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m²" });
+                            Win_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                             data.Add(new { cname = "win_west", data = Win_data[99] });
-                            Win_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m²" });
+                            Win_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                             data.Add(new { cname = "win_south", data = Win_data[100] });
-                            Win_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m²" });
+                            Win_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                             data.Add(new { cname = "win_north", data = Win_data[101] });
 
                             Win_data[102].Add(new { idx = i, val = east_p.ToString("0.0") + " %" });
@@ -593,13 +593,13 @@ namespace main.contents.Result
                         {
                             north_p = north / Convert.ToDouble(area[0][0]) * 100;
                         }
-                        CW_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m²" });
+                        CW_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                         data.Add(new { cname = "cw_east", data = CW_data[98] });
-                        CW_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m²" });
+                        CW_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                         data.Add(new { cname = "cw_west", data = CW_data[99] });
-                        CW_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m²" });
+                        CW_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                         data.Add(new { cname = "cw_south", data = CW_data[100] });
-                        CW_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m²" });
+                        CW_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                         data.Add(new { cname = "cw_north", data = CW_data[101] });
 
                         CW_data[102].Add(new { idx = i, val = east_p.ToString("0.0") + " %" });
@@ -1141,13 +1141,13 @@ namespace main.contents.Result
                                 north_p = north * 100 / Convert.ToDouble(area[0][0]);
                             }
 
-                            Win_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m²" });
+                            Win_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                             data.Add(new { cname = "win_east", data = Win_data[98] });
-                            Win_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m²" });
+                            Win_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                             data.Add(new { cname = "win_west", data = Win_data[99] });
-                            Win_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m²" });
+                            Win_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                             data.Add(new { cname = "win_south", data = Win_data[100] });
-                            Win_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m²" });
+                            Win_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                             data.Add(new { cname = "win_north", data = Win_data[101] });
 
                             Win_data[102].Add(new { idx = i, val = east_p.ToString("0.0") + " %" });
@@ -1448,13 +1448,13 @@ namespace main.contents.Result
                         {
                             north_p = north / Convert.ToDouble(area[0][0]) * 100;
                         }
-                        CW_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m²" });
+                        CW_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                         data.Add(new { cname = "cw_east", data = CW_data[98] });
-                        CW_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m²" });
+                        CW_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                         data.Add(new { cname = "cw_west", data = CW_data[99] });
-                        CW_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m²" });
+                        CW_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                         data.Add(new { cname = "cw_south", data = CW_data[100] });
-                        CW_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m²" });
+                        CW_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
                         data.Add(new { cname = "cw_north", data = CW_data[101] });
 
                         CW_data[102].Add(new { idx = i, val = east_p.ToString("0.0") + " %" });

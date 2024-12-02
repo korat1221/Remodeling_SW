@@ -773,7 +773,7 @@ namespace main.contents.Result.Building_Report
                     light_eta_rule = 70;
                     light_point = Math.Min(100, light_eta_avg / light_eta_rule * 100);
                     __data[85].Add(new { idx = i, val = light_count}); //개수 
-                    __data[86].Add(new { idx = i, val = light_density.ToString("0.0")+ " W/m²" }); //용량
+                    __data[86].Add(new { idx = i, val = light_density.ToString("0.0")+ " W/m"+ Program.UTIL.Subscript(2, true) }); //용량
                     __data[87].Add(new { idx = i, val = light_eta_avg.ToString("0")+ " lm/W" }); //성능
                     __data[88].Add(new { idx = i, val = light_eta_rule.ToString("0") + " lm/W" }); //권장 성능                
                     d = light_point;
@@ -806,7 +806,7 @@ namespace main.contents.Result.Building_Report
                     pv_point = 100;
                     __data[80].Add(new { idx = i, val = pv_count.ToString("0") }); //개수 
                     __data[81].Add(new { idx = i, val = pv_power.ToString("0.0") }); //용량
-                    __data[82].Add(new { idx = i, val = pv_eta_avg.ToString("0.00")+ " kW/m²" }); //성능
+                    __data[82].Add(new { idx = i, val = pv_eta_avg.ToString("0.00")+ " kW/m"+ Program.UTIL.Subscript(2, true) }); //성능
                     __data[83].Add(new { idx = i, val = pv_eta_rule.ToString() }); //권장 성능                
                     d = pv_point;
                     if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 235) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
@@ -1955,7 +1955,7 @@ namespace main.contents.Result.Building_Report
                         light_eta_rule = 70;
                         light_point = Math.Min(100, light_eta_post / light_eta_rule * 100);
                         __data[120].Add(new { idx = i, val = light_count_post }); //개수 
-                        __data[121].Add(new { idx = i, val = light_density_post.ToString("0.0") + " W/m²" }); //용량
+                        __data[121].Add(new { idx = i, val = light_density_post.ToString("0.0") + " W/m"+ Program.UTIL.Subscript(2, true) }); //용량
                         __data[122].Add(new { idx = i, val = light_eta_post.ToString("0") + " lm/W" }); //성능
                         __data[123].Add(new { idx = i, val = light_eta_rule.ToString("0") + " lm/W" }); //권장 성능                
                         d = light_point;
@@ -1992,7 +1992,7 @@ namespace main.contents.Result.Building_Report
                         light_density_pre = light_density_pre / light_area_pre;
                         light_eta_pre = light_eta_pre / light_area_pre;
                         __data[125].Add(new { idx = i, val = light_count_pre }); //개수 
-                        __data[126].Add(new { idx = i, val = light_density_pre.ToString("0.0") + " W/m²" }); //용량
+                        __data[126].Add(new { idx = i, val = light_density_pre.ToString("0.0") + " W/m"+ Program.UTIL.Subscript(2, true) }); //용량
                         __data[127].Add(new { idx = i, val = light_eta_pre.ToString("0") + " lm/W" }); //성능
                         data.Add(new { cname = "light_count_pre", data = __data[125] });
                         data.Add(new { cname = "light_power_pre", data = __data[126] });
@@ -2014,7 +2014,7 @@ namespace main.contents.Result.Building_Report
                         pv_point = 100;
                         __data[128].Add(new { idx = i, val = pv_count_post.ToString("0") }); //개수 
                         __data[129].Add(new { idx = i, val = pv_power_post.ToString("0.0") }); //용량
-                        __data[130].Add(new { idx = i, val = pv_eta_post.ToString("0.00") + " kW/m²" }); //성능
+                        __data[130].Add(new { idx = i, val = pv_eta_post.ToString("0.00") + " kW/m"+ Program.UTIL.Subscript(2, true) }); //성능
                         __data[131].Add(new { idx = i, val = pv_eta_rule.ToString() }); //권장 성능                
                         d = pv_point;
                         if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 175) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
@@ -2050,7 +2050,7 @@ namespace main.contents.Result.Building_Report
                         pv_eta_pre = pv_eta_pre / pv_power_pre;
                         __data[133].Add(new { idx = i, val = pv_count_pre.ToString("0") }); //개수 
                         __data[134].Add(new { idx = i, val = pv_power_pre.ToString("0.0") }); //용량
-                        __data[135].Add(new { idx = i, val = pv_eta_pre.ToString("0.00") + " kW/m²" }); //성능       
+                        __data[135].Add(new { idx = i, val = pv_eta_pre.ToString("0.00") + " kW/m"+ Program.UTIL.Subscript(2, true) }); //성능       
                     }
                     else
                     {
