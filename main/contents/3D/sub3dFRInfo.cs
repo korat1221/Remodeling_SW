@@ -27,8 +27,6 @@ namespace main.contents
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             new StackedHeaderDecorator(Ucalc_dataGridView, DataGridViewAutoSizeColumnsMode.None, Ucalc_dataGridView_RowHandle);
-            label14.Text = "m" + Program.UTIL.Subscript(2, true);
-            label1.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
         }
         private bool Ucalc_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {

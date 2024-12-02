@@ -87,7 +87,7 @@
             label14.Name = "label14";
             label14.Size = new Size(23, 15);
             label14.TabIndex = 136;
-            label14.Text = "m2 ";
+            label14.Text = "m" + Program.UTIL.Subscript(2, true);
             label14.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // DI_textBox
@@ -283,7 +283,7 @@
             label1.Name = "label1";
             label1.Size = new Size(49, 15);
             label1.TabIndex = 155;
-            label1.Text = "W/m2·K ";
+            label1.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             label1.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // pictureBox2

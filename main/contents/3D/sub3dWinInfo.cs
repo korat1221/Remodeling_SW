@@ -27,12 +27,6 @@ namespace main.contents
             InitializeAsync();
             webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
             webView22.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
-            string script = Program.UTIL.Subscript(2, true);
-            label12.Text = "W/m" + script + "·K";
-            label10.Text = "W/m" + script + "·K";
-            label14.Text = "m" + script;
-            label23.Text = "W/m" + script + "·K";
-            label28.Text = "W/m" + script + "·K";
         }
         async void InitializeAsync()
         {

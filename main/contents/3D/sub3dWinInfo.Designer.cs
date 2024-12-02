@@ -1,4 +1,6 @@
-﻿namespace main.contents
+﻿using Eagle._Components.Public;
+
+namespace main.contents
 {
     partial class sub3dWINInfo
     {
@@ -193,7 +195,7 @@
             label12.Name = "label12";
             label12.Size = new Size(49, 15);
             label12.TabIndex = 137;
-            label12.Text = "W/m2·K ";
+            label12.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             label12.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label10
@@ -204,7 +206,7 @@
             label10.Name = "label10";
             label10.Size = new Size(49, 15);
             label10.TabIndex = 136;
-            label10.Text = "W/m2·K ";
+            label10.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             label10.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label7
@@ -300,7 +302,7 @@
             label14.Name = "label14";
             label14.Size = new Size(23, 15);
             label14.TabIndex = 131;
-            label14.Text = "m2 ";
+            label14.Text = "m" + Program.UTIL.Subscript(2, true);
             label14.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // inst_textBox
@@ -791,7 +793,7 @@
             label23.Name = "label23";
             label23.Size = new Size(50, 16);
             label23.TabIndex = 165;
-            label23.Text = "W/m2·K";
+            label23.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label28
             // 
@@ -802,7 +804,7 @@
             label28.Name = "label28";
             label28.Size = new Size(50, 16);
             label28.TabIndex = 164;
-            label28.Text = "W/m2·K";
+            label28.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // Tao_on_textBox
             // 

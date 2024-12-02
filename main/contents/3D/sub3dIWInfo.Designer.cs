@@ -112,7 +112,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(23, 15);
             this.label3.TabIndex = 146;
-            this.label3.Text = "m2 ";
+            this.label3.Text = "m" + Program.UTIL.Subscript(2, true);
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // sub3dIWInfo
