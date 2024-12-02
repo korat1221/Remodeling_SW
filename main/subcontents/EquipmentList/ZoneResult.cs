@@ -46,7 +46,7 @@ namespace main.subcontents
             ZoneResult_dataGridView.Columns.Add("A2", "층");
             ZoneResult_dataGridView.Columns.Add("A3", "존명칭");
             ZoneResult_dataGridView.Columns.Add("A4", "용도프로필");
-            ZoneResult_dataGridView.Columns.Add("A5", "면적.[m²]");
+            ZoneResult_dataGridView.Columns.Add("A5", "면적.[m"+Program.UTIL.Subscript(2, true)+"]");
             ZoneResult_dataGridView.Columns.Add("A6", "연간 요구량.난방.[kWh/a]");
             ZoneResult_dataGridView.Columns.Add("A7", "연간 요구량.냉방.[kWh/a]");
             ZoneResult_dataGridView.Columns.Add("A8", "최대부하.난방.[kW]");
