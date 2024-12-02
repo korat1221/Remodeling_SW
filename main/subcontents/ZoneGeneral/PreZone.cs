@@ -51,7 +51,7 @@ namespace main.subcontents.ZoneGeneral
             Zone_dataGridView.Columns.Add("A4", "냉난방");
             Zone_dataGridView.Columns.Add("A5", "연간 요구량.난방.[kWh/a]");
             Zone_dataGridView.Columns.Add("A6", "연간 요구량.냉방.[kWh/a]");
-            Zone_dataGridView.Columns.Add("A7", "면적.[m²]");
+            Zone_dataGridView.Columns.Add("A7", "면적.[m"+Program.UTIL.Subscript(2, true)+"]");
             Zone_dataGridView.Columns.Add("A8", "리모델링 후");
             Zone_dataGridView.Columns[0].Width = 40;
             Zone_dataGridView.Columns[5].Width = 70;

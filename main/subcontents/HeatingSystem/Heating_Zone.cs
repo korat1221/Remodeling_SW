@@ -49,13 +49,7 @@ namespace main.subcontents.HeatingSystem
             Zone_dataGridView.Columns.Add("A3", "존명칭");
             Zone_dataGridView.Columns.Add("A4", "용도프로필");
             Zone_dataGridView.Columns.Add("A5", "연간 난방요구량.[kWh/a]");
-            Zone_dataGridView.Columns.Add("A6", "면적.[m²]");
-            //table_Zone.Columns.Add("번호", typeof(string));
-            //table_Zone.Columns.Add("층", typeof(string));
-            //table_Zone.Columns.Add("존 명칭", typeof(string));
-            //table_Zone.Columns.Add("용도프로필", typeof(string));
-            //table_Zone.Columns.Add("연간 난방요구량", typeof(string));
-            //table_Zone.Columns.Add("면적", typeof(string));
+            Zone_dataGridView.Columns.Add("A6", "면적.[m"+Program.UTIL.Subscript(2, true)+"]");
 
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적", "냉난방유무 ='냉난방' OR 냉난방유무 = '난방'");
             if (Value.Length > 0)

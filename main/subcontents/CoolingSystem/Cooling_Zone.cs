@@ -67,7 +67,7 @@ namespace main.subcontents
                 CoolingZone_dataGridView.Columns.Add("A4", "용도프로필");
                 CoolingZone_dataGridView.Columns.Add("A5", "냉방요구량.[kWh/a]");
                 CoolingZone_dataGridView.Columns.Add("A6", "최대냉방부하.[kW]");
-                CoolingZone_dataGridView.Columns.Add("A7", "면적.[m²]");
+                CoolingZone_dataGridView.Columns.Add("A7", "면적.[m"+Program.UTIL.Subscript(2, true)+"]");
                 CoolingZone_dataGridView.Columns.Add("A8", "냉방설비.1");
                 CoolingZone_dataGridView.Columns.Add("A9", "냉방설비.2");
             }
@@ -78,7 +78,7 @@ namespace main.subcontents
                 CoolingZone_dataGridView.Columns.Add("A4", "유형");
                 CoolingZone_dataGridView.Columns.Add("A5", "냉방요구량.[kWh/a]");
                 CoolingZone_dataGridView.Columns.Add("A6", "최대냉방부하.[kW]");
-                CoolingZone_dataGridView.Columns.Add("A7", "면적.[m²]");
+                CoolingZone_dataGridView.Columns.Add("A7", "면적.[m"+Program.UTIL.Subscript(2, true)+"]");
             }
            
             CoolingZone_dataGridView.Columns[0].Width = 40;
