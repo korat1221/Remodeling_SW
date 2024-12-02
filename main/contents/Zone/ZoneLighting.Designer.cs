@@ -551,7 +551,7 @@ namespace main.contents
             Acam2_label.Name = "Acam2_label";
             Acam2_label.Size = new Size(19, 15);
             Acam2_label.TabIndex = 125;
-            Acam2_label.Text = "㎡";
+            Acam2_label.Text = "m" + Program.UTIL.Subscript(2, true);
             Acam2_label.Visible = false;
             // 
             // facadeButton
@@ -760,7 +760,7 @@ namespace main.contents
             label7.Name = "label7";
             label7.Size = new Size(19, 15);
             label7.TabIndex = 156;
-            label7.Text = "㎡";
+            label7.Text = "m"+ Program.UTIL.Subscript(2, true);
             label7.Visible = false;
             // 
             // Blind2_textBox
@@ -1142,7 +1142,7 @@ namespace main.contents
             R2_label.Name = "R2_label";
             R2_label.Size = new Size(97, 15);
             R2_label.TabIndex = 146;
-            R2_label.Text = "산광부 면적 [㎡]";
+            R2_label.Text = "산광부 면적 [m"+ Program.UTIL.Subscript(2, true)+"]";
             R2_label.Visible = false;
             // 
             // R2_textBox
@@ -1468,7 +1468,7 @@ namespace main.contents
             label11.Name = "label11";
             label11.Size = new Size(19, 15);
             label11.TabIndex = 210;
-            label11.Text = "㎡";
+            label11.Text = "m"+ Program.UTIL.Subscript(2, true);
             label11.Visible = false;
             // 
             // label12
@@ -1479,7 +1479,7 @@ namespace main.contents
             label12.Name = "label12";
             label12.Size = new Size(19, 15);
             label12.TabIndex = 211;
-            label12.Text = "㎡";
+            label12.Text = "m"+ Program.UTIL.Subscript(2, true);
             label12.Visible = false;
             // 
             // label13
@@ -1512,7 +1512,7 @@ namespace main.contents
             label10.Name = "label10";
             label10.Size = new Size(19, 15);
             label10.TabIndex = 214;
-            label10.Text = "㎡";
+            label10.Text = "m"+ Program.UTIL.Subscript(2, true);
             label10.Visible = false;
             // 
             // Save_button
