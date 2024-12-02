@@ -964,7 +964,7 @@ namespace main.contents
             PV_dataGridView.Columns.Add("A5", "모듈(변경가능).길이.[m]");
             PV_dataGridView.Columns.Add("A6", "모듈(변경가능).높이.[m]");
             PV_dataGridView.Columns.Add("A7", "모듈(변경가능).정격출력.[W]");
-            PV_dataGridView.Columns.Add("A8", "Kpk.[kW/m²]");
+            PV_dataGridView.Columns.Add("A8", "Kpk.[kW/m"+Program.UTIL.Subscript(2, true)+ "]");
            
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
             설치유형Combo.HeaderText = "설치";
@@ -1383,7 +1383,7 @@ namespace main.contents
             WP_dataGridView.Columns.Add("A5", "타입");
             WP_dataGridView.Columns.Add("A6", "세부타입");
             WP_dataGridView.Columns.Add("A7", "정격출력.[kW]");
-            WP_dataGridView.Columns.Add("A8", "허브면적.[㎡]");
+            WP_dataGridView.Columns.Add("A8", "허브면적.[m"+ Program.UTIL.Subscript(2, true) +"]");
             WP_dataGridView.Columns.Add("A9", "허브높이.[m]");
             WP_dataGridView.Columns.Add("A10", "풍속.시동.[m/s]");
             WP_dataGridView.Columns.Add("A11", "풍속.최적.[m/s]");
@@ -3512,7 +3512,7 @@ namespace main.contents
             Solar_dataGridView.Columns.Add("A2", "DB유형");
             Solar_dataGridView.Columns.Add("A3", "명칭");
             Solar_dataGridView.Columns.Add("A4", "난방/급탕");
-            Solar_dataGridView.Columns.Add("A5", "모듈면적.A[m2]");
+            Solar_dataGridView.Columns.Add("A5", "모듈면적.A["+Program.UTIL.Subscript(2, true)+"]");
             Solar_dataGridView.Columns.Add("A6", "효율.ηo");
             Solar_dataGridView.Columns.Add("A7", "손실계수.1차.k1");
             Solar_dataGridView.Columns.Add("A8", "손실계수.2차.k2");

@@ -1920,7 +1920,7 @@ namespace main.contents
             label23.Name = "label23";
             label23.Size = new Size(79, 16);
             label23.TabIndex = 127;
-            label23.Text = "바닥면적[㎡]";
+            label23.Text = "바닥면적[m2]";
             // 
             // Ahu_button
             // 
