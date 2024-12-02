@@ -571,9 +571,9 @@ namespace main.contents
             label23.ForeColor = SystemColors.ControlDark;
             label23.Location = new Point(828, 82);
             label23.Name = "label23";
-            label23.Size = new Size(58, 15);
+            label23.Size = new Size(60, 15);
             label23.TabIndex = 188;
-            label23.Text = "W/m²·K";
+            label23.Text = "W/m2·K";
             // 
             // label26
             // 
@@ -606,9 +606,9 @@ namespace main.contents
             label9.ForeColor = SystemColors.ControlDark;
             label9.Location = new Point(828, 55);
             label9.Name = "label9";
-            label9.Size = new Size(58, 15);
+            label9.Size = new Size(60, 15);
             label9.TabIndex = 185;
-            label9.Text = "W/m²·K";
+            label9.Text = "W/m2·K";
             // 
             // label12
             // 
@@ -863,7 +863,7 @@ namespace main.contents
             label2.Name = "label2";
             label2.Size = new Size(25, 15);
             label2.TabIndex = 184;
-            label2.Text = "m²";
+            label2.Text = "m2";
             // 
             // label8
             // 
@@ -885,7 +885,7 @@ namespace main.contents
             label34.Name = "label34";
             label34.Size = new Size(25, 15);
             label34.TabIndex = 181;
-            label34.Text = "m²";
+            label34.Text = "m2";
             // 
             // GlassArea2_textBox
             // 
@@ -1004,11 +1004,11 @@ namespace main.contents
             label15.AutoSize = true;
             label15.Font = new Font(UTIL.Families[0], 9.75F);
             label15.ForeColor = SystemColors.ControlDark;
-            label15.Location = new Point(578, 22);
+            label15.Location = new Point(584, 22);
             label15.Name = "label15";
-            label15.Size = new Size(58, 15);
+            label15.Size = new Size(60, 15);
             label15.TabIndex = 163;
-            label15.Text = "W/m²·K";
+            label15.Text = "W/m2·K";
             // 
             // pictureBox3
             // 
@@ -1078,7 +1078,7 @@ namespace main.contents
             dUinst_textBox.Enabled = false;
             dUinst_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             dUinst_textBox.ForeColor = SystemColors.ControlDark;
-            dUinst_textBox.Location = new Point(453, 22);
+            dUinst_textBox.Location = new Point(459, 22);
             dUinst_textBox.Name = "dUinst_textBox";
             dUinst_textBox.ReadOnly = true;
             dUinst_textBox.Size = new Size(116, 15);
@@ -1092,7 +1092,7 @@ namespace main.contents
             Psi_InstallBottom_textBox.Enabled = false;
             Psi_InstallBottom_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             Psi_InstallBottom_textBox.ForeColor = SystemColors.ControlDark;
-            Psi_InstallBottom_textBox.Location = new Point(457, 167);
+            Psi_InstallBottom_textBox.Location = new Point(463, 167);
             Psi_InstallBottom_textBox.Name = "Psi_InstallBottom_textBox";
             Psi_InstallBottom_textBox.Size = new Size(116, 15);
             Psi_InstallBottom_textBox.TabIndex = 122;
@@ -1105,7 +1105,7 @@ namespace main.contents
             Psi_InstallSide_textBox.Enabled = false;
             Psi_InstallSide_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             Psi_InstallSide_textBox.ForeColor = SystemColors.ControlDark;
-            Psi_InstallSide_textBox.Location = new Point(457, 131);
+            Psi_InstallSide_textBox.Location = new Point(463, 131);
             Psi_InstallSide_textBox.Name = "Psi_InstallSide_textBox";
             Psi_InstallSide_textBox.Size = new Size(116, 15);
             Psi_InstallSide_textBox.TabIndex = 114;
@@ -1118,7 +1118,7 @@ namespace main.contents
             Psi_InstallTop_textBox.Enabled = false;
             Psi_InstallTop_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             Psi_InstallTop_textBox.ForeColor = SystemColors.ControlDark;
-            Psi_InstallTop_textBox.Location = new Point(457, 95);
+            Psi_InstallTop_textBox.Location = new Point(463, 95);
             Psi_InstallTop_textBox.Name = "Psi_InstallTop_textBox";
             Psi_InstallTop_textBox.Size = new Size(116, 15);
             Psi_InstallTop_textBox.TabIndex = 108;
@@ -1173,7 +1173,7 @@ namespace main.contents
             label44.AutoSize = true;
             label44.Font = new Font(UTIL.Families[0], 9.75F);
             label44.ForeColor = SystemColors.ControlDark;
-            label44.Location = new Point(577, 166);
+            label44.Location = new Point(583, 166);
             label44.Name = "label44";
             label44.Size = new Size(52, 15);
             label44.TabIndex = 125;
@@ -1195,7 +1195,7 @@ namespace main.contents
             label41.AutoSize = true;
             label41.Font = new Font(UTIL.Families[0], 9.75F);
             label41.ForeColor = SystemColors.ControlDark;
-            label41.Location = new Point(577, 130);
+            label41.Location = new Point(583, 130);
             label41.Name = "label41";
             label41.Size = new Size(52, 15);
             label41.TabIndex = 119;
@@ -1206,7 +1206,7 @@ namespace main.contents
             label40.AutoSize = true;
             label40.Font = new Font(UTIL.Families[0], 9.75F);
             label40.ForeColor = SystemColors.ControlDark;
-            label40.Location = new Point(577, 94);
+            label40.Location = new Point(583, 94);
             label40.Name = "label40";
             label40.Size = new Size(52, 15);
             label40.TabIndex = 118;
@@ -1239,7 +1239,7 @@ namespace main.contents
             label38.AutoSize = true;
             label38.Font = new Font(UTIL.Families[0], 9.75F);
             label38.ForeColor = SystemColors.ControlDark;
-            label38.Location = new Point(479, 58);
+            label38.Location = new Point(485, 58);
             label38.Name = "label38";
             label38.Size = new Size(79, 15);
             label38.TabIndex = 107;
@@ -1318,7 +1318,7 @@ namespace main.contents
             label28.Name = "label28";
             label28.Size = new Size(25, 15);
             label28.TabIndex = 176;
-            label28.Text = "m²";
+            label28.Text = "m2";
             // 
             // DoorArea_textBox
             // 
@@ -1382,9 +1382,9 @@ namespace main.contents
             label86.ForeColor = SystemColors.ControlDark;
             label86.Location = new Point(828, 219);
             label86.Name = "label86";
-            label86.Size = new Size(58, 15);
+            label86.Size = new Size(60, 15);
             label86.TabIndex = 168;
-            label86.Text = "W/m²·K";
+            label86.Text = "W/m2·K";
             // 
             // UD2_textBox
             // 
@@ -1431,9 +1431,9 @@ namespace main.contents
             label84.ForeColor = SystemColors.ControlDark;
             label84.Location = new Point(828, 189);
             label84.Name = "label84";
-            label84.Size = new Size(58, 15);
+            label84.Size = new Size(60, 15);
             label84.TabIndex = 163;
-            label84.Text = "W/m²·K";
+            label84.Text = "W/m2·K";
             label84.Visible = false;
             // 
             // label85
@@ -1455,9 +1455,9 @@ namespace main.contents
             label83.ForeColor = SystemColors.ControlDark;
             label83.Location = new Point(828, 272);
             label83.Name = "label83";
-            label83.Size = new Size(58, 15);
+            label83.Size = new Size(60, 15);
             label83.TabIndex = 162;
-            label83.Text = "W/m²·K";
+            label83.Text = "W/m2·K";
             // 
             // label29
             // 
@@ -1603,7 +1603,7 @@ namespace main.contents
             glassArea_label2.Name = "glassArea_label2";
             glassArea_label2.Size = new Size(25, 15);
             glassArea_label2.TabIndex = 113;
-            glassArea_label2.Text = "m²";
+            glassArea_label2.Text = "m2";
             glassArea_label2.Visible = false;
             // 
             // GlassArea_textBox
@@ -1706,9 +1706,9 @@ namespace main.contents
             Ug_unit_label.ForeColor = SystemColors.ControlDark;
             Ug_unit_label.Location = new Point(828, 85);
             Ug_unit_label.Name = "Ug_unit_label";
-            Ug_unit_label.Size = new Size(58, 15);
+            Ug_unit_label.Size = new Size(60, 15);
             Ug_unit_label.TabIndex = 64;
-            Ug_unit_label.Text = "W/m²·K";
+            Ug_unit_label.Text = "W/m2·K";
             // 
             // abs_textBox
             // 

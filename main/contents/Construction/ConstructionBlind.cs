@@ -312,7 +312,8 @@ namespace main.contents
                     max = Convert.ToInt64(Convert.ToDouble(res2[0][0]) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1);
 
                 }
-                runScript("drawChart_blind([{type:\"line\",label:\"차양가동율(남향)\",data:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",label:\"일사량(kWh/m²·mth)\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:" + max + ",dash:false,barPercentage:0.7}])");
+                string unit = "kWh/m" + Program.UTIL.Subscript(2, true) + "·mth";
+                runScript("drawChart_blind([{type:\"line\",label:\"차양가동율(남향)\",data:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",label:\"일사량("+ unit +")\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:" + max + ",dash:false,barPercentage:0.7}])");
                 // runScript("drawChart_blind([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150}])");
             }
             else

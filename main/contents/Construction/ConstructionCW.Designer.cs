@@ -61,6 +61,8 @@ namespace main.contents
             Ucw_comboBox = new CustomComboBox();
             label25 = new Label();
             panel2 = new Panel();
+            label83 = new Label();
+            label4 = new Label();
             Area_textBox2 = new TextBox();
             tabControl1 = new CustomTabControl();
             Frame_tabPage = new TabPage();
@@ -85,6 +87,7 @@ namespace main.contents
             label15 = new Label();
             CWFrame_pictureBox = new PictureBox();
             Glass_tabPage = new TabPage();
+            label21 = new Label();
             label43 = new Label();
             label39 = new Label();
             DoorGlass2_textBox = new TextBox();
@@ -95,7 +98,6 @@ namespace main.contents
             Psi_g_Door_textBox = new TextBox();
             label13 = new Label();
             label20 = new Label();
-            label21 = new Label();
             label28 = new Label();
             label30 = new Label();
             Ug_Door_textBox = new TextBox();
@@ -229,8 +231,6 @@ namespace main.contents
             UCW_g_label = new Label();
             DiIndi_comboBox = new CustomComboBox();
             CWType_pictureBox = new PictureBox();
-            label4 = new Label();
-            label83 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -700,6 +700,24 @@ namespace main.contents
             panel2.TabIndex = 95;
             panel2.Paint += panel2_Paint;
             // 
+            // label83
+            // 
+            label83.BorderStyle = BorderStyle.Fixed3D;
+            label83.Font = new Font(UTIL.Families[0], 9.75F);
+            label83.Location = new Point(22, 231);
+            label83.Name = "label83";
+            label83.Size = new Size(956, 2);
+            label83.TabIndex = 149;
+            // 
+            // label4
+            // 
+            label4.BorderStyle = BorderStyle.Fixed3D;
+            label4.Font = new Font(UTIL.Families[0], 9.75F);
+            label4.Location = new Point(22, 159);
+            label4.Name = "label4";
+            label4.Size = new Size(956, 2);
+            label4.TabIndex = 144;
+            // 
             // Area_textBox2
             // 
             Area_textBox2.BackColor = Color.White;
@@ -860,7 +878,7 @@ namespace main.contents
             label35.Name = "label35";
             label35.Size = new Size(58, 15);
             label35.TabIndex = 129;
-            label35.Text = "W/m²·K";
+            label35.Text = "W/m2·K";
             // 
             // label32
             // 
@@ -871,7 +889,7 @@ namespace main.contents
             label32.Name = "label32";
             label32.Size = new Size(58, 15);
             label32.TabIndex = 127;
-            label32.Text = "W/m²·K";
+            label32.Text = "W/m2·K";
             // 
             // label34
             // 
@@ -882,7 +900,7 @@ namespace main.contents
             label34.Name = "label34";
             label34.Size = new Size(58, 15);
             label34.TabIndex = 126;
-            label34.Text = "W/m²·K";
+            label34.Text = "W/m2·K";
             // 
             // Uf_door_textBox
             // 
@@ -1006,6 +1024,7 @@ namespace main.contents
             // Glass_tabPage
             // 
             Glass_tabPage.BackColor = Color.White;
+            Glass_tabPage.Controls.Add(label21);
             Glass_tabPage.Controls.Add(label43);
             Glass_tabPage.Controls.Add(label39);
             Glass_tabPage.Controls.Add(DoorGlass2_textBox);
@@ -1016,7 +1035,6 @@ namespace main.contents
             Glass_tabPage.Controls.Add(Psi_g_Door_textBox);
             Glass_tabPage.Controls.Add(label13);
             Glass_tabPage.Controls.Add(label20);
-            Glass_tabPage.Controls.Add(label21);
             Glass_tabPage.Controls.Add(label28);
             Glass_tabPage.Controls.Add(label30);
             Glass_tabPage.Controls.Add(Ug_Door_textBox);
@@ -1034,6 +1052,17 @@ namespace main.contents
             Glass_tabPage.Size = new Size(992, 210);
             Glass_tabPage.TabIndex = 2;
             Glass_tabPage.Text = "유리 세부정보";
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font(UTIL.Families[0], 9.75F);
+            label21.ForeColor = SystemColors.ControlDark;
+            label21.Location = new Point(649, 127);
+            label21.Name = "label21";
+            label21.Size = new Size(58, 15);
+            label21.TabIndex = 144;
+            label21.Text = "W/m2·K";
             // 
             // label43
             // 
@@ -1153,17 +1182,6 @@ namespace main.contents
             label20.TabIndex = 145;
             label20.Text = "W/m·K";
             // 
-            // label21
-            // 
-            label21.AutoSize = true;
-            label21.Font = new Font(UTIL.Families[0], 9.75F);
-            label21.ForeColor = SystemColors.ControlDark;
-            label21.Location = new Point(649, 127);
-            label21.Name = "label21";
-            label21.Size = new Size(58, 15);
-            label21.TabIndex = 144;
-            label21.Text = "W/m²·K";
-            // 
             // label28
             // 
             label28.AutoSize = true;
@@ -1173,7 +1191,7 @@ namespace main.contents
             label28.Name = "label28";
             label28.Size = new Size(58, 15);
             label28.TabIndex = 143;
-            label28.Text = "W/m²·K";
+            label28.Text = "W/m2·K";
             // 
             // label30
             // 
@@ -1184,7 +1202,7 @@ namespace main.contents
             label30.Name = "label30";
             label30.Size = new Size(58, 15);
             label30.TabIndex = 142;
-            label30.Text = "W/m²·K";
+            label30.Text = "W/m2·K";
             // 
             // Ug_Door_textBox
             // 
@@ -1653,7 +1671,7 @@ namespace main.contents
             label68.Name = "label68";
             label68.Size = new Size(25, 15);
             label68.TabIndex = 174;
-            label68.Text = "m²";
+            label68.Text = "m2";
             // 
             // Lg_d_textBox
             // 
@@ -1723,7 +1741,7 @@ namespace main.contents
             label72.Name = "label72";
             label72.Size = new Size(25, 15);
             label72.TabIndex = 168;
-            label72.Text = "m²";
+            label72.Text = "m2";
             // 
             // Lp_textBox
             // 
@@ -1887,7 +1905,7 @@ namespace main.contents
             label10.Name = "label10";
             label10.Size = new Size(25, 15);
             label10.TabIndex = 154;
-            label10.Text = "m²";
+            label10.Text = "m2";
             // 
             // label14
             // 
@@ -1898,7 +1916,7 @@ namespace main.contents
             label14.Name = "label14";
             label14.Size = new Size(25, 15);
             label14.TabIndex = 153;
-            label14.Text = "m²";
+            label14.Text = "m2";
             // 
             // Af_d_textBox
             // 
@@ -1957,7 +1975,7 @@ namespace main.contents
             label57.Name = "label57";
             label57.Size = new Size(25, 15);
             label57.TabIndex = 148;
-            label57.Text = "m²";
+            label57.Text = "m2";
             // 
             // label58
             // 
@@ -1968,7 +1986,7 @@ namespace main.contents
             label58.Name = "label58";
             label58.Size = new Size(25, 15);
             label58.TabIndex = 147;
-            label58.Text = "m²";
+            label58.Text = "m2";
             // 
             // Af_mt_textBox
             // 
@@ -2005,7 +2023,7 @@ namespace main.contents
             label59.Name = "label59";
             label59.Size = new Size(25, 15);
             label59.TabIndex = 144;
-            label59.Text = "m²";
+            label59.Text = "m2";
             // 
             // label61
             // 
@@ -2062,7 +2080,7 @@ namespace main.contents
             label65.Name = "label65";
             label65.Size = new Size(25, 15);
             label65.TabIndex = 134;
-            label65.Text = "m²";
+            label65.Text = "m2";
             // 
             // Area_textBox
             // 
@@ -2251,7 +2269,7 @@ namespace main.contents
             UCW_d_label2.Name = "UCW_d_label2";
             UCW_d_label2.Size = new Size(58, 15);
             UCW_d_label2.TabIndex = 132;
-            UCW_d_label2.Text = "W/m²·K";
+            UCW_d_label2.Text = "W/m2·K";
             // 
             // DoorFrame_textBox
             // 
@@ -2471,7 +2489,7 @@ namespace main.contents
             UCW_p_label2.Name = "UCW_p_label2";
             UCW_p_label2.Size = new Size(58, 15);
             UCW_p_label2.TabIndex = 113;
-            UCW_p_label2.Text = "W/m²·K";
+            UCW_p_label2.Text = "W/m2·K";
             // 
             // Panel_textBox
             // 
@@ -2741,9 +2759,9 @@ namespace main.contents
             Ug_unit_label.ForeColor = SystemColors.ControlDark;
             Ug_unit_label.Location = new Point(841, 69);
             Ug_unit_label.Name = "Ug_unit_label";
-            Ug_unit_label.Size = new Size(58, 15);
+            Ug_unit_label.Size = new Size(60, 15);
             Ug_unit_label.TabIndex = 64;
-            Ug_unit_label.Text = "W/m²·K";
+            Ug_unit_label.Text = "W/m2·K";
             // 
             // UCW_g_textBox
             // 
@@ -2788,24 +2806,6 @@ namespace main.contents
             CWType_pictureBox.Size = new Size(178, 386);
             CWType_pictureBox.TabIndex = 97;
             CWType_pictureBox.TabStop = false;
-            // 
-            // label4
-            // 
-            label4.BorderStyle = BorderStyle.Fixed3D;
-            label4.Font = new Font(UTIL.Families[0], 9.75F);
-            label4.Location = new Point(22, 159);
-            label4.Name = "label4";
-            label4.Size = new Size(956, 2);
-            label4.TabIndex = 144;
-            // 
-            // label83
-            // 
-            label83.BorderStyle = BorderStyle.Fixed3D;
-            label83.Font = new Font(UTIL.Families[0], 9.75F);
-            label83.Location = new Point(22, 231);
-            label83.Name = "label83";
-            label83.Size = new Size(956, 2);
-            label83.TabIndex = 149;
             // 
             // ConstructionCW
             // 

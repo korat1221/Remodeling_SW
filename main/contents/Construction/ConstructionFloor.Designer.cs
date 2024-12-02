@@ -509,7 +509,7 @@ namespace main.contents.Construction
             Ueff_label2.Name = "Ueff_label2";
             Ueff_label2.Size = new Size(58, 15);
             Ueff_label2.TabIndex = 132;
-            Ueff_label2.Text = "W/m²·K";
+            Ueff_label2.Text = "W/m2·K";
             // 
             // tabControl1
             // 
@@ -1000,7 +1000,7 @@ namespace main.contents.Construction
             dU_label2.Name = "dU_label2";
             dU_label2.Size = new Size(58, 15);
             dU_label2.TabIndex = 113;
-            dU_label2.Text = "W/m²·K";
+            dU_label2.Text = "W/m2·K";
             // 
             // Ueff_textBox
             // 
@@ -1059,7 +1059,7 @@ namespace main.contents.Construction
             U_label2.Name = "U_label2";
             U_label2.Size = new Size(58, 15);
             U_label2.TabIndex = 64;
-            U_label2.Text = "W/m²·K";
+            U_label2.Text = "W/m2·K";
             // 
             // U_textBox
             // 
@@ -1117,7 +1117,7 @@ namespace main.contents.Construction
             label16.Name = "label16";
             label16.Size = new Size(58, 15);
             label16.TabIndex = 141;
-            label16.Text = "W/m²·K";
+            label16.Text = "W/m2·K";
             // 
             // label15
             // 

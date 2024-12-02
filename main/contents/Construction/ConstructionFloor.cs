@@ -574,22 +574,22 @@ namespace main.contents.Construction
                             if (LinearPoint == "점형")
                             {
                                 PerArea_label1.Text = "적용개수";
-                                PerArea_label2.Text = "EA/m²";
+                                PerArea_label2.Text = "EA/m2";
                                 PsiKai_label1.Text = "점형열교 열관류율";
                                 PsiKai_label2.Text = "W/K";
                                 dU_label3.Text = "1D 열교가산치";
-                                dU_label4.Text = "W/m²·K";
+                                dU_label4.Text = "W/m2·K";
 
 
                             }
                             else
                             {
                                 PerArea_label1.Text = "적용길이";
-                                PerArea_label2.Text = "m/m²";
+                                PerArea_label2.Text = "m/m2";
                                 PsiKai_label1.Text = "선형열교 열관류율";
                                 PsiKai_label2.Text = "W/mK";
                                 dU_label3.Text = "1D 열교가산치";
-                                dU_label4.Text = "W/m²·K";
+                                dU_label4.Text = "W/m2·K";
                             }
 
                             Load_TB_Image();
@@ -645,7 +645,7 @@ namespace main.contents.Construction
             Ucalc_dataGridView.Columns.Add("A3", "재료명");
             Ucalc_dataGridView.Columns.Add("A4", "열전도율.[W/m·K]");
             Ucalc_dataGridView.Columns.Add("A5", "두께.[mm]");
-            Ucalc_dataGridView.Columns.Add("A6", "열저항.[m²·K/W]");
+            Ucalc_dataGridView.Columns.Add("A6", "열저항.[m2·K/W]");
             Ucalc_dataGridView.Columns.Add("A7", "Color");
             Ucalc_dataGridView.Columns[0].Width = 40;
             Ucalc_dataGridView.Columns[1].Width = 40;
@@ -661,7 +661,7 @@ namespace main.contents.Construction
             //Ucalc_dataGridView.Columns[3].HeaderText = "재료명";
             //Ucalc_dataGridView.Columns[4].HeaderText = "열전도율" + Environment.NewLine + "[W/m·K]";
             //Ucalc_dataGridView.Columns[5].HeaderText = "두께" + Environment.NewLine + "[mm]";
-            //Ucalc_dataGridView.Columns[6].HeaderText = "열저항" + Environment.NewLine + "[m²·K/W]";
+            //Ucalc_dataGridView.Columns[6].HeaderText = "열저항" + Environment.NewLine + "[m2·K/W]";
 
         }
         private void Add_OldFloor()
@@ -1393,20 +1393,20 @@ namespace main.contents.Construction
                 if (LinearPoint == "점형")
                 {
                     PerArea_label1.Text = "적용개수";
-                    PerArea_label2.Text = "EA/m²";
+                    PerArea_label2.Text = "EA/m2";
                     PsiKai_label1.Text = "점형열교 열관류율";
                     PsiKai_label2.Text = "W/K";
                     dU_label3.Text = "1D 열교가산치";
-                    dU_label4.Text = "W/m²·K";
+                    dU_label4.Text = "W/m2·K";
                 }
                 else if (LinearPoint == "선형")
                 {
                     PerArea_label1.Text = "적용길이";
-                    PerArea_label2.Text = "m/m²";
+                    PerArea_label2.Text = "m/m2";
                     PsiKai_label1.Text = "선형열교 열관류율";
                     PsiKai_label2.Text = "W/mK";
                     dU_label3.Text = "1D 열교가산치";
-                    dU_label4.Text = "W/m²·K";
+                    dU_label4.Text = "W/m2·K";
                 }
                 else { }
 
