@@ -1,4 +1,4 @@
-import { Box3, Vector3 } from 'three';
+import { Box3, RGBA_ASTC_10x10_Format, Vector3 } from 'three';
 
 function Zoning( editor ) {
     this.editor = editor;
@@ -6,18 +6,15 @@ function Zoning( editor ) {
 
 Zoning.prototype = {
     calc: function (obj) {
-        
+        let zones = {};
         const box = new Box3().setFromObject( obj );
         const center = box.getCenter( new Vector3() );
         const offset = new Vector3(obj.position.x - center.x, 0, obj.position.z - center.z);
-        let _asFixed = (a) => {
-            return Math.round(a * 1000) / 1000;
-        };
         let _getArea = (a) => {
             var i = 0, _area = 0;
     
             while(++i < a.length - 1) {
-                _area += (new THREE.Triangle({x:a[0][0],y:a[0][1],z:a[0][2]},{x:a[i][0],y:a[i][1],z:a[i][2]},{x:a[i + 1][0],y:a[i + 1][1],z:a[i + 1][2]})).getArea();
+                _area += (new THREE.Triangle(a[0],a[i],a[i + 1])).getArea();
             }
     
             return _area;
@@ -91,13 +88,55 @@ Zoning.prototype = {
                 }
             }
         };
+        let _equalPoint = (a, b) => {
+            return a.distanceTo(b) < 0.00000001;
+        };  
+        let _getSamePoints = (a, b) => {
+            var ret = [];
+    
+            for(var i = 0; i < a.length; i++) {
+                for(var j = 0; j < b.length; j++) {
+                    if (_equalPoint(a[i], b[j])) ret.push(a[i]);
+                }
+            }
+    
+            return ret;
+        };
+    
+        let _findWalls = (poss) => {
+            let i = -1, j;
+    
+            while(++i < poss.length) {
+                let po = poss[i];
+
+                j = poss.length;
+                while(--j > i) {
+                    let po2 = poss[j];
+                    let p = _getSamePoints(po.pos, po2.pos);
+
+                    if (p.length > 0 && po.cardi == po2.cardi) {
+                        po.pos = po.pos.concat(po2.pos);
+                        poss.splice(j,1);
+                    }
+                }
+            }
+        };
+        let _asLines = ( pos ) => {
+            let lines = [];
+        
+            for(let i = 0; i < pos.array.length; i+= 3) {
+                lines.push(new THREE.Vector3(pos.array[i],pos.array[i + 1],pos.array[i + 2]));
+            }
+
+            return lines;
+        };
         let _collPositions = ( pos, nor ) => {
             let poss = [];
         
             for(let i = 0; i < pos.array.length; i+= 9) {
                 let _pos = [];
                 for(let j = 0; j < 9; j += 3) {
-                    _pos.push([pos.array[i + j],pos.array[i + j + 1],pos.array[i + j + 2]]);
+                    _pos.push(new THREE.Vector3(pos.array[i + j],pos.array[i + j + 1],pos.array[i + j + 2]));
                 }
     
                 let _area = _getArea(_pos);
@@ -121,98 +160,107 @@ Zoning.prototype = {
         
                     _slope /= 3;
     
-                    poss.push({cardi:_cardinal, slope:_asFixed(_slope), pos:_pos});
+                    poss.push({cardi:_cardinal, pos:_pos});
                 }
             }
+
             return poss;
         };
-
-        //////////////////////////////////////////
-        let _getAdjacentLine = (a, b) => {
-            let i = -1;
-    
-            while(++i < 3) {
-                let line = [b[i], b[(i + 1) % 3]];
-                if (this.editor.isAdjacent(a,line)) {
-                    return line;
-                }
-            }
-            return null;
+        let _getLineMesh = (pos, color) => {
+            return new THREE.Line(
+                new THREE.BufferGeometry().setFromPoints(pos),
+                new THREE.LineBasicMaterial({
+                  color: color,
+                  opacity: 1.0,
+                  transparent: false,
+                })
+              );
         };
-        let _collectWalls = (po) => {
-            if (!wall0[po.cardi]) wall0[po.cardi] = {};
-            for (const [cardi, value] of Object.entries(wall0)) {
-                for (const [j, el] of Object.entries(value)) {
-                    for (var k = 0; k < el.vertices.length; k++) {
-                        let el2 = el.vertices[k];
 
-                        if (this.util.getSamePoints(el2.position, po.pos).length == 2) {
-                            if (po.cardi == cardi && this.isGArea(el2.position) == this.isGArea(po.pos)) {
-                                el.vertices.push({"position":po.pos});
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-            wall0[po.cardi][++wnum] = {"vertices":[{"position":po.pos}]};
+        let _getStructMesh = (pos, color) => {
+              return new THREE.Mesh(new THREE.BufferGeometry().setFromPoints(pos), new THREE.MeshStandardMaterial({
+                color: color,
+                shading: THREE.FlatShading,
+                roughness: 1,
+                metalness: 0,
+                side: THREE.DoubleSide,
+                opacity: 0.5,
+                transparent: true,
+              }));
         };
-		let _asLine = (a) => {
-			let L = this.util.asLine(a);
-			let v = new THREE.Vector3(-99999999,-99999999,-99999999);
-	
-			if (L.start.distanceTo(v) > L.end.distanceTo(v)) {
-				let tmp = L.start;
-				L.start = L.end;
-				L.end = tmp;
-			}
-	
-			return L;
-		};
+        let _getEdges = (edges, id, id2, idx) => {
+            let _i = -1, _j, _k;
+            let __pos = zones[id2].userData.poss[idx].pos;
+            let __poss = zones[id].userData.poss;
+ 
+            while(++_i < __poss.length) {
+                let el3 = __poss[_i];
 
-        let _collectEdges = (po) => {
-            if (!wall0[po.cardi]) wall0[po.cardi] = {};
-            for (const [cardi, value] of Object.entries(wall0)) {
-                for (const [j, el] of Object.entries(value)) {
-                    for (var k = 0; k < el.vertices.length; k++) {
-                        let el2 = el.vertices[k];
-                        let points = this.util.getSamePoints(el2.position, po.pos);
-
-                        if (points.length == 2 || (points = _getAdjacentLine(po.pos,el2.position)) != null || (points = _getAdjacentLine(el2.position,po.pos)) != null) {
-                            if (!(po.cardi == cardi && this.isGArea(el2.position) == this.isGArea(po.pos)) && !this.findEdge(points)) {
-								let L = _asLine(points);
-								this.editor.edges.push({line:[[L.start.x,L.start.y,L.start.z],[L.end.x,L.end.y,L.end.z]], lineL:L, walls:[]});
-                            }
-                        }
+                _j = -1;
+                while(++_j < el3.pos.length) {
+                    _k = -1;
+                    while(++_k < __pos.length) {
+                        if ((id != id2 || _i != idx) && _equalPoint(el3.pos[_j],__pos[_k]) && !edges.find(el4 => _equalPoint(el4, __pos[_k]))) {
+                            edges.push(__pos[_k]);
+                        }    
                     }
                 }
             }
         };
+        let _collectLines = (id) => {
+            let n = -1;
 
-		obj.position.copy( offset );
-		obj.updateMatrixWorld( true );
+            while(++n < zones[id].userData.poss.length) {
+                let edges = zones[id].userData.poss[n].edges;
 
-        // collect zones
-        let zones = {}, i, posit = [];
-        obj.children.forEach((el, idx) => {       
+                edges = [];
+
+                for (const [_id, _el2] of Object.entries(zones)) {
+                    _getEdges(edges, _id, id, n);
+                }
+
+                  obj.add(_getLineMesh(edges, 0x000));            
+            }
+        };
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        let i = -1,j, old = null, mesh = null;
+
+        while(++i < obj.children.length) {
+            let el = obj.children[i];
+
             if ( el instanceof THREE.Mesh) {
                 if (el.name.indexOf(" GWL") < 0 && el.name.indexOf(" DR") < 0 && el.name.indexOf(" CW") < 0 ) {       
                     let a = el.name.split(' ');
 
-                    i = -1;
-                    while(++i < a.length) {
-                        if (a[i].indexOf('Mesh') < 0 && a[i].indexOf('Model') < 0) {
-                            zones[a[i]] = el;
+                    j = -1;
+                    while(++j < a.length) {
+                        if (a[j].indexOf('Mesh') < 0 && a[j].indexOf('Model') < 0) {
+                            zones[a[j]] = el;
+                            obj.children[i].visible = false;
                             break;
                         }
                     }
                 }
-                let o = _collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal"));   
-                if (o.length > 0) {
-                    posit.push(o);
+                old = el;
+                mesh = el;
+                old.userData.poss = _collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal"));   
+            }
+            else if (old && el instanceof THREE.LineSegments) {
+                if (mesh) {
+                    mesh = null;
+                }
+                else {
+                    let o = _asLines(el.geometry.getAttribute("position"));
+                    if (!old.userData.windows) {
+                        old.userData.windows = [];
+                    }
+                    old.userData.windows.push(o);
+                    obj.add(_getStructMesh(o, 0xff0000));
                 }
             }
-        });  
+        }
 
         let zkeys = Object.keys(zones);
 
@@ -229,79 +277,71 @@ Zoning.prototype = {
                 } 
                 return "";
             };
-            let __matched2Mesh = (mesh, line) => {
-                let _a = mesh.geometry.getAttribute("position"), _i = 0;
-                let _b = line.geometry.getAttribute("position"), _j;
 
-                while(_i < _a.length) {
-                    _j = 0;
-                    while(_j < _b.length) {
-                //        _a.array[i]
-                        _j += 3;
+            i = -1;
+            while(++i < obj.children.length) {
+                let el = obj.children[i];
+                 if ( el instanceof THREE.Mesh) { 
+                    j = -1;
+                    while(++j < zkeys.length) {
+                        let zk = zkeys[j];
+                        if (el.name.indexOf(' ' + zk + ' ') > 0) {
+                            let el2 = zones[zk];
+                            if ((type = _getType(el.name)) !== "") {
+                                if (!el2.userData.structures) {
+                                    el2.userData.structures = [];
+                                }
+                                el2.userData.structures.push({type:type, obj:el});
+                                el.material.side = THREE.DoubleSide;
+                                el2.userData.poss = el2.userData.poss.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));   
+                            }
+                            break;
+                        }
                     }
-                    _i += 3;
                 }
-           //     for(var i = 0; i < position.length; i+= 9) {
-             //       var pos = [];
-               //     for(var j = 0; j < 9; j += 3) {
-                 //       pos.push([offset.x + position.array[i + j],offset.y + position.array[i + j + 1],offset.z + position.array[i + j + 2]]);
-                   // }
-        
-
-                return true;
-            };
-            let _matched2Mesh = (_obj) => {
-                let ret = false;
-                    obj.children.forEach((el, idx) => {
-                    if ( el instanceof THREE.Mesh) { 
-                        if (__matched2Mesh(el, _obj)) {
-                            ret = true;
-                            return false;
-                        }     
+            }
+            
+            i = -1;
+            while(++i < obj.children.length) {
+                let el = obj.children[i];
+                 if ( el instanceof THREE.Mesh) { 
+                    j = -1;
+                    while(++j < zkeys.length) {
+                        let zk = zkeys[j];
+                        if (el.name.indexOf(' ' + zk + ' ') > 0) {
+                            _findWalls(el.userData.poss);
+                            break;
+                        }
                     }
-                });
-    
-                return ret;
-            };
-    
-            obj.children.forEach((el, idx) => {
+                }
+            }
+            
+            i = obj.children.length;
+            while(--i >= 0) {
+                let el = obj.children[i];
+
                 if ( el instanceof THREE.LineSegments) { 
-                    if (_matched2Mesh(el)) {
-                        obj.remove( el );
-                    }     
-                }
-            });
-            // obj.traverse( function( child ) {       
-            //     if ( child && child instanceof THREE.LineSegments) { 
-            //         if (_matched2Mesh(child)) {
-            //             that.remove( child );
-            //         }     
-    
-            //         // i = -1;
-            //         // while(++i < zkeys.length) {
-            //         //     let zk = zkeys[i];
-            //         //     if (child.name.indexOf(' ' + zk + ' ') > 0) {
-            //         //         if ((type = _getType(child.name)) !== "") {
-            //         //             if (!zones[zk].userData.structures) {
-            //         //                 zones[zk].userData.structures = [];
-            //         //             }
-            //         //             zones[zk].userData.structures.push({type:type, obj:child});
-            //         //         }
-            //         //         else {
-            //         //             if (!zones[zk].userData.windows) {
-            //         //                 zones[zk].userData.windows = [];
-            //         //             }
-            //         //             zones[zk].userData.windows.push({type:"WIN", obj:child});
-            //         //         }
-            //         //         break;
-            //         //     }
-            //         // }
-            //     }
-            // });  
-        }
+                    obj.children.splice( i, 1 );
+                }     
+            }
 
-        console.log(zones);
-        // 
+            console.log(zones);
+
+            for (const [id, el] of Object.entries(zones)) {
+                    
+                _findWalls(el.userData.poss);
+
+                j = -1;
+
+                while(++j < el.userData.poss.length) {
+                    obj.add(_getStructMesh(el.userData.poss[j].pos, 0xaaa));
+                }
+                _collectLines(id);
+            }
+    
+            obj.position.copy( offset );
+            obj.updateMatrixWorld( true );    
+        }
 	},
 };
 
