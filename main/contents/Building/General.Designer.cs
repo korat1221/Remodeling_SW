@@ -681,7 +681,7 @@ namespace main.contents
             label24.Name = "label24";
             label24.Size = new Size(25, 15);
             label24.TabIndex = 132;
-            label24.Text = "m²";
+            label24.Text = "m2";
             // 
             // label19
             // 
@@ -749,7 +749,7 @@ namespace main.contents
             label23.Name = "label23";
             label23.Size = new Size(25, 15);
             label23.TabIndex = 129;
-            label23.Text = "m²";
+            label23.Text = "m2";
             // 
             // label30
             // 

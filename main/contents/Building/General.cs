@@ -22,6 +22,7 @@ using System.Xml.Linq;
 using Eagle._Components.Public;
 using System.Drawing.Text;
 using main.subcontents.HeatingSystem;
+using System.Text.RegularExpressions;
 
 namespace main.contents
 {
@@ -51,6 +52,9 @@ namespace main.contents
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
+
+            label23.Text = "m" + Program.UTIL.Subscript(2, true);
+            label24.Text = "m" + Program.UTIL.Subscript(2, true);
             //프로젝트명
             string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT title FROM projects WHERE current='1'");
             ProjectName = res[0][0];

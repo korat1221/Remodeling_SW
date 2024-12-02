@@ -654,8 +654,10 @@ namespace main.contents.Alt
             Wall_Old_dataGridView.Columns.Clear();
             Wall_Old_dataGridView.Columns.Add("A0", "번호");
             Wall_Old_dataGridView.Columns.Add("A1", "명칭");
-            Wall_Old_dataGridView.Columns.Add("A2", "유효열관류율.[W/m²·K]");
-            Wall_Old_dataGridView.Columns.Add("A3", "면적.[m²]");
+            string unit =  "W/m" +  Program.UTIL.Subscript(2, true) + "·K";
+            Wall_Old_dataGridView.Columns.Add("A2", "유효열관류율.["+ unit +"]");
+            unit =  "m" +  Program.UTIL.Subscript(2, true);
+            Wall_Old_dataGridView.Columns.Add("A3", "면적.["+ unit +"]");
             Wall_Old_dataGridView.Columns[0].Width = 40;
 
             string[][] List = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.번호,a.명칭,a.유효열관류율 From ConstructionWall as a  Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호");
@@ -693,8 +695,10 @@ namespace main.contents.Alt
 
             Wall_New_dataGridView.Columns.Add("A1", "번호");
             Wall_New_dataGridView.Columns.Add("A2", "명칭");
-            Wall_New_dataGridView.Columns.Add("A3", "유효열관류율.[W/m²·K]");
-            Wall_New_dataGridView.Columns.Add("A4", "면적.[m²]");
+            string unit =  "W/m" +  Program.UTIL.Subscript(2, true) + "·K";
+            Wall_New_dataGridView.Columns.Add("A2", "유효열관류율.["+ unit +"]");
+            unit =  "m" +  Program.UTIL.Subscript(2, true);
+            Wall_New_dataGridView.Columns.Add("A3", "면적.["+ unit +"]");
             Wall_New_dataGridView.Columns[0].Width = 40;
             Wall_New_dataGridView.Columns[1].Width = 40;
 
@@ -1004,8 +1008,10 @@ namespace main.contents.Alt
             Roof_Old_dataGridView.Columns.Clear();
             Roof_Old_dataGridView.Columns.Add("A0", "번호");
             Roof_Old_dataGridView.Columns.Add("A1", "명칭");
-            Roof_Old_dataGridView.Columns.Add("A2", "유효열관류율.[W/m²·K]");
-            Roof_Old_dataGridView.Columns.Add("A3", "면적.[m²]");
+            string unit =  "W/m" +  Program.UTIL.Subscript(2, true) + "·K";
+            Roof_Old_dataGridView.Columns.Add("A2", "유효열관류율.["+ unit +"]");
+            unit =  "m" +  Program.UTIL.Subscript(2, true);
+            Roof_Old_dataGridView.Columns.Add("A3", "면적.["+ unit +"]");
             Roof_Old_dataGridView.Columns[0].Width = 40;
 
             string[][] List = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.번호,a.명칭,a.유효열관류율 From ConstructionRoof as a  Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호");
@@ -1043,8 +1049,10 @@ namespace main.contents.Alt
 
             Roof_New_dataGridView.Columns.Add("A1", "번호");
             Roof_New_dataGridView.Columns.Add("A2", "명칭");
-            Roof_New_dataGridView.Columns.Add("A3", "유효열관류율.[W/m²·K]");
-            Roof_New_dataGridView.Columns.Add("A4", "면적.[m²]");
+            string unit =  "W/m" +  Program.UTIL.Subscript(2, true) + "·K";
+            Roof_New_dataGridView.Columns.Add("A2", "유효열관류율.["+ unit +"]");
+            unit =  "m" +  Program.UTIL.Subscript(2, true);
+            Roof_New_dataGridView.Columns.Add("A3", "면적.["+ unit +"]");
             Roof_New_dataGridView.Columns[0].Width = 40;
             Roof_New_dataGridView.Columns[1].Width = 40;
 
@@ -1345,8 +1353,10 @@ namespace main.contents.Alt
             Floor_Old_dataGridView.Columns.Clear();
             Floor_Old_dataGridView.Columns.Add("A0", "번호");
             Floor_Old_dataGridView.Columns.Add("A1", "명칭");
-            Floor_Old_dataGridView.Columns.Add("A2", "유효열관류율.[W/m²·K]");
-            Floor_Old_dataGridView.Columns.Add("A3", "면적.[m²]");
+            string unit =  "W/m" +  Program.UTIL.Subscript(2, true) + "·K";
+            Floor_Old_dataGridView.Columns.Add("A2", "유효열관류율.["+ unit +"]");
+            unit =  "m" +  Program.UTIL.Subscript(2, true);
+            Floor_Old_dataGridView.Columns.Add("A3", "면적.["+ unit +"]");
             Floor_Old_dataGridView.Columns[0].Width = 40;
 
             string[][] List = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.번호,a.명칭,a.유효열관류율 From ConstructionFloor as a  Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호");
@@ -1384,8 +1394,10 @@ namespace main.contents.Alt
 
             Floor_New_dataGridView.Columns.Add("A1", "번호");
             Floor_New_dataGridView.Columns.Add("A2", "명칭");
-            Floor_New_dataGridView.Columns.Add("A3", "유효열관류율.[W/m²·K]");
-            Floor_New_dataGridView.Columns.Add("A4", "면적.[m²]");
+            string unit =  "W/m" +  Program.UTIL.Subscript(2, true) + "·K";
+            Floor_New_dataGridView.Columns.Add("A2", "유효열관류율.["+ unit +"]");
+            unit =  "m" +  Program.UTIL.Subscript(2, true);
+            Floor_New_dataGridView.Columns.Add("A3", "면적.["+ unit +"]");
             Floor_New_dataGridView.Columns[0].Width = 40;
             Floor_New_dataGridView.Columns[1].Width = 40;
 
