@@ -781,7 +781,7 @@
             label24.Name = "label24";
             label24.Size = new Size(57, 15);
             label24.TabIndex = 163;
-            label24.Text = "kWh/m2";
+            label24.Text = "kWh/m" + Program.UTIL.Subscript(2, true);
             // 
             // webView21
             // 

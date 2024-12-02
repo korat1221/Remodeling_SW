@@ -50,7 +50,6 @@ namespace main.contents
                 pictureBox1.Load(Program.gPath + Image[0][0]);
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
-            label24.Text = "kWh/m"+ Program.UTIL.Subscript(2, true);
             string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             프로젝트유형 = value[0][0].ToString();
             Num = Num_textBox.Text;

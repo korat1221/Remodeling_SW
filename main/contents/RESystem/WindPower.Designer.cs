@@ -539,7 +539,7 @@
             label12.Name = "label12";
             label12.Size = new Size(19, 15);
             label12.TabIndex = 175;
-            label12.Text = "m2";
+            label12.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // label13
             // 
