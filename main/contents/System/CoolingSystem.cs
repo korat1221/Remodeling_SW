@@ -104,7 +104,6 @@ namespace main.contents
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-            label23.Text = "바닥면적[m" + Program.UTIL.Subscript(2, true) + "]";
             string[][] 프로젝트 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             if (프로젝트.Length > 0)
             {
