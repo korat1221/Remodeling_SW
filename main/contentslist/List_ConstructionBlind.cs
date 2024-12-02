@@ -95,7 +95,7 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A5", "색깔");
             dataGridView1.Columns.Add("A6", "투과수준");
             dataGridView1.Columns.Add("A7", "제어방식");
-            dataGridView1.Columns.Add("A8", "면적.[m²]");
+            dataGridView1.Columns.Add("A8", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
             dataGridView1.Columns[0].Width = 40;
         }
 

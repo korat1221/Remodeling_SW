@@ -76,7 +76,7 @@ namespace main.contentslist
             dataGridView1.Columns.Add(checkBoxColumn);
             dataGridView1.Columns.Add("A1", "번호");
             dataGridView1.Columns.Add("A2", "명칭");
-            dataGridView1.Columns.Add("A3", "면적.[m²]");
+            dataGridView1.Columns.Add("A3", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
             dataGridView1.Columns.Add("A4", "용량.[kW]");
             dataGridView1.Columns.Add("A5", "인버터효율.[%]");
             dataGridView1.Columns[0].Width = 40;

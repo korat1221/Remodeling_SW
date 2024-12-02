@@ -83,7 +83,7 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A1", "번호");
             dataGridView1.Columns.Add("A2", "명칭");
             dataGridView1.Columns.Add("A3", "용도프로필");
-            dataGridView1.Columns.Add("A4", "순바닥면적.[m²]");
+            dataGridView1.Columns.Add("A4", "순바닥면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
             dataGridView1.Columns.Add("A5", "천장고.[m]");
             dataGridView1.Columns[0].Width = 40;
         }

@@ -76,7 +76,7 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A1", "층");
             dataGridView1.Columns.Add("A2", "주요 용도프로필");
             dataGridView1.Columns.Add("A3", "존 개수.[EA]");
-            dataGridView1.Columns.Add("A4", "순바닥면적.[m²]");
+            dataGridView1.Columns.Add("A4", "순바닥면적.[m"+Program.UTIL.Subscript(2, true)+"]");
             dataGridView1.Columns.Add("A5", "평균 천장고.[m]");
             dataGridView1.Columns[0].Width = 40;
         }

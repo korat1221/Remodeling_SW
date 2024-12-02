@@ -94,16 +94,9 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A2", "명칭");
             dataGridView1.Columns.Add("A3", "Type");
             dataGridView1.Columns.Add("A4", "기초설치");
-            dataGridView1.Columns.Add("A5", "유효열관류율.[W/m²·K]");
-            dataGridView1.Columns.Add("A6", "면적.[m²]");
+            dataGridView1.Columns.Add("A5", "유효열관류율.[W/m"+Program.UTIL.Subscript(2, true)+"·K]");
+            dataGridView1.Columns.Add("A6", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
             dataGridView1.Columns[0].Width = 40;
-            //FloorList.Columns.Add("번호", typeof(string));
-            //FloorList.Columns.Add("명칭", typeof(string));
-            //FloorList.Columns.Add("Type", typeof(string));
-            //FloorList.Columns.Add("기초설치", typeof(string));
-            //FloorList.Columns.Add("유효열관류율" + Environment.NewLine + "[W/m²·K]", typeof(string));
-            //FloorList.Columns.Add("면적" + Environment.NewLine + "[m²]", typeof(string));
-            //dataGridView1.DataSource = FloorList;
         }
 
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)

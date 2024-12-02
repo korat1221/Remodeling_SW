@@ -93,22 +93,12 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A1", "번호");
             dataGridView1.Columns.Add("A2", "명칭");
             dataGridView1.Columns.Add("A3", "Type");
-            dataGridView1.Columns.Add("A4", "유효열관류율.[W/m²·K]");
+            dataGridView1.Columns.Add("A4", "유효열관류율.[W/m"+Program.UTIL.Subscript(2, true)+"·K]");
             dataGridView1.Columns.Add("A5", "태양열취득률.[-]");
             dataGridView1.Columns.Add("A6", "빛투과율.[-]");
             dataGridView1.Columns.Add("A7", "유리종류");
-            dataGridView1.Columns.Add("A8", "면적.[m²]");
+            dataGridView1.Columns.Add("A8", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
             dataGridView1.Columns.Add("A9", "개수.[EA]");
-            dataGridView1.Columns[0].Width = 40;
-            //CWList.Columns.Add("번호", typeof(string));
-            //CWList.Columns.Add("명칭", typeof(string));
-            //CWList.Columns.Add("Type", typeof(string));
-            //CWList.Columns.Add("유효열관류율" + Environment.NewLine + "[W/m²·K]", typeof(string));
-            //CWList.Columns.Add("태양열취득률" + Environment.NewLine + "[-]", typeof(string));
-            //CWList.Columns.Add("빛투과율" + Environment.NewLine + "[-]", typeof(string));
-            //CWList.Columns.Add("면적" + Environment.NewLine + "[m²]", typeof(string));
-            //CWList.Columns.Add("유리종류", typeof(string));
-            //dataGridView1.DataSource = CWList;
         }
 
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)

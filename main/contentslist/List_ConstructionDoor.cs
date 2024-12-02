@@ -90,9 +90,9 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A1", "번호");
             dataGridView1.Columns.Add("A2", "명칭");
             dataGridView1.Columns.Add("A3", "Type");
-            dataGridView1.Columns.Add("A4", "문유효열관류율.[W/m²·K]");
+            dataGridView1.Columns.Add("A4", "유효열관류율.[W/m"+Program.UTIL.Subscript(2, true)+"·K]");
             dataGridView1.Columns.Add("A5", "흡수율.[-]");
-            dataGridView1.Columns.Add("A6", "면적.[m²]");
+            dataGridView1.Columns.Add("A6", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
             dataGridView1.Columns.Add("A7", "개수.[EA]");
             dataGridView1.Columns[0].Width = 40;
         }
