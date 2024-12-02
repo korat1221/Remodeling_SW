@@ -57,7 +57,7 @@ namespace main.subcontents.RESystem_WP
             WP_dataGridView.Columns.Add("A5", "타입");
             WP_dataGridView.Columns.Add("A6", "세부타입");
             WP_dataGridView.Columns.Add("A7", "정격출력.[Kw]");
-            WP_dataGridView.Columns.Add("A8", "회전면적.[㎡]");
+            WP_dataGridView.Columns.Add("A8", "회전면적.[m"+Program.UTIL.Subscript(2, true)+"]");
             WP_dataGridView.Columns.Add("A9", "허브높이.[m]");
             WP_dataGridView.Columns.Add("A10", "시동풍속.[m/s]");
             WP_dataGridView.Columns.Add("A11", "최적풍속.[m/s]");
