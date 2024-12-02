@@ -132,7 +132,7 @@ namespace main.subcontents.Alt
             checkBoxColumn.Name = "check";
             Alt_dataGridView.Columns.Add(checkBoxColumn);
             Alt_dataGridView.Columns.Add("A1", "리모델링안");
-            Alt_dataGridView.Columns.Add("A2", "유효열관류율.[W/m²·K]");
+            Alt_dataGridView.Columns.Add("A2", "유효열관류율.[W/m"+Program.UTIL.Subscript(2, true)+"·K]");
             Alt_dataGridView.Columns.Add("A3", "종합 점수");
             Alt_dataGridView.Columns.Add("A4", "점수.에너지절감");
             Alt_dataGridView.Columns.Add("A5", "점수.쾌적성");
@@ -250,7 +250,7 @@ namespace main.subcontents.Alt
             Ucalc_dataGridView.Columns.Add("A1", "재료명         ");
             Ucalc_dataGridView.Columns.Add("A2", "열전도율.[W/m·K]");
             Ucalc_dataGridView.Columns.Add("A3", "두께.[mm]");
-            Ucalc_dataGridView.Columns.Add("A4", "열저항.[m²·K/W]");
+            Ucalc_dataGridView.Columns.Add("A4", "열저항.[m"+Program.UTIL.Subscript(2, true)+"·K/W]");
             Ucalc_dataGridView.Columns[0].Width = 40;
             Ucalc_dataGridView.Columns[2].Width = 70;
             Ucalc_dataGridView.Columns[3].Width = 70;
@@ -521,7 +521,7 @@ namespace main.subcontents.Alt
                     pictureBox2.Visible = false;
                 }
                 else { TB_textBox.Text = TB_Type + "_" + TBName; }
-                dU_textBox.Text = "열교가산치 : " + dU.ToString("0.00") + " W/m²·K";
+                dU_textBox.Text = "열교가산치 : " + dU.ToString("0.00") + " W/m"+Program.UTIL.Subscript(2, true)+"·K";
             }
         }
 
