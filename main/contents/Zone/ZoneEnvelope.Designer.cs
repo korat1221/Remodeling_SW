@@ -293,7 +293,7 @@ namespace main.contents
             label10.Name = "label10";
             label10.Size = new Size(66, 15);
             label10.TabIndex = 101;
-            label10.Text = "Wh/m²·K";
+            label10.Text = "Wh/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label9
             // 

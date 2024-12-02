@@ -960,7 +960,7 @@ namespace main.contents
             label63.Name = "label63";
             label63.Size = new Size(39, 15);
             label63.TabIndex = 106;
-            label63.Text = "m³/h";
+            label63.Text = "m"+Program.UTIL.Subscript(3, true)+"/h";
             // 
             // StartTime_comboBox
             // 
@@ -1016,7 +1016,7 @@ namespace main.contents
             label31.Name = "label31";
             label31.Size = new Size(66, 15);
             label31.TabIndex = 72;
-            label31.Text = "Wh/m²·d";
+            label31.Text = "Wh/m"+Program.UTIL.Subscript(2, true)+"·d";
             // 
             // EquipIHG_textBox
             // 
@@ -1062,7 +1062,7 @@ namespace main.contents
             label54.Name = "label54";
             label54.Size = new Size(25, 15);
             label54.TabIndex = 94;
-            label54.Text = "m³";
+            label54.Text = "m"+Program.UTIL.Subscript(3, true);
             // 
             // label33
             // 
@@ -1128,7 +1128,7 @@ namespace main.contents
             label55.Name = "label55";
             label55.Size = new Size(25, 15);
             label55.TabIndex = 91;
-            label55.Text = "m²";
+            label55.Text = "m"+Program.UTIL.Subscript(2, true);
             // 
             // label35
             // 
@@ -1139,7 +1139,7 @@ namespace main.contents
             label35.Name = "label35";
             label35.Size = new Size(66, 15);
             label35.TabIndex = 65;
-            label35.Text = "Wh/m²·d";
+            label35.Text = "Wh/m"+Program.UTIL.Subscript(2, true)+"·d";
             // 
             // PersonIHG_textBox
             // 
@@ -1174,7 +1174,7 @@ namespace main.contents
             label24.Name = "label24";
             label24.Size = new Size(43, 15);
             label24.TabIndex = 62;
-            label24.Text = "m²/인";
+            label24.Text = "m"+Program.UTIL.Subscript(2, true)+"/인";
             // 
             // OccupancyDensity_textBox
             // 
@@ -1417,7 +1417,7 @@ namespace main.contents
             label51.Name = "label51";
             label51.Size = new Size(24, 15);
             label51.TabIndex = 101;
-            label51.Text = "m²";
+            label51.Text = "m"+Program.UTIL.Subscript(2, true);
             // 
             // textBox9
             // 
