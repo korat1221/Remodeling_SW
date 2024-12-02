@@ -130,7 +130,7 @@
             label5.Name = "label5";
             label5.Size = new Size(40, 15);
             label5.TabIndex = 94;
-            label5.Text = "kg/m³";
+            label5.Text = "kg/m"+Program.UTIL.Subscript(3, true);
             // 
             // label10
             // 

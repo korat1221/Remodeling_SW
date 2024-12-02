@@ -552,7 +552,7 @@ namespace main.subcontents.ConstructionWindow
             label35.Name = "label35";
             label35.Size = new Size(58, 15);
             label35.TabIndex = 85;
-            label35.Text = "W/m²·K";
+            label35.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // Uw_inst_textBox
             // 
@@ -588,7 +588,7 @@ namespace main.subcontents.ConstructionWindow
             Uw_unit_label.Name = "Uw_unit_label";
             Uw_unit_label.Size = new Size(58, 15);
             Uw_unit_label.TabIndex = 79;
-            Uw_unit_label.Text = "W/m²·K";
+            Uw_unit_label.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // Uw_label
             // 
@@ -866,7 +866,7 @@ namespace main.subcontents.ConstructionWindow
             Ug_unit_label.Name = "Ug_unit_label";
             Ug_unit_label.Size = new Size(58, 15);
             Ug_unit_label.TabIndex = 64;
-            Ug_unit_label.Text = "W/m²·K";
+            Ug_unit_label.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // Ug_textBox
             // 
@@ -1522,7 +1522,7 @@ namespace main.subcontents.ConstructionWindow
             label58.Name = "label58";
             label58.Size = new Size(25, 15);
             label58.TabIndex = 152;
-            label58.Text = "m²";
+            label58.Text = "m"+Program.UTIL.Subscript(2, true);
             // 
             // label59
             // 
@@ -1594,7 +1594,7 @@ namespace main.subcontents.ConstructionWindow
             label62.Name = "label62";
             label62.Size = new Size(25, 15);
             label62.TabIndex = 146;
-            label62.Text = "m²";
+            label62.Text = "m"+Program.UTIL.Subscript(2, true);
             // 
             // label63
             // 
@@ -1605,7 +1605,7 @@ namespace main.subcontents.ConstructionWindow
             label63.Name = "label63";
             label63.Size = new Size(25, 15);
             label63.TabIndex = 145;
-            label63.Text = "m²";
+            label63.Text = "m"+Program.UTIL.Subscript(2, true);
             // 
             // label64
             // 
@@ -1666,7 +1666,7 @@ namespace main.subcontents.ConstructionWindow
             label54.Name = "label54";
             label54.Size = new Size(25, 15);
             label54.TabIndex = 140;
-            label54.Text = "m²";
+            label54.Text = "m"+Program.UTIL.Subscript(2, true);
             // 
             // label55
             // 
@@ -1702,7 +1702,7 @@ namespace main.subcontents.ConstructionWindow
             label52.Name = "label52";
             label52.Size = new Size(25, 15);
             label52.TabIndex = 137;
-            label52.Text = "m²";
+            label52.Text = "m"+Program.UTIL.Subscript(2, true);
             // 
             // label53
             // 
@@ -1738,7 +1738,7 @@ namespace main.subcontents.ConstructionWindow
             label46.Name = "label46";
             label46.Size = new Size(25, 15);
             label46.TabIndex = 134;
-            label46.Text = "m²";
+            label46.Text = "m"+Program.UTIL.Subscript(2, true);
             // 
             // label47
             // 
@@ -1930,7 +1930,7 @@ namespace main.subcontents.ConstructionWindow
             Uw3_unit_label.Name = "Uw3_unit_label";
             Uw3_unit_label.Size = new Size(58, 15);
             Uw3_unit_label.TabIndex = 150;
-            Uw3_unit_label.Text = "W/m²·K";
+            Uw3_unit_label.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // Uw3_label
             // 

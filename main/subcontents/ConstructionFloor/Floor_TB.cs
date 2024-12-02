@@ -207,7 +207,7 @@ namespace main.subcontents.ConstructionFloor
                     PerArea = 0;
                 }
                 PerArea_label1.Text = "적용개수";
-                PerArea_label2.Text = "EA/m²";
+                PerArea_label2.Text = "EA/m"+Program.UTIL.Subscript(2, true);
             }
             else
             {
@@ -215,7 +215,7 @@ namespace main.subcontents.ConstructionFloor
                 {
                     PerArea = 1 / Math.Max(dx, dy);
                     PerArea_label1.Text = "적용길이";
-                    PerArea_label2.Text = "m/m²";
+                    PerArea_label2.Text = "m/m"+Program.UTIL.Subscript(2, true);
                 }
             }
             PerArea_textBox.Text = string.Format("{0:F3}", PerArea);

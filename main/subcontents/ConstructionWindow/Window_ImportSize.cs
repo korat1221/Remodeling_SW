@@ -84,14 +84,14 @@ namespace main.subcontents
             Size_dataGridView.Columns.Add(checkBoxColumn);
 
             Size_dataGridView.Columns.Add("A1", "창호명칭");
-            Size_dataGridView.Columns.Add("A2", "창호전체.면적.[m²]");
+            Size_dataGridView.Columns.Add("A2", "창호전체.면적.[m"+Program.UTIL.Subscript(2, true)+"]");
             Size_dataGridView.Columns.Add("A3", "창호전체.너비.[m]");
             Size_dataGridView.Columns.Add("A4", "창호전체.높이.[m]");
-            Size_dataGridView.Columns.Add("A5", "유리면적.고정창.[m²]");
-            Size_dataGridView.Columns.Add("A6", "유리면적.개폐창.[m²]");
-            Size_dataGridView.Columns.Add("A7", "프레임면적.개폐프레임.[m²]");
-            Size_dataGridView.Columns.Add("A8", "프레임면적.고정프레임.[m²]");
-            Size_dataGridView.Columns.Add("A9", "프레임면적.중간프레임.[m²]");
+            Size_dataGridView.Columns.Add("A5", "유리면적.고정창.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A6", "유리면적.개폐창.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A7", "프레임면적.개폐프레임.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A8", "프레임면적.고정프레임.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A9", "프레임면적.중간프레임.[m"+Program.UTIL.Subscript(2, true)+"]");
             Size_dataGridView.Columns.Add("A10", "유리 둘레길이.고정창.[m]");
             Size_dataGridView.Columns.Add("A11", "유리 둘레길이.개폐창.[m]");
 

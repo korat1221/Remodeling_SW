@@ -91,7 +91,7 @@ namespace main.subcontents
             Door_dataGridView.Columns.Add("A13", "문짝.두께.[mm]");
             Door_dataGridView.Columns.Add("A14", "문짝치수.가로.[mm]");
             Door_dataGridView.Columns.Add("A15", "문짝치수.세로.[mm]");
-            Door_dataGridView.Columns.Add("A16", "문열관류율.[W/㎡∙K]");
+            Door_dataGridView.Columns.Add("A16", "문열관류율.[W/m"+Program.UTIL.Subscript(2, true)+"∙K]");
             Door_dataGridView.Columns[0].Width = 20;
             Door_dataGridView.Columns[1].Width = 50;
             Door_dataGridView.Columns[2].Width = 60;

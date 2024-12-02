@@ -208,7 +208,7 @@
             Ueff_label2.Name = "Ueff_label2";
             Ueff_label2.Size = new Size(51, 15);
             Ueff_label2.TabIndex = 133;
-            Ueff_label2.Text = "W/m²·K";
+            Ueff_label2.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // label2
             // 

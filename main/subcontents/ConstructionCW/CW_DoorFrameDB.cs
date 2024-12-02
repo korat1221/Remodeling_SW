@@ -47,7 +47,7 @@ namespace main.subcontents.ConstructionCW
             Door_dataGridView.Columns.Add("A3", "제품명");
             Door_dataGridView.Columns.Add("A4", "제조사");
             Door_dataGridView.Columns.Add("A5", "구분");
-            Door_dataGridView.Columns.Add("A6", "프레임.열관류율.Uf,d\r\n[W/m²·K]");
+            Door_dataGridView.Columns.Add("A6", "프레임.열관류율.Uf,d\r\n[W/m"+Program.UTIL.Subscript(2, true)+"·K]");
             Door_dataGridView.Columns.Add("A7", "프레임.두께.dd\r\n[m]");
          
                 string[][] User_CWDoorFrame = Program.DB.getValue(DB.type.ProjDB, "User_CWDoorFrame", "번호,DB유형,제품명,제조사,구분,프레임열관류율,프레임두께", "");

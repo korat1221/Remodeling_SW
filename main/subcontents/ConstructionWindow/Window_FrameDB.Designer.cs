@@ -200,7 +200,7 @@ namespace main.subcontents
             label31.Name = "label31";
             label31.Size = new Size(48, 15);
             label31.TabIndex = 159;
-            label31.Text = "W/m²·K";
+            label31.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // UserDB_UfC_textBox
             // 
@@ -230,7 +230,7 @@ namespace main.subcontents
             label26.Name = "label26";
             label26.Size = new Size(48, 15);
             label26.TabIndex = 163;
-            label26.Text = "W/m²·K";
+            label26.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // UserDB_UfA_textBox
             // 
@@ -334,7 +334,7 @@ namespace main.subcontents
             label27.Name = "label27";
             label27.Size = new Size(48, 15);
             label27.TabIndex = 162;
-            label27.Text = "W/m²·K";
+            label27.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // panel2
             // 
@@ -464,7 +464,7 @@ namespace main.subcontents
             label29.Name = "label29";
             label29.Size = new Size(48, 15);
             label29.TabIndex = 113;
-            label29.Text = "W/m²·K";
+            label29.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // label8
             // 
@@ -513,7 +513,7 @@ namespace main.subcontents
             label17.Name = "label17";
             label17.Size = new Size(48, 15);
             label17.TabIndex = 120;
-            label17.Text = "W/m²·K";
+            label17.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // UserDB_PsiFix_textBox
             // 
@@ -552,7 +552,7 @@ namespace main.subcontents
             label19.Name = "label19";
             label19.Size = new Size(48, 15);
             label19.TabIndex = 125;
-            label19.Text = "W/m²·K";
+            label19.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // UserDB_FrameType_comboBox
             // 
@@ -745,7 +745,7 @@ namespace main.subcontents
             label14.Name = "label14";
             label14.Size = new Size(48, 15);
             label14.TabIndex = 170;
-            label14.Text = "W/m²·K";
+            label14.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // Import_button
             // 

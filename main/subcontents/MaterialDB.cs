@@ -63,7 +63,7 @@ namespace main.subcontents
             dataGridView.Columns.Add("A4", "종류1");
             dataGridView.Columns.Add("A5", "종류2");
             dataGridView.Columns.Add("A6", "λ열전도율.[W/m·K]");
-            dataGridView.Columns.Add("A7", "ρ밀도.[kg/m³]");
+            dataGridView.Columns.Add("A7", "ρ밀도.[kg/m"+Program.UTIL.Subscript(3, true) + "]");
             dataGridView.Columns.Add("A8", "с비열.[kJ/kg·K]");
             dataGridView.Columns.Add("A9", "투습저항계수.dry");
             dataGridView.Columns.Add("A10", "투습저항계수.wet");

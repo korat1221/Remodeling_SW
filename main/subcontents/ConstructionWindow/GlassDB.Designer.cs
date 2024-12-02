@@ -394,7 +394,7 @@ namespace main.subcontents
             label11.Name = "label11";
             label11.Size = new Size(48, 15);
             label11.TabIndex = 48;
-            label11.Text = "W/m²·K";
+            label11.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // label9
             // 

@@ -91,19 +91,19 @@ namespace main.subcontents
             Size_dataGridView.Columns.Add(checkBoxColumn);
 
             Size_dataGridView.Columns.Add("A1", "명칭");
-            Size_dataGridView.Columns.Add("A2", "커튼월전체.면적.[m²]");
+            Size_dataGridView.Columns.Add("A2", "커튼월전체.면적.[m"+Program.UTIL.Subscript(2, true)+"]");
             Size_dataGridView.Columns.Add("A3", "커튼월전체.너비.[m]");
             Size_dataGridView.Columns.Add("A4", "커튼월전체.높이.[m]");
-            Size_dataGridView.Columns.Add("A5", "유리.고정창 면적.[m²]");
-            Size_dataGridView.Columns.Add("A6", "유리.개폐창 면적.[m²]");
+            Size_dataGridView.Columns.Add("A5", "유리.고정창 면적.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A6", "유리.개폐창 면적.[m"+Program.UTIL.Subscript(2, true)+"]");
             Size_dataGridView.Columns.Add("A5", "유리.고정창 둘레길이.[m]");
             Size_dataGridView.Columns.Add("A6", "유리.개폐창 둘레길이.[m]");
-            Size_dataGridView.Columns.Add("A7", "패널.면적.[m²]");
+            Size_dataGridView.Columns.Add("A7", "패널.면적.[m"+Program.UTIL.Subscript(2, true)+"]");
             Size_dataGridView.Columns.Add("A8", "패널.둘레길이.[m]");
-            Size_dataGridView.Columns.Add("A9", "프레임.M/T면적.[m²]");
-            Size_dataGridView.Columns.Add("A10", "프레임.개폐면적.[m²]");
-            Size_dataGridView.Columns.Add("A11", "출입문.프레임면적.[m²]");
-            Size_dataGridView.Columns.Add("A12", "출입문.유리면적.[m²]");
+            Size_dataGridView.Columns.Add("A9", "프레임.M/T면적.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A10", "프레임.개폐면적.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A11", "출입문.프레임면적.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A12", "출입문.유리면적.[m"+Program.UTIL.Subscript(2, true)+"]");
             Size_dataGridView.Columns.Add("A13", "출입문.둘레길이.[m]");
 
             string[][] CWSize = Program.DB.getValue(DB.type.ProjDB, "Import_CWSize", "명칭,커튼월면적,너비,높이,고정창유리면적,개폐창유리면적,고정창유리둘레길이,개폐창유리둘레길이,패널면적,패널둘레길이,M_T프레임면적,개폐창프레임면적,출입문프레임면적,출입문유리면적,출입문유리둘레길이");
