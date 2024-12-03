@@ -334,7 +334,7 @@ Zoning.prototype = {
                 j = -1;
 
                 while(++j < el.userData.poss.length) {
-                    obj.add(_getStructMesh(el.userData.poss[j].pos, 0xaaa));
+                   obj.add(_getStructMesh(el.userData.poss[j].pos, 0xaaa));
                 }
                 _collectLines(id);
             }

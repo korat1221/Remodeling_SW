@@ -64,6 +64,8 @@
 		<script src="js/libs/ternjs/doc_comment.js"></script>
 		<script src="js/libs/tern-threejs/threejs.js"></script>
 		<script src="js/libs/signals.min.js"></script>
+		<script src="/js/jquery-3.6.0.min.js"></script>
+		<script src="/js/b64.js"></script>
 
 		<script type="module">
 
@@ -151,6 +153,8 @@
 				let objFile = "/projects/" + pid + ".obj";				
 				let jsonFile = "/projects/" + pid + ".json";				
 
+				editor.pid = pid;
+
 				loader.load(
 					"app.json",
 					function (text) {
@@ -185,10 +189,11 @@
 									editor.cardinalMark.draw();
 								});
 							},null, function () {
+
 								loader.load(
 									jsonFile,
 									function (text) {
-										editor.fromJSON(JSON.parse(text));
+										editor.loadJSON(JSON.parse(text));
 										editor.cardinalMark.draw();
 									},null, function () {
 									});

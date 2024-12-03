@@ -47,12 +47,9 @@ app.post('/upload', (req, res) => {
     return sval;
   }
 
-  let path0 = __dirname + "/models/" + _getParam("pid");
-  let path = path0 + "/model.json";
+  let path = __dirname + "/projects/" + _getParam("pid") + ".json";
 
-  fs.mkdirSync(path0, { recursive: true });
-
-  fs.writeFile(path,_getParam("json"),function(err){
+  fs.writeFile(path,Buffer.from(_getParam("json"),'base64').toString('utf8'),function(err){
     if (err === null) {
         res.json({"res":"success"});
     } else {

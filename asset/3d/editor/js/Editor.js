@@ -7,6 +7,7 @@ import { Strings } from './Strings.js';
 import { Storage as _Storage } from './Storage.js';
 import { Selector } from './Selector.js';
 import { CardinalMark } from './CardinalMark.js';
+import { AddObjectCommand } from './commands/AddObjectCommand.js';
 
 var _DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.01, 1000 );
 _DEFAULT_CAMERA.name = 'Camera';
@@ -133,7 +134,9 @@ function Editor() {
 	this.viewportShading = 'default';
 
 	this.addCamera( this.camera );
-	
+
+	this.pid = "";
+
 }
 
 Editor.prototype = {
@@ -633,6 +636,83 @@ Editor.prototype = {
 	},
 
 	//
+	loadJSON: function ( data ) {
+
+		if ( data.metadata === undefined ) { // 2.0
+
+			data.metadata = { type: 'Geometry' };
+
+		}
+
+		if ( data.metadata.type === undefined ) { // 3.0
+
+			data.metadata.type = 'Geometry';
+
+		}
+
+		if ( data.metadata.formatVersion !== undefined ) {
+
+			data.metadata.version = data.metadata.formatVersion;
+
+		}
+
+		switch ( data.metadata.type.toLowerCase() ) {
+
+			case 'buffergeometry':
+
+			{
+
+				const loader = new THREE.BufferGeometryLoader();
+				const result = loader.parse( data );
+
+				const mesh = new THREE.Mesh( result );
+
+				this.execute( new AddObjectCommand( this, mesh ) );
+
+				break;
+
+			}
+
+			case 'geometry':
+
+				console.error( 'Loader: "Geometry" is no longer supported.' );
+
+				break;
+
+			case 'object':
+
+			{
+
+				let that = this;
+				const loader = new THREE.ObjectLoader();
+				loader.setResourcePath( loader.texturePath );
+
+				loader.parse( data, function ( result ) {
+
+					if ( result.isScene ) {
+
+						that.execute( new SetSceneCommand( that, result ) );
+
+					} else {
+
+						that.execute( new AddObjectCommand( that, result ) );
+
+					}
+
+				} );
+
+				break;
+
+			}
+
+			case 'app':
+
+			this.fromJSON( data );
+
+				break;
+
+		}
+	},
 
 	fromJSON: async function ( json ) {
 
