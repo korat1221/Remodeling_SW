@@ -900,13 +900,13 @@ class OBJLoader extends Loader {
 
 		}
 
-		new Zoning(editor).calc(container);
+		let sql = new Zoning(editor).calc(container);
 
 		$.ajax ({
             type:"POST",
             url:"/upload",
             async: true,
-            data:"r="+Math.random() + "&pid=" + editor.pid + "&json=" + Base64.encode(JSON.stringify( container.toJSON())),
+            data:"r="+Math.random() + "&pid=" + editor.pid + "&json=" + Base64.encode(JSON.stringify( container.toJSON())) + "&sql=" + Base64.encode(sql),
             dataType:"text",
             success: function (data) {
 //                alert('111');

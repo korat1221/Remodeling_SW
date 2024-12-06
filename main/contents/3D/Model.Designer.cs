@@ -35,6 +35,7 @@
             Import_button = new Button();
             Export_button = new Button();
             timer1 = new System.Windows.Forms.Timer(components);
+            tmSQLExec = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -119,6 +120,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "Model";
             Text = "Form3";
+            VisibleChanged += Model_VisibleChanged;
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             splitContainer1.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
@@ -133,5 +135,6 @@
         private Button Import_button;
         private Button Export_button;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer tmSQLExec;
     }
 }

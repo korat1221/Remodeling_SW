@@ -10,15 +10,6 @@ Zoning.prototype = {
         const box = new Box3().setFromObject( obj );
         const center = box.getCenter( new Vector3() );
         const offset = new Vector3(obj.position.x - center.x, 0, obj.position.z - center.z);
-        let _getArea = (a) => {
-            var i = 0, _area = 0;
-    
-            while(++i < a.length - 1) {
-                _area += (new THREE.Triangle(a[0],a[i],a[i + 1])).getArea();
-            }
-    
-            return _area;
-        };
         let _asSlope = (x, y, z) => {
             return (Math.acos(y / Math.sqrt(x * x + y * y + z * z)) * 180) / Math.PI;
         };
@@ -96,7 +87,7 @@ Zoning.prototype = {
     
             for(var i = 0; i < a.length; i++) {
                 for(var j = 0; j < b.length; j++) {
-                    if (_equalPoint(a[i], b[j])) ret.push(a[i]);
+                    if (_equalPoint(a[i], b[j]) && !ret.find(el => _equalPoint(el, a[i]))) ret.push(a[i]);
                 }
             }
     
@@ -139,9 +130,7 @@ Zoning.prototype = {
                     _pos.push(new THREE.Vector3(pos.array[i + j],pos.array[i + j + 1],pos.array[i + j + 2]));
                 }
     
-                let _area = _getArea(_pos);
-    
-                if (_area > 0) {
+                if ((new THREE.Triangle(_pos[0],_pos[1],_pos[2])).getArea() > 0) {
                     let _slope = 0;
                     let _cardinal = 0;
                     let _nom = [0,0,0];
@@ -160,7 +149,7 @@ Zoning.prototype = {
         
                     _slope /= 3;
     
-                    poss.push({cardi:_cardinal, pos:_pos});
+                    poss.push({cardi:_cardinal, slope:_slope, pos:_pos});
                 }
             }
 
@@ -196,6 +185,15 @@ Zoning.prototype = {
             while(++_i < __poss.length) {
                 let el3 = __poss[_i];
 
+//                if (id != id2 || _i != idx) {
+  //                  let ss = _getSamePoints(el3.pos, __pos);
+
+    //                if (ss.length > 2) {
+      //                  console.log("samepoints",_getSamePoints(el3.pos, __pos));
+        //            }
+   
+          //      }
+
                 _j = -1;
                 while(++_j < el3.pos.length) {
                     _k = -1;
@@ -211,9 +209,9 @@ Zoning.prototype = {
             let n = -1;
 
             while(++n < zones[id].userData.poss.length) {
-                let edges = zones[id].userData.poss[n].edges;
+                zones[id].userData.poss[n].edges = [];
 
-                edges = [];
+                let edges = zones[id].userData.poss[n].edges;
 
                 for (const [_id, _el2] of Object.entries(zones)) {
                     _getEdges(edges, _id, id, n);
@@ -325,8 +323,6 @@ Zoning.prototype = {
                 }     
             }
 
-            console.log(zones);
-
             for (const [id, el] of Object.entries(zones)) {
                     
                 _findWalls(el.userData.poss);
@@ -338,11 +334,31 @@ Zoning.prototype = {
                 }
                 _collectLines(id);
             }
-    
+
+            console.log(zones);
+
             obj.position.copy( offset );
             obj.updateMatrixWorld( true );    
         }
+
+        return "SELECT NOW();";
 	},
 };
 
 export { Zoning };
+/*
+let polygon = entity.polygon;
+let hierarchy = polygon.hierarchy._value;
+let indices = Cesium.PolygonPipeline.triangulate(hierarchy.positions, hierarchy.holes);
+let area = 0;
+for (let i = 0; i < indices.length; i += 3) {
+    let vector1 = hierarchy.positions[indices[i]];
+    let vector2 = hierarchy.positions[indices[i+1]];
+    let vector3 = hierarchy.positions[indices[i+2]];			
+    let vectorC = Cesium.Cartesian3.subtract(vector2, vector1, new Cesium.Cartesian3());
+    let vectorD = Cesium.Cartesian3.subtract(vector3, vector1, new Cesium.Cartesian3());			
+    let areaVector = Cesium.Cartesian3.cross(vectorC, vectorD, new Cesium.Cartesian3());			
+    area += Cesium.Cartesian3.magnitude(areaVector)/2.0;
+}
+
+*/

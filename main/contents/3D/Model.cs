@@ -36,6 +36,7 @@ using System.Timers;
 using System.Drawing.Imaging;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 using System.Security.Cryptography;
+using System.Reflection.Emit;
 
 
 namespace main.contents
@@ -85,6 +86,9 @@ namespace main.contents
             await webView21.EnsureCoreWebView2Async(null);
             webView21.CoreWebView2.WebMessageReceived += OnJSMessage;
             webView21.CoreWebView2.NavigationCompleted += OnNaviCompleted;
+
+            tmSQLExec.Interval = 200;
+            tmSQLExec.Tick += new EventHandler(tmSQLExecTick);
         }
         public void DoLoadForm(int idx)
         {
@@ -104,6 +108,49 @@ namespace main.contents
                 ticked = true;
 
                 MessageBox.Show("치수 정밀도가 훼손된 모델입니다. 치수 정밀도 훼손 원인은 모델 생성 작업시 모델 회전 작업이 포함된 경우입니다.", "인식이 불완전하게 되었습니다.", MessageBoxButtons.OK);
+            }
+        }
+        private void tmSQLExecTick(object sender, EventArgs e)
+        {
+            String path = Program.gPath + "projects\\execute.sql";
+
+            if (File.Exists(path))
+            {
+                try
+                {
+                    String sql = File.ReadAllText(Program.gPath + "projects\\execute.sql");
+
+                    File.Delete(path);
+
+                    Program.DB.executeSQL(DB.type.ProjDB, sql);
+                    Program.DB.deleteTable(DB.type.ProjDB, "Shade_3D");
+
+                    string[][] Win = Program.DB.querySQL(DB.type.ProjDB, "Select 번호 From ZoneEnvelope_3D Where 외피유형 = '창호' or 외피유형 = '커튼월창' Order by 번호");
+                    if (Win.Length > 0)
+                    {
+                        for (int k = 0; k < Win.Length; k++)
+                        {
+                            ZoneShade zoneshade = new ZoneShade(Win[k][0]);
+                            zoneshade.Calc_방위각();
+                            zoneshade.Calc_지형물음영();
+
+                            zoneshade.Calc_상부음영();
+                            zoneshade.Calc_좌측음영();
+                            zoneshade.Calc_우측음영();
+                            zoneshade.Calc_음영계수();
+                            zoneshade.Save();
+                        }
+                    }
+                    resetZoneDraw();
+                    Program.DB.saveProject();
+
+                    runScript("location.reload();");
+
+                    Program.UTIL.loadMainMenu(2);
+                }
+                catch
+                {
+                }
             }
         }
 
@@ -631,5 +678,9 @@ namespace main.contents
             }
         }
 
+        private void Model_VisibleChanged(object sender, EventArgs e)
+        {
+            tmSQLExec.Enabled = Visible;
+        }
     }
 }
