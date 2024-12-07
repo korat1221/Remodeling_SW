@@ -111,29 +111,7 @@ Zoning.prototype = {
             }
             return done;
         };
-//         let _nomalizeWalls = (poss) => {
-//             let i = -1, j, k;
-    
-//             while(++i < poss.length) {
-//                 let po = poss[i];
 
-//                 j = 0;
-//                 while(j < po.pos.length) {
-//                     k = po.pos.length - 4;
-//                     while(k > j) {
-//                         if (_getSamePoints([po.pos[j], po.pos[j + 1], po.pos[j + 2]],[po.pos[k], po.pos[k + 1], po.pos[k + 2]]) == 3) {
-
-//     //                    }
-// //                        if ((new THREE.Triangle( po.pos[j], po.pos[j + 1], po.pos[j + 2])).equals(
-//   //                      new THREE.Triangle( po.pos[k], po.pos[k + 1], po.pos[k + 2]))) {
-//                             poss.splice(k,3);
-//                         }
-//                         k -= 3;
-//                     }
-//                     j += 3;
-//                 }
-//             }
-//         };
         let _getArea = (pos) => {
             let i = 0, ret = 0;
     
@@ -215,28 +193,43 @@ Zoning.prototype = {
             return (_equalPoint(a[0],b[0]) && _equalPoint(a[1],b[1])) ||
             (_equalPoint(a[0],b[1]) && _equalPoint(a[1],b[0]));
         };
-    
-        let _getEdges = (edges, id, id2, idx) => {
-            let _i = -1, _j, _k;
-            let __pos = zones[id2].userData.poss[idx].pos;
-            let __poss = zones[id].userData.poss;
- 
-            while(++_i < __poss.length) {
-                let el3 = __poss[_i];
-                if (id != id2 || _i != idx) {
-                    _j = -1;
-                    while(++_j < el3.pos.length - 1) {
-                        let ln0 = [el3.pos[_j],el3.pos[_j + 1]];
-                        _k = -1;
-                        while(++_k < __pos.length - 1) {
-                            let ln = [__pos[_k],__pos[_k + 1]];
-    
-                            if (_equalLine(ln0,ln) && !edges.find(el4 => _equalLine(el4, ln))) {
-                                edges.push(ln);
-                            }    
-                        }
-                    }
+
+        let _unionLine = (a, b) => {
+
+			if (_equalPoint(a[0],b[0])) {                
+                if ((new THREE.Triangle(a[1], a[0], b[1])).getArea() < 0.00001) {
+                    return [a[1],b[1]];
                 }
+			}
+			else if (_equalPoint(a[0],b[1])) {
+                if ((new THREE.Triangle(a[1], a[0], b[0])).getArea() < 0.00001) {
+                    return [a[1],b[1]];
+                }
+			}
+			else if (_equalPoint(a[1],b[0])) {
+                if ((new THREE.Triangle(a[0], a[1], b[1])).getArea() < 0.00001) {
+                    return [a[1],b[1]];
+                }
+			}
+			else if (_equalPoint(a[1],b[1])) {
+                if ((new THREE.Triangle(a[0], a[1], b[0])).getArea() < 0.00001) {
+                    return [a[1],b[1]];
+                }
+			}
+			return null;
+		};
+        let _counterCardi = (a,b) => {
+            return !!(
+                (a === 'UP' && b === 'DOWN') || (a === 'DOWN' && b === 'UP') ||
+                (a === 'S' && b === 'N') || (a === 'N' && b === 'S') ||
+                (a === 'W' && b === 'E') || (a === 'E' && b === 'W') ||
+                (a === 'NE' && b === 'SW') || (a === 'SW' && b === 'NE') ||
+                (a === 'NW' && b === 'SE') || (a === 'SE' && b === 'NW')
+            );
+        };
+        let _addLine = (ret, line) => {
+            if (!ret.find(_el => _equalLine(_el, line))) {
+                ret.push(line);
             }
         };
         let _getLines = (pos) => {
@@ -244,15 +237,15 @@ Zoning.prototype = {
             let ret = [];
 
             while(i < pos.length) {
-                ret.push([pos[i], pos[i + 1]]);
-                ret.push([pos[i + 1], pos[i + 2]]);
-                ret.push([pos[i + 2], pos[i]]);
+                _addLine(ret, [pos[i], pos[i + 1]]);
+                _addLine(ret, [pos[i + 1], pos[i + 2]]);
+                _addLine(ret, [pos[i + 2], pos[i]]);
                 i += 3;
             }
             return ret;
         };
         let _collectLines = () => {
-            let n = -1, a, b;
+            let n = -1, a, b, c;
             let lines = {};
 
             for (const [id, el] of Object.entries(zones)) {
@@ -262,9 +255,6 @@ Zoning.prototype = {
 
                     if (!lines[id]) lines[id] = {};
                     lines[id][n] = _getLines(zones[id].userData.poss[n].pos);
-
-                    // 머지할수 있는 라인들 머지
-        //            console.log(lines[id][n]);
                 }
             }
 
@@ -272,6 +262,7 @@ Zoning.prototype = {
                 for (const [id2, el2] of Object.entries(lines[id1])) {
                     let edges = zones[id1].userData.poss[id2].edges;
                     let cardi = zones[id1].userData.poss[id2].cardi;
+                    let pos = zones[id1].userData.poss[id2].pos;
 
                     for (const [id3, el3] of Object.entries(lines)) {
                         for (const [id4, el4] of Object.entries(lines[id3])) {
@@ -280,9 +271,11 @@ Zoning.prototype = {
                                 a = -1;
                                 while(++a < el2.length) {
                                     b = -1;
-                                    while(++b < el4.length) {                
-                                        if (cardi != cardi2 && _equalLine(el2[a],el4[b]) && !edges.find(el5 => _equalLine(el5, el4[b]))) {
-                                            edges.push(el4[b]); // 대각선 라인 제외 (같은 존에서 교체하지 않는 라인 제외)
+                                    while(++b < el4.length) {      
+                                        if (cardi !== cardi2 && !_counterCardi(cardi,cardi2) && 
+                                            ((c = _unionLine(el2[a],el4[b])) !== null && pos.find(_el => _equalPoint(_el, c[0])) && pos.find(_el => _equalPoint(_el, c[1]))) && 
+                                            !edges.find(el5 => _equalLine(el5, el4[b]))) {
+                                            edges.push(c); 
                                         }    
                                     }
                                 }            
