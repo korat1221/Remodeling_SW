@@ -218,15 +218,6 @@ Zoning.prototype = {
 			}
 			return null;
 		};
-        let _counterCardi = (a,b) => {
-            return !!(
-                (a === 'UP' && b === 'DOWN') || (a === 'DOWN' && b === 'UP') ||
-                (a === 'S' && b === 'N') || (a === 'N' && b === 'S') ||
-                (a === 'W' && b === 'E') || (a === 'E' && b === 'W') ||
-                (a === 'NE' && b === 'SW') || (a === 'SW' && b === 'NE') ||
-                (a === 'NW' && b === 'SE') || (a === 'SE' && b === 'NW')
-            );
-        };
         let _addLine = (ret, line) => {
             if (!ret.find(_el => _equalLine(_el, line))) {
                 ret.push(line);
@@ -257,29 +248,23 @@ Zoning.prototype = {
                     lines[id][n] = _getLines(zones[id].userData.poss[n].pos);
                 }
             }
-
+            
             for (const [id1, el1] of Object.entries(lines)) {
                 for (const [id2, el2] of Object.entries(lines[id1])) {
                     let edges = zones[id1].userData.poss[id2].edges;
                     let cardi = zones[id1].userData.poss[id2].cardi;
-                    let pos = zones[id1].userData.poss[id2].pos;
 
-                    for (const [id3, el3] of Object.entries(lines)) {
-                        for (const [id4, el4] of Object.entries(lines[id3])) {
-                            if (id1 != id2 || id3 != id4) {
-                                let cardi2 = zones[id3].userData.poss[id4].cardi;
-                                a = -1;
-                                while(++a < el2.length) {
-                                    b = -1;
-                                    while(++b < el4.length) {      
-                                        if (cardi !== cardi2 && !_counterCardi(cardi,cardi2) && 
-                                            ((c = _unionLine(el2[a],el4[b])) !== null && pos.find(_el => _equalPoint(_el, c[0])) && pos.find(_el => _equalPoint(_el, c[1]))) && 
-                                            !edges.find(el5 => _equalLine(el5, el4[b]))) {
-                                            edges.push(c); 
-                                        }    
-                                    }
-                                }            
-                            }
+                    for (const [id4, el4] of Object.entries(lines[id1])) {
+                        if (id2 != id4 && cardi !== zones[id1].userData.poss[id4].cardi) {
+                            a = -1;
+                            while(++a < el2.length) {
+                                b = -1;
+                                while(++b < el4.length) { 
+                                    if ((c = _unionLine(el2[a],el4[b])) !== null && !edges.find(el5 => _equalLine(el5, c))) {
+                                        edges.push(c); 
+                                    }    
+                                }
+                            }            
                         }
                     }
 
@@ -300,7 +285,7 @@ Zoning.prototype = {
 
             if (el.name.indexOf("DUMMY_BUILDING") < 0) {       
                 if ( el instanceof THREE.Mesh) {
-                    if (el.name.indexOf(" GWL") < 0 && el.name.indexOf(" DR") < 0 && el.name.indexOf(" CW") < 0 ) {       
+                    if (el.name.indexOf("+GWL") < 0 && el.name.indexOf("+DR") < 0 && el.name.indexOf("+CW") < 0 ) {       
                         let a = el.name.split(' ');
     
                         j = -1;
@@ -329,6 +314,9 @@ Zoning.prototype = {
                         obj.add(_getStructMesh(o, 0xff0000));
                     }
                 }
+            }
+            else {
+        //        el.visible = false;
             }
         }
 
@@ -380,6 +368,9 @@ Zoning.prototype = {
                     j = -1;
                     while(++j < zkeys.length) {
                         let zk = zkeys[j];
+
+                //        if (zk != '1F_Zone2++35.0+4.4') continue;
+
                         if (el.name.indexOf(' ' + zk + ' ') > 0) {
                             _findWalls(el.userData.poss);
                             break;
@@ -399,9 +390,9 @@ Zoning.prototype = {
 
             for (const [id, el] of Object.entries(zones)) {
 
-                while(_findWalls(el.userData.poss));
+       //         if (id != '1F_Zone2++35.0+4.4') continue;
 
-      //          _nomalizeWalls(el.userData.poss);
+                while(_findWalls(el.userData.poss));
 
                 j = -1;
 
@@ -447,19 +438,3 @@ Zoning.prototype = {
 };
 
 export { Zoning };
-/*
-let polygon = entity.polygon;
-let hierarchy = polygon.hierarchy._value;
-let indices = Cesium.PolygonPipeline.triangulate(hierarchy.positions, hierarchy.holes);
-let area = 0;
-for (let i = 0; i < indices.length; i += 3) {
-    let vector1 = hierarchy.positions[indices[i]];
-    let vector2 = hierarchy.positions[indices[i+1]];
-    let vector3 = hierarchy.positions[indices[i+2]];			
-    let vectorC = Cesium.Cartesian3.subtract(vector2, vector1, new Cesium.Cartesian3());
-    let vectorD = Cesium.Cartesian3.subtract(vector3, vector1, new Cesium.Cartesian3());			
-    let areaVector = Cesium.Cartesian3.cross(vectorC, vectorD, new Cesium.Cartesian3());			
-    area += Cesium.Cartesian3.magnitude(areaVector)/2.0;
-}
-
-*/
