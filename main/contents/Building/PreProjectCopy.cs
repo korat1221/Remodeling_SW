@@ -156,6 +156,7 @@ namespace main.contents
                     tables.Add("User_PVBattery");
                     tables.Add("User_FC");
                     tables.Add("User_WP");
+                    tables.Add("User_WPInverte");
                     tables.Add("User_Boiler");
                     tables.Add("User_AirHP");
                     tables.Add("User_GroundHP");
@@ -168,9 +169,6 @@ namespace main.contents
                     tables.Add("User_AHU");
                     tables.Add("User_HRV");
                     tables.Add("User_DHWHP");
-                    tables.Add("User_AirCooler");
-                    tables.Add("User_WaterCooler");
-                    tables.Add("User_CoolerTop");
                 }
                 if (Construction_checkBox.Checked)
                 {
@@ -224,6 +222,9 @@ namespace main.contents
                     tables.Add("AHUSystem_Form");
                     tables.Add("PV_Form");
                     tables.Add("PV_Result");
+                    tables.Add("User_AirCooler");
+                    tables.Add("User_WaterCooler");
+                    tables.Add("User_CoolerTop");
                 }
 
                 this.DialogResult = DialogResult.OK;
