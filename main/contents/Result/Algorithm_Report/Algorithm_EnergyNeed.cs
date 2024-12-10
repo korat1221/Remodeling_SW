@@ -491,7 +491,7 @@ namespace main.contents.Result
                     for (int mth = 0; mth < 12; mth++)
                     {
 
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth, eta, Q_DHU_tot * dwd_mth /1000 as total_1 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth, eta, Q_DHU_tot * dwd_mth /1000 as total_1 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
                             CoolingMthData[13].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });

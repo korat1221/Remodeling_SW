@@ -163,12 +163,12 @@ namespace main.contents.Result
                         string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select 냉각능력,입구온도,출구온도 From User_CoolingTop Where 번호='" + Value[0][1] + "'");
                         if (Value2.Length > 0)
                         {
-                            if (double.TryParse(Value[0][1], out double result1))
+                            if (double.TryParse(Value2[0][0], out double result1))
                             {
                                 SourceData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(Value2[0][0], 0) });
                             }
-                            SourceData[2].Add(new { idx = i, val = Value[0][1] });
-                            SourceData[3].Add(new { idx = i, val = Value[0][2] });
+                            SourceData[2].Add(new { idx = i, val = Value2[0][1] });
+                            SourceData[3].Add(new { idx = i, val = Value2[0][2] });
                         }
                     }
                 }
