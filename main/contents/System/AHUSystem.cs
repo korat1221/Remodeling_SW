@@ -805,6 +805,7 @@ namespace main.contents
             {
                 MainpictureBox.Visible = true;
                 MainpictureBox.Load(Program.gPath + Image[0][0]);
+                MainpictureBox.Location = new Point(10, 0);
                 MainpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 MainpictureBox.BackColor = Color.Transparent;
                 MainpictureBox.Parent = LocationpictureBox;
@@ -822,6 +823,7 @@ namespace main.contents
                 if (Image.Length > 0)
                 {
                     LocationpictureBox.Load(Program.gPath + Image[0][0]);
+                    LocationpictureBox.Location = new Point(0, 0);
                     LocationpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
             }
@@ -831,6 +833,7 @@ namespace main.contents
                 if (Image.Length > 0)
                 {
                     LocationpictureBox.Load(Program.gPath + Image[0][0]);
+                    LocationpictureBox.Location = new Point(0, 0);
                     LocationpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
             }
@@ -876,6 +879,7 @@ namespace main.contents
                 {
                     PrehPrecpictureBox.Visible = true;
                     PrehPrecpictureBox.Load(Program.gPath + Image[0][0]);
+                    PrehPrecpictureBox.Location = new Point(-20, 0);
                     PrehPrecpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     PrehPrecpictureBox.Parent = VAVpictureBox;
                 }
@@ -918,6 +922,7 @@ namespace main.contents
             {
                 CoilpictureBox.Visible = true;
                 CoilpictureBox.Load(Program.gPath + Image[0][0]);
+                CoilpictureBox.Location = new Point(0,0);
                 CoilpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 CoilpictureBox.Parent = MainpictureBox;
             }
@@ -935,6 +940,7 @@ namespace main.contents
                     {
                         HumidifierpictureBox.Visible = true;
                         HumidifierpictureBox.Load(Program.gPath + Image[0][0]);
+                        HumidifierpictureBox.Location = new Point(0, 0);
                         HumidifierpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                         HumidifierpictureBox.Parent = CoilpictureBox;
                     }
