@@ -275,17 +275,29 @@ Zoning.prototype = {
                 }
             }
         };
+        let _getSubType = (name) => {
+            let arr = ["+GWL","+DR","+CW","+RF","+WL"], _i = -1, n;
+
+            while(++_i < arr.length) {
+                if ((n = name.indexOf(arr[_i])) >= 0) {
+                    return arr[_i].substr(1);
+                }
+            }
+            return "";
+        };
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         let i = -1, j, k, old = null, mesh = null;
+
+        console.log(obj);
 
         while(++i < obj.children.length) {
             let el = obj.children[i];
 
             if (el.name.indexOf("DUMMY_BUILDING") < 0) {       
                 if ( el instanceof THREE.Mesh) {
-                    if (el.name.indexOf("+GWL") < 0 && el.name.indexOf("+DR") < 0 && el.name.indexOf("+CW") < 0 ) {       
+                    if (el.name.trim() !== "" && _getSubType(el.name) === '') {       
                         let a = el.name.split(' ');
     
                         j = -1;
@@ -324,38 +336,28 @@ Zoning.prototype = {
 
         if (zkeys.length > 0) {
             let type;
-            let _getType = (_name) => {
-                let _arr = ["GWL","DR","CW"], _i = -1;
-    
-                while(++_i < _arr.length) {
-                    let _el = _arr[_i];
-                    if (_name.indexOf(" " + _el) > 0) {
-                        return _el;
-                    }
-                } 
-                return "";
-            };
 
             i = -1;
             while(++i < obj.children.length) {
                 let el = obj.children[i];
-                 if ( el instanceof THREE.Mesh) { 
+                 if ( el instanceof THREE.Mesh && el.name.indexOf("DUMMY_BUILDING") < 0) { 
+                    if (el.name.indexOf('1F_Zone5++3.72+3.7+CW Model') >= 0) {
+                        let ii = 0;
+                        ii = ii;
+                    }
                     j = -1;
                     while(++j < zkeys.length) {
                         let zk = zkeys[j];
-                        if (el.name.indexOf(' ' + zk + ' ') > 0) {
+                        if (el.name.indexOf(zk) >= 0 && (type = _getSubType(el.name)) !== "") {
                             let el2 = zones[zk];
-                            if ((type = _getType(el.name)) !== "") {
-                                if (!el2.userData.structures) {
-                                    el2.userData.structures = [];
-                                }
-                                el2.userData.structures.push({type:type, obj:el});
-                                el.material.side = THREE.DoubleSide;
-                                el2.userData.poss = el2.userData.poss.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));   
-                            }
-                            obj.children[i].visible = false;
 
-                            break;
+                            if (!el2.userData.structures) {
+                                el2.userData.structures = [];
+                            }
+                            el2.userData.structures.push({type:type, obj:el});
+                            el.material.side = THREE.DoubleSide;
+                            el2.userData.poss = el2.userData.poss.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));   
+                            obj.children[i].visible = false;
                         }
                     }
                 }
@@ -364,14 +366,14 @@ Zoning.prototype = {
             i = -1;
             while(++i < obj.children.length) {
                 let el = obj.children[i];
-                 if ( el instanceof THREE.Mesh) { 
+                 if ( el instanceof THREE.Mesh && el.name.indexOf("DUMMY_BUILDING") < 0) { 
                     j = -1;
                     while(++j < zkeys.length) {
                         let zk = zkeys[j];
 
                 //        if (zk != '1F_Zone2++35.0+4.4') continue;
 
-                        if (el.name.indexOf(' ' + zk + ' ') > 0) {
+                        if (el.name.indexOf(zk) >= 0) {
                             _findWalls(el.userData.poss);
                             break;
                         }
@@ -406,18 +408,15 @@ Zoning.prototype = {
             i = -1;
             while(++i < obj.children.length) {
                 let el = obj.children[i];
-                 if ( el instanceof THREE.Mesh) { 
+                 if ( el instanceof THREE.Mesh && el.name.indexOf("DUMMY_BUILDING") < 0) { 
                     j = -1;
                     while(++j < zkeys.length) {
                         let zk = zkeys[j];
-                        if (el.name.indexOf(' ' + zk + ' ') > 0) {
-                            if ((type = _getType(el.name)) !== "") {
-                                k = -1;
-                                while(++k < el.userData.poss.length) {
-                                    el.userData.poss[k].area = _getArea(el.userData.poss[k].pos);   
-                                }
+                        if (el.name.indexOf(zk) >= 0 && (type = _getSubType(el.name)) !== "") {
+                            k = -1;
+                            while(++k < el.userData.poss.length) {
+                                el.userData.poss[k].area = _getArea(el.userData.poss[k].pos);   
                             }
-                            break;
                         }
                     }
                 }
