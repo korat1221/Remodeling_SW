@@ -276,7 +276,7 @@ Zoning.prototype = {
             }
         };
         let _getSubType = (name) => {
-            let arr = ["+GWL","+DR","+CW","+RF","+WL"], _i = -1, n;
+            let arr = ["+GWL ","+DR ","+CW ","+RF ","+WL "], _i = -1, n;
 
             while(++_i < arr.length) {
                 if ((n = name.indexOf(arr[_i])) >= 0) {
@@ -341,10 +341,6 @@ Zoning.prototype = {
             while(++i < obj.children.length) {
                 let el = obj.children[i];
                  if ( el instanceof THREE.Mesh && el.name.indexOf("DUMMY_BUILDING") < 0) { 
-                    if (el.name.indexOf('1F_Zone5++3.72+3.7+CW Model') >= 0) {
-                        let ii = 0;
-                        ii = ii;
-                    }
                     j = -1;
                     while(++j < zkeys.length) {
                         let zk = zkeys[j];
