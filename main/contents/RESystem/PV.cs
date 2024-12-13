@@ -19,7 +19,7 @@ namespace main.contents
         //PVModuleDB
         string PVModuleNumber, PVModuleName;
         double PVarea, PVtotalarea, PVpower, Kpk, Ppk, PVwidth, PVheight; //단위면적당 출력(kW), 총출력
-        double check;
+        
 
         //PVInverterDB 
         string Inverter;
@@ -55,6 +55,8 @@ namespace main.contents
             Num = Num_textBox.Text;
 
             PVType_ComboBox.Items.Clear();
+
+            PVType_ComboBox.Items.AddRange(new string[] { "독립형", "계통연계형" });
 
             Battery_label.Visible = false;
             Battery_textBox.Visible = false;
@@ -280,22 +282,22 @@ namespace main.contents
 
                     pvtotal.Visible = true;
                     pvtotal.Text = string.Format("{0:F1} kW", Ppk);
-                    pvtotal.Location = new Point(210, 292);
+                    pvtotal.Location = new Point(210, 295);
                     pvtotal.BackColor = Color.Transparent;
 
                     pvname.Visible = true;
-                    pvname.Text = string.Format("명칭: {0}", PVModuleName);
-                    pvname.Location = new Point(537, 44);
+                    pvname.Text = string.Format("{0}", PVModuleName);
+                    pvname.Location = new Point(535, 44);
                     pvname.BackColor = Color.Transparent;
 
                     pvsize.Visible = true;
                     pvsize.Text = string.Format("{0}m X {1}m", PVwidth, PVheight);
-                    pvsize.Location = new Point(210, 95);
+                    pvsize.Location = new Point(200, 97);
                     pvsize.BackColor = Color.Transparent;
 
                     pvpower.Visible = true;
                     pvpower.Text = string.Format("{0} W", PVpower);
-                    pvpower.Location = new Point(210, 142);
+                    pvpower.Location = new Point(215, 147);
                     pvpower.BackColor = Color.Transparent;
 
                     PVtotalarea = PVarea * val;
@@ -335,11 +337,16 @@ namespace main.contents
                 }
             }
 
-            if (e.ColumnIndex == 6 || e.ColumnIndex == 7 || e.ColumnIndex == 8)
+            if (e.ColumnIndex == 6 || e.ColumnIndex == 7)
             {
-                if (Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, e.ColumnIndex,0))
+                Program.UTIL.dataGridView_doubleComa(PV_dataGridView, e.RowIndex, e.ColumnIndex, 1);
+            }
+            if ( e.ColumnIndex == 8)
+            {
+               double k =  Program.UTIL.dataGridView_doubleComa(PV_dataGridView, e.RowIndex, e.ColumnIndex, 2);
+                if (k <= 0)
                 {
-                    check = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                    MessageBox.Show("어레이길이는 0보다 커야합니다.");
                 }
             }
         }
@@ -380,6 +387,7 @@ namespace main.contents
                 MessageBox.Show("방위 또는 향을 선택해 주세요.");
                 return false;
             }
+           
 
             RadioButton[] rB = { radioButton1, radioButton2, radioButton3, radioButton4 };
 
