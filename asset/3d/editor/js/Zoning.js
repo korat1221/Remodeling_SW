@@ -280,10 +280,23 @@ Zoning.prototype = {
 
             while(++_i < arr.length) {
                 if ((n = name.indexOf(arr[_i])) >= 0) {
-                    return arr[_i].substr(1);
+                    return arr[_i].substr(1).trim();
                 }
             }
             return "";
+        };
+        let _pad = (num, size) => {
+            num = num.toString();
+            while (num.length < size) num = "0" + num;
+            return num;
+        };
+        let _getName = (nm) => {
+            let b = nm.split('+')[0].split('_');
+
+            return b[0] + "_Zone" + _pad(parseInt(b[1].replace("Zone","")), 3);
+        };
+        let _getTitle = (type) => {
+            return {"GWL":"지중벽","DR":"외부출입문","CW":"커튼월창","RF":"지붕","WL":"외벽"}[type];
         };
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -333,6 +346,7 @@ Zoning.prototype = {
         }
 
         let zkeys = Object.keys(zones);
+        let tree = [[],[]];
 
         if (zkeys.length > 0) {
             let type;
@@ -420,6 +434,54 @@ Zoning.prototype = {
      
             console.log(zones);
 
+            for (const [id, el] of Object.entries(zones)) {
+                let nm = _getName(id);
+                let stru = {};
+
+                if (el.userData.structures) {
+                    let i = -1;
+
+                    while(++i < el.userData.structures.length) {
+                        let el2 = el.userData.structures[i];
+
+                        if (!stru[el2.type]) {
+                            stru[el2.type] = [];
+                        }
+                        stru[el2.type].push({
+                            "text": nm + "_" + el2.type + "_" + (stru[el2.type].length + 1),
+                            "id": el2.obj.uuid
+                        });
+                    }
+                }
+
+                let children = [];
+
+                for (const [id2, el2] of Object.entries(stru)) {
+                    if (!children.find(el3 => el3.type === id2)) {
+                        children.push({
+                            "type": id2,
+                            "text": _getTitle(id2),
+                            "id": nm + "_" + id2,
+                            "children":el2,
+                        });
+                    }
+                }
+
+                tree[0].push({
+                    "type": "space",
+                    "text": nm,
+                    "id": el.uuid,
+                    "skey": parseInt(nm.split('_')[1].replace("Zone","")),
+                    "children": children
+                });
+            }
+
+            tree[0].sort(function(_a, _b) {
+                if(_a.skey > _b.skey) return 1;
+                else if(_a.skey === _b.skey) return 0;
+                else return -1;
+              });
+            
             const box = new Box3().setFromObject( obj );
             const center = box.getCenter( new Vector3() );
             const offset = new Vector3(obj.position.x - center.x, 0, obj.position.z - center.z);
@@ -428,7 +490,7 @@ Zoning.prototype = {
             obj.updateMatrixWorld( true );    
         }
 
-        return "SELECT NOW();";
+        return {sql:"SELECT NOW();", tree:tree};
 	},
 };
 

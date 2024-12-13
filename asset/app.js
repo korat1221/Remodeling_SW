@@ -47,13 +47,20 @@ app.post('/upload', (req, res) => {
     return sval;
   }
 
-  let path = __dirname + "/projects/" + _getParam("pid") + ".json";
+  let pid = _getParam("pid");
+  let path = __dirname + "/projects/" + pid + ".json";
 
-  fs.writeFile(path,Buffer.from(_getParam("json"),'base64').toString('utf8'),function(err){
+  fs.writeFile(path,Buffer.from(pid,'base64').toString('utf8'),function(err){
     if (err === null) {
       fs.writeFile(__dirname + "/projects/execute.sql",Buffer.from(_getParam("sql"),'base64').toString('utf8'),function(err){
         if (err === null) {
-            res.json({"res":"success"});
+          fs.writeFile(__dirname + "/projects/" + pid + ".tree",Buffer.from(_getParam("tree"),'base64').toString('utf8'),function(err){
+            if (err === null) {
+                res.json({"res":"success"});
+            } else {
+                res.json({"res":"fail"});
+            }
+          });
         } else {
             res.json({"res":"fail"});
         }
