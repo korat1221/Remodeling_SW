@@ -216,7 +216,7 @@ namespace main.contents.Building
             Gas_m3_dataGridView.Columns.Add(연도Combo);
             for (int mth = 1; mth < 13; mth++)
             {
-                Gas_m3_dataGridView.Columns.Add("B" + mth.ToString(), "가스사용량." + mth + "월.[m3]");
+                Gas_m3_dataGridView.Columns.Add("B" + mth.ToString(), "가스사용량." + mth + "월.[m"+ Program.UTIL.Subscript(3, true) + "]");
             }
 
             new StackedHeaderDecorator(Gas_kWh_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
