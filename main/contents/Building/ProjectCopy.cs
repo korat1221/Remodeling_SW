@@ -72,7 +72,7 @@ namespace main.contents
                 tables.Add("User_DHWHP");
                 tables.Add("User_AirCooler");
                 tables.Add("User_WaterCooler");
-                tables.Add("User_CoolerTop");
+                tables.Add("User_CoolingTop");
             }
             if (Construction_checkBox.Checked)
             {
