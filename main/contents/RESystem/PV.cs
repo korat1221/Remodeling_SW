@@ -142,6 +142,17 @@ namespace main.contents
             pvpower.Location = new Point(210, 142);
             pvtotal.Location = new Point(210, 292);
             pvname.Location = new Point(537, 44);
+
+            string[][] Ima = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광타입별이미지", "이미지", "종류 = '기본'");
+            if (Ima.Length > 0)
+            {
+                PVTypepictureBox.Size = new System.Drawing.Size(305, 245);
+                PVTypepictureBox.Location = new Point(343, 13);
+                PVTypepictureBox.Load(Program.gPath + Ima[0][0]);
+                PVTypepictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                PVTypepictureBox.BackColor = Color.Transparent;
+                PVTypepictureBox.Parent = PVpictureBox;
+            }
         }
         void PVimage(string type)
         {
