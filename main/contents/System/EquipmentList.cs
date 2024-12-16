@@ -179,19 +179,20 @@ namespace main.contents
             Boiler_dataGridView.Columns[0].Width = 40;
             Boiler_dataGridView.Columns[1].Width = 60;
             Boiler_dataGridView.Columns[2].Width = 60;
-            Boiler_dataGridView.Columns[3].Width = 100;
             Boiler_dataGridView.Columns[4].Width = 90;
             Boiler_dataGridView.Columns[5].Width = 60;
             Boiler_dataGridView.Columns[6].Width = 130;
+            Boiler_dataGridView.Columns[7].Width = 80;
             Boiler_dataGridView.Columns[8].Width = 80;
             Boiler_dataGridView.Columns[9].Width = 80;
             Boiler_dataGridView.Columns[10].Width = 80;
             Boiler_dataGridView.Columns[11].Width = 80;
+            Boiler_dataGridView.Columns[12].Width = 60;
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
             설치유형Combo.HeaderText = "설치";
             설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
             Boiler_dataGridView.Columns.Add(설치유형Combo);
-            Boiler_dataGridView.Columns[13].Width = 100;
+            Boiler_dataGridView.Columns[13].Width = 60;
 
 
         }
@@ -543,8 +544,11 @@ namespace main.contents
 
             ABS_dataGridView.Columns[0].Width = 40;
             ABS_dataGridView.Columns[1].Width = 60;
-            ABS_dataGridView.Columns[2].Width = 60;
+            ABS_dataGridView.Columns[2].Width = 50;
+            ABS_dataGridView.Columns[3].Width = 100;
             ABS_dataGridView.Columns[5].Width = 60;
+            ABS_dataGridView.Columns[16].Width = 60;
+            ABS_dataGridView.Columns[17].Width = 60;
 
         }
         private void UserABS_Add_button_Click(object sender, EventArgs e)
@@ -964,7 +968,10 @@ namespace main.contents
             PV_dataGridView.Columns.Add("A5", "모듈(변경가능).길이.[m]");
             PV_dataGridView.Columns.Add("A6", "모듈(변경가능).높이.[m]");
             PV_dataGridView.Columns.Add("A7", "모듈(변경가능).정격출력.[W]");
-            PV_dataGridView.Columns.Add("A8", "Kpk.[kW/m"+Program.UTIL.Subscript(2, true)+ "]");
+            PV_dataGridView.Columns.Add("A8","aaa");
+            //Program.UTIL.ApplyHTMLSuperscriptAndSubscript(label2, "K<sub>pk</sub>");
+            //Program.UTIL.ApplyHTMLSuperscriptAndSubscript(PV_dataGridView, "K<sub>pk</sub>",8);
+
            
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
             설치유형Combo.HeaderText = "설치";
@@ -1651,11 +1658,14 @@ namespace main.contents
 
             AirHP_dataGridView.Columns[0].Width = 40;
             AirHP_dataGridView.Columns[1].Width = 60;
-            AirHP_dataGridView.Columns[2].Width = 60;
-            AirHP_dataGridView.Columns[3].Width = 60;
-            AirHP_dataGridView.Columns[4].Width = 70;
-            AirHP_dataGridView.Columns[5].Width = 70;
-            AirHP_dataGridView.Columns[6].Width = 70;
+            AirHP_dataGridView.Columns[2].Width = 50;
+            AirHP_dataGridView.Columns[3].Width = 100;
+            AirHP_dataGridView.Columns[4].Width = 65;
+            AirHP_dataGridView.Columns[5].Width = 60;
+            AirHP_dataGridView.Columns[6].Width = 65;
+            AirHP_dataGridView.Columns[16].Width = 60;
+            AirHP_dataGridView.Columns[17].Width = 60;
+            AirHP_dataGridView.Columns[18].Width = 60;
 
         }
 
@@ -3082,7 +3092,7 @@ namespace main.contents
             AirCooler_dataGridView.Columns[0].Width = 40;
             AirCooler_dataGridView.Columns[1].Width = 60;
             AirCooler_dataGridView.Columns[2].Width = 60;
-            AirCooler_dataGridView.Columns[3].Width = 80;
+            AirCooler_dataGridView.Columns[3].Width = 100;
 
             AirCooler_dataGridView.Columns[1].ReadOnly = true;
             AirCooler_dataGridView.Columns[2].ReadOnly = true;
@@ -3339,7 +3349,7 @@ namespace main.contents
             WaterCooler_dataGridView.Columns[0].Width = 40;
             WaterCooler_dataGridView.Columns[1].Width = 60;
             WaterCooler_dataGridView.Columns[2].Width = 60;
-            WaterCooler_dataGridView.Columns[3].Width = 80;
+            WaterCooler_dataGridView.Columns[3].Width = 100;
 
             WaterCooler_dataGridView.Columns[1].ReadOnly = true;
             WaterCooler_dataGridView.Columns[2].ReadOnly = true;
@@ -3512,7 +3522,7 @@ namespace main.contents
             Solar_dataGridView.Columns.Add("A2", "DB유형");
             Solar_dataGridView.Columns.Add("A3", "명칭");
             Solar_dataGridView.Columns.Add("A4", "난방/급탕");
-            Solar_dataGridView.Columns.Add("A5", "모듈면적.A["+Program.UTIL.Subscript(2, true)+"]");
+            Solar_dataGridView.Columns.Add("A5", "모듈면적.A[m"+Program.UTIL.Subscript(2, true)+"]");
             Solar_dataGridView.Columns.Add("A6", "효율.ηo");
             Solar_dataGridView.Columns.Add("A7", "손실계수.1차.k1");
             Solar_dataGridView.Columns.Add("A8", "손실계수.2차.k2");
@@ -3719,13 +3729,13 @@ namespace main.contents
             AHU_dataGridView.Columns.Add("A10", "회수 효율.절대습도.냉방.[%]");
             AHU_dataGridView.Columns.Add("A11", "회수 효율.절대습도.난방.[%]");
             AHU_dataGridView.Columns.Add("A12", "냉각코일.출력.[kW]");
-            AHU_dataGridView.Columns.Add("A13", "냉각코일.입구온도.DB.[℃]");
-            AHU_dataGridView.Columns.Add("A14", "냉각코일.입구온도.WB.[℃]");
-            AHU_dataGridView.Columns.Add("A15", "냉각코일.출구온도.DB.[℃]");
-            AHU_dataGridView.Columns.Add("A16", "냉각코일.출구온도.WB.[℃]");
+            AHU_dataGridView.Columns.Add("A13", "냉각코일.입구온도.[℃_DB]");
+            AHU_dataGridView.Columns.Add("A14", "냉각코일.입구온도.[℃_WB]");
+            AHU_dataGridView.Columns.Add("A15", "냉각코일.출구온도.[℃_DB]");
+            AHU_dataGridView.Columns.Add("A16", "냉각코일.출구온도.[℃_WB]");
             AHU_dataGridView.Columns.Add("A17", "난방코일.출력.[kW]");
-            AHU_dataGridView.Columns.Add("A18", "난방코일.입구온도.DB.[℃]");
-            AHU_dataGridView.Columns.Add("A19", "난방코일.출구온도.DB.[℃]");
+            AHU_dataGridView.Columns.Add("A18", "난방코일.입구온도.[℃_DB]");
+            AHU_dataGridView.Columns.Add("A19", "난방코일.출구온도.[℃_DB]");
             AHU_dataGridView.Columns.Add("A20", "가습기.유형");
             AHU_dataGridView.Columns.Add("A21", "가습기.제어유형");
             AHU_dataGridView.Columns.Add("A22", "가습기.습도수준");
@@ -3750,15 +3760,15 @@ namespace main.contents
             AHU_dataGridView.Columns[10].Width = 40;
             AHU_dataGridView.Columns[11].Width = 40;
             AHU_dataGridView.Columns[12].Width = 40;
-            AHU_dataGridView.Columns[13].Width = 50;
+            AHU_dataGridView.Columns[13].Width = 55;
             AHU_dataGridView.Columns[14].Width = 55;
-            AHU_dataGridView.Columns[15].Width = 50;
+            AHU_dataGridView.Columns[15].Width = 55;
             AHU_dataGridView.Columns[16].Width = 55;
             AHU_dataGridView.Columns[17].Width = 40;
             AHU_dataGridView.Columns[18].Width = 55;
             AHU_dataGridView.Columns[19].Width = 55;
             AHU_dataGridView.Columns[20].Width = 100;
-            AHU_dataGridView.Columns[21].Width = 100;
+            AHU_dataGridView.Columns[21].Width = 80;
             AHU_dataGridView.Columns[22].Width = 80;
             AHU_dataGridView.Columns[23].Width = 45;
             AHU_dataGridView.Columns[24].Width = 50;
