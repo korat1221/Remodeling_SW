@@ -491,9 +491,9 @@ namespace main.contents
 
         private void ImportSize_button_Click(object sender, EventArgs e)
         {
-            if(df_fix >0)
+            if(UwMethod=="법규")
             {
-                Window_ImportSize window_importsize_form = new Window_ImportSize(WinNum, WindowName, df_open, df_fix, df_btw);
+                Window_ImportSize window_importsize_form = new Window_ImportSize(WinNum, WindowName, 0.14, 0.10, 0.14);
 
                 DialogResult result = window_importsize_form.ShowDialog();
                 if (result == DialogResult.OK)
@@ -503,7 +503,20 @@ namespace main.contents
             }
             else
             {
-                MessageBox.Show("프레임 종류를 선택 후 입력하세요.");
+                if (df_fix > 0)
+                {
+                    Window_ImportSize window_importsize_form = new Window_ImportSize(WinNum, WindowName, df_open, df_fix, df_btw);
+
+                    DialogResult result = window_importsize_form.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        ImportSize();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("프레임 종류를 선택 후 입력하세요.");
+                }
             }
             
         }

@@ -1052,7 +1052,24 @@ namespace main.contents
                 }
                 else
                 {
-                    Importsize_form = new CW_ImportSize(CWNum, CWName, df_mt, df_open, 0);
+                    if(UcwMethod=="법규")
+                    {
+                        Importsize_form = new CW_ImportSize(CWNum, CWName, 0.6, 0.8, 0);
+                    }
+                    else
+                    {
+                        if (df_mt > 0)
+                        {
+                            Importsize_form = new CW_ImportSize(CWNum, CWName, df_mt, df_open, 0);
+                        }
+                        else
+                        {
+                            MessageBox.Show("프레임부터 선택하세요.");
+                            Importsize_form = null;
+                            goto a_;
+                        }
+                    }
+                 
                 }
 
                 DialogResult result = Importsize_form.ShowDialog();
