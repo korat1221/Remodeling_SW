@@ -26,7 +26,6 @@ using main.subcontents.CoolingSystem;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using main.subcontents.RESystem_WP;
 
-
 namespace main.contents
 {
     public partial class EquipmentList : Form
