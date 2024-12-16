@@ -60,7 +60,7 @@ namespace main.subcontents.HeatingSystem
             {
                 Solar_dataGridView.Columns.Add("A3", "모듈면적.A[m2]");
             }
-            Solar_dataGridView.Columns.Add("A4", "효율.η0]");
+            Solar_dataGridView.Columns.Add("A4", "효율.η0");
             Solar_dataGridView.Columns.Add("A5", "손실계수.1차.k1");
             Solar_dataGridView.Columns.Add("A6", "손실계수.2차.k2");
             Solar_dataGridView.Columns.Add("A7", "50°의 입사각.Khem(50֠)");

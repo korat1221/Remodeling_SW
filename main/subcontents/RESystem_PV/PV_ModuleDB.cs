@@ -94,7 +94,7 @@ namespace main.subcontents.RESystem_PV
                 PVModule_dataGridView.Columns.Add("A6", "출력.[W]");
                 PVModule_dataGridView.Columns.Add("A7", "크기.길이[m]");
                 PVModule_dataGridView.Columns.Add("A8", "크기.높이[m]");
-                PVModule_dataGridView.Columns.Add("A9", "Kpk.[kW/m2]");
+                PVModule_dataGridView.Columns.Add("A9", "Kpk.[kW/m"+ Program.UTIL.Subscript(2, true) + "]");
 
                 PVModule_dataGridView.Columns[0].Width = 40;
 
