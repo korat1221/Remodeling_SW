@@ -93,7 +93,7 @@ namespace main.subcontents.CoolingSystem
                         int nRow = Pump_dataGridView.Rows.Add();
                         for (int a = 0; a < User_Value[0].Length; a++)
                         {
-                            Pump_dataGridView.Rows[nRow].Cells[a + 2].Value = User_Value[0][a];
+                            Pump_dataGridView.Rows[nRow].Cells[a + 2].Value = User_Value[n][a];
                         }
                         Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, 1);
                         Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, 1);
