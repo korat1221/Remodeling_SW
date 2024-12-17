@@ -32,6 +32,7 @@ function Viewport( editor ) {
 //	container.add( new ViewportInfo( editor ) );
 
 	//
+	let selOld = {obj:null,color:null,opacity:null};
 
 	let renderer = null;
 	let pmremGenerator = null;
@@ -197,6 +198,23 @@ function Viewport( editor ) {
 			const intersects = selector.getPointerIntersects( onUpPosition, camera );
 			signals.intersectionsDetected.dispatch( intersects );
 
+			let i = -1;
+
+			while(++i < intersects.length) {
+				let object = intersects[i].object;
+				if (object instanceof THREE.Mesh && object !== scene && object !== camera && object.material && object.name.indexOf("DUMMY_BUILDING") < 0) {
+					if (selOld.obj) {
+						selOld.obj.material.color.set(selOld.obj.userData.color);
+						selOld.obj.material.opacity = selOld.obj.userData.opacity;
+					}
+		
+					object.material.color.set(0xff0000);
+					object.material.opacity = 0.9;
+					selOld.obj = object;
+					break;
+				}
+			}
+	
 			render();
 
 		}
@@ -408,12 +426,18 @@ function Viewport( editor ) {
 		// selectionBox.visible = false;
 		// transformControls.detach();
 
-		 if ( object !== null && object !== scene && object !== camera && object.material) {
+	//	 if ( object !== null && object !== scene && object !== camera && object.material && object instanceof THREE.Mesh) {
+/*
+			if (selOld.obj) {
+				selOld.obj.material.color.set(selOld.obj.userData.color);
+				selOld.obj.material.opacity = selOld.obj.userData.opacity;
+			}
 
-			editor.resetColors();
+			console.log(object);
 			object.material.color.set(0xff0000);
 			object.material.opacity = 0.9;
-
+			selOld.obj = object;
+*/
 		// 	box.setFromObject( object, true );
 
 		// 	if ( box.isEmpty() === false ) {
@@ -425,7 +449,7 @@ function Viewport( editor ) {
 		// 	// transformControls.attach( object );
 		//	object.update material; arcookie
 
-		 }
+	//	 }
 
 		render();
 

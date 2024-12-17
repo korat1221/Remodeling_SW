@@ -840,19 +840,6 @@ Editor.prototype = {
 
 	},
 
-	resetColors: function () {
-		let i = -1;
-		let objects = this.scene.getObjectByName("__OBJ_MODEL__").children;
-
-		while ( ++i < objects.length ) {
-			let el = objects[i];
-
-			if (el.userData.color) {
-				el.material.color = el.userData.color;
-				el.material.opacity = el.userData.opacity;
-			}
-		}
-	}
 };
 
 const link = document.createElement( 'a' );
