@@ -196,15 +196,8 @@ Zoning.prototype = {
                 ret[k + 1] = tmp;
             }
         }
-        if (ret.length > 0) {
-            ret.push(ret[0]);
-            console.log(ret);
-        }
 
-//        if (ret.length >= 4) {
-  //          console.log(ret, _getNormal([ret[0],ret[1],ret[2]]), _getNormal([ret[1],ret[2],ret[3]]));
-    //    }
-        return ret;
+        return ret.length == 4 ? [ret[0],ret[1],ret[2],ret[2],ret[3],ret[0]] : null;
    };
    let _getBoundingBox = (vtx) => {
         let box = [
@@ -288,18 +281,30 @@ Zoning.prototype = {
               );
         };
 
-        let _getStructMesh = (pos, color) => {
-              return new THREE.Mesh(new THREE.BufferGeometry().setFromPoints(pos), new THREE.MeshBasicMaterial({
-                color:new THREE.Color().setHex( color ),
+        let _addStructMesh = (pos, opt) => {
+
+            if (opt.duplicate && pos.length > 2) {
+                const dup_offset = 0.007;
+                let pos2 = [], i = -1;
+                let n = _getNormal([pos[0],pos[1],pos[2]]);
+
+                while(++i < pos.length) {
+                    pos2.push(new Vector3(pos[i].x + n.x * dup_offset,pos[i].y + n.y * dup_offset,pos[i].z + n.z * dup_offset));
+                    pos[i] = (new Vector3(pos[i].x - n.x * dup_offset,pos[i].y - n.y * dup_offset,pos[i].z - n.z * dup_offset));
+                }
+                pos = pos.concat(pos2);
+            }
+
+            obj.add(new THREE.Mesh(new THREE.BufferGeometry().setFromPoints(pos), new THREE.MeshBasicMaterial({
+                color:new THREE.Color().setHex( opt.color ),
                 wireframe : false,
                 shading: THREE.FlatShading,
                 roughness: 1,
                 metalness: 0,
                 side: THREE.DoubleSide,
-                opacity: 0.3,
+                opacity: opt.opacity,
                 transparent: true,
-          //      visible:false
-              }));
+            })));
         };
         let _equalLine = (a, b) => {
             return (_equalPoint(a[0],b[0]) && _equalPoint(a[1],b[1])) ||
@@ -480,7 +485,7 @@ Zoning.prototype = {
                 el.material.transparent = true;
                 el.material.opacity = 0.9;
 
-                el.visible = false;
+            //    el.visible = false;
             }
         }
 
@@ -507,7 +512,8 @@ Zoning.prototype = {
                             el2.userData.structures.push({type:type, obj:el});
                             el.material.side = THREE.DoubleSide;
                             el2.userData.poss = el2.userData.poss.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));   
-                       //     el.visible = false;
+                //           _addStructMesh(el.userData.poss[j].pos, 0x0000ff);
+               //             el.visible = false;
                         }
                     }
                 }
@@ -540,7 +546,7 @@ Zoning.prototype = {
 
                 while(++j < el.userData.poss.length) {
           //          if (el.userData.poss[j].cardi == 'S')
-                    obj.add(_getStructMesh(el.userData.poss[j].pos, 0x0000ff));
+                    _addStructMesh(el.userData.poss[j].pos, {color:0x00ff00, opacity:0.3, duplicate:false});
                 }
             }
 
@@ -557,31 +563,14 @@ Zoning.prototype = {
                             if (el.name.indexOf(zk) >= 0 && _getSubType(el.name) === "" && _isFlat(el.geometry.getAttribute("position"))) {
                                 let el2 = zones[zk];
                                 let o = _asPoly(el.geometry.getAttribute("position"));
-                                if (!el2.userData.windows) {
-                                    el2.userData.windows = [];
+                                if (o) {
+                                    if (!el2.userData.windows) {
+                                        el2.userData.windows = [];
+                                    }
+                                    el2.userData.windows.push(o);
+                                        
+                                    _addStructMesh(o, {color:0xff0000, opacity:1.0, duplicate:true});        
                                 }
-                                el2.userData.windows.push(o);
-                                    
-                                obj.add(_getStructMesh(o, 0xff0000));        
-                                //     return new THREE.Mesh(new THREE.BufferGeometry().setFromPoints(pos), new THREE.MeshBasicMaterial({
-                                //         color:new THREE.Color().setHex( color ),
-                                //         wireframe : false,
-                                //         shading: THREE.FlatShading,
-                                //         roughness: 1,
-                                //         metalness: 0,
-                                //         side: THREE.DoubleSide,
-                                //         opacity: 0.3,
-                                //         transparent: true,
-                                //   //      visible:false
-                                //       }));
-                        /*
-                                      const geometry = new THREE.BoxGeometry( (bbox[1][0] - bbox[0][0]), (bbox[1][1] - bbox[0][1]), (bbox[1][2] - bbox[0][2]) ); 
-                                    const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} ); 
-                                    const cube = new THREE.Mesh( geometry, material ); 
-                                    geometry.translate(bbox[0][0] + (bbox[1][0] - bbox[0][0])/2, bbox[0][1] + (bbox[1][1] - bbox[0][1])/2, bbox[0][2] + (bbox[1][2] - bbox[0][2])/2);
-
-                                    obj.add( cube );*/
-                               //     obj.add(_getStructMesh(o, 0xff0000));        
                             }
                         }
                     }
